@@ -1,0 +1,64 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "build_commit": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{40}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Build Commit"
+    },
+    "image_digest": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Image Digest"
+    },
+    "implementation_status": {
+      "const": "in_progress",
+      "default": "in_progress",
+      "title": "Implementation Status",
+      "type": "string"
+    },
+    "model": {
+      "default": null,
+      "title": "Model",
+      "type": "null"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "service": {
+      "const": "retailops-ai-intelligence",
+      "default": "retailops-ai-intelligence",
+      "title": "Service",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:[a-z0-9.+-]+)?$",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "version"
+  ],
+  "title": "ServiceVersion",
+  "type": "object"
+}

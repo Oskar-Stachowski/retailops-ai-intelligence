@@ -1,0 +1,20 @@
+{
+  "correlation_id": "11111111-1111-4111-8111-111111111111",
+  "detail": "A required dependency is unavailable.",
+  "instance": "urn:uuid:11111111-1111-4111-8111-111111111111",
+  "readiness": {
+    "dependencies": [
+      {
+        "name": "startup",
+        "required": true,
+        "status": "down"
+      }
+    ],
+    "role": "foundation",
+    "schema_version": "1.0",
+    "status": "not_ready"
+  },
+  "status": 503,
+  "title": "Service Unavailable",
+  "type": "about:blank"
+}

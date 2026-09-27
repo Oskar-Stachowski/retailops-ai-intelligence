@@ -1,0 +1,225 @@
+{
+  "schema_version": "1.0",
+  "measured_at_utc": "2026-09-27T17:40:05.264820+00:00",
+  "scope": "AI 01 local diagnostic HTTP, not complete stage 01",
+  "base_commit": "5da5fdc04e8e44510a489c0f0cc45557cf87e15d",
+  "retailops_plan_commit": "c89da89",
+  "source_tree_sha256": "41d74a18afeea135c9a5287063594442e03e695915d0a9159076d108535d66f4",
+  "environment": {
+    "os": "Darwin",
+    "machine": "arm64",
+    "python": "3.11.15",
+    "uv": "0.12.19"
+  },
+  "checks": {
+    "make_ci_local": {
+      "exit_code": 0,
+      "tests_passed": 62,
+      "tests_skipped": 0,
+      "pytest_seconds": 2.23,
+      "mypy_source_files": 18,
+      "scope": [
+        "lint",
+        "format",
+        "strict_types",
+        "HTTP_and_failure_tests",
+        "real_loopback_process",
+        "contracts",
+        "docs",
+        "wheel_sdist",
+        "gitleaks_git",
+        "gitleaks_dir"
+      ]
+    },
+    "actionlint": {
+      "exit_code": 0,
+      "shellcheck": false
+    },
+    "git_diff_check": {
+      "exit_code": 0
+    }
+  },
+  "runtime_scope": {
+    "endpoints": [
+      "/health",
+      "/ready",
+      "/version",
+      "/metrics"
+    ],
+    "bind": "127.0.0.1 ephemeral port",
+    "shutdown": "application_stopped observed; SIGTERM preserved by Uvicorn",
+    "dependencies": "provider fakes; no real DB, MLflow or Bedrock"
+  },
+  "not_executed": [
+    "remote_GitHub_CI",
+    "branch_protection",
+    "PostgreSQL_MLflow",
+    "persistent_restart",
+    "model_serving",
+    "OTLP_export",
+    "AWS"
+  ],
+  "source_files": [
+    {
+      "path": ".env.example",
+      "sha256": "d4c05cd130d34c33be2c4c5a614daeea672866f032ecc393067078ddb3faaf79"
+    },
+    {
+      "path": ".github/workflows/required-ci.yml",
+      "sha256": "bcbe4e9530841899c8b0a0cde78c68d62b8d7e7711a5afef36996f6169c1e432"
+    },
+    {
+      "path": "Makefile",
+      "sha256": "a2c87a91c5821dab503d54cbb98b0bd1e91f36531e5b33ecab7f641d147f1a91"
+    },
+    {
+      "path": "contracts/application-info.v1.example.json",
+      "sha256": "795e7c949c0457449a7074a1df630e0ed8566871d962c5b2a1b6488c8cf220ac"
+    },
+    {
+      "path": "contracts/application-info.v1.schema.json",
+      "sha256": "486aff04c3295544257675a7ba3c32ad331f2d2aed8075030844664b9d11e528"
+    },
+    {
+      "path": "contracts/diagnostics.openapi.json",
+      "sha256": "f93d2fef871ff642d2d1f3fafcbbe9d0a6db5bae988301775b11ae3c4433eb37"
+    },
+    {
+      "path": "contracts/health.v1.example.json",
+      "sha256": "257d0d9fc756f6d8cfe8a1fa2edfe9c7e1e43f8f6713036cfc95ad2eab5dbcda"
+    },
+    {
+      "path": "contracts/health.v1.schema.json",
+      "sha256": "0a32d1d994baa914820bc913a0c1f1f610134fa20a371d4261e60d1ff7ca1ecf"
+    },
+    {
+      "path": "contracts/problem.v1.example.json",
+      "sha256": "c6e3dd158c5d2c628c4b6c551567d5ce3d466f584a9494a3206694baf5f7d907"
+    },
+    {
+      "path": "contracts/problem.v1.schema.json",
+      "sha256": "75de0e0ec593a5eb4052117a458abdd7e1d68f669d5786af39c7fdcb0ca72665"
+    },
+    {
+      "path": "contracts/readiness.v1.example.json",
+      "sha256": "2272e50a3f32b48fc2b425e2f1f802ed104541fe960dd8f4f7a755536ac8083c"
+    },
+    {
+      "path": "contracts/readiness.v1.schema.json",
+      "sha256": "cfe5223fdbd7dde001b70976c5ca5598cde3adc5e8f3de26c249d02fd9c9569b"
+    },
+    {
+      "path": "contracts/service-version.v1.example.json",
+      "sha256": "235dc7471107c82c91edd49a4c4f1e9146c32cc1a5859c96f4336461b3023e6a"
+    },
+    {
+      "path": "contracts/service-version.v1.schema.json",
+      "sha256": "6e1a9b4d0151079b2d65fd0daccbb71898882c6e26a947640d7dfd0fb35aba1e"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "52685076e60f84f61fa426c40cf0c866225add46f9065f7eb459ce23e5d6b600"
+    },
+    {
+      "path": "scripts/check_repository.py",
+      "sha256": "1b4b1e1991f98906ef725bc2aa202454759f439547e1dcf7ede02d9591357a45"
+    },
+    {
+      "path": "scripts/update_http_contracts.py",
+      "sha256": "3ba7f1da37d604de761983d7433d9ecf285d73cc5e439b9611eec7816a545e9c"
+    },
+    {
+      "path": "src/retailops_ai/__init__.py",
+      "sha256": "59d2bd983a699118953f0ae17b04a4641858cffc8439d341014c52cd029d2e01"
+    },
+    {
+      "path": "src/retailops_ai/__main__.py",
+      "sha256": "a0302464a8ba24dc8b60aabaf4cfd9cb17678d31b870cd8a2b9ed8032901bd48"
+    },
+    {
+      "path": "src/retailops_ai/adapters/__init__.py",
+      "sha256": "2fe078e922186e503c8a5a98e1bd91f39dd8d3821cf8122acccc984b0252d643"
+    },
+    {
+      "path": "src/retailops_ai/adapters/telemetry.py",
+      "sha256": "a3d41b8730f5e1593d0f653447923f6fd04d510dc70f6cfc30eeff4aeb760ee7"
+    },
+    {
+      "path": "src/retailops_ai/api/__init__.py",
+      "sha256": "0514c68f477bfaebeea25e2894a54bb96dd129ce612f1e1d7a800fad471a6029"
+    },
+    {
+      "path": "src/retailops_ai/api/app.py",
+      "sha256": "e4918a3ebc2abef629037a4310fc1b84eb4b71553db1f02a767dcfd4538d6b66"
+    },
+    {
+      "path": "src/retailops_ai/api/errors.py",
+      "sha256": "31dc26354bac1de59a6362139205101bd3505a28d16878c2ad50c92fab3145a3"
+    },
+    {
+      "path": "src/retailops_ai/api/middleware.py",
+      "sha256": "b2e961f65dd363472d6b62d294157b93d4cc6370870d5f68365e469a2550a0cd"
+    },
+    {
+      "path": "src/retailops_ai/api/models.py",
+      "sha256": "42b37c18e6273842811be5bc8ed2f2b28b4d642f921829ebcee832338d6bd64f"
+    },
+    {
+      "path": "src/retailops_ai/cli.py",
+      "sha256": "6d212d553a7e8b5a5abef4b608f4c9e8f5093a0477ac4a48fa52171385276c99"
+    },
+    {
+      "path": "src/retailops_ai/config.py",
+      "sha256": "7284d50deb971c425f58b5a670c21378f351b963516a8fbf7439134554044082"
+    },
+    {
+      "path": "src/retailops_ai/contracts.py",
+      "sha256": "a9182e7c6f8166deece4bae2bb2a337818d579b35d088f0ad47f87e863a2ffcb"
+    },
+    {
+      "path": "src/retailops_ai/domain/__init__.py",
+      "sha256": "f8d1ca61e318db7e67d217fdb9944ae51f365c0877e93def5035e66ae1538e07"
+    },
+    {
+      "path": "src/retailops_ai/domain/readiness.py",
+      "sha256": "d93953151818909703f10c0ba0ac5c8034658898f89093a9d546a3e43367fd3d"
+    },
+    {
+      "path": "src/retailops_ai/pipelines/__init__.py",
+      "sha256": "a227c16ead8620c850aa1a37c2d984b664fb06a66d4adb46bdd4b75ca815aa27"
+    },
+    {
+      "path": "src/retailops_ai/pipelines/readiness.py",
+      "sha256": "e776fec7d4effd83464533f603b12f681244c19b64f2f63cbbf784df677e7b18"
+    },
+    {
+      "path": "tests/conftest.py",
+      "sha256": "ca882e3d83e90308a26c83ecfa53d8ba7ad31cc9d232217514b98b50ac22b1b7"
+    },
+    {
+      "path": "tests/test_ci_contract.py",
+      "sha256": "2449c25ff1b33e0bdd394250d3c241f265fcd1b30ce93b535a7ef3de2f916643"
+    },
+    {
+      "path": "tests/test_foundation.py",
+      "sha256": "603429614eff665b406dc2d55fcb99def10abf453ce5807642234c0a0aa30f7c"
+    },
+    {
+      "path": "tests/test_http.py",
+      "sha256": "0d75a3d6e3a53ecfeae80df1ad315d15fdd34df5b4d80898e527fabaf2450e9b"
+    },
+    {
+      "path": "tests/test_readiness.py",
+      "sha256": "59424d3dba7c25a0b387727bc3fb9d363b6ca8f600c3ee844c2ed9644f761d9a"
+    },
+    {
+      "path": "tests/test_server_process.py",
+      "sha256": "1376ecee448896719836709fb4524d6fec025cb318380be0c0e80cf35d9fcd87"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "a63760786842b682363eaca00d1f336ac8c46e98c259c1f4ede80c611bfb0ac9"
+    }
+  ],
+  "source_tree_hash_definition": "sha256(json.dumps({path:sha256}, sort_keys=True).encode())"
+}

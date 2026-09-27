@@ -19,6 +19,8 @@ def main(argv: list[str] | None = None) -> int:
     commands.add_parser("version", help="Print package identity as JSON.")
     check = commands.add_parser("config-check", help="Validate settings without network or writes.")
     check.add_argument("--env-file", type=Path, help="Explicit dotenv file; environment wins.")
+    serve = commands.add_parser("serve", help="Run the local diagnostic HTTP service.")
+    serve.add_argument("--env-file", type=Path, help="Explicit dotenv file; environment wins.")
     args = parser.parse_args(argv)
 
     if args.command == "version":
@@ -46,6 +48,26 @@ def main(argv: list[str] | None = None) -> int:
     except (SettingsError, OSError, UnicodeError):
         print('{"error":"configuration_unavailable"}', file=sys.stderr)
         return 2
+
+    if args.command == "serve":
+        import uvicorn
+
+        from retailops_ai.adapters.telemetry import logging_config
+        from retailops_ai.api.app import create_app
+
+        uvicorn.run(
+            create_app(settings),
+            host=settings.http_host,
+            port=settings.http_port,
+            log_config=logging_config(settings.log_level),
+            access_log=False,
+            proxy_headers=False,
+            server_header=False,
+            ws="none",
+            lifespan="on",
+            timeout_graceful_shutdown=5,
+        )
+        return 0
 
     print(json.dumps({"status": "valid", "app_env": settings.app_env}))
     return 0

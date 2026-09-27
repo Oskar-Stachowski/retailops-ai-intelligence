@@ -1,6 +1,8 @@
 # Bezpieczeństwo
 
-Repo jest lokalnym fundamentem rozwojowym, bez publicznego API i wdrożenia.
+Repo udostępnia lokalny serwis diagnostyczny, bez publicznego wdrożenia.
+[Granice HTTP](http-service.md): loopback, kontrola Host, token metryk,
+walidowany kontekst i logi bez wartości wejściowych.
 Nie deklaruje produkcyjnego auth, RBAC, szyfrowania danych ani gotowych modeli.
 Każdy przyszły endpoint administracyjny wymaga granicy dostępu od pierwszej wersji;
 `user_id` i demo-admin RetailOps nie są tożsamością dla AI.

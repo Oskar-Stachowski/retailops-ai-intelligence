@@ -37,12 +37,14 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 |---|---|
 | `make lint` | Ruff i format |
 | `make type-check` | Mypy strict dla pakietu i helperów |
-| `make test` | Przypadki poprawne i błędne; kontrakt metadanych/CI |
+| `make test` | Konfiguracja, HTTP, provider fakes, kontrakty/CI oraz rzeczywisty proces na loopback |
 | `make docs-check` | Lokalne linki i minimalny kontrakt workflow |
 | `make package` | Wheel i sdist w ignorowanym `dist/` |
 | `make check` | Wszystkie powyższe |
 | `make secrets` | Gitleaks 8.30.1: historia Git i aktualny katalog, z redakcją |
 | `make ci-local` | `check` oraz `secrets` |
+| `make serve` | Lokalny serwer HTTP z jawnym dotenv |
+| `make contracts` | Regeneracja kontraktów HTTP do przeglądu razem ze zmianą kodu |
 
 Gitleaks jest osobnym narzędziem; zainstaluj wersję 8.30.1 z
 [oficjalnego wydania](https://github.com/gitleaks/gitleaks/releases/tag/v8.30.1)
@@ -53,3 +55,10 @@ Zmiany zależności wykonuj przez uv, aktualizując lockfile w tej samej zmianie
 CI stosuje `--locked`, więc rozbieżność pyproject/lock nie naprawia się po cichu.
 Po zmianie kontraktu metadanych odśwież schema fixture i przykład oraz
 przeprowadź testy kompatybilności. Nie nadawaj jej znaczenia kontraktu forecastingu.
+
+
+Serwis i granice dostępu opisuje [instrukcja HTTP](http-service.md).
+Test procesu wymaga możliwości otwarcia krótkotrwałego portu na loopback;
+w sandboxie bez socket bind nie jest pomijany, tylko kończy się błędem.
+Testy ASGI/provider fakes nie używają sieci zewnętrznej. Aktualny klient testowy
+httpx2 odpowiada wymaganiom przypiętej wersji Starlette.

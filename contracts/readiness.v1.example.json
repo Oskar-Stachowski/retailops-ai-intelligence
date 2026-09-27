@@ -1,0 +1,12 @@
+{
+  "dependencies": [
+    {
+      "name": "startup",
+      "required": true,
+      "status": "up"
+    }
+  ],
+  "role": "foundation",
+  "schema_version": "1.0",
+  "status": "ready"
+}

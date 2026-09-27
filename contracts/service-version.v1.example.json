@@ -1,0 +1,9 @@
+{
+  "build_commit": null,
+  "image_digest": null,
+  "implementation_status": "in_progress",
+  "model": null,
+  "schema_version": "1.0",
+  "service": "retailops-ai-intelligence",
+  "version": "0.1.0.dev0"
+}

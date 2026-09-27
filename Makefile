@@ -1,7 +1,8 @@
 UV ?= $(if $(wildcard .tools/bin/uv),.tools/bin/uv,uv)
 GITLEAKS ?= gitleaks
+ENV_FILE ?= .env.example
 
-.PHONY: bootstrap lint type-check test docs-check package check secrets ci-local
+.PHONY: bootstrap lint type-check test docs-check package check secrets ci-local serve contracts
 
 bootstrap:
 	$(UV) sync --locked
@@ -29,3 +30,9 @@ secrets:
 	$(GITLEAKS) dir . --redact --no-banner
 
 ci-local: check secrets
+
+serve:
+	$(UV) run --locked retailops-ai serve --env-file "$(ENV_FILE)"
+
+contracts:
+	$(UV) run --locked python scripts/update_http_contracts.py

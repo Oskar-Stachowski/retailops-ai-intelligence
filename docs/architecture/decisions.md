@@ -56,3 +56,29 @@ przeglądu licencji przy dodaniu.
 Źródła decyzji technicznej: [TensorFlow install](https://www.tensorflow.org/install/pip),
 [scikit-learn install](https://scikit-learn.org/stable/install.html),
 [uv locking](https://docs.astral.sh/uv/concepts/projects/sync/).
+
+
+## ADR-11 — lokalna diagnostyka HTTP
+
+Pierwszy działający serwis używa FastAPI/Uvicorn, bez DB i modeli. Rola foundation
+ma kontrolę startup; API, domena, wykonanie sond i telemetry są oddzielnymi
+modułami. Wymagane zależności blokują readiness, opcjonalne dają degraded.
+Pełna lista zewnętrznych usług jako obowiązkowy health check blokowałaby
+niezależne funkcje, dlatego zależności są jawnie dobierane w composition root.
+
+CLI dopuszcza tylko loopback. Metryki wymagają własnego tokenu, przy jego braku
+pozostają wyłączone. Nie wdrażamy pozornej tożsamości viewer/admin do serwisu,
+który jeszcze nie obsługuje danych biznesowych. Nowe role i persistence wymagają
+własnych sond i granic dostępu przed ich udostępnieniem.
+
+Kontekst W3C obsługuje OpenTelemetry, z osobnym spanem i izolacją żądań przez
+contextvars. Pure ASGI middleware nie ma ograniczenia propagacji kontekstu
+BaseHTTPMiddleware. Trace i metryki nie eksportują danych poza proces.
+Identyfikatory, trasy i logi mają jawne ograniczenia opisane w
+[instrukcji HTTP](../http-service.md). Nie kopiujemy dowolnych incoming headers.
+
+Źródła implementacyjne:
+[FastAPI — bezpieczne handlers](https://fastapi.tiangolo.com/tutorial/handling-errors/),
+[Starlette — middleware i contextvars](https://starlette.dev/middleware/),
+[OpenTelemetry — propagacja](https://opentelemetry.io/docs/languages/python/propagation/).
+Przypięte wersje potwierdzono w metadata PyPI i lokalnych testach.

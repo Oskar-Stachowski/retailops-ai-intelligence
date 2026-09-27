@@ -1,7 +1,8 @@
 # RetailOps AI Intelligence
 
 **Status: in_progress.** Osobny fundament serwisu AI dla RetailOps.
-Obecny zakres: pakiet Python, konfiguracja, CLI, kontrakt metadanych i lokalne kontrole CI.
+Obecny zakres: pakiet Python, konfiguracja, CLI, lokalny serwis diagnostyczny HTTP,
+wersjonowane kontrakty i lokalne kontrole CI. [Uruchomienie HTTP](docs/http-service.md).
 
 - [Dokumentacja i uruchomienie](docs/README.md)
 - [Aktualny status i następna praca](docs/STATUS.md)

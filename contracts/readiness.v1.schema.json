@@ -1,0 +1,71 @@
+{
+  "$defs": {
+    "DependencyStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "^[a-z][a-z0-9_]{0,31}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "up",
+            "down",
+            "timeout"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "required",
+        "status"
+      ],
+      "title": "DependencyStatus",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dependencies": {
+      "items": {
+        "$ref": "#/$defs/DependencyStatus"
+      },
+      "title": "Dependencies",
+      "type": "array"
+    },
+    "role": {
+      "const": "foundation",
+      "default": "foundation",
+      "title": "Role",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ready",
+        "degraded",
+        "not_ready"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "dependencies"
+  ],
+  "title": "Ready",
+  "type": "object"
+}
