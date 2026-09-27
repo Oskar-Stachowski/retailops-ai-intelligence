@@ -60,5 +60,21 @@
     "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
     "astral-sh/setup-uv": "c771a70e6277c0a99b617c7a806ffedaca235ff9",
     "gitleaks/gitleaks-action": "e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e"
+  },
+  "source_commit": "e03d7df5200f75526a2e7c711bf502ddce97dd9a",
+  "acceptance": {
+    "observed_at_utc": "2026-09-27T16:31:27.356772+00:00",
+    "source_commit": "e03d7df5200f75526a2e7c711bf502ddce97dd9a",
+    "invalid_contract_exit_code": 1,
+    "changed_dependency_rejected_exit_code": 1,
+    "synthetic_secret_detected_exit_code": 1,
+    "clean_checkout_unchanged": true,
+    "clean_checkout_ci_local": "passed: 22 tests in 1.81s; all checks and both secret scans passed",
+    "wheel_install": "passed: isolated runtime environment, CLI entrypoint and import outside checkout; uv pip check passed"
+  },
+  "artifact_sha256": {
+    ".gitignore": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+    "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl": "432bf3af3255345fbf874a10d246ef4502cee2b6e37bf65ff8f292fab29188c8",
+    "retailops_ai_intelligence-0.1.0.dev0.tar.gz": "b0d90ab8363a352fc265f90454cbd6e77e32dc256e02da1d887fa1bc1b0d41b1"
   }
 }
