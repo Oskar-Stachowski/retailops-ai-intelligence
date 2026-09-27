@@ -1,0 +1,33 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "service": {
+      "const": "retailops-ai-intelligence",
+      "default": "retailops-ai-intelligence",
+      "title": "Service",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:[a-z0-9.+-]+)?$",
+      "title": "Version",
+      "type": "string"
+    },
+    "implementation_status": {
+      "const": "in_progress",
+      "default": "in_progress",
+      "title": "Implementation Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "version"
+  ],
+  "title": "ApplicationInfo",
+  "type": "object"
+}

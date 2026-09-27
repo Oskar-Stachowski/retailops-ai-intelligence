@@ -1,0 +1,64 @@
+{
+  "observed_at_utc": "2026-09-27T16:30:30.066003+00:00",
+  "retailops_plan_commit": "8a9e620",
+  "scope": "first foundation slice; local package and CI controls; no service deployment",
+  "python": "3.11.15",
+  "uv": "0.12.19",
+  "platform": "macOS arm64",
+  "checks": {
+    "ruff": "passed",
+    "mypy": "passed: 6 source files",
+    "pytest": "22 passed in 1.43s",
+    "package": "wheel and sdist built",
+    "gitleaks_worktree": "no leaks found",
+    "actionlint": "passed: 1.7.12"
+  },
+  "code_sha256": {
+    ".github/workflows/required-ci.yml": "bcbe4e9530841899c8b0a0cde78c68d62b8d7e7711a5afef36996f6169c1e432",
+    ".gitleaks.toml": "731d15214b430aae87b3189537432f5ee75a1e7a15ec961ccde9690318faf71c",
+    ".python-version": "db82937e1f1830581a9553c7814f5c5fcacb6dfdef8310b43e9a812c887acaf5",
+    "Makefile": "8009dfd8d470913cff8b0584ce0e5b86d39700c9037b9e3f1d106cbc2364a9c5",
+    "contracts/application-info.v1.example.json": "795e7c949c0457449a7074a1df630e0ed8566871d962c5b2a1b6488c8cf220ac",
+    "contracts/application-info.v1.schema.json": "486aff04c3295544257675a7ba3c32ad331f2d2aed8075030844664b9d11e528",
+    "pyproject.toml": "51e599d509d887102eedba75ddf969db92695eb971ca3a8fd740c8f23d590c36",
+    "scripts/check_repository.py": "1b4b1e1991f98906ef725bc2aa202454759f439547e1dcf7ede02d9591357a45",
+    "src/retailops_ai/__init__.py": "59d2bd983a699118953f0ae17b04a4641858cffc8439d341014c52cd029d2e01",
+    "src/retailops_ai/__main__.py": "a0302464a8ba24dc8b60aabaf4cfd9cb17678d31b870cd8a2b9ed8032901bd48",
+    "src/retailops_ai/cli.py": "d29830f85999d311750e62d44442d895615db81056b83dbaf128a554c6367b5b",
+    "src/retailops_ai/config.py": "f8fd309acbbabb01a1aa2b2ef7870ef25f68730b4e4ab98ecfbb062fdb8ca17a",
+    "src/retailops_ai/contracts.py": "a9182e7c6f8166deece4bae2bb2a337818d579b35d088f0ad47f87e863a2ffcb",
+    "src/retailops_ai/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/test_ci_contract.py": "2449c25ff1b33e0bdd394250d3c241f265fcd1b30ce93b535a7ef3de2f916643",
+    "tests/test_foundation.py": "603429614eff665b406dc2d55fcb99def10abf453ce5807642234c0a0aa30f7c",
+    "uv.lock": "c5ef44f3ce12b3414fce967fae325bc5a5d536d08e7a0f81ab5065c5f0660eba"
+  },
+  "code_tree_sha256": "fe8da09d60c8b56cb7daf8afe311654849007ac58d2f1413e9f81b88881dd558",
+  "github_ci": "not_run: local repository without remote",
+  "compatibility_metadata": [
+    {
+      "package": "scikit-learn",
+      "version": "1.9.1",
+      "python_requires": ">=3.11",
+      "cp311_wheels": [
+        "macOS ARM64",
+        "Linux x86_64"
+      ],
+      "url": "https://pypi.org/pypi/scikit-learn/1.9.1/json"
+    },
+    {
+      "package": "tensorflow",
+      "version": "2.21.0",
+      "python_requires": ">=3.10",
+      "cp311_wheels": [
+        "macOS ARM64",
+        "Linux x86_64"
+      ],
+      "url": "https://pypi.org/pypi/tensorflow/2.21.0/json"
+    }
+  ],
+  "actions": {
+    "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+    "astral-sh/setup-uv": "c771a70e6277c0a99b617c7a806ffedaca235ff9",
+    "gitleaks/gitleaks-action": "e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e"
+  }
+}

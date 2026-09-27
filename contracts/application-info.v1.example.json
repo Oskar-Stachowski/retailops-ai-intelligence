@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0",
+  "service": "retailops-ai-intelligence",
+  "version": "0.1.0.dev0",
+  "implementation_status": "in_progress"
+}
