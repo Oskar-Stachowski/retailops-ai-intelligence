@@ -35,3 +35,25 @@ jako aktualnego klienta TestClient; testy używają httpx2 2.13.1.
 [Zapis maszynowy](01-http.json) zawiera datę UTC i hashe faktycznie sprawdzonego
 kodu/kontraktów/lockfile. Wynik lokalny nie jest wynikiem GitHub Actions ani
 odbiorem usługi zależnej od rzeczywistej DB.
+
+
+## Odtworzenie i paczka instalacyjna
+
+Kod `e6c78886be9ef151417ee7e5fc91cc817e1bec40` odtworzono w nowym
+checkoutcie i venv. `uv sync --locked` wykorzystało uprzednio pobrany lokalny
+cache, w trybie offline. `make ci-local` przeszło w całości:
+**62 passed in 2.82s**, typy, lint/format, kontrakty, dokumentacja, build oraz
+skany historii i katalogu. Nie jest to nowy download zależności ani test CI Linux.
+
+Celowa zmiana wersji schematu health na `999` spowodowała exit 1 testu kontraktu.
+Fixture przywrócono; checkout po próbie pozostał czysty.
+
+Wheel zainstalowano bez editable w trzecim środowisku zawierającym wyłącznie
+zależności runtime z lockfile. Import spoza checkoutu pochodził z site-packages.
+Uruchomiony z tej paczki proces potwierdził health/ready/version 200,
+metryki 401 bez tokenu i 200 z tokenem oraz łagodne zakończenie lifespan.
+`uv pip check` zakończyło się exit 0. Sumę wheel i wyniki zapisano w JSON.
+
+Weryfikacja obejmuje aktualne pliki evidence: sumy kodu zapisane są jako pary
+path/sha256, żeby skaner nie interpretował klucza zawierającego nazwę config jako
+przypisania sekretu. Skan działa bez nowej allowlisty i bez osłabienia reguł.

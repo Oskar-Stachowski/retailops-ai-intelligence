@@ -221,5 +221,27 @@
       "sha256": "a63760786842b682363eaca00d1f336ac8c46e98c259c1f4ede80c611bfb0ac9"
     }
   ],
-  "source_tree_hash_definition": "sha256(json.dumps({path:sha256}, sort_keys=True).encode())"
+  "source_tree_hash_definition": "sha256(json.dumps({path:sha256}, sort_keys=True).encode())",
+  "clean_checkout_acceptance": {
+    "measured_at_utc": "2026-09-27T18:40:08.885905+00:00",
+    "source_commit": "e6c78886be9ef151417ee7e5fc91cc817e1bec40",
+    "clean_checkout": true,
+    "fresh_ci_exit_code": 0,
+    "tests_passed": 62,
+    "tests_skipped": 0,
+    "dependency_install": "uv sync --locked; fresh venv, previously downloaded local cache, offline",
+    "negative_http_contract_exit_code": 1,
+    "restored_clean": true,
+    "wheel_sha256": "d9948614d4bb81a0f592140d8a8e354f4045842b7c414bf7685d53a2db6e3538",
+    "wheel_http": {
+      "import": "site-packages",
+      "health": 200,
+      "ready": 200,
+      "version": 200,
+      "metrics_unauthorized": 401,
+      "metrics_authorized": 200,
+      "shutdown": "graceful"
+    },
+    "wheel_pip_check_exit_code": 0
+  }
 }
