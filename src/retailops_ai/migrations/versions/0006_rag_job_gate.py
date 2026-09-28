@@ -16,7 +16,7 @@ DECLARE r jsonb;
 BEGIN
     IF NEW.record->>'status'='succeeded' THEN
         SELECT report INTO r FROM ai.rag_index_reports WHERE report_id=NEW.report_id;
-        IF r->'validation'->'checks' IS DISTINCT FROM '{"complete_graph":true,"source_metadata":true,"citation_binding":true,"vector_binding":true,"deterministic_fake_vectors":true}'::jsonb THEN
+        IF r->'validation'->'checks' IS DISTINCT FROM '{"complete_graph": true,"source_metadata": true,"citation_binding": true,"vector_binding": true,"deterministic_fake_vectors": true}'::jsonb THEN
             RAISE EXCEPTION 'knowledge_run_failed_checks' USING ERRCODE='23514';
         END IF;
     END IF;

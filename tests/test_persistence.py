@@ -5,8 +5,10 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 import yaml
+from alembic import op
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
+from sqlalchemy import text
 
 from retailops_ai.adapters.database import EXPECTED_REVISION, DatabaseProbe
 from retailops_ai.api.app import create_app
@@ -100,6 +102,19 @@ def test_migration_failure_is_sanitized(monkeypatch, capsys):
     output = capsys.readouterr()
     assert output.err.strip() == '{"error":"database_migration_failed"}'
     assert SENTINEL not in output.err + output.out
+
+
+def test_job_gate_migration_json_is_literal_sql_without_accidental_bind_parameters(monkeypatch):
+    path = ROOT / "src/retailops_ai/migrations/versions/0006_rag_job_gate.py"
+    spec = importlib.util.spec_from_file_location("job_gate_migration", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    statements = []
+    monkeypatch.setattr(op, "execute", statements.append)
+    module.upgrade()
+    assert statements
+    for statement in statements:
+        assert text(statement).compile().params == {}
 
 
 def load_controller():
