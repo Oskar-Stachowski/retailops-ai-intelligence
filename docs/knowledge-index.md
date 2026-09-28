@@ -5,7 +5,8 @@ bazie PostgreSQL AI z pgvector. Wynik zachowuje [korpus](knowledge-corpus.md),
 [fragmenty i cytaty](knowledge-chunks.md) oraz przypiętą konfigurację embeddings.
 Fake vectors służą odbiorowi kontraktów i persistence; nie opisują znaczenia
 tekstu. Nie potwierdzają jakości wyszukiwania. Nie ma aktywnego indeksu,
-endpointu retrieval ani wywołań Bedrock.
+endpointu retrieval ani wywołań Bedrock. [Lifecycle testowy](knowledge-lifecycle.md)
+sprawdza osobny wskaźnik na syntetycznych indeksach, bez aktywacji tego korpusu.
 
 ## Budowa offline
 
@@ -77,7 +78,9 @@ kandydata zwraca `already_present`, bez zmiany wierszy.
 
 Migracja **0002_rag_candidates** tworzy cztery tabele w `ai`:
 `rag_embedding_spaces`, `rag_embeddings`, `rag_indexes`, `rag_index_chunks`.
-Store wymaga dokładnej wersji migracji i pgvector **0.8.6**; nie migruje bazy.
+Pole manifestu `migration_revision=0002_rag_candidates` przypina kontrakt storage.
+Store wymaga aktualnego head **0003_rag_lifecycle** i pgvector **0.8.6**;
+nie migruje bazy i nie zmienia istniejących manifestów/IDs po dodaniu lifecycle.
 Komponenty wektora są natywne `vector`, a wymiar kontrolują CHECK oraz złożone
 FK przestrzeni/środowiska/indeksu. DB sprawdza normę i checksumę rzeczywistych
 bajtów float32. Fragment musi odpowiadać właściwej pozycji manifestu, tekstowi,
@@ -92,8 +95,9 @@ Hashe i CHECK nie są podpisem autora ani zatwierdzeniem korpusu; operator
 przekazuje artefakt z zaufanej lokalnej budowy. Rola będąca właścicielem bazy
 i administrator Docker pozostają granicą zaufania developmentu.
 
-Nie ma ANN index, aktywnego pointera, automatycznej promocji ani usuwania starego
-kandydata. Późniejsze retrieval będzie musiało najpierw ustalić zatwierdzony
+Nie ma ANN index, automatycznej promocji ani usuwania starego kandydata.
+Osobny pointer testowy opisuje [lifecycle](knowledge-lifecycle.md).
+Późniejsze retrieval będzie musiało najpierw ustalić zatwierdzony
 indeks, środowisko, przestrzeń i access/status filters przed rankingiem.
 
 Podstawa SQL: [pgvector 0.8.6 — typy, wymiary i funkcje](https://github.com/pgvector/pgvector/tree/v0.8.6),
@@ -111,7 +115,7 @@ wycofanie awarii, zmianę/usunięcie treści i trwałość po SIGKILL oraz down/
 [Dowody](evidence/11-index.md) opisują korpus 302 fragmentów, 433 testy i odbiór
 na rzeczywistym pgvector ze świeżego checkoutu.
 
-Następny zakres to lifecycle candidate/active, jawna akceptacja korpusu,
-atomowa aktywacja i rollback. Dalej: retrieval z uprawnieniami i filtrami,
+[Lifecycle](knowledge-lifecycle.md) wiąże jawne zgody i walidację oraz odbiera
+atomowy swap/rollback w testach. Dalej: retrieval z uprawnieniami i filtrami,
 near duplicates, golden set i ocena jakości. Adapter Bedrock wymaga później
 ograniczonego zakresu etapu 12 i rzeczywistego odbioru modelu/dimension/region.

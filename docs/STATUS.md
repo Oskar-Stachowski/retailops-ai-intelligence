@@ -13,10 +13,14 @@ zakresy cytatów i pełne mapy dokumentów; nowy build usuwa nieaktualne fragmen
 [Odbiór chunków](evidence/11-chunks.md): 302 fragmenty z 20 dokumentów,
 389 testów i identyczny wynik odtworzony z czystego checkoutu.
 [Fake embeddings i indeks pgvector](knowledge-index.md) mają przypiętą przestrzeń,
-cache treści oraz transakcyjny zapis niemodyfikowalnego kandydata. Nie ma jeszcze
-aktywacji ani retrieval; fake vectors nie potwierdzają jakości semantycznej.
+cache treści oraz transakcyjny zapis niemodyfikowalnego kandydata.
+Fake vectors nie potwierdzają jakości semantycznej.
 [Odbiór indeksu](evidence/11-index.md): 302 wektory, 433 testy, identyczny artefakt
 z czystego checkoutu i realny Compose z awariami/transakcjami pgvector.
+[Lifecycle indeksu](knowledge-lifecycle.md) dodaje jawne zgody, walidację,
+atomowy wskaźnik, retry i rollback w osobnym kanale syntetycznych testów.
+Użytkowa aktywacja jest blokowana do golden evaluation; rzeczywisty korpus
+pozostaje propozycją i nie ma aktywnego retrieval.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
@@ -44,9 +48,10 @@ i required-result; main wymaga PR i aktualnej gałęzi również dla administrat
 ## Następna praca
 
 Główny kierunek: DATA-01 etapu 02 w RetailOps — konfiguracja, identity i manifest v2.
-Drugi strumień na `ai/rag-corpus`: lifecycle indeksu, atomowa aktywacja i rollback
-etapu 11. Kandydat wymaga przeglądu doboru źródeł/statusów/access
-przed aktywacją. Praca nie zależy od zakończenia DATA-01. Etap 03 wymaga odbioru
+Drugi strumień na `ai/rag-corpus`: ograniczony retrieval, golden set i filtry
+uprawnień/statusów etapu 11. Kandydat wymaga przeglądu/odświeżenia źródeł,
+doboru statusów/access i odbioru jakości przed użytkową aktywacją.
+Praca nie zależy od zakończenia DATA-01. Etap 03 wymaga odbioru
 źródła z 02, a forecasting i serving kolejnych bramek.
 
 Token metryk nie jest systemem tożsamości użytkowników. MLflow ma lokalną

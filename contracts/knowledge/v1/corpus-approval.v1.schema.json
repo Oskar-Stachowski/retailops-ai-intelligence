@@ -1,0 +1,84 @@
+{
+  "$id": "urn:retailops:knowledge:corpus-approval:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "corpus_config_id": {
+      "pattern": "^corpus-config-sha256-[0-9a-f]{64}$",
+      "title": "Corpus Config Id",
+      "type": "string"
+    },
+    "corpus_id": {
+      "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+      "title": "Corpus Id",
+      "type": "string"
+    },
+    "decision": {
+      "const": "approved",
+      "title": "Decision",
+      "type": "string"
+    },
+    "environment": {
+      "enum": [
+        "local",
+        "test"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "review_id": {
+      "pattern": "^corpus-review-sha256-[0-9a-f]{64}$",
+      "title": "Review Id",
+      "type": "string"
+    },
+    "review_owner": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Review Owner",
+      "type": "string"
+    },
+    "reviewed_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Reviewed At",
+      "type": "string"
+    },
+    "reviewer": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Reviewer",
+      "type": "string"
+    },
+    "reviewer_kind": {
+      "enum": [
+        "human",
+        "approved_pipeline"
+      ],
+      "title": "Reviewer Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scope": {
+      "const": "sources_status_access_and_exclusions",
+      "title": "Scope",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "review_id",
+    "corpus_id",
+    "corpus_config_id",
+    "environment",
+    "review_owner",
+    "reviewer",
+    "reviewer_kind",
+    "decision",
+    "scope",
+    "reviewed_at"
+  ],
+  "title": "CorpusApproval",
+  "type": "object"
+}

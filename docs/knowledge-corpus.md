@@ -4,7 +4,9 @@ Etap 11 ma lokalny rejestr kandydacki i walidator źródeł Git. Obejmuje to
 granice korpusu oraz metadane statusu, czyli pierwszy zakres punktów 1–2 planu.
 [Parser i chunker](knowledge-chunks.md) realizuje kolejny zakres punktu 3.
 [Fake embeddings i zapis kandydata](knowledge-index.md) zachowują ten korpus
-w pgvector. Wyszukiwanie RAG i aktywacja indeksu pozostają następnymi zakresami.
+w pgvector. [Lifecycle](knowledge-lifecycle.md) obsługuje kwalifikację,
+atomowy wskaźnik i rollback syntetycznych indeksów testowych. Wyszukiwanie RAG
+i aktywacja rzeczywistego korpusu pozostają następnymi zakresami.
 [Bieżący status](STATUS.md), [dowody rejestru](evidence/11-corpus.md).
 
 ## Co jest zarejestrowane
@@ -96,8 +98,9 @@ JSON evidence jest wyłącznie źródłem kontroli metadanych, nie tekstem korpu
 Adversarial fixtures pozostają poza zwykłym korpusem.
 
 Klasy `public_project`, `project_internal`, `restricted` są metadanymi.
-Środowisko jest częścią tożsamości korpusu; wersja 1 nie udostępnia indeksu
-w żadnym środowisku. Filtry principal/access, cache i izolacja runtime wymagają
+Środowisko jest częścią tożsamości korpusu; nie ma użytkowego retrieval.
+Wskaźnik `offline_test` służy wyłącznie próbom lifecycle w `test`.
+Filtry principal/access, cache i izolacja runtime wymagają
 osobnego odbioru przy retrieval. Manifest zawsze oznacza treść jako
 `untrusted_reference`; treść dokumentu nie nadaje narzędzi ani uprawnień.
 
@@ -114,6 +117,6 @@ rzeczywistych, małych repozytoriach testowych i nie wymaga sąsiedniego checkou
 Zmiana źródłowego SHA wymaga ponownego związania checksum i odwołań oraz
 przeglądu propozycji.
 
-Następny zakres: lifecycle indeksu, atomowa aktywacja i rollback.
-Przegląd redakcyjny kandydata może odbywać się równolegle. Aktywacja/rollback,
-retrieval i golden set zamykają późniejsze zakresy etapu 11.
+Następny zakres: ograniczony retrieval, golden set i filtry access/status.
+Przegląd redakcyjny oraz odświeżenie źródeł kandydata mogą odbywać się równolegle.
+Użytkowa aktywacja wymaga tych odbiorów; fake walidacja nie otwiera tej bramki.

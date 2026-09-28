@@ -9,6 +9,13 @@ from pydantic import BaseModel
 from retailops_ai.knowledge.chunks import ChunkerConfig, ChunkManifest
 from retailops_ai.knowledge.contracts import CorpusManifest, CorpusRegistry
 from retailops_ai.knowledge.indexes import EmbeddingConfig, IndexCandidate, IndexManifest
+from retailops_ai.knowledge.releases import (
+    CorpusApproval,
+    IndexPin,
+    IndexValidation,
+    SwitchRequest,
+    SwitchResult,
+)
 from retailops_ai.pipelines.chunks import load_chunker_config
 from retailops_ai.pipelines.corpus import load_registry
 from retailops_ai.pipelines.indexes import load_embedding_config
@@ -29,6 +36,11 @@ def main() -> int:
         "embedding-config": EmbeddingConfig,
         "index-manifest": IndexManifest,
         "index-candidate": IndexCandidate,
+        "corpus-approval": CorpusApproval,
+        "index-validation": IndexValidation,
+        "index-pin": IndexPin,
+        "switch-request": SwitchRequest,
+        "switch-result": SwitchResult,
     }
     for name, model in models.items():
         schema = model.model_json_schema()

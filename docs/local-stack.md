@@ -33,9 +33,10 @@ nie wypisują surowego stdout/stderr bibliotek.
 | PostgreSQL 16 + pgvector 0.8.6 | Brak portu hosta; wolumen `postgres_data` | Administrator bootstrap, osobne nieuprzywilejowane role aplikacji |
 | Artefakty MLflow | Wolumen `mlflow_artifacts`, `/var/mlflow/artifacts` | Duże pliki poza PostgreSQL, upload/download przez tracking server |
 
-AI: schemat `ai`, wersja Alembic `0002_rag_candidates`, tabela
+AI: schemat `ai`, wersja Alembic `0003_rag_lifecycle`, tabela
 `ai.service_metadata` oraz niemodyfikowalne [kandydaty RAG](knowledge-index.md).
-Nie ma aktywnego indeksu ani retrieval. Metadata operacyjne nie zastępują
+Osobny kanał `test/offline_test` sprawdza [lifecycle](knowledge-lifecycle.md);
+rzeczywisty korpus nie ma aktywnego retrieval. Metadata operacyjne nie zastępują
 kontraktów dataset/run/prediction.
 MLflow ma własne tabele w osobnej bazie. Role nie mogą łączyć się do bazy drugiej
 aplikacji i nie mają superuser/createdb/createrole. Stos nie łączy się z operacyjną

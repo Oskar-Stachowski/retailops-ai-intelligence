@@ -45,6 +45,13 @@ def command(*args: str, stdin: str | None = None, expect: int = 0) -> str:
             except ValueError:
                 continue
             if isinstance(error, dict) and error.get("error") == "rag_database_acceptance_failed":
+                reason = error.get("reason")
+                if (
+                    isinstance(reason, str)
+                    and reason != "internal_failure"
+                    and re.fullmatch(r"[a-z_]{1,100}", reason)
+                ):
+                    raise RuntimeError("rag_" + reason + "_failed") from None
                 kind = error.get("type")
                 if isinstance(kind, str) and re.fullmatch(r"[A-Za-z]+", kind):
                     raise RuntimeError("rag_" + kind.lower() + "_failed") from None
@@ -103,6 +110,23 @@ def wait_ready() -> None:
             pass
         time.sleep(1)
     raise RuntimeError("readiness_did_not_recover")
+
+
+def check_pin_retained(expected: object) -> None:
+    result = json.loads(
+        command(
+            "run",
+            "--rm",
+            "-e",
+            "APP_ENV=test",
+            "api-migrate",
+            "retailops-ai",
+            "index-current",
+            "--lane",
+            "offline_test",
+        )
+    )
+    require(result.get("pin") == expected, "rag_pin_changed_after_restart")
 
 
 def main() -> int:
@@ -169,6 +193,10 @@ def main() -> int:
         rag_retention_query = (
             f"SELECT count(*) FROM ai.rag_index_chunks WHERE index_id='{rag_index_id}';"  # noqa: S608 - full regex validation above
         )
+        lifecycle_report = rag["lifecycle"]
+        if not isinstance(lifecycle_report, dict):
+            raise RuntimeError("invalid_lifecycle_report")
+        expected_pin = lifecycle_report["pin"]
         stage = "write_ai_and_mlflow"
         sql(
             "retailops_ai",
@@ -200,6 +228,7 @@ def main() -> int:
         command("kill", "-s", "SIGKILL", "api", "mlflow", "db")
         command("up", "-d", "--wait", "db", "api", "mlflow")
         wait_ready()
+        check_pin_retained(expected_pin)
         require(
             sql("retailops_ai", rag_retention_query, role="ai") == str(rag["chunks"]),
             "rag_data_lost_after_crash",
@@ -238,6 +267,7 @@ def main() -> int:
         require(stack.main(["down"]) == 0, "stack_shutdown_failed")
         require(stack.main(["up"]) == 0, "stack_recreation_failed")
         wait_ready()
+        check_pin_retained(expected_pin)
         require(
             sql("retailops_ai", rag_retention_query, role="ai") == str(rag["chunks"]),
             "rag_data_lost_after_down",

@@ -25,13 +25,15 @@ pełną mapę fragmentów i odtwarzalność rzeczywistego korpusu.
 przestrzeń, cache treści, kontrolę wymiaru oraz transakcyjny zapis w pgvector.
 [Odbiór indeksu](evidence/11-index.md) potwierdza 433 testy i realny smoke
 na świeżej bazie oraz zapis pełnego korpusu 302 fragmentów.
+[Lifecycle indeksu](knowledge-lifecycle.md) opisuje jawne zgody, bramki jakości,
+atomową aktywację testową, przypinanie wersji i rollback.
 
 ## Mapa repo
 
 | Lokalizacja | Bieżąca zawartość |
 |---|---|
 | `src/retailops_ai/` | CLI/settings oraz warstwy api/domain/pipelines/adapters lokalnego serwera |
-| `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: schemas korpusu, fragmentów i kandydackiego indeksu |
+| `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: korpus, fragmenty, kandydacki indeks i lifecycle |
 | `knowledge/` | Rejestr propozycji RAG, konfiguracja parsera/chunkera i przestrzeni fake embeddings |
 | `tests/` | Konfiguracja, HTTP i socket, awarie, korelacja, kontrakty oraz bramki CI |
 | `scripts/` | Kontroler Compose, rzeczywisty smoke, kontrakty i bramki workflow |

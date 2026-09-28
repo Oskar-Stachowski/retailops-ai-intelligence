@@ -9,6 +9,7 @@ from pathlib import Path
 from pydantic import ValidationError
 from pydantic_settings import SettingsError
 
+from retailops_ai.cli_releases import add_commands, run_database_command, run_validation
 from retailops_ai.config import load_settings
 from retailops_ai.contracts import ApplicationInfo
 
@@ -64,12 +65,16 @@ def main(argv: list[str] | None = None) -> int:
     )
     store.add_argument("--candidate", type=Path, required=True)
     store.add_argument("--env-file", type=Path)
+    add_commands(commands)
     args = parser.parse_args(argv)
 
     if args.command == "version":
         info = ApplicationInfo(version=version("retailops-ai-intelligence"))
         print(info.model_dump_json())
         return 0
+
+    if args.command == "index-validate":
+        return run_validation(args)
 
     if args.command == "access-init":
         from retailops_ai.security.provision import provision
@@ -224,6 +229,9 @@ def main(argv: list[str] | None = None) -> int:
     except (SettingsError, OSError, UnicodeError):
         print('{"error":"configuration_unavailable"}', file=sys.stderr)
         return 2
+
+    if args.command in {"index-qualify", "index-activate", "index-rollback", "index-current"}:
+        return run_database_command(args, settings)
 
     if args.command == "migrate":
         from retailops_ai.migrations.runner import migrate

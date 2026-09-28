@@ -1,6 +1,6 @@
 # Decyzje architektoniczne
 
-**2026-09-27 · zaakceptowane dla projektu; wdrożenie komponentów według etapów.**
+**2026-09-28 · zaakceptowane dla projektu; wdrożenie komponentów według etapów.**
 Źródło: plan RetailOps na `8a9e620`; architektura bazowa na
 [cbf28b2](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/cbf28b2/docs/plans/ai/architektura.md).
 Te decyzje utrwalają granice; aktualne wdrożenie DB/MLflow opisuje ADR-12, kontrakty ADR-13, lokalne auth ADR-14, a agent pozostaje planowany.
@@ -195,3 +195,25 @@ Alternatywa mutable upsert chunków utrudniałaby snapshot i odtworzenie cytató
 Na tym etapie nie ma aktywnego pointera ani ANN index; activation/retrieval
 wymagają osobnego odbioru auth, statusów, rollback i jakości. Fake vectors nie
 udają semantycznych embeddings. [Kontrakt i źródła](../knowledge-index.md).
+
+
+## ADR-18 — osobne decyzje i atomowy wskaźnik z bramką golden set
+
+Kandydat jest niezmienny. Osobne, związane hashami artefakty opisują zgodę
+na korpus i techniczną walidację. Fake acceptance nie jest golden evaluation;
+kwalifikacja i aktywacja kanału `retrieval` pozostają zablokowane. Osobny kanał
+`offline_test`, tylko w `test`, pozwala odebrać mechanizm na syntetycznych fixtures.
+Nie ma automatycznej zgody na rzeczywisty korpus ani endpointu promocji dla agenta.
+
+Historia i wskaźnik zapisują się w jednej transakcji, pod wspólną blokadą writerów.
+Oczekiwana generacja zapobiega nadpisaniu konkurencyjnej zmiany; request ID
+wiąże idempotentny retry z jego historycznym wynikiem. Rollback tworzy nową
+generację wskazującą wcześniej aktywny indeks. FK i deferred constraint wymagają
+pełnego zdarzenia, a nie tylko zmiany wskaźnika. Odczyt jednym SQL statement
+tworzy pin manifestu, który caller zachowuje przez cały run.
+
+Alternatywa modyfikowania kandydata lub bieżącego indeksu w miejscu utrudniałaby
+rollback i odtworzenie cytatów. Artefakt zgody jest dostarczany przez zaufany
+proces; hash i pole reviewer nie uwierzytelniają autora. Prywatne poświadczenia
+DB pozostają lokalną granicą developmentu. Produkcyjna kwalifikacja wymaga
+rzeczywistego odbioru jakości i dostępu. [Kontrakt](../knowledge-lifecycle.md).

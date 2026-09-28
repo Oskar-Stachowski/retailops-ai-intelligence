@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -9,10 +10,11 @@ import tempfile
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from sqlalchemy import Connection, text
 from sqlalchemy.exc import DBAPIError
+from verify_rag_lifecycle import verify_lifecycle
 
 from retailops_ai.adapters import vector_store
 from retailops_ai.adapters.git_documents import CorpusError
@@ -31,7 +33,9 @@ def require(condition: bool, code: str) -> None:
         raise RuntimeError(code)
 
 
-def synthetic_candidates(root: Path) -> list[IndexCandidate]:
+def synthetic_candidates(
+    root: Path, environment: Literal["local", "test"] = "local"
+) -> list[IndexCandidate]:
     git = shutil.which("git")
     if git is None:
         raise RuntimeError("git_unavailable")
@@ -83,7 +87,7 @@ def synthetic_candidates(root: Path) -> list[IndexCandidate]:
     registry = {
         "schema_version": "1.0",
         "policy_version": "registered-markdown-v1",
-        "environment": "local",
+        "environment": environment,
         "review_state": "proposed",
         "review_owner": "fixture-maintainer",
         "sources": sources,
@@ -354,7 +358,12 @@ def verify_database(candidates: list[IndexCandidate]) -> dict[str, object]:
 
 def run_in_compose(command: Callable[..., str]) -> dict[str, object]:
     with tempfile.TemporaryDirectory(prefix="retailops-rag-ci-") as directory:
-        candidates = synthetic_candidates(Path(directory))
+        storage_root = Path(directory) / "storage"
+        storage_root.mkdir()
+        lifecycle_root = Path(directory) / "lifecycle"
+        lifecycle_root.mkdir()
+        candidates = synthetic_candidates(storage_root)
+        lifecycle_candidates = synthetic_candidates(lifecycle_root, "test")
         result = command(
             "run",
             "--rm",
@@ -362,11 +371,16 @@ def run_in_compose(command: Callable[..., str]) -> dict[str, object]:
             "--entrypoint",
             "python",
             "-v",
-            f"{Path(__file__).resolve()}:/tmp/verify_rag_index.py:ro",
+            f"{Path(__file__).resolve().parent}:/opt/retailops-verification:ro",
             "api-migrate",
-            "/tmp/verify_rag_index.py",  # noqa: S108 - read-only bind mount in disposable container
+            "/opt/retailops-verification/verify_rag_index.py",
             "--database-checks",
-            stdin=json.dumps([c.model_dump(mode="json") for c in candidates]),
+            stdin=json.dumps(
+                {
+                    "storage": [c.model_dump(mode="json") for c in candidates],
+                    "lifecycle": [c.model_dump(mode="json") for c in lifecycle_candidates],
+                }
+            ),
         )
         decoded: dict[str, object] = json.loads(result)
         require(decoded.get("result") == "passed", "rag_database_acceptance_failed")
@@ -378,12 +392,24 @@ if __name__ == "__main__":
         if sys.argv[1:] != ["--database-checks"]:
             raise RuntimeError("unsupported_verification_mode")
         raw = json.loads(sys.stdin.read(4_000_001))
-        candidates = [IndexCandidate.model_validate_json(json.dumps(c)) for c in raw]
-        print(json.dumps(verify_database(candidates)))
+        candidates = [IndexCandidate.model_validate_json(json.dumps(c)) for c in raw["storage"]]
+        report = verify_database(candidates)
+        report["lifecycle"] = verify_lifecycle(
+            [IndexCandidate.model_validate_json(json.dumps(c)) for c in raw["lifecycle"]]
+        )
+        print(json.dumps(report))
     except Exception as exc:
         # SQL exceptions may contain DSNs, parameters or document content.
         print(
-            json.dumps({"error": "rag_database_acceptance_failed", "type": type(exc).__name__}),
+            json.dumps(
+                {
+                    "error": "rag_database_acceptance_failed",
+                    "type": type(exc).__name__,
+                    "reason": str(exc)
+                    if isinstance(exc, RuntimeError) and re.fullmatch(r"[a-z_]{1,100}", str(exc))
+                    else "internal_failure",
+                }
+            ),
             file=sys.stderr,
         )
         raise SystemExit(1) from None

@@ -1,0 +1,117 @@
+{
+  "$defs": {
+    "MechanicalChecks": {
+      "additionalProperties": false,
+      "properties": {
+        "citation_binding": {
+          "title": "Citation Binding",
+          "type": "boolean"
+        },
+        "complete_graph": {
+          "title": "Complete Graph",
+          "type": "boolean"
+        },
+        "deterministic_fake_vectors": {
+          "title": "Deterministic Fake Vectors",
+          "type": "boolean"
+        },
+        "source_metadata": {
+          "title": "Source Metadata",
+          "type": "boolean"
+        },
+        "vector_binding": {
+          "title": "Vector Binding",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "complete_graph",
+        "source_metadata",
+        "citation_binding",
+        "vector_binding",
+        "deterministic_fake_vectors"
+      ],
+      "title": "MechanicalChecks",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:knowledge:index-validation:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "checks": {
+      "$ref": "#/$defs/MechanicalChecks"
+    },
+    "corpus_id": {
+      "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+      "title": "Corpus Id",
+      "type": "string"
+    },
+    "environment": {
+      "enum": [
+        "local",
+        "test"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "golden_evaluation": {
+      "const": "not_evaluated_fake_vectors",
+      "title": "Golden Evaluation",
+      "type": "string"
+    },
+    "index_id": {
+      "pattern": "^index-sha256-[0-9a-f]{64}$",
+      "title": "Index Id",
+      "type": "string"
+    },
+    "policy_version": {
+      "const": "fake-mechanical-validation-v1",
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "provider": {
+      "const": "fake",
+      "title": "Provider",
+      "type": "string"
+    },
+    "result": {
+      "enum": [
+        "passed",
+        "failed"
+      ],
+      "title": "Result",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "space_id": {
+      "pattern": "^embedding-space-sha256-[0-9a-f]{64}$",
+      "title": "Space Id",
+      "type": "string"
+    },
+    "validation_id": {
+      "pattern": "^index-validation-sha256-[0-9a-f]{64}$",
+      "title": "Validation Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "validation_id",
+    "policy_version",
+    "index_id",
+    "corpus_id",
+    "space_id",
+    "environment",
+    "provider",
+    "golden_evaluation",
+    "checks",
+    "result"
+  ],
+  "title": "IndexValidation",
+  "type": "object"
+}

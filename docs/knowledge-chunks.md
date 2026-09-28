@@ -4,7 +4,8 @@ Punkt 3 etapu 11 ma wykonywalny parser i deterministyczny chunker.
 `chunk-build` waliduje [rejestr korpusu](knowledge-corpus.md), czyta przypięte
 obiekty Git i buduje kompletny nowy manifest fragmentów. Dokumenty nadal są
 propozycją do przeglądu, a wynik ma wyłącznie `lifecycle=candidate`.
-Nie ma aktywnego indeksu ani wyszukiwania.
+Rzeczywisty korpus nie ma aktywnego indeksu ani wyszukiwania.
+[Lifecycle](knowledge-lifecycle.md) przełącza wyłącznie syntetyczne indeksy testowe.
 [Dowody odbioru](evidence/11-chunks.md) obejmują korpus obu repo i czysty checkout.
 
 ## Uruchomienie
@@ -111,6 +112,7 @@ frontmatter, footnotes, task lists ani GitHub alerts; zachowuje ich źródłowy 
 w ramach dostępnych bloków. Zmiana semantyki parsera wymaga nowej wersji reguł.
 
 [Adapter fake i persistence kandydata](knowledge-index.md) zachowują manifest
-fragmentów oraz sprawdzają przestrzeń i checksumy wektorów. Aktywacja/rollback,
-filtry retrieval, near duplicates i golden set pozostają
-osobnymi bramkami etapu 11. Przegląd redakcyjny korpusu może postępować równolegle.
+fragmentów oraz sprawdzają przestrzeń i checksumy wektorów.
+[Atomowy wskaźnik i rollback](knowledge-lifecycle.md) mają osobny odbiór testowy;
+użytkowa aktywacja, filtry retrieval, near duplicates i golden set pozostają
+bramkami etapu 11. Przegląd redakcyjny korpusu może postępować równolegle.
