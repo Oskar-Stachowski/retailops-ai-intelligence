@@ -2,7 +2,7 @@ UV ?= $(if $(wildcard .tools/bin/uv),.tools/bin/uv,uv)
 GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
 
-.PHONY: bootstrap lint type-check test docs-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
+.PHONY: bootstrap lint type-check test docs-check handoff-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
 
 bootstrap:
 	$(UV) sync --locked
@@ -20,10 +20,13 @@ test:
 docs-check:
 	$(UV) run --locked python scripts/check_repository.py
 
+handoff-check:
+	$(UV) run --locked python scripts/check_snapshot_handoff.py
+
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check contracts-check package compose-config
+check: lint type-check test docs-check handoff-check contracts-check package compose-config
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner

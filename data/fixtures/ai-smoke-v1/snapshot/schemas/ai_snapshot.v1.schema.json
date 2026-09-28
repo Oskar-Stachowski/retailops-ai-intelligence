@@ -1,0 +1,1362 @@
+{
+  "$defs": {
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "columns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "data_class": {
+          "enum": [
+            "source_observation",
+            "mixed_fact_and_simulation_truth",
+            "source_operational_output",
+            "source_plan",
+            "simulation_truth"
+          ],
+          "title": "Data Class",
+          "type": "string"
+        },
+        "date_range": {
+          "$ref": "#/$defs/DateRange"
+        },
+        "field_ranges": {
+          "additionalProperties": {
+            "$ref": "#/$defs/DateRange"
+          },
+          "title": "Field Ranges",
+          "type": "object"
+        },
+        "future_range": {
+          "$ref": "#/$defs/DateRange"
+        },
+        "grain": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Grain",
+          "type": "array"
+        },
+        "history_range": {
+          "$ref": "#/$defs/DateRange"
+        },
+        "open_interval_rows": {
+          "minimum": 0,
+          "title": "Open Interval Rows",
+          "type": "integer"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "row_count": {
+          "minimum": 0,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "table": {
+          "title": "Table",
+          "type": "string"
+        },
+        "temporal_role": {
+          "enum": [
+            "dimension",
+            "observations",
+            "plans",
+            "return_tail",
+            "operational_output",
+            "simulation_truth"
+          ],
+          "title": "Temporal Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "table",
+        "path",
+        "sha256",
+        "size_bytes",
+        "row_count",
+        "content_sha256",
+        "schema_version",
+        "columns",
+        "grain",
+        "data_class",
+        "temporal_role",
+        "date_range",
+        "field_ranges",
+        "history_range",
+        "future_range",
+        "open_interval_rows"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "Column": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "nullable": {
+          "title": "Nullable",
+          "type": "boolean"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "nullable"
+      ],
+      "title": "Column",
+      "type": "object"
+    },
+    "DateRange": {
+      "additionalProperties": false,
+      "properties": {
+        "date_end": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date End"
+        },
+        "date_start": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date Start"
+        },
+        "value_count": {
+          "minimum": 0,
+          "title": "Value Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "date_start",
+        "date_end",
+        "value_count"
+      ],
+      "title": "DateRange",
+      "type": "object"
+    },
+    "ExporterProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "dependency_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Sha256",
+          "type": "string"
+        },
+        "git_commit": {
+          "title": "Git Commit",
+          "type": "string"
+        },
+        "pyarrow_version": {
+          "title": "Pyarrow Version",
+          "type": "string"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "git_commit",
+        "python_version",
+        "pyarrow_version",
+        "code_files",
+        "dependency_sha256"
+      ],
+      "title": "ExporterProvenance",
+      "type": "object"
+    },
+    "FileReference": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 0,
+          "title": "Bytes",
+          "type": "integer"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "bytes",
+        "sha256"
+      ],
+      "title": "FileReference",
+      "type": "object"
+    },
+    "LogicalTable": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "data_class": {
+          "enum": [
+            "source_observation",
+            "mixed_fact_and_simulation_truth",
+            "source_operational_output",
+            "source_plan",
+            "simulation_truth"
+          ],
+          "title": "Data Class",
+          "type": "string"
+        },
+        "date_range": {
+          "$ref": "#/$defs/DateRange"
+        },
+        "field_ranges": {
+          "additionalProperties": {
+            "$ref": "#/$defs/DateRange"
+          },
+          "title": "Field Ranges",
+          "type": "object"
+        },
+        "grain": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Grain",
+          "type": "array"
+        },
+        "row_count": {
+          "minimum": 0,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "schema": {
+          "items": {
+            "$ref": "#/$defs/Column"
+          },
+          "title": "Schema",
+          "type": "array"
+        },
+        "table": {
+          "title": "Table",
+          "type": "string"
+        }
+      },
+      "required": [
+        "table",
+        "data_class",
+        "row_count",
+        "content_sha256",
+        "grain",
+        "date_range",
+        "field_ranges",
+        "schema"
+      ],
+      "title": "LogicalTable",
+      "type": "object"
+    },
+    "ParquetReference": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 0,
+          "title": "Bytes",
+          "type": "integer"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "row_count": {
+          "minimum": 0,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "bytes",
+        "sha256",
+        "row_count"
+      ],
+      "title": "ParquetReference",
+      "type": "object"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "code_state": {
+          "enum": [
+            "clean",
+            "modified",
+            "unavailable"
+          ],
+          "title": "Code State",
+          "type": "string"
+        },
+        "dependency_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Dependency Files",
+          "type": "object"
+        },
+        "dependency_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Sha256",
+          "type": "string"
+        },
+        "git_commit": {
+          "pattern": "^(?:[0-9a-f]{40}|unavailable)$",
+          "title": "Git Commit",
+          "type": "string"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code_sha256",
+        "dependency_sha256",
+        "code_files",
+        "dependency_files",
+        "python_version",
+        "git_commit",
+        "code_state"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "Readiness": {
+      "additionalProperties": false,
+      "properties": {
+        "anomaly": {
+          "const": "not_ready",
+          "title": "Anomaly",
+          "type": "string"
+        },
+        "forecasting": {
+          "const": "not_ready",
+          "title": "Forecasting",
+          "type": "string"
+        },
+        "rag": {
+          "const": "not_applicable",
+          "title": "Rag",
+          "type": "string"
+        },
+        "replay": {
+          "const": "not_ready",
+          "title": "Replay",
+          "type": "string"
+        },
+        "stockout": {
+          "const": "not_ready",
+          "title": "Stockout",
+          "type": "string"
+        }
+      },
+      "required": [
+        "forecasting",
+        "anomaly",
+        "stockout",
+        "replay",
+        "rag"
+      ],
+      "title": "Readiness",
+      "type": "object"
+    },
+    "Report": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "policy_version": {
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes",
+        "policy_version",
+        "status"
+      ],
+      "title": "Report",
+      "type": "object"
+    },
+    "RequestedParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "days": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Days"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End Date"
+        },
+        "max_daily_rows": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Max Daily Rows"
+        },
+        "products": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Products"
+        },
+        "profile": {
+          "title": "Profile",
+          "type": "string"
+        },
+        "seed": {
+          "exclusiveMinimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Start Date"
+        },
+        "stores": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Stores"
+        },
+        "warehouses": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Warehouses"
+        }
+      },
+      "required": [
+        "profile",
+        "days",
+        "products",
+        "stores",
+        "warehouses",
+        "seed",
+        "start_date",
+        "end_date",
+        "max_daily_rows"
+      ],
+      "title": "RequestedParameters",
+      "type": "object"
+    },
+    "ResolvedParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "days": {
+          "exclusiveMinimum": 0,
+          "title": "Days",
+          "type": "integer"
+        },
+        "end_date": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "End Date",
+          "type": "string"
+        },
+        "label_tail_days": {
+          "minimum": 0,
+          "title": "Label Tail Days",
+          "type": "integer"
+        },
+        "max_daily_rows": {
+          "exclusiveMinimum": 0,
+          "title": "Max Daily Rows",
+          "type": "integer"
+        },
+        "origin_days": {
+          "minimum": 0,
+          "title": "Origin Days",
+          "type": "integer"
+        },
+        "output_format": {
+          "const": "csv",
+          "title": "Output Format",
+          "type": "string"
+        },
+        "products": {
+          "exclusiveMinimum": 0,
+          "title": "Products",
+          "type": "integer"
+        },
+        "profile": {
+          "title": "Profile",
+          "type": "string"
+        },
+        "seed": {
+          "exclusiveMinimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        },
+        "start_date": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "title": "Start Date",
+          "type": "string"
+        },
+        "stores": {
+          "exclusiveMinimum": 0,
+          "title": "Stores",
+          "type": "integer"
+        },
+        "warehouses": {
+          "exclusiveMinimum": 0,
+          "title": "Warehouses",
+          "type": "integer"
+        },
+        "warmup_days": {
+          "minimum": 0,
+          "title": "Warmup Days",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "profile",
+        "days",
+        "products",
+        "stores",
+        "warehouses",
+        "seed",
+        "start_date",
+        "end_date",
+        "max_daily_rows",
+        "business_timezone",
+        "output_format",
+        "warmup_days",
+        "origin_days",
+        "label_tail_days"
+      ],
+      "title": "ResolvedParameters",
+      "type": "object"
+    },
+    "SnapshotDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "dependency_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Sha256",
+          "type": "string"
+        },
+        "exporter_code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Exporter Code Sha256",
+          "type": "string"
+        },
+        "format_version": {
+          "const": "retailops-parquet-1.0.0",
+          "title": "Format Version",
+          "type": "string"
+        },
+        "identity_version": {
+          "const": "1.0.0",
+          "title": "Identity Version",
+          "type": "string"
+        },
+        "include_evaluation_truth": {
+          "title": "Include Evaluation Truth",
+          "type": "boolean"
+        },
+        "parent_source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Parent Source Dataset Id",
+          "type": "string"
+        },
+        "policy_version": {
+          "const": "retailops-ai-snapshot-1.0.0",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "required_use_cases": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Use Cases",
+          "type": "array"
+        },
+        "role": {
+          "const": "source_snapshot",
+          "title": "Role",
+          "type": "string"
+        },
+        "schemas": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Schemas",
+          "type": "object"
+        },
+        "source_qualification_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Qualification Sha256",
+          "type": "string"
+        },
+        "tables": {
+          "items": {
+            "$ref": "#/$defs/LogicalTable"
+          },
+          "title": "Tables",
+          "type": "array"
+        }
+      },
+      "required": [
+        "role",
+        "identity_version",
+        "policy_version",
+        "format_version",
+        "parent_source_dataset_id",
+        "required_use_cases",
+        "include_evaluation_truth",
+        "exporter_code_sha256",
+        "dependency_sha256",
+        "source_qualification_sha256",
+        "schemas",
+        "tables"
+      ],
+      "title": "SnapshotDescriptor",
+      "type": "object"
+    },
+    "SourceDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Sha256",
+          "type": "string"
+        },
+        "identity_version": {
+          "const": "1.0.0",
+          "title": "Identity Version",
+          "type": "string"
+        },
+        "owner": {
+          "const": "retailops-cloud-native-platform",
+          "title": "Owner",
+          "type": "string"
+        },
+        "parent_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Parent Ids",
+          "type": "array"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "resolved_parameters": {
+          "$ref": "#/$defs/ResolvedParameters"
+        },
+        "role": {
+          "const": "source",
+          "title": "Role",
+          "type": "string"
+        },
+        "schema_version": {
+          "enum": [
+            "2.0.0",
+            "2.1.0",
+            "2.2.0",
+            "2.3.0",
+            "2.4.0",
+            "2.5.0",
+            "2.6.0"
+          ],
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "tables": {
+          "additionalProperties": {
+            "$ref": "#/$defs/TableIdentity"
+          },
+          "title": "Tables",
+          "type": "object"
+        },
+        "versions": {
+          "$ref": "#/$defs/Versions"
+        }
+      },
+      "required": [
+        "identity_version",
+        "role",
+        "owner",
+        "parent_ids",
+        "schema_version",
+        "versions",
+        "resolved_parameters",
+        "code_sha256",
+        "dependency_sha256",
+        "python_version",
+        "tables"
+      ],
+      "title": "SourceDescriptor",
+      "type": "object"
+    },
+    "SourceManifestV2": {
+      "additionalProperties": false,
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/Artifact"
+          },
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Dataset Id",
+          "type": "string"
+        },
+        "dataset_name": {
+          "const": "retailops-synthetic",
+          "title": "Dataset Name",
+          "type": "string"
+        },
+        "descriptor": {
+          "$ref": "#/$defs/SourceDescriptor"
+        },
+        "generated_at": {
+          "title": "Generated At",
+          "type": "string"
+        },
+        "inventory_ready": {
+          "const": false,
+          "title": "Inventory Ready",
+          "type": "boolean"
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        },
+        "readiness": {
+          "$ref": "#/$defs/Readiness"
+        },
+        "reports": {
+          "items": {
+            "$ref": "#/$defs/Report"
+          },
+          "title": "Reports",
+          "type": "array"
+        },
+        "requested_parameters": {
+          "$ref": "#/$defs/RequestedParameters"
+        },
+        "schema_version": {
+          "enum": [
+            "2.0.0",
+            "2.1.0",
+            "2.2.0",
+            "2.3.0",
+            "2.4.0",
+            "2.5.0",
+            "2.6.0"
+          ],
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_ready": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Ready"
+        },
+        "watermarks": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Watermark"
+          },
+          "title": "Watermarks",
+          "type": "object"
+        }
+      },
+      "required": [
+        "schema_version",
+        "dataset_name",
+        "dataset_id",
+        "descriptor",
+        "requested_parameters",
+        "provenance",
+        "generated_at",
+        "artifacts",
+        "reports",
+        "watermarks",
+        "readiness",
+        "inventory_ready"
+      ],
+      "title": "SourceManifestV2",
+      "type": "object"
+    },
+    "TableArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "data_class": {
+          "enum": [
+            "source_observation",
+            "mixed_fact_and_simulation_truth",
+            "source_operational_output",
+            "source_plan",
+            "simulation_truth"
+          ],
+          "title": "Data Class",
+          "type": "string"
+        },
+        "date_range": {
+          "$ref": "#/$defs/DateRange"
+        },
+        "field_ranges": {
+          "additionalProperties": {
+            "$ref": "#/$defs/DateRange"
+          },
+          "title": "Field Ranges",
+          "type": "object"
+        },
+        "files": {
+          "items": {
+            "$ref": "#/$defs/ParquetReference"
+          },
+          "minItems": 1,
+          "title": "Files",
+          "type": "array"
+        },
+        "grain": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Grain",
+          "type": "array"
+        },
+        "partition_source_field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Partition Source Field"
+        },
+        "row_count": {
+          "minimum": 0,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "schema": {
+          "items": {
+            "$ref": "#/$defs/Column"
+          },
+          "title": "Schema",
+          "type": "array"
+        },
+        "table": {
+          "title": "Table",
+          "type": "string"
+        }
+      },
+      "required": [
+        "table",
+        "data_class",
+        "row_count",
+        "content_sha256",
+        "grain",
+        "date_range",
+        "field_ranges",
+        "schema",
+        "partition_source_field",
+        "files"
+      ],
+      "title": "TableArtifact",
+      "type": "object"
+    },
+    "TableIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "columns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "data_class": {
+          "enum": [
+            "source_observation",
+            "mixed_fact_and_simulation_truth",
+            "source_operational_output",
+            "source_plan",
+            "simulation_truth"
+          ],
+          "title": "Data Class",
+          "type": "string"
+        },
+        "row_count": {
+          "minimum": 0,
+          "title": "Row Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "row_count",
+        "columns",
+        "content_sha256",
+        "data_class"
+      ],
+      "title": "TableIdentity",
+      "type": "object"
+    },
+    "Versions": {
+      "additionalProperties": false,
+      "properties": {
+        "calendar": {
+          "enum": [
+            "legacy-weekday-seasonality-1.0.0",
+            "pl-de-berlin-calendar-1.0.0"
+          ],
+          "title": "Calendar",
+          "type": "string"
+        },
+        "canonicalization": {
+          "enum": [
+            "typed-csv-nfc-utc-multiset-1.0.0",
+            "typed-csv-nfc-utc-multiset-1.1.0",
+            "typed-csv-nfc-utc-multiset-1.2.0",
+            "typed-csv-nfc-utc-multiset-1.3.0",
+            "typed-csv-nfc-utc-multiset-1.4.0",
+            "typed-csv-nfc-utc-multiset-1.5.0",
+            "typed-csv-nfc-utc-multiset-1.6.0"
+          ],
+          "title": "Canonicalization",
+          "type": "string"
+        },
+        "config": {
+          "const": "1.0.0",
+          "title": "Config",
+          "type": "string"
+        },
+        "csv_schema": {
+          "const": "1.0",
+          "title": "Csv Schema",
+          "type": "string"
+        },
+        "demand": {
+          "anyOf": [
+            {
+              "enum": [
+                "daily-demand-1.0.0",
+                "not_applicable"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Demand"
+        },
+        "dimensions": {
+          "anyOf": [
+            {
+              "enum": [
+                "retail-dimensions-1.0.0",
+                "not_applicable"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dimensions"
+        },
+        "generator": {
+          "enum": [
+            "0.2.0",
+            "0.3.0",
+            "0.4.0",
+            "0.5.0",
+            "0.6.0",
+            "0.7.0",
+            "0.8.0"
+          ],
+          "title": "Generator",
+          "type": "string"
+        },
+        "history": {
+          "anyOf": [
+            {
+              "enum": [
+                "observed-quantity-history-1.0.0",
+                "not_applicable"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "History"
+        },
+        "pricing": {
+          "anyOf": [
+            {
+              "enum": [
+                "retail-pricing-1.0.0",
+                "not_applicable"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pricing"
+        },
+        "returns": {
+          "anyOf": [
+            {
+              "enum": [
+                "retail-returns-1.0.0",
+                "not_applicable"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Returns"
+        },
+        "simulation": {
+          "anyOf": [
+            {
+              "enum": [
+                "retail-simulation-parameters-1.0.0",
+                "not_applicable"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Simulation"
+        }
+      },
+      "required": [
+        "generator",
+        "config",
+        "calendar",
+        "canonicalization",
+        "csv_schema"
+      ],
+      "title": "Versions",
+      "type": "object"
+    },
+    "Watermark": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of_time": {
+          "title": "As Of Time",
+          "type": "string"
+        },
+        "complete_through": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Complete Through"
+        },
+        "completeness_status": {
+          "enum": [
+            "not_ready",
+            "complete"
+          ],
+          "title": "Completeness Status",
+          "type": "string"
+        },
+        "meaning": {
+          "enum": [
+            "knowledge_boundary_without_completeness_guarantee",
+            "synthetic_sales_day_close_without_return_guarantee",
+            "synthetic_return_events_with_bounded_ingestion",
+            "synthetic_return_cohort_snapshot_with_window_maturity"
+          ],
+          "title": "Meaning",
+          "type": "string"
+        },
+        "policy_version": {
+          "enum": [
+            "legacy-source-boundary-1.0.0",
+            "daily-demand-1.0.0",
+            "retail-returns-1.0.0"
+          ],
+          "title": "Policy Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "as_of_time",
+        "complete_through",
+        "completeness_status",
+        "policy_version",
+        "meaning"
+      ],
+      "title": "Watermark",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "descriptor": {
+      "$ref": "#/$defs/SnapshotDescriptor"
+    },
+    "exporter": {
+      "$ref": "#/$defs/ExporterProvenance"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "metadata_files": {
+      "items": {
+        "$ref": "#/$defs/FileReference"
+      },
+      "title": "Metadata Files",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "snapshot_ready": {
+      "const": true,
+      "title": "Snapshot Ready",
+      "type": "boolean"
+    },
+    "source": {
+      "$ref": "#/$defs/SourceManifestV2"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_repository": {
+      "const": "retailops-cloud-native-platform",
+      "title": "Source Repository",
+      "type": "string"
+    },
+    "tables": {
+      "items": {
+        "$ref": "#/$defs/TableArtifact"
+      },
+      "title": "Tables",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "source_dataset_id",
+    "source_repository",
+    "generated_at",
+    "snapshot_ready",
+    "descriptor",
+    "source",
+    "exporter",
+    "tables",
+    "metadata_files"
+  ],
+  "title": "SnapshotManifest",
+  "type": "object"
+}

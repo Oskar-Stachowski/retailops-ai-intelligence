@@ -1,0 +1,91 @@
+{
+  "checks": [
+    {
+      "check_id": "demand_schema",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 3269,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "daily_panel_coverage",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "daily_transaction_aggregation",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "basket_sku_totals",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 3244,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "daily_demand_budget",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 1469,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "daily_source_completeness",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    }
+  ],
+  "complete_daily_panel": true,
+  "daily_panel_coverage_percent": 100,
+  "inactive_combinations": 188,
+  "inventory_ready": false,
+  "nominal_daily_combinations": 1800,
+  "observation_status_counts": {
+    "closed": 143,
+    "observed_positive": 1292,
+    "observed_zero": 177
+  },
+  "policy_version": "daily-demand-1.0.0",
+  "returns_ready": true,
+  "sampling": "stochastic_rounding_without_inventory_cap",
+  "status": "passed",
+  "valid_daily_combinations": 1612
+}

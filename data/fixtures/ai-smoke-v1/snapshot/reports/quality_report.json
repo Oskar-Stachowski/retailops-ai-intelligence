@@ -1,0 +1,164 @@
+{
+  "checks": [
+    {
+      "details": {
+        "ids": 22694,
+        "unique_ids": 22694
+      },
+      "name": "primary_keys_are_unique",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "sales": 6096
+      },
+      "name": "sales_reference_products",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "orders": 3244
+      },
+      "name": "orders_reference_stores",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "order_items": 6096
+      },
+      "name": "order_items_reference_orders_and_products",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "price_history": 90,
+        "promotions": 32
+      },
+      "name": "pricing_references_products",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "inventory_snapshots": 100
+      },
+      "name": "inventory_references_products_and_warehouses",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "stock_movements": 6196
+      },
+      "name": "stock_movements_reference_products_and_warehouses",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "returns": 591
+      },
+      "name": "returns_reference_orders_order_items_and_products",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "alerts": 20,
+        "anomalies": 20,
+        "forecasts": 140,
+        "recommendations": 20,
+        "workflow_actions": 20
+      },
+      "name": "operational_records_reference_valid_entities",
+      "status": "passed"
+    },
+    {
+      "details": {},
+      "name": "sales_values_are_positive",
+      "status": "passed"
+    },
+    {
+      "details": {},
+      "name": "inventory_and_returns_are_non_negative",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "mismatches": 0
+      },
+      "name": "order_totals_match_order_items",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "invalid_returns": 0
+      },
+      "name": "returns_do_not_exceed_order_item_quantity",
+      "status": "passed"
+    },
+    {
+      "details": {},
+      "name": "date_windows_are_ordered",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "allowed_statuses": [
+          "",
+          "duplicate_candidate",
+          "late_event",
+          "missing_optional_context",
+          "ok"
+        ]
+      },
+      "name": "sales_data_quality_statuses_are_known",
+      "status": "passed"
+    }
+  ],
+  "profile": "ai-smoke",
+  "row_counts": {
+    "alerts": 20,
+    "anomalies": 20,
+    "assortment": 114,
+    "business_calendar": 90,
+    "catalog_categories": 8,
+    "category_calendar": 240,
+    "channel_assignments": 6,
+    "daily_demand_exclusions": 188,
+    "daily_demand_observations": 1612,
+    "daily_demand_truth": 1469,
+    "daily_demand_versions": 1612,
+    "daily_price_observations": 1292,
+    "daily_return_cohorts": 3224,
+    "forecasts": 140,
+    "fulfillment_routes": 6,
+    "inventory_snapshots": 100,
+    "order_items": 6096,
+    "orders": 3244,
+    "price_history": 90,
+    "price_plans": 90,
+    "product_catalog": 20,
+    "product_simulation_parameters": 20,
+    "products": 20,
+    "promotion_effect_truth": 96,
+    "promotion_plans": 32,
+    "promotions": 32,
+    "recommendations": 20,
+    "return_events": 1044,
+    "return_policies": 32,
+    "returns": 591,
+    "sale_price_references": 6096,
+    "sales": 6096,
+    "selling_locations": 2,
+    "stock_locations": 2,
+    "stock_movements": 6196,
+    "store_simulation_parameters": 3,
+    "stores": 3,
+    "users": 4,
+    "warehouses": 2,
+    "workflow_actions": 20
+  },
+  "status": "passed",
+  "summary": {
+    "checks": 15,
+    "failed": 0,
+    "passed": 15
+  }
+}

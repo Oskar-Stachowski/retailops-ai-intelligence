@@ -1,0 +1,35 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "business_date",
+      "nullable": false,
+      "type": "date32[day]"
+    },
+    {
+      "name": "category_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "calendar_version",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "is_category_season",
+      "nullable": false,
+      "type": "bool"
+    },
+    {
+      "name": "available_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    }
+  ],
+  "table": "category_calendar"
+}

@@ -1,0 +1,110 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "business_date",
+      "nullable": false,
+      "type": "date32[day]"
+    },
+    {
+      "name": "product_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "selling_location_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "observed_units",
+      "nullable": true,
+      "type": "int64"
+    },
+    {
+      "name": "observed_orders",
+      "nullable": true,
+      "type": "int64"
+    },
+    {
+      "name": "gross_revenue",
+      "nullable": true,
+      "type": "decimal128(38, 2)"
+    },
+    {
+      "name": "net_revenue",
+      "nullable": true,
+      "type": "decimal128(38, 2)"
+    },
+    {
+      "name": "return_units",
+      "nullable": true,
+      "type": "int64"
+    },
+    {
+      "name": "return_data_complete",
+      "nullable": false,
+      "type": "bool"
+    },
+    {
+      "name": "currency",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "realized_unit_price",
+      "nullable": true,
+      "type": "decimal128(38, 2)"
+    },
+    {
+      "name": "promotion_plan_ids",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "available_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "is_active_assortment",
+      "nullable": false,
+      "type": "bool"
+    },
+    {
+      "name": "location_open",
+      "nullable": false,
+      "type": "bool"
+    },
+    {
+      "name": "source_data_complete",
+      "nullable": false,
+      "type": "bool"
+    },
+    {
+      "name": "observation_status",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "quality_status",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "demand_policy_version",
+      "nullable": false,
+      "type": "string"
+    }
+  ],
+  "table": "daily_demand_observations"
+}

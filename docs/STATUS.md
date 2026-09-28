@@ -2,6 +2,12 @@
 
 **2026-09-28 · fundament etapu 01 odebrany lokalnie i w zdalnym Required CI.**
 
+**AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
+ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
+identity i transportu bez generatora/DB. Następny zakres to 03.4 typed importer,
+potem 03.5 curated i 03.6 bramka cross-repo. 04/06 pozostają zamknięte;
+pełna publikacja tego brancha i zdalne Required CI nie zostały wykonane.
+
 **Etap 11 w realizacji:** [korpus wiedzy](knowledge-corpus.md) ma rejestr
 kandydacki 29 dokumentów z obu repo, przypięte SHA/checksums, klasy dostępu,
 statusy i kontrolę dowodów. Techniczna walidacja offline nie oznacza akceptacji

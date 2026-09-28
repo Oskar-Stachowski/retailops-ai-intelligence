@@ -1,0 +1,381 @@
+{
+  "$schema": "https://retailops.local/contracts/synthetic-retail-dataset/v1",
+  "contract_name": "retailops_seed_dataset",
+  "version": "1.0.0",
+  "status": "portfolio-readiness-gate",
+  "owner": "RetailOps platform",
+  "dataset": {
+    "name": "retailops-synthetic",
+    "default_path": "data/demo",
+    "profile": "demo",
+    "schema_version": "1.0",
+    "deterministic_seed": 42
+  },
+  "validation": {
+    "quality_report_file": "quality_report.json",
+    "required_quality_status": "passed",
+    "required_scenarios": [
+      "sales_drop",
+      "sales_spike",
+      "stale_inventory",
+      "stockout_risk",
+      "overstock_risk",
+      "missing_forecast_context"
+    ],
+    "seeded_db_tables": [
+      "alerts",
+      "anomalies",
+      "forecasts",
+      "inventory_snapshots",
+      "products",
+      "recommendations",
+      "sales",
+      "users",
+      "workflow_actions"
+    ]
+  },
+  "tables": [
+    {
+      "name": "alerts",
+      "filename": "alerts.csv",
+      "required_for_seed": true,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "product_id",
+        "anomaly_id",
+        "assigned_to_user_id",
+        "alert_type",
+        "severity",
+        "status",
+        "title",
+        "recommended_action",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    {
+      "name": "anomalies",
+      "filename": "anomalies.csv",
+      "required_for_seed": true,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "product_id",
+        "anomaly_type",
+        "metric_name",
+        "actual_value",
+        "expected_value",
+        "deviation_percent",
+        "impact_value",
+        "impact_unit",
+        "severity",
+        "period_start",
+        "period_end",
+        "detected_at"
+      ]
+    },
+    {
+      "name": "forecasts",
+      "filename": "forecasts.csv",
+      "required_for_seed": true,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "product_id",
+        "forecast_period_start",
+        "forecast_period_end",
+        "predicted_quantity",
+        "unit_of_measure",
+        "generated_at",
+        "method",
+        "status",
+        "confidence_level"
+      ]
+    },
+    {
+      "name": "inventory_snapshots",
+      "filename": "inventory_snapshots.csv",
+      "required_for_seed": true,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "product_id",
+        "stock_quantity",
+        "unit_of_measure",
+        "warehouse_code",
+        "recorded_at",
+        "ingested_at",
+        "created_at"
+      ]
+    },
+    {
+      "name": "order_items",
+      "filename": "order_items.csv",
+      "required_for_seed": false,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "order_id",
+        "product_id",
+        "quantity",
+        "unit_price",
+        "total_amount",
+        "currency"
+      ]
+    },
+    {
+      "name": "orders",
+      "filename": "orders.csv",
+      "required_for_seed": false,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "order_reference",
+        "store_id",
+        "channel",
+        "region",
+        "status",
+        "order_total",
+        "currency",
+        "ordered_at",
+        "created_at"
+      ]
+    },
+    {
+      "name": "price_history",
+      "filename": "price_history.csv",
+      "required_for_seed": false,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "product_id",
+        "price",
+        "currency",
+        "valid_from",
+        "valid_to",
+        "price_type",
+        "source",
+        "created_at"
+      ]
+    },
+    {
+      "name": "products",
+      "filename": "products.csv",
+      "required_for_seed": true,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "sku",
+        "name",
+        "category",
+        "brand",
+        "status",
+        "demand_class",
+        "demand_weight",
+        "price_elasticity",
+        "seasonal_pattern",
+        "return_rate"
+      ]
+    },
+    {
+      "name": "promotions",
+      "filename": "promotions.csv",
+      "required_for_seed": false,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "promotion_code",
+        "product_id",
+        "name",
+        "promotion_type",
+        "discount_percent",
+        "starts_at",
+        "ends_at",
+        "channel",
+        "status"
+      ]
+    },
+    {
+      "name": "recommendations",
+      "filename": "recommendations.csv",
+      "required_for_seed": true,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "product_id",
+        "forecast_id",
+        "anomaly_id",
+        "alert_id",
+        "recommendation_type",
+        "recommended_action",
+        "rationale",
+        "status",
+        "generated_at",
+        "expires_at",
+        "created_at"
+      ]
+    },
+    {
+      "name": "returns",
+      "filename": "returns.csv",
+      "required_for_seed": false,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "order_id",
+        "order_item_id",
+        "product_id",
+        "quantity",
+        "refund_amount",
+        "currency",
+        "reason",
+        "status",
+        "returned_at"
+      ]
+    },
+    {
+      "name": "sales",
+      "filename": "sales.csv",
+      "required_for_seed": true,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "product_id",
+        "quantity",
+        "unit_price",
+        "total_amount",
+        "currency",
+        "channel",
+        "region",
+        "sold_at",
+        "order_reference",
+        "latent_demand",
+        "observed_sales",
+        "stockout_flag",
+        "promotion_applied",
+        "promotion_uplift",
+        "price_elasticity_effect",
+        "demand_noise",
+        "data_quality_status",
+        "ingested_at"
+      ]
+    },
+    {
+      "name": "stock_movements",
+      "filename": "stock_movements.csv",
+      "required_for_seed": false,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "product_id",
+        "warehouse_id",
+        "warehouse_code",
+        "movement_type",
+        "quantity",
+        "unit_of_measure",
+        "source_reference",
+        "occurred_at",
+        "created_at"
+      ]
+    },
+    {
+      "name": "stores",
+      "filename": "stores.csv",
+      "required_for_seed": false,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "store_code",
+        "name",
+        "region",
+        "country",
+        "city",
+        "channel",
+        "status",
+        "traffic_multiplier",
+        "promo_sensitivity"
+      ]
+    },
+    {
+      "name": "users",
+      "filename": "users.csv",
+      "required_for_seed": true,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "login",
+        "display_name",
+        "role",
+        "team",
+        "status"
+      ]
+    },
+    {
+      "name": "warehouses",
+      "filename": "warehouses.csv",
+      "required_for_seed": false,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "warehouse_code",
+        "name",
+        "region",
+        "country",
+        "city",
+        "status"
+      ]
+    },
+    {
+      "name": "workflow_actions",
+      "filename": "workflow_actions.csv",
+      "required_for_seed": true,
+      "primary_key": [
+        "id"
+      ],
+      "required_columns": [
+        "id",
+        "alert_id",
+        "performed_by_user_id",
+        "action_type",
+        "comment",
+        "previous_status",
+        "new_status",
+        "performed_at",
+        "created_at"
+      ]
+    }
+  ]
+}

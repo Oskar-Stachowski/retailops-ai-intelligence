@@ -7,6 +7,8 @@ zmiany i PR-y, [security](security.md) — granice dostępu i zgłoszenia.
 offline, otwarte warunki pełnego odbioru oraz możliwości dalszej pracy.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
+[Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
+registry snapshotu i niezależny checker; typed importer jest następnym zakresem 03.4.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.

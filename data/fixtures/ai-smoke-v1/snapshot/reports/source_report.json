@@ -1,0 +1,653 @@
+{
+  "checks": [
+    {
+      "check_id": "legacy:primary_keys_are_unique",
+      "description": {
+        "ids": 22694,
+        "unique_ids": 22694
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:sales_reference_products",
+      "description": {
+        "sales": 6096
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:orders_reference_stores",
+      "description": {
+        "orders": 3244
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:order_items_reference_orders_and_products",
+      "description": {
+        "order_items": 6096
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:pricing_references_products",
+      "description": {
+        "price_history": 90,
+        "promotions": 32
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:inventory_references_products_and_warehouses",
+      "description": {
+        "inventory_snapshots": 100
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:stock_movements_reference_products_and_warehouses",
+      "description": {
+        "stock_movements": 6196
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:returns_reference_orders_order_items_and_products",
+      "description": {
+        "returns": 591
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:operational_records_reference_valid_entities",
+      "description": {
+        "alerts": 20,
+        "anomalies": 20,
+        "forecasts": 140,
+        "recommendations": 20,
+        "workflow_actions": 20
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:sales_values_are_positive",
+      "description": {},
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:inventory_and_returns_are_non_negative",
+      "description": {},
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:order_totals_match_order_items",
+      "description": {
+        "mismatches": 0
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:returns_do_not_exceed_order_item_quantity",
+      "description": {
+        "invalid_returns": 0
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:date_windows_are_ordered",
+      "description": {},
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "legacy:sales_data_quality_statuses_are_known",
+      "description": {
+        "allowed_statuses": [
+          "",
+          "duplicate_candidate",
+          "late_event",
+          "missing_optional_context",
+          "ok"
+        ]
+      },
+      "evidence": "quality_report.json",
+      "policy_version": "legacy-structural-1.0.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "dimension_schema_pk_sku",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 488,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "selling_stock_channel_region",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 3,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "assignment_routing_versions",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 6,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "catalog_lifecycle_assortment",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "calendar_exact_coverage",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 90,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "category_season_coverage",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 240,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "legacy_adapter_consistency",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 25,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "sales_active_open_known_routing",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 6096,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "pricing_schema_versions_scope",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 7606,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "known_price_coverage_and_priority",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "transaction_price_reconciliation",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 6096,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "realized_price_aggregates",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 1292,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "legacy_pricing_adapter",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 122,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "promotion_truth_direction",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 96,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "demand_schema",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 3269,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "daily_panel_coverage",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "daily_transaction_aggregation",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "basket_sku_totals",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 3244,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "daily_demand_budget",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 1469,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "daily_source_completeness",
+      "description": "All required records satisfy the policy.",
+      "evidence": "demand_report.json",
+      "policy_version": "daily-demand-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_daily_demand",
+      "value": 0
+    },
+    {
+      "check_id": "returns_schema",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 4300,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "return_window_policy",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 32,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "transaction_chronology",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 6096,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "return_reference_and_window",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 1044,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "return_quantity_and_refunds",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 1044,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "return_snapshot_reconciliation",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 3224,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "return_tail_completeness",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "fact_schema_without_simulation",
+      "description": "All required records satisfy the policy.",
+      "evidence": "source_report.json",
+      "policy_version": "forecast-source-acceptance-1.1.0",
+      "sample_size": 39992,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "simulation_parameters_schema_coverage",
+      "description": "All required records satisfy the policy.",
+      "evidence": "source_report.json",
+      "policy_version": "forecast-source-acceptance-1.1.0",
+      "sample_size": 23,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "feature_fact_projection",
+      "description": "All required records satisfy the policy.",
+      "evidence": "source_report.json",
+      "policy_version": "forecast-source-acceptance-1.1.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    },
+    {
+      "check_id": "append_only_observation_history",
+      "description": "All required records satisfy the policy.",
+      "evidence": "source_report.json",
+      "policy_version": "forecast-source-acceptance-1.1.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "forecast_source",
+      "value": 0
+    }
+  ],
+  "inventory_ready": false,
+  "policy_version": "forecast-source-acceptance-1.1.0",
+  "readiness": {
+    "anomaly": {
+      "evidence": "source_report.json",
+      "policy_version": "forecast-source-acceptance-1.1.0",
+      "reason": "AI-05 labels and evaluation required",
+      "sample_size": 39992,
+      "status": "not_ready",
+      "threshold": true,
+      "value": null
+    },
+    "forecast_source": {
+      "evidence": "source_report.json",
+      "policy_version": "forecast-source-acceptance-1.1.0",
+      "reason": "AI-03 snapshot/curated input; observed_sales_units only",
+      "sample_size": 39992,
+      "status": "ready",
+      "threshold": true,
+      "value": true
+    },
+    "forecasting": {
+      "evidence": "source_report.json",
+      "policy_version": "forecast-source-acceptance-1.1.0",
+      "reason": "AI-03/04 snapshot, training and fixed-origin assessment required",
+      "sample_size": 39992,
+      "status": "not_ready",
+      "threshold": true,
+      "value": null
+    },
+    "rag": {
+      "evidence": "source_report.json",
+      "policy_version": "forecast-source-acceptance-1.1.0",
+      "reason": "Source sales qualification does not qualify RAG",
+      "sample_size": 39992,
+      "status": "not_applicable",
+      "threshold": true,
+      "value": null
+    },
+    "replay": {
+      "evidence": "source_report.json",
+      "policy_version": "forecast-source-acceptance-1.1.0",
+      "reason": "AI-03/04 historical correction snapshots required",
+      "sample_size": 39992,
+      "status": "not_ready",
+      "threshold": true,
+      "value": null
+    },
+    "stockout": {
+      "evidence": "source_report.json",
+      "policy_version": "forecast-source-acceptance-1.1.0",
+      "reason": "AI-06 inventory ledger and reliable availability required",
+      "sample_size": 39992,
+      "status": "not_ready",
+      "threshold": true,
+      "value": null
+    }
+  },
+  "source_ready": true,
+  "status": "passed",
+  "target_type": "observed_sales_units"
+}

@@ -1,0 +1,375 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Daily demand 1.0.0 (string CSV cells)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "daily_demand_observations",
+    "daily_demand_exclusions",
+    "daily_demand_truth"
+  ],
+  "properties": {
+    "daily_demand_observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "business_date",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "observed_units",
+          "observed_orders",
+          "gross_revenue",
+          "net_revenue",
+          "return_units",
+          "return_data_complete",
+          "currency",
+          "realized_unit_price",
+          "promotion_plan_ids",
+          "available_at",
+          "is_active_assortment",
+          "location_open",
+          "source_data_complete",
+          "observation_status",
+          "quality_status",
+          "demand_policy_version"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "business_date": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "product_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "selling_location_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "channel": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ]
+          },
+          "observed_units": {
+            "type": "string",
+            "minLength": 0,
+            "pattern": "^(?:(?:0|[1-9][0-9]*))?$"
+          },
+          "observed_orders": {
+            "type": "string",
+            "minLength": 0,
+            "pattern": "^(?:(?:0|[1-9][0-9]*))?$"
+          },
+          "gross_revenue": {
+            "type": "string",
+            "minLength": 0,
+            "pattern": "^(?:[0-9]+\\.[0-9]{2})?$"
+          },
+          "net_revenue": {
+            "type": "string",
+            "minLength": 0,
+            "pattern": "^(?:[0-9]+\\.[0-9]{2})?$"
+          },
+          "return_units": {
+            "type": "string",
+            "minLength": 0,
+            "pattern": "^(?:(?:0|[1-9][0-9]*))?$"
+          },
+          "return_data_complete": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          "currency": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "PLN"
+            ]
+          },
+          "realized_unit_price": {
+            "type": "string",
+            "minLength": 0,
+            "pattern": "^(?:[0-9]+\\.[0-9]{2})?$"
+          },
+          "promotion_plan_ids": {
+            "type": "string",
+            "minLength": 0
+          },
+          "available_at": {
+            "type": "string",
+            "minLength": 1,
+            "format": "date-time"
+          },
+          "is_active_assortment": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          "location_open": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          "source_data_complete": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          "observation_status": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "observed_positive",
+              "observed_zero",
+              "closed",
+              "missing",
+              "inactive"
+            ]
+          },
+          "quality_status": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "valid",
+              "incomplete"
+            ]
+          },
+          "demand_policy_version": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "daily-demand-1.0.0"
+            ]
+          }
+        }
+      }
+    },
+    "daily_demand_exclusions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "business_date",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "observation_status",
+          "exclusion_reason",
+          "demand_policy_version"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "business_date": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "product_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "selling_location_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "channel": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ]
+          },
+          "observation_status": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "observed_positive",
+              "observed_zero",
+              "closed",
+              "missing",
+              "inactive"
+            ]
+          },
+          "exclusion_reason": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "inactive_lifecycle",
+              "inactive_assignment",
+              "inactive_assortment"
+            ]
+          },
+          "demand_policy_version": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "daily-demand-1.0.0"
+            ]
+          }
+        }
+      }
+    },
+    "daily_demand_truth": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "business_date",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "base_rate",
+          "product_factor",
+          "location_factor",
+          "weekly_factor",
+          "seasonal_factor",
+          "lifecycle_factor",
+          "price_factor",
+          "promotion_factor",
+          "anomaly_factor",
+          "noise",
+          "expected_rate",
+          "rounding_draw",
+          "latent_units",
+          "demand_policy_version"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "business_date": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "product_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "selling_location_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "channel": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ]
+          },
+          "base_rate": {
+            "type": "string",
+            "minLength": 1
+          },
+          "product_factor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "location_factor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "weekly_factor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "seasonal_factor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lifecycle_factor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "price_factor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "promotion_factor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "anomaly_factor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "noise": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected_rate": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rounding_draw": {
+            "type": "string",
+            "minLength": 1
+          },
+          "latent_units": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?:0|[1-9][0-9]*)$"
+          },
+          "demand_policy_version": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "daily-demand-1.0.0"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

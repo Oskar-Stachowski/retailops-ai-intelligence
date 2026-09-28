@@ -1,0 +1,332 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "daily_return_cohorts": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of_time": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "available_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_date": {
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "currency": {
+            "enum": [
+              "PLN"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "gross_revenue": {
+            "minLength": 1,
+            "pattern": "^[0-9]+\\.[0-9]{2}$",
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "net_revenue": {
+            "minLength": 1,
+            "pattern": "^[0-9]+\\.[0-9]{2}$",
+            "type": "string"
+          },
+          "net_units": {
+            "minLength": 1,
+            "pattern": "^(?:0|[1-9][0-9]*)$",
+            "type": "string"
+          },
+          "observed_units": {
+            "minLength": 1,
+            "pattern": "^(?:0|[1-9][0-9]*)$",
+            "type": "string"
+          },
+          "product_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "refund_amount": {
+            "minLength": 1,
+            "pattern": "^[0-9]+\\.[0-9]{2}$",
+            "type": "string"
+          },
+          "return_data_complete": {
+            "enum": [
+              "true",
+              "false"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "return_units": {
+            "minLength": 1,
+            "pattern": "^(?:0|[1-9][0-9]*)$",
+            "type": "string"
+          },
+          "returns_policy_version": {
+            "enum": [
+              "retail-returns-1.0.0"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "selling_location_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "snapshot_kind": {
+            "enum": [
+              "history",
+              "return_tail"
+            ],
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "business_date",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "snapshot_kind",
+          "as_of_time",
+          "observed_units",
+          "return_units",
+          "net_units",
+          "gross_revenue",
+          "refund_amount",
+          "net_revenue",
+          "currency",
+          "return_data_complete",
+          "available_at",
+          "returns_policy_version"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "return_events": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "available_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "currency": {
+            "enum": [
+              "PLN"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "ingested_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "order_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "order_item_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "policy_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "product_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "quantity": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          },
+          "reason": {
+            "enum": [
+              "wrong_size",
+              "damaged",
+              "changed_mind",
+              "not_as_described",
+              "defective"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "refund_amount": {
+            "minLength": 1,
+            "pattern": "^[0-9]+\\.[0-9]{2}$",
+            "type": "string"
+          },
+          "returned_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "returns_policy_version": {
+            "enum": [
+              "retail-returns-1.0.0"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "sale_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "refunded",
+              "rejected"
+            ],
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "sale_id",
+          "order_id",
+          "order_item_id",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "policy_id",
+          "quantity",
+          "refund_amount",
+          "currency",
+          "reason",
+          "status",
+          "returned_at",
+          "ingested_at",
+          "available_at",
+          "returns_policy_version"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "return_policies": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "category_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "known_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "max_ingestion_delay_days": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          },
+          "returns_policy_version": {
+            "enum": [
+              "retail-returns-1.0.0"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "window_days": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "category_id",
+          "channel",
+          "window_days",
+          "max_ingestion_delay_days",
+          "known_at",
+          "returns_policy_version"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "return_policies",
+    "return_events",
+    "daily_return_cohorts"
+  ],
+  "title": "Retail returns 1.0.0 (string CSV cells)",
+  "type": "object"
+}
