@@ -1,0 +1,10 @@
+{
+  "channel": "store",
+  "product_ids": [
+    "p-101"
+  ],
+  "schema_version": "1.0",
+  "selling_location_ids": [
+    "s-03"
+  ]
+}

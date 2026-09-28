@@ -1,4 +1,4 @@
-"""Composition root for the local diagnostic role; no DB or model is implied."""
+"""Compose role wiring and diagnostic HTTP; no model serving is implied."""
 
 import logging
 import secrets
@@ -15,13 +15,16 @@ from prometheus_client import CONTENT_TYPE_LATEST
 from starlette.exceptions import HTTPException
 from starlette.responses import JSONResponse, Response
 
+from retailops_ai.adapters.database import DatabaseProbe, database_engine
 from retailops_ai.adapters.telemetry import HttpMetrics, new_tracer
+from retailops_ai.api.access import access_router
 from retailops_ai.api.errors import problem_response
 from retailops_ai.api.middleware import HttpObservation, single_header
 from retailops_ai.api.models import DependencyStatus, Health, Problem, Ready, ServiceVersion
 from retailops_ai.config import Settings
 from retailops_ai.domain.readiness import Dependency
 from retailops_ai.pipelines.readiness import Readiness
+from retailops_ai.security.local import load_authority
 
 
 class DiagnosticAPI(FastAPI):
@@ -43,10 +46,15 @@ class DiagnosticAPI(FastAPI):
 def create_app(
     settings: Settings, *, dependencies: tuple[Dependency, ...] = (), tracer: Tracer | None = None
 ) -> FastAPI:
-    # Dependency adapters are explicitly registered per role at this composition root.
-    # The current role only needs its completed application lifecycle.
-    if any(d.name == "startup" for d in dependencies):
-        raise ValueError("startup is a reserved dependency name")
+    if any(d.name in {"startup", "ai_db"} for d in dependencies):
+        raise ValueError("startup and ai_db are reserved dependency names")
+    authority = load_authority(
+        settings.api_auth_file,
+        settings.metrics_token.get_secret_value() if settings.metrics_token else None,
+    )
+    engine = database_engine(settings) if settings.database_url is not None else None
+    if engine is not None:
+        dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
     metrics = HttpMetrics()
     started = False
@@ -61,6 +69,8 @@ def create_app(
             yield
         finally:
             started = False
+            if engine is not None:
+                await engine.dispose()
             logger.info(
                 "application_stopped", extra={"event_data": {"event": "application_stopped"}}
             )
@@ -86,13 +96,24 @@ def create_app(
             500: {"model": Problem},
         },
     )
-    app.add_middleware(HttpObservation, metrics=metrics, tracer=tracer or new_tracer())
+    app.add_middleware(
+        HttpObservation,
+        metrics=metrics,
+        tracer=tracer or new_tracer(),
+        compose=settings.network_mode == "compose",
+    )
 
     @app.exception_handler(HTTPException)
     async def http_error(request: Request, exc: HTTPException) -> JSONResponse:
         headers = None
         if exc.status_code == 405 and exc.headers and "Allow" in exc.headers:
             headers = {"Allow": exc.headers["Allow"]}
+        elif (
+            exc.status_code == 401
+            and exc.headers
+            and exc.headers.get("WWW-Authenticate") == "Bearer"
+        ):
+            headers = {"WWW-Authenticate": "Bearer"}
         # Exception details and arbitrary exception headers are deliberately not reflected.
         return problem_response(exc.status_code, headers=headers)
 
@@ -108,6 +129,7 @@ def create_app(
     async def ready() -> Ready | JSONResponse:
         result = await readiness.evaluate(started=started)
         report = Ready(
+            role="ai_api" if engine is not None else "foundation",
             status=result.status,
             dependencies=[
                 DependencyStatus(name=d.name, required=d.required, status=d.status)
@@ -147,4 +169,5 @@ def create_app(
             return problem_response(401, headers={"WWW-Authenticate": "Bearer"})
         return Response(metrics.render(), headers={"Content-Type": CONTENT_TYPE_LATEST})
 
+    app.include_router(access_router(authority))
     return app

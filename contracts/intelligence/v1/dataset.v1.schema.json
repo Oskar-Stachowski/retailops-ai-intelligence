@@ -1,0 +1,500 @@
+{
+  "$defs": {
+    "ArtifactReference": {
+      "additionalProperties": false,
+      "properties": {
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "classification": {
+          "enum": [
+            "facts",
+            "simulation_truth",
+            "raw_events",
+            "source_operational_output",
+            "curated",
+            "features",
+            "labels",
+            "split",
+            "predictions"
+          ],
+          "title": "Classification",
+          "type": "string"
+        },
+        "date_field": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Date Field",
+          "type": "string"
+        },
+        "date_from": {
+          "format": "date",
+          "title": "Date From",
+          "type": "string"
+        },
+        "date_to": {
+          "format": "date",
+          "title": "Date To",
+          "type": "string"
+        },
+        "grain": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Grain",
+          "type": "array"
+        },
+        "logical_table": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Logical Table",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "rows": {
+          "minimum": 0,
+          "title": "Rows",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "byte_sha256",
+        "size_bytes",
+        "rows",
+        "schema_version",
+        "logical_table",
+        "classification",
+        "grain",
+        "date_field",
+        "date_from",
+        "date_to"
+      ],
+      "title": "ArtifactReference",
+      "type": "object"
+    },
+    "IdentityDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "canonicalization_version": {
+          "const": "retailops-canonical-json-v1",
+          "title": "Canonicalization Version",
+          "type": "string"
+        },
+        "classification": {
+          "enum": [
+            "facts",
+            "simulation_truth",
+            "raw_events",
+            "source_operational_output",
+            "curated",
+            "features",
+            "labels",
+            "split",
+            "predictions"
+          ],
+          "title": "Classification",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/$defs/SemanticConfig"
+        },
+        "logical_content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Logical Content Sha256",
+          "type": "string"
+        },
+        "parents": {
+          "$ref": "#/$defs/Parents"
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        },
+        "role": {
+          "enum": [
+            "source",
+            "curated",
+            "features",
+            "labels",
+            "split",
+            "predictions"
+          ],
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "canonicalization_version",
+        "role",
+        "classification",
+        "parents",
+        "config",
+        "provenance",
+        "logical_content_sha256"
+      ],
+      "title": "IdentityDescriptor",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "Parents": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "anyOf": [
+            {
+              "pattern": "^curated-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curated Dataset Id"
+        },
+        "feature_set_id": {
+          "anyOf": [
+            {
+              "pattern": "^features-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Feature Set Id"
+        },
+        "inference_run_id": {
+          "anyOf": [
+            {
+              "pattern": "^run-[0-9a-f]{32}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Inference Run Id"
+        },
+        "label_dataset_id": {
+          "anyOf": [
+            {
+              "pattern": "^labels-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Label Dataset Id"
+        },
+        "model_id": {
+          "anyOf": [
+            {
+              "pattern": "^model-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Model Id"
+        },
+        "source_dataset_id": {
+          "anyOf": [
+            {
+              "pattern": "^source-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Dataset Id"
+        },
+        "split_id": {
+          "anyOf": [
+            {
+              "pattern": "^split-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Split Id"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "feature_set_id",
+        "label_dataset_id",
+        "split_id",
+        "model_id",
+        "inference_run_id"
+      ],
+      "title": "Parents",
+      "type": "object"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "code_state": {
+          "enum": [
+            "clean",
+            "dirty"
+          ],
+          "title": "Code State",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "dirty_patch_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dirty Patch Sha256"
+        },
+        "repository": {
+          "enum": [
+            "retailops-cloud-native-platform",
+            "retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "transform_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Transform Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "code_state",
+        "dirty_patch_sha256",
+        "dependency_lock_sha256",
+        "transform_version"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "ReadinessFlags": {
+      "additionalProperties": false,
+      "properties": {
+        "anomaly": {
+          "const": "not_ready",
+          "title": "Anomaly",
+          "type": "string"
+        },
+        "forecast": {
+          "enum": [
+            "passed",
+            "failed",
+            "not_ready",
+            "not_evaluable"
+          ],
+          "title": "Forecast",
+          "type": "string"
+        },
+        "inventory_ready": {
+          "const": false,
+          "title": "Inventory Ready",
+          "type": "boolean"
+        },
+        "policy_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "stockout": {
+          "const": "not_ready",
+          "title": "Stockout",
+          "type": "string"
+        }
+      },
+      "required": [
+        "forecast",
+        "inventory_ready",
+        "anomaly",
+        "stockout",
+        "policy_version"
+      ],
+      "title": "ReadinessFlags",
+      "type": "object"
+    },
+    "SemanticConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "calendar_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Calendar Version",
+          "type": "string"
+        },
+        "contract_version": {
+          "const": "1.0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "requested_parameters": {
+          "patternProperties": {
+            "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+              "$ref": "#/$defs/JsonValue"
+            }
+          },
+          "title": "Requested Parameters",
+          "type": "object"
+        },
+        "resolved_parameters": {
+          "minProperties": 1,
+          "patternProperties": {
+            "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+              "$ref": "#/$defs/JsonValue"
+            }
+          },
+          "title": "Resolved Parameters",
+          "type": "object"
+        },
+        "scenario": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Scenario",
+          "type": "string"
+        },
+        "seed": {
+          "minimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "seed",
+        "scenario",
+        "business_timezone",
+        "calendar_version",
+        "contract_version",
+        "requested_parameters",
+        "resolved_parameters"
+      ],
+      "title": "SemanticConfig",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:intelligence:dataset:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/ArtifactReference"
+      },
+      "minItems": 1,
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "classification": {
+      "enum": [
+        "facts",
+        "simulation_truth",
+        "raw_events",
+        "source_operational_output",
+        "curated",
+        "features",
+        "labels",
+        "split",
+        "predictions"
+      ],
+      "title": "Classification",
+      "type": "string"
+    },
+    "contract_type": {
+      "const": "dataset",
+      "title": "Contract Type",
+      "type": "string"
+    },
+    "dataset_id": {
+      "pattern": "^(source|curated|features|labels|split|predictions)-sha256-[0-9a-f]{64}$",
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "identity": {
+      "$ref": "#/$defs/IdentityDescriptor"
+    },
+    "readiness": {
+      "$ref": "#/$defs/ReadinessFlags"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "watermarks": {
+      "minProperties": 1,
+      "patternProperties": {
+        "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "type": "string"
+        }
+      },
+      "title": "Watermarks",
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "contract_type",
+    "dataset_id",
+    "identity",
+    "classification",
+    "generated_at",
+    "watermarks",
+    "artifacts",
+    "readiness"
+  ],
+  "title": "DatasetManifest",
+  "type": "object"
+}

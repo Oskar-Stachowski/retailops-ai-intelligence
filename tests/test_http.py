@@ -18,6 +18,7 @@ from pydantic import ValidationError
 from retailops_ai.adapters.telemetry import CORRELATION_ID, JsonFormatter, context_headers
 from retailops_ai.api.app import create_app
 from retailops_ai.api.models import Health, Problem, Ready, ServiceVersion
+from retailops_ai.api.schema import contract_openapi
 from retailops_ai.config import Settings
 from retailops_ai.domain.readiness import Dependency
 
@@ -386,7 +387,9 @@ def test_raw_third_party_messages_and_exception_text_are_not_logged():
 
 def test_http_contract_snapshots():
     app = create_app(settings())
-    assert app.openapi() == json.loads((ROOT / "contracts/diagnostics.openapi.json").read_text())
+    assert contract_openapi(app.openapi(), access=False) == json.loads(
+        (ROOT / "contracts/diagnostics.openapi.json").read_text()
+    )
     for name, model in [
         ("health", Health),
         ("readiness", Ready),

@@ -44,7 +44,11 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make secrets` | Gitleaks 8.30.1: historia Git i aktualny katalog, z redakcją |
 | `make ci-local` | `check` oraz `secrets` |
 | `make serve` | Lokalny serwer HTTP z jawnym dotenv |
-| `make contracts` | Regeneracja kontraktów HTTP do przeglądu razem ze zmianą kodu |
+| `make compose-up/down` | Lokalny stos DB/API/MLflow, jawne migracje, zachowane wolumeny |
+| `make compose-config` | Walidacja Compose bez wypisywania sekretów |
+| `make compose-smoke` | Rzeczywiste próby persistence i awarii, następnie shutdown |
+| `make contracts-check` | Porównanie intelligence/access snapshots z kodem, bez ich zapisywania |
+| `make contracts` | Regeneracja HTTP oraz intelligence/access schemas/examples do przeglądu |
 
 Gitleaks jest osobnym narzędziem; zainstaluj wersję 8.30.1 z
 [oficjalnego wydania](https://github.com/gitleaks/gitleaks/releases/tag/v8.30.1)
@@ -54,7 +58,9 @@ Brak narzędzia przerywa kontrolę. Na świeżym repo skan historii wymaga pierw
 Zmiany zależności wykonuj przez uv, aktualizując lockfile w tej samej zmianie.
 CI stosuje `--locked`, więc rozbieżność pyproject/lock nie naprawia się po cichu.
 Po zmianie kontraktu metadanych odśwież schema fixture i przykład oraz
-przeprowadź testy kompatybilności. Nie nadawaj jej znaczenia kontraktu forecastingu.
+przeprowadź testy kompatybilności. Metadane aplikacji i HTTP mają osobne znaczenie od [kontraktów danych/run/tool](data-contracts.md).
+Przykłady intelligence są syntetycznymi metadanymi; contract-check nie odczytuje
+artefaktów ani nie wykonuje quality gates.
 
 
 Serwis i granice dostępu opisuje [instrukcja HTTP](http-service.md).
@@ -62,3 +68,9 @@ Test procesu wymaga możliwości otwarcia krótkotrwałego portu na loopback;
 w sandboxie bez socket bind nie jest pomijany, tylko kończy się błędem.
 Testy ASGI/provider fakes nie używają sieci zewnętrznej. Aktualny klient testowy
 httpx2 odpowiada wymaganiom przypiętej wersji Starlette.
+
+Persistence i wymagania Docker opisuje [instrukcja lokalnego stosu](local-stack.md).
+
+[Tożsamość i uprawnienia API](access-control.md) opisują access-init, prywatne
+pliki i API_AUTH_FILE. Config-check weryfikuje jawny plik oraz rozdział tokenów;
+nie tworzy danych i nie sprawdza usług zewnętrznych.

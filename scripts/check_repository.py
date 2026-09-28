@@ -17,6 +17,18 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
     events: dict[str, Any] = workflow.get("on") or workflow.get(True) or {}
     if not all(event in events for event in ("push", "pull_request", "workflow_dispatch")):
         errors.append("CI must cover push, pull_request and workflow_dispatch")
+    push = events.get("push") or {}
+    pull_request = events.get("pull_request") or {}
+    if "branches" in push and not {"main", "ai/**"}.issubset(push["branches"]):
+        errors.append("CI push must cover main and AI development branches")
+    if "types" in pull_request and not {"opened", "synchronize", "reopened"}.issubset(
+        pull_request["types"]
+    ):
+        errors.append("CI must cover new, updated and reopened pull requests")
+    if "branches-ignore" in push or any(
+        key in pull_request for key in ("branches", "branches-ignore")
+    ):
+        errors.append("required CI must not exclude pull requests or push branches")
     if any(
         "paths" in (events.get(event) or {}) or "paths-ignore" in (events.get(event) or {})
         for event in ("push", "pull_request")
@@ -25,11 +37,29 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append("workflow permissions must be contents:read")
     jobs = workflow.get("jobs", {})
+    if not any(
+        step.get("run") == "make bootstrap compose-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute real Compose acceptance")
+    if not any(
+        step.get("run") == "make bootstrap check"
+        for step in jobs.get("checks", {}).get("steps", [])
+    ):
+        errors.append("checks must run every make check gate")
     required = jobs.get("required-result", {})
     if set(required.get("needs", [])) != set(jobs) - {"required-result"}:
         errors.append("required-result must depend on every check")
     if required.get("if") != "always()":
         errors.append("required-result must run even after a failure")
+    result_steps = required.get("steps", [])
+    expected = {
+        name.upper().replace("-", "_") + "_RESULT": "$" + "{{ needs." + name + ".result }}"
+        for name in jobs
+        if name != "required-result"
+    }
+    if not any(step.get("env") == expected for step in result_steps):
+        errors.append("required-result must read the exact result expressions")
     for job in jobs.values():
         if job.get("continue-on-error"):
             errors.append("jobs cannot ignore failures")

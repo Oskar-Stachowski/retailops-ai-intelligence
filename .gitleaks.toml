@@ -3,4 +3,4 @@ useDefault = true
 
 [[allowlists]]
 description = "Generated local environments and output; no source exceptions"
-paths = ['(^|/)([.]venv|[.]tools|[.]mypy_cache|[.]ruff_cache|[.]pytest_cache|dist|build|reports)/']
+paths = ['(^|/)([.]local|[.]venv|[.]tools|[.]mypy_cache|[.]ruff_cache|[.]pytest_cache|dist|build|reports)/']

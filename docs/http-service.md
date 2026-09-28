@@ -21,13 +21,18 @@ Port domyślny: **8081**. Nie wymaga AWS, DB ani konta zewnętrznego.
 | `GET /version` | Metadane pakietu, opcjonalne build/image, `model=null`. | Lokalny |
 | `GET /metrics` | Prometheus; 404, gdy tokenu nie skonfigurowano; 401 przy braku lub błędzie tokenu. | Bearer token + lokalny bind |
 
-`HTTP_HOST` dopuszcza tylko `127.0.0.1` albo `::1`. `HTTP_PORT`: 1–65535.
+W trybie local `HTTP_HOST` dopuszcza tylko `127.0.0.1` albo `::1`.
+[Compose](local-stack.md) dopuszcza bind kontenera `0.0.0.0` i Host `api`,
+przy zachowaniu portów hosta na loopback. `HTTP_PORT`: 1–65535.
 Host żądania musi być `localhost`, `127.0.0.1` lub `[::1]`, z opcjonalnym portem.
 Forwarded headers nie zmieniają tożsamości klienta; proxy headers są wyłączone.
 Nie ma CORS, Swagger UI, publicznego endpointu OpenAPI ani przekierowania slash.
-Rzeczywisty schemat jest wersjonowany w [kontrakcie](../contracts/diagnostics.openapi.json).
+Diagnostyka ma osobny [OpenAPI](../contracts/diagnostics.openapi.json);
+chronione /api/v1 ma [kontrakt access](../contracts/access/v1/access.openapi.json).
+Nowe endpointy i poświadczenia opisują [uprawnienia API](access-control.md).
 
-Bieżąca rola to **foundation**. Jej wymaganą zależnością jest ukończony startup;
+Bez DATABASE_URL rola to **foundation**; z DB rola **ai_api** wymaga rzeczywistej
+sondy ai_db (wersja migracji, vector i tabela). Foundation wymaga ukończonego startup;
 brak bazy/modelu nie jest raportowany jako sprawdzona baza/model. Factory
 `create_app` przyjmuje jawny rejestr `Dependency`: nazwa, async check i required.
 Warstwa `pipelines/readiness.py` uruchamia kontrole równolegle, z limitem ośmiu
@@ -58,6 +63,7 @@ rzeczywistej wartości w Git, argv poleceń ani raportach. Token porównywany je
 w stałym czasie; powielone nagłówki autoryzacji są odrzucane. To lokalna ochrona
 telemetrii, nie system tożsamości ani uprawnień do przyszłych danych AI.
 
+Odrębna [tożsamość i uprawnienia /api/v1](access-control.md) nie używają tokenu metryk.
 Registry jest osobny dla każdej aplikacji. Licznik
 `retailops_ai_http_requests_total` i histogram
 `retailops_ai_http_request_duration_seconds` mają etykiety method, route, status.
@@ -108,6 +114,6 @@ Brak wartości daje null. Brak modelu daje jawne `model=null`.
 - `pipelines/`: wykonanie kontroli gotowości z timeoutem.
 - `adapters/`: logi, Prometheus i kontekst OpenTelemetry.
 
-Próby DB i restartu z persistence należą do następnego zakresu etapu 01.
+Próby rzeczywistej DB i restartu opisują [dowody persistence](evidence/01-persistence.md).
 Przed udostępnieniem serwisu poza loopback wymagane są transport, granica sieciowa
 i uwierzytelnianie właściwe dla nowych funkcji; nie wystarczy zmiana bind address.

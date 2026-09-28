@@ -21,11 +21,49 @@ def main(argv: list[str] | None = None) -> int:
     check.add_argument("--env-file", type=Path, help="Explicit dotenv file; environment wins.")
     serve = commands.add_parser("serve", help="Run the local diagnostic HTTP service.")
     serve.add_argument("--env-file", type=Path, help="Explicit dotenv file; environment wins.")
+    migration = commands.add_parser("migrate", help="Explicitly upgrade the isolated AI database.")
+    migration.add_argument("--env-file", type=Path)
+    access_init = commands.add_parser(
+        "access-init",
+        help="Provision explicit local grants into private files, without printing credentials.",
+    )
+    access_init.add_argument("--grants-file", type=Path, required=True)
+    access_init.add_argument("--output-dir", type=Path, required=True)
+    access_init.add_argument("--ttl-hours", type=int, default=8)
+    contracts = commands.add_parser(
+        "contract-check", help="Validate an offline intelligence contract."
+    )
+    contracts.add_argument("family")
+    contracts.add_argument("path", type=Path)
     args = parser.parse_args(argv)
 
     if args.command == "version":
         info = ApplicationInfo(version=version("retailops-ai-intelligence"))
         print(info.model_dump_json())
+        return 0
+
+    if args.command == "access-init":
+        from retailops_ai.security.provision import provision
+
+        try:
+            provision(args.grants_file, args.output_dir, args.ttl_hours)
+        except (OSError, ValueError, RecursionError):
+            print('{"error":"access_initialization_failed"}', file=sys.stderr)
+            return 2
+        print('{"status":"initialized"}')
+        return 0
+
+    if args.command == "contract-check":
+        from retailops_ai.data_contracts.registry import MAX_DOCUMENT_BYTES, validate_document
+
+        try:
+            with args.path.open("rb") as source:
+                raw = source.read(MAX_DOCUMENT_BYTES + 1)
+            validate_document(args.family, raw)
+        except (OSError, ValueError, RecursionError):
+            print('{"error":"invalid_contract_document"}', file=sys.stderr)
+            return 2
+        print(json.dumps({"status": "valid", "contract": args.family, "schema_version": "1.0"}))
         return 0
 
     if args.env_file is not None and not args.env_file.is_file():
@@ -49,14 +87,30 @@ def main(argv: list[str] | None = None) -> int:
         print('{"error":"configuration_unavailable"}', file=sys.stderr)
         return 2
 
+    if args.command == "migrate":
+        from retailops_ai.migrations.runner import migrate
+
+        try:
+            migrate(settings)
+        except Exception:
+            print('{"error":"database_migration_failed"}', file=sys.stderr)
+            return 1
+        print('{"status":"migrated"}')
+        return 0
+
     if args.command == "serve":
         import uvicorn
 
         from retailops_ai.adapters.telemetry import logging_config
         from retailops_ai.api.app import create_app
 
+        try:
+            app = create_app(settings)
+        except (OSError, ValueError):
+            print('{"error":"access_policy_unavailable"}', file=sys.stderr)
+            return 2
         uvicorn.run(
-            create_app(settings),
+            app,
             host=settings.http_host,
             port=settings.http_port,
             log_config=logging_config(settings.log_level),
@@ -69,5 +123,15 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
 
+    from retailops_ai.security.local import load_authority
+
+    try:
+        load_authority(
+            settings.api_auth_file,
+            settings.metrics_token.get_secret_value() if settings.metrics_token else None,
+        )
+    except (OSError, ValueError):
+        print('{"error":"access_policy_unavailable"}', file=sys.stderr)
+        return 2
     print(json.dumps({"status": "valid", "app_env": settings.app_env}))
     return 0

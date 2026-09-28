@@ -1,30 +1,35 @@
 # Aktualny status
 
-**2026-09-27 · in_progress · bazowy HTTP w etapie 01.**
+**2026-09-28 · in_progress · lokalna tożsamość i uprawnienia API etapu 01.**
 
-Działa pakiet, typed settings, CLI `version/config-check/serve` oraz lokalny
-serwis `/health`, `/ready`, `/version` i chroniony tokenem `/metrics`.
-[Instrukcja HTTP](http-service.md) opisuje gotowość roli foundation,
-kontrole zależności, bezpieczne błędy, logi JSON i kontekst żądania.
-Warstwy api/domain/pipelines/adapters mają rzeczywistą implementację.
-Kontrakty OpenAPI i JSON Schema są sprawdzane razem z testami.
+Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
+PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
+[Uruchomienie](local-stack.md), [HTTP](http-service.md).
 
-[Dowody HTTP](evidence/01-http.md) opisują wykonane kontrole, w tym proces
-nasłuchujący na loopback. [Pierwszy fundament](evidence/01-foundation.md)
-zachowuje zakres wcześniejszego odbioru. Podstawowe Required CI obejmuje
-nowe pliki bez filtrów ścieżek. Repo nadal jest lokalne: brak remote,
-zdalnego przebiegu CI i skonfigurowanej ochrony gałęzi.
+[Lokalne uprawnienia API](access-control.md) weryfikują Bearer token z prywatnej
+mapy, principal i cały scope; endpointy identity, forecast preflight i admin metadata
+mają testy 401/403 oraz rzeczywisty proces loopback. [Dowody](evidence/01-access.md)
+opisują odbiór i restart wymagany po zmianie polityki.
+
+[Kontrakty v1](data-contracts.md) są wykonywalne: dataset/feature/label/split/model/
+prediction/run/tool/bundle, JSON Schema, syntetyczne fixtures i walidacja offline.
+[Dowody](evidence/01-contracts.md) opisują testy struktury, PIT, lineage, identity,
+stanów runa i bezpiecznych tool results. Nie ma jeszcze importera, treningu ani
+endpointów predykcji. Schemat runa/tool nie oznacza działającego workera/agenta.
+
+[Odbiór persistence](evidence/01-persistence.md) opisuje rzeczywisty Compose,
+crash/restart, DB outage/recovery i zachowanie artefaktów.
+[HTTP](evidence/01-http.md) i [fundament](evidence/01-foundation.md) zachowują zakres
+wcześniejszych pomiarów. Required CI obejmuje kod, schemas, docs i persistence.
+GitHub main ma required-result; CI bazowego 7d67530 ma success. Nowe commity
+persistence, kontraktów i auth są lokalne; ich zdalny CI czeka na push.
 
 ## Następna praca
 
-1. Dodać persistence AI i oddzielny MLflow: jawne migracje, Compose,
-   rzeczywistą sondę DB, testy awarii i restartu zachowującego dane.
-2. Rozszerzyć wykonywalne kontrakty o wersje danych/runów i dostosować
-   uprawnienia do pierwszych endpointów aplikacyjnych.
-3. Po publikacji repo uruchomić Required CI i skonfigurować ochronę
-   głównej gałęzi, wymagając `required-result`.
+Po push odebrać Required CI nowych commitów, w tym job persistence.
+Lokalny zakres 01 ma odbiór; zdalna bramka pozostaje otwarta.
 
-Rola foundation nie ma zależności DB/modelowych; jej gotowość nie oznacza
-gotowości predykcji. DB, MLflow, pipeline danych, modele, RAG, agent i cloud
-deploy pozostają planowane. Cały etap 01 pozostaje otwarty. Odbiór 01
-poprzedza odbiór źródła RetailOps w 02.
+Token metryk nie jest systemem tożsamości użytkowników. MLflow ma lokalną
+izolację sieciową, bez aplikacyjnego auth. Cały etap 01 pozostaje otwarty.
+Odbiór 01 poprzedza źródło RetailOps w 02. Pipeline danych, modele, RAG, agent,
+streaming i cloud są planowane, z własnymi późniejszymi bramkami.

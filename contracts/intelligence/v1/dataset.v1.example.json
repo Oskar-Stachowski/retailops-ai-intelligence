@@ -1,0 +1,75 @@
+{
+  "artifacts": [
+    {
+      "byte_sha256": "51cfb3f9b3ccb24830f8008c2d80bbf5c460f8cc5cc14c8639bb6895a83234e9",
+      "classification": "facts",
+      "date_field": "business_date",
+      "date_from": "2026-05-01",
+      "date_to": "2026-08-31",
+      "grain": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "business_date"
+      ],
+      "logical_table": "source",
+      "path": "source/fixture.parquet",
+      "rows": 2,
+      "schema_version": "1.0",
+      "size_bytes": 128
+    }
+  ],
+  "classification": "facts",
+  "contract_type": "dataset",
+  "dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+  "generated_at": "2026-09-01T00:00:00Z",
+  "identity": {
+    "canonicalization_version": "retailops-canonical-json-v1",
+    "classification": "facts",
+    "config": {
+      "business_timezone": "UTC",
+      "calendar_version": "calendar-utc-v1",
+      "contract_version": "1.0",
+      "requested_parameters": {
+        "horizon_days": null,
+        "products": 1
+      },
+      "resolved_parameters": {
+        "horizon_days": 14,
+        "products": 1
+      },
+      "scenario": "schema-fixture",
+      "seed": 42
+    },
+    "logical_content_sha256": "5a2fe18fb70b07214f51606b9dc9fd9354088bd8717b10ae0c991b328fa9dca1",
+    "parents": {
+      "curated_dataset_id": null,
+      "feature_set_id": null,
+      "inference_run_id": null,
+      "label_dataset_id": null,
+      "model_id": null,
+      "source_dataset_id": null,
+      "split_id": null
+    },
+    "provenance": {
+      "code_state": "clean",
+      "commit_sha": "1111111111111111111111111111111111111111",
+      "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+      "dirty_patch_sha256": null,
+      "repository": "retailops-cloud-native-platform",
+      "transform_version": "fixture-v1"
+    },
+    "role": "source"
+  },
+  "readiness": {
+    "anomaly": "not_ready",
+    "forecast": "passed",
+    "inventory_ready": false,
+    "policy_version": "synthetic-fixture-only-v1",
+    "stockout": "not_ready"
+  },
+  "schema_version": "1.0",
+  "watermarks": {
+    "daily_observations": "2026-08-31T23:59:59Z"
+  }
+}

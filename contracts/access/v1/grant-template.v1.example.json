@@ -1,0 +1,36 @@
+{
+  "grants": [
+    {
+      "capabilities": [
+        "forecast:read"
+      ],
+      "principal_id": "local-viewer",
+      "roles": [
+        "viewer"
+      ],
+      "scope": {
+        "channels": [
+          "store"
+        ],
+        "product_ids": [
+          "p-101"
+        ],
+        "selling_location_ids": [
+          "s-03"
+        ]
+      }
+    },
+    {
+      "capabilities": [
+        "access:admin"
+      ],
+      "principal_id": "local-admin",
+      "roles": [
+        "admin"
+      ],
+      "scope": null
+    }
+  ],
+  "policy_id": "local-example-v1",
+  "schema_version": "1.0"
+}

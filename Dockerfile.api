@@ -1,0 +1,13 @@
+FROM python:3.11.15-slim@sha256:90744cff8f32887f075c47d747a173ff333e9e98801667af93c357fa9f5e28ff AS build
+WORKDIR /app
+RUN pip install --no-cache-dir uv==0.12.19
+ENV UV_PROJECT_ENVIRONMENT=/opt/venv
+COPY pyproject.toml uv.lock README.md ./
+COPY src ./src
+RUN uv sync --locked --no-dev --no-editable
+FROM python:3.11.15-slim@sha256:90744cff8f32887f075c47d747a173ff333e9e98801667af93c357fa9f5e28ff
+RUN useradd --uid 10001 --create-home app && mkdir -p /var/lib/retailops-ai/artifacts && chown -R app:app /var/lib/retailops-ai
+COPY --from=build /opt/venv /opt/venv
+ENV PATH=/opt/venv/bin:$PATH
+USER 10001
+CMD ["retailops-ai", "serve"]

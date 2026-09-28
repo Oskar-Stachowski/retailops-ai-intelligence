@@ -25,7 +25,7 @@ class DependencyStatus(Contract):
 
 class Ready(Contract):
     schema_version: Literal["1.0"] = "1.0"
-    role: Literal["foundation"] = "foundation"
+    role: Literal["foundation", "ai_api"] = "foundation"
     status: Literal["ready", "degraded", "not_ready"]
     dependencies: list[DependencyStatus]
 

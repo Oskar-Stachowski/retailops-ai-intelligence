@@ -9,6 +9,7 @@ from pydantic import BaseModel
 
 from retailops_ai.api.app import create_app
 from retailops_ai.api.models import DependencyStatus, Health, Problem, Ready, ServiceVersion
+from retailops_ai.api.schema import contract_openapi
 from retailops_ai.config import Settings
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -48,7 +49,9 @@ def main() -> None:
         write_json(ROOT / f"contracts/{name}.v1.schema.json", type(example).model_json_schema())
         write_json(ROOT / f"contracts/{name}.v1.example.json", example.model_dump(mode="json"))
     app = create_app(Settings(APP_ENV="test", ARTIFACT_ROOT="./artifacts"))
-    write_json(ROOT / "contracts/diagnostics.openapi.json", app.openapi())
+    write_json(
+        ROOT / "contracts/diagnostics.openapi.json", contract_openapi(app.openapi(), access=False)
+    )
 
 
 if __name__ == "__main__":

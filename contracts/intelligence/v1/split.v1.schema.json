@@ -1,0 +1,132 @@
+{
+  "$defs": {
+    "DataLineage": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id"
+      ],
+      "title": "DataLineage",
+      "type": "object"
+    },
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:intelligence:split:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "calibration": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DateWindow"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contract_type": {
+      "const": "split",
+      "title": "Contract Type",
+      "type": "string"
+    },
+    "feature_set_id": {
+      "pattern": "^features-sha256-[0-9a-f]{64}$",
+      "title": "Feature Set Id",
+      "type": "string"
+    },
+    "label_dataset_id": {
+      "pattern": "^labels-sha256-[0-9a-f]{64}$",
+      "title": "Label Dataset Id",
+      "type": "string"
+    },
+    "lineage": {
+      "$ref": "#/$defs/DataLineage"
+    },
+    "max_horizon_days": {
+      "maximum": 14,
+      "minimum": 1,
+      "title": "Max Horizon Days",
+      "type": "integer"
+    },
+    "protocol": {
+      "const": "fixed_origin",
+      "title": "Protocol",
+      "type": "string"
+    },
+    "purge_days": {
+      "maximum": 90,
+      "minimum": 1,
+      "title": "Purge Days",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "split_id": {
+      "pattern": "^split-sha256-[0-9a-f]{64}$",
+      "title": "Split Id",
+      "type": "string"
+    },
+    "test": {
+      "$ref": "#/$defs/DateWindow"
+    },
+    "train": {
+      "$ref": "#/$defs/DateWindow"
+    },
+    "validation": {
+      "$ref": "#/$defs/DateWindow"
+    }
+  },
+  "required": [
+    "schema_version",
+    "contract_type",
+    "split_id",
+    "lineage",
+    "feature_set_id",
+    "label_dataset_id",
+    "protocol",
+    "max_horizon_days",
+    "purge_days",
+    "train",
+    "validation",
+    "calibration",
+    "test"
+  ],
+  "title": "SplitRecord",
+  "type": "object"
+}

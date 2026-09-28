@@ -1,0 +1,16 @@
+{
+  "allowed": true,
+  "capability": "forecast:read",
+  "principal_id": "local-viewer",
+  "schema_version": "1.0",
+  "scope": {
+    "channel": "store",
+    "product_ids": [
+      "p-101"
+    ],
+    "schema_version": "1.0",
+    "selling_location_ids": [
+      "s-03"
+    ]
+  }
+}

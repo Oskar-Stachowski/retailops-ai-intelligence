@@ -1,9 +1,13 @@
 # Bezpieczeństwo
 
-Repo udostępnia lokalny serwis diagnostyczny, bez publicznego wdrożenia.
+Repo udostępnia lokalny serwis diagnostyczny i [stos DB/MLflow](local-stack.md),
+bez publicznego wdrożenia. MLflow nie ma aplikacyjnego auth i jest dostępny tylko lokalnie.
 [Granice HTTP](http-service.md): loopback, kontrola Host, token metryk,
 walidowany kontekst i logi bez wartości wejściowych.
-Nie deklaruje produkcyjnego auth, RBAC, szyfrowania danych ani gotowych modeli.
+[Lokalne uprawnienia API](access-control.md) mają zweryfikowane opaque credentials,
+principal i jawne capabilities/scope, bez automatycznej hierarchii ról.
+Zmiana polityki wymaga restartu; expiry działa przy każdym żądaniu.
+Nie deklaruje produkcyjnego IdP/auth, szyfrowania danych ani gotowych modeli.
 Każdy przyszły endpoint administracyjny wymaga granicy dostępu od pierwszej wersji;
 `user_id` i demo-admin RetailOps nie są tożsamością dla AI.
 
@@ -13,7 +17,7 @@ Git, issue ani evidence. W razie ujawnienia unieważnij/obróć sekret; samo usu
 z najnowszego pliku nie usuwa go z historii.
 
 Gitleaks skanuje aktualny katalog i historię. Wyjątki dotyczą tylko generowanych
-venv/cache/build; nie ma allowlist dla źródeł. Workflow ma przypięte actions,
+venv/cache/build oraz prywatnego generowanego .local/; nie ma allowlist dla źródeł. Workflow ma przypięte actions,
 minimalne permissions oraz wyłączone komentarze i upload wykrytych sekretów.
 Gitleaks Action v3 obsługuje osobiste repo bez license key; przeniesienie do
 organizacji wymaga sprawdzenia warunków upstream przed uruchomieniem tej akcji.

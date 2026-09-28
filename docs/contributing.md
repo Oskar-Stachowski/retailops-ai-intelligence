@@ -10,9 +10,11 @@ sukcesu wszystkich jobs; skipped/cancelled/failed nie oznacza zaliczenia.
 Actions są przypięte pełnym SHA, zmiany wersji mają osobny przegląd.
 Workflow waliduje checkout PR, ma wyłącznie `contents:read` i nie komentuje PR-ów.
 
-Po utworzeniu zdalnego repo i pierwszym zielonym przebiegu skonfiguruj
-PR-before-merge, aktualność gałęzi i wymagany `required-result` również dla
-administratorów. Obecność pliku workflow nie dowodzi takiej ochrony.
+GitHub main wymaga PR, aktualności gałęzi i `required-result` z GitHub Actions,
+również dla administratorów. Odbiór obejmuje zdarzenie PR i późniejszy push na main.
+Ręczne workflow_dispatch służy diagnostyce: jego zielone jobs nie zastępują
+wymaganej kontroli PR. Workflow jawnie obejmuje opened/synchronize/reopened
+oraz push na main i ai/**; lokalny guard odrzuca usunięcie tych zdarzeń.
 
 Zachowuj granice z [ADR](architecture/decisions.md): osobne DB, brak kopii
 generatora/UI i bezpośredniego odczytu operacyjnej bazy. Nowe dane i wyniki

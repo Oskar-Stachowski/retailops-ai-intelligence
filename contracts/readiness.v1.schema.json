@@ -41,8 +41,11 @@
       "type": "array"
     },
     "role": {
-      "const": "foundation",
       "default": "foundation",
+      "enum": [
+        "foundation",
+        "ai_api"
+      ],
       "title": "Role",
       "type": "string"
     },

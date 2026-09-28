@@ -1,0 +1,281 @@
+{
+  "$defs": {
+    "DataLineage": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id"
+      ],
+      "title": "DataLineage",
+      "type": "object"
+    },
+    "FeatureValue": {
+      "additionalProperties": false,
+      "properties": {
+        "currency": {
+          "anyOf": [
+            {
+              "enum": [
+                "PLN",
+                "EUR"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Currency"
+        },
+        "effective_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Effective Date"
+        },
+        "kind": {
+          "enum": [
+            "observed",
+            "known_plan",
+            "calendar"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "enum": [
+            "lag_1_units",
+            "rolling_mean_7_units",
+            "target_weekday",
+            "planned_price_minor_units",
+            "planned_promotion"
+          ],
+          "title": "Name",
+          "type": "string"
+        },
+        "observed_through_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed Through Date"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        },
+        "source_available_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Available At"
+        },
+        "source_class": {
+          "enum": [
+            "facts",
+            "known_plan",
+            "calendar"
+          ],
+          "title": "Source Class",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "missing"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "source_class",
+        "source_dataset_id",
+        "status",
+        "value",
+        "source_available_at",
+        "observed_through_date",
+        "effective_date",
+        "currency",
+        "reason"
+      ],
+      "title": "FeatureValue",
+      "type": "object"
+    },
+    "ForecastKey": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "cutoff_policy": {
+          "const": "end_of_day_second_v1",
+          "title": "Cutoff Policy",
+          "type": "string"
+        },
+        "forecast_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Forecast Origin",
+          "type": "string"
+        },
+        "horizon_days": {
+          "maximum": 14,
+          "minimum": 1,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "target_date": {
+          "format": "date",
+          "title": "Target Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "forecast_origin",
+        "business_timezone",
+        "cutoff_policy",
+        "target_date",
+        "horizon_days"
+      ],
+      "title": "ForecastKey",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:intelligence:feature:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "allowlist_version": {
+      "const": "forecast-observed-sales-v1",
+      "title": "Allowlist Version",
+      "type": "string"
+    },
+    "contract_type": {
+      "const": "feature",
+      "title": "Contract Type",
+      "type": "string"
+    },
+    "feature_set_id": {
+      "pattern": "^features-sha256-[0-9a-f]{64}$",
+      "title": "Feature Set Id",
+      "type": "string"
+    },
+    "key": {
+      "$ref": "#/$defs/ForecastKey"
+    },
+    "lineage": {
+      "$ref": "#/$defs/DataLineage"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "values": {
+      "items": {
+        "$ref": "#/$defs/FeatureValue"
+      },
+      "maxItems": 5,
+      "minItems": 1,
+      "title": "Values",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "contract_type",
+    "feature_set_id",
+    "lineage",
+    "key",
+    "allowlist_version",
+    "values"
+  ],
+  "title": "FeatureRecord",
+  "type": "object"
+}
