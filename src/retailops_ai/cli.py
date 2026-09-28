@@ -11,6 +11,7 @@ from pydantic_settings import SettingsError
 
 from retailops_ai.cli_index_jobs import add_job_commands, run_job_command
 from retailops_ai.cli_knowledge import add_knowledge_commands, run_denial, run_evaluation
+from retailops_ai.cli_qualification import add_release_check, run_release_check
 from retailops_ai.cli_releases import add_commands, run_database_command, run_validation
 from retailops_ai.config import load_settings
 from retailops_ai.contracts import ApplicationInfo
@@ -79,6 +80,7 @@ def main(argv: list[str] | None = None) -> int:
     add_commands(commands)
     add_knowledge_commands(commands)
     add_job_commands(commands)
+    add_release_check(commands)
     args = parser.parse_args(argv)
 
     if args.command == "version":
@@ -94,6 +96,9 @@ def main(argv: list[str] | None = None) -> int:
         from retailops_ai.cli_review import run_review
 
         return run_review(args)
+
+    if args.command == "index-release-check":
+        return run_release_check(args)
 
     if args.command == "access-init":
         from retailops_ai.security.provision import provision

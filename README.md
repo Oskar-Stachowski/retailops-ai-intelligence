@@ -16,6 +16,8 @@ trwałe stany, idempotencję i worker dla zatwierdzonych snapshotów testowych.
 powtórzenia do przeglądu, zachowując metadata oraz cytaty.
 [Odświeżone źródła i etykiety](docs/knowledge-sources.md) wiążą 29 dokumentów
 z konkretnymi SHA; akceptacja treści i jakości pozostaje oddzielną bramką.
+[Kontrola kwalifikacji](docs/knowledge-qualification.md) przygotowuje związany
+manifest konfiguracji, raportów i decyzji, z jawnymi blokadami aktywacji.
 Wyszukiwanie i aktywacja rzeczywistego korpusu wymagają kolejnego odbioru jakości.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).

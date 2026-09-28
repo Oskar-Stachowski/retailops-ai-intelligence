@@ -1,0 +1,131 @@
+{
+  "$defs": {
+    "SimilarityDisposition": {
+      "additionalProperties": false,
+      "properties": {
+        "decision": {
+          "const": "retain_separate_contexts",
+          "title": "Decision",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "exact",
+            "near",
+            "repeated_occurrence"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "left_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Left Checksum",
+          "type": "string"
+        },
+        "level": {
+          "enum": [
+            "document",
+            "chunk"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 1000,
+          "minLength": 20,
+          "title": "Reason",
+          "type": "string"
+        },
+        "right_checksum": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Right Checksum"
+        }
+      },
+      "required": [
+        "level",
+        "kind",
+        "left_checksum",
+        "right_checksum",
+        "decision",
+        "reason"
+      ],
+      "title": "SimilarityDisposition",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:knowledge:similarity-review:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "corpus_approval_created": {
+      "const": false,
+      "title": "Corpus Approval Created",
+      "type": "boolean"
+    },
+    "decisions": {
+      "items": {
+        "$ref": "#/$defs/SimilarityDisposition"
+      },
+      "maxItems": 10000,
+      "title": "Decisions",
+      "type": "array"
+    },
+    "report_id": {
+      "pattern": "^similarity-report-sha256-[0-9a-f]{64}$",
+      "title": "Report Id",
+      "type": "string"
+    },
+    "review_id": {
+      "pattern": "^similarity-review-sha256-[0-9a-f]{64}$",
+      "title": "Review Id",
+      "type": "string"
+    },
+    "review_kind": {
+      "const": "technical_lexical_review_only",
+      "title": "Review Kind",
+      "type": "string"
+    },
+    "review_owner": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Review Owner",
+      "type": "string"
+    },
+    "reviewed_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Reviewed At",
+      "type": "string"
+    },
+    "reviewer": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Reviewer",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "review_id",
+    "report_id",
+    "review_owner",
+    "reviewer",
+    "review_kind",
+    "reviewed_at",
+    "corpus_approval_created",
+    "decisions"
+  ],
+  "title": "SimilarityReview",
+  "type": "object"
+}

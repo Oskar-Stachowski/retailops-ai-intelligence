@@ -143,4 +143,6 @@ Podstawa: [pgvector 0.8.6 — exact search i cosine](https://github.com/pgvector
 [kontrola podobnych treści](knowledge-review.md) mają osobne odbiory testowe.
 Do zamknięcia etapu 11 pozostają akceptacja źródeł/etykiet oraz odbiór jakości
 i użytkowej kwalifikacji. Każda zmiana źródeł wymaga ponownego przeglądu.
+[Kontrola przed kwalifikacją](knowledge-qualification.md) odtwarza pełny raport
+i wiąże osobne zgody z korpusem/etykietami, bez aktywacji fake.
 Real embeddings/Bedrock smoke i agent należą do etapu 12.

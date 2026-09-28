@@ -53,7 +53,12 @@ Statusy i access istniejących pozycji zachowano, zakresy twierdzeń zawężono;
 aktualny raport podobieństwa ma jedną uzasadnioną kopię krótkiego wprowadzenia.
 Fake Recall@5/MRR nie przechodzą; źródła i etykiety nadal wymagają akceptacji.
 
-**Postęp etapu 11: około 90%** — szacunek zakresu implementacji, z uwzględnieniem
+[Kontrola przed kwalifikacją](knowledge-qualification.md) odtwarza golden wyniki,
+wiąże osobne zgody na korpus/etykiety i sprawdza kompletność decyzji podobieństwa.
+[Odbiór](evidence/11-qualification.md): typowany manifest ma pięć jawnych blokad
+dla obecnego kandydata; idealny fake i obie zgody nadal nie otwierają aktywacji.
+
+**Postęp etapu 11: około 92%** — szacunek zakresu implementacji, z uwzględnieniem
 niezamkniętych odbiorów. Rejestr/metadata, parser, fake/storage, test lifecycle
 i ograniczony retrieval są zaimplementowane. Punkt 7 ma golden set i raport,
 administracyjne runy mają odbiór techniczny w zakresie test/fake.

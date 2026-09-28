@@ -47,5 +47,6 @@ fake kandydata. Nowy kandydat i raporty powstają w nowych plikach `0600`, bez
 nadpisania poprzedniego indeksu. Niska jakość fake pozostaje wynikiem pomiaru,
 bez zmiany etykiet/progów po zobaczeniu rankingu.
 
-Użytkowy profil, końcowa akceptacja źródeł/etykiet i kwalifikacja golden są
-oddzielnymi bramkami. Real embeddings, Bedrock i agent należą do etapu 12.
+[Kontrola kwalifikacji](knowledge-qualification.md) przygotowuje związany manifest
+i typowane decyzje. Użytkowy profil, końcowa akceptacja źródeł/etykiet i jakość
+golden pozostają oddzielnymi bramkami. Real embeddings, Bedrock i agent należą do etapu 12.

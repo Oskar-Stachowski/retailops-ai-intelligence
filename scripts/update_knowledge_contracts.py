@@ -17,6 +17,11 @@ from retailops_ai.knowledge.jobs import (
     IndexRunReport,
     KnowledgeIndexRequest,
 )
+from retailops_ai.knowledge.qualification import (
+    GoldenLabelsApproval,
+    IndexReleaseManifest,
+    SimilarityReview,
+)
 from retailops_ai.knowledge.releases import (
     CorpusApproval,
     IndexPin,
@@ -35,6 +40,7 @@ from retailops_ai.pipelines.chunks import load_chunker_config
 from retailops_ai.pipelines.corpus import load_registry
 from retailops_ai.pipelines.golden import load_golden_set
 from retailops_ai.pipelines.indexes import load_embedding_config
+from retailops_ai.pipelines.releases import load_release_document
 from retailops_ai.pipelines.retrieval import load_retrieval_config
 from retailops_ai.pipelines.review import load_similarity_policy
 
@@ -72,6 +78,9 @@ def main() -> int:
         "current-knowledge-index": CurrentKnowledgeIndex,
         "similarity-policy": SimilarityPolicy,
         "similarity-report": SimilarityReport,
+        "golden-labels-approval": GoldenLabelsApproval,
+        "similarity-review": SimilarityReview,
+        "index-release-manifest": IndexReleaseManifest,
     }
     for name, model in models.items():
         schema = model.model_json_schema()
@@ -85,7 +94,7 @@ def main() -> int:
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text)
-    load_registry(ROOT / "knowledge/corpus.v1.json")
+    registry = load_registry(ROOT / "knowledge/corpus.v1.json")
     load_chunker_config(ROOT / "knowledge/chunker.v1.json")
     load_embedding_config(ROOT / "knowledge/embeddings.fake.v1.json")
     load_similarity_policy(ROOT / "knowledge/similarity.v1.json")
@@ -93,6 +102,9 @@ def main() -> int:
     golden = load_golden_set(ROOT / "knowledge/golden.v1.json")
     if golden.retrieval_config_id != config.config_id():
         raise ValueError("golden_retrieval_configuration_mismatch")
+    review = load_release_document(ROOT / "knowledge/similarity-review.v1.json", SimilarityReview)
+    if review.review_owner != registry.review_owner:
+        raise ValueError("similarity_review_owner_mismatch")
     if stale:
         print("Knowledge snapshots differ: " + ", ".join(sorted(stale)))
         return 1

@@ -46,6 +46,10 @@ scope twierdzeń i binding obu list golden sections przed ewaluacją.
 [Odbiór źródeł](evidence/11-sources.md) podaje 29 dokumentów/451 fragmentów,
 44 pytania, 578 testów i identyczny indeks odtworzony z czystego checkoutu.
 Aktualny raport fake nie otwiera aktywacji.
+[Kontrola przed kwalifikacją](knowledge-qualification.md) wiąże konfiguracje,
+etykiety, raport oraz decyzje i zwraca jawną listę blokad w manifestach.
+[Odbiór kwalifikacji](evidence/11-qualification.md) potwierdza odtwarzanie wyników
+i brak aktywacji nawet dla idealnego fake z oboma zgodami.
 
 ## Mapa repo
 

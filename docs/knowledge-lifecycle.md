@@ -113,15 +113,16 @@ i [deferred constraint triggers](https://www.postgresql.org/docs/16/sql-createtr
 
 ## Ograniczenia i następny zakres
 
-Kwalifikacja nie sprawdza jakości semantycznej, revocation/deny filters ani
-uprawnień retrieval. Nie ma podpisanych attestations, production roles, HTTP
-administration lub indeksujących runów. Nie aktywowano rzeczywistego korpusu.
+Kwalifikacja testowa nie odbiera jakości semantycznej ani uprawnień użytkowego
+retrieval. Nie ma podpisanych attestations lub production roles.
+Nie aktywowano rzeczywistego korpusu.
 Source status `specified` nadal oznacza plan, a `verified` przypięty pomiar.
-Stare kandydaty/zgody pozostają immutable; aktualne deny/revocation będą osobną
-bramką retrieval. `0004_rag_denials` egzekwuje pilną blokadę dokumentu także
+Stare kandydaty/zgody pozostają immutable. `0004_rag_denials` egzekwuje pilną blokadę dokumentu także
 dla starych pinów; nie ma współdzielonego cache wyników.
 
-[Retrieval, filtry i golden set](knowledge-retrieval.md) mają wykonywalny zakres
-offline/test. Następnie: administracyjne index runs/read-current HTTP,
-przegląd/odświeżenie źródeł i etykiet oraz użytkowa polityka kwalifikacji.
+[Retrieval](knowledge-retrieval.md), [administracyjne runy/read-current HTTP](knowledge-administration.md)
+i [odświeżenie źródeł](knowledge-sources.md) mają osobne odbiory.
+[Kontrola kwalifikacji](knowledge-qualification.md) wiąże manifest i decyzje,
+lecz polityka fake pozostawia jawne blokady. Następnie: zgody na korpus/etykiety,
+użytkowy profil/run oraz polityka kwalifikacji z odebraną jakością.
 Real embeddings i bounded Bedrock smoke pozostają etapem 12.

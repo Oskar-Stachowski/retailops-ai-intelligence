@@ -18,6 +18,8 @@ takiego profilu. Rejestr i golden labels pozostają propozycją.
 Użytkowe runy z golden evaluation wymagają kolejnego rozszerzenia profilu,
 zatwierdzenia źródeł/etykiet i odbioru jakości. Fake report nie zastępuje tej bramki.
 Real provider i agent należą do etapu 12.
+[Kontrola kwalifikacji](knowledge-qualification.md) przygotowuje związany manifest
+i sprawdza jawne decyzje; nie rozszerza jeszcze profilu ani nie nadaje aktywacji.
 
 ## Uprawnienia i HTTP
 
