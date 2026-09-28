@@ -1,6 +1,6 @@
 # Decyzje architektoniczne
 
-**2026-09-27 · zaakceptowane dla projektu; wdrożenie komponentów według etapów.**
+**2026-09-28 · zaakceptowane dla projektu; wdrożenie komponentów według etapów.**
 Źródło: plan RetailOps na `8a9e620`; architektura bazowa na
 [cbf28b2](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/cbf28b2/docs/plans/ai/architektura.md).
 Te decyzje utrwalają granice; aktualne wdrożenie DB/MLflow opisuje ADR-12, kontrakty ADR-13, lokalne auth ADR-14, a agent pozostaje planowany.
@@ -137,3 +137,103 @@ procesów, expiry jest sprawdzane per request. Nie obiecujemy hot reload ani
 natychmiastowej revocation przez zmianę pliku. Warstwa posłuży przyszłym read APIs,
 które osobno sprawdzą istnienie źródłowych IDs i własny scope danych.
 [Instrukcja i źródła](../access-control.md), [pomiar](../evidence/01-access.md).
+
+
+## ADR-15 — jawny kandydacki korpus z przypiętych obiektów Git
+
+Etap 11 zaczyna od dokładnej listy Markdown obu repo, zamiast automatycznego
+indeksowania wszystkich plików katalogu. Obiekty Git z pełnych SHA i checksumy
+oddzielają źródłową rewizję od dirty worktree. Wersjonowany rejestr zawiera
+proponowane statusy/access/scope i właściciela przeglądu. Kod i evidence są
+powiązane z tymi samymi snapshotami; commit pomiaru pozostaje osobnym polem.
+
+Lokalny CLI tworzy wyłącznie immutable candidate, po pełnej walidacji źródeł.
+Nie ma ukrytej akceptacji redakcyjnej, aktywacji ani oceny statusu przez LLM.
+Content identity normalizuje końce linii; citation binding zawsze przypina
+rewizję. Czas wykonania i miejsce checkoutu pozostają poza hashami.
+
+Git czyta tylko wybrane bloby, bez replacements; wyłączenia nie wczytują
+prywatnych treści. Metadane access nie zastępują auth retrieval, a kontrola
+origin nie zastępuje zaufanego pobrania źródła. Ten scope nie dodaje migracji,
+wektorów lub endpointów. [Kontrakt i ograniczenia](../knowledge-corpus.md).
+
+
+## ADR-16 — fragmentacja bloków z osobnym bindingiem źródła
+
+Parser markdown-it-py 4.2.0, CommonMark z tabelami, zapewnia tokeny z mapami
+linii; chunker nie renderuje HTML i nie wykonuje kodu. Bloki dokumentu są
+jednostkami fragmentacji z limitami UTF-8 i jawnymi heading paths.
+Alternatywa regex nie odróżnia poprawnie nagłówków od kodu/cytatów; pakowanie
+wielu akapitów do przesuwanego okna zmienia granice niezmienionych sąsiadów.
+
+Chunk ID obejmuje dokument, kontekst sekcji, typ bloku, treść i konfigurację.
+Ordinal oraz źródłowy commit/zakresy pozostają poza content identity.
+Dokładne duplikaty w tym samym kontekście są jednym fragmentem z wieloma
+cytatami. Zachowujemy odrębność dokumentów/sekcji i metadata ich dostępu.
+Nowy manifest odtwarza pełny graf bez orphan chunks; nie zmienia starego wyniku.
+
+Rozmiar/token estimate nie jest tokenizerem docelowego modelu. Nie usuwamy
+near duplicates heurystyką, która mogłaby zgubić negację lub różne dowody.
+Parser jest przypięty w runtime lock i konfiguracji; zmiana reguł wymaga wersji.
+[Specyfikacja i źródła](../knowledge-chunks.md).
+
+
+## ADR-17 — przypięta przestrzeń i transakcyjny kandydat pgvector
+
+Fake provider odbiera offline pipeline i storage przed wywołaniem płatnego
+providera. Wszystkie pola konfiguracji należą do space ID; embedding cache
+wiąże body checksum ze space ID. Normalizacja i float32 są jawne, checksum
+jest liczona na bajtach faktycznie przechowywanego wektora. Odczyt używa
+formatu binarnego pgvector, aby prezentacja tekstowa SQL nie zmieniła floatów.
+
+Cały kandydat ze źródłami/chunkami jest niemodyfikowalny; zapis space/cache/index/
+chunks ma jedną transakcję. FK wiążą środowisko, przestrzeń i wymiar, a deferred
+constraint odrzuca niepełny indeks. Błąd nie zmienia starych kandydatów.
+Zmieniona konfiguracja tworzy nową przestrzeń zamiast nadpisania wektorów.
+Alternatywa mutable upsert chunków utrudniałaby snapshot i odtworzenie cytatów.
+
+Na tym etapie nie ma aktywnego pointera ani ANN index; activation/retrieval
+wymagają osobnego odbioru auth, statusów, rollback i jakości. Fake vectors nie
+udają semantycznych embeddings. [Kontrakt i źródła](../knowledge-index.md).
+
+
+## ADR-18 — osobne decyzje i atomowy wskaźnik z bramką golden set
+
+Kandydat jest niezmienny. Osobne, związane hashami artefakty opisują zgodę
+na korpus i techniczną walidację. Fake acceptance nie jest golden evaluation;
+kwalifikacja i aktywacja kanału `retrieval` pozostają zablokowane. Osobny kanał
+`offline_test`, tylko w `test`, pozwala odebrać mechanizm na syntetycznych fixtures.
+Nie ma automatycznej zgody na rzeczywisty korpus ani endpointu promocji dla agenta.
+
+Historia i wskaźnik zapisują się w jednej transakcji, pod wspólną blokadą writerów.
+Oczekiwana generacja zapobiega nadpisaniu konkurencyjnej zmiany; request ID
+wiąże idempotentny retry z jego historycznym wynikiem. Rollback tworzy nową
+generację wskazującą wcześniej aktywny indeks. FK i deferred constraint wymagają
+pełnego zdarzenia, a nie tylko zmiany wskaźnika. Odczyt jednym SQL statement
+tworzy pin manifestu, który caller zachowuje przez cały run.
+
+Alternatywa modyfikowania kandydata lub bieżącego indeksu w miejscu utrudniałaby
+rollback i odtworzenie cytatów. Artefakt zgody jest dostarczany przez zaufany
+proces; hash i pole reviewer nie uwierzytelniają autora. Prywatne poświadczenia
+DB pozostają lokalną granicą developmentu. Produkcyjna kwalifikacja wymaga
+rzeczywistego odbioru jakości i dostępu. [Kontrakt](../knowledge-lifecycle.md).
+
+
+## ADR-19 — exact retrieval z serwerowym grantem i osobną blokadą dokumentu
+
+MVP używa cosine pgvector bez ANN. Repo/type/status/access oraz deny są warunkami
+SQL przed rankingiem; API principal pochodzi z prywatnej serwerowej polityki.
+Polecenie offline ewaluacji czyta prywatny kandydat i nie staje się publicznym
+API odczytu. Jeden pin ogranicza wyszukiwanie do niezmiennego indeksu i przestrzeni.
+
+Selekcja ma deterministyczny tie-break, dywersyfikację repo/dokumentów i budżet
+serializowanych fragmentów z metadanymi. Nie ma współdzielonego cache wyników,
+co eliminuje przenoszenie grantów i blokad między principal. Pilny deny według
+document ID obowiązuje wszystkie stare wersje w danym środowisku; sprawdzamy
+go z bieżącego snapshotu SQL, niezależnie od pin. Odpowiedź jest no-store.
+
+Status źródła ogranicza rodzaj twierdzenia, a fact scope i dowody pozostają
+przy cytacie. Nie generujemy odpowiedzi ani semantycznego rozstrzygnięcia konfliktu.
+36 pytań i progi golden v1 powstały przed ewaluacją, bez etykiet z wyników rankera.
+Wynik fake jest mechaniczny i nigdy nie daje release approval; real provider
+i agent wymagają osobnego odbioru. [Kontrakt i źródła](../knowledge-retrieval.md).

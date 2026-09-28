@@ -1,0 +1,282 @@
+{
+  "schema_version": "1.0",
+  "stage": "11",
+  "scope": "approved_fake_golden_build_profiles_and_retained_run_reports",
+  "result": "passed",
+  "base_commit": "4aa6feb0b4cf1c7b34682c8d291c3c8a157d0740",
+  "branch": "ai/rag-corpus",
+  "owner_authorization": {
+    "date": "2026-09-28",
+    "instruction": "wykonaj kolejny krok, masz ode mnie wszystkie zgody",
+    "corpus_decision": "knowledge/corpus-approval.v1.json",
+    "golden_decision": "knowledge/golden-labels-approval.v1.json",
+    "corpus_review_id": "corpus-review-sha256-48c9a550f60a55a173cde031362f7cf7dabf2343216002471cba36bf279dffbf",
+    "golden_approval_id": "golden-approval-sha256-4de0f267b81e857f7aeca2c1a2c67c9cded32782d0e7c99754b15b492af53f6e"
+  },
+  "targeted_checks": {
+    "passed": 16,
+    "seconds": 8.16,
+    "regression_passed": 91,
+    "regression_seconds": 35.44,
+    "mypy_files": 92,
+    "ruff": true,
+    "ruff_format": true,
+    "docs_links": true,
+    "knowledge_snapshots": true,
+    "gitleaks_dir": true
+  },
+  "actual_corpus_activated": false,
+  "semantic_quality_accepted": false,
+  "pushed": false,
+  "stage_progress_estimate_percent": 96,
+  "verified_at": "2026-09-28T15:24:20.502209+00:00",
+  "runtime": {
+    "python": "3.11.15",
+    "unicode": "14.0.0",
+    "os": "Darwin",
+    "architecture": "arm64"
+  },
+  "runtime_dependencies_added": [],
+  "migration_revision": "0007_rag_golden_jobs",
+  "native_compose": {
+    "result": "passed",
+    "checked_at": "2026-09-28T15:00:24.005363+00:00",
+    "checks": [
+      "separate_databases_roles_and_vector",
+      "explicit_idempotent_migration_and_revision_readiness",
+      "real_pgvector_candidate_constraints_cache_atomicity_and_replay",
+      "sigkill_restart_retains_ai_and_mlflow_artifact",
+      "real_db_outage_health_200_ready_503_then_recovered_200",
+      "down_up_retains_ai_mlflow_metadata_and_artifact",
+      "loopback_ports_internal_network_no_secrets_in_service_logs"
+    ],
+    "golden_checks": [
+      "local_http_submission_read_and_terminal_idempotency",
+      "approved_profile_and_golden_pins",
+      "golden_gate_controls_success_and_failed_report_retention",
+      "private_cli_report_export",
+      "sql_summary_forgery_rejected",
+      "no_user_pointer_activation"
+    ],
+    "fixture_run_statuses": [
+      "succeeded",
+      "failed"
+    ],
+    "golden_reports_retained_after_sigkill_and_down_up": true,
+    "worker_sigkill_and_cancellation_legacy_path": true,
+    "local_current": null,
+    "verification_scripts_sha256": {
+      "scripts/verify_golden_jobs.py": "deda12e945fefaccea9029809b3773c994d6efed05e04aba72c8dde89420b7bf",
+      "scripts/verify_knowledge_admin.py": "8921ab6cf8a2fdcdaeeb54717b072ffd5e75b962df38f01c1b7a411e20141b07",
+      "scripts/verify_rag_index.py": "d8b4b1759e2008ae834954db3a2262f043d555e6f86634fd17b9a773e0ac48b7",
+      "scripts/verify_local_stack.py": "17b9f91875cabfcfd481529c007bf31f66aa7e02b5d59ff445c016d353058dc2"
+    }
+  },
+  "actual_run": {
+    "result": "passed",
+    "checked_at": "2026-09-28T15:05:21.357536+00:00",
+    "sources_rebuilt_from_pinned_git": true,
+    "profile_id": "index-build-profile-sha256-89c6354a6a7339ba6836cccddb9976e586a2edd139b1a522d2cf5070efbd1424",
+    "request": {
+      "corpus_config_id": "corpus-config-sha256-f69337d57b6569092d198a76d32f645fea055d53dcd57fbfddfe613030612bce",
+      "sources": [
+        {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605"
+        },
+        {
+          "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+          "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5"
+        }
+      ],
+      "index_config_id": "index-config-sha256-46be089837218a56d469433adb998d9c182ff27e104283e8dbd4d7b3818ec5c8",
+      "evaluation_set_id": "golden-set-sha256-5dc7eebaf8dbfb60febedf2bf0ae66f840c5a27cdf2b7d6d51355c377e6daba6"
+    },
+    "run": {
+      "schema_version": "1.0",
+      "contract_type": "run",
+      "run_id": "run-97f56aee10e7814998ffa55755106875",
+      "run_type": "knowledge_index",
+      "status": "failed",
+      "attempt": 1,
+      "requested_at": "2026-09-28T15:04:59.097872Z",
+      "started_at": "2026-09-28T15:04:59.156807Z",
+      "completed_at": "2026-09-28T15:05:02.578565Z",
+      "requested_by": "fixture-golden-admin",
+      "input_ref": {
+        "request": {
+          "corpus_config_id": "corpus-config-sha256-f69337d57b6569092d198a76d32f645fea055d53dcd57fbfddfe613030612bce",
+          "sources": [
+            {
+              "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+              "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605"
+            },
+            {
+              "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+              "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5"
+            }
+          ],
+          "index_config_id": "index-config-sha256-46be089837218a56d469433adb998d9c182ff27e104283e8dbd4d7b3818ec5c8",
+          "evaluation_set_id": "golden-set-sha256-5dc7eebaf8dbfb60febedf2bf0ae66f840c5a27cdf2b7d6d51355c377e6daba6"
+        },
+        "request_hash": "462e468ac59defa1c360d2c36c25760fed8461cf1899030032245fc2278fcdb5",
+        "profile_id": "index-build-profile-sha256-89c6354a6a7339ba6836cccddb9976e586a2edd139b1a522d2cf5070efbd1424",
+        "environment": "local"
+      },
+      "resolved_model": null,
+      "output_ref": null,
+      "error": {
+        "code": "gate_failed",
+        "retryable": false
+      }
+    },
+    "report_id": "index-run-report-sha256-2d0943aa6365919dcbc4f3fcf736db29920e8a3a6500d4e14c60e1ef7287c898",
+    "report_path": ".local/rag/approved-golden-run-report-20260928.json",
+    "report_sha256": "8a4e0da1d04e40f985984655b09e95bca76d19cbbdf766e5f9af18654073f6cd",
+    "report_bytes": 36089,
+    "report_mode": "0o600",
+    "golden_cases": 44,
+    "critical_cases": 9,
+    "recall_at_5": 0.04411764705882353,
+    "mrr": 0.04411764705882353,
+    "critical_pass_rate": 1.0,
+    "latency_p95_ms": 7.9322500000671425,
+    "quality_gate_passed": false,
+    "current_after_database_sigkill_restart": null,
+    "report_retained_after_restart": true,
+    "checks": [
+      "local_http_submission_read_and_terminal_idempotency",
+      "approved_profile_and_golden_pins",
+      "golden_gate_controls_success_and_failed_report_retention",
+      "private_cli_report_export",
+      "sql_summary_forgery_rejected",
+      "no_user_pointer_activation"
+    ],
+    "private_full_report_not_in_git": true,
+    "documents": 29,
+    "chunks": 451,
+    "json_schema_validated": true,
+    "index_id": "index-sha256-18c7ac743d35a7f9b8d59f781f2f4ccace9e24af79046bcf9f6a36895de038e9",
+    "golden_set_id": "golden-set-sha256-5dc7eebaf8dbfb60febedf2bf0ae66f840c5a27cdf2b7d6d51355c377e6daba6"
+  },
+  "private_profile": {
+    "path": ".local/rag/approved-golden-profile-20260928.json",
+    "profile_id": "index-build-profile-sha256-89c6354a6a7339ba6836cccddb9976e586a2edd139b1a522d2cf5070efbd1424",
+    "sha256": "28d6480e4132fd760178c4c6d857120a726902325ac4c0d96aeccd2f7754a931",
+    "bytes": 1533825,
+    "mode": "0o600",
+    "json_schema_validated": true,
+    "in_git": false
+  },
+  "approved_preflight": {
+    "path": ".local/rag/release-approved-preflight-20260928.json",
+    "release_id": "rag-release-manifest-sha256-18fc97121ac55cb84fa10194503c9b4fa63b0048fa67a058a07f9ef001a30463",
+    "sha256": "ace07c7154f0b560a42f4de0c843d516b6334e746f6341dcd4d67c296c4bc896",
+    "bytes": 348112,
+    "mode": "0o600",
+    "blockers": [
+      "golden_thresholds_failed",
+      "semantic_provider_required",
+      "user_build_profile_required"
+    ],
+    "activation_allowed": false
+  },
+  "proposal_files_sha256": {
+    "knowledge/corpus.v1.json": "094d302ccdb7ac483cddd49b0162a298fbc7814a748e5747cae8e9f917a006a0",
+    "knowledge/golden.v1.json": "c25768542c1fa204c0c52c813d6588323d04282c64d218cd4d91087c037d2f27",
+    "knowledge/chunker.v1.json": "1100e756b4e2c959cdac774fc7249d11c9b0bb7e5d0524a305a2527b8fcd15b0",
+    "knowledge/embeddings.fake.v1.json": "cf1189f4e0df3ba996c42ea99c1458a8b83b6ac1c97869f23382950d63e6cd87",
+    "knowledge/similarity.v1.json": "b5adbaaff8caebbddbe29b5c7eb5fc5e0a59bfd772cf2ac9165313af93e89e39"
+  },
+  "proposal_files_unchanged_since_base": true,
+  "code_files_sha256": {
+    "src/retailops_ai/knowledge/jobs.py": "66ad8e2a3c97b1bb2e8bdb84f99c978372f64048050a1b9df1e8bdfc64a3ee3e",
+    "src/retailops_ai/pipelines/index_builds.py": "520454244c4b48d59844a5dcbed6c7f4d490f143d29f47fa652cc4ee513a7085",
+    "src/retailops_ai/adapters/index_jobs.py": "cdb996983e208cf329355f4b864dba1f5ee0ba232a2dc9eae5b96f204bd35af7",
+    "src/retailops_ai/cli.py": "282400ba47a5b2f78366ac00e336ff3df5fc5a261f3a0831355b56b93579866c",
+    "src/retailops_ai/cli_index_jobs.py": "aad7f8c8928d33d7810fb39068afb28bce99887722516a98002a546e5222466f",
+    "src/retailops_ai/cli_qualification.py": "515f1864b0457b800e6fdf89d59935872d98596a58fc16acbccee3f2cad572a5",
+    "src/retailops_ai/adapters/database.py": "cec0bf8ff7df8e7f913365aaa754864fd21d50585d9f7115807a5c0e8b0ea289",
+    "src/retailops_ai/migrations/versions/0007_rag_golden_jobs.py": "b96787a65d9974fcabcaf768f9357355dafdbbca4e6594990f19cf6b33d65e3a",
+    "scripts/update_knowledge_contracts.py": "80d4c8c85817df71ada31fc966284c27303fe57dbbf037daa82071c18b1607b6",
+    "scripts/verify_golden_jobs.py": "deda12e945fefaccea9029809b3773c994d6efed05e04aba72c8dde89420b7bf",
+    "scripts/verify_knowledge_admin.py": "8921ab6cf8a2fdcdaeeb54717b072ffd5e75b962df38f01c1b7a411e20141b07",
+    "scripts/verify_rag_index.py": "d8b4b1759e2008ae834954db3a2262f043d555e6f86634fd17b9a773e0ac48b7",
+    "scripts/verify_local_stack.py": "17b9f91875cabfcfd481529c007bf31f66aa7e02b5d59ff445c016d353058dc2",
+    "tests/test_golden_jobs.py": "48acf6e167437bfba2665351c25bebe1ec970c4f1dbebae09e911fa70bb3d0f1"
+  },
+  "contract_and_approval_files_sha256": {
+    "contracts/knowledge/v1/golden-index-build-profile.v1.schema.json": "bd329eb0417d97c9ea7d05d41ec429c93ce1584d7d7bcede0d0d2cfa4c79ae3d",
+    "contracts/knowledge/v1/golden-index-run-report.v1.schema.json": "b3fe00248ed507999298e22ebbca30262ea278adf231640bff6c027ac3c36467",
+    "contracts/knowledge/v1/knowledge-index-run.v1.schema.json": "6b54555dfc916a78704774fa7480a8798af0154553fbf450bed19428ce1a49ed",
+    "contracts/access/v1/access.openapi.json": "b14f586702ee5c90f34bdeeb99bc7667dcaa2c6c5465b4f6e51ca0bfa7ce37d1",
+    "knowledge/corpus-approval.v1.json": "33bd62637499876b301f706d1cedb44ed55f636977648ba5aba6fcf2cefc80d4",
+    "knowledge/golden-labels-approval.v1.json": "7d4a78b1980fbdd82d0c24c8b4e2bfcfe7a9befbbe5049d4fa5c41beed4983e2"
+  },
+  "remaining": [
+    "measured_retrieval_quality_with_real_provider",
+    "user_retrieval_qualification_policy_and_acceptance",
+    "bounded_bedrock_and_agent_in_stage_12"
+  ],
+  "remote_ci_executed_for_this_scope": false,
+  "implementation_commit": "8df02e60df600e2771f4481d18b09517b0500d0e",
+  "application_implementation_commit": "b58d7b71c68fb0d12b05c3b499d0b6ead9fc5fe3",
+  "full_ci": {
+    "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+    "exit_code": 0,
+    "passed": 627,
+    "test_seconds": 257.62,
+    "fresh_venv_for_this_scope": true,
+    "clean_git_status": true,
+    "checks": [
+      "ruff_check",
+      "ruff_format",
+      "mypy_92_files",
+      "pytest",
+      "docs_links",
+      "intelligence_access_knowledge_snapshots",
+      "wheel_and_sdist",
+      "compose_config",
+      "gitleaks_git_and_dir"
+    ]
+  },
+  "reproduction": {
+    "implementation_commit": "8df02e60df600e2771f4481d18b09517b0500d0e",
+    "installed_cli_outside_repository": true,
+    "separate_local_git_clones": true,
+    "different_python_hash_seed": 1129,
+    "invalid_service_settings_ignored": true,
+    "command_exit_codes": {
+      "index-build": 0,
+      "knowledge-profile-prepare": 0,
+      "index-release-check": 0
+    },
+    "index_byte_for_byte_equal": true,
+    "profile_byte_for_byte_equal": true,
+    "approved_preflight_byte_for_byte_equal": true,
+    "actual_report_reproduced_except_timing_and_report_id": true,
+    "reproduced_quality_gate_passed": false,
+    "private_modes": {
+      "index.json": "0o600",
+      "profile.json": "0o600",
+      "release.json": "0o600",
+      "report.json": "0o600"
+    },
+    "profile_sha256": "28d6480e4132fd760178c4c6d857120a726902325ac4c0d96aeccd2f7754a931",
+    "clean_git_status": true,
+    "code_and_input_hashes_match": true
+  },
+  "verification_config_sha256": {
+    ".gitleaks.toml": "2612ea1668f2a75662868e257945875893077849f479732426983f24d34237d4"
+  },
+  "additional_contract_checksums": [
+    {
+      "path": "contracts/diagnostics.openapi.json",
+      "sha256": "43c3ae5b1e91c9b19cbca05fe3a5e9e3090349f32bbb8956f18646e7d6a7aac5"
+    },
+    {
+      "path": "contracts/problem.v1.schema.json",
+      "sha256": "47828caa8dd362a7bbc030045589c9ad7bab528dd48c7a947efd76738db9d1a6"
+    }
+  ]
+}

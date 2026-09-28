@@ -1,0 +1,533 @@
+{
+  "$defs": {
+    "DocumentRegistration": {
+      "additionalProperties": false,
+      "properties": {
+        "access_class": {
+          "enum": [
+            "public_project",
+            "project_internal",
+            "restricted"
+          ],
+          "title": "Access Class",
+          "type": "string"
+        },
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "document_type": {
+          "enum": [
+            "architecture",
+            "contract",
+            "guide",
+            "runbook",
+            "policy",
+            "plan",
+            "evidence",
+            "model_card"
+          ],
+          "title": "Document Type",
+          "type": "string"
+        },
+        "fact_scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Fact Scope",
+          "type": "string"
+        },
+        "implementation_refs": {
+          "items": {
+            "$ref": "#/$defs/ImplementationReference"
+          },
+          "maxItems": 8,
+          "title": "Implementation Refs",
+          "type": "array"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "verification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "byte_sha256",
+        "document_type",
+        "document_status",
+        "access_class",
+        "fact_scope",
+        "implementation_refs",
+        "verification"
+      ],
+      "title": "DocumentRegistration",
+      "type": "object"
+    },
+    "EvidenceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Commit Pointer",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "expected_result": {
+          "enum": [
+            "success",
+            "passed",
+            "rejected"
+          ],
+          "title": "Expected Result",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "result_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Result Pointer",
+          "type": "string"
+        },
+        "scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Scope",
+          "type": "string"
+        },
+        "verified_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Verified At",
+          "type": "string"
+        },
+        "verified_at_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Verified At Pointer",
+          "type": "string"
+        },
+        "verified_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Verified Commit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "byte_sha256",
+        "verified_at",
+        "verified_commit",
+        "commit_pointer",
+        "verified_at_pointer",
+        "scope",
+        "result_pointer",
+        "expected_result"
+      ],
+      "title": "EvidenceReference",
+      "type": "object"
+    },
+    "ExcludedDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "not_registered",
+            "credentials_or_private_path",
+            "non_regular_git_entry"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "path",
+        "reason"
+      ],
+      "title": "ExcludedDocument",
+      "type": "object"
+    },
+    "ImplementationReference": {
+      "additionalProperties": false,
+      "properties": {
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 240,
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "byte_sha256"
+      ],
+      "title": "ImplementationReference",
+      "type": "object"
+    },
+    "ManifestDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "access_class": {
+          "enum": [
+            "public_project",
+            "project_internal",
+            "restricted"
+          ],
+          "title": "Access Class",
+          "type": "string"
+        },
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "content_id": {
+          "pattern": "^markdown-sha256-[0-9a-f]{64}$",
+          "title": "Content Id",
+          "type": "string"
+        },
+        "document_id": {
+          "pattern": "^document-sha256-[0-9a-f]{64}$",
+          "title": "Document Id",
+          "type": "string"
+        },
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "document_type": {
+          "enum": [
+            "architecture",
+            "contract",
+            "guide",
+            "runbook",
+            "policy",
+            "plan",
+            "evidence",
+            "model_card"
+          ],
+          "title": "Document Type",
+          "type": "string"
+        },
+        "fact_scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Fact Scope",
+          "type": "string"
+        },
+        "implementation_refs": {
+          "items": {
+            "$ref": "#/$defs/ImplementationReference"
+          },
+          "maxItems": 8,
+          "title": "Implementation Refs",
+          "type": "array"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "verification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "byte_sha256",
+        "document_type",
+        "document_status",
+        "access_class",
+        "fact_scope",
+        "implementation_refs",
+        "verification",
+        "repository",
+        "commit_sha",
+        "document_id",
+        "content_id",
+        "source_ref"
+      ],
+      "title": "ManifestDocument",
+      "type": "object"
+    },
+    "SourceRegistration": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_roots": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 12,
+          "minItems": 1,
+          "title": "Allowed Roots",
+          "type": "array"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "documents": {
+          "items": {
+            "$ref": "#/$defs/DocumentRegistration"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "title": "Documents",
+          "type": "array"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "allowed_roots",
+        "documents"
+      ],
+      "title": "SourceRegistration",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:knowledge:corpus-manifest:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "canonicalization_version": {
+      "const": "utf8-lf-v1",
+      "title": "Canonicalization Version",
+      "type": "string"
+    },
+    "content_trust": {
+      "const": "untrusted_reference",
+      "title": "Content Trust",
+      "type": "string"
+    },
+    "corpus_config_id": {
+      "pattern": "^corpus-config-sha256-[0-9a-f]{64}$",
+      "title": "Corpus Config Id",
+      "type": "string"
+    },
+    "corpus_id": {
+      "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+      "title": "Corpus Id",
+      "type": "string"
+    },
+    "documents": {
+      "items": {
+        "$ref": "#/$defs/ManifestDocument"
+      },
+      "maxItems": 128,
+      "minItems": 2,
+      "title": "Documents",
+      "type": "array"
+    },
+    "duplicate_content_groups": {
+      "items": {
+        "items": {
+          "pattern": "^document-sha256-[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Duplicate Content Groups",
+      "type": "array"
+    },
+    "environment": {
+      "enum": [
+        "local",
+        "test",
+        "dev",
+        "production"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "excluded_documents": {
+      "items": {
+        "$ref": "#/$defs/ExcludedDocument"
+      },
+      "title": "Excluded Documents",
+      "type": "array"
+    },
+    "exclusion_policy": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Exclusion Policy",
+      "type": "object"
+    },
+    "lifecycle": {
+      "const": "candidate",
+      "title": "Lifecycle",
+      "type": "string"
+    },
+    "policy_version": {
+      "const": "registered-markdown-v1",
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "review_owner": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Review Owner",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceRegistration"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "title": "Sources",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "policy_version",
+    "canonicalization_version",
+    "environment",
+    "lifecycle",
+    "review_owner",
+    "content_trust",
+    "corpus_config_id",
+    "corpus_id",
+    "sources",
+    "documents",
+    "excluded_documents",
+    "exclusion_policy",
+    "duplicate_content_groups"
+  ],
+  "title": "CorpusManifest",
+  "type": "object"
+}

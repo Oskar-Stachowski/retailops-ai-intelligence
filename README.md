@@ -4,6 +4,23 @@
 Obecny zakres: pakiet Python, konfiguracja, CLI, lokalny serwis diagnostyczny HTTP,
 PostgreSQL/pgvector, oddzielny MLflow, migracje, Compose, wykonywalne kontrakty
 danych/run/tool, lokalne poświadczenia i scope API oraz kontrole CI.
+[Etap 11](docs/knowledge-corpus.md) w realizacji: rejestr kandydackiego korpusu,
+walidacja Git, [parser/chunker](docs/knowledge-chunks.md) oraz
+[fake embeddings i zapis kandydata pgvector](docs/knowledge-index.md) oraz
+[atomowe przełączanie indeksów testowych](docs/knowledge-lifecycle.md).
+[Retrieval, filtry uprawnień/statusów i golden set](docs/knowledge-retrieval.md)
+mają wykonywalną ścieżkę offline/test i 44 pytania ewaluacyjne.
+[Administracyjne runy indeksowania](docs/knowledge-administration.md) mają
+trwałe stany, idempotencję i worker dla zatwierdzonych snapshotów `local/test`.
+[Raport podobnych treści](docs/knowledge-review.md) wskazuje dokładne i near
+powtórzenia do przeglądu, zachowując metadata oraz cytaty.
+[Odświeżone źródła i etykiety](docs/knowledge-sources.md) wiążą 29 dokumentów
+z konkretnymi SHA i mają osobne zgody właściciela.
+[Profile golden i trwałe raporty](docs/knowledge-golden-jobs.md) wykonują
+zatwierdzony pomiar, zachowując raport również po niezaliczonym progu.
+[Kontrola kwalifikacji](docs/knowledge-qualification.md) przygotowuje związany
+manifest konfiguracji, raportów i decyzji, z jawnymi blokadami aktywacji.
+Wyszukiwanie i aktywacja rzeczywistego korpusu wymagają kolejnego odbioru jakości.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).
 [Uruchomienie stosu](docs/local-stack.md) i [HTTP](docs/http-service.md).

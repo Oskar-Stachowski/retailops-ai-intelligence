@@ -536,7 +536,7 @@ def test_versioned_access_snapshots_and_openapi_security_are_reviewed():
     app = create_app(Settings(APP_ENV="test", ARTIFACT_ROOT="./artifacts"))
     snapshot = json.loads((CONTRACTS / "access.openapi.json").read_text())
     assert contract_openapi(app.openapi(), access=True) == snapshot
-    assert len(snapshot["paths"]) == 3
+    assert len(snapshot["paths"]) == 7
     for path in snapshot["paths"].values():
         for operation in path.values():
             assert operation["security"] == [{"apiBearer": []}]

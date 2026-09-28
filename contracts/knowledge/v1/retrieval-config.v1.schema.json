@@ -1,0 +1,72 @@
+{
+  "$id": "urn:retailops:knowledge:retrieval-config:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "candidate_limit": {
+      "const": 256,
+      "title": "Candidate Limit",
+      "type": "integer"
+    },
+    "diversification": {
+      "const": "repository-then-document-v1",
+      "title": "Diversification",
+      "type": "string"
+    },
+    "max_chunks_per_document": {
+      "const": 2,
+      "title": "Max Chunks Per Document",
+      "type": "integer"
+    },
+    "max_context_bytes": {
+      "const": 24000,
+      "title": "Max Context Bytes",
+      "type": "integer"
+    },
+    "max_context_tokens": {
+      "const": 6000,
+      "title": "Max Context Tokens",
+      "type": "integer"
+    },
+    "max_top_k": {
+      "const": 5,
+      "title": "Max Top K",
+      "type": "integer"
+    },
+    "min_cosine_score": {
+      "maximum": 1,
+      "minimum": -1,
+      "title": "Min Cosine Score",
+      "type": "number"
+    },
+    "retrieval_version": {
+      "const": "pgvector-cosine-exact-v1",
+      "title": "Retrieval Version",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "size_estimator": {
+      "const": "serialized-hits-utf8-div4-v1",
+      "title": "Size Estimator",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "retrieval_version",
+    "max_top_k",
+    "max_context_tokens",
+    "max_context_bytes",
+    "max_chunks_per_document",
+    "candidate_limit",
+    "min_cosine_score",
+    "diversification",
+    "size_estimator"
+  ],
+  "title": "RetrievalConfig",
+  "type": "object"
+}

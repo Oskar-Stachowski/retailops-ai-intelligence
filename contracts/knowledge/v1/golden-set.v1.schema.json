@@ -1,0 +1,517 @@
+{
+  "$defs": {
+    "ExpectedSection": {
+      "additionalProperties": false,
+      "properties": {
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "heading_path": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 6,
+          "minItems": 1,
+          "title": "Heading Path",
+          "type": "array"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "path",
+        "heading_path",
+        "document_status"
+      ],
+      "title": "ExpectedSection",
+      "type": "object"
+    },
+    "GoldenCase": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptable_outcomes": {
+          "items": {
+            "enum": [
+              "ok",
+              "insufficient_evidence",
+              "forbidden"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Acceptable Outcomes",
+          "type": "array"
+        },
+        "answerability": {
+          "enum": [
+            "answerable",
+            "not_answerable",
+            "conflict",
+            "refused"
+          ],
+          "title": "Answerability",
+          "type": "string"
+        },
+        "case_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Case Id",
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "documentation",
+            "models",
+            "operations",
+            "missing",
+            "conflict",
+            "injection",
+            "authorization"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "critical": {
+          "title": "Critical",
+          "type": "boolean"
+        },
+        "expected_sections": {
+          "items": {
+            "$ref": "#/$defs/ExpectedSection"
+          },
+          "maxItems": 8,
+          "title": "Expected Sections",
+          "type": "array"
+        },
+        "forbidden_sources": {
+          "items": {
+            "$ref": "#/$defs/ExpectedSection"
+          },
+          "maxItems": 8,
+          "title": "Forbidden Sources",
+          "type": "array"
+        },
+        "forbidden_tools": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Forbidden Tools",
+          "type": "array"
+        },
+        "request": {
+          "$ref": "#/$defs/RetrievalRequest"
+        },
+        "required_tools": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Required Tools",
+          "type": "array"
+        },
+        "role": {
+          "enum": [
+            "viewer",
+            "operator",
+            "admin"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KnowledgeResourceScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "case_id",
+        "category",
+        "request",
+        "role",
+        "scope",
+        "expected_sections",
+        "forbidden_sources",
+        "answerability",
+        "acceptable_outcomes",
+        "required_tools",
+        "forbidden_tools",
+        "critical"
+      ],
+      "title": "GoldenCase",
+      "type": "object"
+    },
+    "GoldenThresholds": {
+      "additionalProperties": false,
+      "properties": {
+        "citation_correctness_min": {
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Citation Correctness Min",
+          "type": "number"
+        },
+        "critical_pass_rate_min": {
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Critical Pass Rate Min",
+          "type": "number"
+        },
+        "groundedness_min": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Groundedness Min",
+          "type": "number"
+        },
+        "latency_p95_ms_max": {
+          "exclusiveMinimum": 0,
+          "maximum": 5000,
+          "title": "Latency P95 Ms Max",
+          "type": "number"
+        },
+        "mrr_min": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Mrr Min",
+          "type": "number"
+        },
+        "offline_cost_usd_max": {
+          "maximum": 0,
+          "minimum": 0,
+          "title": "Offline Cost Usd Max",
+          "type": "number"
+        },
+        "recall_at_5_min": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Recall At 5 Min",
+          "type": "number"
+        }
+      },
+      "required": [
+        "recall_at_5_min",
+        "mrr_min",
+        "citation_correctness_min",
+        "critical_pass_rate_min",
+        "groundedness_min",
+        "latency_p95_ms_max",
+        "offline_cost_usd_max"
+      ],
+      "title": "GoldenThresholds",
+      "type": "object"
+    },
+    "KnowledgeResourceScope": {
+      "additionalProperties": false,
+      "properties": {
+        "access_classes": {
+          "items": {
+            "enum": [
+              "public_project",
+              "project_internal",
+              "restricted"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Access Classes",
+          "type": "array"
+        },
+        "document_statuses": {
+          "items": {
+            "enum": [
+              "specified",
+              "implemented",
+              "verified",
+              "deprecated",
+              "historical"
+            ],
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Document Statuses",
+          "type": "array"
+        },
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "repositories": {
+          "items": {
+            "enum": [
+              "Oskar-Stachowski/retailops-cloud-native-platform",
+              "Oskar-Stachowski/retailops-ai-intelligence"
+            ],
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "title": "Repositories",
+          "type": "array"
+        }
+      },
+      "required": [
+        "environment",
+        "repositories",
+        "access_classes",
+        "document_statuses"
+      ],
+      "title": "KnowledgeResourceScope",
+      "type": "object"
+    },
+    "RetrievalFilters": {
+      "additionalProperties": false,
+      "properties": {
+        "access_classes": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "public_project",
+                  "project_internal",
+                  "restricted"
+                ],
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Access Classes"
+        },
+        "document_statuses": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "specified",
+                  "implemented",
+                  "verified",
+                  "deprecated",
+                  "historical"
+                ],
+                "type": "string"
+              },
+              "maxItems": 5,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Document Statuses"
+        },
+        "document_types": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "architecture",
+                  "contract",
+                  "guide",
+                  "runbook",
+                  "policy",
+                  "plan",
+                  "evidence",
+                  "model_card"
+                ],
+                "type": "string"
+              },
+              "maxItems": 8,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Document Types"
+        },
+        "repositories": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "Oskar-Stachowski/retailops-cloud-native-platform",
+                  "Oskar-Stachowski/retailops-ai-intelligence"
+                ],
+                "type": "string"
+              },
+              "maxItems": 2,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repositories"
+        }
+      },
+      "title": "RetrievalFilters",
+      "type": "object"
+    },
+    "RetrievalRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "filters": {
+          "$ref": "#/$defs/RetrievalFilters"
+        },
+        "max_context_tokens": {
+          "default": 6000,
+          "maximum": 6000,
+          "minimum": 1,
+          "title": "Max Context Tokens",
+          "type": "integer"
+        },
+        "purpose": {
+          "default": "documentation",
+          "enum": [
+            "documentation",
+            "implementation",
+            "verified_state",
+            "history"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "question": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "top_k": {
+          "default": 5,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Top K",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "question"
+      ],
+      "title": "RetrievalRequest",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:knowledge:golden-set:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/GoldenCase"
+      },
+      "maxItems": 50,
+      "minItems": 30,
+      "title": "Cases",
+      "type": "array"
+    },
+    "golden_set_id": {
+      "pattern": "^golden-set-sha256-[0-9a-f]{64}$",
+      "title": "Golden Set Id",
+      "type": "string"
+    },
+    "index_id": {
+      "pattern": "^index-sha256-[0-9a-f]{64}$",
+      "title": "Index Id",
+      "type": "string"
+    },
+    "labels_origin": {
+      "const": "manually_authored_source_sections_not_ranker_output",
+      "title": "Labels Origin",
+      "type": "string"
+    },
+    "retrieval_config_id": {
+      "pattern": "^retrieval-config-sha256-[0-9a-f]{64}$",
+      "title": "Retrieval Config Id",
+      "type": "string"
+    },
+    "review_owner": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Review Owner",
+      "type": "string"
+    },
+    "review_state": {
+      "const": "proposed",
+      "title": "Review State",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "set_version": {
+      "const": "retailops-rag-golden-v1",
+      "title": "Set Version",
+      "type": "string"
+    },
+    "thresholds": {
+      "$ref": "#/$defs/GoldenThresholds"
+    }
+  },
+  "required": [
+    "schema_version",
+    "set_version",
+    "golden_set_id",
+    "index_id",
+    "retrieval_config_id",
+    "review_state",
+    "review_owner",
+    "labels_origin",
+    "thresholds",
+    "cases"
+  ],
+  "title": "GoldenSet",
+  "type": "object"
+}

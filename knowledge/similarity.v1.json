@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "algorithm": "retrievable-word-trigram-jaccard-v1",
+  "normalization": "nfkc-casefold-unicode-words-v1",
+  "unicode_version": "14.0.0",
+  "shingle_words": 3,
+  "minimum_words": 12,
+  "threshold_bps": 8000,
+  "max_features": 250000,
+  "max_candidate_pairs": 250000,
+  "max_posting_visits": 2000000,
+  "max_report_pairs": 10000
+}

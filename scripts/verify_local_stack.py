@@ -8,9 +8,13 @@ import time
 import urllib.error
 import urllib.request
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 
 import local_stack as stack
+from verify_rag_index import run_in_compose
+
+from retailops_ai.adapters.database import EXPECTED_REVISION
 
 
 def command(*args: str, stdin: str | None = None, expect: int = 0) -> str:
@@ -36,6 +40,22 @@ def command(*args: str, stdin: str | None = None, expect: int = 0) -> str:
         check=False,
     )
     if (result.returncode == 0) != (expect == 0):
+        for line in result.stderr.splitlines():
+            try:
+                error = json.loads(line)
+            except ValueError:
+                continue
+            if isinstance(error, dict) and error.get("error") == "rag_database_acceptance_failed":
+                reason = error.get("reason")
+                if (
+                    isinstance(reason, str)
+                    and reason != "internal_failure"
+                    and re.fullmatch(r"[a-z_]{1,100}", reason)
+                ):
+                    raise RuntimeError("rag_" + reason + "_failed") from None
+                kind = error.get("type")
+                if isinstance(kind, str) and re.fullmatch(r"[A-Za-z]+", kind):
+                    raise RuntimeError("rag_" + kind.lower() + "_failed") from None
         raise RuntimeError("compose_acceptance_command_failed")
     return result.stdout.strip()
 
@@ -93,6 +113,43 @@ def wait_ready() -> None:
     raise RuntimeError("readiness_did_not_recover")
 
 
+def check_pin_retained(expected: object) -> None:
+    result = json.loads(
+        command(
+            "run",
+            "--rm",
+            "-e",
+            "APP_ENV=test",
+            "api-migrate",
+            "retailops-ai",
+            "index-current",
+            "--lane",
+            "offline_test",
+        )
+    )
+    require(result.get("pin") == expected, "rag_pin_changed_after_restart")
+
+
+def check_jobs_retained(expected: object, *, cleanup: bool = False) -> object:
+    result = json.loads(
+        command(
+            "run",
+            "--rm",
+            "-T",
+            "--entrypoint",
+            "python",
+            "-v",
+            f"{Path(__file__).resolve().parent}:/opt/retailops-verification:ro",
+            "api-migrate",
+            "/opt/retailops-verification/verify_knowledge_admin.py",
+            "--retention-check-and-cleanup" if cleanup else "--retention-check",
+            stdin=json.dumps(expected),
+        )
+    )
+    require(result.get("result") == "passed", "rag_jobs_changed_after_restart")
+    return result["retained_runs"]
+
+
 def main() -> int:
     report: dict[str, Any] = {
         "checked_at": datetime.now(UTC).isoformat(),
@@ -105,7 +162,7 @@ def main() -> int:
         stage = "schema_and_isolation"
         require(
             sql("retailops_ai", "SELECT version_num FROM ai.alembic_version;", role="ai")
-            == "0001_bootstrap",
+            == EXPECTED_REVISION,
             "unexpected_schema",
         )
         require(
@@ -139,12 +196,36 @@ def main() -> int:
         finally:
             sql(
                 "retailops_ai",
-                "UPDATE ai.alembic_version SET version_num='0001_bootstrap';",
+                f"UPDATE ai.alembic_version SET version_num='{EXPECTED_REVISION}';",  # noqa: S608 - repository constant
                 role="ai",
             )
         command("run", "--rm", "api-migrate")
         wait_ready()
         report["checks"].append("explicit_idempotent_migration_and_revision_readiness")
+        stage = "rag_candidate_pgvector"
+        rag = run_in_compose(command)
+        report["rag"] = rag
+        report["checks"].append("real_pgvector_candidate_constraints_cache_atomicity_and_replay")
+        rag_index_id = str(rag["index_id"])
+        require(
+            re.fullmatch(r"index-sha256-[0-9a-f]{64}", rag_index_id) is not None,
+            "invalid_rag_smoke_id",
+        )
+        rag_retention_query = (
+            f"SELECT count(*) FROM ai.rag_index_chunks WHERE index_id='{rag_index_id}';"  # noqa: S608 - full regex validation above
+        )
+        lifecycle_report = rag["retrieval"]
+        if not isinstance(lifecycle_report, dict):
+            raise RuntimeError("invalid_lifecycle_report")
+        expected_pin = lifecycle_report["final_pin"]
+        administration_report = rag["administration"]
+        if not isinstance(administration_report, dict):
+            raise RuntimeError("invalid_administration_report")
+        expected_runs = administration_report["retained_runs"]
+        golden_report = rag["golden_administration"]
+        if not isinstance(golden_report, dict):
+            raise RuntimeError("invalid_golden_administration_report")
+        expected_runs = [*expected_runs, *golden_report["retained_runs"]]
         stage = "write_ai_and_mlflow"
         sql(
             "retailops_ai",
@@ -176,6 +257,12 @@ def main() -> int:
         command("kill", "-s", "SIGKILL", "api", "mlflow", "db")
         command("up", "-d", "--wait", "db", "api", "mlflow")
         wait_ready()
+        check_pin_retained(expected_pin)
+        check_jobs_retained(expected_runs)
+        require(
+            sql("retailops_ai", rag_retention_query, role="ai") == str(rag["chunks"]),
+            "rag_data_lost_after_crash",
+        )
         require(
             sql(
                 "retailops_ai",
@@ -210,6 +297,14 @@ def main() -> int:
         require(stack.main(["down"]) == 0, "stack_shutdown_failed")
         require(stack.main(["up"]) == 0, "stack_recreation_failed")
         wait_ready()
+        check_pin_retained(expected_pin)
+        administration_report["retained_runs"] = check_jobs_retained(expected_runs, cleanup=True)
+        administration_report["queued_retention_verified"] = True
+        administration_report["pending_fixture_cleanup"] = "cancelled_after_both_retention_checks"
+        require(
+            sql("retailops_ai", rag_retention_query, role="ai") == str(rag["chunks"]),
+            "rag_data_lost_after_down",
+        )
         require(
             sql(
                 "retailops_ai",
@@ -252,7 +347,7 @@ def main() -> int:
         report["api_health"] = 200
         report["api_ready_after_recovery"] = 200
         report["postgres_vector_version"] = "0.8.6"
-        report["migration_revision"] = "0001_bootstrap"
+        report["migration_revision"] = EXPECTED_REVISION
         stack.LOCAL.parent.mkdir(exist_ok=True)
         (stack.LOCAL.parent / "persistence-smoke.json").write_text(
             json.dumps(report, indent=2) + "\n"

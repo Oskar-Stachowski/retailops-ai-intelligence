@@ -21,6 +21,31 @@
       "title": "DataLineage",
       "type": "object"
     },
+    "MLRunError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_input",
+            "dependency_unavailable",
+            "execution_failed",
+            "cancelled"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "retryable"
+      ],
+      "title": "MLRunError",
+      "type": "object"
+    },
     "ModelRecord": {
       "additionalProperties": false,
       "properties": {
@@ -210,31 +235,6 @@
       "title": "Provenance",
       "type": "object"
     },
-    "RunError": {
-      "additionalProperties": false,
-      "properties": {
-        "code": {
-          "enum": [
-            "invalid_input",
-            "dependency_unavailable",
-            "execution_failed",
-            "cancelled"
-          ],
-          "title": "Code",
-          "type": "string"
-        },
-        "retryable": {
-          "title": "Retryable",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "code",
-        "retryable"
-      ],
-      "title": "RunError",
-      "type": "object"
-    },
     "RunInput": {
       "additionalProperties": false,
       "properties": {
@@ -337,6 +337,7 @@
   "$id": "urn:retailops:intelligence:run:1.0",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
+  "description": "Closed data bundles contain ML lineage; index runs use the shared standalone Run.",
   "properties": {
     "attempt": {
       "minimum": 1,
@@ -364,7 +365,7 @@
     "error": {
       "anyOf": [
         {
-          "$ref": "#/$defs/RunError"
+          "$ref": "#/$defs/MLRunError"
         },
         {
           "type": "null"
@@ -464,6 +465,6 @@
     "output_ref",
     "error"
   ],
-  "title": "RunRecord",
+  "title": "MLRunRecord",
   "type": "object"
 }

@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "stage": "11",
+  "scope": "markdown_parser_and_deterministic_chunk_candidates",
+  "result": "passed",
+  "verified_at": "2026-09-28T09:34:09.107161+00:00",
+  "implementation_commit": "96a47a3509e20cb464117a162e56b7f69a6e5d5b",
+  "base_commit": "be748a31edaec2822de361ea1bb6d83b1950d4ce",
+  "branch": "ai/rag-corpus",
+  "runtime": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.11.15",
+    "uv": "0.12.19"
+  },
+  "runtime_dependencies_added": [
+    {
+      "name": "markdown-it-py",
+      "version": "4.2.0",
+      "license": "MIT"
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2",
+      "license": "MIT",
+      "transitive": true
+    }
+  ],
+  "candidate": {
+    "corpus_id": "corpus-sha256-b5aa149e41279df9848596a05fab3ee584ba3db94c5f100189e4fef7adb0055d",
+    "chunk_manifest_id": "chunks-sha256-7bbaaf4e0b30db47207dc140ad6d58e2bcf1fa8cf01fa1c139be06f9e82af528",
+    "chunker_config_id": "chunker-config-sha256-158230729ba7b9e753602d83bc786d064a587b1f09e79d2af8d57b3494d26251",
+    "manifest_byte_sha256": "a28505ab65e6f209e0cbd2b72260a7b284e96c810cb4068290f7bba5c975e7cf",
+    "manifest_bytes": 907651,
+    "manifest_mode": "0o600",
+    "documents": 20,
+    "chunks": 302,
+    "max_chunk_utf8_bytes": 2030,
+    "max_token_estimate": 508,
+    "duplicate_occurrences": 0,
+    "omission_reasons": {
+      "structural_heading": 99
+    },
+    "block_types": {
+      "paragraph": 219,
+      "table": 26,
+      "fence": 26,
+      "bullet_list": 20,
+      "ordered_list": 7,
+      "blockquote": 4
+    },
+    "documents_without_content": 0,
+    "source_slice_and_line_checks_passed": true,
+    "no_unaccounted_nonwhitespace_source": true,
+    "independent_jsonschema_validation": "passed",
+    "sources": [
+      {
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+        "documents": 8
+      },
+      {
+        "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+        "commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+        "documents": 12
+      }
+    ],
+    "sample_citation": {
+      "chunk_id": "chunk-sha256-a0d1e6ce17aeab6453418c4c4021cf78acc72b17ceb0c4e713ec8638f3af4f38",
+      "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@7940d2ee7c82dee4e99d49755fc7eb898f15b2ca:docs/access-control.md#L3-L6",
+      "heading_path": [
+        {
+          "level": 1,
+          "title": "Lokalna tożsamość i uprawnienia API"
+        }
+      ],
+      "document_status": "implemented",
+      "access_class": "public_project"
+    },
+    "byte_identical_replay_from_independent_git_copies": true,
+    "byte_identical_clean_checkout_and_cli": true
+  },
+  "checks": {
+    "new_chunk_cases": {
+      "passed": 48,
+      "included_in_full_suite": true
+    },
+    "working_checkout": {
+      "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+      "exit_code": 0,
+      "passed": 389,
+      "test_seconds": 36.43
+    },
+    "clean_checkout": {
+      "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+      "exit_code": 0,
+      "passed": 389,
+      "test_seconds": 44.01,
+      "fresh_venv": true,
+      "clean_git_status_after": true,
+      "implementation_commit": "96a47a3509e20cb464117a162e56b7f69a6e5d5b"
+    },
+    "actionlint": {
+      "exit_code": 0,
+      "working_and_clean_checkout": true
+    },
+    "weakened_chunk_schema": {
+      "exit_code": 1,
+      "temporary_copy_only": true
+    },
+    "clean_cli_outside_checkout": {
+      "exit_code": 0,
+      "byte_identical_manifest": true
+    },
+    "local_gates": [
+      "ruff",
+      "ruff_format",
+      "mypy_strict_56_files",
+      "pytest",
+      "docs",
+      "intelligence_snapshots",
+      "access_snapshots",
+      "knowledge_snapshots",
+      "wheel",
+      "sdist",
+      "compose_config",
+      "gitleaks_history",
+      "gitleaks_directory"
+    ],
+    "wheel_byte_sha256": "dd9bca8ebe87e67793e18e1fd5fe5feef8f9330c61ca1299969a9f4f46f596b2",
+    "remote_ci": "not_run_for_this_scope"
+  },
+  "limitations": [
+    "Proposed editorial corpus and immutable candidate chunks; no active index or approval.",
+    "Near duplicates are retained pending later quality evaluation.",
+    "Token estimate is UTF-8 byte count divided by four, not a model tokenizer or token guarantee.",
+    "Oversized code/table fragments can contain incomplete Markdown syntax; exact source slices are retained.",
+    "No full GFM/frontmatter/footnote/task-list plugins; source remains under CommonMark plus table rules.",
+    "Navigation/comment/deduplication controls were exercised in Git fixtures; actual selected corpus omitted only 99 structural headings.",
+    "No embeddings, pgvector index persistence, activation, rollback, retrieval or golden set.",
+    "Access metadata are inherited, not a runtime principal/cache authorization filter.",
+    "No DB migrations; full Compose persistence smoke not repeated.",
+    "No remote push or Required CI for these commits."
+  ]
+}

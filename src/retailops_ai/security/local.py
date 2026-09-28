@@ -10,7 +10,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from retailops_ai.domain.access import Principal
+from retailops_ai.domain.access import KnowledgeAccess, Principal
 from retailops_ai.security.models import AccessPolicy
 
 MAX_POLICY_BYTES = 131072
@@ -66,6 +66,7 @@ class LocalAccess:
         if policy is not None:
             for grant in policy.grants:
                 scope = grant.scope
+                knowledge = grant.knowledge_scope
                 self._principals[grant.principal_id] = Principal(
                     principal_id=grant.principal_id,
                     roles=frozenset(grant.roles),
@@ -75,6 +76,14 @@ class LocalAccess:
                     if scope
                     else frozenset(),
                     channels=frozenset(scope.channels) if scope else frozenset(),
+                    knowledge=KnowledgeAccess(
+                        environment=knowledge.environment,
+                        repositories=frozenset(knowledge.repositories),
+                        access_classes=frozenset(knowledge.access_classes),
+                        document_statuses=frozenset(knowledge.document_statuses),
+                    )
+                    if knowledge
+                    else None,
                 )
 
     def authenticate(

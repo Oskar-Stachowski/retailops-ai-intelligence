@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "chunker_version": "markdown-blocks-v1",
+  "parser": "markdown-it-py",
+  "parser_version": "4.2.0",
+  "parser_preset": "commonmark-table-v1",
+  "normalization": "utf8-lf-v1",
+  "max_utf8_bytes": 2048,
+  "size_estimator": "utf8-bytes-div4-v1",
+  "navigation_policy": "toc-headings-and-anchor-only-blocks-v1",
+  "duplicate_policy": "same-document-heading-block-content-v1"
+}

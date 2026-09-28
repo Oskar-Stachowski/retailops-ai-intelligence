@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "review_id": "corpus-review-sha256-48c9a550f60a55a173cde031362f7cf7dabf2343216002471cba36bf279dffbf",
+  "corpus_id": "corpus-sha256-6f8518f867b94d73f863018863cb72add891ecb12e26ea677110aaa2c965796f",
+  "corpus_config_id": "corpus-config-sha256-f69337d57b6569092d198a76d32f645fea055d53dcd57fbfddfe613030612bce",
+  "environment": "local",
+  "review_owner": "Oskar-Stachowski",
+  "reviewer": "Oskar-Stachowski",
+  "reviewer_kind": "human",
+  "decision": "approved",
+  "scope": "sources_status_access_and_exclusions",
+  "reviewed_at": "2026-09-28T14:39:17.260457Z"
+}

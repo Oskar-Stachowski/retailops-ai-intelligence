@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "review_id": "similarity-review-sha256-c7124728d9d6837197f980d79afef2dae44a03454c868bbcc5dd4cf94ca619f7",
+  "report_id": "similarity-report-sha256-80d69ca6190ff8ce27d4ddc2f4f29fb6f8b977e79818375afbd9a3b13bf5aab4",
+  "review_owner": "Oskar-Stachowski",
+  "reviewer": "codex-technical-review",
+  "review_kind": "technical_lexical_review_only",
+  "reviewed_at": "2026-09-28T14:17:49.049235Z",
+  "corpus_approval_created": false,
+  "decisions": [
+    {
+      "level": "chunk",
+      "kind": "exact",
+      "left_checksum": "0606e0e0e5c8d54d9b1bdda00d69d4c6492c6e47eec10654bf517041b952b639",
+      "right_checksum": null,
+      "decision": "retain_separate_contexts",
+      "reason": "Short shared introduction to two different instructions; preserve heading and source lineage. One embedding cache record, separate chunks."
+    }
+  ]
+}

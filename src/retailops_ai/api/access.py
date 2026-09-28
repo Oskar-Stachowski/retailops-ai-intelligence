@@ -5,13 +5,19 @@ from typing import Annotated, Literal
 from fastapi import APIRouter, Depends, HTTPException, Request, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import Field
+from sqlalchemy.exc import SQLAlchemyError
 
+from retailops_ai.adapters.index_jobs import IndexAdministration
+from retailops_ai.adapters.knowledge_search import KnowledgeBackend
+from retailops_ai.api.index_jobs import add_index_routes
 from retailops_ai.api.middleware import single_header
 from retailops_ai.api.models import Problem
 from retailops_ai.data_contracts.common import Contract, Symbol, Versioned
 from retailops_ai.domain.access import Capability, Principal, Role, can_read_forecast
+from retailops_ai.knowledge.retrieval import RetrievalRequest, RetrievalResult
+from retailops_ai.pipelines.retrieval import KnowledgeDenied, resolve_scope
 from retailops_ai.security.local import LocalAccess
-from retailops_ai.security.models import ResourceScope
+from retailops_ai.security.models import KnowledgeResourceScope, ResourceScope
 
 
 class IdentityResponse(Contract):
@@ -20,6 +26,7 @@ class IdentityResponse(Contract):
     roles: list[Role]
     capabilities: list[Capability]
     scope: ResourceScope | None
+    knowledge_scope: KnowledgeResourceScope | None = None
 
 
 class ForecastCheckRequest(Versioned):
@@ -43,7 +50,12 @@ class PolicyMetadata(Contract):
     credential_count: int = Field(ge=1, le=64)
 
 
-def access_router(authority: LocalAccess) -> APIRouter:
+def access_router(
+    authority: LocalAccess,
+    knowledge_backend: KnowledgeBackend | None = None,
+    environment: Literal["local", "test"] = "local",
+    index_administration: IndexAdministration | None = None,
+) -> APIRouter:
     bearer = HTTPBearer(auto_error=False, scheme_name="apiBearer")
 
     async def verified(
@@ -82,6 +94,16 @@ def access_router(authority: LocalAccess) -> APIRouter:
             roles=sorted(principal.roles),
             capabilities=sorted(principal.capabilities),
             scope=scope,
+            knowledge_scope=KnowledgeResourceScope.model_validate(
+                {
+                    "environment": principal.knowledge.environment,
+                    "repositories": sorted(principal.knowledge.repositories),
+                    "access_classes": sorted(principal.knowledge.access_classes),
+                    "document_statuses": sorted(principal.knowledge.document_statuses),
+                }
+            )
+            if principal.knowledge
+            else None,
         )
 
     @router.post("/access/forecast-check", response_model=AccessDecision)
@@ -111,4 +133,21 @@ def access_router(authority: LocalAccess) -> APIRouter:
             policy_id=policy_id, principal_count=principals, credential_count=credentials
         )
 
+    @router.post(
+        "/knowledge/search", response_model=RetrievalResult, responses={503: {"model": Problem}}
+    )
+    def knowledge_search(
+        body: RetrievalRequest, principal: Annotated[Principal, Depends(verified)]
+    ) -> RetrievalResult:
+        try:
+            resolve_scope(principal, body, environment)
+            if knowledge_backend is None:
+                raise HTTPException(503)
+            return knowledge_backend.search(body, principal)
+        except KnowledgeDenied:
+            raise HTTPException(403) from None
+        except (SQLAlchemyError, ValueError, OverflowError):
+            raise HTTPException(503) from None
+
+    add_index_routes(router, verified, index_administration)
     return router

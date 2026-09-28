@@ -11,7 +11,7 @@ from retailops_ai.data_contracts.feature import FeatureRecord
 from retailops_ai.data_contracts.label import LabelRecord
 from retailops_ai.data_contracts.model import ModelRecord
 from retailops_ai.data_contracts.prediction import PredictionRecord
-from retailops_ai.data_contracts.run import RunRecord
+from retailops_ai.data_contracts.run import MLRunRecord
 from retailops_ai.data_contracts.split import SplitRecord
 from retailops_ai.data_contracts.tool import ToolRequest, ToolResult
 
@@ -21,7 +21,7 @@ MODELS: dict[str, type[BaseModel]] = {
     "feature": FeatureRecord,
     "label": LabelRecord,
     "prediction": PredictionRecord,
-    "run": RunRecord,
+    "run": MLRunRecord,
     "tool_request": ToolRequest,
     "tool_result": ToolResult,
     "split": SplitRecord,

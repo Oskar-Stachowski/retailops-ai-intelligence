@@ -33,9 +33,11 @@ nie wypisują surowego stdout/stderr bibliotek.
 | PostgreSQL 16 + pgvector 0.8.6 | Brak portu hosta; wolumen `postgres_data` | Administrator bootstrap, osobne nieuprzywilejowane role aplikacji |
 | Artefakty MLflow | Wolumen `mlflow_artifacts`, `/var/mlflow/artifacts` | Duże pliki poza PostgreSQL, upload/download przez tracking server |
 
-AI: schemat `ai`, wersja Alembic `0001_bootstrap` i niewielka tabela
-`ai.service_metadata`. To metadane operacyjne; nie jest jeszcze kontraktem
-dataset/run/prediction. Rozszerzenie vector istnieje w bazie AI, bez indeksu/RAG.
+AI: schemat `ai`, wersja Alembic `0007_rag_golden_jobs`, tabela
+`ai.service_metadata` oraz niemodyfikowalne [kandydaty RAG](knowledge-index.md).
+Osobny kanał `test/offline_test` sprawdza [lifecycle](knowledge-lifecycle.md);
+rzeczywisty korpus nie ma aktywnego retrieval. Metadata operacyjne nie zastępują
+kontraktów dataset/run/prediction.
 MLflow ma własne tabele w osobnej bazie. Role nie mogą łączyć się do bazy drugiej
 aplikacji i nie mają superuser/createdb/createrole. Stos nie łączy się z operacyjną
 bazą RetailOps i nie tworzy brokera. Nie należy tu zapisywać danych klientów.
@@ -86,6 +88,8 @@ Shutdown usuwa kontenery i sieć, zachowuje oba wolumeny oraz plik poświadczeń
 Nie dodaje `-v` i nie usuwa danych. Test smoke uruchamia stos danego checkoutu,
 utrwala rekord w bazie AI oraz eksperyment i run MLflow z artefaktem. Sprawdza izolację ról,
 nieaktualny schemat, SIGKILL i restart, zatrzymanie DB i recovery oraz down/up.
+Sprawdza także rzeczywiste wektory pgvector, kompletność i atomowość kandydata,
+idempotencję, cache i izolację przestrzeni; fragmenty zachowują się po restarcie.
 Weryfikuje brak haseł w logach. Na końcu zatrzymuje kontenery i pozostawia wolumeny.
 Raport bez sekretów: `.local/persistence-smoke.json`. Porty 8081/5010 muszą być wolne.
 Test zapisuje wyłącznie własne dane testowe; uruchamiaj go w deweloperskim checkoutcie.

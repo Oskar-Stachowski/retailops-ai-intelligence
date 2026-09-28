@@ -16,7 +16,7 @@
 | `split` | Fixed-origin train/validation/optional calibration/test z purge ≥ maksymalny horyzont |
 | `model` | Wersja numeryczna MLflow, training run, wejścia, cutoffs, konfiguracja i checksum artefaktu |
 | `prediction` | Observed sales, jednostka, pełne lineage, przypięty model/release, świeżość i jawna obecność/nieobecność przedziału |
-| `run` | Training/forecast batch, tożsamość wykonania, wejścia i kontrolowany stan/output/error |
+| `run` | Training/forecast batch, tożsamość wykonania, przypięte wejścia i kontrolowany stan/output/error |
 | `tool_request` / `tool_result` | Ograniczone, read-only get_demand_forecast; ok/no_data/error |
 | `bundle` | Zamknięty graf powyższych manifestów i rekordów, spójność rodziców, treści i stanów |
 
@@ -88,6 +88,14 @@ wejścia i model pozostają przypięte; nie można przepisać wyniku terminalneg
 Identyczne ponowienie rekordu jest idempotentne. `transition_run` waliduje parę
 rekordów; nie zapisuje ich do DB i nie implementuje retry/queue/atomic publication.
 
+Osobny [kontrakt knowledge-index-run/v1](../contracts/knowledge/v1/knowledge-index-run.v1.schema.json)
+korzysta ze wspólnych pól i przejść Run. Jego wariant `knowledge_index` ma zatwierdzony
+profil, request hash, środowisko i przypięte konfiguracje/źródła; sukces wskazuje
+manifest indeksu oraz raport i zachowuje `activation_status=candidate`.
+[Administracja RAG](knowledge-administration.md) ma osobny trwały zapis/workera
+w zakresie test/fake. `run/v1` i bundle danych nadal dopuszczają wyłącznie runy ML
+z dotychczasowym lineage, outputami i kodami błędów; nie przyjmują runa indeksowania.
+
 Get_demand_forecast ogranicza zakres do 20 produktów, 5 selling locations,
 jednego kanału, targetów origin+1..14 i maksymalnie 50 wyników.
 Odpowiedź zachowuje scope, model, source_ref, as_of i freshness, odrzuca duplikaty.
@@ -120,7 +128,7 @@ Nowe pole, zmiana znaczenia/null/typu/grain/PIT/allowlisty lub kanonizacji wymag
 jawnej nowej wersji, równoległych schemas/examples i przeglądu kompatybilności.
 Consumer obsługuje wyłącznie wymienione wersje; eksport RetailOps v1 nie jest
 automatycznie zgodny z tym kontraktem AI v1. HTTP diagnostyczne OpenAPI pozostaje
-osobnym kontraktem; ta zmiana nie dodaje endpointów.
+osobnym kontraktem. Endpointy administracji RAG mają własne DTO w `knowledge/v1`.
 
 `make contracts` regeneruje snapshots do przeglądu. `contracts-check` porównuje
 je z kodem i deterministycznymi przykładami, nie naprawia ich w CI.
@@ -137,4 +145,3 @@ Modele, event execution i streaming pozostają planowane.
 [strict mode](https://docs.pydantic.dev/latest/concepts/strict_mode/),
 [Python JSON](https://docs.python.org/3/library/json.html),
 [jsonschema validators](https://python-jsonschema.readthedocs.io/en/stable/api/jsonschema/validators/).
-

@@ -1,0 +1,252 @@
+{
+  "schema_version": "1.0",
+  "stage": "11",
+  "audit_date": "2026-09-28",
+  "audited_commit": "ceec8f042c8d35d80775a62d766ba2ceafac8042",
+  "branch": "ai/rag-corpus",
+  "scope": "stage_11_offline_foundation_merge_readiness_and_remaining_acceptance",
+  "verdict": {
+    "offline_scope_ready_for_pull_request": true,
+    "merge_requires_successful_remote_ci": true,
+    "merge_blocking_defects_found_in_reviewed_scope": [],
+    "stage_fully_complete": false,
+    "user_activation_approved": false,
+    "semantic_quality_accepted": false
+  },
+  "plan": {
+    "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+    "path": "docs/plans/ai/etapy/11-rag.md",
+    "sha256": "399c46fe909f35187568c05d6bcff2865638a26c03362da44967e9835a44dccd",
+    "pinned_reference_commit": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+    "current_local_reference_commit": "0b6104a472f4a9faa3ff73ef1a40c3059507d1bf",
+    "stage_11_and_12_plans_unchanged_between_references": true
+  },
+  "fresh_checks": {
+    "targeted_regression": {
+      "command": ".venv/bin/python -m pytest -q tests/test_index_jobs.py tests/test_golden_jobs.py tests/test_index_lifecycle.py tests/test_persistence.py",
+      "test_files": [
+        "tests/test_index_jobs.py",
+        "tests/test_golden_jobs.py",
+        "tests/test_index_lifecycle.py",
+        "tests/test_persistence.py"
+      ],
+      "passed": 104,
+      "seconds": 25.28,
+      "exit_code": 0
+    },
+    "static_gates": {
+      "command": "make bootstrap UV=.tools/bin/uv lint type-check docs-check contracts-check secrets compose-config GITLEAKS=/opt/homebrew/bin/gitleaks",
+      "exit_code": 0,
+      "mypy_files": 92,
+      "ruff_formatted_files": 149
+    },
+    "reproduction": {
+      "sources_rebuilt_from_pinned_git": true,
+      "full_candidate_equals_saved_index": true,
+      "index_id": "index-sha256-18c7ac743d35a7f9b8d59f781f2f4ccace9e24af79046bcf9f6a36895de038e9",
+      "documents": 29,
+      "chunks": 451,
+      "embedding_records": 450,
+      "exclusions": 130,
+      "mechanical_validation": "passed",
+      "golden_cases": 44,
+      "critical_cases": 9,
+      "recall_at_5": 0.04411764705882353,
+      "mrr": 0.04411764705882353,
+      "recall_at_5_threshold": 0.8,
+      "mrr_threshold": 0.6,
+      "critical_pass_rate": 1.0,
+      "citation_correctness": 1.0,
+      "quality_gate_passed": false,
+      "preflight_blockers": [
+        "golden_thresholds_failed",
+        "semantic_provider_required",
+        "user_build_profile_required"
+      ],
+      "activation_allowed": false
+    },
+    "additional_retrieval_checks": [
+      "budget_enforcement",
+      "complete_denial",
+      "denial_after_prior_read",
+      "purpose_status_filters",
+      "missing_capability",
+      "wrong_environment",
+      "explicit_scope_expansion"
+    ],
+    "acceptance_checksum_records_verified": [
+      {
+        "path": "knowledge/corpus.v1.json",
+        "sha256": "094d302ccdb7ac483cddd49b0162a298fbc7814a748e5747cae8e9f917a006a0"
+      },
+      {
+        "path": "knowledge/golden.v1.json",
+        "sha256": "c25768542c1fa204c0c52c813d6588323d04282c64d218cd4d91087c037d2f27"
+      },
+      {
+        "path": "knowledge/chunker.v1.json",
+        "sha256": "1100e756b4e2c959cdac774fc7249d11c9b0bb7e5d0524a305a2527b8fcd15b0"
+      },
+      {
+        "path": "knowledge/embeddings.fake.v1.json",
+        "sha256": "cf1189f4e0df3ba996c42ea99c1458a8b83b6ac1c97869f23382950d63e6cd87"
+      },
+      {
+        "path": "knowledge/similarity.v1.json",
+        "sha256": "b5adbaaff8caebbddbe29b5c7eb5fc5e0a59bfd772cf2ac9165313af93e89e39"
+      },
+      {
+        "path": "src/retailops_ai/knowledge/jobs.py",
+        "sha256": "66ad8e2a3c97b1bb2e8bdb84f99c978372f64048050a1b9df1e8bdfc64a3ee3e"
+      },
+      {
+        "path": "src/retailops_ai/pipelines/index_builds.py",
+        "sha256": "520454244c4b48d59844a5dcbed6c7f4d490f143d29f47fa652cc4ee513a7085"
+      },
+      {
+        "path": "src/retailops_ai/adapters/index_jobs.py",
+        "sha256": "cdb996983e208cf329355f4b864dba1f5ee0ba232a2dc9eae5b96f204bd35af7"
+      },
+      {
+        "path": "src/retailops_ai/cli.py",
+        "sha256": "282400ba47a5b2f78366ac00e336ff3df5fc5a261f3a0831355b56b93579866c"
+      },
+      {
+        "path": "src/retailops_ai/cli_index_jobs.py",
+        "sha256": "aad7f8c8928d33d7810fb39068afb28bce99887722516a98002a546e5222466f"
+      },
+      {
+        "path": "src/retailops_ai/cli_qualification.py",
+        "sha256": "515f1864b0457b800e6fdf89d59935872d98596a58fc16acbccee3f2cad572a5"
+      },
+      {
+        "path": "src/retailops_ai/adapters/database.py",
+        "sha256": "cec0bf8ff7df8e7f913365aaa754864fd21d50585d9f7115807a5c0e8b0ea289"
+      },
+      {
+        "path": "src/retailops_ai/migrations/versions/0007_rag_golden_jobs.py",
+        "sha256": "b96787a65d9974fcabcaf768f9357355dafdbbca4e6594990f19cf6b33d65e3a"
+      },
+      {
+        "path": "scripts/update_knowledge_contracts.py",
+        "sha256": "80d4c8c85817df71ada31fc966284c27303fe57dbbf037daa82071c18b1607b6"
+      },
+      {
+        "path": "scripts/verify_golden_jobs.py",
+        "sha256": "deda12e945fefaccea9029809b3773c994d6efed05e04aba72c8dde89420b7bf"
+      },
+      {
+        "path": "scripts/verify_knowledge_admin.py",
+        "sha256": "8921ab6cf8a2fdcdaeeb54717b072ffd5e75b962df38f01c1b7a411e20141b07"
+      },
+      {
+        "path": "scripts/verify_rag_index.py",
+        "sha256": "d8b4b1759e2008ae834954db3a2262f043d555e6f86634fd17b9a773e0ac48b7"
+      },
+      {
+        "path": "scripts/verify_local_stack.py",
+        "sha256": "17b9f91875cabfcfd481529c007bf31f66aa7e02b5d59ff445c016d353058dc2"
+      },
+      {
+        "path": "tests/test_golden_jobs.py",
+        "sha256": "48acf6e167437bfba2665351c25bebe1ec970c4f1dbebae09e911fa70bb3d0f1"
+      },
+      {
+        "path": "contracts/knowledge/v1/golden-index-build-profile.v1.schema.json",
+        "sha256": "bd329eb0417d97c9ea7d05d41ec429c93ce1584d7d7bcede0d0d2cfa4c79ae3d"
+      },
+      {
+        "path": "contracts/knowledge/v1/golden-index-run-report.v1.schema.json",
+        "sha256": "b3fe00248ed507999298e22ebbca30262ea278adf231640bff6c027ac3c36467"
+      },
+      {
+        "path": "contracts/knowledge/v1/knowledge-index-run.v1.schema.json",
+        "sha256": "6b54555dfc916a78704774fa7480a8798af0154553fbf450bed19428ce1a49ed"
+      },
+      {
+        "path": "contracts/access/v1/access.openapi.json",
+        "sha256": "b14f586702ee5c90f34bdeeb99bc7667dcaa2c6c5465b4f6e51ca0bfa7ce37d1"
+      },
+      {
+        "path": "knowledge/corpus-approval.v1.json",
+        "sha256": "33bd62637499876b301f706d1cedb44ed55f636977648ba5aba6fcf2cefc80d4"
+      },
+      {
+        "path": "knowledge/golden-labels-approval.v1.json",
+        "sha256": "7d4a78b1980fbdd82d0c24c8b4e2bfcfe7a9befbbe5049d4fa5c41beed4983e2"
+      },
+      {
+        "path": ".gitleaks.toml",
+        "sha256": "2612ea1668f2a75662868e257945875893077849f479732426983f24d34237d4"
+      },
+      {
+        "path": "contracts/diagnostics.openapi.json",
+        "sha256": "43c3ae5b1e91c9b19cbca05fe3a5e9e3090349f32bbb8956f18646e7d6a7aac5"
+      },
+      {
+        "path": "contracts/problem.v1.schema.json",
+        "sha256": "47828caa8dd362a7bbc030045589c9ad7bab528dd48c7a947efd76738db9d1a6"
+      }
+    ]
+  },
+  "reused_acceptance": {
+    "evidence": "docs/evidence/11-golden-jobs.json",
+    "commit": "8df02e60df600e2771f4481d18b09517b0500d0e",
+    "full_ci_passed_tests": 627,
+    "full_ci_seconds": 257.62,
+    "native_postgresql_http": "passed",
+    "native_migration_revision": "0007_rag_golden_jobs",
+    "candidate_constraints_and_atomicity": true,
+    "worker_recovery_and_cancellation": true,
+    "golden_success_failure_and_report_retention": true,
+    "actual_fake_gate_failure_persists_without_activation": true,
+    "changed_paths_since_acceptance": [
+      "docs/STATUS.md",
+      "docs/evidence/11-golden-jobs.json",
+      "docs/evidence/11-golden-jobs.md",
+      "docs/knowledge-golden-jobs.md"
+    ],
+    "application_tests_migrations_and_ci_unchanged": true,
+    "full_suite_rerun_in_this_audit": false,
+    "native_compose_rerun_in_this_audit": false
+  },
+  "remote_observation": {
+    "observed_at": "2026-09-28T15:39:40.168097+00:00",
+    "main_commit": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+    "audited_branch_ahead": 26,
+    "audited_branch_behind": 0,
+    "remote_rag_branch_exists": false,
+    "required_pull_request": true,
+    "required_contexts": [
+      "required-result"
+    ],
+    "strict": true,
+    "enforce_admins": true,
+    "latest_main_ci": {
+      "run_id": 36396020430,
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36396020430",
+      "conclusion": "success",
+      "covers_stage_11": false
+    },
+    "stage_11_remote_ci": "not_run"
+  },
+  "remaining_acceptance": [
+    "real_capable_embedding_contracts_provider_selection_build_and_query_path",
+    "user_qualification_activation_and_rollback_policy_with_acceptance",
+    "full_approved_golden_quality_with_real_embeddings_coordinated_with_stage_12"
+  ],
+  "parallel_work": {
+    "data_stage": "03",
+    "source_stage_02_local_audit": "Oskar-Stachowski/retailops-cloud-native-platform@0b6104a472f4a9faa3ff73ef1a40c3059507d1bf:docs/evidence/ai/02/audit/README.md",
+    "platform_remote_state_checked": false,
+    "early_stage_12": "adapters_and_test_doubles_only",
+    "full_stage_12_prerequisites": [
+      "10",
+      "11"
+    ]
+  },
+  "aws_executed": false,
+  "actual_agent_groundedness_and_tools_evaluated": false,
+  "pushed": false,
+  "merged": false
+}

@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "stage": "11",
+  "scope": "bound_fake_release_manifest_and_explicit_decision_preflight",
+  "result": "passed",
+  "base_commit": "e5f6b433e96da7850e71aeb17b9f3dceb6b61bc4",
+  "branch": "ai/rag-corpus",
+  "verified_at": "2026-09-28T14:26:12.776233+00:00",
+  "runtime": {
+    "python": "3.11.15",
+    "unicode": "14.0.0",
+    "os": "Darwin",
+    "architecture": "arm64"
+  },
+  "runtime_dependencies_added": [],
+  "code_files_sha256": {
+    "src/retailops_ai/cli.py": "9223f50f56dbe3589c2fb0fc8417a92e877f518b2bde49b848294b3ee92832f3",
+    "src/retailops_ai/cli_qualification.py": "7cd14d7a42cd4ca898cb8940dd11c3de17dc97e271ca527011b061b1e3ae286c",
+    "src/retailops_ai/knowledge/qualification.py": "bab5418d31ce28e90f68241f205cd335e700eb6ceb1ca3ad5239fbd24077ba50",
+    "src/retailops_ai/pipelines/qualification.py": "2f26029125ae3dbe1de17ee2b88e55a905fb585dbe71ff9780c32b243f3cc5ea",
+    "scripts/update_knowledge_contracts.py": "414b46afef83608927bc0a7d651383203f87f3d9e1b753515342e90e42f3559a",
+    "tests/test_qualification.py": "81e0dffcd5989d2a762bcd17665dc42a76fc23af5f5d6396f1bf43ea2c15a37e"
+  },
+  "schema_files_sha256": {
+    "contracts/knowledge/v1/golden-labels-approval.v1.schema.json": "4940a5735b6620d8ab61f5e5d4c5aa3012e37a9cca74ef30b133d1ccdb3cef9b",
+    "contracts/knowledge/v1/similarity-review.v1.schema.json": "f84b14e75b7f9d8378bdfd5dbb5a4f39c99fc107201106dcc5a8a3966e3baa89",
+    "contracts/knowledge/v1/index-release-manifest.v1.schema.json": "1c38f4f26626849e5672c836c636a4549ad1195b3249ebcbdb409692af1f108d"
+  },
+  "targeted_checks": {
+    "tests": 33,
+    "passed": 33,
+    "test_seconds": 13.2,
+    "mypy_files": 89,
+    "new_negative_cases_and_boundary_checks": true,
+    "ruff": true,
+    "ruff_format": true,
+    "docs_links": true,
+    "knowledge_snapshots": true,
+    "gitleaks_dir": true
+  },
+  "actual_candidate": {
+    "index_id": "index-sha256-18c7ac743d35a7f9b8d59f781f2f4ccace9e24af79046bcf9f6a36895de038e9",
+    "documents": 29,
+    "chunks": 451,
+    "golden_set_id": "golden-set-sha256-5dc7eebaf8dbfb60febedf2bf0ae66f840c5a27cdf2b7d6d51355c377e6daba6",
+    "golden_cases": 44,
+    "sources": [
+      {
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605"
+      },
+      {
+        "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+        "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5"
+      }
+    ],
+    "proposal_files_unchanged_since_base": true,
+    "proposal_files_sha256": {
+      "knowledge/corpus.v1.json": "094d302ccdb7ac483cddd49b0162a298fbc7814a748e5747cae8e9f917a006a0",
+      "knowledge/golden.v1.json": "c25768542c1fa204c0c52c813d6588323d04282c64d218cd4d91087c037d2f27",
+      "knowledge/chunker.v1.json": "1100e756b4e2c959cdac774fc7249d11c9b0bb7e5d0524a305a2527b8fcd15b0",
+      "knowledge/embeddings.fake.v1.json": "cf1189f4e0df3ba996c42ea99c1458a8b83b6ac1c97869f23382950d63e6cd87",
+      "knowledge/similarity.v1.json": "b5adbaaff8caebbddbe29b5c7eb5fc5e0a59bfd772cf2ac9165313af93e89e39"
+    },
+    "mechanical_validation": "passed",
+    "similarity_findings": 1,
+    "unreviewed_similarity_findings": 0,
+    "similarity_review_id": "similarity-review-sha256-c7124728d9d6837197f980d79afef2dae44a03454c868bbcc5dd4cf94ca619f7",
+    "golden_report_reproduced_except_timing": true,
+    "golden_original_timing_aggregation_checked": true,
+    "golden_thresholds_passed": false,
+    "corpus_approval": null,
+    "golden_approval": null
+  },
+  "private_manifest": {
+    "path": ".local/rag/release-preflight-20260928.json",
+    "bytes": 346844,
+    "mode": "0o600",
+    "release_id": "rag-release-manifest-sha256-1dab065f38efb964f2d74b913233f5eb4488ae02486fd511caef98a352295dc0",
+    "sha256": "86481eeddb9360aaff8f126e0194826b8b9f8a61f86deb4ee8036f8bfe65a734",
+    "json_schema_validated": true,
+    "status": "blocked",
+    "activation_allowed": false,
+    "blockers": [
+      "corpus_approval_missing",
+      "golden_labels_approval_missing",
+      "golden_thresholds_failed",
+      "semantic_provider_required",
+      "user_build_profile_required"
+    ]
+  },
+  "input_report": {
+    "path": "docs/evidence/11-sources-golden.json",
+    "sha256": "81ebedd28de7a1fafa18948ddeacf3e26cf20c1e170d9f4e1bba1403a1479d68",
+    "timing_provenance": "original_measurement_consistency_not_independent_attestation"
+  },
+  "corpus_approval_created": false,
+  "labels_approval_created": false,
+  "actual_corpus_activated": false,
+  "database_or_http_changed": false,
+  "semantic_quality_accepted": false,
+  "pushed": false,
+  "remote_ci_executed_for_this_scope": false,
+  "stage_progress_estimate_percent": 92,
+  "remaining": [
+    "owner_approval_of_corpus_and_golden_labels",
+    "user_build_profile_runs_and_retrieval_qualification_policy",
+    "real_embeddings_golden_quality_bedrock_agent_in_stage_12"
+  ],
+  "implementation_commit": "1619849a3ee08e6cf518a01852528a149f506aa0",
+  "full_ci": {
+    "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+    "exit_code": 0,
+    "passed": 611,
+    "test_seconds": 156.41,
+    "fresh_venv": true,
+    "clean_git_status": true,
+    "checks": [
+      "ruff_check",
+      "ruff_format",
+      "mypy_89_files",
+      "pytest",
+      "docs_links",
+      "intelligence_access_knowledge_snapshots",
+      "wheel_and_sdist",
+      "compose_config",
+      "gitleaks_git_and_dir"
+    ]
+  },
+  "reproduction": {
+    "implementation_commit": "1619849a3ee08e6cf518a01852528a149f506aa0",
+    "installed_cli_outside_repository": true,
+    "separate_local_git_clones": true,
+    "different_python_hash_seed": 809,
+    "invalid_service_settings_ignored": true,
+    "command_exit_codes": {
+      "index-build": 0,
+      "index-release-check": 0
+    },
+    "index_byte_for_byte_equal": true,
+    "manifest_byte_for_byte_equal": true,
+    "private_manifest_mode": "0600",
+    "release_file_sha256": "86481eeddb9360aaff8f126e0194826b8b9f8a61f86deb4ee8036f8bfe65a734",
+    "code_hashes_match": true,
+    "clean_git_status": true
+  }
+}

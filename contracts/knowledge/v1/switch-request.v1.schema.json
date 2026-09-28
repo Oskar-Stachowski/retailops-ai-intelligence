@@ -1,0 +1,69 @@
+{
+  "$id": "urn:retailops:knowledge:switch-request:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actor": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Actor",
+      "type": "string"
+    },
+    "environment": {
+      "enum": [
+        "local",
+        "test"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "expected_generation": {
+      "maximum": 9223372036854775806,
+      "minimum": 0,
+      "title": "Expected Generation",
+      "type": "integer"
+    },
+    "lane": {
+      "enum": [
+        "retrieval",
+        "offline_test"
+      ],
+      "title": "Lane",
+      "type": "string"
+    },
+    "operation": {
+      "enum": [
+        "activate",
+        "rollback"
+      ],
+      "title": "Operation",
+      "type": "string"
+    },
+    "request_id": {
+      "pattern": "^rag-change-[0-9a-f]{32}$",
+      "title": "Request Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "target_index_id": {
+      "pattern": "^index-sha256-[0-9a-f]{64}$",
+      "title": "Target Index Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "request_id",
+    "environment",
+    "lane",
+    "operation",
+    "target_index_id",
+    "expected_generation",
+    "actor"
+  ],
+  "title": "SwitchRequest",
+  "type": "object"
+}

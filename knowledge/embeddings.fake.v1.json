@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "provider": "fake",
+  "model_id": "sha256-unit-f32-v1",
+  "inference_profile": null,
+  "region": "offline",
+  "dimension": 32,
+  "normalization": "l2-unit",
+  "distance": "cosine",
+  "transformation_version": "utf8-chunk-body-v1",
+  "vector_format": "float32-big-endian-v1"
+}

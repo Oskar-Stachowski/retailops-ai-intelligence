@@ -4,8 +4,16 @@ from dataclasses import dataclass
 from typing import Literal
 
 Role = Literal["viewer", "operator", "admin"]
-Capability = Literal["forecast:read", "access:admin"]
+Capability = Literal["forecast:read", "access:admin", "knowledge:read", "knowledge:index"]
 Channel = Literal["store", "online"]
+
+
+@dataclass(frozen=True)
+class KnowledgeAccess:
+    environment: str
+    repositories: frozenset[str]
+    access_classes: frozenset[str]
+    document_statuses: frozenset[str]
 
 
 @dataclass(frozen=True)
@@ -16,6 +24,7 @@ class Principal:
     product_ids: frozenset[str]
     selling_location_ids: frozenset[str]
     channels: frozenset[Channel]
+    knowledge: KnowledgeAccess | None = None
 
 
 def can_read_forecast(

@@ -1,0 +1,300 @@
+{
+  "$defs": {
+    "EmbeddingConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            8,
+            16,
+            32,
+            64
+          ],
+          "title": "Dimension",
+          "type": "integer"
+        },
+        "distance": {
+          "const": "cosine",
+          "title": "Distance",
+          "type": "string"
+        },
+        "inference_profile": {
+          "title": "Inference Profile",
+          "type": "null"
+        },
+        "model_id": {
+          "const": "sha256-unit-f32-v1",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "normalization": {
+          "const": "l2-unit",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "provider": {
+          "const": "fake",
+          "title": "Provider",
+          "type": "string"
+        },
+        "region": {
+          "const": "offline",
+          "title": "Region",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "transformation_version": {
+          "const": "utf8-chunk-body-v1",
+          "title": "Transformation Version",
+          "type": "string"
+        },
+        "vector_format": {
+          "const": "float32-big-endian-v1",
+          "title": "Vector Format",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "provider",
+        "model_id",
+        "inference_profile",
+        "region",
+        "dimension",
+        "normalization",
+        "distance",
+        "transformation_version",
+        "vector_format"
+      ],
+      "title": "EmbeddingConfig",
+      "type": "object"
+    },
+    "IndexEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "embedding_id": {
+          "pattern": "^embedding-sha256-[0-9a-f]{64}$",
+          "title": "Embedding Id",
+          "type": "string"
+        },
+        "vector_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Vector Checksum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "embedding_id",
+        "vector_checksum"
+      ],
+      "title": "IndexEntry",
+      "type": "object"
+    },
+    "IndexManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_count": {
+          "maximum": 32768,
+          "minimum": 1,
+          "title": "Chunk Count",
+          "type": "integer"
+        },
+        "chunk_manifest_id": {
+          "pattern": "^chunks-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Manifest Id",
+          "type": "string"
+        },
+        "corpus_id": {
+          "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+          "title": "Corpus Id",
+          "type": "string"
+        },
+        "embedding_config": {
+          "$ref": "#/$defs/EmbeddingConfig"
+        },
+        "embedding_count": {
+          "maximum": 32768,
+          "minimum": 1,
+          "title": "Embedding Count",
+          "type": "integer"
+        },
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/IndexEntry"
+          },
+          "maxItems": 32768,
+          "minItems": 1,
+          "title": "Entries",
+          "type": "array"
+        },
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "index_id": {
+          "pattern": "^index-sha256-[0-9a-f]{64}$",
+          "title": "Index Id",
+          "type": "string"
+        },
+        "lifecycle": {
+          "const": "candidate",
+          "title": "Lifecycle",
+          "type": "string"
+        },
+        "migration_revision": {
+          "const": "0002_rag_candidates",
+          "title": "Migration Revision",
+          "type": "string"
+        },
+        "pgvector_version": {
+          "const": "0.8.6",
+          "title": "Pgvector Version",
+          "type": "string"
+        },
+        "retrieval_version": {
+          "const": "not_implemented",
+          "title": "Retrieval Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "semantic_quality": {
+          "const": "not_evaluated_fake_vectors",
+          "title": "Semantic Quality",
+          "type": "string"
+        },
+        "space_id": {
+          "pattern": "^embedding-space-sha256-[0-9a-f]{64}$",
+          "title": "Space Id",
+          "type": "string"
+        },
+        "storage_version": {
+          "const": "pgvector-checked-dimension-v1",
+          "title": "Storage Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "lifecycle",
+        "environment",
+        "semantic_quality",
+        "index_id",
+        "corpus_id",
+        "chunk_manifest_id",
+        "embedding_config",
+        "space_id",
+        "storage_version",
+        "pgvector_version",
+        "migration_revision",
+        "retrieval_version",
+        "chunk_count",
+        "embedding_count",
+        "entries"
+      ],
+      "title": "IndexManifest",
+      "type": "object"
+    },
+    "IndexPin": {
+      "additionalProperties": false,
+      "properties": {
+        "environment": {
+          "const": "test",
+          "title": "Environment",
+          "type": "string"
+        },
+        "generation": {
+          "maximum": 9223372036854775807,
+          "minimum": 1,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "lane": {
+          "const": "offline_test",
+          "title": "Lane",
+          "type": "string"
+        },
+        "manifest": {
+          "$ref": "#/$defs/IndexManifest"
+        },
+        "purpose": {
+          "const": "lifecycle_validation_only",
+          "title": "Purpose",
+          "type": "string"
+        },
+        "request_id": {
+          "pattern": "^rag-change-[0-9a-f]{32}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "review_id": {
+          "pattern": "^corpus-review-sha256-[0-9a-f]{64}$",
+          "title": "Review Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "validation_id": {
+          "pattern": "^index-validation-sha256-[0-9a-f]{64}$",
+          "title": "Validation Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "environment",
+        "lane",
+        "purpose",
+        "generation",
+        "request_id",
+        "review_id",
+        "validation_id",
+        "manifest"
+      ],
+      "title": "IndexPin",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:knowledge:switch-result:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "pin": {
+      "$ref": "#/$defs/IndexPin"
+    },
+    "status": {
+      "enum": [
+        "applied",
+        "replayed"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "pin"
+  ],
+  "title": "SwitchResult",
+  "type": "object"
+}

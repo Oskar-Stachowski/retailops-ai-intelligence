@@ -1,0 +1,115 @@
+{
+  "$id": "urn:retailops:knowledge:current-knowledge-index:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "activated_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Activated At",
+      "type": "string"
+    },
+    "chunk_count": {
+      "maximum": 32768,
+      "minimum": 1,
+      "title": "Chunk Count",
+      "type": "integer"
+    },
+    "chunk_manifest_id": {
+      "pattern": "^chunks-sha256-[0-9a-f]{64}$",
+      "title": "Chunk Manifest Id",
+      "type": "string"
+    },
+    "corpus_manifest_id": {
+      "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+      "title": "Corpus Manifest Id",
+      "type": "string"
+    },
+    "dimension": {
+      "enum": [
+        8,
+        16,
+        32,
+        64
+      ],
+      "title": "Dimension",
+      "type": "integer"
+    },
+    "document_count": {
+      "maximum": 128,
+      "minimum": 2,
+      "title": "Document Count",
+      "type": "integer"
+    },
+    "embedding_config_id": {
+      "pattern": "^embedding-space-sha256-[0-9a-f]{64}$",
+      "title": "Embedding Config Id",
+      "type": "string"
+    },
+    "environment": {
+      "const": "test",
+      "title": "Environment",
+      "type": "string"
+    },
+    "evaluation_report_ref": {
+      "pattern": "^db:ai.rag_qualifications:index-validation-sha256-[0-9a-f]{64}$",
+      "title": "Evaluation Report Ref",
+      "type": "string"
+    },
+    "index_config_id": {
+      "pattern": "^index-config-sha256-[0-9a-f]{64}$",
+      "title": "Index Config Id",
+      "type": "string"
+    },
+    "index_id": {
+      "pattern": "^index-sha256-[0-9a-f]{64}$",
+      "title": "Index Id",
+      "type": "string"
+    },
+    "lane": {
+      "const": "offline_test",
+      "title": "Lane",
+      "type": "string"
+    },
+    "manifest_ref": {
+      "pattern": "^db:ai.rag_indexes:index-sha256-[0-9a-f]{64}$",
+      "title": "Manifest Ref",
+      "type": "string"
+    },
+    "purpose": {
+      "const": "lifecycle_validation_only",
+      "title": "Purpose",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "const": "active",
+      "default": "active",
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "index_id",
+    "environment",
+    "lane",
+    "purpose",
+    "manifest_ref",
+    "corpus_manifest_id",
+    "chunk_manifest_id",
+    "index_config_id",
+    "embedding_config_id",
+    "dimension",
+    "document_count",
+    "chunk_count",
+    "activated_at",
+    "evaluation_report_ref"
+  ],
+  "title": "CurrentKnowledgeIndex",
+  "type": "object"
+}

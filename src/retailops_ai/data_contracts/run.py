@@ -19,6 +19,7 @@ from retailops_ai.data_contracts.common import (
     Versioned,
 )
 from retailops_ai.data_contracts.model import ModelRecord
+from retailops_ai.knowledge.jobs import KnowledgeRunInput, KnowledgeRunOutput
 
 
 class RunInput(DataLineage):
@@ -29,8 +30,14 @@ class RunInput(DataLineage):
 
 
 class RunError(Contract):
-    code: Literal["invalid_input", "dependency_unavailable", "execution_failed", "cancelled"]
+    code: Literal[
+        "invalid_input", "dependency_unavailable", "execution_failed", "cancelled", "gate_failed"
+    ]
     retryable: bool
+
+
+class MLRunError(RunError):
+    code: Literal["invalid_input", "dependency_unavailable", "execution_failed", "cancelled"]
 
 
 class RunOutput(Contract):
@@ -48,23 +55,28 @@ class RunOutput(Contract):
 class RunRecord(Versioned):
     contract_type: Literal["run"]
     run_id: RunID
-    run_type: Literal["training", "forecast_batch"]
+    run_type: Literal["training", "forecast_batch", "knowledge_index"]
     status: Literal["queued", "running", "succeeded", "failed", "cancelled"]
     attempt: Annotated[int, Field(ge=1)]
     requested_at: UtcTime
     started_at: UtcTime | None
     completed_at: UtcTime | None
     requested_by: Symbol
-    input_ref: RunInput
+    input_ref: RunInput | KnowledgeRunInput
     resolved_model: ModelRecord | None
-    output_ref: RunOutput | None
+    output_ref: RunOutput | KnowledgeRunOutput | None
     error: RunError | None
 
     @model_validator(mode="after")
     def state_coherence(self) -> Self:
-        if self.input_ref.as_of_time > self.requested_at:
+        if self.run_type == "knowledge_index":
+            if not isinstance(self.input_ref, KnowledgeRunInput) or self.resolved_model is not None:
+                raise ValueError("knowledge_run_requires_pinned_build_profile")
+        elif not isinstance(self.input_ref, RunInput):
+            raise ValueError("ml_run_requires_data_lineage")
+        if isinstance(self.input_ref, RunInput) and self.input_ref.as_of_time > self.requested_at:
             raise ValueError("run_input_from_future")
-        if self.run_type == "training":
+        if self.run_type == "training" and isinstance(self.input_ref, RunInput):
             if (
                 self.resolved_model is not None
                 or self.input_ref.label_dataset_id is None
@@ -72,13 +84,18 @@ class RunRecord(Versioned):
             ):
                 raise ValueError("training_run_input_mismatch")
         elif (
-            self.resolved_model is None
-            or self.input_ref.label_dataset_id is not None
-            or self.input_ref.split_id is not None
+            self.run_type == "forecast_batch"
+            and isinstance(self.input_ref, RunInput)
+            and (
+                self.resolved_model is None
+                or self.input_ref.label_dataset_id is not None
+                or self.input_ref.split_id is not None
+            )
         ):
             raise ValueError("forecast_run_requires_pinned_model_without_labels")
         if (
-            self.resolved_model is not None
+            isinstance(self.input_ref, RunInput)
+            and self.resolved_model is not None
             and self.resolved_model.selection_cutoff > self.input_ref.as_of_time
         ):
             raise ValueError("model_selected_after_inference_origin")
@@ -107,7 +124,11 @@ class RunRecord(Versioned):
                 or self.error is not None
             ):
                 raise ValueError("succeeded_run_requires_complete_output")
-            expected = "model" if self.run_type == "training" else "predictions"
+            expected = {
+                "training": "model",
+                "forecast_batch": "predictions",
+                "knowledge_index": "knowledge_index",
+            }[self.run_type]
             if self.output_ref.kind != expected:
                 raise ValueError("succeeded_run_output_mismatch")
         elif self.completed_at is None or self.output_ref is not None or self.error is None:
@@ -115,9 +136,29 @@ class RunRecord(Versioned):
         if self.status == "failed" and self.started_at is None:
             raise ValueError("failed_run_requires_start")
         if self.error is not None:
+            if self.run_type != "knowledge_index" and self.error.code == "gate_failed":
+                raise ValueError("knowledge_gate_error_not_in_ml_run_v1")
             if (self.status == "cancelled") != (self.error.code == "cancelled"):
                 raise ValueError("run_error_status_mismatch")
         return self
+
+
+class MLRunRecord(RunRecord):
+    """Closed data bundles contain ML lineage; index runs use the shared standalone Run."""
+
+    run_type: Literal["training", "forecast_batch"]
+    input_ref: RunInput
+    output_ref: RunOutput | None
+    error: MLRunError | None
+
+
+class KnowledgeRunRecord(RunRecord):
+    """New knowledge contract namespace reuses the shared Run envelope and transitions."""
+
+    run_type: Literal["knowledge_index"]
+    input_ref: KnowledgeRunInput
+    resolved_model: None
+    output_ref: KnowledgeRunOutput | None
 
 
 def transition_run(current: RunRecord, following: RunRecord) -> RunRecord:

@@ -2,6 +2,7 @@
 
 import argparse
 import hashlib
+import json
 import os
 import re
 import secrets
@@ -9,6 +10,9 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+from retailops_ai.knowledge.indexes import MAX_INDEX_BYTES
+from retailops_ai.pipelines.indexes import load_index_candidate
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCAL = ROOT / ".local" / "compose.env"
@@ -46,7 +50,7 @@ def environment_file(*, create: bool) -> Path:
     return LOCAL
 
 
-def compose_command(env_file: Path, *args: str) -> None:
+def compose_command(env_file: Path, *args: str, stdin: str | None = None) -> str:
     docker = shutil.which("docker")
     if docker is None:
         raise RuntimeError("docker_unavailable")
@@ -61,15 +65,19 @@ def compose_command(env_file: Path, *args: str) -> None:
         str(ROOT / "compose.yaml"),
         *args,
     ]
-    result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=False)
+    result = subprocess.run(
+        command, cwd=ROOT, input=stdin, text=True, capture_output=True, check=False
+    )
     if result.returncode:
         raise RuntimeError("compose_step_failed")
     print("compose_step_passed: " + " ".join(args[:3]), flush=True)
+    return result.stdout.strip()
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("init", "up", "down", "config"))
+    parser.add_argument("command", choices=("init", "up", "down", "config", "rag-store"))
+    parser.add_argument("--candidate", type=Path)
     args = parser.parse_args(argv)
     try:
         if args.command == "init":
@@ -77,7 +85,42 @@ def main(argv: list[str] | None = None) -> int:
             print("local_stack_initialized")
             return 0
         env_file = environment_file(create=args.command in {"up", "config"})
-        if args.command == "config":
+        if args.command == "rag-store":
+            if args.candidate is None:
+                raise ValueError("candidate_required")
+            candidate = load_index_candidate(args.candidate)
+            raw = candidate.model_dump_json()
+            if len(raw.encode()) > MAX_INDEX_BYTES or candidate.manifest.environment != "local":
+                raise ValueError("invalid_compose_candidate")
+            result = compose_command(
+                env_file,
+                "run",
+                "--rm",
+                "-T",
+                "api-migrate",
+                "retailops-ai",
+                "index-store",
+                "--candidate",
+                "-",
+                stdin=raw,
+            )
+            summary = json.loads(result)
+            if (
+                summary.get("status") not in {"stored", "already_present"}
+                or summary.get("index_id") != candidate.manifest.index_id
+            ):
+                raise RuntimeError("invalid_index_storage_result")
+            print(
+                json.dumps(
+                    {
+                        "status": summary["status"],
+                        "index_id": candidate.manifest.index_id,
+                        "chunks": candidate.manifest.chunk_count,
+                        "embeddings": candidate.manifest.embedding_count,
+                    }
+                )
+            )
+        elif args.command == "config":
             compose_command(env_file, "config", "--quiet")
         elif args.command == "down":
             compose_command(env_file, "down")

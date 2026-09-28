@@ -1,0 +1,83 @@
+{
+  "$id": "urn:retailops:knowledge:similarity-policy:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "algorithm": {
+      "const": "retrievable-word-trigram-jaccard-v1",
+      "title": "Algorithm",
+      "type": "string"
+    },
+    "max_candidate_pairs": {
+      "maximum": 250000,
+      "minimum": 1,
+      "title": "Max Candidate Pairs",
+      "type": "integer"
+    },
+    "max_features": {
+      "maximum": 250000,
+      "minimum": 1,
+      "title": "Max Features",
+      "type": "integer"
+    },
+    "max_posting_visits": {
+      "maximum": 2000000,
+      "minimum": 1,
+      "title": "Max Posting Visits",
+      "type": "integer"
+    },
+    "max_report_pairs": {
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Max Report Pairs",
+      "type": "integer"
+    },
+    "minimum_words": {
+      "maximum": 128,
+      "minimum": 3,
+      "title": "Minimum Words",
+      "type": "integer"
+    },
+    "normalization": {
+      "const": "nfkc-casefold-unicode-words-v1",
+      "title": "Normalization",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "shingle_words": {
+      "const": 3,
+      "title": "Shingle Words",
+      "type": "integer"
+    },
+    "threshold_bps": {
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Threshold Bps",
+      "type": "integer"
+    },
+    "unicode_version": {
+      "const": "14.0.0",
+      "title": "Unicode Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "algorithm",
+    "normalization",
+    "unicode_version",
+    "shingle_words",
+    "minimum_words",
+    "threshold_bps",
+    "max_features",
+    "max_candidate_pairs",
+    "max_posting_visits",
+    "max_report_pairs"
+  ],
+  "title": "SimilarityPolicy",
+  "type": "object"
+}

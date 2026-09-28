@@ -1,0 +1,1232 @@
+{
+  "$defs": {
+    "ChunkManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_manifest_id": {
+          "pattern": "^chunks-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Manifest Id",
+          "type": "string"
+        },
+        "chunker": {
+          "$ref": "#/$defs/ChunkerConfig"
+        },
+        "chunker_config_id": {
+          "pattern": "^chunker-config-sha256-[0-9a-f]{64}$",
+          "title": "Chunker Config Id",
+          "type": "string"
+        },
+        "chunks": {
+          "items": {
+            "$ref": "#/$defs/MarkdownChunk"
+          },
+          "maxItems": 32768,
+          "title": "Chunks",
+          "type": "array"
+        },
+        "content_trust": {
+          "const": "untrusted_reference",
+          "title": "Content Trust",
+          "type": "string"
+        },
+        "corpus": {
+          "$ref": "#/$defs/CorpusManifest"
+        },
+        "corpus_id": {
+          "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+          "title": "Corpus Id",
+          "type": "string"
+        },
+        "documents": {
+          "items": {
+            "$ref": "#/$defs/DocumentChunkMap"
+          },
+          "maxItems": 128,
+          "minItems": 2,
+          "title": "Documents",
+          "type": "array"
+        },
+        "lifecycle": {
+          "const": "candidate",
+          "title": "Lifecycle",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "lifecycle",
+        "content_trust",
+        "corpus_id",
+        "corpus",
+        "chunker",
+        "chunker_config_id",
+        "chunk_manifest_id",
+        "documents",
+        "chunks"
+      ],
+      "title": "ChunkManifest",
+      "type": "object"
+    },
+    "ChunkerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "chunker_version": {
+          "const": "markdown-blocks-v1",
+          "title": "Chunker Version",
+          "type": "string"
+        },
+        "duplicate_policy": {
+          "const": "same-document-heading-block-content-v1",
+          "title": "Duplicate Policy",
+          "type": "string"
+        },
+        "max_utf8_bytes": {
+          "maximum": 16000,
+          "minimum": 256,
+          "title": "Max Utf8 Bytes",
+          "type": "integer"
+        },
+        "navigation_policy": {
+          "const": "toc-headings-and-anchor-only-blocks-v1",
+          "title": "Navigation Policy",
+          "type": "string"
+        },
+        "normalization": {
+          "const": "utf8-lf-v1",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "parser": {
+          "const": "markdown-it-py",
+          "title": "Parser",
+          "type": "string"
+        },
+        "parser_preset": {
+          "const": "commonmark-table-v1",
+          "title": "Parser Preset",
+          "type": "string"
+        },
+        "parser_version": {
+          "const": "4.2.0",
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "size_estimator": {
+          "const": "utf8-bytes-div4-v1",
+          "title": "Size Estimator",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "chunker_version",
+        "parser",
+        "parser_version",
+        "parser_preset",
+        "normalization",
+        "max_utf8_bytes",
+        "size_estimator",
+        "navigation_policy",
+        "duplicate_policy"
+      ],
+      "title": "ChunkerConfig",
+      "type": "object"
+    },
+    "CorpusApproval": {
+      "additionalProperties": false,
+      "properties": {
+        "corpus_config_id": {
+          "pattern": "^corpus-config-sha256-[0-9a-f]{64}$",
+          "title": "Corpus Config Id",
+          "type": "string"
+        },
+        "corpus_id": {
+          "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+          "title": "Corpus Id",
+          "type": "string"
+        },
+        "decision": {
+          "const": "approved",
+          "title": "Decision",
+          "type": "string"
+        },
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "review_id": {
+          "pattern": "^corpus-review-sha256-[0-9a-f]{64}$",
+          "title": "Review Id",
+          "type": "string"
+        },
+        "review_owner": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Review Owner",
+          "type": "string"
+        },
+        "reviewed_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Reviewed At",
+          "type": "string"
+        },
+        "reviewer": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Reviewer",
+          "type": "string"
+        },
+        "reviewer_kind": {
+          "enum": [
+            "human",
+            "approved_pipeline"
+          ],
+          "title": "Reviewer Kind",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "const": "sources_status_access_and_exclusions",
+          "title": "Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "review_id",
+        "corpus_id",
+        "corpus_config_id",
+        "environment",
+        "review_owner",
+        "reviewer",
+        "reviewer_kind",
+        "decision",
+        "scope",
+        "reviewed_at"
+      ],
+      "title": "CorpusApproval",
+      "type": "object"
+    },
+    "CorpusManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "canonicalization_version": {
+          "const": "utf8-lf-v1",
+          "title": "Canonicalization Version",
+          "type": "string"
+        },
+        "content_trust": {
+          "const": "untrusted_reference",
+          "title": "Content Trust",
+          "type": "string"
+        },
+        "corpus_config_id": {
+          "pattern": "^corpus-config-sha256-[0-9a-f]{64}$",
+          "title": "Corpus Config Id",
+          "type": "string"
+        },
+        "corpus_id": {
+          "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+          "title": "Corpus Id",
+          "type": "string"
+        },
+        "documents": {
+          "items": {
+            "$ref": "#/$defs/ManifestDocument"
+          },
+          "maxItems": 128,
+          "minItems": 2,
+          "title": "Documents",
+          "type": "array"
+        },
+        "duplicate_content_groups": {
+          "items": {
+            "items": {
+              "pattern": "^document-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Duplicate Content Groups",
+          "type": "array"
+        },
+        "environment": {
+          "enum": [
+            "local",
+            "test",
+            "dev",
+            "production"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "excluded_documents": {
+          "items": {
+            "$ref": "#/$defs/ExcludedDocument"
+          },
+          "title": "Excluded Documents",
+          "type": "array"
+        },
+        "exclusion_policy": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Exclusion Policy",
+          "type": "object"
+        },
+        "lifecycle": {
+          "const": "candidate",
+          "title": "Lifecycle",
+          "type": "string"
+        },
+        "policy_version": {
+          "const": "registered-markdown-v1",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "review_owner": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Review Owner",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceRegistration"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "title": "Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "policy_version",
+        "canonicalization_version",
+        "environment",
+        "lifecycle",
+        "review_owner",
+        "content_trust",
+        "corpus_config_id",
+        "corpus_id",
+        "sources",
+        "documents",
+        "excluded_documents",
+        "exclusion_policy",
+        "duplicate_content_groups"
+      ],
+      "title": "CorpusManifest",
+      "type": "object"
+    },
+    "DocumentChunkMap": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_ids": {
+          "items": {
+            "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "maxItems": 4096,
+          "title": "Chunk Ids",
+          "type": "array"
+        },
+        "document_id": {
+          "pattern": "^document-sha256-[0-9a-f]{64}$",
+          "title": "Document Id",
+          "type": "string"
+        },
+        "omitted_blocks": {
+          "items": {
+            "$ref": "#/$defs/OmittedBlock"
+          },
+          "maxItems": 8192,
+          "title": "Omitted Blocks",
+          "type": "array"
+        },
+        "outcome": {
+          "enum": [
+            "chunked",
+            "no_retrievable_content"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "source_characters": {
+          "exclusiveMinimum": 0,
+          "maximum": 500000,
+          "title": "Source Characters",
+          "type": "integer"
+        },
+        "source_lines": {
+          "exclusiveMinimum": 0,
+          "maximum": 500001,
+          "title": "Source Lines",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "document_id",
+        "source_characters",
+        "source_lines",
+        "chunk_ids",
+        "omitted_blocks",
+        "outcome"
+      ],
+      "title": "DocumentChunkMap",
+      "type": "object"
+    },
+    "DocumentRegistration": {
+      "additionalProperties": false,
+      "properties": {
+        "access_class": {
+          "enum": [
+            "public_project",
+            "project_internal",
+            "restricted"
+          ],
+          "title": "Access Class",
+          "type": "string"
+        },
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "document_type": {
+          "enum": [
+            "architecture",
+            "contract",
+            "guide",
+            "runbook",
+            "policy",
+            "plan",
+            "evidence",
+            "model_card"
+          ],
+          "title": "Document Type",
+          "type": "string"
+        },
+        "fact_scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Fact Scope",
+          "type": "string"
+        },
+        "implementation_refs": {
+          "items": {
+            "$ref": "#/$defs/ImplementationReference"
+          },
+          "maxItems": 8,
+          "title": "Implementation Refs",
+          "type": "array"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "verification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "byte_sha256",
+        "document_type",
+        "document_status",
+        "access_class",
+        "fact_scope",
+        "implementation_refs",
+        "verification"
+      ],
+      "title": "DocumentRegistration",
+      "type": "object"
+    },
+    "EmbeddingConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            8,
+            16,
+            32,
+            64
+          ],
+          "title": "Dimension",
+          "type": "integer"
+        },
+        "distance": {
+          "const": "cosine",
+          "title": "Distance",
+          "type": "string"
+        },
+        "inference_profile": {
+          "title": "Inference Profile",
+          "type": "null"
+        },
+        "model_id": {
+          "const": "sha256-unit-f32-v1",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "normalization": {
+          "const": "l2-unit",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "provider": {
+          "const": "fake",
+          "title": "Provider",
+          "type": "string"
+        },
+        "region": {
+          "const": "offline",
+          "title": "Region",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "transformation_version": {
+          "const": "utf8-chunk-body-v1",
+          "title": "Transformation Version",
+          "type": "string"
+        },
+        "vector_format": {
+          "const": "float32-big-endian-v1",
+          "title": "Vector Format",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "provider",
+        "model_id",
+        "inference_profile",
+        "region",
+        "dimension",
+        "normalization",
+        "distance",
+        "transformation_version",
+        "vector_format"
+      ],
+      "title": "EmbeddingConfig",
+      "type": "object"
+    },
+    "EvidenceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Commit Pointer",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "expected_result": {
+          "enum": [
+            "success",
+            "passed",
+            "rejected"
+          ],
+          "title": "Expected Result",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "result_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Result Pointer",
+          "type": "string"
+        },
+        "scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Scope",
+          "type": "string"
+        },
+        "verified_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Verified At",
+          "type": "string"
+        },
+        "verified_at_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Verified At Pointer",
+          "type": "string"
+        },
+        "verified_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Verified Commit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "byte_sha256",
+        "verified_at",
+        "verified_commit",
+        "commit_pointer",
+        "verified_at_pointer",
+        "scope",
+        "result_pointer",
+        "expected_result"
+      ],
+      "title": "EvidenceReference",
+      "type": "object"
+    },
+    "ExcludedDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "not_registered",
+            "credentials_or_private_path",
+            "non_regular_git_entry"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "path",
+        "reason"
+      ],
+      "title": "ExcludedDocument",
+      "type": "object"
+    },
+    "Heading": {
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Level",
+          "type": "integer"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "level",
+        "title"
+      ],
+      "title": "Heading",
+      "type": "object"
+    },
+    "ImplementationReference": {
+      "additionalProperties": false,
+      "properties": {
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 240,
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "byte_sha256"
+      ],
+      "title": "ImplementationReference",
+      "type": "object"
+    },
+    "ManifestDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "access_class": {
+          "enum": [
+            "public_project",
+            "project_internal",
+            "restricted"
+          ],
+          "title": "Access Class",
+          "type": "string"
+        },
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "content_id": {
+          "pattern": "^markdown-sha256-[0-9a-f]{64}$",
+          "title": "Content Id",
+          "type": "string"
+        },
+        "document_id": {
+          "pattern": "^document-sha256-[0-9a-f]{64}$",
+          "title": "Document Id",
+          "type": "string"
+        },
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "document_type": {
+          "enum": [
+            "architecture",
+            "contract",
+            "guide",
+            "runbook",
+            "policy",
+            "plan",
+            "evidence",
+            "model_card"
+          ],
+          "title": "Document Type",
+          "type": "string"
+        },
+        "fact_scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Fact Scope",
+          "type": "string"
+        },
+        "implementation_refs": {
+          "items": {
+            "$ref": "#/$defs/ImplementationReference"
+          },
+          "maxItems": 8,
+          "title": "Implementation Refs",
+          "type": "array"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "verification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "byte_sha256",
+        "document_type",
+        "document_status",
+        "access_class",
+        "fact_scope",
+        "implementation_refs",
+        "verification",
+        "repository",
+        "commit_sha",
+        "document_id",
+        "content_id",
+        "source_ref"
+      ],
+      "title": "ManifestDocument",
+      "type": "object"
+    },
+    "MarkdownChunk": {
+      "additionalProperties": false,
+      "properties": {
+        "access_class": {
+          "enum": [
+            "public_project",
+            "project_internal",
+            "restricted"
+          ],
+          "title": "Access Class",
+          "type": "string"
+        },
+        "block_type": {
+          "enum": [
+            "paragraph",
+            "bullet_list",
+            "ordered_list",
+            "blockquote",
+            "fence",
+            "code_block",
+            "table",
+            "html_block",
+            "reference_definition"
+          ],
+          "title": "Block Type",
+          "type": "string"
+        },
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "chunk_id": {
+          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "chunk_index": {
+          "exclusiveMaximum": 4096,
+          "minimum": 0,
+          "title": "Chunk Index",
+          "type": "integer"
+        },
+        "chunker_config_id": {
+          "pattern": "^chunker-config-sha256-[0-9a-f]{64}$",
+          "title": "Chunker Config Id",
+          "type": "string"
+        },
+        "chunker_version": {
+          "const": "markdown-blocks-v1",
+          "title": "Chunker Version",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "content_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Checksum",
+          "type": "string"
+        },
+        "content_id": {
+          "pattern": "^markdown-sha256-[0-9a-f]{64}$",
+          "title": "Content Id",
+          "type": "string"
+        },
+        "document_id": {
+          "pattern": "^document-sha256-[0-9a-f]{64}$",
+          "title": "Document Id",
+          "type": "string"
+        },
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "document_type": {
+          "enum": [
+            "architecture",
+            "contract",
+            "guide",
+            "runbook",
+            "policy",
+            "plan",
+            "evidence",
+            "model_card"
+          ],
+          "title": "Document Type",
+          "type": "string"
+        },
+        "fact_scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Fact Scope",
+          "type": "string"
+        },
+        "heading_path": {
+          "items": {
+            "$ref": "#/$defs/Heading"
+          },
+          "maxItems": 6,
+          "title": "Heading Path",
+          "type": "array"
+        },
+        "implementation_refs": {
+          "items": {
+            "$ref": "#/$defs/ImplementationReference"
+          },
+          "maxItems": 8,
+          "title": "Implementation Refs",
+          "type": "array"
+        },
+        "occurrences": {
+          "items": {
+            "$ref": "#/$defs/SourceLocation"
+          },
+          "maxItems": 4096,
+          "minItems": 1,
+          "title": "Occurrences",
+          "type": "array"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 16000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "token_estimate": {
+          "maximum": 4000,
+          "minimum": 1,
+          "title": "Token Estimate",
+          "type": "integer"
+        },
+        "verification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "byte_sha256",
+        "document_type",
+        "document_status",
+        "access_class",
+        "fact_scope",
+        "implementation_refs",
+        "verification",
+        "repository",
+        "commit_sha",
+        "document_id",
+        "content_id",
+        "source_ref",
+        "chunk_id",
+        "chunk_index",
+        "chunker_version",
+        "chunker_config_id",
+        "heading_path",
+        "block_type",
+        "text",
+        "content_checksum",
+        "token_estimate",
+        "occurrences"
+      ],
+      "title": "MarkdownChunk",
+      "type": "object"
+    },
+    "OmittedBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "location": {
+          "$ref": "#/$defs/SourceLocation"
+        },
+        "reason": {
+          "enum": [
+            "structural_heading",
+            "navigation_section",
+            "anchor_navigation",
+            "html_comment",
+            "thematic_break"
+          ],
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "location",
+        "reason"
+      ],
+      "title": "OmittedBlock",
+      "type": "object"
+    },
+    "SourceLocation": {
+      "additionalProperties": false,
+      "properties": {
+        "end_line": {
+          "maximum": 500000,
+          "minimum": 1,
+          "title": "End Line",
+          "type": "integer"
+        },
+        "end_offset": {
+          "exclusiveMinimum": 0,
+          "maximum": 500000,
+          "title": "End Offset",
+          "type": "integer"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "start_line": {
+          "maximum": 500000,
+          "minimum": 1,
+          "title": "Start Line",
+          "type": "integer"
+        },
+        "start_offset": {
+          "maximum": 500000,
+          "minimum": 0,
+          "title": "Start Offset",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_offset",
+        "end_offset",
+        "start_line",
+        "end_line",
+        "source_ref"
+      ],
+      "title": "SourceLocation",
+      "type": "object"
+    },
+    "SourceRegistration": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_roots": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 12,
+          "minItems": 1,
+          "title": "Allowed Roots",
+          "type": "array"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "documents": {
+          "items": {
+            "$ref": "#/$defs/DocumentRegistration"
+          },
+          "maxItems": 64,
+          "minItems": 1,
+          "title": "Documents",
+          "type": "array"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "allowed_roots",
+        "documents"
+      ],
+      "title": "SourceRegistration",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:knowledge:index-build-profile:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Test-only acceptance, never an approval of the real proposed corpus or labels.",
+  "properties": {
+    "approval": {
+      "$ref": "#/$defs/CorpusApproval"
+    },
+    "chunks": {
+      "$ref": "#/$defs/ChunkManifest"
+    },
+    "embedding_config": {
+      "$ref": "#/$defs/EmbeddingConfig"
+    },
+    "environment": {
+      "const": "test",
+      "title": "Environment",
+      "type": "string"
+    },
+    "evaluation_set_id": {
+      "const": "offline-index-mechanics-v1",
+      "title": "Evaluation Set Id",
+      "type": "string"
+    },
+    "profile_id": {
+      "pattern": "^index-build-profile-sha256-[0-9a-f]{64}$",
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "purpose": {
+      "const": "offline_build_mechanics_only",
+      "title": "Purpose",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "profile_id",
+    "environment",
+    "approval",
+    "chunks",
+    "embedding_config",
+    "evaluation_set_id",
+    "purpose"
+  ],
+  "title": "IndexBuildProfile",
+  "type": "object"
+}

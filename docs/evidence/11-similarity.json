@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "stage": "11",
+  "scope": "bounded_exact_and_near_lexical_corpus_review",
+  "result": "passed",
+  "verified_at": "2026-09-28T13:35:26.366082+00:00",
+  "base_commit": "54198c0862aea960e695126d68d45242e15d8fa0",
+  "branch": "ai/rag-corpus",
+  "implementation_files_sha256": {
+    "src/retailops_ai/cli.py": "b67ea06a3a3f7cfc470e218c2415bbf6b513a1bf3b11ea9e3b898adef781e21f",
+    "src/retailops_ai/cli_review.py": "76ed12d5d1f6770ef9d0bb9c99d5993e33bf1a7e40a8c0b4897c7128ca72035f",
+    "src/retailops_ai/knowledge/review.py": "fd9671c35fafb0728eecd75d90ee693d9a31654762ff589cfd40c1eb6b0e0f92",
+    "src/retailops_ai/pipelines/review.py": "ab600fbc9ca6e7847ec6658203b55ad46bfd119aeaa630b8441ab1d8837b6581",
+    "scripts/update_knowledge_contracts.py": "c9cb3c0b48a2980cc5ed94e19a69f197395e89bc2109625b28792c69b089f1ad",
+    "tests/test_corpus_review.py": "7a60ad6d4b01b4ca94d662e0525d88672941551893fde2ee55103432309b024b",
+    "knowledge/similarity.v1.json": "b5adbaaff8caebbddbe29b5c7eb5fc5e0a59bfd772cf2ac9165313af93e89e39",
+    "contracts/knowledge/v1/similarity-policy.v1.schema.json": "57c72b7d3dbbf3abb14458980ba632d7fb3c118fb5f644ed1e0e241e2fd095e7",
+    "contracts/knowledge/v1/similarity-report.v1.schema.json": "f31b0b8d891e1879f2676d9b3c0439a5319fd8a2779c46185d022ff0eb6bd03b"
+  },
+  "runtime": {
+    "python": "3.11.15",
+    "unicode": "14.0.0",
+    "os": "Darwin",
+    "architecture": "arm64"
+  },
+  "runtime_dependencies_added": [],
+  "policy": {
+    "schema_version": "1.0",
+    "algorithm": "retrievable-word-trigram-jaccard-v1",
+    "normalization": "nfkc-casefold-unicode-words-v1",
+    "unicode_version": "14.0.0",
+    "shingle_words": 3,
+    "minimum_words": 12,
+    "threshold_bps": 8000,
+    "max_features": 250000,
+    "max_candidate_pairs": 250000,
+    "max_posting_visits": 2000000,
+    "max_report_pairs": 10000
+  },
+  "actual_corpus": {
+    "documents": 20,
+    "chunks": 302,
+    "review_state": "proposed",
+    "activated": false,
+    "approval_created": false,
+    "proposal_files_unchanged_since_base": true,
+    "sources": [
+      {
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca"
+      },
+      {
+        "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+        "commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760"
+      }
+    ],
+    "proposal_files_sha256": {
+      "knowledge/corpus.v1.json": "b8cd241b4688730a24ea2f0fb700c43c5b6673f99123a399b69c60ab8048c2db",
+      "knowledge/golden.v1.json": "c0ef8ae4259a6520d527b5e6a077d9c427a51d6f06aaa9582582c73d84d3e755",
+      "knowledge/embeddings.fake.v1.json": "cf1189f4e0df3ba996c42ea99c1458a8b83b6ac1c97869f23382950d63e6cd87"
+    },
+    "cli_elapsed_seconds": 1.9064,
+    "private_report_mode": "0600",
+    "report_id": "similarity-report-sha256-04e2db214c4bf07829286a1724b8addd4f48590597190ce0a2495ea579a97b73",
+    "report_file_sha256": "5f0ffe2bc0a0683f22824e571584c88b432320a3d8b595c417b0c4eb0ae19155",
+    "corpus_id": "corpus-sha256-b5aa149e41279df9848596a05fab3ee584ba3db94c5f100189e4fef7adb0055d",
+    "chunk_manifest_id": "chunks-sha256-7bbaaf4e0b30db47207dc140ad6d58e2bcf1fa8cf01fa1c139be06f9e82af528",
+    "policy_id": "similarity-policy-sha256-abc1982a8fc3d2392a6d545b6cb963866c659fefd954cd9c8db347c0cc4c08af",
+    "outcome": "no_lexical_candidates",
+    "activation_allowed": false,
+    "repeated_chunk_occurrences": 0,
+    "independent_oracle": {
+      "document": {
+        "all_pairs_checked_by_oracle": 190,
+        "sparse_candidate_pairs": 74,
+        "posting_visits": 500,
+        "unique_contents": 20,
+        "eligible_contents": 20,
+        "short_contents": 0,
+        "features": 16182,
+        "exact_groups": 0,
+        "near_pairs": 0
+      },
+      "chunk": {
+        "all_pairs_checked_by_oracle": 45451,
+        "sparse_candidate_pairs": 404,
+        "posting_visits": 787,
+        "unique_contents": 302,
+        "eligible_contents": 273,
+        "short_contents": 29,
+        "features": 15699,
+        "exact_groups": 0,
+        "near_pairs": 0
+      }
+    },
+    "json_schema_validated": true
+  },
+  "targeted_checks": {
+    "tests": 31,
+    "passed": 31,
+    "test_seconds": 15.29,
+    "ruff": true,
+    "ruff_format": true,
+    "mypy_files": 86,
+    "docs_links": true,
+    "knowledge_snapshots": true,
+    "gitleaks_dir": true
+  },
+  "automatic_merging_or_deletion": false,
+  "semantic_quality_accepted": false,
+  "pushed": false,
+  "remote_ci_executed_for_this_scope": false,
+  "remaining": [
+    "refresh_pinned_sources_and_repeat_review",
+    "review_source_status_access_fact_scope_and_golden_labels",
+    "approved_user_profile_golden_quality_and_release_manifest",
+    "real_embeddings_bedrock_agent_acceptance_in_stage_12"
+  ],
+  "implementation_commit": "f91fd040a68678f571917b4d3bf23e35e7268dd5",
+  "full_ci": {
+    "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+    "exit_code": 0,
+    "passed": 573,
+    "test_seconds": 99.66,
+    "fresh_venv": true,
+    "clean_git_status": true,
+    "checks": [
+      "ruff_check",
+      "ruff_format",
+      "mypy_86_files",
+      "pytest",
+      "docs_links",
+      "intelligence_access_knowledge_snapshots",
+      "wheel_and_sdist",
+      "compose_config",
+      "gitleaks_git_and_dir"
+    ]
+  },
+  "reproduction": {
+    "implementation_commit": "f91fd040a68678f571917b4d3bf23e35e7268dd5",
+    "installed_cli_outside_repository": true,
+    "different_python_hash_seed": 607,
+    "invalid_service_settings_ignored": true,
+    "separate_local_git_clones": true,
+    "report_byte_for_byte_equal": true,
+    "private_report_mode": "0600",
+    "report_file_sha256": "5f0ffe2bc0a0683f22824e571584c88b432320a3d8b595c417b0c4eb0ae19155",
+    "clean_git_status": true
+  },
+  "stage_progress_estimate_percent": 87
+}

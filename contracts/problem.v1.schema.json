@@ -75,6 +75,28 @@
   },
   "additionalProperties": false,
   "properties": {
+    "code": {
+      "anyOf": [
+        {
+          "enum": [
+            "configuration-not-approved",
+            "idempotency-conflict",
+            "index-run-not-found",
+            "index-not-configured",
+            "queue-full",
+            "worker-busy",
+            "claim-lost",
+            "index-report-not-found"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Code"
+    },
     "correlation_id": {
       "format": "uuid",
       "title": "Correlation Id",

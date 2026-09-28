@@ -1,0 +1,72 @@
+{
+  "$id": "urn:retailops:knowledge:chunker-config:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "chunker_version": {
+      "const": "markdown-blocks-v1",
+      "title": "Chunker Version",
+      "type": "string"
+    },
+    "duplicate_policy": {
+      "const": "same-document-heading-block-content-v1",
+      "title": "Duplicate Policy",
+      "type": "string"
+    },
+    "max_utf8_bytes": {
+      "maximum": 16000,
+      "minimum": 256,
+      "title": "Max Utf8 Bytes",
+      "type": "integer"
+    },
+    "navigation_policy": {
+      "const": "toc-headings-and-anchor-only-blocks-v1",
+      "title": "Navigation Policy",
+      "type": "string"
+    },
+    "normalization": {
+      "const": "utf8-lf-v1",
+      "title": "Normalization",
+      "type": "string"
+    },
+    "parser": {
+      "const": "markdown-it-py",
+      "title": "Parser",
+      "type": "string"
+    },
+    "parser_preset": {
+      "const": "commonmark-table-v1",
+      "title": "Parser Preset",
+      "type": "string"
+    },
+    "parser_version": {
+      "const": "4.2.0",
+      "title": "Parser Version",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "size_estimator": {
+      "const": "utf8-bytes-div4-v1",
+      "title": "Size Estimator",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "chunker_version",
+    "parser",
+    "parser_version",
+    "parser_preset",
+    "normalization",
+    "max_utf8_bytes",
+    "size_estimator",
+    "navigation_policy",
+    "duplicate_policy"
+  ],
+  "title": "ChunkerConfig",
+  "type": "object"
+}
