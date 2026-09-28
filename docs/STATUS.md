@@ -10,6 +10,8 @@ redakcyjnej ani aktywnego RAG.
 i identyczny manifest odtworzony z kopii repozytoriów.
 [Parser/chunker](knowledge-chunks.md) zachowuje heading paths, stabilne chunk IDs,
 zakresy cytatów i pełne mapy dokumentów; nowy build usuwa nieaktualne fragmenty.
+[Odbiór chunków](evidence/11-chunks.md): 302 fragmenty z 20 dokumentów,
+389 testów i identyczny wynik odtworzony z czystego checkoutu.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.

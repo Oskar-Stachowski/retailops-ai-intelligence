@@ -19,6 +19,8 @@ kandydacki rejestr obu repo i walidację źródeł Git.
 testy negatywne i granice tego zakresu.
 [Parser i chunker](knowledge-chunks.md) opisuje budowę fragmentów, ich tożsamość
 i cytaty do przypiętych rewizji Git.
+[Odbiór chunków](evidence/11-chunks.md) potwierdza zmiany/usunięcia źródeł,
+pełną mapę fragmentów i odtwarzalność rzeczywistego korpusu.
 
 ## Mapa repo
 

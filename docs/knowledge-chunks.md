@@ -5,6 +5,7 @@ Punkt 3 etapu 11 ma wykonywalny parser i deterministyczny chunker.
 obiekty Git i buduje kompletny nowy manifest fragmentów. Dokumenty nadal są
 propozycją do przeglądu, a wynik ma wyłącznie `lifecycle=candidate`.
 Nie ma aktywnego indeksu ani wyszukiwania.
+[Dowody odbioru](evidence/11-chunks.md) obejmują korpus obu repo i czysty checkout.
 
 ## Uruchomienie
 
