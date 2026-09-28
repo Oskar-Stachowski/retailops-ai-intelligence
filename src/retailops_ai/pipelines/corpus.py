@@ -8,7 +8,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from pydantic import TypeAdapter
+from pydantic import BaseModel, TypeAdapter
 
 from retailops_ai.adapters.git_documents import CorpusError, GitDocuments
 from retailops_ai.data_contracts.common import UtcTime
@@ -143,7 +143,7 @@ def build_candidate(
     return CorpusManifest.model_validate_json(json.dumps(payload))
 
 
-def write_candidate(manifest: CorpusManifest, output: Path) -> None:
+def write_candidate(manifest: BaseModel, output: Path) -> None:
     """Publish a complete file atomically and exclusively; never replace a manifest."""
     temporary: str | None = None
     try:

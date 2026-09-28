@@ -78,3 +78,5 @@ nie tworzy danych i nie sprawdza usług zewnętrznych.
 [Korpus wiedzy](knowledge-corpus.md) opisuje offline `corpus-check`, który
 wiąże wybrane dokumenty obu repo z commitami Git i opcjonalnie zapisuje nowy
 kandydacki manifest. Nie wymaga uruchomionego stosu DB/API.
+[Parser/chunker](knowledge-chunks.md) dodaje offline `chunk-build`; konfiguracja
+reguł i rozmiaru jest wersjonowana w `knowledge/chunker.v1.json`.

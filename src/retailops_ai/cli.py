@@ -42,6 +42,14 @@ def main(argv: list[str] | None = None) -> int:
     corpus.add_argument("--retailops-repo", type=Path, required=True)
     corpus.add_argument("--ai-repo", type=Path, required=True)
     corpus.add_argument("--output", type=Path, help="Write a new immutable candidate manifest.")
+    chunks = commands.add_parser(
+        "chunk-build", help="Compile candidate Markdown chunks from registered Git sources."
+    )
+    chunks.add_argument("--registry", type=Path, required=True)
+    chunks.add_argument("--chunker-config", type=Path, required=True)
+    chunks.add_argument("--retailops-repo", type=Path, required=True)
+    chunks.add_argument("--ai-repo", type=Path, required=True)
+    chunks.add_argument("--output", type=Path, help="Write a new immutable chunk manifest.")
     args = parser.parse_args(argv)
 
     if args.command == "version":
@@ -95,6 +103,54 @@ def main(argv: list[str] | None = None) -> int:
                     "documents": len(manifest.documents),
                     "excluded_markdown": len(manifest.excluded_documents),
                     "duplicate_content_groups": len(manifest.duplicate_content_groups),
+                }
+            )
+        )
+        return 0
+
+    if args.command == "chunk-build":
+        from retailops_ai.adapters.git_documents import CorpusError
+        from retailops_ai.pipelines.chunks import build_chunks, load_chunker_config
+        from retailops_ai.pipelines.corpus import load_registry, write_candidate
+
+        try:
+            chunk_manifest = build_chunks(
+                load_registry(args.registry),
+                load_chunker_config(args.chunker_config),
+                {
+                    "Oskar-Stachowski/retailops-cloud-native-platform": args.retailops_repo,
+                    "Oskar-Stachowski/retailops-ai-intelligence": args.ai_repo,
+                },
+            )
+            if args.output is not None:
+                write_candidate(chunk_manifest, args.output)
+        except CorpusError as exc:
+            print(
+                json.dumps({"error": "chunk_validation_failed", "code": str(exc)}), file=sys.stderr
+            )
+            return 2
+        except (OSError, ValueError, RecursionError):
+            print(
+                '{"error":"chunk_validation_failed","code":"invalid_chunk_input"}', file=sys.stderr
+            )
+            return 2
+        print(
+            json.dumps(
+                {
+                    "status": "valid",
+                    "lifecycle": "candidate",
+                    "corpus_id": chunk_manifest.corpus_id,
+                    "chunk_manifest_id": chunk_manifest.chunk_manifest_id,
+                    "chunker_config_id": chunk_manifest.chunker_config_id,
+                    "documents": len(chunk_manifest.documents),
+                    "chunks": len(chunk_manifest.chunks),
+                    "duplicate_occurrences": sum(
+                        len(c.occurrences) - 1 for c in chunk_manifest.chunks
+                    ),
+                    "omitted_blocks": sum(len(d.omitted_blocks) for d in chunk_manifest.documents),
+                    "documents_without_content": sum(
+                        not d.chunk_ids for d in chunk_manifest.documents
+                    ),
                 }
             )
         )

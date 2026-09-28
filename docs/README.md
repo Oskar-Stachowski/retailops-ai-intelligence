@@ -17,14 +17,16 @@ potwierdza kontrolę PR oraz push na main i ochronę obu repozytoriów.
 kandydacki rejestr obu repo i walidację źródeł Git.
 [Dowody korpusu](evidence/11-corpus.md) podają pomiar deterministyczności,
 testy negatywne i granice tego zakresu.
+[Parser i chunker](knowledge-chunks.md) opisuje budowę fragmentów, ich tożsamość
+i cytaty do przypiętych rewizji Git.
 
 ## Mapa repo
 
 | Lokalizacja | Bieżąca zawartość |
 |---|---|
 | `src/retailops_ai/` | CLI/settings oraz warstwy api/domain/pipelines/adapters lokalnego serwera |
-| `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: schemas rejestru i manifestu korpusu |
-| `knowledge/` | Jawny rejestr propozycji dokumentów RAG z przypiętymi źródłami i metadanymi |
+| `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: schemas korpusu, konfiguracji chunkera i fragmentów |
+| `knowledge/` | Rejestr propozycji dokumentów RAG i przypięta konfiguracja parsera/chunkera |
 | `tests/` | Konfiguracja, HTTP i socket, awarie, korelacja, kontrakty oraz bramki CI |
 | `scripts/` | Kontroler Compose, rzeczywisty smoke, kontrakty i bramki workflow |
 | `.github/` | Required CI, szablon PR, wskaźnik do security |

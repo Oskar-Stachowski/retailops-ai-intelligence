@@ -2,8 +2,9 @@
 
 Etap 11 ma lokalny rejestr kandydacki i walidator źródeł Git. Obejmuje to
 granice korpusu oraz metadane statusu, czyli pierwszy zakres punktów 1–2 planu.
-Wyszukiwanie RAG, parser sekcji, embeddings i aktywacja indeksu pozostają
-następnymi zakresami. [Bieżący status](STATUS.md), [dowody odbioru](evidence/11-corpus.md).
+[Parser i chunker](knowledge-chunks.md) realizuje kolejny zakres punktu 3.
+Wyszukiwanie RAG, embeddings i aktywacja indeksu pozostają następnymi zakresami.
+[Bieżący status](STATUS.md), [dowody rejestru](evidence/11-corpus.md).
 
 ## Co jest zarejestrowane
 
@@ -99,9 +100,9 @@ w żadnym środowisku. Filtry principal/access, cache i izolacja runtime wymagaj
 osobnego odbioru przy retrieval. Manifest zawsze oznacza treść jako
 `untrusted_reference`; treść dokumentu nie nadaje narzędzi ani uprawnień.
 
-Raportujemy dokładne duplikaty po normalizacji LF. Near duplicates, pomijanie
-nawigacji, heading paths i usuwanie osieroconych chunków należą do parsera
-i chunkera w kolejnym zakresie. Identyfikatory dokumentów nie są chunk IDs.
+Raportujemy dokładne duplikaty dokumentów po normalizacji LF. Pomijanie nawigacji,
+heading paths i usuwanie osieroconych fragmentów realizuje [chunker](knowledge-chunks.md).
+Near duplicates pozostają późniejszą kontrolą jakości. Document IDs nie są chunk IDs.
 
 ## Kontrakty i następny zakres
 
@@ -112,7 +113,6 @@ rzeczywistych, małych repozytoriach testowych i nie wymaga sąsiedniego checkou
 Zmiana źródłowego SHA wymaga ponownego związania checksum i odwołań oraz
 przeglądu propozycji.
 
-Następny zakres: parser Markdown i deterministyczny chunker z heading paths,
-stabilnymi content/chunk IDs oraz testami zmian i usunięć. Przegląd redakcyjny
-kandydata może odbywać się równolegle. Późniejsze embeddings, pgvector,
-aktywacja/rollback, retrieval i golden set zamykają etap 11.
+Następny zakres: adapter embeddings z fake oraz persistence pgvector.
+Przegląd redakcyjny kandydata może odbywać się równolegle. Aktywacja/rollback,
+retrieval i golden set zamykają późniejsze zakresy etapu 11.

@@ -6,7 +6,9 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from retailops_ai.knowledge.chunks import ChunkerConfig, ChunkManifest
 from retailops_ai.knowledge.contracts import CorpusManifest, CorpusRegistry
+from retailops_ai.pipelines.chunks import load_chunker_config
 from retailops_ai.pipelines.corpus import load_registry
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +22,8 @@ def main() -> int:
     models: dict[str, type[BaseModel]] = {
         "corpus-registry": CorpusRegistry,
         "corpus-manifest": CorpusManifest,
+        "chunker-config": ChunkerConfig,
+        "chunk-manifest": ChunkManifest,
     }
     for name, model in models.items():
         schema = model.model_json_schema()
@@ -34,10 +38,11 @@ def main() -> int:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text)
     load_registry(ROOT / "knowledge/corpus.v1.json")
+    load_chunker_config(ROOT / "knowledge/chunker.v1.json")
     if stale:
         print("Knowledge snapshots differ: " + ", ".join(sorted(stale)))
         return 1
-    print("Knowledge schemas and candidate registry checked.")
+    print("Knowledge schemas, candidate registry and chunker config checked.")
     return 0
 
 

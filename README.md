@@ -4,8 +4,9 @@
 Obecny zakres: pakiet Python, konfiguracja, CLI, lokalny serwis diagnostyczny HTTP,
 PostgreSQL/pgvector, oddzielny MLflow, migracje, Compose, wykonywalne kontrakty
 danych/run/tool, lokalne poświadczenia i scope API oraz kontrole CI.
-[Etap 11](docs/knowledge-corpus.md) rozpoczęty: rejestr kandydackiego korpusu
-i walidacja dokumentów Git; wyszukiwanie RAG pozostaje kolejnym zakresem.
+[Etap 11](docs/knowledge-corpus.md) w realizacji: rejestr kandydackiego korpusu,
+walidacja Git i [parser/chunker](docs/knowledge-chunks.md); embeddings
+i wyszukiwanie RAG pozostają kolejnymi zakresami.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).
 [Uruchomienie stosu](docs/local-stack.md) i [HTTP](docs/http-service.md).

@@ -8,6 +8,8 @@ statusy i kontrolę dowodów. Techniczna walidacja offline nie oznacza akceptacj
 redakcyjnej ani aktywnego RAG.
 [Odbiór](evidence/11-corpus.md) potwierdza 341 testów, czysty checkout
 i identyczny manifest odtworzony z kopii repozytoriów.
+[Parser/chunker](knowledge-chunks.md) zachowuje heading paths, stabilne chunk IDs,
+zakresy cytatów i pełne mapy dokumentów; nowy build usuwa nieaktualne fragmenty.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
@@ -35,8 +37,8 @@ i required-result; main wymaga PR i aktualnej gałęzi również dla administrat
 ## Następna praca
 
 Główny kierunek: DATA-01 etapu 02 w RetailOps — konfiguracja, identity i manifest v2.
-Drugi strumień na `ai/rag-corpus`: parser/chunker etapu 11, po obecnym zakresie
-rejestru i metadanych. Kandydat wymaga przeglądu doboru źródeł/statusów/access
+Drugi strumień na `ai/rag-corpus`: adapter embeddings z fake i persistence pgvector
+etapu 11, po rejestrze oraz parserze/chunkerze. Kandydat wymaga przeglądu doboru źródeł/statusów/access
 przed aktywacją. Praca nie zależy od zakończenia DATA-01. Etap 03 wymaga odbioru
 źródła z 02, a forecasting i serving kolejnych bramek.
 

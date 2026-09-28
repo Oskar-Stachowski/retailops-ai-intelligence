@@ -156,3 +156,23 @@ Git czyta tylko wybrane bloby, bez replacements; wyłączenia nie wczytują
 prywatnych treści. Metadane access nie zastępują auth retrieval, a kontrola
 origin nie zastępuje zaufanego pobrania źródła. Ten scope nie dodaje migracji,
 wektorów lub endpointów. [Kontrakt i ograniczenia](../knowledge-corpus.md).
+
+
+## ADR-16 — fragmentacja bloków z osobnym bindingiem źródła
+
+Parser markdown-it-py 4.2.0, CommonMark z tabelami, zapewnia tokeny z mapami
+linii; chunker nie renderuje HTML i nie wykonuje kodu. Bloki dokumentu są
+jednostkami fragmentacji z limitami UTF-8 i jawnymi heading paths.
+Alternatywa regex nie odróżnia poprawnie nagłówków od kodu/cytatów; pakowanie
+wielu akapitów do przesuwanego okna zmienia granice niezmienionych sąsiadów.
+
+Chunk ID obejmuje dokument, kontekst sekcji, typ bloku, treść i konfigurację.
+Ordinal oraz źródłowy commit/zakresy pozostają poza content identity.
+Dokładne duplikaty w tym samym kontekście są jednym fragmentem z wieloma
+cytatami. Zachowujemy odrębność dokumentów/sekcji i metadata ich dostępu.
+Nowy manifest odtwarza pełny graf bez orphan chunks; nie zmienia starego wyniku.
+
+Rozmiar/token estimate nie jest tokenizerem docelowego modelu. Nie usuwamy
+near duplicates heurystyką, która mogłaby zgubić negację lub różne dowody.
+Parser jest przypięty w runtime lock i konfiguracji; zmiana reguł wymaga wersji.
+[Specyfikacja i źródła](../knowledge-chunks.md).
