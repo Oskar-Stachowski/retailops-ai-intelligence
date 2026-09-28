@@ -4,3 +4,8 @@ useDefault = true
 [[allowlists]]
 description = "Generated local environments and output; no source exceptions"
 paths = ['(^|/)([.]local|[.]venv|[.]tools|[.]mypy_cache|[.]ruff_cache|[.]pytest_cache|dist|build|reports)/']
+
+[[allowlists]]
+description = "SHA-256 of contracts/access/v1/access.openapi.json in golden-job evidence; not a credential"
+regexTarget = "secret"
+regexes = ['^b14f586702ee5c90f34bdeeb99bc7667dcaa2c6c5465b4f6e51ca0bfa7ce37d1$']
