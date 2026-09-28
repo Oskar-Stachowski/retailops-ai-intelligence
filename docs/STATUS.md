@@ -6,6 +6,8 @@
 kandydacki 20 dokumentów z obu repo, przypięte SHA/checksums, klasy dostępu,
 statusy i kontrolę dowodów. Techniczna walidacja offline nie oznacza akceptacji
 redakcyjnej ani aktywnego RAG.
+[Odbiór](evidence/11-corpus.md) potwierdza 341 testów, czysty checkout
+i identyczny manifest odtworzony z kopii repozytoriów.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.

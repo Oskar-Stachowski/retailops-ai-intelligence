@@ -15,6 +15,8 @@ podają faktyczny zakres prób. [Odbiór zdalnego CI](evidence/01-remote-ci.md)
 potwierdza kontrolę PR oraz push na main i ochronę obu repozytoriów.
 [Korpus wiedzy](knowledge-corpus.md) opisuje pierwszy zakres etapu 11,
 kandydacki rejestr obu repo i walidację źródeł Git.
+[Dowody korpusu](evidence/11-corpus.md) podają pomiar deterministyczności,
+testy negatywne i granice tego zakresu.
 
 ## Mapa repo
 

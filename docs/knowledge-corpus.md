@@ -3,7 +3,7 @@
 Etap 11 ma lokalny rejestr kandydacki i walidator źródeł Git. Obejmuje to
 granice korpusu oraz metadane statusu, czyli pierwszy zakres punktów 1–2 planu.
 Wyszukiwanie RAG, parser sekcji, embeddings i aktywacja indeksu pozostają
-następnymi zakresami. [Bieżący status](STATUS.md).
+następnymi zakresami. [Bieżący status](STATUS.md), [dowody odbioru](evidence/11-corpus.md).
 
 ## Co jest zarejestrowane
 

@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0",
+  "stage": "11",
+  "scope": "candidate_corpus_registry_and_source_status_metadata",
+  "result": "passed",
+  "verified_at": "2026-09-28T09:02:37.607631+00:00",
+  "implementation_commit": "440b21e99e5815bae8c23886bb0a049d951d2a96",
+  "base_commit": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+  "branch": "ai/rag-corpus",
+  "runtime": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.11.15",
+    "uv": "0.12.19"
+  },
+  "corpus": {
+    "corpus_id": "corpus-sha256-b5aa149e41279df9848596a05fab3ee584ba3db94c5f100189e4fef7adb0055d",
+    "corpus_config_id": "corpus-config-sha256-1f21431ec847f58646257075bbe984e47f83407f0422e37ef14d7c91bc463c0e",
+    "manifest_byte_sha256": "82d64159aec6dbe8fdcff1de85c36639c5f86f93886c7d498f48f123f99a6a2b",
+    "manifest_mode": "0o600",
+    "replay_identical_bytes": true,
+    "lifecycle": "candidate",
+    "review_state": "proposed",
+    "environment": "local",
+    "sources": [
+      {
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+        "documents": 8
+      },
+      {
+        "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+        "commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+        "documents": 12
+      }
+    ],
+    "documents": 20,
+    "excluded_markdown": 113,
+    "exclusion_reasons": {
+      "not_registered": 112,
+      "credentials_or_private_path": 1
+    },
+    "document_statuses": {
+      "implemented": 8,
+      "specified": 10,
+      "verified": 2
+    },
+    "access_classes": {
+      "public_project": 20
+    },
+    "implementation_references": 8,
+    "verification_references": 2,
+    "duplicate_content_groups": 0
+  },
+  "checks": {
+    "focused_tests": {
+      "command": ".venv/bin/pytest tests/test_corpus.py",
+      "exit_code": 0,
+      "passed": 68,
+      "seconds": 15.1
+    },
+    "working_checkout": {
+      "command": "make bootstrap ci-local UV=.tools/bin/uv GITLEAKS=/opt/homebrew/bin/gitleaks",
+      "exit_code": 0,
+      "passed": 341,
+      "test_seconds": 22.8
+    },
+    "clean_checkout": {
+      "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+      "exit_code": 0,
+      "passed": 341,
+      "test_seconds": 26.98,
+      "fresh_venv": true,
+      "clean_git_status_after": true,
+      "implementation_commit": "440b21e99e5815bae8c23886bb0a049d951d2a96"
+    },
+    "actionlint": {
+      "exit_code": 0,
+      "working_and_clean_checkout": true
+    },
+    "weakened_schema": {
+      "exit_code": 1,
+      "temporary_copy_only": true
+    },
+    "real_corpus_cli": {
+      "exit_code": 0,
+      "documents": 20,
+      "replay_identical_bytes_in_clean_checkout": true
+    },
+    "local_gates": [
+      "ruff",
+      "ruff_format",
+      "mypy_strict_53_files",
+      "pytest",
+      "docs",
+      "intelligence_snapshots",
+      "access_snapshots",
+      "knowledge_snapshots",
+      "wheel",
+      "sdist",
+      "compose_config",
+      "gitleaks_history",
+      "gitleaks_directory"
+    ],
+    "wheel_byte_sha256": "40c53cb3878501b866b343007eaa856d8fcc8c88eb1ba5f520a6bfcacd7a74e3",
+    "remote_ci": "not_run_for_this_scope"
+  },
+  "limitations": [
+    "Proposed editorial metadata and candidate manifest; no human approval or active index.",
+    "Exact normalized-content duplicates only; no near-duplicate or section/chunk analysis.",
+    "No embeddings, pgvector index, retrieval, golden set, activation, rollback or RAG API.",
+    "Access classes are metadata, not a runtime principal filter.",
+    "Evidence binding verifies stored JSON and Git objects, not historic execution or general factual truth.",
+    "No new dependencies or DB migrations; full Compose persistence smoke not repeated.",
+    "No remote push or Required CI for these commits."
+  ]
+}
