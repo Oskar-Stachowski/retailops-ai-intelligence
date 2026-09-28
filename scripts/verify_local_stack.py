@@ -11,6 +11,9 @@ from datetime import UTC, datetime
 from typing import Any
 
 import local_stack as stack
+from verify_rag_index import run_in_compose
+
+from retailops_ai.adapters.database import EXPECTED_REVISION
 
 
 def command(*args: str, stdin: str | None = None, expect: int = 0) -> str:
@@ -36,6 +39,15 @@ def command(*args: str, stdin: str | None = None, expect: int = 0) -> str:
         check=False,
     )
     if (result.returncode == 0) != (expect == 0):
+        for line in result.stderr.splitlines():
+            try:
+                error = json.loads(line)
+            except ValueError:
+                continue
+            if isinstance(error, dict) and error.get("error") == "rag_database_acceptance_failed":
+                kind = error.get("type")
+                if isinstance(kind, str) and re.fullmatch(r"[A-Za-z]+", kind):
+                    raise RuntimeError("rag_" + kind.lower() + "_failed") from None
         raise RuntimeError("compose_acceptance_command_failed")
     return result.stdout.strip()
 
@@ -105,7 +117,7 @@ def main() -> int:
         stage = "schema_and_isolation"
         require(
             sql("retailops_ai", "SELECT version_num FROM ai.alembic_version;", role="ai")
-            == "0001_bootstrap",
+            == EXPECTED_REVISION,
             "unexpected_schema",
         )
         require(
@@ -139,12 +151,24 @@ def main() -> int:
         finally:
             sql(
                 "retailops_ai",
-                "UPDATE ai.alembic_version SET version_num='0001_bootstrap';",
+                f"UPDATE ai.alembic_version SET version_num='{EXPECTED_REVISION}';",  # noqa: S608 - repository constant
                 role="ai",
             )
         command("run", "--rm", "api-migrate")
         wait_ready()
         report["checks"].append("explicit_idempotent_migration_and_revision_readiness")
+        stage = "rag_candidate_pgvector"
+        rag = run_in_compose(command)
+        report["rag"] = rag
+        report["checks"].append("real_pgvector_candidate_constraints_cache_atomicity_and_replay")
+        rag_index_id = str(rag["index_id"])
+        require(
+            re.fullmatch(r"index-sha256-[0-9a-f]{64}", rag_index_id) is not None,
+            "invalid_rag_smoke_id",
+        )
+        rag_retention_query = (
+            f"SELECT count(*) FROM ai.rag_index_chunks WHERE index_id='{rag_index_id}';"  # noqa: S608 - full regex validation above
+        )
         stage = "write_ai_and_mlflow"
         sql(
             "retailops_ai",
@@ -176,6 +200,10 @@ def main() -> int:
         command("kill", "-s", "SIGKILL", "api", "mlflow", "db")
         command("up", "-d", "--wait", "db", "api", "mlflow")
         wait_ready()
+        require(
+            sql("retailops_ai", rag_retention_query, role="ai") == str(rag["chunks"]),
+            "rag_data_lost_after_crash",
+        )
         require(
             sql(
                 "retailops_ai",
@@ -210,6 +238,10 @@ def main() -> int:
         require(stack.main(["down"]) == 0, "stack_shutdown_failed")
         require(stack.main(["up"]) == 0, "stack_recreation_failed")
         wait_ready()
+        require(
+            sql("retailops_ai", rag_retention_query, role="ai") == str(rag["chunks"]),
+            "rag_data_lost_after_down",
+        )
         require(
             sql(
                 "retailops_ai",
@@ -252,7 +284,7 @@ def main() -> int:
         report["api_health"] = 200
         report["api_ready_after_recovery"] = 200
         report["postgres_vector_version"] = "0.8.6"
-        report["migration_revision"] = "0001_bootstrap"
+        report["migration_revision"] = EXPECTED_REVISION
         stack.LOCAL.parent.mkdir(exist_ok=True)
         (stack.LOCAL.parent / "persistence-smoke.json").write_text(
             json.dumps(report, indent=2) + "\n"

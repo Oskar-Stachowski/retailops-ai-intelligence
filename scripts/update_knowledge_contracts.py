@@ -8,8 +8,10 @@ from pydantic import BaseModel
 
 from retailops_ai.knowledge.chunks import ChunkerConfig, ChunkManifest
 from retailops_ai.knowledge.contracts import CorpusManifest, CorpusRegistry
+from retailops_ai.knowledge.indexes import EmbeddingConfig, IndexCandidate, IndexManifest
 from retailops_ai.pipelines.chunks import load_chunker_config
 from retailops_ai.pipelines.corpus import load_registry
+from retailops_ai.pipelines.indexes import load_embedding_config
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -24,6 +26,9 @@ def main() -> int:
         "corpus-manifest": CorpusManifest,
         "chunker-config": ChunkerConfig,
         "chunk-manifest": ChunkManifest,
+        "embedding-config": EmbeddingConfig,
+        "index-manifest": IndexManifest,
+        "index-candidate": IndexCandidate,
     }
     for name, model in models.items():
         schema = model.model_json_schema()
@@ -39,6 +44,7 @@ def main() -> int:
             path.write_text(text)
     load_registry(ROOT / "knowledge/corpus.v1.json")
     load_chunker_config(ROOT / "knowledge/chunker.v1.json")
+    load_embedding_config(ROOT / "knowledge/embeddings.fake.v1.json")
     if stale:
         print("Knowledge snapshots differ: " + ", ".join(sorted(stale)))
         return 1

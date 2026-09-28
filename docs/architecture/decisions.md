@@ -176,3 +176,22 @@ Rozmiar/token estimate nie jest tokenizerem docelowego modelu. Nie usuwamy
 near duplicates heurystyką, która mogłaby zgubić negację lub różne dowody.
 Parser jest przypięty w runtime lock i konfiguracji; zmiana reguł wymaga wersji.
 [Specyfikacja i źródła](../knowledge-chunks.md).
+
+
+## ADR-17 — przypięta przestrzeń i transakcyjny kandydat pgvector
+
+Fake provider odbiera offline pipeline i storage przed wywołaniem płatnego
+providera. Wszystkie pola konfiguracji należą do space ID; embedding cache
+wiąże body checksum ze space ID. Normalizacja i float32 są jawne, checksum
+jest liczona na bajtach faktycznie przechowywanego wektora. Odczyt używa
+formatu binarnego pgvector, aby prezentacja tekstowa SQL nie zmieniła floatów.
+
+Cały kandydat z źródłami/chunkami jest niemodyfikowalny; zapis space/cache/index/
+chunks ma jedną transakcję. FK wiążą środowisko, przestrzeń i wymiar, a deferred
+constraint odrzuca niepełny indeks. Błąd nie zmienia starych kandydatów.
+Zmieniona konfiguracja tworzy nową przestrzeń zamiast nadpisania wektorów.
+Alternatywa mutable upsert chunków utrudniałaby snapshot i odtworzenie cytatów.
+
+Na tym etapie nie ma aktywnego pointera ani ANN index; activation/retrieval
+wymagają osobnego odbioru auth, statusów, rollback i jakości. Fake vectors nie
+udają semantycznych embeddings. [Kontrakt i źródła](../knowledge-index.md).

@@ -110,7 +110,7 @@ przekroczenie przerywa budowę. Wersja 1 nie udaje pełnego GFM: nie dodaje plug
 frontmatter, footnotes, task lists ani GitHub alerts; zachowuje ich źródłowy tekst
 w ramach dostępnych bloków. Zmiana semantyki parsera wymaga nowej wersji reguł.
 
-Następny zakres to adapter embeddings z deterministycznym fake oraz persistence
-indeksu w PostgreSQL/pgvector. Odbiór wymiarów/modelu, candidate index,
-aktywacja/rollback, filtry retrieval, near duplicates i golden set pozostają
+[Adapter fake i persistence kandydata](knowledge-index.md) zachowują manifest
+fragmentów oraz sprawdzają przestrzeń i checksumy wektorów. Aktywacja/rollback,
+filtry retrieval, near duplicates i golden set pozostają
 osobnymi bramkami etapu 11. Przegląd redakcyjny korpusu może postępować równolegle.

@@ -21,14 +21,16 @@ testy negatywne i granice tego zakresu.
 i cytaty do przypiętych rewizji Git.
 [Odbiór chunków](evidence/11-chunks.md) potwierdza zmiany/usunięcia źródeł,
 pełną mapę fragmentów i odtwarzalność rzeczywistego korpusu.
+[Fake embeddings i kandydacki indeks](knowledge-index.md) opisują przypiętą
+przestrzeń, cache treści, kontrolę wymiaru oraz transakcyjny zapis w pgvector.
 
 ## Mapa repo
 
 | Lokalizacja | Bieżąca zawartość |
 |---|---|
 | `src/retailops_ai/` | CLI/settings oraz warstwy api/domain/pipelines/adapters lokalnego serwera |
-| `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: schemas korpusu, konfiguracji chunkera i fragmentów |
-| `knowledge/` | Rejestr propozycji dokumentów RAG i przypięta konfiguracja parsera/chunkera |
+| `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: schemas korpusu, fragmentów i kandydackiego indeksu |
+| `knowledge/` | Rejestr propozycji RAG, konfiguracja parsera/chunkera i przestrzeni fake embeddings |
 | `tests/` | Konfiguracja, HTTP i socket, awarie, korelacja, kontrakty oraz bramki CI |
 | `scripts/` | Kontroler Compose, rzeczywisty smoke, kontrakty i bramki workflow |
 | `.github/` | Required CI, szablon PR, wskaźnik do security |

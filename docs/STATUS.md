@@ -12,6 +12,9 @@ i identyczny manifest odtworzony z kopii repozytoriów.
 zakresy cytatów i pełne mapy dokumentów; nowy build usuwa nieaktualne fragmenty.
 [Odbiór chunków](evidence/11-chunks.md): 302 fragmenty z 20 dokumentów,
 389 testów i identyczny wynik odtworzony z czystego checkoutu.
+[Fake embeddings i indeks pgvector](knowledge-index.md) mają przypiętą przestrzeń,
+cache treści oraz transakcyjny zapis niemodyfikowalnego kandydata. Nie ma jeszcze
+aktywacji ani retrieval; fake vectors nie potwierdzają jakości semantycznej.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
@@ -39,8 +42,8 @@ i required-result; main wymaga PR i aktualnej gałęzi również dla administrat
 ## Następna praca
 
 Główny kierunek: DATA-01 etapu 02 w RetailOps — konfiguracja, identity i manifest v2.
-Drugi strumień na `ai/rag-corpus`: adapter embeddings z fake i persistence pgvector
-etapu 11, po rejestrze oraz parserze/chunkerze. Kandydat wymaga przeglądu doboru źródeł/statusów/access
+Drugi strumień na `ai/rag-corpus`: lifecycle indeksu, atomowa aktywacja i rollback
+etapu 11. Kandydat wymaga przeglądu doboru źródeł/statusów/access
 przed aktywacją. Praca nie zależy od zakończenia DATA-01. Etap 03 wymaga odbioru
 źródła z 02, a forecasting i serving kolejnych bramek.
 

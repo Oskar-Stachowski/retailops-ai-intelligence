@@ -50,6 +50,20 @@ def main(argv: list[str] | None = None) -> int:
     chunks.add_argument("--retailops-repo", type=Path, required=True)
     chunks.add_argument("--ai-repo", type=Path, required=True)
     chunks.add_argument("--output", type=Path, help="Write a new immutable chunk manifest.")
+    index = commands.add_parser(
+        "index-build", help="Build an offline fake embedding candidate from pinned Git sources."
+    )
+    index.add_argument("--registry", type=Path, required=True)
+    index.add_argument("--chunker-config", type=Path, required=True)
+    index.add_argument("--embedding-config", type=Path, required=True)
+    index.add_argument("--retailops-repo", type=Path, required=True)
+    index.add_argument("--ai-repo", type=Path, required=True)
+    index.add_argument("--output", type=Path, required=True)
+    store = commands.add_parser(
+        "index-store", help="Persist a candidate in the isolated AI database; never activate."
+    )
+    store.add_argument("--candidate", type=Path, required=True)
+    store.add_argument("--env-file", type=Path)
     args = parser.parse_args(argv)
 
     if args.command == "version":
@@ -108,7 +122,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
 
-    if args.command == "chunk-build":
+    if args.command in {"chunk-build", "index-build"}:
         from retailops_ai.adapters.git_documents import CorpusError
         from retailops_ai.pipelines.chunks import build_chunks, load_chunker_config
         from retailops_ai.pipelines.corpus import load_registry, write_candidate
@@ -122,6 +136,27 @@ def main(argv: list[str] | None = None) -> int:
                     "Oskar-Stachowski/retailops-ai-intelligence": args.ai_repo,
                 },
             )
+            if args.command == "index-build":
+                from retailops_ai.pipelines.indexes import build_index, load_embedding_config
+
+                candidate = build_index(
+                    chunk_manifest, load_embedding_config(args.embedding_config)
+                )
+                write_candidate(candidate, args.output)
+                print(
+                    json.dumps(
+                        {
+                            "status": "built",
+                            "lifecycle": "candidate",
+                            "index_id": candidate.manifest.index_id,
+                            "space_id": candidate.manifest.space_id,
+                            "chunks": candidate.manifest.chunk_count,
+                            "embeddings": candidate.manifest.embedding_count,
+                            "semantic_quality": candidate.manifest.semantic_quality,
+                        }
+                    )
+                )
+                return 0
             if args.output is not None:
                 write_candidate(chunk_manifest, args.output)
         except CorpusError as exc:
@@ -129,7 +164,7 @@ def main(argv: list[str] | None = None) -> int:
                 json.dumps({"error": "chunk_validation_failed", "code": str(exc)}), file=sys.stderr
             )
             return 2
-        except (OSError, ValueError, RecursionError):
+        except (OSError, ValueError, RecursionError, OverflowError):
             print(
                 '{"error":"chunk_validation_failed","code":"invalid_chunk_input"}', file=sys.stderr
             )
@@ -199,6 +234,43 @@ def main(argv: list[str] | None = None) -> int:
             print('{"error":"database_migration_failed"}', file=sys.stderr)
             return 1
         print('{"status":"migrated"}')
+        return 0
+
+    if args.command == "index-store":
+        from sqlalchemy.exc import SQLAlchemyError
+
+        from retailops_ai.adapters.git_documents import CorpusError
+        from retailops_ai.adapters.vector_store import index_engine, store_candidate
+        from retailops_ai.knowledge.indexes import MAX_INDEX_BYTES
+        from retailops_ai.pipelines.indexes import load_index_candidate, validate_index_bytes
+
+        try:
+            candidate = (
+                validate_index_bytes(sys.stdin.buffer.read(MAX_INDEX_BYTES + 1))
+                if args.candidate == Path("-")
+                else load_index_candidate(args.candidate)
+            )
+            if candidate.manifest.environment != settings.app_env:
+                raise CorpusError("index_environment_mismatch")
+            engine = index_engine(settings)
+            try:
+                created = store_candidate(engine, candidate)
+            finally:
+                engine.dispose()
+        except (SQLAlchemyError, OSError, ValueError, RecursionError):
+            print('{"error":"index_storage_failed"}', file=sys.stderr)
+            return 2
+        print(
+            json.dumps(
+                {
+                    "status": "stored" if created else "already_present",
+                    "lifecycle": "candidate",
+                    "index_id": candidate.manifest.index_id,
+                    "chunks": candidate.manifest.chunk_count,
+                    "embeddings": candidate.manifest.embedding_count,
+                }
+            )
+        )
         return 0
 
     if args.command == "serve":

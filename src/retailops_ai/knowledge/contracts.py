@@ -14,7 +14,7 @@ Repository = Literal[
     "Oskar-Stachowski/retailops-cloud-native-platform",
     "Oskar-Stachowski/retailops-ai-intelligence",
 ]
-REPOSITORIES = (
+REPOSITORIES: tuple[Repository, ...] = (
     "Oskar-Stachowski/retailops-cloud-native-platform",
     "Oskar-Stachowski/retailops-ai-intelligence",
 )

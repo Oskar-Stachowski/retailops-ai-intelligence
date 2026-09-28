@@ -78,5 +78,7 @@ nie tworzy danych i nie sprawdza usług zewnętrznych.
 [Korpus wiedzy](knowledge-corpus.md) opisuje offline `corpus-check`, który
 wiąże wybrane dokumenty obu repo z commitami Git i opcjonalnie zapisuje nowy
 kandydacki manifest. Nie wymaga uruchomionego stosu DB/API.
+[Fake index](knowledge-index.md) dodaje offline `index-build` i jawny `index-store`
+do odrębnej bazy AI. Build nie uruchamia DB lub AWS; zapis nie aktywuje indeksu.
 [Parser/chunker](knowledge-chunks.md) dodaje offline `chunk-build`; konfiguracja
 reguł i rozmiaru jest wersjonowana w `knowledge/chunker.v1.json`.
