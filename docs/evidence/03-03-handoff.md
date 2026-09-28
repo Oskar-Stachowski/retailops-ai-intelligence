@@ -2,14 +2,18 @@
 
 **2026-09-28, lokalnie.** Branch `ai/03-03-handoff`, osobny worktree na bazie
 `1c3b65e2bff68a920c45a5fbfd39b64c2bc80d95` (`origin/main` z początku pracy).
+Implementacja handoff: `654a54254e1965a3e4247aa22485684586f167e0`.
+Po publikacji RAG 11 branch przyjął aktualny `origin/main` (`abf3f69`)
+przez lokalny merge `0785edfaad80bfd2d9debce954c2d5e36b6dbb1b`.
 Upstream RetailOps: implementacja fixture/packaging `e26faa2` na bazie `ea63330`.
 Wersja handoff **1.0.0**, snapshot 1.0.0/source 2.6.0.
 [Runbook](../source-snapshot-handoff.md) opisuje zakres i dokładne granice.
 [Rejestr](03-03-handoff.json) podaje file hashes, testy i ograniczenia.
 
-**642 testy passed** całego repo, w tym 15 nowych testów handoff. Ruff check/format,
-mypy (93 pliki), schemas/registry checks, docs/CI contract checker oraz budowa
-wheel przeszły. Pełne regresje użyły dostępu do rzeczywistych lokalnych portów
+**658 testów passed** po synchronizacji z ukończonym RAG 11, w tym 15 nowych
+testów handoff. Ruff check/format, mypy (101 plików), schemas/registry checks,
+docs/CI contract checker oraz budowa wheel przeszły. Wcześniejszy odbiór na bazie
+fundamentu RAG miał 642 testy. Pełne regresje użyły rzeczywistych lokalnych portów
 HTTP dla istniejących testów. Nowy handoff checker nie używa HTTP, DB ani sieci.
 
 Pełny pakiet ma **76 plików, 2048665 B**. Wewnątrz: 74 pliki snapshotu,
@@ -32,5 +36,5 @@ typed importu dowolnego snapshotu, recomputed typed canonical hashes ani
 publikacji do generated. Upstream przelicza typed parity wszystkich 25 tabel;
 consumer zrobi to ponownie w **03.4**. Curated to 03.5, full gate to 03.6.
 Forecast-source ready nie kwalifikuje modeli ani inventory; 04/06 nadal czekają.
-Branch RAG pozostał niezależny. Push/merge i zdalne Required CI tego zakresu
-nie zostały wykonane.
+Osobny worktree RAG pozostał bez naszych zmian. Nie publikowano branchu handoff
+ani nie scalano go do zdalnego main; zdalne Required CI 03.3 nie zostało wykonane.
