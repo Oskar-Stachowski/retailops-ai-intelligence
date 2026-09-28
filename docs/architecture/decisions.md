@@ -137,3 +137,22 @@ procesów, expiry jest sprawdzane per request. Nie obiecujemy hot reload ani
 natychmiastowej revocation przez zmianę pliku. Warstwa posłuży przyszłym read APIs,
 które osobno sprawdzą istnienie źródłowych IDs i własny scope danych.
 [Instrukcja i źródła](../access-control.md), [pomiar](../evidence/01-access.md).
+
+
+## ADR-15 — jawny kandydacki korpus z przypiętych obiektów Git
+
+Etap 11 zaczyna od dokładnej listy Markdown obu repo, zamiast automatycznego
+indeksowania wszystkich plików katalogu. Obiekty Git z pełnych SHA i checksumy
+oddzielają źródłową rewizję od dirty worktree. Wersjonowany rejestr zawiera
+proponowane statusy/access/scope i właściciela przeglądu. Kod i evidence są
+powiązane z tymi samymi snapshotami; commit pomiaru pozostaje osobnym polem.
+
+Lokalny CLI tworzy wyłącznie immutable candidate, po pełnej walidacji źródeł.
+Nie ma ukrytej akceptacji redakcyjnej, aktywacji ani oceny statusu przez LLM.
+Content identity normalizuje końce linii; citation binding zawsze przypina
+rewizję. Czas wykonania i miejsce checkoutu pozostają poza hashami.
+
+Git czyta tylko wybrane bloby, bez replacements; wyłączenia nie wczytują
+prywatnych treści. Metadane access nie zastępują auth retrieval, a kontrola
+origin nie zastępuje zaufanego pobrania źródła. Ten scope nie dodaje migracji,
+wektorów lub endpointów. [Kontrakt i ograniczenia](../knowledge-corpus.md).

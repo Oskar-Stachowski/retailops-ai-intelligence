@@ -13,13 +13,16 @@ zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)
 podają faktyczny zakres prób. [Odbiór zdalnego CI](evidence/01-remote-ci.md)
 potwierdza kontrolę PR oraz push na main i ochronę obu repozytoriów.
+[Korpus wiedzy](knowledge-corpus.md) opisuje pierwszy zakres etapu 11,
+kandydacki rejestr obu repo i walidację źródeł Git.
 
 ## Mapa repo
 
 | Lokalizacja | Bieżąca zawartość |
 |---|---|
 | `src/retailops_ai/` | CLI/settings oraz warstwy api/domain/pipelines/adapters lokalnego serwera |
-| `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1: auth policy i chronione operacje; intelligence/v1: data/run/tool schemas, przykłady i negatywne fixtures |
+| `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: schemas rejestru i manifestu korpusu |
+| `knowledge/` | Jawny rejestr propozycji dokumentów RAG z przypiętymi źródłami i metadanymi |
 | `tests/` | Konfiguracja, HTTP i socket, awarie, korelacja, kontrakty oraz bramki CI |
 | `scripts/` | Kontroler Compose, rzeczywisty smoke, kontrakty i bramki workflow |
 | `.github/` | Required CI, szablon PR, wskaźnik do security |

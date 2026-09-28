@@ -2,6 +2,11 @@
 
 **2026-09-28 · fundament etapu 01 odebrany lokalnie i w zdalnym Required CI.**
 
+**Etap 11 w realizacji:** [korpus wiedzy](knowledge-corpus.md) ma rejestr
+kandydacki 20 dokumentów z obu repo, przypięte SHA/checksums, klasy dostępu,
+statusy i kontrolę dowodów. Techniczna walidacja offline nie oznacza akceptacji
+redakcyjnej ani aktywnego RAG.
+
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
 [Uruchomienie](local-stack.md), [HTTP](http-service.md).
@@ -28,10 +33,11 @@ i required-result; main wymaga PR i aktualnej gałęzi również dla administrat
 ## Następna praca
 
 Główny kierunek: DATA-01 etapu 02 w RetailOps — konfiguracja, identity i manifest v2.
-Równolegle w tym repo można rozpocząć etap 11 od rejestru zatwierdzonego korpusu,
-access metadata i wersjonowania dokumentów. Etap 03 wymaga odbioru źródła z 02,
-a forecasting i serving kolejnych bramek.
+Drugi strumień na `ai/rag-corpus`: parser/chunker etapu 11, po obecnym zakresie
+rejestru i metadanych. Kandydat wymaga przeglądu doboru źródeł/statusów/access
+przed aktywacją. Praca nie zależy od zakończenia DATA-01. Etap 03 wymaga odbioru
+źródła z 02, a forecasting i serving kolejnych bramek.
 
 Token metryk nie jest systemem tożsamości użytkowników. MLflow ma lokalną
-izolację sieciową, bez aplikacyjnego auth. Pipeline danych, modele, RAG, agent,
-streaming i cloud są planowane, z własnymi późniejszymi bramkami.
+izolację sieciową, bez aplikacyjnego auth. Pipeline danych, modele, wyszukiwanie
+RAG, agent, streaming i cloud mają własne późniejsze bramki.

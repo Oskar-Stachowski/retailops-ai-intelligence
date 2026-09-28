@@ -47,8 +47,8 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make compose-up/down` | Lokalny stos DB/API/MLflow, jawne migracje, zachowane wolumeny |
 | `make compose-config` | Walidacja Compose bez wypisywania sekretów |
 | `make compose-smoke` | Rzeczywiste próby persistence i awarii, następnie shutdown |
-| `make contracts-check` | Porównanie intelligence/access snapshots z kodem, bez ich zapisywania |
-| `make contracts` | Regeneracja HTTP oraz intelligence/access schemas/examples do przeglądu |
+| `make contracts-check` | Porównanie intelligence/access/knowledge snapshots z kodem, walidacja struktury rejestru korpusu |
+| `make contracts` | Regeneracja HTTP oraz intelligence/access/knowledge schemas/examples do przeglądu |
 
 Gitleaks jest osobnym narzędziem; zainstaluj wersję 8.30.1 z
 [oficjalnego wydania](https://github.com/gitleaks/gitleaks/releases/tag/v8.30.1)
@@ -74,3 +74,7 @@ Persistence i wymagania Docker opisuje [instrukcja lokalnego stosu](local-stack.
 [Tożsamość i uprawnienia API](access-control.md) opisują access-init, prywatne
 pliki i API_AUTH_FILE. Config-check weryfikuje jawny plik oraz rozdział tokenów;
 nie tworzy danych i nie sprawdza usług zewnętrznych.
+
+[Korpus wiedzy](knowledge-corpus.md) opisuje offline `corpus-check`, który
+wiąże wybrane dokumenty obu repo z commitami Git i opcjonalnie zapisuje nowy
+kandydacki manifest. Nie wymaga uruchomionego stosu DB/API.

@@ -35,6 +35,13 @@ def main(argv: list[str] | None = None) -> int:
     )
     contracts.add_argument("family")
     contracts.add_argument("path", type=Path)
+    corpus = commands.add_parser(
+        "corpus-check", help="Validate registered Git sources and compile a candidate corpus."
+    )
+    corpus.add_argument("--registry", type=Path, required=True)
+    corpus.add_argument("--retailops-repo", type=Path, required=True)
+    corpus.add_argument("--ai-repo", type=Path, required=True)
+    corpus.add_argument("--output", type=Path, help="Write a new immutable candidate manifest.")
     args = parser.parse_args(argv)
 
     if args.command == "version":
@@ -51,6 +58,46 @@ def main(argv: list[str] | None = None) -> int:
             print('{"error":"access_initialization_failed"}', file=sys.stderr)
             return 2
         print('{"status":"initialized"}')
+        return 0
+
+    if args.command == "corpus-check":
+        from retailops_ai.adapters.git_documents import CorpusError
+        from retailops_ai.pipelines.corpus import build_candidate, load_registry, write_candidate
+
+        try:
+            manifest = build_candidate(
+                load_registry(args.registry),
+                {
+                    "Oskar-Stachowski/retailops-cloud-native-platform": args.retailops_repo,
+                    "Oskar-Stachowski/retailops-ai-intelligence": args.ai_repo,
+                },
+            )
+            if args.output is not None:
+                write_candidate(manifest, args.output)
+        except CorpusError as exc:
+            print(
+                json.dumps({"error": "corpus_validation_failed", "code": str(exc)}), file=sys.stderr
+            )
+            return 2
+        except (OSError, ValueError, RecursionError, UnicodeError):
+            print(
+                '{"error":"corpus_validation_failed","code":"invalid_corpus_input"}',
+                file=sys.stderr,
+            )
+            return 2
+        print(
+            json.dumps(
+                {
+                    "status": "valid",
+                    "lifecycle": "candidate",
+                    "corpus_id": manifest.corpus_id,
+                    "corpus_config_id": manifest.corpus_config_id,
+                    "documents": len(manifest.documents),
+                    "excluded_markdown": len(manifest.excluded_documents),
+                    "duplicate_content_groups": len(manifest.duplicate_content_groups),
+                }
+            )
+        )
         return 0
 
     if args.command == "contract-check":
