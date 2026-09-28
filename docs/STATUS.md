@@ -28,6 +28,8 @@ deterministyczną selekcję, bounded context, grant knowledge:read, filtry
 repo/type/status/access, live deny dla starych pinów i 36 wersjonowanych pytań.
 Ścieżka runtime działa na kwalifikowanych indeksach testowych; rzeczywisty
 korpus i etykiety pozostają propozycją. Fake report nie otwiera aktywacji.
+[Odbiór retrieval](evidence/11-retrieval.md): 498 testów, świeży PG/HTTP,
+7/7 krytycznych przypadków oraz jawnie nieprzechodzące progi Recall@5/MRR z fake.
 
 **Postęp etapu 11: około 80%** — szacunek zakresu implementacji, z uwzględnieniem
 niezamkniętych odbiorów. Rejestr/metadata, parser, fake/storage, test lifecycle

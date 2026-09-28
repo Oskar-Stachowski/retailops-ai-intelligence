@@ -1,0 +1,324 @@
+{
+  "schema_version": "1.0",
+  "stage": "11",
+  "scope": "bounded_exact_retrieval_server_scope_status_filters_live_denials_and_draft_golden_set",
+  "result": "passed",
+  "verified_at": "2026-09-28T11:32:32.519078+00:00",
+  "implementation_commit": "1e6fbf14ca29f4758f97f5fd81754c66f6e18336",
+  "base_commit": "4fb5d288fb9a0f2557dc189bf54addbffd4d2f81",
+  "branch": "ai/rag-corpus",
+  "runtime": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.11.15",
+    "uv": "0.12.19",
+    "postgres_major": 16,
+    "pgvector": "0.8.6",
+    "migration_revision": "0004_rag_denials"
+  },
+  "runtime_dependencies_added": [],
+  "actual_candidate": {
+    "index_id": "index-sha256-922d7c3e2cbfdfcc1f2c176fdbefd0b56ed74196de64287ebcbf625a5777fe51",
+    "documents": 20,
+    "chunks": 302,
+    "sources": [
+      {
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+        "documents": 8
+      },
+      {
+        "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+        "commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+        "documents": 12
+      }
+    ],
+    "review_state": "proposed",
+    "corpus_approval_created": false,
+    "activated": false
+  },
+  "golden": {
+    "golden_set_id": "golden-set-sha256-e286887e587b0c22c5195b49a62e5efb0e94552239459e7e7882c191391c5b32",
+    "retrieval_config_id": "retrieval-config-sha256-b438aa592eb4be671dcb74121d48ecf62d211869479ca9087e9a588ccdff4f1e",
+    "cases": 36,
+    "categories": {
+      "authorization": 3,
+      "conflict": 2,
+      "documentation": 11,
+      "injection": 2,
+      "missing": 3,
+      "models": 5,
+      "operations": 10
+    },
+    "critical_cases": 7,
+    "labels_review_state": "proposed",
+    "labels_origin": "manually_authored_source_sections_not_ranker_output",
+    "thresholds_frozen_before_first_evaluation": true,
+    "thresholds": {
+      "recall_at_5_min": 0.8,
+      "mrr_min": 0.6,
+      "citation_correctness_min": 1.0,
+      "critical_pass_rate_min": 1.0,
+      "groundedness_min": 0.95,
+      "latency_p95_ms_max": 1000.0,
+      "offline_cost_usd_max": 0.0
+    },
+    "report_file": "docs/evidence/11-retrieval-golden.json",
+    "report_byte_sha256": "5d604d14ad1a9182e6411a4252d94a8d0a7c5a0a411f4d6c19ebe6c3f3b2c3d8",
+    "provider": "fake",
+    "report_kind": "offline_mechanics_with_draft_semantic_labels",
+    "recall_at_5": 0.017857142857142856,
+    "mrr": 0.03571428571428571,
+    "citation_binding_correctness": 1.0,
+    "critical_pass_rate": 1.0,
+    "latency_p95_ms_offline_candidate_path": 2.605790999950841,
+    "model_cost_usd": 0.0,
+    "measured_thresholds_passed": false,
+    "semantic_quality": "not_evaluated_fake_vectors",
+    "answer_groundedness": null,
+    "agent_tool_evaluation": "labels_only_no_agent_runtime",
+    "activation_allowed": false,
+    "independent_jsonschema_validation": "passed",
+    "clean_checkout_reproduction": {
+      "exit_code": 0,
+      "same_metrics_outcomes_and_chunk_ids": true,
+      "timings_excluded_from_comparison": true,
+      "outside_repo_cwd": true,
+      "hashseed": 248,
+      "invalid_service_settings_ignored": true,
+      "artifact_mode": "0o600"
+    }
+  },
+  "checks": {
+    "new_retrieval_cases": {
+      "passed": 35,
+      "included_in_full_suite": true
+    },
+    "working_checkout": {
+      "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks compose-smoke",
+      "exit_code": 0,
+      "passed": 498,
+      "test_seconds": 58.92,
+      "pre_commit_worktree": true,
+      "later_targeted_cases_after_final_scope_label_guards": 35
+    },
+    "clean_checkout": {
+      "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks compose-smoke",
+      "exit_code": 0,
+      "passed": 498,
+      "test_seconds": 66.14,
+      "fresh_venv": true,
+      "fresh_isolated_postgres_volume": true,
+      "clean_git_status_after": true,
+      "implementation_commit": "1e6fbf14ca29f4758f97f5fd81754c66f6e18336"
+    },
+    "real_compose_acceptance": {
+      "checked_at": "2026-09-28T11:27:24.576232+00:00",
+      "kind": "real_local_compose",
+      "checks": [
+        "separate_databases_roles_and_vector",
+        "explicit_idempotent_migration_and_revision_readiness",
+        "real_pgvector_candidate_constraints_cache_atomicity_and_replay",
+        "sigkill_restart_retains_ai_and_mlflow_artifact",
+        "real_db_outage_health_200_ready_503_then_recovered_200",
+        "down_up_retains_ai_mlflow_metadata_and_artifact",
+        "loopback_ports_internal_network_no_secrets_in_service_logs"
+      ],
+      "rag": {
+        "checks": [
+          "native_float32_checksum_round_trip_and_idempotent_replay",
+          "real_candidate_cli_stdin_replay_and_safe_validation_error",
+          "body_cache_reuse_metadata_lineage_and_separate_dimension_spaces",
+          "conflicting_valid_vector_cache_refused_without_overwrite",
+          "database_rejects_wrong_dimension_nonfinite_nonunit_and_corrupt_checksum",
+          "database_blocks_update_and_delete_of_every_candidate_table",
+          "incomplete_mixed_space_and_mid_transaction_failure_roll_back_all_rows",
+          "concurrent_build_single_candidate_and_removed_content_absent_from_new_index"
+        ],
+        "index_id": "index-sha256-e7ef868a590526f96f4fb0446fcba612119d879801725182dd647e5d21898124",
+        "chunks": 2,
+        "embeddings": 2,
+        "result": "passed",
+        "lifecycle": {
+          "result": "passed",
+          "checks": [
+            "qualification_replay_generation_cas_unqualified_and_golden_gate_rejections",
+            "failure_after_pointer_write_rolls_back_event_and_pointer",
+            "readers_see_old_until_commit_and_pinned_run_retains_old_manifest",
+            "rollback_restores_previous_manifest_with_new_generation",
+            "two_independent_promoters_have_one_winner_and_one_generation_conflict",
+            "sql_blocks_incomplete_history_generation_jump_and_deletion",
+            "real_cli_qualify_rollback_current_and_default_retrieval_denial"
+          ],
+          "pin": {
+            "schema_version": "1.0",
+            "environment": "test",
+            "lane": "offline_test",
+            "purpose": "lifecycle_validation_only",
+            "generation": 5,
+            "request_id": "rag-change-be4b348433b9437dacf41b19e1a4e38d",
+            "review_id": "corpus-review-sha256-a9e580704c8ccee7a0c1e6aeb2f4ce5584ccef2ac1fd1865dc923290ce13b73f",
+            "validation_id": "index-validation-sha256-e575fd4361f15165364796c1d871d25a523d2d0a25eae6717cf593f2bcee274e",
+            "manifest": {
+              "schema_version": "1.0",
+              "lifecycle": "candidate",
+              "environment": "test",
+              "semantic_quality": "not_evaluated_fake_vectors",
+              "index_id": "index-sha256-fe9424bff0caebb2fa386a90170028471cc47d39d5ce1399c78fa96442c2c2a9",
+              "corpus_id": "corpus-sha256-1de3b68861fe14a76087c05d09bbfaffecd11084648f4d316153a5ad33e044b2",
+              "chunk_manifest_id": "chunks-sha256-84bee5d6b787b6964f4146b8acbfd486de57c9ddb7aab783489eeecdf81143ab",
+              "embedding_config": {
+                "schema_version": "1.0",
+                "provider": "fake",
+                "model_id": "sha256-unit-f32-v1",
+                "inference_profile": null,
+                "region": "offline",
+                "dimension": 32,
+                "normalization": "l2-unit",
+                "distance": "cosine",
+                "transformation_version": "utf8-chunk-body-v1",
+                "vector_format": "float32-big-endian-v1"
+              },
+              "space_id": "embedding-space-sha256-1cf9d4ec38fe18ba85ae9ecbd032fb5b516e73085997cec96703ed6d0ca40817",
+              "storage_version": "pgvector-checked-dimension-v1",
+              "pgvector_version": "0.8.6",
+              "migration_revision": "0002_rag_candidates",
+              "retrieval_version": "not_implemented",
+              "chunk_count": 2,
+              "embedding_count": 2,
+              "entries": [
+                {
+                  "chunk_id": "chunk-sha256-33d8a5aae18c18017c2f07a0d8423f3a860b8e7e63e7f5d2431aa08dfa552f36",
+                  "embedding_id": "embedding-sha256-d3f74d8ba08a0472703d043d5450210082bb5e8e298c44a2f3bf2efa33f904af",
+                  "vector_checksum": "e67bef3a479ffe7f4c02e72397aca92a6d03dbe1994c55008997649c2bc41f22"
+                },
+                {
+                  "chunk_id": "chunk-sha256-c67e157d642420a446616034e51b12985f3b7195e74d7c5e3c77c45755acffa3",
+                  "embedding_id": "embedding-sha256-366eccdf0f1f3d4ff61051185f7c8b45593f243c7a48808cae29bb56bcb2072a",
+                  "vector_checksum": "7f9a200842a9c4020bbc3104f3f5b4341045f63e80e9ccbcf843b25f0e859fc4"
+                }
+              ]
+            }
+          },
+          "base_generation": 0,
+          "actual_corpus_activated": false,
+          "semantic_quality_evaluated": false
+        },
+        "retrieval": {
+          "result": "passed",
+          "checks": [
+            "real_exact_cosine_ties_acl_repo_type_status_history_diversity_and_budgets",
+            "adversarial_source_keeps_untrusted_metadata_without_tool_or_role_effects",
+            "real_loopback_http_credentials_401_403_422_no_store_and_live_denial_after_warm_read",
+            "immutable_live_denial_covers_old_pin_after_swap_and_prior_manifest_restored"
+          ],
+          "fixture_documents": 10,
+          "fixture_chunks": 10,
+          "max_sql_search_ms": 4.521958999987419,
+          "final_pin": {
+            "schema_version": "1.0",
+            "environment": "test",
+            "lane": "offline_test",
+            "purpose": "lifecycle_validation_only",
+            "generation": 7,
+            "request_id": "rag-change-1edb75bd1df4b53dd33706f59aa41f05",
+            "review_id": "corpus-review-sha256-a9e580704c8ccee7a0c1e6aeb2f4ce5584ccef2ac1fd1865dc923290ce13b73f",
+            "validation_id": "index-validation-sha256-e575fd4361f15165364796c1d871d25a523d2d0a25eae6717cf593f2bcee274e",
+            "manifest": {
+              "schema_version": "1.0",
+              "lifecycle": "candidate",
+              "environment": "test",
+              "semantic_quality": "not_evaluated_fake_vectors",
+              "index_id": "index-sha256-fe9424bff0caebb2fa386a90170028471cc47d39d5ce1399c78fa96442c2c2a9",
+              "corpus_id": "corpus-sha256-1de3b68861fe14a76087c05d09bbfaffecd11084648f4d316153a5ad33e044b2",
+              "chunk_manifest_id": "chunks-sha256-84bee5d6b787b6964f4146b8acbfd486de57c9ddb7aab783489eeecdf81143ab",
+              "embedding_config": {
+                "schema_version": "1.0",
+                "provider": "fake",
+                "model_id": "sha256-unit-f32-v1",
+                "inference_profile": null,
+                "region": "offline",
+                "dimension": 32,
+                "normalization": "l2-unit",
+                "distance": "cosine",
+                "transformation_version": "utf8-chunk-body-v1",
+                "vector_format": "float32-big-endian-v1"
+              },
+              "space_id": "embedding-space-sha256-1cf9d4ec38fe18ba85ae9ecbd032fb5b516e73085997cec96703ed6d0ca40817",
+              "storage_version": "pgvector-checked-dimension-v1",
+              "pgvector_version": "0.8.6",
+              "migration_revision": "0002_rag_candidates",
+              "retrieval_version": "not_implemented",
+              "chunk_count": 2,
+              "embedding_count": 2,
+              "entries": [
+                {
+                  "chunk_id": "chunk-sha256-33d8a5aae18c18017c2f07a0d8423f3a860b8e7e63e7f5d2431aa08dfa552f36",
+                  "embedding_id": "embedding-sha256-d3f74d8ba08a0472703d043d5450210082bb5e8e298c44a2f3bf2efa33f904af",
+                  "vector_checksum": "e67bef3a479ffe7f4c02e72397aca92a6d03dbe1994c55008997649c2bc41f22"
+                },
+                {
+                  "chunk_id": "chunk-sha256-c67e157d642420a446616034e51b12985f3b7195e74d7c5e3c77c45755acffa3",
+                  "embedding_id": "embedding-sha256-366eccdf0f1f3d4ff61051185f7c8b45593f243c7a48808cae29bb56bcb2072a",
+                  "vector_checksum": "7f9a200842a9c4020bbc3104f3f5b4341045f63e80e9ccbcf843b25f0e859fc4"
+                }
+              ]
+            }
+          },
+          "actual_corpus_activated": false,
+          "semantic_quality_evaluated": false
+        }
+      },
+      "result": "passed",
+      "api_health": 200,
+      "api_ready_after_recovery": 200,
+      "postgres_vector_version": "0.8.6",
+      "migration_revision": "0004_rag_denials"
+    },
+    "actionlint": {
+      "exit_code": 0,
+      "working_and_clean_checkout": true
+    },
+    "local_gates": [
+      "ruff",
+      "ruff_format",
+      "mypy_strict_76_files",
+      "pytest",
+      "docs",
+      "intelligence_snapshots",
+      "access_snapshots",
+      "knowledge_snapshots",
+      "wheel",
+      "sdist",
+      "compose_config",
+      "gitleaks_history",
+      "gitleaks_directory",
+      "real_pgvector_and_authenticated_loopback_http",
+      "crash_restart_and_down_up_pin_retention"
+    ],
+    "clean_wheel_byte_sha256": "e8af7b2424bc238825276c01c1fa2f404e89f3be02fc8f34e6eb6e5282621370",
+    "remote_ci": "not_run_for_this_scope"
+  },
+  "stage_progress": {
+    "approximate_percent": 80,
+    "method": "engineering_scope_estimate_across_the_seven_stage_11_ranges_not_a_test_or_quality_metric",
+    "remaining": [
+      "Administrative knowledge-index-runs and read-current HTTP with persisted Run/idempotency/auth contract.",
+      "Editorial review and source refresh of actual corpus and golden section labels.",
+      "Near-duplicate evaluation and user release manifest/qualification policy.",
+      "Semantic quality acceptance with real embeddings; bounded Bedrock smoke and agent evaluation in stage 12."
+    ]
+  },
+  "limitations": [
+    "Production retrieval lane remains blocked; runtime API search currently uses qualified synthetic offline_test indexes in APP_ENV=test. Actual local corpus is proposed and inactive.",
+    "Natural-question Recall@5/MRR are deliberately reported even though they fail frozen thresholds; fake vectors are not semantic quality evidence.",
+    "Citation correctness measures binding to the immutable source chunk, not factual truth or answer groundedness. No answer synthesis or semantic conflict resolution is implemented.",
+    "Required/forbidden tool labels are provided for stage 12; no agent/tool execution is claimed.",
+    "SQL/loopback/crash cases use ten synthetic documents; the actual 302-chunk candidate is evaluated privately offline. Measured SQL fixture times do not establish actual-corpus production latency.",
+    "Statement timeout is 5 seconds, connect and pool wait limits are 3 seconds; this is not a 5-second whole-request deadline.",
+    "Private policy grants are snapshots requiring restart; immutable DB denials apply from the current search statement snapshot, including old pins. Previously delivered data cannot be recalled.",
+    "No shared result cache, production RLS/OIDC/TLS, HTTP index administration, ANN/FTS/reranker, real embeddings, AWS/Bedrock cost or deployment.",
+    "Existing immutable creation manifests keep migration revision 0002_rag_candidates and retrieval_version not_implemented; runtime results and evaluation separately bind pgvector-cosine-exact-v1 and retrieval config ID. User release manifests/policy remain a later gate.",
+    "No push or remote Required CI for these commits."
+  ]
+}

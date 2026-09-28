@@ -5,6 +5,7 @@ dywersyfikację źródeł i limity kontekstu. [Korpus](knowledge-corpus.md) nada
 propozycją. HTTP używa kwalifikowanego, przypiętego indeksu: w `test` tylko kanału
 `offline_test`; w `local` kanału `retrieval`, który pozostaje nieaktywny.
 Nie ma odpowiedzi LLM ani użytkowej aktywacji rzeczywistego korpusu.
+[Dowody odbioru](evidence/11-retrieval.md) obejmują czysty checkout i realny PG/HTTP.
 
 ## Odczyt i dostęp
 
@@ -76,6 +77,9 @@ Adapter `search_pinned` może ponownie używać tej wersji podczas zmiany curren
 bieżące blokady nadal obowiązują. Serwis zwraca `Cache-Control: no-store`.
 Nie ma współdzielonego cache odpowiedzi/query vectors; każdy odczyt ponownie
 sprawdza grant i SQL deny. Polityka poświadczeń nadal wymaga restartu po zmianie.
+Dotychczasowe manifesty zachowują creation/storage revision 0002 oraz pierwotne
+`retrieval_version=not_implemented`. Wynik i ewaluacja osobno wiążą nowy config
+retrieval; użytkowy release manifest/polityka wymagają kolejnego odbioru.
 
 ## Pilne odebranie dostępu do dokumentu
 

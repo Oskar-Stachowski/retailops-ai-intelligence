@@ -31,6 +31,8 @@ atomową aktywację testową, przypinanie wersji i rollback.
 rollback i zachowanie pełnego pin po restartach na świeżej bazie.
 [Retrieval i golden set](knowledge-retrieval.md) opisują exact cosine, kontrolę
 scope, statusy, live deny i wersjonowane etykiety dla 36 pytań.
+[Odbiór retrieval](evidence/11-retrieval.md) podaje 498 testów, rzeczywisty PG/HTTP,
+raport fake i pozostały zakres etapu 11.
 
 ## Mapa repo
 
