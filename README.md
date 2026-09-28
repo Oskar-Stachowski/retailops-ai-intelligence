@@ -8,6 +8,8 @@ danych/run/tool, lokalne poświadczenia i scope API oraz kontrole CI.
 walidacja Git, [parser/chunker](docs/knowledge-chunks.md) oraz
 [fake embeddings i zapis kandydata pgvector](docs/knowledge-index.md) oraz
 [atomowe przełączanie indeksów testowych](docs/knowledge-lifecycle.md).
+[Retrieval, filtry uprawnień/statusów i golden set](docs/knowledge-retrieval.md)
+mają wykonywalną ścieżkę offline/test i 36 pytań ewaluacyjnych.
 Wyszukiwanie i aktywacja rzeczywistego korpusu wymagają kolejnego odbioru jakości.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).

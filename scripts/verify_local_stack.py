@@ -193,10 +193,10 @@ def main() -> int:
         rag_retention_query = (
             f"SELECT count(*) FROM ai.rag_index_chunks WHERE index_id='{rag_index_id}';"  # noqa: S608 - full regex validation above
         )
-        lifecycle_report = rag["lifecycle"]
+        lifecycle_report = rag["retrieval"]
         if not isinstance(lifecycle_report, dict):
             raise RuntimeError("invalid_lifecycle_report")
-        expected_pin = lifecycle_report["pin"]
+        expected_pin = lifecycle_report["final_pin"]
         stage = "write_ai_and_mlflow"
         sql(
             "retailops_ai",

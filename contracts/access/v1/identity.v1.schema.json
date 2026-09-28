@@ -1,5 +1,69 @@
 {
   "$defs": {
+    "KnowledgeResourceScope": {
+      "additionalProperties": false,
+      "properties": {
+        "access_classes": {
+          "items": {
+            "enum": [
+              "public_project",
+              "project_internal",
+              "restricted"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Access Classes",
+          "type": "array"
+        },
+        "document_statuses": {
+          "items": {
+            "enum": [
+              "specified",
+              "implemented",
+              "verified",
+              "deprecated",
+              "historical"
+            ],
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Document Statuses",
+          "type": "array"
+        },
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "repositories": {
+          "items": {
+            "enum": [
+              "Oskar-Stachowski/retailops-cloud-native-platform",
+              "Oskar-Stachowski/retailops-ai-intelligence"
+            ],
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "title": "Repositories",
+          "type": "array"
+        }
+      },
+      "required": [
+        "environment",
+        "repositories",
+        "access_classes",
+        "document_statuses"
+      ],
+      "title": "KnowledgeResourceScope",
+      "type": "object"
+    },
     "ResourceScope": {
       "additionalProperties": false,
       "properties": {
@@ -54,12 +118,24 @@
       "items": {
         "enum": [
           "forecast:read",
-          "access:admin"
+          "access:admin",
+          "knowledge:read"
         ],
         "type": "string"
       },
       "title": "Capabilities",
       "type": "array"
+    },
+    "knowledge_scope": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/KnowledgeResourceScope"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "principal_id": {
       "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",

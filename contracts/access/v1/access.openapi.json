@@ -68,6 +68,92 @@
         "title": "DependencyStatus",
         "type": "object"
       },
+      "EvidenceReference": {
+        "additionalProperties": false,
+        "properties": {
+          "byte_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Byte Sha256",
+            "type": "string"
+          },
+          "commit_pointer": {
+            "maxLength": 200,
+            "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+            "title": "Commit Pointer",
+            "type": "string"
+          },
+          "commit_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Commit Sha",
+            "type": "string"
+          },
+          "expected_result": {
+            "enum": [
+              "success",
+              "passed",
+              "rejected"
+            ],
+            "title": "Expected Result",
+            "type": "string"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "repository": {
+            "enum": [
+              "Oskar-Stachowski/retailops-cloud-native-platform",
+              "Oskar-Stachowski/retailops-ai-intelligence"
+            ],
+            "title": "Repository",
+            "type": "string"
+          },
+          "result_pointer": {
+            "maxLength": 200,
+            "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+            "title": "Result Pointer",
+            "type": "string"
+          },
+          "scope": {
+            "maxLength": 600,
+            "minLength": 1,
+            "title": "Scope",
+            "type": "string"
+          },
+          "verified_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Verified At",
+            "type": "string"
+          },
+          "verified_at_pointer": {
+            "maxLength": 200,
+            "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+            "title": "Verified At Pointer",
+            "type": "string"
+          },
+          "verified_commit": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Verified Commit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "repository",
+          "commit_sha",
+          "path",
+          "byte_sha256",
+          "verified_at",
+          "verified_commit",
+          "commit_pointer",
+          "verified_at_pointer",
+          "scope",
+          "result_pointer",
+          "expected_result"
+        ],
+        "title": "EvidenceReference",
+        "type": "object"
+      },
       "ForecastCheckRequest": {
         "additionalProperties": false,
         "properties": {
@@ -114,6 +200,29 @@
         "title": "ForecastCheckRequest",
         "type": "object"
       },
+      "Heading": {
+        "additionalProperties": false,
+        "properties": {
+          "level": {
+            "maximum": 6.0,
+            "minimum": 1.0,
+            "title": "Level",
+            "type": "integer"
+          },
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "level",
+          "title"
+        ],
+        "title": "Heading",
+        "type": "object"
+      },
       "IdentityResponse": {
         "additionalProperties": false,
         "properties": {
@@ -121,12 +230,23 @@
             "items": {
               "enum": [
                 "forecast:read",
-                "access:admin"
+                "access:admin",
+                "knowledge:read"
               ],
               "type": "string"
             },
             "title": "Capabilities",
             "type": "array"
+          },
+          "knowledge_scope": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/KnowledgeResourceScope"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "principal_id": {
             "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
@@ -169,6 +289,340 @@
           "scope"
         ],
         "title": "IdentityResponse",
+        "type": "object"
+      },
+      "ImplementationReference": {
+        "additionalProperties": false,
+        "properties": {
+          "byte_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Byte Sha256",
+            "type": "string"
+          },
+          "commit_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Commit Sha",
+            "type": "string"
+          },
+          "path": {
+            "maxLength": 240,
+            "title": "Path",
+            "type": "string"
+          },
+          "repository": {
+            "enum": [
+              "Oskar-Stachowski/retailops-cloud-native-platform",
+              "Oskar-Stachowski/retailops-ai-intelligence"
+            ],
+            "title": "Repository",
+            "type": "string"
+          }
+        },
+        "required": [
+          "repository",
+          "commit_sha",
+          "path",
+          "byte_sha256"
+        ],
+        "title": "ImplementationReference",
+        "type": "object"
+      },
+      "KnowledgeHit": {
+        "additionalProperties": false,
+        "properties": {
+          "chunk": {
+            "$ref": "#/components/schemas/MarkdownChunk"
+          },
+          "claim_kind": {
+            "enum": [
+              "plan",
+              "implementation",
+              "verified_evidence",
+              "historical_reference"
+            ],
+            "title": "Claim Kind",
+            "type": "string"
+          },
+          "score": {
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "Score",
+            "type": "number"
+          }
+        },
+        "required": [
+          "score",
+          "chunk",
+          "claim_kind"
+        ],
+        "title": "KnowledgeHit",
+        "type": "object"
+      },
+      "KnowledgeResourceScope": {
+        "additionalProperties": false,
+        "properties": {
+          "access_classes": {
+            "items": {
+              "enum": [
+                "public_project",
+                "project_internal",
+                "restricted"
+              ],
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "title": "Access Classes",
+            "type": "array"
+          },
+          "document_statuses": {
+            "items": {
+              "enum": [
+                "specified",
+                "implemented",
+                "verified",
+                "deprecated",
+                "historical"
+              ],
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Document Statuses",
+            "type": "array"
+          },
+          "environment": {
+            "enum": [
+              "local",
+              "test"
+            ],
+            "title": "Environment",
+            "type": "string"
+          },
+          "repositories": {
+            "items": {
+              "enum": [
+                "Oskar-Stachowski/retailops-cloud-native-platform",
+                "Oskar-Stachowski/retailops-ai-intelligence"
+              ],
+              "type": "string"
+            },
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Repositories",
+            "type": "array"
+          }
+        },
+        "required": [
+          "environment",
+          "repositories",
+          "access_classes",
+          "document_statuses"
+        ],
+        "title": "KnowledgeResourceScope",
+        "type": "object"
+      },
+      "MarkdownChunk": {
+        "additionalProperties": false,
+        "properties": {
+          "access_class": {
+            "enum": [
+              "public_project",
+              "project_internal",
+              "restricted"
+            ],
+            "title": "Access Class",
+            "type": "string"
+          },
+          "block_type": {
+            "enum": [
+              "paragraph",
+              "bullet_list",
+              "ordered_list",
+              "blockquote",
+              "fence",
+              "code_block",
+              "table",
+              "html_block",
+              "reference_definition"
+            ],
+            "title": "Block Type",
+            "type": "string"
+          },
+          "byte_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Byte Sha256",
+            "type": "string"
+          },
+          "chunk_id": {
+            "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "chunk_index": {
+            "exclusiveMaximum": 4096.0,
+            "minimum": 0.0,
+            "title": "Chunk Index",
+            "type": "integer"
+          },
+          "chunker_config_id": {
+            "pattern": "^chunker-config-sha256-[0-9a-f]{64}$",
+            "title": "Chunker Config Id",
+            "type": "string"
+          },
+          "chunker_version": {
+            "const": "markdown-blocks-v1",
+            "title": "Chunker Version",
+            "type": "string"
+          },
+          "commit_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Commit Sha",
+            "type": "string"
+          },
+          "content_checksum": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Content Checksum",
+            "type": "string"
+          },
+          "content_id": {
+            "pattern": "^markdown-sha256-[0-9a-f]{64}$",
+            "title": "Content Id",
+            "type": "string"
+          },
+          "document_id": {
+            "pattern": "^document-sha256-[0-9a-f]{64}$",
+            "title": "Document Id",
+            "type": "string"
+          },
+          "document_status": {
+            "enum": [
+              "specified",
+              "implemented",
+              "verified",
+              "deprecated",
+              "historical"
+            ],
+            "title": "Document Status",
+            "type": "string"
+          },
+          "document_type": {
+            "enum": [
+              "architecture",
+              "contract",
+              "guide",
+              "runbook",
+              "policy",
+              "plan",
+              "evidence",
+              "model_card"
+            ],
+            "title": "Document Type",
+            "type": "string"
+          },
+          "fact_scope": {
+            "maxLength": 600,
+            "minLength": 1,
+            "title": "Fact Scope",
+            "type": "string"
+          },
+          "heading_path": {
+            "items": {
+              "$ref": "#/components/schemas/Heading"
+            },
+            "maxItems": 6,
+            "title": "Heading Path",
+            "type": "array"
+          },
+          "implementation_refs": {
+            "items": {
+              "$ref": "#/components/schemas/ImplementationReference"
+            },
+            "maxItems": 8,
+            "title": "Implementation Refs",
+            "type": "array"
+          },
+          "occurrences": {
+            "items": {
+              "$ref": "#/components/schemas/SourceLocation"
+            },
+            "maxItems": 4096,
+            "minItems": 1,
+            "title": "Occurrences",
+            "type": "array"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "repository": {
+            "enum": [
+              "Oskar-Stachowski/retailops-cloud-native-platform",
+              "Oskar-Stachowski/retailops-ai-intelligence"
+            ],
+            "title": "Repository",
+            "type": "string"
+          },
+          "source_ref": {
+            "title": "Source Ref",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 16000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "token_estimate": {
+            "maximum": 4000.0,
+            "minimum": 1.0,
+            "title": "Token Estimate",
+            "type": "integer"
+          },
+          "verification": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EvidenceReference"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "path",
+          "title",
+          "byte_sha256",
+          "document_type",
+          "document_status",
+          "access_class",
+          "fact_scope",
+          "implementation_refs",
+          "verification",
+          "repository",
+          "commit_sha",
+          "document_id",
+          "content_id",
+          "source_ref",
+          "chunk_id",
+          "chunk_index",
+          "chunker_version",
+          "chunker_config_id",
+          "heading_path",
+          "block_type",
+          "text",
+          "content_checksum",
+          "token_estimate",
+          "occurrences"
+        ],
+        "title": "MarkdownChunk",
         "type": "object"
       },
       "PolicyMetadata": {
@@ -345,6 +799,290 @@
           "channels"
         ],
         "title": "ResourceScope",
+        "type": "object"
+      },
+      "RetrievalFilters": {
+        "additionalProperties": false,
+        "properties": {
+          "access_classes": {
+            "anyOf": [
+              {
+                "items": {
+                  "enum": [
+                    "public_project",
+                    "project_internal",
+                    "restricted"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 3,
+                "minItems": 1,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Access Classes"
+          },
+          "document_statuses": {
+            "anyOf": [
+              {
+                "items": {
+                  "enum": [
+                    "specified",
+                    "implemented",
+                    "verified",
+                    "deprecated",
+                    "historical"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 5,
+                "minItems": 1,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Statuses"
+          },
+          "document_types": {
+            "anyOf": [
+              {
+                "items": {
+                  "enum": [
+                    "architecture",
+                    "contract",
+                    "guide",
+                    "runbook",
+                    "policy",
+                    "plan",
+                    "evidence",
+                    "model_card"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 8,
+                "minItems": 1,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Types"
+          },
+          "repositories": {
+            "anyOf": [
+              {
+                "items": {
+                  "enum": [
+                    "Oskar-Stachowski/retailops-cloud-native-platform",
+                    "Oskar-Stachowski/retailops-ai-intelligence"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 2,
+                "minItems": 1,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Repositories"
+          }
+        },
+        "title": "RetrievalFilters",
+        "type": "object"
+      },
+      "RetrievalRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/RetrievalFilters"
+          },
+          "max_context_tokens": {
+            "default": 6000,
+            "maximum": 6000.0,
+            "minimum": 1.0,
+            "title": "Max Context Tokens",
+            "type": "integer"
+          },
+          "purpose": {
+            "default": "documentation",
+            "enum": [
+              "documentation",
+              "implementation",
+              "verified_state",
+              "history"
+            ],
+            "title": "Purpose",
+            "type": "string"
+          },
+          "question": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Question",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "top_k": {
+            "default": 5,
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Top K",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "schema_version",
+          "question"
+        ],
+        "title": "RetrievalRequest",
+        "type": "object"
+      },
+      "RetrievalResult": {
+        "additionalProperties": false,
+        "properties": {
+          "answer_generation": {
+            "const": "not_implemented",
+            "default": "not_implemented",
+            "title": "Answer Generation",
+            "type": "string"
+          },
+          "content_trust": {
+            "const": "untrusted_reference",
+            "default": "untrusted_reference",
+            "title": "Content Trust",
+            "type": "string"
+          },
+          "context_bytes": {
+            "maximum": 24000.0,
+            "minimum": 0.0,
+            "title": "Context Bytes",
+            "type": "integer"
+          },
+          "context_tokens": {
+            "maximum": 6000.0,
+            "minimum": 0.0,
+            "title": "Context Tokens",
+            "type": "integer"
+          },
+          "corpus_id": {
+            "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+            "title": "Corpus Id",
+            "type": "string"
+          },
+          "index_id": {
+            "pattern": "^index-sha256-[0-9a-f]{64}$",
+            "title": "Index Id",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/KnowledgeHit"
+            },
+            "maxItems": 5,
+            "title": "Items",
+            "type": "array"
+          },
+          "provider": {
+            "const": "fake",
+            "default": "fake",
+            "title": "Provider",
+            "type": "string"
+          },
+          "retrieval_config_id": {
+            "pattern": "^retrieval-config-sha256-[0-9a-f]{64}$",
+            "title": "Retrieval Config Id",
+            "type": "string"
+          },
+          "retrieval_version": {
+            "const": "pgvector-cosine-exact-v1",
+            "default": "pgvector-cosine-exact-v1",
+            "title": "Retrieval Version",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "semantic_quality": {
+            "const": "not_evaluated_fake_vectors",
+            "default": "not_evaluated_fake_vectors",
+            "title": "Semantic Quality",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "insufficient_evidence"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "index_id",
+          "corpus_id",
+          "retrieval_config_id",
+          "items",
+          "context_tokens",
+          "context_bytes"
+        ],
+        "title": "RetrievalResult",
+        "type": "object"
+      },
+      "SourceLocation": {
+        "additionalProperties": false,
+        "properties": {
+          "end_line": {
+            "maximum": 500000.0,
+            "minimum": 1.0,
+            "title": "End Line",
+            "type": "integer"
+          },
+          "end_offset": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 500000.0,
+            "title": "End Offset",
+            "type": "integer"
+          },
+          "source_ref": {
+            "title": "Source Ref",
+            "type": "string"
+          },
+          "start_line": {
+            "maximum": 500000.0,
+            "minimum": 1.0,
+            "title": "Start Line",
+            "type": "integer"
+          },
+          "start_offset": {
+            "maximum": 500000.0,
+            "minimum": 0.0,
+            "title": "Start Offset",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start_offset",
+          "end_offset",
+          "start_line",
+          "end_line",
+          "source_ref"
+        ],
+        "title": "SourceLocation",
         "type": "object"
       }
     },
@@ -708,6 +1446,139 @@
           }
         ],
         "summary": "Identity"
+      }
+    },
+    "/api/v1/knowledge/search": {
+      "post": {
+        "operationId": "knowledge_search_api_v1_knowledge_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetrievalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetrievalResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Knowledge Search"
       }
     }
   }

@@ -23,6 +23,16 @@ Użytkowa aktywacja jest blokowana do golden evaluation; rzeczywisty korpus
 pozostaje propozycją i nie ma aktywnego retrieval.
 [Odbiór lifecycle](evidence/11-lifecycle.md): 463 testy, czysty checkout,
 konkurencyjna aktywacja, rollback i zachowany pełny pin po restartach PostgreSQL.
+[Retrieval i golden set](knowledge-retrieval.md) dodają exact cosine pgvector,
+deterministyczną selekcję, bounded context, grant knowledge:read, filtry
+repo/type/status/access, live deny dla starych pinów i 36 wersjonowanych pytań.
+Ścieżka runtime działa na kwalifikowanych indeksach testowych; rzeczywisty
+korpus i etykiety pozostają propozycją. Fake report nie otwiera aktywacji.
+
+**Postęp etapu 11: około 80%** — szacunek zakresu implementacji, z uwzględnieniem
+niezamkniętych odbiorów. Rejestr/metadata, parser, fake/storage, test lifecycle
+i ograniczony retrieval są zaimplementowane. Punkt 7 ma golden set i raport,
+ale administracyjne runy oraz odbiór jakości/źródeł pozostają otwarte.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
@@ -50,12 +60,13 @@ i required-result; main wymaga PR i aktualnej gałęzi również dla administrat
 ## Następna praca
 
 Główny kierunek: DATA-01 etapu 02 w RetailOps — konfiguracja, identity i manifest v2.
-Drugi strumień na `ai/rag-corpus`: ograniczony retrieval, golden set i filtry
-uprawnień/statusów etapu 11. Kandydat wymaga przeglądu/odświeżenia źródeł,
-doboru statusów/access i odbioru jakości przed użytkową aktywacją.
+Drugi strumień na `ai/rag-corpus`: administracyjne index runs/read-current HTTP,
+near duplicates i zamknięcie kwalifikacji etapu 11. Kandydat i golden labels
+wymagają przeglądu/odświeżenia źródeł, doboru statusów/access i odbioru jakości
+przed użytkową aktywacją. Real embeddings/Bedrock smoke i agent są w etapie 12.
 Praca nie zależy od zakończenia DATA-01. Etap 03 wymaga odbioru
 źródła z 02, a forecasting i serving kolejnych bramek.
 
 Token metryk nie jest systemem tożsamości użytkowników. MLflow ma lokalną
 izolację sieciową, bez aplikacyjnego auth. Pipeline danych, modele, wyszukiwanie
-RAG, agent, streaming i cloud mają własne późniejsze bramki.
+użytkowe RAG, agent, streaming i cloud mają własne późniejsze bramki.

@@ -114,5 +114,6 @@ w ramach dostępnych bloków. Zmiana semantyki parsera wymaga nowej wersji regu�
 [Adapter fake i persistence kandydata](knowledge-index.md) zachowują manifest
 fragmentów oraz sprawdzają przestrzeń i checksumy wektorów.
 [Atomowy wskaźnik i rollback](knowledge-lifecycle.md) mają osobny odbiór testowy;
-użytkowa aktywacja, filtry retrieval, near duplicates i golden set pozostają
-bramkami etapu 11. Przegląd redakcyjny korpusu może postępować równolegle.
+[retrieval i jego filtry](knowledge-retrieval.md) mają osobny odbiór offline/test.
+Użytkowa aktywacja, near duplicates i jakość golden set pozostają bramkami
+etapu 11. Przegląd redakcyjny korpusu może postępować równolegle.

@@ -29,6 +29,8 @@ na świeżej bazie oraz zapis pełnego korpusu 302 fragmentów.
 atomową aktywację testową, przypinanie wersji i rollback.
 [Odbiór lifecycle](evidence/11-lifecycle.md) potwierdza 463 testy, współbieżność,
 rollback i zachowanie pełnego pin po restartach na świeżej bazie.
+[Retrieval i golden set](knowledge-retrieval.md) opisują exact cosine, kontrolę
+scope, statusy, live deny i wersjonowane etykiety dla 36 pytań.
 
 ## Mapa repo
 

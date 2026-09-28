@@ -1,11 +1,26 @@
 """Versioned local grant/credential file contracts, not an OAuth/OIDC provider."""
 
-from typing import Self
+from typing import Literal, Self
 
 from pydantic import Field, model_validator
 
 from retailops_ai.data_contracts.common import Contract, Sha256, Symbol, UtcTime, Versioned
 from retailops_ai.domain.access import Capability, Channel, Role
+from retailops_ai.knowledge.contracts import AccessClass, DocumentStatus, Repository
+
+
+class KnowledgeResourceScope(Contract):
+    environment: Literal["local", "test"]
+    repositories: list[Repository] = Field(min_length=1, max_length=2)
+    access_classes: list[AccessClass] = Field(min_length=1, max_length=3)
+    document_statuses: list[DocumentStatus] = Field(min_length=1, max_length=5)
+
+    @model_validator(mode="after")
+    def unique(self) -> Self:
+        for values in (self.repositories, self.access_classes, self.document_statuses):
+            if len(values) != len(set(values)):
+                raise ValueError("duplicate_knowledge_scope")
+        return self
 
 
 class ResourceScope(Contract):
@@ -24,8 +39,9 @@ class ResourceScope(Contract):
 class AccessGrant(Contract):
     principal_id: Symbol
     roles: list[Role] = Field(min_length=1, max_length=3)
-    capabilities: list[Capability] = Field(min_length=1, max_length=2)
+    capabilities: list[Capability] = Field(min_length=1, max_length=3)
     scope: ResourceScope | None
+    knowledge_scope: KnowledgeResourceScope | None = None
 
     @model_validator(mode="after")
     def explicit_capabilities(self) -> Self:
@@ -37,6 +53,8 @@ class AccessGrant(Contract):
             raise ValueError("administrative_capability_requires_admin_role")
         if ("forecast:read" in self.capabilities) != (self.scope is not None):
             raise ValueError("forecast_capability_requires_explicit_scope")
+        if ("knowledge:read" in self.capabilities) != (self.knowledge_scope is not None):
+            raise ValueError("knowledge_capability_requires_explicit_scope")
         return self
 
 

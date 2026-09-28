@@ -217,3 +217,23 @@ rollback i odtworzenie cytatów. Artefakt zgody jest dostarczany przez zaufany
 proces; hash i pole reviewer nie uwierzytelniają autora. Prywatne poświadczenia
 DB pozostają lokalną granicą developmentu. Produkcyjna kwalifikacja wymaga
 rzeczywistego odbioru jakości i dostępu. [Kontrakt](../knowledge-lifecycle.md).
+
+
+## ADR-19 — exact retrieval z serwerowym grantem i osobną blokadą dokumentu
+
+MVP używa cosine pgvector bez ANN. Repo/type/status/access oraz deny są warunkami
+SQL przed rankingiem; API principal pochodzi z prywatnej serwerowej polityki.
+Polecenie offline ewaluacji czyta prywatny kandydat i nie staje się publicznym
+API odczytu. Jeden pin ogranicza wyszukiwanie do niezmiennego indeksu i przestrzeni.
+
+Selekcja ma deterministyczny tie-break, dywersyfikację repo/dokumentów i budżet
+serializowanych fragmentów z metadanymi. Nie ma współdzielonego cache wyników,
+co eliminuje przenoszenie grantów i blokad między principal. Pilny deny według
+document ID obowiązuje wszystkie stare wersje w danym środowisku; sprawdzamy
+go z bieżącego snapshotu SQL, niezależnie od pin. Odpowiedź jest no-store.
+
+Status źródła ogranicza rodzaj twierdzenia, a fact scope i dowody pozostają
+przy cytacie. Nie generujemy odpowiedzi ani semantycznego rozstrzygnięcia konfliktu.
+36 pytań i progi golden v1 powstały przed ewaluacją, bez etykiet z wyników rankera.
+Wynik fake jest mechaniczny i nigdy nie daje release approval; real provider
+i agent wymagają osobnego odbioru. [Kontrakt i źródła](../knowledge-retrieval.md).

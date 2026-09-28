@@ -20,7 +20,9 @@ def index_engine(settings: Settings) -> Engine:
     url = make_url(settings.database_url.get_secret_value())
     if url.username != "ai_app" or url.database != "retailops_ai":
         raise CorpusError("isolated_ai_database_required")
-    return create_engine(url, connect_args={"connect_timeout": 3}, pool_size=1, max_overflow=0)
+    return create_engine(
+        url, connect_args={"connect_timeout": 3}, pool_size=1, max_overflow=0, pool_timeout=3
+    )
 
 
 def _boundary(connection: Connection) -> None:

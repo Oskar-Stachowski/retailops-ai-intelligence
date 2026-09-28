@@ -5,6 +5,7 @@ import secrets
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from importlib.metadata import version
+from pathlib import Path
 from typing import Annotated, Any
 
 from fastapi import FastAPI, Request, Security
@@ -16,7 +17,9 @@ from starlette.exceptions import HTTPException
 from starlette.responses import JSONResponse, Response
 
 from retailops_ai.adapters.database import DatabaseProbe, database_engine
+from retailops_ai.adapters.knowledge_search import KnowledgeBackend, PostgresKnowledge
 from retailops_ai.adapters.telemetry import HttpMetrics, new_tracer
+from retailops_ai.adapters.vector_store import index_engine
 from retailops_ai.api.access import access_router
 from retailops_ai.api.errors import problem_response
 from retailops_ai.api.middleware import HttpObservation, single_header
@@ -24,6 +27,7 @@ from retailops_ai.api.models import DependencyStatus, Health, Problem, Ready, Se
 from retailops_ai.config import Settings
 from retailops_ai.domain.readiness import Dependency
 from retailops_ai.pipelines.readiness import Readiness
+from retailops_ai.pipelines.retrieval import load_retrieval_config
 from retailops_ai.security.local import load_authority
 
 
@@ -44,7 +48,11 @@ class DiagnosticAPI(FastAPI):
 
 
 def create_app(
-    settings: Settings, *, dependencies: tuple[Dependency, ...] = (), tracer: Tracer | None = None
+    settings: Settings,
+    *,
+    dependencies: tuple[Dependency, ...] = (),
+    tracer: Tracer | None = None,
+    knowledge_backend: KnowledgeBackend | None = None,
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
@@ -53,6 +61,16 @@ def create_app(
         settings.metrics_token.get_secret_value() if settings.metrics_token else None,
     )
     engine = database_engine(settings) if settings.database_url is not None else None
+    knowledge_engine = None
+    if knowledge_backend is None and settings.database_url is not None:
+        knowledge_engine = index_engine(settings)
+        knowledge_backend = PostgresKnowledge(
+            knowledge_engine,
+            settings.app_env,
+            load_retrieval_config(
+                Path(__file__).resolve().parents[1] / "knowledge/retrieval.default.json"
+            ),
+        )
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
@@ -71,6 +89,8 @@ def create_app(
             started = False
             if engine is not None:
                 await engine.dispose()
+            if knowledge_engine is not None:
+                knowledge_engine.dispose()
             logger.info(
                 "application_stopped", extra={"event_data": {"event": "application_stopped"}}
             )
@@ -169,5 +189,5 @@ def create_app(
             return problem_response(401, headers={"WWW-Authenticate": "Bearer"})
         return Response(metrics.render(), headers={"Content-Type": CONTENT_TYPE_LATEST})
 
-    app.include_router(access_router(authority))
+    app.include_router(access_router(authority, knowledge_backend, settings.app_env))
     return app

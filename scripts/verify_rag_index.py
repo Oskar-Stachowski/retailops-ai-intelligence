@@ -14,6 +14,7 @@ from typing import Any, Literal
 
 from sqlalchemy import Connection, text
 from sqlalchemy.exc import DBAPIError
+from verify_knowledge_search import retrieval_candidate, verify_retrieval
 from verify_rag_lifecycle import verify_lifecycle
 
 from retailops_ai.adapters import vector_store
@@ -364,6 +365,9 @@ def run_in_compose(command: Callable[..., str]) -> dict[str, object]:
         lifecycle_root.mkdir()
         candidates = synthetic_candidates(storage_root)
         lifecycle_candidates = synthetic_candidates(lifecycle_root, "test")
+        retrieval_root = Path(directory) / "retrieval"
+        retrieval_root.mkdir()
+        retrieval = retrieval_candidate(retrieval_root)
         result = command(
             "run",
             "--rm",
@@ -379,6 +383,7 @@ def run_in_compose(command: Callable[..., str]) -> dict[str, object]:
                 {
                     "storage": [c.model_dump(mode="json") for c in candidates],
                     "lifecycle": [c.model_dump(mode="json") for c in lifecycle_candidates],
+                    "retrieval": retrieval.model_dump(mode="json"),
                 }
             ),
         )
@@ -396,6 +401,9 @@ if __name__ == "__main__":
         report = verify_database(candidates)
         report["lifecycle"] = verify_lifecycle(
             [IndexCandidate.model_validate_json(json.dumps(c)) for c in raw["lifecycle"]]
+        )
+        report["retrieval"] = verify_retrieval(
+            IndexCandidate.model_validate_json(json.dumps(raw["retrieval"]))
         )
         print(json.dumps(report))
     except Exception as exc:

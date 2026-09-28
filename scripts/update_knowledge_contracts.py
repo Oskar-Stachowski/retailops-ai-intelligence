@@ -8,6 +8,7 @@ from pydantic import BaseModel
 
 from retailops_ai.knowledge.chunks import ChunkerConfig, ChunkManifest
 from retailops_ai.knowledge.contracts import CorpusManifest, CorpusRegistry
+from retailops_ai.knowledge.golden import GoldenReport, GoldenSet
 from retailops_ai.knowledge.indexes import EmbeddingConfig, IndexCandidate, IndexManifest
 from retailops_ai.knowledge.releases import (
     CorpusApproval,
@@ -16,9 +17,17 @@ from retailops_ai.knowledge.releases import (
     SwitchRequest,
     SwitchResult,
 )
+from retailops_ai.knowledge.retrieval import (
+    DocumentDenial,
+    RetrievalConfig,
+    RetrievalRequest,
+    RetrievalResult,
+)
 from retailops_ai.pipelines.chunks import load_chunker_config
 from retailops_ai.pipelines.corpus import load_registry
+from retailops_ai.pipelines.golden import load_golden_set
 from retailops_ai.pipelines.indexes import load_embedding_config
+from retailops_ai.pipelines.retrieval import load_retrieval_config
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -41,6 +50,12 @@ def main() -> int:
         "index-pin": IndexPin,
         "switch-request": SwitchRequest,
         "switch-result": SwitchResult,
+        "retrieval-config": RetrievalConfig,
+        "retrieval-request": RetrievalRequest,
+        "retrieval-result": RetrievalResult,
+        "document-denial": DocumentDenial,
+        "golden-set": GoldenSet,
+        "golden-report": GoldenReport,
     }
     for name, model in models.items():
         schema = model.model_json_schema()
@@ -57,6 +72,10 @@ def main() -> int:
     load_registry(ROOT / "knowledge/corpus.v1.json")
     load_chunker_config(ROOT / "knowledge/chunker.v1.json")
     load_embedding_config(ROOT / "knowledge/embeddings.fake.v1.json")
+    config = load_retrieval_config(ROOT / "src/retailops_ai/knowledge/retrieval.default.json")
+    golden = load_golden_set(ROOT / "knowledge/golden.v1.json")
+    if golden.retrieval_config_id != config.config_id():
+        raise ValueError("golden_retrieval_configuration_mismatch")
     if stale:
         print("Knowledge snapshots differ: " + ", ".join(sorted(stale)))
         return 1

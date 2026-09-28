@@ -105,7 +105,7 @@ Odczyt wskaźnika, kwalifikacji i manifestu jest jednym SQL statement snapshot.
 `IndexPin` zawiera niezmienny manifest z embedding config, IDs korpusu/fragmentów
 i checksumami oraz generację/review/report IDs. Caller zachowuje ten pin i używa
 jego index ID przez cały run; kolejne kroki nie odczytują ponownie current.
-Nie ma jeszcze agenta ani retrieval używającego tego interfejsu.
+[Retrieval](knowledge-retrieval.md) używa tego interfejsu w `test`; agent jest planowany.
 
 Podstawa: [PostgreSQL 16 — blokady](https://www.postgresql.org/docs/16/explicit-locking.html),
 [statement snapshots](https://www.postgresql.org/docs/16/transaction-iso.html)
@@ -118,8 +118,10 @@ uprawnień retrieval. Nie ma podpisanych attestations, production roles, HTTP
 administration lub indeksujących runów. Nie aktywowano rzeczywistego korpusu.
 Source status `specified` nadal oznacza plan, a `verified` przypięty pomiar.
 Stare kandydaty/zgody pozostają immutable; aktualne deny/revocation będą osobną
-bramką retrieval, również dla starych wersji i cache.
+bramką retrieval. `0004_rag_denials` egzekwuje pilną blokadę dokumentu także
+dla starych pinów; nie ma współdzielonego cache wyników.
 
-Następnie: ograniczony retrieval, golden set z progami i access/status filters,
-przegląd/odświeżenie źródeł korpusu oraz użytkowa polityka kwalifikacji.
+[Retrieval, filtry i golden set](knowledge-retrieval.md) mają wykonywalny zakres
+offline/test. Następnie: administracyjne index runs/read-current HTTP,
+przegląd/odświeżenie źródeł i etykiet oraz użytkowa polityka kwalifikacji.
 Real embeddings i bounded Bedrock smoke pozostają etapem 12.

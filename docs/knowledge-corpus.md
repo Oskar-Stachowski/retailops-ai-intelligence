@@ -100,8 +100,8 @@ Adversarial fixtures pozostają poza zwykłym korpusem.
 Klasy `public_project`, `project_internal`, `restricted` są metadanymi.
 Środowisko jest częścią tożsamości korpusu; nie ma użytkowego retrieval.
 Wskaźnik `offline_test` służy wyłącznie próbom lifecycle w `test`.
-Filtry principal/access, cache i izolacja runtime wymagają
-osobnego odbioru przy retrieval. Manifest zawsze oznacza treść jako
+[Retrieval](knowledge-retrieval.md) odbiera filtry principal/access/status oraz
+live deny na syntetycznych indeksach testowych. Manifest zawsze oznacza treść jako
 `untrusted_reference`; treść dokumentu nie nadaje narzędzi ani uprawnień.
 
 Raportujemy dokładne duplikaty dokumentów po normalizacji LF. Pomijanie nawigacji,
@@ -117,6 +117,6 @@ rzeczywistych, małych repozytoriach testowych i nie wymaga sąsiedniego checkou
 Zmiana źródłowego SHA wymaga ponownego związania checksum i odwołań oraz
 przeglądu propozycji.
 
-Następny zakres: ograniczony retrieval, golden set i filtry access/status.
-Przegląd redakcyjny oraz odświeżenie źródeł kandydata mogą odbywać się równolegle.
+Następny zakres: przegląd redakcyjny oraz odświeżenie źródeł i golden labels,
+administracyjne index runs i użytkowa polityka kwalifikacji.
 Użytkowa aktywacja wymaga tych odbiorów; fake walidacja nie otwiera tej bramki.
