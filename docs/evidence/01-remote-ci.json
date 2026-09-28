@@ -1,0 +1,70 @@
+{
+  "id": 36393431781,
+  "name": "Required CI",
+  "event": "workflow_dispatch",
+  "head_sha": "2f067c68cb5931ef31578f724e496f5381b3ae6a",
+  "status": "completed",
+  "conclusion": "success",
+  "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781",
+  "jobs": [
+    {
+      "id": 108834180975,
+      "name": "checks",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781/job/108834180975",
+      "steps": []
+    },
+    {
+      "id": 108834181097,
+      "name": "persistence",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781/job/108834181097",
+      "steps": []
+    },
+    {
+      "id": 108834181222,
+      "name": "secrets",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781/job/108834181222",
+      "steps": []
+    },
+    {
+      "id": 108834722541,
+      "name": "required-result",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781/job/108834722541",
+      "steps": []
+    }
+  ],
+  "environment": {
+    "runner": "ubuntu-24.04",
+    "architecture": "x86_64"
+  },
+  "tests": {
+    "passed": 267,
+    "skipped": 0,
+    "seconds": 8.86
+  },
+  "persistence": {
+    "checked_at": "2026-09-28T07:46:02.745761+00:00",
+    "kind": "real_local_compose",
+    "checks": [
+      "separate_databases_roles_and_vector",
+      "explicit_idempotent_migration_and_revision_readiness",
+      "sigkill_restart_retains_ai_and_mlflow_artifact",
+      "real_db_outage_health_200_ready_503_then_recovered_200",
+      "down_up_retains_ai_mlflow_metadata_and_artifact",
+      "loopback_ports_internal_network_no_secrets_in_service_logs"
+    ],
+    "result": "passed",
+    "api_health": 200,
+    "api_ready_after_recovery": 200,
+    "postgres_vector_version": "0.8.6",
+    "migration_revision": "0001_bootstrap"
+  },
+  "publication_status": "awaiting_pull_request_ci_and_main_push"
+}
