@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "golden-approval-sha256-4de0f267b81e857f7aeca2c1a2c67c9cded32782d0e7c99754b15b492af53f6e",
+  "golden_set_id": "golden-set-sha256-5dc7eebaf8dbfb60febedf2bf0ae66f840c5a27cdf2b7d6d51355c377e6daba6",
+  "index_id": "index-sha256-18c7ac743d35a7f9b8d59f781f2f4ccace9e24af79046bcf9f6a36895de038e9",
+  "retrieval_config_id": "retrieval-config-sha256-b438aa592eb4be671dcb74121d48ecf62d211869479ca9087e9a588ccdff4f1e",
+  "environment": "local",
+  "review_owner": "Oskar-Stachowski",
+  "reviewer": "Oskar-Stachowski",
+  "reviewer_kind": "human",
+  "decision": "approved",
+  "scope": "labels_tools_and_frozen_thresholds",
+  "reviewed_at": "2026-09-28T14:39:17.260457Z"
+}

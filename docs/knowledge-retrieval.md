@@ -1,8 +1,9 @@
 # Retrieval, uprawnienia i golden set — etap 11
 
 Wyszukiwanie ma adapter exact cosine pgvector, deterministyczny ranking,
-dywersyfikację źródeł i limity kontekstu. [Korpus](knowledge-corpus.md) nadal jest
-propozycją. HTTP używa kwalifikowanego, przypiętego indeksu: w `test` tylko kanału
+dywersyfikację źródeł i limity kontekstu. [Korpus](knowledge-corpus.md) i etykiety
+mają [osobne zgody właściciela](knowledge-golden-jobs.md). HTTP używa
+kwalifikowanego, przypiętego indeksu: w `test` tylko kanału
 `offline_test`; w `local` kanału `retrieval`, który pozostaje nieaktywny.
 Nie ma odpowiedzi LLM ani użytkowej aktywacji rzeczywistego korpusu.
 [Dowody odbioru](evidence/11-retrieval.md) obejmują czysty checkout i realny PG/HTTP.
@@ -101,7 +102,7 @@ nie zastępuje grantu; posiadanie document/index ID nie uprawnia do odczytu.
 operacje, brak danych, konflikt, injection i autoryzacja. Ręcznie napisane etykiety
 wskazują repo/path/heading/status, forbidden sources, answerability, role/scope
 oraz required/forbidden tools dla etapu 12. Zbiór i korpus mają `review_state=proposed`;
-nie przypisujemy im akceptacji właściciela. Nie generujemy etykiet z rankingu.
+aktualne zgody właściciela zapisano w osobnych artefaktach. Nie generujemy etykiet z rankingu.
 Przed pierwszą ewaluacją zamrożono progi: Recall@5 ≥0.8, MRR ≥0.6, poprawność
 bindingu cytatów i krytyczne kontrole 100%, groundedness ≥0.95, p95 ≤1000 ms,
 koszt wywołań modelu offline 0 USD. IDs wiążą etykiety, progi, indeks i config.
@@ -141,8 +142,9 @@ Podstawa: [pgvector 0.8.6 — exact search i cosine](https://github.com/pgvector
 
 [Administracyjne runy](knowledge-administration.md) i
 [kontrola podobnych treści](knowledge-review.md) mają osobne odbiory testowe.
-Do zamknięcia etapu 11 pozostają akceptacja źródeł/etykiet oraz odbiór jakości
-i użytkowej kwalifikacji. Każda zmiana źródeł wymaga ponownego przeglądu.
+Do zamknięcia etapu 11 pozostają odbiór jakości i użytkowej kwalifikacji.
+[Profil golden](knowledge-golden-jobs.md) wiąże obecne zgody i zachowuje
+raport nieudanego runa. Każda zmiana źródeł wymaga ponownego przeglądu.
 [Kontrola przed kwalifikacją](knowledge-qualification.md) odtwarza pełny raport
 i wiąże osobne zgody z korpusem/etykietami, bez aktywacji fake.
 Real embeddings/Bedrock smoke i agent należą do etapu 12.

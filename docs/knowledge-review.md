@@ -4,7 +4,8 @@
 rejestru i przypiętych obiektów Git. Raport wskazuje dokładnie powtarzające się
 treści oraz pary podobne leksykalnie, oddzielnie dla dokumentów i fragmentów.
 Służy przeglądowi redakcyjnemu: nie usuwa, nie scala i nie zatwierdza źródeł.
-Rzeczywisty rejestr i etykiety nadal mają status propozycji.
+Przypięte wejścia zachowują status propozycji; ich
+[aktualne zgody właściciela](knowledge-golden-jobs.md) zapisano osobno.
 [Odbiór](evidence/11-similarity.md) podaje wynik kontroli przypiętego korpusu
 i niezależne porównanie wszystkich par.
 

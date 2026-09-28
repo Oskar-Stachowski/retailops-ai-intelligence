@@ -27,8 +27,10 @@ nie nadaje nikomu grantu odczytu/indeksowania ani nie rozszerza istniejącego sc
 
 Kontrolowana walidacja code/evidence refs sprawdza ich obecność i checksumy,
 nie przypisuje statusu na podstawie odpowiedzi LLM. Pole review_owner wskazuje
-odpowiedzialność; `review_state=proposed` pozostaje do akceptacji korpusu i etykiet.
-Techniczny przegląd metadanych nie tworzy CorpusApproval.
+odpowiedzialność; niemodyfikowalny snapshot zachowuje `review_state=proposed`.
+[Aktualne zgody właściciela](knowledge-golden-jobs.md) są osobnymi decyzjami
+związanymi z obecnym korpusem i etykietami. Techniczny przegląd metadanych
+nie tworzy CorpusApproval.
 
 ## Etykiety przed ewaluacją
 
@@ -48,5 +50,6 @@ nadpisania poprzedniego indeksu. Niska jakość fake pozostaje wynikiem pomiaru,
 bez zmiany etykiet/progów po zobaczeniu rankingu.
 
 [Kontrola kwalifikacji](knowledge-qualification.md) przygotowuje związany manifest
-i typowane decyzje. Użytkowy profil, końcowa akceptacja źródeł/etykiet i jakość
-golden pozostają oddzielnymi bramkami. Real embeddings, Bedrock i agent należą do etapu 12.
+i typowane decyzje. Zatwierdzony profil golden ma własny worker i raport;
+jakość golden oraz użytkowa kwalifikacja pozostają oddzielnymi bramkami.
+Real embeddings, Bedrock i agent należą do etapu 12.

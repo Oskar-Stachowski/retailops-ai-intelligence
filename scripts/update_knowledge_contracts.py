@@ -13,6 +13,8 @@ from retailops_ai.knowledge.golden import GoldenReport, GoldenSet
 from retailops_ai.knowledge.indexes import EmbeddingConfig, IndexCandidate, IndexManifest
 from retailops_ai.knowledge.jobs import (
     CurrentKnowledgeIndex,
+    GoldenIndexBuildProfile,
+    GoldenIndexRunReport,
     IndexBuildProfile,
     IndexRunReport,
     KnowledgeIndexRequest,
@@ -72,7 +74,9 @@ def main() -> int:
         "golden-set": GoldenSet,
         "golden-report": GoldenReport,
         "index-build-profile": IndexBuildProfile,
+        "golden-index-build-profile": GoldenIndexBuildProfile,
         "index-run-report": IndexRunReport,
+        "golden-index-run-report": GoldenIndexRunReport,
         "knowledge-index-request": KnowledgeIndexRequest,
         "knowledge-index-run": KnowledgeRunRecord,
         "current-knowledge-index": CurrentKnowledgeIndex,
@@ -105,6 +109,21 @@ def main() -> int:
     review = load_release_document(ROOT / "knowledge/similarity-review.v1.json", SimilarityReview)
     if review.review_owner != registry.review_owner:
         raise ValueError("similarity_review_owner_mismatch")
+    approval = load_release_document(ROOT / "knowledge/corpus-approval.v1.json", CorpusApproval)
+    labels = load_release_document(
+        ROOT / "knowledge/golden-labels-approval.v1.json", GoldenLabelsApproval
+    )
+    if (
+        approval.corpus_config_id != registry.config_id()
+        or approval.environment != registry.environment
+        or approval.review_owner != registry.review_owner
+        or labels.golden_set_id != golden.golden_set_id
+        or labels.index_id != golden.index_id
+        or labels.retrieval_config_id != config.config_id()
+        or labels.environment != registry.environment
+        or labels.review_owner != registry.review_owner
+    ):
+        raise ValueError("committed_owner_approval_binding_mismatch")
     if stale:
         print("Knowledge snapshots differ: " + ", ".join(sorted(stale)))
         return 1

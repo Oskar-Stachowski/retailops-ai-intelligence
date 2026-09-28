@@ -16,6 +16,8 @@ zwraca `status=blocked` oraz `activation_allowed=false`.
   --golden-report docs/evidence/11-sources-golden.json \
   --similarity-policy knowledge/similarity.v1.json \
   --similarity-review knowledge/similarity-review.v1.json \
+  --corpus-approval knowledge/corpus-approval.v1.json \
+  --golden-approval knowledge/golden-labels-approval.v1.json \
   --output .local/rag/release-review.json
 ```
 
@@ -80,5 +82,8 @@ ustanawia zaufanego pipeline i nie wystawia endpointu HTTP lub narzędzia agenta
 Dwie ostatnie blokady są stałe w obecnej polityce. Idealny fake report i obie
 zgody nie nadają jakości semantycznej ani prawa do użytkowej aktywacji.
 Manifest nie jest wejściem obecnego `index-qualify`; DB lifecycle oraz
-[administracyjne profile test/fake](knowledge-administration.md) zachowują
-oddzielne kontrakty. Bounded real embeddings/Bedrock i agent są etapem 12.
+[administracyjne profile](knowledge-administration.md) zachowują oddzielne
+kontrakty. [Zatwierdzony profil golden](knowledge-golden-jobs.md) wykonuje
+pomiar fake i zachowuje raport; nie jest kwalifikacją użytkowego retrieval
+wymaganą przez stałą politykę preflight v1. Bounded real embeddings/Bedrock
+i agent są etapem 12.

@@ -13,19 +13,22 @@ from sqlalchemy.pool import NullPool
 
 from retailops_ai.adapters.index_lifecycle import read_current
 from retailops_ai.adapters.vector_store import _boundary, store_candidate
-from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.data_contracts.run import RunRecord, transition_run
 from retailops_ai.knowledge.jobs import (
+    BUILD_PROFILE_ADAPTER,
+    RUN_REPORT_ADAPTER,
+    BuildProfile,
     CurrentKnowledgeIndex,
-    IndexBuildProfile,
+    GoldenIndexRunReport,
     IndexErrorCode,
-    IndexRunReport,
     KnowledgeIndexRequest,
     KnowledgeRunInput,
     KnowledgeRunOutput,
+    RunReport,
     index_config_id,
 )
 from retailops_ai.knowledge.releases import Lane
+from retailops_ai.pipelines.index_builds import build_run_report, check_build_profile
 from retailops_ai.pipelines.indexes import build_index
 from retailops_ai.pipelines.releases import validate_candidate
 
@@ -58,8 +61,9 @@ def _record(value: object) -> RunRecord:
     return run
 
 
-def register_profile(engine: Engine, profile: IndexBuildProfile) -> bool:
-    profile = IndexBuildProfile.model_validate_json(profile.model_dump_json())
+def register_profile(engine: Engine, profile: BuildProfile) -> bool:
+    profile = BUILD_PROFILE_ADAPTER.validate_json(profile.model_dump_json())
+    check_build_profile(profile)
     with engine.begin() as connection:
         _transaction(connection)
         connection.execute(text("SELECT pg_advisory_xact_lock(:key)"), {"key": QUEUE_LOCK})
@@ -121,7 +125,7 @@ class PostgresIndexAdministration:
             )
             if raw is None:
                 raise IndexJobError(422, "configuration-not-approved")
-            profile = IndexBuildProfile.model_validate_json(json.dumps(raw))
+            profile = BUILD_PROFILE_ADAPTER.validate_json(json.dumps(raw))
             if profile.request().request_hash() != request_hash:
                 raise ValueError("stored_build_profile_mismatch")
             pending = connection.scalar(
@@ -223,6 +227,30 @@ def worker_lock_key(environment: str, run_id: str) -> int:
     return int.from_bytes(digest[:8], "big") & (2**63 - 1)
 
 
+def read_run_report(engine: Engine, environment: str, run_id: str) -> RunReport:
+    with engine.connect() as connection:
+        _boundary(connection)
+        row = connection.execute(
+            text("""SELECT k.record,r.report FROM ai.knowledge_index_runs k
+            LEFT JOIN ai.rag_index_reports r ON r.report_id=k.report_id AND r.profile_id=k.profile_id
+            WHERE k.run_id=:id AND k.environment=:env"""),
+            {"id": run_id, "env": environment},
+        ).first()
+        if row is None:
+            raise IndexJobError(404, "index-run-not-found")
+        if row.report is None:
+            raise IndexJobError(404, "index-report-not-found")
+        run = _record(row.record)
+        report = RUN_REPORT_ADAPTER.validate_json(json.dumps(row.report))
+        if (
+            not isinstance(run.input_ref, KnowledgeRunInput)
+            or report.profile_id != run.input_ref.profile_id
+            or report.validation.environment != environment
+        ):
+            raise ValueError("stored_run_report_binding_mismatch")
+        return report
+
+
 def cancel_run(engine: Engine, environment: str, run_id: str) -> RunRecord:
     with engine.begin() as connection:
         _transaction(connection)
@@ -304,7 +332,7 @@ def execute_run(engine: Engine, environment: Literal["local", "test"], run_id: s
                 output = None
                 failure = None
                 try:
-                    profile = IndexBuildProfile.model_validate_json(json.dumps(profile_raw))
+                    profile = BUILD_PROFILE_ADAPTER.validate_json(json.dumps(profile_raw))
                     if (
                         not isinstance(current.input_ref, KnowledgeRunInput)
                         or profile.request().request_hash() != current.input_ref.request_hash
@@ -312,17 +340,11 @@ def execute_run(engine: Engine, environment: Literal["local", "test"], run_id: s
                         raise ValueError("worker_profile_binding_mismatch")
                     candidate = build_index(profile.chunks, profile.embedding_config)
                     validation = validate_candidate(candidate)
-                    value = {
-                        "schema_version": "1.0",
-                        "profile_id": profile.profile_id,
-                        "validation": validation.model_dump(mode="json"),
-                        "purpose": profile.purpose,
-                        "activation_allowed": False,
-                    }
-                    value["report_id"] = "index-run-report-sha256-" + canonical_sha256(value)
-                    report = IndexRunReport.model_validate_json(json.dumps(value))
+                    report = build_run_report(profile, candidate, validation)
                     store_candidate(engine, candidate)
-                    if validation.result != "passed":
+                    if validation.result != "passed" or (
+                        isinstance(report, GoldenIndexRunReport) and not report.quality_gate_passed
+                    ):
                         failure = {"code": "gate_failed", "retryable": False}
                     else:
                         output = KnowledgeRunOutput(
@@ -386,7 +408,7 @@ def execute_run(engine: Engine, environment: Literal["local", "test"], run_id: s
                             "id": run_id,
                             "record": following.model_dump_json(),
                             "index": output.index_id if output else None,
-                            "report": report.report_id if output and report else None,
+                            "report": report.report_id if report else None,
                         },
                     )
                 return administration.get(run_id)

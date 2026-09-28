@@ -8,7 +8,8 @@ Ten zakres wdraża mechanizm punktu 5 dla **syntetycznych indeksów `test`**,
 w osobnym kanale `offline_test`. Fake vectors i walidacja techniczna nie odbierają
 jakości retrieval. Domyślny kanał `retrieval` odmawia kwalifikacji i aktywacji
 z kodem `golden_evaluation_required`; nie ma obejścia przez flagę `force`.
-Rzeczywisty korpus nadal jest propozycją, bez aktywnego retrieval.
+Rzeczywisty korpus ma [osobne zgody właściciela](knowledge-golden-jobs.md),
+bez aktywnego retrieval.
 [Dowody odbioru](evidence/11-lifecycle.md) obejmują czysty checkout i świeżą bazę.
 
 ## Co trzeba sprawdzić
@@ -123,6 +124,7 @@ dla starych pinów; nie ma współdzielonego cache wyników.
 [Retrieval](knowledge-retrieval.md), [administracyjne runy/read-current HTTP](knowledge-administration.md)
 i [odświeżenie źródeł](knowledge-sources.md) mają osobne odbiory.
 [Kontrola kwalifikacji](knowledge-qualification.md) wiąże manifest i decyzje,
-lecz polityka fake pozostawia jawne blokady. Następnie: zgody na korpus/etykiety,
-użytkowy profil/run oraz polityka kwalifikacji z odebraną jakością.
+lecz polityka fake pozostawia jawne blokady. Zatwierdzony profil golden
+wykonuje pomiar i zachowuje raport. Następnie: polityka użytkowej kwalifikacji
+z odebraną jakością.
 Real embeddings i bounded Bedrock smoke pozostają etapem 12.

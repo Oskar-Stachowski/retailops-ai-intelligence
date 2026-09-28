@@ -1,8 +1,9 @@
 """Approved offline build snapshots and safe administrative run references."""
 
+import json
 from typing import Annotated, Literal, Self
 
-from pydantic import Field, field_validator, model_validator
+from pydantic import Field, TypeAdapter, field_validator, model_validator
 
 from retailops_ai.data_contracts.common import (
     CommitSha,
@@ -16,8 +17,12 @@ from retailops_ai.data_contracts.common import (
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.knowledge.chunks import ChunkManifest, ChunkManifestID
 from retailops_ai.knowledge.contracts import REPOSITORIES, ConfigID, CorpusID, Repository
+from retailops_ai.knowledge.golden import GoldenID, GoldenReport, GoldenSet
 from retailops_ai.knowledge.indexes import Dimension, EmbeddingConfig, IndexID, SpaceID
+from retailops_ai.knowledge.qualification import GoldenLabelsApproval, SimilarityReview
 from retailops_ai.knowledge.releases import CorpusApproval, IndexValidation, approval_matches
+from retailops_ai.knowledge.retrieval import RetrievalConfig
+from retailops_ai.knowledge.review import SimilarityPolicy
 
 BuildProfileID = Annotated[str, Field(pattern=r"^index-build-profile-sha256-[0-9a-f]{64}$")]
 IndexConfigID = Annotated[str, Field(pattern=r"^index-config-sha256-[0-9a-f]{64}$")]
@@ -35,6 +40,7 @@ IndexErrorCode = Literal[
     "queue-full",
     "worker-busy",
     "claim-lost",
+    "index-report-not-found",
 ]
 
 
@@ -128,7 +134,7 @@ class KnowledgeRunInput(Contract):
     request: KnowledgeIndexRequest
     request_hash: Sha256
     profile_id: BuildProfileID
-    environment: Literal["test"]
+    environment: Literal["local", "test"]
 
     @model_validator(mode="after")
     def binding(self) -> Self:
@@ -206,3 +212,132 @@ def index_config_id(chunks: ChunkManifest, embedding: EmbeddingConfig) -> str:
             "storage_version": "pgvector-checked-dimension-v1",
         }
     )
+
+
+class GoldenIndexBuildProfile(Contract):
+    """Explicitly approved corpus and labels; fake evaluation can only produce a candidate."""
+
+    schema_version: Literal["1.0"]
+    profile_id: BuildProfileID
+    environment: Literal["local", "test"]
+    approval: CorpusApproval
+    chunks: ChunkManifest
+    embedding_config: EmbeddingConfig
+    evaluation_set_id: GoldenID
+    golden_set: GoldenSet
+    golden_approval: GoldenLabelsApproval
+    retrieval_config: RetrievalConfig
+    similarity_policy: SimilarityPolicy
+    similarity_review: SimilarityReview
+    purpose: Literal["approved_corpus_fake_golden_validation"]
+
+    @model_validator(mode="after")
+    def binding(self) -> Self:
+        corpus, golden, labels = self.chunks.corpus, self.golden_set, self.golden_approval
+        if (
+            not approval_matches(
+                self.approval,
+                corpus.corpus_id,
+                corpus.corpus_config_id,
+                corpus.review_owner,
+                self.environment,
+            )
+            or corpus.environment != self.environment
+        ):
+            raise ValueError("golden_profile_corpus_approval_mismatch")
+        if (
+            labels.golden_set_id,
+            labels.index_id,
+            labels.retrieval_config_id,
+            labels.environment,
+            labels.review_owner,
+        ) != (
+            golden.golden_set_id,
+            golden.index_id,
+            self.retrieval_config.config_id(),
+            self.environment,
+            golden.review_owner,
+        ) or golden.retrieval_config_id != self.retrieval_config.config_id():
+            raise ValueError("golden_profile_labels_approval_mismatch")
+        if self.evaluation_set_id != golden.golden_set_id:
+            raise ValueError("golden_profile_evaluation_set_mismatch")
+        if self.similarity_review.review_owner != corpus.review_owner:
+            raise ValueError("golden_profile_similarity_owner_mismatch")
+        if self.profile_id != "index-build-profile-sha256-" + canonical_sha256(
+            self.model_dump(mode="json", exclude={"profile_id"})
+        ):
+            raise ValueError("build_profile_identity_mismatch")
+        return self
+
+    def index_config_id(self) -> str:
+        return "index-config-sha256-" + canonical_sha256(
+            {
+                "base_index_config_id": index_config_id(self.chunks, self.embedding_config),
+                "retrieval_config_id": self.retrieval_config.config_id(),
+                "similarity_policy_id": self.similarity_policy.config_id(),
+                "similarity_review_id": self.similarity_review.review_id,
+                "corpus_approval_id": self.approval.review_id,
+                "golden_approval_id": self.golden_approval.approval_id,
+            }
+        )
+
+    def request(self) -> KnowledgeIndexRequest:
+        return KnowledgeIndexRequest.model_validate_json(
+            json.dumps(
+                {
+                    "corpus_config_id": self.chunks.corpus.corpus_config_id,
+                    "sources": [
+                        {"repository": s.repository, "commit_sha": s.commit_sha}
+                        for s in sorted(self.chunks.corpus.sources, key=lambda s: s.repository)
+                    ],
+                    "index_config_id": self.index_config_id(),
+                    "evaluation_set_id": self.evaluation_set_id,
+                }
+            )
+        )
+
+
+class GoldenIndexRunReport(Contract):
+    schema_version: Literal["1.0"]
+    report_id: ReportID
+    profile_id: BuildProfileID
+    validation: IndexValidation
+    approval: CorpusApproval
+    golden_approval: GoldenLabelsApproval
+    golden: GoldenReport
+    similarity_report_id: Annotated[str, Field(pattern=r"^similarity-report-sha256-[0-9a-f]{64}$")]
+    similarity_review_id: Annotated[str, Field(pattern=r"^similarity-review-sha256-[0-9a-f]{64}$")]
+    quality_gate_passed: bool
+    purpose: Literal["approved_corpus_fake_golden_validation"]
+    activation_allowed: FalseFlag
+
+    @model_validator(mode="after")
+    def binding(self) -> Self:
+        validation, labels, golden = self.validation, self.golden_approval, self.golden
+        if (
+            validation.index_id != golden.index_id
+            or labels.index_id != golden.index_id
+            or labels.golden_set_id != golden.golden_set_id
+            or labels.retrieval_config_id != golden.retrieval_config_id
+            or validation.environment != labels.environment
+            or validation.environment != self.approval.environment
+            or validation.corpus_id != self.approval.corpus_id
+        ):
+            raise ValueError("golden_run_report_binding_mismatch")
+        if self.quality_gate_passed != (
+            validation.result == "passed" and golden.measured_thresholds_passed
+        ):
+            raise ValueError("golden_run_report_gate_mismatch")
+        if self.report_id != "index-run-report-sha256-" + canonical_sha256(
+            self.model_dump(mode="json", exclude={"report_id"})
+        ):
+            raise ValueError("index_run_report_identity_mismatch")
+        return self
+
+
+BuildProfile = Annotated[
+    IndexBuildProfile | GoldenIndexBuildProfile, Field(discriminator="purpose")
+]
+RunReport = Annotated[IndexRunReport | GoldenIndexRunReport, Field(discriminator="purpose")]
+BUILD_PROFILE_ADAPTER: TypeAdapter[BuildProfile] = TypeAdapter(BuildProfile)
+RUN_REPORT_ADAPTER: TypeAdapter[RunReport] = TypeAdapter(RunReport)

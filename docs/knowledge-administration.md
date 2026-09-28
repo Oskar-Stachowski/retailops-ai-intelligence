@@ -6,20 +6,21 @@ niemodyfikowalnego kandydata oraz raport. Zakończenie runa nie przełącza wska
 
 ## Zakres obecnego odbioru
 
-Obsługiwane profile mają `environment=test`, provider `fake` i politykę
+Pierwszy odbiór obejmował profile `environment=test`, provider `fake` i politykę
 `offline-index-mechanics-v1`. Jest to odbiór budowy, persistence i uprawnień.
 Nie potwierdza jakości semantycznej ani zatwierdzenia rzeczywistego korpusu.
 [Odbiór](evidence/11-administration.md) obejmuje 542 testy oraz rzeczywisty
 HTTP/PostgreSQL z awariami workera i retencją po restartach.
 Profil zawiera jawny `CorpusApproval` dla syntetycznych źródeł; samo uruchomienie
-API lub workera nie tworzy zgody. W bazie lokalnego korpusu nie instalujemy
-takiego profilu. Rejestr i golden labels pozostają propozycją.
+API lub workera nie tworzy zgody.
 
-Użytkowe runy z golden evaluation wymagają kolejnego rozszerzenia profilu,
-zatwierdzenia źródeł/etykiet i odbioru jakości. Fake report nie zastępuje tej bramki.
-Real provider i agent należą do etapu 12.
-[Kontrola kwalifikacji](knowledge-qualification.md) przygotowuje związany manifest
-i sprawdza jawne decyzje; nie rozszerza jeszcze profilu ani nie nadaje aktywacji.
+[Zatwierdzone profile golden](knowledge-golden-jobs.md) rozszerzają worker na
+`local/test`, rzeczywisty golden set i osobne decyzje właściciela. Obecny korpus
+i etykiety mają zapisane zgody. Niezaliczony próg zachowuje pełny raport,
+bez outputu lub aktywacji. Odbiór jakości i użytkowa kwalifikacja pozostają
+osobnymi bramkami. Real provider i agent należą do etapu 12.
+[Kontrola kwalifikacji](knowledge-qualification.md) wiąże manifest i decyzje,
+lecz polityka fake nie nadaje aktywacji.
 
 ## Uprawnienia i HTTP
 

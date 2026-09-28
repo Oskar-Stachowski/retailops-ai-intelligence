@@ -120,6 +120,7 @@ na rzeczywistym pgvector ze świeżego checkoutu.
 [Lifecycle](knowledge-lifecycle.md) wiąże jawne zgody i walidację oraz odbiera
 atomowy swap/rollback w testach. [Retrieval i golden set](knowledge-retrieval.md)
 mają osobny zakres. [Kontrola podobnych treści](knowledge-review.md) ma raport
-do przeglądu; dalej pozostają zatwierdzenie źródeł i odbiór jakości.
+do przeglądu. [Zatwierdzony profil golden](knowledge-golden-jobs.md) wiąże
+obecne zgody i wykonuje pomiar; dalej pozostaje odbiór jakości i kwalifikacji.
 Adapter Bedrock wymaga później
 ograniczonego zakresu etapu 12 i rzeczywistego odbioru modelu/dimension/region.

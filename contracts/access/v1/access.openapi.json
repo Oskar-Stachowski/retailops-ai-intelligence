@@ -601,7 +601,10 @@
         "additionalProperties": false,
         "properties": {
           "environment": {
-            "const": "test",
+            "enum": [
+              "local",
+              "test"
+            ],
             "title": "Environment",
             "type": "string"
           },
@@ -1048,7 +1051,8 @@
                   "index-not-configured",
                   "queue-full",
                   "worker-busy",
-                  "claim-lost"
+                  "claim-lost",
+                  "index-report-not-found"
                 ],
                 "type": "string"
               },

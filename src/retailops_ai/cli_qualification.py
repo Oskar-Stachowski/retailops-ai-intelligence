@@ -11,6 +11,7 @@ from retailops_ai.knowledge.golden import GoldenReport
 from retailops_ai.knowledge.qualification import GoldenLabelsApproval, SimilarityReview
 from retailops_ai.pipelines.corpus import write_candidate
 from retailops_ai.pipelines.golden import load_golden_set
+from retailops_ai.pipelines.index_builds import prepare_build_profile
 from retailops_ai.pipelines.indexes import load_index_candidate
 from retailops_ai.pipelines.qualification import prepare_release
 from retailops_ai.pipelines.releases import load_approval, load_release_document
@@ -27,6 +28,49 @@ def add_release_check(commands: Any) -> None:
     command.add_argument("--retrieval-config", type=Path, default=DEFAULT_CONFIG)
     for flag in ("corpus-approval", "golden-approval", "similarity-review"):
         command.add_argument("--" + flag, type=Path)
+    profile = commands.add_parser(
+        "knowledge-profile-prepare", help="Prepare an approved fake/golden snapshot offline."
+    )
+    for flag in (
+        "candidate",
+        "golden-set",
+        "corpus-approval",
+        "golden-approval",
+        "similarity-policy",
+        "similarity-review",
+        "output",
+    ):
+        profile.add_argument("--" + flag, type=Path, required=True)
+    profile.add_argument("--retrieval-config", type=Path, default=DEFAULT_CONFIG)
+
+
+def run_profile_prepare(args: argparse.Namespace) -> int:
+    try:
+        profile = prepare_build_profile(
+            load_index_candidate(args.candidate),
+            load_golden_set(args.golden_set),
+            load_approval(args.corpus_approval),
+            load_release_document(args.golden_approval, GoldenLabelsApproval),
+            load_retrieval_config(args.retrieval_config),
+            load_similarity_policy(args.similarity_policy),
+            load_release_document(args.similarity_review, SimilarityReview),
+        )
+        write_candidate(profile, args.output)
+    except (OSError, ValueError, RecursionError, OverflowError):
+        print('{"error":"knowledge_profile_preparation_failed"}', file=sys.stderr)
+        return 2
+    print(
+        json.dumps(
+            {
+                "status": "prepared",
+                "profile_id": profile.profile_id,
+                "purpose": profile.purpose,
+                "request": profile.request().model_dump(mode="json"),
+                "activation_allowed": False,
+            }
+        )
+    )
+    return 0
 
 
 def run_release_check(args: argparse.Namespace) -> int:

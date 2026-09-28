@@ -14,6 +14,7 @@ from typing import Any, Literal
 
 from sqlalchemy import Connection, text
 from sqlalchemy.exc import DBAPIError
+from verify_golden_jobs import verify_golden_administration
 from verify_knowledge_admin import verify_administration
 from verify_knowledge_search import retrieval_candidate, verify_retrieval
 from verify_rag_lifecycle import verify_lifecycle
@@ -409,6 +410,7 @@ if __name__ == "__main__":
         report["administration"] = verify_administration(
             IndexCandidate.model_validate_json(json.dumps(raw["lifecycle"][-1]))
         )
+        report["golden_administration"] = verify_golden_administration(candidates[0])
         print(json.dumps(report))
     except Exception as exc:
         # SQL exceptions may contain DSNs, parameters or document content.

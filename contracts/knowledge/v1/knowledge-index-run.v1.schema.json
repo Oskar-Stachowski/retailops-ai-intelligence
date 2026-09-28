@@ -65,7 +65,10 @@
       "additionalProperties": false,
       "properties": {
         "environment": {
-          "const": "test",
+          "enum": [
+            "local",
+            "test"
+          ],
           "title": "Environment",
           "type": "string"
         },

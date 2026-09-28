@@ -222,6 +222,10 @@ def main() -> int:
         if not isinstance(administration_report, dict):
             raise RuntimeError("invalid_administration_report")
         expected_runs = administration_report["retained_runs"]
+        golden_report = rag["golden_administration"]
+        if not isinstance(golden_report, dict):
+            raise RuntimeError("invalid_golden_administration_report")
+        expected_runs = [*expected_runs, *golden_report["retained_runs"]]
         stage = "write_ai_and_mlflow"
         sql(
             "retailops_ai",

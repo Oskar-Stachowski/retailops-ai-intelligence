@@ -28,7 +28,12 @@ from retailops_ai.config import load_settings
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.data_contracts.run import RunRecord
 from retailops_ai.knowledge.indexes import IndexCandidate
-from retailops_ai.knowledge.jobs import IndexBuildProfile
+from retailops_ai.knowledge.jobs import (
+    BUILD_PROFILE_ADAPTER,
+    GoldenIndexRunReport,
+    IndexBuildProfile,
+    KnowledgeRunInput,
+)
 from retailops_ai.knowledge.releases import IndexValidation
 from retailops_ai.pipelines.releases import validate_candidate
 from retailops_ai.security.local import token_fingerprint
@@ -572,10 +577,12 @@ def verify_retention(
 ) -> list[dict[str, Any]]:
     engine = index_engine(load_settings())
     try:
-        admin = jobs.PostgresIndexAdministration(engine, "test")
         snapshots = []
         for raw in expected:
             run = RunRecord.model_validate_json(json.dumps(raw))
+            if not isinstance(run.input_ref, KnowledgeRunInput):
+                raise RuntimeError("retained_run_not_knowledge")
+            admin = jobs.PostgresIndexAdministration(engine, run.input_ref.environment)
             require(admin.get(run.run_id) == run, "admin_run_changed_after_restart")
             with engine.connect() as connection:
                 profile = connection.scalar(
@@ -584,7 +591,7 @@ def verify_retention(
                 )
                 require(
                     profile is not None
-                    and IndexBuildProfile.model_validate_json(json.dumps(profile))
+                    and BUILD_PROFILE_ADAPTER.validate_json(json.dumps(profile))
                     .request()
                     .request_hash()
                     == raw["input_ref"]["request_hash"],
@@ -601,6 +608,19 @@ def verify_retention(
                         row.report["validation"]["result"] == "passed"
                         and read_candidate(connection, row.output_index_id) is not None,
                         "admin_output_lost_after_restart",
+                    )
+            if run.status == "succeeded" or (
+                run.status == "failed" and run.error is not None and run.error.code == "gate_failed"
+            ):
+                retained = jobs.read_run_report(engine, run.input_ref.environment, run.run_id)
+                require(
+                    retained.profile_id == run.input_ref.profile_id,
+                    "run_report_lost_after_restart",
+                )
+                if isinstance(retained, GoldenIndexRunReport):
+                    require(
+                        retained.quality_gate_passed == (run.status == "succeeded"),
+                        "golden_gate_changed_after_restart",
                     )
             if cleanup and run.status == "queued":
                 require(run.requested_by == "fixture-index-admin", "admin_cleanup_outside_fixture")

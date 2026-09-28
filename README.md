@@ -11,11 +11,13 @@ walidacja Git, [parser/chunker](docs/knowledge-chunks.md) oraz
 [Retrieval, filtry uprawnień/statusów i golden set](docs/knowledge-retrieval.md)
 mają wykonywalną ścieżkę offline/test i 44 pytania ewaluacyjne.
 [Administracyjne runy indeksowania](docs/knowledge-administration.md) mają
-trwałe stany, idempotencję i worker dla zatwierdzonych snapshotów testowych.
+trwałe stany, idempotencję i worker dla zatwierdzonych snapshotów `local/test`.
 [Raport podobnych treści](docs/knowledge-review.md) wskazuje dokładne i near
 powtórzenia do przeglądu, zachowując metadata oraz cytaty.
 [Odświeżone źródła i etykiety](docs/knowledge-sources.md) wiążą 29 dokumentów
-z konkretnymi SHA; akceptacja treści i jakości pozostaje oddzielną bramką.
+z konkretnymi SHA i mają osobne zgody właściciela.
+[Profile golden i trwałe raporty](docs/knowledge-golden-jobs.md) wykonują
+zatwierdzony pomiar, zachowując raport również po niezaliczonym progu.
 [Kontrola kwalifikacji](docs/knowledge-qualification.md) przygotowuje związany
 manifest konfiguracji, raportów i decyzji, z jawnymi blokadami aktywacji.
 Wyszukiwanie i aktywacja rzeczywistego korpusu wymagają kolejnego odbioru jakości.

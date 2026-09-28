@@ -8,20 +8,26 @@ from typing import Any
 
 from sqlalchemy.exc import SQLAlchemyError
 
-from retailops_ai.adapters.index_jobs import cancel_run, execute_run, register_profile
+from retailops_ai.adapters.index_jobs import (
+    cancel_run,
+    execute_run,
+    read_run_report,
+    register_profile,
+)
 from retailops_ai.adapters.vector_store import index_engine
 from retailops_ai.config import Settings
 from retailops_ai.data_contracts.registry import _invalid_constant, _pairs
 from retailops_ai.knowledge.contracts import CorpusRegistry
 from retailops_ai.knowledge.indexes import MAX_INDEX_BYTES
-from retailops_ai.knowledge.jobs import IndexBuildProfile
+from retailops_ai.knowledge.jobs import BUILD_PROFILE_ADAPTER, BuildProfile
 from retailops_ai.pipelines.chunks import build_chunks
+from retailops_ai.pipelines.corpus import write_candidate
 
 
 def add_job_commands(commands: Any) -> None:
     profile = commands.add_parser(
         "knowledge-profile-register",
-        help="Register an explicitly approved test build snapshot after checking pinned Git sources.",
+        help="Register an explicitly approved build snapshot after checking pinned Git sources.",
     )
     profile.add_argument("--profile", type=Path, required=True)
     profile.add_argument("--retailops-repo", type=Path, required=True)
@@ -34,15 +40,21 @@ def add_job_commands(commands: Any) -> None:
         )
         command.add_argument("--run-id", required=True)
         command.add_argument("--env-file", type=Path)
+    report = commands.add_parser(
+        "knowledge-index-report", help="Export a private persisted run report."
+    )
+    report.add_argument("--run-id", required=True)
+    report.add_argument("--output", type=Path, required=True)
+    report.add_argument("--env-file", type=Path)
 
 
-def load_profile(path: Path) -> IndexBuildProfile:
+def load_profile(path: Path) -> BuildProfile:
     with path.open("rb") as source:
         raw = source.read(MAX_INDEX_BYTES + 1)
     if len(raw) > MAX_INDEX_BYTES:
         raise ValueError("build_profile_size_limit")
     json.loads(raw, object_pairs_hook=_pairs, parse_constant=_invalid_constant)
-    return IndexBuildProfile.model_validate_json(raw)
+    return BUILD_PROFILE_ADAPTER.validate_json(raw)
 
 
 def run_job_command(args: argparse.Namespace, settings: Settings) -> int:
@@ -80,6 +92,14 @@ def run_job_command(args: argparse.Namespace, settings: Settings) -> int:
                     "profile_id": profile.profile_id,
                     "request": profile.request().model_dump(mode="json"),
                     "purpose": profile.purpose,
+                }
+            elif args.command == "knowledge-index-report":
+                report = read_run_report(engine, settings.app_env, args.run_id)
+                write_candidate(report, args.output)
+                result = {
+                    "status": "exported",
+                    "report_id": report.report_id,
+                    "activation_allowed": False,
                 }
             else:
                 run = (

@@ -52,13 +52,17 @@ etykiety, raport oraz decyzje i zwraca jawną listę blokad w manifestach.
 identyczny manifest z czystego checkoutu, odtwarzanie wyników
 i brak aktywacji nawet dla idealnego fake z oboma zgodami.
 
+[Zatwierdzone profile golden](knowledge-golden-jobs.md) wiążą zgody właściciela,
+etykiety i progi. Worker zachowuje pełny raport także po niezaliczonym progu.
+[Odbiór profili](evidence/11-golden-jobs.md) opisuje testy oraz realne PG/HTTP.
+
 ## Mapa repo
 
 | Lokalizacja | Bieżąca zawartość |
 |---|---|
 | `src/retailops_ai/` | CLI/settings oraz warstwy api/domain/pipelines/adapters lokalnego serwera |
 | `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: korpus, fragmenty, kandydacki indeks i lifecycle |
-| `knowledge/` | Rejestr propozycji RAG, konfiguracja parsera/chunkera i przestrzeni fake embeddings |
+| `knowledge/` | Przypięty rejestr RAG, konfiguracje, golden set oraz osobne zgody właściciela |
 | `tests/` | Konfiguracja, HTTP i socket, awarie, korelacja, kontrakty oraz bramki CI |
 | `scripts/` | Kontroler Compose, rzeczywisty smoke, kontrakty i bramki workflow |
 | `.github/` | Required CI, szablon PR, wskaźnik do security |

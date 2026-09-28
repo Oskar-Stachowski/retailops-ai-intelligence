@@ -21,8 +21,9 @@ do `docs` nie dodaje go automatycznie do korpusu.
 
 Rejestr ma `review_state=proposed`, właściciela przeglądu `Oskar-Stachowski`
 i środowisko `local`. Właściciel jest wskazaniem odpowiedzialności, a nie
-zapisem udzielonej akceptacji. Dobór plików, zakresy faktów, klasy dostępu
-i statusy wymagają przeglądu redakcyjnego przed późniejszą aktywacją.
+zapisem udzielonej akceptacji. Dla bieżącego snapshotu zapisano
+[osobną decyzję właściciela](../knowledge/corpus-approval.v1.json), obejmującą
+dobór plików, zakresy faktów, klasy dostępu, statusy i wyłączenia.
 Walidacja techniczna nie zatwierdza treści. Wersja 1 pozwala wygenerować tylko
 manifest `candidate`; odrzuca deklaracje `approved` lub `active`.
 
@@ -120,6 +121,6 @@ rzeczywistych, małych repozytoriach testowych i nie wymaga sąsiedniego checkou
 Zmiana źródłowego SHA wymaga ponownego związania checksum i odwołań oraz
 przeglądu propozycji.
 
-Następny zakres: przegląd redakcyjny oraz odświeżenie źródeł i golden labels,
-profil użytkowy i polityka kwalifikacji jakości.
+[Zatwierdzony profil golden](knowledge-golden-jobs.md) ma własny run i raport.
+Następny zakres: odbiór jakości oraz polityka użytkowej kwalifikacji.
 Użytkowa aktywacja wymaga tych odbiorów; fake walidacja nie otwiera tej bramki.

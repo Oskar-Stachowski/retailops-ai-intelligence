@@ -2,7 +2,8 @@
 
 **2026-09-28 · zakres offline/fake, bez aktywacji.**
 [Pomiar JSON](11-qualification.json), [instrukcja](../knowledge-qualification.md),
-[aktualny status](../STATUS.md).
+[aktualny status](../STATUS.md). Ten pomiar poprzedza zgody właściciela;
+[bieżący odbiór profili golden](11-golden-jobs.md) opisuje ich zapis i nowe runy.
 
 `index-release-check` zapisuje deterministyczny manifest wiążący corpus/index,
 konfiguracje, golden set, pełny raport, walidację mechaniczną i decyzje przeglądu.
