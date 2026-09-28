@@ -36,5 +36,32 @@
     "actionlint": "passed",
     "gitleaks_git_and_dir": "passed"
   },
-  "untouched_http_contracts": "git diff -- contracts/*.json: empty"
+  "untouched_http_contracts": "git diff -- contracts/*.json: empty",
+  "implementation_commit": "ae21d4e37dc56fb6d12c53f103190aa663b9a0f0",
+  "clean_checkout": {
+    "commit": "ae21d4e37dc56fb6d12c53f103190aa663b9a0f0",
+    "new_venv": true,
+    "make_bootstrap_ci_local": "passed",
+    "unit_tests": {
+      "passed": 208,
+      "skipped": 0,
+      "seconds": 9.56
+    },
+    "worktree": "clean",
+    "weakened_snapshot_gate": "exit 1 detected; test passed"
+  },
+  "installed_wheel": {
+    "checked_at": "2026-09-28T06:55:50.873260+00:00",
+    "kind": "installed_wheel_outside_checkout",
+    "result": "passed",
+    "import_location": "runtime/site-packages/retailops_ai",
+    "dependencies": "production_from_uv_lock_with_hashes; no_dev_jsonschema",
+    "uv_pip_check": "passed",
+    "valid_bundle_cli_exit": 0,
+    "late_feature_cli_exit": 2,
+    "private_input_cli_exit": 2,
+    "settings_bypass_with_invalid_env": "passed",
+    "no_artifact_directory_created": true,
+    "wheel_sha256": "4450e7de4b9856529ea7d2a8cf8f6dc4551080e6dba840a7b71a7048f0d6f43c"
+  }
 }
