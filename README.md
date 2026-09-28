@@ -9,11 +9,13 @@ walidacja Git, [parser/chunker](docs/knowledge-chunks.md) oraz
 [fake embeddings i zapis kandydata pgvector](docs/knowledge-index.md) oraz
 [atomowe przełączanie indeksów testowych](docs/knowledge-lifecycle.md).
 [Retrieval, filtry uprawnień/statusów i golden set](docs/knowledge-retrieval.md)
-mają wykonywalną ścieżkę offline/test i 36 pytań ewaluacyjnych.
+mają wykonywalną ścieżkę offline/test i 44 pytania ewaluacyjne.
 [Administracyjne runy indeksowania](docs/knowledge-administration.md) mają
 trwałe stany, idempotencję i worker dla zatwierdzonych snapshotów testowych.
 [Raport podobnych treści](docs/knowledge-review.md) wskazuje dokładne i near
 powtórzenia do przeglądu, zachowując metadata oraz cytaty.
+[Odświeżone źródła i etykiety](docs/knowledge-sources.md) wiążą 29 dokumentów
+z konkretnymi SHA; akceptacja treści i jakości pozostaje oddzielną bramką.
 Wyszukiwanie i aktywacja rzeczywistego korpusu wymagają kolejnego odbioru jakości.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).

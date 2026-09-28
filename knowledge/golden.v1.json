@@ -1,8 +1,7 @@
 {
   "schema_version": "1.0",
   "set_version": "retailops-rag-golden-v1",
-  "golden_set_id": "golden-set-sha256-e286887e587b0c22c5195b49a62e5efb0e94552239459e7e7882c191391c5b32",
-  "index_id": "index-sha256-922d7c3e2cbfdfcc1f2c176fdbefd0b56ed74196de64287ebcbf625a5777fe51",
+  "index_id": "index-sha256-18c7ac743d35a7f9b8d59f781f2f4ccace9e24af79046bcf9f6a36895de038e9",
   "retrieval_config_id": "retrieval-config-sha256-b438aa592eb4be671dcb74121d48ecf62d211869479ca9087e9a588ccdff4f1e",
   "review_state": "proposed",
   "review_owner": "Oskar-Stachowski",
@@ -965,7 +964,7 @@
       "category": "documentation",
       "request": {
         "schema_version": "1.0",
-        "question": "Jakie wersjonowane kontrakty źródła danych definiuje RetailOps?",
+        "question": "Jaki kontrakt CSV seed demo/legacy v1 opisuje RetailOps i czego nie dowodzi dla źródła AI 2.x?",
         "purpose": "documentation",
         "filters": {
           "repositories": null,
@@ -2078,6 +2077,460 @@
         "knowledge_index_run"
       ],
       "critical": true
+    },
+    {
+      "case_id": "rag-37",
+      "category": "documentation",
+      "request": {
+        "schema_version": "1.0",
+        "question": "Jak chunker zachowuje nagłówki, kolejność i dokładne zakresy cytatów?",
+        "purpose": "documentation",
+        "filters": {
+          "repositories": null,
+          "document_types": null,
+          "document_statuses": null,
+          "access_classes": null
+        },
+        "top_k": 5,
+        "max_context_tokens": 6000
+      },
+      "role": "operator",
+      "scope": {
+        "environment": "local",
+        "repositories": [
+          "Oskar-Stachowski/retailops-ai-intelligence",
+          "Oskar-Stachowski/retailops-cloud-native-platform"
+        ],
+        "access_classes": [
+          "public_project"
+        ],
+        "document_statuses": [
+          "specified",
+          "implemented",
+          "verified"
+        ]
+      },
+      "expected_sections": [
+        {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "path": "docs/knowledge-chunks.md",
+          "heading_path": [
+            "Parser Markdown i kandydackie fragmenty — etap 11",
+            "Tożsamość i cytowanie"
+          ],
+          "document_status": "implemented"
+        }
+      ],
+      "forbidden_sources": [],
+      "answerability": "answerable",
+      "acceptable_outcomes": [
+        "ok"
+      ],
+      "required_tools": [
+        "search_knowledge"
+      ],
+      "forbidden_tools": [
+        "create_purchase_order",
+        "modify_price",
+        "knowledge_index_activate",
+        "knowledge_index_run"
+      ],
+      "critical": false
+    },
+    {
+      "case_id": "rag-38",
+      "category": "operations",
+      "request": {
+        "schema_version": "1.0",
+        "question": "Kto może zgłosić indeksowanie i jak wiąże się Idempotency-Key z principal i środowiskiem?",
+        "purpose": "documentation",
+        "filters": {
+          "repositories": null,
+          "document_types": null,
+          "document_statuses": null,
+          "access_classes": null
+        },
+        "top_k": 5,
+        "max_context_tokens": 6000
+      },
+      "role": "operator",
+      "scope": {
+        "environment": "local",
+        "repositories": [
+          "Oskar-Stachowski/retailops-ai-intelligence",
+          "Oskar-Stachowski/retailops-cloud-native-platform"
+        ],
+        "access_classes": [
+          "public_project"
+        ],
+        "document_statuses": [
+          "specified",
+          "implemented",
+          "verified"
+        ]
+      },
+      "expected_sections": [
+        {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "path": "docs/knowledge-administration.md",
+          "heading_path": [
+            "Administracja indeksami wiedzy",
+            "Uprawnienia i HTTP"
+          ],
+          "document_status": "implemented"
+        }
+      ],
+      "forbidden_sources": [],
+      "answerability": "answerable",
+      "acceptable_outcomes": [
+        "ok"
+      ],
+      "required_tools": [
+        "search_knowledge"
+      ],
+      "forbidden_tools": [
+        "create_purchase_order",
+        "modify_price",
+        "knowledge_index_activate",
+        "knowledge_index_run"
+      ],
+      "critical": false
+    },
+    {
+      "case_id": "rag-39",
+      "category": "operations",
+      "request": {
+        "schema_version": "1.0",
+        "question": "Czy sukces runa aktywuje indeks i jak wznawia się worker po śmierci procesu?",
+        "purpose": "documentation",
+        "filters": {
+          "repositories": null,
+          "document_types": null,
+          "document_statuses": null,
+          "access_classes": null
+        },
+        "top_k": 5,
+        "max_context_tokens": 6000
+      },
+      "role": "operator",
+      "scope": {
+        "environment": "local",
+        "repositories": [
+          "Oskar-Stachowski/retailops-ai-intelligence",
+          "Oskar-Stachowski/retailops-cloud-native-platform"
+        ],
+        "access_classes": [
+          "public_project"
+        ],
+        "document_statuses": [
+          "specified",
+          "implemented",
+          "verified"
+        ]
+      },
+      "expected_sections": [
+        {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "path": "docs/knowledge-administration.md",
+          "heading_path": [
+            "Administracja indeksami wiedzy",
+            "Zatwierdzony snapshot i worker"
+          ],
+          "document_status": "implemented"
+        }
+      ],
+      "forbidden_sources": [],
+      "answerability": "answerable",
+      "acceptable_outcomes": [
+        "ok"
+      ],
+      "required_tools": [
+        "search_knowledge"
+      ],
+      "forbidden_tools": [
+        "create_purchase_order",
+        "modify_price",
+        "knowledge_index_activate",
+        "knowledge_index_run"
+      ],
+      "critical": false
+    },
+    {
+      "case_id": "rag-40",
+      "category": "documentation",
+      "request": {
+        "schema_version": "1.0",
+        "question": "Co oznacza wynik podobieństwa leksykalnego i czy wolno automatycznie usuwać podobne zdania?",
+        "purpose": "documentation",
+        "filters": {
+          "repositories": null,
+          "document_types": null,
+          "document_statuses": null,
+          "access_classes": null
+        },
+        "top_k": 5,
+        "max_context_tokens": 6000
+      },
+      "role": "operator",
+      "scope": {
+        "environment": "local",
+        "repositories": [
+          "Oskar-Stachowski/retailops-ai-intelligence",
+          "Oskar-Stachowski/retailops-cloud-native-platform"
+        ],
+        "access_classes": [
+          "public_project"
+        ],
+        "document_statuses": [
+          "specified",
+          "implemented",
+          "verified"
+        ]
+      },
+      "expected_sections": [
+        {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "path": "docs/knowledge-review.md",
+          "heading_path": [
+            "Kontrola podobnych treści korpusu",
+            "Zakres i interpretacja"
+          ],
+          "document_status": "implemented"
+        }
+      ],
+      "forbidden_sources": [],
+      "answerability": "answerable",
+      "acceptable_outcomes": [
+        "ok"
+      ],
+      "required_tools": [
+        "search_knowledge"
+      ],
+      "forbidden_tools": [
+        "create_purchase_order",
+        "modify_price",
+        "knowledge_index_activate",
+        "knowledge_index_run"
+      ],
+      "critical": false
+    },
+    {
+      "case_id": "rag-41",
+      "category": "documentation",
+      "request": {
+        "schema_version": "1.0",
+        "question": "Jak status dokumentu i jawny grant ograniczają retrieval dla purpose verified_state?",
+        "purpose": "documentation",
+        "filters": {
+          "repositories": null,
+          "document_types": null,
+          "document_statuses": null,
+          "access_classes": null
+        },
+        "top_k": 5,
+        "max_context_tokens": 6000
+      },
+      "role": "operator",
+      "scope": {
+        "environment": "local",
+        "repositories": [
+          "Oskar-Stachowski/retailops-ai-intelligence",
+          "Oskar-Stachowski/retailops-cloud-native-platform"
+        ],
+        "access_classes": [
+          "public_project"
+        ],
+        "document_statuses": [
+          "specified",
+          "implemented",
+          "verified"
+        ]
+      },
+      "expected_sections": [
+        {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "path": "docs/knowledge-retrieval.md",
+          "heading_path": [
+            "Retrieval, uprawnienia i golden set — etap 11",
+            "Odczyt i dostęp"
+          ],
+          "document_status": "implemented"
+        }
+      ],
+      "forbidden_sources": [],
+      "answerability": "answerable",
+      "acceptable_outcomes": [
+        "ok"
+      ],
+      "required_tools": [
+        "search_knowledge"
+      ],
+      "forbidden_tools": [
+        "create_purchase_order",
+        "modify_price",
+        "knowledge_index_activate",
+        "knowledge_index_run"
+      ],
+      "critical": false
+    },
+    {
+      "case_id": "rag-42",
+      "category": "operations",
+      "request": {
+        "schema_version": "1.0",
+        "question": "Co potwierdzono w lokalnym odbiorze administracji indeksami test/fake?",
+        "purpose": "verified_state",
+        "filters": {
+          "repositories": null,
+          "document_types": [
+            "evidence"
+          ],
+          "document_statuses": null,
+          "access_classes": null
+        },
+        "top_k": 5,
+        "max_context_tokens": 6000
+      },
+      "role": "operator",
+      "scope": {
+        "environment": "local",
+        "repositories": [
+          "Oskar-Stachowski/retailops-ai-intelligence",
+          "Oskar-Stachowski/retailops-cloud-native-platform"
+        ],
+        "access_classes": [
+          "public_project"
+        ],
+        "document_statuses": [
+          "specified",
+          "implemented",
+          "verified"
+        ]
+      },
+      "expected_sections": [
+        {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "path": "docs/evidence/11-administration.md",
+          "heading_path": [
+            "Odbiór administracji indeksami — etap 11",
+            "Kontrole"
+          ],
+          "document_status": "verified"
+        }
+      ],
+      "forbidden_sources": [],
+      "answerability": "answerable",
+      "acceptable_outcomes": [
+        "ok"
+      ],
+      "required_tools": [
+        "search_knowledge"
+      ],
+      "forbidden_tools": [
+        "create_purchase_order",
+        "modify_price",
+        "knowledge_index_activate",
+        "knowledge_index_run"
+      ],
+      "critical": false
+    },
+    {
+      "case_id": "rag-43",
+      "category": "authorization",
+      "request": {
+        "schema_version": "1.0",
+        "question": "Czy czytelnik z grantem tylko do AI może rozszerzyć filtr na RetailOps?",
+        "purpose": "verified_state",
+        "filters": {
+          "repositories": [
+            "Oskar-Stachowski/retailops-cloud-native-platform"
+          ],
+          "document_types": null,
+          "document_statuses": null,
+          "access_classes": null
+        },
+        "top_k": 5,
+        "max_context_tokens": 6000
+      },
+      "role": "operator",
+      "scope": {
+        "environment": "local",
+        "repositories": [
+          "Oskar-Stachowski/retailops-ai-intelligence"
+        ],
+        "access_classes": [
+          "public_project"
+        ],
+        "document_statuses": [
+          "specified",
+          "implemented",
+          "verified"
+        ]
+      },
+      "expected_sections": [],
+      "forbidden_sources": [],
+      "answerability": "refused",
+      "acceptable_outcomes": [
+        "forbidden"
+      ],
+      "required_tools": [],
+      "forbidden_tools": [
+        "create_purchase_order",
+        "modify_price",
+        "knowledge_index_activate",
+        "knowledge_index_run"
+      ],
+      "critical": true
+    },
+    {
+      "case_id": "rag-44",
+      "category": "authorization",
+      "request": {
+        "schema_version": "1.0",
+        "question": "Czy można pobrać historical pomimo grantu wyłącznie do aktualnych statusów?",
+        "purpose": "history",
+        "filters": {
+          "repositories": null,
+          "document_types": null,
+          "document_statuses": [
+            "historical"
+          ],
+          "access_classes": null
+        },
+        "top_k": 5,
+        "max_context_tokens": 6000
+      },
+      "role": "operator",
+      "scope": {
+        "environment": "local",
+        "repositories": [
+          "Oskar-Stachowski/retailops-ai-intelligence",
+          "Oskar-Stachowski/retailops-cloud-native-platform"
+        ],
+        "access_classes": [
+          "public_project"
+        ],
+        "document_statuses": [
+          "specified",
+          "implemented",
+          "verified"
+        ]
+      },
+      "expected_sections": [],
+      "forbidden_sources": [],
+      "answerability": "refused",
+      "acceptable_outcomes": [
+        "forbidden"
+      ],
+      "required_tools": [],
+      "forbidden_tools": [
+        "create_purchase_order",
+        "modify_price",
+        "knowledge_index_activate",
+        "knowledge_index_run"
+      ],
+      "critical": true
     }
-  ]
+  ],
+  "golden_set_id": "golden-set-sha256-5dc7eebaf8dbfb60febedf2bf0ae66f840c5a27cdf2b7d6d51355c377e6daba6"
 }

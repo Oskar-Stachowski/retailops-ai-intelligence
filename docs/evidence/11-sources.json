@@ -15,9 +15,487 @@
       "tests/test_retrieval.py": "39211dd884327e8eb7fc900fd53df6b717ba2bae143b2ab9058e8c9108b3f70f"
     }
   },
-  "verified_at": "2026-09-28T13:48:15.599757+00:00",
+  "verified_at": "2026-09-28T13:54:15.454976+00:00",
   "pushed": false,
   "corpus_approved": false,
   "labels_approved": false,
-  "actual_corpus_activated": false
+  "actual_corpus_activated": false,
+  "result": "passed",
+  "source_snapshot_preparation_commit": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+  "sources": [
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605"
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5"
+    }
+  ],
+  "documents": 29,
+  "chunks": 451,
+  "source_changes": [
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/access-control.md",
+      "change": "refreshed",
+      "old_commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "old_byte_sha256": "b3cbecfc703f0c49130537df9c4b453556153443570d535810686ad420ccf83a",
+      "byte_sha256": "3fb9f599f989248f9497243998eae4fef5e8934f9cc2638c1a840c83717b6a0f",
+      "body_changed": true,
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/architecture/decisions.md",
+      "change": "refreshed",
+      "old_commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "old_byte_sha256": "5a1cdd60f6a1fdcc8c1c2435e573d90f0115f253948b1fc0cf6162d832346cbb",
+      "byte_sha256": "93de66d1dcd713bda433a943ef70cdf5449eaf58ab9c6a7de1a0b1cbec105efd",
+      "body_changed": true,
+      "document_status": "specified",
+      "access_class": "public_project",
+      "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/data-contracts.md",
+      "change": "refreshed",
+      "old_commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "old_byte_sha256": "e3f71fb7dd5131ae9d87b84c878118f5f5510cf12ab07f876d598c1b3cb6f5e5",
+      "byte_sha256": "1f7c4531a2bdc8e2773ac214c453346550b156557316ba12f4cb26a6003cfcbe",
+      "body_changed": true,
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Wykonywalna walidacja offline kontraktów ML v1 i oddzielnego runa knowledge_index; bez importera, treningu, serving lub executora agenta."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/development.md",
+      "change": "refreshed",
+      "old_commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "old_byte_sha256": "ebabca1c4a55a44c1e273086477a43bc7d624b49652072c724ecceac40e4d9df",
+      "byte_sha256": "c4ddd9a7e563d8d3d6a8f4c10d9a638ea47e622f24a66dc73717064fe82f4f73",
+      "body_changed": true,
+      "document_status": "specified",
+      "access_class": "public_project",
+      "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/evidence/01-remote-ci.md",
+      "change": "refreshed",
+      "old_commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "old_byte_sha256": "602269b81b26d88645334e4518f084c4dd630178d3892f720f41dba4048c6ded",
+      "byte_sha256": "602269b81b26d88645334e4518f084c4dd630178d3892f720f41dba4048c6ded",
+      "body_changed": false,
+      "document_status": "verified",
+      "access_class": "public_project",
+      "fact_scope": "Odbiór fundamentu AI 01 dla rewizji i środowisk wskazanych w raporcie Required CI; bez modeli, RAG, agenta i AWS."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/http-service.md",
+      "change": "refreshed",
+      "old_commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "old_byte_sha256": "46ddb372f56477cb7acc4530f1483df280f4dd779cc5cb1754f363e243f4bcd9",
+      "byte_sha256": "46ddb372f56477cb7acc4530f1483df280f4dd779cc5cb1754f363e243f4bcd9",
+      "body_changed": false,
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Implementacja diagnostycznych health/ready, metryk, korelacji i statycznych błędów lokalnego HTTP; bez dodatkowego odbioru runtime tej rewizji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/local-stack.md",
+      "change": "refreshed",
+      "old_commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "old_byte_sha256": "7d38f4c654d402ddda2a307630d472cfe85954f6d3060eeea14f82de8535380f",
+      "byte_sha256": "44be1928dec4c336c2d59ef08b2eb16bca9a9252861ab4de911cf0464ef3dfff",
+      "body_changed": true,
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Kontrolowane polecenia lokalnego Compose, jawne migracje i izolacja konfiguracji baz AI/MLflow; bez wdrożenia AWS i bez nowego pomiaru runtime tej rewizji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/security.md",
+      "change": "refreshed",
+      "old_commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "old_byte_sha256": "6a85a6a5871b52281dfc2c008fb74e4088b303d796da0e09d27e38bcd2bf450c",
+      "byte_sha256": "6a85a6a5871b52281dfc2c008fb74e4088b303d796da0e09d27e38bcd2bf450c",
+      "body_changed": false,
+      "document_status": "specified",
+      "access_class": "public_project",
+      "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/architecture/overview.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "433d81fb9178896c2e8dff267999b9b1f591067d6d4d2a442362bfe5ce98e79b",
+      "byte_sha256": "433d81fb9178896c2e8dff267999b9b1f591067d6d4d2a442362bfe5ce98e79b",
+      "body_changed": false,
+      "document_status": "specified",
+      "access_class": "public_project",
+      "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/evidence/ai/01/README.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "7c266f01c0f99c61e80537437f8102ecad6f09841e4972a471064dfea0874ac7",
+      "byte_sha256": "7c266f01c0f99c61e80537437f8102ecad6f09841e4972a471064dfea0874ac7",
+      "body_changed": false,
+      "document_status": "verified",
+      "access_class": "public_project",
+      "fact_scope": "Odbiór fundamentu AI 01 dla rewizji i środowisk wskazanych w raporcie Required CI; bez modeli, RAG, agenta i AWS."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/evidence/ml/fixed-origin-rf-2026-09-27/rf-80-model-card.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "fa20b5f68cd71988cbcce52953c7bf6c7548288eca8991e8ef58f8551324e5a6",
+      "byte_sha256": "fa20b5f68cd71988cbcce52953c7bf6c7548288eca8991e8ef58f8551324e5a6",
+      "body_changed": false,
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Istniejąca karta syntetycznej oceny Random Forest ze statusem rejected; brak kwalifikacji do serving."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/governance/branch-protection.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "3f82ceecc0ed5c7c4a2695fc384c53bb823b3bd1d54d682545ee87d3561d13b8",
+      "byte_sha256": "3f82ceecc0ed5c7c4a2695fc384c53bb823b3bd1d54d682545ee87d3561d13b8",
+      "body_changed": false,
+      "document_status": "specified",
+      "access_class": "public_project",
+      "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/plans/ai/architektura.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "fcb5fae12c73340850c52afb1cad37624f2b797e0f4eaf500ffaf9df69126517",
+      "byte_sha256": "fcb5fae12c73340850c52afb1cad37624f2b797e0f4eaf500ffaf9df69126517",
+      "body_changed": false,
+      "document_status": "specified",
+      "access_class": "public_project",
+      "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/plans/ai/etapy/11-rag.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "399c46fe909f35187568c05d6bcff2865638a26c03362da44967e9835a44dccd",
+      "byte_sha256": "399c46fe909f35187568c05d6bcff2865638a26c03362da44967e9835a44dccd",
+      "body_changed": false,
+      "document_status": "specified",
+      "access_class": "public_project",
+      "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/plans/ai/kontrakty/integracja-agent.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "9514d29263b06bc387d392df4baaac3e9651b4b6cea9faf9ce233f95166305e3",
+      "byte_sha256": "9514d29263b06bc387d392df4baaac3e9651b4b6cea9faf9ce233f95166305e3",
+      "body_changed": false,
+      "document_status": "specified",
+      "access_class": "public_project",
+      "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/reference/data-contracts.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "f4ee91563c8649b82b9f6532079fc3e8e9669737c84ac0e07b864b8bda5bcb12",
+      "byte_sha256": "f4ee91563c8649b82b9f6532079fc3e8e9669737c84ac0e07b864b8bda5bcb12",
+      "body_changed": false,
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Opis istniejącej bramki kontraktów CSV seed demo/legacy v1; nie jest opisem source 2.5 ani dowodem zgodności z importerem AI."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/reference/events.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "b211e3f0a5d694b2dd482b1e8484c44bdb64fcb6308271cddfee47a6c42b7983",
+      "byte_sha256": "b211e3f0a5d694b2dd482b1e8484c44bdb64fcb6308271cddfee47a6c42b7983",
+      "body_changed": false,
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Implementacja walidacji/deduplikacji konsumenta zdarzeń i modelu odczytu; bez poświadczenia pełnego runtime broker–consumer lub exactly-once."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/reference/ml-admission-policy.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "90e9a79292230b604d59ea95e7acbd141cbb4f04a8e9e5f9ec7c137675ed3066",
+      "byte_sha256": "90e9a79292230b604d59ea95e7acbd141cbb4f04a8e9e5f9ec7c137675ed3066",
+      "body_changed": false,
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Implementacja lokalnej polityki syntetycznej kwalifikacji RF; candidate dopuszcza tylko dalszą walidację i nie oznacza serving."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/runbooks/db-restore.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "0a81602c04f707fcd2ce35c397d73b801600c74ffa5d664a7a2999f2794858d7",
+      "byte_sha256": "0a81602c04f707fcd2ce35c397d73b801600c74ffa5d664a7a2999f2794858d7",
+      "body_changed": false,
+      "document_status": "specified",
+      "access_class": "public_project",
+      "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/security/demo-auth-boundary.md",
+      "change": "refreshed",
+      "old_commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+      "commit_sha": "78f801f2e8bf33a92007821644ef9649b6c62bd5",
+      "old_byte_sha256": "56a6c6a42b0651d67a0ab7010395d46080e8194bc9955adad12e229feed31e60",
+      "byte_sha256": "56a6c6a42b0651d67a0ab7010395d46080e8194bc9955adad12e229feed31e60",
+      "body_changed": false,
+      "document_status": "specified",
+      "access_class": "public_project",
+      "fact_scope": "Projekt lub instrukcja; metadata nie potwierdzają wykonania opisanych operacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/knowledge-corpus.md",
+      "change": "added",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "byte_sha256": "3e8f7daa721aef54b6cbc40a1617670a50527627bbc95439c57a101e1e4ab691",
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Implementacja jawnego rejestru i walidacji przypiętych źródeł; rejestr pozostaje proposed, brak akceptacji treści."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/knowledge-chunks.md",
+      "change": "added",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "byte_sha256": "8bbddf25cc66b1d181e25c8d6156d2cf5c2f9d94eb258765af463c53127c70b4",
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Implementacja deterministycznego parsera/chunkera, coverage i cytatów; bez zatwierdzenia źródeł lub jakości semantycznej."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/knowledge-index.md",
+      "change": "added",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "byte_sha256": "f3313846035dc81354bce011df95787ff8e326f98347139b2a5ee353258ed096",
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Implementacja adaptera fake i transakcyjnego zapisu kandydata pgvector; nie potwierdza jakości semantycznej ani użytkowej aktywacji."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/knowledge-lifecycle.md",
+      "change": "added",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "byte_sha256": "511269c8da6335d19e0a9c8fe34e47b46245910f841eb2844a7be012c72cd35f",
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Implementacja atomowego wskaźnika, kwalifikacji i rollback w syntetycznym kanale testowym; bez aktywacji rzeczywistego korpusu."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/knowledge-retrieval.md",
+      "change": "added",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "byte_sha256": "f4ade1d38604135060391817c7824d5a5f35c594105a5aad27d7cc335235ed68",
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Implementacja ograniczonego retrieval, filtrów i kontroli obu list etykiet golden; odbiór mechaniki test/fake, bez odpowiedzi LLM i jakości użytkowej."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/knowledge-administration.md",
+      "change": "added",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "byte_sha256": "24120d20d7feac3b720611fec9d9d9d4134a74609ee29a0b90e616a10cf26ac9",
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Implementacja administracyjnych runów, idempotencji i jawnego workera test/fake; sukces tworzy kandydata i nie aktywuje indeksu."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/knowledge-review.md",
+      "change": "added",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "byte_sha256": "c826615056aa8ab3ad64125b4315a84d65c112bf5d46eebef64b3e55b5af854f",
+      "document_status": "implemented",
+      "access_class": "public_project",
+      "fact_scope": "Implementacja ograniczonego raportu podobieństwa leksykalnego; brak automatycznego usuwania, scalania lub zatwierdzenia dokumentów."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/evidence/11-administration.md",
+      "change": "added",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "byte_sha256": "aefc651f46ea22889e9e2a3f954f6794eca42191becbd133df80fbd0f2d07360",
+      "document_status": "verified",
+      "access_class": "public_project",
+      "fact_scope": "Pomiar trwałych runów/index HTTP, SIGKILL/resume i retencji w test/fake na ae31935; bez aktywacji rzeczywistego korpusu i bez odbioru jakości semantycznej."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "path": "docs/evidence/11-similarity.md",
+      "change": "added",
+      "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+      "byte_sha256": "9450c940cecd7dd45854237ad5ff7a6795a44b575b877da98468090b8c9b2199",
+      "document_status": "verified",
+      "access_class": "public_project",
+      "fact_scope": "Pomiar metody leksykalnej na snapshotach 7940d2ee/b8de65b5: 20 dokumentów/302 fragmenty i odtwarzalność na f91fd04; nie jest pomiarem nowego korpusu ani odbiorem semantycznym."
+    }
+  ],
+  "source_bodies_changed": 5,
+  "documents_added": 9,
+  "status_counts": {
+    "implemented": 15,
+    "specified": 10,
+    "verified": 4
+  },
+  "access_class_counts": {
+    "public_project": 29
+  },
+  "existing_status_and_access_preserved": true,
+  "corpus_id": "corpus-sha256-6f8518f867b94d73f863018863cb72add891ecb12e26ea677110aaa2c965796f",
+  "corpus_config_id": "corpus-config-sha256-f69337d57b6569092d198a76d32f645fea055d53dcd57fbfddfe613030612bce",
+  "chunk_manifest_id": "chunks-sha256-973d3886f71b90e26920a2c30e2e78535c88e3e984c9a0168f36cc6bed9c94c7",
+  "index_id": "index-sha256-18c7ac743d35a7f9b8d59f781f2f4ccace9e24af79046bcf9f6a36895de038e9",
+  "golden_set_id": "golden-set-sha256-5dc7eebaf8dbfb60febedf2bf0ae66f840c5a27cdf2b7d6d51355c377e6daba6",
+  "golden_cases": 44,
+  "golden_thresholds_unchanged": true,
+  "labels_selected_before_evaluation": true,
+  "source_labels_origin": "explicit_source_section_review_not_ranker_output",
+  "unchanged_chunk_ids": 294,
+  "old_chunk_ids_absent_from_new_candidate": 8,
+  "new_chunk_ids": 157,
+  "embedding_cache_records_reused": 294,
+  "semantic_quality_accepted": false,
+  "review_state": "proposed",
+  "offline_outputs": {
+    "index": {
+      "path": ".local/rag/index-18c7ac743d35.json",
+      "sha256": "faefbbc1a0e52bae7b5b0bdf535fc12d07ec373d5d9efae8071854ef881f451b",
+      "mode": "0o600"
+    },
+    "source-similarity": {
+      "path": ".local/rag/source-similarity-18c7ac743d35.json",
+      "sha256": "13ce4cfe91cfaaf542dbef7e260ca93cc7c1b201678ce52521a075127136374a",
+      "mode": "0o600"
+    },
+    "source-golden": {
+      "path": ".local/rag/source-golden-18c7ac743d35.json",
+      "sha256": "81ebedd28de7a1fafa18948ddeacf3e26cf20c1e170d9f4e1bba1403a1479d68",
+      "mode": "0o600"
+    }
+  },
+  "similarity": {
+    "report_id": "similarity-report-sha256-80d69ca6190ff8ce27d4ddc2f4f29fb6f8b977e79818375afbd9a3b13bf5aab4",
+    "outcome": "review_required",
+    "document_exact_groups": 0,
+    "document_near_pairs": 0,
+    "chunk_exact_groups": 1,
+    "chunk_near_pairs": 0,
+    "repeated_occurrences": 0,
+    "independent_all_pairs_verified": {
+      "document": {
+        "all_pairs_checked": 406,
+        "sparse_pairs_checked": 207,
+        "short_content_groups": 0,
+        "features": 24170,
+        "posting_visits": 1686
+      },
+      "chunk": {
+        "all_pairs_checked": 101025,
+        "sparse_pairs_checked": 1045,
+        "short_content_groups": 33,
+        "features": 23425,
+        "posting_visits": 2188
+      }
+    },
+    "technical_review_decisions": [
+      {
+        "text_checksum": "0606e0e0e5c8d54d9b1bdda00d69d4c6492c6e47eec10654bf517041b952b639",
+        "member_ids": [
+          "chunk-sha256-6bdd117cf47015e21e5ee78859284dadbfb0a203f4a894c5d83c0304c238a67d",
+          "chunk-sha256-c12456cdd946d2aa429e48f478155d370e19ab62c5bbe1fd2c469a39249c600a"
+        ],
+        "source_refs": [
+          "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/knowledge-chunks.md#L13-L13",
+          "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/knowledge-review.md#L13-L13"
+        ],
+        "decision": "keep_separate_document_contexts",
+        "reason": "Short shared introduction to two different instructions; preserve heading and source lineage. One embedding cache record, separate chunks.",
+        "review_kind": "technical_lexical_review_only",
+        "corpus_approval_created": false
+      }
+    ],
+    "review_decisions_complete": true
+  },
+  "golden": {
+    "recall_at_5": 0.04411764705882353,
+    "mrr": 0.04411764705882353,
+    "citation_correctness": 1.0,
+    "critical_pass_rate": 1.0,
+    "critical_cases": 9,
+    "critical_cases_passed": 9,
+    "measured_thresholds_passed": false,
+    "activation_allowed": false,
+    "latency_p95_ms": 6.409041998267639,
+    "model_cost_usd": 0.0
+  },
+  "excluded_review_notes": [
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/reference/ml-features.md",
+      "reason": "Describes source 2.3 and pending runtime isolation; not admitted as current source 2.5 evidence."
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "path": "docs/reference/source-compatibility-fixtures.md",
+      "reason": "Documents archived 2.0–2.3 exports only; not admitted as current source 2.5 acceptance."
+    }
+  ],
+  "full_golden_report": "docs/evidence/11-sources-golden.json",
+  "full_golden_report_sha256": "81ebedd28de7a1fafa18948ddeacf3e26cf20c1e170d9f4e1bba1403a1479d68"
 }

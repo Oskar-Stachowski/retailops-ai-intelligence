@@ -43,6 +43,8 @@ powtórzeń, pełną listę referencji i limity bez automatycznego usuwania lub 
 302 fragmentów, 573 testy oraz niezależne porównanie wszystkich par.
 [Odświeżenie źródeł i etykiet](knowledge-sources.md) opisuje przypięte snapshoty,
 scope twierdzeń i binding obu list golden sections przed ewaluacją.
+[Odbiór źródeł](evidence/11-sources.md) podaje 29 dokumentów/451 fragmentów,
+44 pytania i aktualny raport fake bez zgody na aktywację.
 
 ## Mapa repo
 

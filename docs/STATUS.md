@@ -3,7 +3,7 @@
 **2026-09-28 · fundament etapu 01 odebrany lokalnie i w zdalnym Required CI.**
 
 **Etap 11 w realizacji:** [korpus wiedzy](knowledge-corpus.md) ma rejestr
-kandydacki 20 dokumentów z obu repo, przypięte SHA/checksums, klasy dostępu,
+kandydacki 29 dokumentów z obu repo, przypięte SHA/checksums, klasy dostępu,
 statusy i kontrolę dowodów. Techniczna walidacja offline nie oznacza akceptacji
 redakcyjnej ani aktywnego RAG.
 [Odbiór](evidence/11-corpus.md) potwierdza 341 testów, czysty checkout
@@ -25,7 +25,7 @@ pozostaje propozycją i nie ma aktywnego retrieval.
 konkurencyjna aktywacja, rollback i zachowany pełny pin po restartach PostgreSQL.
 [Retrieval i golden set](knowledge-retrieval.md) dodają exact cosine pgvector,
 deterministyczną selekcję, bounded context, grant knowledge:read, filtry
-repo/type/status/access, live deny dla starych pinów i 36 wersjonowanych pytań.
+repo/type/status/access, live deny dla starych pinów i 44 wersjonowane pytania.
 Ścieżka runtime działa na kwalifikowanych indeksach testowych; rzeczywisty
 korpus i etykiety pozostają propozycją. Fake report nie otwiera aktywacji.
 [Odbiór retrieval](evidence/11-retrieval.md): 498 testów, świeży PG/HTTP,
@@ -45,11 +45,18 @@ raport z czystych klonów i zgodność z pełnym porównaniem wszystkich par.
 W przypiętym korpusie 20 dokumentów/302 fragmentów brak kandydatów przy progu
 leksykalnym 0,80; nie jest to potwierdzenie aktualności lub jakości semantycznej.
 
-**Postęp etapu 11: około 87%** — szacunek zakresu implementacji, z uwzględnieniem
+[Odświeżenie źródeł i etykiet](knowledge-sources.md) wiąże snapshoty AI `082bed4`
+i RetailOps `78f801f`. [Odbiór](evidence/11-sources.md): 29 dokumentów/451 fragmentów,
+44 pytania, walidacja obu list sekcji i 9/9 przypadków krytycznych.
+Statusy i access istniejących pozycji zachowano, zakresy twierdzeń zawężono;
+aktualny raport podobieństwa ma jedną uzasadnioną kopię krótkiego wprowadzenia.
+Fake Recall@5/MRR nie przechodzą; źródła i etykiety nadal wymagają akceptacji.
+
+**Postęp etapu 11: około 90%** — szacunek zakresu implementacji, z uwzględnieniem
 niezamkniętych odbiorów. Rejestr/metadata, parser, fake/storage, test lifecycle
 i ograniczony retrieval są zaimplementowane. Punkt 7 ma golden set i raport,
 administracyjne runy mają odbiór techniczny w zakresie test/fake.
-Odbiór jakości/źródeł i profil użytkowy pozostają otwarte.
+Akceptacja źródeł/etykiet, odbiór jakości i profil użytkowy pozostają otwarte.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
@@ -78,9 +85,9 @@ i required-result; main wymaga PR i aktualnej gałęzi również dla administrat
 ## Następna praca
 
 Główny kierunek: dane etapu 02 w RetailOps.
-Drugi strumień na `ai/rag-corpus`: odświeżenie/przegląd źródeł i etykiet,
-ponowienie kontroli podobieństwa oraz zamknięcie kwalifikacji etapu 11. Kandydat i golden labels
-wymagają przeglądu/odświeżenia źródeł, doboru statusów/access i odbioru jakości
+Drugi strumień na `ai/rag-corpus`: profil użytkowy, akceptacja korpusu/etykiet
+i zamknięcie kwalifikacji etapu 11. Kandydat i golden labels
+wymagają akceptacji oraz odbioru jakości
 przed użytkową aktywacją. Real embeddings/Bedrock smoke i agent są w etapie 12.
 Praca może postępować równolegle ze strumieniem danych. Etap 03 wymaga odbioru
 źródła z 02, a forecasting i serving kolejnych bramek.

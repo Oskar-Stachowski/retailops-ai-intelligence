@@ -1,0 +1,808 @@
+{
+  "schema_version": "1.0",
+  "golden_set_id": "golden-set-sha256-5dc7eebaf8dbfb60febedf2bf0ae66f840c5a27cdf2b7d6d51355c377e6daba6",
+  "index_id": "index-sha256-18c7ac743d35a7f9b8d59f781f2f4ccace9e24af79046bcf9f6a36895de038e9",
+  "retrieval_config_id": "retrieval-config-sha256-b438aa592eb4be671dcb74121d48ecf62d211869479ca9087e9a588ccdff4f1e",
+  "provider": "fake",
+  "report_kind": "offline_mechanics_with_draft_semantic_labels",
+  "semantic_quality": "not_evaluated_fake_vectors",
+  "corpus_approved": false,
+  "labels_approved": false,
+  "activation_allowed": false,
+  "answer_groundedness": null,
+  "agent_tool_evaluation": "labels_only_no_agent_runtime",
+  "thresholds": {
+    "recall_at_5_min": 0.8,
+    "mrr_min": 0.6,
+    "citation_correctness_min": 1.0,
+    "critical_pass_rate_min": 1.0,
+    "groundedness_min": 0.95,
+    "latency_p95_ms_max": 1000.0,
+    "offline_cost_usd_max": 0.0
+  },
+  "cases": [
+    {
+      "case_id": "rag-01",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-3a9430e738235917c81f57a771e50fee6c157e96a0646d4ef57f6e1f9e58974d",
+        "chunk-sha256-b6ebdcb773c0d27e024fcd23a5221c1183ea33bea1305461b565107abe8231cf",
+        "chunk-sha256-cfd2694ab2683547773682dffbf8543e4b7501653755ebdf3743cdc15efa0271",
+        "chunk-sha256-f22e00b46316f52e888d8079f6799ba6f0c7fe373f21fb0aed5fd4f5dd22bcd2",
+        "chunk-sha256-36114cf3119024f60df240edf2615bd821f8f475d29304ec98b22361576d83b3"
+      ],
+      "elapsed_ms": 6.409041998267639
+    },
+    {
+      "case_id": "rag-02",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-05c67ded7480b8d130605b7cc627e606475e2407cbbeb48628139fedeb7e464a",
+        "chunk-sha256-2f34732f2f92e408ac7daebcb8378a8f02348525355d8979e2bb5ff22a9a683d",
+        "chunk-sha256-c2eba5fb8534345c02381c8de3918d2e4506a68f7cc82d31a527c36f23dc42da",
+        "chunk-sha256-f78b3dbb686a783cb1725de3363aa5a43a80da3e82d70826a77b72305baddcf4",
+        "chunk-sha256-059aa9d2012b0cc4893dc1de5c698157fbce5d38c4fbed311b4c25c20fa47444"
+      ],
+      "elapsed_ms": 5.435375001979992
+    },
+    {
+      "case_id": "rag-03",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-53bfe617c16600a379e8f9bf339369ceef22fa3c8026c49cc081c136ecb03260",
+        "chunk-sha256-e001439b155a9a33b6b6429216f2c27ba7e0aece05a9d5a232c877a87426d79a",
+        "chunk-sha256-6bdd117cf47015e21e5ee78859284dadbfb0a203f4a894c5d83c0304c238a67d",
+        "chunk-sha256-7d17e373440a7ddbe69537a17d835ebf94ae53069de3bbb1e3b6b6d21aa5c42d",
+        "chunk-sha256-6cdfa6b64db6da6f6d49b4be4383448ed23f77e378f5f067a3459a448357461d"
+      ],
+      "elapsed_ms": 4.926249999698484
+    },
+    {
+      "case_id": "rag-04",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-636d890fe9a7a7e257d5daeba7191f0ae9f9983052f37fc39efb7d55f163aa79",
+        "chunk-sha256-b33122aa8ef08f6c246545a3db30abcab858fc27659d6237a53ddb50044b68b6",
+        "chunk-sha256-f553ccc4f6ecf38c5d5575f77d695757c0a940de94c272d5acda5ba978a3672f",
+        "chunk-sha256-12bdaa8273dcb07df6896e335bd3cd75194f7a86e7af1383d4a6354f1126afbc",
+        "chunk-sha256-731392b73695ca3967883cce4929caef9ee179d9a3f979d757297dddc0c68964"
+      ],
+      "elapsed_ms": 5.775207999249687
+    },
+    {
+      "case_id": "rag-05",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-6bdd117cf47015e21e5ee78859284dadbfb0a203f4a894c5d83c0304c238a67d",
+        "chunk-sha256-f7f7ca4a14021c57b4454878b9d032da3f0f87aca08378b6fc3886429b0e15ad",
+        "chunk-sha256-c12456cdd946d2aa429e48f478155d370e19ab62c5bbe1fd2c469a39249c600a",
+        "chunk-sha256-8aff2ff6c3a9668f17245bd01d641202158e20e2c2e9cab13ded604ab0d15c68",
+        "chunk-sha256-ac53059433c85d2d67bc55d10af36db0673c5b9d7aa8d8dec94e61129b922196"
+      ],
+      "elapsed_ms": 4.969416997482767
+    },
+    {
+      "case_id": "rag-06",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-e9b18585e601d636bba6ebca9800b065e47e2f702220d78c919531e15af4cb38",
+        "chunk-sha256-b90f7e70a7235db43755db32b39b4e98b2daa7a44ec00f5a404e6eed97e279bd",
+        "chunk-sha256-c37b26b1bcadcb138149eb09bfcd34da28f9c766f03d88d3ef91f37289a85153",
+        "chunk-sha256-636d890fe9a7a7e257d5daeba7191f0ae9f9983052f37fc39efb7d55f163aa79",
+        "chunk-sha256-03a10cdb9824f00e0579f0e21c3639634ba3df6dae3fcf45a67d32d7e950db0b"
+      ],
+      "elapsed_ms": 4.341874999227002
+    },
+    {
+      "case_id": "rag-07",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-e9b18585e601d636bba6ebca9800b065e47e2f702220d78c919531e15af4cb38",
+        "chunk-sha256-eabe9efcadd2e2032ead5d55a52e152177432f1e24869f330ec9c164fa5d3633",
+        "chunk-sha256-f34e66cb9048c4a738b5a65d0b3ad0a4181be54ab425cb580e7c840e026e7396",
+        "chunk-sha256-89c5711e2524644ee71bf9cc271e335db6e7732a13bddede15de150c336b6913",
+        "chunk-sha256-f78b3dbb686a783cb1725de3363aa5a43a80da3e82d70826a77b72305baddcf4"
+      ],
+      "elapsed_ms": 3.4892080002464354
+    },
+    {
+      "case_id": "rag-08",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-9faf75b3931fbfda2294160dd29a9e94daad261623b9eb14b4cd827fb45c1839",
+        "chunk-sha256-97cb56db6ec3d7224659182fe68a2fe9555db3e2eb60925c24637a8eabe8cda9",
+        "chunk-sha256-d7765e90e774d1a7b6295b86a18df29f24b669108531043b1bff04ee0c1e5a89",
+        "chunk-sha256-040d997a9a003c55b1744ce1c1e7bb1f4b7266b8ace341735f7a21ed7fad1572",
+        "chunk-sha256-84e5ebb23b937a835ecc29e9e072143d75eccbe4837b55f940cbb118aaf0a486"
+      ],
+      "elapsed_ms": 5.32050000037998
+    },
+    {
+      "case_id": "rag-09",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-99710f0651751de50cae9c2db83f9e07190e6d8705edba1211f36fbdd30dc02c",
+        "chunk-sha256-340c37da1bb8564c6b91f70fd664062d5b7c173a345b8ee6b1bffbce3fdb8661",
+        "chunk-sha256-f913a98f8e0a8ff669b288a1358915b6e04ca69d9fedc084177c0a3742424c2d",
+        "chunk-sha256-8b0bb051fbe8f429131ce94432ccf0a0b7b6cb408082d4d5673550a43e3afe70",
+        "chunk-sha256-1be85d4e4405e6a84d5f994652cd35e7b5cd45e43eac00f169a431a659861517"
+      ],
+      "elapsed_ms": 3.4200839982077014
+    },
+    {
+      "case_id": "rag-10",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-f224a0f1bcd83506757eabef71c341d0d459d47a40a6bf8089fd6fc4518c4c62",
+        "chunk-sha256-c9073c2c7f202f8d6c740b02fcd82ee3b5788eddd4ee12c59d28edc89bf8ec7d",
+        "chunk-sha256-a462d364cf1a8e7933c00cf09150c606ba49470f2c119277be2c584eda39aae7",
+        "chunk-sha256-1194f00ea3a3127974887b809d7629c0c4f56c7500fd4884eb86493e909eabe7",
+        "chunk-sha256-86c72f2a49491f4b56f2d76580614ed8655862768d2306ab025ec0cf9bbf4c7f"
+      ],
+      "elapsed_ms": 3.852334000839619
+    },
+    {
+      "case_id": "rag-11",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-f7ec78278e30de49a5a07b493893e037c95e1ffd07a40226cda16ae7c14d492a",
+        "chunk-sha256-45c0987a3591ba6a014667e4f15da30ab4e2df8393050528508a4efc98746b72",
+        "chunk-sha256-22ea383b9040b641265de67c2668dc7bf7690a6c2fbda7bda1ab10b7fba5c868",
+        "chunk-sha256-43e8e405bc69573d997d43ecda51f644a40975463fe85d131976ae5f69a7973a",
+        "chunk-sha256-79243ec2e36abaedff0d3e2c8cc4bc45428df68debb9c11e9a0434dec9d6108c"
+      ],
+      "elapsed_ms": 3.661833001388004
+    },
+    {
+      "case_id": "rag-12",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-e28feb2f0998e771aa8d78897e4f90d9f886c43683873f5a16abdf1c23e21f37",
+        "chunk-sha256-dfb4dceca4ab2e97ec22afe79d56f16b1f85a1c94286ff95d348dd514560ac32",
+        "chunk-sha256-c9073c2c7f202f8d6c740b02fcd82ee3b5788eddd4ee12c59d28edc89bf8ec7d",
+        "chunk-sha256-d7e602154473d3251324aadc79e423f57bc693ce4d9ca0d343037b7b15426d93",
+        "chunk-sha256-45c0987a3591ba6a014667e4f15da30ab4e2df8393050528508a4efc98746b72"
+      ],
+      "elapsed_ms": 5.805832999612903
+    },
+    {
+      "case_id": "rag-13",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-1d1119476cd15b0f453a4aaef7a45c50657b75fd7b562298a11cf35918e0a45d",
+        "chunk-sha256-b1d11ea26afc898084dcecd63a2f6fcd324d28b27f88f8431228c3d28c752f5c",
+        "chunk-sha256-b65dc913fe8c669a5c975a1415de76518a46e5f07f8d44a2c1e6a56678075710",
+        "chunk-sha256-88e8bbe4569a6de7fe7d2bcc64de13e53d514843c2ed19cb5ba542bb7f32d414",
+        "chunk-sha256-1c9737e3ee4f80bc8796b00b30b865c20adcd1e42c1937cddac8fc425d309414"
+      ],
+      "elapsed_ms": 3.8193750006030314
+    },
+    {
+      "case_id": "rag-14",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-bfc73e23458964b9675402a07a2d1d1c18b0b41cab2a0c858983a167648a5ee3",
+        "chunk-sha256-563907d39ffd8e2e68ae662f0434269d54c5e66d902fe6c521cc695ebe26ff59",
+        "chunk-sha256-fec9c1e78d7b073c02fbacfc993c6297f4126a2802c37248bd45a96f09912134",
+        "chunk-sha256-8aff2ff6c3a9668f17245bd01d641202158e20e2c2e9cab13ded604ab0d15c68",
+        "chunk-sha256-0bf20e40eebf6c3c4572dcfa9eced7b0c5ecb5c0d76de65001a475a683560db2"
+      ],
+      "elapsed_ms": 4.060708000906743
+    },
+    {
+      "case_id": "rag-15",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-d4df53d54c1d9d8263b57bc7c58f3efe86af255f13f4074d8402723b7f05dd8c",
+        "chunk-sha256-ef341499a15285ad3bf8e51a009f1bb82f19ffb314d1f5eb28d211b55d2af29a",
+        "chunk-sha256-ac2b44370725189b25b02ef9b8331d3fb588e57c7f21caf2a55b1a4bc2418b0c",
+        "chunk-sha256-bf662f23e2f760cce817a09a3a804a665efdfeba51632c91ad1292bac9006032",
+        "chunk-sha256-0fbfb0a3ea0caa97b90a2eff96b43a6120ea9312e1ff3ae04219f980796af3b6"
+      ],
+      "elapsed_ms": 7.053999997879146
+    },
+    {
+      "case_id": "rag-16",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-b39c86e2fc94ff4e8490dbc12c6446d5fb1d029deba9ce23962260f5455dc35e",
+        "chunk-sha256-be5c3e13b17bd03cd71c8d5beb9a4b07943b8bf3c040c40ff566ce67d12ddadb",
+        "chunk-sha256-108a72cb35e294a586643bc828cd7a31cc6e3f28b7fb8c8071d3712b54bd0e9d",
+        "chunk-sha256-9a7294c0606d29fe6f11e1b6570263f1e293e3dae9726cace3ef517656922156",
+        "chunk-sha256-62ad4dced55128b155458aa57a21b2cdfdc0f9a6db2e1d81a30e1ac571f1700d"
+      ],
+      "elapsed_ms": 5.044167002779432
+    },
+    {
+      "case_id": "rag-17",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-36114cf3119024f60df240edf2615bd821f8f475d29304ec98b22361576d83b3",
+        "chunk-sha256-36709bda23c6131ef607e0240f5af057ef45dec70e339d046122f529a7fd5d6c",
+        "chunk-sha256-6377d9051da87743025f8edd164da6504d5c05087c2997ab1c4ac3bc2423a296",
+        "chunk-sha256-d47e706a7e5b8d33e96aece7a26332d4f50f04abebb4e4484dc5a88516c9b54a",
+        "chunk-sha256-e2a442b4d9f21cadca5e80fcae59efe6cdda82c45ba7217f50b58947e1a44dbf"
+      ],
+      "elapsed_ms": 4.165625003224704
+    },
+    {
+      "case_id": "rag-18",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-d0208b4a91a7a3058c91dfe22c3b48fd771054f3c0f863b52de0260687597950",
+        "chunk-sha256-040d997a9a003c55b1744ce1c1e7bb1f4b7266b8ace341735f7a21ed7fad1572",
+        "chunk-sha256-e9bfa3b3e903fe426bfaf53542a057054ecffb30c00695edaad0559eff8b7443",
+        "chunk-sha256-8f201135363029b18a6d0a2976b29a8176893ee971aea19a887076a600e25552",
+        "chunk-sha256-63ba7c56dbd8c680d41b6dda6445d74511bb8406ea48bf9e6d6f3c362daa4820"
+      ],
+      "elapsed_ms": 3.7430410011438653
+    },
+    {
+      "case_id": "rag-19",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-ba0a2555cde4ef2d42dc9175cc82f9ca5be0fb0cf0ae2222e6c361beec6baec7",
+        "chunk-sha256-f224a0f1bcd83506757eabef71c341d0d459d47a40a6bf8089fd6fc4518c4c62",
+        "chunk-sha256-70e2685862fa0856ee702182639b5bae540804f1b8b753cc64819b0654fea06a",
+        "chunk-sha256-edd6b5b5b927ee3466174866f1f61ba2fbea6fa8858088d7ade0d9df3d3a25eb",
+        "chunk-sha256-0342c94dd32f6ecac7dff6af0fc1faf8e3195e1dd39e630d7b5b025a09ebc835"
+      ],
+      "elapsed_ms": 5.4179579965421
+    },
+    {
+      "case_id": "rag-20",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-dc49d5231b14608f6ab5d7c2820c52ee0bbb8ae57de837aa2affda3a8819a73c",
+        "chunk-sha256-63ba7c56dbd8c680d41b6dda6445d74511bb8406ea48bf9e6d6f3c362daa4820",
+        "chunk-sha256-37fd8cefe6c611c1cda19284f585ba3870a377e2ce3fbb16bdb070b5e8a20740",
+        "chunk-sha256-89163b66068685d76496dffb632fc2498ecef323abdbb5a1abf23465a287c931",
+        "chunk-sha256-b190e28d10556e982c45850e9ff7d59a2b66314676cdededf7695224b0db1a54"
+      ],
+      "elapsed_ms": 3.7042080002720468
+    },
+    {
+      "case_id": "rag-21",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-98ebc68f2ed09631a3b25f70046b35f2ac4874f99fe4dc515a23f0c753246304",
+        "chunk-sha256-e5eabb5781ed894f9ecb955651b81e41a7789630bb07a0cc0cc264f699b86533",
+        "chunk-sha256-8279d3203d9df955096cf997762e98d39ca363c9898f8f03f9887de2a40f5737",
+        "chunk-sha256-b91e1dd84762beec2fffe75589f6c2abdcec1dc083c2008b204e8413ed2326ec",
+        "chunk-sha256-90652bb37046eb87f2c5ad09fae1b2db54570efdcc2a84f35ea5d407ed9b58c9"
+      ],
+      "elapsed_ms": 6.291249999776483
+    },
+    {
+      "case_id": "rag-22",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-232f0932cc209e54a2882f680d0ce93492f8636d466d5742beace485877a5b81",
+        "chunk-sha256-f22e00b46316f52e888d8079f6799ba6f0c7fe373f21fb0aed5fd4f5dd22bcd2",
+        "chunk-sha256-b4c2055bbc324c6a469bf0b106d74bec961c69a0eda1e799fb06b48d5f33f2a9",
+        "chunk-sha256-1358d2ecd21a5d91be02592173058384fd65a5942e426b661e610492ee37539a",
+        "chunk-sha256-4496bac86ef3d1d71cc8e0f283cce02c389073348e7e22b81ba86932804a383c"
+      ],
+      "elapsed_ms": 7.349750001594657
+    },
+    {
+      "case_id": "rag-23",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-c2772690e582eb9cc9ba20ecaffb5eaba3d946b34eb6c88f4fa0a51a497b082e",
+        "chunk-sha256-e5b64b495a39fd9655a87446e7ab9ec8098a4cf6a8c12c1b50a453309a182490",
+        "chunk-sha256-12bdaa8273dcb07df6896e335bd3cd75194f7a86e7af1383d4a6354f1126afbc",
+        "chunk-sha256-9c7b98ef7ddcfa446fc2ae41f19cf74d84a1f21690c41537f3b7cfa9b6b571ed",
+        "chunk-sha256-aee714ee68653a63dbad1c9b12a58f42cce0647e90380734b53a4fc6858ab419"
+      ],
+      "elapsed_ms": 4.787292000401067
+    },
+    {
+      "case_id": "rag-24",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-937504b05d0476ee1111520503418cdf5fc5e88f5b0f116ece9779274c15126b",
+        "chunk-sha256-636d890fe9a7a7e257d5daeba7191f0ae9f9983052f37fc39efb7d55f163aa79",
+        "chunk-sha256-d4e98373a17a25781a6366462c5e7f05621b0c1b4e58d9345ffb6c61837fa3b9",
+        "chunk-sha256-7ef7abf8f7bfc54eab1e2e7394652623ed8af15d5ce51ddd11f40872fd3cafc3",
+        "chunk-sha256-007d1c4b66d1db55adbb6a6cb0d99ed49b8acf8a40642675fe95de9fc822dc47"
+      ],
+      "elapsed_ms": 3.629040998930577
+    },
+    {
+      "case_id": "rag-25",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-932e152b22d4f0fa3e54b32239b0c2bb761e2fa870bf738d7338f9ee11661bbe",
+        "chunk-sha256-c38816ccd6c88a757e0ea63edaf676d542333ce3a3c75f3228a3cceef6ec23a6",
+        "chunk-sha256-c2eba5fb8534345c02381c8de3918d2e4506a68f7cc82d31a527c36f23dc42da",
+        "chunk-sha256-e6ab84cb94ccfeb7361ed8ecedcaf2bc2b8f35bdac986c79a1095b0fd7e71525",
+        "chunk-sha256-37fd8cefe6c611c1cda19284f585ba3870a377e2ce3fbb16bdb070b5e8a20740"
+      ],
+      "elapsed_ms": 4.686874999606516
+    },
+    {
+      "case_id": "rag-26",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-108a72cb35e294a586643bc828cd7a31cc6e3f28b7fb8c8071d3712b54bd0e9d",
+        "chunk-sha256-94e2f56cb35296fc6974ea4256ceb58bdc243ae9570d9f78cb01fc2d762df7b1",
+        "chunk-sha256-ae9675849a75549b6720a3af198e123b753a6996aaf0b8518b2b4517ab8e649e",
+        "chunk-sha256-b39c86e2fc94ff4e8490dbc12c6446d5fb1d029deba9ce23962260f5455dc35e",
+        "chunk-sha256-2dd4ba11228283138233d2250604646e24b3155656fe9dfd09badb640dc9c39c"
+      ],
+      "elapsed_ms": 5.0186250009574
+    },
+    {
+      "case_id": "rag-27",
+      "outcome": "ok",
+      "recall_at_5": 0.5,
+      "reciprocal_rank": 1.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-9a7294c0606d29fe6f11e1b6570263f1e293e3dae9726cace3ef517656922156",
+        "chunk-sha256-56355164203fe813abfb681f38376858488436ef90e8c68be1f50450750b5f85",
+        "chunk-sha256-42fcdfd3e758a5e80cab490422c0320bfaed5333e371ff4ce0eba111e51c6d36",
+        "chunk-sha256-f451ce4190044b70a1ca1c1022c6a7f03594ecf55952e0f70648a4f5828dec2c",
+        "chunk-sha256-f6d952e684c3e7112cbbd501a024ec572d14160ee7840df0ab84863d2186947f"
+      ],
+      "elapsed_ms": 3.6020829975313973
+    },
+    {
+      "case_id": "rag-28",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-b0d3b8f3db8bbbdacba90a5f215cf9fcd1e160101a58a2142c7cedbc3d203751",
+        "chunk-sha256-aa353b329d5ad84cc4c31b7a3e538af70a0698bda93bfd583fe2b870e93acacb",
+        "chunk-sha256-9a7294c0606d29fe6f11e1b6570263f1e293e3dae9726cace3ef517656922156",
+        "chunk-sha256-8e4dff821ec38585c9a94d2c67092f60a77d08b6f0d089a57df70b86f3bb9556",
+        "chunk-sha256-a982018cfa814fe26cd399040330fd14860a51f7ac72e32e2b0074743142c754"
+      ],
+      "elapsed_ms": 3.5961670000688173
+    },
+    {
+      "case_id": "rag-29",
+      "outcome": "insufficient_evidence",
+      "recall_at_5": null,
+      "reciprocal_rank": null,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": true,
+      "retrieved_chunk_ids": [],
+      "elapsed_ms": 0.44600000182981603
+    },
+    {
+      "case_id": "rag-30",
+      "outcome": "insufficient_evidence",
+      "recall_at_5": null,
+      "reciprocal_rank": null,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": true,
+      "passed": true,
+      "retrieved_chunk_ids": [],
+      "elapsed_ms": 0.4282910012989305
+    },
+    {
+      "case_id": "rag-31",
+      "outcome": "insufficient_evidence",
+      "recall_at_5": null,
+      "reciprocal_rank": null,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": true,
+      "passed": true,
+      "retrieved_chunk_ids": [],
+      "elapsed_ms": 0.4210420011077076
+    },
+    {
+      "case_id": "rag-32",
+      "outcome": "forbidden",
+      "recall_at_5": null,
+      "reciprocal_rank": null,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": true,
+      "passed": true,
+      "retrieved_chunk_ids": [],
+      "elapsed_ms": 0.0028340000426396728
+    },
+    {
+      "case_id": "rag-33",
+      "outcome": "forbidden",
+      "recall_at_5": null,
+      "reciprocal_rank": null,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": true,
+      "passed": true,
+      "retrieved_chunk_ids": [],
+      "elapsed_ms": 0.0014999968698248267
+    },
+    {
+      "case_id": "rag-34",
+      "outcome": "forbidden",
+      "recall_at_5": null,
+      "reciprocal_rank": null,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": true,
+      "passed": true,
+      "retrieved_chunk_ids": [],
+      "elapsed_ms": 0.000833999365568161
+    },
+    {
+      "case_id": "rag-35",
+      "outcome": "forbidden",
+      "recall_at_5": null,
+      "reciprocal_rank": null,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": true,
+      "passed": true,
+      "retrieved_chunk_ids": [],
+      "elapsed_ms": 0.0012500022421590984
+    },
+    {
+      "case_id": "rag-36",
+      "outcome": "insufficient_evidence",
+      "recall_at_5": null,
+      "reciprocal_rank": null,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": true,
+      "passed": true,
+      "retrieved_chunk_ids": [],
+      "elapsed_ms": 0.42500000199652277
+    },
+    {
+      "case_id": "rag-37",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-f790a76a47ac2a3a43ef49452330d8b2d5aafd6c8beb6e9b3e35b20db63198ab",
+        "chunk-sha256-f7f7ca4a14021c57b4454878b9d032da3f0f87aca08378b6fc3886429b0e15ad",
+        "chunk-sha256-dd6260c774b30c56e3b77f5ecdd7c17aff7824de68166391efe7d1722794225c",
+        "chunk-sha256-b39c86e2fc94ff4e8490dbc12c6446d5fb1d029deba9ce23962260f5455dc35e",
+        "chunk-sha256-8cd6d07b5c8f9452472855dad071fee212f5d6c911b79222512a517ecb19d8f8"
+      ],
+      "elapsed_ms": 3.8857079998706467
+    },
+    {
+      "case_id": "rag-38",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-7a9dc59b94adf2bf422c397286e4da83974cf244a3bba1f67c57ecd685518ec2",
+        "chunk-sha256-051373405f43c5d098cd5bed152c92dbda75fed9ccf8e3c9814fd32d14b8bfb5",
+        "chunk-sha256-2065c825d9498562515f2d03c72b9602f931adeeedd838ff7f3ad87c1541cab5",
+        "chunk-sha256-8b0bb051fbe8f429131ce94432ccf0a0b7b6cb408082d4d5673550a43e3afe70",
+        "chunk-sha256-4496bac86ef3d1d71cc8e0f283cce02c389073348e7e22b81ba86932804a383c"
+      ],
+      "elapsed_ms": 3.8068750000093132
+    },
+    {
+      "case_id": "rag-39",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-2560f08a48ce40433fd1e8fe9db729fa8cbf87c2925c842cc58246e7049fb2db",
+        "chunk-sha256-4d4d7ea7a0dd773740a7ffa90a649ad3cbbc1c41a58037eb35f949b17c624796",
+        "chunk-sha256-1806097ff1491daba25fa6155bfa047aa2c40b502e029b883077a60779a22a55",
+        "chunk-sha256-9d26af952e73c406f81d8974e249661a0eda64b08e99f21ced5cf8808cb18880",
+        "chunk-sha256-7ea4f2948265bd0b79558c04107cfb3541fc76dacabcda1beb190241dc8c6e00"
+      ],
+      "elapsed_ms": 3.739666000910802
+    },
+    {
+      "case_id": "rag-40",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-c37b26b1bcadcb138149eb09bfcd34da28f9c766f03d88d3ef91f37289a85153",
+        "chunk-sha256-7df61f049a312ab7c22b10801ac531590327a376fd835010198a9e33d63f14a9",
+        "chunk-sha256-e9b18585e601d636bba6ebca9800b065e47e2f702220d78c919531e15af4cb38",
+        "chunk-sha256-9d2f2f2df55413df051510a5f42f3613675908ce59fff113e9e27614e6b2765a",
+        "chunk-sha256-7136f96edfb501d7797bee590c1ca3618a987d93040fc89b8fc7ccc585493b7a"
+      ],
+      "elapsed_ms": 4.612332999386126
+    },
+    {
+      "case_id": "rag-41",
+      "outcome": "ok",
+      "recall_at_5": 0.0,
+      "reciprocal_rank": 0.0,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": false,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-43e8e405bc69573d997d43ecda51f644a40975463fe85d131976ae5f69a7973a",
+        "chunk-sha256-5c2034b309d5195cbf57b42f583260b10f1bd7111b7919953e95f80cbed102eb",
+        "chunk-sha256-8279d3203d9df955096cf997762e98d39ca363c9898f8f03f9887de2a40f5737",
+        "chunk-sha256-e28feb2f0998e771aa8d78897e4f90d9f886c43683873f5a16abdf1c23e21f37",
+        "chunk-sha256-1806097ff1491daba25fa6155bfa047aa2c40b502e029b883077a60779a22a55"
+      ],
+      "elapsed_ms": 5.334042001777561
+    },
+    {
+      "case_id": "rag-42",
+      "outcome": "ok",
+      "recall_at_5": 1.0,
+      "reciprocal_rank": 0.5,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": false,
+      "passed": true,
+      "retrieved_chunk_ids": [
+        "chunk-sha256-6a0d1785aa1255c5757fc12b62857759de8f38e783a06effd5995e1235636b25",
+        "chunk-sha256-f742fd5dc61a8a575cbde539c88cd230fe89a248c6043374839c46e20c002988",
+        "chunk-sha256-d992622986bf8516aa3cc8b4b9b3934065c2f54fe052368f017b508efab7c902",
+        "chunk-sha256-a3ac4be3e56cb4418bff13a3520490b7a9ec4fab1fb94267954c6ab67c7714f7",
+        "chunk-sha256-05c67ded7480b8d130605b7cc627e606475e2407cbbeb48628139fedeb7e464a"
+      ],
+      "elapsed_ms": 1.3317500015546102
+    },
+    {
+      "case_id": "rag-43",
+      "outcome": "forbidden",
+      "recall_at_5": null,
+      "reciprocal_rank": null,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": true,
+      "passed": true,
+      "retrieved_chunk_ids": [],
+      "elapsed_ms": 0.004917001206194982
+    },
+    {
+      "case_id": "rag-44",
+      "outcome": "forbidden",
+      "recall_at_5": null,
+      "reciprocal_rank": null,
+      "forbidden_sources_absent": true,
+      "expected_outcome": true,
+      "citations_bound": true,
+      "critical": true,
+      "passed": true,
+      "retrieved_chunk_ids": [],
+      "elapsed_ms": 0.00145800004247576
+    }
+  ],
+  "recall_at_5": 0.04411764705882353,
+  "mrr": 0.04411764705882353,
+  "citation_correctness": 1.0,
+  "critical_pass_rate": 1.0,
+  "latency_p95_ms": 6.409041998267639,
+  "model_cost_usd": 0.0,
+  "measured_thresholds_passed": false
+}
