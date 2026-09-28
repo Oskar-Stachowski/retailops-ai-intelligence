@@ -1,7 +1,7 @@
 # Persistence etapu 01
 
 Pomiar **2026-09-28**, lokalny macOS ARM64, Docker Desktop, Python 3.11.15,
-uv 0.12.19; baza kodu `7d67530`. [Raport maszynowy](01-persistence.json)
+uv 0.12.19; implementacja `7e0978b7a3d14ba222c7c305d8b995e960369fc1`, baza `7d67530`. [Raport maszynowy](01-persistence.json)
 zawiera datę, digest obrazów i sumę lockfile. [Uruchomienie](../local-stack.md).
 
 ## Rzeczywiste usługi
@@ -37,10 +37,25 @@ Linki, kontrakt CI, build wheel/sdist, Compose config i actionlint sprawdzone.
 Wymagany job persistence wykonuje pełny smoke, a required-result zależy od niego.
 Plik poświadczeń pozostaje ignorowany przez Git i poza kontekstem builda.
 
+## Czysty checkout i GitHub
+
+Czysty checkout implementacji, nowe venv i nowe wolumeny:
+`make bootstrap ci-local` — exit 0, **77 passed in 8.80s**, bez pominięć;
+lint/format, Mypy, kontrakty, dokumentacja, build, Compose config i oba skany
+Gitleaks przeszły. Ponowiony `scripts/verify_local_stack.py` — exit 0,
+wszystkie rzeczywiste próby również przeszły. Worktree pozostał czysty.
+To potwierdza bootstrap nowej bazy oraz dostępność migracji w zbudowanym wheel.
+
+Repo AI ma origin na GitHub. Odczyt API 28.09.2026 potwierdził chronione main
+z wymaganym required-result oraz
+[udany Required CI bazowego 7d67530](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36383297184).
+Nowy commit persistence nie został wypchnięty, więc jego zdalne CI nie jest odebrane.
+
 ## Ograniczenia
 
 Etap 01 pozostaje in_progress: kontrakty danych/run/tool, uprawnienia nowych
-endpointów i zdalne CI/ochrona repo są następną pracą. Repo AI nadal nie ma remote.
+endpointów są następną pracą. Po push wymagany jest zdalny CI nowego zakresu;
+stan GitHub wyżej dotyczy bazowego commitu.
 Nie wykonano Linux x86_64 runtime ani AWS. To lokalny development, bez TLS,
 aplikacyjnego auth MLflow, backup/restore, pipeline importu, modeli, RAG lub agenta.
 Trwałość po crash/restart nie dowodzi odtwarzania po utracie wolumenu.

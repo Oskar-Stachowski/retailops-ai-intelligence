@@ -13,14 +13,15 @@ schematu i bazy. Nie ma jeszcze endpointów predykcji.
 restart/awarię/recovery i trwałość danych; osobno wskazują testy adaptera z fake.
 [HTTP](evidence/01-http.md) i [fundament](evidence/01-foundation.md) zachowują zakres
 wcześniejszych pomiarów. Wymagane kontrole obejmują kod, migracje, Compose i runtime
-persistence. Repo nadal jest lokalne: brak remote, przebiegu zdalnego CI i ochrony gałęzi.
+persistence. Repo jest już na GitHub: main jest chronione przez required-result,
+a CI bazowego 7d67530 ma success. Commity persistence są lokalne; ich zdalny
+przebieg CI pozostaje do wykonania po push.
 
 ## Następna praca
 
 1. Wykonywalne wersje kontraktów dataset/feature/label/prediction/run/tool
    i reguły kompatybilności; uprawnienia pierwszych endpointów aplikacyjnych.
-2. Po publikacji repo wykonać Required CI i ustawić ochronę głównej gałęzi
-   wymagającą required-result.
+2. Po push tego zakresu odebrać nowy Required CI, w tym rzeczywisty job persistence.
 
 Pipeline danych, modele, RAG, agent i cloud pozostają planowane.
 Cały etap 01 pozostaje otwarty. Odbiór 01 poprzedza odbiór źródła RetailOps w 02.

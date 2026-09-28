@@ -27,5 +27,50 @@
     "mlflow": "ghcr.io/mlflow/mlflow:v3.16.1@sha256:06058cc872276873e9759c635e773342aca4731e240f6d20d88ea43774083984"
   },
   "uv_lock_sha256": "8b3ca3531c70fad6d07ee430576448463221dbcf671a13d2d490fb492cd2d8ff",
-  "remote_ci": "not_run"
+  "remote_ci": "baseline_7d67530_passed; persistence_commit_not_pushed",
+  "implementation_commit": "7e0978b7a3d14ba222c7c305d8b995e960369fc1",
+  "clean_checkout": {
+    "checked_at": "2026-09-28T06:04:17.862256+00:00",
+    "kind": "real_local_compose",
+    "checks": [
+      "separate_databases_roles_and_vector",
+      "explicit_idempotent_migration_and_revision_readiness",
+      "sigkill_restart_retains_ai_and_mlflow_artifact",
+      "real_db_outage_health_200_ready_503_then_recovered_200",
+      "down_up_retains_ai_mlflow_metadata_and_artifact",
+      "loopback_ports_internal_network_no_secrets_in_service_logs"
+    ],
+    "result": "passed",
+    "api_health": 200,
+    "api_ready_after_recovery": 200,
+    "postgres_vector_version": "0.8.6",
+    "migration_revision": "0001_bootstrap",
+    "commit": "7e0978b7a3d14ba222c7c305d8b995e960369fc1",
+    "unit_tests": {
+      "passed": 77,
+      "skipped": 0,
+      "seconds": 8.8
+    },
+    "make_bootstrap_ci_local": "passed"
+  },
+  "github_state": {
+    "main_sha": "7d67530ca574e4acf60405c22fdde1ec59f1f174",
+    "main_protected": true,
+    "protection_status": 200,
+    "required_contexts": [
+      "required-result"
+    ],
+    "runs": [
+      {
+        "id": 36383297184,
+        "name": "Required CI",
+        "head_sha": "7d67530ca574e4acf60405c22fdde1ec59f1f174",
+        "head_branch": "main",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36383297184"
+      }
+    ],
+    "checked_at": "2026-09-28T06:07:45.866585+00:00"
+  }
 }

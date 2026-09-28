@@ -89,7 +89,8 @@ Test zapisuje wyłącznie własne dane testowe; uruchamiaj go w deweloperskim ch
 Required CI wykonuje `make check` (w tym Compose config), testy adaptera i odrębny
 `persistence` z rzeczywistym smoke. Wynik tego joba jest wymagany w `required-result`.
 [Dowody tego zakresu](evidence/01-persistence.md) rozróżniają lokalny runtime i
-testy z fake; przebieg zdalnego CI pozostaje do wykonania po publikacji repo.
+testy z fake; repo jest opublikowane i main jest chronione, ale zdalny CI nowych commitów
+pozostaje do wykonania po ich push.
 
 Źródła: [Alembic](https://alembic.sqlalchemy.org/en/latest/tutorial.html),
 [MLflow server](https://mlflow.org/docs/latest/self-hosting/architecture/tracking-server/),
