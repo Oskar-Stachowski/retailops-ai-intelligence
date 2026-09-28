@@ -27,7 +27,9 @@ przy zachowaniu portów hosta na loopback. `HTTP_PORT`: 1–65535.
 Host żądania musi być `localhost`, `127.0.0.1` lub `[::1]`, z opcjonalnym portem.
 Forwarded headers nie zmieniają tożsamości klienta; proxy headers są wyłączone.
 Nie ma CORS, Swagger UI, publicznego endpointu OpenAPI ani przekierowania slash.
-Rzeczywisty schemat jest wersjonowany w [kontrakcie](../contracts/diagnostics.openapi.json).
+Diagnostyka ma osobny [OpenAPI](../contracts/diagnostics.openapi.json);
+chronione /api/v1 ma [kontrakt access](../contracts/access/v1/access.openapi.json).
+Nowe endpointy i poświadczenia opisują [uprawnienia API](access-control.md).
 
 Bez DATABASE_URL rola to **foundation**; z DB rola **ai_api** wymaga rzeczywistej
 sondy ai_db (wersja migracji, vector i tabela). Foundation wymaga ukończonego startup;
@@ -61,6 +63,7 @@ rzeczywistej wartości w Git, argv poleceń ani raportach. Token porównywany je
 w stałym czasie; powielone nagłówki autoryzacji są odrzucane. To lokalna ochrona
 telemetrii, nie system tożsamości ani uprawnień do przyszłych danych AI.
 
+Odrębna [tożsamość i uprawnienia /api/v1](access-control.md) nie używają tokenu metryk.
 Registry jest osobny dla każdej aplikacji. Licznik
 `retailops_ai_http_requests_total` i histogram
 `retailops_ai_http_request_duration_seconds` mają etykiety method, route, status.

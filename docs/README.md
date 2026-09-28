@@ -5,6 +5,8 @@ Zacznij od [statusu](STATUS.md), [decyzji](architecture/decisions.md) i
 zmiany i PR-y, [security](security.md) — granice dostępu i zgłoszenia.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
+[Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
+zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
@@ -16,7 +18,7 @@ podają faktyczny zakres prób.
 | Lokalizacja | Bieżąca zawartość |
 |---|---|
 | `src/retailops_ai/` | CLI/settings oraz warstwy api/domain/pipelines/adapters lokalnego serwera |
-| `contracts/` | Diagnostyczne OpenAPI/CLI; intelligence/v1: data/run/tool schemas, przykłady i negatywne fixtures |
+| `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1: auth policy i chronione operacje; intelligence/v1: data/run/tool schemas, przykłady i negatywne fixtures |
 | `tests/` | Konfiguracja, HTTP i socket, awarie, korelacja, kontrakty oraz bramki CI |
 | `scripts/` | Kontroler Compose, rzeczywisty smoke, kontrakty i bramki workflow |
 | `.github/` | Required CI, szablon PR, wskaźnik do security |

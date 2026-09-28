@@ -30,3 +30,6 @@ reports/
 .DS_Store
 
 .local/
+
+api-access-policy.json
+api-client-credentials.json

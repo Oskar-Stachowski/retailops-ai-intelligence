@@ -1,0 +1,47 @@
+{
+  "checked_at": "2026-09-28T07:24:46.095320+00:00",
+  "base_commit": "40ad85c39551f00546b994e902e476f0b171ac07",
+  "kind": "real_private_policy_loader_asgi_and_loopback_http",
+  "result": "passed",
+  "python": "3.11.15",
+  "uv": "0.12.19",
+  "platform": "Darwin arm64",
+  "unit_tests": {
+    "passed": 267,
+    "skipped": 0,
+    "seconds": 9.01
+  },
+  "local_checks": [
+    "ruff",
+    "mypy_strict_48_files",
+    "docs",
+    "intelligence_and_access_snapshots",
+    "wheel_sdist",
+    "compose_config",
+    "gitleaks_git_and_dir"
+  ],
+  "uv_lock_sha256": "b629d6ab142bc7866fc298414211f08f7e3ef8623fa387049d80e952d8dd818d",
+  "runtime_dependencies": "unchanged",
+  "http_diagnostic_contracts": "unchanged",
+  "checks": [
+    "verified_principal_from_private_policy",
+    "401_expired_revoked_future_wrong_duplicate_or_missing_credentials",
+    "403_explicit_capabilities_and_whole_scope",
+    "request_claims_cannot_elevate_identity",
+    "metrics_and_application_token_separation",
+    "private_ownership_permissions_nofollow_regular_bounded_policy_file",
+    "safe_errors_logs_metrics",
+    "bounded_post_body_and_duplicate_json_rejection",
+    "offline_provision_without_stdout_credentials_or_overwrite",
+    "real_loopback_authorization_and_lifespan",
+    "weakened_access_openapi_snapshot_rejected"
+  ],
+  "limitations": [
+    "startup_policy_snapshot_revocation_requires_restart",
+    "no_data_or_model_serving_or_tool_executor",
+    "no_oidc_public_tls_tenant_rate_limit_or_persistent_audit",
+    "compose_has_no_policy_mount_application_endpoints_closed",
+    "no_new_db_crash_restart_smoke"
+  ],
+  "remote_ci": "not_pushed"
+}

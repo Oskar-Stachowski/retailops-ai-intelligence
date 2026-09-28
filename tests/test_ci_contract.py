@@ -56,3 +56,4 @@ def test_make_check_includes_snapshot_gate():
     dependencies = makefile.split("check: ", 1)[1].splitlines()[0]
     assert "contracts-check" in dependencies.split()
     assert "scripts/update_intelligence_contracts.py --check" in makefile
+    assert "scripts/update_access_contracts.py --check" in makefile

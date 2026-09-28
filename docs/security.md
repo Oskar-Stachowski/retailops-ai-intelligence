@@ -4,7 +4,10 @@ Repo udostępnia lokalny serwis diagnostyczny i [stos DB/MLflow](local-stack.md)
 bez publicznego wdrożenia. MLflow nie ma aplikacyjnego auth i jest dostępny tylko lokalnie.
 [Granice HTTP](http-service.md): loopback, kontrola Host, token metryk,
 walidowany kontekst i logi bez wartości wejściowych.
-Nie deklaruje produkcyjnego auth, RBAC, szyfrowania danych ani gotowych modeli.
+[Lokalne uprawnienia API](access-control.md) mają zweryfikowane opaque credentials,
+principal i jawne capabilities/scope, bez automatycznej hierarchii ról.
+Zmiana polityki wymaga restartu; expiry działa przy każdym żądaniu.
+Nie deklaruje produkcyjnego IdP/auth, szyfrowania danych ani gotowych modeli.
 Każdy przyszły endpoint administracyjny wymaga granicy dostępu od pierwszej wersji;
 `user_id` i demo-admin RetailOps nie są tożsamością dla AI.
 

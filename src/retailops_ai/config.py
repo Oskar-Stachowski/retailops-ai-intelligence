@@ -29,6 +29,9 @@ class Settings(BaseSettings):
         default="127.0.0.1", validation_alias="HTTP_HOST"
     )
     http_port: int = Field(default=8081, ge=1, le=65535, validation_alias="HTTP_PORT")
+    api_auth_file: Path | None = Field(
+        default=None, validation_alias="API_AUTH_FILE", exclude=True, repr=False
+    )
     metrics_token: SecretStr | None = Field(default=None, validation_alias="METRICS_TOKEN")
     readiness_timeout_seconds: float = Field(
         default=1.0, ge=0.01, le=5.0, validation_alias="READINESS_TIMEOUT_SECONDS"
@@ -79,7 +82,7 @@ class Settings(BaseSettings):
             raise ValueError("metrics token must contain 32-128 URL-safe characters")
         return value
 
-    @field_validator("artifact_root", mode="before")
+    @field_validator("artifact_root", "api_auth_file", mode="before")
     @classmethod
     def nonempty_path(cls, value: object) -> object:
         if isinstance(value, str) and (not value.strip() or "\x00" in value):

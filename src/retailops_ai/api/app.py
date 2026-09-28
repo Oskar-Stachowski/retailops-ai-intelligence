@@ -17,12 +17,14 @@ from starlette.responses import JSONResponse, Response
 
 from retailops_ai.adapters.database import DatabaseProbe, database_engine
 from retailops_ai.adapters.telemetry import HttpMetrics, new_tracer
+from retailops_ai.api.access import access_router
 from retailops_ai.api.errors import problem_response
 from retailops_ai.api.middleware import HttpObservation, single_header
 from retailops_ai.api.models import DependencyStatus, Health, Problem, Ready, ServiceVersion
 from retailops_ai.config import Settings
 from retailops_ai.domain.readiness import Dependency
 from retailops_ai.pipelines.readiness import Readiness
+from retailops_ai.security.local import load_authority
 
 
 class DiagnosticAPI(FastAPI):
@@ -46,6 +48,10 @@ def create_app(
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
+    authority = load_authority(
+        settings.api_auth_file,
+        settings.metrics_token.get_secret_value() if settings.metrics_token else None,
+    )
     engine = database_engine(settings) if settings.database_url is not None else None
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
@@ -102,6 +108,12 @@ def create_app(
         headers = None
         if exc.status_code == 405 and exc.headers and "Allow" in exc.headers:
             headers = {"Allow": exc.headers["Allow"]}
+        elif (
+            exc.status_code == 401
+            and exc.headers
+            and exc.headers.get("WWW-Authenticate") == "Bearer"
+        ):
+            headers = {"WWW-Authenticate": "Bearer"}
         # Exception details and arbitrary exception headers are deliberately not reflected.
         return problem_response(exc.status_code, headers=headers)
 
@@ -157,4 +169,5 @@ def create_app(
             return problem_response(401, headers={"WWW-Authenticate": "Bearer"})
         return Response(metrics.render(), headers={"Content-Type": CONTENT_TYPE_LATEST})
 
+    app.include_router(access_router(authority))
     return app

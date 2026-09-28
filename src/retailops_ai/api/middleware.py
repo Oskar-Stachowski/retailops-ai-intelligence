@@ -1,5 +1,6 @@
 """Pure ASGI middleware preserves async request context and bounds telemetry labels."""
 
+import asyncio
 import logging
 import re
 from time import perf_counter
@@ -17,14 +18,43 @@ from retailops_ai.adapters.telemetry import (
     trace_ids,
 )
 from retailops_ai.api.errors import problem_response
+from retailops_ai.security.local import strict_json
 
 LOGGER = logging.getLogger("retailops_ai.http")
+MAX_ACCESS_BODY = 16384
+ACCESS_BODY_TIMEOUT = 5.0
 METHODS = frozenset({"GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"})
 
 
 def single_header(headers: Headers, name: str) -> str | None:
     values = headers.getlist(name)
     return values[0] if len(values) == 1 else None
+
+
+async def access_body(receive: Receive) -> tuple[bytes, int | None]:
+    async def collect() -> tuple[bytes, int | None]:
+        content = bytearray()
+        while True:
+            message = await receive()
+            if message["type"] != "http.request":
+                return b"", 400
+            chunk = message.get("body", b"")
+            if len(content) + len(chunk) > MAX_ACCESS_BODY:
+                return b"", 413
+            content.extend(chunk)
+            if not message.get("more_body", False):
+                break
+        raw = bytes(content)
+        try:
+            strict_json(raw)
+        except (ValueError, RecursionError):
+            return b"", 422
+        return raw, None
+
+    try:
+        return await asyncio.wait_for(collect(), timeout=ACCESS_BODY_TIMEOUT)
+    except TimeoutError:
+        return b"", 408
 
 
 class HttpObservation:
@@ -75,6 +105,31 @@ class HttpObservation:
                 host = single_header(headers, "host")
                 if host is None or re.fullmatch(self.host_pattern, host.lower()) is None:
                     await problem_response(400)(scope, receive, observed_send)
+                elif scope["path"].startswith("/api/v1/") and scope["method"] == "POST":
+                    lengths = headers.getlist("content-length")
+                    if (
+                        len(lengths) > 1
+                        or (lengths and not lengths[0].isascii())
+                        or (lengths and not lengths[0].isdigit())
+                    ):
+                        await problem_response(400)(scope, receive, observed_send)
+                    elif lengths and (len(lengths[0]) > 8 or int(lengths[0]) > MAX_ACCESS_BODY):
+                        await problem_response(413)(scope, receive, observed_send)
+                    else:
+                        raw, error = await access_body(receive)
+                        if error is not None:
+                            await problem_response(error)(scope, receive, observed_send)
+                        else:
+                            delivered = False
+
+                            async def replay() -> Message:
+                                nonlocal delivered
+                                if not delivered:
+                                    delivered = True
+                                    return {"type": "http.request", "body": raw, "more_body": False}
+                                return await receive()
+
+                            await self.app(scope, replay, observed_send)
                 else:
                     await self.app(scope, receive, observed_send)
             except Exception:

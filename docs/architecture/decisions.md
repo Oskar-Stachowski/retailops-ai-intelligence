@@ -3,7 +3,7 @@
 **2026-09-27 · zaakceptowane dla projektu; wdrożenie komponentów według etapów.**
 Źródło: plan RetailOps na `8a9e620`; architektura bazowa na
 [cbf28b2](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/cbf28b2/docs/plans/ai/architektura.md).
-Te decyzje utrwalają granice; aktualne wdrożenie DB/MLflow opisuje ADR-12, kontrakty ADR-13, a agent pozostaje planowany.
+Te decyzje utrwalają granice; aktualne wdrożenie DB/MLflow opisuje ADR-12, kontrakty ADR-13, lokalne auth ADR-14, a agent pozostaje planowany.
 
 | ADR | Kontekst i wybrana decyzja | Rozważona alternatywa i konsekwencja |
 |---|---|---|
@@ -120,3 +120,20 @@ Alternatywa: ręczne, oddzielne DTO i schemas mogłyby rozchodzić się z semant
 Snapshot check oraz niezależny jsonschema i negatywne testy sprawdzają zgodność.
 Nie implementujemy importu, training, worker/auth lub agenta przez sam kontrakt.
 [Specyfikacja i źródła](../data-contracts.md), [dowody](../evidence/01-contracts.md).
+
+
+## ADR-14 — lokalne opaque credentials i server scope
+
+Etap 01 używa prywatnego owner-only pliku: losowe 256-bitowe tokens klientów,
+SHA-256 fingerprints w serwerowej mapie, bounded TTL i jawne grants. Nie ma
+password/login ani JWT udającego integrację z IdP. Verified principal jest
+niemodyfikowalnym obiektem domenowym; API egzekwuje capabilities i cały scope.
+Admin nie dziedziczy odczytów. Token metryk jest odrębnym poświadczeniem.
+
+Alternatywa OIDC wymaga prawdziwego issuer/audience/signature/expiry i własnego
+odbioru. Lokalne poświadczenia nie wystawiają publicznego deploymentu. Polityka
+jest snapshotem przy starcie; revoke/grants/rotation wymagają restartu wszystkich
+procesów, expiry jest sprawdzane per request. Nie obiecujemy hot reload ani
+natychmiastowej revocation przez zmianę pliku. Warstwa posłuży przyszłym read APIs,
+które osobno sprawdzą istnienie źródłowych IDs i własny scope danych.
+[Instrukcja i źródła](../access-control.md), [pomiar](../evidence/01-access.md).

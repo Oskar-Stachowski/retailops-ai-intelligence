@@ -1,0 +1,37 @@
+{
+  "$id": "urn:retailops:access:policy-metadata:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "credential_count": {
+      "maximum": 64,
+      "minimum": 1,
+      "title": "Credential Count",
+      "type": "integer"
+    },
+    "policy_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "principal_count": {
+      "maximum": 32,
+      "minimum": 1,
+      "title": "Principal Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_id",
+    "principal_count",
+    "credential_count"
+  ],
+  "title": "PolicyMetadata",
+  "type": "object"
+}

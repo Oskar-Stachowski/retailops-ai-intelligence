@@ -14,6 +14,8 @@ DETAILS = {
     403: "Access is forbidden.",
     404: "The resource is not available.",
     405: "The method is not allowed.",
+    413: "The request body exceeds the allowed size.",
+    408: "The request body did not arrive in time.",
     422: "The request does not match the expected schema.",
     429: "The request limit was exceeded.",
     500: "An internal error occurred.",

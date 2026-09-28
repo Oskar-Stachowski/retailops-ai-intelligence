@@ -71,6 +71,10 @@ hasła. Osoby kontrolujące Docker mogą odczytać env; to granica zaufania loka
 developmentu, nie secret manager. Bootstrap działa tylko na nowym wolumenie:
 zmiana samego pliku haseł nie zmienia zapisanych haseł PostgreSQL.
 
+[Lokalne auth API](access-control.md) działa z prywatnym plikiem dla lokalnego
+serve. Obecny Compose nie montuje polityki: /api/v1 odmawia dostępu, a sondy
+i token metryk zachowują dotychczasowe zachowanie.
+
 ## Zatrzymanie i weryfikacja
 
 ```bash
