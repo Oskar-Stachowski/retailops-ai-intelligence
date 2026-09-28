@@ -8,6 +8,7 @@ import time
 import urllib.error
 import urllib.request
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 
 import local_stack as stack
@@ -129,6 +130,26 @@ def check_pin_retained(expected: object) -> None:
     require(result.get("pin") == expected, "rag_pin_changed_after_restart")
 
 
+def check_jobs_retained(expected: object, *, cleanup: bool = False) -> object:
+    result = json.loads(
+        command(
+            "run",
+            "--rm",
+            "-T",
+            "--entrypoint",
+            "python",
+            "-v",
+            f"{Path(__file__).resolve().parent}:/opt/retailops-verification:ro",
+            "api-migrate",
+            "/opt/retailops-verification/verify_knowledge_admin.py",
+            "--retention-check-and-cleanup" if cleanup else "--retention-check",
+            stdin=json.dumps(expected),
+        )
+    )
+    require(result.get("result") == "passed", "rag_jobs_changed_after_restart")
+    return result["retained_runs"]
+
+
 def main() -> int:
     report: dict[str, Any] = {
         "checked_at": datetime.now(UTC).isoformat(),
@@ -197,6 +218,10 @@ def main() -> int:
         if not isinstance(lifecycle_report, dict):
             raise RuntimeError("invalid_lifecycle_report")
         expected_pin = lifecycle_report["final_pin"]
+        administration_report = rag["administration"]
+        if not isinstance(administration_report, dict):
+            raise RuntimeError("invalid_administration_report")
+        expected_runs = administration_report["retained_runs"]
         stage = "write_ai_and_mlflow"
         sql(
             "retailops_ai",
@@ -229,6 +254,7 @@ def main() -> int:
         command("up", "-d", "--wait", "db", "api", "mlflow")
         wait_ready()
         check_pin_retained(expected_pin)
+        check_jobs_retained(expected_runs)
         require(
             sql("retailops_ai", rag_retention_query, role="ai") == str(rag["chunks"]),
             "rag_data_lost_after_crash",
@@ -268,6 +294,9 @@ def main() -> int:
         require(stack.main(["up"]) == 0, "stack_recreation_failed")
         wait_ready()
         check_pin_retained(expected_pin)
+        administration_report["retained_runs"] = check_jobs_retained(expected_runs, cleanup=True)
+        administration_report["queued_retention_verified"] = True
+        administration_report["pending_fixture_cleanup"] = "cancelled_after_both_retention_checks"
         require(
             sql("retailops_ai", rag_retention_query, role="ai") == str(rag["chunks"]),
             "rag_data_lost_after_down",

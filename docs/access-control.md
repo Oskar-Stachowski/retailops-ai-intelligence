@@ -13,6 +13,9 @@ Nie używa user_id, roli z body/query/header ani demo-admin RetailOps jako login
 | `POST /api/v1/access/forecast-check` | Jawne forecast:read i cały dozwolony scope; 200 z decyzją dla tego żądania |
 | `GET /api/v1/admin/access-policy` | Jawne access:admin; wyłącznie policy ID i liczba principal/credentials |
 | `POST /api/v1/knowledge/search` | Jawne knowledge:read i knowledge_scope; przypięty kwalifikowany indeks, access/status filters i bounded context |
+| `POST /api/v1/knowledge-index-runs` | Admin + jawne knowledge:index; wymagany Idempotency-Key, zatwierdzony profil, trwały Run |
+| `GET /api/v1/knowledge-index-runs/{run_id}` | Admin + knowledge:index; stan runa w środowisku API |
+| `GET /api/v1/knowledge-indexes/current` | Admin + knowledge:index; metadane aktywnego indeksu lub 404 index-not-configured |
 
 Forecast-check jest **preflight uprawnień**; nie zwraca prognozy, nie sprawdza
 istnienia produktu w źródle i nie potwierdza gotowości modelu.
@@ -30,6 +33,9 @@ nie są poświadczeniami. Nie ma login/password endpointu.
 Role viewer/operator/admin są metadanymi polityki, bez automatycznej hierarchii.
 Capabilities nadaje się jawnie. Access:admin wymaga roli admin; sam admin nie
 otrzymuje forecast:read. Każda forecast capability wymaga niepustego scope.
+`knowledge:index` również wymaga roli admin i jawnego grantu. Nie wynika z
+access:admin ani knowledge:read. [Administracja indeksami](knowledge-administration.md)
+opisuje obecny zakres testowy i brak HTTP/agent promotion.
 `knowledge:read` wymaga osobnego `knowledge_scope`: środowisko, jawne repozytoria,
 klasy dostępu i statusy. Pole jest opcjonalne dla dotychczasowych grantów;
 brak grantu odczytu wiedzy nie daje dostępu do nowego endpointu.

@@ -33,7 +33,7 @@ nie wypisują surowego stdout/stderr bibliotek.
 | PostgreSQL 16 + pgvector 0.8.6 | Brak portu hosta; wolumen `postgres_data` | Administrator bootstrap, osobne nieuprzywilejowane role aplikacji |
 | Artefakty MLflow | Wolumen `mlflow_artifacts`, `/var/mlflow/artifacts` | Duże pliki poza PostgreSQL, upload/download przez tracking server |
 
-AI: schemat `ai`, wersja Alembic `0004_rag_denials`, tabela
+AI: schemat `ai`, wersja Alembic `0006_rag_job_gate`, tabela
 `ai.service_metadata` oraz niemodyfikowalne [kandydaty RAG](knowledge-index.md).
 Osobny kanał `test/offline_test` sprawdza [lifecycle](knowledge-lifecycle.md);
 rzeczywisty korpus nie ma aktywnego retrieval. Metadata operacyjne nie zastępują

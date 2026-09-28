@@ -10,6 +10,12 @@ from retailops_ai.knowledge.chunks import ChunkerConfig, ChunkManifest
 from retailops_ai.knowledge.contracts import CorpusManifest, CorpusRegistry
 from retailops_ai.knowledge.golden import GoldenReport, GoldenSet
 from retailops_ai.knowledge.indexes import EmbeddingConfig, IndexCandidate, IndexManifest
+from retailops_ai.knowledge.jobs import (
+    CurrentKnowledgeIndex,
+    IndexBuildProfile,
+    IndexRunReport,
+    KnowledgeIndexRequest,
+)
 from retailops_ai.knowledge.releases import (
     CorpusApproval,
     IndexPin,
@@ -56,6 +62,10 @@ def main() -> int:
         "document-denial": DocumentDenial,
         "golden-set": GoldenSet,
         "golden-report": GoldenReport,
+        "index-build-profile": IndexBuildProfile,
+        "index-run-report": IndexRunReport,
+        "knowledge-index-request": KnowledgeIndexRequest,
+        "current-knowledge-index": CurrentKnowledgeIndex,
     }
     for name, model in models.items():
         schema = model.model_json_schema()

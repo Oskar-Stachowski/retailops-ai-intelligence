@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 from retailops_ai.config import Settings
 
-EXPECTED_REVISION = "0004_rag_denials"
+EXPECTED_REVISION = "0006_rag_job_gate"
 
 
 def database_engine(settings: Settings) -> AsyncEngine:

@@ -12,7 +12,7 @@ from retailops_ai.data_contracts.identity import canonical_sha256, logical_rows_
 from retailops_ai.data_contracts.label import LabelRecord
 from retailops_ai.data_contracts.model import ModelRecord
 from retailops_ai.data_contracts.prediction import PredictionRecord
-from retailops_ai.data_contracts.run import RunRecord
+from retailops_ai.data_contracts.run import MLRunRecord
 from retailops_ai.data_contracts.split import SplitRecord
 from retailops_ai.data_contracts.tool import ToolResult
 
@@ -24,7 +24,7 @@ class ContractBundle(Versioned):
     labels: list[LabelRecord] = Field(max_length=1000)
     splits: list[SplitRecord] = Field(max_length=32)
     models: list[ModelRecord] = Field(max_length=32)
-    runs: list[RunRecord] = Field(max_length=100)
+    runs: list[MLRunRecord] = Field(max_length=100)
     predictions: list[PredictionRecord] = Field(max_length=1000)
     tool_results: list[ToolResult] = Field(max_length=50)
 

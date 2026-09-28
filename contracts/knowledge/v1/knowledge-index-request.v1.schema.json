@@ -1,0 +1,65 @@
+{
+  "$defs": {
+    "IndexSource": {
+      "additionalProperties": false,
+      "properties": {
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha"
+      ],
+      "title": "IndexSource",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:knowledge:knowledge-index-request:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "corpus_config_id": {
+      "pattern": "^corpus-config-sha256-[0-9a-f]{64}$",
+      "title": "Corpus Config Id",
+      "type": "string"
+    },
+    "evaluation_set_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Evaluation Set Id",
+      "type": "string"
+    },
+    "index_config_id": {
+      "pattern": "^index-config-sha256-[0-9a-f]{64}$",
+      "title": "Index Config Id",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/IndexSource"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "title": "Sources",
+      "type": "array"
+    }
+  },
+  "required": [
+    "corpus_config_id",
+    "sources",
+    "index_config_id",
+    "evaluation_set_id"
+  ],
+  "title": "KnowledgeIndexRequest",
+  "type": "object"
+}

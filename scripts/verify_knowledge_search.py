@@ -57,10 +57,11 @@ def retrieval_candidate(root: Path) -> IndexCandidate:
 
     sources = []
     repos: dict[Repository, Path] = {}
+    namespace = "acceptance-" + secrets.token_hex(8)
     attacks = json.loads((ROOT / "tests/fixtures/rag/adversarial.v1.json").read_text())["documents"]
     for i, repository in enumerate(REPOSITORIES):
         repo = root / str(i)
-        (repo / "docs").mkdir(parents=True)
+        (repo / "docs" / namespace).mkdir(parents=True)
         run(repo, "init", "-q")
         run(repo, "config", "user.name", "Fixture author")
         run(repo, "config", "user.email", "fixture@example.invalid")
@@ -84,7 +85,7 @@ def retrieval_candidate(root: Path) -> IndexCandidate:
             )
         for name, access, status, body in specimens:
             raw = f"# {name}\n\n## Scope\n\n{body}\n".encode()
-            path = f"docs/{name}.md"
+            path = f"docs/{namespace}/{name}.md"
             (repo / path).write_bytes(raw)
             documents.append(
                 {
@@ -249,7 +250,7 @@ def verify_retrieval(candidate: IndexCandidate) -> dict[str, object]:
             "sql_tiny_context_budget_failed",
         )
         checks.append("real_exact_cosine_ties_acl_repo_type_status_history_diversity_and_budgets")
-        attack = next(c for c in candidate.chunks.chunks if c.path == "docs/attack.md")
+        attack = next(c for c in candidate.chunks.chunks if c.path.endswith("/attack.md"))
         attacked = query(request(attack.text), public)
         require(
             attacked.items[0].chunk == attack

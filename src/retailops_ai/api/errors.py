@@ -7,6 +7,7 @@ from starlette.responses import JSONResponse
 
 from retailops_ai.adapters.telemetry import CORRELATION_ID
 from retailops_ai.api.models import Problem, Ready
+from retailops_ai.knowledge.jobs import IndexErrorCode
 
 DETAILS = {
     400: "The request cannot be accepted.",
@@ -16,6 +17,7 @@ DETAILS = {
     405: "The method is not allowed.",
     413: "The request body exceeds the allowed size.",
     408: "The request body did not arrive in time.",
+    409: "The request conflicts with the recorded state.",
     422: "The request does not match the expected schema.",
     429: "The request limit was exceeded.",
     500: "An internal error occurred.",
@@ -24,7 +26,11 @@ DETAILS = {
 
 
 def problem_response(
-    status: int, *, readiness: Ready | None = None, headers: dict[str, str] | None = None
+    status: int,
+    *,
+    readiness: Ready | None = None,
+    headers: dict[str, str] | None = None,
+    code: IndexErrorCode | None = None,
 ) -> JSONResponse:
     current = CORRELATION_ID.get()
     if current is None:
@@ -40,6 +46,7 @@ def problem_response(
         instance=f"urn:uuid:{current}",
         correlation_id=UUID(current),
         readiness=readiness,
+        code=code,
     )
     return JSONResponse(
         problem.model_dump(mode="json", exclude_none=True),

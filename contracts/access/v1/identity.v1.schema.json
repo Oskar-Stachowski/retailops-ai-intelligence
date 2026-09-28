@@ -119,7 +119,8 @@
         "enum": [
           "forecast:read",
           "access:admin",
-          "knowledge:read"
+          "knowledge:read",
+          "knowledge:index"
         ],
         "type": "string"
       },

@@ -10,6 +10,8 @@ walidacja Git, [parser/chunker](docs/knowledge-chunks.md) oraz
 [atomowe przełączanie indeksów testowych](docs/knowledge-lifecycle.md).
 [Retrieval, filtry uprawnień/statusów i golden set](docs/knowledge-retrieval.md)
 mają wykonywalną ścieżkę offline/test i 36 pytań ewaluacyjnych.
+[Administracyjne runy indeksowania](docs/knowledge-administration.md) mają
+trwałe stany, idempotencję i worker dla zatwierdzonych snapshotów testowych.
 Wyszukiwanie i aktywacja rzeczywistego korpusu wymagają kolejnego odbioru jakości.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).

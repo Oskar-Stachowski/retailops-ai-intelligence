@@ -31,10 +31,16 @@ korpus i etykiety pozostają propozycją. Fake report nie otwiera aktywacji.
 [Odbiór retrieval](evidence/11-retrieval.md): 498 testów, świeży PG/HTTP,
 7/7 krytycznych przypadków oraz jawnie nieprzechodzące progi Recall@5/MRR z fake.
 
-**Postęp etapu 11: około 80%** — szacunek zakresu implementacji, z uwzględnieniem
+[Administracja indeksami](knowledge-administration.md) dodaje osobny grant,
+trwałe runy/idempotencję, odczyt current i worker zatwierdzonych snapshotów
+`test/fake`. Run zapisuje kandydata i raport; nie aktywuje indeksu.
+Użytkowe profile z golden evaluation wymagają rozszerzenia i odbioru jakości.
+
+**Postęp etapu 11: około 85%** — szacunek zakresu implementacji, z uwzględnieniem
 niezamkniętych odbiorów. Rejestr/metadata, parser, fake/storage, test lifecycle
 i ograniczony retrieval są zaimplementowane. Punkt 7 ma golden set i raport,
-ale administracyjne runy oraz odbiór jakości/źródeł pozostają otwarte.
+administracyjne runy mają odbiór techniczny w zakresie test/fake.
+Odbiór jakości/źródeł i profil użytkowy pozostają otwarte.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
@@ -49,7 +55,8 @@ opisują odbiór i restart wymagany po zmianie polityki.
 prediction/run/tool/bundle, JSON Schema, syntetyczne fixtures i walidacja offline.
 [Dowody](evidence/01-contracts.md) opisują testy struktury, PIT, lineage, identity,
 stanów runa i bezpiecznych tool results. Nie ma jeszcze importera, treningu ani
-endpointów predykcji. Schemat runa/tool nie oznacza działającego workera/agenta.
+endpointów predykcji. Schemat runa ML/tool nie oznacza workera treningu/agenta;
+administracyjne runy RAG mają osobny worker testowy.
 
 [Odbiór persistence](evidence/01-persistence.md) opisuje rzeczywisty Compose,
 crash/restart, DB outage/recovery i zachowanie artefaktów.
@@ -62,8 +69,8 @@ i required-result; main wymaga PR i aktualnej gałęzi również dla administrat
 ## Następna praca
 
 Główny kierunek: DATA-01 etapu 02 w RetailOps — konfiguracja, identity i manifest v2.
-Drugi strumień na `ai/rag-corpus`: administracyjne index runs/read-current HTTP,
-near duplicates i zamknięcie kwalifikacji etapu 11. Kandydat i golden labels
+Drugi strumień na `ai/rag-corpus`: near duplicates, odświeżenie/przegląd źródeł
+i zamknięcie kwalifikacji etapu 11. Kandydat i golden labels
 wymagają przeglądu/odświeżenia źródeł, doboru statusów/access i odbioru jakości
 przed użytkową aktywacją. Real embeddings/Bedrock smoke i agent są w etapie 12.
 Praca nie zależy od zakończenia DATA-01. Etap 03 wymaga odbioru

@@ -1,0 +1,208 @@
+"""Approved offline build snapshots and safe administrative run references."""
+
+from typing import Annotated, Literal, Self
+
+from pydantic import Field, field_validator, model_validator
+
+from retailops_ai.data_contracts.common import (
+    CommitSha,
+    Contract,
+    FalseFlag,
+    Sha256,
+    Symbol,
+    TrueFlag,
+    UtcTime,
+)
+from retailops_ai.data_contracts.identity import canonical_sha256
+from retailops_ai.knowledge.chunks import ChunkManifest, ChunkManifestID
+from retailops_ai.knowledge.contracts import REPOSITORIES, ConfigID, CorpusID, Repository
+from retailops_ai.knowledge.indexes import Dimension, EmbeddingConfig, IndexID, SpaceID
+from retailops_ai.knowledge.releases import CorpusApproval, IndexValidation, approval_matches
+
+BuildProfileID = Annotated[str, Field(pattern=r"^index-build-profile-sha256-[0-9a-f]{64}$")]
+IndexConfigID = Annotated[str, Field(pattern=r"^index-config-sha256-[0-9a-f]{64}$")]
+ReportID = Annotated[str, Field(pattern=r"^index-run-report-sha256-[0-9a-f]{64}$")]
+ManifestRef = Annotated[str, Field(pattern=r"^db:ai.rag_indexes:index-sha256-[0-9a-f]{64}$")]
+ReportRef = Annotated[
+    str, Field(pattern=r"^db:ai.rag_index_reports:index-run-report-sha256-[0-9a-f]{64}$")
+]
+EvaluationID = Literal["offline-index-mechanics-v1"]
+IndexErrorCode = Literal[
+    "configuration-not-approved",
+    "idempotency-conflict",
+    "index-run-not-found",
+    "index-not-configured",
+    "queue-full",
+    "worker-busy",
+    "claim-lost",
+]
+
+
+class IndexSource(Contract):
+    repository: Repository
+    commit_sha: CommitSha
+
+    @field_validator("commit_sha")
+    @classmethod
+    def real_revision(cls, value: str) -> str:
+        if value == "0" * 40:
+            raise ValueError("placeholder_revision")
+        return value
+
+
+class KnowledgeIndexRequest(Contract):
+    corpus_config_id: ConfigID
+    sources: Annotated[tuple[IndexSource, ...], Field(min_length=2, max_length=2)]
+    index_config_id: IndexConfigID
+    evaluation_set_id: Symbol
+
+    @field_validator("sources", mode="before")
+    @classmethod
+    def json_arrays(cls, value: object) -> object:
+        return tuple(value) if isinstance(value, list) else value
+
+    @model_validator(mode="after")
+    def both_sources(self) -> Self:
+        if {s.repository for s in self.sources} != set(REPOSITORIES):
+            raise ValueError("both_registered_repositories_required")
+        return self
+
+    def request_hash(self) -> str:
+        body = self.model_dump(mode="json")
+        body["sources"] = [
+            s.model_dump(mode="json") for s in sorted(self.sources, key=lambda s: s.repository)
+        ]
+        return canonical_sha256(body)
+
+
+class IndexBuildProfile(Contract):
+    """Test-only acceptance, never an approval of the real proposed corpus or labels."""
+
+    schema_version: Literal["1.0"]
+    profile_id: BuildProfileID
+    environment: Literal["test"]
+    approval: CorpusApproval
+    chunks: ChunkManifest
+    embedding_config: EmbeddingConfig
+    evaluation_set_id: EvaluationID
+    purpose: Literal["offline_build_mechanics_only"]
+
+    @model_validator(mode="after")
+    def binding(self) -> Self:
+        corpus = self.chunks.corpus
+        if (
+            not approval_matches(
+                self.approval,
+                corpus.corpus_id,
+                corpus.corpus_config_id,
+                corpus.review_owner,
+                self.environment,
+            )
+            or corpus.environment != self.environment
+        ):
+            raise ValueError("build_profile_review_binding_mismatch")
+        if self.profile_id != "index-build-profile-sha256-" + canonical_sha256(
+            self.model_dump(mode="json", exclude={"profile_id"})
+        ):
+            raise ValueError("build_profile_identity_mismatch")
+        return self
+
+    def index_config_id(self) -> str:
+        return index_config_id(self.chunks, self.embedding_config)
+
+    def request(self) -> KnowledgeIndexRequest:
+        return KnowledgeIndexRequest.model_validate(
+            {
+                "corpus_config_id": self.chunks.corpus.corpus_config_id,
+                "sources": tuple(
+                    IndexSource(repository=s.repository, commit_sha=s.commit_sha)
+                    for s in sorted(self.chunks.corpus.sources, key=lambda s: s.repository)
+                ),
+                "index_config_id": self.index_config_id(),
+                "evaluation_set_id": self.evaluation_set_id,
+            }
+        )
+
+
+class KnowledgeRunInput(Contract):
+    request: KnowledgeIndexRequest
+    request_hash: Sha256
+    profile_id: BuildProfileID
+    environment: Literal["test"]
+
+    @model_validator(mode="after")
+    def binding(self) -> Self:
+        if self.request_hash != self.request.request_hash():
+            raise ValueError("index_run_request_hash_mismatch")
+        return self
+
+
+class KnowledgeRunOutput(Contract):
+    kind: Literal["knowledge_index"]
+    complete: TrueFlag
+    index_id: IndexID
+    manifest_ref: ManifestRef
+    evaluation_report_ref: ReportRef
+    activation_status: Literal["candidate"]
+
+    @model_validator(mode="after")
+    def binding(self) -> Self:
+        if self.manifest_ref != "db:ai.rag_indexes:" + self.index_id:
+            raise ValueError("index_run_manifest_reference_mismatch")
+        return self
+
+
+class IndexRunReport(Contract):
+    schema_version: Literal["1.0"]
+    report_id: ReportID
+    profile_id: BuildProfileID
+    validation: IndexValidation
+    purpose: Literal["offline_build_mechanics_only"]
+    activation_allowed: FalseFlag
+
+    @model_validator(mode="after")
+    def identity(self) -> Self:
+        if self.validation.environment != "test":
+            raise ValueError("index_run_report_requires_test_environment")
+        if self.report_id != "index-run-report-sha256-" + canonical_sha256(
+            self.model_dump(mode="json", exclude={"report_id"})
+        ):
+            raise ValueError("index_run_report_identity_mismatch")
+        return self
+
+
+class CurrentKnowledgeIndex(Contract):
+    schema_version: Literal["1.0"] = "1.0"
+    index_id: IndexID
+    status: Literal["active"] = "active"
+    environment: Literal["test"]
+    lane: Literal["offline_test"]
+    purpose: Literal["lifecycle_validation_only"]
+    manifest_ref: ManifestRef
+    corpus_manifest_id: CorpusID
+    chunk_manifest_id: ChunkManifestID
+    index_config_id: IndexConfigID
+    embedding_config_id: SpaceID
+    dimension: Dimension
+    document_count: Annotated[int, Field(ge=2, le=128)]
+    chunk_count: Annotated[int, Field(ge=1, le=32768)]
+    activated_at: UtcTime
+    evaluation_report_ref: Annotated[
+        str, Field(pattern=r"^db:ai.rag_qualifications:index-validation-sha256-[0-9a-f]{64}$")
+    ]
+
+    @model_validator(mode="after")
+    def binding(self) -> Self:
+        if self.manifest_ref != "db:ai.rag_indexes:" + self.index_id:
+            raise ValueError("current_index_manifest_reference_mismatch")
+        return self
+
+
+def index_config_id(chunks: ChunkManifest, embedding: EmbeddingConfig) -> str:
+    return "index-config-sha256-" + canonical_sha256(
+        {
+            "chunker_config_id": chunks.chunker_config_id,
+            "embedding_config": embedding.model_dump(mode="json"),
+            "storage_version": "pgvector-checked-dimension-v1",
+        }
+    )

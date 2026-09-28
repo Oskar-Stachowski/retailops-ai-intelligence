@@ -9,6 +9,7 @@ from pathlib import Path
 from pydantic import ValidationError
 from pydantic_settings import SettingsError
 
+from retailops_ai.cli_index_jobs import add_job_commands, run_job_command
 from retailops_ai.cli_knowledge import add_knowledge_commands, run_denial, run_evaluation
 from retailops_ai.cli_releases import add_commands, run_database_command, run_validation
 from retailops_ai.config import load_settings
@@ -68,6 +69,7 @@ def main(argv: list[str] | None = None) -> int:
     store.add_argument("--env-file", type=Path)
     add_commands(commands)
     add_knowledge_commands(commands)
+    add_job_commands(commands)
     args = parser.parse_args(argv)
 
     if args.command == "version":
@@ -238,6 +240,12 @@ def main(argv: list[str] | None = None) -> int:
         return run_database_command(args, settings)
     if args.command == "knowledge-deny":
         return run_denial(args, settings)
+    if args.command in {
+        "knowledge-profile-register",
+        "knowledge-index-work",
+        "knowledge-index-cancel",
+    }:
+        return run_job_command(args, settings)
 
     if args.command == "migrate":
         from retailops_ai.migrations.runner import migrate

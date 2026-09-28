@@ -8,11 +8,12 @@
             "enum": [
               "forecast:read",
               "access:admin",
-              "knowledge:read"
+              "knowledge:read",
+              "knowledge:index"
             ],
             "type": "string"
           },
-          "maxItems": 3,
+          "maxItems": 4,
           "minItems": 1,
           "title": "Capabilities",
           "type": "array"

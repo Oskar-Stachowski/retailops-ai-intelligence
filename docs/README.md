@@ -33,6 +33,8 @@ rollback i zachowanie pełnego pin po restartach na świeżej bazie.
 scope, statusy, live deny i wersjonowane etykiety dla 36 pytań.
 [Odbiór retrieval](evidence/11-retrieval.md) podaje 498 testów, rzeczywisty PG/HTTP,
 raport fake i pozostały zakres etapu 11.
+[Administracja indeksami](knowledge-administration.md) opisuje osobny grant,
+trwałe runy, zatwierdzone snapshoty, worker i odczyt bieżącego indeksu.
 
 ## Mapa repo
 

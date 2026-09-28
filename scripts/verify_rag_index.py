@@ -14,6 +14,7 @@ from typing import Any, Literal
 
 from sqlalchemy import Connection, text
 from sqlalchemy.exc import DBAPIError
+from verify_knowledge_admin import verify_administration
 from verify_knowledge_search import retrieval_candidate, verify_retrieval
 from verify_rag_lifecycle import verify_lifecycle
 
@@ -404,6 +405,9 @@ if __name__ == "__main__":
         )
         report["retrieval"] = verify_retrieval(
             IndexCandidate.model_validate_json(json.dumps(raw["retrieval"]))
+        )
+        report["administration"] = verify_administration(
+            IndexCandidate.model_validate_json(json.dumps(raw["lifecycle"][-1]))
         )
         print(json.dumps(report))
     except Exception as exc:

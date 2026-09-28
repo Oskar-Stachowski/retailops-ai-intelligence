@@ -7,7 +7,9 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import Field
 from sqlalchemy.exc import SQLAlchemyError
 
+from retailops_ai.adapters.index_jobs import IndexAdministration
 from retailops_ai.adapters.knowledge_search import KnowledgeBackend
+from retailops_ai.api.index_jobs import add_index_routes
 from retailops_ai.api.middleware import single_header
 from retailops_ai.api.models import Problem
 from retailops_ai.data_contracts.common import Contract, Symbol, Versioned
@@ -52,6 +54,7 @@ def access_router(
     authority: LocalAccess,
     knowledge_backend: KnowledgeBackend | None = None,
     environment: Literal["local", "test"] = "local",
+    index_administration: IndexAdministration | None = None,
 ) -> APIRouter:
     bearer = HTTPBearer(auto_error=False, scheme_name="apiBearer")
 
@@ -146,4 +149,5 @@ def access_router(
         except (SQLAlchemyError, ValueError, OverflowError):
             raise HTTPException(503) from None
 
+    add_index_routes(router, verified, index_administration)
     return router

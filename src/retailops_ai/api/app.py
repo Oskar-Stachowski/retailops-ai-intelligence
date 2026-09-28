@@ -17,6 +17,7 @@ from starlette.exceptions import HTTPException
 from starlette.responses import JSONResponse, Response
 
 from retailops_ai.adapters.database import DatabaseProbe, database_engine
+from retailops_ai.adapters.index_jobs import IndexAdministration, PostgresIndexAdministration
 from retailops_ai.adapters.knowledge_search import KnowledgeBackend, PostgresKnowledge
 from retailops_ai.adapters.telemetry import HttpMetrics, new_tracer
 from retailops_ai.adapters.vector_store import index_engine
@@ -53,6 +54,7 @@ def create_app(
     dependencies: tuple[Dependency, ...] = (),
     tracer: Tracer | None = None,
     knowledge_backend: KnowledgeBackend | None = None,
+    index_administration: IndexAdministration | None = None,
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
@@ -62,8 +64,11 @@ def create_app(
     )
     engine = database_engine(settings) if settings.database_url is not None else None
     knowledge_engine = None
-    if knowledge_backend is None and settings.database_url is not None:
+    if (
+        knowledge_backend is None or index_administration is None
+    ) and settings.database_url is not None:
         knowledge_engine = index_engine(settings)
+    if knowledge_backend is None and knowledge_engine is not None:
         knowledge_backend = PostgresKnowledge(
             knowledge_engine,
             settings.app_env,
@@ -71,6 +76,8 @@ def create_app(
                 Path(__file__).resolve().parents[1] / "knowledge/retrieval.default.json"
             ),
         )
+    if index_administration is None and knowledge_engine is not None:
+        index_administration = PostgresIndexAdministration(knowledge_engine, settings.app_env)
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
@@ -189,5 +196,7 @@ def create_app(
             return problem_response(401, headers={"WWW-Authenticate": "Bearer"})
         return Response(metrics.render(), headers={"Content-Type": CONTENT_TYPE_LATEST})
 
-    app.include_router(access_router(authority, knowledge_backend, settings.app_env))
+    app.include_router(
+        access_router(authority, knowledge_backend, settings.app_env, index_administration)
+    )
     return app
