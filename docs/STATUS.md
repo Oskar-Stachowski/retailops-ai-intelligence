@@ -67,11 +67,12 @@ prywatny eksport i retencja raportów. Czyste klony odtwarzają identyczny profi
 Run właściwego korpusu ma 9/9 krytycznych kontroli, lecz nie przechodzi
 Recall@5/MRR; zachowuje raport bez outputu i użytkowej aktywacji.
 
-**[Audyt Etapu 11](evidence/11-audit.md): zakres offline gotowy do PR;
+**[Audyt Etapu 11](evidence/11-audit.md): fundament offline zweryfikowany;
 pełny etap pozostaje otwarty.** Nie znaleziono błędów blokujących scalenie tego
 zakresu. Nowa regresja 104 testów i odtworzenie golden potwierdzają wcześniejszy
-odbiór 627 testów. Przed merge wymagany jest zielony zdalny Required CI dla
-tego branchu. Do pełnego odbioru brakuje ścieżki rzeczywistego providera,
+odbiór 627 testów. Zdalny odbiór i publikację tego zakresu śledzi
+[PR #3](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/3).
+Do pełnego odbioru brakuje ścieżki rzeczywistego providera,
 użytkowej kwalifikacji/aktywacji oraz potwierdzenia jakości semantycznej.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
@@ -104,12 +105,14 @@ Strumień danych: etap 03 — typed Parquet, polityka artefaktów i immutable
 exporter w RetailOps, następnie importer i curated w AI. Lokalny audyt 02
 w repo RetailOps potwierdza gotowość źródła; [audyt 11](evidence/11-audit.md)
 zapisuje odczytany stan i granicę tej weryfikacji.
-Drugi strumień na `ai/rag-corpus`: PR obecnego zakresu offline, ścieżka
-rzeczywistego providera oraz użytkowa kwalifikacja/aktywacja etapu 11.
+Drugi strumień: ścieżka rzeczywistego providera oraz użytkowa
+kwalifikacja/aktywacja etapu 11.
 Zgody na obecny korpus/etykiety zapisano; odbiór jakości pozostaje otwarty.
 Real embeddings/Bedrock smoke są w 12. Adaptery i test doubles można rozwijać
 wcześniej, ale pełny agent wymaga ukończenia 10 i 11.
 RAG i dane mogą postępować równolegle w osobnych branchach/worktree.
+[Mapa etapów i repozytoriów](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/plans/ai/kolejnosc-i-repozytoria.md)
+jest utrzymywana razem z instrukcjami w repo RetailOps.
 
 Token metryk nie jest systemem tożsamości użytkowników. MLflow ma lokalną
 izolację sieciową, bez aplikacyjnego auth. Pipeline danych, modele, wyszukiwanie
