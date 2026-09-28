@@ -310,6 +310,7 @@ finally:
             )
             raw = probe.model_dump(mode="json")
             raw.update(status="running", started_at=datetime.now(UTC).isoformat())
+            raw = RunRecord.model_validate_json(json.dumps(raw)).model_dump(mode="json")
             connection.execute(
                 text(
                     "UPDATE ai.knowledge_index_runs SET record=CAST(:record AS jsonb),claim_token=CAST(:claim AS uuid) WHERE run_id=:id"
@@ -332,6 +333,7 @@ finally:
                 "activation_status": "candidate",
             },
         )
+        raw = RunRecord.model_validate_json(json.dumps(raw)).model_dump(mode="json")
         rejected(
             "UPDATE ai.knowledge_index_runs SET record=CAST(:record AS jsonb),claim_token=NULL,output_index_id=:index,report_id=:report WHERE run_id=:id",
             {
