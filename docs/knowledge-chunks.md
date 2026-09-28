@@ -69,8 +69,9 @@ blokami nie są fragmentami. Dokument bez treści otrzymuje mapę
 Dokładnie takie same fragmenty w tym samym dokumencie, ścieżce nagłówków
 i typie bloku są scalane; wszystkie wystąpienia pozostają osobnymi cytatami.
 Identyczny tekst w różnych sekcjach lub dokumentach zachowuje osobne chunk IDs
-i metadata dostępu/statusu. Near duplicates nie są automatycznie usuwane;
-wymagają późniejszego raportu jakości, aby nie zgubić różnic w faktach lub negacji.
+i metadata dostępu/statusu. [Raport podobnych treści](knowledge-review.md)
+wskazuje near duplicates do przeglądu bez automatycznego usuwania,
+aby zachować różnice w faktach lub negacji.
 
 ## Tożsamość i cytowanie
 
@@ -115,5 +116,5 @@ w ramach dostępnych bloków. Zmiana semantyki parsera wymaga nowej wersji regu�
 fragmentów oraz sprawdzają przestrzeń i checksumy wektorów.
 [Atomowy wskaźnik i rollback](knowledge-lifecycle.md) mają osobny odbiór testowy;
 [retrieval i jego filtry](knowledge-retrieval.md) mają osobny odbiór offline/test.
-Użytkowa aktywacja, near duplicates i jakość golden set pozostają bramkami
-etapu 11. Przegląd redakcyjny korpusu może postępować równolegle.
+Użytkowa aktywacja, przegląd kandydatów podobieństwa i jakość golden set pozostają
+bramkami etapu 11. Przegląd redakcyjny korpusu może postępować równolegle.

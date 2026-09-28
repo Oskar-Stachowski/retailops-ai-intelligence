@@ -37,6 +37,10 @@ raport fake i pozostały zakres etapu 11.
 trwałe runy, zatwierdzone snapshoty, worker i odczyt bieżącego indeksu.
 [Odbiór administracji](evidence/11-administration.md) potwierdza 542 testy,
 rzeczywisty HTTP/PG, wznowienie workera, idempotencję i trwałość runów.
+[Kontrola podobnych treści](knowledge-review.md) opisuje raport dokładnych/near
+powtórzeń, pełną listę referencji i limity bez automatycznego usuwania lub zgody.
+[Odbiór podobieństwa](evidence/11-similarity.md) podaje kontrolę 20 dokumentów/
+302 fragmentów oraz niezależne porównanie wszystkich par.
 
 ## Mapa repo
 

@@ -30,11 +30,13 @@ from retailops_ai.knowledge.retrieval import (
     RetrievalRequest,
     RetrievalResult,
 )
+from retailops_ai.knowledge.review import SimilarityPolicy, SimilarityReport
 from retailops_ai.pipelines.chunks import load_chunker_config
 from retailops_ai.pipelines.corpus import load_registry
 from retailops_ai.pipelines.golden import load_golden_set
 from retailops_ai.pipelines.indexes import load_embedding_config
 from retailops_ai.pipelines.retrieval import load_retrieval_config
+from retailops_ai.pipelines.review import load_similarity_policy
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -68,6 +70,8 @@ def main() -> int:
         "knowledge-index-request": KnowledgeIndexRequest,
         "knowledge-index-run": KnowledgeRunRecord,
         "current-knowledge-index": CurrentKnowledgeIndex,
+        "similarity-policy": SimilarityPolicy,
+        "similarity-report": SimilarityReport,
     }
     for name, model in models.items():
         schema = model.model_json_schema()
@@ -84,6 +88,7 @@ def main() -> int:
     load_registry(ROOT / "knowledge/corpus.v1.json")
     load_chunker_config(ROOT / "knowledge/chunker.v1.json")
     load_embedding_config(ROOT / "knowledge/embeddings.fake.v1.json")
+    load_similarity_policy(ROOT / "knowledge/similarity.v1.json")
     config = load_retrieval_config(ROOT / "src/retailops_ai/knowledge/retrieval.default.json")
     golden = load_golden_set(ROOT / "knowledge/golden.v1.json")
     if golden.retrieval_config_id != config.config_id():

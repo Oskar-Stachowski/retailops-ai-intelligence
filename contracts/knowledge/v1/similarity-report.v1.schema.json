@@ -1,0 +1,707 @@
+{
+  "$defs": {
+    "EvidenceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Commit Pointer",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "expected_result": {
+          "enum": [
+            "success",
+            "passed",
+            "rejected"
+          ],
+          "title": "Expected Result",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "result_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Result Pointer",
+          "type": "string"
+        },
+        "scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Scope",
+          "type": "string"
+        },
+        "verified_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Verified At",
+          "type": "string"
+        },
+        "verified_at_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Verified At Pointer",
+          "type": "string"
+        },
+        "verified_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Verified Commit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "byte_sha256",
+        "verified_at",
+        "verified_commit",
+        "commit_pointer",
+        "verified_at_pointer",
+        "scope",
+        "result_pointer",
+        "expected_result"
+      ],
+      "title": "EvidenceReference",
+      "type": "object"
+    },
+    "Heading": {
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Level",
+          "type": "integer"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "level",
+        "title"
+      ],
+      "title": "Heading",
+      "type": "object"
+    },
+    "ImplementationReference": {
+      "additionalProperties": false,
+      "properties": {
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 240,
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "byte_sha256"
+      ],
+      "title": "ImplementationReference",
+      "type": "object"
+    },
+    "ManifestDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "access_class": {
+          "enum": [
+            "public_project",
+            "project_internal",
+            "restricted"
+          ],
+          "title": "Access Class",
+          "type": "string"
+        },
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "content_id": {
+          "pattern": "^markdown-sha256-[0-9a-f]{64}$",
+          "title": "Content Id",
+          "type": "string"
+        },
+        "document_id": {
+          "pattern": "^document-sha256-[0-9a-f]{64}$",
+          "title": "Document Id",
+          "type": "string"
+        },
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "document_type": {
+          "enum": [
+            "architecture",
+            "contract",
+            "guide",
+            "runbook",
+            "policy",
+            "plan",
+            "evidence",
+            "model_card"
+          ],
+          "title": "Document Type",
+          "type": "string"
+        },
+        "fact_scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Fact Scope",
+          "type": "string"
+        },
+        "implementation_refs": {
+          "items": {
+            "$ref": "#/$defs/ImplementationReference"
+          },
+          "maxItems": 8,
+          "title": "Implementation Refs",
+          "type": "array"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "verification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "byte_sha256",
+        "document_type",
+        "document_status",
+        "access_class",
+        "fact_scope",
+        "implementation_refs",
+        "verification",
+        "repository",
+        "commit_sha",
+        "document_id",
+        "content_id",
+        "source_ref"
+      ],
+      "title": "ManifestDocument",
+      "type": "object"
+    },
+    "ReviewContentGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "eligible_for_near": {
+          "title": "Eligible For Near",
+          "type": "boolean"
+        },
+        "member_ids": {
+          "items": {
+            "pattern": "^(document|chunk)-sha256-[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "maxItems": 32768,
+          "minItems": 1,
+          "title": "Member Ids",
+          "type": "array"
+        },
+        "metadata_differences": {
+          "items": {
+            "enum": [
+              "repository",
+              "document_status",
+              "access_class",
+              "fact_scope",
+              "document_type",
+              "block_type",
+              "heading_path"
+            ],
+            "type": "string"
+          },
+          "title": "Metadata Differences",
+          "type": "array"
+        },
+        "shingle_count": {
+          "minimum": 0,
+          "title": "Shingle Count",
+          "type": "integer"
+        },
+        "text_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Text Checksum",
+          "type": "string"
+        },
+        "utf8_bytes": {
+          "minimum": 0,
+          "title": "Utf8 Bytes",
+          "type": "integer"
+        },
+        "word_count": {
+          "minimum": 0,
+          "title": "Word Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "text_checksum",
+        "member_ids",
+        "utf8_bytes",
+        "word_count",
+        "shingle_count",
+        "eligible_for_near",
+        "metadata_differences"
+      ],
+      "title": "ReviewContentGroup",
+      "type": "object"
+    },
+    "ReviewMember": {
+      "additionalProperties": false,
+      "properties": {
+        "block_type": {
+          "anyOf": [
+            {
+              "enum": [
+                "paragraph",
+                "bullet_list",
+                "ordered_list",
+                "blockquote",
+                "fence",
+                "code_block",
+                "table",
+                "html_block",
+                "reference_definition"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Block Type"
+        },
+        "document": {
+          "$ref": "#/$defs/ManifestDocument"
+        },
+        "heading_path": {
+          "items": {
+            "$ref": "#/$defs/Heading"
+          },
+          "maxItems": 6,
+          "title": "Heading Path",
+          "type": "array"
+        },
+        "source_refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4096,
+          "minItems": 1,
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "unit_id": {
+          "pattern": "^(document|chunk)-sha256-[0-9a-f]{64}$",
+          "title": "Unit Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "unit_id",
+        "document",
+        "block_type",
+        "heading_path",
+        "source_refs"
+      ],
+      "title": "ReviewMember",
+      "type": "object"
+    },
+    "SimilarityAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_pairs_checked": {
+          "minimum": 0,
+          "title": "Candidate Pairs Checked",
+          "type": "integer"
+        },
+        "content_groups": {
+          "items": {
+            "$ref": "#/$defs/ReviewContentGroup"
+          },
+          "maxItems": 32768,
+          "title": "Content Groups",
+          "type": "array"
+        },
+        "level": {
+          "enum": [
+            "document",
+            "chunk"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "members": {
+          "items": {
+            "$ref": "#/$defs/ReviewMember"
+          },
+          "maxItems": 32768,
+          "title": "Members",
+          "type": "array"
+        },
+        "near_pairs": {
+          "items": {
+            "$ref": "#/$defs/SimilarityPair"
+          },
+          "maxItems": 10000,
+          "title": "Near Pairs",
+          "type": "array"
+        },
+        "posting_visits": {
+          "minimum": 0,
+          "title": "Posting Visits",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "level",
+        "members",
+        "content_groups",
+        "near_pairs",
+        "candidate_pairs_checked",
+        "posting_visits"
+      ],
+      "title": "SimilarityAnalysis",
+      "type": "object"
+    },
+    "SimilarityPair": {
+      "additionalProperties": false,
+      "properties": {
+        "common_shingles": {
+          "exclusiveMinimum": 0,
+          "title": "Common Shingles",
+          "type": "integer"
+        },
+        "left_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Left Checksum",
+          "type": "string"
+        },
+        "metadata_differences": {
+          "items": {
+            "enum": [
+              "repository",
+              "document_status",
+              "access_class",
+              "fact_scope",
+              "document_type",
+              "block_type",
+              "heading_path"
+            ],
+            "type": "string"
+          },
+          "title": "Metadata Differences",
+          "type": "array"
+        },
+        "right_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Right Checksum",
+          "type": "string"
+        },
+        "similarity_bps": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Similarity Bps",
+          "type": "integer"
+        },
+        "union_shingles": {
+          "exclusiveMinimum": 0,
+          "title": "Union Shingles",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "left_checksum",
+        "right_checksum",
+        "common_shingles",
+        "union_shingles",
+        "similarity_bps",
+        "metadata_differences"
+      ],
+      "title": "SimilarityPair",
+      "type": "object"
+    },
+    "SimilarityPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "const": "retrievable-word-trigram-jaccard-v1",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "max_candidate_pairs": {
+          "maximum": 250000,
+          "minimum": 1,
+          "title": "Max Candidate Pairs",
+          "type": "integer"
+        },
+        "max_features": {
+          "maximum": 250000,
+          "minimum": 1,
+          "title": "Max Features",
+          "type": "integer"
+        },
+        "max_posting_visits": {
+          "maximum": 2000000,
+          "minimum": 1,
+          "title": "Max Posting Visits",
+          "type": "integer"
+        },
+        "max_report_pairs": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Max Report Pairs",
+          "type": "integer"
+        },
+        "minimum_words": {
+          "maximum": 128,
+          "minimum": 3,
+          "title": "Minimum Words",
+          "type": "integer"
+        },
+        "normalization": {
+          "const": "nfkc-casefold-unicode-words-v1",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "shingle_words": {
+          "const": 3,
+          "title": "Shingle Words",
+          "type": "integer"
+        },
+        "threshold_bps": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Threshold Bps",
+          "type": "integer"
+        },
+        "unicode_version": {
+          "const": "14.0.0",
+          "title": "Unicode Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "algorithm",
+        "normalization",
+        "unicode_version",
+        "shingle_words",
+        "minimum_words",
+        "threshold_bps",
+        "max_features",
+        "max_candidate_pairs",
+        "max_posting_visits",
+        "max_report_pairs"
+      ],
+      "title": "SimilarityPolicy",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:knowledge:similarity-report:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "activation_allowed": {
+      "const": false,
+      "title": "Activation Allowed",
+      "type": "boolean"
+    },
+    "chunk_manifest_id": {
+      "pattern": "^chunks-sha256-[0-9a-f]{64}$",
+      "title": "Chunk Manifest Id",
+      "type": "string"
+    },
+    "chunker_config_id": {
+      "pattern": "^chunker-config-sha256-[0-9a-f]{64}$",
+      "title": "Chunker Config Id",
+      "type": "string"
+    },
+    "chunks": {
+      "$ref": "#/$defs/SimilarityAnalysis"
+    },
+    "content_trust": {
+      "const": "untrusted_reference",
+      "title": "Content Trust",
+      "type": "string"
+    },
+    "corpus_config_id": {
+      "pattern": "^corpus-config-sha256-[0-9a-f]{64}$",
+      "title": "Corpus Config Id",
+      "type": "string"
+    },
+    "corpus_id": {
+      "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+      "title": "Corpus Id",
+      "type": "string"
+    },
+    "documents": {
+      "$ref": "#/$defs/SimilarityAnalysis"
+    },
+    "environment": {
+      "enum": [
+        "local",
+        "test",
+        "dev",
+        "production"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "outcome": {
+      "enum": [
+        "review_required",
+        "no_lexical_candidates"
+      ],
+      "title": "Outcome",
+      "type": "string"
+    },
+    "policy": {
+      "$ref": "#/$defs/SimilarityPolicy"
+    },
+    "policy_id": {
+      "pattern": "^similarity-policy-sha256-[0-9a-f]{64}$",
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "purpose": {
+      "const": "lexical_candidates_for_editorial_review_only",
+      "title": "Purpose",
+      "type": "string"
+    },
+    "repeated_chunk_occurrences": {
+      "minimum": 0,
+      "title": "Repeated Chunk Occurrences",
+      "type": "integer"
+    },
+    "report_id": {
+      "pattern": "^similarity-report-sha256-[0-9a-f]{64}$",
+      "title": "Report Id",
+      "type": "string"
+    },
+    "review_owner": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Review Owner",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "purpose",
+    "corpus_id",
+    "corpus_config_id",
+    "chunk_manifest_id",
+    "chunker_config_id",
+    "environment",
+    "review_owner",
+    "content_trust",
+    "policy",
+    "policy_id",
+    "documents",
+    "chunks",
+    "repeated_chunk_occurrences",
+    "outcome",
+    "activation_allowed",
+    "report_id"
+  ],
+  "title": "SimilarityReport",
+  "type": "object"
+}

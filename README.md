@@ -12,6 +12,8 @@ walidacja Git, [parser/chunker](docs/knowledge-chunks.md) oraz
 mają wykonywalną ścieżkę offline/test i 36 pytań ewaluacyjnych.
 [Administracyjne runy indeksowania](docs/knowledge-administration.md) mają
 trwałe stany, idempotencję i worker dla zatwierdzonych snapshotów testowych.
+[Raport podobnych treści](docs/knowledge-review.md) wskazuje dokładne i near
+powtórzenia do przeglądu, zachowując metadata oraz cytaty.
 Wyszukiwanie i aktywacja rzeczywistego korpusu wymagają kolejnego odbioru jakości.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).

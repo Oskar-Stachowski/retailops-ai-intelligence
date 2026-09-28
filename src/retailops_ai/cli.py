@@ -53,6 +53,15 @@ def main(argv: list[str] | None = None) -> int:
     chunks.add_argument("--retailops-repo", type=Path, required=True)
     chunks.add_argument("--ai-repo", type=Path, required=True)
     chunks.add_argument("--output", type=Path, help="Write a new immutable chunk manifest.")
+    review = commands.add_parser(
+        "corpus-review", help="Report exact and near lexical duplicates from pinned Git sources."
+    )
+    review.add_argument("--registry", type=Path, required=True)
+    review.add_argument("--chunker-config", type=Path, required=True)
+    review.add_argument("--similarity-policy", type=Path, required=True)
+    review.add_argument("--retailops-repo", type=Path, required=True)
+    review.add_argument("--ai-repo", type=Path, required=True)
+    review.add_argument("--output", type=Path, required=True)
     index = commands.add_parser(
         "index-build", help="Build an offline fake embedding candidate from pinned Git sources."
     )
@@ -81,6 +90,10 @@ def main(argv: list[str] | None = None) -> int:
         return run_validation(args)
     if args.command == "knowledge-evaluate":
         return run_evaluation(args)
+    if args.command == "corpus-review":
+        from retailops_ai.cli_review import run_review
+
+        return run_review(args)
 
     if args.command == "access-init":
         from retailops_ai.security.provision import provision

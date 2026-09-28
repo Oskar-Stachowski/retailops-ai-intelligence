@@ -5,8 +5,9 @@ granice korpusu oraz metadane statusu, czyli pierwszy zakres punktów 1–2 plan
 [Parser i chunker](knowledge-chunks.md) realizuje kolejny zakres punktu 3.
 [Fake embeddings i zapis kandydata](knowledge-index.md) zachowują ten korpus
 w pgvector. [Lifecycle](knowledge-lifecycle.md) obsługuje kwalifikację,
-atomowy wskaźnik i rollback syntetycznych indeksów testowych. Wyszukiwanie RAG
-i aktywacja rzeczywistego korpusu pozostają następnymi zakresami.
+atomowy wskaźnik i rollback syntetycznych indeksów testowych.
+[Retrieval](knowledge-retrieval.md) i [administracyjne runy](knowledge-administration.md)
+działają w odebranym zakresie test/fake; aktywacja rzeczywistego korpusu pozostaje otwarta.
 [Bieżący status](STATUS.md), [dowody rejestru](evidence/11-corpus.md).
 
 ## Co jest zarejestrowane
@@ -106,7 +107,9 @@ live deny na syntetycznych indeksach testowych. Manifest zawsze oznacza treść 
 
 Raportujemy dokładne duplikaty dokumentów po normalizacji LF. Pomijanie nawigacji,
 heading paths i usuwanie osieroconych fragmentów realizuje [chunker](knowledge-chunks.md).
-Near duplicates pozostają późniejszą kontrolą jakości. Document IDs nie są chunk IDs.
+[Kontrola podobnych treści](knowledge-review.md) raportuje także near duplicates
+na podstawie wersjonowanej polityki leksykalnej, bez automatycznego usuwania.
+Document IDs nie są chunk IDs.
 
 ## Kontrakty i następny zakres
 
@@ -118,5 +121,5 @@ Zmiana źródłowego SHA wymaga ponownego związania checksum i odwołań oraz
 przeglądu propozycji.
 
 Następny zakres: przegląd redakcyjny oraz odświeżenie źródeł i golden labels,
-administracyjne index runs i użytkowa polityka kwalifikacji.
+profil użytkowy i polityka kwalifikacji jakości.
 Użytkowa aktywacja wymaga tych odbiorów; fake walidacja nie otwiera tej bramki.
