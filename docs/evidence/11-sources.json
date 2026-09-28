@@ -15,7 +15,7 @@
       "tests/test_retrieval.py": "39211dd884327e8eb7fc900fd53df6b717ba2bae143b2ab9058e8c9108b3f70f"
     }
   },
-  "verified_at": "2026-09-28T13:54:15.454976+00:00",
+  "verified_at": "2026-09-28T14:04:52.760044+00:00",
   "pushed": false,
   "corpus_approved": false,
   "labels_approved": false,
@@ -497,5 +497,71 @@
     }
   ],
   "full_golden_report": "docs/evidence/11-sources-golden.json",
-  "full_golden_report_sha256": "81ebedd28de7a1fafa18948ddeacf3e26cf20c1e170d9f4e1bba1403a1479d68"
+  "full_golden_report_sha256": "81ebedd28de7a1fafa18948ddeacf3e26cf20c1e170d9f4e1bba1403a1479d68",
+  "branch": "ai/rag-corpus",
+  "implementation_commit": "7f00b30b655c69db4a93aa91788761723b2a9bf7",
+  "runtime": {
+    "python": "3.11.15",
+    "unicode": "14.0.0",
+    "os": "Darwin",
+    "architecture": "arm64"
+  },
+  "proposal_files_sha256": {
+    "knowledge/corpus.v1.json": "094d302ccdb7ac483cddd49b0162a298fbc7814a748e5747cae8e9f917a006a0",
+    "knowledge/golden.v1.json": "c25768542c1fa204c0c52c813d6588323d04282c64d218cd4d91087c037d2f27",
+    "knowledge/chunker.v1.json": "1100e756b4e2c959cdac774fc7249d11c9b0bb7e5d0524a305a2527b8fcd15b0",
+    "knowledge/embeddings.fake.v1.json": "cf1189f4e0df3ba996c42ea99c1458a8b83b6ac1c97869f23382950d63e6cd87",
+    "knowledge/similarity.v1.json": "b5adbaaff8caebbddbe29b5c7eb5fc5e0a59bfd772cf2ac9165313af93e89e39"
+  },
+  "full_ci": {
+    "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+    "exit_code": 0,
+    "passed": 578,
+    "test_seconds": 117.58,
+    "fresh_venv": true,
+    "clean_git_status": true,
+    "checks": [
+      "ruff_check",
+      "ruff_format",
+      "mypy_86_files",
+      "pytest",
+      "docs_links",
+      "intelligence_access_knowledge_snapshots",
+      "wheel_and_sdist",
+      "compose_config",
+      "gitleaks_git_and_dir"
+    ]
+  },
+  "reproduction": {
+    "implementation_commit": "7f00b30b655c69db4a93aa91788761723b2a9bf7",
+    "installed_cli_outside_repository": true,
+    "different_python_hash_seed": 317,
+    "invalid_service_settings_ignored": true,
+    "separate_local_git_clones": true,
+    "command_exit_codes": {
+      "index-build": 0,
+      "corpus-review": 0,
+      "knowledge-evaluate": 0
+    },
+    "index_byte_for_byte_equal": true,
+    "index_file_sha256": "faefbbc1a0e52bae7b5b0bdf535fc12d07ec373d5d9efae8071854ef881f451b",
+    "similarity_byte_for_byte_equal": true,
+    "similarity_file_sha256": "13ce4cfe91cfaaf542dbef7e260ca93cc7c1b201678ce52521a075127136374a",
+    "golden_equal_except_timing": true,
+    "golden_comparison_ignored_fields": [
+      "latency_p95_ms",
+      "cases[].elapsed_ms"
+    ],
+    "private_files_mode": "0600",
+    "guard_code_hashes_match": true,
+    "clean_git_status": true
+  },
+  "runtime_dependencies_added": [],
+  "remote_ci_executed_for_this_scope": false,
+  "stage_progress_estimate_percent": 90,
+  "remaining": [
+    "owner_approval_of_corpus_and_golden_labels",
+    "approved_user_profile_golden_quality_and_release_manifest",
+    "real_embeddings_bedrock_agent_acceptance_in_stage_12"
+  ]
 }

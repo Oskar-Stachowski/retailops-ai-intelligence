@@ -70,6 +70,21 @@ zgodność z przypiętym fragmentem, nie prawdziwość twierdzeń. Fake vectors 
 potwierdzają jakości semantycznej. Koszt wywołań modelu offline wynosi 0 USD.
 Po odświeżeniu 40 testów retrieval/golden przechodzi ponownie (11,91 s).
 
+## Czysty odbiór
+
+Pełne `make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks`
+na commicie `7f00b30b655c69db4a93aa91788761723b2a9bf7`, w osobnym klonie
+i świeżym venv, przechodzi: **578 testów w 117,58 s**, Ruff/format, strict Mypy
+(86 plików), linki, snapshoty kontraktów, wheel/sdist, Compose config i oba skany
+Gitleaks. Checkout pozostaje czysty.
+
+Zainstalowane CLI uruchomione spoza repozytorium, z `PYTHONHASHSEED=317`
+i niepoprawnym `APP_ENV`, odtwarza indeks oraz raport podobieństwa identyczne
+bajt po bajcie. Build od zera daje ten sam wynik co wcześniejsze użycie cache.
+Wyniki/cytaty/bramki wszystkich 44 pytań są identyczne; porównanie pomija wyłącznie
+czas wykonania każdego pytania i p95. Wszystkie nowe artefakty mają tryb `0600`.
+Reprodukcja używa osobnych lokalnych klonów obu repo i przypiętych źródeł Git.
+
 Przegląd techniczny metadanych/etykiet nie tworzy akceptacji korpusu i nie
 aktywuje indeksu. Pozostają akceptacja właściciela, profil użytkowy, kwalifikacja
 golden i release manifest; real embeddings/Bedrock/agent mają odbiór w etapie 12.

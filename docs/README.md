@@ -30,7 +30,7 @@ atomową aktywację testową, przypinanie wersji i rollback.
 [Odbiór lifecycle](evidence/11-lifecycle.md) potwierdza 463 testy, współbieżność,
 rollback i zachowanie pełnego pin po restartach na świeżej bazie.
 [Retrieval i golden set](knowledge-retrieval.md) opisują exact cosine, kontrolę
-scope, statusy, live deny i wersjonowane etykiety dla 36 pytań.
+scope, statusy, live deny i wersjonowany golden set (aktualnie 44 pytania).
 [Odbiór retrieval](evidence/11-retrieval.md) podaje 498 testów, rzeczywisty PG/HTTP,
 raport fake i pozostały zakres etapu 11.
 [Administracja indeksami](knowledge-administration.md) opisuje osobny grant,
@@ -44,7 +44,8 @@ powtórzeń, pełną listę referencji i limity bez automatycznego usuwania lub 
 [Odświeżenie źródeł i etykiet](knowledge-sources.md) opisuje przypięte snapshoty,
 scope twierdzeń i binding obu list golden sections przed ewaluacją.
 [Odbiór źródeł](evidence/11-sources.md) podaje 29 dokumentów/451 fragmentów,
-44 pytania i aktualny raport fake bez zgody na aktywację.
+44 pytania, 578 testów i identyczny indeks odtworzony z czystego checkoutu.
+Aktualny raport fake nie otwiera aktywacji.
 
 ## Mapa repo
 

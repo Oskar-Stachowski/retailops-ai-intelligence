@@ -47,7 +47,8 @@ leksykalnym 0,80; nie jest to potwierdzenie aktualności lub jakości semantyczn
 
 [Odświeżenie źródeł i etykiet](knowledge-sources.md) wiąże snapshoty AI `082bed4`
 i RetailOps `78f801f`. [Odbiór](evidence/11-sources.md): 29 dokumentów/451 fragmentów,
-44 pytania, walidacja obu list sekcji i 9/9 przypadków krytycznych.
+578 testów, 44 pytania, walidacja obu list sekcji i 9/9 przypadków krytycznych;
+czysty checkout odtwarza identyczny indeks oraz raport podobieństwa.
 Statusy i access istniejących pozycji zachowano, zakresy twierdzeń zawężono;
 aktualny raport podobieństwa ma jedną uzasadnioną kopię krótkiego wprowadzenia.
 Fake Recall@5/MRR nie przechodzą; źródła i etykiety nadal wymagają akceptacji.
