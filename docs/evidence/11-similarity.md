@@ -1,7 +1,8 @@
 # Odbiór kontroli podobnych treści — etap 11
 
 **2026-09-28 · raport leksykalny odebrany, przegląd redakcyjny pozostaje otwarty.**
-Baza `54198c0`, gałąź `ai/rag-corpus`.
+Implementacja `f91fd040a68678f571917b4d3bf23e35e7268dd5`, baza `54198c0`,
+gałąź `ai/rag-corpus`.
 [Pomiar JSON i hashe kodu](11-similarity.json),
 [instrukcja](../knowledge-review.md), [aktualny status](../STATUS.md).
 
@@ -48,8 +49,15 @@ bezpieczne błędy przy nieznanym SHA, niepoprawnej polityce i duplicate JSON ke
 Pydantic odrzuca niespójne coverage, cytaty, metadata, score, piny i aktywację;
 niezależny JSON Schema validator sprawdza politykę oraz raport.
 
-Ruff/format, strict Mypy (86 plików), dokumentacja, knowledge snapshots
-i Gitleaks dir przechodzą. Nie dodano zależności runtime.
+Pełne `make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks`
+przechodzi w czystej kopii finalnego commitu ze świeżym venv:
+**573 testy** (99,66 s), Ruff/format, strict Mypy (86 plików), dokumentacja,
+snapshots intelligence/access/knowledge, wheel/sdist, Compose config i Gitleaks
+git/dir. Nie dodano zależności runtime.
+
+Zainstalowany CLI uruchomiony poza repozytorium, z innym hash seed i niepoprawnymi
+settings serwisu odtwarza raport **identyczny bajt po bajcie** z osobnych lokalnych
+klonów obu repozytoriów. Checksuma i tryb `0600` są zgodne, a checkout pozostaje czysty.
 Odbiór nie wykonuje AWS/DB ani zmiany aktywnego wskaźnika.
 
 ## Dalszy zakres

@@ -60,8 +60,8 @@ jakości semantycznej. Rzeczywisty kandydat 20 dokumentów/302 fragmentów,
 rejestr źródeł i golden labels pozostają niezmienioną propozycją. Nie utworzono
 dla niego zgody ani profilu administracyjnego i nie aktywowano indeksu.
 
-**Około 85% etapu 11** to szacunek implementacji z otwartymi odbiorami.
-Pozostają near duplicates, odświeżenie i przegląd źródeł/statusów/dostępu/etykiet,
+Aktualny postęp opisuje [status](../STATUS.md), a kontrola podobnych treści ma
+[osobny odbiór](11-similarity.md). Pozostają odświeżenie i przegląd źródeł/statusów/dostępu/etykiet,
 profil użytkowy z kwalifikacją golden oraz powiązanie release manifestu.
 Real embeddings, Bedrock i agent mają osobny odbiór w etapie 12.
 Commity zapisano lokalnie; nie wykonano push ani zdalnego Required CI dla tego zakresu.

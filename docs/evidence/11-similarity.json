@@ -3,7 +3,7 @@
   "stage": "11",
   "scope": "bounded_exact_and_near_lexical_corpus_review",
   "result": "passed",
-  "verified_at": "2026-09-28T13:30:49.144128+00:00",
+  "verified_at": "2026-09-28T13:35:26.366082+00:00",
   "base_commit": "54198c0862aea960e695126d68d45242e15d8fa0",
   "branch": "ai/rag-corpus",
   "implementation_files_sha256": {
@@ -115,5 +115,37 @@
     "review_source_status_access_fact_scope_and_golden_labels",
     "approved_user_profile_golden_quality_and_release_manifest",
     "real_embeddings_bedrock_agent_acceptance_in_stage_12"
-  ]
+  ],
+  "implementation_commit": "f91fd040a68678f571917b4d3bf23e35e7268dd5",
+  "full_ci": {
+    "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+    "exit_code": 0,
+    "passed": 573,
+    "test_seconds": 99.66,
+    "fresh_venv": true,
+    "clean_git_status": true,
+    "checks": [
+      "ruff_check",
+      "ruff_format",
+      "mypy_86_files",
+      "pytest",
+      "docs_links",
+      "intelligence_access_knowledge_snapshots",
+      "wheel_and_sdist",
+      "compose_config",
+      "gitleaks_git_and_dir"
+    ]
+  },
+  "reproduction": {
+    "implementation_commit": "f91fd040a68678f571917b4d3bf23e35e7268dd5",
+    "installed_cli_outside_repository": true,
+    "different_python_hash_seed": 607,
+    "invalid_service_settings_ignored": true,
+    "separate_local_git_clones": true,
+    "report_byte_for_byte_equal": true,
+    "private_report_mode": "0600",
+    "report_file_sha256": "5f0ffe2bc0a0683f22824e571584c88b432320a3d8b595c417b0c4eb0ae19155",
+    "clean_git_status": true
+  },
+  "stage_progress_estimate_percent": 87
 }

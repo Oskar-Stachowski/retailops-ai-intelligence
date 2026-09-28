@@ -89,7 +89,7 @@ wynosi 0 USD; nie było AWS/Bedrock ani real embeddings.
 Aktualny postęp i otwarte odbiory opisuje [status etapu 11](../STATUS.md).
 Administracyjne runy i odczyt current mają
 [osobny odbiór test/fake](11-administration.md). Przegląd/odświeżenie źródeł
-i etykiet, near duplicates oraz release manifest/kwalifikacja użytkowa pozostają
+i etykiet, przegląd podobieństwa odświeżonych źródeł oraz release manifest/kwalifikacja użytkowa pozostają
 otwarte. Jakość z real embeddings, Bedrock smoke i agent mają odbiór w etapie 12.
 
 Istniejące manifesty creation/storage pozostają immutable, z revision 0002

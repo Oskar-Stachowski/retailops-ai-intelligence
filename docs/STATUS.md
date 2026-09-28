@@ -38,7 +38,14 @@ Użytkowe profile z golden evaluation wymagają rozszerzenia i odbioru jakości.
 [Odbiór administracji](evidence/11-administration.md): 542 testy, rzeczywisty
 PG/HTTP, idempotencja, wznowienie workera po SIGKILL i retencja po restartach.
 
-**Postęp etapu 11: około 85%** — szacunek zakresu implementacji, z uwzględnieniem
+[Kontrola podobnych treści](knowledge-review.md) ma deterministyczny raport
+dokładnych/near powtórzeń z cytatami i różnicami statusów/access, bez scalania
+lub usuwania treści. [Odbiór](evidence/11-similarity.md): 573 testy, identyczny
+raport z czystych klonów i zgodność z pełnym porównaniem wszystkich par.
+W przypiętym korpusie 20 dokumentów/302 fragmentów brak kandydatów przy progu
+leksykalnym 0,80; nie jest to potwierdzenie aktualności lub jakości semantycznej.
+
+**Postęp etapu 11: około 87%** — szacunek zakresu implementacji, z uwzględnieniem
 niezamkniętych odbiorów. Rejestr/metadata, parser, fake/storage, test lifecycle
 i ograniczony retrieval są zaimplementowane. Punkt 7 ma golden set i raport,
 administracyjne runy mają odbiór techniczny w zakresie test/fake.
@@ -70,12 +77,12 @@ i required-result; main wymaga PR i aktualnej gałęzi również dla administrat
 
 ## Następna praca
 
-Główny kierunek: DATA-01 etapu 02 w RetailOps — konfiguracja, identity i manifest v2.
-Drugi strumień na `ai/rag-corpus`: near duplicates, odświeżenie/przegląd źródeł
-i zamknięcie kwalifikacji etapu 11. Kandydat i golden labels
+Główny kierunek: dane etapu 02 w RetailOps.
+Drugi strumień na `ai/rag-corpus`: odświeżenie/przegląd źródeł i etykiet,
+ponowienie kontroli podobieństwa oraz zamknięcie kwalifikacji etapu 11. Kandydat i golden labels
 wymagają przeglądu/odświeżenia źródeł, doboru statusów/access i odbioru jakości
 przed użytkową aktywacją. Real embeddings/Bedrock smoke i agent są w etapie 12.
-Praca nie zależy od zakończenia DATA-01. Etap 03 wymaga odbioru
+Praca może postępować równolegle ze strumieniem danych. Etap 03 wymaga odbioru
 źródła z 02, a forecasting i serving kolejnych bramek.
 
 Token metryk nie jest systemem tożsamości użytkowników. MLflow ma lokalną

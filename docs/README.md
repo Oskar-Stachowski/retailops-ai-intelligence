@@ -40,7 +40,7 @@ rzeczywisty HTTP/PG, wznowienie workera, idempotencję i trwałość runów.
 [Kontrola podobnych treści](knowledge-review.md) opisuje raport dokładnych/near
 powtórzeń, pełną listę referencji i limity bez automatycznego usuwania lub zgody.
 [Odbiór podobieństwa](evidence/11-similarity.md) podaje kontrolę 20 dokumentów/
-302 fragmentów oraz niezależne porównanie wszystkich par.
+302 fragmentów, 573 testy oraz niezależne porównanie wszystkich par.
 
 ## Mapa repo
 
