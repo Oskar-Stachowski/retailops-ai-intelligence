@@ -67,11 +67,12 @@ prywatny eksport i retencja raportów. Czyste klony odtwarzają identyczny profi
 Run właściwego korpusu ma 9/9 krytycznych kontroli, lecz nie przechodzi
 Recall@5/MRR; zachowuje raport bez outputu i użytkowej aktywacji.
 
-**Postęp etapu 11: około 96%** — szacunek zakresu implementacji, z uwzględnieniem
-niezamkniętych odbiorów. Rejestr/metadata, parser, fake/storage, test lifecycle
-i ograniczony retrieval są zaimplementowane. Punkt 7 ma golden set i raport,
-administracyjne runy obejmują zatwierdzony korpus i pomiar golden fake.
-Odbiór jakości i użytkowa kwalifikacja pozostają otwarte.
+**[Audyt Etapu 11](evidence/11-audit.md): zakres offline gotowy do PR;
+pełny etap pozostaje otwarty.** Nie znaleziono błędów blokujących scalenie tego
+zakresu. Nowa regresja 104 testów i odtworzenie golden potwierdzają wcześniejszy
+odbiór 627 testów. Przed merge wymagany jest zielony zdalny Required CI dla
+tego branchu. Do pełnego odbioru brakuje ścieżki rzeczywistego providera,
+użytkowej kwalifikacji/aktywacji oraz potwierdzenia jakości semantycznej.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
@@ -99,12 +100,16 @@ i required-result; main wymaga PR i aktualnej gałęzi również dla administrat
 
 ## Następna praca
 
-Główny kierunek: dane etapu 02 w RetailOps.
-Drugi strumień na `ai/rag-corpus`: odbiór jakości i polityka użytkowej
-kwalifikacji etapu 11. Zgody na obecny korpus/etykiety zapisano;
-użytkowa aktywacja wymaga jeszcze odbioru jakości. Real embeddings/Bedrock smoke i agent są w etapie 12.
-Praca może postępować równolegle ze strumieniem danych. Etap 03 wymaga odbioru
-źródła z 02, a forecasting i serving kolejnych bramek.
+Strumień danych: etap 03 — typed Parquet, polityka artefaktów i immutable
+exporter w RetailOps, następnie importer i curated w AI. Lokalny audyt 02
+w repo RetailOps potwierdza gotowość źródła; [audyt 11](evidence/11-audit.md)
+zapisuje odczytany stan i granicę tej weryfikacji.
+Drugi strumień na `ai/rag-corpus`: PR obecnego zakresu offline, ścieżka
+rzeczywistego providera oraz użytkowa kwalifikacja/aktywacja etapu 11.
+Zgody na obecny korpus/etykiety zapisano; odbiór jakości pozostaje otwarty.
+Real embeddings/Bedrock smoke są w 12. Adaptery i test doubles można rozwijać
+wcześniej, ale pełny agent wymaga ukończenia 10 i 11.
+RAG i dane mogą postępować równolegle w osobnych branchach/worktree.
 
 Token metryk nie jest systemem tożsamości użytkowników. MLflow ma lokalną
 izolację sieciową, bez aplikacyjnego auth. Pipeline danych, modele, wyszukiwanie

@@ -3,6 +3,8 @@
 Zacznij od [statusu](STATUS.md), [decyzji](architecture/decisions.md) i
 [poleceń lokalnych](development.md). [Contributing](contributing.md) opisuje
 zmiany i PR-y, [security](security.md) — granice dostępu i zgłoszenia.
+[Audyt Etapu 11](evidence/11-audit.md) podaje gotowość do scalenia zakresu
+offline, otwarte warunki pełnego odbioru oraz możliwości dalszej pracy.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
