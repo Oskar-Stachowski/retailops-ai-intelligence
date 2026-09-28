@@ -22,7 +22,7 @@ crash/restart, DB outage/recovery i zachowanie artefaktów.
 [HTTP](evidence/01-http.md) i [fundament](evidence/01-foundation.md) zachowują zakres
 wcześniejszych pomiarów. Required CI obejmuje kod, schemas, docs i persistence.
 GitHub main ma required-result; CI bazowego 7d67530 ma success. Nowe commity
-persistence i kontraktów są lokalne; ich zdalny CI czeka na push.
+persistence, kontraktów i auth są lokalne; ich zdalny CI czeka na push.
 
 ## Następna praca
 

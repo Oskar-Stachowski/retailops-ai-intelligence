@@ -43,5 +43,40 @@
     "compose_has_no_policy_mount_application_endpoints_closed",
     "no_new_db_crash_restart_smoke"
   ],
-  "remote_ci": "not_pushed"
+  "remote_ci": "not_pushed",
+  "implementation_commit": "01eca67b1af4d0e082770ddb3e26dee601fa9d02",
+  "clean_checkout": {
+    "commit": "01eca67b1af4d0e082770ddb3e26dee601fa9d02",
+    "new_venv": true,
+    "make_bootstrap_ci_local": "passed",
+    "unit_tests": {
+      "passed": 267,
+      "skipped": 0,
+      "seconds": 12.27
+    },
+    "worktree": "clean"
+  },
+  "installed_wheel": {
+    "checked_at": "2026-09-28T07:29:31.916304+00:00",
+    "kind": "installed_wheel_real_loopback_outside_checkout",
+    "result": "passed",
+    "import_location": "runtime/site-packages/retailops_ai",
+    "dependencies": "production_from_uv_lock_with_hashes; no_dev_jsonschema",
+    "uv_pip_check": "passed",
+    "private_files_permissions": "directory_0700; policy_and_client_files_0600",
+    "http_checks": [
+      "identity_401_200",
+      "whole_scope_200_and_three_403",
+      "admin_403_200",
+      "admin_has_no_implicit_forecast_capability",
+      "request_claim_422_sanitized",
+      "health_ready_200",
+      "policy_revocation_requires_restart_then_401",
+      "no_tokens_or_private_path_in_logs",
+      "clean_shutdown_both_processes"
+    ],
+    "no_artifacts_created": true,
+    "wheel_sha256": "cd15c6102783f47f9070baaa00e4e077545256b499110163fcb9970c75adf802"
+  },
+  "actionlint": "passed"
 }
