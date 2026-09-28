@@ -9,7 +9,10 @@
       "type": "integer"
     },
     "diversification": {
-      "const": "repository-then-document-v1",
+      "enum": [
+        "repository-then-document-v1",
+        "score-then-document-v1"
+      ],
       "title": "Diversification",
       "type": "string"
     },

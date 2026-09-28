@@ -226,6 +226,10 @@ def main() -> int:
         if not isinstance(golden_report, dict):
             raise RuntimeError("invalid_golden_administration_report")
         expected_runs = [*expected_runs, *golden_report["retained_runs"]]
+        semantic_report = rag["semantic_lifecycle"]
+        if not isinstance(semantic_report, dict):
+            raise RuntimeError("invalid_semantic_report")
+        expected_runs = [*expected_runs, *semantic_report["retained_runs"]]
         stage = "write_ai_and_mlflow"
         sql(
             "retailops_ai",

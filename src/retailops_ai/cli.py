@@ -9,6 +9,7 @@ from pathlib import Path
 from pydantic import ValidationError
 from pydantic_settings import SettingsError
 
+from retailops_ai.cli_bedrock import add_bedrock_command, run_bedrock_prepare
 from retailops_ai.cli_index_jobs import add_job_commands, run_job_command
 from retailops_ai.cli_knowledge import add_knowledge_commands, run_denial, run_evaluation
 from retailops_ai.cli_qualification import add_release_check, run_profile_prepare, run_release_check
@@ -81,7 +82,10 @@ def main(argv: list[str] | None = None) -> int:
     add_knowledge_commands(commands)
     add_job_commands(commands)
     add_release_check(commands)
+    add_bedrock_command(commands)
     args = parser.parse_args(argv)
+    if args.command == "knowledge-bedrock-prepare":
+        return run_bedrock_prepare(args)
 
     if args.command == "version":
         info = ApplicationInfo(version=version("retailops-ai-intelligence"))
@@ -257,7 +261,13 @@ def main(argv: list[str] | None = None) -> int:
         print('{"error":"configuration_unavailable"}', file=sys.stderr)
         return 2
 
-    if args.command in {"index-qualify", "index-activate", "index-rollback", "index-current"}:
+    if args.command in {
+        "index-qualify",
+        "index-qualify-semantic",
+        "index-activate",
+        "index-rollback",
+        "index-current",
+    }:
         return run_database_command(args, settings)
     if args.command == "knowledge-deny":
         return run_denial(args, settings)

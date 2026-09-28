@@ -31,7 +31,7 @@ class RetrievalConfig(Contract):
     max_chunks_per_document: Literal[2]
     candidate_limit: Literal[256]
     min_cosine_score: Annotated[float, Field(ge=-1, le=1)]
-    diversification: Literal["repository-then-document-v1"]
+    diversification: Literal["repository-then-document-v1", "score-then-document-v1"]
     size_estimator: Literal["serialized-hits-utf8-div4-v1"]
 
     def config_id(self) -> str:

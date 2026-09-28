@@ -1,5 +1,9 @@
 # Lifecycle indeksu i atomowy wskaźnik — etap 11
 
+Ścieżkę rzeczywistych embeddings i użytkowej kwalifikacji opisuje
+[semantyczny RAG](knowledge-semantic.md). Poniższe polecenia fake pozostają
+oddzielną ścieżką testową.
+
 Kandydat pozostaje niemodyfikowalny. Osobne rekordy opisują decyzję o korpusie,
 walidację techniczną i historię aktywacji. Zmiana jednego wskaźnika nie modyfikuje
 fragmentów ani wektorów; stary indeks pozostaje dostępny do odtworzenia i rollback.
@@ -112,19 +116,12 @@ Podstawa: [PostgreSQL 16 — blokady](https://www.postgresql.org/docs/16/explici
 [statement snapshots](https://www.postgresql.org/docs/16/transaction-iso.html)
 i [deferred constraint triggers](https://www.postgresql.org/docs/16/sql-createtrigger.html).
 
-## Ograniczenia i następny zakres
+## Granice
 
-Kwalifikacja testowa nie odbiera jakości semantycznej ani uprawnień użytkowego
-retrieval. Nie ma podpisanych attestations lub production roles.
-Nie aktywowano rzeczywistego korpusu.
-Source status `specified` nadal oznacza plan, a `verified` przypięty pomiar.
-Stare kandydaty/zgody pozostają immutable. `0004_rag_denials` egzekwuje pilną blokadę dokumentu także
-dla starych pinów; nie ma współdzielonego cache wyników.
-
-[Retrieval](knowledge-retrieval.md), [administracyjne runy/read-current HTTP](knowledge-administration.md)
-i [odświeżenie źródeł](knowledge-sources.md) mają osobne odbiory.
-[Kontrola kwalifikacji](knowledge-qualification.md) wiąże manifest i decyzje,
-lecz polityka fake pozostawia jawne blokady. Zatwierdzony profil golden
-wykonuje pomiar i zachowuje raport. Następnie: polityka użytkowej kwalifikacji
-z odebraną jakością.
-Real embeddings i bounded Bedrock smoke pozostają etapem 12.
+Kwalifikacja testowa nie potwierdza jakości semantycznej. Użytkowa kwalifikacja
+korzysta z osobnego [release semantycznego](knowledge-semantic.md), udanego runa
+oraz odebranego golden set. Source status `specified` nadal oznacza plan,
+a `verified` przypięty pomiar. Stare kandydaty i zgody pozostają immutable;
+pilne blokady dokumentów obowiązują również stare piny. Nie ma cache wyników
+współdzielonego między użytkownikami. Podpisane attestations i role produkcyjne
+należą do późniejszego wdrożenia.

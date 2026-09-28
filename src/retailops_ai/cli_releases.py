@@ -33,6 +33,12 @@ def add_commands(commands: Any) -> None:
     qualification.add_argument("--validation", type=Path, required=True)
     qualification.add_argument("--lane", choices=("retrieval", "offline_test"), default="retrieval")
     qualification.add_argument("--env-file", type=Path)
+    semantic = commands.add_parser(
+        "index-qualify-semantic",
+        help="Reproduce and qualify a successful semantic run; activation remains explicit.",
+    )
+    semantic.add_argument("--run-id", required=True)
+    semantic.add_argument("--env-file", type=Path)
     for operation in ("activate", "rollback"):
         command = commands.add_parser(
             "index-" + operation,
@@ -73,7 +79,16 @@ def run_database_command(args: argparse.Namespace, settings: Settings) -> int:
     try:
         engine = index_engine(settings)
         try:
-            if args.command == "index-qualify":
+            if args.command == "index-qualify-semantic":
+                from retailops_ai.adapters.semantic_release import qualify_semantic_run
+
+                created = qualify_semantic_run(engine, settings.app_env, args.run_id)
+                result: dict[str, object] = {
+                    "status": "qualified" if created else "already_qualified",
+                    "run_id": args.run_id,
+                    "lane": "retrieval",
+                }
+            elif args.command == "index-qualify":
                 created = qualify_index(
                     engine,
                     args.index_id,
@@ -82,7 +97,7 @@ def run_database_command(args: argparse.Namespace, settings: Settings) -> int:
                     load_approval(args.approval),
                     load_release_document(args.validation, IndexValidation),
                 )
-                result: dict[str, object] = {
+                result = {
                     "status": "qualified" if created else "already_qualified",
                     "index_id": args.index_id,
                     "environment": settings.app_env,

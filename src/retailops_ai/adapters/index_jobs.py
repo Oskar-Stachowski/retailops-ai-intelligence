@@ -194,8 +194,10 @@ class PostgresIndexAdministration:
             if pin is None:
                 return None
             row = connection.execute(
-                text("""SELECT e.recorded_at,i.chunk_manifest
+                text("""SELECT e.recorded_at,i.chunk_manifest,r.report_id
                 FROM ai.rag_index_changes e JOIN ai.rag_indexes i USING(index_id)
+                JOIN ai.rag_qualifications q ON q.index_id=e.index_id AND q.environment=e.environment AND q.lane=e.lane
+                LEFT JOIN ai.rag_semantic_releases r ON r.release_id=q.release_id
                 WHERE e.request_id=:request"""),
                 {"request": pin.request_id},
             ).one()
@@ -218,7 +220,9 @@ class PostgresIndexAdministration:
                 document_count=len(chunks.corpus.documents),
                 chunk_count=manifest.chunk_count,
                 activated_at=row.recorded_at,
-                evaluation_report_ref="db:ai.rag_qualifications:" + pin.validation_id,
+                evaluation_report_ref=("db:ai.rag_index_reports:" + row.report_id)
+                if pin.lane == "retrieval"
+                else ("db:ai.rag_qualifications:" + pin.validation_id),
             )
 
 
@@ -338,7 +342,14 @@ def execute_run(engine: Engine, environment: Literal["local", "test"], run_id: s
                         or profile.request().request_hash() != current.input_ref.request_hash
                     ):
                         raise ValueError("worker_profile_binding_mismatch")
-                    candidate = build_index(profile.chunks, profile.embedding_config)
+                    from retailops_ai.knowledge.jobs import SemanticIndexBuildProfile
+                    from retailops_ai.pipelines.index_builds import build_profile_candidate
+
+                    candidate = (
+                        build_profile_candidate(profile)
+                        if isinstance(profile, SemanticIndexBuildProfile)
+                        else build_index(profile.chunks, profile.embedding_config)
+                    )
                     validation = validate_candidate(candidate)
                     report = build_run_report(profile, candidate, validation)
                     store_candidate(engine, candidate)

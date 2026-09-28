@@ -18,6 +18,7 @@ from verify_golden_jobs import verify_golden_administration
 from verify_knowledge_admin import verify_administration
 from verify_knowledge_search import retrieval_candidate, verify_retrieval
 from verify_rag_lifecycle import verify_lifecycle
+from verify_semantic_release import verify_semantic_lifecycle
 
 from retailops_ai.adapters import vector_store
 from retailops_ai.adapters.git_documents import CorpusError
@@ -411,6 +412,9 @@ if __name__ == "__main__":
             IndexCandidate.model_validate_json(json.dumps(raw["lifecycle"][-1]))
         )
         report["golden_administration"] = verify_golden_administration(candidates[0])
+        report["semantic_lifecycle"] = verify_semantic_lifecycle(
+            IndexCandidate.model_validate_json(json.dumps(raw["lifecycle"][-1]))
+        )
         print(json.dumps(report))
     except Exception as exc:
         # SQL exceptions may contain DSNs, parameters or document content.

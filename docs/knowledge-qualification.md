@@ -1,5 +1,9 @@
 # Kontrola przed kwalifikacją indeksu
 
+Ścieżkę rzeczywistych embeddings i użytkowej kwalifikacji opisuje
+[semantyczny RAG](knowledge-semantic.md). Poniższe polecenia fake pozostają
+oddzielną ścieżką testową.
+
 `index-release-check` tworzy jeden niemodyfikowalny manifest gotowości z korpusu,
 indeksu, konfiguracji retrieval, golden set i raportu. Sprawdza kompletność oraz
 zgodność decyzji przeglądu z przypiętymi artefaktami. Wynik jest materiałem do
@@ -76,14 +80,12 @@ ustanawia zaufanego pipeline i nie wystawia endpointu HTTP lub narzędzia agenta
 | `mechanical_validation_failed` | Poprawna, odtwarzalna budowa indeksu |
 | `similarity_review_incomplete` | Decyzje dla wszystkich wykrytych powtórzeń |
 | `golden_thresholds_failed` | Odbiór mierzonej jakości dla zamrożonych etykiet |
-| `semantic_provider_required` | Rzeczywisty provider i jego odbiór w etapie 12 |
+| `semantic_provider_required` | Rzeczywisty provider i odbiór jakości |
 | `user_build_profile_required` | Użytkowy profil/run oraz polityka kwalifikacji |
 
-Dwie ostatnie blokady są stałe w obecnej polityce. Idealny fake report i obie
+Dwie ostatnie blokady są stałe w polityce fake. Idealny fake report i obie
 zgody nie nadają jakości semantycznej ani prawa do użytkowej aktywacji.
-Manifest nie jest wejściem obecnego `index-qualify`; DB lifecycle oraz
-[administracyjne profile](knowledge-administration.md) zachowują oddzielne
-kontrakty. [Zatwierdzony profil golden](knowledge-golden-jobs.md) wykonuje
-pomiar fake i zachowuje raport; nie jest kwalifikacją użytkowego retrieval
-wymaganą przez stałą politykę preflight v1. Bounded real embeddings/Bedrock
-i agent są etapem 12.
+Manifest fake nie jest wejściem `index-qualify-semantic`. Ten interfejs wymaga
+udanego, zapisanego runa semantycznego i odtwarza jego wynik przed kwalifikacją.
+Szczegóły [użytkowego release](knowledge-semantic.md) obejmują konfigurację,
+raport, zgody oraz osobną aktywację. Agent pozostaje zakresem AI 12.

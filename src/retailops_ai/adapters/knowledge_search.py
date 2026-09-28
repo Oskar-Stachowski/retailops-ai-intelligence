@@ -1,15 +1,18 @@
 """Exact pgvector search with authorization and live denials before row output."""
 
 import json
+from collections.abc import Callable
+from threading import Lock
 from typing import Literal, Protocol
 
 from sqlalchemy import Engine, text
 
-from retailops_ai.adapters.embeddings import FakeEmbeddingProvider
+from retailops_ai.adapters.embeddings import EmbeddingProvider, FakeEmbeddingProvider
 from retailops_ai.adapters.index_lifecycle import current_index
 from retailops_ai.adapters.vector_store import STORE_LOCK_ID, _boundary
 from retailops_ai.domain.access import Principal
 from retailops_ai.knowledge.chunks import MarkdownChunk
+from retailops_ai.knowledge.indexes import EmbeddingConfig
 from retailops_ai.knowledge.releases import IndexPin, Lane
 from retailops_ai.knowledge.retrieval import (
     DocumentDenial,
@@ -31,11 +34,42 @@ class KnowledgeBackend(Protocol):
 
 class PostgresKnowledge:
     def __init__(
-        self, engine: Engine, environment: Literal["local", "test"], config: RetrievalConfig
+        self,
+        engine: Engine,
+        environment: Literal["local", "test"],
+        config: RetrievalConfig,
+        *,
+        allow_bedrock: bool = False,
+        provider_factory: Callable[[EmbeddingConfig], EmbeddingProvider] | None = None,
     ) -> None:
         self.engine = engine
         self.environment = environment
         self.config = config
+        self.allow_bedrock = allow_bedrock
+        self.provider_factory = provider_factory
+        self.providers: dict[str, EmbeddingProvider] = {}
+        self.provider_lock = Lock()
+
+    def _provider(self, config: EmbeddingConfig) -> EmbeddingProvider:
+        if config.provider == "fake":
+            return FakeEmbeddingProvider(config)
+        with self.provider_lock:
+            provider = self.providers.get(config.space_id())
+            if provider is None:
+                if self.provider_factory is not None:
+                    provider = self.provider_factory(config)
+                elif self.allow_bedrock:
+                    from retailops_ai.adapters.bedrock_embeddings import BedrockEmbeddingProvider
+
+                    provider = BedrockEmbeddingProvider(
+                        config, max_requests=1000, max_input_bytes=5_000_000
+                    )
+                else:
+                    raise ValueError("bedrock_queries_disabled")
+                if provider.config != config:
+                    raise ValueError("embedding_provider_config_mismatch")
+                self.providers[config.space_id()] = provider
+        return provider
 
     def search(self, request: RetrievalRequest, principal: Principal) -> RetrievalResult:
         resolve_scope(principal, request, self.environment)
@@ -54,16 +88,12 @@ class PostgresKnowledge:
             raise ValueError("knowledge_environment_mismatch")
         scope = resolve_scope(principal, request, self.environment)
         manifest = pin.manifest
-        vector = checked_vector(
-            manifest.embedding_config,
-            FakeEmbeddingProvider(manifest.embedding_config).embed(request.question),
-        )
-        parameters = {
+        config = self.config
+        parameters: dict[str, object] = {
             "id": manifest.index_id,
             "env": self.environment,
             "space": manifest.space_id,
             "dimension": manifest.embedding_config.dimension,
-            "vector": "[" + ",".join(repr(v) for v in vector) + "]",
             "repos": json.dumps(sorted(scope.repositories)),
             "types": json.dumps(sorted(scope.document_types)),
             "statuses": json.dumps(sorted(scope.document_statuses)),
@@ -74,21 +104,40 @@ class PostgresKnowledge:
             "generation": pin.generation,
             "review": pin.review_id,
             "validation": pin.validation_id,
+            "lane": pin.lane,
+            "manifest": manifest.model_dump_json(),
         }
         with self.engine.begin() as connection:
             connection.execute(text("SET LOCAL statement_timeout='5s'"))
             _boundary(connection)
             # Do not resolve current again: a pinned run may legitimately use an older version.
-            bound = connection.scalar(
-                text("""SELECT 1 FROM ai.rag_index_changes e
+            bound = connection.execute(
+                text("""SELECT r.release->'retrieval_config' AS config FROM ai.rag_index_changes e
                 JOIN ai.rag_qualifications q USING(index_id,environment,lane)
+                JOIN ai.rag_indexes i ON i.index_id=e.index_id
+                LEFT JOIN ai.rag_semantic_releases r ON r.release_id=q.release_id
                 WHERE e.request_id=:request AND e.generation=:generation AND e.index_id=:id
-                AND e.environment=:env AND e.lane='offline_test'
+                AND e.environment=:env AND e.lane=:lane AND i.manifest=CAST(:manifest AS jsonb)
                 AND q.review_id=:review AND q.validation_id=:validation"""),
                 parameters,
-            )
-            if bound != 1:
+            ).first()
+            if bound is None:
                 raise ValueError("knowledge_pin_not_qualified")
+            if pin.lane == "retrieval":
+                config = RetrievalConfig.model_validate_json(json.dumps(bound.config))
+        # Qualification precedes network use; SQL below checks current document denials.
+        vector = checked_vector(
+            manifest.embedding_config,
+            self._provider(manifest.embedding_config).embed(request.question),
+        )
+        parameters.update(
+            vector="[" + ",".join(repr(v) for v in vector) + "]",
+            per_document=config.max_chunks_per_document,
+            pool=config.candidate_limit,
+        )
+        with self.engine.begin() as connection:
+            connection.execute(text("SET LOCAL statement_timeout='5s'"))
+            _boundary(connection)
             rows = connection.execute(
                 text("""WITH eligible AS (
                 SELECT c.metadata,c.chunk_id,
@@ -117,7 +166,7 @@ class PostgresKnowledge:
             if chunk.chunk_id not in entries or not allowed(chunk, scope, frozenset()):
                 raise ValueError("knowledge_row_binding_mismatch")
             ranked.append((chunk, float(row.score)))
-        return result_from_ranked(manifest, request, self.config, ranked)
+        return result_from_ranked(manifest, request, config, ranked)
 
 
 def deny_document(engine: Engine, denial: DocumentDenial) -> bool:

@@ -20,7 +20,10 @@
           "type": "string"
         },
         "golden_evaluation": {
-          "const": "not_evaluated_fake_vectors",
+          "enum": [
+            "not_evaluated_fake_vectors",
+            "not_evaluated_real_vectors"
+          ],
           "title": "Golden Evaluation",
           "type": "string"
         },
@@ -30,12 +33,18 @@
           "type": "string"
         },
         "policy_version": {
-          "const": "fake-mechanical-validation-v1",
+          "enum": [
+            "fake-mechanical-validation-v1",
+            "real-structural-validation-v1"
+          ],
           "title": "Policy Version",
           "type": "string"
         },
         "provider": {
-          "const": "fake",
+          "enum": [
+            "fake",
+            "bedrock"
+          ],
           "title": "Provider",
           "type": "string"
         },
@@ -91,8 +100,15 @@
           "type": "boolean"
         },
         "deterministic_fake_vectors": {
-          "title": "Deterministic Fake Vectors",
-          "type": "boolean"
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Deterministic Fake Vectors"
         },
         "source_metadata": {
           "title": "Source Metadata",

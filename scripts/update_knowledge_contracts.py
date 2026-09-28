@@ -18,6 +18,7 @@ from retailops_ai.knowledge.jobs import (
     IndexBuildProfile,
     IndexRunReport,
     KnowledgeIndexRequest,
+    SemanticIndexBuildProfile,
 )
 from retailops_ai.knowledge.qualification import (
     GoldenLabelsApproval,
@@ -75,6 +76,7 @@ def main() -> int:
         "golden-report": GoldenReport,
         "index-build-profile": IndexBuildProfile,
         "golden-index-build-profile": GoldenIndexBuildProfile,
+        "semantic-index-build-profile": SemanticIndexBuildProfile,
         "index-run-report": IndexRunReport,
         "golden-index-run-report": GoldenIndexRunReport,
         "knowledge-index-request": KnowledgeIndexRequest,
@@ -101,9 +103,26 @@ def main() -> int:
     registry = load_registry(ROOT / "knowledge/corpus.v1.json")
     load_chunker_config(ROOT / "knowledge/chunker.v1.json")
     load_embedding_config(ROOT / "knowledge/embeddings.fake.v1.json")
+    load_embedding_config(ROOT / "knowledge/embeddings.bedrock.v1.json")
     load_similarity_policy(ROOT / "knowledge/similarity.v1.json")
     config = load_retrieval_config(ROOT / "src/retailops_ai/knowledge/retrieval.default.json")
     golden = load_golden_set(ROOT / "knowledge/golden.v1.json")
+    semantic = load_golden_set(ROOT / "knowledge/golden.semantic.v1.json")
+    semantic_config = load_retrieval_config(ROOT / "knowledge/retrieval.semantic.v1.json")
+    semantic_approval = load_release_document(
+        ROOT / "knowledge/golden-labels-approval.semantic.v1.json", GoldenLabelsApproval
+    )
+    if semantic.cases != golden.cases or semantic.thresholds != golden.thresholds:
+        raise ValueError("semantic_golden_editorial_labels_changed")
+    if (
+        semantic.retrieval_config_id != semantic_config.config_id()
+        or semantic_approval.golden_set_id != semantic.golden_set_id
+        or semantic_approval.index_id != semantic.index_id
+        or semantic_approval.retrieval_config_id != semantic_config.config_id()
+        or semantic_approval.environment != registry.environment
+        or semantic_approval.review_owner != semantic.review_owner
+    ):
+        raise ValueError("semantic_golden_approval_binding_mismatch")
     if golden.retrieval_config_id != config.config_id():
         raise ValueError("golden_retrieval_configuration_mismatch")
     review = load_release_document(ROOT / "knowledge/similarity-review.v1.json", SimilarityReview)

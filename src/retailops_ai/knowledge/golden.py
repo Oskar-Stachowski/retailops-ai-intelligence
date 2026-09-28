@@ -125,11 +125,13 @@ class GoldenReport(Contract):
     golden_set_id: GoldenID
     index_id: IndexID
     retrieval_config_id: RetrievalConfigID
-    provider: Literal["fake"] = "fake"
-    report_kind: Literal["offline_mechanics_with_draft_semantic_labels"] = (
-        "offline_mechanics_with_draft_semantic_labels"
+    provider: Literal["fake", "bedrock"] = "fake"
+    report_kind: Literal[
+        "offline_mechanics_with_draft_semantic_labels", "semantic_retrieval_evaluation"
+    ] = "offline_mechanics_with_draft_semantic_labels"
+    semantic_quality: Literal["not_evaluated_fake_vectors", "measured_real_vectors"] = (
+        "not_evaluated_fake_vectors"
     )
-    semantic_quality: Literal["not_evaluated_fake_vectors"] = "not_evaluated_fake_vectors"
     corpus_approved: FalseFlag = False
     labels_approved: FalseFlag = False
     activation_allowed: FalseFlag = False
@@ -144,3 +146,14 @@ class GoldenReport(Contract):
     latency_p95_ms: float
     model_cost_usd: Annotated[float, Field(ge=0, le=0)] = 0.0
     measured_thresholds_passed: bool
+
+    @model_validator(mode="after")
+    def provider_binding(self) -> Self:
+        expected = (
+            ("offline_mechanics_with_draft_semantic_labels", "not_evaluated_fake_vectors")
+            if self.provider == "fake"
+            else ("semantic_retrieval_evaluation", "measured_real_vectors")
+        )
+        if (self.report_kind, self.semantic_quality) != expected:
+            raise ValueError("golden_report_provider_mismatch")
+        return self

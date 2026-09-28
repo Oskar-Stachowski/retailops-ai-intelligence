@@ -118,16 +118,18 @@ def release_blockers(
         blockers.append("similarity_review_incomplete")
     if not report.measured_thresholds_passed:
         blockers.append("golden_thresholds_failed")
-    return tuple((*blockers, "semantic_provider_required", "user_build_profile_required"))
+    if validation.provider == "fake":
+        return tuple((*blockers, "semantic_provider_required", "user_build_profile_required"))
+    return tuple(blockers)
 
 
 class IndexReleaseManifest(Contract):
     schema_version: Literal["1.0"]
     release_id: ReleaseManifestID
-    policy_version: Literal["fake-release-preflight-v1"]
+    policy_version: Literal["fake-release-preflight-v1", "semantic-release-v1"]
     purpose: Literal["release_readiness_only"]
-    status: Literal["blocked"]
-    activation_allowed: FalseFlag
+    status: Literal["blocked", "ready"]
+    activation_allowed: bool
     index_manifest: IndexManifest
     corpus_manifest: CorpusManifest
     retrieval_config: RetrievalConfig
@@ -140,7 +142,7 @@ class IndexReleaseManifest(Contract):
     similarity_review: SimilarityReview | None
     similarity_findings: Annotated[int, Field(ge=0, le=10000)]
     unreviewed_similarity_findings: Annotated[int, Field(ge=0, le=10000)]
-    blockers: Annotated[tuple[Blocker, ...], Field(min_length=2, max_length=7)]
+    blockers: Annotated[tuple[Blocker, ...], Field(max_length=7)]
 
     @model_validator(mode="after")
     def binding(self) -> Self:
@@ -150,6 +152,16 @@ class IndexReleaseManifest(Contract):
             self.golden_report,
         )
         corpus, golden = self.corpus_manifest, self.golden_set
+        fake = manifest.embedding_config.provider == "fake"
+        if (
+            self.policy_version != ("fake-release-preflight-v1" if fake else "semantic-release-v1")
+            or validation.provider != manifest.embedding_config.provider
+            or report.provider != validation.provider
+        ):
+            raise ValueError("release_provider_mismatch")
+        ready = not self.blockers and not fake
+        if self.activation_allowed != ready or self.status != ("ready" if ready else "blocked"):
+            raise ValueError("release_status_mismatch")
         if (
             (validation.index_id, validation.corpus_id, validation.space_id, validation.environment)
             != (manifest.index_id, manifest.corpus_id, manifest.space_id, manifest.environment)
