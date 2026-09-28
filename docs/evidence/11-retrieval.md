@@ -86,13 +86,14 @@ wynosi 0 USD; nie było AWS/Bedrock ani real embeddings.
 
 ## Pozostały zakres i postęp
 
-**Około 80% etapu 11** to szacunek implementacji siedmiu zakresów, uwzględniający
-otwarte odbiory. Nie jest metryką jakości raportu. Do zamknięcia pozostają
-administracyjne index runs/read-current HTTP, przegląd/odświeżenie źródeł
-i etykiet, near duplicates oraz release manifest/kwalifikacja użytkowa.
-Jakość z real embeddings, Bedrock smoke i agent mają osobny odbiór w etapie 12.
+Aktualny postęp i otwarte odbiory opisuje [status etapu 11](../STATUS.md).
+Administracyjne runy i odczyt current mają
+[osobny odbiór test/fake](11-administration.md). Przegląd/odświeżenie źródeł
+i etykiet, near duplicates oraz release manifest/kwalifikacja użytkowa pozostają
+otwarte. Jakość z real embeddings, Bedrock smoke i agent mają odbiór w etapie 12.
 
 Istniejące manifesty creation/storage pozostają immutable, z revision 0002
 i `retrieval_version=not_implemented`; bieżący wynik/raport osobno wiąże nową
 wersję i config retrieval. Nie ma production RLS/OIDC, globalnego cache,
-administracji HTTP ani gwarancji 5 s jako deadline całego requestu.
+gwarancji 5 s jako deadline całego requestu. Zakres administracyjnego HTTP
+opisuje [instrukcja](../knowledge-administration.md).

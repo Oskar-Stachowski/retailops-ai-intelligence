@@ -35,6 +35,8 @@ scope, statusy, live deny i wersjonowane etykiety dla 36 pytań.
 raport fake i pozostały zakres etapu 11.
 [Administracja indeksami](knowledge-administration.md) opisuje osobny grant,
 trwałe runy, zatwierdzone snapshoty, worker i odczyt bieżącego indeksu.
+[Odbiór administracji](evidence/11-administration.md) potwierdza 542 testy,
+rzeczywisty HTTP/PG, wznowienie workera, idempotencję i trwałość runów.
 
 ## Mapa repo
 

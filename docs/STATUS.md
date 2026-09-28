@@ -35,6 +35,8 @@ korpus i etykiety pozostają propozycją. Fake report nie otwiera aktywacji.
 trwałe runy/idempotencję, odczyt current i worker zatwierdzonych snapshotów
 `test/fake`. Run zapisuje kandydata i raport; nie aktywuje indeksu.
 Użytkowe profile z golden evaluation wymagają rozszerzenia i odbioru jakości.
+[Odbiór administracji](evidence/11-administration.md): 542 testy, rzeczywisty
+PG/HTTP, idempotencja, wznowienie workera po SIGKILL i retencja po restartach.
 
 **Postęp etapu 11: około 85%** — szacunek zakresu implementacji, z uwzględnieniem
 niezamkniętych odbiorów. Rejestr/metadata, parser, fake/storage, test lifecycle

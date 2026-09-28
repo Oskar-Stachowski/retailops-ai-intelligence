@@ -1,0 +1,445 @@
+{
+  "schema_version": "1.0",
+  "stage": "11",
+  "scope": "durable_admin_index_runs_idempotency_offline_worker_and_current_http",
+  "result": "passed",
+  "verified_at": "2026-09-28T13:10:22.801030+00:00",
+  "implementation_commit": "ae31935740fac2ac643d0bbe29d05bd2addf2c56",
+  "implementation_commits": [
+    "adda2dfd7dd7663d0ff14c7c02055757164fa89f",
+    "ec5c00da2f81d3d2f383b0ba4145f5ed516f9aad",
+    "e5f426b8a96b369326d724b0f13fbd6db1e64c14",
+    "ae31935740fac2ac643d0bbe29d05bd2addf2c56"
+  ],
+  "base_commit": "5bb74b1755b204b959d2956053624561a4ed654c",
+  "branch": "ai/rag-corpus",
+  "runtime": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.11.15",
+    "uv": "0.12.19",
+    "postgres_major": 16,
+    "pgvector": "0.8.6",
+    "migration_revision": "0006_rag_job_gate"
+  },
+  "runtime_dependencies_added": [],
+  "test_scope": {
+    "environment": "test",
+    "provider": "fake",
+    "evaluation_policy": "offline-index-mechanics-v1",
+    "semantic_quality_accepted": false
+  },
+  "actual_corpus": {
+    "index_id": "index-sha256-922d7c3e2cbfdfcc1f2c176fdbefd0b56ed74196de64287ebcbf625a5777fe51",
+    "documents": 20,
+    "chunks": 302,
+    "review_state": "proposed",
+    "labels_review_state": "proposed",
+    "corpus_approval_created": false,
+    "profile_installed": false,
+    "activated": false,
+    "proposal_files_unchanged_since_base": true,
+    "proposal_file_sha256": {
+      "knowledge/corpus.v1.json": "b8cd241b4688730a24ea2f0fb700c43c5b6673f99123a399b69c60ab8048c2db",
+      "knowledge/golden.v1.json": "c0ef8ae4259a6520d527b5e6a077d9c427a51d6f06aaa9582582c73d84d3e755",
+      "knowledge/embeddings.fake.v1.json": "cf1189f4e0df3ba996c42ea99c1458a8b83b6ac1c97869f23382950d63e6cd87"
+    }
+  },
+  "compatibility": {
+    "ml_run_v1_keeps_training_and_forecast_batch_only": true,
+    "ml_error_codes_unchanged": true,
+    "ml_bundle_rejects_index_runs": true,
+    "knowledge_run_schema": "contracts/knowledge/v1/knowledge-index-run.v1.schema.json",
+    "shared_run_envelope_and_transitions": true
+  },
+  "tests": {
+    "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks compose-smoke",
+    "initial_clean_acceptance": {
+      "implementation_commit": "e5f426b8a96b369326d724b0f13fbd6db1e64c14",
+      "exit_code": 0,
+      "passed": 542,
+      "test_seconds": 82.97,
+      "fresh_venv": true,
+      "fresh_isolated_postgres_volume": true
+    },
+    "final_clean_acceptance": {
+      "implementation_commit": "ae31935740fac2ac643d0bbe29d05bd2addf2c56",
+      "exit_code": 0,
+      "passed": 542,
+      "test_seconds": 78.1,
+      "clean_git_status": true,
+      "repeat_on_existing_test_database": true,
+      "checks": [
+        "ruff_check",
+        "ruff_format",
+        "mypy_83_files",
+        "pytest",
+        "docs_links",
+        "intelligence_access_knowledge_snapshots",
+        "wheel_and_sdist",
+        "compose_config",
+        "gitleaks_git_and_dir",
+        "real_compose"
+      ]
+    },
+    "real_compose_acceptance": {
+      "checked_at": "2026-09-28T13:05:18.154901+00:00",
+      "kind": "real_local_compose",
+      "checks": [
+        "separate_databases_roles_and_vector",
+        "explicit_idempotent_migration_and_revision_readiness",
+        "real_pgvector_candidate_constraints_cache_atomicity_and_replay",
+        "sigkill_restart_retains_ai_and_mlflow_artifact",
+        "real_db_outage_health_200_ready_503_then_recovered_200",
+        "down_up_retains_ai_mlflow_metadata_and_artifact",
+        "loopback_ports_internal_network_no_secrets_in_service_logs"
+      ],
+      "rag": {
+        "checks": [
+          "native_float32_checksum_round_trip_and_idempotent_replay",
+          "real_candidate_cli_stdin_replay_and_safe_validation_error",
+          "body_cache_reuse_metadata_lineage_and_separate_dimension_spaces",
+          "conflicting_valid_vector_cache_refused_without_overwrite",
+          "database_rejects_wrong_dimension_nonfinite_nonunit_and_corrupt_checksum",
+          "database_blocks_update_and_delete_of_every_candidate_table",
+          "incomplete_mixed_space_and_mid_transaction_failure_roll_back_all_rows",
+          "concurrent_build_single_candidate_and_removed_content_absent_from_new_index"
+        ],
+        "index_id": "index-sha256-0f9ae440feaba8db6cb5490588adb6578914fbfec99494c14700cf59c6a5ce89",
+        "chunks": 2,
+        "embeddings": 2,
+        "result": "passed",
+        "lifecycle": {
+          "result": "passed",
+          "checks": [
+            "qualification_replay_generation_cas_unqualified_and_golden_gate_rejections",
+            "failure_after_pointer_write_rolls_back_event_and_pointer",
+            "readers_see_old_until_commit_and_pinned_run_retains_old_manifest",
+            "rollback_restores_previous_manifest_with_new_generation",
+            "two_independent_promoters_have_one_winner_and_one_generation_conflict",
+            "sql_blocks_incomplete_history_generation_jump_and_deletion",
+            "real_cli_qualify_rollback_current_and_default_retrieval_denial"
+          ],
+          "pin": {
+            "schema_version": "1.0",
+            "environment": "test",
+            "lane": "offline_test",
+            "purpose": "lifecycle_validation_only",
+            "generation": 12,
+            "request_id": "rag-change-62f64bab9f2c4278bbc7dcc8b5269fdc",
+            "review_id": "corpus-review-sha256-f00e0c479127d106d8cfbd60cc1321bdca8fbb863c5b1be05ba2ed449d961dc3",
+            "validation_id": "index-validation-sha256-a914a50aa749b16ab676d627f07689d5863b8d11fe55bd8204e7c600f44eeeba",
+            "manifest": {
+              "schema_version": "1.0",
+              "lifecycle": "candidate",
+              "environment": "test",
+              "semantic_quality": "not_evaluated_fake_vectors",
+              "index_id": "index-sha256-a13d1b942ea79a9bc3afbcfe86b4f49a0beb2a91c8c14a036347592685f12ccc",
+              "corpus_id": "corpus-sha256-e1a6a0c983cc08cb9348618cee8b1effa061f16429a4454b92ca9c7522783c9a",
+              "chunk_manifest_id": "chunks-sha256-a9139b30c53b08c49f79a78e5ced9a0562cff78d646886b84652af7e69c4e8f8",
+              "embedding_config": {
+                "schema_version": "1.0",
+                "provider": "fake",
+                "model_id": "sha256-unit-f32-v1",
+                "inference_profile": null,
+                "region": "offline",
+                "dimension": 32,
+                "normalization": "l2-unit",
+                "distance": "cosine",
+                "transformation_version": "utf8-chunk-body-v1",
+                "vector_format": "float32-big-endian-v1"
+              },
+              "space_id": "embedding-space-sha256-1cf9d4ec38fe18ba85ae9ecbd032fb5b516e73085997cec96703ed6d0ca40817",
+              "storage_version": "pgvector-checked-dimension-v1",
+              "pgvector_version": "0.8.6",
+              "migration_revision": "0002_rag_candidates",
+              "retrieval_version": "not_implemented",
+              "chunk_count": 2,
+              "embedding_count": 2,
+              "entries": [
+                {
+                  "chunk_id": "chunk-sha256-33d8a5aae18c18017c2f07a0d8423f3a860b8e7e63e7f5d2431aa08dfa552f36",
+                  "embedding_id": "embedding-sha256-d3f74d8ba08a0472703d043d5450210082bb5e8e298c44a2f3bf2efa33f904af",
+                  "vector_checksum": "e67bef3a479ffe7f4c02e72397aca92a6d03dbe1994c55008997649c2bc41f22"
+                },
+                {
+                  "chunk_id": "chunk-sha256-c67e157d642420a446616034e51b12985f3b7195e74d7c5e3c77c45755acffa3",
+                  "embedding_id": "embedding-sha256-366eccdf0f1f3d4ff61051185f7c8b45593f243c7a48808cae29bb56bcb2072a",
+                  "vector_checksum": "7f9a200842a9c4020bbc3104f3f5b4341045f63e80e9ccbcf843b25f0e859fc4"
+                }
+              ]
+            }
+          },
+          "base_generation": 7,
+          "actual_corpus_activated": false,
+          "semantic_quality_evaluated": false
+        },
+        "retrieval": {
+          "result": "passed",
+          "checks": [
+            "real_exact_cosine_ties_acl_repo_type_status_history_diversity_and_budgets",
+            "adversarial_source_keeps_untrusted_metadata_without_tool_or_role_effects",
+            "real_loopback_http_credentials_401_403_422_no_store_and_live_denial_after_warm_read",
+            "immutable_live_denial_covers_old_pin_after_swap_and_prior_manifest_restored"
+          ],
+          "fixture_documents": 10,
+          "fixture_chunks": 10,
+          "max_sql_search_ms": 11.25945899998726,
+          "final_pin": {
+            "schema_version": "1.0",
+            "environment": "test",
+            "lane": "offline_test",
+            "purpose": "lifecycle_validation_only",
+            "generation": 14,
+            "request_id": "rag-change-bff7de55775659f37ec8510c72113808",
+            "review_id": "corpus-review-sha256-f00e0c479127d106d8cfbd60cc1321bdca8fbb863c5b1be05ba2ed449d961dc3",
+            "validation_id": "index-validation-sha256-a914a50aa749b16ab676d627f07689d5863b8d11fe55bd8204e7c600f44eeeba",
+            "manifest": {
+              "schema_version": "1.0",
+              "lifecycle": "candidate",
+              "environment": "test",
+              "semantic_quality": "not_evaluated_fake_vectors",
+              "index_id": "index-sha256-a13d1b942ea79a9bc3afbcfe86b4f49a0beb2a91c8c14a036347592685f12ccc",
+              "corpus_id": "corpus-sha256-e1a6a0c983cc08cb9348618cee8b1effa061f16429a4454b92ca9c7522783c9a",
+              "chunk_manifest_id": "chunks-sha256-a9139b30c53b08c49f79a78e5ced9a0562cff78d646886b84652af7e69c4e8f8",
+              "embedding_config": {
+                "schema_version": "1.0",
+                "provider": "fake",
+                "model_id": "sha256-unit-f32-v1",
+                "inference_profile": null,
+                "region": "offline",
+                "dimension": 32,
+                "normalization": "l2-unit",
+                "distance": "cosine",
+                "transformation_version": "utf8-chunk-body-v1",
+                "vector_format": "float32-big-endian-v1"
+              },
+              "space_id": "embedding-space-sha256-1cf9d4ec38fe18ba85ae9ecbd032fb5b516e73085997cec96703ed6d0ca40817",
+              "storage_version": "pgvector-checked-dimension-v1",
+              "pgvector_version": "0.8.6",
+              "migration_revision": "0002_rag_candidates",
+              "retrieval_version": "not_implemented",
+              "chunk_count": 2,
+              "embedding_count": 2,
+              "entries": [
+                {
+                  "chunk_id": "chunk-sha256-33d8a5aae18c18017c2f07a0d8423f3a860b8e7e63e7f5d2431aa08dfa552f36",
+                  "embedding_id": "embedding-sha256-d3f74d8ba08a0472703d043d5450210082bb5e8e298c44a2f3bf2efa33f904af",
+                  "vector_checksum": "e67bef3a479ffe7f4c02e72397aca92a6d03dbe1994c55008997649c2bc41f22"
+                },
+                {
+                  "chunk_id": "chunk-sha256-c67e157d642420a446616034e51b12985f3b7195e74d7c5e3c77c45755acffa3",
+                  "embedding_id": "embedding-sha256-366eccdf0f1f3d4ff61051185f7c8b45593f243c7a48808cae29bb56bcb2072a",
+                  "vector_checksum": "7f9a200842a9c4020bbc3104f3f5b4341045f63e80e9ccbcf843b25f0e859fc4"
+                }
+              ]
+            }
+          },
+          "actual_corpus_activated": false,
+          "semantic_quality_evaluated": false
+        },
+        "administration": {
+          "result": "passed",
+          "checks": [
+            "concurrent_idempotency_principal_environment_and_approved_config_boundaries",
+            "real_worker_sigkill_resumes_same_pins_session_exclusion_and_terminal_replay",
+            "cancellation_fences_running_worker_and_keeps_active_pointer",
+            "failed_required_gate_is_terminal_with_safe_error_and_no_output",
+            "database_rejects_pinned_input_terminal_state_profile_and_report_mutations",
+            "database_success_requires_all_check_booleans_not_only_passed_label",
+            "real_http_admin_capability_401_403_422_409_location_run_and_current",
+            "pending_queue_budget_is_one_hundred_before_any_build"
+          ],
+          "actual_corpus_activated": false,
+          "test_only": true,
+          "retained_runs": [
+            {
+              "schema_version": "1.0",
+              "contract_type": "run",
+              "run_id": "run-afe627bf534c0a0245fb1b312abfb003",
+              "run_type": "knowledge_index",
+              "status": "succeeded",
+              "attempt": 1,
+              "requested_at": "2026-09-28T13:06:33.960934Z",
+              "started_at": "2026-09-28T13:06:36.322520Z",
+              "completed_at": "2026-09-28T13:06:38.249677Z",
+              "requested_by": "fixture-index-admin",
+              "input_ref": {
+                "request": {
+                  "corpus_config_id": "corpus-config-sha256-9af60609fc25212c3f95335b3915fba1f1cc36c2a10ef20f16d830921d09dd4f",
+                  "sources": [
+                    {
+                      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+                      "commit_sha": "0cb28072631773923506d68ffc8d807a6ceb651c"
+                    },
+                    {
+                      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+                      "commit_sha": "8a308d285b1850e439657de159bd345f02b893a3"
+                    }
+                  ],
+                  "index_config_id": "index-config-sha256-0c617503800229f6de5ad9f45e564473d75236e44067d4d49d786a99ca044355",
+                  "evaluation_set_id": "offline-index-mechanics-v1"
+                },
+                "request_hash": "8d17bcd21f7b46a38ee2607557429941d90f24afb19ada23c637d303f789af3e",
+                "profile_id": "index-build-profile-sha256-488da95b006251b2dc9f11b723ccc7fef96dee314cbf847310211d852b7b3752",
+                "environment": "test"
+              },
+              "resolved_model": null,
+              "output_ref": {
+                "kind": "knowledge_index",
+                "complete": true,
+                "index_id": "index-sha256-893d44be22ae4989bdbe8b5f4e00f9843e98f4e4e962cf1d25a79b8888bbc1db",
+                "manifest_ref": "db:ai.rag_indexes:index-sha256-893d44be22ae4989bdbe8b5f4e00f9843e98f4e4e962cf1d25a79b8888bbc1db",
+                "evaluation_report_ref": "db:ai.rag_index_reports:index-run-report-sha256-2afc0e5b3550482d10089e9d13da70d4e8b24ee176096c24c1e4320182aebbcc",
+                "activation_status": "candidate"
+              },
+              "error": null
+            },
+            {
+              "schema_version": "1.0",
+              "contract_type": "run",
+              "run_id": "run-0c2cdc5fe828c7579b7155c5df2ebfe9",
+              "run_type": "knowledge_index",
+              "status": "failed",
+              "attempt": 1,
+              "requested_at": "2026-09-28T13:06:41.002920Z",
+              "started_at": "2026-09-28T13:06:41.014413Z",
+              "completed_at": "2026-09-28T13:06:41.039390Z",
+              "requested_by": "fixture-index-admin",
+              "input_ref": {
+                "request": {
+                  "corpus_config_id": "corpus-config-sha256-9af60609fc25212c3f95335b3915fba1f1cc36c2a10ef20f16d830921d09dd4f",
+                  "sources": [
+                    {
+                      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+                      "commit_sha": "0cb28072631773923506d68ffc8d807a6ceb651c"
+                    },
+                    {
+                      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+                      "commit_sha": "8a308d285b1850e439657de159bd345f02b893a3"
+                    }
+                  ],
+                  "index_config_id": "index-config-sha256-0c617503800229f6de5ad9f45e564473d75236e44067d4d49d786a99ca044355",
+                  "evaluation_set_id": "offline-index-mechanics-v1"
+                },
+                "request_hash": "8d17bcd21f7b46a38ee2607557429941d90f24afb19ada23c637d303f789af3e",
+                "profile_id": "index-build-profile-sha256-488da95b006251b2dc9f11b723ccc7fef96dee314cbf847310211d852b7b3752",
+                "environment": "test"
+              },
+              "resolved_model": null,
+              "output_ref": null,
+              "error": {
+                "code": "gate_failed",
+                "retryable": false
+              }
+            },
+            {
+              "schema_version": "1.0",
+              "contract_type": "run",
+              "run_id": "run-22108e00247f8b8e429bf11b5a58364e",
+              "run_type": "knowledge_index",
+              "status": "cancelled",
+              "attempt": 1,
+              "requested_at": "2026-09-28T13:06:38.537775Z",
+              "started_at": "2026-09-28T13:06:40.627515Z",
+              "completed_at": "2026-09-28T13:06:40.676492Z",
+              "requested_by": "fixture-index-admin",
+              "input_ref": {
+                "request": {
+                  "corpus_config_id": "corpus-config-sha256-9af60609fc25212c3f95335b3915fba1f1cc36c2a10ef20f16d830921d09dd4f",
+                  "sources": [
+                    {
+                      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+                      "commit_sha": "0cb28072631773923506d68ffc8d807a6ceb651c"
+                    },
+                    {
+                      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+                      "commit_sha": "8a308d285b1850e439657de159bd345f02b893a3"
+                    }
+                  ],
+                  "index_config_id": "index-config-sha256-0c617503800229f6de5ad9f45e564473d75236e44067d4d49d786a99ca044355",
+                  "evaluation_set_id": "offline-index-mechanics-v1"
+                },
+                "request_hash": "8d17bcd21f7b46a38ee2607557429941d90f24afb19ada23c637d303f789af3e",
+                "profile_id": "index-build-profile-sha256-488da95b006251b2dc9f11b723ccc7fef96dee314cbf847310211d852b7b3752",
+                "environment": "test"
+              },
+              "resolved_model": null,
+              "output_ref": null,
+              "error": {
+                "code": "cancelled",
+                "retryable": false
+              }
+            },
+            {
+              "schema_version": "1.0",
+              "contract_type": "run",
+              "run_id": "run-8211cee4fc5717581ea6615749cf721d",
+              "run_type": "knowledge_index",
+              "status": "cancelled",
+              "attempt": 1,
+              "requested_at": "2026-09-28T13:06:44.629310Z",
+              "started_at": null,
+              "completed_at": "2026-09-28T13:07:58.219332Z",
+              "requested_by": "fixture-index-admin",
+              "input_ref": {
+                "request": {
+                  "corpus_config_id": "corpus-config-sha256-9af60609fc25212c3f95335b3915fba1f1cc36c2a10ef20f16d830921d09dd4f",
+                  "sources": [
+                    {
+                      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+                      "commit_sha": "0cb28072631773923506d68ffc8d807a6ceb651c"
+                    },
+                    {
+                      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+                      "commit_sha": "8a308d285b1850e439657de159bd345f02b893a3"
+                    }
+                  ],
+                  "index_config_id": "index-config-sha256-0c617503800229f6de5ad9f45e564473d75236e44067d4d49d786a99ca044355",
+                  "evaluation_set_id": "offline-index-mechanics-v1"
+                },
+                "request_hash": "8d17bcd21f7b46a38ee2607557429941d90f24afb19ada23c637d303f789af3e",
+                "profile_id": "index-build-profile-sha256-488da95b006251b2dc9f11b723ccc7fef96dee314cbf847310211d852b7b3752",
+                "environment": "test"
+              },
+              "resolved_model": null,
+              "output_ref": null,
+              "error": {
+                "code": "cancelled",
+                "retryable": false
+              }
+            }
+          ],
+          "profile_id": "index-build-profile-sha256-488da95b006251b2dc9f11b723ccc7fef96dee314cbf847310211d852b7b3752",
+          "queued_retention_verified": true,
+          "pending_fixture_cleanup": "cancelled_after_both_retention_checks"
+        }
+      },
+      "result": "passed",
+      "api_health": 200,
+      "api_ready_after_recovery": 200,
+      "postgres_vector_version": "0.8.6",
+      "migration_revision": "0006_rag_job_gate"
+    }
+  },
+  "existing_local_database_upgrade": {
+    "from_revision": "0005_rag_jobs",
+    "to_revision": "0006_rag_job_gate",
+    "migration_cli_result": "migrated",
+    "current_cli_result": {
+      "status": "not_active",
+      "pin": null
+    },
+    "own_stack_stopped_with_volumes_retained": true
+  },
+  "remote_ci_executed_for_this_scope": false,
+  "pushed": false,
+  "stage_progress_estimate_percent": 85,
+  "remaining": [
+    "near_duplicate_review",
+    "refresh_and_review_actual_sources_status_access_and_golden_labels",
+    "approved_user_build_profile_and_golden_quality_qualification",
+    "user_release_manifest_binding",
+    "real_embeddings_bedrock_and_agent_acceptance_in_stage_12"
+  ]
+}

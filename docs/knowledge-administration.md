@@ -9,6 +9,8 @@ niemodyfikowalnego kandydata oraz raport. Zakończenie runa nie przełącza wska
 Obsługiwane profile mają `environment=test`, provider `fake` i politykę
 `offline-index-mechanics-v1`. Jest to odbiór budowy, persistence i uprawnień.
 Nie potwierdza jakości semantycznej ani zatwierdzenia rzeczywistego korpusu.
+[Odbiór](evidence/11-administration.md) obejmuje 542 testy oraz rzeczywisty
+HTTP/PostgreSQL z awariami workera i retencją po restartach.
 Profil zawiera jawny `CorpusApproval` dla syntetycznych źródeł; samo uruchomienie
 API lub workera nie tworzy zgody. W bazie lokalnego korpusu nie instalujemy
 takiego profilu. Rejestr i golden labels pozostają propozycją.
