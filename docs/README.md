@@ -11,7 +11,8 @@ zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)
-podają faktyczny zakres prób.
+podają faktyczny zakres prób. [Odbiór zdalnego CI](evidence/01-remote-ci.md)
+potwierdza kontrolę PR oraz push na main i ochronę obu repozytoriów.
 
 ## Mapa repo
 

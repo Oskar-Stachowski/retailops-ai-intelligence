@@ -1,6 +1,6 @@
 # RetailOps AI Intelligence
 
-**Status: in_progress.** Osobny fundament serwisu AI dla RetailOps.
+**Status: fundament etapu 01 odebrany.** Dalszy rozwój AI jest w realizacji.
 Obecny zakres: pakiet Python, konfiguracja, CLI, lokalny serwis diagnostyczny HTTP,
 PostgreSQL/pgvector, oddzielny MLflow, migracje, Compose, wykonywalne kontrakty
 danych/run/tool, lokalne poświadczenia i scope API oraz kontrole CI.
