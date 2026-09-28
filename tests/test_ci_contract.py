@@ -32,6 +32,27 @@ def test_ci_guard_rejects_weakened_gates(mutation):
         data["jobs"]["checks"]["continue-on-error"] = True
     elif mutation == "missing_gate":
         data["jobs"]["required-result"]["needs"] = ["checks"]
+    elif mutation == "missing_persistence":
+        data["jobs"].pop("persistence")
     else:
         data[True]["pull_request"] = {"paths": ["src/**"]}
     assert module.workflow_errors(data)
+
+
+@pytest.mark.parametrize("mutation", ["checks-bypass", "persistence-expression"])
+def test_ci_rejects_bypassed_checks_or_malformed_result_expression(mutation):
+    data = workflow()
+    if mutation == "checks-bypass":
+        data["jobs"]["checks"]["steps"][-1]["run"] = "make bootstrap test"
+    else:
+        data["jobs"]["required-result"]["steps"][0]["env"]["PERSISTENCE_RESULT"] = (
+            "invalid-expression"
+        )
+    assert module.workflow_errors(data)
+
+
+def test_make_check_includes_snapshot_gate():
+    makefile = (ROOT / "Makefile").read_text()
+    dependencies = makefile.split("check: ", 1)[1].splitlines()[0]
+    assert "contracts-check" in dependencies.split()
+    assert "scripts/update_intelligence_contracts.py --check" in makefile

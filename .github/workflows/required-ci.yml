@@ -63,7 +63,7 @@ jobs:
       - name: Require every gate
         env:
           CHECKS_RESULT: ${{ needs.checks.result }}
-          PERSISTENCE_RESULT: ${${ needs.persistence.result }}
+          PERSISTENCE_RESULT: ${{ needs.persistence.result }}
           SECRETS_RESULT: ${{ needs.secrets.result }}
         run: |
           test "$CHECKS_RESULT" = "success"

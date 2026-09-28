@@ -1,0 +1,22 @@
+{
+  "compatibility": "exact-version; unknown fields rejected; no implicit migration",
+  "draft": "2020-12",
+  "families": [
+    "bundle",
+    "dataset",
+    "feature",
+    "label",
+    "model",
+    "prediction",
+    "run",
+    "split",
+    "tool_request",
+    "tool_result"
+  ],
+  "fixture_kind": "synthetic metadata; no physical data or trained model",
+  "schema_version": "1.0",
+  "semantic_validator": "retailops-ai contract-check FAMILY PATH",
+  "supported_versions": [
+    "1.0"
+  ]
+}

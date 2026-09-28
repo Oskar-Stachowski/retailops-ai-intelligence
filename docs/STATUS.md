@@ -1,27 +1,31 @@
 # Aktualny status
 
-**2026-09-28 · in_progress · persistence i lokalny stos etapu 01.**
+**2026-09-28 · in_progress · kontrakty danych i wykonania etapu 01.**
 
-Pakiet, typed settings, CLI i diagnostyczny HTTP działają razem z izolowanym
-PostgreSQL AI, pgvector oraz MLflow na oddzielnej bazie i roli.
-[Instrukcja stosu](local-stack.md) obejmuje pierwsze uruchomienie, jawne migracje,
-wolumeny, granice sieciowe i bezpieczny shutdown.
-[HTTP](http-service.md) ma rolę foundation bez DB albo ai_api z rzeczywistą sondą
-schematu i bazy. Nie ma jeszcze endpointów predykcji.
+Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
+PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
+[Uruchomienie](local-stack.md), [HTTP](http-service.md).
 
-[Dowody persistence](evidence/01-persistence.md) opisują rzeczywisty lokalny Compose,
-restart/awarię/recovery i trwałość danych; osobno wskazują testy adaptera z fake.
+[Kontrakty v1](data-contracts.md) są wykonywalne: dataset/feature/label/split/model/
+prediction/run/tool/bundle, JSON Schema, syntetyczne fixtures i walidacja offline.
+[Dowody](evidence/01-contracts.md) opisują testy struktury, PIT, lineage, identity,
+stanów runa i bezpiecznych tool results. Nie ma jeszcze importera, treningu ani
+endpointów predykcji. Schemat runa/tool nie oznacza działającego workera/agenta.
+
+[Odbiór persistence](evidence/01-persistence.md) opisuje rzeczywisty Compose,
+crash/restart, DB outage/recovery i zachowanie artefaktów.
 [HTTP](evidence/01-http.md) i [fundament](evidence/01-foundation.md) zachowują zakres
-wcześniejszych pomiarów. Wymagane kontrole obejmują kod, migracje, Compose i runtime
-persistence. Repo jest już na GitHub: main jest chronione przez required-result,
-a CI bazowego 7d67530 ma success. Commity persistence są lokalne; ich zdalny
-przebieg CI pozostaje do wykonania po push.
+wcześniejszych pomiarów. Required CI obejmuje kod, schemas, docs i persistence.
+GitHub main ma required-result; CI bazowego 7d67530 ma success. Nowe commity
+persistence i kontraktów są lokalne; ich zdalny CI czeka na push.
 
 ## Następna praca
 
-1. Wykonywalne wersje kontraktów dataset/feature/label/prediction/run/tool
-   i reguły kompatybilności; uprawnienia pierwszych endpointów aplikacyjnych.
-2. Po push tego zakresu odebrać nowy Required CI, w tym rzeczywisty job persistence.
+1. Granica tożsamości i uprawnień pierwszych endpointów aplikacyjnych, z testami
+   odmowy dostępu i ograniczenia scope, zanim udostępnimy dane biznesowe.
+2. Po push odebrać Required CI nowych commitów, w tym job persistence.
 
-Pipeline danych, modele, RAG, agent i cloud pozostają planowane.
-Cały etap 01 pozostaje otwarty. Odbiór 01 poprzedza odbiór źródła RetailOps w 02.
+Token metryk nie jest systemem tożsamości użytkowników. MLflow ma lokalną
+izolację sieciową, bez aplikacyjnego auth. Cały etap 01 pozostaje otwarty.
+Odbiór 01 poprzedza źródło RetailOps w 02. Pipeline danych, modele, RAG, agent,
+streaming i cloud są planowane, z własnymi późniejszymi bramkami.

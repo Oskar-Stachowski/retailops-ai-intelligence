@@ -23,11 +23,29 @@ def main(argv: list[str] | None = None) -> int:
     serve.add_argument("--env-file", type=Path, help="Explicit dotenv file; environment wins.")
     migration = commands.add_parser("migrate", help="Explicitly upgrade the isolated AI database.")
     migration.add_argument("--env-file", type=Path)
+    contracts = commands.add_parser(
+        "contract-check", help="Validate an offline intelligence contract."
+    )
+    contracts.add_argument("family")
+    contracts.add_argument("path", type=Path)
     args = parser.parse_args(argv)
 
     if args.command == "version":
         info = ApplicationInfo(version=version("retailops-ai-intelligence"))
         print(info.model_dump_json())
+        return 0
+
+    if args.command == "contract-check":
+        from retailops_ai.data_contracts.registry import MAX_DOCUMENT_BYTES, validate_document
+
+        try:
+            with args.path.open("rb") as source:
+                raw = source.read(MAX_DOCUMENT_BYTES + 1)
+            validate_document(args.family, raw)
+        except (OSError, ValueError, RecursionError):
+            print('{"error":"invalid_contract_document"}', file=sys.stderr)
+            return 2
+        print(json.dumps({"status": "valid", "contract": args.family, "schema_version": "1.0"}))
         return 0
 
     if args.env_file is not None and not args.env_file.is_file():

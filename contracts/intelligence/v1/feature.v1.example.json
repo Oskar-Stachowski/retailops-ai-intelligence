@@ -1,0 +1,61 @@
+{
+  "allowlist_version": "forecast-observed-sales-v1",
+  "contract_type": "feature",
+  "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+  "key": {
+    "business_timezone": "UTC",
+    "channel": "store",
+    "cutoff_policy": "end_of_day_second_v1",
+    "forecast_origin": "2026-08-22T23:59:59Z",
+    "horizon_days": 3,
+    "product_id": "p-101",
+    "selling_location_id": "s-03",
+    "target_date": "2026-08-25"
+  },
+  "lineage": {
+    "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+    "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+  },
+  "schema_version": "1.0",
+  "values": [
+    {
+      "currency": null,
+      "effective_date": null,
+      "kind": "observed",
+      "name": "lag_1_units",
+      "observed_through_date": "2026-08-22",
+      "reason": null,
+      "source_available_at": "2026-08-22T23:59:59Z",
+      "source_class": "facts",
+      "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+      "status": "available",
+      "value": 0
+    },
+    {
+      "currency": null,
+      "effective_date": "2026-08-25",
+      "kind": "calendar",
+      "name": "target_weekday",
+      "observed_through_date": null,
+      "reason": null,
+      "source_available_at": "2026-08-22T23:59:59Z",
+      "source_class": "calendar",
+      "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+      "status": "available",
+      "value": 1
+    },
+    {
+      "currency": "PLN",
+      "effective_date": "2026-08-25",
+      "kind": "known_plan",
+      "name": "planned_price_minor_units",
+      "observed_through_date": null,
+      "reason": null,
+      "source_available_at": "2026-08-22T23:59:59Z",
+      "source_class": "known_plan",
+      "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+      "status": "available",
+      "value": 1025
+    }
+  ]
+}

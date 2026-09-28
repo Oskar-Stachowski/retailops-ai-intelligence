@@ -1,0 +1,58 @@
+{
+  "attempt": 1,
+  "completed_at": "2026-08-23T00:05:00Z",
+  "contract_type": "run",
+  "error": null,
+  "input_ref": {
+    "as_of_time": "2026-08-22T23:59:59Z",
+    "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+    "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+    "label_dataset_id": null,
+    "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+    "split_id": null
+  },
+  "output_ref": {
+    "artifact_id": "predictions-sha256-e48a2183b91cfcf89fd47aa6e6c0f155124acc913317a849683d52acf0aeb1de",
+    "complete": true,
+    "kind": "predictions"
+  },
+  "requested_at": "2026-08-23T00:02:00Z",
+  "requested_by": "fixture-pipeline",
+  "resolved_model": {
+    "artifact_sha256": "b6052dbebf430c96fe1d23e4448819c5947516c39a7954429b83505f19a9b68b",
+    "config_sha256": "6d0cc86ad3538e13cf8212ea97765d07f2fff8e2ec2af2a9a407e6ecd9bf6ba5",
+    "contract_type": "model",
+    "feature_allowlist_version": "forecast-observed-sales-v1",
+    "feature_schema_version": "1.0",
+    "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+    "label_dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+    "model_family": "baseline",
+    "model_id": "model-sha256-3f1c8c51c702a30d34da3d775a11eb1141f7a40bdfd94919d0d49300b9b7c9cf",
+    "model_name": "retailops-demand-forecast",
+    "model_seed": 42,
+    "model_version": "1",
+    "provenance": {
+      "code_state": "clean",
+      "commit_sha": "1111111111111111111111111111111111111111",
+      "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+      "dirty_patch_sha256": null,
+      "repository": "retailops-ai-intelligence",
+      "transform_version": "fixture-v1"
+    },
+    "schema_version": "1.0",
+    "selection_cutoff": "2026-08-03T23:59:59Z",
+    "split_id": "split-sha256-78c012d1228b0da163ab661aa82999f18c0b599b4e913e99bf40684899ccfd92",
+    "target_type": "observed_sales_units",
+    "training_cutoff": "2026-06-14T23:59:59Z",
+    "training_lineage": {
+      "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+      "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+    },
+    "training_run_id": "run-33333333333333333333333333333333"
+  },
+  "run_id": "run-44444444444444444444444444444444",
+  "run_type": "forecast_batch",
+  "schema_version": "1.0",
+  "started_at": "2026-08-23T00:03:00Z",
+  "status": "succeeded"
+}

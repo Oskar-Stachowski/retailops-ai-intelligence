@@ -53,8 +53,8 @@ Nowy commit persistence nie został wypchnięty, więc jego zdalne CI nie jest o
 
 ## Ograniczenia
 
-Etap 01 pozostaje in_progress: kontrakty danych/run/tool, uprawnienia nowych
-endpointów są następną pracą. Po push wymagany jest zdalny CI nowego zakresu;
+Etap 01 pozostaje in_progress. Aktualny zakres kontraktów i otwarte wymagania
+opisuje [status](../STATUS.md). Po push wymagany jest zdalny CI nowego zakresu;
 stan GitHub wyżej dotyczy bazowego commitu.
 Nie wykonano Linux x86_64 runtime ani AWS. To lokalny development, bez TLS,
 aplikacyjnego auth MLflow, backup/restore, pipeline importu, modeli, RAG lub agenta.

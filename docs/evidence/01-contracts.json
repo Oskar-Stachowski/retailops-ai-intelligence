@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-09-28T06:52:04.788408+00:00",
+  "base_commit": "7bd17e65a3bb5416620526a8b48e14986923d140",
+  "kind": "offline_contract_semantics_and_local_package",
+  "contract_version": "1.0",
+  "families": 10,
+  "hand_authored_negative_cases": 55,
+  "remote_ci": "not_pushed",
+  "uv_lock_sha256": "b629d6ab142bc7866fc298414211f08f7e3ef8623fa387049d80e952d8dd818d",
+  "limitations": [
+    "synthetic_metadata_only",
+    "no_file_checksum_verification",
+    "no_import_training_worker_tool_executor_or_auth",
+    "no_new_compose_runtime_smoke"
+  ],
+  "result": "passed",
+  "python": "3.11.15",
+  "platform": "Darwin arm64",
+  "uv": "0.12.19",
+  "local_checks": {
+    "make_ci_local": "passed",
+    "unit_tests": {
+      "passed": 208,
+      "skipped": 0,
+      "seconds": 8.83
+    },
+    "ruff": "passed",
+    "mypy": {
+      "result": "passed",
+      "source_files": 40
+    },
+    "docs": "passed",
+    "contracts_snapshot": "passed",
+    "wheel_sdist": "passed",
+    "compose_config": "passed",
+    "actionlint": "passed",
+    "gitleaks_git_and_dir": "passed"
+  },
+  "untouched_http_contracts": "git diff -- contracts/*.json: empty"
+}

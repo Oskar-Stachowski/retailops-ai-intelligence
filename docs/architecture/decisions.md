@@ -3,7 +3,7 @@
 **2026-09-27 · zaakceptowane dla projektu; wdrożenie komponentów według etapów.**
 Źródło: plan RetailOps na `8a9e620`; architektura bazowa na
 [cbf28b2](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/cbf28b2/docs/plans/ai/architektura.md).
-Te decyzje utrwalają granice; aktualne wdrożenie DB/MLflow opisuje ADR-12, a agent pozostaje planowany.
+Te decyzje utrwalają granice; aktualne wdrożenie DB/MLflow opisuje ADR-12, kontrakty ADR-13, a agent pozostaje planowany.
 
 | ADR | Kontekst i wybrana decyzja | Rozważona alternatywa i konsekwencja |
 |---|---|---|
@@ -99,3 +99,24 @@ Tryb Compose pozwala na bind kontenera, ale publikuje porty tylko na loopback
 i izoluje DB w internal network. Rola foundation zachowuje lokalną granicę.
 To decyzja developmentu; publiczne auth/TLS i release wymagają własnych etapów.
 [Instrukcja i źródła](../local-stack.md), [pomiar](../evidence/01-persistence.md).
+
+
+## ADR-13 — wykonywalne kontrakty i walidacja offline
+
+Modele Pydantic są źródłem JSON Schema Draft 2020-12 i przykładów intelligence v1.
+Dokładna wersja 1.0, unknown fields forbidden i brak coercji chronią granicę
+przed cichą zmianą znaczenia. Zmiana wire format lub semantyki wymaga nowej wersji.
+Osobny bundle sprawdza graf, PIT, logiczne hashe i spójność model/run/output.
+JSON Schema samodzielnie nie wykonuje tych relacji. Przykłady i negatywne przypadki
+są małymi metadanymi, bez prawdziwych artefaktów lub modeli.
+
+Content identity zawiera rolę, klasyfikację, rodziców, resolved config i provenance;
+byte checksums i metadane wykonania są osobne. Run ID jest niezależną tożsamością
+wykonania, co pozwala zapisać model/output bez cyklu hashów. Missing/censored
+nie są zerami. Pierwszy forecast wspiera UTC end-of-day i observed_sales_units,
+bez inventory; zakresy stockout/anomaly i event runtime pozostają późniejsze.
+
+Alternatywa: ręczne, oddzielne DTO i schemas mogłyby rozchodzić się z semantyką.
+Snapshot check oraz niezależny jsonschema i negatywne testy sprawdzają zgodność.
+Nie implementujemy importu, training, worker/auth lub agenta przez sam kontrakt.
+[Specyfikacja i źródła](../data-contracts.md), [dowody](../evidence/01-contracts.md).

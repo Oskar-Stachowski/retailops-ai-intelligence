@@ -47,7 +47,8 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make compose-up/down` | Lokalny stos DB/API/MLflow, jawne migracje, zachowane wolumeny |
 | `make compose-config` | Walidacja Compose bez wypisywania sekretów |
 | `make compose-smoke` | Rzeczywiste próby persistence i awarii, następnie shutdown |
-| `make contracts` | Regeneracja kontraktów HTTP do przeglądu razem ze zmianą kodu |
+| `make contracts-check` | Porównanie intelligence snapshots z kodem, bez ich zapisywania |
+| `make contracts` | Regeneracja HTTP oraz intelligence schemas/examples do przeglądu |
 
 Gitleaks jest osobnym narzędziem; zainstaluj wersję 8.30.1 z
 [oficjalnego wydania](https://github.com/gitleaks/gitleaks/releases/tag/v8.30.1)
@@ -57,7 +58,9 @@ Brak narzędzia przerywa kontrolę. Na świeżym repo skan historii wymaga pierw
 Zmiany zależności wykonuj przez uv, aktualizując lockfile w tej samej zmianie.
 CI stosuje `--locked`, więc rozbieżność pyproject/lock nie naprawia się po cichu.
 Po zmianie kontraktu metadanych odśwież schema fixture i przykład oraz
-przeprowadź testy kompatybilności. Nie nadawaj jej znaczenia kontraktu forecastingu.
+przeprowadź testy kompatybilności. Metadane aplikacji i HTTP mają osobne znaczenie od [kontraktów danych/run/tool](data-contracts.md).
+Przykłady intelligence są syntetycznymi metadanymi; contract-check nie odczytuje
+artefaktów ani nie wykonuje quality gates.
 
 
 Serwis i granice dostępu opisuje [instrukcja HTTP](http-service.md).

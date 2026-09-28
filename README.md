@@ -2,7 +2,9 @@
 
 **Status: in_progress.** Osobny fundament serwisu AI dla RetailOps.
 Obecny zakres: pakiet Python, konfiguracja, CLI, lokalny serwis diagnostyczny HTTP,
-PostgreSQL/pgvector, oddzielny MLflow, migracje, Compose i lokalne kontrole CI.
+PostgreSQL/pgvector, oddzielny MLflow, migracje, Compose, wykonywalne kontrakty
+danych/run/tool oraz lokalne kontrole CI.
+[Kontrakty i walidacja offline](docs/data-contracts.md).
 [Uruchomienie stosu](docs/local-stack.md) i [HTTP](docs/http-service.md).
 
 - [Dokumentacja i uruchomienie](docs/README.md)

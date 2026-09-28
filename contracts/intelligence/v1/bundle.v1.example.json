@@ -1,0 +1,943 @@
+{
+  "contract_type": "bundle",
+  "datasets": [
+    {
+      "artifacts": [
+        {
+          "byte_sha256": "51cfb3f9b3ccb24830f8008c2d80bbf5c460f8cc5cc14c8639bb6895a83234e9",
+          "classification": "facts",
+          "date_field": "business_date",
+          "date_from": "2026-05-01",
+          "date_to": "2026-08-31",
+          "grain": [
+            "product_id",
+            "selling_location_id",
+            "channel",
+            "business_date"
+          ],
+          "logical_table": "source",
+          "path": "source/fixture.parquet",
+          "rows": 2,
+          "schema_version": "1.0",
+          "size_bytes": 128
+        }
+      ],
+      "classification": "facts",
+      "contract_type": "dataset",
+      "dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+      "generated_at": "2026-09-01T00:00:00Z",
+      "identity": {
+        "canonicalization_version": "retailops-canonical-json-v1",
+        "classification": "facts",
+        "config": {
+          "business_timezone": "UTC",
+          "calendar_version": "calendar-utc-v1",
+          "contract_version": "1.0",
+          "requested_parameters": {
+            "horizon_days": null,
+            "products": 1
+          },
+          "resolved_parameters": {
+            "horizon_days": 14,
+            "products": 1
+          },
+          "scenario": "schema-fixture",
+          "seed": 42
+        },
+        "logical_content_sha256": "5a2fe18fb70b07214f51606b9dc9fd9354088bd8717b10ae0c991b328fa9dca1",
+        "parents": {
+          "curated_dataset_id": null,
+          "feature_set_id": null,
+          "inference_run_id": null,
+          "label_dataset_id": null,
+          "model_id": null,
+          "source_dataset_id": null,
+          "split_id": null
+        },
+        "provenance": {
+          "code_state": "clean",
+          "commit_sha": "1111111111111111111111111111111111111111",
+          "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+          "dirty_patch_sha256": null,
+          "repository": "retailops-cloud-native-platform",
+          "transform_version": "fixture-v1"
+        },
+        "role": "source"
+      },
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast": "passed",
+        "inventory_ready": false,
+        "policy_version": "synthetic-fixture-only-v1",
+        "stockout": "not_ready"
+      },
+      "schema_version": "1.0",
+      "watermarks": {
+        "daily_observations": "2026-08-31T23:59:59Z"
+      }
+    },
+    {
+      "artifacts": [
+        {
+          "byte_sha256": "6d6e9b5646fc07694d657b5f3181aa5aa71d57d8798b25412b7a0bd02660bc73",
+          "classification": "curated",
+          "date_field": "business_date",
+          "date_from": "2026-05-01",
+          "date_to": "2026-08-31",
+          "grain": [
+            "product_id",
+            "selling_location_id",
+            "channel",
+            "business_date"
+          ],
+          "logical_table": "curated",
+          "path": "curated/fixture.parquet",
+          "rows": 2,
+          "schema_version": "1.0",
+          "size_bytes": 128
+        }
+      ],
+      "classification": "curated",
+      "contract_type": "dataset",
+      "dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+      "generated_at": "2026-09-01T00:00:00Z",
+      "identity": {
+        "canonicalization_version": "retailops-canonical-json-v1",
+        "classification": "curated",
+        "config": {
+          "business_timezone": "UTC",
+          "calendar_version": "calendar-utc-v1",
+          "contract_version": "1.0",
+          "requested_parameters": {
+            "horizon_days": null,
+            "products": 1
+          },
+          "resolved_parameters": {
+            "horizon_days": 14,
+            "products": 1
+          },
+          "scenario": "schema-fixture",
+          "seed": 42
+        },
+        "logical_content_sha256": "0276cfd75ef7469998b00319675f28af69100b8260e5fd3b996998efe3794bc2",
+        "parents": {
+          "curated_dataset_id": null,
+          "feature_set_id": null,
+          "inference_run_id": null,
+          "label_dataset_id": null,
+          "model_id": null,
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "split_id": null
+        },
+        "provenance": {
+          "code_state": "clean",
+          "commit_sha": "1111111111111111111111111111111111111111",
+          "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+          "dirty_patch_sha256": null,
+          "repository": "retailops-ai-intelligence",
+          "transform_version": "fixture-v1"
+        },
+        "role": "curated"
+      },
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast": "passed",
+        "inventory_ready": false,
+        "policy_version": "synthetic-fixture-only-v1",
+        "stockout": "not_ready"
+      },
+      "schema_version": "1.0",
+      "watermarks": {
+        "daily_observations": "2026-08-31T23:59:59Z"
+      }
+    },
+    {
+      "artifacts": [
+        {
+          "byte_sha256": "4219281b3573e68425ae68f6ed8e9aed2045f1e0e813b5b203389e54a84ffc8a",
+          "classification": "features",
+          "date_field": "forecast_origin",
+          "date_from": "2026-05-30",
+          "date_to": "2026-08-22",
+          "grain": [
+            "product_id",
+            "selling_location_id",
+            "channel",
+            "forecast_origin",
+            "target_date"
+          ],
+          "logical_table": "features",
+          "path": "features/fixture.parquet",
+          "rows": 2,
+          "schema_version": "1.0",
+          "size_bytes": 128
+        }
+      ],
+      "classification": "features",
+      "contract_type": "dataset",
+      "dataset_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+      "generated_at": "2026-09-01T00:00:00Z",
+      "identity": {
+        "canonicalization_version": "retailops-canonical-json-v1",
+        "classification": "features",
+        "config": {
+          "business_timezone": "UTC",
+          "calendar_version": "calendar-utc-v1",
+          "contract_version": "1.0",
+          "requested_parameters": {
+            "horizon_days": null,
+            "products": 1
+          },
+          "resolved_parameters": {
+            "horizon_days": 14,
+            "products": 1
+          },
+          "scenario": "schema-fixture",
+          "seed": 42
+        },
+        "logical_content_sha256": "e74115fa3c36e0bec52dc6e10658b0043c93e2cf16807c084e37bb40512f34ea",
+        "parents": {
+          "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+          "feature_set_id": null,
+          "inference_run_id": null,
+          "label_dataset_id": null,
+          "model_id": null,
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "split_id": null
+        },
+        "provenance": {
+          "code_state": "clean",
+          "commit_sha": "1111111111111111111111111111111111111111",
+          "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+          "dirty_patch_sha256": null,
+          "repository": "retailops-ai-intelligence",
+          "transform_version": "fixture-v1"
+        },
+        "role": "features"
+      },
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast": "passed",
+        "inventory_ready": false,
+        "policy_version": "synthetic-fixture-only-v1",
+        "stockout": "not_ready"
+      },
+      "schema_version": "1.0",
+      "watermarks": {
+        "daily_observations": "2026-08-31T23:59:59Z"
+      }
+    },
+    {
+      "artifacts": [
+        {
+          "byte_sha256": "1e097ffdafa41c722da34cf76ac2d2b3298e074c4b061c1453e5bd591d24406c",
+          "classification": "labels",
+          "date_field": "target_date",
+          "date_from": "2026-05-31",
+          "date_to": "2026-08-25",
+          "grain": [
+            "product_id",
+            "selling_location_id",
+            "channel",
+            "forecast_origin",
+            "target_date"
+          ],
+          "logical_table": "labels",
+          "path": "labels/fixture.parquet",
+          "rows": 2,
+          "schema_version": "1.0",
+          "size_bytes": 128
+        }
+      ],
+      "classification": "labels",
+      "contract_type": "dataset",
+      "dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+      "generated_at": "2026-09-01T00:00:00Z",
+      "identity": {
+        "canonicalization_version": "retailops-canonical-json-v1",
+        "classification": "labels",
+        "config": {
+          "business_timezone": "UTC",
+          "calendar_version": "calendar-utc-v1",
+          "contract_version": "1.0",
+          "requested_parameters": {
+            "horizon_days": null,
+            "products": 1
+          },
+          "resolved_parameters": {
+            "horizon_days": 14,
+            "products": 1
+          },
+          "scenario": "schema-fixture",
+          "seed": 42
+        },
+        "logical_content_sha256": "62097bf3bbfdc6383c8b58c125a610522b4319225074a398739529cef928ea0f",
+        "parents": {
+          "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+          "feature_set_id": null,
+          "inference_run_id": null,
+          "label_dataset_id": null,
+          "model_id": null,
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "split_id": null
+        },
+        "provenance": {
+          "code_state": "clean",
+          "commit_sha": "1111111111111111111111111111111111111111",
+          "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+          "dirty_patch_sha256": null,
+          "repository": "retailops-ai-intelligence",
+          "transform_version": "fixture-v1"
+        },
+        "role": "labels"
+      },
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast": "passed",
+        "inventory_ready": false,
+        "policy_version": "synthetic-fixture-only-v1",
+        "stockout": "not_ready"
+      },
+      "schema_version": "1.0",
+      "watermarks": {
+        "daily_observations": "2026-08-31T23:59:59Z"
+      }
+    },
+    {
+      "artifacts": [
+        {
+          "byte_sha256": "e27ecc59b616b631e0daf9dc2bffd139fd3d08106f8bc4e325e3d46b10d3288e",
+          "classification": "split",
+          "date_field": "origin_date",
+          "date_from": "2026-05-01",
+          "date_to": "2026-08-31",
+          "grain": [
+            "origin_date"
+          ],
+          "logical_table": "split",
+          "path": "split/fixture.parquet",
+          "rows": 1,
+          "schema_version": "1.0",
+          "size_bytes": 128
+        }
+      ],
+      "classification": "split",
+      "contract_type": "dataset",
+      "dataset_id": "split-sha256-78c012d1228b0da163ab661aa82999f18c0b599b4e913e99bf40684899ccfd92",
+      "generated_at": "2026-09-01T00:00:00Z",
+      "identity": {
+        "canonicalization_version": "retailops-canonical-json-v1",
+        "classification": "split",
+        "config": {
+          "business_timezone": "UTC",
+          "calendar_version": "calendar-utc-v1",
+          "contract_version": "1.0",
+          "requested_parameters": {
+            "horizon_days": null,
+            "products": 1
+          },
+          "resolved_parameters": {
+            "horizon_days": 14,
+            "products": 1
+          },
+          "scenario": "schema-fixture",
+          "seed": 42
+        },
+        "logical_content_sha256": "1be9846ef10dee327dacb47aa54f92aa4bc0379d5186c56c2b9a1ae1bae9e752",
+        "parents": {
+          "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+          "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+          "inference_run_id": null,
+          "label_dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+          "model_id": null,
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "split_id": null
+        },
+        "provenance": {
+          "code_state": "clean",
+          "commit_sha": "1111111111111111111111111111111111111111",
+          "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+          "dirty_patch_sha256": null,
+          "repository": "retailops-ai-intelligence",
+          "transform_version": "fixture-v1"
+        },
+        "role": "split"
+      },
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast": "passed",
+        "inventory_ready": false,
+        "policy_version": "synthetic-fixture-only-v1",
+        "stockout": "not_ready"
+      },
+      "schema_version": "1.0",
+      "watermarks": {
+        "daily_observations": "2026-08-31T23:59:59Z"
+      }
+    },
+    {
+      "artifacts": [
+        {
+          "byte_sha256": "c920ddf28804888b0a0c2e00527a57ddb9d9f15dc67621783e5d4ea59621c789",
+          "classification": "predictions",
+          "date_field": "target_date",
+          "date_from": "2026-08-25",
+          "date_to": "2026-08-25",
+          "grain": [
+            "product_id",
+            "selling_location_id",
+            "channel",
+            "forecast_origin",
+            "target_date"
+          ],
+          "logical_table": "predictions",
+          "path": "predictions/fixture.parquet",
+          "rows": 1,
+          "schema_version": "1.0",
+          "size_bytes": 128
+        }
+      ],
+      "classification": "predictions",
+      "contract_type": "dataset",
+      "dataset_id": "predictions-sha256-e48a2183b91cfcf89fd47aa6e6c0f155124acc913317a849683d52acf0aeb1de",
+      "generated_at": "2026-09-01T00:00:00Z",
+      "identity": {
+        "canonicalization_version": "retailops-canonical-json-v1",
+        "classification": "predictions",
+        "config": {
+          "business_timezone": "UTC",
+          "calendar_version": "calendar-utc-v1",
+          "contract_version": "1.0",
+          "requested_parameters": {
+            "horizon_days": null,
+            "products": 1
+          },
+          "resolved_parameters": {
+            "horizon_days": 14,
+            "products": 1
+          },
+          "scenario": "schema-fixture",
+          "seed": 42
+        },
+        "logical_content_sha256": "d4c8e2731ec2f536d6a254382a8560f1ba35b53d56b69d713b512b90a5aa185b",
+        "parents": {
+          "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+          "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+          "inference_run_id": "run-44444444444444444444444444444444",
+          "label_dataset_id": null,
+          "model_id": "model-sha256-3f1c8c51c702a30d34da3d775a11eb1141f7a40bdfd94919d0d49300b9b7c9cf",
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "split_id": null
+        },
+        "provenance": {
+          "code_state": "clean",
+          "commit_sha": "1111111111111111111111111111111111111111",
+          "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+          "dirty_patch_sha256": null,
+          "repository": "retailops-ai-intelligence",
+          "transform_version": "fixture-v1"
+        },
+        "role": "predictions"
+      },
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast": "passed",
+        "inventory_ready": false,
+        "policy_version": "synthetic-fixture-only-v1",
+        "stockout": "not_ready"
+      },
+      "schema_version": "1.0",
+      "watermarks": {
+        "daily_observations": "2026-08-31T23:59:59Z"
+      }
+    }
+  ],
+  "features": [
+    {
+      "allowlist_version": "forecast-observed-sales-v1",
+      "contract_type": "feature",
+      "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+      "key": {
+        "business_timezone": "UTC",
+        "channel": "store",
+        "cutoff_policy": "end_of_day_second_v1",
+        "forecast_origin": "2026-05-30T23:59:59Z",
+        "horizon_days": 1,
+        "product_id": "p-101",
+        "selling_location_id": "s-03",
+        "target_date": "2026-05-31"
+      },
+      "lineage": {
+        "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+        "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+      },
+      "schema_version": "1.0",
+      "values": [
+        {
+          "currency": null,
+          "effective_date": null,
+          "kind": "observed",
+          "name": "lag_1_units",
+          "observed_through_date": "2026-05-30",
+          "reason": null,
+          "source_available_at": "2026-05-30T23:59:59Z",
+          "source_class": "facts",
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "status": "available",
+          "value": 0
+        },
+        {
+          "currency": null,
+          "effective_date": "2026-05-31",
+          "kind": "calendar",
+          "name": "target_weekday",
+          "observed_through_date": null,
+          "reason": null,
+          "source_available_at": "2026-05-30T23:59:59Z",
+          "source_class": "calendar",
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "status": "available",
+          "value": 6
+        },
+        {
+          "currency": "PLN",
+          "effective_date": "2026-05-31",
+          "kind": "known_plan",
+          "name": "planned_price_minor_units",
+          "observed_through_date": null,
+          "reason": null,
+          "source_available_at": "2026-05-30T23:59:59Z",
+          "source_class": "known_plan",
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "status": "available",
+          "value": 1025
+        }
+      ]
+    },
+    {
+      "allowlist_version": "forecast-observed-sales-v1",
+      "contract_type": "feature",
+      "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+      "key": {
+        "business_timezone": "UTC",
+        "channel": "store",
+        "cutoff_policy": "end_of_day_second_v1",
+        "forecast_origin": "2026-08-22T23:59:59Z",
+        "horizon_days": 3,
+        "product_id": "p-101",
+        "selling_location_id": "s-03",
+        "target_date": "2026-08-25"
+      },
+      "lineage": {
+        "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+        "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+      },
+      "schema_version": "1.0",
+      "values": [
+        {
+          "currency": null,
+          "effective_date": null,
+          "kind": "observed",
+          "name": "lag_1_units",
+          "observed_through_date": "2026-08-22",
+          "reason": null,
+          "source_available_at": "2026-08-22T23:59:59Z",
+          "source_class": "facts",
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "status": "available",
+          "value": 0
+        },
+        {
+          "currency": null,
+          "effective_date": "2026-08-25",
+          "kind": "calendar",
+          "name": "target_weekday",
+          "observed_through_date": null,
+          "reason": null,
+          "source_available_at": "2026-08-22T23:59:59Z",
+          "source_class": "calendar",
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "status": "available",
+          "value": 1
+        },
+        {
+          "currency": "PLN",
+          "effective_date": "2026-08-25",
+          "kind": "known_plan",
+          "name": "planned_price_minor_units",
+          "observed_through_date": null,
+          "reason": null,
+          "source_available_at": "2026-08-22T23:59:59Z",
+          "source_class": "known_plan",
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+          "status": "available",
+          "value": 1025
+        }
+      ]
+    }
+  ],
+  "labels": [
+    {
+      "contract_type": "label",
+      "key": {
+        "business_timezone": "UTC",
+        "channel": "store",
+        "cutoff_policy": "end_of_day_second_v1",
+        "forecast_origin": "2026-05-30T23:59:59Z",
+        "horizon_days": 1,
+        "product_id": "p-101",
+        "selling_location_id": "s-03",
+        "target_date": "2026-05-31"
+      },
+      "label_available_at": "2026-05-31T23:59:59Z",
+      "label_dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+      "lineage": {
+        "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+        "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+      },
+      "observed_sales_units": 0,
+      "reason": null,
+      "schema_version": "1.0",
+      "status": "eligible",
+      "target_type": "observed_sales_units"
+    },
+    {
+      "contract_type": "label",
+      "key": {
+        "business_timezone": "UTC",
+        "channel": "store",
+        "cutoff_policy": "end_of_day_second_v1",
+        "forecast_origin": "2026-08-22T23:59:59Z",
+        "horizon_days": 3,
+        "product_id": "p-101",
+        "selling_location_id": "s-03",
+        "target_date": "2026-08-25"
+      },
+      "label_available_at": null,
+      "label_dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+      "lineage": {
+        "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+        "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+      },
+      "observed_sales_units": null,
+      "reason": "incomplete_window",
+      "schema_version": "1.0",
+      "status": "censored",
+      "target_type": "observed_sales_units"
+    }
+  ],
+  "models": [
+    {
+      "artifact_sha256": "b6052dbebf430c96fe1d23e4448819c5947516c39a7954429b83505f19a9b68b",
+      "config_sha256": "6d0cc86ad3538e13cf8212ea97765d07f2fff8e2ec2af2a9a407e6ecd9bf6ba5",
+      "contract_type": "model",
+      "feature_allowlist_version": "forecast-observed-sales-v1",
+      "feature_schema_version": "1.0",
+      "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+      "label_dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+      "model_family": "baseline",
+      "model_id": "model-sha256-3f1c8c51c702a30d34da3d775a11eb1141f7a40bdfd94919d0d49300b9b7c9cf",
+      "model_name": "retailops-demand-forecast",
+      "model_seed": 42,
+      "model_version": "1",
+      "provenance": {
+        "code_state": "clean",
+        "commit_sha": "1111111111111111111111111111111111111111",
+        "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+        "dirty_patch_sha256": null,
+        "repository": "retailops-ai-intelligence",
+        "transform_version": "fixture-v1"
+      },
+      "schema_version": "1.0",
+      "selection_cutoff": "2026-08-03T23:59:59Z",
+      "split_id": "split-sha256-78c012d1228b0da163ab661aa82999f18c0b599b4e913e99bf40684899ccfd92",
+      "target_type": "observed_sales_units",
+      "training_cutoff": "2026-06-14T23:59:59Z",
+      "training_lineage": {
+        "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+        "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+      },
+      "training_run_id": "run-33333333333333333333333333333333"
+    }
+  ],
+  "predictions": [
+    {
+      "contract_type": "prediction",
+      "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+      "freshness_status": "unknown",
+      "generated_at": "2026-08-23T00:04:00Z",
+      "inference_run_id": "run-44444444444444444444444444444444",
+      "interval": null,
+      "interval_reason": "not_calibrated",
+      "key": {
+        "business_timezone": "UTC",
+        "channel": "store",
+        "cutoff_policy": "end_of_day_second_v1",
+        "forecast_origin": "2026-08-22T23:59:59Z",
+        "horizon_days": 3,
+        "product_id": "p-101",
+        "selling_location_id": "s-03",
+        "target_date": "2026-08-25"
+      },
+      "lineage": {
+        "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+        "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+      },
+      "model": {
+        "artifact_sha256": "b6052dbebf430c96fe1d23e4448819c5947516c39a7954429b83505f19a9b68b",
+        "config_sha256": "6d0cc86ad3538e13cf8212ea97765d07f2fff8e2ec2af2a9a407e6ecd9bf6ba5",
+        "contract_type": "model",
+        "feature_allowlist_version": "forecast-observed-sales-v1",
+        "feature_schema_version": "1.0",
+        "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+        "label_dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+        "model_family": "baseline",
+        "model_id": "model-sha256-3f1c8c51c702a30d34da3d775a11eb1141f7a40bdfd94919d0d49300b9b7c9cf",
+        "model_name": "retailops-demand-forecast",
+        "model_seed": 42,
+        "model_version": "1",
+        "provenance": {
+          "code_state": "clean",
+          "commit_sha": "1111111111111111111111111111111111111111",
+          "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+          "dirty_patch_sha256": null,
+          "repository": "retailops-ai-intelligence",
+          "transform_version": "fixture-v1"
+        },
+        "schema_version": "1.0",
+        "selection_cutoff": "2026-08-03T23:59:59Z",
+        "split_id": "split-sha256-78c012d1228b0da163ab661aa82999f18c0b599b4e913e99bf40684899ccfd92",
+        "target_type": "observed_sales_units",
+        "training_cutoff": "2026-06-14T23:59:59Z",
+        "training_lineage": {
+          "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+        },
+        "training_run_id": "run-33333333333333333333333333333333"
+      },
+      "predicted_units": 0.0,
+      "prediction_dataset_id": "predictions-sha256-e48a2183b91cfcf89fd47aa6e6c0f155124acc913317a849683d52acf0aeb1de",
+      "prediction_id": "prediction-sha256-a65adda39c49a78f7c2a8ec6e793319156eb797435cc32b76623ece7990616f6",
+      "quality_status": "passed",
+      "release_id": "synthetic-release-fixture",
+      "schema_version": "1.0",
+      "target_type": "observed_sales_units",
+      "unit_of_measure": "unit"
+    }
+  ],
+  "runs": [
+    {
+      "attempt": 1,
+      "completed_at": "2026-08-23T00:02:00Z",
+      "contract_type": "run",
+      "error": null,
+      "input_ref": {
+        "as_of_time": "2026-06-14T23:59:59Z",
+        "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+        "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+        "label_dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+        "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+        "split_id": "split-sha256-78c012d1228b0da163ab661aa82999f18c0b599b4e913e99bf40684899ccfd92"
+      },
+      "output_ref": {
+        "artifact_id": "model-sha256-3f1c8c51c702a30d34da3d775a11eb1141f7a40bdfd94919d0d49300b9b7c9cf",
+        "complete": true,
+        "kind": "model"
+      },
+      "requested_at": "2026-08-23T00:00:00Z",
+      "requested_by": "fixture-pipeline",
+      "resolved_model": null,
+      "run_id": "run-33333333333333333333333333333333",
+      "run_type": "training",
+      "schema_version": "1.0",
+      "started_at": "2026-08-23T00:01:00Z",
+      "status": "succeeded"
+    },
+    {
+      "attempt": 1,
+      "completed_at": "2026-08-23T00:05:00Z",
+      "contract_type": "run",
+      "error": null,
+      "input_ref": {
+        "as_of_time": "2026-08-22T23:59:59Z",
+        "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+        "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+        "label_dataset_id": null,
+        "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a",
+        "split_id": null
+      },
+      "output_ref": {
+        "artifact_id": "predictions-sha256-e48a2183b91cfcf89fd47aa6e6c0f155124acc913317a849683d52acf0aeb1de",
+        "complete": true,
+        "kind": "predictions"
+      },
+      "requested_at": "2026-08-23T00:02:00Z",
+      "requested_by": "fixture-pipeline",
+      "resolved_model": {
+        "artifact_sha256": "b6052dbebf430c96fe1d23e4448819c5947516c39a7954429b83505f19a9b68b",
+        "config_sha256": "6d0cc86ad3538e13cf8212ea97765d07f2fff8e2ec2af2a9a407e6ecd9bf6ba5",
+        "contract_type": "model",
+        "feature_allowlist_version": "forecast-observed-sales-v1",
+        "feature_schema_version": "1.0",
+        "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+        "label_dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+        "model_family": "baseline",
+        "model_id": "model-sha256-3f1c8c51c702a30d34da3d775a11eb1141f7a40bdfd94919d0d49300b9b7c9cf",
+        "model_name": "retailops-demand-forecast",
+        "model_seed": 42,
+        "model_version": "1",
+        "provenance": {
+          "code_state": "clean",
+          "commit_sha": "1111111111111111111111111111111111111111",
+          "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+          "dirty_patch_sha256": null,
+          "repository": "retailops-ai-intelligence",
+          "transform_version": "fixture-v1"
+        },
+        "schema_version": "1.0",
+        "selection_cutoff": "2026-08-03T23:59:59Z",
+        "split_id": "split-sha256-78c012d1228b0da163ab661aa82999f18c0b599b4e913e99bf40684899ccfd92",
+        "target_type": "observed_sales_units",
+        "training_cutoff": "2026-06-14T23:59:59Z",
+        "training_lineage": {
+          "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+          "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+        },
+        "training_run_id": "run-33333333333333333333333333333333"
+      },
+      "run_id": "run-44444444444444444444444444444444",
+      "run_type": "forecast_batch",
+      "schema_version": "1.0",
+      "started_at": "2026-08-23T00:03:00Z",
+      "status": "succeeded"
+    }
+  ],
+  "schema_version": "1.0",
+  "splits": [
+    {
+      "calibration": {
+        "end": "2026-07-20",
+        "start": "2026-07-15"
+      },
+      "contract_type": "split",
+      "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+      "label_dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+      "lineage": {
+        "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+        "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+      },
+      "max_horizon_days": 14,
+      "protocol": "fixed_origin",
+      "purge_days": 14,
+      "schema_version": "1.0",
+      "split_id": "split-sha256-78c012d1228b0da163ab661aa82999f18c0b599b4e913e99bf40684899ccfd92",
+      "test": {
+        "end": "2026-08-31",
+        "start": "2026-08-04"
+      },
+      "train": {
+        "end": "2026-05-31",
+        "start": "2026-05-01"
+      },
+      "validation": {
+        "end": "2026-06-30",
+        "start": "2026-06-15"
+      }
+    }
+  ],
+  "tool_results": [
+    {
+      "as_of": "2026-08-22T23:59:59Z",
+      "contract_type": "tool_result",
+      "error": null,
+      "freshness_status": "unknown",
+      "items": [
+        {
+          "contract_type": "prediction",
+          "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+          "freshness_status": "unknown",
+          "generated_at": "2026-08-23T00:04:00Z",
+          "inference_run_id": "run-44444444444444444444444444444444",
+          "interval": null,
+          "interval_reason": "not_calibrated",
+          "key": {
+            "business_timezone": "UTC",
+            "channel": "store",
+            "cutoff_policy": "end_of_day_second_v1",
+            "forecast_origin": "2026-08-22T23:59:59Z",
+            "horizon_days": 3,
+            "product_id": "p-101",
+            "selling_location_id": "s-03",
+            "target_date": "2026-08-25"
+          },
+          "lineage": {
+            "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+            "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+          },
+          "model": {
+            "artifact_sha256": "b6052dbebf430c96fe1d23e4448819c5947516c39a7954429b83505f19a9b68b",
+            "config_sha256": "6d0cc86ad3538e13cf8212ea97765d07f2fff8e2ec2af2a9a407e6ecd9bf6ba5",
+            "contract_type": "model",
+            "feature_allowlist_version": "forecast-observed-sales-v1",
+            "feature_schema_version": "1.0",
+            "feature_set_id": "features-sha256-fce54de709a19200482ed8d01aeef18abaf7246ccd0c21d9667a4167348409fb",
+            "label_dataset_id": "labels-sha256-5ff71a583d68f1885754202e422c240f306be8ed926b709fa724febe8d4ba246",
+            "model_family": "baseline",
+            "model_id": "model-sha256-3f1c8c51c702a30d34da3d775a11eb1141f7a40bdfd94919d0d49300b9b7c9cf",
+            "model_name": "retailops-demand-forecast",
+            "model_seed": 42,
+            "model_version": "1",
+            "provenance": {
+              "code_state": "clean",
+              "commit_sha": "1111111111111111111111111111111111111111",
+              "dependency_lock_sha256": "12afcaf0a05ede12d24955ee504730f40ce39b16428cafa308cf3e9dacb2c1bc",
+              "dirty_patch_sha256": null,
+              "repository": "retailops-ai-intelligence",
+              "transform_version": "fixture-v1"
+            },
+            "schema_version": "1.0",
+            "selection_cutoff": "2026-08-03T23:59:59Z",
+            "split_id": "split-sha256-78c012d1228b0da163ab661aa82999f18c0b599b4e913e99bf40684899ccfd92",
+            "target_type": "observed_sales_units",
+            "training_cutoff": "2026-06-14T23:59:59Z",
+            "training_lineage": {
+              "curated_dataset_id": "curated-sha256-dac4f2a219d3f7441b28ab1f6920781f2407bc4b1df451ff0bae3344d85b9f28",
+              "source_dataset_id": "source-sha256-1c43b488286ce44d34e04de9aae7eb4f976183c920cd4655f5ce573171cbc67a"
+            },
+            "training_run_id": "run-33333333333333333333333333333333"
+          },
+          "predicted_units": 0.0,
+          "prediction_dataset_id": "predictions-sha256-e48a2183b91cfcf89fd47aa6e6c0f155124acc913317a849683d52acf0aeb1de",
+          "prediction_id": "prediction-sha256-a65adda39c49a78f7c2a8ec6e793319156eb797435cc32b76623ece7990616f6",
+          "quality_status": "passed",
+          "release_id": "synthetic-release-fixture",
+          "schema_version": "1.0",
+          "target_type": "observed_sales_units",
+          "unit_of_measure": "unit"
+        }
+      ],
+      "request": {
+        "as_of": "2026-08-22T23:59:59Z",
+        "contract_type": "tool_request",
+        "limit": 20,
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ],
+          "target_from": "2026-08-23",
+          "target_to": "2026-08-31"
+        },
+        "tool": "get_demand_forecast"
+      },
+      "schema_version": "1.0",
+      "source_ref": "predictions-sha256-e48a2183b91cfcf89fd47aa6e6c0f155124acc913317a849683d52acf0aeb1de",
+      "status": "ok",
+      "tool": "get_demand_forecast"
+    }
+  ]
+}

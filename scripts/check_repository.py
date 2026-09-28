@@ -30,11 +30,24 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
         for step in jobs.get("persistence", {}).get("steps", [])
     ):
         errors.append("persistence must execute real Compose acceptance")
+    if not any(
+        step.get("run") == "make bootstrap check"
+        for step in jobs.get("checks", {}).get("steps", [])
+    ):
+        errors.append("checks must run every make check gate")
     required = jobs.get("required-result", {})
     if set(required.get("needs", [])) != set(jobs) - {"required-result"}:
         errors.append("required-result must depend on every check")
     if required.get("if") != "always()":
         errors.append("required-result must run even after a failure")
+    result_steps = required.get("steps", [])
+    expected = {
+        name.upper().replace("-", "_") + "_RESULT": "$" + "{{ needs." + name + ".result }}"
+        for name in jobs
+        if name != "required-result"
+    }
+    if not any(step.get("env") == expected for step in result_steps):
+        errors.append("required-result must read the exact result expressions")
     for job in jobs.values():
         if job.get("continue-on-error"):
             errors.append("jobs cannot ignore failures")
