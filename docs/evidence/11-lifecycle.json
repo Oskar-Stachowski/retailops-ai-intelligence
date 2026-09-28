@@ -1,0 +1,242 @@
+{
+  "schema_version": "1.0",
+  "stage": "11",
+  "scope": "explicit_corpus_approval_mechanical_validation_and_atomic_offline_test_index_lifecycle",
+  "result": "passed",
+  "verified_at": "2026-09-28T10:53:41.651447+00:00",
+  "implementation_commit": "da01ece5e443c5a3e4b9ec5f58d7b01c33106eae",
+  "base_commit": "e1f360fe682a96844c077e5b178c0553ddd3fd55",
+  "branch": "ai/rag-corpus",
+  "runtime": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.11.15",
+    "uv": "0.12.19",
+    "postgres_major": 16,
+    "pgvector": "0.8.6",
+    "migration_revision": "0003_rag_lifecycle"
+  },
+  "runtime_dependencies_added": [],
+  "actual_candidate": {
+    "index_id": "index-sha256-922d7c3e2cbfdfcc1f2c176fdbefd0b56ed74196de64287ebcbf625a5777fe51",
+    "corpus_id": "corpus-sha256-b5aa149e41279df9848596a05fab3ee584ba3db94c5f100189e4fef7adb0055d",
+    "documents": 20,
+    "chunks": 302,
+    "embeddings": 302,
+    "sources": [
+      {
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "commit_sha": "7940d2ee7c82dee4e99d49755fc7eb898f15b2ca",
+        "documents": 8
+      },
+      {
+        "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+        "commit_sha": "b8de65b53b3f27863bb11999ca6e9a5d6d41a760",
+        "documents": 12
+      }
+    ],
+    "artifact_byte_sha256": "32473ee8d0a071ca1d81af6127a0a5d03fb703d0745bcff7a39d62e075a1ab88",
+    "unchanged_since_index_acceptance": true,
+    "review_state": "proposed",
+    "corpus_approval_created": false,
+    "qualified_for_retrieval": false,
+    "activated": false,
+    "mechanical_validation": {
+      "schema_version": "1.0",
+      "validation_id": "index-validation-sha256-d0060cd600f2d1c64604cdcfa81fb79c9c0ead6facddc02985b73dca3da5094b",
+      "policy_version": "fake-mechanical-validation-v1",
+      "index_id": "index-sha256-922d7c3e2cbfdfcc1f2c176fdbefd0b56ed74196de64287ebcbf625a5777fe51",
+      "corpus_id": "corpus-sha256-b5aa149e41279df9848596a05fab3ee584ba3db94c5f100189e4fef7adb0055d",
+      "space_id": "embedding-space-sha256-1cf9d4ec38fe18ba85ae9ecbd032fb5b516e73085997cec96703ed6d0ca40817",
+      "environment": "local",
+      "provider": "fake",
+      "golden_evaluation": "not_evaluated_fake_vectors",
+      "checks": {
+        "complete_graph": true,
+        "source_metadata": true,
+        "citation_binding": true,
+        "vector_binding": true,
+        "deterministic_fake_vectors": true
+      },
+      "result": "passed"
+    },
+    "validation_artifact": {
+      "exit_code": 0,
+      "byte_identical_clean_checkout": true,
+      "outside_repo_cwd": true,
+      "hashseed": 731,
+      "invalid_service_settings_ignored": true,
+      "bytes": 787,
+      "sha256": "3a68ed35865ba1a34b9bdc053914bac837a8e3ed8f5f1350bfc6c10cc5fd378c",
+      "mode": "0o600",
+      "summary": {
+        "result": "passed",
+        "validation_id": "index-validation-sha256-d0060cd600f2d1c64604cdcfa81fb79c9c0ead6facddc02985b73dca3da5094b",
+        "index_id": "index-sha256-922d7c3e2cbfdfcc1f2c176fdbefd0b56ed74196de64287ebcbf625a5777fe51",
+        "golden_evaluation": "not_evaluated_fake_vectors"
+      }
+    }
+  },
+  "checks": {
+    "new_lifecycle_cases": {
+      "passed": 30,
+      "included_in_full_suite": true
+    },
+    "working_checkout": {
+      "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+      "exit_code": 0,
+      "passed": 463,
+      "test_seconds": 52.49,
+      "pre_commit_worktree": true,
+      "real_compose_result": "passed",
+      "lifecycle_base_generation": 1
+    },
+    "clean_checkout": {
+      "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks compose-smoke",
+      "exit_code": 0,
+      "passed": 463,
+      "test_seconds": 62.09,
+      "fresh_venv": true,
+      "fresh_isolated_postgres_volume": true,
+      "clean_git_status_after": true,
+      "implementation_commit": "da01ece5e443c5a3e4b9ec5f58d7b01c33106eae"
+    },
+    "real_compose_acceptance": {
+      "checked_at": "2026-09-28T10:49:50.500790+00:00",
+      "kind": "real_local_compose",
+      "checks": [
+        "separate_databases_roles_and_vector",
+        "explicit_idempotent_migration_and_revision_readiness",
+        "real_pgvector_candidate_constraints_cache_atomicity_and_replay",
+        "sigkill_restart_retains_ai_and_mlflow_artifact",
+        "real_db_outage_health_200_ready_503_then_recovered_200",
+        "down_up_retains_ai_mlflow_metadata_and_artifact",
+        "loopback_ports_internal_network_no_secrets_in_service_logs"
+      ],
+      "rag": {
+        "checks": [
+          "native_float32_checksum_round_trip_and_idempotent_replay",
+          "real_candidate_cli_stdin_replay_and_safe_validation_error",
+          "body_cache_reuse_metadata_lineage_and_separate_dimension_spaces",
+          "conflicting_valid_vector_cache_refused_without_overwrite",
+          "database_rejects_wrong_dimension_nonfinite_nonunit_and_corrupt_checksum",
+          "database_blocks_update_and_delete_of_every_candidate_table",
+          "incomplete_mixed_space_and_mid_transaction_failure_roll_back_all_rows",
+          "concurrent_build_single_candidate_and_removed_content_absent_from_new_index"
+        ],
+        "index_id": "index-sha256-9a535efc9c5b468548fe57a1b55bd44e199f3d3337e0cbe62f95303553d48dbd",
+        "chunks": 2,
+        "embeddings": 2,
+        "result": "passed",
+        "lifecycle": {
+          "result": "passed",
+          "checks": [
+            "qualification_replay_generation_cas_unqualified_and_golden_gate_rejections",
+            "failure_after_pointer_write_rolls_back_event_and_pointer",
+            "readers_see_old_until_commit_and_pinned_run_retains_old_manifest",
+            "rollback_restores_previous_manifest_with_new_generation",
+            "two_independent_promoters_have_one_winner_and_one_generation_conflict",
+            "sql_blocks_incomplete_history_generation_jump_and_deletion",
+            "real_cli_qualify_rollback_current_and_default_retrieval_denial"
+          ],
+          "pin": {
+            "schema_version": "1.0",
+            "environment": "test",
+            "lane": "offline_test",
+            "purpose": "lifecycle_validation_only",
+            "generation": 5,
+            "request_id": "rag-change-b492b07fff0046b5988686195337fb2b",
+            "review_id": "corpus-review-sha256-f50fe5f332d30564d4495bf27e30f25bb70278cba060403db15a9820801dd97d",
+            "validation_id": "index-validation-sha256-d97a46e8b33586a3c2a4c7deaeb24b780849411d3ec873b790dc69370e20bf6d",
+            "manifest": {
+              "schema_version": "1.0",
+              "lifecycle": "candidate",
+              "environment": "test",
+              "semantic_quality": "not_evaluated_fake_vectors",
+              "index_id": "index-sha256-488772f8e8c612d2347e2a0d5d47d4e933d360b76a2b854494abc426210689e7",
+              "corpus_id": "corpus-sha256-16b1630ea01ea6629fb9d5025e11d4d3b5b9af9a9c0a54881e909cbf7832d836",
+              "chunk_manifest_id": "chunks-sha256-b7a90e2578210bac894020314d319daf10c90cd6e8a7c1248d53bfbf42390903",
+              "embedding_config": {
+                "schema_version": "1.0",
+                "provider": "fake",
+                "model_id": "sha256-unit-f32-v1",
+                "inference_profile": null,
+                "region": "offline",
+                "dimension": 32,
+                "normalization": "l2-unit",
+                "distance": "cosine",
+                "transformation_version": "utf8-chunk-body-v1",
+                "vector_format": "float32-big-endian-v1"
+              },
+              "space_id": "embedding-space-sha256-1cf9d4ec38fe18ba85ae9ecbd032fb5b516e73085997cec96703ed6d0ca40817",
+              "storage_version": "pgvector-checked-dimension-v1",
+              "pgvector_version": "0.8.6",
+              "migration_revision": "0002_rag_candidates",
+              "retrieval_version": "not_implemented",
+              "chunk_count": 2,
+              "embedding_count": 2,
+              "entries": [
+                {
+                  "chunk_id": "chunk-sha256-33d8a5aae18c18017c2f07a0d8423f3a860b8e7e63e7f5d2431aa08dfa552f36",
+                  "embedding_id": "embedding-sha256-d3f74d8ba08a0472703d043d5450210082bb5e8e298c44a2f3bf2efa33f904af",
+                  "vector_checksum": "e67bef3a479ffe7f4c02e72397aca92a6d03dbe1994c55008997649c2bc41f22"
+                },
+                {
+                  "chunk_id": "chunk-sha256-c67e157d642420a446616034e51b12985f3b7195e74d7c5e3c77c45755acffa3",
+                  "embedding_id": "embedding-sha256-366eccdf0f1f3d4ff61051185f7c8b45593f243c7a48808cae29bb56bcb2072a",
+                  "vector_checksum": "7f9a200842a9c4020bbc3104f3f5b4341045f63e80e9ccbcf843b25f0e859fc4"
+                }
+              ]
+            }
+          },
+          "base_generation": 0,
+          "actual_corpus_activated": false,
+          "semantic_quality_evaluated": false
+        }
+      },
+      "result": "passed",
+      "api_health": 200,
+      "api_ready_after_recovery": 200,
+      "postgres_vector_version": "0.8.6",
+      "migration_revision": "0003_rag_lifecycle"
+    },
+    "restart_pin_comparison": "full_manifest_and_generation_review_validation_request_ids_equal_after_sigkill_and_down_up",
+    "independent_jsonschema_validation": {
+      "actual_mechanical_report": "passed",
+      "synthetic_activation_pin": "passed"
+    },
+    "actionlint": {
+      "exit_code": 0,
+      "working_and_clean_checkout": true
+    },
+    "local_gates": [
+      "ruff",
+      "ruff_format",
+      "mypy_strict_68_files",
+      "pytest",
+      "docs",
+      "intelligence_snapshots",
+      "access_snapshots",
+      "knowledge_snapshots",
+      "wheel",
+      "sdist",
+      "compose_config",
+      "gitleaks_history",
+      "gitleaks_directory",
+      "real_pgvector_lifecycle_compose_smoke"
+    ],
+    "clean_wheel_byte_sha256": "69b7a6493a6c9ccd64b8377f85fdb68034f3a95d65aa6cd2ce464a0c08756a39",
+    "remote_ci": "not_run_for_this_scope"
+  },
+  "limitations": [
+    "Only synthetic test corpora can qualify and activate in the offline_test lane; this is lifecycle validation only.",
+    "The default retrieval lane refuses qualification and activation because actual golden evaluation is missing. Fake vectors cannot satisfy this gate.",
+    "Actual 20-document corpus remains proposed and inactive; its passed mechanical report is not editorial approval or semantic quality evidence.",
+    "Corpus source revisions remain pinned to earlier snapshots; editorial review and a source refresh are required before user retrieval activation.",
+    "No retrieval endpoint, principal/status/access filtering, near-duplicate quality evaluation, golden set, ANN index or agent run consuming the pin.",
+    "Approvals and actor metadata are assertions from trusted local CLI/pipeline input, not authenticated HTTP principals or signed author attestations; private DB access is the development boundary.",
+    "Immutable creation manifests retain storage contract revision 0002_rag_candidates; the operational database head is 0003_rag_lifecycle.",
+    "The shared writer advisory lock serializes candidate storage and lifecycle operations; production throughput and administration remain later scopes.",
+    "No Bedrock/AWS calls, cloud deployment, push or remote Required CI for these commits."
+  ]
+}

@@ -9,6 +9,7 @@ w osobnym kanale `offline_test`. Fake vectors i walidacja techniczna nie odbiera
 jakości retrieval. Domyślny kanał `retrieval` odmawia kwalifikacji i aktywacji
 z kodem `golden_evaluation_required`; nie ma obejścia przez flagę `force`.
 Rzeczywisty korpus nadal jest propozycją, bez aktywnego retrieval.
+[Dowody odbioru](evidence/11-lifecycle.md) obejmują czysty checkout i świeżą bazę.
 
 ## Co trzeba sprawdzić
 

@@ -21,6 +21,8 @@ z czystego checkoutu i realny Compose z awariami/transakcjami pgvector.
 atomowy wskaźnik, retry i rollback w osobnym kanale syntetycznych testów.
 Użytkowa aktywacja jest blokowana do golden evaluation; rzeczywisty korpus
 pozostaje propozycją i nie ma aktywnego retrieval.
+[Odbiór lifecycle](evidence/11-lifecycle.md): 463 testy, czysty checkout,
+konkurencyjna aktywacja, rollback i zachowany pełny pin po restartach PostgreSQL.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.

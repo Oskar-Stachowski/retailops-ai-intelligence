@@ -27,6 +27,8 @@ przestrzeń, cache treści, kontrolę wymiaru oraz transakcyjny zapis w pgvector
 na świeżej bazie oraz zapis pełnego korpusu 302 fragmentów.
 [Lifecycle indeksu](knowledge-lifecycle.md) opisuje jawne zgody, bramki jakości,
 atomową aktywację testową, przypinanie wersji i rollback.
+[Odbiór lifecycle](evidence/11-lifecycle.md) potwierdza 463 testy, współbieżność,
+rollback i zachowanie pełnego pin po restartach na świeżej bazie.
 
 ## Mapa repo
 
