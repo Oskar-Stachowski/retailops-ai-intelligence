@@ -16,7 +16,6 @@ progów, fałszywe flagi/binding oraz prywatny eksport bez nadpisania.
 Fake nie potwierdza jakości semantycznej. Użytkowa aktywacja, groundedness
 odpowiedzi i wykonanie narzędzi agenta nie należą do tego odbioru.
 
-
 ## PostgreSQL i HTTP
 
 Pełny lokalny Compose przechodzi na rewizji `0007_rag_golden_jobs`.
@@ -43,5 +42,22 @@ Obie zgody i aktualna polityka podobieństwa są wersjonowane. Preflight z
 oboma zgodami pozostawia trzy blokady: jakość golden, real provider i polityka
 użytkowej kwalifikacji. Poprzedni pomiar pięciu blokad zachowuje własny wynik.
 
-Pełne CI z czystego checkoutu i odtworzenie profilu są ostatnią częścią odbioru.
+## Czysty odbiór i odtworzenie
+
+Pełne `make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks`
+w osobnym klonie na commicie `8df02e60df600e2771f4481d18b09517b0500d0e`
+przechodzi: **627 testów w 257,62 s**, Ruff/format, strict Mypy
+(92 pliki), linki, snapshoty kontraktów, wheel/sdist, Compose config oraz
+Gitleaks git/dir. Venv utworzono od nowa dla tego odbioru; checkout pozostaje
+czysty. Wyjątek Gitleaks dotyczy jednej konkretnej, zweryfikowanej checksumy
+wygenerowanego OpenAPI — nie poświadczeń lub całej ścieżki evidence.
+
+Zainstalowane CLI spoza repo, z innym `PYTHONHASHSEED=1129` i niepoprawnym
+`APP_ENV`, odtwarza indeks ze źródeł osobnych klonów obu repo. Indeks, profil
+ze zgodami i approved preflight są identyczne bajt po bajcie. Raport workera
+odtworzono we wszystkich polach poza nowymi czasami pomiaru i wynikającym
+z nich report ID. Metryki, wyniki wszystkich pytań, cytaty, zgody i niezaliczona
+bramka pozostają identyczne. Artefakty odtworzenia mają `0600`; checksumy kodu,
+kontraktów i przypiętych wejść zgadzają się z odbiorem.
+
 Nie wykonano push ani AWS.

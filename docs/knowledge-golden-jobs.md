@@ -66,7 +66,9 @@ Retry terminalnego runa odczytuje ten sam wynik i raport, bez nowego pomiaru.
   --run-id run-… --output .local/rag/golden-run-report.json
 ```
 
-Odczyt wymaga settings bazy i właściwego środowiska. Eksport ma `0600`,
+Polecenia DB wymagają settings i właściwego środowiska. W lokalnym Compose
+wykonuj je w kontenerze utrzymaniowym, w sieci bazy opisanej w
+[instrukcji stosu](local-stack.md); PostgreSQL nie ma portu hosta. Eksport ma `0600`,
 nie nadpisuje pliku i wypisuje tylko report ID. Nieistniejący run/raport daje
 bezpieczny błąd. [Schema raportu](../contracts/knowledge/v1/golden-index-run-report.v1.schema.json).
 

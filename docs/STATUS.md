@@ -62,8 +62,10 @@ również po przekazaniu obu zgód.
 [Zatwierdzone profile golden](knowledge-golden-jobs.md) wiążą obecny korpus,
 44 pytania, zamrożone progi i obie zgody. Worker działa w `local/test`, a
 niezaliczony próg zachowuje pełny raport `failed/gate_failed` bez outputu.
-[Odbiór](evidence/11-golden-jobs.md) obejmuje bramkę PostgreSQL, HTTP,
-prywatny eksport i retencję raportów. Nie nadaje użytkowej aktywacji.
+[Odbiór](evidence/11-golden-jobs.md): 627 testów, bramka PostgreSQL/HTTP,
+prywatny eksport i retencja raportów. Czyste klony odtwarzają identyczny profil.
+Run właściwego korpusu ma 9/9 krytycznych kontroli, lecz nie przechodzi
+Recall@5/MRR; zachowuje raport bez outputu i użytkowej aktywacji.
 
 **Postęp etapu 11: około 96%** — szacunek zakresu implementacji, z uwzględnieniem
 niezamkniętych odbiorów. Rejestr/metadata, parser, fake/storage, test lifecycle

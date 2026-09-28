@@ -18,13 +18,18 @@
     "seconds": 8.16,
     "regression_passed": 91,
     "regression_seconds": 35.44,
-    "mypy_files": 92
+    "mypy_files": 92,
+    "ruff": true,
+    "ruff_format": true,
+    "docs_links": true,
+    "knowledge_snapshots": true,
+    "gitleaks_dir": true
   },
   "actual_corpus_activated": false,
   "semantic_quality_accepted": false,
   "pushed": false,
   "stage_progress_estimate_percent": 96,
-  "verified_at": "2026-09-28T15:06:42.362508+00:00",
+  "verified_at": "2026-09-28T15:24:20.502209+00:00",
   "runtime": {
     "python": "3.11.15",
     "unicode": "14.0.0",
@@ -59,7 +64,13 @@
     ],
     "golden_reports_retained_after_sigkill_and_down_up": true,
     "worker_sigkill_and_cancellation_legacy_path": true,
-    "local_current": null
+    "local_current": null,
+    "verification_scripts_sha256": {
+      "scripts/verify_golden_jobs.py": "deda12e945fefaccea9029809b3773c994d6efed05e04aba72c8dde89420b7bf",
+      "scripts/verify_knowledge_admin.py": "8921ab6cf8a2fdcdaeeb54717b072ffd5e75b962df38f01c1b7a411e20141b07",
+      "scripts/verify_rag_index.py": "d8b4b1759e2008ae834954db3a2262f043d555e6f86634fd17b9a773e0ac48b7",
+      "scripts/verify_local_stack.py": "17b9f91875cabfcfd481529c007bf31f66aa7e02b5d59ff445c016d353058dc2"
+    }
   },
   "actual_run": {
     "result": "passed",
@@ -144,7 +155,9 @@
     "private_full_report_not_in_git": true,
     "documents": 29,
     "chunks": 451,
-    "json_schema_validated": true
+    "json_schema_validated": true,
+    "index_id": "index-sha256-18c7ac743d35a7f9b8d59f781f2f4ccace9e24af79046bcf9f6a36895de038e9",
+    "golden_set_id": "golden-set-sha256-5dc7eebaf8dbfb60febedf2bf0ae66f840c5a27cdf2b7d6d51355c377e6daba6"
   },
   "private_profile": {
     "path": ".local/rag/approved-golden-profile-20260928.json",
@@ -205,5 +218,65 @@
     "user_retrieval_qualification_policy_and_acceptance",
     "bounded_bedrock_and_agent_in_stage_12"
   ],
-  "remote_ci_executed_for_this_scope": false
+  "remote_ci_executed_for_this_scope": false,
+  "implementation_commit": "8df02e60df600e2771f4481d18b09517b0500d0e",
+  "application_implementation_commit": "b58d7b71c68fb0d12b05c3b499d0b6ead9fc5fe3",
+  "full_ci": {
+    "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+    "exit_code": 0,
+    "passed": 627,
+    "test_seconds": 257.62,
+    "fresh_venv_for_this_scope": true,
+    "clean_git_status": true,
+    "checks": [
+      "ruff_check",
+      "ruff_format",
+      "mypy_92_files",
+      "pytest",
+      "docs_links",
+      "intelligence_access_knowledge_snapshots",
+      "wheel_and_sdist",
+      "compose_config",
+      "gitleaks_git_and_dir"
+    ]
+  },
+  "reproduction": {
+    "implementation_commit": "8df02e60df600e2771f4481d18b09517b0500d0e",
+    "installed_cli_outside_repository": true,
+    "separate_local_git_clones": true,
+    "different_python_hash_seed": 1129,
+    "invalid_service_settings_ignored": true,
+    "command_exit_codes": {
+      "index-build": 0,
+      "knowledge-profile-prepare": 0,
+      "index-release-check": 0
+    },
+    "index_byte_for_byte_equal": true,
+    "profile_byte_for_byte_equal": true,
+    "approved_preflight_byte_for_byte_equal": true,
+    "actual_report_reproduced_except_timing_and_report_id": true,
+    "reproduced_quality_gate_passed": false,
+    "private_modes": {
+      "index.json": "0o600",
+      "profile.json": "0o600",
+      "release.json": "0o600",
+      "report.json": "0o600"
+    },
+    "profile_sha256": "28d6480e4132fd760178c4c6d857120a726902325ac4c0d96aeccd2f7754a931",
+    "clean_git_status": true,
+    "code_and_input_hashes_match": true
+  },
+  "verification_config_sha256": {
+    ".gitleaks.toml": "2612ea1668f2a75662868e257945875893077849f479732426983f24d34237d4"
+  },
+  "additional_contract_checksums": [
+    {
+      "path": "contracts/diagnostics.openapi.json",
+      "sha256": "43c3ae5b1e91c9b19cbca05fe3a5e9e3090349f32bbb8956f18646e7d6a7aac5"
+    },
+    {
+      "path": "contracts/problem.v1.schema.json",
+      "sha256": "47828caa8dd362a7bbc030045589c9ad7bab528dd48c7a947efd76738db9d1a6"
+    }
+  ]
 }
