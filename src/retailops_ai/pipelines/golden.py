@@ -61,6 +61,9 @@ def validate_labels(candidate: IndexCandidate, golden: GoldenSet, config: Retrie
     ):
         raise ValueError("golden_candidate_configuration_mismatch")
     for case in golden.cases:
+        for forbidden in case.forbidden_sources:
+            if not any(matches(c, forbidden) for c in candidate.chunks.chunks):
+                raise ValueError("golden_forbidden_section_missing")
         for expected in case.expected_sections:
             if not any(matches(c, expected) for c in candidate.chunks.chunks):
                 raise ValueError("golden_label_section_missing")

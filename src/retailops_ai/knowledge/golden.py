@@ -53,7 +53,12 @@ class GoldenCase(Contract):
         if set(self.required_tools) & set(self.forbidden_tools):
             raise ValueError("golden_tool_labels_conflict")
         expected = {s.model_dump_json() for s in self.expected_sections}
-        if expected & {s.model_dump_json() for s in self.forbidden_sources}:
+        forbidden = {s.model_dump_json() for s in self.forbidden_sources}
+        if len(expected) != len(self.expected_sections) or len(forbidden) != len(
+            self.forbidden_sources
+        ):
+            raise ValueError("golden_source_labels_duplicate")
+        if expected & forbidden:
             raise ValueError("golden_source_labels_conflict")
         return self
 

@@ -80,5 +80,6 @@ raportowanych par. Dokładne kopie są grupowane przed near comparison.
 Przekroczenie któregokolwiek limitu przerywa cały raport, bez cichego pominięcia
 par lub przycięcia outputu. Nie jest to gwarancja czasu dla dowolnego korpusu.
 
-Następny zakres: odświeżenie/przegląd przypiętych źródeł, statusów/dostępu
-i golden labels, następnie profil użytkowy i kwalifikacja jakości etapu 11.
+Po zmianie przypiętych źródeł/statusów/dostępu należy ponowić raport i przegląd
+golden labels. Dalsze bramki: akceptacja korpusu/etykiet, profil użytkowy
+i kwalifikacja jakości etapu 11.

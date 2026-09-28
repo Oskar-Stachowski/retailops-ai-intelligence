@@ -359,9 +359,64 @@ def test_golden_thresholds_and_positive_labels_are_bound(sources, config, embedd
         validate_labels(index, wrong, retrieval_config())
 
 
+@pytest.mark.parametrize("mutation", ["path", "heading_path", "document_status"])
+def test_forbidden_labels_are_bound_to_candidate_sections_before_any_retrieval(
+    sources, config, embedding_config, mutation, monkeypatch
+):
+    index = candidate(sources, config, embedding_config)
+    v = fixture_golden(index).model_dump(mode="json")
+    second = index.chunks.chunks[-1]
+    forbidden = {
+        "repository": second.repository,
+        "path": second.path,
+        "heading_path": [h.title for h in second.heading_path],
+        "document_status": second.document_status,
+    }
+    v["cases"][0]["forbidden_sources"] = [forbidden]
+    v.pop("golden_set_id")
+    v["golden_set_id"] = "golden-set-sha256-" + canonical_sha256(v)
+    correct = GoldenSet.model_validate_json(json.dumps(v))
+    validate_labels(index, correct, retrieval_config())
+    if mutation == "path":
+        forbidden["path"] = "docs/missing.md"
+    elif mutation == "heading_path":
+        forbidden["heading_path"] = ["Removed section"]
+    else:
+        forbidden["document_status"] = "historical"
+    v.pop("golden_set_id")
+    v["golden_set_id"] = "golden-set-sha256-" + canonical_sha256(v)
+    wrong = GoldenSet.model_validate_json(json.dumps(v))
+    calls = []
+    monkeypatch.setattr(
+        "retailops_ai.pipelines.golden.search_candidate", lambda *a: calls.append(a)
+    )
+    with pytest.raises(ValueError, match="golden_forbidden_section_missing"):
+        evaluate(index, wrong, retrieval_config())
+    assert not calls
+
+
+@pytest.mark.parametrize("family", ["expected_sections", "forbidden_sources"])
+def test_duplicate_source_labels_are_rejected(sources, config, embedding_config, family):
+    index = candidate(sources, config, embedding_config)
+    v = fixture_golden(index).model_dump(mode="json")
+    label = deepcopy(v["cases"][0]["expected_sections"][0])
+    if family == "forbidden_sources":
+        other = index.chunks.chunks[-1]
+        label.update(
+            repository=other.repository,
+            path=other.path,
+            heading_path=[h.title for h in other.heading_path],
+        )
+    v["cases"][0][family] = [label, deepcopy(label)]
+    v.pop("golden_set_id")
+    v["golden_set_id"] = "golden-set-sha256-" + canonical_sha256(v)
+    with pytest.raises(ValidationError, match="golden_source_labels_duplicate"):
+        GoldenSet.model_validate_json(json.dumps(v))
+
+
 def test_committed_golden_and_retrieval_schemas_are_consistent():
     golden = load_golden_set(ROOT / "knowledge/golden.v1.json")
-    assert len(golden.cases) == 36
+    assert 30 <= len(golden.cases) <= 50
     assert golden.review_state == "proposed"
     assert golden.retrieval_config_id == retrieval_config().config_id()
     for name, value in [

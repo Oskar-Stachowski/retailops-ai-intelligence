@@ -97,7 +97,7 @@ nie zastępuje grantu; posiadanie document/index ID nie uprawnia do odczytu.
 
 ## Golden set i ewaluacja
 
-[Golden v1](../knowledge/golden.v1.json) ma **36 pytań**: dokumentacja, modele,
+[Golden v1](../knowledge/golden.v1.json) ma **30–50 wersjonowanych pytań**: dokumentacja, modele,
 operacje, brak danych, konflikt, injection i autoryzacja. Ręcznie napisane etykiety
 wskazują repo/path/heading/status, forbidden sources, answerability, role/scope
 oraz required/forbidden tools dla etapu 12. Zbiór i korpus mają `review_state=proposed`;
@@ -116,7 +116,10 @@ koszt wywołań modelu offline 0 USD. IDs wiążą etykiety, progi, indeks i con
 CLI jest prywatną ewaluacją kandydata offline, bez settings, DB lub aktywacji.
 Tworzy nowy plik `0600` i małe podsumowanie, nie nadpisuje raportu. Exit 0 oznacza
 wykonanie ewaluacji; bramki odczytaj z raportu. Błędny artefakt ma exit 2.
-Kontrola etykiet odrzuca nieobecne sekcje i mismatch index/config.
+Kontrola etykiet odrzuca nieobecne sekcje oczekiwane i zabronione, duplikaty
+etykiet i mismatch index/config. Sekcja zabroniona musi istnieć w pełnym
+kandydacie, nawet jeśli jej status lub access uniemożliwia zwrócenie jej principal.
+Zmiana/usunięcie źródła wymaga nowej etykiety przed ewaluacją.
 
 Raport zawiera Recall@5/MRR, brak forbidden sources, binding cytatów, odmowy,
 latency i koszt offline. Binding cytatu mierzy zgodność z przypiętym chunkem,
@@ -136,6 +139,8 @@ Podstawa: [pgvector 0.8.6 — exact search i cosine](https://github.com/pgvector
 
 ## Następny odbiór
 
-Do zamknięcia etapu 11 pozostają administracyjne index runs/read-current HTTP,
-przegląd i odświeżenie korpusu/etykiet, near duplicates oraz odbiór jakości
-i użytkowej kwalifikacji. Real embeddings/Bedrock smoke i agent należą do etapu 12.
+[Administracyjne runy](knowledge-administration.md) i
+[kontrola podobnych treści](knowledge-review.md) mają osobne odbiory testowe.
+Do zamknięcia etapu 11 pozostają akceptacja źródeł/etykiet oraz odbiór jakości
+i użytkowej kwalifikacji. Każda zmiana źródeł wymaga ponownego przeglądu.
+Real embeddings/Bedrock smoke i agent należą do etapu 12.

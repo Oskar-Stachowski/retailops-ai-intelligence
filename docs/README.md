@@ -41,6 +41,8 @@ rzeczywisty HTTP/PG, wznowienie workera, idempotencję i trwałość runów.
 powtórzeń, pełną listę referencji i limity bez automatycznego usuwania lub zgody.
 [Odbiór podobieństwa](evidence/11-similarity.md) podaje kontrolę 20 dokumentów/
 302 fragmentów, 573 testy oraz niezależne porównanie wszystkich par.
+[Odświeżenie źródeł i etykiet](knowledge-sources.md) opisuje przypięte snapshoty,
+scope twierdzeń i binding obu list golden sections przed ewaluacją.
 
 ## Mapa repo
 

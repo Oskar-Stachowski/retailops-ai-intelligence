@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "stage": "11",
+  "scope": "source_refresh_status_access_and_golden_label_binding",
+  "guard_preparation": {
+    "result": "passed",
+    "base_commit": "2a8ee4d799b0ec45087f5b92ec391beaa779a81f",
+    "targeted_tests": 40,
+    "new_negative_cases": 5,
+    "test_seconds": 7.51,
+    "mypy_source_files": 86,
+    "code_files_sha256": {
+      "src/retailops_ai/knowledge/golden.py": "e73fbbdf24aa8a3a5b6af1c668e06ba766a67ab3f2663e45d7642cebaab61de0",
+      "src/retailops_ai/pipelines/golden.py": "8624b19bed9d0f6ecff968f44ad8fe8fdcebccc285bf3af9ddf76bce0a5d136b",
+      "tests/test_retrieval.py": "39211dd884327e8eb7fc900fd53df6b717ba2bae143b2ab9058e8c9108b3f70f"
+    }
+  },
+  "verified_at": "2026-09-28T13:48:15.599757+00:00",
+  "pushed": false,
+  "corpus_approved": false,
+  "labels_approved": false,
+  "actual_corpus_activated": false
+}

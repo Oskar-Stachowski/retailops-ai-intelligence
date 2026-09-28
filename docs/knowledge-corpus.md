@@ -12,8 +12,8 @@ działają w odebranym zakresie test/fake; aktywacja rzeczywistego korpusu pozos
 
 ## Co jest zarejestrowane
 
-[knowledge/corpus.v1.json](../knowledge/corpus.v1.json) jawnie wymienia 20 plików
-Markdown: 12 z RetailOps i 8 z RetailOps AI. Każde repo ma pełny źródłowy SHA,
+[knowledge/corpus.v1.json](../knowledge/corpus.v1.json) jawnie wymienia pliki
+Markdown obu repo; bieżące liczby podaje [status](STATUS.md). Każde repo ma pełny źródłowy SHA,
 każdy dokument — checksum oryginalnych bajtów, tytuł, typ, `access_class`,
 `document_status` oraz ograniczony `fact_scope`. Katalog `docs` jest granicą
 przeglądu; tylko dokładnie wymienione pliki stają się kandydatami. Dodanie pliku
