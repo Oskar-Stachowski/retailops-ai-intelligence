@@ -22,21 +22,28 @@ def load_release_document(path: Path, model: type[T]) -> T:
 
 def validate_candidate(candidate: IndexCandidate) -> IndexValidation:
     candidate = IndexCandidate.model_validate_json(candidate.model_dump_json())
-    provider = FakeEmbeddingProvider(candidate.manifest.embedding_config)
+    fake = candidate.manifest.embedding_config.provider == "fake"
+    provider = FakeEmbeddingProvider(candidate.manifest.embedding_config) if fake else None
     records = {r.embedding_id: r for r in candidate.embeddings}
-    deterministic = all(
-        records[e.embedding_id].vector == provider.embed(c.text)
-        for e, c in zip(candidate.manifest.entries, candidate.chunks.chunks, strict=True)
+    deterministic = (
+        all(
+            records[e.embedding_id].vector == provider.embed(c.text)
+            for e, c in zip(candidate.manifest.entries, candidate.chunks.chunks, strict=True)
+        )
+        if provider is not None
+        else None
     )
     value = {
         "schema_version": "1.0",
-        "policy_version": "fake-mechanical-validation-v1",
+        "policy_version": "fake-mechanical-validation-v1"
+        if fake
+        else "real-structural-validation-v1",
         "index_id": candidate.manifest.index_id,
         "corpus_id": candidate.manifest.corpus_id,
         "space_id": candidate.manifest.space_id,
         "environment": candidate.manifest.environment,
-        "provider": "fake",
-        "golden_evaluation": "not_evaluated_fake_vectors",
+        "provider": candidate.manifest.embedding_config.provider,
+        "golden_evaluation": candidate.manifest.semantic_quality,
         "checks": {
             "complete_graph": True,
             "source_metadata": True,
@@ -44,7 +51,7 @@ def validate_candidate(candidate: IndexCandidate) -> IndexValidation:
             "vector_binding": True,
             "deterministic_fake_vectors": deterministic,
         },
-        "result": "passed" if deterministic else "failed",
+        "result": "failed" if deterministic is False else "passed",
     }
     value["validation_id"] = "index-validation-sha256-" + canonical_sha256(value)
     return IndexValidation.model_validate(value)

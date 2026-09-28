@@ -124,8 +124,8 @@ def verify_lifecycle(candidates: list[IndexCandidate]) -> dict[str, object]:
         rejected(request(b, generation - 1), "active_generation_conflict")
         rejected(request(c, generation, "rollback"), "rollback_history_missing")
         rejected(
-            request(b, generation).model_copy(update={"lane": "retrieval"}),
-            "golden_evaluation_required",
+            request(b, 0).model_copy(update={"lane": "retrieval"}),
+            "index_not_qualified",
         )
         rejected(
             request(b, generation).model_copy(update={"environment": "local"}),

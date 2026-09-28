@@ -16,6 +16,8 @@ class EmbeddingProvider(Protocol):
 
 class FakeEmbeddingProvider:
     def __init__(self, config: EmbeddingConfig) -> None:
+        if config.provider != "fake":
+            raise ValueError("explicit_real_embedding_provider_required")
         self.config = config
 
     def embed(self, text: str) -> tuple[float, ...]:

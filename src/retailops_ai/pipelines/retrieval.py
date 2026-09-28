@@ -6,7 +6,7 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 
-from retailops_ai.adapters.embeddings import FakeEmbeddingProvider
+from retailops_ai.adapters.embeddings import EmbeddingProvider, FakeEmbeddingProvider
 from retailops_ai.domain.access import Principal
 from retailops_ai.knowledge.chunks import MarkdownChunk
 from retailops_ai.knowledge.indexes import EmbeddingConfig, IndexCandidate, IndexManifest, float32
@@ -126,7 +126,11 @@ def result_from_ranked(
     ranked = sorted(ranked, key=lambda row: (-row[1], row[0].chunk_id))
     # Reserve the best eligible hit from each repository, then each document.
     order: list[tuple[MarkdownChunk, float]] = []
-    for attribute in ("repository", "document_id"):
+    for attribute in (
+        ("repository", "document_id")
+        if config.diversification == "repository-then-document-v1"
+        else ()
+    ):
         seen = {getattr(c, attribute) for c, _ in order}
         for row in ranked:
             key = getattr(row[0], attribute)
@@ -183,12 +187,16 @@ def search_candidate(
     config: RetrievalConfig,
     *,
     denied: frozenset[str] = frozenset(),
+    provider: EmbeddingProvider | None = None,
 ) -> RetrievalResult:
     """Private evaluation path; it neither qualifies nor activates a corpus."""
     scope = resolve_scope(principal, request, candidate.manifest.environment)
+    provider = provider or FakeEmbeddingProvider(candidate.manifest.embedding_config)
+    if provider.config != candidate.manifest.embedding_config:
+        raise ValueError("embedding_provider_config_mismatch")
     vector = checked_vector(
         candidate.manifest.embedding_config,
-        FakeEmbeddingProvider(candidate.manifest.embedding_config).embed(request.question),
+        provider.embed(request.question),
     )
     records = {record.embedding_id: record.vector for record in candidate.embeddings}
     ranked = []

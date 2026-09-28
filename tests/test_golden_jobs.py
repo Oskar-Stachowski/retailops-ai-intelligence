@@ -258,3 +258,94 @@ def test_golden_migration_has_literal_sql_and_preserves_history_on_downgrade(mon
     monkeypatch.setattr(op, "get_bind", lambda: Connection())
     with pytest.raises(RuntimeError, match="requires_empty_history"):
         module.downgrade()
+
+
+def test_semantic_profile_rebuild_and_release_reproduce_frozen_results(profile):
+    from retailops_ai.adapters.embedding_snapshot import SnapshotEmbeddingProvider, embedding_record
+    from retailops_ai.adapters.embeddings import FakeEmbeddingProvider
+    from retailops_ai.knowledge.indexes import EmbeddingConfig
+    from retailops_ai.knowledge.jobs import SemanticIndexBuildProfile
+    from retailops_ai.knowledge.qualification import GoldenLabelsApproval
+    from retailops_ai.pipelines.index_builds import build_profile_candidate
+    from retailops_ai.pipelines.indexes import build_index
+    from retailops_ai.pipelines.qualification import prepare_release
+
+    raw = profile.embedding_config.model_dump(mode="json")
+    raw.update(
+        provider="bedrock",
+        model_id="amazon.titan-embed-text-v2:0",
+        dimension=256,
+        region="eu-north-1",
+    )
+    config = EmbeddingConfig.model_validate_json(json.dumps(raw))
+    original = FakeEmbeddingProvider(profile.embedding_config)
+    stub = type(
+        "OfflineVectorFixture",
+        (),
+        {"config": config, "embed": lambda self, text: (*original.embed(text), *((0.0,) * 224))},
+    )()
+    candidate = build_index(profile.chunks, config, provider=stub)
+    raw = profile.golden_set.model_dump(mode="json", exclude={"golden_set_id"})
+    raw["index_id"] = candidate.manifest.index_id
+    raw["golden_set_id"] = "golden-set-sha256-" + canonical_sha256(raw)
+    golden = GoldenSet.model_validate_json(json.dumps(raw))
+    raw = profile.golden_approval.model_dump(mode="json", exclude={"approval_id"})
+    raw.update(index_id=golden.index_id, golden_set_id=golden.golden_set_id)
+    raw["approval_id"] = "golden-approval-sha256-" + canonical_sha256(raw)
+    labels = GoldenLabelsApproval.model_validate_json(json.dumps(raw))
+    records = {
+        c.request.question: embedding_record(
+            config, c.request.question, stub.embed(c.request.question)
+        )
+        for c in golden.cases
+    }
+    semantic = prepare_build_profile(
+        candidate,
+        golden,
+        profile.approval,
+        labels,
+        profile.retrieval_config,
+        profile.similarity_policy,
+        profile.similarity_review,
+        query_embeddings=tuple(records.values()),
+    )
+    assert isinstance(semantic, SemanticIndexBuildProfile)
+    assert build_profile_candidate(semantic) == candidate
+    assert (
+        golden.cases == profile.golden_set.cases
+        and golden.thresholds == profile.golden_set.thresholds
+    )
+    report = build_run_report(semantic, candidate, validate_candidate(candidate))
+    assert report.quality_gate_passed and not report.activation_allowed
+    provider = SnapshotEmbeddingProvider(config, semantic.query_embeddings)
+    release = prepare_release(
+        candidate,
+        golden,
+        semantic.retrieval_config,
+        report.golden,
+        semantic.similarity_policy,
+        corpus_approval=semantic.approval,
+        golden_approval=labels,
+        similarity_review=semantic.similarity_review,
+        provider=provider,
+    )
+    assert release.activation_allowed and not release.blockers and release.status == "ready"
+    forged = report.golden.model_copy(update={"recall_at_5": 0.5})
+    with pytest.raises(ValueError, match="reproduction_mismatch"):
+        prepare_release(
+            candidate,
+            golden,
+            semantic.retrieval_config,
+            forged,
+            semantic.similarity_policy,
+            provider=provider,
+        )
+    missing = prepare_release(
+        candidate,
+        golden,
+        semantic.retrieval_config,
+        report.golden,
+        semantic.similarity_policy,
+        provider=provider,
+    )
+    assert not missing.activation_allowed and "golden_labels_approval_missing" in missing.blockers

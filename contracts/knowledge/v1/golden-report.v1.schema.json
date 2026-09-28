@@ -229,8 +229,11 @@
       "type": "number"
     },
     "provider": {
-      "const": "fake",
       "default": "fake",
+      "enum": [
+        "fake",
+        "bedrock"
+      ],
       "title": "Provider",
       "type": "string"
     },
@@ -239,8 +242,11 @@
       "type": "number"
     },
     "report_kind": {
-      "const": "offline_mechanics_with_draft_semantic_labels",
       "default": "offline_mechanics_with_draft_semantic_labels",
+      "enum": [
+        "offline_mechanics_with_draft_semantic_labels",
+        "semantic_retrieval_evaluation"
+      ],
       "title": "Report Kind",
       "type": "string"
     },
@@ -256,8 +262,11 @@
       "type": "string"
     },
     "semantic_quality": {
-      "const": "not_evaluated_fake_vectors",
       "default": "not_evaluated_fake_vectors",
+      "enum": [
+        "not_evaluated_fake_vectors",
+        "measured_real_vectors"
+      ],
       "title": "Semantic Quality",
       "type": "string"
     },

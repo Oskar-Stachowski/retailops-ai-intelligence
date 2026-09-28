@@ -30,7 +30,10 @@
         8,
         16,
         32,
-        64
+        64,
+        256,
+        512,
+        1024
       ],
       "title": "Dimension",
       "type": "integer"
@@ -47,12 +50,15 @@
       "type": "string"
     },
     "environment": {
-      "const": "test",
+      "enum": [
+        "local",
+        "test"
+      ],
       "title": "Environment",
       "type": "string"
     },
     "evaluation_report_ref": {
-      "pattern": "^db:ai.rag_qualifications:index-validation-sha256-[0-9a-f]{64}$",
+      "pattern": "^db:ai\\.(rag_qualifications:index-validation|rag_index_reports:index-run-report)-sha256-[0-9a-f]{64}$",
       "title": "Evaluation Report Ref",
       "type": "string"
     },
@@ -67,7 +73,10 @@
       "type": "string"
     },
     "lane": {
-      "const": "offline_test",
+      "enum": [
+        "offline_test",
+        "retrieval"
+      ],
       "title": "Lane",
       "type": "string"
     },
@@ -77,7 +86,10 @@
       "type": "string"
     },
     "purpose": {
-      "const": "lifecycle_validation_only",
+      "enum": [
+        "lifecycle_validation_only",
+        "qualified_semantic_retrieval"
+      ],
       "title": "Purpose",
       "type": "string"
     },

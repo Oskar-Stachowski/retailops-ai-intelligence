@@ -15,6 +15,8 @@ from retailops_ai.knowledge.indexes import (
     EmbeddingRecord,
     IndexCandidate,
     embedding_id,
+    embedding_input_checksum,
+    embedding_text,
     vector_checksum,
 )
 from retailops_ai.pipelines.corpus import decode_json
@@ -61,7 +63,8 @@ def build_index(
     records: dict[str, EmbeddingRecord] = {}
     entries = []
     for chunk in chunks.chunks:
-        key = embedding_id(chunk.content_checksum, config.space_id())
+        checksum = embedding_input_checksum(chunk, config)
+        key = embedding_id(checksum, config.space_id())
         if key not in records:
             cached = cache.get(key) if cache is not None else None
             if cached is not None:
@@ -69,13 +72,13 @@ def build_index(
                 if record.embedding_id != key or record.dimension != config.dimension:
                     raise CorpusError("embedding_cache_binding_mismatch")
             else:
-                vector = provider.embed(chunk.text)
+                vector = provider.embed(embedding_text(chunk, config))
                 if len(vector) != config.dimension:
                     raise CorpusError("embedding_dimension_mismatch")
                 record = EmbeddingRecord(
                     embedding_id=key,
                     space_id=config.space_id(),
-                    content_checksum=chunk.content_checksum,
+                    content_checksum=checksum,
                     dimension=config.dimension,
                     vector=vector,
                     vector_checksum=vector_checksum(vector),
@@ -92,15 +95,21 @@ def build_index(
         "schema_version": "1.0",
         "lifecycle": "candidate",
         "environment": chunks.corpus.environment,
-        "semantic_quality": "not_evaluated_fake_vectors",
+        "semantic_quality": "not_evaluated_fake_vectors"
+        if config.provider == "fake"
+        else "not_evaluated_real_vectors",
         "corpus_id": chunks.corpus_id,
         "chunk_manifest_id": chunks.chunk_manifest_id,
         "embedding_config": config.model_dump(mode="json"),
         "space_id": config.space_id(),
         "storage_version": "pgvector-checked-dimension-v1",
         "pgvector_version": "0.8.6",
-        "migration_revision": "0002_rag_candidates",
-        "retrieval_version": "not_implemented",
+        "migration_revision": "0002_rag_candidates"
+        if config.provider == "fake"
+        else "0008_rag_semantic",
+        "retrieval_version": "not_implemented"
+        if config.provider == "fake"
+        else "pgvector-cosine-exact-v1",
         "chunk_count": len(entries),
         "embedding_count": len(records),
         "entries": entries,

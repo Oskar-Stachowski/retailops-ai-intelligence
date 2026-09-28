@@ -119,7 +119,15 @@ def _pin(connection: Connection, request_id: str) -> IndexPin:
         .one()
     )
     return IndexPin.model_validate_json(
-        json.dumps({"schema_version": "1.0", "purpose": "lifecycle_validation_only", **dict(row)})
+        json.dumps(
+            {
+                "schema_version": "1.0",
+                "purpose": "lifecycle_validation_only"
+                if row["lane"] == "offline_test"
+                else "qualified_semantic_retrieval",
+                **dict(row),
+            }
+        )
     )
 
 
@@ -139,7 +147,15 @@ def read_current(connection: Connection, environment: str, lane: Lane) -> IndexP
     if row is None:
         return None
     return IndexPin.model_validate_json(
-        json.dumps({"schema_version": "1.0", "purpose": "lifecycle_validation_only", **dict(row)})
+        json.dumps(
+            {
+                "schema_version": "1.0",
+                "purpose": "lifecycle_validation_only"
+                if row["lane"] == "offline_test"
+                else "qualified_semantic_retrieval",
+                **dict(row),
+            }
+        )
     )
 
 
@@ -176,9 +192,7 @@ def _write_pointer(connection: Connection, request: SwitchRequest, generation: i
 
 def switch_index(engine: Engine, request: SwitchRequest) -> SwitchResult:
     request = SwitchRequest.model_validate_json(request.model_dump_json())
-    if request.lane != "offline_test":
-        raise CorpusError("golden_evaluation_required")
-    if request.environment != "test":
+    if request.lane == "offline_test" and request.environment != "test":
         raise CorpusError("offline_activation_requires_test_environment")
     with engine.begin() as connection:
         _transaction(connection)

@@ -75,6 +75,7 @@ def create_app(
             load_retrieval_config(
                 Path(__file__).resolve().parents[1] / "knowledge/retrieval.default.json"
             ),
+            allow_bedrock=settings.rag_bedrock_enabled,
         )
     if index_administration is None and knowledge_engine is not None:
         index_administration = PostgresIndexAdministration(knowledge_engine, settings.app_env)

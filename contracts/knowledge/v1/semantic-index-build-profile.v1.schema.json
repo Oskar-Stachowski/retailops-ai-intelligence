@@ -1,95 +1,145 @@
 {
   "$defs": {
-    "CaseEvaluation": {
+    "ChunkManifest": {
       "additionalProperties": false,
       "properties": {
-        "case_id": {
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
-          "title": "Case Id",
+        "chunk_manifest_id": {
+          "pattern": "^chunks-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Manifest Id",
           "type": "string"
         },
-        "citations_bound": {
-          "title": "Citations Bound",
-          "type": "boolean"
+        "chunker": {
+          "$ref": "#/$defs/ChunkerConfig"
         },
-        "critical": {
-          "title": "Critical",
-          "type": "boolean"
-        },
-        "elapsed_ms": {
-          "minimum": 0,
-          "title": "Elapsed Ms",
-          "type": "number"
-        },
-        "expected_outcome": {
-          "title": "Expected Outcome",
-          "type": "boolean"
-        },
-        "forbidden_sources_absent": {
-          "title": "Forbidden Sources Absent",
-          "type": "boolean"
-        },
-        "outcome": {
-          "enum": [
-            "ok",
-            "insufficient_evidence",
-            "forbidden"
-          ],
-          "title": "Outcome",
+        "chunker_config_id": {
+          "pattern": "^chunker-config-sha256-[0-9a-f]{64}$",
+          "title": "Chunker Config Id",
           "type": "string"
         },
-        "passed": {
-          "title": "Passed",
-          "type": "boolean"
-        },
-        "recall_at_5": {
-          "anyOf": [
-            {
-              "maximum": 1,
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Recall At 5"
-        },
-        "reciprocal_rank": {
-          "anyOf": [
-            {
-              "maximum": 1,
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Reciprocal Rank"
-        },
-        "retrieved_chunk_ids": {
+        "chunks": {
           "items": {
-            "type": "string"
+            "$ref": "#/$defs/MarkdownChunk"
           },
-          "title": "Retrieved Chunk Ids",
+          "maxItems": 32768,
+          "title": "Chunks",
           "type": "array"
+        },
+        "content_trust": {
+          "const": "untrusted_reference",
+          "title": "Content Trust",
+          "type": "string"
+        },
+        "corpus": {
+          "$ref": "#/$defs/CorpusManifest"
+        },
+        "corpus_id": {
+          "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+          "title": "Corpus Id",
+          "type": "string"
+        },
+        "documents": {
+          "items": {
+            "$ref": "#/$defs/DocumentChunkMap"
+          },
+          "maxItems": 128,
+          "minItems": 2,
+          "title": "Documents",
+          "type": "array"
+        },
+        "lifecycle": {
+          "const": "candidate",
+          "title": "Lifecycle",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
         }
       },
       "required": [
-        "case_id",
-        "outcome",
-        "recall_at_5",
-        "reciprocal_rank",
-        "forbidden_sources_absent",
-        "expected_outcome",
-        "citations_bound",
-        "critical",
-        "passed",
-        "retrieved_chunk_ids",
-        "elapsed_ms"
+        "schema_version",
+        "lifecycle",
+        "content_trust",
+        "corpus_id",
+        "corpus",
+        "chunker",
+        "chunker_config_id",
+        "chunk_manifest_id",
+        "documents",
+        "chunks"
       ],
-      "title": "CaseEvaluation",
+      "title": "ChunkManifest",
+      "type": "object"
+    },
+    "ChunkerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "chunker_version": {
+          "const": "markdown-blocks-v1",
+          "title": "Chunker Version",
+          "type": "string"
+        },
+        "duplicate_policy": {
+          "const": "same-document-heading-block-content-v1",
+          "title": "Duplicate Policy",
+          "type": "string"
+        },
+        "max_utf8_bytes": {
+          "maximum": 16000,
+          "minimum": 256,
+          "title": "Max Utf8 Bytes",
+          "type": "integer"
+        },
+        "navigation_policy": {
+          "const": "toc-headings-and-anchor-only-blocks-v1",
+          "title": "Navigation Policy",
+          "type": "string"
+        },
+        "normalization": {
+          "const": "utf8-lf-v1",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "parser": {
+          "const": "markdown-it-py",
+          "title": "Parser",
+          "type": "string"
+        },
+        "parser_preset": {
+          "const": "commonmark-table-v1",
+          "title": "Parser Preset",
+          "type": "string"
+        },
+        "parser_version": {
+          "const": "4.2.0",
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "size_estimator": {
+          "const": "utf8-bytes-div4-v1",
+          "title": "Size Estimator",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "chunker_version",
+        "parser",
+        "parser_version",
+        "parser_preset",
+        "normalization",
+        "max_utf8_bytes",
+        "size_estimator",
+        "navigation_policy",
+        "duplicate_policy"
+      ],
+      "title": "ChunkerConfig",
       "type": "object"
     },
     "CorpusApproval": {
@@ -290,6 +340,63 @@
       "title": "CorpusManifest",
       "type": "object"
     },
+    "DocumentChunkMap": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_ids": {
+          "items": {
+            "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "maxItems": 4096,
+          "title": "Chunk Ids",
+          "type": "array"
+        },
+        "document_id": {
+          "pattern": "^document-sha256-[0-9a-f]{64}$",
+          "title": "Document Id",
+          "type": "string"
+        },
+        "omitted_blocks": {
+          "items": {
+            "$ref": "#/$defs/OmittedBlock"
+          },
+          "maxItems": 8192,
+          "title": "Omitted Blocks",
+          "type": "array"
+        },
+        "outcome": {
+          "enum": [
+            "chunked",
+            "no_retrievable_content"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "source_characters": {
+          "exclusiveMinimum": 0,
+          "maximum": 500000,
+          "title": "Source Characters",
+          "type": "integer"
+        },
+        "source_lines": {
+          "exclusiveMinimum": 0,
+          "maximum": 500001,
+          "title": "Source Lines",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "document_id",
+        "source_characters",
+        "source_lines",
+        "chunk_ids",
+        "omitted_blocks",
+        "outcome"
+      ],
+      "title": "DocumentChunkMap",
+      "type": "object"
+    },
     "DocumentRegistration": {
       "additionalProperties": false,
       "properties": {
@@ -464,6 +571,63 @@
         "vector_format"
       ],
       "title": "EmbeddingConfig",
+      "type": "object"
+    },
+    "EmbeddingRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "content_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Checksum",
+          "type": "string"
+        },
+        "dimension": {
+          "enum": [
+            8,
+            16,
+            32,
+            64,
+            256,
+            512,
+            1024
+          ],
+          "title": "Dimension",
+          "type": "integer"
+        },
+        "embedding_id": {
+          "pattern": "^embedding-sha256-[0-9a-f]{64}$",
+          "title": "Embedding Id",
+          "type": "string"
+        },
+        "space_id": {
+          "pattern": "^embedding-space-sha256-[0-9a-f]{64}$",
+          "title": "Space Id",
+          "type": "string"
+        },
+        "vector": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 1024,
+          "minItems": 8,
+          "title": "Vector",
+          "type": "array"
+        },
+        "vector_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Vector Checksum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "embedding_id",
+        "space_id",
+        "content_checksum",
+        "dimension",
+        "vector",
+        "vector_checksum"
+      ],
+      "title": "EmbeddingRecord",
       "type": "object"
     },
     "EvidenceReference": {
@@ -842,144 +1006,6 @@
       "title": "GoldenLabelsApproval",
       "type": "object"
     },
-    "GoldenReport": {
-      "additionalProperties": false,
-      "properties": {
-        "activation_allowed": {
-          "const": false,
-          "default": false,
-          "title": "Activation Allowed",
-          "type": "boolean"
-        },
-        "agent_tool_evaluation": {
-          "const": "labels_only_no_agent_runtime",
-          "default": "labels_only_no_agent_runtime",
-          "title": "Agent Tool Evaluation",
-          "type": "string"
-        },
-        "answer_groundedness": {
-          "default": null,
-          "title": "Answer Groundedness",
-          "type": "null"
-        },
-        "cases": {
-          "items": {
-            "$ref": "#/$defs/CaseEvaluation"
-          },
-          "title": "Cases",
-          "type": "array"
-        },
-        "citation_correctness": {
-          "title": "Citation Correctness",
-          "type": "number"
-        },
-        "corpus_approved": {
-          "const": false,
-          "default": false,
-          "title": "Corpus Approved",
-          "type": "boolean"
-        },
-        "critical_pass_rate": {
-          "title": "Critical Pass Rate",
-          "type": "number"
-        },
-        "golden_set_id": {
-          "pattern": "^golden-set-sha256-[0-9a-f]{64}$",
-          "title": "Golden Set Id",
-          "type": "string"
-        },
-        "index_id": {
-          "pattern": "^index-sha256-[0-9a-f]{64}$",
-          "title": "Index Id",
-          "type": "string"
-        },
-        "labels_approved": {
-          "const": false,
-          "default": false,
-          "title": "Labels Approved",
-          "type": "boolean"
-        },
-        "latency_p95_ms": {
-          "title": "Latency P95 Ms",
-          "type": "number"
-        },
-        "measured_thresholds_passed": {
-          "title": "Measured Thresholds Passed",
-          "type": "boolean"
-        },
-        "model_cost_usd": {
-          "default": 0.0,
-          "maximum": 0,
-          "minimum": 0,
-          "title": "Model Cost Usd",
-          "type": "number"
-        },
-        "mrr": {
-          "title": "Mrr",
-          "type": "number"
-        },
-        "provider": {
-          "default": "fake",
-          "enum": [
-            "fake",
-            "bedrock"
-          ],
-          "title": "Provider",
-          "type": "string"
-        },
-        "recall_at_5": {
-          "title": "Recall At 5",
-          "type": "number"
-        },
-        "report_kind": {
-          "default": "offline_mechanics_with_draft_semantic_labels",
-          "enum": [
-            "offline_mechanics_with_draft_semantic_labels",
-            "semantic_retrieval_evaluation"
-          ],
-          "title": "Report Kind",
-          "type": "string"
-        },
-        "retrieval_config_id": {
-          "pattern": "^retrieval-config-sha256-[0-9a-f]{64}$",
-          "title": "Retrieval Config Id",
-          "type": "string"
-        },
-        "schema_version": {
-          "const": "1.0",
-          "default": "1.0",
-          "title": "Schema Version",
-          "type": "string"
-        },
-        "semantic_quality": {
-          "default": "not_evaluated_fake_vectors",
-          "enum": [
-            "not_evaluated_fake_vectors",
-            "measured_real_vectors"
-          ],
-          "title": "Semantic Quality",
-          "type": "string"
-        },
-        "thresholds": {
-          "$ref": "#/$defs/GoldenThresholds"
-        }
-      },
-      "required": [
-        "golden_set_id",
-        "index_id",
-        "retrieval_config_id",
-        "thresholds",
-        "cases",
-        "recall_at_5",
-        "mrr",
-        "citation_correctness",
-        "critical_pass_rate",
-        "latency_p95_ms",
-        "measured_thresholds_passed"
-      ],
-      "title": "GoldenReport",
-      "type": "object"
-    },
     "GoldenSet": {
       "additionalProperties": false,
       "properties": {
@@ -1109,6 +1135,29 @@
       "title": "GoldenThresholds",
       "type": "object"
     },
+    "Heading": {
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Level",
+          "type": "integer"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "level",
+        "title"
+      ],
+      "title": "Heading",
+      "type": "object"
+    },
     "ImplementationReference": {
       "additionalProperties": false,
       "properties": {
@@ -1143,242 +1192,6 @@
         "byte_sha256"
       ],
       "title": "ImplementationReference",
-      "type": "object"
-    },
-    "IndexEntry": {
-      "additionalProperties": false,
-      "properties": {
-        "chunk_id": {
-          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
-          "title": "Chunk Id",
-          "type": "string"
-        },
-        "embedding_id": {
-          "pattern": "^embedding-sha256-[0-9a-f]{64}$",
-          "title": "Embedding Id",
-          "type": "string"
-        },
-        "vector_checksum": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Vector Checksum",
-          "type": "string"
-        }
-      },
-      "required": [
-        "chunk_id",
-        "embedding_id",
-        "vector_checksum"
-      ],
-      "title": "IndexEntry",
-      "type": "object"
-    },
-    "IndexManifest": {
-      "additionalProperties": false,
-      "properties": {
-        "chunk_count": {
-          "maximum": 32768,
-          "minimum": 1,
-          "title": "Chunk Count",
-          "type": "integer"
-        },
-        "chunk_manifest_id": {
-          "pattern": "^chunks-sha256-[0-9a-f]{64}$",
-          "title": "Chunk Manifest Id",
-          "type": "string"
-        },
-        "corpus_id": {
-          "pattern": "^corpus-sha256-[0-9a-f]{64}$",
-          "title": "Corpus Id",
-          "type": "string"
-        },
-        "embedding_config": {
-          "$ref": "#/$defs/EmbeddingConfig"
-        },
-        "embedding_count": {
-          "maximum": 32768,
-          "minimum": 1,
-          "title": "Embedding Count",
-          "type": "integer"
-        },
-        "entries": {
-          "items": {
-            "$ref": "#/$defs/IndexEntry"
-          },
-          "maxItems": 32768,
-          "minItems": 1,
-          "title": "Entries",
-          "type": "array"
-        },
-        "environment": {
-          "enum": [
-            "local",
-            "test"
-          ],
-          "title": "Environment",
-          "type": "string"
-        },
-        "index_id": {
-          "pattern": "^index-sha256-[0-9a-f]{64}$",
-          "title": "Index Id",
-          "type": "string"
-        },
-        "lifecycle": {
-          "const": "candidate",
-          "title": "Lifecycle",
-          "type": "string"
-        },
-        "migration_revision": {
-          "enum": [
-            "0002_rag_candidates",
-            "0008_rag_semantic"
-          ],
-          "title": "Migration Revision",
-          "type": "string"
-        },
-        "pgvector_version": {
-          "const": "0.8.6",
-          "title": "Pgvector Version",
-          "type": "string"
-        },
-        "retrieval_version": {
-          "enum": [
-            "not_implemented",
-            "pgvector-cosine-exact-v1"
-          ],
-          "title": "Retrieval Version",
-          "type": "string"
-        },
-        "schema_version": {
-          "const": "1.0",
-          "title": "Schema Version",
-          "type": "string"
-        },
-        "semantic_quality": {
-          "enum": [
-            "not_evaluated_fake_vectors",
-            "not_evaluated_real_vectors"
-          ],
-          "title": "Semantic Quality",
-          "type": "string"
-        },
-        "space_id": {
-          "pattern": "^embedding-space-sha256-[0-9a-f]{64}$",
-          "title": "Space Id",
-          "type": "string"
-        },
-        "storage_version": {
-          "const": "pgvector-checked-dimension-v1",
-          "title": "Storage Version",
-          "type": "string"
-        }
-      },
-      "required": [
-        "schema_version",
-        "lifecycle",
-        "environment",
-        "semantic_quality",
-        "index_id",
-        "corpus_id",
-        "chunk_manifest_id",
-        "embedding_config",
-        "space_id",
-        "storage_version",
-        "pgvector_version",
-        "migration_revision",
-        "retrieval_version",
-        "chunk_count",
-        "embedding_count",
-        "entries"
-      ],
-      "title": "IndexManifest",
-      "type": "object"
-    },
-    "IndexValidation": {
-      "additionalProperties": false,
-      "properties": {
-        "checks": {
-          "$ref": "#/$defs/MechanicalChecks"
-        },
-        "corpus_id": {
-          "pattern": "^corpus-sha256-[0-9a-f]{64}$",
-          "title": "Corpus Id",
-          "type": "string"
-        },
-        "environment": {
-          "enum": [
-            "local",
-            "test"
-          ],
-          "title": "Environment",
-          "type": "string"
-        },
-        "golden_evaluation": {
-          "enum": [
-            "not_evaluated_fake_vectors",
-            "not_evaluated_real_vectors"
-          ],
-          "title": "Golden Evaluation",
-          "type": "string"
-        },
-        "index_id": {
-          "pattern": "^index-sha256-[0-9a-f]{64}$",
-          "title": "Index Id",
-          "type": "string"
-        },
-        "policy_version": {
-          "enum": [
-            "fake-mechanical-validation-v1",
-            "real-structural-validation-v1"
-          ],
-          "title": "Policy Version",
-          "type": "string"
-        },
-        "provider": {
-          "enum": [
-            "fake",
-            "bedrock"
-          ],
-          "title": "Provider",
-          "type": "string"
-        },
-        "result": {
-          "enum": [
-            "passed",
-            "failed"
-          ],
-          "title": "Result",
-          "type": "string"
-        },
-        "schema_version": {
-          "const": "1.0",
-          "title": "Schema Version",
-          "type": "string"
-        },
-        "space_id": {
-          "pattern": "^embedding-space-sha256-[0-9a-f]{64}$",
-          "title": "Space Id",
-          "type": "string"
-        },
-        "validation_id": {
-          "pattern": "^index-validation-sha256-[0-9a-f]{64}$",
-          "title": "Validation Id",
-          "type": "string"
-        }
-      },
-      "required": [
-        "schema_version",
-        "validation_id",
-        "policy_version",
-        "index_id",
-        "corpus_id",
-        "space_id",
-        "environment",
-        "provider",
-        "golden_evaluation",
-        "checks",
-        "result"
-      ],
-      "title": "IndexValidation",
       "type": "object"
     },
     "KnowledgeResourceScope": {
@@ -1568,45 +1381,232 @@
       "title": "ManifestDocument",
       "type": "object"
     },
-    "MechanicalChecks": {
+    "MarkdownChunk": {
       "additionalProperties": false,
       "properties": {
-        "citation_binding": {
-          "title": "Citation Binding",
-          "type": "boolean"
+        "access_class": {
+          "enum": [
+            "public_project",
+            "project_internal",
+            "restricted"
+          ],
+          "title": "Access Class",
+          "type": "string"
         },
-        "complete_graph": {
-          "title": "Complete Graph",
-          "type": "boolean"
+        "block_type": {
+          "enum": [
+            "paragraph",
+            "bullet_list",
+            "ordered_list",
+            "blockquote",
+            "fence",
+            "code_block",
+            "table",
+            "html_block",
+            "reference_definition"
+          ],
+          "title": "Block Type",
+          "type": "string"
         },
-        "deterministic_fake_vectors": {
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "chunk_id": {
+          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "chunk_index": {
+          "exclusiveMaximum": 4096,
+          "minimum": 0,
+          "title": "Chunk Index",
+          "type": "integer"
+        },
+        "chunker_config_id": {
+          "pattern": "^chunker-config-sha256-[0-9a-f]{64}$",
+          "title": "Chunker Config Id",
+          "type": "string"
+        },
+        "chunker_version": {
+          "const": "markdown-blocks-v1",
+          "title": "Chunker Version",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "content_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Checksum",
+          "type": "string"
+        },
+        "content_id": {
+          "pattern": "^markdown-sha256-[0-9a-f]{64}$",
+          "title": "Content Id",
+          "type": "string"
+        },
+        "document_id": {
+          "pattern": "^document-sha256-[0-9a-f]{64}$",
+          "title": "Document Id",
+          "type": "string"
+        },
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "document_type": {
+          "enum": [
+            "architecture",
+            "contract",
+            "guide",
+            "runbook",
+            "policy",
+            "plan",
+            "evidence",
+            "model_card"
+          ],
+          "title": "Document Type",
+          "type": "string"
+        },
+        "fact_scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Fact Scope",
+          "type": "string"
+        },
+        "heading_path": {
+          "items": {
+            "$ref": "#/$defs/Heading"
+          },
+          "maxItems": 6,
+          "title": "Heading Path",
+          "type": "array"
+        },
+        "implementation_refs": {
+          "items": {
+            "$ref": "#/$defs/ImplementationReference"
+          },
+          "maxItems": 8,
+          "title": "Implementation Refs",
+          "type": "array"
+        },
+        "occurrences": {
+          "items": {
+            "$ref": "#/$defs/SourceLocation"
+          },
+          "maxItems": 4096,
+          "minItems": 1,
+          "title": "Occurrences",
+          "type": "array"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 16000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "token_estimate": {
+          "maximum": 4000,
+          "minimum": 1,
+          "title": "Token Estimate",
+          "type": "integer"
+        },
+        "verification": {
           "anyOf": [
             {
-              "type": "boolean"
+              "$ref": "#/$defs/EvidenceReference"
             },
             {
               "type": "null"
             }
-          ],
-          "title": "Deterministic Fake Vectors"
-        },
-        "source_metadata": {
-          "title": "Source Metadata",
-          "type": "boolean"
-        },
-        "vector_binding": {
-          "title": "Vector Binding",
-          "type": "boolean"
+          ]
         }
       },
       "required": [
-        "complete_graph",
-        "source_metadata",
-        "citation_binding",
-        "vector_binding",
-        "deterministic_fake_vectors"
+        "path",
+        "title",
+        "byte_sha256",
+        "document_type",
+        "document_status",
+        "access_class",
+        "fact_scope",
+        "implementation_refs",
+        "verification",
+        "repository",
+        "commit_sha",
+        "document_id",
+        "content_id",
+        "source_ref",
+        "chunk_id",
+        "chunk_index",
+        "chunker_version",
+        "chunker_config_id",
+        "heading_path",
+        "block_type",
+        "text",
+        "content_checksum",
+        "token_estimate",
+        "occurrences"
       ],
-      "title": "MechanicalChecks",
+      "title": "MarkdownChunk",
+      "type": "object"
+    },
+    "OmittedBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "location": {
+          "$ref": "#/$defs/SourceLocation"
+        },
+        "reason": {
+          "enum": [
+            "structural_heading",
+            "navigation_section",
+            "anchor_navigation",
+            "html_comment",
+            "thematic_break"
+          ],
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "location",
+        "reason"
+      ],
+      "title": "OmittedBlock",
       "type": "object"
     },
     "RetrievalConfig": {
@@ -1893,6 +1893,87 @@
       "title": "SimilarityDisposition",
       "type": "object"
     },
+    "SimilarityPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "const": "retrievable-word-trigram-jaccard-v1",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "max_candidate_pairs": {
+          "maximum": 250000,
+          "minimum": 1,
+          "title": "Max Candidate Pairs",
+          "type": "integer"
+        },
+        "max_features": {
+          "maximum": 250000,
+          "minimum": 1,
+          "title": "Max Features",
+          "type": "integer"
+        },
+        "max_posting_visits": {
+          "maximum": 2000000,
+          "minimum": 1,
+          "title": "Max Posting Visits",
+          "type": "integer"
+        },
+        "max_report_pairs": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Max Report Pairs",
+          "type": "integer"
+        },
+        "minimum_words": {
+          "maximum": 128,
+          "minimum": 3,
+          "title": "Minimum Words",
+          "type": "integer"
+        },
+        "normalization": {
+          "const": "nfkc-casefold-unicode-words-v1",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "shingle_words": {
+          "const": 3,
+          "title": "Shingle Words",
+          "type": "integer"
+        },
+        "threshold_bps": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Threshold Bps",
+          "type": "integer"
+        },
+        "unicode_version": {
+          "const": "14.0.0",
+          "title": "Unicode Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "algorithm",
+        "normalization",
+        "unicode_version",
+        "shingle_words",
+        "minimum_words",
+        "threshold_bps",
+        "max_features",
+        "max_candidate_pairs",
+        "max_posting_visits",
+        "max_report_pairs"
+      ],
+      "title": "SimilarityPolicy",
+      "type": "object"
+    },
     "SimilarityReview": {
       "additionalProperties": false,
       "properties": {
@@ -1960,6 +2041,48 @@
       "title": "SimilarityReview",
       "type": "object"
     },
+    "SourceLocation": {
+      "additionalProperties": false,
+      "properties": {
+        "end_line": {
+          "maximum": 500000,
+          "minimum": 1,
+          "title": "End Line",
+          "type": "integer"
+        },
+        "end_offset": {
+          "exclusiveMinimum": 0,
+          "maximum": 500000,
+          "title": "End Offset",
+          "type": "integer"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "start_line": {
+          "maximum": 500000,
+          "minimum": 1,
+          "title": "Start Line",
+          "type": "integer"
+        },
+        "start_offset": {
+          "maximum": 500000,
+          "minimum": 0,
+          "title": "Start Offset",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_offset",
+        "end_offset",
+        "start_line",
+        "end_line",
+        "source_ref"
+      ],
+      "title": "SourceLocation",
+      "type": "object"
+    },
     "SourceRegistration": {
       "additionalProperties": false,
       "properties": {
@@ -2005,83 +2128,65 @@
       "type": "object"
     }
   },
-  "$id": "urn:retailops:knowledge:index-release-manifest:1.0",
+  "$id": "urn:retailops:knowledge:semantic-index-build-profile:1.0",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "activation_allowed": {
-      "title": "Activation Allowed",
-      "type": "boolean"
+    "approval": {
+      "$ref": "#/$defs/CorpusApproval"
     },
-    "blockers": {
+    "chunks": {
+      "$ref": "#/$defs/ChunkManifest"
+    },
+    "document_embeddings": {
       "items": {
-        "enum": [
-          "corpus_approval_missing",
-          "golden_labels_approval_missing",
-          "mechanical_validation_failed",
-          "similarity_review_incomplete",
-          "golden_thresholds_failed",
-          "semantic_provider_required",
-          "user_build_profile_required"
-        ],
-        "type": "string"
+        "$ref": "#/$defs/EmbeddingRecord"
       },
-      "maxItems": 7,
-      "title": "Blockers",
+      "maxItems": 32768,
+      "minItems": 1,
+      "title": "Document Embeddings",
       "type": "array"
     },
-    "corpus_approval": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/CorpusApproval"
-        },
-        {
-          "type": "null"
-        }
-      ]
+    "embedding_config": {
+      "$ref": "#/$defs/EmbeddingConfig"
     },
-    "corpus_manifest": {
-      "$ref": "#/$defs/CorpusManifest"
+    "environment": {
+      "enum": [
+        "local",
+        "test"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "evaluation_set_id": {
+      "pattern": "^golden-set-sha256-[0-9a-f]{64}$",
+      "title": "Evaluation Set Id",
+      "type": "string"
     },
     "golden_approval": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/GoldenLabelsApproval"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "golden_report": {
-      "$ref": "#/$defs/GoldenReport"
+      "$ref": "#/$defs/GoldenLabelsApproval"
     },
     "golden_set": {
       "$ref": "#/$defs/GoldenSet"
     },
-    "index_manifest": {
-      "$ref": "#/$defs/IndexManifest"
-    },
-    "mechanical_validation": {
-      "$ref": "#/$defs/IndexValidation"
-    },
-    "policy_version": {
-      "enum": [
-        "fake-release-preflight-v1",
-        "semantic-release-v1"
-      ],
-      "title": "Policy Version",
+    "profile_id": {
+      "pattern": "^index-build-profile-sha256-[0-9a-f]{64}$",
+      "title": "Profile Id",
       "type": "string"
     },
     "purpose": {
-      "const": "release_readiness_only",
+      "const": "approved_corpus_semantic_validation",
       "title": "Purpose",
       "type": "string"
     },
-    "release_id": {
-      "pattern": "^rag-release-manifest-sha256-[0-9a-f]{64}$",
-      "title": "Release Id",
-      "type": "string"
+    "query_embeddings": {
+      "items": {
+        "$ref": "#/$defs/EmbeddingRecord"
+      },
+      "maxItems": 50,
+      "minItems": 1,
+      "title": "Query Embeddings",
+      "type": "array"
     },
     "retrieval_config": {
       "$ref": "#/$defs/RetrievalConfig"
@@ -2091,63 +2196,30 @@
       "title": "Schema Version",
       "type": "string"
     },
-    "similarity_findings": {
-      "maximum": 10000,
-      "minimum": 0,
-      "title": "Similarity Findings",
-      "type": "integer"
-    },
-    "similarity_report_id": {
-      "pattern": "^similarity-report-sha256-[0-9a-f]{64}$",
-      "title": "Similarity Report Id",
-      "type": "string"
+    "similarity_policy": {
+      "$ref": "#/$defs/SimilarityPolicy"
     },
     "similarity_review": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/SimilarityReview"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "status": {
-      "enum": [
-        "blocked",
-        "ready"
-      ],
-      "title": "Status",
-      "type": "string"
-    },
-    "unreviewed_similarity_findings": {
-      "maximum": 10000,
-      "minimum": 0,
-      "title": "Unreviewed Similarity Findings",
-      "type": "integer"
+      "$ref": "#/$defs/SimilarityReview"
     }
   },
   "required": [
     "schema_version",
-    "release_id",
-    "policy_version",
-    "purpose",
-    "status",
-    "activation_allowed",
-    "index_manifest",
-    "corpus_manifest",
-    "retrieval_config",
+    "profile_id",
+    "environment",
+    "approval",
+    "chunks",
+    "embedding_config",
+    "evaluation_set_id",
     "golden_set",
-    "golden_report",
-    "mechanical_validation",
-    "corpus_approval",
     "golden_approval",
-    "similarity_report_id",
+    "retrieval_config",
+    "similarity_policy",
     "similarity_review",
-    "similarity_findings",
-    "unreviewed_similarity_findings",
-    "blockers"
+    "purpose",
+    "document_embeddings",
+    "query_embeddings"
   ],
-  "title": "IndexReleaseManifest",
+  "title": "SemanticIndexBuildProfile",
   "type": "object"
 }

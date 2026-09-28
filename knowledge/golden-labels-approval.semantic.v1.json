@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "approval_id": "golden-approval-sha256-0b8634aea5888f3aa91ed61b872596a179122efd9747b13e7e68fdfbab7212f8",
+  "golden_set_id": "golden-set-sha256-4dea937d3d13b628c6892513ca12d536bc973d2c8b7de5b73e0b967e36e0c1e3",
+  "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+  "retrieval_config_id": "retrieval-config-sha256-39f5f998dea99bde765d259102ed605fa77583edcb22da6e39d5b0e871fd786b",
+  "environment": "local",
+  "review_owner": "Oskar-Stachowski",
+  "reviewer": "approved-embedding-rebind-pipeline",
+  "reviewer_kind": "approved_pipeline",
+  "decision": "approved",
+  "scope": "labels_tools_and_frozen_thresholds",
+  "reviewed_at": "2026-09-28T14:39:17.260457Z"
+}

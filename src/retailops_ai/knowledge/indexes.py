@@ -9,27 +9,52 @@ from pydantic import Field, model_validator
 
 from retailops_ai.data_contracts.common import Contract, Sha256
 from retailops_ai.data_contracts.identity import canonical_sha256
-from retailops_ai.knowledge.chunks import MAX_TOTAL_CHUNKS, ChunkID, ChunkManifest, ChunkManifestID
+from retailops_ai.knowledge.chunks import (
+    MAX_TOTAL_CHUNKS,
+    ChunkID,
+    ChunkManifest,
+    ChunkManifestID,
+    MarkdownChunk,
+)
 from retailops_ai.knowledge.contracts import CorpusID
 
 SpaceID = Annotated[str, Field(pattern=r"^embedding-space-sha256-[0-9a-f]{64}$")]
 EmbeddingID = Annotated[str, Field(pattern=r"^embedding-sha256-[0-9a-f]{64}$")]
 IndexID = Annotated[str, Field(pattern=r"^index-sha256-[0-9a-f]{64}$")]
-Dimension = Literal[8, 16, 32, 64]
+Dimension = Literal[8, 16, 32, 64, 256, 512, 1024]
 MAX_INDEX_BYTES = 64_000_000
 
 
 class EmbeddingConfig(Contract):
     schema_version: Literal["1.0"]
-    provider: Literal["fake"]
-    model_id: Literal["sha256-unit-f32-v1"]
+    provider: Literal["fake", "bedrock"]
+    model_id: Literal["sha256-unit-f32-v1", "amazon.titan-embed-text-v2:0"]
     inference_profile: None
-    region: Literal["offline"]
+    region: Annotated[str, Field(pattern=r"^(offline|[a-z]{2}-[a-z]+-[0-9])$")]
     dimension: Dimension
     normalization: Literal["l2-unit"]
     distance: Literal["cosine"]
-    transformation_version: Literal["utf8-chunk-body-v1"]
+    transformation_version: Literal["utf8-chunk-body-v1", "utf8-heading-path-body-v1"]
     vector_format: Literal["float32-big-endian-v1"]
+
+    @model_validator(mode="after")
+    def provider_binding(self) -> Self:
+        if self.provider == "fake":
+            if self.transformation_version != "utf8-chunk-body-v1":
+                raise ValueError("fake_transformation_mismatch")
+            if (
+                self.model_id != "sha256-unit-f32-v1"
+                or self.region != "offline"
+                or self.dimension not in {8, 16, 32, 64}
+            ):
+                raise ValueError("fake_embedding_configuration_mismatch")
+        elif (
+            self.model_id != "amazon.titan-embed-text-v2:0"
+            or self.region == "offline"
+            or self.dimension not in {256, 512, 1024}
+        ):
+            raise ValueError("bedrock_embedding_configuration_mismatch")
+        return self
 
     def space_id(self) -> str:
         return "embedding-space-sha256-" + canonical_sha256(self.model_dump(mode="json"))
@@ -47,12 +72,22 @@ def embedding_id(checksum: str, space: str) -> str:
     return "embedding-sha256-" + canonical_sha256({"content_checksum": checksum, "space_id": space})
 
 
+def embedding_text(chunk: MarkdownChunk, config: EmbeddingConfig) -> str:
+    if config.transformation_version == "utf8-heading-path-body-v1":
+        return "\n".join(h.title for h in chunk.heading_path) + "\n\n" + chunk.text
+    return chunk.text
+
+
+def embedding_input_checksum(chunk: MarkdownChunk, config: EmbeddingConfig) -> str:
+    return hashlib.sha256(embedding_text(chunk, config).encode()).hexdigest()
+
+
 class EmbeddingRecord(Contract):
     embedding_id: EmbeddingID
     space_id: SpaceID
     content_checksum: Sha256
     dimension: Dimension
-    vector: Annotated[tuple[float, ...], Field(min_length=8, max_length=64)]
+    vector: Annotated[tuple[float, ...], Field(min_length=8, max_length=1024)]
     vector_checksum: Sha256
 
     @model_validator(mode="after")
@@ -80,7 +115,7 @@ class IndexManifest(Contract):
     schema_version: Literal["1.0"]
     lifecycle: Literal["candidate"]
     environment: Literal["local", "test"]
-    semantic_quality: Literal["not_evaluated_fake_vectors"]
+    semantic_quality: Literal["not_evaluated_fake_vectors", "not_evaluated_real_vectors"]
     index_id: IndexID
     corpus_id: CorpusID
     chunk_manifest_id: ChunkManifestID
@@ -88,14 +123,21 @@ class IndexManifest(Contract):
     space_id: SpaceID
     storage_version: Literal["pgvector-checked-dimension-v1"]
     pgvector_version: Literal["0.8.6"]
-    migration_revision: Literal["0002_rag_candidates"]
-    retrieval_version: Literal["not_implemented"]
+    migration_revision: Literal["0002_rag_candidates", "0008_rag_semantic"]
+    retrieval_version: Literal["not_implemented", "pgvector-cosine-exact-v1"]
     chunk_count: Annotated[int, Field(ge=1, le=MAX_TOTAL_CHUNKS)]
     embedding_count: Annotated[int, Field(ge=1, le=MAX_TOTAL_CHUNKS)]
     entries: Annotated[tuple[IndexEntry, ...], Field(min_length=1, max_length=MAX_TOTAL_CHUNKS)]
 
     @model_validator(mode="after")
     def identity(self) -> Self:
+        expected_quality = (
+            "not_evaluated_fake_vectors"
+            if self.embedding_config.provider == "fake"
+            else "not_evaluated_real_vectors"
+        )
+        if self.semantic_quality != expected_quality:
+            raise ValueError("index_semantic_quality_mismatch")
         if self.index_id != "index-sha256-" + canonical_sha256(self.identity_data()):
             raise ValueError("index_identity_mismatch")
         if self.space_id != self.embedding_config.space_id():
@@ -139,7 +181,8 @@ class IndexCandidate(Contract):
             if (
                 record.space_id != manifest.space_id
                 or record.dimension != manifest.embedding_config.dimension
-                or record.content_checksum != chunk.content_checksum
+                or record.content_checksum
+                != embedding_input_checksum(chunk, manifest.embedding_config)
                 or record.vector_checksum != entry.vector_checksum
             ):
                 raise ValueError("index_embedding_binding_mismatch")
