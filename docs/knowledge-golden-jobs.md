@@ -1,5 +1,9 @@
 # Zatwierdzony profil i run golden evaluation
 
+Ścieżkę rzeczywistych embeddings i użytkowej kwalifikacji opisuje
+[semantyczny RAG](knowledge-semantic.md). Poniższe polecenia fake pozostają
+oddzielną ścieżką testową.
+
 Profil `approved_corpus_fake_golden_validation` wiąże zatwierdzony korpus,
 etykiety, zamrożone progi, konfigurację retrieval i decyzje podobieństwa.
 Worker zapisuje kandydata oraz pełny raport, także gdy jakość nie przechodzi
@@ -89,9 +93,8 @@ z zamrożonymi progami **profilu**, więc sama zmiana flag podsumowania nie daje
 sukcesu. Profile, raporty, piny i terminalna historia pozostają niemodyfikowalne.
 Downgrade odmawia działania przy istniejącej historii jobs.
 
-Obecny rzeczywisty fake nadal nie przechodzi Recall@5/MRR. Nie ma aktywnego
-indeksu lokalnego korpusu. Profil służy zatwierdzonemu pomiarowi golden;
-kwalifikacja użytkowego retrieval wymaga odebranej jakości oraz własnej
-polityki aktywacji. `fake-release-preflight-v1` nadal zwraca stałe blokady
-real provider/użytkowej kwalifikacji. Real embeddings, Bedrock i agent
-należą do etapu 12.
+Profil fake nadal nie jest podstawą użytkowej aktywacji.
+[Profil semantyczny](knowledge-semantic.md) wiąże rzeczywiste wektory dokumentów
+i pytań, a migracja `0008_rag_semantic` rozszerza tę samą kolejkę i raporty.
+Worker wykonuje odtwarzalny pomiar bez AWS. Jawna kwalifikacja i aktywacja
+następują dopiero po udanym runie; progi i zgody są związane z release.

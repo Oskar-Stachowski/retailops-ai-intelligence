@@ -1,5 +1,9 @@
 # Kandydacki indeks fake embeddings — etap 11
 
+Ścieżkę rzeczywistych embeddings i użytkowej kwalifikacji opisuje
+[semantyczny RAG](knowledge-semantic.md). Poniższe polecenia fake pozostają
+oddzielną ścieżką testową.
+
 Punkt 4 etapu 11 ma adapter offline oraz zapis kompletnego kandydata w izolowanej
 bazie PostgreSQL AI z pgvector. Wynik zachowuje [korpus](knowledge-corpus.md),
 [fragmenty i cytaty](knowledge-chunks.md) oraz przypiętą konfigurację embeddings.

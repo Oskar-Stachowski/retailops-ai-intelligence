@@ -1,5 +1,9 @@
 # Retrieval, uprawnienia i golden set — etap 11
 
+Ścieżkę rzeczywistych embeddings i użytkowej kwalifikacji opisuje
+[semantyczny RAG](knowledge-semantic.md). Poniższe polecenia fake pozostają
+oddzielną ścieżką testową.
+
 Wyszukiwanie ma adapter exact cosine pgvector, deterministyczny ranking,
 dywersyfikację źródeł i limity kontekstu. [Korpus](knowledge-corpus.md) i etykiety
 mają [osobne zgody właściciela](knowledge-golden-jobs.md). HTTP używa
@@ -138,13 +142,9 @@ oraz pin podczas swapu. CI nie korzysta z AWS.
 Podstawa: [pgvector 0.8.6 — exact search i cosine](https://github.com/pgvector/pgvector/tree/v0.8.6),
 [PostgreSQL 16 — window functions](https://www.postgresql.org/docs/16/functions-window.html).
 
-## Następny odbiór
+## Ścieżka semantyczna
 
-[Administracyjne runy](knowledge-administration.md) i
-[kontrola podobnych treści](knowledge-review.md) mają osobne odbiory testowe.
-Do zamknięcia etapu 11 pozostają odbiór jakości i użytkowej kwalifikacji.
-[Profil golden](knowledge-golden-jobs.md) wiąże obecne zgody i zachowuje
-raport nieudanego runa. Każda zmiana źródeł wymaga ponownego przeglądu.
-[Kontrola przed kwalifikacją](knowledge-qualification.md) odtwarza pełny raport
-i wiąże osobne zgody z korpusem/etykietami, bez aktywacji fake.
-Real embeddings/Bedrock smoke i agent należą do etapu 12.
+[Semantyczny RAG](knowledge-semantic.md) dodaje rzeczywisty provider,
+wersjonowaną selekcję według trafności oraz użytkową kwalifikację.
+Zmiana źródeł wymaga nowego przeglądu. Odbiór odpowiedzi i wykonania narzędzi
+agenta pozostaje zakresem AI 12; retrieval zwraca źródła, a nie odpowiedź modelu.
