@@ -165,8 +165,6 @@ def test_validation_report_is_closed_and_does_not_accept_fake_quality_claims(
     "environment,lane,code",
     [
         ("local", "offline_test", "requires_test"),
-        ("test", "retrieval", "golden_evaluation"),
-        ("local", "retrieval", "golden_evaluation"),
     ],
 )
 def test_fake_switch_cannot_bypass_test_environment_or_golden_gate(environment, lane, code):

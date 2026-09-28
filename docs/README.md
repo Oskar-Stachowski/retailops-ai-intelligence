@@ -3,8 +3,9 @@
 Zacznij od [statusu](STATUS.md), [decyzji](architecture/decisions.md) i
 [poleceń lokalnych](development.md). [Contributing](contributing.md) opisuje
 zmiany i PR-y, [security](security.md) — granice dostępu i zgłoszenia.
-[Audyt Etapu 11](evidence/11-audit.md) podaje gotowość do scalenia zakresu
-offline, otwarte warunki pełnego odbioru oraz możliwości dalszej pracy.
+[Semantyczny RAG](knowledge-semantic.md) opisuje rzeczywiste embeddings,
+kwalifikację jakości, aktywację i rollback Etapu 11. Historyczne evidence
+zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
@@ -36,7 +37,7 @@ rollback i zachowanie pełnego pin po restartach na świeżej bazie.
 [Retrieval i golden set](knowledge-retrieval.md) opisują exact cosine, kontrolę
 scope, statusy, live deny i wersjonowany golden set (aktualnie 44 pytania).
 [Odbiór retrieval](evidence/11-retrieval.md) podaje 498 testów, rzeczywisty PG/HTTP,
-raport fake i pozostały zakres etapu 11.
+historyczny raport fake.
 [Administracja indeksami](knowledge-administration.md) opisuje osobny grant,
 trwałe runy, zatwierdzone snapshoty, worker i odczyt bieżącego indeksu.
 [Odbiór administracji](evidence/11-administration.md) potwierdza 542 testy,

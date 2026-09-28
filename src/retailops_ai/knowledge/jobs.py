@@ -18,7 +18,13 @@ from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.knowledge.chunks import ChunkManifest, ChunkManifestID
 from retailops_ai.knowledge.contracts import REPOSITORIES, ConfigID, CorpusID, Repository
 from retailops_ai.knowledge.golden import GoldenID, GoldenReport, GoldenSet
-from retailops_ai.knowledge.indexes import Dimension, EmbeddingConfig, IndexID, SpaceID
+from retailops_ai.knowledge.indexes import (
+    Dimension,
+    EmbeddingConfig,
+    EmbeddingRecord,
+    IndexID,
+    SpaceID,
+)
 from retailops_ai.knowledge.qualification import GoldenLabelsApproval, SimilarityReview
 from retailops_ai.knowledge.releases import CorpusApproval, IndexValidation, approval_matches
 from retailops_ai.knowledge.retrieval import RetrievalConfig
@@ -96,6 +102,8 @@ class IndexBuildProfile(Contract):
     @model_validator(mode="after")
     def binding(self) -> Self:
         corpus = self.chunks.corpus
+        if self.embedding_config.provider != "fake":
+            raise ValueError("offline_profile_requires_fake_embeddings")
         if (
             not approval_matches(
                 self.approval,
@@ -181,9 +189,9 @@ class CurrentKnowledgeIndex(Contract):
     schema_version: Literal["1.0"] = "1.0"
     index_id: IndexID
     status: Literal["active"] = "active"
-    environment: Literal["test"]
-    lane: Literal["offline_test"]
-    purpose: Literal["lifecycle_validation_only"]
+    environment: Literal["local", "test"]
+    lane: Literal["offline_test", "retrieval"]
+    purpose: Literal["lifecycle_validation_only", "qualified_semantic_retrieval"]
     manifest_ref: ManifestRef
     corpus_manifest_id: CorpusID
     chunk_manifest_id: ChunkManifestID
@@ -194,11 +202,34 @@ class CurrentKnowledgeIndex(Contract):
     chunk_count: Annotated[int, Field(ge=1, le=32768)]
     activated_at: UtcTime
     evaluation_report_ref: Annotated[
-        str, Field(pattern=r"^db:ai.rag_qualifications:index-validation-sha256-[0-9a-f]{64}$")
+        str,
+        Field(
+            pattern=r"^db:ai\.(rag_qualifications:index-validation|rag_index_reports:index-run-report)-sha256-[0-9a-f]{64}$"
+        ),
     ]
 
     @model_validator(mode="after")
     def binding(self) -> Self:
+        if self.lane == "offline_test":
+            if (
+                self.environment != "test"
+                or self.purpose != "lifecycle_validation_only"
+                or self.dimension not in {8, 16, 32, 64}
+            ):
+                raise ValueError("current_offline_binding_mismatch")
+        elif self.purpose != "qualified_semantic_retrieval" or self.dimension not in {
+            256,
+            512,
+            1024,
+        }:
+            raise ValueError("current_semantic_binding_mismatch")
+        expected_prefix = (
+            "db:ai.rag_qualifications:"
+            if self.lane == "offline_test"
+            else "db:ai.rag_index_reports:"
+        )
+        if not self.evaluation_report_ref.startswith(expected_prefix):
+            raise ValueError("current_evaluation_reference_mismatch")
         if self.manifest_ref != "db:ai.rag_indexes:" + self.index_id:
             raise ValueError("current_index_manifest_reference_mismatch")
         return self
@@ -214,7 +245,7 @@ def index_config_id(chunks: ChunkManifest, embedding: EmbeddingConfig) -> str:
     )
 
 
-class GoldenIndexBuildProfile(Contract):
+class GoldenProfileBase(Contract):
     """Explicitly approved corpus and labels; fake evaluation can only produce a candidate."""
 
     schema_version: Literal["1.0"]
@@ -229,11 +260,18 @@ class GoldenIndexBuildProfile(Contract):
     retrieval_config: RetrievalConfig
     similarity_policy: SimilarityPolicy
     similarity_review: SimilarityReview
-    purpose: Literal["approved_corpus_fake_golden_validation"]
+    purpose: Literal[
+        "approved_corpus_fake_golden_validation", "approved_corpus_semantic_validation"
+    ]
 
     @model_validator(mode="after")
     def binding(self) -> Self:
         corpus, golden, labels = self.chunks.corpus, self.golden_set, self.golden_approval
+        expected_provider = (
+            "fake" if self.purpose == "approved_corpus_fake_golden_validation" else "bedrock"
+        )
+        if self.embedding_config.provider != expected_provider:
+            raise ValueError("golden_profile_provider_mismatch")
         if (
             not approval_matches(
                 self.approval,
@@ -297,6 +335,18 @@ class GoldenIndexBuildProfile(Contract):
         )
 
 
+class GoldenIndexBuildProfile(GoldenProfileBase):
+    purpose: Literal["approved_corpus_fake_golden_validation"]
+
+
+class SemanticIndexBuildProfile(GoldenProfileBase):
+    purpose: Literal["approved_corpus_semantic_validation"]
+    document_embeddings: Annotated[
+        tuple[EmbeddingRecord, ...], Field(min_length=1, max_length=32768)
+    ]
+    query_embeddings: Annotated[tuple[EmbeddingRecord, ...], Field(min_length=1, max_length=50)]
+
+
 class GoldenIndexRunReport(Contract):
     schema_version: Literal["1.0"]
     report_id: ReportID
@@ -308,12 +358,19 @@ class GoldenIndexRunReport(Contract):
     similarity_report_id: Annotated[str, Field(pattern=r"^similarity-report-sha256-[0-9a-f]{64}$")]
     similarity_review_id: Annotated[str, Field(pattern=r"^similarity-review-sha256-[0-9a-f]{64}$")]
     quality_gate_passed: bool
-    purpose: Literal["approved_corpus_fake_golden_validation"]
+    purpose: Literal[
+        "approved_corpus_fake_golden_validation", "approved_corpus_semantic_validation"
+    ]
     activation_allowed: FalseFlag
 
     @model_validator(mode="after")
     def binding(self) -> Self:
         validation, labels, golden = self.validation, self.golden_approval, self.golden
+        expected_provider = (
+            "fake" if self.purpose == "approved_corpus_fake_golden_validation" else "bedrock"
+        )
+        if validation.provider != expected_provider or golden.provider != expected_provider:
+            raise ValueError("golden_report_provider_mismatch")
         if (
             validation.index_id != golden.index_id
             or labels.index_id != golden.index_id
@@ -336,7 +393,8 @@ class GoldenIndexRunReport(Contract):
 
 
 BuildProfile = Annotated[
-    IndexBuildProfile | GoldenIndexBuildProfile, Field(discriminator="purpose")
+    IndexBuildProfile | GoldenIndexBuildProfile | SemanticIndexBuildProfile,
+    Field(discriminator="purpose"),
 ]
 RunReport = Annotated[IndexRunReport | GoldenIndexRunReport, Field(discriminator="purpose")]
 BUILD_PROFILE_ADAPTER: TypeAdapter[BuildProfile] = TypeAdapter(BuildProfile)

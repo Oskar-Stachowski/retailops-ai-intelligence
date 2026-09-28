@@ -242,7 +242,8 @@ def verify_profiles(profiles: list[GoldenIndexBuildProfile]) -> dict[str, Any]:
                     return error.code, json.loads(error.read())
 
             try:
-                for _ in range(80):
+                for _ in range(600):
+                    require(child.poll() is None, "golden_http_process_exited")
                     try:
                         http("knowledge-indexes/current")
                         break

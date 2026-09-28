@@ -8,7 +8,10 @@
         8,
         16,
         32,
-        64
+        64,
+        256,
+        512,
+        1024
       ],
       "title": "Dimension",
       "type": "integer"
@@ -23,7 +26,10 @@
       "type": "null"
     },
     "model_id": {
-      "const": "sha256-unit-f32-v1",
+      "enum": [
+        "sha256-unit-f32-v1",
+        "amazon.titan-embed-text-v2:0"
+      ],
       "title": "Model Id",
       "type": "string"
     },
@@ -33,12 +39,15 @@
       "type": "string"
     },
     "provider": {
-      "const": "fake",
+      "enum": [
+        "fake",
+        "bedrock"
+      ],
       "title": "Provider",
       "type": "string"
     },
     "region": {
-      "const": "offline",
+      "pattern": "^(offline|[a-z]{2}-[a-z]+-[0-9])$",
       "title": "Region",
       "type": "string"
     },
@@ -48,7 +57,10 @@
       "type": "string"
     },
     "transformation_version": {
-      "const": "utf8-chunk-body-v1",
+      "enum": [
+        "utf8-chunk-body-v1",
+        "utf8-heading-path-body-v1"
+      ],
       "title": "Transformation Version",
       "type": "string"
     },

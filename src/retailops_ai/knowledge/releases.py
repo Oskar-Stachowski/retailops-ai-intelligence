@@ -44,27 +44,40 @@ class MechanicalChecks(Contract):
     source_metadata: bool
     citation_binding: bool
     vector_binding: bool
-    deterministic_fake_vectors: bool
+    deterministic_fake_vectors: bool | None
 
     def passed(self) -> bool:
-        return all(self.model_dump().values())
+        return all(value for value in self.model_dump().values() if value is not None)
 
 
 class IndexValidation(Contract):
     schema_version: Literal["1.0"]
     validation_id: ValidationID
-    policy_version: Literal["fake-mechanical-validation-v1"]
+    policy_version: Literal["fake-mechanical-validation-v1", "real-structural-validation-v1"]
     index_id: IndexID
     corpus_id: CorpusID
     space_id: SpaceID
     environment: Literal["local", "test"]
-    provider: Literal["fake"]
-    golden_evaluation: Literal["not_evaluated_fake_vectors"]
+    provider: Literal["fake", "bedrock"]
+    golden_evaluation: Literal["not_evaluated_fake_vectors", "not_evaluated_real_vectors"]
     checks: MechanicalChecks
     result: Literal["passed", "failed"]
 
     @model_validator(mode="after")
     def identity(self) -> Self:
+        if self.provider == "fake":
+            if (
+                self.policy_version != "fake-mechanical-validation-v1"
+                or self.golden_evaluation != "not_evaluated_fake_vectors"
+                or self.checks.deterministic_fake_vectors is None
+            ):
+                raise ValueError("validation_provider_mismatch")
+        elif (
+            self.policy_version != "real-structural-validation-v1"
+            or self.golden_evaluation != "not_evaluated_real_vectors"
+            or self.checks.deterministic_fake_vectors is not None
+        ):
+            raise ValueError("validation_provider_mismatch")
         if self.validation_id != "index-validation-sha256-" + canonical_sha256(
             self.model_dump(mode="json", exclude={"validation_id"})
         ):
@@ -87,9 +100,9 @@ class SwitchRequest(Contract):
 
 class IndexPin(Contract):
     schema_version: Literal["1.0"]
-    environment: Literal["test"]
-    lane: Literal["offline_test"]
-    purpose: Literal["lifecycle_validation_only"]
+    environment: Literal["local", "test"]
+    lane: Lane
+    purpose: Literal["lifecycle_validation_only", "qualified_semantic_retrieval"]
     generation: Annotated[int, Field(ge=1, le=2**63 - 1)]
     request_id: ChangeID
     review_id: ReviewID
@@ -98,6 +111,18 @@ class IndexPin(Contract):
 
     @model_validator(mode="after")
     def binding(self) -> Self:
+        if self.lane == "offline_test":
+            if (
+                self.environment != "test"
+                or self.purpose != "lifecycle_validation_only"
+                or self.manifest.embedding_config.provider != "fake"
+            ):
+                raise ValueError("offline_pin_binding_mismatch")
+        elif (
+            self.purpose != "qualified_semantic_retrieval"
+            or self.manifest.embedding_config.provider != "bedrock"
+        ):
+            raise ValueError("semantic_pin_binding_mismatch")
         if self.manifest.environment != self.environment:
             raise ValueError("index_pin_environment_mismatch")
         return self

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "retrieval_version": "pgvector-cosine-exact-v1",
+  "max_top_k": 5,
+  "max_context_tokens": 6000,
+  "max_context_bytes": 24000,
+  "max_chunks_per_document": 2,
+  "candidate_limit": 256,
+  "min_cosine_score": 0.0,
+  "diversification": "score-then-document-v1",
+  "size_estimator": "serialized-hits-utf8-div4-v1"
+}

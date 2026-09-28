@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "provider": "bedrock",
+  "model_id": "amazon.titan-embed-text-v2:0",
+  "inference_profile": null,
+  "region": "eu-north-1",
+  "dimension": 1024,
+  "normalization": "l2-unit",
+  "distance": "cosine",
+  "transformation_version": "utf8-heading-path-body-v1",
+  "vector_format": "float32-big-endian-v1"
+}

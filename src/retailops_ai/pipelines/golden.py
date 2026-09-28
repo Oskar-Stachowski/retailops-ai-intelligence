@@ -5,6 +5,7 @@ import time
 from pathlib import Path
 from typing import Literal
 
+from retailops_ai.adapters.embeddings import EmbeddingProvider
 from retailops_ai.domain.access import KnowledgeAccess, Principal
 from retailops_ai.knowledge.chunks import MarkdownChunk
 from retailops_ai.knowledge.golden import (
@@ -85,7 +86,13 @@ def validate_labels(candidate: IndexCandidate, golden: GoldenSet, config: Retrie
                 raise ValueError("golden_positive_filter_mismatch")
 
 
-def evaluate(candidate: IndexCandidate, golden: GoldenSet, config: RetrievalConfig) -> GoldenReport:
+def evaluate(
+    candidate: IndexCandidate,
+    golden: GoldenSet,
+    config: RetrievalConfig,
+    *,
+    provider: EmbeddingProvider | None = None,
+) -> GoldenReport:
     validate_labels(candidate, golden, config)
     original = {c.chunk_id: c for c in candidate.chunks.chunks}
     cases = []
@@ -96,7 +103,7 @@ def evaluate(candidate: IndexCandidate, golden: GoldenSet, config: RetrievalConf
         start = time.monotonic()
         outcome: Literal["ok", "insufficient_evidence", "forbidden"]
         try:
-            result = search_candidate(candidate, case.request, principal, config)
+            result = search_candidate(candidate, case.request, principal, config, provider=provider)
             hits = list(result.items)
             outcome = result.status
         except KnowledgeDenied:
@@ -153,6 +160,13 @@ def evaluate(candidate: IndexCandidate, golden: GoldenSet, config: RetrievalConf
         and p95 <= t.latency_p95_ms_max
     )
     return GoldenReport(
+        provider=candidate.manifest.embedding_config.provider,
+        report_kind="offline_mechanics_with_draft_semantic_labels"
+        if candidate.manifest.embedding_config.provider == "fake"
+        else "semantic_retrieval_evaluation",
+        semantic_quality="not_evaluated_fake_vectors"
+        if candidate.manifest.embedding_config.provider == "fake"
+        else "measured_real_vectors",
         golden_set_id=golden.golden_set_id,
         index_id=candidate.manifest.index_id,
         retrieval_config_id=config.config_id(),

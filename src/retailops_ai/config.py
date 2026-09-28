@@ -32,6 +32,7 @@ class Settings(BaseSettings):
     api_auth_file: Path | None = Field(
         default=None, validation_alias="API_AUTH_FILE", exclude=True, repr=False
     )
+    rag_bedrock_enabled: bool = Field(default=False, validation_alias="RAG_BEDROCK_ENABLED")
     metrics_token: SecretStr | None = Field(default=None, validation_alias="METRICS_TOKEN")
     readiness_timeout_seconds: float = Field(
         default=1.0, ge=0.01, le=5.0, validation_alias="READINESS_TIMEOUT_SECONDS"

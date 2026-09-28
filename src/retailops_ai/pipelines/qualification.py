@@ -3,6 +3,7 @@
 import json
 import math
 
+from retailops_ai.adapters.embeddings import EmbeddingProvider
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.knowledge.golden import GoldenReport, GoldenSet
 from retailops_ai.knowledge.indexes import IndexCandidate
@@ -39,9 +40,14 @@ def similarity_findings(report: SimilarityReport) -> set[tuple[str, str, str, st
 
 
 def check_golden_report(
-    candidate: IndexCandidate, golden: GoldenSet, config: RetrievalConfig, report: GoldenReport
+    candidate: IndexCandidate,
+    golden: GoldenSet,
+    config: RetrievalConfig,
+    report: GoldenReport,
+    *,
+    provider: EmbeddingProvider | None = None,
 ) -> None:
-    actual = evaluate(candidate, golden, config)
+    actual = evaluate(candidate, golden, config, provider=provider)
 
     def semantic_fields(value: GoldenReport) -> dict[str, object]:
         body = value.model_dump(
@@ -75,9 +81,10 @@ def prepare_release(
     corpus_approval: CorpusApproval | None = None,
     golden_approval: GoldenLabelsApproval | None = None,
     similarity_review: SimilarityReview | None = None,
+    provider: EmbeddingProvider | None = None,
 ) -> IndexReleaseManifest:
     candidate = IndexCandidate.model_validate_json(candidate.model_dump_json())
-    check_golden_report(candidate, golden, config, report)
+    check_golden_report(candidate, golden, config, report, provider=provider)
     validation = validate_candidate(candidate)
     similarity = review_similarity(candidate.chunks, policy)
     findings = similarity_findings(similarity)
@@ -92,12 +99,15 @@ def prepare_release(
         if reviewed - findings:
             raise ValueError("release_similarity_decision_not_found")
     unreviewed = len(findings - reviewed)
+    blockers = release_blockers(corpus_approval, golden_approval, validation, report, unreviewed)
     value = {
         "schema_version": "1.0",
-        "policy_version": "fake-release-preflight-v1",
+        "policy_version": "fake-release-preflight-v1"
+        if validation.provider == "fake"
+        else "semantic-release-v1",
         "purpose": "release_readiness_only",
-        "status": "blocked",
-        "activation_allowed": False,
+        "status": "blocked" if blockers else "ready",
+        "activation_allowed": not blockers,
         "index_manifest": candidate.manifest.model_dump(mode="json"),
         "corpus_manifest": candidate.chunks.corpus.model_dump(mode="json"),
         "retrieval_config": config.model_dump(mode="json"),
