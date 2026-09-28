@@ -57,3 +57,20 @@ def test_make_check_includes_snapshot_gate():
     assert "contracts-check" in dependencies.split()
     assert "scripts/update_intelligence_contracts.py --check" in makefile
     assert "scripts/update_access_contracts.py --check" in makefile
+
+
+@pytest.mark.parametrize(
+    "event,settings",
+    [
+        ("push", {"branches": ["ai/**"]}),
+        ("push", {"branches": ["main"]}),
+        ("push", {"branches-ignore": ["main"]}),
+        ("pull_request", {"types": ["opened"]}),
+        ("pull_request", {"branches": ["develop"]}),
+        ("pull_request", {"branches-ignore": ["main"]}),
+    ],
+)
+def test_ci_rejects_missing_automatic_triggers(event, settings):
+    data = workflow()
+    data[True][event] = settings
+    assert module.workflow_errors(data)
