@@ -72,12 +72,13 @@ wheel do środowiska wyłącznie produkcyjnych zależności.
 ## Ograniczenia
 
 Punkt 3 jest odebrany jako parser i kandydackie manifesty. Etap 11 pozostaje
-w realizacji. Nie zatwierdzono redakcyjnie korpusu, nie powstały embeddings,
-indeks pgvector, retrieval, golden set, aktywacja ani rollback. Access/status
+w realizacji. Pomiar tego commitu nie obejmował embeddings, indeksu pgvector,
+retrieval, golden set, aktywacji ani rollback. Access/status
 są odziedziczonymi metadata, bez runtime auth/cache. Near duplicates nie są
 automatycznie usuwane. Token estimate nie dowodzi limitów docelowego modelu.
 Duże bloki mogą być podzielone na niezamknięte składniowo wycinki Markdown.
 
 Nie zmieniono migracji DB; nie powtarzano pełnego Compose persistence smoke.
-Nowe commity są lokalne, bez odbioru zdalnego Required CI. Następny zakres
-opisuje [status](../STATUS.md): fake embeddings i persistence indeksu.
+Odbiór był lokalny, bez zdalnego Required CI dla tego zakresu.
+[Fake embeddings i persistence](../knowledge-index.md) mają własny późniejszy
+odbiór. Aktualną następną pracę opisuje [status](../STATUS.md).

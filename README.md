@@ -5,8 +5,9 @@ Obecny zakres: pakiet Python, konfiguracja, CLI, lokalny serwis diagnostyczny HT
 PostgreSQL/pgvector, oddzielny MLflow, migracje, Compose, wykonywalne kontrakty
 danych/run/tool, lokalne poświadczenia i scope API oraz kontrole CI.
 [Etap 11](docs/knowledge-corpus.md) w realizacji: rejestr kandydackiego korpusu,
-walidacja Git i [parser/chunker](docs/knowledge-chunks.md); embeddings
-i wyszukiwanie RAG pozostają kolejnymi zakresami.
+walidacja Git, [parser/chunker](docs/knowledge-chunks.md) oraz
+[fake embeddings i zapis kandydata pgvector](docs/knowledge-index.md).
+Aktywacja i wyszukiwanie RAG pozostają kolejnymi zakresami.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).
 [Uruchomienie stosu](docs/local-stack.md) i [HTTP](docs/http-service.md).

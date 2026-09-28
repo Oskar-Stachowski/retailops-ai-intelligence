@@ -186,7 +186,7 @@ wiąże body checksum ze space ID. Normalizacja i float32 są jawne, checksum
 jest liczona na bajtach faktycznie przechowywanego wektora. Odczyt używa
 formatu binarnego pgvector, aby prezentacja tekstowa SQL nie zmieniła floatów.
 
-Cały kandydat z źródłami/chunkami jest niemodyfikowalny; zapis space/cache/index/
+Cały kandydat ze źródłami/chunkami jest niemodyfikowalny; zapis space/cache/index/
 chunks ma jedną transakcję. FK wiążą środowisko, przestrzeń i wymiar, a deferred
 constraint odrzuca niepełny indeks. Błąd nie zmienia starych kandydatów.
 Zmieniona konfiguracja tworzy nową przestrzeń zamiast nadpisania wektorów.

@@ -108,6 +108,8 @@ oraz [transakcje Psycopg](https://www.psycopg.org/psycopg3/docs/basic/transactio
 `make compose-smoke`, wymagane przez job persistence Required CI, sprawdza
 rzeczywisty pgvector: round trip, ograniczenia SQL, ponowny zapis, współbieżność,
 wycofanie awarii, zmianę/usunięcie treści i trwałość po SIGKILL oraz down/up.
+[Dowody](evidence/11-index.md) opisują korpus 302 fragmentów, 433 testy i odbiór
+na rzeczywistym pgvector ze świeżego checkoutu.
 
 Następny zakres to lifecycle candidate/active, jawna akceptacja korpusu,
 atomowa aktywacja i rollback. Dalej: retrieval z uprawnieniami i filtrami,

@@ -23,6 +23,8 @@ i cytaty do przypiętych rewizji Git.
 pełną mapę fragmentów i odtwarzalność rzeczywistego korpusu.
 [Fake embeddings i kandydacki indeks](knowledge-index.md) opisują przypiętą
 przestrzeń, cache treści, kontrolę wymiaru oraz transakcyjny zapis w pgvector.
+[Odbiór indeksu](evidence/11-index.md) potwierdza 433 testy i realny smoke
+na świeżej bazie oraz zapis pełnego korpusu 302 fragmentów.
 
 ## Mapa repo
 

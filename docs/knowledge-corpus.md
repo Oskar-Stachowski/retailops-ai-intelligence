@@ -3,7 +3,8 @@
 Etap 11 ma lokalny rejestr kandydacki i walidator źródeł Git. Obejmuje to
 granice korpusu oraz metadane statusu, czyli pierwszy zakres punktów 1–2 planu.
 [Parser i chunker](knowledge-chunks.md) realizuje kolejny zakres punktu 3.
-Wyszukiwanie RAG, embeddings i aktywacja indeksu pozostają następnymi zakresami.
+[Fake embeddings i zapis kandydata](knowledge-index.md) zachowują ten korpus
+w pgvector. Wyszukiwanie RAG i aktywacja indeksu pozostają następnymi zakresami.
 [Bieżący status](STATUS.md), [dowody rejestru](evidence/11-corpus.md).
 
 ## Co jest zarejestrowane
@@ -113,6 +114,6 @@ rzeczywistych, małych repozytoriach testowych i nie wymaga sąsiedniego checkou
 Zmiana źródłowego SHA wymaga ponownego związania checksum i odwołań oraz
 przeglądu propozycji.
 
-Następny zakres: adapter embeddings z fake oraz persistence pgvector.
+Następny zakres: lifecycle indeksu, atomowa aktywacja i rollback.
 Przegląd redakcyjny kandydata może odbywać się równolegle. Aktywacja/rollback,
 retrieval i golden set zamykają późniejsze zakresy etapu 11.

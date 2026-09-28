@@ -15,6 +15,8 @@ zakresy cytatów i pełne mapy dokumentów; nowy build usuwa nieaktualne fragmen
 [Fake embeddings i indeks pgvector](knowledge-index.md) mają przypiętą przestrzeń,
 cache treści oraz transakcyjny zapis niemodyfikowalnego kandydata. Nie ma jeszcze
 aktywacji ani retrieval; fake vectors nie potwierdzają jakości semantycznej.
+[Odbiór indeksu](evidence/11-index.md): 302 wektory, 433 testy, identyczny artefakt
+z czystego checkoutu i realny Compose z awariami/transakcjami pgvector.
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
