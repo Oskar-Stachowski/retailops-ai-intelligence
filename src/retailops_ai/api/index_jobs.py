@@ -13,7 +13,7 @@ from retailops_ai.api.errors import problem_response
 from retailops_ai.api.middleware import single_header
 from retailops_ai.api.models import Problem
 from retailops_ai.data_contracts.common import RunID
-from retailops_ai.data_contracts.run import RunRecord
+from retailops_ai.data_contracts.run import KnowledgeRunRecord, RunRecord
 from retailops_ai.domain.access import Principal
 from retailops_ai.knowledge.jobs import CurrentKnowledgeIndex, KnowledgeIndexRequest
 
@@ -33,7 +33,7 @@ def add_index_routes(
 
     @router.post(
         "/knowledge-index-runs",
-        response_model=RunRecord,
+        response_model=KnowledgeRunRecord,
         status_code=202,
         responses={
             202: {
@@ -82,7 +82,7 @@ def add_index_routes(
 
     @router.get(
         "/knowledge-index-runs/{run_id}",
-        response_model=RunRecord,
+        response_model=KnowledgeRunRecord,
         responses={503: {"model": Problem}},
     )
     def get_run(

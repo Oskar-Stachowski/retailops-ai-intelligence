@@ -36,6 +36,10 @@ class RunError(Contract):
     retryable: bool
 
 
+class MLRunError(RunError):
+    code: Literal["invalid_input", "dependency_unavailable", "execution_failed", "cancelled"]
+
+
 class RunOutput(Contract):
     kind: Literal["model", "predictions"]
     artifact_id: ModelID | PredictionDatasetID
@@ -132,6 +136,8 @@ class RunRecord(Versioned):
         if self.status == "failed" and self.started_at is None:
             raise ValueError("failed_run_requires_start")
         if self.error is not None:
+            if self.run_type != "knowledge_index" and self.error.code == "gate_failed":
+                raise ValueError("knowledge_gate_error_not_in_ml_run_v1")
             if (self.status == "cancelled") != (self.error.code == "cancelled"):
                 raise ValueError("run_error_status_mismatch")
         return self
@@ -143,6 +149,16 @@ class MLRunRecord(RunRecord):
     run_type: Literal["training", "forecast_batch"]
     input_ref: RunInput
     output_ref: RunOutput | None
+    error: MLRunError | None
+
+
+class KnowledgeRunRecord(RunRecord):
+    """New knowledge contract namespace reuses the shared Run envelope and transitions."""
+
+    run_type: Literal["knowledge_index"]
+    input_ref: KnowledgeRunInput
+    resolved_model: None
+    output_ref: KnowledgeRunOutput | None
 
 
 def transition_run(current: RunRecord, following: RunRecord) -> RunRecord:

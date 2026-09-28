@@ -86,6 +86,8 @@ historii. To mechanika jednego lokalnego workera, bez retry scheduler/cloud queu
 Model blokad sesyjnych opisuje [PostgreSQL 16](https://www.postgresql.org/docs/16/explicit-locking.html#ADVISORY-LOCKS).
 
 [Schemas wiedzy](../contracts/knowledge/v1/),
-[wspólny Run](../contracts/intelligence/v1/run.v1.schema.json) i
+[run indeksowania](../contracts/knowledge/v1/knowledge-index-run.v1.schema.json) i
 [OpenAPI dostępu](../contracts/access/v1/access.openapi.json) są wersjonowane.
-Bundle kontraktów danych nadal dopuszcza wyłącznie runy ML z lineage danych.
+Run indeksowania używa wspólnego envelope/states. Istniejący kontrakt
+[ML run/v1](../contracts/intelligence/v1/run.v1.schema.json) i bundle danych
+zachowują dotychczasowe wejścia/outputy i kody błędów; odrzucają nowy wariant.

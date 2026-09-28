@@ -677,6 +677,31 @@
       "title": "LabelRecord",
       "type": "object"
     },
+    "MLRunError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_input",
+            "dependency_unavailable",
+            "execution_failed",
+            "cancelled"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "retryable"
+      ],
+      "title": "MLRunError",
+      "type": "object"
+    },
     "MLRunRecord": {
       "additionalProperties": false,
       "description": "Closed data bundles contain ML lineage; index runs use the shared standalone Run.",
@@ -707,7 +732,7 @@
         "error": {
           "anyOf": [
             {
-              "$ref": "#/$defs/RunError"
+              "$ref": "#/$defs/MLRunError"
             },
             {
               "type": "null"
@@ -1316,32 +1341,6 @@
         "policy_version"
       ],
       "title": "ReadinessFlags",
-      "type": "object"
-    },
-    "RunError": {
-      "additionalProperties": false,
-      "properties": {
-        "code": {
-          "enum": [
-            "invalid_input",
-            "dependency_unavailable",
-            "execution_failed",
-            "cancelled",
-            "gate_failed"
-          ],
-          "title": "Code",
-          "type": "string"
-        },
-        "retryable": {
-          "title": "Retryable",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "code",
-        "retryable"
-      ],
-      "title": "RunError",
       "type": "object"
     },
     "RunInput": {

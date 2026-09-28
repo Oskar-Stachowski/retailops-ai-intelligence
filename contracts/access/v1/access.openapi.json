@@ -151,27 +151,6 @@
         "title": "CurrentKnowledgeIndex",
         "type": "object"
       },
-      "DataLineage": {
-        "additionalProperties": false,
-        "properties": {
-          "curated_dataset_id": {
-            "pattern": "^curated-sha256-[0-9a-f]{64}$",
-            "title": "Curated Dataset Id",
-            "type": "string"
-          },
-          "source_dataset_id": {
-            "pattern": "^source-sha256-[0-9a-f]{64}$",
-            "title": "Source Dataset Id",
-            "type": "string"
-          }
-        },
-        "required": [
-          "source_dataset_id",
-          "curated_dataset_id"
-        ],
-        "title": "DataLineage",
-        "type": "object"
-      },
       "DependencyStatus": {
         "additionalProperties": false,
         "properties": {
@@ -694,6 +673,130 @@
         "title": "KnowledgeRunOutput",
         "type": "object"
       },
+      "KnowledgeRunRecord": {
+        "additionalProperties": false,
+        "description": "New knowledge contract namespace reuses the shared Run envelope and transitions.",
+        "properties": {
+          "attempt": {
+            "minimum": 1.0,
+            "title": "Attempt",
+            "type": "integer"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "contract_type": {
+            "const": "run",
+            "title": "Contract Type",
+            "type": "string"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunError"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "input_ref": {
+            "$ref": "#/components/schemas/KnowledgeRunInput"
+          },
+          "output_ref": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/KnowledgeRunOutput"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requested_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Requested At",
+            "type": "string"
+          },
+          "requested_by": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Requested By",
+            "type": "string"
+          },
+          "resolved_model": {
+            "title": "Resolved Model",
+            "type": "null"
+          },
+          "run_id": {
+            "pattern": "^run-[0-9a-f]{32}$",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "run_type": {
+            "const": "knowledge_index",
+            "title": "Run Type",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "contract_type",
+          "run_id",
+          "run_type",
+          "status",
+          "attempt",
+          "requested_at",
+          "started_at",
+          "completed_at",
+          "requested_by",
+          "input_ref",
+          "resolved_model",
+          "output_ref",
+          "error"
+        ],
+        "title": "KnowledgeRunRecord",
+        "type": "object"
+      },
       "MarkdownChunk": {
         "additionalProperties": false,
         "properties": {
@@ -897,137 +1000,6 @@
         "title": "MarkdownChunk",
         "type": "object"
       },
-      "ModelRecord": {
-        "additionalProperties": false,
-        "properties": {
-          "artifact_sha256": {
-            "pattern": "^[0-9a-f]{64}$",
-            "title": "Artifact Sha256",
-            "type": "string"
-          },
-          "config_sha256": {
-            "pattern": "^[0-9a-f]{64}$",
-            "title": "Config Sha256",
-            "type": "string"
-          },
-          "contract_type": {
-            "const": "model",
-            "title": "Contract Type",
-            "type": "string"
-          },
-          "feature_allowlist_version": {
-            "const": "forecast-observed-sales-v1",
-            "title": "Feature Allowlist Version",
-            "type": "string"
-          },
-          "feature_schema_version": {
-            "const": "1.0",
-            "title": "Feature Schema Version",
-            "type": "string"
-          },
-          "feature_set_id": {
-            "pattern": "^features-sha256-[0-9a-f]{64}$",
-            "title": "Feature Set Id",
-            "type": "string"
-          },
-          "label_dataset_id": {
-            "pattern": "^labels-sha256-[0-9a-f]{64}$",
-            "title": "Label Dataset Id",
-            "type": "string"
-          },
-          "model_family": {
-            "enum": [
-              "baseline",
-              "random_forest",
-              "hist_gradient_boosting"
-            ],
-            "title": "Model Family",
-            "type": "string"
-          },
-          "model_id": {
-            "pattern": "^model-sha256-[0-9a-f]{64}$",
-            "title": "Model Id",
-            "type": "string"
-          },
-          "model_name": {
-            "const": "retailops-demand-forecast",
-            "title": "Model Name",
-            "type": "string"
-          },
-          "model_seed": {
-            "minimum": 0.0,
-            "title": "Model Seed",
-            "type": "integer"
-          },
-          "model_version": {
-            "pattern": "^[1-9][0-9]*$",
-            "title": "Model Version",
-            "type": "string"
-          },
-          "provenance": {
-            "$ref": "#/components/schemas/Provenance"
-          },
-          "schema_version": {
-            "const": "1.0",
-            "title": "Schema Version",
-            "type": "string"
-          },
-          "selection_cutoff": {
-            "format": "date-time",
-            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
-            "title": "Selection Cutoff",
-            "type": "string"
-          },
-          "split_id": {
-            "pattern": "^split-sha256-[0-9a-f]{64}$",
-            "title": "Split Id",
-            "type": "string"
-          },
-          "target_type": {
-            "const": "observed_sales_units",
-            "title": "Target Type",
-            "type": "string"
-          },
-          "training_cutoff": {
-            "format": "date-time",
-            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
-            "title": "Training Cutoff",
-            "type": "string"
-          },
-          "training_lineage": {
-            "$ref": "#/components/schemas/DataLineage"
-          },
-          "training_run_id": {
-            "pattern": "^run-[0-9a-f]{32}$",
-            "title": "Training Run Id",
-            "type": "string"
-          }
-        },
-        "required": [
-          "schema_version",
-          "contract_type",
-          "model_id",
-          "model_name",
-          "model_version",
-          "target_type",
-          "feature_schema_version",
-          "feature_allowlist_version",
-          "model_family",
-          "training_run_id",
-          "training_lineage",
-          "feature_set_id",
-          "label_dataset_id",
-          "split_id",
-          "training_cutoff",
-          "selection_cutoff",
-          "model_seed",
-          "artifact_sha256",
-          "config_sha256",
-          "provenance"
-        ],
-        "title": "ModelRecord",
-        "type": "object"
-      },
       "PolicyMetadata": {
         "additionalProperties": false,
         "properties": {
@@ -1135,64 +1107,6 @@
           "correlation_id"
         ],
         "title": "Problem",
-        "type": "object"
-      },
-      "Provenance": {
-        "additionalProperties": false,
-        "properties": {
-          "code_state": {
-            "enum": [
-              "clean",
-              "dirty"
-            ],
-            "title": "Code State",
-            "type": "string"
-          },
-          "commit_sha": {
-            "pattern": "^[0-9a-f]{40}$",
-            "title": "Commit Sha",
-            "type": "string"
-          },
-          "dependency_lock_sha256": {
-            "pattern": "^[0-9a-f]{64}$",
-            "title": "Dependency Lock Sha256",
-            "type": "string"
-          },
-          "dirty_patch_sha256": {
-            "anyOf": [
-              {
-                "pattern": "^[0-9a-f]{64}$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Dirty Patch Sha256"
-          },
-          "repository": {
-            "enum": [
-              "retailops-cloud-native-platform",
-              "retailops-ai-intelligence"
-            ],
-            "title": "Repository",
-            "type": "string"
-          },
-          "transform_version": {
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
-            "title": "Transform Version",
-            "type": "string"
-          }
-        },
-        "required": [
-          "repository",
-          "commit_sha",
-          "code_state",
-          "dirty_patch_sha256",
-          "dependency_lock_sha256",
-          "transform_version"
-        ],
-        "title": "Provenance",
         "type": "object"
       },
       "Ready": {
@@ -1548,249 +1462,6 @@
           "retryable"
         ],
         "title": "RunError",
-        "type": "object"
-      },
-      "RunInput": {
-        "additionalProperties": false,
-        "properties": {
-          "as_of_time": {
-            "format": "date-time",
-            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
-            "title": "As Of Time",
-            "type": "string"
-          },
-          "curated_dataset_id": {
-            "pattern": "^curated-sha256-[0-9a-f]{64}$",
-            "title": "Curated Dataset Id",
-            "type": "string"
-          },
-          "feature_set_id": {
-            "pattern": "^features-sha256-[0-9a-f]{64}$",
-            "title": "Feature Set Id",
-            "type": "string"
-          },
-          "label_dataset_id": {
-            "anyOf": [
-              {
-                "pattern": "^labels-sha256-[0-9a-f]{64}$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Label Dataset Id"
-          },
-          "source_dataset_id": {
-            "pattern": "^source-sha256-[0-9a-f]{64}$",
-            "title": "Source Dataset Id",
-            "type": "string"
-          },
-          "split_id": {
-            "anyOf": [
-              {
-                "pattern": "^split-sha256-[0-9a-f]{64}$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Split Id"
-          }
-        },
-        "required": [
-          "source_dataset_id",
-          "curated_dataset_id",
-          "feature_set_id",
-          "label_dataset_id",
-          "split_id",
-          "as_of_time"
-        ],
-        "title": "RunInput",
-        "type": "object"
-      },
-      "RunOutput": {
-        "additionalProperties": false,
-        "properties": {
-          "artifact_id": {
-            "anyOf": [
-              {
-                "pattern": "^model-sha256-[0-9a-f]{64}$",
-                "type": "string"
-              },
-              {
-                "pattern": "^predictions-sha256-[0-9a-f]{64}$",
-                "type": "string"
-              }
-            ],
-            "title": "Artifact Id"
-          },
-          "complete": {
-            "const": true,
-            "title": "Complete",
-            "type": "boolean"
-          },
-          "kind": {
-            "enum": [
-              "model",
-              "predictions"
-            ],
-            "title": "Kind",
-            "type": "string"
-          }
-        },
-        "required": [
-          "kind",
-          "artifact_id",
-          "complete"
-        ],
-        "title": "RunOutput",
-        "type": "object"
-      },
-      "RunRecord": {
-        "additionalProperties": false,
-        "properties": {
-          "attempt": {
-            "minimum": 1.0,
-            "title": "Attempt",
-            "type": "integer"
-          },
-          "completed_at": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Completed At"
-          },
-          "contract_type": {
-            "const": "run",
-            "title": "Contract Type",
-            "type": "string"
-          },
-          "error": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/RunError"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "input_ref": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/RunInput"
-              },
-              {
-                "$ref": "#/components/schemas/KnowledgeRunInput"
-              }
-            ],
-            "title": "Input Ref"
-          },
-          "output_ref": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/RunOutput"
-              },
-              {
-                "$ref": "#/components/schemas/KnowledgeRunOutput"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Output Ref"
-          },
-          "requested_at": {
-            "format": "date-time",
-            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
-            "title": "Requested At",
-            "type": "string"
-          },
-          "requested_by": {
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
-            "title": "Requested By",
-            "type": "string"
-          },
-          "resolved_model": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/ModelRecord"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "run_id": {
-            "pattern": "^run-[0-9a-f]{32}$",
-            "title": "Run Id",
-            "type": "string"
-          },
-          "run_type": {
-            "enum": [
-              "training",
-              "forecast_batch",
-              "knowledge_index"
-            ],
-            "title": "Run Type",
-            "type": "string"
-          },
-          "schema_version": {
-            "const": "1.0",
-            "title": "Schema Version",
-            "type": "string"
-          },
-          "started_at": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Started At"
-          },
-          "status": {
-            "enum": [
-              "queued",
-              "running",
-              "succeeded",
-              "failed",
-              "cancelled"
-            ],
-            "title": "Status",
-            "type": "string"
-          }
-        },
-        "required": [
-          "schema_version",
-          "contract_type",
-          "run_id",
-          "run_type",
-          "status",
-          "attempt",
-          "requested_at",
-          "started_at",
-          "completed_at",
-          "requested_by",
-          "input_ref",
-          "resolved_model",
-          "output_ref",
-          "error"
-        ],
-        "title": "RunRecord",
         "type": "object"
       },
       "SourceLocation": {
@@ -2230,7 +1901,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RunRecord"
+                  "$ref": "#/components/schemas/KnowledgeRunRecord"
                 }
               }
             },
@@ -2393,7 +2064,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RunRecord"
+                  "$ref": "#/components/schemas/KnowledgeRunRecord"
                 }
               }
             },

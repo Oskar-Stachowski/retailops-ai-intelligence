@@ -6,6 +6,7 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from retailops_ai.data_contracts.run import KnowledgeRunRecord
 from retailops_ai.knowledge.chunks import ChunkerConfig, ChunkManifest
 from retailops_ai.knowledge.contracts import CorpusManifest, CorpusRegistry
 from retailops_ai.knowledge.golden import GoldenReport, GoldenSet
@@ -65,6 +66,7 @@ def main() -> int:
         "index-build-profile": IndexBuildProfile,
         "index-run-report": IndexRunReport,
         "knowledge-index-request": KnowledgeIndexRequest,
+        "knowledge-index-run": KnowledgeRunRecord,
         "current-knowledge-index": CurrentKnowledgeIndex,
     }
     for name, model in models.items():

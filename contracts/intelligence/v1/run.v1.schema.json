@@ -21,141 +21,29 @@
       "title": "DataLineage",
       "type": "object"
     },
-    "IndexSource": {
+    "MLRunError": {
       "additionalProperties": false,
       "properties": {
-        "commit_sha": {
-          "pattern": "^[0-9a-f]{40}$",
-          "title": "Commit Sha",
-          "type": "string"
-        },
-        "repository": {
+        "code": {
           "enum": [
-            "Oskar-Stachowski/retailops-cloud-native-platform",
-            "Oskar-Stachowski/retailops-ai-intelligence"
+            "invalid_input",
+            "dependency_unavailable",
+            "execution_failed",
+            "cancelled"
           ],
-          "title": "Repository",
-          "type": "string"
-        }
-      },
-      "required": [
-        "repository",
-        "commit_sha"
-      ],
-      "title": "IndexSource",
-      "type": "object"
-    },
-    "KnowledgeIndexRequest": {
-      "additionalProperties": false,
-      "properties": {
-        "corpus_config_id": {
-          "pattern": "^corpus-config-sha256-[0-9a-f]{64}$",
-          "title": "Corpus Config Id",
+          "title": "Code",
           "type": "string"
         },
-        "evaluation_set_id": {
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
-          "title": "Evaluation Set Id",
-          "type": "string"
-        },
-        "index_config_id": {
-          "pattern": "^index-config-sha256-[0-9a-f]{64}$",
-          "title": "Index Config Id",
-          "type": "string"
-        },
-        "sources": {
-          "items": {
-            "$ref": "#/$defs/IndexSource"
-          },
-          "maxItems": 2,
-          "minItems": 2,
-          "title": "Sources",
-          "type": "array"
-        }
-      },
-      "required": [
-        "corpus_config_id",
-        "sources",
-        "index_config_id",
-        "evaluation_set_id"
-      ],
-      "title": "KnowledgeIndexRequest",
-      "type": "object"
-    },
-    "KnowledgeRunInput": {
-      "additionalProperties": false,
-      "properties": {
-        "environment": {
-          "const": "test",
-          "title": "Environment",
-          "type": "string"
-        },
-        "profile_id": {
-          "pattern": "^index-build-profile-sha256-[0-9a-f]{64}$",
-          "title": "Profile Id",
-          "type": "string"
-        },
-        "request": {
-          "$ref": "#/$defs/KnowledgeIndexRequest"
-        },
-        "request_hash": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Request Hash",
-          "type": "string"
-        }
-      },
-      "required": [
-        "request",
-        "request_hash",
-        "profile_id",
-        "environment"
-      ],
-      "title": "KnowledgeRunInput",
-      "type": "object"
-    },
-    "KnowledgeRunOutput": {
-      "additionalProperties": false,
-      "properties": {
-        "activation_status": {
-          "const": "candidate",
-          "title": "Activation Status",
-          "type": "string"
-        },
-        "complete": {
-          "const": true,
-          "title": "Complete",
+        "retryable": {
+          "title": "Retryable",
           "type": "boolean"
-        },
-        "evaluation_report_ref": {
-          "pattern": "^db:ai.rag_index_reports:index-run-report-sha256-[0-9a-f]{64}$",
-          "title": "Evaluation Report Ref",
-          "type": "string"
-        },
-        "index_id": {
-          "pattern": "^index-sha256-[0-9a-f]{64}$",
-          "title": "Index Id",
-          "type": "string"
-        },
-        "kind": {
-          "const": "knowledge_index",
-          "title": "Kind",
-          "type": "string"
-        },
-        "manifest_ref": {
-          "pattern": "^db:ai.rag_indexes:index-sha256-[0-9a-f]{64}$",
-          "title": "Manifest Ref",
-          "type": "string"
         }
       },
       "required": [
-        "kind",
-        "complete",
-        "index_id",
-        "manifest_ref",
-        "evaluation_report_ref",
-        "activation_status"
+        "code",
+        "retryable"
       ],
-      "title": "KnowledgeRunOutput",
+      "title": "MLRunError",
       "type": "object"
     },
     "ModelRecord": {
@@ -347,32 +235,6 @@
       "title": "Provenance",
       "type": "object"
     },
-    "RunError": {
-      "additionalProperties": false,
-      "properties": {
-        "code": {
-          "enum": [
-            "invalid_input",
-            "dependency_unavailable",
-            "execution_failed",
-            "cancelled",
-            "gate_failed"
-          ],
-          "title": "Code",
-          "type": "string"
-        },
-        "retryable": {
-          "title": "Retryable",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "code",
-        "retryable"
-      ],
-      "title": "RunError",
-      "type": "object"
-    },
     "RunInput": {
       "additionalProperties": false,
       "properties": {
@@ -475,6 +337,7 @@
   "$id": "urn:retailops:intelligence:run:1.0",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
+  "description": "Closed data bundles contain ML lineage; index runs use the shared standalone Run.",
   "properties": {
     "attempt": {
       "minimum": 1,
@@ -502,7 +365,7 @@
     "error": {
       "anyOf": [
         {
-          "$ref": "#/$defs/RunError"
+          "$ref": "#/$defs/MLRunError"
         },
         {
           "type": "null"
@@ -510,15 +373,7 @@
       ]
     },
     "input_ref": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/RunInput"
-        },
-        {
-          "$ref": "#/$defs/KnowledgeRunInput"
-        }
-      ],
-      "title": "Input Ref"
+      "$ref": "#/$defs/RunInput"
     },
     "output_ref": {
       "anyOf": [
@@ -526,13 +381,9 @@
           "$ref": "#/$defs/RunOutput"
         },
         {
-          "$ref": "#/$defs/KnowledgeRunOutput"
-        },
-        {
           "type": "null"
         }
-      ],
-      "title": "Output Ref"
+      ]
     },
     "requested_at": {
       "format": "date-time",
@@ -563,8 +414,7 @@
     "run_type": {
       "enum": [
         "training",
-        "forecast_batch",
-        "knowledge_index"
+        "forecast_batch"
       ],
       "title": "Run Type",
       "type": "string"
@@ -615,6 +465,6 @@
     "output_ref",
     "error"
   ],
-  "title": "RunRecord",
+  "title": "MLRunRecord",
   "type": "object"
 }

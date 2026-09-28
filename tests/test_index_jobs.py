@@ -21,6 +21,7 @@ from retailops_ai.cli import main
 from retailops_ai.cli_index_jobs import load_profile
 from retailops_ai.config import Settings
 from retailops_ai.data_contracts.identity import canonical_sha256
+from retailops_ai.data_contracts.registry import validate_document
 from retailops_ai.data_contracts.run import MLRunRecord, RunRecord, transition_run
 from retailops_ai.knowledge.jobs import (
     CurrentKnowledgeIndex,
@@ -124,8 +125,15 @@ def test_approved_profile_and_shared_run_schemas_bind_all_inputs(profile):
     ):
         schema = json.loads((ROOT / f"contracts/knowledge/v1/{name}.v1.schema.json").read_text())
         jsonschema.Draft202012Validator(schema).validate(value.model_dump(mode="json"))
-    schema = json.loads((ROOT / "contracts/intelligence/v1/run.v1.schema.json").read_text())
+    schema = json.loads(
+        (ROOT / "contracts/knowledge/v1/knowledge-index-run.v1.schema.json").read_text()
+    )
     jsonschema.Draft202012Validator(schema).validate(run.model_dump(mode="json"))
+    original = json.loads((ROOT / "contracts/intelligence/v1/run.v1.schema.json").read_text())
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.Draft202012Validator(original).validate(run.model_dump(mode="json"))
+    with pytest.raises(ValidationError):
+        validate_document("run", run.model_dump_json().encode())
     reversed_sources = profile.request().model_copy(
         update={"sources": tuple(reversed(profile.request().sources))}
     )
