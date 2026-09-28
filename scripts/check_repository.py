@@ -25,6 +25,11 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append("workflow permissions must be contents:read")
     jobs = workflow.get("jobs", {})
+    if not any(
+        step.get("run") == "make bootstrap compose-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute real Compose acceptance")
     required = jobs.get("required-result", {})
     if set(required.get("needs", [])) != set(jobs) - {"required-result"}:
         errors.append("required-result must depend on every check")

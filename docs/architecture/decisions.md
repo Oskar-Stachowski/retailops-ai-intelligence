@@ -3,12 +3,12 @@
 **2026-09-27 · zaakceptowane dla projektu; wdrożenie komponentów według etapów.**
 Źródło: plan RetailOps na `8a9e620`; architektura bazowa na
 [cbf28b2](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/cbf28b2/docs/plans/ai/architektura.md).
-Te decyzje utrwalają granice; nie deklarują uruchomionego MLflow, DB ani agenta.
+Te decyzje utrwalają granice; aktualne wdrożenie DB/MLflow opisuje ADR-12, a agent pozostaje planowany.
 
 | ADR | Kontekst i wybrana decyzja | Rozważona alternatywa i konsekwencja |
 |---|---|---|
 | 01 — granice | Niezależne tempo rozwoju AI: osobne repo, API, release i własna baza. RetailOps ma generator, encje, frontend i workflow operacyjny; AI ma snapshot/curated/features/labels/predictions i lifecycle. | Monorepo/wspólna DB wiązałyby migracje i uprawnienia. Integrujemy przez wersjonowane pliki, później REST/zdarzenia; bez kopiowania generatora ani operacyjnych modeli DB. |
-| 02 — storage | Metadata, wyniki i RAG potrzebują trwałości: PostgreSQL AI z pgvector; osobna baza i użytkownik MLflow. | Dodatkowy vector DB zwiększa zakres operacyjny. pgvector dopiero przy RAG; duże artefakty poza bazą, początkowo lokalnie, później w S3. |
+| 02 — storage | Metadata, wyniki i RAG potrzebują trwałości: PostgreSQL AI z pgvector; osobna baza i użytkownik MLflow. | Dodatkowy vector DB zwiększa zakres operacyjny. Indeksy i zastosowanie pgvector dopiero przy RAG; duże artefakty poza bazą, początkowo lokalnie, później w S3. |
 | 03 — batch-first | Odtwarzalność i bounded work: trening oraz inference jako jobs/runy, wynik utrwalony przed read API. | Trening w handlerze HTTP utrudnia retry/timeout. Atomic output, run identity i idempotencja są warunkami późniejszej implementacji. |
 | 04 — MLflow | Audyt eksperymentów, odrzuceń i promocji: tracking i registry MLflow. | Same pliki wystarczą przejściowo w 04, nie zastąpią lifecycle 05. Zachowujemy rejected/failed; serving wyłącznie kwalifikowanego modelu lub baseline. |
 | 05 — GitOps | Jeden właściciel release AI: desired state w repo AI. | Osobne repo konfiguracji odłożone. Niezmienne tożsamości obrazów/modeli, migracje i rollback są odbierane w 14–15. |
@@ -82,3 +82,20 @@ Identyfikatory, trasy i logi mają jawne ograniczenia opisane w
 [Starlette — middleware i contextvars](https://starlette.dev/middleware/),
 [OpenTelemetry — propagacja](https://opentelemetry.io/docs/languages/python/propagation/).
 Przypięte wersje potwierdzono w metadata PyPI i lokalnych testach.
+
+
+## ADR-12 — lokalna persistence i jawne migracje
+
+PostgreSQL 16 z pgvector 0.8.6: oddzielne bazy i role AI/MLflow, bez dostępu do
+operacyjnej DB RetailOps. Metadata są w bazie, duże artefakty MLflow w osobnym
+trwałym wolumenie. Nie dodajemy brokera ani dataset/modelowych tabel przed kontraktami.
+
+Alembic jest wykonywany przez CLI z advisory lock, MLflow przez własne zadanie
+upgrade. Proces HTTP nie migruje przy starcie. Alternatywą było create_all/startup
+każdej repliki, które nie daje wersjonowania ani kontrolowanego lifecycle.
+Readiness ai_api sprawdza rzeczywistą DB i dokładną wersję schematu.
+
+Tryb Compose pozwala na bind kontenera, ale publikuje porty tylko na loopback
+i izoluje DB w internal network. Rola foundation zachowuje lokalną granicę.
+To decyzja developmentu; publiczne auth/TLS i release wymagają własnych etapów.
+[Instrukcja i źródła](../local-stack.md), [pomiar](../evidence/01-persistence.md).

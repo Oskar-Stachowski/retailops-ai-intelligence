@@ -21,6 +21,8 @@ def main(argv: list[str] | None = None) -> int:
     check.add_argument("--env-file", type=Path, help="Explicit dotenv file; environment wins.")
     serve = commands.add_parser("serve", help="Run the local diagnostic HTTP service.")
     serve.add_argument("--env-file", type=Path, help="Explicit dotenv file; environment wins.")
+    migration = commands.add_parser("migrate", help="Explicitly upgrade the isolated AI database.")
+    migration.add_argument("--env-file", type=Path)
     args = parser.parse_args(argv)
 
     if args.command == "version":
@@ -48,6 +50,17 @@ def main(argv: list[str] | None = None) -> int:
     except (SettingsError, OSError, UnicodeError):
         print('{"error":"configuration_unavailable"}', file=sys.stderr)
         return 2
+
+    if args.command == "migrate":
+        from retailops_ai.migrations.runner import migrate
+
+        try:
+            migrate(settings)
+        except Exception:
+            print('{"error":"database_migration_failed"}', file=sys.stderr)
+            return 1
+        print('{"status":"migrated"}')
+        return 0
 
     if args.command == "serve":
         import uvicorn

@@ -28,3 +28,5 @@ reports/
 .terraform/
 *.log
 .DS_Store
+
+.local/

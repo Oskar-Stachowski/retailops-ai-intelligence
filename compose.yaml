@@ -1,0 +1,106 @@
+services:
+  db:
+    image: pgvector/pgvector:0.8.6-pg16-trixie@sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: retailops_admin
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?initialize_local_stack}
+      AI_DB_PASSWORD: ${AI_DB_PASSWORD:?initialize_local_stack}
+      MLFLOW_DB_PASSWORD: ${MLFLOW_DB_PASSWORD:?initialize_local_stack}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infra/postgres/init.sh:/docker-entrypoint-initdb.d/10-retailops-ai.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U retailops_admin -d postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 15s
+    restart: unless-stopped
+    networks: [ai_backend]
+  api-migrate:
+    image: ${COMPOSE_PROJECT_NAME:?use_controller}-api:local
+    command: ["retailops-ai", "migrate"]
+    environment:
+      APP_ENV: local
+      ARTIFACT_ROOT: /var/lib/retailops-ai/artifacts
+      NETWORK_MODE: compose
+      DATABASE_URL: postgresql+psycopg://ai_app:${AI_DB_PASSWORD:?initialize_local_stack}@db:5432/retailops_ai
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles: [maintenance]
+    restart: "no"
+    networks: [ai_backend]
+  mlflow-migrate:
+    image: ${COMPOSE_PROJECT_NAME:?use_controller}-mlflow:local
+    entrypoint: ["sh", "-c"]
+    command: ['exec mlflow db upgrade "$$MLFLOW_BACKEND_STORE_URI"']
+    environment:
+      MLFLOW_BACKEND_STORE_URI: postgresql+psycopg2://mlflow_app@db:5432/retailops_mlflow
+      PGPASSWORD: ${MLFLOW_DB_PASSWORD:?initialize_local_stack}
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles: [maintenance]
+    restart: "no"
+    networks: [ai_backend]
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: ${COMPOSE_PROJECT_NAME:?use_controller}-api:local
+    environment:
+      APP_ENV: local
+      ARTIFACT_ROOT: /var/lib/retailops-ai/artifacts
+      NETWORK_MODE: compose
+      DATABASE_URL: postgresql+psycopg://ai_app:${AI_DB_PASSWORD:?initialize_local_stack}@db:5432/retailops_ai
+      HTTP_HOST: 0.0.0.0
+      HTTP_PORT: "8081"
+      METRICS_TOKEN: ${METRICS_TOKEN:?initialize_local_stack}
+    ports: ["127.0.0.1:8081:8081"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8081/ready', timeout=2)"]
+      interval: 4s
+      timeout: 3s
+      retries: 20
+      start_period: 15s
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [ai_backend, ai_frontend]
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    image: ${COMPOSE_PROJECT_NAME:?use_controller}-mlflow:local
+    environment:
+      MLFLOW_BACKEND_STORE_URI: postgresql+psycopg2://mlflow_app@db:5432/retailops_mlflow
+      PGPASSWORD: ${MLFLOW_DB_PASSWORD:?initialize_local_stack}
+      MLFLOW_ARTIFACTS_DESTINATION: /var/mlflow/artifacts
+      MLFLOW_HOST: 0.0.0.0
+      MLFLOW_PORT: "5000"
+      MLFLOW_WORKERS: "1"
+      MLFLOW_SERVER_ALLOWED_HOSTS: localhost,localhost:*,127.0.0.1,127.0.0.1:*,mlflow,mlflow:*
+    volumes:
+      - mlflow_artifacts:/var/mlflow/artifacts
+    ports: ["127.0.0.1:5010:5000"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health', timeout=2)"]
+      interval: 5s
+      timeout: 4s
+      retries: 24
+      start_period: 20s
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [ai_backend, ai_frontend]
+networks:
+  ai_frontend:
+  ai_backend:
+    internal: true
+volumes:
+  postgres_data:
+  mlflow_artifacts:

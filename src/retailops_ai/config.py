@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, SecretStr, field_validator
+from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -21,7 +21,11 @@ class Settings(BaseSettings):
         default="INFO", validation_alias="LOG_LEVEL"
     )
 
-    http_host: Literal["127.0.0.1", "::1"] = Field(
+    network_mode: Literal["local", "compose"] = Field(
+        default="local", validation_alias="NETWORK_MODE"
+    )
+    database_url: SecretStr | None = Field(default=None, validation_alias="DATABASE_URL")
+    http_host: Literal["127.0.0.1", "::1", "0.0.0.0"] = Field(  # noqa: S104 - controlled Compose bind
         default="127.0.0.1", validation_alias="HTTP_HOST"
     )
     http_port: int = Field(default=8081, ge=1, le=65535, validation_alias="HTTP_PORT")
@@ -35,6 +39,36 @@ class Settings(BaseSettings):
     image_digest: str | None = Field(
         default=None, pattern=r"^sha256:[0-9a-f]{64}$", validation_alias="IMAGE_DIGEST"
     )
+
+    @field_validator("database_url")
+    @classmethod
+    def valid_database_url(cls, value: SecretStr | None) -> SecretStr | None:
+        if value is None:
+            return None
+        from sqlalchemy.engine import make_url
+        from sqlalchemy.exc import ArgumentError
+
+        try:
+            url = make_url(value.get_secret_value())
+        except ArgumentError as exc:
+            raise ValueError("invalid database URL") from exc
+        if (
+            url.drivername != "postgresql+psycopg"
+            or not url.host
+            or not url.database
+            or not url.username
+            or not url.password
+        ):
+            raise ValueError("database URL requires PostgreSQL/psycopg and credentials")
+        return value
+
+    @model_validator(mode="after")
+    def valid_network_boundary(self) -> "Settings":
+        if self.network_mode == "compose" and self.database_url is None:
+            raise ValueError("Compose mode requires a database URL")
+        if self.http_host == "0.0.0.0" and self.network_mode != "compose":  # noqa: S104
+            raise ValueError("all-interface binding requires Compose mode")
+        return self
 
     @field_validator("metrics_token")
     @classmethod

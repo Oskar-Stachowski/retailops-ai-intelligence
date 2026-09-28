@@ -1,30 +1,26 @@
 # Aktualny status
 
-**2026-09-27 · in_progress · bazowy HTTP w etapie 01.**
+**2026-09-28 · in_progress · persistence i lokalny stos etapu 01.**
 
-Działa pakiet, typed settings, CLI `version/config-check/serve` oraz lokalny
-serwis `/health`, `/ready`, `/version` i chroniony tokenem `/metrics`.
-[Instrukcja HTTP](http-service.md) opisuje gotowość roli foundation,
-kontrole zależności, bezpieczne błędy, logi JSON i kontekst żądania.
-Warstwy api/domain/pipelines/adapters mają rzeczywistą implementację.
-Kontrakty OpenAPI i JSON Schema są sprawdzane razem z testami.
+Pakiet, typed settings, CLI i diagnostyczny HTTP działają razem z izolowanym
+PostgreSQL AI, pgvector oraz MLflow na oddzielnej bazie i roli.
+[Instrukcja stosu](local-stack.md) obejmuje pierwsze uruchomienie, jawne migracje,
+wolumeny, granice sieciowe i bezpieczny shutdown.
+[HTTP](http-service.md) ma rolę foundation bez DB albo ai_api z rzeczywistą sondą
+schematu i bazy. Nie ma jeszcze endpointów predykcji.
 
-[Dowody HTTP](evidence/01-http.md) opisują wykonane kontrole, w tym proces
-nasłuchujący na loopback. [Pierwszy fundament](evidence/01-foundation.md)
-zachowuje zakres wcześniejszego odbioru. Podstawowe Required CI obejmuje
-nowe pliki bez filtrów ścieżek. Repo nadal jest lokalne: brak remote,
-zdalnego przebiegu CI i skonfigurowanej ochrony gałęzi.
+[Dowody persistence](evidence/01-persistence.md) opisują rzeczywisty lokalny Compose,
+restart/awarię/recovery i trwałość danych; osobno wskazują testy adaptera z fake.
+[HTTP](evidence/01-http.md) i [fundament](evidence/01-foundation.md) zachowują zakres
+wcześniejszych pomiarów. Wymagane kontrole obejmują kod, migracje, Compose i runtime
+persistence. Repo nadal jest lokalne: brak remote, przebiegu zdalnego CI i ochrony gałęzi.
 
 ## Następna praca
 
-1. Dodać persistence AI i oddzielny MLflow: jawne migracje, Compose,
-   rzeczywistą sondę DB, testy awarii i restartu zachowującego dane.
-2. Rozszerzyć wykonywalne kontrakty o wersje danych/runów i dostosować
-   uprawnienia do pierwszych endpointów aplikacyjnych.
-3. Po publikacji repo uruchomić Required CI i skonfigurować ochronę
-   głównej gałęzi, wymagając `required-result`.
+1. Wykonywalne wersje kontraktów dataset/feature/label/prediction/run/tool
+   i reguły kompatybilności; uprawnienia pierwszych endpointów aplikacyjnych.
+2. Po publikacji repo wykonać Required CI i ustawić ochronę głównej gałęzi
+   wymagającą required-result.
 
-Rola foundation nie ma zależności DB/modelowych; jej gotowość nie oznacza
-gotowości predykcji. DB, MLflow, pipeline danych, modele, RAG, agent i cloud
-deploy pozostają planowane. Cały etap 01 pozostaje otwarty. Odbiór 01
-poprzedza odbiór źródła RetailOps w 02.
+Pipeline danych, modele, RAG, agent i cloud pozostają planowane.
+Cały etap 01 pozostaje otwarty. Odbiór 01 poprzedza odbiór źródła RetailOps w 02.

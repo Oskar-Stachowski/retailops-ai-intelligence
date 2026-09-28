@@ -21,7 +21,9 @@ def test_workflow_is_covered_by_required_result():
     assert module.workflow_errors(workflow()) == []
 
 
-@pytest.mark.parametrize("mutation", ["tag", "ignored_failure", "missing_gate", "path_filter"])
+@pytest.mark.parametrize(
+    "mutation", ["tag", "ignored_failure", "missing_gate", "path_filter", "missing_persistence"]
+)
 def test_ci_guard_rejects_weakened_gates(mutation):
     data = deepcopy(workflow())
     if mutation == "tag":

@@ -44,6 +44,9 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make secrets` | Gitleaks 8.30.1: historia Git i aktualny katalog, z redakcją |
 | `make ci-local` | `check` oraz `secrets` |
 | `make serve` | Lokalny serwer HTTP z jawnym dotenv |
+| `make compose-up/down` | Lokalny stos DB/API/MLflow, jawne migracje, zachowane wolumeny |
+| `make compose-config` | Walidacja Compose bez wypisywania sekretów |
+| `make compose-smoke` | Rzeczywiste próby persistence i awarii, następnie shutdown |
 | `make contracts` | Regeneracja kontraktów HTTP do przeglądu razem ze zmianą kodu |
 
 Gitleaks jest osobnym narzędziem; zainstaluj wersję 8.30.1 z
@@ -62,3 +65,5 @@ Test procesu wymaga możliwości otwarcia krótkotrwałego portu na loopback;
 w sandboxie bez socket bind nie jest pomijany, tylko kończy się błędem.
 Testy ASGI/provider fakes nie używają sieci zewnętrznej. Aktualny klient testowy
 httpx2 odpowiada wymaganiom przypiętej wersji Starlette.
+
+Persistence i wymagania Docker opisuje [instrukcja lokalnego stosu](local-stack.md).

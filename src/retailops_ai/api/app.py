@@ -1,4 +1,4 @@
-"""Composition root for the local diagnostic role; no DB or model is implied."""
+"""Compose role wiring and diagnostic HTTP; no model serving is implied."""
 
 import logging
 import secrets
@@ -15,6 +15,7 @@ from prometheus_client import CONTENT_TYPE_LATEST
 from starlette.exceptions import HTTPException
 from starlette.responses import JSONResponse, Response
 
+from retailops_ai.adapters.database import DatabaseProbe, database_engine
 from retailops_ai.adapters.telemetry import HttpMetrics, new_tracer
 from retailops_ai.api.errors import problem_response
 from retailops_ai.api.middleware import HttpObservation, single_header
@@ -43,10 +44,11 @@ class DiagnosticAPI(FastAPI):
 def create_app(
     settings: Settings, *, dependencies: tuple[Dependency, ...] = (), tracer: Tracer | None = None
 ) -> FastAPI:
-    # Dependency adapters are explicitly registered per role at this composition root.
-    # The current role only needs its completed application lifecycle.
-    if any(d.name == "startup" for d in dependencies):
-        raise ValueError("startup is a reserved dependency name")
+    if any(d.name in {"startup", "ai_db"} for d in dependencies):
+        raise ValueError("startup and ai_db are reserved dependency names")
+    engine = database_engine(settings) if settings.database_url is not None else None
+    if engine is not None:
+        dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
     metrics = HttpMetrics()
     started = False
@@ -61,6 +63,8 @@ def create_app(
             yield
         finally:
             started = False
+            if engine is not None:
+                await engine.dispose()
             logger.info(
                 "application_stopped", extra={"event_data": {"event": "application_stopped"}}
             )
@@ -86,7 +90,12 @@ def create_app(
             500: {"model": Problem},
         },
     )
-    app.add_middleware(HttpObservation, metrics=metrics, tracer=tracer or new_tracer())
+    app.add_middleware(
+        HttpObservation,
+        metrics=metrics,
+        tracer=tracer or new_tracer(),
+        compose=settings.network_mode == "compose",
+    )
 
     @app.exception_handler(HTTPException)
     async def http_error(request: Request, exc: HTTPException) -> JSONResponse:
@@ -108,6 +117,7 @@ def create_app(
     async def ready() -> Ready | JSONResponse:
         result = await readiness.evaluate(started=started)
         report = Ready(
+            role="ai_api" if engine is not None else "foundation",
             status=result.status,
             dependencies=[
                 DependencyStatus(name=d.name, required=d.required, status=d.status)

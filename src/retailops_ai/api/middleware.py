@@ -28,8 +28,15 @@ def single_header(headers: Headers, name: str) -> str | None:
 
 
 class HttpObservation:
-    def __init__(self, app: ASGIApp, *, metrics: HttpMetrics, tracer: Tracer) -> None:
+    def __init__(
+        self, app: ASGIApp, *, metrics: HttpMetrics, tracer: Tracer, compose: bool = False
+    ) -> None:
         self.app, self.metrics, self.tracer = app, metrics, tracer
+        self.host_pattern = (
+            r"(?:127\.0\.0\.1|localhost|\[::1\]"
+            + ("|api" if compose else "")
+            + r")(?::[0-9]{1,5})?"
+        )
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if scope["type"] != "http":
@@ -66,13 +73,7 @@ class HttpObservation:
 
             try:
                 host = single_header(headers, "host")
-                if (
-                    host is None
-                    or re.fullmatch(
-                        r"(?:127\.0\.0\.1|localhost|\[::1\])(?::[0-9]{1,5})?", host.lower()
-                    )
-                    is None
-                ):
+                if host is None or re.fullmatch(self.host_pattern, host.lower()) is None:
                     await problem_response(400)(scope, receive, observed_send)
                 else:
                     await self.app(scope, receive, observed_send)

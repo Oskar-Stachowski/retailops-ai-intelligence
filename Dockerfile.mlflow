@@ -1,0 +1,4 @@
+FROM ghcr.io/mlflow/mlflow:v3.16.1@sha256:06058cc872276873e9759c635e773342aca4731e240f6d20d88ea43774083984
+RUN pip install --no-cache-dir psycopg2-binary==2.9.11 && useradd --uid 10002 --create-home mlflow && mkdir -p /var/mlflow/artifacts && chown -R mlflow:mlflow /var/mlflow
+USER 10002
+CMD ["mlflow", "server"]
