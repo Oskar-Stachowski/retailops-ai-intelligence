@@ -1,6 +1,6 @@
 # Aktualny status
 
-**2026-09-28 · in_progress · lokalna tożsamość i uprawnienia API etapu 01.**
+**2026-09-28 · fundament etapu 01 odebrany lokalnie i w zdalnym Required CI.**
 
 Pakiet, settings, CLI i diagnostyczny HTTP działają razem z izolowanym
 PostgreSQL AI/pgvector i oddzielną bazą/rolą MLflow.
@@ -21,15 +21,17 @@ endpointów predykcji. Schemat runa/tool nie oznacza działającego workera/agen
 crash/restart, DB outage/recovery i zachowanie artefaktów.
 [HTTP](evidence/01-http.md) i [fundament](evidence/01-foundation.md) zachowują zakres
 wcześniejszych pomiarów. Required CI obejmuje kod, schemas, docs i persistence.
-GitHub main ma required-result; CI bazowego 7d67530 ma success. Nowe commity
-persistence, kontraktów i auth są lokalne; ich zdalny CI czeka na push.
+[Zdalny odbiór](evidence/01-remote-ci.md) potwierdza success Required CI po
+push na main obu repozytoriów. W AI przechodzą checks, secrets, persistence
+i required-result; main wymaga PR i aktualnej gałęzi również dla administratora.
 
 ## Następna praca
 
-Po push odebrać Required CI nowych commitów, w tym job persistence.
-Lokalny zakres 01 ma odbiór; zdalna bramka pozostaje otwarta.
+Główny kierunek: DATA-01 etapu 02 w RetailOps — konfiguracja, identity i manifest v2.
+Równolegle w tym repo można rozpocząć etap 11 od rejestru zatwierdzonego korpusu,
+access metadata i wersjonowania dokumentów. Etap 03 wymaga odbioru źródła z 02,
+a forecasting i serving kolejnych bramek.
 
 Token metryk nie jest systemem tożsamości użytkowników. MLflow ma lokalną
-izolację sieciową, bez aplikacyjnego auth. Cały etap 01 pozostaje otwarty.
-Odbiór 01 poprzedza źródło RetailOps w 02. Pipeline danych, modele, RAG, agent,
+izolację sieciową, bez aplikacyjnego auth. Pipeline danych, modele, RAG, agent,
 streaming i cloud są planowane, z własnymi późniejszymi bramkami.

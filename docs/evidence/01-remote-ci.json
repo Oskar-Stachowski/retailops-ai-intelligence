@@ -1,56 +1,339 @@
 {
-  "id": 36393431781,
-  "name": "Required CI",
-  "event": "workflow_dispatch",
-  "head_sha": "2f067c68cb5931ef31578f724e496f5381b3ae6a",
-  "status": "completed",
-  "conclusion": "success",
-  "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781",
-  "jobs": [
+  "version": 1,
+  "verified_at": "2026-09-28T08:07:26.211392+00:00",
+  "result": "success",
+  "repositories": [
     {
-      "id": 108834180975,
-      "name": "checks",
-      "status": "completed",
-      "conclusion": "success",
-      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781/job/108834180975",
-      "steps": []
+      "repository": "retailops-cloud-native-platform",
+      "observed_at": "2026-09-28T08:05:56.588806+00:00",
+      "main_sha": "a0a83c4c82519d5258eb3144e0fef0a68fc909a4",
+      "protected": true,
+      "required_contexts": [
+        "required-result"
+      ],
+      "required_checks": [
+        {
+          "context": "required-result",
+          "app_id": 15368
+        }
+      ],
+      "strict": true,
+      "enforce_admins": {
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-cloud-native-platform/branches/main/protection/enforce_admins",
+        "enabled": true
+      },
+      "required_pull_request_reviews": {
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-cloud-native-platform/branches/main/protection/required_pull_request_reviews",
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": false,
+        "require_last_push_approval": false,
+        "required_approving_review_count": 0
+      },
+      "workflow": {
+        "id": 36394194602,
+        "name": "Required CI",
+        "event": "push",
+        "head_sha": "a0a83c4c82519d5258eb3144e0fef0a68fc909a4",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602",
+        "jobs": [
+          {
+            "id": 108836618657,
+            "name": "Required CI contract tests",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836618657",
+            "steps": []
+          },
+          {
+            "id": 108836618880,
+            "name": "Detect changed areas",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836618880",
+            "steps": []
+          },
+          {
+            "id": 108836669788,
+            "name": "Repository diff hygiene",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836669788",
+            "steps": []
+          },
+          {
+            "id": 108836670559,
+            "name": "api-gate / API integration tests",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670559",
+            "steps": []
+          },
+          {
+            "id": 108836670601,
+            "name": "data-gate / Synthetic data quality gate",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670601",
+            "steps": []
+          },
+          {
+            "id": 108836670627,
+            "name": "terraform-validation-gate / Terraform fmt, init and validate",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670627",
+            "steps": []
+          },
+          {
+            "id": 108836670669,
+            "name": "frontend-gate / Frontend tests and lint",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670669",
+            "steps": []
+          },
+          {
+            "id": 108836670684,
+            "name": "security-gate / Frontend image vulnerability scan",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670684",
+            "steps": []
+          },
+          {
+            "id": 108836670696,
+            "name": "iac-security-gate / TFLint IaC quality gate",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670696",
+            "steps": []
+          },
+          {
+            "id": 108836670704,
+            "name": "security-gate / Secret scanning with Gitleaks",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670704",
+            "steps": []
+          },
+          {
+            "id": 108836670708,
+            "name": "iac-security-gate / Checkov IaC security report",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670708",
+            "steps": []
+          },
+          {
+            "id": 108836670748,
+            "name": "security-gate / Python dependency audit",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670748",
+            "steps": []
+          },
+          {
+            "id": 108836670773,
+            "name": "security-gate / Filesystem vulnerability scan",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670773",
+            "steps": []
+          },
+          {
+            "id": 108836670786,
+            "name": "docker-gate / Validate Docker Compose config",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670786",
+            "steps": []
+          },
+          {
+            "id": 108836670809,
+            "name": "kubernetes-gate / Kustomize, schema and policy gates",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670809",
+            "steps": []
+          },
+          {
+            "id": 108836670896,
+            "name": "security-gate / Frontend dependency audit",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670896",
+            "steps": []
+          },
+          {
+            "id": 108836670941,
+            "name": "security-gate / Backend image vulnerability scan",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836670941",
+            "steps": []
+          },
+          {
+            "id": 108836758550,
+            "name": "frontend-gate / Build frontend application",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836758550",
+            "steps": []
+          },
+          {
+            "id": 108836778234,
+            "name": "docker-gate / Build full stack and run smoke tests",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836778234",
+            "steps": []
+          },
+          {
+            "id": 108836823978,
+            "name": "frontend-gate / Build frontend Docker image",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836823978",
+            "steps": []
+          },
+          {
+            "id": 108836870659,
+            "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836870659",
+            "steps": []
+          },
+          {
+            "id": 108836961362,
+            "name": "security-gate / Security evidence summary",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108836961362",
+            "steps": []
+          },
+          {
+            "id": 108837312071,
+            "name": "api-gate / API Docker image build",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108837312071",
+            "steps": []
+          },
+          {
+            "id": 108839354986,
+            "name": "required-result",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602/job/108839354986",
+            "steps": []
+          }
+        ]
+      },
+      "pull_request": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/59",
+      "pull_request_workflow": {
+        "id": 36393311755,
+        "name": "Required CI",
+        "event": "pull_request",
+        "head_sha": "382c3d558a996312ce328961e21e078146561e5b",
+        "head_branch": "ai/implementation",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36393311755"
+      }
     },
     {
-      "id": 108834181097,
-      "name": "persistence",
-      "status": "completed",
-      "conclusion": "success",
-      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781/job/108834181097",
-      "steps": []
-    },
-    {
-      "id": 108834181222,
-      "name": "secrets",
-      "status": "completed",
-      "conclusion": "success",
-      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781/job/108834181222",
-      "steps": []
-    },
-    {
-      "id": 108834722541,
-      "name": "required-result",
-      "status": "completed",
-      "conclusion": "success",
-      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781/job/108834722541",
-      "steps": []
+      "repository": "retailops-ai-intelligence",
+      "observed_at": "2026-09-28T08:05:54.888247+00:00",
+      "main_sha": "f2c047b85ba7a2c3eeed6428a545ec8ef6bb79de",
+      "protected": true,
+      "required_contexts": [
+        "required-result"
+      ],
+      "required_checks": [
+        {
+          "context": "required-result",
+          "app_id": 15368
+        }
+      ],
+      "strict": true,
+      "enforce_admins": {
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/branches/main/protection/enforce_admins",
+        "enabled": true
+      },
+      "required_pull_request_reviews": {
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/branches/main/protection/required_pull_request_reviews",
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": false,
+        "require_last_push_approval": false,
+        "required_approving_review_count": 0
+      },
+      "workflow": {
+        "id": 36395139229,
+        "name": "Required CI",
+        "event": "push",
+        "head_sha": "f2c047b85ba7a2c3eeed6428a545ec8ef6bb79de",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36395139229",
+        "jobs": [
+          {
+            "id": 108839631965,
+            "name": "checks",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36395139229/job/108839631965",
+            "steps": []
+          },
+          {
+            "id": 108839632301,
+            "name": "secrets",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36395139229/job/108839632301",
+            "steps": []
+          },
+          {
+            "id": 108839632337,
+            "name": "persistence",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36395139229/job/108839632337",
+            "steps": []
+          },
+          {
+            "id": 108840227674,
+            "name": "required-result",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36395139229/job/108840227674",
+            "steps": []
+          }
+        ]
+      },
+      "pull_request": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/1",
+      "pull_request_workflow": {
+        "id": 36394722854,
+        "name": "Required CI",
+        "event": "pull_request",
+        "head_sha": "ba580f59bfd1dc75317a1c8b389b9a646f3366dc",
+        "head_branch": "ai/implementation",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36394722854"
+      }
     }
   ],
-  "environment": {
-    "runner": "ubuntu-24.04",
-    "architecture": "x86_64"
-  },
-  "tests": {
-    "passed": 267,
+  "ai_tests": {
+    "passed": 273,
+    "seconds": 9.86,
     "skipped": 0,
-    "seconds": 8.86
+    "job_id": 108839631965
   },
-  "persistence": {
-    "checked_at": "2026-09-28T07:46:02.745761+00:00",
+  "ai_persistence": {
+    "checked_at": "2026-09-28T08:04:03.140534+00:00",
     "kind": "real_local_compose",
     "checks": [
       "separate_databases_roles_and_vector",
@@ -65,6 +348,5 @@
     "api_ready_after_recovery": 200,
     "postgres_vector_version": "0.8.6",
     "migration_revision": "0001_bootstrap"
-  },
-  "publication_status": "awaiting_pull_request_ci_and_main_push"
+  }
 }

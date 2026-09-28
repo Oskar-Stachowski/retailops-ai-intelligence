@@ -1,23 +1,38 @@
 # Zdalny odbiór fundamentu AI 01
 
-Pomiar 28.09.2026, GitHub Actions, Ubuntu 24.04 / Linux AMD64.
-[Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36393431781)
-na `2f067c68cb5931ef31578f724e496f5381b3ae6a`, zdarzenie `workflow_dispatch`:
-checks, secrets, persistence i required-result mają `success`.
+Pomiar 28.09.2026, GitHub Actions. Oba repozytoria przeszły Required CI
+po chronionym scaleniu PR i zdarzeniu **push na main**.
 
-`make bootstrap check`: 267 testów bez pominięć, 8.86 s; Ruff/format,
-Mypy (48 plików), dokumentacja, kontrakty, pakowanie i Compose config przechodzą.
-`make bootstrap compose-smoke` potwierdza odrębne bazy/role i pgvector 0.8.6,
-jawne migracje, trwałość rekordu AI i artefaktu MLflow po SIGKILL oraz down/up,
-health 200 i ready 503 podczas awarii DB oraz ready 200 po jej powrocie.
-Porty są loopback, DB nie ma portu hosta, metryki wymagają tokenu; sprawdzono
-brak wygenerowanych sekretów w logach usług. Wyniki maszynowe: [JSON](01-remote-ci.json).
+| Repozytorium | Odebrany main SHA | Przebieg | Wynik |
+|---|---|---|---|
+| retailops-cloud-native-platform | `a0a83c4c82519d5258eb3144e0fef0a68fc909a4` | [Required CI](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/36394194602) | 24 jobs success |
+| retailops-ai-intelligence | `f2c047b85ba7a2c3eeed6428a545ec8ef6bb79de` | [Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36395139229) | 4 jobs success |
 
-Ten przebieg potwierdza runtime Linux, ale nie jest kontrolą zdarzenia PR lub
-push na main. GitHub nie zalicza workflow_dispatch jako wymaganej kontroli PR;
-[zasady GitHub](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks).
-Odbiór publikacji pozostaje otwarty do automatycznego Required CI i scalenia
-z zachowaniem ochrony main. Nie zastępuj tego warunku ręcznym statusem success.
+Odbiór dotyczy wskazanych rewizji; późniejszy commit aktualizuje dokumentację.
+Wyniki maszynowe zawierają zdarzenie, SHA i każdy job: [JSON](01-remote-ci.json).
 
-Zakres nie obejmuje AWS, produkcyjnego IAM, backup/restore, modeli, RAG ani agenta.
-Lokalne pomiary macOS/ARM64 w pozostałych raportach zachowują własne daty i rewizje.
+Repo AI: Ubuntu 24.04 / Linux AMD64, Python 3.11.15, uv 0.12.19.
+`make bootstrap check` wykonuje 273 testy bez pominięć (9.86 s), lint/format,
+Mypy (48 plików), dokumentację, kontrakty, wheel/sdist i Compose config.
+Jobs checks, secrets, persistence i required-result mają success.
+`make bootstrap compose-smoke` sprawdza rzeczywisty PostgreSQL/pgvector i MLflow:
+oddzielne bazy/role, jawne migracje, trwałość rekordu i artefaktu po SIGKILL
+i down/up, health 200 oraz ready 503 podczas awarii DB i ready 200 po recovery.
+Sprawdza loopback portów, brak publikacji DB i brak wygenerowanych sekretów
+w logach usług. Modele, RAG, agent, produkcyjne IAM i AWS nie są częścią odbioru.
+
+RetailOps: pełna macierz Required CI na runnerach Linux, w tym API/frontend,
+data quality, Docker smoke/recovery/rollback, kind runtime, Terraform i skany.
+Odbiór CI nie zamyka ustaleń źródła DATA-01–05 ani nie kwalifikuje RF do serving.
+
+Odczyt API GitHub potwierdza w obu repo main protected, required-result od
+GitHub Actions, strict/up-to-date, PR-before-merge i enforce_admins.
+Nie osłabiono tych ustawień. W nowym repo AI automatyczne wyzwalanie ruszyło
+po ponownym zapisaniu niezmienionej konfiguracji Actions (enabled=true,
+allowed_actions=all) i zdarzeniu reopened. Workflow jawnie określa zdarzenia
+PR i branche push; sześć testów negatywnych chroni ten zakres.
+
+Wcześniejszy workflow_dispatch potwierdził runtime Linux, lecz GitHub nie
+zalicza go jako wymaganej kontroli PR. Odbiór opiera się na automatycznych
+przebiegach PR i push, zgodnie z [zasadami GitHub](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks).
+Lokalne pomiary macOS/ARM64 zachowują własne daty, rewizje i zakresy.
