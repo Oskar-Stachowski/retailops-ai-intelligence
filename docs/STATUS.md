@@ -55,7 +55,8 @@ Fake Recall@5/MRR nie przechodzą; źródła i etykiety nadal wymagają akceptac
 
 [Kontrola przed kwalifikacją](knowledge-qualification.md) odtwarza golden wyniki,
 wiąże osobne zgody na korpus/etykiety i sprawdza kompletność decyzji podobieństwa.
-[Odbiór](evidence/11-qualification.md): typowany manifest ma pięć jawnych blokad
+[Odbiór](evidence/11-qualification.md): 611 testów i identyczny manifest z czystych
+klonów. Typowany manifest ma pięć jawnych blokad
 dla obecnego kandydata; idealny fake i obie zgody nadal nie otwierają aktywacji.
 
 **Postęp etapu 11: około 92%** — szacunek zakresu implementacji, z uwzględnieniem

@@ -40,6 +40,20 @@ oraz pięć blokad:
 - `user_build_profile_required`.
 
 Prywatny manifest nie zawiera tekstów chunków/wektorów i ma `0600`.
+
+## Czysty odbiór
+
+Pełne `make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks`
+na commicie `1619849a3ee08e6cf518a01852528a149f506aa0`, w osobnym klonie
+i świeżym venv, przechodzi: **611 testów w 156,41 s**, Ruff/format, strict Mypy
+(89 plików), linki, snapshoty kontraktów, wheel/sdist, Compose config i oba skany
+Gitleaks. Checkout pozostaje czysty.
+
+Zainstalowane CLI spoza repozytorium, z `PYTHONHASHSEED=809` i niepoprawnym
+`APP_ENV`, odtwarza indeks z przypiętych źródeł osobnych klonów obu repo.
+Indeks i pełny manifest kwalifikacji są identyczne bajt po bajcie z pierwotnymi
+artefaktami; manifest zachowuje ten sam release ID, raport i pięć blokad.
+
 Nie zmieniono schematu DB, testowej kwalifikacji/wskaźnika, HTTP, runów ani
 drugiego repozytorium. Nie uruchomiono AWS i nie wykonano push.
 Pozostają jawne decyzje właściciela, użytkowy profil/kwalifikacja oraz real

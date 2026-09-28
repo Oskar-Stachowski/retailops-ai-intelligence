@@ -5,7 +5,7 @@
   "result": "passed",
   "base_commit": "e5f6b433e96da7850e71aeb17b9f3dceb6b61bc4",
   "branch": "ai/rag-corpus",
-  "verified_at": "2026-09-28T14:21:28.582789+00:00",
+  "verified_at": "2026-09-28T14:26:12.776233+00:00",
   "runtime": {
     "python": "3.11.15",
     "unicode": "14.0.0",
@@ -31,7 +31,12 @@
     "passed": 33,
     "test_seconds": 13.2,
     "mypy_files": 89,
-    "new_negative_cases_and_boundary_checks": true
+    "new_negative_cases_and_boundary_checks": true,
+    "ruff": true,
+    "ruff_format": true,
+    "docs_links": true,
+    "knowledge_snapshots": true,
+    "gitleaks_dir": true
   },
   "actual_candidate": {
     "index_id": "index-sha256-18c7ac743d35a7f9b8d59f781f2f4ccace9e24af79046bcf9f6a36895de038e9",
@@ -101,5 +106,42 @@
     "owner_approval_of_corpus_and_golden_labels",
     "user_build_profile_runs_and_retrieval_qualification_policy",
     "real_embeddings_golden_quality_bedrock_agent_in_stage_12"
-  ]
+  ],
+  "implementation_commit": "1619849a3ee08e6cf518a01852528a149f506aa0",
+  "full_ci": {
+    "command": "make bootstrap UV=.tools/bin/uv ci-local GITLEAKS=/opt/homebrew/bin/gitleaks",
+    "exit_code": 0,
+    "passed": 611,
+    "test_seconds": 156.41,
+    "fresh_venv": true,
+    "clean_git_status": true,
+    "checks": [
+      "ruff_check",
+      "ruff_format",
+      "mypy_89_files",
+      "pytest",
+      "docs_links",
+      "intelligence_access_knowledge_snapshots",
+      "wheel_and_sdist",
+      "compose_config",
+      "gitleaks_git_and_dir"
+    ]
+  },
+  "reproduction": {
+    "implementation_commit": "1619849a3ee08e6cf518a01852528a149f506aa0",
+    "installed_cli_outside_repository": true,
+    "separate_local_git_clones": true,
+    "different_python_hash_seed": 809,
+    "invalid_service_settings_ignored": true,
+    "command_exit_codes": {
+      "index-build": 0,
+      "index-release-check": 0
+    },
+    "index_byte_for_byte_equal": true,
+    "manifest_byte_for_byte_equal": true,
+    "private_manifest_mode": "0600",
+    "release_file_sha256": "86481eeddb9360aaff8f126e0194826b8b9f8a61f86deb4ee8036f8bfe65a734",
+    "code_hashes_match": true,
+    "clean_git_status": true
+  }
 }

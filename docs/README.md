@@ -48,7 +48,8 @@ scope twierdzeń i binding obu list golden sections przed ewaluacją.
 Aktualny raport fake nie otwiera aktywacji.
 [Kontrola przed kwalifikacją](knowledge-qualification.md) wiąże konfiguracje,
 etykiety, raport oraz decyzje i zwraca jawną listę blokad w manifestach.
-[Odbiór kwalifikacji](evidence/11-qualification.md) potwierdza odtwarzanie wyników
+[Odbiór kwalifikacji](evidence/11-qualification.md) potwierdza 611 testów,
+identyczny manifest z czystego checkoutu, odtwarzanie wyników
 i brak aktywacji nawet dla idealnego fake z oboma zgodami.
 
 ## Mapa repo
