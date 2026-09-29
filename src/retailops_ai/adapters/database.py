@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 from retailops_ai.config import Settings
 
-EXPECTED_REVISION = "0009_assistant"
+EXPECTED_REVISION = "0010_assistant_token_budget"
 
 
 def database_engine(settings: Settings) -> AsyncEngine:

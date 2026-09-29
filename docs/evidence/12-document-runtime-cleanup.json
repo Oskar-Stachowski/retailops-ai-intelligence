@@ -1,0 +1,14 @@
+{
+  "assistant_test_records_archived_before_restoring_main_schema": true,
+  "backup_bytes": 9276837,
+  "backup_sha256": "6e8fee2f18b07a83f44dc611b3ca855fd414dec699e88521714e8580e313c2d2",
+  "db_container_stopped": true,
+  "ephemeral_test_credentials_removed": true,
+  "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+  "original_compose_configuration_restored": true,
+  "private_test_database_backup": true,
+  "restored_root_checkout_revision": "0008_rag_semantic",
+  "retrieval_pin_unchanged": true,
+  "schema_version": "1.0",
+  "status": "passed"
+}

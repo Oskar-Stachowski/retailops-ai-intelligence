@@ -14,6 +14,7 @@ from retailops_ai.assistant.contracts import (
     AssistantRun,
     PersistedSuggestion,
 )
+from retailops_ai.assistant.runtime import DocumentRuntimeConfig
 from retailops_ai.assistant.service import AdmissionPolicy
 from retailops_ai.config import Settings
 
@@ -32,6 +33,7 @@ def main() -> int:
         "run": AssistantRun,
         "suggestion": PersistedSuggestion,
         "admission-policy": AdmissionPolicy,
+        "document-runtime": DocumentRuntimeConfig,
     }
     artifacts: dict[str, object] = {}
     for name, model in models.items():

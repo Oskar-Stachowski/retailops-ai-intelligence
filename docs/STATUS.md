@@ -21,8 +21,8 @@ normalizację, quarantine, immutable IDs i odczyt z pełnej historii wersji.
 [AI 03.6 — bramka cross-repo](evidence/03-06-cross-repo.md) wiąże oba repo
 przez pełne smoke i przypięte rewizje. Końcowy odbiór RetailOps określa wejście
 do 04/06 oraz odrębne readiness use cases.
-Branch `ai/03-04-importer` ma osobny worktree; AI 12 rozwija się niezależnie.
-Branch 03 jest opublikowany w [PR #5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/5).
+AI 12 ma osobny worktree; zaakceptowany AI 03 z `main` jest włączony w branch
+`ai/12-tools`. Branch 03 jest opublikowany w [PR #5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/5).
 Przypięte wyniki Required CI, testów i rzeczywistego Compose/persistence
 znajdują się w [końcowym evidence cross-repo](evidence/03-06-cross-repo.md).
 
@@ -90,15 +90,15 @@ auth i kontrolę całego scope, trwały zapis run/odpowiedź/review candidate
 w bazie AI oraz wspólne admission PostgreSQL. Trace sprawdza również cofnięte
 prawa narzędzi/wiedzy; admin wymaga osobnego assistant:audit.
 [Odbiór](evidence/12-assistant.md) opisuje rzeczywiste próby PG/HTTP i granice.
-Standardowe serve nie ma jeszcze modelu/planner/resolvera, więc query daje 503;
-fake jest dopuszczony wyłącznie w testach.
+Standardowe serve obsługuje opcjonalny runtime dokumentacyjny opisany niżej;
+bez jego konfiguracji query daje 503. Fake jest dostępny wyłącznie w testach.
 
 [Chat Bedrock](agent-bedrock.md) ma adapter Converse/CountTokens, kontrolę
 formularza/dostępu konta, zweryfikowane profile EU, circuit breaker i ograniczony
 smoke. Formularz oraz aktywacja Haiku 4.5 i Sonnet 4.6 zostały wykonane po
 potwierdzeniu danych projektu osobistego. Zgoda kosztowa wynosi **1,50 USD
 łącznie**; [rejestr wszystkich prób](evidence/12-bedrock-budget.json) zachowuje
-**1,1722710 USD** szacunków/rezerw, w tym pełny cap przerwanej próby.
+**1,4017210 USD** szacunków/rezerw, w tym pełny cap przerwanej próby.
 
 [Poprzedni mieszany test Sonnet](evidence/12-bedrock-real.md): **5/6**, w tym
 3/3 przypadki biznesowe i 2/2 zabezpieczenia serwera. Historyczny przypadek dokumentacji
@@ -112,22 +112,33 @@ opisane w [przeglądzie](evidence/12-document-label-review.json).
 [Ponowny test Sonnet](evidence/12-bedrock-runs/sonnet-4-documents.json)
 zaliczył **6/6 pytań dokumentacji**, bez napraw: pięć kompletnych odpowiedzi
 i jedno poprawne `insufficient_evidence`. Koszt szacowany wyniósł
-**0,2439129 USD**; z łącznego limitu pozostaje **0,3277290 USD**.
+**0,2439129 USD**. Aktualny stan budżetu uwzględnia też późniejszy test runtime.
 [Odbiór poprawki](evidence/12-document-evidence.md) zawiera pełne wyniki.
 Sonnet zaliczył ten ograniczony test; pełny golden rzeczywistego
 modelu i retrieval nadal wymaga odbioru.
 Test używa rzeczywistego chatu i syntetycznych narzędzi/retrieval.
 
-Następny zakres bez AI 10: planner rzeczywistych pytań, resolver source IDs,
-podłączenie runtime Assistant do RAG, zatwierdzone powiązania pytań z
-rzeczywistymi źródłami oraz ponowny odbiór rzeczywistego modelu. Dalej pozostają realne źródła ML/operacyjne oraz
-kwalifikacja rzeczywistego modelu i retrieval na golden set. Pełne AI 12 wymaga
-AI 10 i E2E sugestii/outbox/v2/read API/UI. Obecny profil sprawdza kanoniczne
-fakty i literalne cytaty; nie potwierdza jakości swobodnych odpowiedzi LLM ani
-pełnego golden dla rzeczywistego chatu. Planner języka naturalnego, resolver source IDs,
-odczyt sugestii ML oraz ich publikacja do RetailOps pozostają do podłączenia.
-Etykiety golden i progi polityki są lokalnym
-profilem developmentu, bez niezależnego business/model approval.
+[Runtime dokumentacyjny](assistant-document-runtime.md) podłącza standardowe
+API do dwóch jawnych tras pytań, zweryfikowanego importu AI 03, rzeczywistego
+PostgreSQL/pgvector, Titan i Sonnet. Resolver zachowuje source UUID i sprawdza
+przypisanie kanału w całym okresie. Przypięte konfiguracje, brak automatycznej
+zmiany indeksu i kontrola pełnych dowodów pozostają obowiązkowe.
+[Ponowny odbiór](evidence/12-bedrock-runs/sonnet-6-runtime.json): **2/2**,
+4 Converse + 2 embeddings, bez napraw; odpowiedzi i trace zapisane w bazie,
+obcy operator nie ma dostępu. Projekcja sprawdzonych faktów ogranicza kontekst
+wysyłany do modelu. [Evidence zakresu](evidence/12-document-runtime.md) podaje
+regresję, testy SQL, pierwotną nieudaną próbę i ograniczenia.
+Pozostaje **0,0982790 USD** zatwierdzonego budżetu; dalszy większy test wymaga
+nowej zgody. Kwoty są szacunkami/rezerwami, nie rachunkiem AWS.
+
+Następny zakres bez AI 10: rozszerzenie zbioru pytań/routingu i kwalifikacja
+rzeczywistego modelu oraz retrieval na pełnym golden. Obecne dwie trasy nie
+są ogólnym plannerem języka naturalnego. Resolver source działa na przyjętym
+syntetycznym fixture AI 03; adaptery rzeczywistych źródeł biznesowych i ML
+pozostają do podłączenia. Pełne AI 12 wymaga AI 10 i E2E
+sugestii/outbox/v2/read API/UI. Profil sprawdza kanoniczne fakty i literalne
+cytaty, bez deklaracji jakości swobodnych odpowiedzi. Etykiety i progi są
+lokalnym profilem developmentu, bez niezależnego business/model approval.
 
 ## Fundament i dalsza praca
 

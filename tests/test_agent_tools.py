@@ -245,7 +245,7 @@ def test_role_and_read_permission_do_not_implicitly_grant_assistant(capabilities
 
 def test_each_tool_requires_its_own_capability():
     spy = Spy()
-    executor, bearer = session(spy, access=authority(["assistant:query"], scope=False))
+    executor, bearer = session(spy, access=authority(["assistant:query"], scope=True))
     assert_failure(executor.open_session(bearer), example(), "unauthorized")
     assert spy.calls == 0
 
@@ -262,13 +262,19 @@ def test_missing_identity_is_denied_and_new_grants_require_explicit_role_and_sco
                 "principal_id": "someone",
                 "roles": ["admin"],
                 "capabilities": ["assistant:query"],
-                "scope": None,
+                "scope": {
+                    "product_ids": ["p-101"],
+                    "selling_location_ids": ["s-03"],
+                    "channels": ["store"],
+                },
             }
         ],
     }
     with pytest.raises(ValidationError, match="operator"):
         GrantTemplate.model_validate_json(json.dumps(base))
-    base["grants"][0].update(roles=["operator"], capabilities=["assistant:query", "sales:read"])
+    base["grants"][0].update(
+        roles=["operator"], capabilities=["assistant:query", "sales:read"], scope=None
+    )
     with pytest.raises(ValidationError, match="explicit_scope"):
         GrantTemplate.model_validate_json(json.dumps(base))
 

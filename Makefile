@@ -68,7 +68,7 @@ contracts-check:
 	$(UV_RUN) python scripts/update_assistant_contracts.py --check
 
 agent-security-test:
-	$(UV_RUN) pytest tests/test_agent_tools.py tests/test_agent_chat.py tests/test_agent_graph.py tests/test_document_evidence.py tests/test_agent_suggestions.py tests/test_agent_evaluation.py tests/test_assistant.py tests/test_bedrock_chat.py
+	$(UV_RUN) pytest tests/test_agent_tools.py tests/test_agent_chat.py tests/test_agent_graph.py tests/test_document_evidence.py tests/test_agent_suggestions.py tests/test_agent_evaluation.py tests/test_assistant.py tests/test_document_runtime.py tests/test_bedrock_chat.py
 
 agent-evaluate:
 	$(UV_RUN) retailops-ai agent-evaluate --provider "$(PROVIDER)" --config agent/graph.evaluate.fake.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock

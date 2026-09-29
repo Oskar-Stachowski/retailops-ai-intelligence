@@ -13,7 +13,7 @@
     "recovery_seconds": 30.0,
     "schema_version": "1.0"
   },
-  "offline_release_id": "agent-evaluation-release-sha256-24cf3d5553c491dfe9474dd5de527b68d0e00f5e21cd8b2ed0922bd638460a0d",
+  "offline_release_id": "agent-evaluation-release-sha256-fe9e8c77fb1097d88dc04566139a01f2b4254cf6aee75cea606328ac0095a631",
   "runtime_graph_config_id": "agent-graph-config-sha256-77c7bd5589eb26532f484ad32f93037a105a2c92726977dce867bceb2fa88e21",
   "schema_version": "1.0"
 }

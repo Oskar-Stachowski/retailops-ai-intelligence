@@ -20,6 +20,7 @@ Capability = Literal[
 ]
 DATA_CAPABILITIES: frozenset[Capability] = frozenset(
     {
+        "assistant:query",
         "forecast:read",
         "sales:read",
         "inventory:read",

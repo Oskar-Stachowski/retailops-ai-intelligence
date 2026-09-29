@@ -79,12 +79,6 @@ def create_app(
     if assistant_store is None and engine is not None:
         assistant_store = PostgresAssistantStore(engine, settings.app_env)
     assistant_service = None
-    if assistant_backend is not None:
-        if assistant_store is None:
-            raise ValueError("assistant_requires_durable_store")
-        assistant_service = AssistantService(
-            assistant_backend, assistant_store, settings.app_env, assistant_policy
-        )
     knowledge_engine = None
     if (
         knowledge_backend is None or index_administration is None
@@ -101,6 +95,28 @@ def create_app(
         )
     if index_administration is None and knowledge_engine is not None:
         index_administration = PostgresIndexAdministration(knowledge_engine, settings.app_env)
+    if settings.assistant_runtime_file is not None:
+        if (
+            assistant_backend is not None
+            or knowledge_engine is None
+            or settings.assistant_source_import is None
+        ):
+            raise ValueError("ambiguous_or_missing_assistant_runtime_dependencies")
+        from retailops_ai.assistant.runtime import document_backend
+
+        assistant_backend = document_backend(
+            settings.assistant_runtime_file,
+            settings.assistant_source_import,
+            knowledge_engine,
+            authority,
+            settings.app_env,
+        )
+    if assistant_backend is not None:
+        if assistant_store is None:
+            raise ValueError("assistant_requires_durable_store")
+        assistant_service = AssistantService(
+            assistant_backend, assistant_store, settings.app_env, assistant_policy
+        )
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
@@ -223,4 +239,5 @@ def create_app(
         access_router(authority, knowledge_backend, settings.app_env, index_administration)
     )
     app.include_router(assistant_router(authority, assistant_service, assistant_store))
+    app.state.assistant_backend = assistant_backend
     return app

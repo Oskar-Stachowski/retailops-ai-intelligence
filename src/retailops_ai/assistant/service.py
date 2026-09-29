@@ -62,7 +62,7 @@ class RunLease(Contract):
     owner_id: Symbol
     scope_json: str
     request_sha256: str
-    reserved_tokens: int = Field(ge=1, le=13500)
+    reserved_tokens: int = Field(ge=1, le=19000)
     reserved_cost: str
     required_capabilities: list[Capability] = Field(default_factory=list, max_length=12)
     knowledge_scope: KnowledgeResourceScope | None = None
@@ -111,8 +111,11 @@ class GraphAssistant:
         source_kind: Literal["runtime", "fixture"],
         planner: Callable[[AssistantQuery, Principal], Awaitable[GraphRequest]],
         runner: Callable[[], GraphRunner],
+        *,
+        runtime_version: str | None = None,
     ) -> None:
-        self.config_version = config_version
+        self.graph_config_version = config_version
+        self.config_version = runtime_version or config_version
         self.index_id = index_id
         self.deadline_seconds = deadline_seconds
         self.reserved_tokens = reserved_tokens
@@ -128,7 +131,7 @@ class GraphAssistant:
         runner = self.runner()
         budget = runner.config.config.chat.budget
         if (
-            runner.config.config_id != self.config_version
+            runner.config.config_id != self.graph_config_version
             or runner.config.config.chat.knowledge_index_id != self.index_id
             or runner.executor.policy.request_deadline_seconds > self.deadline_seconds
             or budget.max_input_tokens + budget.max_output_tokens > self.reserved_tokens
@@ -208,7 +211,7 @@ class AssistantService:
     ) -> None:
         if backend.source_kind == "fixture" and environment != "test":
             raise ValueError("fixture_assistant_requires_test_environment")
-        if not 0 < backend.deadline_seconds <= 45 or not 0 < backend.reserved_tokens <= 13500:
+        if not 0 < backend.deadline_seconds <= 45 or not 0 < backend.reserved_tokens <= 19000:
             raise ValueError("assistant_budget_outside_profile")
         if not Decimal(backend.reserved_cost).is_finite() or Decimal(backend.reserved_cost) <= 0:
             raise ValueError("assistant_cost_reservation_required")
@@ -319,7 +322,8 @@ class AssistantService:
             if result.trace is not None and (
                 result.trace.owner_id != principal.principal_id
                 or result.trace.scope != request.scope
-                or result.trace.config_id != self.backend.config_version
+                or result.trace.config_id
+                != getattr(self.backend, "graph_config_version", self.backend.config_version)
                 or result.trace.fixture_only != (self.backend.source_kind == "fixture")
                 or (
                     result.trace.index_id is not None
@@ -381,7 +385,13 @@ class AssistantService:
         except TimeoutError:
             error = "deadline_exceeded"
         except AssistantError as exc:
-            error = "provider_unavailable" if exc.status == 503 else "invalid_output"
+            error = {
+                403: "unauthorized",
+                424: "dependency_unavailable",
+                429: "budget_exceeded",
+                503: "provider_unavailable",
+                504: "deadline_exceeded",
+            }.get(exc.status, "invalid_output")  # type: ignore[assignment]
             result = None
         except Exception:
             error = "invalid_output"

@@ -1,0 +1,65 @@
+{
+  "accepted_ai03_integration_commit": "17bc724",
+  "ai12_closed": false,
+  "artifacts_sha256": {
+    "agent/document-runtime.golden.v1.json": "cc3da2e192989b2904dd155755657215fea69665fe6932e4b90f60ab8c06ae72",
+    "agent/document-runtime.v1.json": "8baf1d04449f06f1e837ae3d96edc5e4c03ce3cdad2b2e24ebd780d8d3ba3d2e",
+    "agent/evaluation-release.fake.v1.json": "0499510fc20727a5ad6452946f4dc3a3effa5c269a54cec224d0134d964ffeb3",
+    "docs/evidence/12-bedrock-budget.json": "9252e9fadb009cbf19fc8bfdd6bbabfc2a2e431e60e88bc22c814f0438013df0",
+    "docs/evidence/12-bedrock-runs/sonnet-5-runtime-config.json": "84a1b841a9d95b9096968a8615281755c7ba64b9593fabe8cf7c1d618aed9ab9",
+    "docs/evidence/12-bedrock-runs/sonnet-5-runtime-diagnostic.json": "909bae26cd8afa207050f758555bd75f961110bc992ec1463c13a2b0870a6592",
+    "docs/evidence/12-bedrock-runs/sonnet-5-runtime.json": "0df8de0a0a0ee2300d2a72f4435c2ace2389c1bccbd0042a42a1e5340ce67e5d",
+    "docs/evidence/12-bedrock-runs/sonnet-6-runtime.json": "7606b8845599be8e97e0bdaa548f56eb64c05beb0dc765267e5c3028e9a78abb",
+    "docs/evidence/12-document-runtime-cleanup.json": "8c391c007c6a5f055963f8d65c2cc10369b5d799a8373fbccf115d211c6597f5",
+    "docs/evidence/12-document-runtime-offline.json": "a2ce406465449545d500d0ea392e70fd15ba1da003535cbb7a7ffdee8f6cdb90",
+    "docs/evidence/12-document-runtime-preflight.json": "87679daf040b0e58fb96f20e452cfb327ecffe938716817e9f902b05aa9c8156",
+    "docs/evidence/12-document-runtime-projection-preflight.json": "38514b7175d1cb033c8a864b47a488a49d376b709a89eb734479c9ba3f2f6b67",
+    "docs/evidence/12-document-runtime-wheel.json": "a6b5f81b464d615f30be6dad6c0e2b79b9e293521da5f7054f055f977eb28124",
+    "uv.lock": "755c312dd73525fd9ffe59a0bd29337f48aaa00cc739130525b30a04b512fd05"
+  },
+  "branch": "ai/12-tools",
+  "checks": {
+    "compose_config": "passed",
+    "contracts_8_groups": "passed",
+    "curated": "passed",
+    "mypy_157_files": "passed",
+    "remote_ci": "not_run",
+    "ruff": "passed",
+    "secret_scan_directory": "passed",
+    "secret_scan_history": "passed",
+    "source_handoff": "passed",
+    "source_import": "passed",
+    "wheel_and_sdist": "passed",
+    "wheel_outside_checkout": "passed"
+  },
+  "created_at": "2026-09-29T11:08:39.704640+00:00",
+  "evaluator_sha256": "d5db661cdd9cdff236c5e9da266542842cb85b35b0df14413884a4c9c9650992",
+  "offline_golden": {
+    "critical_passed": 36,
+    "critical_total": 36,
+    "passed": 50,
+    "total": 50
+  },
+  "real_runtime": {
+    "cases_passed": 2,
+    "cases_total": 2,
+    "chat_provider": "real_sonnet",
+    "embedding_provider": "real_titan",
+    "full_golden_qualification": false,
+    "http_transport": "asgi_testclient",
+    "postgres": "real",
+    "repairs": 0,
+    "source": "accepted_ai03_synthetic_fixture"
+  },
+  "runtime_config_id": "assistant-runtime-sha256-70d5265ef0be6431fcf2d3822e10ff37b6a8630adba7ab57331a1d66ec39847b",
+  "schema_version": "1.0",
+  "scope": "two_document_questions_with_configured_api_real_rag_and_real_chat",
+  "status": "passed",
+  "tests": {
+    "aws_calls": 0,
+    "duration_seconds": 551.28,
+    "full_suite": true,
+    "loopback_allowed": true,
+    "passed": 1150
+  }
+}

@@ -121,6 +121,40 @@
       "scope": "document_golden_v2",
       "sha256": "afb4782c12db0749fd02b320ab2ce7abc7b333ecbed59a33dc55a2953217b286",
       "status": "passed"
+    },
+    {
+      "accounted_usd": "0.1332149",
+      "accounting": "reported_chat_estimate_or_reservation_plus_full_embedding_reserve",
+      "attempt": 5,
+      "chat_cap_usd": "0.30",
+      "completed_cases": 2,
+      "embedding_requests": 2,
+      "embedding_reserve_basis": "Four requests, at most 8192 tokens each; conservative 0.10 USD per million <= 0.0032768 USD; retain 0.005 USD reserve.",
+      "embedding_reserve_usd": "0.005",
+      "inference_requests": 4,
+      "model": "sonnet",
+      "passed_cases": 1,
+      "receipt": "12-bedrock-runs/sonnet-5-runtime.json",
+      "scope": "configured_http_pg_real_titan_real_converse_two_document_questions",
+      "sha256": "0df8de0a0a0ee2300d2a72f4435c2ace2389c1bccbd0042a42a1e5340ce67e5d",
+      "status": "failed"
+    },
+    {
+      "accounted_usd": "0.0962351",
+      "accounting": "reported_chat_estimate_or_reservation_plus_full_embedding_reserve",
+      "attempt": 6,
+      "chat_cap_usd": "0.18",
+      "completed_cases": 2,
+      "embedding_requests": 2,
+      "embedding_reserve_basis": "Four requests, at most 8192 tokens each; conservative 0.10 USD per million <= 0.0032768 USD; retain 0.005 USD reserve.",
+      "embedding_reserve_usd": "0.005",
+      "inference_requests": 4,
+      "model": "sonnet",
+      "passed_cases": 2,
+      "receipt": "12-bedrock-runs/sonnet-6-runtime.json",
+      "scope": "configured_http_pg_real_titan_real_converse_two_document_questions",
+      "sha256": "7606b8845599be8e97e0bdaa548f56eb64c05beb0dc765267e5c3028e9a78abb",
+      "status": "passed"
     }
   ],
   "budget_approvals": [
@@ -137,10 +171,10 @@
   ],
   "campaign_cap_usd": "1.50",
   "created_at": "2026-09-29T09:35:37.221545+00:00",
-  "estimated_or_reserved_usd": "1.1722710",
+  "estimated_or_reserved_usd": "1.4017210",
   "new_paid_calls_planned": false,
   "not_an_aws_invoice": true,
-  "remaining_usd": "0.3277290",
+  "remaining_usd": "0.0982790",
   "schema_version": "1.0",
-  "updated_at": "2026-09-29T10:07:43.141012+00:00"
+  "updated_at": "2026-09-29T10:52:11.585739+00:00"
 }

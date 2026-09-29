@@ -134,6 +134,8 @@ przypadków, zero zbędnych wywołań, p95 ≤ 5000 ms i koszt syntetyczny 0 USD
 
 Gotowy [adapter Bedrock](agent-bedrock.md) oraz circuit breaker mają osobny
 odbiór transportu oraz [wynik rzeczywistych prób](evidence/12-bedrock-real.md).
-Kolejne kroki: planner/resolver oraz adaptery źródeł. Pełne AI 12 wymaga rzeczywistych
+[Runtime dokumentacyjny](assistant-document-runtime.md) ma dwie trasy pytań,
+resolver source AI 03 oraz realny RAG/chat. Kolejne kroki to rozszerzenie
+plannera i adaptery źródeł biznesowych. Pełne AI 12 wymaga rzeczywistych
 narzędzi, golden dla realnego modelu/retrieval oraz ścieżki sugestia → outbox/v2
 → RetailOps read API/UI z AI 10.

@@ -92,8 +92,9 @@ reguł i rozmiaru jest wersjonowana w `knowledge/chunker.v1.json`.
 
 [Katalog narzędzi agenta](agent-tools.md) dodaje offline `agent-tools`
 i `agent-tool-check`. Wykonawca jest na tym etapie interfejsem serwerowym;
-Kontrakt [Assistant API](assistant-api.md) jest wykonany; rzeczywisty runtime
-chat/planner/resolver wymaga osobnego podłączenia.
+Kontrakt [Assistant API](assistant-api.md) jest wykonany;
+[runtime dokumentacyjny](assistant-document-runtime.md) podłącza dwie trasy
+pytań, source AI 03, RAG i Bedrock przez jawną konfigurację.
 
 [Konfiguracja rozmowy](agent-chat.md) dodaje offline
 `agent-config-check agent/chat.fake.v1.json`. `make contracts-check` kontroluje

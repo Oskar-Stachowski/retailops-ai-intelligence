@@ -1,9 +1,9 @@
 # Chat Bedrock i ograniczony test
 
 AI 12 ma adapter Converse, kontrolę dostępu konta i zweryfikowane europejskie
-profile Haiku 4.5 oraz Sonnet 4.6. [Bieżący wynik i koszt](evidence/12-document-evidence.md)
-odnoszą się do rzeczywistych wywołań modelu. Standardowe Assistant API wymaga
-jeszcze planner/resolvera i podłączenia źródeł; sam test CLI go nie uruchamia.
+profile Haiku 4.5 oraz Sonnet 4.6. [Bieżący wynik i koszt](evidence/12-document-runtime.md)
+odnoszą się do rzeczywistych wywołań modelu i RAG. Standardowe Assistant API
+ma opcjonalny runtime dokumentacyjny; sam test CLI nie uruchamia serwisu.
 
 ## Modele i zakres
 
@@ -68,7 +68,7 @@ próbę i najwyżej sześć prób. Circuit breaker oraz dwa miejsca dla operacji
 obejmują też operacje nadal trwające po anulowaniu coroutine.
 
 Właściciel zatwierdził **1,50 USD łącznie na obecną serię testów i porównanie**.
-Zestawienie kosztów/rezerw wynosi 1,1722710 USD; pozostaje 0,3277290 USD.
+Zestawienie kosztów/rezerw wynosi 1,4017210 USD; pozostaje 0,0982790 USD.
 Limit dotyczy wszystkich prób łącznie. Haiku ma cap smoke 0,15 USD, Sonnet 0,25 USD w teście mieszanym i 0,35 USD w teście dokumentacji.
 Limit kosztu całego smoke pozostaje nadrzędny wobec sumy limitów tokenów pytań.
 Run ma limit odpowiednio 0,04 i 0,11 USD. [Cennik i SKU](evidence/12-bedrock-real-pricing.json)
@@ -114,3 +114,8 @@ dla profilu i jego modeli docelowych. Wspólne admission replik opisuje
 - [Dostęp do modeli i formularz](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html)
 - [Geograficzne profile](https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html)
 - [Regionalny cennik modeli](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrockFoundationModels/current/eu-central-1/index.json)
+
+[Runtime dokumentacyjny](assistant-document-runtime.md) podłącza standardowe
+serve do importu AI 03, prawdziwego RAG i Sonnet. [Odbiór](evidence/12-document-runtime.md)
+obejmuje dwa pytania, HTTP i trwały zapis; pełna kwalifikacja modelu nadal
+wymaga szerszego golden.

@@ -131,3 +131,7 @@ musi ją egzekwować także dla listy, pojedynczego rekordu i cache.
 Źródła implementacyjne: [FastAPI security](https://fastapi.tiangolo.com/reference/security/),
 [Python secrets](https://docs.python.org/3.11/library/secrets.html),
 [Python os](https://docs.python.org/3.11/library/os.html).
+
+Grant `assistant:query` wymaga jawnego scope produktów, lokalizacji i kanałów.
+[Profil dokumentacyjny](assistant-document-runtime.md) dodatkowo wymaga
+`knowledge:read` i knowledge_scope; nie wymaga praw do źródeł sprzedażowych.

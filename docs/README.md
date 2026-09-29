@@ -20,8 +20,10 @@ z wymaganymi informacjami, cytatami i odmową przy brakach;
 [odbiór](evidence/12-document-evidence.md).
 [Assistant API i persistence](assistant-api.md) opisują queries/runs,
 trwałe wyniki, bezpieczny odczyt i wspólne admission; [odbiór](evidence/12-assistant.md).
+[Runtime dokumentacyjny](assistant-document-runtime.md) łączy planner, źródło AI 03,
+HTTP, rzeczywisty RAG i Bedrock; [odbiór](evidence/12-document-runtime.md).
 [Chat Bedrock](agent-bedrock.md) opisuje adapter, kontrolę dostępu i tokenów,
-europejskie profile oraz limit kosztu; [bieżący odbiór](evidence/12-document-evidence.md).
+europejskie profile oraz limit kosztu; [bieżący odbiór](evidence/12-document-runtime.md).
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,

@@ -2,9 +2,10 @@
 
 **AI 12 · zakres lokalny, bez AI 10.** [Kontrakty](../contracts/assistant/v1/assistant.openapi.json)
 oraz [odbiór](evidence/12-assistant.md). HTTP jest wykonane i sprawdzone z grafem
-na fixtures oraz z rzeczywistą bazą PostgreSQL. Standardowe `serve` nie ma jeszcze
-podłączonego modelu chat ani resolvera danych; autoryzowane query zwraca wtedy 503.
-To nie jest odbiór rzeczywistego Bedrock ani zamknięcie AI 12.
+na fixtures oraz z rzeczywistą bazą PostgreSQL. Opcjonalny
+[runtime dokumentacyjny](assistant-document-runtime.md) podłącza standardowe `serve`
+do plannera, importu AI 03, rzeczywistego RAG i Bedrock. Bez konfiguracji runtime
+autoryzowane query zwraca 503. Pełne AI 12 ma dalsze bramki.
 
 ## Żądanie i odpowiedź
 
@@ -26,7 +27,7 @@ Resolver musi sprawdzić istnienie identyfikatorów w źródle. W tym profilu
 aliasów ani nie zgaduje mapowania. Zwrócony graph request musi zachować dokładne
 IDs, pytanie i okres. Channel jest jawnie rozstrzygnięty na serwerze i sprawdzony
 w grants. Nie ma ogólnego klasyfikatora języka naturalnego w tej warstwie.
-Planner dla rzeczywistych pytań/źródeł należy do podłączenia runtime.
+Profil dokumentacyjny ma dwie jawne trasy pytań i resolver importu AI 03.
 
 200 zawiera wszystkie pola MVP: answer/trace UUID, outcome, summary, evidence,
 recommended_actions, confidence, freshness, citations, limitations,
@@ -58,6 +59,8 @@ wymaga restartu wszystkich procesów, zgodnie z [lokalnym auth](access-control.m
 
 Migracja `0009_assistant` tworzy w odrębnej bazie AI `assistant_runs`,
 `assistant_answers`, `assistant_suggestions` i wiązanie polityki admission.
+Migracja `0010_assistant_token_budget` dostosowuje limit SQL do 19 000 tokenów
+(16 000 wejścia + 3000 wyjścia); limity okna pozostają takie same.
 Run ma właściciela, scope, wymagane prawa, hash requestu, HTTP correlation UUID
 i claim. Pytanie/payloady narzędzi nie trafiają do trace. Odpowiedź i pełny
 review candidate są chronionymi danymi własnymi AI; nie są rekordem workflow
@@ -107,7 +110,7 @@ fault injection, SIGKILL API i zachowanie trzech wyników po restarcie bazy.
 Fixtures mierzą te mechanizmy; nie potwierdzają jakości LLM lub danych ML.
 
 Gotowy [adapter Bedrock](agent-bedrock.md) ma circuit breaker i ograniczony
-smoke CLI; nie został jeszcze podłączony do standardowego runtime. Najbliższe
-zakresy: serwerowy planner i source resolver, podłączenie runtime,
-kwalifikacja realnego modelu, adaptery danych, realny golden/retrieval oraz
+smoke CLI oraz opcjonalne podłączenie do runtime dokumentacyjnego. Dalsze
+zakresy: więcej ocenionych pytań i planner języka naturalnego, adaptery danych
+biznesowych/ML, kwalifikacja modelu i retrieval na pełnym golden oraz
 AI 10 outbox/v2/read API/UI. Sugestie nie są jeszcze wystawione w read API ML.

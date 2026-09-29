@@ -1,0 +1,1192 @@
+{
+  "$defs": {
+    "AgentChatConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "$ref": "#/$defs/ModelBudget"
+        },
+        "embeddings": {
+          "$ref": "#/$defs/EmbeddingConfig"
+        },
+        "graph_version": {
+          "enum": [
+            "pregraph-provider-v1",
+            "bounded-langgraph-v1"
+          ],
+          "title": "Graph Version",
+          "type": "string"
+        },
+        "knowledge_index_id": {
+          "pattern": "^index-sha256-[0-9a-f]{64}$",
+          "title": "Knowledge Index Id",
+          "type": "string"
+        },
+        "model": {
+          "$ref": "#/$defs/ChatModelConfig"
+        },
+        "profile": {
+          "const": "agent-bounded-v1",
+          "title": "Profile",
+          "type": "string"
+        },
+        "prompt_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Prompt Version",
+          "type": "string"
+        },
+        "prompts": {
+          "items": {
+            "$ref": "#/$defs/PromptFile"
+          },
+          "maxItems": 6,
+          "minItems": 6,
+          "title": "Prompts",
+          "type": "array"
+        },
+        "response_schema_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Response Schema Sha256",
+          "type": "string"
+        },
+        "response_schema_version": {
+          "const": "agent-draft-v1",
+          "title": "Response Schema Version",
+          "type": "string"
+        },
+        "retrieval": {
+          "$ref": "#/$defs/RetrievalConfig"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "tool_policy": {
+          "$ref": "#/$defs/ToolPolicy"
+        },
+        "tool_schemas_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Tool Schemas Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "profile",
+        "graph_version",
+        "prompt_version",
+        "response_schema_version",
+        "model",
+        "budget",
+        "tool_policy",
+        "tool_schemas_sha256",
+        "response_schema_sha256",
+        "knowledge_index_id",
+        "embeddings",
+        "retrieval",
+        "prompts"
+      ],
+      "title": "AgentChatConfig",
+      "type": "object"
+    },
+    "AgentGraphConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "chat": {
+          "$ref": "#/$defs/AgentChatConfig"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "evidence_policy_version": {
+          "const": "typed-facts-v2",
+          "title": "Evidence Policy Version",
+          "type": "string"
+        },
+        "graph_version": {
+          "const": "bounded-langgraph-v1",
+          "title": "Graph Version",
+          "type": "string"
+        },
+        "langgraph_version": {
+          "const": "1.2.12",
+          "title": "Langgraph Version",
+          "type": "string"
+        },
+        "policy": {
+          "$ref": "#/$defs/GraphPolicy"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "schemas_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Schemas Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "graph_version",
+        "evidence_policy_version",
+        "langgraph_version",
+        "code_sha256",
+        "schemas_sha256",
+        "policy",
+        "chat"
+      ],
+      "title": "AgentGraphConfig",
+      "type": "object"
+    },
+    "ChatModelConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "inference_profile": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,299}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Inference Profile"
+        },
+        "max_output_tokens": {
+          "maximum": 1500,
+          "minimum": 1,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "model_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,199}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "provider": {
+          "enum": [
+            "fake",
+            "bedrock"
+          ],
+          "title": "Provider",
+          "type": "string"
+        },
+        "region": {
+          "pattern": "^(offline|[a-z]{2}-[a-z]+-[0-9])$",
+          "title": "Region",
+          "type": "string"
+        },
+        "temperature": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Temperature",
+          "type": "number"
+        }
+      },
+      "required": [
+        "provider",
+        "model_id",
+        "inference_profile",
+        "region",
+        "temperature",
+        "max_output_tokens"
+      ],
+      "title": "ChatModelConfig",
+      "type": "object"
+    },
+    "ChatPricing": {
+      "additionalProperties": false,
+      "properties": {
+        "currency": {
+          "const": "USD",
+          "title": "Currency",
+          "type": "string"
+        },
+        "input_per_million": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,9}|(?=[\\d.]{1,19}0*$)\\d{0,9}\\.\\d{0,9}0*$)",
+              "type": "string"
+            }
+          ],
+          "title": "Input Per Million"
+        },
+        "kind": {
+          "enum": [
+            "synthetic_test_rates",
+            "reviewed_provider_rates"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "max_run_cost": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,9}|(?=[\\d.]{1,19}0*$)\\d{0,9}\\.\\d{0,9}0*$)",
+              "type": "string"
+            }
+          ],
+          "title": "Max Run Cost"
+        },
+        "max_smoke_cost": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,9}|(?=[\\d.]{1,19}0*$)\\d{0,9}\\.\\d{0,9}0*$)",
+              "type": "string"
+            }
+          ],
+          "title": "Max Smoke Cost"
+        },
+        "output_per_million": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,9}|(?=[\\d.]{1,19}0*$)\\d{0,9}\\.\\d{0,9}0*$)",
+              "type": "string"
+            }
+          ],
+          "title": "Output Per Million"
+        },
+        "rate_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Rate Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "currency",
+        "input_per_million",
+        "output_per_million",
+        "rate_version",
+        "max_run_cost",
+        "max_smoke_cost"
+      ],
+      "title": "ChatPricing",
+      "type": "object"
+    },
+    "CircuitPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "failure_threshold": {
+          "default": 3,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Failure Threshold",
+          "type": "integer"
+        },
+        "max_inflight": {
+          "default": 2,
+          "maximum": 8,
+          "minimum": 1,
+          "title": "Max Inflight",
+          "type": "integer"
+        },
+        "recovery_seconds": {
+          "default": 30.0,
+          "exclusiveMinimum": 0,
+          "maximum": 300,
+          "title": "Recovery Seconds",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version"
+      ],
+      "title": "CircuitPolicy",
+      "type": "object"
+    },
+    "DocumentEvidenceRule": {
+      "additionalProperties": false,
+      "properties": {
+        "intent": {
+          "enum": [
+            "documentation",
+            "verified_state"
+          ],
+          "title": "Intent",
+          "type": "string"
+        },
+        "question": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/$defs/DocumentRequirement"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Requirements",
+          "type": "array"
+        }
+      },
+      "required": [
+        "question",
+        "intent",
+        "requirements"
+      ],
+      "title": "DocumentEvidenceRule",
+      "type": "object"
+    },
+    "DocumentRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 400,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "requirement_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "supports": {
+          "items": {
+            "$ref": "#/$defs/DocumentSupport"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Supports",
+          "type": "array"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "description",
+        "supports"
+      ],
+      "title": "DocumentRequirement",
+      "type": "object"
+    },
+    "DocumentSupport": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "chunk_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Chunk Sha256",
+          "type": "string"
+        },
+        "quote": {
+          "maxLength": 800,
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "chunk_sha256",
+        "quote"
+      ],
+      "title": "DocumentSupport",
+      "type": "object"
+    },
+    "EmbeddingConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            8,
+            16,
+            32,
+            64,
+            256,
+            512,
+            1024
+          ],
+          "title": "Dimension",
+          "type": "integer"
+        },
+        "distance": {
+          "const": "cosine",
+          "title": "Distance",
+          "type": "string"
+        },
+        "inference_profile": {
+          "title": "Inference Profile",
+          "type": "null"
+        },
+        "model_id": {
+          "enum": [
+            "sha256-unit-f32-v1",
+            "amazon.titan-embed-text-v2:0"
+          ],
+          "title": "Model Id",
+          "type": "string"
+        },
+        "normalization": {
+          "const": "l2-unit",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "provider": {
+          "enum": [
+            "fake",
+            "bedrock"
+          ],
+          "title": "Provider",
+          "type": "string"
+        },
+        "region": {
+          "pattern": "^(offline|[a-z]{2}-[a-z]+-[0-9])$",
+          "title": "Region",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "transformation_version": {
+          "enum": [
+            "utf8-chunk-body-v1",
+            "utf8-heading-path-body-v1"
+          ],
+          "title": "Transformation Version",
+          "type": "string"
+        },
+        "vector_format": {
+          "const": "float32-big-endian-v1",
+          "title": "Vector Format",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "provider",
+        "model_id",
+        "inference_profile",
+        "region",
+        "dimension",
+        "normalization",
+        "distance",
+        "transformation_version",
+        "vector_format"
+      ],
+      "title": "EmbeddingConfig",
+      "type": "object"
+    },
+    "GraphPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "document_rules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/DocumentEvidenceRule"
+          },
+          "maxItems": 50,
+          "title": "Document Rules",
+          "type": "array"
+        },
+        "max_catalogue_facts": {
+          "default": 40,
+          "maximum": 40,
+          "minimum": 5,
+          "title": "Max Catalogue Facts",
+          "type": "integer"
+        },
+        "max_extra_evidence_rounds": {
+          "const": 1,
+          "default": 1,
+          "title": "Max Extra Evidence Rounds",
+          "type": "integer"
+        },
+        "max_selected_facts": {
+          "default": 5,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Max Selected Facts",
+          "type": "integer"
+        },
+        "max_steps": {
+          "default": 20,
+          "maximum": 20,
+          "minimum": 15,
+          "title": "Max Steps",
+          "type": "integer"
+        },
+        "profile": {
+          "const": "bounded-evidence-graph-v1",
+          "title": "Profile",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "suggestions": {
+          "$ref": "#/$defs/SuggestionPolicy"
+        },
+        "trace_capacity": {
+          "default": 100,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Trace Capacity",
+          "type": "integer"
+        },
+        "trace_retention_seconds": {
+          "default": 900,
+          "maximum": 900,
+          "minimum": 1,
+          "title": "Trace Retention Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "profile"
+      ],
+      "title": "GraphPolicy",
+      "type": "object"
+    },
+    "IndexEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "embedding_id": {
+          "pattern": "^embedding-sha256-[0-9a-f]{64}$",
+          "title": "Embedding Id",
+          "type": "string"
+        },
+        "vector_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Vector Checksum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "embedding_id",
+        "vector_checksum"
+      ],
+      "title": "IndexEntry",
+      "type": "object"
+    },
+    "IndexManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_count": {
+          "maximum": 32768,
+          "minimum": 1,
+          "title": "Chunk Count",
+          "type": "integer"
+        },
+        "chunk_manifest_id": {
+          "pattern": "^chunks-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Manifest Id",
+          "type": "string"
+        },
+        "corpus_id": {
+          "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+          "title": "Corpus Id",
+          "type": "string"
+        },
+        "embedding_config": {
+          "$ref": "#/$defs/EmbeddingConfig"
+        },
+        "embedding_count": {
+          "maximum": 32768,
+          "minimum": 1,
+          "title": "Embedding Count",
+          "type": "integer"
+        },
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/IndexEntry"
+          },
+          "maxItems": 32768,
+          "minItems": 1,
+          "title": "Entries",
+          "type": "array"
+        },
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "index_id": {
+          "pattern": "^index-sha256-[0-9a-f]{64}$",
+          "title": "Index Id",
+          "type": "string"
+        },
+        "lifecycle": {
+          "const": "candidate",
+          "title": "Lifecycle",
+          "type": "string"
+        },
+        "migration_revision": {
+          "enum": [
+            "0002_rag_candidates",
+            "0008_rag_semantic"
+          ],
+          "title": "Migration Revision",
+          "type": "string"
+        },
+        "pgvector_version": {
+          "const": "0.8.6",
+          "title": "Pgvector Version",
+          "type": "string"
+        },
+        "retrieval_version": {
+          "enum": [
+            "not_implemented",
+            "pgvector-cosine-exact-v1"
+          ],
+          "title": "Retrieval Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "semantic_quality": {
+          "enum": [
+            "not_evaluated_fake_vectors",
+            "not_evaluated_real_vectors"
+          ],
+          "title": "Semantic Quality",
+          "type": "string"
+        },
+        "space_id": {
+          "pattern": "^embedding-space-sha256-[0-9a-f]{64}$",
+          "title": "Space Id",
+          "type": "string"
+        },
+        "storage_version": {
+          "const": "pgvector-checked-dimension-v1",
+          "title": "Storage Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "lifecycle",
+        "environment",
+        "semantic_quality",
+        "index_id",
+        "corpus_id",
+        "chunk_manifest_id",
+        "embedding_config",
+        "space_id",
+        "storage_version",
+        "pgvector_version",
+        "migration_revision",
+        "retrieval_version",
+        "chunk_count",
+        "embedding_count",
+        "entries"
+      ],
+      "title": "IndexManifest",
+      "type": "object"
+    },
+    "IndexPin": {
+      "additionalProperties": false,
+      "properties": {
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "generation": {
+          "maximum": 9223372036854775807,
+          "minimum": 1,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "lane": {
+          "enum": [
+            "retrieval",
+            "offline_test"
+          ],
+          "title": "Lane",
+          "type": "string"
+        },
+        "manifest": {
+          "$ref": "#/$defs/IndexManifest"
+        },
+        "purpose": {
+          "enum": [
+            "lifecycle_validation_only",
+            "qualified_semantic_retrieval"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "request_id": {
+          "pattern": "^rag-change-[0-9a-f]{32}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "review_id": {
+          "pattern": "^corpus-review-sha256-[0-9a-f]{64}$",
+          "title": "Review Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "validation_id": {
+          "pattern": "^index-validation-sha256-[0-9a-f]{64}$",
+          "title": "Validation Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "environment",
+        "lane",
+        "purpose",
+        "generation",
+        "request_id",
+        "review_id",
+        "validation_id",
+        "manifest"
+      ],
+      "title": "IndexPin",
+      "type": "object"
+    },
+    "ModelBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "max_calls": {
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Max Calls",
+          "type": "integer"
+        },
+        "max_input_tokens": {
+          "maximum": 16000,
+          "minimum": 1,
+          "title": "Max Input Tokens",
+          "type": "integer"
+        },
+        "max_output_tokens": {
+          "maximum": 3000,
+          "minimum": 1,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_repairs": {
+          "const": 1,
+          "title": "Max Repairs",
+          "type": "integer"
+        },
+        "max_retries": {
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Max Retries",
+          "type": "integer"
+        },
+        "pricing": {
+          "$ref": "#/$defs/ChatPricing"
+        },
+        "provider_timeout_seconds": {
+          "exclusiveMinimum": 0,
+          "maximum": 20,
+          "title": "Provider Timeout Seconds",
+          "type": "number"
+        },
+        "retry_base_seconds": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Retry Base Seconds",
+          "type": "number"
+        },
+        "retry_max_seconds": {
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Retry Max Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "max_input_tokens",
+        "max_output_tokens",
+        "max_calls",
+        "max_retries",
+        "max_repairs",
+        "provider_timeout_seconds",
+        "retry_base_seconds",
+        "retry_max_seconds",
+        "pricing"
+      ],
+      "title": "ModelBudget",
+      "type": "object"
+    },
+    "PromptFile": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "enum": [
+            "policy",
+            "tool_selection",
+            "evidence",
+            "response",
+            "refusal",
+            "examples"
+          ],
+          "title": "Name",
+          "type": "string"
+        },
+        "resource_version": {
+          "default": "v1",
+          "enum": [
+            "v1",
+            "v2",
+            "v3",
+            "v4"
+          ],
+          "title": "Resource Version",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "sha256"
+      ],
+      "title": "PromptFile",
+      "type": "object"
+    },
+    "RetrievalConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_limit": {
+          "const": 256,
+          "title": "Candidate Limit",
+          "type": "integer"
+        },
+        "diversification": {
+          "enum": [
+            "repository-then-document-v1",
+            "score-then-document-v1"
+          ],
+          "title": "Diversification",
+          "type": "string"
+        },
+        "max_chunks_per_document": {
+          "const": 2,
+          "title": "Max Chunks Per Document",
+          "type": "integer"
+        },
+        "max_context_bytes": {
+          "const": 24000,
+          "title": "Max Context Bytes",
+          "type": "integer"
+        },
+        "max_context_tokens": {
+          "const": 6000,
+          "title": "Max Context Tokens",
+          "type": "integer"
+        },
+        "max_top_k": {
+          "const": 5,
+          "title": "Max Top K",
+          "type": "integer"
+        },
+        "min_cosine_score": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Min Cosine Score",
+          "type": "number"
+        },
+        "retrieval_version": {
+          "const": "pgvector-cosine-exact-v1",
+          "title": "Retrieval Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "size_estimator": {
+          "const": "serialized-hits-utf8-div4-v1",
+          "title": "Size Estimator",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "retrieval_version",
+        "max_top_k",
+        "max_context_tokens",
+        "max_context_bytes",
+        "max_chunks_per_document",
+        "candidate_limit",
+        "min_cosine_score",
+        "diversification",
+        "size_estimator"
+      ],
+      "title": "RetrievalConfig",
+      "type": "object"
+    },
+    "SuggestionPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "lifetime_seconds": {
+          "default": 300,
+          "maximum": 300,
+          "minimum": 1,
+          "title": "Lifetime Seconds",
+          "type": "integer"
+        },
+        "max_candidates": {
+          "default": 5,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Max Candidates",
+          "type": "integer"
+        },
+        "minimum_stockout_probability": {
+          "default": 0.8,
+          "maximum": 1,
+          "minimum": 0.8,
+          "title": "Minimum Stockout Probability",
+          "type": "number"
+        },
+        "operations_lag_seconds": {
+          "default": 60.0,
+          "maximum": 3600,
+          "minimum": 60,
+          "title": "Operations Lag Seconds",
+          "type": "number"
+        },
+        "policy_version": {
+          "const": "read-only-review-v1",
+          "default": "read-only-review-v1",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version"
+      ],
+      "title": "SuggestionPolicy",
+      "type": "object"
+    },
+    "ToolPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "freshness_seconds": {
+          "default": 300,
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Freshness Seconds",
+          "type": "integer"
+        },
+        "max_calls": {
+          "default": 6,
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Max Calls",
+          "type": "integer"
+        },
+        "max_locations": {
+          "default": 5,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Max Locations",
+          "type": "integer"
+        },
+        "max_period_days": {
+          "default": 90,
+          "maximum": 90,
+          "minimum": 1,
+          "title": "Max Period Days",
+          "type": "integer"
+        },
+        "max_products": {
+          "default": 20,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Max Products",
+          "type": "integer"
+        },
+        "max_result_bytes": {
+          "default": 131072,
+          "maximum": 131072,
+          "minimum": 1024,
+          "title": "Max Result Bytes",
+          "type": "integer"
+        },
+        "max_rows": {
+          "default": 50,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Max Rows",
+          "type": "integer"
+        },
+        "profile": {
+          "const": "agent-tools-bounded-v1",
+          "title": "Profile",
+          "type": "string"
+        },
+        "request_deadline_seconds": {
+          "default": 45.0,
+          "exclusiveMinimum": 0,
+          "maximum": 45,
+          "title": "Request Deadline Seconds",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "tool_timeout_seconds": {
+          "default": 5.0,
+          "exclusiveMinimum": 0,
+          "maximum": 5,
+          "title": "Tool Timeout Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "schema_version",
+        "profile"
+      ],
+      "title": "ToolPolicy",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:assistant:document-runtime:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "channel": {
+      "enum": [
+        "store",
+        "online"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "circuit": {
+      "$ref": "#/$defs/CircuitPolicy"
+    },
+    "code_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Code Sha256",
+      "type": "string"
+    },
+    "embedding_max_input_bytes": {
+      "maximum": 800000,
+      "minimum": 1,
+      "title": "Embedding Max Input Bytes",
+      "type": "integer"
+    },
+    "embedding_max_requests": {
+      "maximum": 100,
+      "minimum": 1,
+      "title": "Embedding Max Requests",
+      "type": "integer"
+    },
+    "graph": {
+      "$ref": "#/$defs/AgentGraphConfig"
+    },
+    "pin": {
+      "$ref": "#/$defs/IndexPin"
+    },
+    "runtime_version": {
+      "const": "assistant-documents-v1",
+      "title": "Runtime Version",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "source_catalog_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Catalog Sha256",
+      "type": "string"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "runtime_version",
+    "code_sha256",
+    "source_dataset_id",
+    "snapshot_id",
+    "source_catalog_sha256",
+    "channel",
+    "graph",
+    "pin",
+    "circuit",
+    "embedding_max_requests",
+    "embedding_max_input_bytes"
+  ],
+  "title": "DocumentRuntimeConfig",
+  "type": "object"
+}

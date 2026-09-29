@@ -92,7 +92,8 @@ Sprawdza także rzeczywiste wektory pgvector, kompletność i atomowość kandyd
 idempotencję, cache i izolację przestrzeni; fragmenty zachowują się po restarcie.
 Weryfikuje brak haseł w logach. Na końcu zatrzymuje kontenery i pozostawia wolumeny.
 Raport bez sekretów: `.local/persistence-smoke.json`. Porty 8081/5010 muszą być wolne.
-Migracja `0009_assistant` dodaje własne runy/wyniki/sugestie AI. Smoke obejmuje
+Migracja `0009_assistant` dodaje własne runy/wyniki/sugestie AI, a
+`0010_assistant_token_budget` ustala limit rezerwacji chatu na 19 000 tokenów. Smoke obejmuje
 [Assistant API](assistant-api.md), współbieżne admission dwóch procesów,
 token/cost debit, rollback po awarii zapisu oraz zachowanie wyników po SIGKILL
 API/bazy. Jego backend jest jawnie scripted i nie mierzy jakości Bedrock.
