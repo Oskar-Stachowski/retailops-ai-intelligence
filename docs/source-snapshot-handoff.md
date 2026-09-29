@@ -33,8 +33,9 @@ uruchamia `python -I` dwukrotnie i zachowuje wejściowe bajty.
 `make check`/Required CI obejmują ten checker i testy negatywne.
 
 To **odbiór kontraktu i transportu**, nie typed import dowolnego snapshotu.
-03.4 zaimplementuje importer, odczyt Parquet, recomputed canonical hashes,
-idempotentną atomową publikację i konflikty w `data/generated/snapshots/`.
+[03.4 dostarcza importer](source-snapshot-import.md): odczyt Parquet,
+recomputed canonical hashes, idempotentną atomową publikację i konflikty
+w `data/generated/snapshots/`.
 03.5 doda curated i kwarantannę, a 03.6 sprawdzi oba smoke dwukrotnie end-to-end.
 
 ## Zasady dla importera i curated
@@ -62,5 +63,5 @@ idempotentną atomową publikację i konflikty w `data/generated/snapshots/`.
   nie są kwalifikowane tym pakietem. Odrzucaj wymagane niegotowe use cases.
 
 Zmiany producer/consumer mają osobne commity i wspólną wersję. Obecny branch
-handoff jest niezależny od równoległego RAG. [Evidence](evidence/03-03-handoff.md)
+importera jest niezależny od równoległego AI 12. [Evidence](evidence/03-03-handoff.md)
 podaje rewizje, kontrole i granice; 04/06 czekają na 03.6.

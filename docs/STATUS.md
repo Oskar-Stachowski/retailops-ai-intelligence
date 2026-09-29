@@ -1,6 +1,6 @@
 # Aktualny status
 
-Aktualizacja: **2026-09-28**. **Etap 11 — RAG jest odebrany lokalnie.**
+Aktualizacja: **2026-09-29**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
 przygotowanie, kwalifikację, aktywację i rollback. [Końcowy odbiór](evidence/11-completion.md)
 wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodzi
@@ -9,9 +9,14 @@ przez chroniony `main` oraz Required CI; stan wykonania pokazuje
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
-identity i transportu bez generatora/DB. Następny zakres to 03.4 typed importer,
-potem 03.5 curated i 03.6 bramka cross-repo. 04/06 pozostają zamknięte;
-publikacja brancha handoff i zdalne Required CI nie zostały wykonane.
+identity i transportu bez generatora/DB.
+**AI 03.4 — typed importer odebrany lokalnie:** [CLI i runbook](source-snapshot-import.md)
+opisują pełną weryfikację Parquet, canonical hashes, gates, atomową publikację
+i niezmienny reimport. [Evidence](evidence/03-04-importer.md) podaje testy obu
+smoke, partycje, truth opt-in i odłączony wheel. Kolejny zakres to 03.5 curated,
+a potem 03.6 bramka cross-repo. 04/06 pozostają zamknięte.
+Branch `ai/03-04-importer` ma osobny worktree; AI 12 rozwija się niezależnie.
+Publikacja branchy 03 i zdalne Required CI nie zostały wykonane.
 
 ## Etap 11
 
@@ -45,8 +50,8 @@ wykonywalne kontrakty danych/run/tool, jawne migracje i Required CI.
 [Uruchomienie](local-stack.md), [uprawnienia](access-control.md),
 [kontrakty](data-contracts.md), [odbiór zdalny](evidence/01-remote-ci.md).
 
-Najbliższy zakres danych to **AI 03.4**: typed importer w AI-intelligence,
-następnie curated i bramka cross-repo. Upstream ma lokalny odbiór Parquet,
+Najbliższy zakres danych to **AI 03.5**: curated w AI-intelligence,
+następnie bramka cross-repo 03.6. Upstream ma lokalny odbiór Parquet,
 immutable eksportera i handoff fixture. Równolegle można przygotować
 interfejsy i test doubles **AI 12**. Pełne zamknięcie agenta wymaga **AI 10 i 11**;
 11 jest gotowy, 10 nadal należy do późniejszego ciągu danych/ML/integracji.
