@@ -25,6 +25,17 @@ Branch 03 jest opublikowany w [PR #5](https://github.com/Oskar-Stachowski/retail
 Przypięte wyniki Required CI, testów i rzeczywistego Compose/persistence
 znajdują się w [końcowym evidence cross-repo](evidence/03-06-cross-repo.md).
 
+## Etap 06 — inventory
+
+**06.6b.2c.1 ma lokalny odbiór:** [snapshot 1.1/source 2.7](reference/inventory-snapshot-11.md)
+zachowuje typed/native content i lineage. Importer ponownie uzgadnia ledger,
+known snapshots, historyczny routing, issues, refund/restock i receipts.
+[Dowody](evidence/06-inventory-handoff.md) potwierdzają oba profile dwukrotnie,
+727/773 testy oraz budget 300 s / 1024 MiB dla source/qualification/export/import.
+Branch `ai/06-inventory-handoff` ma własny worktree. Następny zakres 06.6b.2c.2
+obejmuje curated 1.1, pełny pipeline i przełączenie domyślnego source AI.
+`inventory_ready` i DATA-06 pozostają otwarte; source/model readiness są false.
+
 ## Etap 11
 
 - Zatwierdzony korpus: 29 dokumentów, 451 fragmentów, przypięte źródła Git,

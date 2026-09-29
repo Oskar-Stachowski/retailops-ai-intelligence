@@ -12,6 +12,10 @@ opisują wersje, lineage i walidację offline.
 registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
 sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)
 normalizuje fakty, mapuje lokalizacje, zachowuje kwarantannę i odczyt as-of.
+[Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
+rozszerza typed import o source 2.7, native ledger i private qualification.
+[Odbiór](evidence/06-inventory-handoff.md) obejmuje oba standardowe profile
+dwukrotnie. Curated 1.1 i domyślne przełączenie pozostają kolejnym zakresem.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.
