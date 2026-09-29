@@ -51,7 +51,7 @@ class ImportResult:
             "rows": sum(t["row_count"] for t in self.snapshot.manifest["tables"]),
             "evaluation_truth": self.snapshot.manifest["descriptor"]["include_evaluation_truth"],
             "typed_canonical_parity": "passed",
-            "curated": "not_implemented",
+            "curated": "not_performed_by_this_command",
         }
 
 

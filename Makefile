@@ -3,7 +3,7 @@ GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
 UV_RUN = $(UV) run --locked --extra snapshot
 
-.PHONY: bootstrap lint type-check test docs-check handoff-check snapshot-import-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
+.PHONY: bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
 
 bootstrap:
 	$(UV) sync --locked --extra snapshot
@@ -27,10 +27,13 @@ handoff-check:
 snapshot-import-check:
 	$(UV_RUN) python scripts/check_snapshot_import.py
 
+curated-check:
+	$(UV_RUN) python scripts/check_curated.py
+
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check handoff-check snapshot-import-check contracts-check package compose-config
+check: lint type-check test docs-check handoff-check snapshot-import-check curated-check contracts-check package compose-config
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner
