@@ -124,4 +124,5 @@ Indeks SQLite ma limit 2 GiB, grupy 4000, przedziały 3 mln rekordów/2 GiB,
 metadata 4 MiB; czytniki i bufory zachowują ograniczenia poprzednich etapów.
 
 [Evidence 04.7](evidence/04-07-quality.md) podaje wyniki i aktualne blokady.
-Pozostaje **AI 04.8 — evidence runu i minimalny lifecycle handoff**.
+[Eksport AI 04.8](forecast-run.md) utrwala je wraz z niezmiennym backtestem
+do późniejszego importu w AI 05; nie zmienia statusu jakości.

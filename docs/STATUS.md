@@ -7,7 +7,7 @@ wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodz
 przez chroniony `main` oraz Required CI; stan wykonania pokazuje
 [workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
 
-**AI 04.1–04.7 — zadanie, modele, backtesting i ocena jakości forecastingu:**
+**AI 04.1–04.8 — zadanie, modele, backtesting, jakość i evidence runu:**
 [kontrakt i polecenia](forecasting.md) definiują observed sales, grain,
 cutoff 23:59:59 UTC, horyzonty 1–14 i okna 7/14 z jedną granicą wiedzy.
 Manifest wiąże kalendarz ze zweryfikowanym curated AI 03; inventory i truth
@@ -51,10 +51,15 @@ a przedziały dla wysokiego wolumenu pokrywają tylko 69,37% obserwacji.
 Niski wolumen ma MAE o 28,63% gorsze od zamrożonego baseline'u i zbyt
 szerokie przedziały. Drugi fold nie poprawia globalnego holdout MAE.
 Progi nie zostały poluzowane; model pozostaje `not_ready`.
-Kolejny zakres to **04.8 — evidence runu i minimalny lifecycle handoff**.
-Może utrwalić wynik diagnostyczny i blokady; dopuszczenie modelu wymaga
-oddzielnego rozwiązania braków próby i jakości, bez strojenia na final test.
-Ten zakres nie ma jeszcze publikacji ani zdalnego Required CI.
+[Plikowy run 04.8](forecast-run.md) utrwala komplet rodziców, predykcje,
+modele, config, metryki, card, signature i blokady w jednym archiwum
+z checksumami. [Odbiór 04.8](evidence/04-08-handoff.md) wskazuje jego ID,
+walidację i sposób importu w AI 05 bez przypisywania historycznego treningu
+do MLflow. **AI 04 jest zrealizowane jako development evidence, lecz model
+nie przeszedł bramki jakości i nie jest gotowy do serving.** Dopuszczenie
+wymaga oddzielnego rozwiązania braków próby i jakości na późniejszych danych,
+bez strojenia na final test. Ten branch nie ma jeszcze zdalnej publikacji
+ani Required CI.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
