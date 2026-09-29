@@ -4,7 +4,30 @@ from dataclasses import dataclass
 from typing import Literal
 
 Role = Literal["viewer", "operator", "admin"]
-Capability = Literal["forecast:read", "access:admin", "knowledge:read", "knowledge:index"]
+Capability = Literal[
+    "forecast:read",
+    "access:admin",
+    "knowledge:read",
+    "knowledge:index",
+    "assistant:query",
+    "sales:read",
+    "inventory:read",
+    "stockout:read",
+    "anomalies:read",
+    "operations:read",
+    "model:read",
+]
+DATA_CAPABILITIES: frozenset[Capability] = frozenset(
+    {
+        "forecast:read",
+        "sales:read",
+        "inventory:read",
+        "stockout:read",
+        "anomalies:read",
+        "operations:read",
+        "model:read",
+    }
+)
 Channel = Literal["store", "online"]
 
 

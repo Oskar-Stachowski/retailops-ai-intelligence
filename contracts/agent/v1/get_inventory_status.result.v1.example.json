@@ -1,0 +1,24 @@
+{
+  "as_of": "2026-08-22T23:59:59Z",
+  "contract_type": "agent_tool_result",
+  "error": null,
+  "freshness_status": "current",
+  "items": [
+    {
+      "available_units": 10.0,
+      "channel": "store",
+      "mapping_ref": "fixture-location-mapping-v1",
+      "physical_units": 12.0,
+      "product_id": "p-101",
+      "reserved_units": 2.0,
+      "selling_location_id": "s-03",
+      "stock_location_id": "warehouse-01",
+      "unit_of_measure": "unit"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_kind": "fixture",
+  "source_ref": "fixture-get_inventory_status",
+  "status": "ok",
+  "tool": "get_inventory_status"
+}

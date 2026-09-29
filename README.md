@@ -8,7 +8,9 @@ danych/run/tool, lokalne poświadczenia i scope API oraz kontrole CI.
 korpus, wersjonowane fragmenty i rzeczywiste embeddings Bedrock, pgvector,
 filtry uprawnień/statusów, 44 pytania golden, trwałe runy oraz kwalifikację,
 atomową aktywację i rollback. Aktualny odbiór i granice opisuje
-[status](docs/STATUS.md). Generowanie odpowiedzi i narzędzia agenta należą do AI 12.
+[status](docs/STATUS.md). [AI 12 jest rozpoczęty](docs/agent-tools.md): typowany
+katalog narzędzi, uprawnienia, budżet i adapter wiedzy. Generowanie odpowiedzi
+oraz rzeczywiste narzędzia biznesowe pozostają kolejnym zakresem.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).
 [Uruchomienie stosu](docs/local-stack.md) i [HTTP](docs/http-service.md).

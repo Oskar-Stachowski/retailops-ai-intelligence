@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "freshness_seconds": {
+      "default": 300,
+      "maximum": 86400,
+      "minimum": 1,
+      "title": "Freshness Seconds",
+      "type": "integer"
+    },
+    "max_calls": {
+      "default": 6,
+      "maximum": 6,
+      "minimum": 1,
+      "title": "Max Calls",
+      "type": "integer"
+    },
+    "max_locations": {
+      "default": 5,
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Max Locations",
+      "type": "integer"
+    },
+    "max_period_days": {
+      "default": 90,
+      "maximum": 90,
+      "minimum": 1,
+      "title": "Max Period Days",
+      "type": "integer"
+    },
+    "max_products": {
+      "default": 20,
+      "maximum": 20,
+      "minimum": 1,
+      "title": "Max Products",
+      "type": "integer"
+    },
+    "max_result_bytes": {
+      "default": 131072,
+      "maximum": 131072,
+      "minimum": 1024,
+      "title": "Max Result Bytes",
+      "type": "integer"
+    },
+    "max_rows": {
+      "default": 50,
+      "maximum": 50,
+      "minimum": 1,
+      "title": "Max Rows",
+      "type": "integer"
+    },
+    "profile": {
+      "const": "agent-tools-bounded-v1",
+      "title": "Profile",
+      "type": "string"
+    },
+    "request_deadline_seconds": {
+      "default": 45.0,
+      "exclusiveMinimum": 0,
+      "maximum": 45,
+      "title": "Request Deadline Seconds",
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "tool_timeout_seconds": {
+      "default": 5.0,
+      "exclusiveMinimum": 0,
+      "maximum": 5,
+      "title": "Tool Timeout Seconds",
+      "type": "number"
+    }
+  },
+  "required": [
+    "schema_version",
+    "profile"
+  ],
+  "title": "ToolPolicy",
+  "type": "object"
+}

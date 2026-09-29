@@ -13,7 +13,13 @@ from retailops_ai.api.index_jobs import add_index_routes
 from retailops_ai.api.middleware import single_header
 from retailops_ai.api.models import Problem
 from retailops_ai.data_contracts.common import Contract, Symbol, Versioned
-from retailops_ai.domain.access import Capability, Principal, Role, can_read_forecast
+from retailops_ai.domain.access import (
+    DATA_CAPABILITIES,
+    Capability,
+    Principal,
+    Role,
+    can_read_forecast,
+)
 from retailops_ai.knowledge.retrieval import RetrievalRequest, RetrievalResult
 from retailops_ai.pipelines.retrieval import KnowledgeDenied, resolve_scope
 from retailops_ai.security.local import LocalAccess
@@ -86,7 +92,7 @@ def access_router(
                 selling_location_ids=sorted(principal.selling_location_ids),
                 channels=sorted(principal.channels),
             )
-            if "forecast:read" in principal.capabilities
+            if DATA_CAPABILITIES & principal.capabilities
             else None
         )
         return IdentityResponse(

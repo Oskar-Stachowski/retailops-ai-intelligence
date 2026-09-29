@@ -22,6 +22,12 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="retailops-ai")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("version", help="Print package identity as JSON.")
+    commands.add_parser("agent-tools", help="Inspect the closed read-only agent tool catalogue.")
+    agent_check = commands.add_parser(
+        "agent-tool-check", help="Validate an agent tool contract offline."
+    )
+    agent_check.add_argument("direction", choices=["request", "result", "policy"])
+    agent_check.add_argument("path", type=Path)
     check = commands.add_parser("config-check", help="Validate settings without network or writes.")
     check.add_argument("--env-file", type=Path, help="Explicit dotenv file; environment wins.")
     serve = commands.add_parser("serve", help="Run the local diagnostic HTTP service.")
@@ -84,6 +90,10 @@ def main(argv: list[str] | None = None) -> int:
     add_release_check(commands)
     add_bedrock_command(commands)
     args = parser.parse_args(argv)
+    if args.command in {"agent-tools", "agent-tool-check"}:
+        from retailops_ai.cli_agent import run_agent_command
+
+        return run_agent_command(args)
     if args.command == "knowledge-bedrock-prepare":
         return run_bedrock_prepare(args)
 

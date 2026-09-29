@@ -1,11 +1,12 @@
 # Aktualny status
 
-Aktualizacja: **2026-09-28**. **Etap 11 — RAG jest odebrany lokalnie.**
+Aktualizacja: **2026-09-29**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
 przygotowanie, kwalifikację, aktywację i rollback. [Końcowy odbiór](evidence/11-completion.md)
-wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodzi
-przez chroniony `main` oraz Required CI; stan wykonania pokazuje
-[workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
+wiąże implementację z pomiarami i ograniczeniami. Etap 11 jest opublikowany na
+chronionym `main` przez [PR #4](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/4);
+[Required CI na main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36461392661)
+ma `success`.
 
 ## Etap 11
 
@@ -31,6 +32,22 @@ Fake pozostaje wyłącznie ścieżką testową i nigdy nie uprawnia do użytkowe
 Szczegółowe wcześniejsze evidence opisuje historyczne, mniejsze zakresy odbioru;
 nie stanowi bieżącej listy braków.
 
+## Rozpoczęty AI 12
+
+[Pierwszy zakres](agent-tools.md) obejmuje osiem narzędzi tylko do odczytu,
+typowane request/result schemas, principal z prywatnych poświadczeń, jawne
+`assistant:query` i prawa poszczególnych źródeł, kontrolę całego scope oraz
+wspólny budżet wywołań. Adapter wiedzy korzysta z jednego serwerowego pinu
+AI 11. Przyszłe narzędzia biznesowe mają ścisłe kontrakty i testowe odpowiedniki;
+brak rzeczywistego źródła jest jawnym `unavailable`.
+[Odbiór](evidence/12-tools.md) opisuje lokalne testy i granice.
+Ten zakres jest zapisany lokalnie na osobnym branchu `ai/12-tools`.
+
+Następny zakres tego strumienia: wersjonowana konfiguracja/prompty i fake chat
+provider, potem ograniczony graf oraz walidacja odpowiedzi. Rzeczywiste źródła
+ML/operacyjne, Assistant API, trwały trace, admission, golden odpowiedzi,
+chat Bedrock oraz E2E sugestii pozostają do realizacji. Pełne AI 12 wymaga AI 10.
+
 ## Fundament i dalsza praca
 
 Etap 01 ma odbiór lokalny i zdalny: pakiet/CLI, settings, HTTP/telemetry,
@@ -40,8 +57,8 @@ wykonywalne kontrakty danych/run/tool, jawne migracje i Required CI.
 [kontrakty](data-contracts.md), [odbiór zdalny](evidence/01-remote-ci.md).
 
 Najbliższy pełny zakres to **AI 03**: typed Parquet i immutable eksport w
-cloud-native, importer/curated w AI-intelligence. Równolegle można przygotować
-interfejsy i test doubles **AI 12**. Pełne zamknięcie agenta wymaga **AI 10 i 11**;
+cloud-native, importer/curated w AI-intelligence. Równolegle można
+kontynuować [rozpoczęte narzędzia **AI 12**](agent-tools.md). Pełne zamknięcie agenta wymaga **AI 10 i 11**;
 11 jest gotowy, 10 nadal należy do późniejszego ciągu danych/ML/integracji.
 [Pisemna mapa etapów i repozytoriów](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/plans/ai/kolejnosc-i-repozytoria.md).
 
@@ -50,7 +67,7 @@ interfejsy i test doubles **AI 12**. Pełne zamknięcie agenta wymaga **AI 10 i 
 Odbiór dotyczy lokalnego retrieval na konkretnym zatwierdzonym snapshotcie.
 Zmiana dokumentacji na `main` nie aktualizuje automatycznie korpusu. Kolejna
 wersja wymaga nowego snapshotu, przeglądu i ewaluacji.
-Nie ma jeszcze generowania odpowiedzi, ewaluacji groundedness ani wykonywania
-narzędzi agenta — to AI 12. Pipeline danych, modele, integracja zdarzeń oraz
+Generowanie odpowiedzi, ewaluacja groundedness i pełna ścieżka agenta
+pozostają do realizacji w AI 12. Pipeline danych, modele, integracja zdarzeń oraz
 wdrożenie AWS/EKS mają dalsze bramki. Limit AWS na proces nie zastępuje wspólnego
 budżetu wielu replik ani produkcyjnego IAM. Nie deklarujemy wdrożenia w chmurze.

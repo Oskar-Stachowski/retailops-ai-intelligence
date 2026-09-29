@@ -6,6 +6,9 @@ zmiany i PR-y, [security](security.md) — granice dostępu i zgłoszenia.
 [Semantyczny RAG](knowledge-semantic.md) opisuje rzeczywiste embeddings,
 kwalifikację jakości, aktywację i rollback Etapu 11. Historyczne evidence
 zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
+[Narzędzia agenta AI 12](agent-tools.md) opisują typowany katalog, uprawnienia,
+budżet i testowe źródła; [odbiór pierwszego zakresu](evidence/12-tools.md)
+wiąże je z lokalnymi testami.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują

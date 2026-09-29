@@ -357,7 +357,14 @@
                 "forecast:read",
                 "access:admin",
                 "knowledge:read",
-                "knowledge:index"
+                "knowledge:index",
+                "assistant:query",
+                "sales:read",
+                "inventory:read",
+                "stockout:read",
+                "anomalies:read",
+                "operations:read",
+                "model:read"
               ],
               "type": "string"
             },

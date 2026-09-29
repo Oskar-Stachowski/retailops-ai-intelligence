@@ -47,8 +47,8 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make compose-up/down` | Lokalny stos DB/API/MLflow, jawne migracje, zachowane wolumeny |
 | `make compose-config` | Walidacja Compose bez wypisywania sekretów |
 | `make compose-smoke` | Rzeczywiste próby persistence i awarii, następnie shutdown |
-| `make contracts-check` | Porównanie intelligence/access/knowledge snapshots z kodem, walidacja struktury rejestru korpusu |
-| `make contracts` | Regeneracja HTTP oraz intelligence/access/knowledge schemas/examples do przeglądu |
+| `make contracts-check` | Porównanie intelligence/access/knowledge/agent snapshots z kodem, walidacja struktury rejestru korpusu |
+| `make contracts` | Regeneracja HTTP oraz intelligence/access/knowledge/agent schemas/examples do przeglądu |
 
 Gitleaks jest osobnym narzędziem; zainstaluj wersję 8.30.1 z
 [oficjalnego wydania](https://github.com/gitleaks/gitleaks/releases/tag/v8.30.1)
@@ -82,3 +82,7 @@ kandydacki manifest. Nie wymaga uruchomionego stosu DB/API.
 do odrębnej bazy AI. Build nie uruchamia DB lub AWS; zapis nie aktywuje indeksu.
 [Parser/chunker](knowledge-chunks.md) dodaje offline `chunk-build`; konfiguracja
 reguł i rozmiaru jest wersjonowana w `knowledge/chunker.v1.json`.
+
+[Katalog narzędzi agenta](agent-tools.md) dodaje offline `agent-tools`
+i `agent-tool-check`. Wykonawca jest na tym etapie interfejsem serwerowym;
+Assistant API będzie dodane w dalszym zakresie AI 12.
