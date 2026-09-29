@@ -1,0 +1,17 @@
+{
+  "aws_calls": 0,
+  "calendar_id": "forecast-calendar-sha256-83598117e5bdcb3645d5b9e87594c301d302e27ddc4ad27c52ecd7e31e736c6f",
+  "feature_rows": 1518,
+  "history_contexts": 114,
+  "implementation_loaded_from_wheel": true,
+  "inputs_id": "forecast-inputs-sha256-3d510e86ef6b571a84ec7012740bba4f666f71fd2ee72c5a2baf98ea3f7dbe19",
+  "native_parquet_columns_unique": true,
+  "schemas_packaged": [
+    "history_context.schema.json",
+    "input_row.schema.json",
+    "panel_policy.schema.json"
+  ],
+  "scope": "extracted wheel outside checkout; import/curated/calendar/draft inputs/verify/native Parquet read",
+  "status": "passed",
+  "wheel_sha256": "2683cc1def0d09875ee3a19d66afb8292aad2b31324d51d1bd5e5af3b93a4b30"
+}

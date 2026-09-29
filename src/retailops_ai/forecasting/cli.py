@@ -33,10 +33,32 @@ def main(argv: list[str] | None = None) -> int:
     verify = commands.add_parser("calendar-verify")
     verify.add_argument("--manifest", type=Path, required=True)
     verify.add_argument("--curated-dir", type=Path, required=True)
+    inputs = commands.add_parser("inputs-build")
+    inputs.add_argument("--curated-dir", type=Path, required=True)
+    inputs.add_argument("--calendar", type=Path, required=True)
+    inputs.add_argument("--output-root", type=Path, default=Path("data/generated/forecast-inputs"))
+    inputs_verify = commands.add_parser("inputs-verify")
+    inputs_verify.add_argument("--inputs-dir", type=Path, required=True)
     args = parser.parse_args(argv)
     summary: dict[str, object]
     try:
-        if args.command == "calendar-verify":
+        if args.command in {"inputs-build", "inputs-verify"}:
+            from retailops_ai.forecasting.features_store import build_inputs, verify_inputs
+
+            directory = (
+                build_inputs(args.curated_dir, load_calendar(args.calendar), args.output_root)
+                if args.command == "inputs-build"
+                else args.inputs_dir
+            )
+            document = verify_inputs(directory)
+            summary = {
+                "status": "passed",
+                "inputs_id": document["inputs_id"],
+                "directory": str(directory),
+                "stats": document["descriptor"]["stats"],
+                "forecast_model_status": document["forecast_model_status"],
+            }
+        elif args.command == "calendar-verify":
             manifest = load_calendar(args.manifest)
             if verified_parent(args.curated_dir) != manifest.descriptor.parent:
                 raise SnapshotError("forecast_calendar_parent_mismatch")

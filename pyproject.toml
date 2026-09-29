@@ -56,6 +56,9 @@ packages = ["src/retailops_ai"]
 "contracts/curated/v1/curated_manifest.schema.json" = "retailops_ai/curated/curated_manifest.schema.json"
 "contracts/forecast/v1/task.schema.json" = "retailops_ai/forecasting/task.schema.json"
 "contracts/forecast/v1/calendar_manifest.schema.json" = "retailops_ai/forecasting/calendar_manifest.schema.json"
+"contracts/forecast/v1/history_context.schema.json" = "retailops_ai/forecasting/history_context.schema.json"
+"contracts/forecast/v1/input_row.schema.json" = "retailops_ai/forecasting/input_row.schema.json"
+"contracts/forecast/v1/panel_policy.schema.json" = "retailops_ai/forecasting/panel_policy.schema.json"
 
 [tool.uv]
 required-version = "==0.12.19"

@@ -22,9 +22,10 @@ UTC nie przesuwa się przy europejskiej zmianie czasu.
 
 Okna raportowe obejmują D+1…D+7 oraz D+1…D+14. Nakładające się dni mają
 jedną dzienną prognozę: 14 kluczy na serię i origin, nie 21.
-Kalendarz nie mnoży jeszcze dat przez asortyment i nie nadaje scoring eligibility.
-Aktywny panel, cechy świąt/sezonów z istniejącego source calendar, warmup,
-zero/missing/closed oraz uprawnienia do oceny dojdą w 04.2.
+Kalendarz sam nie mnoży dat przez asortyment i nie nadaje scoring eligibility.
+[Panel i cechy 04.2](forecast-features.md) sprawdzają aktywne kombinacje,
+wykorzystują święta/sezony source calendar oraz zachowują zero/missing/closed
+i coverage historii. Pełna kwalifikacja oceny należy do dalszych punktów 04.
 
 ## Granica dostępności i opóźnienia
 
@@ -93,8 +94,8 @@ semantyczna Pydantic są sprawdzane w `make contracts-check`.
 
 ## Kolejny zakres
 
-**04.2:** poprawny panel i origin-relative cechy, bez inventory. Dalej:
-feature/split IDs, baseline, modele, uczciwy backtesting i artefakty.
+**04.3:** formalne feature/split manifests i kwalifikacja historii/etykiet.
+Dalej: baseline, modele, uczciwy backtesting i artefakty.
 AI 06 może rozwijać się równolegle w RetailOps; zmienione źródło otrzyma nowe
 IDs i będzie wymagało ponownego importu oraz zależnych ocen.
 

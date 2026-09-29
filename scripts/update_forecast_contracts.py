@@ -5,13 +5,20 @@ import json
 from pathlib import Path
 
 from retailops_ai.forecasting.contract import CalendarManifest, TaskConfig
+from retailops_ai.forecasting.features_contract import HistoryContext, InputRow, PanelPolicy
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def artifacts() -> dict[Path, object]:
     result: dict[Path, object] = {}
-    for name, model in (("task", TaskConfig), ("calendar_manifest", CalendarManifest)):
+    for name, model in (
+        ("task", TaskConfig),
+        ("calendar_manifest", CalendarManifest),
+        ("history_context", HistoryContext),
+        ("input_row", InputRow),
+        ("panel_policy", PanelPolicy),
+    ):
         schema = model.model_json_schema()
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
         schema["$id"] = f"urn:retailops:forecast:{name}:1.0.0"

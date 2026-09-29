@@ -14,6 +14,8 @@ sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)
 normalizuje fakty, mapuje lokalizacje, zachowuje kwarantannę i odczyt as-of.
 [Forecasting 04.1](forecasting.md) definiuje zadanie, kalendarz i granice wiedzy;
 [odbiór](evidence/04-01-calendar.md) potwierdza lokalne testy i smoke.
+[Panel i cechy 04.2](forecast-features.md) zachowują aktywny kalendarz,
+braki/zera, kategorię i znane plany oraz przypiętą historię dla wszystkich horyzontów.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.
