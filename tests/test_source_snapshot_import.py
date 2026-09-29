@@ -6,6 +6,7 @@ import hashlib
 import json
 import selectors
 import shutil
+import sqlite3
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -24,7 +25,7 @@ from retailops_ai.source_snapshot.files import SnapshotError
 from retailops_ai.source_snapshot.importer import import_snapshot, verify_import, verify_snapshot
 from retailops_ai.source_snapshot.protocol import Limits
 from retailops_ai.source_snapshot.publish import publish_noreplace
-from retailops_ai.source_snapshot.tables import arrow_schema
+from retailops_ai.source_snapshot.tables import arrow_schema, verify_table
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "data/fixtures/ai-smoke-v1/snapshot"
@@ -537,6 +538,59 @@ def test_recomputed_date_ranges_are_not_trusted_metadata(copied: Path) -> None:
     reseal(copied, document)
     with pytest.raises(SnapshotError, match="typed_date_range_mismatch"):
         verify_snapshot(copied)
+
+
+@pytest.mark.parametrize("name", ["product_catalog", "daily_demand_exclusions"])
+@pytest.mark.parametrize("tampered", [False, True])
+def test_null_temporal_columns_and_empty_tables_keep_zero_ranges(
+    tmp_path: Path, name: str, tampered: bool
+) -> None:
+    table = next(t for t in manifest(FIXTURE)["tables"] if t["table"] == name)
+    schema = arrow_schema(table["schema"])
+    rows = []
+    if name == "product_catalog":
+        rows = pq.ParquetFile(FIXTURE / table["files"][0]["path"]).read().to_pylist()
+        for row in rows:
+            row["discontinue_date"] = None
+        table["date_range"]["value_count"] -= table["field_ranges"]["discontinue_date"][
+            "value_count"
+        ]
+        table["field_ranges"]["discontinue_date"] = {
+            "date_start": None,
+            "date_end": None,
+            "value_count": 0,
+        }
+        # The fixture spans availability on July 1 and launches through July 9.
+        table["date_range"].update(
+            date_start="2026-07-01",
+            date_end="2026-07-09",
+        )
+    else:
+        table["date_range"] = {"date_start": None, "date_end": None, "value_count": 0}
+        table["field_ranges"] = {"business_date": dict(table["date_range"])}
+    table["row_count"] = len(rows)
+    table["partition_source_field"] = None
+    table["content_sha256"] = multiset_digest(rows, schema.names, tmp_path / "hash.sqlite")
+    output = tmp_path / "facts" / name / "part-000000.parquet"
+    output.parent.mkdir(parents=True)
+    pq.write_table(pa.Table.from_pylist(rows, schema=schema), output)
+    table["files"] = [{"path": output.relative_to(tmp_path).as_posix(), "row_count": len(rows)}]
+    schemas = tmp_path / "schemas"
+    schemas.mkdir()
+    (schemas / (name + ".arrow.json")).write_bytes(
+        raw_json({"table": name, "schema": table["schema"]})
+    )
+    if tampered:
+        key = "discontinue_date" if name == "product_catalog" else "business_date"
+        table["field_ranges"][key]["value_count"] = 1
+    scratch = tmp_path / "scratch"
+    scratch.mkdir()
+    with sqlite3.connect(tmp_path / "dates.sqlite") as dates:
+        if tampered:
+            with pytest.raises(SnapshotError, match="typed_date_range_mismatch"):
+                verify_table(tmp_path, table, scratch, dates, Limits())
+        else:
+            verify_table(tmp_path, table, scratch, dates, Limits())
 
 
 def test_ai_output_cannot_masquerade_as_a_fact(copied: Path) -> None:

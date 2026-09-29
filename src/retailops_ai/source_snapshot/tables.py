@@ -83,7 +83,12 @@ def verify_table(
     field = partition_field(table)
     namespace = "evaluation_truth" if table["data_class"] == "simulation_truth" else "facts"
     prefix = namespace + "/" + table["table"] + "/"
-    digest = RowDigest(scratch / (table["table"] + ".sqlite"), schema.names, table["grain"])
+    digest = RowDigest(
+        scratch / (table["table"] + ".sqlite"),
+        schema.names,
+        table["grain"],
+        [f.name for f in schema if pa.types.is_date(f.type) or pa.types.is_timestamp(f.type)],
+    )
     try:
         for ref in table["files"]:
             suffix = ref["path"].removeprefix(prefix)

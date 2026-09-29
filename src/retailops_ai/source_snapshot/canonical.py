@@ -41,7 +41,13 @@ def canonical_cell(value: object) -> object:
 class RowDigest:
     """Canonical duplicate rows are retained; grain uniqueness is checked separately."""
 
-    def __init__(self, database: Path, columns: list[str], grain: list[str]) -> None:
+    def __init__(
+        self,
+        database: Path,
+        columns: list[str],
+        grain: list[str],
+        temporal_columns: Iterable[str] = (),
+    ) -> None:
         self.connection = sqlite3.connect(database)
         self.connection.execute("PRAGMA cache_size=-2048")
         self.connection.execute("PRAGMA temp_store=FILE")
@@ -50,7 +56,10 @@ class RowDigest:
         self.columns = columns
         self.grain = grain
         self.rows = 0
-        self.ranges: dict[str, dict[str, Any]] = {}
+        self.ranges: dict[str, dict[str, Any]] = {
+            key: {"date_start": None, "date_end": None, "value_count": 0}
+            for key in temporal_columns
+        }
 
     def add(self, row: dict[str, Any]) -> None:
         record = {key: canonical_cell(row[key]) for key in self.columns}
@@ -73,8 +82,8 @@ class RowDigest:
                 previous = self.ranges.setdefault(
                     key, {"date_start": day, "date_end": day, "value_count": 0}
                 )
-                previous["date_start"] = min(previous["date_start"], day)
-                previous["date_end"] = max(previous["date_end"], day)
+                previous["date_start"] = min(previous["date_start"] or day, day)
+                previous["date_end"] = max(previous["date_end"] or day, day)
                 previous["value_count"] += 1
         self.rows += 1
 
@@ -85,7 +94,7 @@ class RowDigest:
         return digest.hexdigest()
 
     def date_range(self) -> dict[str, Any]:
-        populated = list(self.ranges.values())
+        populated = [r for r in self.ranges.values() if r["value_count"]]
         return {
             "date_start": min((r["date_start"] for r in populated), default=None),
             "date_end": max((r["date_end"] for r in populated), default=None),
