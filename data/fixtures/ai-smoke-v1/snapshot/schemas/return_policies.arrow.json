@@ -1,0 +1,40 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "category_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "window_days",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "max_ingestion_delay_days",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "known_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "returns_policy_version",
+      "nullable": false,
+      "type": "string"
+    }
+  ],
+  "table": "return_policies"
+}

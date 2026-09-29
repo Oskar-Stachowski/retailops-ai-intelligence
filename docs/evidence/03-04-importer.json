@@ -1,0 +1,188 @@
+{
+  "verified_at_utc": "2026-09-29T05:51:00.002363+00:00",
+  "status": "passed_locally",
+  "implementation_commit": "aadd145e6f023078dcc34783247213d6fe8fdde5",
+  "base_commit": "4376cb84d428d6370c05eaa6ebf50a5091bd9a62",
+  "accepted_main_base": "abf3f69a6a78c444b5a8a910fef8b3b43ba047a9",
+  "branch": "ai/03-04-importer",
+  "worktree": "/private/tmp/retailops-ai-03-04",
+  "ai12_worktree": "/private/tmp/retailops-ai-12-tools",
+  "ai12_modified_by_this_task": false,
+  "handoff_version": "1.0.0",
+  "source_schema": "2.6.0",
+  "snapshot_schema": "1.0.0",
+  "import_receipt_version": "1.0.0",
+  "test_suites": {
+    "03-04-import-tests.xml": {
+      "tests": "48",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "37.415"
+    },
+    "03-04-tests.xml": {
+      "tests": "706",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "175.953"
+    }
+  },
+  "benchmarks": {
+    "fixture": [
+      {
+        "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+        "snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+        "tables": 25,
+        "rows": 31171,
+        "snapshot_files": 74,
+        "snapshot_bytes": 1967631,
+        "seconds": 4.257624332996784,
+        "peak_rss_mib": 73.328125,
+        "source_commit": "6561481506d9e5ec9f7fc48bbe54a80567420128"
+      },
+      {
+        "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+        "snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+        "tables": 25,
+        "rows": 31171,
+        "snapshot_files": 74,
+        "snapshot_bytes": 1967631,
+        "seconds": 4.162452417003806,
+        "peak_rss_mib": 76.828125,
+        "source_commit": "6561481506d9e5ec9f7fc48bbe54a80567420128"
+      }
+    ],
+    "temporal": [
+      {
+        "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22",
+        "snapshot_id": "snapshot-sha256-d84c7b9630c6a34f7807abc7560253bf8e7ba3d7d962abee8aca580cf909b767",
+        "tables": 25,
+        "rows": 52973,
+        "snapshot_files": 1211,
+        "snapshot_bytes": 9533017,
+        "seconds": 18.463042665985995,
+        "peak_rss_mib": 61.234375,
+        "source_commit": "b5d2804001085d9dee4b37ddfb90d8697d05ae4e"
+      },
+      {
+        "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22",
+        "snapshot_id": "snapshot-sha256-d84c7b9630c6a34f7807abc7560253bf8e7ba3d7d962abee8aca580cf909b767",
+        "tables": 25,
+        "rows": 52973,
+        "snapshot_files": 1211,
+        "snapshot_bytes": 9533017,
+        "seconds": 15.201005332986824,
+        "peak_rss_mib": 62.46875,
+        "source_commit": "b5d2804001085d9dee4b37ddfb90d8697d05ae4e"
+      }
+    ],
+    "truth": [
+      {
+        "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+        "snapshot_id": "snapshot-sha256-0186ca4acd48a9bf04ad2a946765913a949f6af931000af5c140552d760ecd07",
+        "tables": 29,
+        "rows": 32759,
+        "snapshot_files": 83,
+        "snapshot_bytes": 2129701,
+        "seconds": 5.46861920900119,
+        "peak_rss_mib": 75.6875,
+        "source_commit": "b5d2804001085d9dee4b37ddfb90d8697d05ae4e"
+      },
+      {
+        "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+        "snapshot_id": "snapshot-sha256-0186ca4acd48a9bf04ad2a946765913a949f6af931000af5c140552d760ecd07",
+        "tables": 29,
+        "rows": 32759,
+        "snapshot_files": 83,
+        "snapshot_bytes": 2129701,
+        "seconds": 7.258046374990954,
+        "peak_rss_mib": 73.53125,
+        "source_commit": "b5d2804001085d9dee4b37ddfb90d8697d05ae4e"
+      }
+    ]
+  },
+  "core_files_sha256": {
+    "Makefile": "fbd68d9d043d537ad6ca70b94e86533e529fe805d401b05bb90d5bc1f90bfba8",
+    "contracts/source_snapshot/v1/retail_simulation.v1.schema.json": "f7ef44b745b0cec09489435e5f535681833f018b996328435e2d1d086e98a8ee",
+    "pyproject.toml": "0dbe4d5fb1e823ae5a7321e324089ea2b925b682abc86796c06005f9fdc4ccf6",
+    "scripts/check_snapshot_import.py": "f27b379a0d4ceaf614a23a7e3977c2b89cea384ee4a2282c729094251beb18fd",
+    "src/retailops_ai/source_snapshot/__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+    "src/retailops_ai/source_snapshot/canonical.py": "e21bb102037bb7bab2e1cf77359e1a23478197aaf1095092167fad16bd6e7cbb",
+    "src/retailops_ai/source_snapshot/cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+    "src/retailops_ai/source_snapshot/files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+    "src/retailops_ai/source_snapshot/importer.py": "f23edb66919f274f131b9701244f509e7db140b36a1dc794156af3e8561e3467",
+    "src/retailops_ai/source_snapshot/protocol.py": "eda46d150967182f3c943b201909629e6c16b976dc21c44faa9fbb68d915f6ae",
+    "src/retailops_ai/source_snapshot/publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+    "src/retailops_ai/source_snapshot/tables.py": "1f5562f10ba4bd4cfbbefa3331adb4f300c8b1672d4fb867779176325a6c001d",
+    "tests/test_source_snapshot_import.py": "2f182c435626816b203cc1c875b5640443a35c23cb836ae1492092478bc1d156",
+    "uv.lock": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d"
+  },
+  "linux_atomic_probe": {
+    "status": "passed",
+    "platform": "linux",
+    "empty_destination_refused": true,
+    "complete_publication": true,
+    "image": "python@sha256:90744cff8f32887f075c47d747a173ff333e9e98801667af93c357fa9f5e28ff",
+    "network": "none",
+    "filesystem": "read_only",
+    "user": "65534:65534",
+    "scope": "actual production publish.py and files.py; no PyArrow pipeline in Linux probe",
+    "probe_sha256": "2b2abeec806709d6214b7a05a7b340431d35fef3af4ab34f9ca9f1a676a183a1"
+  },
+  "checks": {
+    "all_regressions": "706 passed",
+    "importer_tests": "48 passed",
+    "known_fixture_byte_and_typed_hashes": "passed",
+    "source_and_snapshot_identity": "passed",
+    "fresh_process_smoke_twice": "passed",
+    "fresh_process_partitioned_temporal_twice": "passed: 1211 files",
+    "real_optional_truth_twice": "passed: 29 tables",
+    "input_and_existing_publication_unchanged": "passed",
+    "alternate_partition_layout_and_execution_metadata_idempotency": "passed",
+    "unsupported_versions_paths_classifications_and_reports": "passed",
+    "corruption_forged_byte_sha_typed_schema_grain_ranges_partitions": "passed",
+    "not_ready_use_case_blocks_import": "passed",
+    "concurrent_no_replace_and_empty_or_corrupted_destination": "passed",
+    "controlled_failure_cleanup_and_sigkill_hidden_staging_retry": "passed",
+    "detached_python_I_and_built_wheel_twice": "passed",
+    "no_generator_database_or_api_dependency": "passed",
+    "ruff_check_format": "passed: 180 files",
+    "mypy": "110 files passed",
+    "existing_intelligence_access_knowledge_contracts": "passed",
+    "wheel_sdist_and_compose_config": "passed",
+    "gitleaks_staged": "passed",
+    "remote_required_ci": "not_run"
+  },
+  "commands": [
+    "uv lock",
+    "uv sync --locked --extra snapshot",
+    "env PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_source_snapshot_import.py --junitxml=reports/03-04-import-tests.xml --maxfail=2",
+    "env PYTHONPATH=src .venv/bin/python -m pytest -q --junitxml=reports/03-04-tests.xml --maxfail=2",
+    "env PYTHONPATH=src .venv/bin/python scripts/check_snapshot_import.py --output reports/03-04-fixture-import.json",
+    "env PYTHONPATH=src .venv/bin/python scripts/check_snapshot_import.py --snapshot-dir /Users/oskarstachowski/retailops-cloud-native-platform/data/generated/ai03-04/facts/source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22 --output reports/03-04-temporal-import.json",
+    "env PYTHONPATH=src .venv/bin/python scripts/check_snapshot_import.py --snapshot-dir /Users/oskarstachowski/retailops-cloud-native-platform/data/generated/ai03-04/truth/source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00 --allow-evaluation-truth --output reports/03-04-truth-import.json",
+    ".venv/bin/ruff check .",
+    ".venv/bin/ruff format --check .",
+    "env PYTHONPATH=src .venv/bin/python -m mypy",
+    ".venv/bin/python scripts/check_repository.py",
+    "env PYTHONPATH=src .venv/bin/python scripts/update_intelligence_contracts.py --check",
+    "env PYTHONPATH=src .venv/bin/python scripts/update_access_contracts.py --check",
+    "env PYTHONPATH=src .venv/bin/python scripts/update_knowledge_contracts.py --check",
+    "env PYTHONPATH=src .venv/bin/python -m hatchling build -t wheel -t sdist",
+    "env PYTHONPATH=src .venv/bin/python scripts/local_stack.py config",
+    "gitleaks protect --staged --redact --report-format json --report-path reports/03-04-gitleaks-core.json",
+    "git diff --check"
+  ],
+  "limitations": [
+    "Local commits only; no push, remote merge or remote Required CI.",
+    "Curated 03.5, quarantine/mapping/PIT reads and full cross-repo gate 03.6 remain open; 04/06 still closed.",
+    "Source reports are checked for integrity, known gate shape/status/value and readiness, not regenerated source qualification or producer authentication.",
+    "POSIX no-replace publication supported on tested macOS/Linux; unsupported filesystem/kernel fails closed.",
+    "Handled errors clean staging; SIGKILL can leave a private hidden orphan, requiring owner-controlled cleanup after checking no live process.",
+    "Private truth filesystem modes do not isolate same-UID processes; no API joins/mounts or automatic truth use added.",
+    "Bounded smoke acceptance does not qualify ai-dev/ai-training end-to-end or models; inventory stays false.",
+    "Linux probe tests production atomic publication only; full Linux PyArrow acceptance awaits Required CI.",
+    "Full regression required escalation because sandbox blocked two existing loopback HTTP tests. Final 706-test run has no failures/skips."
+  ]
+}

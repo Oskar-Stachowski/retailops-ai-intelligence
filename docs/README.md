@@ -8,6 +8,10 @@ kwalifikację jakości, aktywację i rollback Etapu 11. Historyczne evidence
 zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
+[Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
+registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
+sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)
+normalizuje fakty, mapuje lokalizacje, zachowuje kwarantannę i odczyt as-of.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.
@@ -77,3 +81,5 @@ Dokumentację dla ludzi utrzymujemy w `docs/`; root README jest wejściem,
 a licencja i konfiguracje narzędzi pozostają przy kodzie. Usuwamy rozwiązane
 wnioski i wykonane zadania z aktywnej listy. Evidence opisuje pomiar i jego
 ograniczenia; nie jest listą zakończonych zadań ani deklaracją wdrożenia.
+
+- [Pełna bramka cross-repo AI 03.6](evidence/03-06-cross-repo.md) — wspólny odbiór RetailOps i AI, publikacja oraz kolejne etapy.

@@ -1,0 +1,80 @@
+{
+  "limits": {
+    "rss_mib_per_run": 1024,
+    "seconds_per_run": 300
+  },
+  "runs": [
+    {
+      "evaluation_truth": false,
+      "importer": {
+        "code_files": {
+          "__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+          "canonical.py": "e21bb102037bb7bab2e1cf77359e1a23478197aaf1095092167fad16bd6e7cbb",
+          "cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+          "files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+          "importer.py": "f23edb66919f274f131b9701244f509e7db140b36a1dc794156af3e8561e3467",
+          "protocol.py": "eda46d150967182f3c943b201909629e6c16b976dc21c44faa9fbb68d915f6ae",
+          "publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+          "tables.py": "1f5562f10ba4bd4cfbbefa3331adb4f300c8b1672d4fb867779176325a6c001d"
+        },
+        "code_sha256": "a1178278eec95d6cfedfd5d96657fdd9f8135c934c8c5f03c9db685f4a4bb3c7",
+        "dependency_sha256": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d",
+        "handoff_sha256": "0b99b7a5ea09dffed17a7fbc6c2ebc38cabea4340d73d6729bbdbe5b08d74a8b",
+        "pyarrow_version": "25.0.1",
+        "version": "1.0.0"
+      },
+      "input_unchanged": true,
+      "peak_rss_mib": 61.234375,
+      "profile": "ai-temporal-smoke",
+      "reimport_unchanged": true,
+      "rows": 52973,
+      "seconds": 18.463042665985995,
+      "snapshot_bytes": 9533017,
+      "snapshot_files": 1211,
+      "snapshot_id": "snapshot-sha256-d84c7b9630c6a34f7807abc7560253bf8e7ba3d7d962abee8aca580cf909b767",
+      "source_commit": "b5d2804001085d9dee4b37ddfb90d8697d05ae4e",
+      "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22",
+      "source_repository": "retailops-cloud-native-platform",
+      "status": "passed",
+      "tables": 25,
+      "typed_parity": "passed"
+    },
+    {
+      "evaluation_truth": false,
+      "importer": {
+        "code_files": {
+          "__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+          "canonical.py": "e21bb102037bb7bab2e1cf77359e1a23478197aaf1095092167fad16bd6e7cbb",
+          "cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+          "files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+          "importer.py": "f23edb66919f274f131b9701244f509e7db140b36a1dc794156af3e8561e3467",
+          "protocol.py": "eda46d150967182f3c943b201909629e6c16b976dc21c44faa9fbb68d915f6ae",
+          "publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+          "tables.py": "1f5562f10ba4bd4cfbbefa3331adb4f300c8b1672d4fb867779176325a6c001d"
+        },
+        "code_sha256": "a1178278eec95d6cfedfd5d96657fdd9f8135c934c8c5f03c9db685f4a4bb3c7",
+        "dependency_sha256": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d",
+        "handoff_sha256": "0b99b7a5ea09dffed17a7fbc6c2ebc38cabea4340d73d6729bbdbe5b08d74a8b",
+        "pyarrow_version": "25.0.1",
+        "version": "1.0.0"
+      },
+      "input_unchanged": true,
+      "peak_rss_mib": 62.46875,
+      "profile": "ai-temporal-smoke",
+      "reimport_unchanged": true,
+      "rows": 52973,
+      "seconds": 15.201005332986824,
+      "snapshot_bytes": 9533017,
+      "snapshot_files": 1211,
+      "snapshot_id": "snapshot-sha256-d84c7b9630c6a34f7807abc7560253bf8e7ba3d7d962abee8aca580cf909b767",
+      "source_commit": "b5d2804001085d9dee4b37ddfb90d8697d05ae4e",
+      "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22",
+      "source_repository": "retailops-cloud-native-platform",
+      "status": "passed",
+      "tables": 25,
+      "typed_parity": "passed"
+    }
+  ],
+  "scope": "typed import/reimport/verify, not curated or model readiness",
+  "status": "passed"
+}

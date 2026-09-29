@@ -1,0 +1,50 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "route_key",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "version",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "selling_location_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "stock_location_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "effective_from",
+      "nullable": false,
+      "type": "date32[day]"
+    },
+    {
+      "name": "effective_to",
+      "nullable": false,
+      "type": "date32[day]"
+    },
+    {
+      "name": "available_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    }
+  ],
+  "table": "fulfillment_routes"
+}

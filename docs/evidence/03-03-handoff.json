@@ -1,0 +1,69 @@
+{
+  "date_utc": "2026-09-28T18:17:14.679302+00:00",
+  "status": "passed_locally",
+  "branch": "ai/03-03-handoff",
+  "base_commit": "1c3b65e2bff68a920c45a5fbfd39b64c2bc80d95",
+  "upstream_implementation": "e26faa2",
+  "scope": "handoff contract and pinned fixture acceptance; typed importer remains 03.4",
+  "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+  "snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+  "handoff_version": "1.0.0",
+  "package_files": 76,
+  "package_bytes": 2048665,
+  "identical_to_upstream": true,
+  "tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "658",
+    "time": "120.829",
+    "timestamp": "2026-09-28T20:11:20.711364+02:00",
+    "hostname": "Oskars-MacBook-Air.local"
+  },
+  "file_sha256": {
+    "scripts/check_snapshot_handoff.py": "4e6051ffc583316be36f2a98c1c230c6c45069765b11dd96588081bbc08494f0",
+    "tests/test_snapshot_handoff.py": "06bde2c0875878017a891953efb599e6638923cbafbcb099600677636c661a60",
+    "contracts/source_snapshot/v1/contract.json": "0b99b7a5ea09dffed17a7fbc6c2ebc38cabea4340d73d6729bbdbe5b08d74a8b",
+    "contracts/source_snapshot/v1/expected_manifest.json": "c41bad44bf7f9e12ff73973848dd149e392062b50aa9233faade44d875953c23",
+    "contracts/source_snapshot/v1/snapshot_manifest.schema.json": "8311d786153df76a98b7e0c68589644c60f43e9f0baeb65bc16175e36bffb105"
+  },
+  "checks": {
+    "all_tests": "658 passed after integration with completed RAG 11",
+    "handoff_tests": "15 passed",
+    "detached_python_isolated_twice": "passed",
+    "no_producer_generator_dependency": "passed",
+    "ruff_check_format": "passed",
+    "mypy": "101 files passed",
+    "contracts_check": "passed",
+    "wheel_build": "passed",
+    "gitleaks": "passed",
+    "remote_required_ci": "not_run",
+    "compose_config": "passed"
+  },
+  "commands": [
+    "env PYTHONPATH=src /Users/oskarstachowski/retailops-ai-intelligence/.venv/bin/python -m pytest -q --junitxml=reports/03-03-integrated-tests.xml --maxfail=2",
+    "/Users/oskarstachowski/retailops-ai-intelligence/.venv/bin/python scripts/check_snapshot_handoff.py",
+    "/Users/oskarstachowski/retailops-ai-intelligence/.venv/bin/ruff check .",
+    "/Users/oskarstachowski/retailops-ai-intelligence/.venv/bin/ruff format --check .",
+    "env PYTHONPATH=src /Users/oskarstachowski/retailops-ai-intelligence/.venv/bin/python -m mypy",
+    "env PYTHONPATH=src /Users/oskarstachowski/retailops-ai-intelligence/.venv/bin/python -m hatchling build -t wheel",
+    "/Users/oskarstachowski/retailops-ai-intelligence/.venv/bin/python scripts/check_repository.py",
+    "env PYTHONPATH=src /Users/oskarstachowski/retailops-ai-intelligence/.venv/bin/python scripts/local_stack.py config",
+    "gitleaks protect --staged --redact --report-format json --report-path reports/03-03-gitleaks.json",
+    "git diff --check"
+  ],
+  "implementation_commit": "654a54254e1965a3e4247aa22485684586f167e0",
+  "integrated_main_commit": "abf3f69a6a78c444b5a8a910fef8b3b43ba047a9",
+  "integration_commit": "0785edfaad80bfd2d9debce954c2d5e36b6dbb1b",
+  "initial_tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "642",
+    "time": "133.555",
+    "timestamp": "2026-09-28T20:04:05.026936+02:00",
+    "hostname": "Oskars-MacBook-Air.local"
+  }
+}

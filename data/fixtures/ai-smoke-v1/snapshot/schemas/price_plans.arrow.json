@@ -1,0 +1,75 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "plan_key",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "version",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "product_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "scope",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "selling_location_id",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "effective_from",
+      "nullable": false,
+      "type": "date32[day]"
+    },
+    {
+      "name": "effective_to",
+      "nullable": false,
+      "type": "date32[day]"
+    },
+    {
+      "name": "known_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "available_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "price",
+      "nullable": false,
+      "type": "decimal128(38, 2)"
+    },
+    {
+      "name": "currency",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "pricing_policy_version",
+      "nullable": false,
+      "type": "string"
+    }
+  ],
+  "table": "price_plans"
+}

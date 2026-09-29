@@ -27,6 +27,11 @@ dependencies = [
 
 [project.scripts]
 retailops-ai = "retailops_ai.cli:main"
+retailops-ai-snapshot = "retailops_ai.source_snapshot.cli:main"
+retailops-ai-curated = "retailops_ai.curated.cli:main"
+
+[project.optional-dependencies]
+snapshot = ["pyarrow==25.0.1", "jsonschema==4.26.0"]
 
 [dependency-groups]
 dev = [
@@ -42,6 +47,12 @@ dev = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/retailops_ai"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"contracts/source_snapshot/v1/contract.json" = "retailops_ai/source_snapshot/contract.json"
+"contracts/source_snapshot/v1/snapshot_manifest.schema.json" = "retailops_ai/source_snapshot/snapshot_manifest.schema.json"
+"uv.lock" = "retailops_ai/source_snapshot/dependencies.lock"
+"contracts/curated/v1/curated_manifest.schema.json" = "retailops_ai/curated/curated_manifest.schema.json"
 
 [tool.uv]
 required-version = "==0.12.19"

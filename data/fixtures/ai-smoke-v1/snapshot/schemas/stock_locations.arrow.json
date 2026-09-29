@@ -1,0 +1,40 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "location_code",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "region_code",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "country_code",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "city",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "location_type",
+      "nullable": false,
+      "type": "string"
+    }
+  ],
+  "table": "stock_locations"
+}

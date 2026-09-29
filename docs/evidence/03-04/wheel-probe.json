@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "wheel_sha256": "e679bb5479f79b6b190103f134fddc190a3db20fe650b1acc21958bce9228405",
+  "package_from_detached_wheel": true,
+  "isolated_python_twice": true,
+  "statuses": [
+    "published",
+    "reused"
+  ],
+  "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+  "snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+  "producer_checkout_required": false,
+  "api_or_sqlalchemy_imported": false,
+  "packaged_contract_and_schema_and_lock": true
+}

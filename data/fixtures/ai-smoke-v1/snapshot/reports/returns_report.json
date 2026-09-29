@@ -1,0 +1,105 @@
+{
+  "checks": [
+    {
+      "check_id": "returns_schema",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 4300,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "return_window_policy",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 32,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "transaction_chronology",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 6096,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "return_reference_and_window",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 1044,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "return_quantity_and_refunds",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 1044,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "return_snapshot_reconciliation",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 3224,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    },
+    {
+      "check_id": "return_tail_completeness",
+      "description": "All required records satisfy the policy.",
+      "evidence": "returns_report.json",
+      "policy_version": "retail-returns-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_returns",
+      "value": 0
+    }
+  ],
+  "event_count": 1044,
+  "history_event_count": 591,
+  "inventory_ready": false,
+  "policy_version": "retail-returns-1.0.0",
+  "return_tail_days": 39,
+  "returns_ready": true,
+  "revenue_semantics": "gross minus refunded amounts known at the explicit cutoff; final only after return-window and ingestion maturity",
+  "snapshot_boundaries": {
+    "history": "2026-08-01T00:00:00+00:00",
+    "return_tail": "2026-09-09T00:00:00+00:00"
+  },
+  "status": "passed",
+  "status_counts": {
+    "refunded": 959,
+    "rejected": 85
+  },
+  "tail_event_count": 453
+}

@@ -1,0 +1,45 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "store_code",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "region",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "country",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "city",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "status",
+      "nullable": false,
+      "type": "string"
+    }
+  ],
+  "table": "stores"
+}

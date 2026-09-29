@@ -1,0 +1,2032 @@
+{
+  "arrow_metadata": {
+    "retailops.format": "retailops-parquet-1.0.0",
+    "retailops.source_schema": "2.6.0"
+  },
+  "canonical_identity": {
+    "ai_foundation_hash": "Existing logical_rows_sha256 in AI v1 uses unique keys and a different algorithm; do not substitute it for this source multiset hash",
+    "boolean": "JSON true/false",
+    "date": "YYYY-MM-DD",
+    "decimal": "finite Decimal.normalize() with context precision 28; fixed notation string; all numeric zero is '0'",
+    "identity_excludes": [
+      "own ID",
+      "generated_at",
+      "local paths",
+      "physical file checksums",
+      "manifest checksum"
+    ],
+    "integer": "JSON integer, never float or boolean",
+    "json": "UTF-8 json.dumps(sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False)",
+    "physical_integrity": "separate SHA256/bytes for every file; manifest.sha256 checks snapshot_manifest.json",
+    "snapshot_id": "snapshot-sha256- + SHA256(canonical JSON descriptor)",
+    "source_id": "source-sha256- + SHA256(canonical JSON source.descriptor)",
+    "table_hash": "sha256(canonical JSON ordered column-name list + LF + canonical JSON rows sorted by UTF-8 bytes, each followed by LF); preserve duplicate rows",
+    "text": "Unicode NFC; preserve whitespace; empty CSV cell maps to null",
+    "timestamp": "UTC datetime.isoformat(), +00:00 suffix; retain microseconds"
+  },
+  "canonicalization_version": "typed-csv-nfc-utc-multiset-1.6.0",
+  "consumer": "retailops-ai-intelligence",
+  "consumer_rules": [
+    "No generator imports or operational DB access",
+    "Reject unsupported versions, unsafe paths, symlinks, missing/extra artifacts and identity/checksum conflicts",
+    "Verify every declared physical file and typed canonical rows before immutable import publication",
+    "Choose facts explicitly; truth never enters API runtime or feature joins automatically",
+    "Schemas include full upstream lineage metadata; excluded source CSV paths are not snapshot file references",
+    "Fixture acceptance checks transport/schema/identity; typed importer, curated and cross-repo gate are stages 03.4/03.5/03.6"
+  ],
+  "contract_name": "retailops-source-snapshot-handoff",
+  "contract_version": "1.0.0",
+  "evaluation_truth_tables": {
+    "daily_demand_truth": {
+      "data_class": "simulation_truth",
+      "grain": [
+        "business_date",
+        "product_id",
+        "selling_location_id",
+        "channel"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_date",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "base_rate",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "product_factor",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "location_factor",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "weekly_factor",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "seasonal_factor",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "lifecycle_factor",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "price_factor",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "promotion_factor",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "anomaly_factor",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "noise",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "expected_rate",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "rounding_draw",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "latent_units",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "demand_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "simulation_truth"
+    },
+    "product_simulation_parameters": {
+      "data_class": "simulation_truth",
+      "grain": [
+        "product_id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "demand_class",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "demand_weight",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "price_elasticity",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "seasonal_pattern",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "return_rate",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "simulation_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "simulation_truth"
+    },
+    "promotion_effect_truth": {
+      "data_class": "simulation_truth",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "promotion_plan_id",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "phase",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "effective_from",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "effective_to",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "demand_multiplier",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "truth_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "simulation_truth"
+    },
+    "store_simulation_parameters": {
+      "data_class": "simulation_truth",
+      "grain": [
+        "legacy_store_id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "legacy_store_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "traffic_multiplier",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "promo_sensitivity",
+          "nullable": false,
+          "type": "decimal256(76, 40)"
+        },
+        {
+          "name": "simulation_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "simulation_truth"
+    }
+  },
+  "excluded_source_tables": [
+    "users",
+    "price_history",
+    "promotions",
+    "stock_movements",
+    "returns",
+    "inventory_snapshots",
+    "forecasts",
+    "anomalies",
+    "alerts",
+    "recommendations",
+    "workflow_actions"
+  ],
+  "export_policy_version": "retailops-ai-snapshot-1.0.0",
+  "fact_tables": {
+    "assortment": {
+      "data_class": "source_plan",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "assortment_key",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "version",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "effective_from",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "effective_to",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        }
+      ],
+      "temporal_role": "plans"
+    },
+    "business_calendar": {
+      "data_class": "source_plan",
+      "grain": [
+        "business_date",
+        "selling_location_id",
+        "channel"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_date",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "assignment_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "calendar_version",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "country_code",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "calendar_jurisdiction",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_timezone",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "local_timezone",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "day_of_week",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "week_of_year",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "month",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "quarter",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "is_weekend",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "is_public_holiday",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "holiday_names",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "is_easter",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "is_christmas",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "is_black_friday",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "is_cyber_monday",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "location_open",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "opening_policy",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_day_start_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "business_day_end_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "local_day_start_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "local_day_end_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        }
+      ],
+      "temporal_role": "plans"
+    },
+    "catalog_categories": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "category_code",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "department",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "segment",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "seasonal_months",
+          "nullable": true,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "dimension"
+    },
+    "category_calendar": {
+      "data_class": "source_plan",
+      "grain": [
+        "business_date",
+        "category_id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_date",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "category_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "calendar_version",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "is_category_season",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        }
+      ],
+      "temporal_role": "plans"
+    },
+    "channel_assignments": {
+      "data_class": "source_plan",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "assignment_key",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "version",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "legacy_store_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "effective_from",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "effective_to",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        }
+      ],
+      "temporal_role": "plans"
+    },
+    "daily_demand_exclusions": {
+      "data_class": "source_observation",
+      "grain": [
+        "business_date",
+        "product_id",
+        "selling_location_id",
+        "channel"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_date",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "observation_status",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "exclusion_reason",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "demand_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "observations"
+    },
+    "daily_demand_observations": {
+      "data_class": "source_observation",
+      "grain": [
+        "business_date",
+        "product_id",
+        "selling_location_id",
+        "channel"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_date",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "observed_units",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "observed_orders",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "gross_revenue",
+          "nullable": true,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "net_revenue",
+          "nullable": true,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "return_units",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "return_data_complete",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "currency",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "realized_unit_price",
+          "nullable": true,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "promotion_plan_ids",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "is_active_assortment",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "location_open",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "source_data_complete",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "observation_status",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "quality_status",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "demand_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "observations"
+    },
+    "daily_demand_versions": {
+      "data_class": "source_observation",
+      "grain": [
+        "business_date",
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "version"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "observation_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_date",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "version",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "observed_units",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "observation_status",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "history_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "observations"
+    },
+    "daily_price_observations": {
+      "data_class": "source_observation",
+      "grain": [
+        "business_date",
+        "product_id",
+        "selling_location_id",
+        "channel"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_date",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "gross_revenue",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "realized_unit_price",
+          "nullable": true,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "currency",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "price_plan_ids",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "promotion_plan_ids",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "pricing_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "observations"
+    },
+    "daily_return_cohorts": {
+      "data_class": "source_observation",
+      "grain": [
+        "business_date",
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "as_of_time"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_date",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "snapshot_kind",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "as_of_time",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "observed_units",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "return_units",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "net_units",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "gross_revenue",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "refund_amount",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "net_revenue",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "currency",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "return_data_complete",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "returns_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "return_tail"
+    },
+    "fulfillment_routes": {
+      "data_class": "source_plan",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "route_key",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "version",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "stock_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "effective_from",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "effective_to",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        }
+      ],
+      "temporal_role": "plans"
+    },
+    "order_items": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "order_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "unit_price",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "total_amount",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "currency",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "dimension"
+    },
+    "orders": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "order_reference",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "store_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "region",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "order_total",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "currency",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "ordered_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "created_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        }
+      ],
+      "temporal_role": "observations"
+    },
+    "price_plans": {
+      "data_class": "source_plan",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "plan_key",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "version",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "scope",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "effective_from",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "effective_to",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "known_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "price",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "currency",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "pricing_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "plans"
+    },
+    "product_catalog": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "sku",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "sku_policy_version",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "category_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "brand",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "launch_date",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "discontinue_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "unit_of_measure",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "pack_quantity",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "pack_unit",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "unit_cost",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "currency",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "margin_band",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        }
+      ],
+      "temporal_role": "observations"
+    },
+    "products": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "sku",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "category",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "brand",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "dimension"
+    },
+    "promotion_plans": {
+      "data_class": "source_plan",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "promotion_key",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "version",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "scope",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "effective_from",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "effective_to",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "known_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "promotion_type",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "discount_percent",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "minimum_quantity",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "priority",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "stacking_policy",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "pricing_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "plans"
+    },
+    "return_events": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "sale_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "order_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "order_item_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "policy_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "refund_amount",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "currency",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "reason",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "returned_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "ingested_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "available_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "returns_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "return_tail"
+    },
+    "return_policies": {
+      "data_class": "source_plan",
+      "grain": [
+        "category_id",
+        "channel"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "category_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "window_days",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "max_ingestion_delay_days",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "known_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "returns_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "plans"
+    },
+    "sale_price_references": {
+      "data_class": "source_observation",
+      "grain": [
+        "sale_id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "sale_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "order_item_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "selling_location_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_date",
+          "nullable": false,
+          "type": "date32[day]"
+        },
+        {
+          "name": "as_of_time",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "price_plan_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "promotion_plan_id",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "pricing_policy_version",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "observations"
+    },
+    "sales": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "product_id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "unit_price",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "total_amount",
+          "nullable": false,
+          "type": "decimal128(38, 2)"
+        },
+        {
+          "name": "currency",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "region",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "sold_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        },
+        {
+          "name": "order_reference",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "observed_sales",
+          "nullable": false,
+          "type": "int64"
+        },
+        {
+          "name": "promotion_applied",
+          "nullable": false,
+          "type": "bool"
+        },
+        {
+          "name": "data_quality_status",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "ingested_at",
+          "nullable": false,
+          "type": "timestamp[us, tz=UTC]"
+        }
+      ],
+      "temporal_role": "observations"
+    },
+    "selling_locations": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "location_code",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "region_code",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "country_code",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "city",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "calendar_jurisdiction",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "local_timezone",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "business_timezone",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "dimension"
+    },
+    "stock_locations": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "location_code",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "region_code",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "country_code",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "city",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "location_type",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "dimension"
+    },
+    "stores": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "store_code",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "region",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "city",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "dimension"
+    },
+    "warehouses": {
+      "data_class": "source_observation",
+      "grain": [
+        "id"
+      ],
+      "schema": [
+        {
+          "name": "id",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "warehouse_code",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "region",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "city",
+          "nullable": false,
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "nullable": false,
+          "type": "string"
+        }
+      ],
+      "temporal_role": "dimension"
+    }
+  },
+  "format_version": "retailops-parquet-1.0.0",
+  "mapping_semantics": {
+    "inventory": "stock location mapping is available; inventory_ready=false forbids inventory features",
+    "missing_mapping": "reject/quarantine with lineage; never invent store/warehouse/zero",
+    "product_id": "products.id = product_catalog.id; SKU from product_catalog",
+    "selling_location_id": "selling_locations.id; channel_assignments maps legacy_store_id by channel, validity and availability",
+    "stock_location_id": "stock_locations.id; fulfillment_routes maps selling location/channel by validity and availability"
+  },
+  "namespaces": {
+    "simulation_truth": "evaluation_truth",
+    "source_observation": "facts",
+    "source_plan": "facts"
+  },
+  "producer": "retailops-cloud-native-platform",
+  "readiness_semantics": {
+    "anomaly": "not_ready",
+    "forecast_source": "ready",
+    "forecasting": "not_ready",
+    "hard_checks": 46,
+    "inventory_ready": false,
+    "rag": "not_applicable",
+    "replay": "not_ready",
+    "required_use_case": "forecast_source",
+    "source_ready": true,
+    "source_report_policy": "forecast-source-acceptance-1.1.0",
+    "stockout": "not_ready"
+  },
+  "supported_snapshot_versions": [
+    "1.0.0"
+  ],
+  "supported_source_versions": [
+    "2.6.0"
+  ],
+  "time_semantics": {
+    "business_date": "UTC business day; local_timezone is calendar metadata",
+    "business_timezone": "UTC",
+    "history": "append-only version, increasing available_at; latest version known at origin, never latest overall",
+    "intervals": "effective_from <= business_date < effective_to; available_at <= origin",
+    "null": "unknown/missing/open interval; never replace with zero",
+    "origin": "inclusive UTC knowledge cutoff; available_at must be <= origin",
+    "returns": "39-day return tail; event time, ingestion and cohort maturity remain separate",
+    "timestamps": "UTC, explicit timezone, microsecond precision",
+    "watermarks": "manifest per-stream boundary and declared completeness, not maximum event timestamp"
+  },
+  "units": {
+    "channels": [
+      "store",
+      "online",
+      "marketplace",
+      "wholesale"
+    ],
+    "money": "decimal128(38,2), source currency retained",
+    "rates": "decimal256(76,40); never binary float for canonicalization",
+    "sales_quantity": "integer saleable packs; pack_quantity/pack_unit describes physical content"
+  }
+}

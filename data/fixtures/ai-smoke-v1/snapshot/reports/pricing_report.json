@@ -1,0 +1,83 @@
+{
+  "checks": [
+    {
+      "check_id": "pricing_schema_versions_scope",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 7606,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "known_price_coverage_and_priority",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "transaction_price_reconciliation",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 6096,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "realized_price_aggregates",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 1292,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "legacy_pricing_adapter",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 122,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    },
+    {
+      "check_id": "promotion_truth_direction",
+      "description": "All required records satisfy the policy.",
+      "evidence": "pricing_report.json",
+      "policy_version": "retail-pricing-1.0.0",
+      "sample_size": 96,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_pricing",
+      "value": 0
+    }
+  ],
+  "complete_daily_panel": false,
+  "inventory_ready": false,
+  "policy_version": "retail-pricing-1.0.0",
+  "price_coverage_percent": 100,
+  "realized_prices_are_outcomes": true,
+  "status": "passed",
+  "valid_daily_combinations": 1612
+}

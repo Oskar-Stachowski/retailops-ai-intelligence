@@ -1,11 +1,29 @@
 # Aktualny status
 
-Aktualizacja: **2026-09-28**. **Etap 11 — RAG jest odebrany lokalnie.**
+Aktualizacja: **2026-09-29**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
 przygotowanie, kwalifikację, aktywację i rollback. [Końcowy odbiór](evidence/11-completion.md)
 wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodzi
 przez chroniony `main` oraz Required CI; stan wykonania pokazuje
 [workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
+
+**AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
+ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
+identity i transportu bez generatora/DB.
+**AI 03.4 — typed importer odebrany lokalnie:** [CLI i runbook](source-snapshot-import.md)
+opisują pełną weryfikację Parquet, canonical hashes, gates, atomową publikację
+i niezmienny reimport. [Evidence](evidence/03-04-importer.md) podaje testy obu
+smoke, partycje, truth opt-in i odłączony wheel.
+**AI 03.5 — curated:** [runbook](curated.md) opisuje jawne mappings,
+normalizację, quarantine, immutable IDs i odczyt z pełnej historii wersji.
+[Evidence](evidence/03-05-curated.md) podaje 743 testy i pomiary smoke/as-of.
+[AI 03.6 — bramka cross-repo](evidence/03-06-cross-repo.md) wiąże oba repo
+przez pełne smoke i przypięte rewizje. Końcowy odbiór RetailOps określa wejście
+do 04/06 oraz odrębne readiness use cases.
+Branch `ai/03-04-importer` ma osobny worktree; AI 12 rozwija się niezależnie.
+Branch 03 jest opublikowany w [PR #5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/5).
+Przypięte wyniki Required CI, testów i rzeczywistego Compose/persistence
+znajdują się w [końcowym evidence cross-repo](evidence/03-06-cross-repo.md).
 
 ## Etap 11
 
@@ -39,8 +57,9 @@ wykonywalne kontrakty danych/run/tool, jawne migracje i Required CI.
 [Uruchomienie](local-stack.md), [uprawnienia](access-control.md),
 [kontrakty](data-contracts.md), [odbiór zdalny](evidence/01-remote-ci.md).
 
-Najbliższy pełny zakres to **AI 03**: typed Parquet i immutable eksport w
-cloud-native, importer/curated w AI-intelligence. Równolegle można przygotować
+[Bieżący odbiór danych](evidence/03-06-cross-repo.md) jest wspólny z RetailOps.
+Po pełnej bramce 03 można rozdzielić forecasting **04** w AI i ledger **06**
+w RetailOps; nowe źródło po 06 wymaga ponownego importu i zależnych ocen. Równolegle można przygotować
 interfejsy i test doubles **AI 12**. Pełne zamknięcie agenta wymaga **AI 10 i 11**;
 11 jest gotowy, 10 nadal należy do późniejszego ciągu danych/ML/integracji.
 [Pisemna mapa etapów i repozytoriów](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/plans/ai/kolejnosc-i-repozytoria.md).

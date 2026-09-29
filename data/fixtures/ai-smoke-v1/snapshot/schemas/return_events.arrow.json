@@ -1,0 +1,90 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "sale_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "order_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "order_item_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "product_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "selling_location_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "policy_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "quantity",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "refund_amount",
+      "nullable": false,
+      "type": "decimal128(38, 2)"
+    },
+    {
+      "name": "currency",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "reason",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "status",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "returned_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "ingested_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "available_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "returns_policy_version",
+      "nullable": false,
+      "type": "string"
+    }
+  ],
+  "table": "return_events"
+}

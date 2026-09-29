@@ -1,0 +1,85 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "sku",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "sku_policy_version",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "category_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "brand",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "launch_date",
+      "nullable": false,
+      "type": "date32[day]"
+    },
+    {
+      "name": "discontinue_date",
+      "nullable": true,
+      "type": "date32[day]"
+    },
+    {
+      "name": "unit_of_measure",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "pack_quantity",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "pack_unit",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "unit_cost",
+      "nullable": false,
+      "type": "decimal128(38, 2)"
+    },
+    {
+      "name": "currency",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "margin_band",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "status",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "available_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    }
+  ],
+  "table": "product_catalog"
+}

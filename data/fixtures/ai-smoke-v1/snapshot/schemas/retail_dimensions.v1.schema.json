@@ -1,0 +1,784 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assortment": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "assortment_key": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "available_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "effective_from": {
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "effective_to": {
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "product_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "version": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "assortment_key",
+          "version",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "effective_from",
+          "effective_to",
+          "available_at"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "business_calendar": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "assignment_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "available_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_date": {
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "business_day_end_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_day_start_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_timezone": {
+            "enum": [
+              "UTC"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "calendar_jurisdiction": {
+            "enum": [
+              "PL",
+              "DE-BE"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "calendar_version": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "country_code": {
+            "enum": [
+              "PL",
+              "DE"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "day_of_week": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          },
+          "holiday_names": {
+            "minLength": 0,
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "is_black_friday": {
+            "enum": [
+              "true",
+              "false"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "is_christmas": {
+            "enum": [
+              "true",
+              "false"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "is_cyber_monday": {
+            "enum": [
+              "true",
+              "false"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "is_easter": {
+            "enum": [
+              "true",
+              "false"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "is_public_holiday": {
+            "enum": [
+              "true",
+              "false"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "is_weekend": {
+            "enum": [
+              "true",
+              "false"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "local_day_end_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "local_day_start_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "local_timezone": {
+            "enum": [
+              "Europe/Warsaw",
+              "Europe/Berlin"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "location_open": {
+            "enum": [
+              "true",
+              "false"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "month": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          },
+          "opening_policy": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "quarter": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "week_of_year": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "business_date",
+          "selling_location_id",
+          "channel",
+          "assignment_id",
+          "calendar_version",
+          "country_code",
+          "calendar_jurisdiction",
+          "business_timezone",
+          "local_timezone",
+          "day_of_week",
+          "week_of_year",
+          "month",
+          "quarter",
+          "is_weekend",
+          "is_public_holiday",
+          "holiday_names",
+          "is_easter",
+          "is_christmas",
+          "is_black_friday",
+          "is_cyber_monday",
+          "location_open",
+          "opening_policy",
+          "business_day_start_at",
+          "business_day_end_at",
+          "local_day_start_at",
+          "local_day_end_at",
+          "available_at"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "catalog_categories": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "category_code": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "department": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "seasonal_months": {
+            "minLength": 0,
+            "type": "string"
+          },
+          "segment": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "category_code",
+          "name",
+          "department",
+          "segment",
+          "seasonal_months"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "category_calendar": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "available_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_date": {
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "calendar_version": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "category_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "is_category_season": {
+            "enum": [
+              "true",
+              "false"
+            ],
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "business_date",
+          "category_id",
+          "calendar_version",
+          "is_category_season",
+          "available_at"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "channel_assignments": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "assignment_key": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "available_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "effective_from": {
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "effective_to": {
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "legacy_store_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "version": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "assignment_key",
+          "version",
+          "legacy_store_id",
+          "selling_location_id",
+          "channel",
+          "effective_from",
+          "effective_to",
+          "available_at"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "fulfillment_routes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "available_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "effective_from": {
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "effective_to": {
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "route_key": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "selling_location_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "version": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "route_key",
+          "version",
+          "selling_location_id",
+          "channel",
+          "stock_location_id",
+          "effective_from",
+          "effective_to",
+          "available_at"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "product_catalog": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "available_at": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          },
+          "brand": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "category_id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "currency": {
+            "enum": [
+              "PLN"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "discontinue_date": {
+            "minLength": 0,
+            "pattern": "^(?:\\d{4}-\\d{2}-\\d{2})?$",
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "launch_date": {
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "margin_band": {
+            "enum": [
+              "low",
+              "standard",
+              "high"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "pack_quantity": {
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$",
+            "type": "string"
+          },
+          "pack_unit": {
+            "enum": [
+              "pcs",
+              "g",
+              "ml"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "sku": {
+            "minLength": 1,
+            "pattern": "^[A-Z]{4}-[0-9]{6}$",
+            "type": "string"
+          },
+          "sku_policy_version": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "unit_cost": {
+            "minLength": 1,
+            "pattern": "^[0-9]+\\.[0-9]{2}$",
+            "type": "string"
+          },
+          "unit_of_measure": {
+            "enum": [
+              "pcs"
+            ],
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "sku",
+          "sku_policy_version",
+          "name",
+          "category_id",
+          "brand",
+          "launch_date",
+          "discontinue_date",
+          "unit_of_measure",
+          "pack_quantity",
+          "pack_unit",
+          "unit_cost",
+          "currency",
+          "margin_band",
+          "status",
+          "available_at"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "selling_locations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "business_timezone": {
+            "enum": [
+              "UTC"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "calendar_jurisdiction": {
+            "enum": [
+              "PL",
+              "DE-BE"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "city": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "country_code": {
+            "enum": [
+              "PL",
+              "DE"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "local_timezone": {
+            "enum": [
+              "Europe/Warsaw",
+              "Europe/Berlin"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "location_code": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "region_code": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "location_code",
+          "name",
+          "region_code",
+          "country_code",
+          "city",
+          "calendar_jurisdiction",
+          "local_timezone",
+          "business_timezone"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "stock_locations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "city": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "country_code": {
+            "enum": [
+              "PL",
+              "DE"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "location_code": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "location_type": {
+            "enum": [
+              "warehouse"
+            ],
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "region_code": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "location_code",
+          "name",
+          "region_code",
+          "country_code",
+          "city",
+          "location_type"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "catalog_categories",
+    "product_catalog",
+    "selling_locations",
+    "stock_locations",
+    "channel_assignments",
+    "fulfillment_routes",
+    "assortment",
+    "business_calendar",
+    "category_calendar"
+  ],
+  "title": "Retail dimensions 1.0.0 (CSV cells represented as strings)",
+  "type": "object"
+}
