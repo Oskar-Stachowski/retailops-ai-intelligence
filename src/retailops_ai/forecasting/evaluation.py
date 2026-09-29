@@ -242,7 +242,7 @@ def _database(
     return split, coverage
 
 
-def _metrics(db: sqlite3.Connection, fold: str, role: str, model: BaselineName) -> MetricResult:
+def score_model(db: sqlite3.Connection, fold: str, role: str, model: str) -> MetricResult:
     metric = MetricAccumulator()
     for units, body in db.execute(
         "SELECT p.units,l.body FROM predictions p LEFT JOIN labels l ON l.key=p.key WHERE p.fold=? AND p.role=? AND p.model=? AND p.eligible=1 ORDER BY p.key",
@@ -257,7 +257,7 @@ def _metrics(db: sqlite3.Connection, fold: str, role: str, model: BaselineName) 
     return metric.result()
 
 
-def _deferred_holdout(db: sqlite3.Connection, fold: str, model: BaselineName) -> MetricResult:
+def defer_holdout(db: sqlite3.Connection, fold: str, model: str) -> MetricResult:
     eligible, predicted = db.execute(
         "SELECT COUNT(*),COALESCE(SUM(units IS NOT NULL),0) FROM predictions WHERE fold=? AND role='development_holdout' AND model=? AND eligible=1",
         (fold, model),
@@ -282,7 +282,7 @@ def _report(
     selections = []
     for fold in split.descriptor.resolved_policy.folds:
         validation = {
-            model: _metrics(db, fold.name, "validation", model) for model in policy.candidates
+            model: score_model(db, fold.name, "validation", model) for model in policy.candidates
         }
         digest = hashlib.sha256()
         for (row_key,) in db.execute(
@@ -305,9 +305,9 @@ def _report(
                 metrics[fold.name + ":" + role + ":" + model] = (
                     validation[model]
                     if role == "validation"
-                    else _deferred_holdout(db, fold.name, model)
+                    else defer_holdout(db, fold.name, model)
                     if role == "development_holdout" and selection.model is None
-                    else _metrics(db, fold.name, role, model)
+                    else score_model(db, fold.name, role, model)
                 )
     digest = hashlib.sha256()
     count = size = 0

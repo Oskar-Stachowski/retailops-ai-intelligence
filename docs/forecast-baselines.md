@@ -43,7 +43,7 @@ na pomniejszonym zbiorze. Pokrycie predykcji wymagane do wyboru wynosi 100%.
 W każdym foldzie wybieramy najniższe **MAE na validation**. Przy dokładnym remisie
 obowiązuje kolejność z konfiguracji: last observed, moving average, seasonal naive7.
 Okno, minimum, kryterium i tie-break są zapisane przed pomiarem. Trzy modele
-nie dopasowują parametrów na train; przyszłe RF/HGB użyją train-only preprocessing.
+nie dopasowują parametrów na train; [RF/HGB](forecast-models.md) używają train-only preprocessing.
 
 Evaluator zapisuje hash wyboru związany z konfiguracją, rodzicami, foldem,
 kluczami i metrykami validation, zanim policzy wyniki development holdout.
@@ -97,7 +97,7 @@ Nie udaje kwalifikacji temporalnej. Checker z `--feature-dir` i `--split-dir`
 wykonuje rzeczywisty evaluator, niezależny replay i immutable rerun.
 [Evidence 04.4](evidence/04-04-baselines.md) podaje konkretny temporalny odbiór.
 
-Kolejny zakres: **AI 04.5 — RandomForestRegressor i HistGradientBoostingRegressor**
-na tym samym splicie i train-only preprocessing. Wielofoldowy backtesting,
+**[AI 04.5 — RandomForestRegressor i HistGradientBoostingRegressor](forecast-models.md)**
+korzystają z tego samego splitu i train-only preprocessing. Wielofoldowy backtesting,
 pełne przekroje/intervals/quality gates oraz model lifecycle należą do 04.6–04.8.
 `forecast_model_status` pozostaje `not_ready`.

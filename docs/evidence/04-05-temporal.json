@@ -1,0 +1,415 @@
+{
+  "aws_calls": 0,
+  "comparison_id": "forecast-model-comparison-sha256-b4dc6946a69971c7c8130bf400ed779eaa6b44b410d6ba7df70300d9f521fcab",
+  "descriptor": {
+    "code": {
+      "code_files": {
+        "forecasting/baselines.py": "fb339916e02683932b254e73d05d0a43ce7aec4eca7c818441e6a99f7f4a2560",
+        "forecasting/evaluation.py": "3eed80ae124780d447d698aae748d818f10df9054a5b00b56abc53e678aad1b8",
+        "forecasting/evaluation_contract.py": "d154ad2c5fc01756b7905933dcab1827541250034101cfcf92acea948e9ee26a",
+        "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+        "forecasting/manifest_contract.py": "6cc088e4ec6cd1e15399745affef8feaf7978325a346431d9679f20f526add2b",
+        "forecasting/manifest_io.py": "0a290464dbb1957d9e0ea96c53246e9d55046852d7d2f046ae594051d99c3346",
+        "forecasting/manifests.py": "8ea6b52b5c4ac9b4cda1c17146e22c4b3ee550100e9dc39cac0a0b367d58feeb",
+        "forecasting/model_contract.py": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+        "forecasting/model_trees.py": "7b6d77b382b74c7c548e8d395d443f1bce02bea1922c298ef1602d0cfc407bdd",
+        "forecasting/model_worker.py": "5662e8de5fb3d65c05a82e717144ab1064b3e447b00a1e96531488831085c859",
+        "forecasting/models.py": "4cea13cb2585715be25416e101b6ff24aabac717dde0c6e3f1fba72a097b8de7",
+        "forecasting/preprocessing.py": "26b8df57f41a1bcd0e5468233fd532e6e7d92be7c9fb49f1a7f9502b2cc447cb",
+        "forecasting/splits.py": "7564af16532313a4b94950c10d9ea8b16d31d82affd9161b708bef5601a04ba1"
+      },
+      "code_sha256": "6f97320d2a4706d06eada7aed4a26daf7d1e206109bccee49ab24ac2d21a8c18",
+      "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+      "machine": "arm64",
+      "system": "Darwin",
+      "version": "forecast-models-1.0.0",
+      "versions": {
+        "joblib": "1.6.0",
+        "numpy": "2.4.6",
+        "psutil": "7.2.2",
+        "pyarrow": "25.0.1",
+        "python": "3.11.15",
+        "scikit-learn": "1.9.1",
+        "scipy": "1.17.1",
+        "threadpoolctl": "3.7.0"
+      }
+    },
+    "coverage_counts": {
+      "development-v1:development_holdout:eligible": 2968,
+      "development-v1:development_holdout:excluded:closed_target": 308,
+      "development-v1:development_holdout:hist_gradient_boosting:predicted": 2968,
+      "development-v1:development_holdout:last_observed:predicted": 2968,
+      "development-v1:development_holdout:moving_average:predicted": 2968,
+      "development-v1:development_holdout:random_forest:predicted": 2968,
+      "development-v1:development_holdout:seasonal_naive7:predicted": 2968,
+      "development-v1:development_holdout:total": 3276,
+      "development-v1:purged:eligible": 0,
+      "development-v1:purged:excluded:purged_origin": 10080,
+      "development-v1:purged:total": 10080,
+      "development-v1:train:eligible": 2710,
+      "development-v1:train:excluded:closed_target": 432,
+      "development-v1:train:excluded:insufficient_history": 252,
+      "development-v1:train:hist_gradient_boosting:predicted": 2710,
+      "development-v1:train:last_observed:predicted": 2710,
+      "development-v1:train:moving_average:predicted": 2710,
+      "development-v1:train:random_forest:predicted": 2710,
+      "development-v1:train:seasonal_naive7:predicted": 2710,
+      "development-v1:train:total": 3360,
+      "development-v1:validation:eligible": 3040,
+      "development-v1:validation:excluded:closed_target": 320,
+      "development-v1:validation:hist_gradient_boosting:predicted": 3040,
+      "development-v1:validation:last_observed:predicted": 3040,
+      "development-v1:validation:moving_average:predicted": 3040,
+      "development-v1:validation:random_forest:predicted": 3040,
+      "development-v1:validation:seasonal_naive7:predicted": 3040,
+      "development-v1:validation:total": 3360
+    },
+    "feature_set_id": "features-sha256-e7992553d0d3b67f00b5f16e8e0ace55bb88fc3f3d023135bfcd70538e0fdbaf",
+    "label_dataset_id": "labels-sha256-38fec186cdb841e65391fbcdda63ff31a1eb83140c9f71a694f431248aa4465d",
+    "metrics": {
+      "development-v1:development_holdout:hist_gradient_boosting": {
+        "absolute_actual_sum": 27377.0,
+        "absolute_error_sum": 4537.3266600756015,
+        "eligible_rows": 2968,
+        "mae": 1.528748874688545,
+        "predicted_rows": 2968,
+        "status": "passed",
+        "wape": 0.1657349841135114,
+        "wape_status": "passed"
+      },
+      "development-v1:development_holdout:last_observed": {
+        "absolute_actual_sum": 27377.0,
+        "absolute_error_sum": 6823.0,
+        "eligible_rows": 2968,
+        "mae": 2.298854447439353,
+        "predicted_rows": 2968,
+        "status": "passed",
+        "wape": 0.24922380100084013,
+        "wape_status": "passed"
+      },
+      "development-v1:development_holdout:moving_average": {
+        "absolute_actual_sum": 27377.0,
+        "absolute_error_sum": 5152.833333333331,
+        "eligible_rows": 2968,
+        "mae": 1.7361298292902059,
+        "predicted_rows": 2968,
+        "status": "passed",
+        "wape": 0.18821760358451733,
+        "wape_status": "passed"
+      },
+      "development-v1:development_holdout:random_forest": {
+        "absolute_actual_sum": 27377.0,
+        "absolute_error_sum": 4544.916640615444,
+        "eligible_rows": 2968,
+        "mae": 1.5313061457599204,
+        "predicted_rows": 2968,
+        "status": "passed",
+        "wape": 0.16601222342168404,
+        "wape_status": "passed"
+      },
+      "development-v1:development_holdout:seasonal_naive7": {
+        "absolute_actual_sum": 27377.0,
+        "absolute_error_sum": 4640.0,
+        "eligible_rows": 2968,
+        "mae": 1.5633423180592991,
+        "predicted_rows": 2968,
+        "status": "passed",
+        "wape": 0.16948533440479235,
+        "wape_status": "passed"
+      },
+      "development-v1:train:hist_gradient_boosting": {
+        "absolute_actual_sum": 27771.0,
+        "absolute_error_sum": 1550.2854440804513,
+        "eligible_rows": 2710,
+        "mae": 0.5720610494761813,
+        "predicted_rows": 2710,
+        "status": "passed",
+        "wape": 0.05582389701776858,
+        "wape_status": "passed"
+      },
+      "development-v1:train:last_observed": {
+        "absolute_actual_sum": 27771.0,
+        "absolute_error_sum": 8811.0,
+        "eligible_rows": 2710,
+        "mae": 3.251291512915129,
+        "predicted_rows": 2710,
+        "status": "passed",
+        "wape": 0.31727341471319004,
+        "wape_status": "passed"
+      },
+      "development-v1:train:moving_average": {
+        "absolute_actual_sum": 27771.0,
+        "absolute_error_sum": 7094.166666666709,
+        "eligible_rows": 2710,
+        "mae": 2.617773677736793,
+        "predicted_rows": 2710,
+        "status": "passed",
+        "wape": 0.2554523303686115,
+        "wape_status": "passed"
+      },
+      "development-v1:train:random_forest": {
+        "absolute_actual_sum": 27771.0,
+        "absolute_error_sum": 992.6449175679462,
+        "eligible_rows": 2710,
+        "mae": 0.36628963747894694,
+        "predicted_rows": 2710,
+        "status": "passed",
+        "wape": 0.035743938553453106,
+        "wape_status": "passed"
+      },
+      "development-v1:train:seasonal_naive7": {
+        "absolute_actual_sum": 27771.0,
+        "absolute_error_sum": 6916.0,
+        "eligible_rows": 2710,
+        "mae": 2.552029520295203,
+        "predicted_rows": 2710,
+        "status": "passed",
+        "wape": 0.24903676497065283,
+        "wape_status": "passed"
+      },
+      "development-v1:validation:hist_gradient_boosting": {
+        "absolute_actual_sum": 27327.0,
+        "absolute_error_sum": 4289.246966322489,
+        "eligible_rows": 3040,
+        "mae": 1.4109365020797662,
+        "predicted_rows": 3040,
+        "status": "passed",
+        "wape": 0.1569600382889629,
+        "wape_status": "passed"
+      },
+      "development-v1:validation:last_observed": {
+        "absolute_actual_sum": 27327.0,
+        "absolute_error_sum": 8589.0,
+        "eligible_rows": 3040,
+        "mae": 2.825328947368421,
+        "predicted_rows": 3040,
+        "status": "passed",
+        "wape": 0.314304533977385,
+        "wape_status": "passed"
+      },
+      "development-v1:validation:moving_average": {
+        "absolute_actual_sum": 27327.0,
+        "absolute_error_sum": 5205.333333333345,
+        "eligible_rows": 3040,
+        "mae": 1.7122807017543897,
+        "predicted_rows": 3040,
+        "status": "passed",
+        "wape": 0.19048316073236524,
+        "wape_status": "passed"
+      },
+      "development-v1:validation:random_forest": {
+        "absolute_actual_sum": 27327.0,
+        "absolute_error_sum": 4290.43001090703,
+        "eligible_rows": 3040,
+        "mae": 1.4113256614825758,
+        "predicted_rows": 3040,
+        "status": "passed",
+        "wape": 0.15700333043901746,
+        "wape_status": "passed"
+      },
+      "development-v1:validation:seasonal_naive7": {
+        "absolute_actual_sum": 27327.0,
+        "absolute_error_sum": 4597.0,
+        "eligible_rows": 3040,
+        "mae": 1.512171052631579,
+        "predicted_rows": 3040,
+        "status": "passed",
+        "wape": 0.16822190507556628,
+        "wape_status": "passed"
+      }
+    },
+    "models": {
+      "development-v1:hist_gradient_boosting": "model-sha256-386c0e2705683426b23b5f8fc218face6dd8961b9307b0a7c7bfe9096e72838c",
+      "development-v1:random_forest": "model-sha256-151f28e902b78f04f69c1d17cabdc75cedaf58ea2758fd98360fdd4a5faf0826"
+    },
+    "parent": {
+      "business_timezone": "UTC",
+      "curated_dataset_id": "curated-sha256-aeedd1a49f75eb27b687b328b92e23fee5b8cfa7c2520b2ff5219a8a74bd748a",
+      "curated_descriptor_sha256": "aeedd1a49f75eb27b687b328b92e23fee5b8cfa7c2520b2ff5219a8a74bd748a",
+      "forecast_source_status": "passed",
+      "snapshot_id": "snapshot-sha256-d84c7b9630c6a34f7807abc7560253bf8e7ba3d7d962abee8aca580cf909b767",
+      "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22"
+    },
+    "policy": {
+      "baseline": {
+        "candidates": [
+          "last_observed",
+          "moving_average",
+          "seasonal_naive7"
+        ],
+        "closed_history": "confirmed_closed_zero_is_observed",
+        "common_keys": "all_split_memberships_no_model_specific_drops",
+        "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+        "missing_history": "skip_unknown_never_impute_zero",
+        "moving_average_calendar_days": 7,
+        "moving_average_minimum_known_days": 1,
+        "origin_mode": "fixed_origin_no_recursive_actuals",
+        "portfolio_final_test": "not_included_not_opened",
+        "required_prediction_coverage": 1.0,
+        "schema_version": "1.0.0",
+        "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+        "selection_metric": "mae",
+        "selection_role": "validation_only_per_fold",
+        "tie_break": "candidate_order"
+      },
+      "cpu_threads": 1,
+      "fit_cpu_seconds": 90.0,
+      "fit_rss_bytes": 1073741824,
+      "fit_wall_seconds": 120.0,
+      "grid": "one_frozen_configuration_per_family",
+      "hgb": {
+        "categorical_features": null,
+        "early_stopping": false,
+        "l2_regularization": 0.0,
+        "learning_rate": 0.1,
+        "loss": "squared_error",
+        "max_bins": 255,
+        "max_iter": 100,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "validation_fraction": null
+      },
+      "legacy_retailops_serving": "unchanged_rejection_not_overridden",
+      "max_matrix_bytes": 67108864,
+      "max_train_rows": 50000,
+      "minimum_relative_improvement": 0.05,
+      "monitor_interval_seconds": 0.05,
+      "portfolio_final_test": "not_included_not_opened",
+      "postprocessing": "clip_negative_to_zero_no_rounding",
+      "primary_metric": "validation_mae",
+      "random_state": 42,
+      "rf": {
+        "bootstrap": true,
+        "criterion": "squared_error",
+        "max_depth": 12,
+        "max_features": 1.0,
+        "min_samples_leaf": 2,
+        "min_samples_split": 2,
+        "n_estimators": 64,
+        "n_jobs": 1
+      },
+      "schema_version": "1.0.0",
+      "selection_use": "diagnostic_only_pending_04_6_to_04_8",
+      "strategy": "direct_global_with_horizon_feature",
+      "target_type": "observed_sales_units",
+      "tie_break": "baseline_then_rf_then_hgb"
+    },
+    "prediction_rows": 100380,
+    "predictions_content_sha256": "7fe3f41402b67ee96ed9cc5d170e783728fc2fa5a079d3ffe5f74de92d38671d",
+    "role": "supervised_model_comparison",
+    "selections": [
+      {
+        "baseline": "seasonal_naive7",
+        "fold": "development-v1",
+        "selected": "hist_gradient_boosting",
+        "selection_sha256": "ed868e93fbccbf6eafca48dfed6b35b1979680d2de61b2621550863b5ce38dd3",
+        "status": "selected",
+        "validation_grain_sha256": "67e9f5f71655be5396cb39e501535176f6b5991370d820c5d1fade029812de96",
+        "validation_metrics": {
+          "hist_gradient_boosting": {
+            "absolute_actual_sum": 27327.0,
+            "absolute_error_sum": 4289.246966322489,
+            "eligible_rows": 3040,
+            "mae": 1.4109365020797662,
+            "predicted_rows": 3040,
+            "status": "passed",
+            "wape": 0.1569600382889629,
+            "wape_status": "passed"
+          },
+          "last_observed": {
+            "absolute_actual_sum": 27327.0,
+            "absolute_error_sum": 8589.0,
+            "eligible_rows": 3040,
+            "mae": 2.825328947368421,
+            "predicted_rows": 3040,
+            "status": "passed",
+            "wape": 0.314304533977385,
+            "wape_status": "passed"
+          },
+          "moving_average": {
+            "absolute_actual_sum": 27327.0,
+            "absolute_error_sum": 5205.333333333345,
+            "eligible_rows": 3040,
+            "mae": 1.7122807017543897,
+            "predicted_rows": 3040,
+            "status": "passed",
+            "wape": 0.19048316073236524,
+            "wape_status": "passed"
+          },
+          "random_forest": {
+            "absolute_actual_sum": 27327.0,
+            "absolute_error_sum": 4290.43001090703,
+            "eligible_rows": 3040,
+            "mae": 1.4113256614825758,
+            "predicted_rows": 3040,
+            "status": "passed",
+            "wape": 0.15700333043901746,
+            "wape_status": "passed"
+          },
+          "seasonal_naive7": {
+            "absolute_actual_sum": 27327.0,
+            "absolute_error_sum": 4597.0,
+            "eligible_rows": 3040,
+            "mae": 1.512171052631579,
+            "predicted_rows": 3040,
+            "status": "passed",
+            "wape": 0.16822190507556628,
+            "wape_status": "passed"
+          }
+        }
+      }
+    ],
+    "split_id": "split-sha256-5e2eebec14ff8a4e6769a3fb5387b1d6fbc83d873168d3300263b9dd01a3584d",
+    "status": "passed"
+  },
+  "forecast_model_status": "not_ready",
+  "full_retraining_replay": true,
+  "parents_unchanged": true,
+  "pipelines": {
+    "development-v1:hist_gradient_boosting": {
+      "path": "models/00-hist_gradient_boosting.json",
+      "row_count": 1,
+      "sha256": "f61d9cd5a05acba82a64f74a73706f0cbc17a8394517da04952a06dd3c888526",
+      "size_bytes": 541404
+    },
+    "development-v1:random_forest": {
+      "path": "models/00-random_forest.json",
+      "row_count": 1,
+      "sha256": "1f667d569f61c6cc413d91cfe1ce3d0b6ced3e7b38c68beebd03d8b0faac9d36",
+      "size_bytes": 3082952
+    }
+  },
+  "portfolio_final_test": "not_included_not_opened",
+  "predictions": {
+    "content_sha256": "7fe3f41402b67ee96ed9cc5d170e783728fc2fa5a079d3ffe5f74de92d38671d",
+    "files": [
+      {
+        "path": "predictions.jsonl",
+        "row_count": 100380,
+        "sha256": "7fe3f41402b67ee96ed9cc5d170e783728fc2fa5a079d3ffe5f74de92d38671d",
+        "size_bytes": 53276244
+      }
+    ],
+    "row_count": 100380
+  },
+  "repeatable_and_immutable": true,
+  "resources": {
+    "development-v1:hist_gradient_boosting": {
+      "cpu_seconds": 1.7138788800000002,
+      "peak_rss_bytes": 199311360,
+      "status": "passed",
+      "threads": 1,
+      "wall_seconds": 1.8467027500009863
+    },
+    "development-v1:random_forest": {
+      "cpu_seconds": 2.160686144,
+      "peak_rss_bytes": 287358976,
+      "status": "passed",
+      "threads": 1,
+      "wall_seconds": 2.8303383749880595
+    }
+  },
+  "scope": "AI 04.5 temporal training/comparison; diagnostic, not model release",
+  "seconds": 433.01,
+  "status": "passed"
+}

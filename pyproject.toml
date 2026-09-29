@@ -33,6 +33,10 @@ retailops-ai-forecast = "retailops_ai.forecasting.cli:main"
 
 [project.optional-dependencies]
 snapshot = ["pyarrow==25.0.1", "jsonschema==4.26.0"]
+forecast = [
+    "psutil==7.2.2",
+    "scikit-learn==1.9.1",
+]
 
 [dependency-groups]
 dev = [
@@ -72,6 +76,12 @@ packages = ["src/retailops_ai"]
 "contracts/forecast/v1/baseline_prediction.schema.json" = "retailops_ai/forecasting/baseline_prediction.schema.json"
 "contracts/forecast/v1/evaluation_manifest.schema.json" = "retailops_ai/forecasting/evaluation_manifest.schema.json"
 "contracts/forecast/v1/baselines.default.json" = "retailops_ai/forecasting/baselines.default.json"
+"contracts/forecast/v1/model_policy.schema.json" = "retailops_ai/forecasting/model_policy.schema.json"
+"contracts/forecast/v1/model_pipeline.schema.json" = "retailops_ai/forecasting/model_pipeline.schema.json"
+"contracts/forecast/v1/model_prediction.schema.json" = "retailops_ai/forecasting/model_prediction.schema.json"
+"contracts/forecast/v1/model_comparison.schema.json" = "retailops_ai/forecasting/model_comparison.schema.json"
+"contracts/forecast/v1/forecast_value.schema.json" = "retailops_ai/forecasting/forecast_value.schema.json"
+"contracts/forecast/v1/models.default.json" = "retailops_ai/forecasting/models.default.json"
 
 [tool.uv]
 required-version = "==0.12.19"

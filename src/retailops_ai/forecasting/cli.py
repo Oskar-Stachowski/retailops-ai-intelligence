@@ -81,10 +81,58 @@ def main(argv: list[str] | None = None) -> int:
     baseline_verify.add_argument("--evaluation-dir", type=Path, required=True)
     baseline_verify.add_argument("--feature-dir", type=Path, required=True)
     baseline_verify.add_argument("--split-dir", type=Path, required=True)
+    models = commands.add_parser("models-evaluate")
+    models.add_argument("--feature-dir", type=Path, required=True)
+    models.add_argument("--split-dir", type=Path, required=True)
+    models.add_argument("--config", type=Path)
+    models.add_argument("--output-root", type=Path, default=Path("data/generated/forecast-models"))
+    models_verify = commands.add_parser("models-verify")
+    models_verify.add_argument("--comparison-dir", type=Path, required=True)
+    models_verify.add_argument("--feature-dir", type=Path, required=True)
+    models_verify.add_argument("--split-dir", type=Path, required=True)
     args = parser.parse_args(argv)
     summary: dict[str, object]
     try:
-        if args.command in {"baselines-evaluate", "evaluation-verify"}:
+        if args.command in {"models-evaluate", "models-verify"}:
+            from retailops_ai.forecasting.model_contract import ModelPolicy
+            from retailops_ai.forecasting.models import (
+                build_comparison,
+                load_comparison,
+                verify_comparison,
+            )
+
+            model_policy = ModelPolicy()
+            if args.command == "models-evaluate":
+                if args.config is not None:
+                    raw = read_bytes(args.config.absolute().parent, args.config.name)
+                    decode_json(raw)
+                    model_policy = ModelPolicy.model_validate_json(raw)
+                directory = build_comparison(
+                    args.feature_dir, args.split_dir, args.output_root, model_policy
+                )
+                comparison = load_comparison(directory)
+            else:
+                directory = args.comparison_dir
+                comparison = verify_comparison(directory, args.feature_dir, args.split_dir)
+            summary = {
+                "status": comparison.descriptor.status,
+                "comparison_id": comparison.comparison_id,
+                "models": comparison.descriptor.models,
+                "prediction_rows": comparison.predictions.row_count,
+                "selections": [
+                    value.model_dump(mode="json") for value in comparison.descriptor.selections
+                ],
+                "resources": {
+                    name: receipt.model_dump(mode="json")
+                    for name, receipt in comparison.resources.items()
+                },
+                "directory": str(directory),
+                "forecast_model_status": "not_ready",
+            }
+            if comparison.descriptor.status != "passed":
+                print(json.dumps(summary, sort_keys=True))
+                return 3
+        elif args.command in {"baselines-evaluate", "evaluation-verify"}:
             from retailops_ai.forecasting.evaluation import (
                 build_evaluation,
                 load_evaluation,
@@ -250,6 +298,12 @@ def main(argv: list[str] | None = None) -> int:
                     "forecast_model_status": manifest.forecast_model_status,
                 }
     except ImportError:
+        if args.command in {"models-evaluate", "models-verify"}:
+            print(
+                '{"error":"forecast_dependencies_required","install":"uv sync --locked --extra snapshot --extra forecast"}',
+                file=sys.stderr,
+            )
+            return 2
         print(
             '{"error":"snapshot_dependencies_required","install":"uv sync --locked --extra snapshot"}',
             file=sys.stderr,

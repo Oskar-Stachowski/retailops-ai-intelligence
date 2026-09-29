@@ -7,7 +7,7 @@ wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodz
 przez chroniony `main` oraz Required CI; stan wykonania pokazuje
 [workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
 
-**AI 04.1–04.4 — zadanie, cechy, podział i baseline'y forecastingu:**
+**AI 04.1–04.5 — zadanie, cechy, podział i modele forecastingu:**
 [kontrakt i polecenia](forecasting.md) definiują observed sales, grain,
 cutoff 23:59:59 UTC, horyzonty 1–14 i okna 7/14 z jedną granicą wiedzy.
 Manifest wiąże kalendarz ze zweryfikowanym curated AI 03; inventory i truth
@@ -25,8 +25,15 @@ i [04.3](evidence/04-03-manifests.md) podają lokalne kontrole i powtarzalne smo
 Wybór według MAE używa tylko validation; h=8–14 nie odczytują przyszłych actuals.
 Raport zachowuje coverage i brakujące predykcje, z poprawnym MAE/WAPE dla zer.
 [Odbiór 04.4](evidence/04-04-baselines.md) dokumentuje temporalny pomiar i replay.
+[Modele RF i HGB 04.5](forecast-models.md) mają pełny train-only pipeline,
+direct horizon feature, wspólny evaluator i egzekwowane limity CPU/RAM/czasu.
+Wybór diagnostyczny wymaga poprawy validation MAE >5% wobec najlepszego baseline'u.
+[Odbiór 04.5](evidence/04-05-models.md) wiąże pomiary z artefaktami i replay.
+Na małym temporalnym fixture wybrano HGB: MAE lepsze od seasonal naive7
+o 6,7% na validation i 2,2% na development holdout. To pomiar protokołu,
+bez kwalifikacji produkcyjnej jakości lub zmiany odrzucenia RF w RetailOps.
 Branch `ai/04-01-task-calendar` jest osobny od AI 12.
-Kolejny zakres to **04.5 — RF i HistGradientBoosting**;
+Kolejny zakres to **04.6 — chronologiczny backtesting wielu foldów**;
 model pozostaje `not_ready`.
 Ten zakres nie ma jeszcze publikacji ani zdalnego Required CI.
 

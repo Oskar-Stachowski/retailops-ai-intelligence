@@ -1,0 +1,437 @@
+{
+  "$defs": {
+    "BaselinePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "candidates": {
+          "default": [
+            "last_observed",
+            "moving_average",
+            "seasonal_naive7"
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "const": "last_observed",
+              "type": "string"
+            },
+            {
+              "const": "moving_average",
+              "type": "string"
+            },
+            {
+              "const": "seasonal_naive7",
+              "type": "string"
+            }
+          ],
+          "title": "Candidates",
+          "type": "array"
+        },
+        "closed_history": {
+          "const": "confirmed_closed_zero_is_observed",
+          "default": "confirmed_closed_zero_is_observed",
+          "title": "Closed History",
+          "type": "string"
+        },
+        "common_keys": {
+          "const": "all_split_memberships_no_model_specific_drops",
+          "default": "all_split_memberships_no_model_specific_drops",
+          "title": "Common Keys",
+          "type": "string"
+        },
+        "incomplete_candidate": {
+          "const": "not_ready_no_selection_no_partial_metrics",
+          "default": "not_ready_no_selection_no_partial_metrics",
+          "title": "Incomplete Candidate",
+          "type": "string"
+        },
+        "missing_history": {
+          "const": "skip_unknown_never_impute_zero",
+          "default": "skip_unknown_never_impute_zero",
+          "title": "Missing History",
+          "type": "string"
+        },
+        "moving_average_calendar_days": {
+          "default": 7,
+          "enum": [
+            7,
+            14,
+            28
+          ],
+          "title": "Moving Average Calendar Days",
+          "type": "integer"
+        },
+        "moving_average_minimum_known_days": {
+          "default": 1,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Moving Average Minimum Known Days",
+          "type": "integer"
+        },
+        "origin_mode": {
+          "const": "fixed_origin_no_recursive_actuals",
+          "default": "fixed_origin_no_recursive_actuals",
+          "title": "Origin Mode",
+          "type": "string"
+        },
+        "portfolio_final_test": {
+          "const": "not_included_not_opened",
+          "default": "not_included_not_opened",
+          "title": "Portfolio Final Test",
+          "type": "string"
+        },
+        "required_prediction_coverage": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Required Prediction Coverage",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "seasonal_missing": {
+          "const": "last_known_same_weekday_within_28_days_or_insufficient_data",
+          "default": "last_known_same_weekday_within_28_days_or_insufficient_data",
+          "title": "Seasonal Missing",
+          "type": "string"
+        },
+        "selection_metric": {
+          "const": "mae",
+          "default": "mae",
+          "title": "Selection Metric",
+          "type": "string"
+        },
+        "selection_role": {
+          "const": "validation_only_per_fold",
+          "default": "validation_only_per_fold",
+          "title": "Selection Role",
+          "type": "string"
+        },
+        "tie_break": {
+          "const": "candidate_order",
+          "default": "candidate_order",
+          "title": "Tie Break",
+          "type": "string"
+        }
+      },
+      "title": "BaselinePolicy",
+      "type": "object"
+    },
+    "HGBConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "categorical_features": {
+          "default": null,
+          "title": "Categorical Features",
+          "type": "null"
+        },
+        "early_stopping": {
+          "const": false,
+          "default": false,
+          "title": "Early Stopping",
+          "type": "boolean"
+        },
+        "l2_regularization": {
+          "default": 0.0,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "L2 Regularization",
+          "type": "number"
+        },
+        "learning_rate": {
+          "default": 0.1,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Learning Rate",
+          "type": "number"
+        },
+        "loss": {
+          "const": "squared_error",
+          "default": "squared_error",
+          "title": "Loss",
+          "type": "string"
+        },
+        "max_bins": {
+          "const": 255,
+          "default": 255,
+          "title": "Max Bins",
+          "type": "integer"
+        },
+        "max_iter": {
+          "default": 100,
+          "maximum": 200,
+          "minimum": 1,
+          "title": "Max Iter",
+          "type": "integer"
+        },
+        "max_leaf_nodes": {
+          "default": 31,
+          "maximum": 63,
+          "minimum": 2,
+          "title": "Max Leaf Nodes",
+          "type": "integer"
+        },
+        "min_samples_leaf": {
+          "default": 20,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Min Samples Leaf",
+          "type": "integer"
+        },
+        "validation_fraction": {
+          "default": null,
+          "title": "Validation Fraction",
+          "type": "null"
+        }
+      },
+      "title": "HGBConfig",
+      "type": "object"
+    },
+    "RFConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "bootstrap": {
+          "const": true,
+          "default": true,
+          "title": "Bootstrap",
+          "type": "boolean"
+        },
+        "criterion": {
+          "const": "squared_error",
+          "default": "squared_error",
+          "title": "Criterion",
+          "type": "string"
+        },
+        "max_depth": {
+          "default": 12,
+          "maximum": 12,
+          "minimum": 1,
+          "title": "Max Depth",
+          "type": "integer"
+        },
+        "max_features": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Max Features",
+          "type": "number"
+        },
+        "min_samples_leaf": {
+          "default": 2,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Min Samples Leaf",
+          "type": "integer"
+        },
+        "min_samples_split": {
+          "default": 2,
+          "maximum": 200,
+          "minimum": 2,
+          "title": "Min Samples Split",
+          "type": "integer"
+        },
+        "n_estimators": {
+          "default": 64,
+          "maximum": 128,
+          "minimum": 1,
+          "title": "N Estimators",
+          "type": "integer"
+        },
+        "n_jobs": {
+          "const": 1,
+          "default": 1,
+          "title": "N Jobs",
+          "type": "integer"
+        }
+      },
+      "title": "RFConfig",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:forecast:model_policy:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "baseline": {
+      "$ref": "#/$defs/BaselinePolicy",
+      "default": {
+        "candidates": [
+          "last_observed",
+          "moving_average",
+          "seasonal_naive7"
+        ],
+        "closed_history": "confirmed_closed_zero_is_observed",
+        "common_keys": "all_split_memberships_no_model_specific_drops",
+        "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+        "missing_history": "skip_unknown_never_impute_zero",
+        "moving_average_calendar_days": 7,
+        "moving_average_minimum_known_days": 1,
+        "origin_mode": "fixed_origin_no_recursive_actuals",
+        "portfolio_final_test": "not_included_not_opened",
+        "required_prediction_coverage": 1.0,
+        "schema_version": "1.0.0",
+        "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+        "selection_metric": "mae",
+        "selection_role": "validation_only_per_fold",
+        "tie_break": "candidate_order"
+      }
+    },
+    "cpu_threads": {
+      "const": 1,
+      "default": 1,
+      "title": "Cpu Threads",
+      "type": "integer"
+    },
+    "fit_cpu_seconds": {
+      "default": 90.0,
+      "exclusiveMinimum": 0,
+      "maximum": 300,
+      "title": "Fit Cpu Seconds",
+      "type": "number"
+    },
+    "fit_rss_bytes": {
+      "default": 1073741824,
+      "maximum": 2147483648,
+      "minimum": 1048576,
+      "title": "Fit Rss Bytes",
+      "type": "integer"
+    },
+    "fit_wall_seconds": {
+      "default": 120.0,
+      "exclusiveMinimum": 0,
+      "maximum": 300,
+      "title": "Fit Wall Seconds",
+      "type": "number"
+    },
+    "grid": {
+      "const": "one_frozen_configuration_per_family",
+      "default": "one_frozen_configuration_per_family",
+      "title": "Grid",
+      "type": "string"
+    },
+    "hgb": {
+      "$ref": "#/$defs/HGBConfig",
+      "default": {
+        "categorical_features": null,
+        "early_stopping": false,
+        "l2_regularization": 0.0,
+        "learning_rate": 0.1,
+        "loss": "squared_error",
+        "max_bins": 255,
+        "max_iter": 100,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "validation_fraction": null
+      }
+    },
+    "legacy_retailops_serving": {
+      "const": "unchanged_rejection_not_overridden",
+      "default": "unchanged_rejection_not_overridden",
+      "title": "Legacy Retailops Serving",
+      "type": "string"
+    },
+    "max_matrix_bytes": {
+      "default": 67108864,
+      "maximum": 134217728,
+      "minimum": 1024,
+      "title": "Max Matrix Bytes",
+      "type": "integer"
+    },
+    "max_train_rows": {
+      "default": 50000,
+      "maximum": 50000,
+      "minimum": 1,
+      "title": "Max Train Rows",
+      "type": "integer"
+    },
+    "minimum_relative_improvement": {
+      "default": 0.05,
+      "exclusiveMaximum": 1,
+      "minimum": 0,
+      "title": "Minimum Relative Improvement",
+      "type": "number"
+    },
+    "monitor_interval_seconds": {
+      "default": 0.05,
+      "maximum": 0.05,
+      "minimum": 0.05,
+      "title": "Monitor Interval Seconds",
+      "type": "number"
+    },
+    "portfolio_final_test": {
+      "const": "not_included_not_opened",
+      "default": "not_included_not_opened",
+      "title": "Portfolio Final Test",
+      "type": "string"
+    },
+    "postprocessing": {
+      "const": "clip_negative_to_zero_no_rounding",
+      "default": "clip_negative_to_zero_no_rounding",
+      "title": "Postprocessing",
+      "type": "string"
+    },
+    "primary_metric": {
+      "const": "validation_mae",
+      "default": "validation_mae",
+      "title": "Primary Metric",
+      "type": "string"
+    },
+    "random_state": {
+      "default": 42,
+      "maximum": 2147483647,
+      "minimum": 0,
+      "title": "Random State",
+      "type": "integer"
+    },
+    "rf": {
+      "$ref": "#/$defs/RFConfig",
+      "default": {
+        "bootstrap": true,
+        "criterion": "squared_error",
+        "max_depth": 12,
+        "max_features": 1.0,
+        "min_samples_leaf": 2,
+        "min_samples_split": 2,
+        "n_estimators": 64,
+        "n_jobs": 1
+      }
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selection_use": {
+      "const": "diagnostic_only_pending_04_6_to_04_8",
+      "default": "diagnostic_only_pending_04_6_to_04_8",
+      "title": "Selection Use",
+      "type": "string"
+    },
+    "strategy": {
+      "const": "direct_global_with_horizon_feature",
+      "default": "direct_global_with_horizon_feature",
+      "title": "Strategy",
+      "type": "string"
+    },
+    "target_type": {
+      "const": "observed_sales_units",
+      "default": "observed_sales_units",
+      "title": "Target Type",
+      "type": "string"
+    },
+    "tie_break": {
+      "const": "baseline_then_rf_then_hgb",
+      "default": "baseline_then_rf_then_hgb",
+      "title": "Tie Break",
+      "type": "string"
+    }
+  },
+  "title": "ModelPolicy",
+  "type": "object"
+}

@@ -133,4 +133,5 @@ Smoke nie kwalifikuje pełnego ai-dev/ai-training pod względem zasobów.
 [Formalny feature/split contract 04.3](forecast-manifests.md) wersjonuje ten
 draft input i dopasowuje preprocessing wyłącznie na train.
 [Evaluator i baseline'y 04.4](forecast-baselines.md) używają zamrożonej historii.
-Kolejny zakres: **04.5 — RF i HistGradientBoosting**.
+[Modele 04.5](forecast-models.md) dopasowują train-only pipeline RF/HGB.
+Kolejny zakres: **04.6 — chronologiczny backtesting**.

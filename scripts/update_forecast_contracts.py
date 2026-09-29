@@ -21,6 +21,13 @@ from retailops_ai.forecasting.manifest_contract import (
     SplitManifest,
     SplitPolicy,
 )
+from retailops_ai.forecasting.model_contract import (
+    ForecastValue,
+    ModelPipeline,
+    ModelPolicy,
+    ModelPrediction,
+    ModelRunManifest,
+)
 from retailops_ai.forecasting.preprocessing import FittedState
 from retailops_ai.forecasting.splits import default_split
 
@@ -45,6 +52,11 @@ def artifacts() -> dict[Path, object]:
         ("baseline_policy", BaselinePolicy),
         ("baseline_prediction", BaselinePrediction),
         ("evaluation_manifest", EvaluationManifest),
+        ("model_policy", ModelPolicy),
+        ("model_pipeline", ModelPipeline),
+        ("model_prediction", ModelPrediction),
+        ("model_comparison", ModelRunManifest),
+        ("forecast_value", ForecastValue),
     ):
         schema = model.model_json_schema()
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
@@ -57,6 +69,9 @@ def artifacts() -> dict[Path, object]:
         mode="json"
     )
     result[ROOT / "contracts/forecast/v1/baselines.default.json"] = BaselinePolicy().model_dump(
+        mode="json"
+    )
+    result[ROOT / "contracts/forecast/v1/models.default.json"] = ModelPolicy().model_dump(
         mode="json"
     )
     calendar = SimpleNamespace(

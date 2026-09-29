@@ -19,8 +19,9 @@ make check UV=.tools/bin/uv
 ```
 
 Przy uv dostępnym w PATH można użyć `make bootstrap` i `make check` bez override.
-Kontrole instalują opcjonalny extra `snapshot` dla typed importera; przy ręcznym
-uruchomieniu całych testów użyj `uv run --locked --extra snapshot pytest`.
+Kontrole instalują opcjonalne extras `snapshot` dla typed importera i `forecast`
+dla treningu RF/HGB. Przy ręcznym uruchomieniu całych testów użyj
+`uv run --locked --extra snapshot --extra forecast pytest`.
 [Osobne CLI importera](source-snapshot-import.md) nie wymaga konfiguracji API/DB.
 [CLI curated](curated.md) buduje dane i odczytuje historię as-of z tego samego extra.
 [CLI forecast](forecasting.md) definiuje zadanie i buduje przypięty kalendarz
@@ -52,6 +53,7 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make forecast-features-check` | Aktywny panel, typed Parquet inputs, zgodność z historią i niezmienny rerun |
 | `make forecast-manifests-check` | Formalny feature set i schema smoke; krótki calendar nie udaje kwalifikacji splitu |
 | `make forecast-baselines-check` | Baseline'y as-of i brak kwalifikacji krótkiego fixture; z jawnymi rodzicami temporalny evaluator, replay i immutable rerun |
+| `make forecast-models-check` | Ograniczony trening RF/HGB i portable JSON; z jawnymi rodzicami temporalny trening, niezależny retraining/replay i immutable rerun |
 | `make package` | Wheel i sdist w ignorowanym `dist/` |
 | `make check` | Wszystkie powyższe |
 | `make secrets` | Gitleaks 8.30.1: historia Git i aktualny katalog, z redakcją |
