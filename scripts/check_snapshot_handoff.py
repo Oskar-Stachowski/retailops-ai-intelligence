@@ -214,7 +214,7 @@ def verify_fixture(package: Path = FIXTURE) -> dict[str, Any]:
         "rows": sum(t["row_count"] for t in manifest["tables"]),
         "snapshot_files": len(names),
         "snapshot_bytes": total,
-        "typed_import": "not_implemented",
+        "typed_import": "not_performed_by_this_check",
     }
 
 

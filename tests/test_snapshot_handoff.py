@@ -33,7 +33,7 @@ def test_reviewed_contract_and_expected_fixture_pass_without_generator():
     first, second = checker.verify_fixture(), checker.verify_fixture()
     assert first == second
     assert first["tables"] == 25 and first["rows"] == 31171
-    assert first["typed_import"] == "not_implemented"
+    assert first["typed_import"] == "not_performed_by_this_check"
     assert before == {
         p.relative_to(checker.FIXTURE).as_posix(): checker.file_sha256(p)
         for p in checker.FIXTURE.rglob("*")
