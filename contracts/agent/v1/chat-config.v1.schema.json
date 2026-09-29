@@ -1,0 +1,572 @@
+{
+  "$defs": {
+    "ChatModelConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "inference_profile": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,299}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Inference Profile"
+        },
+        "max_output_tokens": {
+          "maximum": 1500,
+          "minimum": 1,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "model_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,199}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "provider": {
+          "enum": [
+            "fake",
+            "bedrock"
+          ],
+          "title": "Provider",
+          "type": "string"
+        },
+        "region": {
+          "pattern": "^(offline|[a-z]{2}-[a-z]+-[0-9])$",
+          "title": "Region",
+          "type": "string"
+        },
+        "temperature": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Temperature",
+          "type": "number"
+        }
+      },
+      "required": [
+        "provider",
+        "model_id",
+        "inference_profile",
+        "region",
+        "temperature",
+        "max_output_tokens"
+      ],
+      "title": "ChatModelConfig",
+      "type": "object"
+    },
+    "ChatPricing": {
+      "additionalProperties": false,
+      "properties": {
+        "currency": {
+          "const": "USD",
+          "title": "Currency",
+          "type": "string"
+        },
+        "input_per_million": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,9}|(?=[\\d.]{1,19}0*$)\\d{0,9}\\.\\d{0,9}0*$)",
+              "type": "string"
+            }
+          ],
+          "title": "Input Per Million"
+        },
+        "kind": {
+          "enum": [
+            "synthetic_test_rates",
+            "reviewed_provider_rates"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "max_run_cost": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,9}|(?=[\\d.]{1,19}0*$)\\d{0,9}\\.\\d{0,9}0*$)",
+              "type": "string"
+            }
+          ],
+          "title": "Max Run Cost"
+        },
+        "max_smoke_cost": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,9}|(?=[\\d.]{1,19}0*$)\\d{0,9}\\.\\d{0,9}0*$)",
+              "type": "string"
+            }
+          ],
+          "title": "Max Smoke Cost"
+        },
+        "output_per_million": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,9}|(?=[\\d.]{1,19}0*$)\\d{0,9}\\.\\d{0,9}0*$)",
+              "type": "string"
+            }
+          ],
+          "title": "Output Per Million"
+        },
+        "rate_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Rate Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "currency",
+        "input_per_million",
+        "output_per_million",
+        "rate_version",
+        "max_run_cost",
+        "max_smoke_cost"
+      ],
+      "title": "ChatPricing",
+      "type": "object"
+    },
+    "EmbeddingConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            8,
+            16,
+            32,
+            64,
+            256,
+            512,
+            1024
+          ],
+          "title": "Dimension",
+          "type": "integer"
+        },
+        "distance": {
+          "const": "cosine",
+          "title": "Distance",
+          "type": "string"
+        },
+        "inference_profile": {
+          "title": "Inference Profile",
+          "type": "null"
+        },
+        "model_id": {
+          "enum": [
+            "sha256-unit-f32-v1",
+            "amazon.titan-embed-text-v2:0"
+          ],
+          "title": "Model Id",
+          "type": "string"
+        },
+        "normalization": {
+          "const": "l2-unit",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "provider": {
+          "enum": [
+            "fake",
+            "bedrock"
+          ],
+          "title": "Provider",
+          "type": "string"
+        },
+        "region": {
+          "pattern": "^(offline|[a-z]{2}-[a-z]+-[0-9])$",
+          "title": "Region",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "transformation_version": {
+          "enum": [
+            "utf8-chunk-body-v1",
+            "utf8-heading-path-body-v1"
+          ],
+          "title": "Transformation Version",
+          "type": "string"
+        },
+        "vector_format": {
+          "const": "float32-big-endian-v1",
+          "title": "Vector Format",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "provider",
+        "model_id",
+        "inference_profile",
+        "region",
+        "dimension",
+        "normalization",
+        "distance",
+        "transformation_version",
+        "vector_format"
+      ],
+      "title": "EmbeddingConfig",
+      "type": "object"
+    },
+    "ModelBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "max_calls": {
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Max Calls",
+          "type": "integer"
+        },
+        "max_input_tokens": {
+          "maximum": 12000,
+          "minimum": 1,
+          "title": "Max Input Tokens",
+          "type": "integer"
+        },
+        "max_output_tokens": {
+          "maximum": 1500,
+          "minimum": 1,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_repairs": {
+          "const": 1,
+          "title": "Max Repairs",
+          "type": "integer"
+        },
+        "max_retries": {
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Max Retries",
+          "type": "integer"
+        },
+        "pricing": {
+          "$ref": "#/$defs/ChatPricing"
+        },
+        "provider_timeout_seconds": {
+          "exclusiveMinimum": 0,
+          "maximum": 20,
+          "title": "Provider Timeout Seconds",
+          "type": "number"
+        },
+        "retry_base_seconds": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Retry Base Seconds",
+          "type": "number"
+        },
+        "retry_max_seconds": {
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Retry Max Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "max_input_tokens",
+        "max_output_tokens",
+        "max_calls",
+        "max_retries",
+        "max_repairs",
+        "provider_timeout_seconds",
+        "retry_base_seconds",
+        "retry_max_seconds",
+        "pricing"
+      ],
+      "title": "ModelBudget",
+      "type": "object"
+    },
+    "PromptFile": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "enum": [
+            "policy",
+            "tool_selection",
+            "evidence",
+            "response",
+            "refusal",
+            "examples"
+          ],
+          "title": "Name",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "sha256"
+      ],
+      "title": "PromptFile",
+      "type": "object"
+    },
+    "RetrievalConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_limit": {
+          "const": 256,
+          "title": "Candidate Limit",
+          "type": "integer"
+        },
+        "diversification": {
+          "enum": [
+            "repository-then-document-v1",
+            "score-then-document-v1"
+          ],
+          "title": "Diversification",
+          "type": "string"
+        },
+        "max_chunks_per_document": {
+          "const": 2,
+          "title": "Max Chunks Per Document",
+          "type": "integer"
+        },
+        "max_context_bytes": {
+          "const": 24000,
+          "title": "Max Context Bytes",
+          "type": "integer"
+        },
+        "max_context_tokens": {
+          "const": 6000,
+          "title": "Max Context Tokens",
+          "type": "integer"
+        },
+        "max_top_k": {
+          "const": 5,
+          "title": "Max Top K",
+          "type": "integer"
+        },
+        "min_cosine_score": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Min Cosine Score",
+          "type": "number"
+        },
+        "retrieval_version": {
+          "const": "pgvector-cosine-exact-v1",
+          "title": "Retrieval Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "size_estimator": {
+          "const": "serialized-hits-utf8-div4-v1",
+          "title": "Size Estimator",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "retrieval_version",
+        "max_top_k",
+        "max_context_tokens",
+        "max_context_bytes",
+        "max_chunks_per_document",
+        "candidate_limit",
+        "min_cosine_score",
+        "diversification",
+        "size_estimator"
+      ],
+      "title": "RetrievalConfig",
+      "type": "object"
+    },
+    "ToolPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "freshness_seconds": {
+          "default": 300,
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Freshness Seconds",
+          "type": "integer"
+        },
+        "max_calls": {
+          "default": 6,
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Max Calls",
+          "type": "integer"
+        },
+        "max_locations": {
+          "default": 5,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Max Locations",
+          "type": "integer"
+        },
+        "max_period_days": {
+          "default": 90,
+          "maximum": 90,
+          "minimum": 1,
+          "title": "Max Period Days",
+          "type": "integer"
+        },
+        "max_products": {
+          "default": 20,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Max Products",
+          "type": "integer"
+        },
+        "max_result_bytes": {
+          "default": 131072,
+          "maximum": 131072,
+          "minimum": 1024,
+          "title": "Max Result Bytes",
+          "type": "integer"
+        },
+        "max_rows": {
+          "default": 50,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Max Rows",
+          "type": "integer"
+        },
+        "profile": {
+          "const": "agent-tools-bounded-v1",
+          "title": "Profile",
+          "type": "string"
+        },
+        "request_deadline_seconds": {
+          "default": 45.0,
+          "exclusiveMinimum": 0,
+          "maximum": 45,
+          "title": "Request Deadline Seconds",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "tool_timeout_seconds": {
+          "default": 5.0,
+          "exclusiveMinimum": 0,
+          "maximum": 5,
+          "title": "Tool Timeout Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "schema_version",
+        "profile"
+      ],
+      "title": "ToolPolicy",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:agent:chat-config:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "budget": {
+      "$ref": "#/$defs/ModelBudget"
+    },
+    "embeddings": {
+      "$ref": "#/$defs/EmbeddingConfig"
+    },
+    "graph_version": {
+      "const": "pregraph-provider-v1",
+      "title": "Graph Version",
+      "type": "string"
+    },
+    "knowledge_index_id": {
+      "pattern": "^index-sha256-[0-9a-f]{64}$",
+      "title": "Knowledge Index Id",
+      "type": "string"
+    },
+    "model": {
+      "$ref": "#/$defs/ChatModelConfig"
+    },
+    "profile": {
+      "const": "agent-bounded-v1",
+      "title": "Profile",
+      "type": "string"
+    },
+    "prompt_version": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Prompt Version",
+      "type": "string"
+    },
+    "prompts": {
+      "items": {
+        "$ref": "#/$defs/PromptFile"
+      },
+      "maxItems": 6,
+      "minItems": 6,
+      "title": "Prompts",
+      "type": "array"
+    },
+    "response_schema_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Response Schema Sha256",
+      "type": "string"
+    },
+    "response_schema_version": {
+      "const": "agent-draft-v1",
+      "title": "Response Schema Version",
+      "type": "string"
+    },
+    "retrieval": {
+      "$ref": "#/$defs/RetrievalConfig"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "tool_policy": {
+      "$ref": "#/$defs/ToolPolicy"
+    },
+    "tool_schemas_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Tool Schemas Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "profile",
+    "graph_version",
+    "prompt_version",
+    "response_schema_version",
+    "model",
+    "budget",
+    "tool_policy",
+    "tool_schemas_sha256",
+    "response_schema_sha256",
+    "knowledge_index_id",
+    "embeddings",
+    "retrieval",
+    "prompts"
+  ],
+  "title": "AgentChatConfig",
+  "type": "object"
+}

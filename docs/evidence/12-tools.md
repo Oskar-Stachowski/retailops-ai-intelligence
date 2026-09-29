@@ -41,10 +41,9 @@ Nowe testy obejmują cały katalog i następujące granice:
 
 ## Granice i kolejny zakres
 
-AI 12 jest w realizacji. Otwarta praca: chat provider, wersjonowane prompty
-i konfiguracja, graf, walidacja odpowiedzi/cytatów/liczb, Assistant API,
-trwały trace i admission, golden odpowiedzi, rzeczywisty chat Bedrock,
-rzeczywiste narzędzia oraz publikacja sugestii/outbox/E2E z AI 10.
+Ten odbiór dotyczy pierwszego zakresu narzędzi. Aktualne bramki AI 12 podaje
+[status](../STATUS.md); konfigurację/prompty i fake chat opisuje
+[kolejny odbiór](12-chat.md).
 
 Nie wykonano wywołań AWS, wdrożenia chmurowego ani zapisów operacyjnych.
 Pełne zamknięcie AI 12 wymaga odebranego AI 10 i AI 11. Równoległe AI 03

@@ -4,12 +4,31 @@ import argparse
 import json
 import sys
 
+from retailops_ai.agent.chat_config import load_chat_config
 from retailops_ai.agent.execution import READ_CAPABILITIES
 from retailops_ai.agent.tools import INPUT, OUTPUT, REQUEST_MODELS, ToolPolicy
 from retailops_ai.security.local import strict_json
 
 
 def run_agent_command(args: argparse.Namespace) -> int:
+    if args.command == "agent-config-check":
+        try:
+            resolved = load_chat_config(args.path)
+        except ValueError:
+            print("agent_chat_config_invalid", file=sys.stderr)
+            return 2
+        print(
+            json.dumps(
+                {
+                    "status": "valid",
+                    "provider": resolved.config.model.provider,
+                    "config_id": resolved.config_id,
+                    "provider_invoked": False,
+                },
+                sort_keys=True,
+            )
+        )
+        return 0
     if args.command == "agent-tools":
         print(
             json.dumps(

@@ -8,7 +8,9 @@ kwalifikację jakości, aktywację i rollback Etapu 11. Historyczne evidence
 zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
 [Narzędzia agenta AI 12](agent-tools.md) opisują typowany katalog, uprawnienia,
 budżet i testowe źródła; [odbiór pierwszego zakresu](evidence/12-tools.md)
-wiąże je z lokalnymi testami.
+wiąże je z lokalnymi testami. [Konfiguracja i fake chat](agent-chat.md) opisują
+wersjonowane prompty, kontrolę draftów oraz budżet rozmowy;
+[odbiór drugiego zakresu](evidence/12-chat.md) podaje jego granice.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
@@ -69,6 +71,7 @@ etykiety i progi. Worker zachowuje pełny raport także po niezaliczonym progu.
 | `src/retailops_ai/` | CLI/settings oraz warstwy api/domain/pipelines/adapters lokalnego serwera |
 | `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: korpus, fragmenty, kandydacki indeks i lifecycle |
 | `knowledge/` | Przypięty rejestr RAG, konfiguracje, golden set oraz osobne zgody właściciela |
+| `agent/` | Wersjonowana konfiguracja maszynowa chat/budżetu; prompty są zasobami pakietu |
 | `tests/` | Konfiguracja, HTTP i socket, awarie, korelacja, kontrakty oraz bramki CI |
 | `scripts/` | Kontroler Compose, rzeczywisty smoke, kontrakty i bramki workflow |
 | `.github/` | Required CI, szablon PR, wskaźnik do security |

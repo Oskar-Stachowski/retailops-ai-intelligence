@@ -86,3 +86,8 @@ reguł i rozmiaru jest wersjonowana w `knowledge/chunker.v1.json`.
 [Katalog narzędzi agenta](agent-tools.md) dodaje offline `agent-tools`
 i `agent-tool-check`. Wykonawca jest na tym etapie interfejsem serwerowym;
 Assistant API będzie dodane w dalszym zakresie AI 12.
+
+[Konfiguracja rozmowy](agent-chat.md) dodaje offline
+`agent-config-check agent/chat.fake.v1.json`. `make contracts-check` kontroluje
+także checksum promptów, model/budget config i chat schemas; generowanie
+snapshotów nie aktualizuje zatwierdzonych powiązań konfiguracji po cichu.

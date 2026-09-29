@@ -40,12 +40,14 @@ contracts:
 	$(UV) run --locked python scripts/update_access_contracts.py
 	$(UV) run --locked python scripts/update_knowledge_contracts.py
 	$(UV) run --locked python scripts/update_agent_contracts.py
+	$(UV) run --locked python scripts/update_agent_chat_contracts.py
 
 contracts-check:
 	$(UV) run --locked python scripts/update_intelligence_contracts.py --check
 	$(UV) run --locked python scripts/update_access_contracts.py --check
 	$(UV) run --locked python scripts/update_knowledge_contracts.py --check
 	$(UV) run --locked python scripts/update_agent_contracts.py --check
+	$(UV) run --locked python scripts/update_agent_chat_contracts.py --check
 
 compose-up:
 	$(UV) run --locked python scripts/local_stack.py up

@@ -29,6 +29,7 @@ from retailops_ai.agent.tools import (
     ToolPolicy,
 )
 from retailops_ai.data_contracts.common import SellingKey
+from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.data_contracts.tool import ERRORS, ToolError, ToolRequest
 from retailops_ai.domain.access import Capability, Principal
 from retailops_ai.knowledge.releases import IndexPin
@@ -153,9 +154,17 @@ class ToolSession:
         self.deadline = executor.timer() + executor.policy.request_deadline_seconds
         self.calls = 0
         self.audit: list[ToolAudit] = []
+        self._accepted_outputs: dict[str, str] = {}
+        self._chat_claimed = False
         self._budget_lock = asyncio.Lock()
 
-    async def execute_json(self, raw: str) -> ToolOutput:
+    def claim_chat_session(self) -> None:
+        if self._chat_claimed:
+            raise ValueError("chat_session_already_bound")
+        self._chat_claimed = True
+
+    def validate_call(self, raw: str) -> ToolInput:
+        """Validate a proposed model call without executing it or consuming tool budget."""
         if len(raw.encode()) > 16384:
             raise ToolFailure("invalid_scope")
         try:
@@ -171,6 +180,10 @@ class ToolSession:
         except ToolFailure as exc:
             self.audit.append(ToolAudit(request.tool, "error", 0.0, exc.code, ()))
             raise
+        return request
+
+    async def execute_json(self, raw: str) -> ToolOutput:
+        request = self.validate_call(raw)
         async with self._budget_lock:
             remaining = self.deadline - self.executor.timer()
             if self.calls >= self.executor.policy.max_calls or remaining <= 0:
@@ -211,6 +224,9 @@ class ToolSession:
                 status = output.status
                 refs = (output.source_ref,) if output.source_ref else ()
             self.audit.append(ToolAudit(request.tool, status, self._elapsed(start), None, refs))
+            self._accepted_outputs[canonical_sha256(output.model_dump(mode="json"))] = (
+                output.model_dump_json()
+            )
             return output
         except asyncio.CancelledError:
             self.audit.append(
@@ -228,6 +244,10 @@ class ToolSession:
 
     def _elapsed(self, start: float) -> float:
         return max(0.0, (self.executor.timer() - start) * 1000)
+
+    def accepted_outputs(self) -> tuple[ToolOutput, ...]:
+        """Detached snapshots of results that passed this principal's output checks."""
+        return tuple(OUTPUT.validate_json(value) for value in self._accepted_outputs.values())
 
     def _authorize(self, request: ToolInput) -> ToolInput:
         policy = self.executor.policy

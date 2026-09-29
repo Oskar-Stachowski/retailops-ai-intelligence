@@ -1,0 +1,183 @@
+{
+  "schema_version": "1.0",
+  "stage": "12",
+  "status": "in_progress",
+  "scope": "versioned_configuration_prompts_and_bounded_fake_chat",
+  "verified_at": "2026-09-29T05:47:35.256802+00:00",
+  "parent_commit": "aa0192960185a93e8b6134b11515d0285d521a9a",
+  "branch": "ai/12-tools",
+  "config_id": "agent-chat-config-sha256-5c3161844484ac2e27344619b30dc22ec341d3d85d1f9fd10efb12bf09fa8e89",
+  "graph_version": "pregraph-provider-v1",
+  "provider": "fake",
+  "prompt_files": 6,
+  "verification": {
+    "full_regression": {
+      "passed": 819,
+      "duration_seconds": 131.94
+    },
+    "focused": {
+      "passed": 176,
+      "chat_cases": 67,
+      "duration_seconds": 6.27
+    },
+    "ruff_format": {
+      "status": "passed",
+      "files": 185
+    },
+    "mypy": {
+      "status": "passed",
+      "files": 112
+    },
+    "contracts": "passed",
+    "docs": "passed",
+    "wheel_sdist": "passed",
+    "wheel_cli_and_six_prompts_outside_source": "passed",
+    "compose_config": "passed",
+    "gitleaks": "passed"
+  },
+  "aws_chat_executed": false,
+  "new_embedding_quality_measurement": false,
+  "business_source_acceptance": false,
+  "ai10_required_for_this_scope": false,
+  "knowledge_test_backend": "Synthetic vectors and pinned backend spy; stage 11 index ID and configuration bound in the shipped profile",
+  "pricing_kind": "synthetic_test_rates",
+  "remote_ci": "not_run",
+  "published_to_main": false,
+  "remaining": [
+    "bounded_graph_numeric_faithfulness_groundedness_and_deterministic_suggestion_policy",
+    "assistant_api_safe_trace_persistence_and_admission",
+    "answer_golden_evaluation",
+    "real_bedrock_chat_adapter_circuit_breaker_and_bounded_smoke",
+    "real_business_tools_and_ai10_suggestion_outbox_e2e"
+  ],
+  "checksums": [
+    {
+      "path": "Makefile",
+      "sha256": "8b9a1938e621d03a027f7e5f0b4791eb68d58b8aec607d38f8bdad0435010b9e"
+    },
+    {
+      "path": "agent/chat.fake.v1.json",
+      "sha256": "d7b37dcde191612d3c92e29ba8f82e7d856b7ddf198ca67009a6641bc32db7e4"
+    },
+    {
+      "path": "contracts/agent/v1/chat-answer.v1.example.json",
+      "sha256": "06adbce9dcd0a39a0dd5a1935d733cb0115568bf505902a72623e691cf519f98"
+    },
+    {
+      "path": "contracts/agent/v1/chat-answer.v1.schema.json",
+      "sha256": "c62957b987104aa2f8b61854e5ab449273524c41ac48e344f0d0abe6a94d239c"
+    },
+    {
+      "path": "contracts/agent/v1/chat-bindings.v1.json",
+      "sha256": "e946e91f33dbe0142ac29edf586f7761d34ad67994f806d7ef551d2429c71490"
+    },
+    {
+      "path": "contracts/agent/v1/chat-config.v1.example.json",
+      "sha256": "d7b37dcde191612d3c92e29ba8f82e7d856b7ddf198ca67009a6641bc32db7e4"
+    },
+    {
+      "path": "contracts/agent/v1/chat-config.v1.schema.json",
+      "sha256": "f8d1052a9d2ba44933ae57fceafef1a56a4f79cef75bd1c3efaec1d0c5b27153"
+    },
+    {
+      "path": "contracts/agent/v1/chat-plan.v1.example.json",
+      "sha256": "31cc2f7010c4a136fb7c861db1beaf4ba94486ef173546e84d21266ef0d2ff0c"
+    },
+    {
+      "path": "contracts/agent/v1/chat-plan.v1.schema.json",
+      "sha256": "974ac7af1aae5d7771248922c98a3bffb134bf9c3e617954175b82f537a97e9e"
+    },
+    {
+      "path": "contracts/agent/v1/provider-reply.v1.example.json",
+      "sha256": "611aa11962689896615695f32dbd95cc033d55f9e8d231352ff3df195644d872"
+    },
+    {
+      "path": "contracts/agent/v1/provider-reply.v1.schema.json",
+      "sha256": "98ab6dac7aa6c26b4c956a500f0f39bed3b4a2d3f06515fa9bba2ddaef1da661"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "sha256": "f7ee28b13e0efb33c4d131a1053b6e3ff040c5a10309e88b9be224527fe43a83"
+    },
+    {
+      "path": "docs/agent-chat.md",
+      "sha256": "2bb1a0bac6f2565767db610806f2a51f4858a5ba457f2fb9aa0d7e149978bba4"
+    },
+    {
+      "path": "docs/evidence/12-chat.md",
+      "sha256": "ec0fe06758450a2a0a3d2d229574abaf976d197a062874c0c23687f76991dd8e"
+    },
+    {
+      "path": "scripts/update_agent_chat_contracts.py",
+      "sha256": "97f991c48876268a3acc3ae846f0198debcd313b0b642d156796ebe7c178a760"
+    },
+    {
+      "path": "src/retailops_ai/adapters/fake_chat.py",
+      "sha256": "1121ee75bfcb24fc4fc5179d56fd2bc9d2f19449b01da67d62dabc3855bdeb7a"
+    },
+    {
+      "path": "src/retailops_ai/agent/__init__.py",
+      "sha256": "c217050bdb775762270065a7bf1872527bb737bd23407cb1892fddbacd3c3912"
+    },
+    {
+      "path": "src/retailops_ai/agent/chat.py",
+      "sha256": "8dbc68f86c3898456241683e07152d852a65f5de714171f7530bef26e3b693c4"
+    },
+    {
+      "path": "src/retailops_ai/agent/chat_config.py",
+      "sha256": "6c6592eabe2d03ebf9298d9fa7a8a82cd5c89478b26a34ba97e52a1aed9abae1"
+    },
+    {
+      "path": "src/retailops_ai/agent/chat_context.py",
+      "sha256": "6d83e8827f0ffa6d1810ffe879aec856f4b61b0a37fdfb6eaaa18b5ff95a0af1"
+    },
+    {
+      "path": "src/retailops_ai/agent/chat_contracts.py",
+      "sha256": "5e18bbcf5ee2db55e3a2158acab1c83acd5b224581ddba1bc4129bce922ecd40"
+    },
+    {
+      "path": "src/retailops_ai/agent/execution.py",
+      "sha256": "4ccaee053247d86d1be66061d889057ba9105e2540a5edc0f1526ad1e8194010"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/evidence.v1.md",
+      "sha256": "031c966ac7bd47db1e6a76776a81d38d620c37e7eaf7781ac274aff111d40b77"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/examples.v1.md",
+      "sha256": "cc13ebe587e1f26b0263eae818f276a6ec8f7c5d050aa4552e32c60782d57a4e"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/policy.v1.md",
+      "sha256": "fbb6d5ad02c01ddd4a41371e04cd9d85bda544a36d6210a09a8bc2f3dbf6be9b"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/refusal.v1.md",
+      "sha256": "4c5b42d42f62bf3609773b2c834d305300f99d8bd7280503af86526b6c09481b"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/response.v1.md",
+      "sha256": "35410e96a093377cb9dfcc655b19e934bc4c6d3af672ff8b89c6446100f227c4"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/tool_selection.v1.md",
+      "sha256": "572f1b6bc660aef3714738c249cd913a698cef3f88903b6699c9f79eb17b07c7"
+    },
+    {
+      "path": "src/retailops_ai/agent/tools.py",
+      "sha256": "5cc425bba0727b352f731e56cd1fd0d1d0a7aad2d43de693368676036dfad00d"
+    },
+    {
+      "path": "src/retailops_ai/cli.py",
+      "sha256": "42b97253febbcecc976e9925f67e26d012d7a38722733cd39c02d1f865007394"
+    },
+    {
+      "path": "src/retailops_ai/cli_agent.py",
+      "sha256": "c578177bf5e527a6f91480a224d8e8b9633afd07e90bb2c7202f6f13a602cf46"
+    },
+    {
+      "path": "tests/test_agent_chat.py",
+      "sha256": "80fee4b5808281a2bb689331439943406b3ddf17dd23d1ceb4b856d79372be76"
+    }
+  ]
+}

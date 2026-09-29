@@ -41,12 +41,22 @@ wspólny budżet wywołań. Adapter wiedzy korzysta z jednego serwerowego pinu
 AI 11. Przyszłe narzędzia biznesowe mają ścisłe kontrakty i testowe odpowiedniki;
 brak rzeczywistego źródła jest jawnym `unavailable`.
 [Odbiór](evidence/12-tools.md) opisuje lokalne testy i granice.
-Ten zakres jest zapisany lokalnie na osobnym branchu `ai/12-tools`.
+Zakresy AI 12 są zapisywane lokalnie na osobnym branchu `ai/12-tools`.
 
-Następny zakres tego strumienia: wersjonowana konfiguracja/prompty i fake chat
-provider, potem ograniczony graf oraz walidacja odpowiedzi. Rzeczywiste źródła
+[Drugi zakres](agent-chat.md) dodaje konfigurację modelu/budżetu, sześć
+wersjonowanych promptów, checksum całej konfiguracji i schematów, kontrolę
+CLI offline oraz scripted fake chat. Sesja modelu dzieli deadline z narzędziami;
+retry i jedna naprawa zużywają wspólny budżet tokenów/kosztu. Draft przechodzi
+kontrolę zakresu planowanych narzędzi oraz powiązania referencji, cytatów,
+as-of i freshness z rzeczywiście pobranymi wynikami.
+[Odbiór](evidence/12-chat.md) opisuje testy i granice tego przygotowania.
+
+Następny zakres tego strumienia: ograniczony graf oraz walidacja liczb/znaczenia
+odpowiedzi i deterministyczna polityka sugestii z fixtures. Rzeczywiste źródła
 ML/operacyjne, Assistant API, trwały trace, admission, golden odpowiedzi,
-chat Bedrock oraz E2E sugestii pozostają do realizacji. Pełne AI 12 wymaga AI 10.
+adapter chat Bedrock z circuit breaker i smoke oraz E2E sugestii pozostają
+do realizacji. Pełne AI 12 wymaga AI 10. Obecny zakres nie potwierdza jakości
+odpowiedzi LLM ani działania rzeczywistego chat modelu.
 
 ## Fundament i dalsza praca
 

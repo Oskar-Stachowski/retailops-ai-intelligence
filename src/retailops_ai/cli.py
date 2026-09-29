@@ -23,6 +23,10 @@ def main(argv: list[str] | None = None) -> int:
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("version", help="Print package identity as JSON.")
     commands.add_parser("agent-tools", help="Inspect the closed read-only agent tool catalogue.")
+    agent_config = commands.add_parser(
+        "agent-config-check", help="Check model, prompt and schema bindings offline."
+    )
+    agent_config.add_argument("path", type=Path)
     agent_check = commands.add_parser(
         "agent-tool-check", help="Validate an agent tool contract offline."
     )
@@ -90,7 +94,7 @@ def main(argv: list[str] | None = None) -> int:
     add_release_check(commands)
     add_bedrock_command(commands)
     args = parser.parse_args(argv)
-    if args.command in {"agent-tools", "agent-tool-check"}:
+    if args.command in {"agent-tools", "agent-tool-check", "agent-config-check"}:
         from retailops_ai.cli_agent import run_agent_command
 
         return run_agent_command(args)

@@ -1,0 +1,36 @@
+{
+  "config_id": "agent-chat-config-sha256-5c3161844484ac2e27344619b30dc22ec341d3d85d1f9fd10efb12bf09fa8e89",
+  "fixture_only": true,
+  "graph_version": "pregraph-provider-v1",
+  "knowledge_index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+  "prompt_version": "prompts-v1",
+  "prompts": [
+    {
+      "name": "policy",
+      "sha256": "fbb6d5ad02c01ddd4a41371e04cd9d85bda544a36d6210a09a8bc2f3dbf6be9b"
+    },
+    {
+      "name": "tool_selection",
+      "sha256": "572f1b6bc660aef3714738c249cd913a698cef3f88903b6699c9f79eb17b07c7"
+    },
+    {
+      "name": "evidence",
+      "sha256": "031c966ac7bd47db1e6a76776a81d38d620c37e7eaf7781ac274aff111d40b77"
+    },
+    {
+      "name": "response",
+      "sha256": "35410e96a093377cb9dfcc655b19e934bc4c6d3af672ff8b89c6446100f227c4"
+    },
+    {
+      "name": "refusal",
+      "sha256": "4c5b42d42f62bf3609773b2c834d305300f99d8bd7280503af86526b6c09481b"
+    },
+    {
+      "name": "examples",
+      "sha256": "cc13ebe587e1f26b0263eae818f276a6ec8f7c5d050aa4552e32c60782d57a4e"
+    }
+  ],
+  "response_schema_sha256": "5f5a8e14081a9ac0fa82cb86144bbf2326e3cfd93da4e1007480f3ccc992aa5a",
+  "schema_version": "1.0",
+  "tool_schemas_sha256": "c724b1fce12a8cf790249749280710aef045767d8c0ab5adb4f40163ec115dbe"
+}
