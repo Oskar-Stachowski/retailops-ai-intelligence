@@ -1,32 +1,36 @@
 UV ?= $(if $(wildcard .tools/bin/uv),.tools/bin/uv,uv)
 GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
+UV_RUN = $(UV) run --locked --extra snapshot
 
-.PHONY: bootstrap lint type-check test docs-check handoff-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
+.PHONY: bootstrap lint type-check test docs-check handoff-check snapshot-import-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
 
 bootstrap:
-	$(UV) sync --locked
+	$(UV) sync --locked --extra snapshot
 
 lint:
-	$(UV) run --locked ruff check .
-	$(UV) run --locked ruff format --check .
+	$(UV_RUN) ruff check .
+	$(UV_RUN) ruff format --check .
 
 type-check:
-	$(UV) run --locked mypy
+	$(UV_RUN) mypy
 
 test:
-	$(UV) run --locked pytest
+	$(UV_RUN) pytest
 
 docs-check:
-	$(UV) run --locked python scripts/check_repository.py
+	$(UV_RUN) python scripts/check_repository.py
 
 handoff-check:
-	$(UV) run --locked python scripts/check_snapshot_handoff.py
+	$(UV_RUN) python scripts/check_snapshot_handoff.py
+
+snapshot-import-check:
+	$(UV_RUN) python scripts/check_snapshot_import.py
 
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check handoff-check contracts-check package compose-config
+check: lint type-check test docs-check handoff-check snapshot-import-check contracts-check package compose-config
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner
@@ -35,27 +39,27 @@ secrets:
 ci-local: check secrets
 
 serve:
-	$(UV) run --locked retailops-ai serve --env-file "$(ENV_FILE)"
+	$(UV_RUN) retailops-ai serve --env-file "$(ENV_FILE)"
 
 contracts:
-	$(UV) run --locked python scripts/update_http_contracts.py
-	$(UV) run --locked python scripts/update_intelligence_contracts.py
-	$(UV) run --locked python scripts/update_access_contracts.py
-	$(UV) run --locked python scripts/update_knowledge_contracts.py
+	$(UV_RUN) python scripts/update_http_contracts.py
+	$(UV_RUN) python scripts/update_intelligence_contracts.py
+	$(UV_RUN) python scripts/update_access_contracts.py
+	$(UV_RUN) python scripts/update_knowledge_contracts.py
 
 contracts-check:
-	$(UV) run --locked python scripts/update_intelligence_contracts.py --check
-	$(UV) run --locked python scripts/update_access_contracts.py --check
-	$(UV) run --locked python scripts/update_knowledge_contracts.py --check
+	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
+	$(UV_RUN) python scripts/update_access_contracts.py --check
+	$(UV_RUN) python scripts/update_knowledge_contracts.py --check
 
 compose-up:
-	$(UV) run --locked python scripts/local_stack.py up
+	$(UV_RUN) python scripts/local_stack.py up
 
 compose-down:
-	$(UV) run --locked python scripts/local_stack.py down
+	$(UV_RUN) python scripts/local_stack.py down
 
 compose-config:
-	$(UV) run --locked python scripts/local_stack.py config
+	$(UV_RUN) python scripts/local_stack.py config
 
 compose-smoke:
-	$(UV) run --locked python scripts/verify_local_stack.py
+	$(UV_RUN) python scripts/verify_local_stack.py
