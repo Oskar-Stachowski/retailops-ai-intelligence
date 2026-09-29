@@ -65,6 +65,7 @@ def test_make_check_includes_snapshot_gate():
     assert "forecast-baselines-check" in dependencies.split()
     assert "forecast-models-check" in dependencies.split()
     assert "forecast-backtest-check" in dependencies.split()
+    assert "forecast-quality-check" in dependencies.split()
 
 
 @pytest.mark.parametrize(

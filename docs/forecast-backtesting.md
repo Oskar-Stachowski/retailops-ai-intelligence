@@ -114,5 +114,5 @@ Observed sales może być ograniczona zapasem. Inventory/truth features są
 wyłączone; odrzucenie wcześniejszego RF w RetailOps pozostaje w mocy.
 Nie ma wdrożenia, AWS, DB/API ani promocji. Model nadal ma `not_ready`.
 [Odbiór 04.6](evidence/04-06-backtesting.md) podaje konkretne wyniki i kontrole.
-Pozostają **AI 04.7 — przekroje, bias, niepewność i quality gates** oraz
-**AI 04.8 — lifecycle/handoff**.
+[Metryki, przedziały i bramki jakości 04.7](forecast-quality.md) rozszerzają
+ten backtest bez zmiany rodziców ani treningu. Pozostaje **AI 04.8 — lifecycle/handoff**.

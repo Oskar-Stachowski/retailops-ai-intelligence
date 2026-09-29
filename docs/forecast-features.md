@@ -135,4 +135,5 @@ draft input i dopasowuje preprocessing wyłącznie na train.
 [Evaluator i baseline'y 04.4](forecast-baselines.md) używają zamrożonej historii.
 [Modele 04.5](forecast-models.md) dopasowują train-only pipeline RF/HGB.
 [Backtesting 04.6](forecast-backtesting.md) używa tych samych cech per fold.
-Kolejny zakres: **04.7 — metryki, niepewność i quality gates**.
+[Metryki i niepewność 04.7](forecast-quality.md) wykorzystują znane w origin
+cechy do przekrojów. Kolejny zakres: **04.8 — evidence i lifecycle handoff**.

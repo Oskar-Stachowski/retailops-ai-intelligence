@@ -1,0 +1,400 @@
+{
+  "$defs": {
+    "IntervalMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "eligible_rows": {
+          "minimum": 0,
+          "title": "Eligible Rows",
+          "type": "integer"
+        },
+        "empirical_coverage": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Empirical Coverage"
+        },
+        "interval_rows": {
+          "minimum": 0,
+          "title": "Interval Rows",
+          "type": "integer"
+        },
+        "mean_width": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mean Width"
+        },
+        "nominal_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Nominal Coverage",
+          "type": "number"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "incomplete",
+            "not_evaluable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "eligible_rows",
+        "interval_rows",
+        "status",
+        "nominal_coverage",
+        "empirical_coverage",
+        "mean_width"
+      ],
+      "title": "IntervalMetric",
+      "type": "object"
+    },
+    "MetricResult": {
+      "additionalProperties": false,
+      "properties": {
+        "absolute_actual_sum": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Absolute Actual Sum"
+        },
+        "absolute_error_sum": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Absolute Error Sum"
+        },
+        "eligible_rows": {
+          "minimum": 0,
+          "title": "Eligible Rows",
+          "type": "integer"
+        },
+        "mae": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mae"
+        },
+        "predicted_rows": {
+          "minimum": 0,
+          "title": "Predicted Rows",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "incomplete",
+            "not_evaluable",
+            "selection_not_ready"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "wape": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Wape"
+        },
+        "wape_status": {
+          "enum": [
+            "passed",
+            "zero_denominator",
+            "incomplete",
+            "no_rows",
+            "selection_not_ready"
+          ],
+          "title": "Wape Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "eligible_rows",
+        "predicted_rows",
+        "status",
+        "mae",
+        "wape",
+        "absolute_error_sum",
+        "absolute_actual_sum",
+        "wape_status"
+      ],
+      "title": "MetricResult",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:forecast:segment_metric:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bias": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Bias"
+    },
+    "dimension": {
+      "enum": [
+        "global",
+        "horizon",
+        "category",
+        "channel",
+        "volume"
+      ],
+      "title": "Dimension",
+      "type": "string"
+    },
+    "eligibility_coverage": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Eligibility Coverage"
+    },
+    "exact_rows": {
+      "minimum": 0,
+      "title": "Exact Rows",
+      "type": "integer"
+    },
+    "excluded_rows": {
+      "minimum": 0,
+      "title": "Excluded Rows",
+      "type": "integer"
+    },
+    "exclusion_counts": {
+      "additionalProperties": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "title": "Exclusion Counts",
+      "type": "object"
+    },
+    "fold": {
+      "title": "Fold",
+      "type": "string"
+    },
+    "interval": {
+      "$ref": "#/$defs/IntervalMetric"
+    },
+    "mape_coverage": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Mape Coverage"
+    },
+    "mape_positive_actuals": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Mape Positive Actuals"
+    },
+    "method": {
+      "title": "Method",
+      "type": "string"
+    },
+    "normalized_bias": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Normalized Bias"
+    },
+    "overforecast_rows": {
+      "minimum": 0,
+      "title": "Overforecast Rows",
+      "type": "integer"
+    },
+    "overforecast_units": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Overforecast Units"
+    },
+    "point": {
+      "$ref": "#/$defs/MetricResult"
+    },
+    "positive_actual_rows": {
+      "minimum": 0,
+      "title": "Positive Actual Rows",
+      "type": "integer"
+    },
+    "prediction_coverage": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Prediction Coverage"
+    },
+    "rmse": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Rmse"
+    },
+    "role": {
+      "enum": [
+        "validation",
+        "development_holdout"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "total_rows": {
+      "minimum": 0,
+      "title": "Total Rows",
+      "type": "integer"
+    },
+    "underforecast_rows": {
+      "minimum": 0,
+      "title": "Underforecast Rows",
+      "type": "integer"
+    },
+    "underforecast_units": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Underforecast Units"
+    },
+    "value": {
+      "title": "Value",
+      "type": "string"
+    },
+    "zero_actual_excess_forecast_units": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Zero Actual Excess Forecast Units"
+    },
+    "zero_actual_rows": {
+      "minimum": 0,
+      "title": "Zero Actual Rows",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "fold",
+    "role",
+    "method",
+    "dimension",
+    "value",
+    "total_rows",
+    "excluded_rows",
+    "exclusion_counts",
+    "eligibility_coverage",
+    "prediction_coverage",
+    "point",
+    "rmse",
+    "bias",
+    "normalized_bias",
+    "underforecast_units",
+    "overforecast_units",
+    "underforecast_rows",
+    "overforecast_rows",
+    "exact_rows",
+    "positive_actual_rows",
+    "mape_positive_actuals",
+    "mape_coverage",
+    "zero_actual_rows",
+    "zero_actual_excess_forecast_units",
+    "interval"
+  ],
+  "title": "SegmentMetric",
+  "type": "object"
+}

@@ -7,7 +7,7 @@ wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodz
 przez chroniony `main` oraz Required CI; stan wykonania pokazuje
 [workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
 
-**AI 04.1–04.6 — zadanie, cechy, modele i backtesting forecastingu:**
+**AI 04.1–04.7 — zadanie, modele, backtesting i ocena jakości forecastingu:**
 [kontrakt i polecenia](forecasting.md) definiują observed sales, grain,
 cutoff 23:59:59 UTC, horyzonty 1–14 i okna 7/14 z jedną granicą wiedzy.
 Manifest wiąże kalendarz ze zweryfikowanym curated AI 03; inventory i truth
@@ -40,8 +40,20 @@ Na temporalnym fixture wybory validation to RF/HGB/RF; wspólne holdouty
 mają 5400 ocenianych kluczy, pooled MAE strategii 1,442420 i WAPE 0,157508.
 Wynik jest development evidence; portfolio final test pozostaje nietknięty.
 Branch `ai/04-01-task-calendar` jest osobny od AI 12.
-Kolejny zakres to **04.7 — przekroje, bias, niepewność i quality gates**;
-model pozostaje `not_ready`.
+[Ocena jakości 04.7](forecast-quality.md) dodaje RMSE, bias, under/overforecast,
+MAPE z pokryciem, przekroje i przedziały kalibrowane tylko na validation.
+[Odbiór 04.7](evidence/04-07-quality.md) zachowuje pełne wyniki oraz blokady:
+**145 bramek passed, 79 failed, 8 not_ready**. Pooled holdout strategii ma
+RMSE 2,216533, normalized bias −4,37% i empirical interval coverage 91,67%
+przy nominalnym 90%, ale wynik globalny nie zalicza krytycznych segmentów.
+Brakuje próby koszyka zero; część kategorii ma nadmierny bias/regresję,
+a przedziały dla wysokiego wolumenu pokrywają tylko 69,37% obserwacji.
+Niski wolumen ma MAE o 28,63% gorsze od zamrożonego baseline'u i zbyt
+szerokie przedziały. Drugi fold nie poprawia globalnego holdout MAE.
+Progi nie zostały poluzowane; model pozostaje `not_ready`.
+Kolejny zakres to **04.8 — evidence runu i minimalny lifecycle handoff**.
+Może utrwalić wynik diagnostyczny i blokady; dopuszczenie modelu wymaga
+oddzielnego rozwiązania braków próby i jakości, bez strojenia na final test.
 Ten zakres nie ma jeszcze publikacji ani zdalnego Required CI.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)

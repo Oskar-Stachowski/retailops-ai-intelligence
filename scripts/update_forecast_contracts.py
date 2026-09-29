@@ -30,6 +30,7 @@ from retailops_ai.forecasting.model_contract import (
     ModelRunManifest,
 )
 from retailops_ai.forecasting.preprocessing import FittedState
+from retailops_ai.forecasting.quality_contract import QualityManifest, QualityPolicy, SegmentMetric
 from retailops_ai.forecasting.splits import default_split
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,6 +61,9 @@ def artifacts() -> dict[Path, object]:
         ("forecast_value", ForecastValue),
         ("backtest_policy", BacktestPolicy),
         ("backtest_manifest", BacktestManifest),
+        ("quality_policy", QualityPolicy),
+        ("quality_manifest", QualityManifest),
+        ("segment_metric", SegmentMetric),
     ):
         schema = model.model_json_schema()
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
@@ -78,6 +82,9 @@ def artifacts() -> dict[Path, object]:
         mode="json"
     )
     result[ROOT / "contracts/forecast/v1/backtest.default.json"] = BacktestPolicy().model_dump(
+        mode="json"
+    )
+    result[ROOT / "contracts/forecast/v1/quality.default.json"] = QualityPolicy().model_dump(
         mode="json"
     )
     calendar = SimpleNamespace(

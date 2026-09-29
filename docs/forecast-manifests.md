@@ -155,4 +155,5 @@ Smoke nie kwalifikuje większych profili pod względem zasobów.
 [Evaluator 04.4](forecast-baselines.md) korzysta z tych manifestów i wspólnych kluczy.
 [Modele 04.5](forecast-models.md) zapisują pełne train-only pipeline'y RF/HGB.
 [Backtesting 04.6](forecast-backtesting.md) wersjonuje chronologiczny plan foldów.
-Kolejny zakres: **04.7 — metryki, niepewność i quality gates**.
+[Ocena jakości 04.7](forecast-quality.md) zachowuje te same klucze i rodziców.
+Kolejny zakres: **04.8 — evidence i lifecycle handoff**.

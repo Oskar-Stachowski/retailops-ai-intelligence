@@ -99,7 +99,8 @@ kwalifikację historii/etykiet i train-only preprocessing.
 [04.4](forecast-baselines.md) ma wspólny evaluator i trzy baseline'y.
 [Modele 04.5](forecast-models.md) dodają RF/HGB na tym samym splicie.
 [Backtesting 04.6](forecast-backtesting.md) dodaje chronologiczne foldy.
-Kolejny zakres: **04.7 — metryki, niepewność i quality gates**.
+[Metryki i niepewność 04.7](forecast-quality.md) mają pełne przekroje,
+kalibrację i bramki. Kolejny zakres: **04.8 — evidence i lifecycle handoff**.
 Dalej: modele, uczciwy backtesting i artefakty.
 AI 06 może rozwijać się równolegle w RetailOps; zmienione źródło otrzyma nowe
 IDs i będzie wymagało ponownego importu oraz zależnych ocen.

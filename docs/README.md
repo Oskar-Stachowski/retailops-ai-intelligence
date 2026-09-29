@@ -24,6 +24,8 @@ wybierają na validation i raportują poprawne MAE/WAPE.
 wspólny evaluator i ograniczony trening; wybór pozostaje diagnostyczny.
 [Backtesting 04.6](forecast-backtesting.md) wyznacza chronologiczne foldy,
 kontroluje dojrzałość etykiet i wspólne klucze oraz raportuje pooled MAE/WAPE.
+[Metryki i niepewność 04.7](forecast-quality.md) dodają przekroje, bias,
+kalibrację przedziałów i jawne bramki jakości bez promocji modelu.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.

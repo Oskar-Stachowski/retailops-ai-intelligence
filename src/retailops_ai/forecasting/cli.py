@@ -101,10 +101,50 @@ def main(argv: list[str] | None = None) -> int:
     backtest_verify.add_argument("--backtest-dir", type=Path, required=True)
     backtest_verify.add_argument("--feature-dir", type=Path, required=True)
     backtest_verify.add_argument("--curated-dir", type=Path, required=True)
+    quality = commands.add_parser("quality-evaluate")
+    quality.add_argument("--feature-dir", type=Path, required=True)
+    quality.add_argument("--backtest-dir", type=Path, required=True)
+    quality.add_argument("--config", type=Path)
+    quality.add_argument(
+        "--output-root", type=Path, default=Path("data/generated/forecast-quality")
+    )
+    quality_verify = commands.add_parser("quality-verify")
+    quality_verify.add_argument("--quality-dir", type=Path, required=True)
+    quality_verify.add_argument("--feature-dir", type=Path, required=True)
+    quality_verify.add_argument("--backtest-dir", type=Path, required=True)
     args = parser.parse_args(argv)
     summary: dict[str, object]
     try:
-        if args.command in {"backtest-run", "backtest-verify"}:
+        if args.command in {"quality-evaluate", "quality-verify"}:
+            from retailops_ai.forecasting.quality import build_quality, load_quality, verify_quality
+            from retailops_ai.forecasting.quality_contract import QualityPolicy
+
+            quality_policy = QualityPolicy()
+            if args.command == "quality-evaluate":
+                if args.config is not None:
+                    raw = read_bytes(args.config.absolute().parent, args.config.name)
+                    decode_json(raw)
+                    quality_policy = QualityPolicy.model_validate_json(raw)
+                directory = build_quality(
+                    args.feature_dir, args.backtest_dir, args.output_root, quality_policy
+                )
+                quality_manifest = load_quality(directory)
+            else:
+                directory = args.quality_dir
+                quality_manifest = verify_quality(directory, args.feature_dir, args.backtest_dir)
+            summary = {
+                "status": "passed",
+                "quality_status": quality_manifest.descriptor.quality_status,
+                "quality_id": quality_manifest.quality_id,
+                "backtest_id": quality_manifest.descriptor.backtest_id,
+                "gate_counts": quality_manifest.descriptor.gate_counts,
+                "directory": str(directory),
+                "forecast_model_status": "not_ready",
+            }
+            if quality_manifest.descriptor.quality_status != "passed":
+                print(json.dumps(summary, sort_keys=True))
+                return 3
+        elif args.command in {"backtest-run", "backtest-verify"}:
             from retailops_ai.forecasting.backtest import (
                 build_backtest,
                 load_backtest,
@@ -346,7 +386,14 @@ def main(argv: list[str] | None = None) -> int:
                     "forecast_model_status": manifest.forecast_model_status,
                 }
     except ImportError:
-        if args.command in {"models-evaluate", "models-verify", "backtest-run", "backtest-verify"}:
+        if args.command in {
+            "models-evaluate",
+            "models-verify",
+            "backtest-run",
+            "backtest-verify",
+            "quality-evaluate",
+            "quality-verify",
+        }:
             print(
                 '{"error":"forecast_dependencies_required","install":"uv sync --locked --extra snapshot --extra forecast"}',
                 file=sys.stderr,

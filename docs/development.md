@@ -55,6 +55,7 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make forecast-baselines-check` | Baseline'y as-of i brak kwalifikacji krótkiego fixture; z jawnymi rodzicami temporalny evaluator, replay i immutable rerun |
 | `make forecast-models-check` | Ograniczony trening RF/HGB i portable JSON; z jawnymi rodzicami temporalny trening, niezależny retraining/replay i immutable rerun |
 | `make forecast-backtest-check` | Expanding/rolling planner i pooled metryki; z jawnymi rodzicami pełny backtest, niezależny source rebuild/training i immutable rerun |
+| `make forecast-quality-check` | Metryki zer i kalibracja; z jawnymi rodzicami przekroje, przedziały, quality gates, niezależny replay oraz immutable rerun |
 | `make package` | Wheel i sdist w ignorowanym `dist/` |
 | `make check` | Wszystkie powyższe |
 | `make secrets` | Gitleaks 8.30.1: historia Git i aktualny katalog, z redakcją |

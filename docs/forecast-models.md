@@ -113,5 +113,7 @@ sprawdza jego treść i bindings bez deklarowania nowej kwalifikacji.
 
 [Odbiór 04.5](evidence/04-05-models.md) podaje konkretny pomiar i ograniczenia.
 [AI 04.6 — chronologiczny backtesting wielu foldów](forecast-backtesting.md)
-korzysta z tych samych pipeline'ów i evaluatora. Następny zakres:
-**AI 04.7 — przekroje, bias, niepewność i quality gates**.
+korzysta z tych samych pipeline'ów i evaluatora.
+[AI 04.7 — przekroje, bias, niepewność i quality gates](forecast-quality.md)
+rozszerza ocenę bez ponownego wyboru na holdoucie.
+Następny zakres: **AI 04.8 — evidence i lifecycle handoff**.

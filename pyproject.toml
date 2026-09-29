@@ -85,6 +85,10 @@ packages = ["src/retailops_ai"]
 "contracts/forecast/v1/backtest_policy.schema.json" = "retailops_ai/forecasting/backtest_policy.schema.json"
 "contracts/forecast/v1/backtest_manifest.schema.json" = "retailops_ai/forecasting/backtest_manifest.schema.json"
 "contracts/forecast/v1/backtest.default.json" = "retailops_ai/forecasting/backtest.default.json"
+"contracts/forecast/v1/quality_policy.schema.json" = "retailops_ai/forecasting/quality_policy.schema.json"
+"contracts/forecast/v1/quality_manifest.schema.json" = "retailops_ai/forecasting/quality_manifest.schema.json"
+"contracts/forecast/v1/segment_metric.schema.json" = "retailops_ai/forecasting/segment_metric.schema.json"
+"contracts/forecast/v1/quality.default.json" = "retailops_ai/forecasting/quality.default.json"
 
 [tool.uv]
 required-version = "==0.12.19"
