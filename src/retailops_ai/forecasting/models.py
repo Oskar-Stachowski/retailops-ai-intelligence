@@ -67,13 +67,28 @@ from retailops_ai.source_snapshot.files import (
     decode_json,
     file_hash,
     inventory,
+    nonfinite,
     read_bytes,
     read_json,
     regular_file,
+    unique_keys,
 )
 from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
 
 LEARNED: tuple[LearnedName, ...] = ("random_forest", "hist_gradient_boosting")
+
+
+def decode_model_json(raw: bytes) -> dict[str, Any]:
+    """Model data has its own byte budget; ordinary metadata keeps the 4 MiB cap."""
+    if len(raw) > MAX_MODEL_BYTES:
+        raise SnapshotError("forecast_model_json_size_limit")
+    try:
+        value = json.loads(raw, object_pairs_hook=unique_keys, parse_constant=nonfinite)
+    except (UnicodeError, json.JSONDecodeError, RecursionError) as exc:
+        raise SnapshotError("forecast_model_json_invalid") from exc
+    if not isinstance(value, dict):
+        raise SnapshotError("forecast_model_json_object_required")
+    return value
 
 
 def model_code() -> ModelCode:
@@ -176,7 +191,7 @@ def fit_worker(
         ):
             raise SnapshotError("forecast_model_fit_final_budget_exceeded")
         raw = read_bytes(root, "estimator.json", MAX_MODEL_BYTES)
-        decode_json(raw)
+        decode_model_json(raw)
         estimator = LearnedEstimator.model_validate_json(raw)
         if estimator.family != family or estimator.feature_count != x.shape[1]:
             raise SnapshotError("forecast_worker_output_binding_mismatch")
@@ -557,9 +572,9 @@ def load_comparison(root: Path) -> ModelRunManifest:
             or file_hash(root, receipt.path) != (receipt.size_bytes, receipt.sha256)
         ):
             raise SnapshotError("forecast_model_pipeline_receipt_mismatch")
-        pipeline = ModelPipeline.model_validate_json(
-            read_bytes(root, receipt.path, MAX_MODEL_BYTES)
-        )
+        pipeline_raw = read_bytes(root, receipt.path, MAX_MODEL_BYTES)
+        decode_model_json(pipeline_raw)
+        pipeline = ModelPipeline.model_validate_json(pipeline_raw)
         if (
             pipeline.model_id != manifest.descriptor.models[name]
             or pipeline.descriptor.feature_set_id != manifest.descriptor.feature_set_id

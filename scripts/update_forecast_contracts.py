@@ -6,6 +6,7 @@ from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
 
+from retailops_ai.forecasting.backtest_contract import BacktestManifest, BacktestPolicy
 from retailops_ai.forecasting.contract import CalendarManifest, OriginWindow, TaskConfig
 from retailops_ai.forecasting.evaluation_contract import (
     BaselinePolicy,
@@ -57,6 +58,8 @@ def artifacts() -> dict[Path, object]:
         ("model_prediction", ModelPrediction),
         ("model_comparison", ModelRunManifest),
         ("forecast_value", ForecastValue),
+        ("backtest_policy", BacktestPolicy),
+        ("backtest_manifest", BacktestManifest),
     ):
         schema = model.model_json_schema()
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
@@ -72,6 +75,9 @@ def artifacts() -> dict[Path, object]:
         mode="json"
     )
     result[ROOT / "contracts/forecast/v1/models.default.json"] = ModelPolicy().model_dump(
+        mode="json"
+    )
+    result[ROOT / "contracts/forecast/v1/backtest.default.json"] = BacktestPolicy().model_dump(
         mode="json"
     )
     calendar = SimpleNamespace(

@@ -32,6 +32,7 @@ from retailops_ai.forecasting.models import (
     LEARNED,
     build_comparison,
     compare_validation,
+    decode_model_json,
     fit_worker,
     load_comparison,
     model_card,
@@ -46,6 +47,23 @@ def small_policy(**kwargs):
         hgb=HGBConfig(max_iter=5, min_samples_leaf=2),
         **kwargs,
     )
+
+
+def test_model_json_budget_accepts_large_models_without_weakening_metadata(monkeypatch):
+    from retailops_ai.forecasting import models
+    from retailops_ai.source_snapshot.files import MAX_METADATA_BYTES, decode_json
+
+    raw = json.dumps({"model_data": "x" * MAX_METADATA_BYTES}).encode()
+    assert len(raw) > MAX_METADATA_BYTES
+    assert len(decode_model_json(raw)["model_data"]) == MAX_METADATA_BYTES
+    with pytest.raises(SnapshotError, match="metadata_size_limit"):
+        decode_json(raw)
+    for invalid in (b'{"value":1,"value":2}', b'{"value":NaN}', b'{"value":Infinity}', b"[]"):
+        with pytest.raises(SnapshotError):
+            decode_model_json(invalid)
+    monkeypatch.setattr(models, "MAX_MODEL_BYTES", 1024)
+    with pytest.raises(SnapshotError, match="forecast_model_json_size_limit"):
+        decode_model_json(raw)
 
 
 @pytest.mark.parametrize("family", LEARNED)

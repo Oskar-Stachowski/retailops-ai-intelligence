@@ -7,7 +7,7 @@ wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodz
 przez chroniony `main` oraz Required CI; stan wykonania pokazuje
 [workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
 
-**AI 04.1–04.5 — zadanie, cechy, podział i modele forecastingu:**
+**AI 04.1–04.6 — zadanie, cechy, modele i backtesting forecastingu:**
 [kontrakt i polecenia](forecasting.md) definiują observed sales, grain,
 cutoff 23:59:59 UTC, horyzonty 1–14 i okna 7/14 z jedną granicą wiedzy.
 Manifest wiąże kalendarz ze zweryfikowanym curated AI 03; inventory i truth
@@ -29,11 +29,18 @@ Raport zachowuje coverage i brakujące predykcje, z poprawnym MAE/WAPE dla zer.
 direct horizon feature, wspólny evaluator i egzekwowane limity CPU/RAM/czasu.
 Wybór diagnostyczny wymaga poprawy validation MAE >5% wobec najlepszego baseline'u.
 [Odbiór 04.5](evidence/04-05-models.md) wiąże pomiary z artefaktami i replay.
-Na małym temporalnym fixture wybrano HGB: MAE lepsze od seasonal naive7
+W jednofoldowym odbiorze 04.5 wybrano HGB: MAE lepsze od seasonal naive7
 o 6,7% na validation i 2,2% na development holdout. To pomiar protokołu,
 bez kwalifikacji produkcyjnej jakości lub zmiany odrzucenia RF w RetailOps.
+[Backtesting 04.6](forecast-backtesting.md) dodaje expanding/rolling-origin
+plan, trzy odrębne treningi z mature labels, rozłączne okna oceny i pooled
+MAE/WAPE. [Odbiór 04.6](evidence/04-06-backtesting.md) zapisuje wynik,
+audyt wspólnych kluczy i niezależne odtworzenie ze źródła.
+Na temporalnym fixture wybory validation to RF/HGB/RF; wspólne holdouty
+mają 5400 ocenianych kluczy, pooled MAE strategii 1,442420 i WAPE 0,157508.
+Wynik jest development evidence; portfolio final test pozostaje nietknięty.
 Branch `ai/04-01-task-calendar` jest osobny od AI 12.
-Kolejny zakres to **04.6 — chronologiczny backtesting wielu foldów**;
+Kolejny zakres to **04.7 — przekroje, bias, niepewność i quality gates**;
 model pozostaje `not_ready`.
 Ten zakres nie ma jeszcze publikacji ani zdalnego Required CI.
 

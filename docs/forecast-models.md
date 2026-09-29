@@ -106,6 +106,12 @@ nadpisuje istniejącego wyniku; rerun zachowuje oryginalne bajty.
 `models-verify` ponownie dopasowuje oba modele ze zweryfikowanych rodziców
 i odtwarza wszystkie predykcje, wybór oraz metryki. Zmienione drzewa z
 przeliczonymi hashami nie przechodzą takiej weryfikacji.
+Pełne verify wymaga przypiętego kodu, lockfile i runtime z manifestu.
+Historyczne evidence dotyczy zapisanej wersji; zmiana implementacji tworzy
+nowe model IDs i wymaga nowego pomiaru. Zwykły odczyt starego artefaktu
+sprawdza jego treść i bindings bez deklarowania nowej kwalifikacji.
 
 [Odbiór 04.5](evidence/04-05-models.md) podaje konkretny pomiar i ograniczenia.
-Następny zakres: **AI 04.6 — chronologiczny backtesting wielu foldów**.
+[AI 04.6 — chronologiczny backtesting wielu foldów](forecast-backtesting.md)
+korzysta z tych samych pipeline'ów i evaluatora. Następny zakres:
+**AI 04.7 — przekroje, bias, niepewność i quality gates**.

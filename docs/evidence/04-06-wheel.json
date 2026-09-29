@@ -1,0 +1,18 @@
+{
+  "aws_calls": 0,
+  "backtest_id": "forecast-backtest-sha256-0f8e578af20d95d6d6062e7d00f13b30b4522b30b1bb5ab68e9371483a5f3f22",
+  "comparison_id": "forecast-model-comparison-sha256-25ff34ce2996dde712e7183a4e3b2ce57585566afd68992353308e4cef6bb7c3",
+  "copied_artifacts_outside_checkout": true,
+  "default_config_packaged": true,
+  "forecast_model_status": "not_ready",
+  "implementation_loaded_from_wheel": true,
+  "matches_checkout_descriptor": true,
+  "packaged_code_pins_match": true,
+  "schemas_packaged": [
+    "backtest_policy.schema.json",
+    "backtest_manifest.schema.json"
+  ],
+  "scope": "extracted wheel outside checkout; copied complete temporal backtest, planner, all model/prediction/label receipts and independent fold audit/metric aggregation replay; no new model fitting in this packaging probe",
+  "status": "passed",
+  "wheel_sha256": "f521151f431e554e8b22550d85c2bd8005d215fcc882c3a76807680ba7d7855a"
+}

@@ -90,10 +90,58 @@ def main(argv: list[str] | None = None) -> int:
     models_verify.add_argument("--comparison-dir", type=Path, required=True)
     models_verify.add_argument("--feature-dir", type=Path, required=True)
     models_verify.add_argument("--split-dir", type=Path, required=True)
+    backtest = commands.add_parser("backtest-run")
+    backtest.add_argument("--feature-dir", type=Path, required=True)
+    backtest.add_argument("--curated-dir", type=Path, required=True)
+    backtest.add_argument("--config", type=Path)
+    backtest.add_argument(
+        "--output-root", type=Path, default=Path("data/generated/forecast-backtests")
+    )
+    backtest_verify = commands.add_parser("backtest-verify")
+    backtest_verify.add_argument("--backtest-dir", type=Path, required=True)
+    backtest_verify.add_argument("--feature-dir", type=Path, required=True)
+    backtest_verify.add_argument("--curated-dir", type=Path, required=True)
     args = parser.parse_args(argv)
     summary: dict[str, object]
     try:
-        if args.command in {"models-evaluate", "models-verify"}:
+        if args.command in {"backtest-run", "backtest-verify"}:
+            from retailops_ai.forecasting.backtest import (
+                build_backtest,
+                load_backtest,
+                verify_backtest,
+            )
+            from retailops_ai.forecasting.backtest_contract import BacktestPolicy
+
+            backtest_policy = BacktestPolicy()
+            if args.command == "backtest-run":
+                if args.config is not None:
+                    raw = read_bytes(args.config.absolute().parent, args.config.name)
+                    decode_json(raw)
+                    backtest_policy = BacktestPolicy.model_validate_json(raw)
+                directory = build_backtest(
+                    args.feature_dir, args.curated_dir, args.output_root, backtest_policy
+                )
+                backtest_manifest = load_backtest(directory)
+            else:
+                directory = args.backtest_dir
+                backtest_manifest = verify_backtest(directory, args.feature_dir, args.curated_dir)
+            summary = {
+                "status": backtest_manifest.descriptor.status,
+                "backtest_id": backtest_manifest.backtest_id,
+                "split_id": backtest_manifest.descriptor.split_id,
+                "comparison_id": backtest_manifest.descriptor.comparison_id,
+                "folds": len(backtest_manifest.descriptor.folds),
+                "pooled_metrics": {
+                    name: metric.model_dump(mode="json")
+                    for name, metric in backtest_manifest.descriptor.pooled_metrics.items()
+                },
+                "directory": str(directory),
+                "forecast_model_status": "not_ready",
+            }
+            if backtest_manifest.descriptor.status != "passed":
+                print(json.dumps(summary, sort_keys=True))
+                return 3
+        elif args.command in {"models-evaluate", "models-verify"}:
             from retailops_ai.forecasting.model_contract import ModelPolicy
             from retailops_ai.forecasting.models import (
                 build_comparison,
@@ -298,7 +346,7 @@ def main(argv: list[str] | None = None) -> int:
                     "forecast_model_status": manifest.forecast_model_status,
                 }
     except ImportError:
-        if args.command in {"models-evaluate", "models-verify"}:
+        if args.command in {"models-evaluate", "models-verify", "backtest-run", "backtest-verify"}:
             print(
                 '{"error":"forecast_dependencies_required","install":"uv sync --locked --extra snapshot --extra forecast"}',
                 file=sys.stderr,

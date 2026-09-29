@@ -22,6 +22,8 @@ pełne coverage i preprocessing dopasowany wyłącznie na train.
 wybierają na validation i raportują poprawne MAE/WAPE.
 [Modele RF i HGB 04.5](forecast-models.md) mają pełny train-only pipeline,
 wspólny evaluator i ograniczony trening; wybór pozostaje diagnostyczny.
+[Backtesting 04.6](forecast-backtesting.md) wyznacza chronologiczne foldy,
+kontroluje dojrzałość etykiet i wspólne klucze oraz raportuje pooled MAE/WAPE.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.

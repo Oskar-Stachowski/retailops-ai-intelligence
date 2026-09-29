@@ -95,7 +95,7 @@ def timeline(tables):
 
 
 @pytest.fixture
-def artifacts(timeline, tmp_path, monkeypatch):
+def artifacts(timeline, tmp_path, monkeypatch, request):
     from retailops_ai.forecasting import features_store, splits
 
     curated = tmp_path / "curated"
@@ -113,13 +113,14 @@ def artifacts(timeline, tmp_path, monkeypatch):
         forecast_source_status="passed",
     )
     task = TaskConfig()
-    origins = tuple(make_origin(DAY + timedelta(days=i)) for i in range(33))
+    origin_days = getattr(request, "param", 33)
+    origins = tuple(make_origin(DAY + timedelta(days=i)) for i in range(origin_days))
     descriptor = CalendarDescriptor(
         schema_version="1.0.0",
         task=task,
         task_id=task.task_id(),
         parent=parent,
-        origin_window=OriginWindow(start=DAY, end=DAY + timedelta(days=32)),
+        origin_window=OriginWindow(start=DAY, end=DAY + timedelta(days=origin_days - 1)),
         implementation=Implementation(
             version="forecast-calendar-1.0.0",
             code_files={"controlled-fixture": "d" * 64},
