@@ -61,6 +61,14 @@ wymaga oddzielnego rozwiązania braków próby i jakości na późniejszych dany
 bez strojenia na final test. Ten branch nie ma jeszcze zdalnej publikacji
 ani Required CI.
 
+**AI 05.1 — lokalny tracking i magazyn MLflow:** istniejący z AI 01
+PostgreSQL, rola i trwały wolumen mają teraz [backup/restore i politykę
+retencji](mlflow-store.md). [Odbiór](evidence/05-01-store.md) sprawdza
+rzeczywiste przeniesienie eksperymentu, runu i artefaktu do pustego projektu
+oraz odczyt po odtworzeniu. Kolejny zakres to import evidence 04.8 do
+MLflow. Model pozostaje `not_ready`; registry, promocja, batch i API nie
+są jeszcze częścią odbioru 05.1.
+
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
 identity i transportu bez generatora/DB.

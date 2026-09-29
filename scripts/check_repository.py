@@ -43,6 +43,11 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
     ):
         errors.append("persistence must execute real Compose acceptance")
     if not any(
+        step.get("run") == "make mlflow-store-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute MLflow backup/restore acceptance")
+    if not any(
         step.get("run") == "make bootstrap check"
         for step in jobs.get("checks", {}).get("steps", [])
     ):

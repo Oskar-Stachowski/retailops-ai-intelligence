@@ -41,6 +41,8 @@ kontraktów dataset/run/prediction.
 MLflow ma własne tabele w osobnej bazie. Role nie mogą łączyć się do bazy drugiej
 aplikacji i nie mają superuser/createdb/createrole. Stos nie łączy się z operacyjną
 bazą RetailOps i nie tworzy brokera. Nie należy tu zapisywać danych klientów.
+[Backup, restore i retencja MLflow](mlflow-store.md) obejmują zarówno tę bazę,
+jak i wolumen artefaktów; są odbierane osobnym testem AI 05.1.
 
 Własny artifact root API nie jest jeszcze magazynem danych biznesowych; ten zakres
 zapisuje duże artefakty przez MLflow. Importer i immutable storage danych będą w 03.

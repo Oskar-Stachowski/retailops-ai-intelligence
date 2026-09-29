@@ -57,6 +57,7 @@ jobs:
           python-version: "3.11.15"
           enable-cache: true
       - run: make bootstrap compose-smoke
+      - run: make mlflow-store-smoke
   required-result:
     if: always()
     needs: [checks, secrets, persistence]
