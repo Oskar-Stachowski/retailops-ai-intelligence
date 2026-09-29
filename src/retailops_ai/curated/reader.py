@@ -79,6 +79,11 @@ def rows_as_of(
                 )
             if any(spec[k] != v for k, v in digest.summary().items()):
                 raise SnapshotError("curated_changed_during_as_of_read")
+            ambiguous = db.execute(
+                "SELECT e.key FROM eligible e JOIN (SELECT key,MAX(version) AS latest FROM eligible GROUP BY key) v ON e.key=v.key AND e.version=v.latest GROUP BY e.key HAVING COUNT(*)>1 LIMIT 1"
+            ).fetchone()
+            if ambiguous is not None:
+                raise SnapshotError("ambiguous_as_of_version")
             query = "SELECT body FROM (SELECT key,body,ROW_NUMBER() OVER (PARTITION BY key ORDER BY version DESC,available DESC) AS rank FROM eligible) WHERE rank=1 ORDER BY key"
             for (body,) in db.execute(query):
                 yield decoded(body, columns_for(table))

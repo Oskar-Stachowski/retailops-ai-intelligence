@@ -297,6 +297,23 @@ def test_future_plan_requires_a_known_version_and_half_open_effective_date(
     )
 
 
+def test_as_of_never_arbitrarily_selects_ambiguous_plan_version(index, tmp_path, monkeypatch):
+    mapping, _, _ = index
+    raw = next(r for r in source_rows("price_plans") if r["scope"] == "global")
+    first = transform("price_plans", raw, ["id"], mapping, Config())
+    duplicate = {**first, "id": "ambiguous-plan", "price": first["price"] + 1}
+    synthetic_reader_package(tmp_path, monkeypatch, "price_plans", [first, duplicate])
+    with pytest.raises(SnapshotError, match="ambiguous_as_of_version"):
+        list(
+            reader.rows_as_of(
+                tmp_path,
+                first["curated_available_at"],
+                table="price_plans",
+                business_date=raw["effective_from"],
+            )
+        )
+
+
 @pytest.mark.parametrize("fault", ["gap", "regression"])
 def test_history_versions_must_be_contiguous_and_chronological(index, fault):
     mapping, _, raw = index
