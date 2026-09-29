@@ -3,7 +3,7 @@ GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
 UV_RUN = $(UV) run --locked --extra snapshot --extra forecast
 
-.PHONY: bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
+.PHONY: bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
 
 bootstrap:
 	$(UV) sync --locked --extra snapshot --extra forecast
@@ -51,10 +51,13 @@ forecast-backtest-check:
 forecast-quality-check:
 	$(UV_RUN) python scripts/check_forecast_quality.py
 
+forecast-run-check:
+	$(UV_RUN) python scripts/check_forecast_run.py
+
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check contracts-check package compose-config
+check: lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check contracts-check package compose-config
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner

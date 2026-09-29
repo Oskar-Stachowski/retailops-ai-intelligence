@@ -31,6 +31,7 @@ from retailops_ai.forecasting.model_contract import (
 )
 from retailops_ai.forecasting.preprocessing import FittedState
 from retailops_ai.forecasting.quality_contract import QualityManifest, QualityPolicy, SegmentMetric
+from retailops_ai.forecasting.run_contract import ForecastRunManifest
 from retailops_ai.forecasting.splits import default_split
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,6 +65,7 @@ def artifacts() -> dict[Path, object]:
         ("quality_policy", QualityPolicy),
         ("quality_manifest", QualityManifest),
         ("segment_metric", SegmentMetric),
+        ("run_manifest", ForecastRunManifest),
     ):
         schema = model.model_json_schema()
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"

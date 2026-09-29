@@ -112,10 +112,46 @@ def main(argv: list[str] | None = None) -> int:
     quality_verify.add_argument("--quality-dir", type=Path, required=True)
     quality_verify.add_argument("--feature-dir", type=Path, required=True)
     quality_verify.add_argument("--backtest-dir", type=Path, required=True)
+    run_build = commands.add_parser("run-export")
+    run_build.add_argument("--source-dir", type=Path, required=True)
+    run_build.add_argument("--curated-dir", type=Path, required=True)
+    run_build.add_argument("--feature-dir", type=Path, required=True)
+    run_build.add_argument("--backtest-dir", type=Path, required=True)
+    run_build.add_argument("--quality-dir", type=Path, required=True)
+    run_build.add_argument("--ai-commit", required=True)
+    run_build.add_argument("--output-root", type=Path, default=Path("data/generated/forecast-runs"))
+    run_verify = commands.add_parser("run-verify")
+    run_verify.add_argument("--run-dir", type=Path, required=True)
     args = parser.parse_args(argv)
     summary: dict[str, object]
     try:
-        if args.command in {"quality-evaluate", "quality-verify"}:
+        if args.command in {"run-export", "run-verify"}:
+            from retailops_ai.forecasting.run import build_run, verify_run
+
+            directory = (
+                build_run(
+                    args.source_dir,
+                    args.curated_dir,
+                    args.feature_dir,
+                    args.backtest_dir,
+                    args.quality_dir,
+                    args.output_root,
+                    args.ai_commit,
+                )
+                if args.command == "run-export"
+                else args.run_dir
+            )
+            run_manifest = verify_run(directory)
+            summary = {
+                "status": "passed",
+                "run_id": run_manifest.run_id,
+                "run_status": run_manifest.run_status,
+                "quality_status": run_manifest.descriptor.quality_status,
+                "gate_counts": run_manifest.descriptor.gate_counts,
+                "forecast_model_status": run_manifest.forecast_model_status,
+                "directory": str(directory),
+            }
+        elif args.command in {"quality-evaluate", "quality-verify"}:
             from retailops_ai.forecasting.quality import build_quality, load_quality, verify_quality
             from retailops_ai.forecasting.quality_contract import QualityPolicy
 
@@ -393,6 +429,8 @@ def main(argv: list[str] | None = None) -> int:
             "backtest-verify",
             "quality-evaluate",
             "quality-verify",
+            "run-export",
+            "run-verify",
         }:
             print(
                 '{"error":"forecast_dependencies_required","install":"uv sync --locked --extra snapshot --extra forecast"}',
