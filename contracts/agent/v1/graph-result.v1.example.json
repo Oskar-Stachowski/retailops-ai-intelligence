@@ -5,7 +5,7 @@
   "suggestions": [],
   "trace": {
     "chat_config_id": "agent-chat-config-sha256-4eb68fa07ff4511bb4b7bf1830d3146d1401f1781f5fe1ae7098e1a2aa26659f",
-    "config_id": "agent-graph-config-sha256-73ea61aedb8c493c8a192a6463e9151932115748f5c2bc31604990a15fcbcd9f",
+    "config_id": "agent-graph-config-sha256-1b6b9bb7ada1b71ce10d43d004c384eb7ed055760a000632299b837dd54308cf",
     "correlation_id": "correlation-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     "created_at": "2026-08-23T00:00:00Z",
     "error_code": "dependency_unavailable",

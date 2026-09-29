@@ -2,8 +2,9 @@ UV ?= $(if $(wildcard .tools/bin/uv),.tools/bin/uv,uv)
 GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
 PROVIDER ?= fake
+BEDROCK_ARGS ?=
 
-.PHONY: bootstrap lint type-check test docs-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke agent-security-test agent-evaluate
+.PHONY: bootstrap lint type-check test docs-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke agent-security-test agent-evaluate bedrock-smoke
 
 bootstrap:
 	$(UV) sync --locked
@@ -43,6 +44,7 @@ contracts:
 	$(UV) run --locked python scripts/update_agent_contracts.py
 	$(UV) run --locked python scripts/update_agent_chat_contracts.py
 	$(UV) run --locked python scripts/update_agent_graph_contracts.py
+	$(UV) run --locked python scripts/update_agent_bedrock_contracts.py
 	$(UV) run --locked python scripts/update_assistant_contracts.py
 
 contracts-check:
@@ -52,13 +54,17 @@ contracts-check:
 	$(UV) run --locked python scripts/update_agent_contracts.py --check
 	$(UV) run --locked python scripts/update_agent_chat_contracts.py --check
 	$(UV) run --locked python scripts/update_agent_graph_contracts.py --check
+	$(UV) run --locked python scripts/update_agent_bedrock_contracts.py --check
 	$(UV) run --locked python scripts/update_assistant_contracts.py --check
 
 agent-security-test:
-	$(UV) run --locked pytest tests/test_agent_tools.py tests/test_agent_chat.py tests/test_agent_graph.py tests/test_agent_suggestions.py tests/test_agent_evaluation.py tests/test_assistant.py
+	$(UV) run --locked pytest tests/test_agent_tools.py tests/test_agent_chat.py tests/test_agent_graph.py tests/test_agent_suggestions.py tests/test_agent_evaluation.py tests/test_assistant.py tests/test_bedrock_chat.py
 
 agent-evaluate:
 	$(UV) run --locked retailops-ai agent-evaluate --provider "$(PROVIDER)" --config agent/graph.evaluate.fake.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock
+
+bedrock-smoke:
+	$(UV) run --locked retailops-ai bedrock-smoke --config agent/graph.bedrock-smoke.v1.json --offline-config agent/graph.evaluate.fake.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock --profile agent/bedrock-smoke.v1.json $(BEDROCK_ARGS)
 
 compose-up:
 	$(UV) run --locked python scripts/local_stack.py up

@@ -123,7 +123,8 @@ przypadków, zero zbędnych wywołań, p95 ≤ 5000 ms i koszt syntetyczny 0 USD
 - Latency p95 jest nearest-rank z wall time grafu; tokeny są zapisanym usage
   fake i rezerwacją przy błędzie providera. Nie mierzą wydajności ani ceny Bedrock.
 
-Kolejne kroki: rzeczywisty adapter chat/circuit breaker i bounded smoke,
-planner/resolver oraz adaptery źródeł. Pełne AI 12 wymaga rzeczywistych
+Gotowy [adapter Bedrock](agent-bedrock.md) oraz circuit breaker mają osobny
+odbiór transportu. Kolejne kroki: ograniczony rzeczywisty smoke po ustaleniu
+kosztu, planner/resolver oraz adaptery źródeł. Pełne AI 12 wymaga rzeczywistych
 narzędzi, golden dla realnego modelu/retrieval oraz ścieżki sugestia → outbox/v2
 → RetailOps read API/UI z AI 10.

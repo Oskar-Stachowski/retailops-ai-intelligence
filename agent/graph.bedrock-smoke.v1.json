@@ -8,14 +8,14 @@
       "max_retries": 2,
       "pricing": {
         "currency": "USD",
-        "input_per_million": "0",
-        "kind": "synthetic_test_rates",
-        "max_run_cost": "0.02",
+        "input_per_million": "0.065",
+        "kind": "reviewed_provider_rates",
+        "max_run_cost": "0.002",
         "max_smoke_cost": "0.05",
-        "output_per_million": "0",
-        "rate_version": "fixture-zero-v1"
+        "output_per_million": "0.26",
+        "rate_version": "aws-nova-lite-stockholm-20260928"
       },
-      "provider_timeout_seconds": 5.0,
+      "provider_timeout_seconds": 20.0,
       "retry_base_seconds": 0.05,
       "retry_max_seconds": 0.2
     },
@@ -32,13 +32,13 @@
       "vector_format": "float32-big-endian-v1"
     },
     "graph_version": "bounded-langgraph-v1",
-    "knowledge_index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+    "knowledge_index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
     "model": {
       "inference_profile": null,
-      "max_output_tokens": 400,
-      "model_id": "scripted-chat-v1",
-      "provider": "fake",
-      "region": "offline",
+      "max_output_tokens": 1000,
+      "model_id": "amazon.nova-lite-v1:0",
+      "provider": "bedrock",
+      "region": "eu-north-1",
       "temperature": 0.0
     },
     "profile": "agent-bounded-v1",

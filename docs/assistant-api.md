@@ -106,6 +106,8 @@ sprawdza rzeczywisty HTTP/PG, równoległe admission, token/cost debit,
 fault injection, SIGKILL API i zachowanie trzech wyników po restarcie bazy.
 Fixtures mierzą te mechanizmy; nie potwierdzają jakości LLM lub danych ML.
 
-Najbliższe zakresy: rzeczywisty chat/circuit breaker/bounded smoke, serwerowy
-planner i source resolver, adaptery danych, realny golden/retrieval oraz
+Gotowy [adapter Bedrock](agent-bedrock.md) ma circuit breaker i ograniczony
+smoke CLI; nie został jeszcze podłączony do standardowego runtime. Najbliższe
+zakresy: serwerowy planner i source resolver, podłączenie runtime,
+płatny smoke po ustaleniu kosztu, adaptery danych, realny golden/retrieval oraz
 AI 10 outbox/v2/read API/UI. Sugestie nie są jeszcze wystawione w read API ML.

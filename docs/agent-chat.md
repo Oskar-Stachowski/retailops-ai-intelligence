@@ -116,7 +116,7 @@ W tym profilu obliczenia i modelowe `recommended_actions` są odrzucane.
 kanonicznych faktów i obliczeń. Powyższy profil pregraph z promptami v1 zachowuje
 wcześniejsze ograniczenia. [Reguły i golden](agent-evaluation.md) obejmują
 kanoniczne odpowiedzi i kandydatów na fixtures. [Assistant API](assistant-api.md)
-dodaje admission i trwałe wyniki. Dalej pozostają circuit breaker,
-rzeczywisty adapter chat Bedrock, weryfikacja aktualnego
-modelu/regionu/IAM/cennika i ograniczony rzeczywisty smoke. Źródła biznesowe
+dodaje admission i trwałe wyniki. [Adapter Bedrock](agent-bedrock.md) ma
+circuit breaker, CountTokens i przypiętą propozycję modelu/cennika. Dalej
+pozostają rzeczywisty smoke, odbiór dostępu/IAM i jakości tego modelu. Źródła biznesowe
 oraz producent sugestii/outbox/E2E wymagają dalszych etapów, w tym AI 10.

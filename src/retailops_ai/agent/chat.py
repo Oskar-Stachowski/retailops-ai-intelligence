@@ -7,7 +7,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from decimal import Decimal
 from threading import Lock
-from typing import Literal, Protocol, cast
+from typing import Literal, Protocol, cast, runtime_checkable
 
 from retailops_ai.agent.chat_config import ChatModelConfig, ChatPricing, ResolvedChatConfig
 from retailops_ai.agent.chat_context import EvidenceSnapshot, InvalidEvidence
@@ -42,7 +42,9 @@ class ChatFailure(ValueError):
 
 
 class ProviderFailure(ValueError):
-    def __init__(self, code: Literal["throttled", "transient", "auth", "schema"]) -> None:
+    def __init__(
+        self, code: Literal["throttled", "transient", "auth", "schema", "circuit_open"]
+    ) -> None:
         self.code = code
         super().__init__("Model provider request failed.")
 
@@ -82,6 +84,13 @@ class ChatProvider(Protocol):
 
     def input_token_bound(self, request: ChatRequest) -> int: ...
     async def generate(self, request: ChatRequest) -> ProviderReply: ...
+
+
+@runtime_checkable
+class CountedChatProvider(Protocol):
+    """A runtime provider counts the exact serialized input before paid inference."""
+
+    async def count_input_tokens(self, request: ChatRequest) -> int: ...
 
 
 def estimated_cost(pricing: ChatPricing, inputs: int, outputs: int) -> Decimal:
@@ -219,14 +228,29 @@ class ChatSession:
         )
         return request, snapshot
 
-    def _reserve(self, request: ChatRequest) -> tuple[int, int, Decimal]:
+    async def _reserve(self, request: ChatRequest) -> tuple[int, int, Decimal]:
         budget = self.config.config.budget
         if self.tools.executor.timer() >= self.tools.deadline:
             raise ChatFailure("deadline_exceeded")
         try:
-            inputs = self.provider.input_token_bound(request)
+            if isinstance(self.provider, CountedChatProvider):
+                inputs = await asyncio.wait_for(
+                    self.provider.count_input_tokens(request),
+                    timeout=min(
+                        budget.provider_timeout_seconds,
+                        self.tools.deadline - self.tools.executor.timer(),
+                    ),
+                )
+            else:
+                inputs = self.provider.input_token_bound(request)
+        except asyncio.CancelledError:
+            raise
         except Exception:
+            if self.tools.executor.timer() >= self.tools.deadline:
+                raise ChatFailure("deadline_exceeded") from None
             raise ChatFailure("provider_unavailable") from None
+        if self.tools.executor.timer() >= self.tools.deadline:
+            raise ChatFailure("deadline_exceeded")
         outputs = request.max_output_tokens
         if type(inputs) is not int or inputs < 1:
             raise ChatFailure("provider_unavailable")
@@ -268,7 +292,7 @@ class ChatSession:
                 self.repairs += 1
                 self._repair = None
             while True:
-                reserved = self._reserve(request)
+                reserved = await self._reserve(request)
                 started = self.tools.executor.timer()
                 accounted = (reserved[0], reserved[1])
                 try:

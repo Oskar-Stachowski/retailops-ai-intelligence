@@ -75,8 +75,18 @@ prawa narzędzi/wiedzy; admin wymaga osobnego assistant:audit.
 Standardowe serve nie ma jeszcze modelu/planner/resolvera, więc query daje 503;
 fake jest dopuszczony wyłącznie w testach.
 
-Następny zakres bez AI 10: rzeczywisty adapter chat
-Bedrock z circuit breaker i bounded smoke, realne źródła ML/operacyjne oraz
+[Szósty zakres](agent-bedrock.md) dodaje adapter Converse/CountTokens, wspólny
+lokalny circuit breaker, limit operacji SDK pozostających w tle i CLI małego
+testu z przypiętym modelem/cennikiem/budżetem. Domyślnie CLI przechodzi offline
+gates i zapisuje propozycję `not_run`, bez AWS. Płatny smoke nie został jeszcze
+uruchomiony: trzeba ustalić kwotę; proponowane 0,05 USD opisuje
+[konkretna propozycja](evidence/12-bedrock-proposal.json). Test chat korzysta
+z jawnych fixtures danych/retrieval i nie zamyka agenta.
+[Odbiór](evidence/12-bedrock.md) podaje kontrolę transportu/awarii.
+
+Następny zakres bez AI 10: planner rzeczywistych pytań, resolver source IDs,
+podłączenie runtime Assistant do RAG oraz rzeczywisty ograniczony smoke po
+ustaleniu kosztu. Dalej pozostają realne źródła ML/operacyjne oraz
 kwalifikacja rzeczywistego modelu i retrieval na golden set. Pełne AI 12 wymaga
 AI 10 i E2E sugestii/outbox/v2/read API/UI. Obecny profil sprawdza kanoniczne
 fakty i literalne cytaty; nie potwierdza jakości swobodnych odpowiedzi LLM ani

@@ -64,6 +64,10 @@ class ChatPricing(Contract):
     def caps(self) -> Self:
         if self.max_run_cost > self.max_smoke_cost:
             raise ValueError("run_cost_exceeds_smoke_cap")
+        if self.kind == "reviewed_provider_rates" and (
+            self.input_per_million <= 0 or self.output_per_million <= 0
+        ):
+            raise ValueError("runtime_pricing_requires_positive_rates")
         return self
 
 

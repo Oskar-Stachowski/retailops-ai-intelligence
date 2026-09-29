@@ -10,6 +10,7 @@ from pydantic import ValidationError
 from pydantic_settings import SettingsError
 
 from retailops_ai.cli_bedrock import add_bedrock_command, run_bedrock_prepare
+from retailops_ai.cli_bedrock_chat import add_chat_smoke, run_chat_smoke
 from retailops_ai.cli_index_jobs import add_job_commands, run_job_command
 from retailops_ai.cli_knowledge import add_knowledge_commands, run_denial, run_evaluation
 from retailops_ai.cli_qualification import add_release_check, run_profile_prepare, run_release_check
@@ -107,6 +108,7 @@ def main(argv: list[str] | None = None) -> int:
     add_job_commands(commands)
     add_release_check(commands)
     add_bedrock_command(commands)
+    add_chat_smoke(commands)
     args = parser.parse_args(argv)
     if args.command in {
         "agent-tools",
@@ -120,6 +122,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_agent_command(args)
     if args.command == "knowledge-bedrock-prepare":
         return run_bedrock_prepare(args)
+    if args.command == "bedrock-smoke":
+        return run_chat_smoke(args)
 
     if args.command == "version":
         info = ApplicationInfo(version=version("retailops-ai-intelligence"))

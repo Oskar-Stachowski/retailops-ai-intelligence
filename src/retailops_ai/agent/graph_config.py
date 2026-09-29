@@ -38,6 +38,11 @@ def graph_code_checksum() -> str:
             name: hashlib.sha256(package.joinpath(name).read_bytes()).hexdigest()
             for name in BOUND_MODULES
         }
+        | {
+            "adapters/bedrock_chat.py": hashlib.sha256(
+                files("retailops_ai.adapters").joinpath("bedrock_chat.py").read_bytes()
+            ).hexdigest()
+        }
     )
 
 
