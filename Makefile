@@ -3,7 +3,7 @@ GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
 UV_RUN = $(UV) run --locked --extra snapshot
 
-.PHONY: bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
+.PHONY: bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
 
 bootstrap:
 	$(UV) sync --locked --extra snapshot
@@ -30,10 +30,13 @@ snapshot-import-check:
 curated-check:
 	$(UV_RUN) python scripts/check_curated.py
 
+forecast-calendar-check:
+	$(UV_RUN) python scripts/check_forecast_calendar.py
+
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check handoff-check snapshot-import-check curated-check contracts-check package compose-config
+check: lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check contracts-check package compose-config
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner
@@ -49,11 +52,13 @@ contracts:
 	$(UV_RUN) python scripts/update_intelligence_contracts.py
 	$(UV_RUN) python scripts/update_access_contracts.py
 	$(UV_RUN) python scripts/update_knowledge_contracts.py
+	$(UV_RUN) python scripts/update_forecast_contracts.py
 
 contracts-check:
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
 	$(UV_RUN) python scripts/update_access_contracts.py --check
 	$(UV_RUN) python scripts/update_knowledge_contracts.py --check
+	$(UV_RUN) python scripts/update_forecast_contracts.py --check
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up

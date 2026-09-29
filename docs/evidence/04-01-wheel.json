@@ -1,0 +1,10 @@
+{
+  "aws_calls": 0,
+  "calendar_id": "forecast-calendar-sha256-83598117e5bdcb3645d5b9e87594c301d302e27ddc4ad27c52ecd7e31e736c6f",
+  "history_rows": 742,
+  "implementation_loaded_from_wheel": true,
+  "schemas_packaged": true,
+  "scope": "extracted wheel outside checkout; source import/curated/calendar/as-of",
+  "status": "passed",
+  "task_id": "forecast-task-sha256-6479b48ab01c1df86b2297f1d00474872db21c29db83449ec79a70295297ad9e"
+}

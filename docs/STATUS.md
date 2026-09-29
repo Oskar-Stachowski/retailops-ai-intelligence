@@ -7,6 +7,15 @@ wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodz
 przez chroniony `main` oraz Required CI; stan wykonania pokazuje
 [workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
 
+**AI 04.1 — zadanie i kalendarz forecastingu:**
+[kontrakt i polecenia](forecasting.md) definiują observed sales, grain,
+cutoff 23:59:59 UTC, horyzonty 1–14 i okna 7/14 z jedną granicą wiedzy.
+Manifest wiąże kalendarz ze zweryfikowanym curated AI 03; inventory i truth
+features są wyłączone. [Odbiór lokalny](evidence/04-01-calendar.md) podaje
+testy i powtarzalny smoke. Branch `ai/04-01-task-calendar` jest osobny od AI 12.
+Kolejny zakres to **04.2 — panel i cechy**; model pozostaje `not_ready`.
+Ten zakres nie ma jeszcze publikacji ani zdalnego Required CI.
+
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
 identity i transportu bez generatora/DB.
@@ -20,7 +29,7 @@ normalizację, quarantine, immutable IDs i odczyt z pełnej historii wersji.
 [AI 03.6 — bramka cross-repo](evidence/03-06-cross-repo.md) wiąże oba repo
 przez pełne smoke i przypięte rewizje. Końcowy odbiór RetailOps określa wejście
 do 04/06 oraz odrębne readiness use cases.
-Branch `ai/03-04-importer` ma osobny worktree; AI 12 rozwija się niezależnie.
+AI 12 rozwija się w osobnym worktree; forecasting zaczyna się od main z AI 03.
 Branch 03 jest opublikowany w [PR #5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/5).
 Przypięte wyniki Required CI, testów i rzeczywistego Compose/persistence
 znajdują się w [końcowym evidence cross-repo](evidence/03-06-cross-repo.md).

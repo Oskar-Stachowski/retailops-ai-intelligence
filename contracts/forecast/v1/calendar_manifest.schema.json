@@ -1,0 +1,554 @@
+{
+  "$defs": {
+    "CalendarDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "calendar_content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Calendar Content Sha256",
+          "type": "string"
+        },
+        "implementation": {
+          "$ref": "#/$defs/Implementation"
+        },
+        "origin_window": {
+          "$ref": "#/$defs/OriginWindow"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "task": {
+          "$ref": "#/$defs/TaskConfig"
+        },
+        "task_id": {
+          "pattern": "^forecast-task-sha256-[0-9a-f]{64}$",
+          "title": "Task Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "task",
+        "task_id",
+        "parent",
+        "origin_window",
+        "implementation",
+        "calendar_content_sha256"
+      ],
+      "title": "CalendarDescriptor",
+      "type": "object"
+    },
+    "Implementation": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "minProperties": 1,
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-calendar-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "code_files",
+        "code_sha256"
+      ],
+      "title": "Implementation",
+      "type": "object"
+    },
+    "Origin": {
+      "additionalProperties": false,
+      "properties": {
+        "availability_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Availability Cutoff",
+          "type": "string"
+        },
+        "forecast_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Forecast Origin",
+          "type": "string"
+        },
+        "observed_through_date": {
+          "format": "date",
+          "title": "Observed Through Date",
+          "type": "string"
+        },
+        "origin_date": {
+          "format": "date",
+          "title": "Origin Date",
+          "type": "string"
+        },
+        "reporting_windows": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/ReportingWindow"
+            },
+            {
+              "$ref": "#/$defs/ReportingWindow"
+            }
+          ],
+          "title": "Reporting Windows",
+          "type": "array"
+        },
+        "targets": {
+          "items": {
+            "$ref": "#/$defs/Target"
+          },
+          "maxItems": 14,
+          "minItems": 14,
+          "title": "Targets",
+          "type": "array"
+        }
+      },
+      "required": [
+        "origin_date",
+        "forecast_origin",
+        "availability_cutoff",
+        "observed_through_date",
+        "targets",
+        "reporting_windows"
+      ],
+      "title": "Origin",
+      "type": "object"
+    },
+    "OriginWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "OriginWindow",
+      "type": "object"
+    },
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "forecast_source_status": {
+          "const": "passed",
+          "title": "Forecast Source Status",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "curated_descriptor_sha256",
+        "business_timezone",
+        "forecast_source_status"
+      ],
+      "title": "Parent",
+      "type": "object"
+    },
+    "ReportingWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "days": {
+          "enum": [
+            7,
+            14
+          ],
+          "title": "Days",
+          "type": "integer"
+        },
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "days"
+      ],
+      "title": "ReportingWindow",
+      "type": "object"
+    },
+    "Target": {
+      "additionalProperties": false,
+      "properties": {
+        "horizon_days": {
+          "maximum": 14,
+          "minimum": 1,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "target_date": {
+          "format": "date",
+          "title": "Target Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "horizon_days",
+        "target_date"
+      ],
+      "title": "Target",
+      "type": "object"
+    },
+    "TaskConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "availability_delay_seconds": {
+          "default": 0,
+          "maximum": 0,
+          "minimum": 0,
+          "title": "Availability Delay Seconds",
+          "type": "integer"
+        },
+        "availability_rule": {
+          "const": "curated_available_at_lte_forecast_origin",
+          "default": "curated_available_at_lte_forecast_origin",
+          "title": "Availability Rule",
+          "type": "string"
+        },
+        "business_timezone": {
+          "const": "UTC",
+          "default": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "calendar_version": {
+          "const": "forecast-utc-daily-1.0.0",
+          "default": "forecast-utc-daily-1.0.0",
+          "title": "Calendar Version",
+          "type": "string"
+        },
+        "cutoff_policy": {
+          "const": "end_of_day_second_v1",
+          "default": "end_of_day_second_v1",
+          "title": "Cutoff Policy",
+          "type": "string"
+        },
+        "cutoff_precision": {
+          "const": "seconds",
+          "default": "seconds",
+          "title": "Cutoff Precision",
+          "type": "string"
+        },
+        "cutoff_time_utc": {
+          "const": "23:59:59",
+          "default": "23:59:59",
+          "title": "Cutoff Time Utc",
+          "type": "string"
+        },
+        "day_step": {
+          "const": "calendar_day_including_closed_days",
+          "default": "calendar_day_including_closed_days",
+          "title": "Day Step",
+          "type": "string"
+        },
+        "delayed_data_policy": {
+          "const": "exclude_until_a_new_origin_never_fill_missing_with_zero",
+          "default": "exclude_until_a_new_origin_never_fill_missing_with_zero",
+          "title": "Delayed Data Policy",
+          "type": "string"
+        },
+        "evaluation_protocol": {
+          "const": "fixed_origin_multi_horizon",
+          "default": "fixed_origin_multi_horizon",
+          "title": "Evaluation Protocol",
+          "type": "string"
+        },
+        "forecast_grain": {
+          "default": [
+            "product_id",
+            "selling_location_id",
+            "channel",
+            "forecast_origin",
+            "target_date"
+          ],
+          "maxItems": 5,
+          "minItems": 5,
+          "prefixItems": [
+            {
+              "const": "product_id",
+              "type": "string"
+            },
+            {
+              "const": "selling_location_id",
+              "type": "string"
+            },
+            {
+              "const": "channel",
+              "type": "string"
+            },
+            {
+              "const": "forecast_origin",
+              "type": "string"
+            },
+            {
+              "const": "target_date",
+              "type": "string"
+            }
+          ],
+          "title": "Forecast Grain",
+          "type": "array"
+        },
+        "history_policy": {
+          "const": "one_boundary_for_all_horizons_and_models",
+          "default": "one_boundary_for_all_horizons_and_models",
+          "title": "History Policy",
+          "type": "string"
+        },
+        "horizon_days": {
+          "default": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "items": {
+            "maximum": 14,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "title": "Horizon Days",
+          "type": "array"
+        },
+        "inventory_features_enabled": {
+          "const": false,
+          "default": false,
+          "title": "Inventory Features Enabled",
+          "type": "boolean"
+        },
+        "missing_availability_policy": {
+          "const": "exclude",
+          "default": "exclude",
+          "title": "Missing Availability Policy",
+          "type": "string"
+        },
+        "model_name": {
+          "const": "retailops-demand-forecast",
+          "default": "retailops-demand-forecast",
+          "title": "Model Name",
+          "type": "string"
+        },
+        "observation_grain": {
+          "default": [
+            "business_date",
+            "product_id",
+            "selling_location_id",
+            "channel"
+          ],
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "const": "business_date",
+              "type": "string"
+            },
+            {
+              "const": "product_id",
+              "type": "string"
+            },
+            {
+              "const": "selling_location_id",
+              "type": "string"
+            },
+            {
+              "const": "channel",
+              "type": "string"
+            }
+          ],
+          "title": "Observation Grain",
+          "type": "array"
+        },
+        "observation_history": {
+          "const": "daily_demand_versions_latest_known_version",
+          "default": "daily_demand_versions_latest_known_version",
+          "title": "Observation History",
+          "type": "string"
+        },
+        "quantity_policy": {
+          "const": "saleable_units_no_pack_or_fx_conversion",
+          "default": "saleable_units_no_pack_or_fx_conversion",
+          "title": "Quantity Policy",
+          "type": "string"
+        },
+        "reporting_windows_days": {
+          "default": [
+            7,
+            14
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": 7,
+              "type": "integer"
+            },
+            {
+              "const": 14,
+              "type": "integer"
+            }
+          ],
+          "title": "Reporting Windows Days",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "simulation_truth_features_enabled": {
+          "const": false,
+          "default": false,
+          "title": "Simulation Truth Features Enabled",
+          "type": "boolean"
+        },
+        "source_operational_outputs_as_targets": {
+          "const": false,
+          "default": false,
+          "title": "Source Operational Outputs As Targets",
+          "type": "boolean"
+        },
+        "source_timestamp_precision": {
+          "const": "microseconds_no_rounding",
+          "default": "microseconds_no_rounding",
+          "title": "Source Timestamp Precision",
+          "type": "string"
+        },
+        "target_type": {
+          "const": "observed_sales_units",
+          "default": "observed_sales_units",
+          "title": "Target Type",
+          "type": "string"
+        },
+        "task": {
+          "const": "daily_observed_sales_forecast",
+          "default": "daily_observed_sales_forecast",
+          "title": "Task",
+          "type": "string"
+        }
+      },
+      "title": "TaskConfig",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:forecast:calendar_manifest:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "calendar_id": {
+      "pattern": "^forecast-calendar-sha256-[0-9a-f]{64}$",
+      "title": "Calendar Id",
+      "type": "string"
+    },
+    "descriptor": {
+      "$ref": "#/$defs/CalendarDescriptor"
+    },
+    "forecast_model_status": {
+      "const": "not_ready",
+      "title": "Forecast Model Status",
+      "type": "string"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "origins": {
+      "items": {
+        "$ref": "#/$defs/Origin"
+      },
+      "maxItems": 366,
+      "minItems": 1,
+      "title": "Origins",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "calendar_id",
+    "descriptor",
+    "origins",
+    "forecast_model_status",
+    "generated_at"
+  ],
+  "title": "CalendarManifest",
+  "type": "object"
+}
