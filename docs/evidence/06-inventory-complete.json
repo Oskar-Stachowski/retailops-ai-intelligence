@@ -1,0 +1,308 @@
+{
+  "status": "passed",
+  "scope": "AI06 complete source/qualification/export/import/curated/as-of",
+  "producer_commit": "f07ba22555a48b6c750f865f609e0893dfc129e0",
+  "consumer_commit": "2574c06794b7b4f86393f23db1d9e97c16413706",
+  "limits": {
+    "seconds": 300,
+    "rss_mib": 1024
+  },
+  "curated": "passed",
+  "default_ai_source": "2.7.0",
+  "source_ready": true,
+  "inventory_ready": true,
+  "model_ready": false,
+  "cases": [
+    {
+      "case": "ai-smoke-first",
+      "profile": "ai-smoke",
+      "source_id": "source-sha256-70f155b79f449d9b7be6c3798dba839383a02b9afd50bd19d98bb1ff283b666a",
+      "qualification_id": "inventory-labels-sha256-6084d3465a9841df163efa80a92412b5a63c05a01c60cde01af7a7a337219d0c",
+      "snapshot_id": "snapshot-sha256-10ebfa41adc95966a785876565c3fa391006726184975b0d4d823fe2d083d6a4",
+      "source_seconds": 27.086945958988508,
+      "qualification_seconds": 10.93518812500406,
+      "export_seconds": 10.054687833995558,
+      "import_curated_as_of_seconds": 35.36387849999301,
+      "curated_id": "curated-sha256-4f3457a8557879ccfe8263d7f4080e9eb24d3ed009c4b605ab286add27bfc0bb",
+      "seconds": 83.44070041798113,
+      "producer_peak_rss_mib": 218.359375,
+      "consumer_peak_rss_mib": 116.1875,
+      "source_receipt_sha256": "ed0f3668ab29520fbe1abeed3597a8d7113938fae82dd711b3e53da8e699a810",
+      "qualification_receipt_sha256": "c2ca4bea6acc91898ad4331d16c275bf1c571770b6ea29eda74c31398dcab654",
+      "status": "passed",
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast_model": "not_ready",
+        "forecast_source": "passed",
+        "inventory_ready": true,
+        "rag": "not_applicable",
+        "replay": "not_ready",
+        "stockout": "not_ready"
+      },
+      "as_of_checks": [
+        {
+          "origin": "2026-07-08T23:59:59+00:00",
+          "selected_observations": 294,
+          "source_versions": 1612,
+          "status": "passed"
+        },
+        {
+          "origin": "2026-07-31T23:59:59+00:00",
+          "selected_observations": 1561,
+          "source_versions": 1612,
+          "status": "passed"
+        }
+      ],
+      "inventory_as_of_checks": [
+        {
+          "origin": "2026-07-02T23:59:59.999998+00:00",
+          "physical_positions": 0,
+          "status": "passed"
+        },
+        {
+          "origin": "2026-07-31T23:59:59+00:00",
+          "physical_positions": 40,
+          "status": "passed"
+        }
+      ],
+      "rows": 31729
+    },
+    {
+      "case": "ai-smoke-repeat",
+      "profile": "ai-smoke",
+      "source_id": "source-sha256-70f155b79f449d9b7be6c3798dba839383a02b9afd50bd19d98bb1ff283b666a",
+      "qualification_id": "inventory-labels-sha256-6084d3465a9841df163efa80a92412b5a63c05a01c60cde01af7a7a337219d0c",
+      "snapshot_id": "snapshot-sha256-10ebfa41adc95966a785876565c3fa391006726184975b0d4d823fe2d083d6a4",
+      "source_seconds": 28.1842809170048,
+      "qualification_seconds": 10.99800087499898,
+      "export_seconds": 9.826526958000613,
+      "import_curated_as_of_seconds": 33.275514416003716,
+      "curated_id": "curated-sha256-4f3457a8557879ccfe8263d7f4080e9eb24d3ed009c4b605ab286add27bfc0bb",
+      "seconds": 82.28432316600811,
+      "producer_peak_rss_mib": 224.359375,
+      "consumer_peak_rss_mib": 118.9375,
+      "source_receipt_sha256": "e5ad6fba6cbfe4524d979089c79c6eb11ade13c37004632e1bd18f5883d1bda6",
+      "qualification_receipt_sha256": "5e039b70282b4d1ec2321aee8254982f61924afb5314e2a794b5d1f3830c9512",
+      "status": "passed",
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast_model": "not_ready",
+        "forecast_source": "passed",
+        "inventory_ready": true,
+        "rag": "not_applicable",
+        "replay": "not_ready",
+        "stockout": "not_ready"
+      },
+      "as_of_checks": [
+        {
+          "origin": "2026-07-08T23:59:59+00:00",
+          "selected_observations": 294,
+          "source_versions": 1612,
+          "status": "passed"
+        },
+        {
+          "origin": "2026-07-31T23:59:59+00:00",
+          "selected_observations": 1561,
+          "source_versions": 1612,
+          "status": "passed"
+        }
+      ],
+      "inventory_as_of_checks": [
+        {
+          "origin": "2026-07-02T23:59:59.999998+00:00",
+          "physical_positions": 0,
+          "status": "passed"
+        },
+        {
+          "origin": "2026-07-31T23:59:59+00:00",
+          "physical_positions": 40,
+          "status": "passed"
+        }
+      ],
+      "rows": 31729
+    },
+    {
+      "case": "ai-temporal-smoke-first",
+      "profile": "ai-temporal-smoke",
+      "source_id": "source-sha256-d76d0942c703ceaefd9fde5c921560886fe9b8c833693ee32eb12eb594b8867f",
+      "qualification_id": "inventory-labels-sha256-a697f24ab5c735e49557fe901b620e341cb936403c755608fdf5e4b018c3ef12",
+      "snapshot_id": "snapshot-sha256-f36775eed4a0a6df8be8e8baa17821324b072f647330547dffa6747e3e1edce3",
+      "source_seconds": 74.66039649999584,
+      "qualification_seconds": 26.58459362499707,
+      "export_seconds": 19.862997999996878,
+      "import_curated_as_of_seconds": 57.52866587499739,
+      "curated_id": "curated-sha256-a23ae90c556a0c69e808fcbb886a137ee1f5fc1316e41eecda963f3d540df5f6",
+      "seconds": 178.63665399998717,
+      "producer_peak_rss_mib": 292.96875,
+      "consumer_peak_rss_mib": 135.125,
+      "source_receipt_sha256": "8d412fc24eb5895107c54d2982edf9cc87da05da448a3f7bc504bfcb7a83b73d",
+      "qualification_receipt_sha256": "fca648c561a346cdc4107072221be3abc8aa9486fa645dcb59fcadad03b68abe",
+      "status": "passed",
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast_model": "not_ready",
+        "forecast_source": "passed",
+        "inventory_ready": true,
+        "rag": "not_applicable",
+        "replay": "not_ready",
+        "stockout": "not_ready"
+      },
+      "as_of_checks": [
+        {
+          "origin": "2026-05-18T23:59:59+00:00",
+          "selected_observations": 627,
+          "source_versions": 2406,
+          "status": "passed"
+        },
+        {
+          "origin": "2026-07-31T23:59:59+00:00",
+          "selected_observations": 2385,
+          "source_versions": 2406,
+          "status": "passed"
+        }
+      ],
+      "inventory_as_of_checks": [
+        {
+          "origin": "2026-04-21T23:59:59.999998+00:00",
+          "physical_positions": 0,
+          "status": "passed"
+        },
+        {
+          "origin": "2026-07-31T23:59:59+00:00",
+          "physical_positions": 16,
+          "status": "passed"
+        }
+      ],
+      "rows": 56533
+    },
+    {
+      "case": "ai-temporal-smoke-repeat",
+      "profile": "ai-temporal-smoke",
+      "source_id": "source-sha256-d76d0942c703ceaefd9fde5c921560886fe9b8c833693ee32eb12eb594b8867f",
+      "qualification_id": "inventory-labels-sha256-a697f24ab5c735e49557fe901b620e341cb936403c755608fdf5e4b018c3ef12",
+      "snapshot_id": "snapshot-sha256-f36775eed4a0a6df8be8e8baa17821324b072f647330547dffa6747e3e1edce3",
+      "source_seconds": 60.870214708003914,
+      "qualification_seconds": 21.812083333003102,
+      "export_seconds": 16.560197541999514,
+      "import_curated_as_of_seconds": 53.60883041701163,
+      "curated_id": "curated-sha256-a23ae90c556a0c69e808fcbb886a137ee1f5fc1316e41eecda963f3d540df5f6",
+      "seconds": 152.85132600001816,
+      "producer_peak_rss_mib": 300.296875,
+      "consumer_peak_rss_mib": 125.375,
+      "source_receipt_sha256": "633229902f4125f758dc572d7d85a0af5db9f22ad6ad8e68e2a94a9c557e6092",
+      "qualification_receipt_sha256": "239fd37af7901a74e94523add689b185a469f4043ca19a0f87b68916c4677524",
+      "status": "passed",
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast_model": "not_ready",
+        "forecast_source": "passed",
+        "inventory_ready": true,
+        "rag": "not_applicable",
+        "replay": "not_ready",
+        "stockout": "not_ready"
+      },
+      "as_of_checks": [
+        {
+          "origin": "2026-05-18T23:59:59+00:00",
+          "selected_observations": 627,
+          "source_versions": 2406,
+          "status": "passed"
+        },
+        {
+          "origin": "2026-07-31T23:59:59+00:00",
+          "selected_observations": 2385,
+          "source_versions": 2406,
+          "status": "passed"
+        }
+      ],
+      "inventory_as_of_checks": [
+        {
+          "origin": "2026-04-21T23:59:59.999998+00:00",
+          "physical_positions": 0,
+          "status": "passed"
+        },
+        {
+          "origin": "2026-07-31T23:59:59+00:00",
+          "physical_positions": 16,
+          "status": "passed"
+        }
+      ],
+      "rows": 56533
+    }
+  ],
+  "tests": [
+    {
+      "repo": "retailops-cloud-native-platform",
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "730",
+      "time": "284.474",
+      "timestamp": "2026-09-29T18:55:02.760934+02:00",
+      "hostname": "Oskars-MacBook-Air.local",
+      "junit_sha256": "87c2444f129b928987ac05b8f8ed76e3212fac482b9d463f6edea601fbcc2c2c"
+    },
+    {
+      "repo": "retailops-ai-06-handoff",
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "784",
+      "time": "373.386",
+      "timestamp": "2026-09-29T19:04:22.999649+02:00",
+      "hostname": "Oskars-MacBook-Air.local",
+      "junit_sha256": "753651aa0a5f4f4a6847957510670ddb755456998a8bf578b9abb17d1cb15316"
+    }
+  ],
+  "wheel": {
+    "status": "passed",
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "wheel_sha256": "5bbb250fec18dabe8c4cd05fdee2637dfd2e259fc1a7fba061c71f6d9e416651",
+    "isolated_python": true,
+    "packaged_contracts_only": true,
+    "runs": [
+      {
+        "variant": "facts",
+        "tables": 43,
+        "physical_positions": 6,
+        "inventory_ready": true,
+        "curated_id": "curated-sha256-3ed775fe4c59d5bbac23b7cf5cdfd7fda6c968df9aecb714c01758582a3f0d10"
+      },
+      {
+        "variant": "private",
+        "tables": 43,
+        "physical_positions": 6,
+        "inventory_ready": true,
+        "curated_id": "curated-sha256-5524596dc2a1ba62638217781cf52ec59a574c520cb50a3e6404deb5427d0163"
+      }
+    ]
+  },
+  "compatibility": [
+    {
+      "repo": "retailops-cloud-native-platform",
+      "base": "68fe5d98758f5c39e54044d93a1d09f7e60d8dac",
+      "frozen_files": 105,
+      "changed": [],
+      "includes": "data/demo, data/fixtures, data/contracts"
+    },
+    {
+      "repo": "retailops-ai-06-handoff",
+      "base": "9eb873a0ae6ec75e444d20aad3bebb7f8820beba",
+      "frozen_files": 81,
+      "changed": []
+    }
+  ],
+  "raw_receipt_sha256": "8357390bca99877eb75b5d2c15dbe209514a3087eb082507da76f410d4502059",
+  "audit": {
+    "blocking_findings": 0,
+    "scope": "06.1–06.6; source gates, independent import, causal curated, as-of, packaging, immutable compatibility",
+    "resolved_in_this_acceptance": [
+      "orphan delivery plan rejected by independent consumer",
+      "source 2.7 supported by curated 1.1 with causal sale and snapshot availability",
+      "default AI CLI dispatches source 2.7; explicit 2.6 compatibility"
+    ],
+    "model_scope": "04/05 on these new IDs required before 07/08; models not qualified by 06"
+  }
+}

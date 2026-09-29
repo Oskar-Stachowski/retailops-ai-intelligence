@@ -222,7 +222,11 @@ def synthetic_reader_package(tmp_path, monkeypatch, table, rows):
         }
     finally:
         digest.close()
-    monkeypatch.setattr(reader, "verify_curated", lambda *args, **kwargs: {"tables": [spec]})
+    monkeypatch.setattr(
+        reader,
+        "verify_curated",
+        lambda *args, **kwargs: {"schema_version": "1.0.0", "tables": [spec]},
+    )
 
 
 def test_late_quantity_correction_preserves_old_origin_at_microsecond_boundary(

@@ -112,15 +112,15 @@ def decoded(raw: str | bytes, columns: list[dict[str, Any]]) -> dict[str, Any]:
     return dict(row)
 
 
-def columns_for(table: str) -> list[dict[str, Any]]:
-    return list(contract_document()["fact_tables"][table]["schema"]) + EXTRA_COLUMNS
+def columns_for(table: str, version: str = VERSION) -> list[dict[str, Any]]:
+    return list(source_contract(version)["fact_tables"][table]["schema"]) + EXTRA_COLUMNS
 
 
-def schema_for(columns: list[dict[str, Any]]) -> Any:
+def schema_for(columns: list[dict[str, Any]], version: str = VERSION) -> Any:
     return pa.schema(
         [pa.field(c["name"], arrow_type(c["type"]), nullable=c["nullable"]) for c in columns],
         metadata={
-            b"retailops.curated_schema": VERSION.encode(),
+            b"retailops.curated_schema": version.encode(),
             b"retailops.canonical": CANONICAL_VERSION.encode(),
         },
     )
@@ -185,3 +185,30 @@ def record_sha(row: dict[str, Any]) -> str:
 
 def descriptor_id(descriptor: dict[str, Any]) -> str:
     return "curated-sha256-" + json_sha256(descriptor)
+
+
+def source_contract(version: str = VERSION) -> dict[str, Any]:
+    if version == "1.1.0":
+        from retailops_ai.source_snapshot.inventory_protocol import contract_document as inventory
+
+        return inventory()
+    if version != VERSION:
+        raise SnapshotError("unsupported_curated_version")
+    return contract_document()
+
+
+def handoff_bytes(version: str = VERSION) -> bytes:
+    from retailops_ai.source_snapshot.protocol import resource_bytes
+
+    if version == "1.1.0":
+        from retailops_ai.source_snapshot.inventory_protocol import resource_bytes as inventory
+
+        return inventory("contract.json")
+    return resource_bytes("contract.json")
+
+
+def watermarks(snapshot: Any) -> dict[str, Any]:
+    if snapshot.manifest["schema_version"] == "1.1.0":
+        context = snapshot.manifest["source"]["descriptor"]["context"]
+        return {"inventory": context["projection"], "source_context": context}
+    return dict(snapshot.manifest["source"]["watermarks"])

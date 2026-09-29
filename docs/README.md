@@ -26,6 +26,10 @@ wspólny evaluator i ograniczony trening; wybór pozostaje diagnostyczny.
 kontroluje dojrzałość etykiet i wspólne klucze oraz raportuje pooled MAE/WAPE.
 [Metryki i niepewność 04.7](forecast-quality.md) dodają przekroje, bias,
 kalibrację przedziałów i jawne bramki jakości bez promocji modelu.
+[Plikowy run 04.8](forecast-run.md) utrwala komplet dowodów do AI 05.
+[Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
+rozszerza typed import o source 2.7, native ledger i private qualification.
+[Odbiór](evidence/06-inventory-complete.md) obejmuje curated 1.1 i oba profile.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.

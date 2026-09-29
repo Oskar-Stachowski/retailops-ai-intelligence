@@ -1,0 +1,138 @@
+{
+  "status": "passed",
+  "verified_at": "2026-09-29T16:17:31.543751+00:00",
+  "scope": "AI06.6b.2c.1 source/qualification/export/import; curated and default switch pending",
+  "producer_commit": "6b40f11086dc810d31a79bf6c0e6483a5834ed23",
+  "consumer_commit": "891a7615466e467e1a37454a0f2af5a464605bbd",
+  "cases": [
+    {
+      "case": "ai-smoke-first",
+      "source_id": "source-sha256-52cdf90535820a2adebd999678758ec805f94f5254728706d73b0aabe819975e",
+      "qualification_id": "inventory-labels-sha256-7800448cb678b43606e127771eecd3d6947a5d5bccc53dc04c9653b8f17cf447",
+      "snapshot_id": "snapshot-sha256-07fd4d0ab12321983e7f64d446c4b72168b9734ad72d81cc0313a828a6929ac9",
+      "source_seconds": 29.615430082994862,
+      "qualification_seconds": 11.853575750006712,
+      "export_seconds": 9.568304417000036,
+      "import_seconds": 15.777893624996068,
+      "seconds": 66.81520387499768,
+      "producer_peak_rss_mib": 215.359375,
+      "consumer_peak_rss_mib": 76.328125,
+      "tables": 43,
+      "rows": 31729,
+      "positive_labels": 250,
+      "negative_labels": 337,
+      "typed_parity": "passed",
+      "reimport_unchanged": true
+    },
+    {
+      "case": "ai-smoke-repeat",
+      "source_id": "source-sha256-52cdf90535820a2adebd999678758ec805f94f5254728706d73b0aabe819975e",
+      "qualification_id": "inventory-labels-sha256-7800448cb678b43606e127771eecd3d6947a5d5bccc53dc04c9653b8f17cf447",
+      "snapshot_id": "snapshot-sha256-07fd4d0ab12321983e7f64d446c4b72168b9734ad72d81cc0313a828a6929ac9",
+      "source_seconds": 29.46079270899645,
+      "qualification_seconds": 11.705374750003102,
+      "export_seconds": 9.54550224999548,
+      "import_seconds": 15.713617166999029,
+      "seconds": 66.42528687599406,
+      "producer_peak_rss_mib": 214.484375,
+      "consumer_peak_rss_mib": 73.71875,
+      "tables": 43,
+      "rows": 31729,
+      "positive_labels": 250,
+      "negative_labels": 337,
+      "typed_parity": "passed",
+      "reimport_unchanged": true
+    },
+    {
+      "case": "ai-temporal-smoke-first",
+      "source_id": "source-sha256-df5364bc1773061d5f6bbe098336082949704fcda3a1dbc81fc9002ba23736a6",
+      "qualification_id": "inventory-labels-sha256-9c1d0119a0f7b4ec450513c8a184794e0e4dc7c217eb690c8f0318f3ab72f981",
+      "snapshot_id": "snapshot-sha256-0528ffabe3b476d2fb59894ce44e8ad0387304cd601f4315b5c5e35ade5d02a5",
+      "source_seconds": 78.44305266698939,
+      "qualification_seconds": 28.124739457998658,
+      "export_seconds": 25.934074208009406,
+      "import_seconds": 45.94399283299572,
+      "seconds": 178.44585916599317,
+      "producer_peak_rss_mib": 286.75,
+      "consumer_peak_rss_mib": 82.8125,
+      "tables": 43,
+      "rows": 56533,
+      "positive_labels": 472,
+      "negative_labels": 611,
+      "typed_parity": "passed",
+      "reimport_unchanged": true
+    },
+    {
+      "case": "ai-temporal-smoke-repeat",
+      "source_id": "source-sha256-df5364bc1773061d5f6bbe098336082949704fcda3a1dbc81fc9002ba23736a6",
+      "qualification_id": "inventory-labels-sha256-9c1d0119a0f7b4ec450513c8a184794e0e4dc7c217eb690c8f0318f3ab72f981",
+      "snapshot_id": "snapshot-sha256-0528ffabe3b476d2fb59894ce44e8ad0387304cd601f4315b5c5e35ade5d02a5",
+      "source_seconds": 86.13381154100352,
+      "qualification_seconds": 25.78256054200756,
+      "export_seconds": 18.844605332997162,
+      "import_seconds": 32.55419145799533,
+      "seconds": 163.31516887400358,
+      "producer_peak_rss_mib": 311.609375,
+      "consumer_peak_rss_mib": 84.140625,
+      "tables": 43,
+      "rows": 56533,
+      "positive_labels": 472,
+      "negative_labels": 611,
+      "typed_parity": "passed",
+      "reimport_unchanged": true
+    }
+  ],
+  "limits": {
+    "seconds": 300,
+    "rss_mib": 1024
+  },
+  "raw_acceptance_sha256": "1973753612fa513fae44832707d9a5e9946b7566efac3d115ca584109e0f363c",
+  "tests": {
+    "RetailOps": {
+      "tests": 727,
+      "seconds": 255.032,
+      "sha256": "14ba90cd6993d27a229ea80dd6b8946f0994150c9999e4d772c4a4087631db41",
+      "path": "ci-cd/reports/data/ai06-06b2c1/optimized-tests.xml"
+    },
+    "AI": {
+      "tests": 773,
+      "seconds": 309.102,
+      "sha256": "8e17ee0e9c699ffae30345100436ac88f97e30707a5bdd74ce5e2f53f15ba0f9",
+      "path": "reports/ai06-inventory-tests.xml"
+    }
+  },
+  "compatibility": {
+    "status": "passed",
+    "baseline": "68fe5d98758f5c39e54044d93a1d09f7e60d8dac",
+    "frozen_files": 84,
+    "tracked_demo_files": 19,
+    "changed_frozen_files": [],
+    "changed_demo_files": [],
+    "consumer_frozen": {
+      "baseline": "9eb873a0ae6ec75e444d20aad3bebb7f8820beba",
+      "files": 80,
+      "changed": []
+    }
+  },
+  "late_availability": {
+    "status": "passed",
+    "case": "frozen source with late availability is rejected before snapshot publication",
+    "source_id": "source-sha256-bb71951a1ea72bdb711545198418dac64b533c4f32641a2d703cbce0287229ed",
+    "error": "Inventory snapshot requires passed source facts gates.",
+    "rechecked_after_optimization": true
+  },
+  "wheel": {
+    "status": "passed",
+    "variants": [
+      43,
+      55
+    ],
+    "sha256": "143f9fd47934a83f7911de93f34c2d8cc955fe49a7746b807b044614280c7eb4"
+  },
+  "curated": "not_evaluated",
+  "default_ai_source": "2.6.0",
+  "source_ready": false,
+  "inventory_ready": false,
+  "model_ready": false,
+  "raw_acceptance_path": "ci-cd/reports/data/ai06-06b2c1/optimized/acceptance.json"
+}
