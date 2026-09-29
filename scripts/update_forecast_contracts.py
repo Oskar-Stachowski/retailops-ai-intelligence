@@ -1,11 +1,23 @@
-"""Generate or check AI 04.1 schemas and the resolved, packaged task policy."""
+"""Generate/check forecast schemas and frozen task, feature and development split configs."""
 
 import argparse
 import json
+from datetime import date
 from pathlib import Path
+from types import SimpleNamespace
 
-from retailops_ai.forecasting.contract import CalendarManifest, TaskConfig
+from retailops_ai.forecasting.contract import CalendarManifest, OriginWindow, TaskConfig
 from retailops_ai.forecasting.features_contract import HistoryContext, InputRow, PanelPolicy
+from retailops_ai.forecasting.manifest_contract import (
+    FeatureManifest,
+    FeaturePolicy,
+    LabelPoint,
+    Membership,
+    SplitManifest,
+    SplitPolicy,
+)
+from retailops_ai.forecasting.preprocessing import FittedState
+from retailops_ai.forecasting.splits import default_split
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -18,6 +30,13 @@ def artifacts() -> dict[Path, object]:
         ("history_context", HistoryContext),
         ("input_row", InputRow),
         ("panel_policy", PanelPolicy),
+        ("feature_policy", FeaturePolicy),
+        ("feature_manifest", FeatureManifest),
+        ("split_policy", SplitPolicy),
+        ("split_manifest", SplitManifest),
+        ("label_point", LabelPoint),
+        ("membership", Membership),
+        ("preprocessing", FittedState),
     ):
         schema = model.model_json_schema()
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
@@ -26,6 +45,17 @@ def artifacts() -> dict[Path, object]:
     result[ROOT / "src/retailops_ai/forecasting/task.default.json"] = TaskConfig().model_dump(
         mode="json"
     )
+    result[ROOT / "contracts/forecast/v1/features.default.json"] = FeaturePolicy().model_dump(
+        mode="json"
+    )
+    calendar = SimpleNamespace(
+        descriptor=SimpleNamespace(
+            origin_window=OriginWindow(start=date(2026, 5, 19), end=date(2026, 7, 17))
+        )
+    )
+    result[ROOT / "contracts/forecast/v1/split.temporal.default.json"] = default_split(
+        calendar
+    ).model_dump(mode="json")
     return result
 
 

@@ -7,16 +7,21 @@ wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodz
 przez chroniony `main` oraz Required CI; stan wykonania pokazuje
 [workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
 
-**AI 04.1–04.2 — zadanie, kalendarz, panel i cechy forecastingu:**
+**AI 04.1–04.3 — zadanie, cechy i formalny podział danych forecastingu:**
 [kontrakt i polecenia](forecasting.md) definiują observed sales, grain,
 cutoff 23:59:59 UTC, horyzonty 1–14 i okna 7/14 z jedną granicą wiedzy.
 Manifest wiąże kalendarz ze zweryfikowanym curated AI 03; inventory i truth
 features są wyłączone. [Panel i cechy](forecast-features.md) mają kalendarzowe
 lagi 1/7/14/28, rolling z count, zero/missing/closed, kategorię, kalendarz
 i znane plany ceny/promocji. Typed draft inputs zachowują cold start i coverage.
-[Odbiór 04.1](evidence/04-01-calendar.md) oraz [04.2](evidence/04-02-features.md)
-podają testy i powtarzalne smoke. Branch `ai/04-01-task-calendar` jest osobny od AI 12.
-Kolejny zakres to **04.3 — formalne feature/split manifests i kwalifikacja**;
+[Formalne manifests 04.3](forecast-manifests.md) wiążą feature/label/split IDs,
+minimum/freshness, mature labels i wszystkie oceniane klucze. Preprocessing
+dopasowuje się tylko na eligible train jednego folda; development holdout
+jest oddzielony, portfolio final test pozostaje poza tym protokołem.
+[Odbiór 04.1](evidence/04-01-calendar.md), [04.2](evidence/04-02-features.md)
+i [04.3](evidence/04-03-manifests.md) podają lokalne kontrole i powtarzalne smoke.
+Branch `ai/04-01-task-calendar` jest osobny od AI 12.
+Kolejny zakres to **04.4 — wspólny evaluator i baseline'y**;
 model pozostaje `not_ready`.
 Ten zakres nie ma jeszcze publikacji ani zdalnego Required CI.
 

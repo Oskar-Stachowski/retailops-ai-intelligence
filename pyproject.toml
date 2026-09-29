@@ -59,6 +59,15 @@ packages = ["src/retailops_ai"]
 "contracts/forecast/v1/history_context.schema.json" = "retailops_ai/forecasting/history_context.schema.json"
 "contracts/forecast/v1/input_row.schema.json" = "retailops_ai/forecasting/input_row.schema.json"
 "contracts/forecast/v1/panel_policy.schema.json" = "retailops_ai/forecasting/panel_policy.schema.json"
+"contracts/forecast/v1/feature_policy.schema.json" = "retailops_ai/forecasting/feature_policy.schema.json"
+"contracts/forecast/v1/feature_manifest.schema.json" = "retailops_ai/forecasting/feature_manifest.schema.json"
+"contracts/forecast/v1/split_policy.schema.json" = "retailops_ai/forecasting/split_policy.schema.json"
+"contracts/forecast/v1/split_manifest.schema.json" = "retailops_ai/forecasting/split_manifest.schema.json"
+"contracts/forecast/v1/label_point.schema.json" = "retailops_ai/forecasting/label_point.schema.json"
+"contracts/forecast/v1/membership.schema.json" = "retailops_ai/forecasting/membership.schema.json"
+"contracts/forecast/v1/preprocessing.schema.json" = "retailops_ai/forecasting/preprocessing.schema.json"
+"contracts/forecast/v1/features.default.json" = "retailops_ai/forecasting/features.default.json"
+"contracts/forecast/v1/split.temporal.default.json" = "retailops_ai/forecasting/split.temporal.default.json"
 
 [tool.uv]
 required-version = "==0.12.19"

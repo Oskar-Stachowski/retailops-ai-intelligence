@@ -51,8 +51,9 @@ wartością D−1. Dostępność zachowuje mikrosekundy, także na granicy cutof
 Draft policy wskazuje 28 aktywnych dni historii i minimum 7 znanych obserwacji.
 `insufficient_history` oznacza niespełnienie któregokolwiek warunku. Wiersz
 pozostaje w coverage i nie dostaje zera/fallback prediction. To oddzielne
-pole od eligibility kalendarza; pełna kwalifikacja historii, świeżości, etykiet
-i fallback oraz formalny feature/split contract należą do 04.3 i dalszych punktów.
+pole od eligibility kalendarza. Kwalifikacja historii, świeżości, etykiet
+i polityka cold start są w [formalnym kontrakcie 04.3](forecast-manifests.md).
+Baseline fallback wymaga osobnego odbioru; domyślnie pozostaje insufficient_data.
 
 ## Kalendarz, kategorie i plany
 
@@ -109,7 +110,9 @@ można odczytać standardowym PyArrow. Weryfikacja sprawdza ich zgodność.
 
 `forecast-inputs-sha256-…` identyfikuje **draft inputs**, nie finalny feature set.
 Wiąże parent IDs, calendar ID, kod/lock/runtime, politykę, typy, rzeczywistą
-treść i coverage. Nie ma jeszcze `feature_set_id` ani `split_id`. Publikacja
+treść i coverage. Ten draft format nie nadaje `feature_set_id` ani `split_id`;
+[manifest 04.3](forecast-manifests.md) wiąże go z formalnym feature setem i splitem.
+Publikacja
 jest atomowa bez nadpisania; rerun zachowuje content ID i oryginalne bajty.
 Generated time i ścieżki nie definiują ID. Zmiana source parent zmienia ID,
 choć późniejsze fakty nie zmieniają wartości dawnych fixed-origin inputs.
@@ -126,5 +129,7 @@ na tabelę; 2 GiB encoded source index, 2 GiB encoded/physical output, 10 tys.
 plików, 1 MiB na logical row. Bufor ma 256 rows/16 MiB, Arrow batch limit 64 MiB.
 Smoke nie kwalifikuje pełnego ai-dev/ai-training pod względem zasobów.
 
-[Odbiór 04.2](evidence/04-02-features.md). Kolejny zakres:
-**04.3 — formalne feature/split manifests i polityka kwalifikacji**.
+[Odbiór 04.2](evidence/04-02-features.md).
+[Formalny feature/split contract 04.3](forecast-manifests.md) wersjonuje ten
+draft input i dopasowuje preprocessing wyłącznie na train.
+Kolejny zakres: **04.4 — wspólny evaluator i baseline'y**.

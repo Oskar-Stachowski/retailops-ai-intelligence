@@ -1,0 +1,412 @@
+{
+  "$defs": {
+    "CodePin": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "pyarrow_version": {
+          "title": "Pyarrow Version",
+          "type": "string"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-manifests-1.0.0",
+          "default": "forecast-manifests-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code_files",
+        "code_sha256",
+        "dependency_lock_sha256",
+        "python_version",
+        "pyarrow_version"
+      ],
+      "title": "CodePin",
+      "type": "object"
+    },
+    "FeatureDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "calendar_id": {
+          "pattern": "^forecast-calendar-sha256-[0-9a-f]{64}$",
+          "title": "Calendar Id",
+          "type": "string"
+        },
+        "canonicalization": {
+          "const": "retailops-canonical-json-v1",
+          "default": "retailops-canonical-json-v1",
+          "title": "Canonicalization",
+          "type": "string"
+        },
+        "code": {
+          "$ref": "#/$defs/CodePin"
+        },
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "feature_types": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Feature Types",
+          "type": "object"
+        },
+        "history_content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "History Content Sha256",
+          "type": "string"
+        },
+        "input_code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Code Sha256",
+          "type": "string"
+        },
+        "inputs_id": {
+          "pattern": "^forecast-inputs-sha256-[0-9a-f]{64}$",
+          "title": "Inputs Id",
+          "type": "string"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "requested_policy": {
+          "$ref": "#/$defs/FeaturePolicy"
+        },
+        "resolved_policy": {
+          "$ref": "#/$defs/FeaturePolicy"
+        },
+        "role": {
+          "const": "features",
+          "default": "features",
+          "title": "Role",
+          "type": "string"
+        },
+        "row_count": {
+          "minimum": 1,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_parameters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Source Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "parent",
+        "calendar_id",
+        "inputs_id",
+        "source_parameters",
+        "requested_policy",
+        "resolved_policy",
+        "feature_types",
+        "code",
+        "input_code_sha256",
+        "content_sha256",
+        "history_content_sha256",
+        "row_count"
+      ],
+      "title": "FeatureDescriptor",
+      "type": "object"
+    },
+    "FeaturePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "closed_target": {
+          "const": "retain_in_coverage_exclude_from_scoring",
+          "default": "retain_in_coverage_exclude_from_scoring",
+          "title": "Closed Target",
+          "type": "string"
+        },
+        "cold_start": {
+          "const": "insufficient_data_no_prediction",
+          "default": "insufficient_data_no_prediction",
+          "title": "Cold Start",
+          "type": "string"
+        },
+        "columns": {
+          "default": [
+            "origin_lag_1_units",
+            "origin_lag_7_units",
+            "origin_lag_14_units",
+            "origin_lag_28_units",
+            "rolling_mean_7",
+            "rolling_std_7",
+            "rolling_count_7",
+            "rolling_mean_14",
+            "rolling_std_14",
+            "rolling_count_14",
+            "rolling_mean_28",
+            "rolling_std_28",
+            "rolling_count_28",
+            "target_weekday",
+            "target_week_of_year",
+            "target_month",
+            "target_quarter",
+            "target_is_weekend",
+            "target_is_public_holiday",
+            "target_is_easter",
+            "target_is_christmas",
+            "target_is_black_friday",
+            "target_is_cyber_monday",
+            "target_location_open",
+            "target_is_category_season",
+            "category_id",
+            "brand",
+            "country_code",
+            "calendar_jurisdiction",
+            "channel",
+            "planned_regular_price_minor_units",
+            "currency",
+            "planned_promotion_offered",
+            "planned_promotion_type",
+            "planned_promotion_discount_basis_points",
+            "planned_promotion_minimum_quantity"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "inventory": {
+          "const": "excluded",
+          "default": "excluded",
+          "title": "Inventory",
+          "type": "string"
+        },
+        "maximum_observation_age_days": {
+          "default": 3,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Maximum Observation Age Days",
+          "type": "integer"
+        },
+        "minimum_active_history_days": {
+          "default": 28,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Minimum Active History Days",
+          "type": "integer"
+        },
+        "minimum_known_history_days": {
+          "default": 7,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Minimum Known History Days",
+          "type": "integer"
+        },
+        "missing_features": {
+          "const": "retain_nullable_values_and_fit_train_only",
+          "default": "retain_nullable_values_and_fit_train_only",
+          "title": "Missing Features",
+          "type": "string"
+        },
+        "preprocessing": {
+          "$ref": "#/$defs/PreprocessingRecipe",
+          "default": {
+            "boolean_missing": "train_mode_tie_false_with_indicator",
+            "categorical": "train_vocabulary_one_hot_with_missing_and_unknown",
+            "entirely_missing": "constant_zero_with_indicator",
+            "fit_scope": "eligible_train_rows_of_one_fold_only",
+            "numeric_missing": "train_median_with_indicator",
+            "output_numbers": "float64_model_inputs_raw_money_remains_exact",
+            "scaling": "none",
+            "version": "forecast-train-only-1.0.0"
+          }
+        },
+        "stale_history": {
+          "const": "block_run_no_partial_success",
+          "default": "block_run_no_partial_success",
+          "title": "Stale History",
+          "type": "string"
+        },
+        "truth": {
+          "const": "excluded",
+          "default": "excluded",
+          "title": "Truth",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-features-1.0.0",
+          "default": "forecast-features-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "FeaturePolicy",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "forecast_source_status": {
+          "const": "passed",
+          "title": "Forecast Source Status",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "curated_descriptor_sha256",
+        "business_timezone",
+        "forecast_source_status"
+      ],
+      "title": "Parent",
+      "type": "object"
+    },
+    "PreprocessingRecipe": {
+      "additionalProperties": false,
+      "properties": {
+        "boolean_missing": {
+          "const": "train_mode_tie_false_with_indicator",
+          "default": "train_mode_tie_false_with_indicator",
+          "title": "Boolean Missing",
+          "type": "string"
+        },
+        "categorical": {
+          "const": "train_vocabulary_one_hot_with_missing_and_unknown",
+          "default": "train_vocabulary_one_hot_with_missing_and_unknown",
+          "title": "Categorical",
+          "type": "string"
+        },
+        "entirely_missing": {
+          "const": "constant_zero_with_indicator",
+          "default": "constant_zero_with_indicator",
+          "title": "Entirely Missing",
+          "type": "string"
+        },
+        "fit_scope": {
+          "const": "eligible_train_rows_of_one_fold_only",
+          "default": "eligible_train_rows_of_one_fold_only",
+          "title": "Fit Scope",
+          "type": "string"
+        },
+        "numeric_missing": {
+          "const": "train_median_with_indicator",
+          "default": "train_median_with_indicator",
+          "title": "Numeric Missing",
+          "type": "string"
+        },
+        "output_numbers": {
+          "const": "float64_model_inputs_raw_money_remains_exact",
+          "default": "float64_model_inputs_raw_money_remains_exact",
+          "title": "Output Numbers",
+          "type": "string"
+        },
+        "scaling": {
+          "const": "none",
+          "default": "none",
+          "title": "Scaling",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-train-only-1.0.0",
+          "default": "forecast-train-only-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "PreprocessingRecipe",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:forecast:feature_manifest:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "descriptor": {
+      "$ref": "#/$defs/FeatureDescriptor"
+    },
+    "feature_set_id": {
+      "pattern": "^features-sha256-[0-9a-f]{64}$",
+      "title": "Feature Set Id",
+      "type": "string"
+    },
+    "forecast_model_status": {
+      "const": "not_ready",
+      "default": "not_ready",
+      "title": "Forecast Model Status",
+      "type": "string"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "feature_set_id",
+    "descriptor",
+    "generated_at"
+  ],
+  "title": "FeatureManifest",
+  "type": "object"
+}

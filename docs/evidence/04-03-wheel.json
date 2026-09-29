@@ -1,0 +1,22 @@
+{
+  "aws_calls": 0,
+  "default_configs_packaged": true,
+  "feature_set_id": "features-sha256-dd7734e1bc32fa4ec3934a3302eaac01db1cb137972e107c22903acb1c365d43",
+  "forecast_model_status": "not_ready",
+  "implementation_loaded_from_wheel": true,
+  "inputs_id": "forecast-inputs-sha256-3d510e86ef6b571a84ec7012740bba4f666f71fd2ee72c5a2baf98ea3f7dbe19",
+  "rows": 1518,
+  "schemas_packaged": [
+    "feature_policy.schema.json",
+    "feature_manifest.schema.json",
+    "split_policy.schema.json",
+    "split_manifest.schema.json",
+    "label_point.schema.json",
+    "membership.schema.json",
+    "preprocessing.schema.json"
+  ],
+  "scope": "extracted wheel outside checkout; import/curated/calendar/formal features/verify; short split rejected",
+  "split_status": "not_ready_insufficient_origin_window",
+  "status": "passed",
+  "wheel_sha256": "fa138ba63a97488320546f03adf2418d36db31399c64494499add8fb5ddb4c53"
+}

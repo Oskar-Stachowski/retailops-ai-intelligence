@@ -1,0 +1,136 @@
+{
+  "$defs": {
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    },
+    "FoldPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "development_holdout": {
+          "$ref": "#/$defs/DateWindow"
+        },
+        "evaluation_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Evaluation Cutoff",
+          "type": "string"
+        },
+        "name": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "purge_days": {
+          "default": 15,
+          "maximum": 90,
+          "minimum": 14,
+          "title": "Purge Days",
+          "type": "integer"
+        },
+        "selection_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Selection Cutoff",
+          "type": "string"
+        },
+        "train": {
+          "$ref": "#/$defs/DateWindow"
+        },
+        "training_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Training Cutoff",
+          "type": "string"
+        },
+        "validation": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "name",
+        "train",
+        "validation",
+        "development_holdout",
+        "training_cutoff",
+        "selection_cutoff",
+        "evaluation_cutoff"
+      ],
+      "title": "FoldPlan",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:forecast:split_policy:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "folds": {
+      "items": {
+        "$ref": "#/$defs/FoldPlan"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "title": "Folds",
+      "type": "array"
+    },
+    "label_policy": {
+      "const": "latest_complete_known_version_at_role_cutoff",
+      "default": "latest_complete_known_version_at_role_cutoff",
+      "title": "Label Policy",
+      "type": "string"
+    },
+    "minimum_eligible_rows_per_role": {
+      "default": 1,
+      "maximum": 100000,
+      "minimum": 1,
+      "title": "Minimum Eligible Rows Per Role",
+      "type": "integer"
+    },
+    "missing_label": {
+      "const": "censored_never_zero",
+      "default": "censored_never_zero",
+      "title": "Missing Label",
+      "type": "string"
+    },
+    "portfolio_final_test": {
+      "const": "not_included_not_opened",
+      "default": "not_included_not_opened",
+      "title": "Portfolio Final Test",
+      "type": "string"
+    },
+    "protocol": {
+      "const": "fixed_origin_development_only",
+      "default": "fixed_origin_development_only",
+      "title": "Protocol",
+      "type": "string"
+    },
+    "version": {
+      "const": "forecast-development-split-1.0.0",
+      "default": "forecast-development-split-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "folds"
+  ],
+  "title": "SplitPolicy",
+  "type": "object"
+}

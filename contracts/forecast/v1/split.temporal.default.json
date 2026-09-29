@@ -1,0 +1,29 @@
+{
+  "folds": [
+    {
+      "development_holdout": {
+        "end": "2026-07-17",
+        "start": "2026-07-08"
+      },
+      "evaluation_cutoff": "2026-08-01T23:59:59Z",
+      "name": "development-v1",
+      "purge_days": 15,
+      "selection_cutoff": "2026-07-07T23:59:59Z",
+      "train": {
+        "end": "2026-05-28",
+        "start": "2026-05-19"
+      },
+      "training_cutoff": "2026-06-12T23:59:59Z",
+      "validation": {
+        "end": "2026-06-22",
+        "start": "2026-06-13"
+      }
+    }
+  ],
+  "label_policy": "latest_complete_known_version_at_role_cutoff",
+  "minimum_eligible_rows_per_role": 1,
+  "missing_label": "censored_never_zero",
+  "portfolio_final_test": "not_included_not_opened",
+  "protocol": "fixed_origin_development_only",
+  "version": "forecast-development-split-1.0.0"
+}

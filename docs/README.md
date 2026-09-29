@@ -16,6 +16,8 @@ normalizuje fakty, mapuje lokalizacje, zachowuje kwarantannę i odczyt as-of.
 [odbiór](evidence/04-01-calendar.md) potwierdza lokalne testy i smoke.
 [Panel i cechy 04.2](forecast-features.md) zachowują aktywny kalendarz,
 braki/zera, kategorię i znane plany oraz przypiętą historię dla wszystkich horyzontów.
+[Manifesty i split 04.3](forecast-manifests.md) opisują dojrzałe etykiety,
+pełne coverage i preprocessing dopasowany wyłącznie na train.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.
