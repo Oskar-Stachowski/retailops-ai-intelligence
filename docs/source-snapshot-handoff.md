@@ -37,7 +37,8 @@ To **odbiór kontraktu i transportu**, nie typed import dowolnego snapshotu.
 recomputed canonical hashes, idempotentną atomową publikację i konflikty
 w `data/generated/snapshots/`.
 [03.5 curated](curated.md) dostarcza mapping, kwarantannę i historyczny as-of;
-03.6 sprawdzi oba smoke dwukrotnie end-to-end.
+[Pełny odbiór 03.6](evidence/03-06-cross-repo.md) wiąże oba smoke dwukrotnie
+end-to-end z przypiętymi rewizjami obu repo.
 
 ## Zasady dla importera i curated
 
@@ -65,4 +66,5 @@ w `data/generated/snapshots/`.
 
 Zmiany producer/consumer mają osobne commity i wspólną wersję. Obecny branch
 importera jest niezależny od równoległego AI 12. [Evidence](evidence/03-03-handoff.md)
-podaje rewizje, kontrole i granice; 04/06 czekają na 03.6.
+podaje rewizje, kontrole i granice. Decyzja wejścia do 04/06 znajduje się
+w [końcowym evidence cross-repo](evidence/03-06-cross-repo.md).

@@ -99,8 +99,8 @@ Niegotowy stockout blokuje import wymagający stockout. To nie kwalifikuje model
 Wersje `daily_demand_versions`, null/zero, availability, mikrosekundy, currency
 i pełny return tail są kopiowane bez collapse, normalizacji do latest lub joinów.
 Watermark pozostaje deklaracją źródła, nie maksimum czasu odczytanych zdarzeń.
-[Curated 03.5](curated.md) dostarcza odczyt as-of i mapping; pełny cross-repo
-odbiór pozostaje w 03.6.
+[Curated 03.5](curated.md) dostarcza odczyt as-of i mapping;
+[odbiór 03.6](evidence/03-06-cross-repo.md) opisuje pełną ścieżkę cross-repo.
 
 Truth snapshot jest domyślnie odrzucany. Tylko jawne
 `--allow-evaluation-truth` przyjmuje cztery znane tabele pod `evaluation_truth/`.
@@ -129,8 +129,9 @@ uv run --locked --extra snapshot python scripts/check_snapshot_import.py \
 Check uruchamia dwa świeże procesy: import → reimport → verify, niezmienność
 wejścia/publikacji oraz limit **300 s / 1024 MiB** na przebieg smoke.
 [Evidence 03.4](evidence/03-04-importer.md) opisuje oba profile, truth i wheel.
-Wyniki smoke nie kwalifikują ai-dev/ai-training end-to-end. Kolejny zakres to
-**03.6 cross-repo**, obejmujący [curated](curated.md); 04/06 jeszcze nie są otwarte.
+Wyniki smoke nie kwalifikują ai-dev/ai-training end-to-end.
+[03.6 cross-repo](evidence/03-06-cross-repo.md) obejmuje [curated](curated.md)
+i wskazuje aktualną decyzję wejścia do 04/06.
 
 Reader korzysta z [ParquetFile.iter_batches](https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html#pyarrow.parquet.ParquetFile.iter_batches).
 Linuxowa gwarancja odmowy nadpisania jest opisana w
