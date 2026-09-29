@@ -88,6 +88,7 @@ class ModelBudget(Contract):
 class PromptFile(Contract):
     name: PromptName
     sha256: Sha256
+    resource_version: Literal["v1", "v2"] = "v1"
 
 
 def tool_schemas_checksum() -> str:
@@ -110,7 +111,7 @@ def response_schema_checksum() -> str:
 
 class AgentChatConfig(Versioned):
     profile: Literal["agent-bounded-v1"]
-    graph_version: Literal["pregraph-provider-v1"]
+    graph_version: Literal["pregraph-provider-v1", "bounded-langgraph-v1"]
     prompt_version: Symbol
     response_schema_version: Literal["agent-draft-v1"]
     model: ChatModelConfig
@@ -179,7 +180,11 @@ def resolve_chat_config(config: AgentChatConfig) -> ResolvedChatConfig:
     resolved = []
     for prompt in config.prompts:
         # Closed package resources: no paths or templates supplied by caller/model.
-        raw = files("retailops_ai.agent").joinpath("prompts", prompt.name + ".v1.md").read_bytes()
+        raw = (
+            files("retailops_ai.agent")
+            .joinpath("prompts", prompt.name + "." + prompt.resource_version + ".md")
+            .read_bytes()
+        )
         if not 1 <= len(raw) <= 8000 or hashlib.sha256(raw).hexdigest() != prompt.sha256:
             raise ValueError("agent_prompt_binding_mismatch")
         content = raw.decode("utf-8")

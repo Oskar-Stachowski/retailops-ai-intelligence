@@ -155,6 +155,7 @@ class ToolSession:
         self.calls = 0
         self.audit: list[ToolAudit] = []
         self._accepted_outputs: dict[str, str] = {}
+        self._accepted_calls: dict[str, tuple[str, str]] = {}
         self._chat_claimed = False
         self._budget_lock = asyncio.Lock()
 
@@ -227,6 +228,10 @@ class ToolSession:
             self._accepted_outputs[canonical_sha256(output.model_dump(mode="json"))] = (
                 output.model_dump_json()
             )
+            self._accepted_calls[canonical_sha256(request.model_dump(mode="json"))] = (
+                request.model_dump_json(),
+                output.model_dump_json(),
+            )
             return output
         except asyncio.CancelledError:
             self.audit.append(
@@ -248,6 +253,12 @@ class ToolSession:
     def accepted_outputs(self) -> tuple[ToolOutput, ...]:
         """Detached snapshots of results that passed this principal's output checks."""
         return tuple(OUTPUT.validate_json(value) for value in self._accepted_outputs.values())
+
+    def accepted_calls(self) -> tuple[tuple[ToolInput, ToolOutput], ...]:
+        return tuple(
+            (INPUT.validate_json(request), OUTPUT.validate_json(output))
+            for request, output in self._accepted_calls.values()
+        )
 
     def _authorize(self, request: ToolInput) -> ToolInput:
         policy = self.executor.policy

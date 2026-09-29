@@ -6,11 +6,31 @@ import sys
 
 from retailops_ai.agent.chat_config import load_chat_config
 from retailops_ai.agent.execution import READ_CAPABILITIES
+from retailops_ai.agent.graph_config import load_graph_config
 from retailops_ai.agent.tools import INPUT, OUTPUT, REQUEST_MODELS, ToolPolicy
 from retailops_ai.security.local import strict_json
 
 
 def run_agent_command(args: argparse.Namespace) -> int:
+    if args.command == "agent-graph-check":
+        try:
+            resolved_graph = load_graph_config(args.path)
+        except ValueError:
+            print("agent_graph_config_invalid", file=sys.stderr)
+            return 2
+        print(
+            json.dumps(
+                {
+                    "status": "valid",
+                    "config_id": resolved_graph.config_id,
+                    "graph_version": resolved_graph.config.graph_version,
+                    "provider": resolved_graph.config.chat.model.provider,
+                    "provider_invoked": False,
+                },
+                sort_keys=True,
+            )
+        )
+        return 0
     if args.command == "agent-config-check":
         try:
             resolved = load_chat_config(args.path)

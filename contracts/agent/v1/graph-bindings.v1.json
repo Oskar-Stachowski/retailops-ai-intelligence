@@ -1,0 +1,11 @@
+{
+  "chat_config_id": "agent-chat-config-sha256-8a155743209998caddc013bc640b6bd6740a08d8a30d9794831513603a44ffd8",
+  "code_sha256": "5b9000b538edac4653116da4027b8acd0785da1b1d3cee95d4d66d18f58fc811",
+  "config_id": "agent-graph-config-sha256-85759d3cee6a8cc64c3a2048a2db424181cd3511be14a0624ba1eb9499bfa13e",
+  "evidence_policy_version": "typed-facts-v1",
+  "examples_are_synthetic_metadata": true,
+  "fixture_only": true,
+  "graph_version": "bounded-langgraph-v1",
+  "schema_version": "1.0",
+  "schemas_sha256": "eeaba15d68858a22e30c4f6044ba443ba2bd2d2d30ebeaa72bd5e55c4531e313"
+}

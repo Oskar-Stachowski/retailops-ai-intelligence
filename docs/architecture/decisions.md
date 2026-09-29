@@ -237,3 +237,25 @@ przy cytacie. Nie generujemy odpowiedzi ani semantycznego rozstrzygnięcia konfl
 36 pytań i progi golden v1 powstały przed ewaluacją, bez etykiet z wyników rankera.
 Wynik fake jest mechaniczny i nigdy nie daje release approval; real provider
 i agent wymagają osobnego odbioru. [Kontrakt i źródła](../knowledge-retrieval.md).
+
+## ADR-20 — skończony graf i kanoniczne fakty przed swobodnymi odpowiedziami
+
+AI 12 używa LangGraph **1.2.12**, przypiętego z zależnościami w `uv.lock`.
+API StateGraph wykonuje acykliczne ścieżki z jednym dograniem i jedną wspólną
+naprawą. Nie używamy prebuilt autonomicznego agenta, checkpointów, pamięci
+konwersacji ani eksportu LangSmith. Prywatny kontekst ma zakres jednego runa;
+stan routingu i bezpieczny trace nie kopiują pytania/wyników narzędzi.
+
+Pierwszy profil waliduje kanoniczne twierdzenia wygenerowane z typed values,
+jawny wzór różnicy dwóch okresów i literalne cytaty ze statusem źródła.
+Model wybiera fakty; nie nadaje im nowego znaczenia. Ten kompromis ogranicza
+swobodę języka, ale pozwala deterministycznie odrzucić poprawnie cytowaną,
+nieprawdziwą liczbę lub wniosek. Nie jest pomiarem jakości dowolnych parafraz.
+Rozszerzenie języka wymaga osobnej polityki i golden odpowiedzi.
+
+Metadata zainstalowanych LangGraph/core/checkpoint/prebuilt/SDK/LangSmith
+podają MIT. Python >=3.10 z metadata LangGraph obejmuje wybrany 3.11.15;
+wspólny runtime potwierdzają testy tego zakresu. [Instrukcja](../agent-graph.md).
+Źródła: [PyPI LangGraph](https://pypi.org/project/langgraph/1.2.12/),
+[Graph API](https://docs.langchain.com/oss/python/langgraph/graph-api),
+[compile i wyłączenie checkpointera](https://reference.langchain.com/python/langgraph/graph/state/StateGraph/compile).

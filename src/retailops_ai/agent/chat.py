@@ -131,6 +131,8 @@ class ChatSession:
         *,
         smoke: SmokeBudget | None = None,
         jitter: Callable[[], float] = random.random,
+        reference_context: Callable[[EvidenceSnapshot], dict[str, object]] | None = None,
+        answer_validator: Callable[[EvidenceSnapshot, AnswerDraft], None] | None = None,
     ) -> None:
         config = config.verified()
         resolved = config.config
@@ -159,6 +161,8 @@ class ChatSession:
         ):
             raise ValueError("smoke_pricing_binding_mismatch")
         self.jitter = jitter
+        self.reference_context = reference_context
+        self.answer_validator = answer_validator
         self.calls = 0
         self.retries = 0
         self.repairs = 0
@@ -185,9 +189,10 @@ class ChatSession:
             raise ChatFailure("invalid_output")
         config = self.config.config
         snapshot = EvidenceSnapshot.build(self.tools.accepted_outputs(), self.config)
-        refs = json.dumps(
-            snapshot.payload(), ensure_ascii=False, sort_keys=True, separators=(",", ":")
-        )
+        payload = snapshot.payload()
+        if self.reference_context is not None:
+            payload["server_evidence_policy"] = self.reference_context(snapshot)
+        refs = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         repair_code = None
         if phase == "repair":
             if self._repair is None or self.repairs >= config.budget.max_repairs:
@@ -304,7 +309,10 @@ class ChatSession:
                         draft = PlanDraft(kind="tool_plan", tools=normalized)
                     elif isinstance(draft, AnswerDraft):
                         try:
-                            snapshot.validate_answer(draft)
+                            if self.answer_validator is None:
+                                snapshot.validate_answer(draft)
+                            else:
+                                self.answer_validator(snapshot, draft)
                         except InvalidEvidence:
                             raise ChatFailure("invalid_evidence") from None
                     if self.tools.executor.timer() >= self.tools.deadline:

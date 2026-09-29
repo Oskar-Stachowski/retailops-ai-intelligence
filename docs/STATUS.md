@@ -51,12 +51,21 @@ kontrolę zakresu planowanych narzędzi oraz powiązania referencji, cytatów,
 as-of i freshness z rzeczywiście pobranymi wynikami.
 [Odbiór](evidence/12-chat.md) opisuje testy i granice tego przygotowania.
 
-Następny zakres tego strumienia: ograniczony graf oraz walidacja liczb/znaczenia
-odpowiedzi i deterministyczna polityka sugestii z fixtures. Rzeczywiste źródła
+[Trzeci zakres](agent-graph.md) dodaje acykliczny LangGraph, jedno dogranie
+brakujących danych i jedną wspólną naprawę, dokładne wywołania z typed requestu,
+katalog kanonicznych faktów i sprawdzalne porównanie okresów sprzedaży.
+Podmienione liczby, jednostki, okresy, swobodne wnioski, braki dowodów,
+konfliktujące prognozy i niejednoznaczny mapping mają kontrolowane wyniki.
+Bezpieczny trace ma odczyt właściciela, scope, retencję i limit w pamięci.
+[Odbiór](evidence/12-graph.md) podaje testy i granice profilu.
+
+Następny zakres bez AI 10: deterministyczna polityka sugestii z fixtures oraz
+wersjonowany golden odpowiedzi i pomiary grafu. Dalej pozostają rzeczywiste źródła
 ML/operacyjne, Assistant API, trwały trace, admission, golden odpowiedzi,
 adapter chat Bedrock z circuit breaker i smoke oraz E2E sugestii pozostają
-do realizacji. Pełne AI 12 wymaga AI 10. Obecny zakres nie potwierdza jakości
-odpowiedzi LLM ani działania rzeczywistego chat modelu.
+do realizacji. Pełne AI 12 wymaga AI 10. Obecny profil sprawdza kanoniczne fakty
+i literalne cytaty; nie potwierdza jakości dowolnych odpowiedzi LLM ani działania
+rzeczywistego chat modelu. Trace nie jest jeszcze trwały po restarcie.
 
 ## Fundament i dalsza praca
 

@@ -11,6 +11,8 @@ budżet i testowe źródła; [odbiór pierwszego zakresu](evidence/12-tools.md)
 wiąże je z lokalnymi testami. [Konfiguracja i fake chat](agent-chat.md) opisują
 wersjonowane prompty, kontrolę draftów oraz budżet rozmowy;
 [odbiór drugiego zakresu](evidence/12-chat.md) podaje jego granice.
+[Graf i sprawdzalne dowody](agent-graph.md) opisują skończony przebieg,
+kontrolę liczb/znaczenia i bezpieczny ślad; [odbiór](evidence/12-graph.md).
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują

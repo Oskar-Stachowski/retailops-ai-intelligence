@@ -40,8 +40,7 @@ Nie wykonano AWS chat, nowej kwalifikacji embeddings, zapisu DB czy sugestii
 w RetailOps. Test wiedzy używa syntetycznych wektorów i pinned backend spy;
 nie jest nowym pomiarem jakości Titan. Syntetyczne stawki nie są cennikiem AWS.
 
-Drafty nie są końcową zweryfikowaną odpowiedzią Assistant API. Pełne sprawdzenie
-liczb/znaczenia źródeł, graf, polityka sugestii, golden odpowiedzi, trwały trace,
-admission i circuit breaker pozostają otwarte. Rzeczywisty adapter i ograniczony
-smoke chat oraz działające źródła i E2E sugestii z AI 10 są dalszymi bramkami.
+Drafty tego profilu pregraph nie są końcową odpowiedzią Assistant API.
+[Kolejny odbiór](12-graph.md) opisuje graf i walidację kanonicznych faktów;
+aktualną listę dalszych bramek podaje [status](../STATUS.md).
 Nie wykonano zdalnego CI ani publikacji tego zakresu na main.

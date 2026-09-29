@@ -1,5 +1,6 @@
 """Reference snapshots come from authorized tool execution, never from caller payloads."""
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 
 from retailops_ai.agent.chat_config import ResolvedChatConfig
@@ -8,6 +9,7 @@ from retailops_ai.agent.chat_contracts import (
     AnswerFreshness,
     DomainFreshness,
     DraftCitation,
+    EvidenceClaim,
 )
 from retailops_ai.agent.tools import ForecastResult, KnowledgeResult, ToolOutput
 from retailops_ai.data_contracts.common import UtcTime
@@ -110,7 +112,13 @@ class EvidenceSnapshot:
             "data_freshness": self.freshness().model_dump(mode="json"),
         }
 
-    def validate_answer(self, answer: AnswerDraft) -> None:
+    def validate_answer(
+        self,
+        answer: AnswerDraft,
+        *,
+        calculations: Mapping[str, EvidenceClaim] | None = None,
+        expected_freshness: AnswerFreshness | None = None,
+    ) -> None:
         tools = {tool_result_ref(output): output for output in self.outputs}
         citations = self.citations()
         refs = set(tools) | set(citations)
@@ -134,9 +142,9 @@ class EvidenceSnapshot:
                 if claim.source_ref not in provided_citations:
                     raise InvalidEvidence("document_claim_requires_retrieved_citation")
             else:
-                # Approved formula registry belongs to the graph/evidence policy scope.
-                raise InvalidEvidence("calculation_policy_not_implemented")
-        if answer.data_freshness != self.freshness():
+                if calculations is None or calculations.get(claim.source_ref) != claim:
+                    raise InvalidEvidence("unregistered_or_modified_calculation")
+        if answer.data_freshness != (expected_freshness or self.freshness()):
             raise InvalidEvidence("invented_data_freshness")
         if answer.recommended_actions:
             # Later server policy may create suggestions; model proposals cannot authorize them.

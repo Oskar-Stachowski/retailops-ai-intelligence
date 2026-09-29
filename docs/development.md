@@ -91,3 +91,8 @@ Assistant API będzie dodane w dalszym zakresie AI 12.
 `agent-config-check agent/chat.fake.v1.json`. `make contracts-check` kontroluje
 także checksum promptów, model/budget config i chat schemas; generowanie
 snapshotów nie aktualizuje zatwierdzonych powiązań konfiguracji po cichu.
+
+[Ograniczony graf](agent-graph.md) dodaje `agent-graph-check agent/graph.fake.v1.json`
+oraz `make agent-security-test` dla narzędzi, rozmowy i pełnego grafu.
+Testy działają bez AWS/AI 10; target nie zastępuje golden jakości odpowiedzi
+ani rzeczywistego smoke.

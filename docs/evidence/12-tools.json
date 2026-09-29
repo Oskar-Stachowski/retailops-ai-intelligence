@@ -35,13 +35,6 @@
   "knowledge_test_backend": "Synthetic vectors and pinned backend spy; runtime adapter uses previously accepted PostgresKnowledge from stage 11",
   "remote_ci": "not_run",
   "published_to_main": false,
-  "remaining": [
-    "chat_provider_and_versioned_prompts_configuration",
-    "bounded_graph_and_evidence_answer_validation",
-    "assistant_api_persistence_admission",
-    "answer_golden_and_real_bedrock_chat",
-    "real_business_tools_and_ai10_suggestions_integration"
-  ],
   "checksums": [
     {
       "path": "contracts/agent/v1/catalogue.json",
@@ -207,5 +200,6 @@
       "path": "tests/test_agent_tools.py",
       "sha256": "2bd8ce8dc12bec7bf2088b90c8184fdfc7a7d28164b281d7f97f1faeb122f9ef"
     }
-  ]
+  ],
+  "current_status_document": "docs/STATUS.md"
 }

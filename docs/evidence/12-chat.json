@@ -43,13 +43,6 @@
   "pricing_kind": "synthetic_test_rates",
   "remote_ci": "not_run",
   "published_to_main": false,
-  "remaining": [
-    "bounded_graph_numeric_faithfulness_groundedness_and_deterministic_suggestion_policy",
-    "assistant_api_safe_trace_persistence_and_admission",
-    "answer_golden_evaluation",
-    "real_bedrock_chat_adapter_circuit_breaker_and_bounded_smoke",
-    "real_business_tools_and_ai10_suggestion_outbox_e2e"
-  ],
   "checksums": [
     {
       "path": "Makefile",
@@ -179,5 +172,6 @@
       "path": "tests/test_agent_chat.py",
       "sha256": "80fee4b5808281a2bb689331439943406b3ddf17dd23d1ceb4b856d79372be76"
     }
-  ]
+  ],
+  "current_status_document": "docs/STATUS.md"
 }

@@ -1,0 +1,35 @@
+{
+  "chat_config_id": "agent-chat-config-sha256-8a155743209998caddc013bc640b6bd6740a08d8a30d9794831513603a44ffd8",
+  "config_id": "agent-graph-config-sha256-85759d3cee6a8cc64c3a2048a2db424181cd3511be14a0624ba1eb9499bfa13e",
+  "correlation_id": "correlation-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "created_at": "2026-08-23T00:00:00Z",
+  "error_code": "dependency_unavailable",
+  "estimated_cost": "0",
+  "extra_evidence_rounds": 0,
+  "fixture_only": true,
+  "index_id": null,
+  "input_tokens": 0,
+  "model_calls": 0,
+  "nodes": [],
+  "output_tokens": 0,
+  "owner_id": "fixture-agent-operator",
+  "release_refs": [],
+  "release_refs_total": 0,
+  "repairs": 0,
+  "request_sha256": "f736dc6abef1e4b109f8c97642f1b0131dc42bb5188fa2cdd8f8229a140e3e5d",
+  "schema_version": "1.0",
+  "scope": {
+    "channel": "store",
+    "product_ids": [
+      "p-101"
+    ],
+    "selling_location_ids": [
+      "s-03"
+    ]
+  },
+  "source_refs": [],
+  "source_refs_total": 0,
+  "status": "failed",
+  "tool_calls": 0,
+  "trace_id": "trace-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

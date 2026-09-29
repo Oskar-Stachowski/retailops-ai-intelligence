@@ -112,8 +112,9 @@ groundedness, dobór narzędzi, reguły statusu „wdrożono”, zatwierdzone fo
 i deterministyczna polityka sugestii wymagają grafu i ewaluacji odpowiedzi.
 W tym profilu obliczenia i modelowe `recommended_actions` są odrzucane.
 
-Kolejny zakres bez AI 10: skończony graf, kontrola dowodów/liczb oraz golden
-z typed fixtures. Dalej pozostają Assistant API, admission, trwały bezpieczny
+[Profil grafu](agent-graph.md) ma odrębny manifest i prompty v2 oraz kontrolę
+kanonicznych faktów i obliczeń. Powyższy profil pregraph z promptami v1 zachowuje
+wcześniejsze ograniczenia. Dalej pozostają golden odpowiedzi, Assistant API, admission, trwały bezpieczny
 trace, circuit breaker, rzeczywisty adapter chat Bedrock, weryfikacja aktualnego
 modelu/regionu/IAM/cennika i ograniczony rzeczywisty smoke. Źródła biznesowe
 oraz producent sugestii/outbox/E2E wymagają dalszych etapów, w tym AI 10.

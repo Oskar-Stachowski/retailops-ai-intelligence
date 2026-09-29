@@ -2,7 +2,7 @@ UV ?= $(if $(wildcard .tools/bin/uv),.tools/bin/uv,uv)
 GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
 
-.PHONY: bootstrap lint type-check test docs-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
+.PHONY: bootstrap lint type-check test docs-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke agent-security-test
 
 bootstrap:
 	$(UV) sync --locked
@@ -41,6 +41,7 @@ contracts:
 	$(UV) run --locked python scripts/update_knowledge_contracts.py
 	$(UV) run --locked python scripts/update_agent_contracts.py
 	$(UV) run --locked python scripts/update_agent_chat_contracts.py
+	$(UV) run --locked python scripts/update_agent_graph_contracts.py
 
 contracts-check:
 	$(UV) run --locked python scripts/update_intelligence_contracts.py --check
@@ -48,6 +49,10 @@ contracts-check:
 	$(UV) run --locked python scripts/update_knowledge_contracts.py --check
 	$(UV) run --locked python scripts/update_agent_contracts.py --check
 	$(UV) run --locked python scripts/update_agent_chat_contracts.py --check
+	$(UV) run --locked python scripts/update_agent_graph_contracts.py --check
+
+agent-security-test:
+	$(UV) run --locked pytest tests/test_agent_tools.py tests/test_agent_chat.py tests/test_agent_graph.py
 
 compose-up:
 	$(UV) run --locked python scripts/local_stack.py up

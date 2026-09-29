@@ -1,0 +1,64 @@
+{
+  "$id": "urn:retailops:agent:graph-policy:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "max_catalogue_facts": {
+      "default": 40,
+      "maximum": 40,
+      "minimum": 5,
+      "title": "Max Catalogue Facts",
+      "type": "integer"
+    },
+    "max_extra_evidence_rounds": {
+      "const": 1,
+      "default": 1,
+      "title": "Max Extra Evidence Rounds",
+      "type": "integer"
+    },
+    "max_selected_facts": {
+      "default": 5,
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Max Selected Facts",
+      "type": "integer"
+    },
+    "max_steps": {
+      "default": 20,
+      "maximum": 20,
+      "minimum": 15,
+      "title": "Max Steps",
+      "type": "integer"
+    },
+    "profile": {
+      "const": "bounded-evidence-graph-v1",
+      "title": "Profile",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "trace_capacity": {
+      "default": 100,
+      "maximum": 100,
+      "minimum": 1,
+      "title": "Trace Capacity",
+      "type": "integer"
+    },
+    "trace_retention_seconds": {
+      "default": 900,
+      "maximum": 900,
+      "minimum": 1,
+      "title": "Trace Retention Seconds",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "profile"
+  ],
+  "title": "GraphPolicy",
+  "type": "object"
+}

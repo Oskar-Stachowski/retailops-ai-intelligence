@@ -1,5 +1,95 @@
 {
   "$defs": {
+    "AgentChatConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "$ref": "#/$defs/ModelBudget"
+        },
+        "embeddings": {
+          "$ref": "#/$defs/EmbeddingConfig"
+        },
+        "graph_version": {
+          "enum": [
+            "pregraph-provider-v1",
+            "bounded-langgraph-v1"
+          ],
+          "title": "Graph Version",
+          "type": "string"
+        },
+        "knowledge_index_id": {
+          "pattern": "^index-sha256-[0-9a-f]{64}$",
+          "title": "Knowledge Index Id",
+          "type": "string"
+        },
+        "model": {
+          "$ref": "#/$defs/ChatModelConfig"
+        },
+        "profile": {
+          "const": "agent-bounded-v1",
+          "title": "Profile",
+          "type": "string"
+        },
+        "prompt_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Prompt Version",
+          "type": "string"
+        },
+        "prompts": {
+          "items": {
+            "$ref": "#/$defs/PromptFile"
+          },
+          "maxItems": 6,
+          "minItems": 6,
+          "title": "Prompts",
+          "type": "array"
+        },
+        "response_schema_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Response Schema Sha256",
+          "type": "string"
+        },
+        "response_schema_version": {
+          "const": "agent-draft-v1",
+          "title": "Response Schema Version",
+          "type": "string"
+        },
+        "retrieval": {
+          "$ref": "#/$defs/RetrievalConfig"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "tool_policy": {
+          "$ref": "#/$defs/ToolPolicy"
+        },
+        "tool_schemas_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Tool Schemas Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "profile",
+        "graph_version",
+        "prompt_version",
+        "response_schema_version",
+        "model",
+        "budget",
+        "tool_policy",
+        "tool_schemas_sha256",
+        "response_schema_sha256",
+        "knowledge_index_id",
+        "embeddings",
+        "retrieval",
+        "prompts"
+      ],
+      "title": "AgentChatConfig",
+      "type": "object"
+    },
     "ChatModelConfig": {
       "additionalProperties": false,
       "properties": {
@@ -226,6 +316,68 @@
         "vector_format"
       ],
       "title": "EmbeddingConfig",
+      "type": "object"
+    },
+    "GraphPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "max_catalogue_facts": {
+          "default": 40,
+          "maximum": 40,
+          "minimum": 5,
+          "title": "Max Catalogue Facts",
+          "type": "integer"
+        },
+        "max_extra_evidence_rounds": {
+          "const": 1,
+          "default": 1,
+          "title": "Max Extra Evidence Rounds",
+          "type": "integer"
+        },
+        "max_selected_facts": {
+          "default": 5,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Max Selected Facts",
+          "type": "integer"
+        },
+        "max_steps": {
+          "default": 20,
+          "maximum": 20,
+          "minimum": 15,
+          "title": "Max Steps",
+          "type": "integer"
+        },
+        "profile": {
+          "const": "bounded-evidence-graph-v1",
+          "title": "Profile",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "trace_capacity": {
+          "default": 100,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Trace Capacity",
+          "type": "integer"
+        },
+        "trace_retention_seconds": {
+          "default": 900,
+          "maximum": 900,
+          "minimum": 1,
+          "title": "Trace Retention Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "profile"
+      ],
+      "title": "GraphPolicy",
       "type": "object"
     },
     "ModelBudget": {
@@ -491,94 +643,57 @@
       "type": "object"
     }
   },
-  "$id": "urn:retailops:agent:chat-config:1.0",
+  "$id": "urn:retailops:agent:graph-config:1.0",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
-    "budget": {
-      "$ref": "#/$defs/ModelBudget"
+    "chat": {
+      "$ref": "#/$defs/AgentChatConfig"
     },
-    "embeddings": {
-      "$ref": "#/$defs/EmbeddingConfig"
+    "code_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Code Sha256",
+      "type": "string"
+    },
+    "evidence_policy_version": {
+      "const": "typed-facts-v1",
+      "title": "Evidence Policy Version",
+      "type": "string"
     },
     "graph_version": {
-      "enum": [
-        "pregraph-provider-v1",
-        "bounded-langgraph-v1"
-      ],
+      "const": "bounded-langgraph-v1",
       "title": "Graph Version",
       "type": "string"
     },
-    "knowledge_index_id": {
-      "pattern": "^index-sha256-[0-9a-f]{64}$",
-      "title": "Knowledge Index Id",
+    "langgraph_version": {
+      "const": "1.2.12",
+      "title": "Langgraph Version",
       "type": "string"
     },
-    "model": {
-      "$ref": "#/$defs/ChatModelConfig"
-    },
-    "profile": {
-      "const": "agent-bounded-v1",
-      "title": "Profile",
-      "type": "string"
-    },
-    "prompt_version": {
-      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
-      "title": "Prompt Version",
-      "type": "string"
-    },
-    "prompts": {
-      "items": {
-        "$ref": "#/$defs/PromptFile"
-      },
-      "maxItems": 6,
-      "minItems": 6,
-      "title": "Prompts",
-      "type": "array"
-    },
-    "response_schema_sha256": {
-      "pattern": "^[0-9a-f]{64}$",
-      "title": "Response Schema Sha256",
-      "type": "string"
-    },
-    "response_schema_version": {
-      "const": "agent-draft-v1",
-      "title": "Response Schema Version",
-      "type": "string"
-    },
-    "retrieval": {
-      "$ref": "#/$defs/RetrievalConfig"
+    "policy": {
+      "$ref": "#/$defs/GraphPolicy"
     },
     "schema_version": {
       "const": "1.0",
       "title": "Schema Version",
       "type": "string"
     },
-    "tool_policy": {
-      "$ref": "#/$defs/ToolPolicy"
-    },
-    "tool_schemas_sha256": {
+    "schemas_sha256": {
       "pattern": "^[0-9a-f]{64}$",
-      "title": "Tool Schemas Sha256",
+      "title": "Schemas Sha256",
       "type": "string"
     }
   },
   "required": [
     "schema_version",
-    "profile",
     "graph_version",
-    "prompt_version",
-    "response_schema_version",
-    "model",
-    "budget",
-    "tool_policy",
-    "tool_schemas_sha256",
-    "response_schema_sha256",
-    "knowledge_index_id",
-    "embeddings",
-    "retrieval",
-    "prompts"
+    "evidence_policy_version",
+    "langgraph_version",
+    "code_sha256",
+    "schemas_sha256",
+    "policy",
+    "chat"
   ],
-  "title": "AgentChatConfig",
+  "title": "AgentGraphConfig",
   "type": "object"
 }

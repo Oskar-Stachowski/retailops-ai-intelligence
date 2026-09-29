@@ -27,6 +27,10 @@ def main(argv: list[str] | None = None) -> int:
         "agent-config-check", help="Check model, prompt and schema bindings offline."
     )
     agent_config.add_argument("path", type=Path)
+    graph_config = commands.add_parser(
+        "agent-graph-check", help="Check the bounded graph manifest offline."
+    )
+    graph_config.add_argument("path", type=Path)
     agent_check = commands.add_parser(
         "agent-tool-check", help="Validate an agent tool contract offline."
     )
@@ -94,7 +98,12 @@ def main(argv: list[str] | None = None) -> int:
     add_release_check(commands)
     add_bedrock_command(commands)
     args = parser.parse_args(argv)
-    if args.command in {"agent-tools", "agent-tool-check", "agent-config-check"}:
+    if args.command in {
+        "agent-tools",
+        "agent-tool-check",
+        "agent-config-check",
+        "agent-graph-check",
+    }:
         from retailops_ai.cli_agent import run_agent_command
 
         return run_agent_command(args)
