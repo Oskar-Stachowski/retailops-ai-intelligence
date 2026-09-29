@@ -25,7 +25,9 @@ def hashes(root: Path) -> dict[str, str]:
     }
 
 
-def worker(snapshot: Path, workspace: Path, truth: bool) -> dict[str, Any]:
+def worker(
+    snapshot: Path, workspace: Path, truth: bool, *, pipeline_only: bool = False
+) -> dict[str, Any]:
     from retailops_ai.curated.builder import build_curated, iter_rows, verify_curated
     from retailops_ai.curated.reader import rows_as_of
     from retailops_ai.source_snapshot.importer import import_snapshot
@@ -34,22 +36,27 @@ def worker(snapshot: Path, workspace: Path, truth: bool) -> dict[str, Any]:
     start = time.monotonic()
     imported = import_snapshot(snapshot, workspace / "data/generated", allow_evaluation_truth=truth)
     source_bytes = hashes(imported.directory)
-    reimported = import_snapshot(
-        snapshot, workspace / "data/generated", allow_evaluation_truth=truth
-    )
-    if reimported.status != "reused" or hashes(imported.directory) != source_bytes:
-        raise ValueError("reimport_changed_immutable_input")
+    if not pipeline_only:
+        reimported = import_snapshot(
+            snapshot, workspace / "data/generated", allow_evaluation_truth=truth
+        )
+        if reimported.status != "reused" or hashes(imported.directory) != source_bytes:
+            raise ValueError("reimport_changed_immutable_input")
     first = build_curated(
         imported.directory, workspace / "data/generated", allow_evaluation_truth=truth
     )
     published = hashes(first.directory)
-    second = build_curated(
-        imported.directory, workspace / "data/generated", allow_evaluation_truth=truth
+    second = (
+        None
+        if pipeline_only
+        else build_curated(
+            imported.directory, workspace / "data/generated", allow_evaluation_truth=truth
+        )
     )
     verified = verify_curated(first.directory)
     if (
         first.status != "published"
-        or second.status != "reused"
+        or (second is not None and second.status != "reused")
         or hashes(first.directory) != published
         or hashes(imported.directory) != source_bytes
         or hashes(snapshot) != before
@@ -150,8 +157,9 @@ def worker(snapshot: Path, workspace: Path, truth: bool) -> dict[str, Any]:
         "curated_files": len(published),
         "curated_bytes": sum(p.stat().st_size for p in first.directory.rglob("*") if p.is_file()),
         "input_unchanged": True,
-        "rebuild_unchanged": True,
-        "reimport_unchanged": True,
+        "rebuild_unchanged": None if pipeline_only else True,
+        "reimport_unchanged": None if pipeline_only else True,
+        "extra_idempotence_checks": "separate_required_ci" if pipeline_only else "passed",
         "evaluation_truth_in_curated": False,
         "as_of_checks": comparisons,
         "late_correction": {
@@ -187,6 +195,7 @@ def main() -> None:
     parser.add_argument("--allow-evaluation-truth", action="store_true")
     parser.add_argument("--output", type=Path, default=ROOT / "reports/curated.json")
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--pipeline-only", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--workspace", type=Path, help=argparse.SUPPRESS)
     args = parser.parse_args()
     if args.worker:
@@ -194,7 +203,12 @@ def main() -> None:
             parser.error("workspace required")
         print(
             json.dumps(
-                worker(args.snapshot_dir, args.workspace, args.allow_evaluation_truth),
+                worker(
+                    args.snapshot_dir,
+                    args.workspace,
+                    args.allow_evaluation_truth,
+                    pipeline_only=args.pipeline_only,
+                ),
                 sort_keys=True,
             )
         )
