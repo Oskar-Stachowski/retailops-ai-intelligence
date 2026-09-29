@@ -1,0 +1,18 @@
+{
+  "aws_calls": 0,
+  "baseline_default_config_packaged": true,
+  "copied_parents_outside_checkout": true,
+  "evaluation_id": "forecast-evaluation-sha256-848df301d82db5fed75197dc9cf7992da2ba2259955e151dc8aaea4155fceea6",
+  "forecast_model_status": "not_ready",
+  "implementation_loaded_from_wheel": true,
+  "matches_checkout_evaluation": true,
+  "prediction_rows": 60228,
+  "schemas_packaged": [
+    "baseline_policy.schema.json",
+    "baseline_prediction.schema.json",
+    "evaluation_manifest.schema.json"
+  ],
+  "scope": "extracted wheel outside checkout with copied immutable temporal parents; evaluator and independent replay",
+  "status": "passed",
+  "wheel_sha256": "7fb7c4c31cbf49f32b291553cf553214969dc751702406886bd0749df526fb2a"
+}

@@ -96,7 +96,8 @@ semantyczna Pydantic są sprawdzane w `make contracts-check`.
 
 [04.3](forecast-manifests.md) ma formalne feature/label/split manifests,
 kwalifikację historii/etykiet i train-only preprocessing.
-Kolejny zakres: **04.4 — wspólny evaluator i baseline'y**.
+[04.4](forecast-baselines.md) ma wspólny evaluator i trzy baseline'y.
+Kolejny zakres: **04.5 — RF i HistGradientBoosting**.
 Dalej: modele, uczciwy backtesting i artefakty.
 AI 06 może rozwijać się równolegle w RetailOps; zmienione źródło otrzyma nowe
 IDs i będzie wymagało ponownego importu oraz zależnych ocen.

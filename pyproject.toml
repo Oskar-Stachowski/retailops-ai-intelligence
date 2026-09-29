@@ -68,6 +68,10 @@ packages = ["src/retailops_ai"]
 "contracts/forecast/v1/preprocessing.schema.json" = "retailops_ai/forecasting/preprocessing.schema.json"
 "contracts/forecast/v1/features.default.json" = "retailops_ai/forecasting/features.default.json"
 "contracts/forecast/v1/split.temporal.default.json" = "retailops_ai/forecasting/split.temporal.default.json"
+"contracts/forecast/v1/baseline_policy.schema.json" = "retailops_ai/forecasting/baseline_policy.schema.json"
+"contracts/forecast/v1/baseline_prediction.schema.json" = "retailops_ai/forecasting/baseline_prediction.schema.json"
+"contracts/forecast/v1/evaluation_manifest.schema.json" = "retailops_ai/forecasting/evaluation_manifest.schema.json"
+"contracts/forecast/v1/baselines.default.json" = "retailops_ai/forecasting/baselines.default.json"
 
 [tool.uv]
 required-version = "==0.12.19"

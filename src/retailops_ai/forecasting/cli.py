@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import sqlite3
 import sys
 from datetime import date
 from pathlib import Path
@@ -69,10 +70,58 @@ def main(argv: list[str] | None = None) -> int:
     preprocess_verify.add_argument("--preprocessing-dir", type=Path, required=True)
     preprocess_verify.add_argument("--feature-dir", type=Path, required=True)
     preprocess_verify.add_argument("--split-dir", type=Path, required=True)
+    baseline_build = commands.add_parser("baselines-evaluate")
+    baseline_build.add_argument("--feature-dir", type=Path, required=True)
+    baseline_build.add_argument("--split-dir", type=Path, required=True)
+    baseline_build.add_argument("--config", type=Path)
+    baseline_build.add_argument(
+        "--output-root", type=Path, default=Path("data/generated/forecast-evaluations")
+    )
+    baseline_verify = commands.add_parser("evaluation-verify")
+    baseline_verify.add_argument("--evaluation-dir", type=Path, required=True)
+    baseline_verify.add_argument("--feature-dir", type=Path, required=True)
+    baseline_verify.add_argument("--split-dir", type=Path, required=True)
     args = parser.parse_args(argv)
     summary: dict[str, object]
     try:
-        if args.command in {"features-build", "features-verify"}:
+        if args.command in {"baselines-evaluate", "evaluation-verify"}:
+            from retailops_ai.forecasting.evaluation import (
+                build_evaluation,
+                load_evaluation,
+                verify_evaluation,
+            )
+            from retailops_ai.forecasting.evaluation_contract import BaselinePolicy
+
+            baseline_policy = BaselinePolicy()
+            if args.command == "baselines-evaluate":
+                if args.config is not None:
+                    raw = read_bytes(args.config.absolute().parent, args.config.name)
+                    decode_json(raw)
+                    baseline_policy = BaselinePolicy.model_validate_json(raw)
+                directory = build_evaluation(
+                    args.feature_dir, args.split_dir, args.output_root, baseline_policy
+                )
+                evaluation = load_evaluation(directory)
+            else:
+                directory = args.evaluation_dir
+                evaluation = verify_evaluation(directory, args.feature_dir, args.split_dir)
+            summary = {
+                "status": evaluation.descriptor.status,
+                "evaluation_id": evaluation.evaluation_id,
+                "feature_set_id": evaluation.descriptor.feature_set_id,
+                "split_id": evaluation.descriptor.split_id,
+                "prediction_rows": evaluation.predictions.row_count,
+                "selections": [
+                    selection.model_dump(mode="json")
+                    for selection in evaluation.descriptor.selections
+                ],
+                "directory": str(directory),
+                "forecast_model_status": "not_ready",
+            }
+            if evaluation.descriptor.status != "passed":
+                print(json.dumps(summary, sort_keys=True))
+                return 3
+        elif args.command in {"features-build", "features-verify"}:
             from retailops_ai.forecasting.manifest_contract import FeaturePolicy
             from retailops_ai.forecasting.manifests import build_feature_set, verify_feature_set
 
@@ -206,7 +255,7 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
         return 2
-    except (SnapshotError, OSError, ValueError, TypeError, KeyError, OverflowError):
+    except (SnapshotError, OSError, ValueError, TypeError, KeyError, OverflowError, sqlite3.Error):
         print(
             '{"error":"forecast_rejected","code":"invalid_policy_calendar_or_curated_input"}',
             file=sys.stderr,

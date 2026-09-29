@@ -1,0 +1,250 @@
+{
+  "aws_calls": 0,
+  "descriptor": {
+    "code": {
+      "code_files": {
+        "forecasting/baselines.py": "fb339916e02683932b254e73d05d0a43ce7aec4eca7c818441e6a99f7f4a2560",
+        "forecasting/evaluation.py": "09404c54fc1740224e7154abf8b0317de6412d801678adf6e0664ce82da47213",
+        "forecasting/evaluation_contract.py": "d154ad2c5fc01756b7905933dcab1827541250034101cfcf92acea948e9ee26a",
+        "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+        "forecasting/manifest_contract.py": "6cc088e4ec6cd1e15399745affef8feaf7978325a346431d9679f20f526add2b",
+        "forecasting/manifest_io.py": "0a290464dbb1957d9e0ea96c53246e9d55046852d7d2f046ae594051d99c3346",
+        "forecasting/manifests.py": "8ea6b52b5c4ac9b4cda1c17146e22c4b3ee550100e9dc39cac0a0b367d58feeb",
+        "forecasting/preprocessing.py": "26b8df57f41a1bcd0e5468233fd532e6e7d92be7c9fb49f1a7f9502b2cc447cb",
+        "forecasting/splits.py": "7564af16532313a4b94950c10d9ea8b16d31d82affd9161b708bef5601a04ba1"
+      },
+      "code_sha256": "5ba7cc138734ddf5df2e9dfecc79194689d661429a7e911ec0566e563b3813c6",
+      "dependency_lock_sha256": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d",
+      "pyarrow_version": "25.0.1",
+      "python_version": "3.11.15",
+      "version": "forecast-baselines-1.0.0"
+    },
+    "coverage_counts": {
+      "development-v1:development_holdout:eligible": 2968,
+      "development-v1:development_holdout:excluded:closed_target": 308,
+      "development-v1:development_holdout:last_observed:predicted": 2968,
+      "development-v1:development_holdout:moving_average:predicted": 2968,
+      "development-v1:development_holdout:seasonal_naive7:predicted": 2968,
+      "development-v1:development_holdout:total": 3276,
+      "development-v1:purged:eligible": 0,
+      "development-v1:purged:excluded:purged_origin": 10080,
+      "development-v1:purged:total": 10080,
+      "development-v1:train:eligible": 2710,
+      "development-v1:train:excluded:closed_target": 432,
+      "development-v1:train:excluded:insufficient_history": 252,
+      "development-v1:train:last_observed:predicted": 2710,
+      "development-v1:train:moving_average:predicted": 2710,
+      "development-v1:train:seasonal_naive7:predicted": 2710,
+      "development-v1:train:total": 3360,
+      "development-v1:validation:eligible": 3040,
+      "development-v1:validation:excluded:closed_target": 320,
+      "development-v1:validation:last_observed:predicted": 3040,
+      "development-v1:validation:moving_average:predicted": 3040,
+      "development-v1:validation:seasonal_naive7:predicted": 3040,
+      "development-v1:validation:total": 3360
+    },
+    "feature_set_id": "features-sha256-e7992553d0d3b67f00b5f16e8e0ace55bb88fc3f3d023135bfcd70538e0fdbaf",
+    "label_dataset_id": "labels-sha256-38fec186cdb841e65391fbcdda63ff31a1eb83140c9f71a694f431248aa4465d",
+    "metrics": {
+      "development-v1:development_holdout:last_observed": {
+        "absolute_actual_sum": 27377.0,
+        "absolute_error_sum": 6823.0,
+        "eligible_rows": 2968,
+        "mae": 2.298854447439353,
+        "predicted_rows": 2968,
+        "status": "passed",
+        "wape": 0.24922380100084013,
+        "wape_status": "passed"
+      },
+      "development-v1:development_holdout:moving_average": {
+        "absolute_actual_sum": 27377.0,
+        "absolute_error_sum": 5152.833333333331,
+        "eligible_rows": 2968,
+        "mae": 1.7361298292902059,
+        "predicted_rows": 2968,
+        "status": "passed",
+        "wape": 0.18821760358451733,
+        "wape_status": "passed"
+      },
+      "development-v1:development_holdout:seasonal_naive7": {
+        "absolute_actual_sum": 27377.0,
+        "absolute_error_sum": 4640.0,
+        "eligible_rows": 2968,
+        "mae": 1.5633423180592991,
+        "predicted_rows": 2968,
+        "status": "passed",
+        "wape": 0.16948533440479235,
+        "wape_status": "passed"
+      },
+      "development-v1:train:last_observed": {
+        "absolute_actual_sum": 27771.0,
+        "absolute_error_sum": 8811.0,
+        "eligible_rows": 2710,
+        "mae": 3.251291512915129,
+        "predicted_rows": 2710,
+        "status": "passed",
+        "wape": 0.31727341471319004,
+        "wape_status": "passed"
+      },
+      "development-v1:train:moving_average": {
+        "absolute_actual_sum": 27771.0,
+        "absolute_error_sum": 7094.166666666709,
+        "eligible_rows": 2710,
+        "mae": 2.617773677736793,
+        "predicted_rows": 2710,
+        "status": "passed",
+        "wape": 0.2554523303686115,
+        "wape_status": "passed"
+      },
+      "development-v1:train:seasonal_naive7": {
+        "absolute_actual_sum": 27771.0,
+        "absolute_error_sum": 6916.0,
+        "eligible_rows": 2710,
+        "mae": 2.552029520295203,
+        "predicted_rows": 2710,
+        "status": "passed",
+        "wape": 0.24903676497065283,
+        "wape_status": "passed"
+      },
+      "development-v1:validation:last_observed": {
+        "absolute_actual_sum": 27327.0,
+        "absolute_error_sum": 8589.0,
+        "eligible_rows": 3040,
+        "mae": 2.825328947368421,
+        "predicted_rows": 3040,
+        "status": "passed",
+        "wape": 0.314304533977385,
+        "wape_status": "passed"
+      },
+      "development-v1:validation:moving_average": {
+        "absolute_actual_sum": 27327.0,
+        "absolute_error_sum": 5205.333333333345,
+        "eligible_rows": 3040,
+        "mae": 1.7122807017543897,
+        "predicted_rows": 3040,
+        "status": "passed",
+        "wape": 0.19048316073236524,
+        "wape_status": "passed"
+      },
+      "development-v1:validation:seasonal_naive7": {
+        "absolute_actual_sum": 27327.0,
+        "absolute_error_sum": 4597.0,
+        "eligible_rows": 3040,
+        "mae": 1.512171052631579,
+        "predicted_rows": 3040,
+        "status": "passed",
+        "wape": 0.16822190507556628,
+        "wape_status": "passed"
+      }
+    },
+    "prediction_rows": 60228,
+    "predictions_content_sha256": "b9ae5e0f0d61d9076ec328e3b34244150056321680faeb6a07d369d2522cd043",
+    "requested_policy": {
+      "candidates": [
+        "last_observed",
+        "moving_average",
+        "seasonal_naive7"
+      ],
+      "closed_history": "confirmed_closed_zero_is_observed",
+      "common_keys": "all_split_memberships_no_model_specific_drops",
+      "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+      "missing_history": "skip_unknown_never_impute_zero",
+      "moving_average_calendar_days": 7,
+      "moving_average_minimum_known_days": 1,
+      "origin_mode": "fixed_origin_no_recursive_actuals",
+      "portfolio_final_test": "not_included_not_opened",
+      "required_prediction_coverage": 1.0,
+      "schema_version": "1.0.0",
+      "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+      "selection_metric": "mae",
+      "selection_role": "validation_only_per_fold",
+      "tie_break": "candidate_order"
+    },
+    "resolved_policy": {
+      "candidates": [
+        "last_observed",
+        "moving_average",
+        "seasonal_naive7"
+      ],
+      "closed_history": "confirmed_closed_zero_is_observed",
+      "common_keys": "all_split_memberships_no_model_specific_drops",
+      "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+      "missing_history": "skip_unknown_never_impute_zero",
+      "moving_average_calendar_days": 7,
+      "moving_average_minimum_known_days": 1,
+      "origin_mode": "fixed_origin_no_recursive_actuals",
+      "portfolio_final_test": "not_included_not_opened",
+      "required_prediction_coverage": 1.0,
+      "schema_version": "1.0.0",
+      "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+      "selection_metric": "mae",
+      "selection_role": "validation_only_per_fold",
+      "tie_break": "candidate_order"
+    },
+    "role": "baseline_evaluation",
+    "selections": [
+      {
+        "fold": "development-v1",
+        "model": "seasonal_naive7",
+        "selection_sha256": "faff49a5e924ce11e1feafe8de9632060473c95e6ee09237304706e503de4fef",
+        "status": "selected",
+        "validation_grain_sha256": "67e9f5f71655be5396cb39e501535176f6b5991370d820c5d1fade029812de96",
+        "validation_metrics": {
+          "last_observed": {
+            "absolute_actual_sum": 27327.0,
+            "absolute_error_sum": 8589.0,
+            "eligible_rows": 3040,
+            "mae": 2.825328947368421,
+            "predicted_rows": 3040,
+            "status": "passed",
+            "wape": 0.314304533977385,
+            "wape_status": "passed"
+          },
+          "moving_average": {
+            "absolute_actual_sum": 27327.0,
+            "absolute_error_sum": 5205.333333333345,
+            "eligible_rows": 3040,
+            "mae": 1.7122807017543897,
+            "predicted_rows": 3040,
+            "status": "passed",
+            "wape": 0.19048316073236524,
+            "wape_status": "passed"
+          },
+          "seasonal_naive7": {
+            "absolute_actual_sum": 27327.0,
+            "absolute_error_sum": 4597.0,
+            "eligible_rows": 3040,
+            "mae": 1.512171052631579,
+            "predicted_rows": 3040,
+            "status": "passed",
+            "wape": 0.16822190507556628,
+            "wape_status": "passed"
+          }
+        }
+      }
+    ],
+    "split_id": "split-sha256-5e2eebec14ff8a4e6769a3fb5387b1d6fbc83d873168d3300263b9dd01a3584d",
+    "status": "passed"
+  },
+  "evaluation_directory": "/private/tmp/retailops-ai-04-forecasting/data/generated/forecast-evaluations/forecast-evaluation-sha256-848df301d82db5fed75197dc9cf7992da2ba2259955e151dc8aaea4155fceea6",
+  "evaluation_id": "forecast-evaluation-sha256-848df301d82db5fed75197dc9cf7992da2ba2259955e151dc8aaea4155fceea6",
+  "forecast_model_status": "not_ready",
+  "parents_unchanged": true,
+  "portfolio_final_test": "not_included_not_opened",
+  "predictions": {
+    "content_sha256": "b9ae5e0f0d61d9076ec328e3b34244150056321680faeb6a07d369d2522cd043",
+    "files": [
+      {
+        "path": "predictions.jsonl",
+        "row_count": 60228,
+        "sha256": "b9ae5e0f0d61d9076ec328e3b34244150056321680faeb6a07d369d2522cd043",
+        "size_bytes": 27358275
+      }
+    ],
+    "row_count": 60228
+  },
+  "repeatable_and_immutable": true,
+  "scope": "AI 04.4 temporal baseline execution, not model release or quality threshold",
+  "seconds": 321.162,
+  "status": "passed"
+}

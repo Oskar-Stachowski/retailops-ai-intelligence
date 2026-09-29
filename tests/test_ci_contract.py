@@ -62,6 +62,7 @@ def test_make_check_includes_snapshot_gate():
     assert "forecast-calendar-check" in dependencies.split()
     assert "forecast-features-check" in dependencies.split()
     assert "forecast-manifests-check" in dependencies.split()
+    assert "forecast-baselines-check" in dependencies.split()
 
 
 @pytest.mark.parametrize(

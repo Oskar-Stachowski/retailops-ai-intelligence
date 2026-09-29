@@ -51,6 +51,7 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make forecast-calendar-check` | Zweryfikowany parent, powtarzalny kalendarz, historia i znane plany z jednym cutoffem |
 | `make forecast-features-check` | Aktywny panel, typed Parquet inputs, zgodność z historią i niezmienny rerun |
 | `make forecast-manifests-check` | Formalny feature set i schema smoke; krótki calendar nie udaje kwalifikacji splitu |
+| `make forecast-baselines-check` | Baseline'y as-of i brak kwalifikacji krótkiego fixture; z jawnymi rodzicami temporalny evaluator, replay i immutable rerun |
 | `make package` | Wheel i sdist w ignorowanym `dist/` |
 | `make check` | Wszystkie powyższe |
 | `make secrets` | Gitleaks 8.30.1: historia Git i aktualny katalog, z redakcją |

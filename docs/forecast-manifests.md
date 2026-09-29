@@ -152,4 +152,5 @@ Typed label/membership tables mają bounded writes i dyskowy indeks:
 Smoke nie kwalifikuje większych profili pod względem zasobów.
 
 [Odbiór 04.3](evidence/04-03-manifests.md).
-Kolejny zakres: **04.4 — wspólny evaluator i baseline'y**.
+[Evaluator 04.4](forecast-baselines.md) korzysta z tych manifestów i wspólnych kluczy.
+Kolejny zakres: **04.5 — RF i HistGradientBoosting**.

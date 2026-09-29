@@ -132,4 +132,5 @@ Smoke nie kwalifikuje pełnego ai-dev/ai-training pod względem zasobów.
 [Odbiór 04.2](evidence/04-02-features.md).
 [Formalny feature/split contract 04.3](forecast-manifests.md) wersjonuje ten
 draft input i dopasowuje preprocessing wyłącznie na train.
-Kolejny zakres: **04.4 — wspólny evaluator i baseline'y**.
+[Evaluator i baseline'y 04.4](forecast-baselines.md) używają zamrożonej historii.
+Kolejny zakres: **04.5 — RF i HistGradientBoosting**.

@@ -7,6 +7,11 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from retailops_ai.forecasting.contract import CalendarManifest, OriginWindow, TaskConfig
+from retailops_ai.forecasting.evaluation_contract import (
+    BaselinePolicy,
+    BaselinePrediction,
+    EvaluationManifest,
+)
 from retailops_ai.forecasting.features_contract import HistoryContext, InputRow, PanelPolicy
 from retailops_ai.forecasting.manifest_contract import (
     FeatureManifest,
@@ -37,6 +42,9 @@ def artifacts() -> dict[Path, object]:
         ("label_point", LabelPoint),
         ("membership", Membership),
         ("preprocessing", FittedState),
+        ("baseline_policy", BaselinePolicy),
+        ("baseline_prediction", BaselinePrediction),
+        ("evaluation_manifest", EvaluationManifest),
     ):
         schema = model.model_json_schema()
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
@@ -46,6 +54,9 @@ def artifacts() -> dict[Path, object]:
         mode="json"
     )
     result[ROOT / "contracts/forecast/v1/features.default.json"] = FeaturePolicy().model_dump(
+        mode="json"
+    )
+    result[ROOT / "contracts/forecast/v1/baselines.default.json"] = BaselinePolicy().model_dump(
         mode="json"
     )
     calendar = SimpleNamespace(

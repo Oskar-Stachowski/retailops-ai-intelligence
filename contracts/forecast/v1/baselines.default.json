@@ -1,0 +1,21 @@
+{
+  "candidates": [
+    "last_observed",
+    "moving_average",
+    "seasonal_naive7"
+  ],
+  "closed_history": "confirmed_closed_zero_is_observed",
+  "common_keys": "all_split_memberships_no_model_specific_drops",
+  "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+  "missing_history": "skip_unknown_never_impute_zero",
+  "moving_average_calendar_days": 7,
+  "moving_average_minimum_known_days": 1,
+  "origin_mode": "fixed_origin_no_recursive_actuals",
+  "portfolio_final_test": "not_included_not_opened",
+  "required_prediction_coverage": 1.0,
+  "schema_version": "1.0.0",
+  "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+  "selection_metric": "mae",
+  "selection_role": "validation_only_per_fold",
+  "tie_break": "candidate_order"
+}
