@@ -34,6 +34,11 @@ def worker(snapshot: Path, workspace: Path, truth: bool) -> dict[str, Any]:
     start = time.monotonic()
     imported = import_snapshot(snapshot, workspace / "data/generated", allow_evaluation_truth=truth)
     source_bytes = hashes(imported.directory)
+    reimported = import_snapshot(
+        snapshot, workspace / "data/generated", allow_evaluation_truth=truth
+    )
+    if reimported.status != "reused" or hashes(imported.directory) != source_bytes:
+        raise ValueError("reimport_changed_immutable_input")
     first = build_curated(
         imported.directory, workspace / "data/generated", allow_evaluation_truth=truth
     )
@@ -66,6 +71,13 @@ def worker(snapshot: Path, workspace: Path, truth: bool) -> dict[str, Any]:
     source_spec = next(
         t for t in imported.snapshot.manifest["tables"] if t["table"] == "daily_demand_versions"
     )
+    correction = next(
+        (row for row in iter_rows(snapshot, source_spec["files"], 8192) if row["version"] > 1),
+        None,
+    )
+    if correction is not None:
+        cutoff = correction["available_at"]
+        origins.extend([cutoff - timedelta(microseconds=1), cutoff])
     comparisons = []
     for origin in origins:
         expected: dict[tuple[Any, ...], dict[str, Any]] = {}
@@ -99,6 +111,24 @@ def worker(snapshot: Path, workspace: Path, truth: bool) -> dict[str, Any]:
                 "status": "passed",
             }
         )
+        if correction is not None and origin in origins[-2:]:
+            key = tuple(
+                correction[k]
+                for k in ("business_date", "product_id", "selling_location_id", "channel")
+            )
+            chosen = observed.get(key)
+            if (
+                chosen is None
+                or (
+                    origin < correction["available_at"]
+                    and chosen["version"] >= correction["version"]
+                )
+                or (
+                    origin == correction["available_at"]
+                    and chosen["version"] != correction["version"]
+                )
+            ):
+                raise ValueError("real_late_correction_boundary_failed")
     elapsed = time.monotonic() - start
     peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (
         1024**2 if sys.platform == "darwin" else 1024
@@ -121,8 +151,29 @@ def worker(snapshot: Path, workspace: Path, truth: bool) -> dict[str, Any]:
         "curated_bytes": sum(p.stat().st_size for p in first.directory.rglob("*") if p.is_file()),
         "input_unchanged": True,
         "rebuild_unchanged": True,
+        "reimport_unchanged": True,
         "evaluation_truth_in_curated": False,
         "as_of_checks": comparisons,
+        "late_correction": {
+            "status": "passed" if correction is not None else "not_present",
+            "observation_id": correction["observation_id"] if correction else None,
+            "version": correction["version"] if correction else None,
+            "available_at": correction["available_at"].isoformat() if correction else None,
+        },
+        "logical_tables": [
+            {
+                k: t[k]
+                for k in (
+                    "table",
+                    "row_count",
+                    "content_sha256",
+                    "grain",
+                    "date_range",
+                    "field_ranges",
+                )
+            }
+            for t in verified["tables"]
+        ],
         "transform": verified["descriptor"]["transform"],
         "readiness": verified["readiness"],
     }
