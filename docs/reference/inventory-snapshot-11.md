@@ -1,8 +1,7 @@
-# Inventory snapshot 1.1 — AI 06.6b.2c.1
+# Inventory snapshot i curated 1.1 — AI 06
 
 Ta ścieżka importuje niezmienny source 2.7 i qualification 1.0 z RetailOps.
-Kontrakt 1.0/source 2.6 zachowuje własny czytnik. To lokalny odbiór transportu
-i uzgodnień inventory; curated 1.1, pełna publikacja 03 i modele są kolejnym zakresem.
+Kontrakt 1.0/source 2.6 zachowuje własny czytnik. Curated 1.1 obsługuje wszystkie 43 facts/plans i historyczny as-of; modele mają odrębne bramki.
 
 ## Import
 
@@ -54,12 +53,26 @@ Odczyty są ograniczone do 2 GiB, 10 000 plików i 20 mln wierszy, z batchami
 do 65 536 wierszy/64 MiB i row groups do 128 MiB. JSON metadata ma limit 4 MiB.
 To limity odczytu; odbiór smoke mierzy rzeczywisty czas i RSS osobno.
 
-## Co pozostaje
+## Curated 1.1
 
-`build_curated` odrzuca snapshot 1.1 kodem
-`inventory_curated_contract_not_yet_supported`. Kolejny zakres rozszerzy curated
-o native grain, historyczny mapping i causal availability oraz odczyty as-of.
-Dopiero pełny source → qualification → snapshot → import → curated wraz
-z odbiorem budget/truth isolation pozwoli przełączyć domyślne źródło AI.
-`source_ready`, `inventory_ready`, `model_ready` pozostają false w frozen source.
-Oceny 04/05 wymagają ponowienia na nowych IDs; model 08 wymaga własnego odbioru.
+```sh
+uv run retailops-ai-curated build \
+  --import-dir data/generated/snapshots/source-sha256-ID --generated-root data/generated
+uv run retailops-ai-curated as-of \
+  --curated-dir data/generated/curated/curated-sha256-ID \
+  --origin 2026-07-31T23:59:59.999999+00:00 --table inventory_daily_snapshots
+```
+
+Wstaw rzeczywiste IDs zwrócone przez CLI. Private import wymaga opt-in przy build.
+Curated zawiera wyłącznie 43 facts/plans. Zachowuje native grain i łączy lineage
+source → qualification → snapshot → curated. Native sale wyznacza causal availability
+sprzedaży; return ma oryginalny magazyn, a snapshot czeka na własny cutoff.
+Unknown availability pozostaje unknown. As-of obsługuje historię popytu, fizyczne
+snapshoty, native ledger/fakty i znane wersje planów dostaw; brak danych nie uruchamia
+fallbacku do przyszłości. Klasa `CuratedReader` weryfikuje widok raz, a każde zapytanie
+sprawdza typed hash/count/grain przed zwróceniem wyników.
+
+Curated bez quarantine ma `inventory_ready=true`; readiness modeli pozostają
+`not_ready`. Frozen source 2.7 zachowuje flagi false; późniejszy odbiór warstw
+ma osobny receipt. [Końcowy odbiór](../evidence/06-inventory-complete.md) podaje zakres.
+AI 04/05 należy odebrać na nowych IDs przed 07/08. Model 08 ma własne gates.

@@ -27,14 +27,14 @@ znajdują się w [końcowym evidence cross-repo](evidence/03-06-cross-repo.md).
 
 ## Etap 06 — inventory
 
-**06.6b.2c.1 ma lokalny odbiór:** [snapshot 1.1/source 2.7](reference/inventory-snapshot-11.md)
-zachowuje typed/native content i lineage. Importer ponownie uzgadnia ledger,
-known snapshots, historyczny routing, issues, refund/restock i receipts.
-[Dowody](evidence/06-inventory-handoff.md) potwierdzają oba profile dwukrotnie,
-727/773 testy oraz budget 300 s / 1024 MiB dla source/qualification/export/import.
-Branch `ai/06-inventory-handoff` ma własny worktree. Następny zakres 06.6b.2c.2
-obejmuje curated 1.1, pełny pipeline i przełączenie domyślnego source AI.
-`inventory_ready` i DATA-06 pozostają otwarte; source/model readiness są false.
+**AI 06 ma [końcowy odbiór](evidence/06-inventory-complete.md).**
+[Snapshot/import/curated 1.1](reference/inventory-snapshot-11.md) obsługuje
+source 2.7, 43 facts/plans i oddzielne private evaluation truth. Ledger, historyczny
+routing, sprzedaż/zwroty, orders/plans/receipts i snapshots są niezależnie uzgadniane.
+Curated zachowuje causal availability, fizyczny grain i odczyty as-of bez future fallback.
+Pełny pipeline obu profili dwukrotnie spełnia budżet 300 s / 1024 MiB.
+Inventory readiness dotyczy danych; modele 04/05/08 wymagają własnej oceny.
+AI 04 i AI 12 zachowują odrębne branche/worktrees.
 
 ## Etap 11
 
