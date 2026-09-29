@@ -72,8 +72,8 @@ class ChatPricing(Contract):
 
 
 class ModelBudget(Contract):
-    max_input_tokens: Annotated[int, Field(ge=1, le=12000)]
-    max_output_tokens: Annotated[int, Field(ge=1, le=1500)]
+    max_input_tokens: Annotated[int, Field(ge=1, le=16000)]
+    max_output_tokens: Annotated[int, Field(ge=1, le=3000)]
     max_calls: Annotated[int, Field(ge=1, le=6)]
     max_retries: Annotated[int, Field(ge=0, le=2)]
     max_repairs: Literal[1]

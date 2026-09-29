@@ -75,22 +75,29 @@ prawa narzędzi/wiedzy; admin wymaga osobnego assistant:audit.
 Standardowe serve nie ma jeszcze modelu/planner/resolvera, więc query daje 503;
 fake jest dopuszczony wyłącznie w testach.
 
-[Szósty zakres](agent-bedrock.md) dodaje adapter Converse/CountTokens, wspólny
-lokalny circuit breaker, limit operacji SDK pozostających w tle i CLI małego
-testu z przypiętym modelem/cennikiem/budżetem. Domyślnie CLI przechodzi offline
-gates i zapisuje propozycję `not_run`, bez AWS. Płatny smoke nie został jeszcze
-uruchomiony: trzeba ustalić kwotę; proponowane 0,05 USD opisuje
-[konkretna propozycja](evidence/12-bedrock-proposal.json). Test chat korzysta
-z jawnych fixtures danych/retrieval i nie zamyka agenta.
-[Odbiór](evidence/12-bedrock.md) podaje kontrolę transportu/awarii.
+[Chat Bedrock](agent-bedrock.md) ma adapter Converse/CountTokens, kontrolę
+formularza/dostępu konta, zweryfikowane profile EU, circuit breaker i ograniczony
+smoke. Formularz oraz aktywacja Haiku 4.5 i Sonnet 4.6 zostały wykonane po
+potwierdzeniu danych projektu osobistego. Zgoda kosztowa wynosi **1,00 USD
+łącznie**; [rejestr wszystkich prób](evidence/12-bedrock-budget.json) zachowuje
+**0,9283581 USD** szacunków/rezerw, w tym pełny cap przerwanej próby.
+
+[Ostatni rzeczywisty smoke Sonnet](evidence/12-bedrock-real.md): **5/6**, w tym
+3/3 przypadki biznesowe i 2/2 zabezpieczenia serwera. Przypadek dokumentacji
+pozostaje `invalid_evidence`: fixture nie zawiera odpowiedzi na pytanie, a
+model zwraca `insufficient_evidence` zamiast oczekiwanego przez zamrożoną
+etykietę `answered`. Potrzebna jest niezależna korekta semantyki fixture/golden
+oraz ponowna kwalifikacja. Nie zmieniono etykiet ani progów w tej serii.
+Sonnet jest kandydatem do dalszej oceny; nie uzyskał pełnego odbioru jakości.
+Test używa rzeczywistego chatu i syntetycznych narzędzi/retrieval.
 
 Następny zakres bez AI 10: planner rzeczywistych pytań, resolver source IDs,
-podłączenie runtime Assistant do RAG oraz rzeczywisty ograniczony smoke po
-ustaleniu kosztu. Dalej pozostają realne źródła ML/operacyjne oraz
+podłączenie runtime Assistant do RAG oraz poprawne semantycznie przypadki
+dokumentacji i ponowny odbiór rzeczywistego modelu. Dalej pozostają realne źródła ML/operacyjne oraz
 kwalifikacja rzeczywistego modelu i retrieval na golden set. Pełne AI 12 wymaga
 AI 10 i E2E sugestii/outbox/v2/read API/UI. Obecny profil sprawdza kanoniczne
 fakty i literalne cytaty; nie potwierdza jakości swobodnych odpowiedzi LLM ani
-rzeczywistego chat modelu. Planner języka naturalnego, resolver source IDs,
+pełnego golden dla rzeczywistego chatu. Planner języka naturalnego, resolver source IDs,
 odczyt sugestii ML oraz ich publikacja do RetailOps pozostają do podłączenia.
 Etykiety golden i progi polityki są lokalnym
 profilem developmentu, bez niezależnego business/model approval.
@@ -103,9 +110,10 @@ wykonywalne kontrakty danych/run/tool, jawne migracje i Required CI.
 [Uruchomienie](local-stack.md), [uprawnienia](access-control.md),
 [kontrakty](data-contracts.md), [odbiór zdalny](evidence/01-remote-ci.md).
 
-Najbliższy pełny zakres to **AI 03**: typed Parquet i immutable eksport w
-cloud-native, importer/curated w AI-intelligence. Równolegle można
-kontynuować [rozpoczęte narzędzia **AI 12**](agent-tools.md). Pełne zamknięcie agenta wymaga **AI 10 i 11**;
+AI 03 ma osobny odbiór na `origin/main` przez PR #5. Ten branch AI 12 nie
+zawiera jeszcze tych równoległych zmian; przed połączeniem trzeba uzgodnić
+aktualny stan kontraktów i dokumentacji. Można kontynuować
+[rozpoczęte narzędzia **AI 12**](agent-tools.md). Pełne zamknięcie agenta wymaga **AI 10 i 11**;
 11 jest gotowy, 10 nadal należy do późniejszego ciągu danych/ML/integracji.
 [Pisemna mapa etapów i repozytoriów](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/plans/ai/kolejnosc-i-repozytoria.md).
 

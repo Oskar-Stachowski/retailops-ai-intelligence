@@ -34,16 +34,10 @@ SDK call, policy/case binding, porównanie odpowiedzi z oracles oraz CLI bez AWS
 Transport jest sprawdzony na testowych odpowiednikach SDK, nie na prawdziwym
 modelu. Wyniki pełnej regresji, golden i kontroli pakietu podaje JSON odbioru.
 
-## Otwarte bramki
+## Bieżący odbiór
 
-Rzeczywisty Bedrock ma **`not_run`**, wydatek 0 USD. Proponowany model to Nova Lite
-w `eu-north-1`; proponowany cap smoke 0,05 USD. Trzeba ustalić kwotę, a potem
-potwierdzić dostęp konta, CountTokens/IAM oraz jakość odpowiedzi. Stan
-`execution_started` po przerwanym paid procesie nie jest dowodem sukcesu.
-
-Test korzysta z frozen typed tools i wyników retrieval, więc nie potwierdza
-realnych danych biznesowych ani jakości retrieval. Natural-language planner,
-source-ID resolver i runtime Assistant nadal pozostają do podłączenia.
-Pełna kwalifikacja realnego modelu i źródeł, business approval reguł/golden oraz
-AI 10 sugestia/outbox/v2/read API/UI pozostają poza tym odbiorem.
-AI 12 jest otwarty. Nie wykonano push ani wdrożenia chmurowego.
+Ten dokument opisuje historyczny zakres implementacji transportu. Aktualne
+modele, zgoda kosztowa, wykonane wywołania i otwarte bramki znajdują się w
+[odbiorze rzeczywistych prób](12-bedrock-real.md). Powiązane wcześniejsze
+propozycja/cennik/wheel są dowodami poprzedniego zakresu, nie konfiguracją
+bieżącego testu. AI 12 pozostaje otwarty.

@@ -1,0 +1,120 @@
+{
+  "approved_by": "project_owner_in_session",
+  "attempts": [
+    {
+      "accounted_usd": "0.0108988",
+      "accounting": "reported_estimate_or_reservation",
+      "attempt": 1,
+      "completed_cases": 1,
+      "inference_requests": 1,
+      "model": "haiku",
+      "passed_cases": 0,
+      "receipt": "12-bedrock-runs/haiku-1.json",
+      "sha256": "a6ee796129394f79ec813ac8f5e9d0f87d899622f08ce0d542e733815fe0b9a5",
+      "status": "failed"
+    },
+    {
+      "accounted_usd": "0.0108988",
+      "accounting": "reported_estimate_or_reservation",
+      "attempt": 2,
+      "completed_cases": 1,
+      "inference_requests": 1,
+      "model": "haiku",
+      "passed_cases": 0,
+      "receipt": "12-bedrock-runs/haiku-2.json",
+      "sha256": "3e74b1032f76882461187a109d6b0906c52f1a9af0e4f24342a11edd17a0fc99",
+      "status": "failed"
+    },
+    {
+      "accounted_usd": "0.0108988",
+      "accounting": "reported_estimate_or_reservation",
+      "attempt": 3,
+      "completed_cases": 1,
+      "inference_requests": 1,
+      "model": "haiku",
+      "passed_cases": 0,
+      "receipt": "12-bedrock-runs/haiku-3.json",
+      "sha256": "574262ecd37f01bdb64f15d7e34fd3aa9b1914497f896a9fd7f29a5380cdd2a2",
+      "status": "failed"
+    },
+    {
+      "accounted_usd": "0.0530068",
+      "accounting": "reported_estimate_or_reservation",
+      "attempt": 4,
+      "completed_cases": 6,
+      "inference_requests": 8,
+      "model": "haiku",
+      "passed_cases": 2,
+      "receipt": "12-bedrock-runs/haiku-4.json",
+      "sha256": "ce306f70aebdf7763052196242701344a23c0f4f550b2ae5a81f6c0ded59759d",
+      "status": "failed"
+    },
+    {
+      "accounted_usd": "0.0108988",
+      "accounting": "reported_estimate_or_reservation",
+      "attempt": 5,
+      "completed_cases": 1,
+      "inference_requests": 1,
+      "model": "haiku",
+      "passed_cases": 0,
+      "receipt": "12-bedrock-runs/haiku-5.json",
+      "sha256": "40e8541dd1daeb2663f11bcb5a6d212d2ffe3daee60db207f602e0b0a63f09d6",
+      "status": "failed"
+    },
+    {
+      "accounted_usd": "0.0108988",
+      "accounting": "reported_estimate_or_reservation",
+      "attempt": 6,
+      "completed_cases": 1,
+      "inference_requests": 1,
+      "model": "haiku",
+      "passed_cases": 0,
+      "receipt": "12-bedrock-runs/haiku-6.json",
+      "sha256": "b270c96520427fdd058315f2e0bc8acd4f63688c8ede43a4b5285e1388502231",
+      "status": "failed"
+    },
+    {
+      "accounted_usd": "0.1604757",
+      "accounting": "reported_estimate_or_reservation",
+      "attempt": 1,
+      "completed_cases": 4,
+      "inference_requests": 8,
+      "model": "sonnet",
+      "passed_cases": 2,
+      "receipt": "12-bedrock-runs/sonnet-1.json",
+      "sha256": "ce50ebe612e632bebae8b5bee71856ebba25d9dd7b1254c54f07e7c6cb8f8f43",
+      "status": "failed"
+    },
+    {
+      "accounted_usd": "0.45",
+      "accounting": "full_attempt_cap_reserved",
+      "attempt": 2,
+      "completed_cases": 0,
+      "inference_requests": null,
+      "model": "sonnet",
+      "passed_cases": null,
+      "receipt": "12-bedrock-runs/sonnet-2.json",
+      "sha256": "1a6f60b08ac4dc6de788880813f4d99dc9100f6104ca93f6efb380f4fa60e32b",
+      "status": "execution_started"
+    },
+    {
+      "accounted_usd": "0.2103816",
+      "accounting": "reported_estimate_or_reservation",
+      "attempt": 3,
+      "completed_cases": 6,
+      "inference_requests": 10,
+      "model": "sonnet",
+      "passed_cases": 5,
+      "receipt": "12-bedrock-runs/sonnet-3.json",
+      "sha256": "147292dee62c6d223aa22df225bf10bca46407c1edea8f2184409fdd97ee36ed",
+      "status": "failed"
+    }
+  ],
+  "campaign_cap_usd": "1.00",
+  "created_at": "2026-09-29T09:35:37.221545+00:00",
+  "estimated_or_reserved_usd": "0.9283581",
+  "new_paid_calls_planned": false,
+  "not_an_aws_invoice": true,
+  "remaining_usd": "0.0716419",
+  "schema_version": "1.0"
+}

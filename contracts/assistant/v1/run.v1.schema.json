@@ -122,13 +122,13 @@
           "type": "string"
         },
         "input_tokens": {
-          "maximum": 12000,
+          "maximum": 16000,
           "minimum": 0,
           "title": "Input Tokens",
           "type": "integer"
         },
         "output_tokens": {
-          "maximum": 1500,
+          "maximum": 3000,
           "minimum": 0,
           "title": "Output Tokens",
           "type": "integer"

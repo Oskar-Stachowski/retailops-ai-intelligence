@@ -174,6 +174,8 @@ async def run_smoke(
             "cases_passed": sum(bool(item["passed"]) for item in results),
             "cases_total": len(profile.case_ids),
             "circuit": provider.breaker.state(),
+            "verified_destination_regions": list(provider.destination_regions),
+            "provider_diagnostics": provider.diagnostics(),
         }
     )
     return report

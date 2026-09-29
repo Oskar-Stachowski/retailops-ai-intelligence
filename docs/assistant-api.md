@@ -109,5 +109,5 @@ Fixtures mierzą te mechanizmy; nie potwierdzają jakości LLM lub danych ML.
 Gotowy [adapter Bedrock](agent-bedrock.md) ma circuit breaker i ograniczony
 smoke CLI; nie został jeszcze podłączony do standardowego runtime. Najbliższe
 zakresy: serwerowy planner i source resolver, podłączenie runtime,
-płatny smoke po ustaleniu kosztu, adaptery danych, realny golden/retrieval oraz
+kwalifikacja realnego modelu, adaptery danych, realny golden/retrieval oraz
 AI 10 outbox/v2/read API/UI. Sugestie nie są jeszcze wystawione w read API ML.

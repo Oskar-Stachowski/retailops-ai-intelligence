@@ -17,8 +17,8 @@ kontrolę liczb/znaczenia i bezpieczny ślad; [odbiór](evidence/12-graph.md).
 golden i wersjonowany fixture release; [odbiór](evidence/12-evaluation.md).
 [Assistant API i persistence](assistant-api.md) opisują queries/runs,
 trwałe wyniki, bezpieczny odczyt i wspólne admission; [odbiór](evidence/12-assistant.md).
-[Chat Bedrock](agent-bedrock.md) opisuje rzeczywisty adapter, exact token preflight,
-circuit breaker i propozycję ograniczonego testu; [odbiór](evidence/12-bedrock.md).
+[Chat Bedrock](agent-bedrock.md) opisuje adapter, kontrolę dostępu i tokenów,
+europejskie profile oraz limit kosztu; [bieżący odbiór](evidence/12-bedrock-real.md).
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują

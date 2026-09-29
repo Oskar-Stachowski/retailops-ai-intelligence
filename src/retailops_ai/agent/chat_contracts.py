@@ -109,7 +109,7 @@ DRAFT: TypeAdapter[ChatDraft] = TypeAdapter(ChatDraft)
 
 
 class ProviderUsage(Contract):
-    input_tokens: Annotated[int, Field(ge=0, le=12000)]
+    input_tokens: Annotated[int, Field(ge=0, le=16000)]
     output_tokens: Annotated[int, Field(ge=0, le=1500)]
 
 

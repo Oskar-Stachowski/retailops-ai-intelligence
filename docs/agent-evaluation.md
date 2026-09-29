@@ -124,7 +124,7 @@ przypadków, zero zbędnych wywołań, p95 ≤ 5000 ms i koszt syntetyczny 0 USD
   fake i rezerwacją przy błędzie providera. Nie mierzą wydajności ani ceny Bedrock.
 
 Gotowy [adapter Bedrock](agent-bedrock.md) oraz circuit breaker mają osobny
-odbiór transportu. Kolejne kroki: ograniczony rzeczywisty smoke po ustaleniu
-kosztu, planner/resolver oraz adaptery źródeł. Pełne AI 12 wymaga rzeczywistych
+odbiór transportu oraz [wynik rzeczywistych prób](evidence/12-bedrock-real.md).
+Kolejne kroki: planner/resolver oraz adaptery źródeł. Pełne AI 12 wymaga rzeczywistych
 narzędzi, golden dla realnego modelu/retrieval oraz ścieżki sugestia → outbox/v2
 → RetailOps read API/UI z AI 10.

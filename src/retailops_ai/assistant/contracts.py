@@ -126,8 +126,8 @@ class TraceNode(Contract):
 
 
 class TraceUsage(Contract):
-    input_tokens: int = Field(ge=0, le=12000)
-    output_tokens: int = Field(ge=0, le=1500)
+    input_tokens: int = Field(ge=0, le=16000)
+    output_tokens: int = Field(ge=0, le=3000)
     duration_ms: float = Field(ge=0)
     estimated_cost: str = Field(pattern=r"^[0-9]+(?:\.[0-9]+)?(?:E-[0-9]+)?$")
     currency: Literal["USD"] = "USD"

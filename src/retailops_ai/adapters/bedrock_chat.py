@@ -1,4 +1,4 @@
-"""Text-only Converse boundary: exact token preflight, bounded SDK work and circuit breaker."""
+"""Text-only Converse boundary: counted token reservation, bounded SDK and circuit breaker."""
 
 import asyncio
 import json
@@ -106,9 +106,67 @@ class ConverseClient(Protocol):
     def count_tokens(self, **kwargs: object) -> dict[str, object]: ...
 
 
-def chat_client(config: ResolvedChatConfig, profile: str | None = None) -> ConverseClient:
+class ProfileClient(Protocol):
+    def get_inference_profile(self, **kwargs: object) -> dict[str, object]: ...
+
+
+def verify_eu_profile(config: ResolvedChatConfig, client: ProfileClient) -> tuple[str, ...]:
+    """Bind an active AWS-managed EU profile to the counted base model before inference."""
+    model = config.config.model
+    allowed = {"eu-central-1", "eu-west-1", "eu-west-3", "eu-north-1", "eu-south-1", "eu-south-2"}
+    if model.region not in allowed or model.inference_profile != "eu." + model.model_id:
+        raise ValueError("bedrock_profile_binding_invalid")
+    try:
+        description = client.get_inference_profile(
+            inferenceProfileIdentifier=model.inference_profile
+        )
+        entries = description.get("models")
+        if (
+            description.get("inferenceProfileId") != model.inference_profile
+            or description.get("status") != "ACTIVE"
+            or description.get("type") != "SYSTEM_DEFINED"
+            or not isinstance(entries, list)
+            or not 1 <= len(entries) <= len(allowed)
+        ):
+            raise ValueError("invalid_profile")
+        regions = []
+        for entry in entries:
+            arn = entry.get("modelArn") if isinstance(entry, dict) else None
+            if not isinstance(arn, str):
+                raise ValueError("invalid_profile")
+            parts = arn.split(":", 5)
+            if (
+                len(parts) != 6
+                or parts[:3] != ["arn", "aws", "bedrock"]
+                or parts[3] not in allowed
+                or parts[4] != ""
+                or parts[5] != "foundation-model/" + model.model_id
+                or parts[3] in regions
+            ):
+                raise ValueError("invalid_profile")
+            regions.append(parts[3])
+        return tuple(sorted(regions))
+    except (ValueError, ClientError, BotoCoreError):
+        raise ValueError("bedrock_profile_binding_invalid") from None
+
+
+def profile_client(config: ResolvedChatConfig, profile: str | None = None) -> ProfileClient:
     import boto3  # type: ignore[import-untyped]
     from botocore.config import Config  # type: ignore[import-untyped]
+
+    return cast(
+        ProfileClient,
+        boto3.Session(profile_name=profile).client(
+            "bedrock",
+            region_name=config.config.model.region,
+            config=Config(connect_timeout=3, read_timeout=5, retries={"total_max_attempts": 1}),
+        ),
+    )
+
+
+def chat_client(config: ResolvedChatConfig, profile: str | None = None) -> ConverseClient:
+    import boto3
+    from botocore.config import Config
 
     timeout = config.config.budget.provider_timeout_seconds
     return cast(
@@ -161,20 +219,33 @@ class BedrockChatProvider:
         client: ConverseClient | None = None,
         profile: str | None = None,
         timer: Callable[[], float] = monotonic,
+        profiles: ProfileClient | None = None,
     ) -> None:
         self.config = config.verified()
         self.model = self.config.config.model
         if self.model.provider != "bedrock":
             raise ValueError("bedrock_chat_configuration_required")
-        if self.model.inference_profile is not None:
-            # A profile needs independently verified destination-model/rate bindings.
-            raise ValueError("in_region_bedrock_chat_required")
+        self.destination_regions = (
+            verify_eu_profile(self.config, profiles or profile_client(self.config, profile))
+            if self.model.inference_profile is not None
+            else (self.model.region,)
+        )
         self.client = client or chat_client(self.config, profile)
         self.breaker = CircuitBreaker(policy, timer)
         self._counts: dict[str, int] = {}
+        self._diagnostics: list[dict[str, object]] = []
         self._lock = Lock()
         self.count_requests = 0
         self.inference_requests = 0
+
+    def diagnostics(self) -> list[dict[str, object]]:
+        with self._lock:
+            return [dict(item) for item in self._diagnostics]
+
+    def _record(self, **values: object) -> None:
+        with self._lock:
+            self._diagnostics.append(values)
+            self._diagnostics = self._diagnostics[-64:]
 
     def wire(self, request: ChatRequest) -> dict[str, object]:
         if (
@@ -238,6 +309,27 @@ class BedrockChatProvider:
                 return cast(dict[str, object], response)
             except ClientError as exc:
                 failure = _failure(exc)
+                code = exc.response.get("Error", {}).get("Code")
+                known = {
+                    "AccessDeniedException",
+                    "ExpiredTokenException",
+                    "InvalidSignatureException",
+                    "UnrecognizedClientException",
+                    "ThrottlingException",
+                    "ValidationException",
+                    "InternalServerException",
+                    "ServiceUnavailableException",
+                    "ModelNotReadyException",
+                    "ModelTimeoutException",
+                    "ModelErrorException",
+                    "ResourceNotFoundException",
+                }
+                self._record(
+                    operation=operation,
+                    reason="provider_rejected",
+                    kind=failure.code,
+                    code=code if isinstance(code, str) and code in known else "unknown",
+                )
                 result = "outage" if failure.code in {"throttled", "transient"} else "rejected"
                 raise failure from None
             except BotoCoreError:
@@ -312,7 +404,7 @@ class BedrockChatProvider:
                     or not isinstance(item["text"], str)
                     for item in content
                 )
-                or inputs != counted
+                or not 0 < inputs <= counted
                 or outputs < 0
                 or outputs > request.max_output_tokens
                 or total != inputs + outputs
@@ -327,4 +419,15 @@ class BedrockChatProvider:
                 usage=ProviderUsage(input_tokens=inputs, output_tokens=outputs),
             )
         except (KeyError, TypeError, ValueError, OverflowError, RecursionError):
+            usage_values = response.get("usage")
+            safe_usage = {}
+            for name in ("inputTokens", "outputTokens", "totalTokens"):
+                value = usage_values.get(name) if isinstance(usage_values, dict) else None
+                safe_usage[name] = value if type(value) is int and 0 <= value <= 1000000 else None
+            self._record(
+                operation="converse",
+                reason="response_schema_invalid",
+                counted_input_tokens=counted,
+                **safe_usage,
+            )
             raise ProviderFailure("schema") from None

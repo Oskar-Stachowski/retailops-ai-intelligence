@@ -1,104 +1,103 @@
 # Chat Bedrock i ograniczony test
 
-**AI 12 · adapter wykonany, rzeczywisty test nieuruchomiony.**
-[Odbiór zakresu](evidence/12-bedrock.md), [propozycja testu](evidence/12-bedrock-proposal.json).
-Podłączenie standardowego Assistant API do rzeczywistych pytań, resolvera źródeł
-i danych biznesowych pozostaje osobnym zakresem. Ten adapter sam go nie uruchamia.
+AI 12 ma adapter Converse, kontrolę dostępu konta i zweryfikowane europejskie
+profile Haiku 4.5 oraz Sonnet 4.6. [Bieżący wynik i koszt](evidence/12-bedrock-real.md)
+odnoszą się do rzeczywistych wywołań modelu. Standardowe Assistant API wymaga
+jeszcze planner/resolvera i podłączenia źródeł; sam test CLI go nie uruchamia.
 
-## Konfiguracja proponowanego testu
+## Modele i zakres
 
-[Manifest grafu](../agent/graph.bedrock-smoke.v1.json) przypina model
-`amazon.nova-lite-v1:0`, `eu-north-1`, temperaturę 0 oraz prompty i walidatory
-używane przez zamrożony profil offline. To propozycja pierwszego testu integracji;
-jakość tego modelu w RetailOps nie jest jeszcze potwierdzona. Adapter obsługuje
-inference w jednym regionie. Niezweryfikowany cross-region inference profile
-jest odrzucany przed utworzeniem klienta AWS.
+| Wariant | Model bazowy | Profil inference | Input / output za milion tokenów |
+| --- | --- | --- | --- |
+| Podstawowy | `anthropic.claude-haiku-4-5-20251001-v1:0` | `eu.anthropic.claude-haiku-4-5-20251001-v1:0` | 1,10 / 5,50 USD |
+| Porównanie | `anthropic.claude-sonnet-4-6` | `eu.anthropic.claude-sonnet-4-6` | 3,30 / 16,50 USD |
 
-[Profil smoke](../agent/bedrock-smoke.v1.json) wybiera sześć istniejących przypadków:
-sprzedaż, zapas, porównanie okresów, cytowaną dokumentację, odmowę zamówienia
-i cudzy scope. Ostatnie dwa kontroluje serwer bez wywołania modelu. Pytania,
-oczekiwane odpowiedzi i etykiety pochodzą z zamrożonego golden; nie są
-przepisywane z odpowiedzi modelu ani aktualnego katalogu dowodów.
+Oba warianty startują w `eu-central-1`, z temperaturą 0. Adapter weryfikuje
+przez AWS aktywny systemowy profil, dokładny model i zamkniętą listę regionów
+UE: Frankfurt, Sztokholm, Irlandia, Paryż, Mediolan i Hiszpania. Odrzuca obcy
+model, profil globalny, region spoza listy i ARN z identyfikatorem konta.
+CountTokens używa modelu bazowego; Converse używa sprawdzonego profilu EU.
+[Dowód dostępności profili i CountTokens](evidence/12-bedrock-preflight.json).
+Nova Lite nie obsługuje wymaganego CountTokens i nie jest bieżącym wariantem.
 
-**Narzędzia i wyniki wyszukiwania w tym teście są fixtures.** Rzeczywisty jest
-wyłącznie wywoływany chat, kiedy jawnie uruchomimy wariant płatny. Test nie
-mierzy ponownie retrieval ani embeddings z AI 11 i nie odbiera danych ML/AI 10.
-Nie zamyka AI 12, nawet jeśli wszystkie sześć przypadków przejdzie.
+[Konfiguracja Haiku](../agent/graph.bedrock-smoke.v1.json) oraz
+[konfiguracja Sonnet](../agent/graph.sonnet-smoke.v1.json) używają tych samych
+promptów, walidatorów, sześciu pytań i zamrożonych oracles. Sprawdzają sprzedaż,
+zapas, porównanie okresów, cytowaną dokumentację, odmowę zamówienia i cudzy
+scope. Ostatnie dwa przypadki kontroluje serwer bez modelu.
 
-## Tokeny, koszt i awarie
+**Dane narzędzi i wyniki retrieval są fixtures.** Test mierzy rzeczywisty chat
+na zamrożonych dowodach, nie ponowny odbiór embeddings/RAG, realnych źródeł ML
+ani AI 10. Nie zamyka AI 12. Etykiety i progi nie są dopasowywane do modelu.
 
-Przed każdą płatną próbą `Converse` adapter wysyła `CountTokens` dla dokładnie
-tych samych `system` i `messages`. Brak wsparcia CountTokens, błąd dostępu,
-timeout albo niewiarygodny licznik blokuje inference; nie używamy przybliżenia
-bajtów jako zgody na płatne wywołanie. Licznik przekraczający budżet tokenów
-również blokuje inference. CountTokens nie jest dodatkowym chat wywołaniem.
+Bieżący kandydat do dalszej kwalifikacji to **Sonnet 4.6**. Ostatni wynik to
+5/6, z otwartym problemem semantyki fixture dokumentacji. Haiku pozostaje
+profilem porównawczym; nie jest modelem zakwalifikowanym do runtime.
 
-SDK ma jedną próbę. Retry realizuje istniejąca sesja agenta, wyłącznie dla
-throttle/transient, najwyżej dwa razy we wspólnym budżecie. Auth/schema nie
-uruchamia retry. Awaria preflight CountTokens kończy bieżący run. Łączny
-deadline to 45 s; provider timeout w tym profilu to 20 s. Run ma do 12 000 input
-i 1500 output tokens łącznie, do 1000 output na pojedynczą próbę i do sześciu
-chat prób. Jedna naprawa także zużywa ten budżet.
+## Dostęp, tokeny i koszt
 
-Zweryfikowany [cennik AWS dla Sztokholmu](evidence/12-bedrock-pricing.json)
-opublikowany 2026-09-28 podaje **0,065 USD / milion input tokens** oraz
-**0,26 USD / milion output tokens** dla on-demand Nova Lite. Budżet konfiguracji
-to 0,002 USD na run i **proponowane 0,05 USD na cały smoke**. Przy pełnych
-limitach tokenów jeden run kosztuje najwyżej szacowane 0,00117 USD, a sześć
-runów 0,00702 USD. To koszt wywołań modelu według przypiętych stawek, nie limit
-całego rachunku konta AWS, podatków lub innych usług. Przed rzeczywistym testem
-trzeba ustalić z użytkownikiem kwotę i zachować aktualne wiązanie cennika.
+CLI przed inference sprawdza formularz Anthropic, umowę, autoryzację,
+entitlement i dostępność regionu. Brak lub nieznany status kończy się raportem
+`blocked`, bez CountTokens i Converse. Kontrola niczego nie subskrybuje i nie
+zmienia IAM. [Dostęp konta](agent-bedrock-access.md) opisuje wymagania wznowienia.
 
-Wspólny SmokeBudget obejmuje wszystkie sesje jednego testu. Timeout, anulowanie
-lub niewiarygodny usage zachowują pełną rezerwację. Poprawny usage rozlicza
-rzeczywiście obserwowane tokeny, również gdy JSON wymaga naprawy. Nieznana
-odpowiedź, native tool call, nietekstowa treść, niezgodny token count i cache
-usage są odrzucane. Model nie otrzymuje native narzędzi SDK.
+Każde Converse poprzedza CountTokens z tymi samymi system/messages. Rezerwujemy
+policzone wejście oraz maksymalne wyjście. Poprawny usage może być niższy od
+rezerwy: w rzeczywistym Haiku obserwowano 4908 policzonych i 4891 naliczonych
+tokenów. Rozliczamy dodatni rzeczywisty input nieprzekraczający rezerwy,
+wyjście w limicie i zgodną sumę. Większy input, cache, native tool call lub
+nieznana odpowiedź są odrzucane, z zachowaniem rezerwy. Diagnostyka pokazuje
+wyłącznie bezpieczne kody i liczniki, bez promptów, treści wyjątków i formularza.
 
-Circuit breaker jest wspólny dla sesji używających jednej instancji providera:
-trzy kolejne awarie, 30 s przerwy i jedna próba odzyskania. Udany CountTokens
-nie zeruje awarii inference. Otwarcie blokuje dalsze SDK wywołania. Limit dwóch
-operacji SDK w tle obejmuje także anulowane operacje aż do rzeczywistego końca.
-Spóźniony sukces nie zamyka circuit otwartego przez timeout lub nowszą awarię.
-To lokalny mechanizm providera; wspólne admission replik opisuje
-[Assistant API](assistant-api.md).
+SDK ma jedną próbę; sesja dopuszcza do dwóch retry wyłącznie dla przejściowych
+awarii/throttle i jedną naprawę JSON. Wszystko zużywa wspólny budżet. Run ma
+45 s, provider 20 s, do 16 000 input i 3000 output łącznie, do 1500 output na
+próbę i najwyżej sześć prób. Circuit breaker oraz dwa miejsca dla operacji SDK
+obejmują też operacje nadal trwające po anulowaniu coroutine.
+
+Właściciel zatwierdził **1,00 USD łącznie na obecną serię testów i porównanie**.
+To nie jest 1 USD na każdą próbę. Haiku ma cap smoke 0,15 USD, Sonnet 0,25 USD.
+Limit kosztu całego smoke pozostaje nadrzędny wobec sumy limitów tokenów pytań.
+Run ma limit odpowiednio 0,04 i 0,11 USD. [Cennik i SKU](evidence/12-bedrock-real-pricing.json)
+pochodzą z publikacji AWS z 2026-09-28. Koszt dotyczy modelu według tych stawek,
+nie całego rachunku konta. Nie utworzono provisioned ani reserved throughput.
+
+SmokeBudget łączy sesje jednego procesu. Rejestr w [odbiorze](evidence/12-bedrock-real.md)
+łączy wszystkie próby tej serii, także nieudane i niepewne rezerwacje. Przed
+kolejnym procesem trzeba odjąć je od 1 USD; samo CLI nie zapewnia limitu między
+procesami. Przerwane wykonanie bez końcowego kosztu zachowuje pełny cap próby.
 
 ## Uruchomienie
 
-`make bedrock-smoke` najpierw sprawdza pełny offline golden i wiązania release,
-a następnie pokazuje propozycję `not_run`. Nie tworzy klienta AWS i niczego nie
-wywołuje. Profile/schema/code drift blokuje test przed utworzeniem klienta.
-
-Po ustaleniu limitu 0,05 USD można uruchomić:
+`make bedrock-smoke` sprawdza pełny offline golden i wiązania release, a potem
+pokazuje `not_run`, bez klienta AWS. Jawny test Haiku po sprawdzeniu pozostałego
+budżetu:
 
 ```sh
-make bedrock-smoke BEDROCK_ARGS='--execute --max-cost-usd 0.05 --output .local/bedrock-smoke-run-1.json'
+make bedrock-smoke BEDROCK_ARGS='--execute --max-cost-usd 0.15 --output .local/bedrock-haiku-next.json'
 ```
 
-Katalog `.local` musi istnieć; nazwa raportu musi być nowa. Poświadczenia
-pochodzą z AWS default chain albo jawnego `--aws-profile`; nie zapisujemy ich
-w repozytorium. Potrzebne są `bedrock:CountTokens` dla foundation model oraz
-`bedrock:InvokeModel` dla Converse w wybranym regionie. Nie uruchamiamy chmurowej
-ewaluacji ani provisioned throughput. Dostęp konta i obsługa CountTokens przez
-model muszą zostać potwierdzone w rzeczywistym teście.
+Dla Sonnet użyć tego samego polecenia CLI z parametrami
+`--config agent/graph.sonnet-smoke.v1.json`,
+`--profile agent/sonnet-smoke.v1.json`, `--max-cost-usd 0.25` oraz nowym outputem.
+Pozostałe parametry są identyczne jak w celu `bedrock-smoke` w Makefile.
 
-Raport ma uprawnienia 0600. CLI rezerwuje plik przed AWS, zapisuje trwały
-checkpoint rozpoczęcia, a potem wynik, odpowiedzi/cytaty, bezpieczne traces,
-liczniki wywołań i szacowany lub zarezerwowany koszt. Konsola pokazuje tylko
-podsumowanie. Istniejący raport nie jest nadpisywany. Przerwany proces pozostawia
-`execution_started` z nieznanym wykonaniem AWS; taki zapis nie oznacza sukcesu
-ani pozwolenia na automatyczne powtórzenie. Błąd providera/deadline/budżetu
-zatrzymuje pozostałe płatne przypadki. Failed walidacji odpowiedzi pozostaje
-failed; nie zmieniamy etykiet lub progów, aby model przeszedł test.
+Katalog `.local` musi istnieć. Raport ma 0600, nową nazwę i trwały checkpoint
+przed AWS. Istniejącego raportu nie nadpisujemy. `execution_started` po przerwaniu
+nie dowodzi sukcesu ani nie zeruje kosztu. Błąd zależności/deadline/budżetu
+zatrzymuje następne przypadki. Konsola pokazuje tylko podsumowanie.
+Poświadczenia pochodzą z AWS default chain lub `--aws-profile`.
 
-## Źródła AWS sprawdzone podczas implementacji
+Odczytowe uprawnienia preflight obejmują `bedrock:GetUseCaseForModelAccess`,
+`bedrock:GetFoundationModelAvailability` i `bedrock:GetInferenceProfile`.
+Wykonanie wymaga `bedrock:CountTokens` dla modelu oraz `bedrock:InvokeModel`
+dla profilu i jego modeli docelowych. Wspólne admission replik opisuje
+[Assistant API](assistant-api.md); test lokalny nie jest wdrożeniem chmurowym.
 
-- [Converse API](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html)
-  opisuje system/messages, usage, stop reasons i uprawnienie InvokeModel.
-- [CountTokens](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_CountTokens.html)
-  i [instrukcja liczenia tokenów](https://docs.aws.amazon.com/bedrock/latest/userguide/count-tokens.html)
-  opisują dokładne wejście, obsługę zależną od modelu i brak opłaty za liczenie.
-- [Nova Lite](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-lite.html)
-  opisuje Converse i regionalną dostępność; nie dowodzi dostępu konkretnego konta.
-- [Regionalny cennik AWS](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/eu-north-1/index.json)
-  jest źródłem stawek i SKU zapisanych w evidence.
+## Źródła
+
+- [Converse](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html)
+- [CountTokens](https://docs.aws.amazon.com/bedrock/latest/userguide/count-tokens.html)
+- [Dostęp do modeli i formularz](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html)
+- [Geograficzne profile](https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html)
+- [Regionalny cennik modeli](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrockFoundationModels/current/eu-central-1/index.json)

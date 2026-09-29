@@ -117,6 +117,6 @@ kanonicznych faktów i obliczeń. Powyższy profil pregraph z promptami v1 zacho
 wcześniejsze ograniczenia. [Reguły i golden](agent-evaluation.md) obejmują
 kanoniczne odpowiedzi i kandydatów na fixtures. [Assistant API](assistant-api.md)
 dodaje admission i trwałe wyniki. [Adapter Bedrock](agent-bedrock.md) ma
-circuit breaker, CountTokens i przypiętą propozycję modelu/cennika. Dalej
-pozostają rzeczywisty smoke, odbiór dostępu/IAM i jakości tego modelu. Źródła biznesowe
+circuit breaker, CountTokens i przypięte profile/cenniki Haiku oraz Sonnet.
+[Bieżący odbiór](evidence/12-bedrock-real.md) podaje rzeczywiste próby i ich granice. Źródła biznesowe
 oraz producent sugestii/outbox/E2E wymagają dalszych etapów, w tym AI 10.

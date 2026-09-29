@@ -134,8 +134,8 @@ class SafeTrace(Versioned):
     model_calls: Annotated[int, Field(ge=0, le=6)]
     extra_evidence_rounds: Annotated[int, Field(ge=0, le=1)]
     repairs: Annotated[int, Field(ge=0, le=1)]
-    input_tokens: Annotated[int, Field(ge=0, le=12000)]
-    output_tokens: Annotated[int, Field(ge=0, le=1500)]
+    input_tokens: Annotated[int, Field(ge=0, le=16000)]
+    output_tokens: Annotated[int, Field(ge=0, le=3000)]
     estimated_cost: Annotated[str, Field(pattern=r"^[0-9]+(?:\.[0-9]+)?(?:E-[0-9]+)?$")]
     fixture_only: bool
     created_at: UtcTime

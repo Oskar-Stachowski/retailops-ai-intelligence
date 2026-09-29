@@ -4,7 +4,7 @@
       "additionalProperties": false,
       "properties": {
         "input_tokens": {
-          "maximum": 12000,
+          "maximum": 16000,
           "minimum": 0,
           "title": "Input Tokens",
           "type": "integer"

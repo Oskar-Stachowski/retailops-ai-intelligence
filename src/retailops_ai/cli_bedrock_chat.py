@@ -35,6 +35,7 @@ def _write(output: TextIO, report: dict[str, object]) -> None:
 def run_chat_smoke(args: argparse.Namespace) -> int:
     from botocore.exceptions import BotoCoreError, ClientError  # type: ignore[import-untyped]
 
+    from retailops_ai.adapters.bedrock_access import inspect_model_access
     from retailops_ai.adapters.bedrock_chat import BedrockChatProvider
     from retailops_ai.agent.bedrock_smoke import (
         BedrockSmokeProfile,
@@ -79,11 +80,24 @@ def run_chat_smoke(args: argparse.Namespace) -> int:
             if args.execute:
                 report.update(status="execution_started", reason=None, aws_executed=None)
                 _write(output, report)
-                provider = BedrockChatProvider(
-                    runtime.chat, profile.circuit, profile=args.aws_profile
-                )
-                report = asyncio.run(run_smoke(profile, suite, runtime, provider))
-                report["offline_gates_passed"] = True
+                access = inspect_model_access(runtime.chat, args.aws_profile)
+                if access["status"] == "blocked":
+                    report.update(
+                        status="blocked",
+                        reason=access["reason"],
+                        aws_executed=True,
+                        real_chat=False,
+                        count_requests=0,
+                        inference_requests=0,
+                        estimated_or_reserved_usd="0",
+                    )
+                else:
+                    provider = BedrockChatProvider(
+                        runtime.chat, profile.circuit, profile=args.aws_profile
+                    )
+                    report = asyncio.run(run_smoke(profile, suite, runtime, provider))
+                    report["offline_gates_passed"] = True
+                report["model_access"] = access
             _write(output, report)
     except (
         OSError,
@@ -105,4 +119,4 @@ def run_chat_smoke(args: argparse.Namespace) -> int:
             sort_keys=True,
         )
     )
-    return 1 if report["status"] == "failed" else 0
+    return 1 if report["status"] in {"failed", "blocked"} else 0

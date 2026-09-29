@@ -137,8 +137,8 @@ class CaseEvaluation(Contract):
     duration_ms: Annotated[float, Field(ge=0)]
     tool_calls: Annotated[int, Field(ge=0, le=6)]
     model_calls: Annotated[int, Field(ge=0, le=6)]
-    input_tokens: Annotated[int, Field(ge=0, le=12000)]
-    output_tokens: Annotated[int, Field(ge=0, le=1500)]
+    input_tokens: Annotated[int, Field(ge=0, le=16000)]
+    output_tokens: Annotated[int, Field(ge=0, le=3000)]
     estimated_cost: str
 
 

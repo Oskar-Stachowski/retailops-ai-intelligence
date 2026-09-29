@@ -2,18 +2,18 @@
   "chat": {
     "budget": {
       "max_calls": 6,
-      "max_input_tokens": 12000,
-      "max_output_tokens": 1500,
+      "max_input_tokens": 16000,
+      "max_output_tokens": 3000,
       "max_repairs": 1,
       "max_retries": 2,
       "pricing": {
         "currency": "USD",
-        "input_per_million": "0.065",
+        "input_per_million": "1.1",
         "kind": "reviewed_provider_rates",
-        "max_run_cost": "0.002",
-        "max_smoke_cost": "0.05",
-        "output_per_million": "0.26",
-        "rate_version": "aws-nova-lite-stockholm-20260928"
+        "max_run_cost": "0.04",
+        "max_smoke_cost": "0.15",
+        "output_per_million": "5.5",
+        "rate_version": "aws-haiku45-frankfurt-20260928"
       },
       "provider_timeout_seconds": 20.0,
       "retry_base_seconds": 0.05,
@@ -34,11 +34,11 @@
     "graph_version": "bounded-langgraph-v1",
     "knowledge_index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
     "model": {
-      "inference_profile": null,
-      "max_output_tokens": 1000,
-      "model_id": "amazon.nova-lite-v1:0",
+      "inference_profile": "eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+      "max_output_tokens": 1500,
+      "model_id": "anthropic.claude-haiku-4-5-20251001-v1:0",
       "provider": "bedrock",
-      "region": "eu-north-1",
+      "region": "eu-central-1",
       "temperature": 0.0
     },
     "profile": "agent-bounded-v1",
@@ -105,7 +105,7 @@
     },
     "tool_schemas_sha256": "c724b1fce12a8cf790249749280710aef045767d8c0ab5adb4f40163ec115dbe"
   },
-  "code_sha256": "fa8083066a48e04440e0aa4f32bbe215d1503fc6e771ed11598feae20dfde60e",
+  "code_sha256": "54bba07ab85cc1e16767c24ced1f6c097bf104ada324f3a45e84f3252a084238",
   "evidence_policy_version": "typed-facts-v1",
   "graph_version": "bounded-langgraph-v1",
   "langgraph_version": "1.2.12",
@@ -128,5 +128,5 @@
     "trace_retention_seconds": 900
   },
   "schema_version": "1.0",
-  "schemas_sha256": "e4d87951f95c0cabd292316ce35303fc2b54516e0d8c655ab4003d7539401fb8"
+  "schemas_sha256": "a229f96199649c577ae59cda77b2c8c3f9334b3de8dd0681951ec9bc67245760"
 }

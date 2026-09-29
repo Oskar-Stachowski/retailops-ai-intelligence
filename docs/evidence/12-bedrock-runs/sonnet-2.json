@@ -1,0 +1,43 @@
+{
+  "ai12_closed": false,
+  "aws_executed": null,
+  "case_ids": [
+    "business-sales",
+    "business-inventory",
+    "business-comparison",
+    "document-1",
+    "refuse-order",
+    "auth-foreign-scope"
+  ],
+  "data_sources": "frozen_fixtures",
+  "max_calls": 36,
+  "model": {
+    "inference_profile": "eu.anthropic.claude-sonnet-4-6",
+    "max_output_tokens": 1000,
+    "model_id": "anthropic.claude-sonnet-4-6",
+    "provider": "bedrock",
+    "region": "eu-central-1",
+    "temperature": 0.0
+  },
+  "offline_gates_passed": true,
+  "offline_release_id": "agent-evaluation-release-sha256-a20e055f2d1b9666d2776c50393b7bd08edd253b0aa6f3a5a53fdfa409f327b2",
+  "pricing": {
+    "currency": "USD",
+    "input_per_million": "3.3",
+    "kind": "reviewed_provider_rates",
+    "max_run_cost": "0.07",
+    "max_smoke_cost": "0.45",
+    "output_per_million": "16.5",
+    "rate_version": "aws-sonnet46-frankfurt-20260928"
+  },
+  "profile_id": "bedrock-smoke-profile-sha256-5f57ce238a85470c319c63d16d89d6493807fc8e15b7624e4744438095d167ee",
+  "real_chat": false,
+  "real_retrieval_measured": false,
+  "reason": null,
+  "runtime_graph_config_id": "agent-graph-config-sha256-dd80c51fb966731ba60ed9092562d946ee75d9f646c70ff738312ac9aed2dbc7",
+  "schema_version": "1.0",
+  "scope": "real_chat_over_fixture_evidence_only",
+  "status": "execution_started",
+  "transport_version": "converse-json-counted-v1",
+  "worst_case_estimated_usd": "0.38610"
+}

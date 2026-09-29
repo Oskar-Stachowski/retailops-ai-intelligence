@@ -16,6 +16,7 @@ from retailops_ai.adapters.bedrock_chat import (
     CircuitBreaker,
     CircuitPolicy,
     chat_client,
+    verify_eu_profile,
 )
 from retailops_ai.agent.bedrock_smoke import BedrockSmokeProfile, proposal, run_smoke, verify_smoke
 from retailops_ai.agent.chat import ChatFailure, ChatSession, ProviderFailure
@@ -141,8 +142,73 @@ def test_unverified_cross_region_profile_fails_closed():
     value = real_settings().config.model_dump(mode="json")
     value["model"]["inference_profile"] = "eu.amazon.nova-lite-v1:0"
     config = resolve_chat_config(AgentChatConfig.model_validate_json(json.dumps(value)))
-    with pytest.raises(ValueError, match="in_region"):
-        BedrockChatProvider(config, policy(), client=Client())
+    profiles = Profiles(config)
+    profiles.description["status"] = "INACTIVE"
+    with pytest.raises(ValueError, match="profile_binding_invalid"):
+        BedrockChatProvider(config, policy(), client=Client(), profiles=profiles)
+
+
+class Profiles:
+    def __init__(self, config):
+        self.description = {
+            "inferenceProfileId": config.config.model.inference_profile,
+            "status": "ACTIVE",
+            "type": "SYSTEM_DEFINED",
+            "models": [
+                {
+                    "modelArn": "arn:aws:bedrock:eu-central-1::foundation-model/"
+                    + config.config.model.model_id
+                }
+            ],
+        }
+        self.calls = []
+
+    def get_inference_profile(self, **kwargs):
+        self.calls.append(kwargs)
+        return self.description
+
+
+@pytest.mark.parametrize(
+    "mutation", ["model", "region", "account", "duplicate", "empty", "profile", "status", "type"]
+)
+def test_profile_cannot_change_counted_model_or_route_outside_eu(mutation):
+    value = real_settings().config.model_dump(mode="json")
+    value["model"]["inference_profile"] = "eu." + value["model"]["model_id"]
+    config = resolve_chat_config(AgentChatConfig.model_validate_json(json.dumps(value)))
+    profiles = Profiles(config)
+    if mutation in {"model", "region", "account"}:
+        arn = profiles.description["models"][0]["modelArn"]
+        if mutation == "model":
+            arn = arn.replace(config.config.model.model_id, "unrelated-model")
+        elif mutation == "region":
+            arn = arn.replace("eu-central-1", "us-east-1")
+        else:
+            arn = arn.replace("::foundation-model", ":123456789012:foundation-model")
+        profiles.description["models"][0]["modelArn"] = arn
+    elif mutation == "duplicate":
+        profiles.description["models"] *= 2
+    elif mutation == "empty":
+        profiles.description["models"] = []
+    elif mutation == "profile":
+        profiles.description["inferenceProfileId"] = "other-profile"
+    else:
+        profiles.description[mutation] = "unexpected"
+    with pytest.raises(ValueError, match="profile_binding_invalid"):
+        verify_eu_profile(config, profiles)
+
+
+def test_verified_profile_routes_inference_but_counts_the_base_model():
+    value = real_settings().config.model_dump(mode="json")
+    value["model"]["inference_profile"] = "eu." + value["model"]["model_id"]
+    config = resolve_chat_config(AgentChatConfig.model_validate_json(json.dumps(value)))
+    client, profiles = Client(), Profiles(config)
+    provider = BedrockChatProvider(config, policy(), client=client, profiles=profiles)
+    executor, bearer = session(settings=config.config.tool_policy)
+    run = ChatSession(executor.open_session(bearer), config, provider)
+    asyncio.run(run.call("plan", "Show evidence."))
+    assert client.seen[0][1]["modelId"] == config.config.model.model_id
+    assert client.seen[1][1]["modelId"] == config.config.model.inference_profile
+    assert provider.destination_regions == ("eu-central-1",)
 
 
 @pytest.mark.parametrize("count", [True, 0, -1, "120", 1000001])
@@ -303,10 +369,22 @@ def test_smoke_profile_cannot_change_golden_policy_or_select_arbitrary_questions
     verify_smoke(profile, suite, release, offline, runtime)
     report = proposal(profile, runtime)
     assert report["aws_executed"] is False and report["real_retrieval_measured"] is False
-    assert report["worst_case_estimated_usd"] == "0.00702"
+    assert report["worst_case_estimated_usd"] == "0.15"
     altered = profile.model_copy(update={"case_ids": (*profile.case_ids[:-1], "invented")})
     with pytest.raises(ValueError, match="binding_invalid"):
         verify_smoke(altered, suite, release, offline, runtime)
+
+
+def test_comparison_profile_uses_the_same_cases_oracles_and_policy():
+    baseline, suite, release, offline, runtime = smoke_inputs()
+    comparison = load_graph_config(ROOT / "agent/graph.sonnet-smoke.v1.json")
+    profile = BedrockSmokeProfile.model_validate_json(
+        (ROOT / "agent/sonnet-smoke.v1.json").read_bytes()
+    )
+    verify_smoke(profile, suite, release, offline, comparison)
+    assert profile.case_ids == baseline.case_ids
+    assert comparison.config.chat.model.model_id != runtime.config.chat.model.model_id
+    assert comparison.config_id != runtime.config_id
 
 
 def test_real_transport_smoke_over_fixtures_compares_frozen_labels_without_echoing_runtime_policy():
@@ -322,7 +400,9 @@ def test_real_transport_smoke_over_fixtures_compares_frozen_labels_without_echoi
             step = scripted.pop(0)
             return response(step.body)
 
-    provider = BedrockChatProvider(runtime.chat, profile.circuit, client=Replies())
+    provider = BedrockChatProvider(
+        runtime.chat, profile.circuit, client=Replies(), profiles=Profiles(runtime.chat)
+    )
     report = asyncio.run(run_smoke(profile, suite, runtime, provider))
     assert report["status"] == "passed" and report["cases_passed"] == 6
     assert report["data_sources"] == "frozen_fixtures" and report["ai12_closed"] is False
@@ -332,13 +412,61 @@ def test_real_transport_smoke_over_fixtures_compares_frozen_labels_without_echoi
 def test_smoke_stops_after_provider_failure_and_reports_reserved_cost():
     profile, suite, release, offline, runtime = smoke_inputs()
     provider = BedrockChatProvider(
-        runtime.chat, profile.circuit, client=Client(error="AccessDeniedException")
+        runtime.chat,
+        profile.circuit,
+        client=Client(error="AccessDeniedException"),
+        profiles=Profiles(runtime.chat),
     )
     report = asyncio.run(run_smoke(profile, suite, runtime, provider))
     assert report["status"] == "failed" and len(report["cases"]) == 1
     assert report["cases"][0]["error_code"] == "provider_unavailable"
     assert report["inference_requests"] == 1
-    assert report["estimated_or_reserved_usd"] == "0.0002678"
+    assert report["estimated_or_reserved_usd"] == "0.008382"
+    assert report["provider_diagnostics"] == [
+        {
+            "operation": "converse",
+            "reason": "provider_rejected",
+            "kind": "auth",
+            "code": "AccessDeniedException",
+        }
+    ]
+    assert PRIVATE not in json.dumps(report)
+
+
+def test_invalid_response_usage_produces_bounded_numeric_diagnostic_without_content():
+    run, provider = boundary(Client(reply=response(body=PRIVATE, inputs=121)))
+    with pytest.raises(ChatFailure):
+        asyncio.run(run.call("plan", "Show sales."))
+    assert provider.diagnostics() == [
+        {
+            "operation": "converse",
+            "reason": "response_schema_invalid",
+            "counted_input_tokens": 120,
+            "inputTokens": 121,
+            "outputTokens": 20,
+            "totalTokens": 141,
+        }
+    ]
+    assert PRIVATE not in json.dumps(provider.diagnostics())
+    provider.diagnostics()[0]["inputTokens"] = 0
+    assert provider.diagnostics()[0]["inputTokens"] == 121
+
+
+def test_actual_usage_below_count_tokens_settles_lower_cost_without_relaxing_upper_bound():
+    run, provider = boundary(Client(count=4908, reply=response(inputs=4891)))
+    result = asyncio.run(run.call("plan", "Show sales."))
+    assert result.kind == "tool_plan"
+    assert run.input_tokens == 4891 and run.output_tokens == 20
+    assert provider.count_requests == provider.inference_requests == 1
+    assert not provider.diagnostics()
+
+
+@pytest.mark.parametrize("inputs", [0, -1])
+def test_nonpositive_actual_input_usage_is_rejected(inputs):
+    run, provider = boundary(Client(reply=response(inputs=inputs)))
+    with pytest.raises(ChatFailure):
+        asyncio.run(run.call("plan", "Show sales."))
+    assert run.input_tokens == 120 and run.output_tokens == 400
 
 
 def smoke_args():

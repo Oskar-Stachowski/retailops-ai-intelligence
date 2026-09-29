@@ -190,7 +190,7 @@ def test_invalid_prompt_and_budget_bindings_are_rejected(mutation):
     elif mutation == "deadline":
         value["tool_policy"]["request_deadline_seconds"] = 46.0
     else:
-        value["budget"]["max_output_tokens"] = 1501
+        value["budget"]["max_output_tokens"] = 3001
     with pytest.raises(ValueError):
         resolve_chat_config(AgentChatConfig.model_validate_json(json.dumps(value)))
 
