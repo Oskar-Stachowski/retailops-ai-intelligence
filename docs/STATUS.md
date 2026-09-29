@@ -17,9 +17,13 @@ smoke, partycje, truth opt-in i odłączony wheel.
 **AI 03.5 — curated:** [runbook](curated.md) opisuje jawne mappings,
 normalizację, quarantine, immutable IDs i odczyt z pełnej historii wersji.
 [Evidence](evidence/03-05-curated.md) podaje 743 testy i pomiary smoke/as-of.
-Kolejny zakres to 03.6 bramka cross-repo. 04/06 pozostają zamknięte.
+[AI 03.6 — bramka cross-repo](evidence/03-06-cross-repo.md) wiąże oba repo
+przez pełne smoke i przypięte rewizje. Końcowy odbiór RetailOps określa wejście
+do 04/06 oraz odrębne readiness use cases.
 Branch `ai/03-04-importer` ma osobny worktree; AI 12 rozwija się niezależnie.
-Publikacja branchy 03 i zdalne Required CI nie zostały wykonane.
+Branch 03 jest opublikowany w [PR #5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/5).
+[Required CI implementacji 5190134](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36537300250)
+ma success: 743 testy, pełne check i rzeczywisty Compose/persistence.
 
 ## Etap 11
 
@@ -53,9 +57,9 @@ wykonywalne kontrakty danych/run/tool, jawne migracje i Required CI.
 [Uruchomienie](local-stack.md), [uprawnienia](access-control.md),
 [kontrakty](data-contracts.md), [odbiór zdalny](evidence/01-remote-ci.md).
 
-Najbliższy zakres danych to **AI 03.6**: pełna bramka cross-repo.
-Upstream ma lokalny odbiór Parquet,
-immutable eksportera i handoff fixture. Równolegle można przygotować
+[Bieżący odbiór danych](evidence/03-06-cross-repo.md) jest wspólny z RetailOps.
+Po pełnej bramce 03 można rozdzielić forecasting **04** w AI i ledger **06**
+w RetailOps; nowe źródło po 06 wymaga ponownego importu i zależnych ocen. Równolegle można przygotować
 interfejsy i test doubles **AI 12**. Pełne zamknięcie agenta wymaga **AI 10 i 11**;
 11 jest gotowy, 10 nadal należy do późniejszego ciągu danych/ML/integracji.
 [Pisemna mapa etapów i repozytoriów](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/plans/ai/kolejnosc-i-repozytoria.md).

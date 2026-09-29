@@ -81,3 +81,5 @@ Dokumentację dla ludzi utrzymujemy w `docs/`; root README jest wejściem,
 a licencja i konfiguracje narzędzi pozostają przy kodzie. Usuwamy rozwiązane
 wnioski i wykonane zadania z aktywnej listy. Evidence opisuje pomiar i jego
 ograniczenia; nie jest listą zakończonych zadań ani deklaracją wdrożenia.
+
+- [Pełna bramka cross-repo AI 03.6](evidence/03-06-cross-repo.md) — wspólny odbiór RetailOps i AI, publikacja oraz kolejne etapy.
