@@ -19,6 +19,10 @@ make check UV=.tools/bin/uv
 ```
 
 Przy uv dostępnym w PATH można użyć `make bootstrap` i `make check` bez override.
+Kontrole instalują opcjonalny extra `snapshot` dla typed importera; przy ręcznym
+uruchomieniu całych testów użyj `uv run --locked --extra snapshot pytest`.
+[Osobne CLI importera](source-snapshot-import.md) nie wymaga konfiguracji API/DB.
+[CLI curated](curated.md) buduje dane i odczytuje historię as-of z tego samego extra.
 Wszystkie polecenia projektu korzystają z tego samego pakietu, także
 `uv run --locked python -m retailops_ai`. `config-check` niczego nie tworzy,
 nie sprawdza DB, nie wykonuje zapytań sieciowych i nie potwierdza readiness usług.
@@ -39,6 +43,9 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make type-check` | Mypy strict dla pakietu i helperów |
 | `make test` | Konfiguracja, HTTP, provider fakes, kontrakty/CI oraz rzeczywisty proces na loopback |
 | `make docs-check` | Lokalne linki i minimalny kontrakt workflow |
+| `make handoff-check` | Odbiór przypiętego fixture source snapshot 1.0.0 |
+| `make snapshot-import-check` | Dwa świeże import/reimport/verify, immutable bytes i limity zasobów smoke |
+| `make curated-check` | Dwa świeże import/build/rebuild/verify/as-of, mapping/quarantine i zasoby smoke |
 | `make package` | Wheel i sdist w ignorowanym `dist/` |
 | `make check` | Wszystkie powyższe |
 | `make secrets` | Gitleaks 8.30.1: historia Git i aktualny katalog, z redakcją |

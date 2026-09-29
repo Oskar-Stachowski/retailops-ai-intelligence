@@ -1,0 +1,119 @@
+{
+  "benchmark_host": "macOS ARM64; other local checks ran concurrently; resource measurement is per fresh worker process",
+  "benchmark_scope": "import/build/rebuild/verify/two independently checked source as-of origins; generator and upstream qualification excluded",
+  "benchmarks": {
+    "fixture": {
+      "curated_dataset_id": "curated-sha256-6d7c6088199cd0505ad5a91ff0fbca171960e900e4a00f2e3dfb55a0617cade3",
+      "peak_rss_mib": [
+        100.78125,
+        104.21875
+      ],
+      "report": "03-05/fixture-curated.json",
+      "rows": 31171,
+      "seconds": [
+        49.58698154101148,
+        66.75276129200938
+      ]
+    },
+    "temporal": {
+      "curated_dataset_id": "curated-sha256-a1073a9c1aac2b213d144f1285056b81a699f095e87c88746956b55f265c4c38",
+      "peak_rss_mib": [
+        100.53125,
+        99.859375
+      ],
+      "report": "03-05/temporal-curated.json",
+      "rows": 52973,
+      "seconds": [
+        134.65155495800718,
+        122.13686629100994
+      ]
+    },
+    "truth": {
+      "curated_dataset_id": "curated-sha256-61694528eec30be5d64b7876537ebb2f2c66d41719138fe79077ee694b59ee6d",
+      "peak_rss_mib": [
+        102.25,
+        106.078125
+      ],
+      "report": "03-05/truth-curated.json",
+      "rows": 31171,
+      "seconds": [
+        70.83372616600536,
+        65.03102366700477
+      ]
+    }
+  },
+  "branch": "ai/03-04-importer",
+  "date": "2026-09-29",
+  "fixture_manifest": "03-05/fixture-curated-manifest.json",
+  "implementation_commits": [
+    "4e4717b9304a8668103aa4c0f5d65de46a57453a",
+    "073b22e38953472e622f6f2c44a95963f7717136"
+  ],
+  "inputs": "Pinned fixture (producer 6561481) plus the real 03.4 temporal/truth exports (producer b5d2804); no newly generated source claimed",
+  "limitations": [
+    "03.6 full generator-to-curated cross-repo gate remains open",
+    "remote Required CI and push not run",
+    "no model/feature/label training or AWS calls",
+    "static source attributes without availability remain not_recorded",
+    "same-UID processes are not isolated by file modes",
+    "SIGKILL may leave private hidden staging for checked owner cleanup",
+    "full Linux and ai-dev/ai-training resource qualification not performed"
+  ],
+  "make_integration_command": "make -o lint -o type-check -o test -o docs-check -o handoff-check -o snapshot-import-check -o contracts-check -o package -o compose-config check UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv",
+  "new_tests": 37,
+  "next_scope": "03.6",
+  "published_fixture": "data/generated/curated/curated-sha256-6d7c6088199cd0505ad5a91ff0fbca171960e900e4a00f2e3dfb55a0617cade3",
+  "quality": {
+    "compose_config": "passed",
+    "contract_checks": "passed",
+    "docs_required_ci_contract": "passed",
+    "format": "passed",
+    "gitleaks_staged": "passed",
+    "make_curated_check": "passed",
+    "mypy_strict_files": 117,
+    "ruff": "passed",
+    "wheel_sdist": "passed"
+  },
+  "remote_required_ci": "not_run",
+  "repository": "retailops-ai-intelligence",
+  "stage_id": "03.5",
+  "status": "passed",
+  "tests": {
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "743",
+    "time": "423.775"
+  },
+  "transform": {
+    "code_files": {
+      "contracts/curated/v1/curated_manifest.schema.json": "fa6c1bec58e12d555df79e2a183aa6436ae7f5bb9a5e8e9f11f2d67ca43425be",
+      "curated/__init__.py": "90b6f440253a1b7dd698de16dd7bb6e757ef638723b6adc2ab5c352d367dddc2",
+      "curated/builder.py": "c008f5857f110fdb6c40a080bf12ed754b602d761b20bfef6a5dcbfca1a9db6f",
+      "curated/cli.py": "5c4ccff7e751fcb77b3279f28745994135311d314be286f70e2f28831f27e01a",
+      "curated/contract.py": "14d8df6b28fbcc824dc32b190721125135d002c9eb5e58ebf598358f9b9a4e7c",
+      "curated/reader.py": "acdcc64426389097d5e619b15eb7c214ab66b71c29c5e2e8e059fa946ba31c11",
+      "curated/transform.py": "808a239bebd8bc1a565de95736e99c8837d577b4cb12e83bc417cf1b1018b61c",
+      "source_snapshot/__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+      "source_snapshot/canonical.py": "e21bb102037bb7bab2e1cf77359e1a23478197aaf1095092167fad16bd6e7cbb",
+      "source_snapshot/cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+      "source_snapshot/files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+      "source_snapshot/importer.py": "54b24d28a22068cada571d37094510b8e1dcc2d3e6c0eb65567bc702b9bc0112",
+      "source_snapshot/protocol.py": "eda46d150967182f3c943b201909629e6c16b976dc21c44faa9fbb68d915f6ae",
+      "source_snapshot/publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+      "source_snapshot/tables.py": "1f5562f10ba4bd4cfbbefa3331adb4f300c8b1672d4fb867779176325a6c001d"
+    },
+    "code_sha256": "562353ec212e4b24985d0e253c280778fe16eb478116a54752ab98029a294a41",
+    "dependency_sha256": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d",
+    "handoff_sha256": "0b99b7a5ea09dffed17a7fbc6c2ebc38cabea4340d73d6729bbdbe5b08d74a8b",
+    "pyarrow_version": "25.0.1",
+    "python_version": "3.11.15",
+    "version": "1.0.0"
+  },
+  "wheel": {
+    "isolated_python": true,
+    "loaded_installed_wheel": true,
+    "report": "03-05/wheel-probe.json",
+    "sha256": "233b56a61a15a45e7c1a1b7219f5910ba73869727ad4b043a396cd092fa8b8aa"
+  }
+}

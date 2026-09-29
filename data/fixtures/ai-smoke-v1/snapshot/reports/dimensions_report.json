@@ -1,0 +1,106 @@
+{
+  "active_daily_combinations": 1612,
+  "checks": [
+    {
+      "check_id": "dimension_schema_pk_sku",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 488,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "selling_stock_channel_region",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 3,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "assignment_routing_versions",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 6,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "catalog_lifecycle_assortment",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 1612,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "calendar_exact_coverage",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 90,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "category_season_coverage",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 240,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "legacy_adapter_consistency",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 25,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    },
+    {
+      "check_id": "sales_active_open_known_routing",
+      "description": "All required records satisfy the policy.",
+      "evidence": "dimensions_report.json",
+      "policy_version": "retail-dimensions-1.0.0",
+      "sample_size": 6096,
+      "severity": "hard",
+      "status": "passed",
+      "threshold": 0,
+      "use_case": "source_dimensions",
+      "value": 0
+    }
+  ],
+  "inventory_ready": false,
+  "nominal_daily_grid": 1800,
+  "observation_panel_status": "not_ready",
+  "policy_version": "retail-dimensions-1.0.0",
+  "status": "passed"
+}

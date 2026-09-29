@@ -1,0 +1,75 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "product_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "quantity",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "unit_price",
+      "nullable": false,
+      "type": "decimal128(38, 2)"
+    },
+    {
+      "name": "total_amount",
+      "nullable": false,
+      "type": "decimal128(38, 2)"
+    },
+    {
+      "name": "currency",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "region",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "sold_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "order_reference",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "observed_sales",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "promotion_applied",
+      "nullable": false,
+      "type": "bool"
+    },
+    {
+      "name": "data_quality_status",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "ingested_at",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    }
+  ],
+  "table": "sales"
+}

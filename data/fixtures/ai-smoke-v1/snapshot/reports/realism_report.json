@@ -1,0 +1,1718 @@
+{
+  "limitations": "Bounded synthetic data is not a production distribution or model benchmark.",
+  "metrics": [
+    {
+      "description": "Denominator includes unsold catalog products; fewer than 50 products is diagnostic only.",
+      "evidence": "realism_report.json",
+      "metric_id": "top_20_percent_catalog_revenue_share",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 20,
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 0.8,
+        "min": 0.45,
+        "minimum_sample": 50
+      },
+      "use_case": "forecast_source",
+      "value": 0.4880028193423317
+    },
+    {
+      "description": "One row per distinct product in an order; units are not item count.",
+      "evidence": "realism_report.json",
+      "metric_id": "average_distinct_order_items",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 3244,
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 3.5,
+        "min": 1.2,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 1.8791615289765722
+    },
+    {
+      "description": "Closed days are excluded from denominator; missing never becomes zero.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 1469,
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0
+      },
+      "use_case": "forecast_source",
+      "value": 0.12049012933968686
+    },
+    {
+      "description": "Observed promoted/non-promoted means are confounded; simulation truth is not an observed effect.",
+      "evidence": "realism_report.json",
+      "metric_id": "causal_promotion_uplift",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 6096,
+      "severity": "diagnostic",
+      "status": "not_ready",
+      "threshold": null,
+      "use_case": "forecast_source",
+      "value": null
+    },
+    {
+      "description": "Inventory ledger is not qualified before AI-06.",
+      "evidence": "realism_report.json",
+      "metric_id": "stockout_rate",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 0,
+      "severity": "diagnostic",
+      "status": "not_ready",
+      "threshold": null,
+      "use_case": "forecast_source",
+      "value": null
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:clearance_product/Electronics/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Electronics",
+        "channel": "online",
+        "demand_bucket": "clearance_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:clearance_product/Electronics/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Electronics",
+        "channel": "store",
+        "demand_bucket": "clearance_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.15384615384615385
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:clearance_product/Pet Care/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Pet Care",
+        "channel": "online",
+        "demand_bucket": "clearance_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:clearance_product/Pet Care/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Pet Care",
+        "channel": "store",
+        "demand_bucket": "clearance_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.11538461538461539
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:core_product/Beauty/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Beauty",
+        "channel": "online",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:core_product/Beauty/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Beauty",
+        "channel": "store",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:core_product/Fashion/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 23,
+      "segment": {
+        "category": "Fashion",
+        "channel": "online",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:core_product/Fashion/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 40,
+      "segment": {
+        "category": "Fashion",
+        "channel": "store",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:core_product/Grocery/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Grocery",
+        "channel": "online",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:core_product/Grocery/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Grocery",
+        "channel": "store",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:core_product/Home Improvement/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Home Improvement",
+        "channel": "online",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:core_product/Home Improvement/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Home Improvement",
+        "channel": "store",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:declining_product/Beauty/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Beauty",
+        "channel": "online",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:declining_product/Beauty/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Beauty",
+        "channel": "store",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.038461538461538464
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:declining_product/Sports/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 23,
+      "segment": {
+        "category": "Sports",
+        "channel": "online",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:declining_product/Sports/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 40,
+      "segment": {
+        "category": "Sports",
+        "channel": "store",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:declining_product/Toys/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Toys",
+        "channel": "online",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.03333333333333333
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:declining_product/Toys/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Toys",
+        "channel": "store",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.17307692307692307
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:hero_product/Electronics/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Electronics",
+        "channel": "online",
+        "demand_bucket": "hero_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:hero_product/Electronics/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Electronics",
+        "channel": "store",
+        "demand_bucket": "hero_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:long_tail/Fashion/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 23,
+      "segment": {
+        "category": "Fashion",
+        "channel": "online",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.7391304347826086
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:long_tail/Fashion/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 40,
+      "segment": {
+        "category": "Fashion",
+        "channel": "store",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.65
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:long_tail/Grocery/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Grocery",
+        "channel": "online",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.5
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:long_tail/Grocery/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Grocery",
+        "channel": "store",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.4423076923076923
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:long_tail/Home Improvement/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Home Improvement",
+        "channel": "online",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.9
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:long_tail/Home Improvement/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Home Improvement",
+        "channel": "store",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.8269230769230769
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:new_product/Fashion/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 23,
+      "segment": {
+        "category": "Fashion",
+        "channel": "online",
+        "demand_bucket": "new_product"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:new_product/Fashion/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 20,
+      "segment": {
+        "category": "Fashion",
+        "channel": "store",
+        "demand_bucket": "new_product"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:new_product/Grocery/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Grocery",
+        "channel": "online",
+        "demand_bucket": "new_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:new_product/Grocery/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 26,
+      "segment": {
+        "category": "Grocery",
+        "channel": "store",
+        "demand_bucket": "new_product"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:new_product/Home Improvement/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Home Improvement",
+        "channel": "store",
+        "demand_bucket": "new_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:seasonal/Electronics/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Electronics",
+        "channel": "online",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:seasonal/Electronics/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Electronics",
+        "channel": "store",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:seasonal/Pet Care/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Pet Care",
+        "channel": "online",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:seasonal/Pet Care/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Pet Care",
+        "channel": "store",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:seasonal/Sports/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 23,
+      "segment": {
+        "category": "Sports",
+        "channel": "online",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:seasonal/Sports/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 40,
+      "segment": {
+        "category": "Sports",
+        "channel": "store",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:seasonal/Toys/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 30,
+      "segment": {
+        "category": "Toys",
+        "channel": "online",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Open active days only; closed/missing are not zero observations.",
+      "evidence": "realism_report.json",
+      "metric_id": "open_panel_zero_rate:seasonal/Toys/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Toys",
+        "channel": "store",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:clearance_product/Electronics/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 33,
+      "segment": {
+        "category": "Electronics",
+        "channel": "online",
+        "demand_bucket": "clearance_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.24242424242424243
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:clearance_product/Electronics/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 58,
+      "segment": {
+        "category": "Electronics",
+        "channel": "store",
+        "demand_bucket": "clearance_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.13793103448275862
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:clearance_product/Pet Care/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 44,
+      "segment": {
+        "category": "Pet Care",
+        "channel": "online",
+        "demand_bucket": "clearance_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.022727272727272728
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:clearance_product/Pet Care/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 71,
+      "segment": {
+        "category": "Pet Care",
+        "channel": "store",
+        "demand_bucket": "clearance_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.014084507042253521
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:core_product/Beauty/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 308,
+      "segment": {
+        "category": "Beauty",
+        "channel": "online",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.10714285714285714
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:core_product/Beauty/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 522,
+      "segment": {
+        "category": "Beauty",
+        "channel": "store",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.07279693486590039
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:core_product/Fashion/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 494,
+      "segment": {
+        "category": "Fashion",
+        "channel": "online",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.32793522267206476
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:core_product/Fashion/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 697,
+      "segment": {
+        "category": "Fashion",
+        "channel": "store",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.25251076040172166
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:core_product/Grocery/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 418,
+      "segment": {
+        "category": "Grocery",
+        "channel": "online",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.01674641148325359
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:core_product/Grocery/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 723,
+      "segment": {
+        "category": "Grocery",
+        "channel": "store",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.011065006915629323
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:core_product/Home Improvement/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 554,
+      "segment": {
+        "category": "Home Improvement",
+        "channel": "online",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.1624548736462094
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:core_product/Home Improvement/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 946,
+      "segment": {
+        "category": "Home Improvement",
+        "channel": "store",
+        "demand_bucket": "core_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.09302325581395349
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:declining_product/Beauty/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 68,
+      "segment": {
+        "category": "Beauty",
+        "channel": "online",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.04411764705882353
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:declining_product/Beauty/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 112,
+      "segment": {
+        "category": "Beauty",
+        "channel": "store",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.044642857142857144
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:declining_product/Sports/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 63,
+      "segment": {
+        "category": "Sports",
+        "channel": "online",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.23809523809523808
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:declining_product/Sports/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 107,
+      "segment": {
+        "category": "Sports",
+        "channel": "store",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.037383177570093455
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:declining_product/Toys/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 33,
+      "segment": {
+        "category": "Toys",
+        "channel": "online",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.030303030303030304
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:declining_product/Toys/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 57,
+      "segment": {
+        "category": "Toys",
+        "channel": "store",
+        "demand_bucket": "declining_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.05263157894736842
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:hero_product/Electronics/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 1242,
+      "segment": {
+        "category": "Electronics",
+        "channel": "online",
+        "demand_bucket": "hero_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.12962962962962962
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:hero_product/Electronics/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 2236,
+      "segment": {
+        "category": "Electronics",
+        "channel": "store",
+        "demand_bucket": "hero_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.07915921288014312
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:long_tail/Fashion/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 6,
+      "segment": {
+        "category": "Fashion",
+        "channel": "online",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.6666666666666666
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:long_tail/Fashion/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 14,
+      "segment": {
+        "category": "Fashion",
+        "channel": "store",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.35714285714285715
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:long_tail/Grocery/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 15,
+      "segment": {
+        "category": "Grocery",
+        "channel": "online",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:long_tail/Grocery/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 29,
+      "segment": {
+        "category": "Grocery",
+        "channel": "store",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:long_tail/Home Improvement/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 3,
+      "segment": {
+        "category": "Home Improvement",
+        "channel": "online",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:long_tail/Home Improvement/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 9,
+      "segment": {
+        "category": "Home Improvement",
+        "channel": "store",
+        "demand_bucket": "long_tail"
+      },
+      "severity": "diagnostic",
+      "status": "not_evaluable",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.1111111111111111
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:new_product/Fashion/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 104,
+      "segment": {
+        "category": "Fashion",
+        "channel": "online",
+        "demand_bucket": "new_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.4423076923076923
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:new_product/Fashion/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 52,
+      "segment": {
+        "category": "Fashion",
+        "channel": "store",
+        "demand_bucket": "new_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.1346153846153846
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:new_product/Grocery/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 104,
+      "segment": {
+        "category": "Grocery",
+        "channel": "online",
+        "demand_bucket": "new_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.019230769230769232
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:new_product/Grocery/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 121,
+      "segment": {
+        "category": "Grocery",
+        "channel": "store",
+        "demand_bucket": "new_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.008264462809917356
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:new_product/Home Improvement/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 217,
+      "segment": {
+        "category": "Home Improvement",
+        "channel": "store",
+        "demand_bucket": "new_product"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.08755760368663594
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:seasonal/Electronics/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 146,
+      "segment": {
+        "category": "Electronics",
+        "channel": "online",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.18493150684931506
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:seasonal/Electronics/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 248,
+      "segment": {
+        "category": "Electronics",
+        "channel": "store",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.06048387096774194
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:seasonal/Pet Care/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 149,
+      "segment": {
+        "category": "Pet Care",
+        "channel": "online",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.053691275167785234
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:seasonal/Pet Care/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 244,
+      "segment": {
+        "category": "Pet Care",
+        "channel": "store",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.0
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:seasonal/Sports/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 117,
+      "segment": {
+        "category": "Sports",
+        "channel": "online",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.15384615384615385
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:seasonal/Sports/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 194,
+      "segment": {
+        "category": "Sports",
+        "channel": "store",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.08247422680412371
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:seasonal/Toys/online",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 179,
+      "segment": {
+        "category": "Toys",
+        "channel": "online",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.09497206703910614
+    },
+    {
+      "description": "Qualified refunded units over original sold units, including mature tail; no historical label rewrite.",
+      "evidence": "realism_report.json",
+      "metric_id": "final_refunded_unit_rate:seasonal/Toys/store",
+      "policy_version": "observed-sales-realism-1.1.0",
+      "sample_size": 310,
+      "segment": {
+        "category": "Toys",
+        "channel": "store",
+        "demand_bucket": "seasonal"
+      },
+      "severity": "diagnostic",
+      "status": "passed",
+      "threshold": {
+        "max": 1,
+        "min": 0,
+        "minimum_sample": 30
+      },
+      "use_case": "forecast_source",
+      "value": 0.03225806451612903
+    }
+  ],
+  "policy_version": "observed-sales-realism-1.1.0",
+  "profile": "ai-smoke",
+  "seed": 42,
+  "status": "diagnostic"
+}

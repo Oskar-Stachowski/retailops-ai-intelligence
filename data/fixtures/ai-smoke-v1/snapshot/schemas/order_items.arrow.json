@@ -1,0 +1,40 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "order_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "product_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "quantity",
+      "nullable": false,
+      "type": "int64"
+    },
+    {
+      "name": "unit_price",
+      "nullable": false,
+      "type": "decimal128(38, 2)"
+    },
+    {
+      "name": "total_amount",
+      "nullable": false,
+      "type": "decimal128(38, 2)"
+    },
+    {
+      "name": "currency",
+      "nullable": false,
+      "type": "string"
+    }
+  ],
+  "table": "order_items"
+}

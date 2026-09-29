@@ -1,0 +1,60 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "sale_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "order_item_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "product_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "selling_location_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "channel",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "business_date",
+      "nullable": false,
+      "type": "date32[day]"
+    },
+    {
+      "name": "as_of_time",
+      "nullable": false,
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "price_plan_id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "promotion_plan_id",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "pricing_policy_version",
+      "nullable": false,
+      "type": "string"
+    }
+  ],
+  "table": "sale_price_references"
+}

@@ -1,0 +1,35 @@
+{
+  "schema": [
+    {
+      "name": "id",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "category_code",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "department",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "segment",
+      "nullable": false,
+      "type": "string"
+    },
+    {
+      "name": "seasonal_months",
+      "nullable": true,
+      "type": "string"
+    }
+  ],
+  "table": "catalog_categories"
+}

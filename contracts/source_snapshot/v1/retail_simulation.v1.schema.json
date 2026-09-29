@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Retail simulation parameters 1.0.0 (string CSV cells)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "product_simulation_parameters",
+    "store_simulation_parameters"
+  ],
+  "properties": {
+    "product_simulation_parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "product_id",
+          "demand_class",
+          "demand_weight",
+          "price_elasticity",
+          "seasonal_pattern",
+          "return_rate",
+          "simulation_policy_version"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "product_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "demand_class": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "hero_product",
+              "core_product",
+              "seasonal",
+              "new_product",
+              "declining_product",
+              "clearance_product",
+              "long_tail"
+            ]
+          },
+          "demand_weight": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+          },
+          "price_elasticity": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+          },
+          "seasonal_pattern": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "seasonal_peak",
+              "holiday_peak",
+              "spring_summer_peak",
+              "stable",
+              "weekly_sensitive"
+            ]
+          },
+          "return_rate": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+          },
+          "simulation_policy_version": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "retail-simulation-parameters-1.0.0"
+            ]
+          }
+        }
+      }
+    },
+    "store_simulation_parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "legacy_store_id",
+          "traffic_multiplier",
+          "promo_sensitivity",
+          "simulation_policy_version"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "legacy_store_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "traffic_multiplier": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+          },
+          "promo_sensitivity": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+          },
+          "simulation_policy_version": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "retail-simulation-parameters-1.0.0"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

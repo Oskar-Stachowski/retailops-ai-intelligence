@@ -1,0 +1,581 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://retailops.local/contracts/curated/1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "curated_dataset_id": {
+      "type": "string",
+      "pattern": "^curated-sha256-[0-9a-f]{64}$"
+    },
+    "descriptor": {
+      "$ref": "#/$defs/descriptor"
+    },
+    "tables": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/table"
+      },
+      "minItems": 25,
+      "maxItems": 25
+    },
+    "quarantine": {
+      "$ref": "#/$defs/quarantine"
+    },
+    "readiness": {
+      "$ref": "#/$defs/readiness"
+    },
+    "watermarks": {
+      "type": "object",
+      "minProperties": 1
+    },
+    "time_semantics": {
+      "const": {
+        "business_timezone": "UTC",
+        "effective_interval": "half_open",
+        "history_table": "daily_demand_versions",
+        "as_of": "curated_available_at<=origin"
+      }
+    },
+    "evaluation_truth": {
+      "const": {
+        "included": false,
+        "access": "separate_parent_import_only"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "curated_dataset_id",
+    "descriptor",
+    "tables",
+    "quarantine",
+    "readiness",
+    "watermarks",
+    "time_semantics",
+    "evaluation_truth"
+  ],
+  "$defs": {
+    "column": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "nullable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "nullable"
+      ]
+    },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "date_start": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date_end": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "date_start",
+        "date_end",
+        "value_count"
+      ]
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "row_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "path",
+        "bytes",
+        "sha256",
+        "row_count"
+      ]
+    },
+    "logical_table": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "table": {
+          "type": "string"
+        },
+        "classification": {
+          "const": "curated"
+        },
+        "source_data_class": {
+          "enum": [
+            "source_plan",
+            "source_observation"
+          ]
+        },
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/column"
+          },
+          "minItems": 1
+        },
+        "grain": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "source_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rejected_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "row_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "field_ranges": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/range"
+          }
+        }
+      },
+      "required": [
+        "table",
+        "classification",
+        "source_data_class",
+        "schema",
+        "grain",
+        "source_rows",
+        "rejected_rows",
+        "row_count",
+        "content_sha256",
+        "field_ranges"
+      ]
+    },
+    "table": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "table": {
+          "type": "string"
+        },
+        "classification": {
+          "const": "curated"
+        },
+        "source_data_class": {
+          "enum": [
+            "source_plan",
+            "source_observation"
+          ]
+        },
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/column"
+          },
+          "minItems": 1
+        },
+        "grain": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "source_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rejected_rows": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "row_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "field_ranges": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/range"
+          }
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          },
+          "minItems": 1,
+          "maxItems": 10000
+        }
+      },
+      "required": [
+        "table",
+        "classification",
+        "source_data_class",
+        "schema",
+        "grain",
+        "source_rows",
+        "rejected_rows",
+        "row_count",
+        "content_sha256",
+        "field_ranges",
+        "files"
+      ]
+    },
+    "logical_quarantine": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/column"
+          },
+          "minItems": 1
+        },
+        "grain": {
+          "const": []
+        },
+        "reasons": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "row_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "field_ranges": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/range"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "grain",
+        "reasons",
+        "row_count",
+        "content_sha256",
+        "field_ranges"
+      ]
+    },
+    "quarantine": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/column"
+          },
+          "minItems": 1
+        },
+        "grain": {
+          "const": []
+        },
+        "reasons": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "row_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "field_ranges": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/range"
+          }
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          },
+          "minItems": 1,
+          "maxItems": 10000
+        }
+      },
+      "required": [
+        "schema",
+        "grain",
+        "reasons",
+        "row_count",
+        "content_sha256",
+        "field_ranges",
+        "files"
+      ]
+    },
+    "descriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "role": {
+          "const": "curated"
+        },
+        "canonicalization_version": {
+          "const": "retailops-curated-exact-1.0.0"
+        },
+        "classification": {
+          "const": "curated"
+        },
+        "parent_source_dataset_id": {
+          "type": "string",
+          "pattern": "^source-sha256-[0-9a-f]{64}$"
+        },
+        "parent_snapshot_id": {
+          "type": "string",
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$"
+        },
+        "source_schema_version": {
+          "const": "2.6.0"
+        },
+        "source_parameters": {
+          "type": "object",
+          "properties": {
+            "business_timezone": {
+              "const": "UTC"
+            }
+          },
+          "required": [
+            "business_timezone"
+          ]
+        },
+        "config": {
+          "$ref": "#/$defs/config"
+        },
+        "config_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "transform": {
+          "$ref": "#/$defs/transform"
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/logical_table"
+          },
+          "minItems": 25,
+          "maxItems": 25
+        },
+        "quarantine": {
+          "$ref": "#/$defs/logical_quarantine"
+        },
+        "watermarks": {
+          "type": "object",
+          "minProperties": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "role",
+        "canonicalization_version",
+        "classification",
+        "parent_source_dataset_id",
+        "parent_snapshot_id",
+        "source_schema_version",
+        "source_parameters",
+        "config",
+        "config_sha256",
+        "transform",
+        "tables",
+        "quarantine",
+        "watermarks"
+      ]
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currencies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "business_timezone": {
+          "const": "UTC"
+        },
+        "dictionary_version": {
+          "const": "retailops-curated-dictionaries-1.0.0"
+        },
+        "quantity_policy": {
+          "const": "saleable_pcs_no_pack_or_fx_conversion"
+        },
+        "mapping_policy": {
+          "const": "effective_half_open_available_at_v1"
+        },
+        "quarantine_policy": {
+          "const": "any_rejection_blocks_ready_publication"
+        }
+      },
+      "required": [
+        "currencies",
+        "business_timezone",
+        "dictionary_version",
+        "quantity_policy",
+        "mapping_policy",
+        "quarantine_policy"
+      ]
+    },
+    "transform": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "const": "1.0.0"
+        },
+        "code_files": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "code_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "dependency_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "handoff_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "pyarrow_version": {
+          "type": "string"
+        },
+        "python_version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "code_files",
+        "code_sha256",
+        "dependency_sha256",
+        "handoff_sha256",
+        "pyarrow_version",
+        "python_version"
+      ]
+    },
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "forecast_source": {
+          "enum": [
+            "passed",
+            "failed"
+          ]
+        },
+        "forecast_model": {
+          "const": "not_ready"
+        },
+        "anomaly": {
+          "const": "not_ready"
+        },
+        "stockout": {
+          "const": "not_ready"
+        },
+        "replay": {
+          "const": "not_ready"
+        },
+        "rag": {
+          "const": "not_applicable"
+        },
+        "inventory_ready": {
+          "const": false
+        }
+      },
+      "required": [
+        "forecast_source",
+        "forecast_model",
+        "anomaly",
+        "stockout",
+        "replay",
+        "rag",
+        "inventory_ready"
+      ]
+    }
+  }
+}

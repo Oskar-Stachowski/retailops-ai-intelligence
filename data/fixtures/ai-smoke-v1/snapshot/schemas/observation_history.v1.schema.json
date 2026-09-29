@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Append-only observed quantity history 1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "daily_demand_versions"
+  ],
+  "properties": {
+    "daily_demand_versions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "observation_id",
+          "business_date",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "version",
+          "observed_units",
+          "observation_status",
+          "available_at",
+          "history_policy_version"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "observation_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "business_date": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "product_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "selling_location_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "channel": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ]
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "observed_units": {
+            "type": "string",
+            "minLength": 0,
+            "pattern": "^(?:0|[1-9][0-9]*)?$"
+          },
+          "observation_status": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "observed_positive",
+              "observed_zero",
+              "closed",
+              "missing"
+            ]
+          },
+          "available_at": {
+            "type": "string",
+            "minLength": 1,
+            "format": "date-time"
+          },
+          "history_policy_version": {
+            "type": "string",
+            "minLength": 1,
+            "enum": [
+              "observed-quantity-history-1.0.0"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
