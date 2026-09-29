@@ -26,8 +26,11 @@ from retailops_ai.curated.contract import (
     decoded,
     descriptor_id,
     encoded,
+    handoff_bytes,
     record_sha,
     schema_for,
+    source_contract,
+    watermarks,
 )
 from retailops_ai.curated.transform import Index, Reject, transform
 from retailops_ai.source_snapshot.files import (
@@ -50,7 +53,6 @@ from retailops_ai.source_snapshot.importer import (
 from retailops_ai.source_snapshot.protocol import (
     Limits,
     Snapshot,
-    contract_document,
     resource_bytes,
 )
 from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
@@ -97,7 +99,7 @@ def iter_rows(root: Path, files: list[dict[str, Any]], batch_rows: int) -> Any:
                 parquet.close()
 
 
-def implementation() -> dict[str, Any]:
+def implementation(version: str = VERSION) -> dict[str, Any]:
     package = Path(__file__).parent
     files = {
         "curated/" + p.name: hashlib.sha256(p.read_bytes()).hexdigest()
@@ -105,21 +107,31 @@ def implementation() -> dict[str, Any]:
     }
     for p in sorted((package.parent / "source_snapshot").glob("*.py")):
         files["source_snapshot/" + p.name] = hashlib.sha256(p.read_bytes()).hexdigest()
-    files["contracts/curated/v1/curated_manifest.schema.json"] = hashlib.sha256(
-        manifest_schema_bytes()
+    files[f"contracts/curated/{version}/curated_manifest.schema.json"] = hashlib.sha256(
+        manifest_schema_bytes(version)
     ).hexdigest()
     return {
-        "version": VERSION,
+        "version": version,
         "code_files": files,
         "code_sha256": json_sha256(files),
         "dependency_sha256": hashlib.sha256(resource_bytes("dependencies.lock")).hexdigest(),
-        "handoff_sha256": hashlib.sha256(resource_bytes("contract.json")).hexdigest(),
+        "handoff_sha256": hashlib.sha256(handoff_bytes(version)).hexdigest(),
         "pyarrow_version": pa.__version__,
         "python_version": sys.version.split()[0],
     }
 
 
-def manifest_schema_bytes() -> bytes:
+def manifest_schema_bytes(version: str = VERSION) -> bytes:
+    if version == "1.1.0":
+        schema = files("retailops_ai.curated").joinpath("v1_1/curated_manifest.schema.json")
+        return (
+            schema.read_bytes()
+            if schema.is_file()
+            else (
+                Path(__file__).resolve().parents[3]
+                / "contracts/curated/v1_1/curated_manifest.schema.json"
+            ).read_bytes()
+        )
     schema = files("retailops_ai.curated").joinpath("curated_manifest.schema.json")
     return (
         schema.read_bytes()
@@ -132,7 +144,12 @@ def manifest_schema_bytes() -> bytes:
 
 
 def write_parts(
-    root: Path, name: str, digest: Digest, limits: Limits, budget: dict[str, int]
+    root: Path,
+    name: str,
+    digest: Digest,
+    limits: Limits,
+    budget: dict[str, int],
+    version: str = VERSION,
 ) -> list[dict[str, Any]]:
     directory = root / name
     directory.mkdir(parents=True, mode=0o700)
@@ -142,7 +159,7 @@ def write_parts(
 
     def flush() -> None:
         path = directory / f"part-{len(files):06d}.parquet"
-        arrow = pa.Table.from_pylist(batch, schema=schema_for(digest.columns))
+        arrow = pa.Table.from_pylist(batch, schema=schema_for(digest.columns, version))
         if arrow.nbytes > 64 * 1024**2:
             raise SnapshotError("curated_write_batch_size_limit")
         pq.write_table(
@@ -191,11 +208,18 @@ def derive(
     config: Config,
     limits: Limits,
 ) -> dict[str, Any]:
+    version = snapshot.manifest["schema_version"]
+    specs = source_contract(version)["fact_tables"]
+    transform_row = transform
+    if version == "1.1.0":
+        from retailops_ai.curated.inventory import transform_inventory
+
+        transform_row = transform_inventory
     facts = sorted(
         (t for t in snapshot.manifest["tables"] if t["data_class"] != "simulation_truth"),
         key=lambda t: t["table"],
     )
-    index = Index(scratch / "index.sqlite")
+    index = Index(scratch / "index.sqlite", specs)
     quarantine = Digest(scratch / "quarantine.sqlite", QUARANTINE_COLUMNS, [])
     tables: list[dict[str, Any]] = []
     reasons: dict[str, int] = {}
@@ -207,12 +231,14 @@ def derive(
         index.db.commit()
         for source in facts:
             name = source["table"]
-            digest = Digest(scratch / (name + ".sqlite"), columns_for(name), source["grain"])
+            digest = Digest(
+                scratch / (name + ".sqlite"), columns_for(name, version), source["grain"]
+            )
             rejected = 0
             try:
                 for row in iter_rows(snapshot_root, source["files"], limits.batch_rows):
                     try:
-                        normalized = transform(name, row, source["grain"], index, config)
+                        normalized = transform_row(name, row, source["grain"], index, config)
                     except Reject as exc:
                         reason = str(exc)
                         quarantine.add(
@@ -240,7 +266,9 @@ def derive(
                         "source_rows": source["row_count"],
                         "rejected_rows": rejected,
                         **digest.summary(),
-                        "files": write_parts(payload, "curated/" + name, digest, limits, budget),
+                        "files": write_parts(
+                            payload, "curated/" + name, digest, limits, budget, version
+                        ),
                     }
                 )
             finally:
@@ -250,28 +278,32 @@ def derive(
             "grain": [],
             "reasons": reasons,
             **quarantine.summary(),
-            "files": write_parts(payload, "quarantine", quarantine, limits, budget),
+            "files": write_parts(payload, "quarantine", quarantine, limits, budget, version),
         }
     finally:
         quarantine.close()
         index.close()
     logical = [{k: v for k, v in table.items() if k != "files"} for table in tables]
     descriptor = {
-        "schema_version": VERSION,
+        "schema_version": version,
         "role": "curated",
         "canonicalization_version": CANONICAL_VERSION,
         "classification": "curated",
         "parent_source_dataset_id": snapshot.source_id,
         "parent_snapshot_id": snapshot.snapshot_id,
-        "source_schema_version": "2.6.0",
+        "source_schema_version": snapshot.manifest["source"]["schema_version"],
         "source_parameters": snapshot.manifest["source"]["descriptor"]["resolved_parameters"],
-        "watermarks": snapshot.manifest["source"]["watermarks"],
+        "watermarks": watermarks(snapshot),
         "config": config.document(),
         "config_sha256": json_sha256(config.document()),
-        "transform": implementation(),
+        "transform": implementation(version),
         "tables": logical,
         "quarantine": {k: v for k, v in q.items() if k != "files"},
     }
+    if version == "1.1.0":
+        descriptor["parent_qualification_id"] = snapshot.manifest["descriptor"][
+            "parent_qualification_id"
+        ]
     readiness = {
         "forecast_source": "passed" if not q["row_count"] else "failed",
         "forecast_model": "not_ready",
@@ -279,16 +311,16 @@ def derive(
         "stockout": "not_ready",
         "replay": "not_ready",
         "rag": "not_applicable",
-        "inventory_ready": False,
+        "inventory_ready": version == "1.1.0" and not q["row_count"],
     }
     return {
-        "schema_version": VERSION,
+        "schema_version": version,
         "curated_dataset_id": descriptor_id(descriptor),
         "descriptor": descriptor,
         "tables": tables,
         "quarantine": q,
         "readiness": readiness,
-        "watermarks": snapshot.manifest["source"]["watermarks"],
+        "watermarks": watermarks(snapshot),
         "time_semantics": {
             "business_timezone": "UTC",
             "effective_interval": "half_open",
@@ -304,10 +336,12 @@ def verify_curated(
 ) -> dict[str, Any]:
     root = checked_directory(root)
     document = read_json(root, "curated_manifest.json")
+    version = document.get("schema_version", "")
+    specs = source_contract(version)["fact_tables"]
     from retailops_ai.source_snapshot.files import decode_json
 
     try:
-        Draft202012Validator(decode_json(manifest_schema_bytes())).validate(document)
+        Draft202012Validator(decode_json(manifest_schema_bytes(version))).validate(document)
     except ValidationError as exc:
         raise SnapshotError("invalid_curated_manifest_schema") from exc
     _, manifest_sha = file_hash(root, "curated_manifest.json")
@@ -315,8 +349,8 @@ def verify_curated(
         raise SnapshotError("curated_manifest_checksum_mismatch")
     descriptor = document["descriptor"]
     if (
-        document["schema_version"] != VERSION
-        or descriptor["schema_version"] != VERSION
+        document["schema_version"] != version
+        or descriptor["schema_version"] != version
         or descriptor["role"] != "curated"
         or descriptor["classification"] != "curated"
         or descriptor["canonicalization_version"] != CANONICAL_VERSION
@@ -326,12 +360,11 @@ def verify_curated(
         or descriptor["transform"]["code_sha256"]
         != json_sha256(descriptor["transform"]["code_files"])
         or descriptor["transform"]["handoff_sha256"]
-        != hashlib.sha256(resource_bytes("contract.json")).hexdigest()
+        != hashlib.sha256(handoff_bytes(version)).hexdigest()
         or document["evaluation_truth"]
         != {"included": False, "access": "separate_parent_import_only"}
     ):
         raise SnapshotError("curated_identity_or_policy_mismatch")
-    specs = contract_document()["fact_tables"]
     if [t["table"] for t in document["tables"]] != sorted(specs):
         raise SnapshotError("curated_table_allowlist_mismatch")
     logical = [{k: v for k, v in t.items() if k != "files"} for t in document["tables"]]
@@ -356,7 +389,7 @@ def verify_curated(
         for table in [*document["tables"], document["quarantine"]]:
             is_q = "table" not in table
             table_name = "quarantine" if is_q else table["table"]
-            columns = QUARANTINE_COLUMNS if is_q else columns_for(table_name)
+            columns = QUARANTINE_COLUMNS if is_q else columns_for(table_name, version)
             grain = [] if is_q else specs[table_name]["grain"]
             if table["schema"] != columns or table["grain"] != grain:
                 raise SnapshotError("curated_declared_schema_mismatch")
@@ -390,7 +423,7 @@ def verify_curated(
                         try:
                             if (
                                 not parquet.schema_arrow.equals(
-                                    schema_for(columns), check_metadata=True
+                                    schema_for(columns, version), check_metadata=True
                                 )
                                 or parquet.metadata.num_rows != ref["row_count"]
                             ):
@@ -435,10 +468,15 @@ def verify_curated(
             "stockout": "not_ready",
             "replay": "not_ready",
             "rag": "not_applicable",
-            "inventory_ready": False,
+            "inventory_ready": version == "1.1.0" and not rejected,
         }
     ):
         raise SnapshotError("curated_readiness_or_quarantine_mismatch")
+    if version == "1.1.0" and not rejected:
+        from retailops_ai.curated.inventory import verify_semantics
+
+        with tempfile.TemporaryDirectory(prefix="curated-semantic-verify-") as tmp:
+            verify_semantics(root, document, Path(tmp), limits)
     if require_ready and rejected:
         raise SnapshotError("curated_not_ready")
     return document
@@ -469,8 +507,6 @@ def build_curated(
     initial = verify_import(
         import_root, allow_evaluation_truth=allow_evaluation_truth, limits=limits
     )
-    if initial.manifest["schema_version"] == "1.1.0":
-        raise SnapshotError("inventory_curated_contract_not_yet_supported")
     with tempfile.TemporaryDirectory(prefix=".curated-build-", dir=root) as tmp:
         stage = Path(tmp)
         # Seal a bounded private input to prevent input mutation during transform.

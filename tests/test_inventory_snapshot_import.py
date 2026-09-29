@@ -149,11 +149,12 @@ def test_truth_and_qualification_require_explicit_opt_in(fixture, tmp_path):
         verify_import(result.directory)
 
 
-def test_curated_1_0_cannot_silently_process_inventory_1_1(fixture, tmp_path):
+def test_curated_dispatches_inventory_1_1(fixture, tmp_path):
     result = import_snapshot(fixture / "facts", tmp_path / "import/data/generated")
-    with pytest.raises(SnapshotError, match="inventory_curated_contract_not_yet_supported"):
-        build_curated(result.directory, tmp_path / "curated/data/generated")
-    assert not list((tmp_path / "curated/data/generated").glob("curated*/*"))
+    curated = build_curated(result.directory, tmp_path / "curated/data/generated")
+    assert curated.manifest["schema_version"] == "1.1.0"
+    assert curated.manifest["readiness"]["inventory_ready"] is True
+    assert len(curated.manifest["tables"]) == 43
 
 
 @pytest.mark.parametrize(
@@ -274,3 +275,15 @@ def test_resource_limits_precede_copy(fixture, tmp_path):
     with pytest.raises(SnapshotError, match="snapshot_resource_limit"):
         import_snapshot(fixture / "facts", tmp_path / "data/generated", limits=Limits(max_rows=1))
     assert not (tmp_path / "data/generated").exists()
+
+
+def test_orphan_delivery_revision_is_rejected_even_with_new_hashes(fixture, tmp_path):
+    root = Path(shutil.copytree(fixture / "facts", tmp_path / "orphan"))
+    document = json.loads((root / "snapshot_manifest.json").read_text())
+
+    def orphan(rows):
+        rows[0]["replenishment_order_id"] = "00000000-0000-4000-8000-000000000001"
+
+    change_table(root, document, "delivery_plan_versions", orphan, tmp_path)
+    with pytest.raises(SnapshotError, match="missing_native_reference"):
+        verify_snapshot(root)

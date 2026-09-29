@@ -439,6 +439,8 @@ def verify_operations(facts: Facts) -> None:
 
 
 def verify_supply(facts: Facts) -> None:
+    for plan in facts.rows("delivery_plan_versions"):
+        facts.get("replenishment_orders", plan["replenishment_order_id"])
     for offer in facts.rows("product_suppliers"):
         supplier = facts.get("suppliers", offer["supplier_id"])
         product = facts.get("inventory_products", offer["product_id"])
