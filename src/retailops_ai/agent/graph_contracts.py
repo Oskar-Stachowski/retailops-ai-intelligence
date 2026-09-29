@@ -106,6 +106,13 @@ class NodeAudit(Contract):
     duration_ms: Annotated[float, Field(ge=0)]
 
 
+class SafeToolAudit(Contract):
+    name: Annotated[str, Field(pattern=r"^get_[a-z_]+$|^search_knowledge$")]
+    status: Literal["ok", "no_data", "error"]
+    source_refs: list[str] = Field(max_length=100)
+    freshness_status: Literal["current", "stale", "missing", "unavailable", "not_requested"]
+
+
 class SafeTrace(Versioned):
     trace_id: Annotated[str, Field(pattern=r"^trace-[0-9a-f]{32}$")]
     correlation_id: Annotated[str, Field(pattern=r"^correlation-[0-9a-f]{32}$")]
@@ -122,6 +129,7 @@ class SafeTrace(Versioned):
     status: Literal["succeeded", "failed"]
     error_code: GraphCode | None
     nodes: list[NodeAudit] = Field(max_length=20)
+    tools: list[SafeToolAudit] = Field(default_factory=list, max_length=6)
     tool_calls: Annotated[int, Field(ge=0, le=6)]
     model_calls: Annotated[int, Field(ge=0, le=6)]
     extra_evidence_rounds: Annotated[int, Field(ge=0, le=1)]

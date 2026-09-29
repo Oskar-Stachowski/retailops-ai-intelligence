@@ -21,6 +21,7 @@ from retailops_ai.agent.graph_contracts import (
     GraphRequest,
     GraphResult,
     NodeAudit,
+    SafeToolAudit,
     SafeTrace,
 )
 from retailops_ai.agent.graph_traces import MemoryTraces, TraceUnavailable
@@ -324,6 +325,34 @@ class _Execution:
                     chunk.source_ref for hit in output.items for chunk in hit.chunk.occurrences
                 )
         chat = self.chat
+        tool_audits = []
+        outputs = self.tools.accepted_outputs()
+        for audit in self.tools.audit[:6]:
+            audited_output = next((item for item in outputs if item.tool == audit.tool), None)
+            freshness = "unavailable" if audit.status == "error" else "missing"
+            if audit.status == "ok" and audited_output is not None:
+                if isinstance(audited_output, KnowledgeResult):
+                    freshness = "not_requested"
+                elif isinstance(audited_output, ForecastResult):
+                    freshness = (
+                        "unavailable"
+                        if audited_output.result.freshness_status == "unknown"
+                        else audited_output.result.freshness_status
+                    )
+                else:
+                    freshness = audited_output.freshness_status
+            tool_audits.append(
+                SafeToolAudit.model_validate_json(
+                    json.dumps(
+                        {
+                            "name": audit.tool,
+                            "status": audit.status,
+                            "source_refs": list(audit.source_refs)[:100],
+                            "freshness_status": freshness,
+                        }
+                    )
+                )
+            )
         return SafeTrace.model_validate_json(
             json.dumps(
                 {
@@ -343,6 +372,7 @@ class _Execution:
                     "status": "failed" if self.error else "succeeded",
                     "error_code": self.error,
                     "nodes": [node.model_dump(mode="json") for node in self.nodes],
+                    "tools": [audit.model_dump(mode="json") for audit in tool_audits],
                     "tool_calls": self.tools.calls,
                     "model_calls": chat.calls if chat else 0,
                     "extra_evidence_rounds": self.extra_rounds,

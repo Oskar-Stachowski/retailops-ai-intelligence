@@ -4,7 +4,8 @@ Zakres działa bez AI 10: LangGraph wykonuje zamknięty przebieg z typed fixture
 oraz serwerowym adapterem wiedzy AI 11. [Status](STATUS.md),
 [odbiór](evidence/12-graph.md), [narzędzia](agent-tools.md),
 [budżet rozmowy](agent-chat.md). Jest to lokalny interfejs domenowy;
-Assistant HTTP API i rzeczywiste biznesowe źródła będą osobnymi zakresami.
+[Assistant HTTP API](assistant-api.md) ma osobny odbiór; rzeczywiste źródła
+biznesowe pozostają do podłączenia.
 
 ## Przebieg i kontrola offline
 
@@ -102,4 +103,5 @@ Retencja: najwyżej 900 s; capacity: najwyżej 100. Pełny store daje
 Brak checkpointów i pamięci konwersacji. Stan routingu nie zawiera prywatnych
 danych; request/wyniki pozostają w kontekście danego runa. Remote tracing jest
 wyłączony także przy zmiennych LangSmith. Restart usuwa ślady z pamięci.
-Trwały trace, endpoint HTTP i admission będą osobnym odbiorem.
+[Assistant API](assistant-api.md) zapisuje końcowy ślad, odpowiedź i kandydatów
+w PostgreSQL; ma osobny odbiór persistence/admission.

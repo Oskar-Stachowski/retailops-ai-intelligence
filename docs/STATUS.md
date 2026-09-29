@@ -67,14 +67,22 @@ politykę/prompty v3, schemas, golden, ewaluator i lock. `make agent-evaluate`
 jest bramką `make check`; pomiar dotyczy jawnych fixtures i kanonicznych twierdzeń.
 [Odbiór](evidence/12-evaluation.md) podaje wyniki oraz ograniczenia.
 
-Następny zakres bez AI 10: Assistant API, trwały zapis bezpiecznego trace,
-odpowiedzi/kandydatów i admission. Dalej pozostają rzeczywisty adapter chat
+[Piąty zakres](assistant-api.md) dodaje kontrakt HTTP queries/runs, lokalne
+auth i kontrolę całego scope, trwały zapis run/odpowiedź/review candidate
+w bazie AI oraz wspólne admission PostgreSQL. Trace sprawdza również cofnięte
+prawa narzędzi/wiedzy; admin wymaga osobnego assistant:audit.
+[Odbiór](evidence/12-assistant.md) opisuje rzeczywiste próby PG/HTTP i granice.
+Standardowe serve nie ma jeszcze modelu/planner/resolvera, więc query daje 503;
+fake jest dopuszczony wyłącznie w testach.
+
+Następny zakres bez AI 10: rzeczywisty adapter chat
 Bedrock z circuit breaker i bounded smoke, realne źródła ML/operacyjne oraz
 kwalifikacja rzeczywistego modelu i retrieval na golden set. Pełne AI 12 wymaga
 AI 10 i E2E sugestii/outbox/v2/read API/UI. Obecny profil sprawdza kanoniczne
 fakty i literalne cytaty; nie potwierdza jakości swobodnych odpowiedzi LLM ani
-rzeczywistego chat modelu. Trace nie jest trwały po restarcie, kandydaci nie są
-utrwalonymi sugestiami RetailOps. Etykiety golden i progi polityki są lokalnym
+rzeczywistego chat modelu. Planner języka naturalnego, resolver source IDs,
+odczyt sugestii ML oraz ich publikacja do RetailOps pozostają do podłączenia.
+Etykiety golden i progi polityki są lokalnym
 profilem developmentu, bez niezależnego business/model approval.
 
 ## Fundament i dalsza praca

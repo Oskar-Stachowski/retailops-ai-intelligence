@@ -20,6 +20,9 @@ DETAILS = {
     409: "The request conflicts with the recorded state.",
     422: "The request does not match the expected schema.",
     429: "The request limit was exceeded.",
+    424: "A required data or evidence source is unavailable.",
+    502: "The provider response did not pass validation.",
+    504: "The execution deadline was exceeded.",
     500: "An internal error occurred.",
     503: "A required dependency is unavailable.",
 }
@@ -31,6 +34,7 @@ def problem_response(
     readiness: Ready | None = None,
     headers: dict[str, str] | None = None,
     code: IndexErrorCode | None = None,
+    problem_type: str = "about:blank",
 ) -> JSONResponse:
     current = CORRELATION_ID.get()
     if current is None:
@@ -40,6 +44,7 @@ def problem_response(
     except ValueError:
         title = "Request failed"
     problem = Problem(
+        type=problem_type,
         title=title,
         status=status,
         detail=DETAILS.get(status, "The request could not be completed."),

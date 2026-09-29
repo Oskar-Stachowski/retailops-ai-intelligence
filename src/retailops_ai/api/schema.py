@@ -4,12 +4,15 @@ from copy import deepcopy
 from typing import Any
 
 
-def contract_openapi(document: dict[str, Any], *, access: bool) -> dict[str, Any]:
+def contract_openapi(
+    document: dict[str, Any], *, access: bool, assistant: bool = False
+) -> dict[str, Any]:
     result = deepcopy(document)
     paths = {
         path: spec
         for path, spec in result["paths"].items()
         if path.startswith("/api/v1/") == access
+        and (not access or path.startswith("/api/v1/assistant/") == assistant)
     }
     result["paths"] = paths
     components = result.get("components", {})
@@ -36,5 +39,7 @@ def contract_openapi(document: dict[str, Any], *, access: bool) -> dict[str, Any
     scheme = "apiBearer" if access else "metricsBearer"
     components["securitySchemes"] = {scheme: components["securitySchemes"][scheme]}
     if access:
-        result["info"]["title"] = "RetailOps AI local access"
+        result["info"]["title"] = (
+            "RetailOps AI Assistant" if assistant else "RetailOps AI local access"
+        )
     return result

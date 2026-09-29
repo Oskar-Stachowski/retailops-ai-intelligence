@@ -99,8 +99,8 @@ outputu. Nieudana naprawa kończy się kontrolowanym błędem.
 
 Audit w pamięci zawiera config ID, fazę, wynik, kanoniczny kod, czas,
 tokeny i szacowany koszt. Nie zapisuje question, raw response, exception text,
-sekretów ani ukrytego toku rozumowania. Trwały trace i kontrakt HTTP będą
-osobnym zakresem. Kody domenowe to `budget_exceeded`, `deadline_exceeded`,
+sekretów ani ukrytego toku rozumowania. [Assistant API](assistant-api.md) ma
+osobny trwały trace i kontrakt HTTP. Kody domenowe to `budget_exceeded`, `deadline_exceeded`,
 `provider_unavailable`, `invalid_output`, `invalid_evidence`,
 `unauthorized_tool` i `invalid_repair`.
 
@@ -115,7 +115,8 @@ W tym profilu obliczenia i modelowe `recommended_actions` są odrzucane.
 [Profil grafu](agent-graph.md) ma odrębny manifest i prompty v3 oraz kontrolę
 kanonicznych faktów i obliczeń. Powyższy profil pregraph z promptami v1 zachowuje
 wcześniejsze ograniczenia. [Reguły i golden](agent-evaluation.md) obejmują
-kanoniczne odpowiedzi i kandydatów na fixtures. Dalej pozostają Assistant API, admission, trwały bezpieczny
-trace, circuit breaker, rzeczywisty adapter chat Bedrock, weryfikacja aktualnego
+kanoniczne odpowiedzi i kandydatów na fixtures. [Assistant API](assistant-api.md)
+dodaje admission i trwałe wyniki. Dalej pozostają circuit breaker,
+rzeczywisty adapter chat Bedrock, weryfikacja aktualnego
 modelu/regionu/IAM/cennika i ograniczony rzeczywisty smoke. Źródła biznesowe
 oraz producent sugestii/outbox/E2E wymagają dalszych etapów, w tym AI 10.

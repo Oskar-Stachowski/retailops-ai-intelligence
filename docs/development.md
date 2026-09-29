@@ -85,12 +85,18 @@ reguł i rozmiaru jest wersjonowana w `knowledge/chunker.v1.json`.
 
 [Katalog narzędzi agenta](agent-tools.md) dodaje offline `agent-tools`
 i `agent-tool-check`. Wykonawca jest na tym etapie interfejsem serwerowym;
-Assistant API będzie dodane w dalszym zakresie AI 12.
+Kontrakt [Assistant API](assistant-api.md) jest wykonany; rzeczywisty runtime
+chat/planner/resolver wymaga osobnego podłączenia.
 
 [Konfiguracja rozmowy](agent-chat.md) dodaje offline
 `agent-config-check agent/chat.fake.v1.json`. `make contracts-check` kontroluje
 także checksum promptów, model/budget config i chat schemas; generowanie
 snapshotów nie aktualizuje zatwierdzonych powiązań konfiguracji po cichu.
+
+`make contracts-check` obejmuje także Assistant schemas/OpenAPI.
+`make compose-smoke` sprawdza transakcje Assistant w realnym PostgreSQL,
+wspólne limity procesów i zachowanie wyników po restartach. Backend dowodowy
+jest scripted i działa wyłącznie w APP_ENV=test.
 
 [Ograniczony graf](agent-graph.md) dodaje `agent-graph-check agent/graph.fake.v1.json`
 oraz `make agent-security-test` dla narzędzi, rozmowy i pełnego grafu.

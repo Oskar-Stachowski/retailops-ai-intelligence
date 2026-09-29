@@ -16,15 +16,23 @@ from prometheus_client import CONTENT_TYPE_LATEST
 from starlette.exceptions import HTTPException
 from starlette.responses import JSONResponse, Response
 
+from retailops_ai.adapters.assistant_store import PostgresAssistantStore
 from retailops_ai.adapters.database import DatabaseProbe, database_engine
 from retailops_ai.adapters.index_jobs import IndexAdministration, PostgresIndexAdministration
 from retailops_ai.adapters.knowledge_search import KnowledgeBackend, PostgresKnowledge
 from retailops_ai.adapters.telemetry import HttpMetrics, new_tracer
 from retailops_ai.adapters.vector_store import index_engine
 from retailops_ai.api.access import access_router
+from retailops_ai.api.assistant import assistant_router
 from retailops_ai.api.errors import problem_response
 from retailops_ai.api.middleware import HttpObservation, single_header
 from retailops_ai.api.models import DependencyStatus, Health, Problem, Ready, ServiceVersion
+from retailops_ai.assistant.service import (
+    AdmissionPolicy,
+    AssistantBackend,
+    AssistantService,
+    AssistantStore,
+)
 from retailops_ai.config import Settings
 from retailops_ai.domain.readiness import Dependency
 from retailops_ai.pipelines.readiness import Readiness
@@ -55,6 +63,9 @@ def create_app(
     tracer: Tracer | None = None,
     knowledge_backend: KnowledgeBackend | None = None,
     index_administration: IndexAdministration | None = None,
+    assistant_backend: AssistantBackend | None = None,
+    assistant_store: AssistantStore | None = None,
+    assistant_policy: AdmissionPolicy | None = None,
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
@@ -63,6 +74,17 @@ def create_app(
         settings.metrics_token.get_secret_value() if settings.metrics_token else None,
     )
     engine = database_engine(settings) if settings.database_url is not None else None
+    if assistant_store is not None and settings.app_env != "test":
+        raise ValueError("injected_assistant_store_requires_test_environment")
+    if assistant_store is None and engine is not None:
+        assistant_store = PostgresAssistantStore(engine, settings.app_env)
+    assistant_service = None
+    if assistant_backend is not None:
+        if assistant_store is None:
+            raise ValueError("assistant_requires_durable_store")
+        assistant_service = AssistantService(
+            assistant_backend, assistant_store, settings.app_env, assistant_policy
+        )
     knowledge_engine = None
     if (
         knowledge_backend is None or index_administration is None
@@ -200,4 +222,5 @@ def create_app(
     app.include_router(
         access_router(authority, knowledge_backend, settings.app_env, index_administration)
     )
+    app.include_router(assistant_router(authority, assistant_service, assistant_store))
     return app

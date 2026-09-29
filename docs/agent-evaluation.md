@@ -42,8 +42,8 @@ muszą być dokładną kopią reguły. Podmiana, pominięcie wymaganej akcji, du
 lub dopisanie ilości kończy się kontrolowaną naprawą/błędem.
 
 [SuggestionCandidate](../contracts/agent/v1/suggestion-candidate.v1.schema.json)
-jest lokalnym kandydatem. Pełny persisted recommendation z answer/trace/config
-binding, trwałym zapisem i outbox będzie osobnym zakresem. Obecne GraphResult
+jest lokalnym kandydatem. [Assistant API](assistant-api.md) dodaje
+answer/trace/config binding i trwały zapis w AI. Outbox pozostaje AI 10. Obecne GraphResult
 nie oznacza, że sugestia jest utrwalona, zaakceptowana lub widoczna w UI.
 Nie ma uprawnienia do wykonania zamówienia, odświeżenia źródła ani workflow.
 
@@ -123,7 +123,7 @@ przypadków, zero zbędnych wywołań, p95 ≤ 5000 ms i koszt syntetyczny 0 USD
 - Latency p95 jest nearest-rank z wall time grafu; tokeny są zapisanym usage
   fake i rezerwacją przy błędzie providera. Nie mierzą wydajności ani ceny Bedrock.
 
-Kolejne kroki: Assistant API, trwały trace/odpowiedź/sugestia, admission, rzeczywisty
-adapter chat/circuit breaker i bounded smoke. Pełne AI 12 wymaga rzeczywistych
+Kolejne kroki: rzeczywisty adapter chat/circuit breaker i bounded smoke,
+planner/resolver oraz adaptery źródeł. Pełne AI 12 wymaga rzeczywistych
 narzędzi, golden dla realnego modelu/retrieval oraz ścieżki sugestia → outbox/v2
 → RetailOps read API/UI z AI 10.

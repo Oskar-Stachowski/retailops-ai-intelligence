@@ -16,6 +16,8 @@ Nie używa user_id, roli z body/query/header ani demo-admin RetailOps jako login
 | `POST /api/v1/knowledge-index-runs` | Admin + jawne knowledge:index; wymagany Idempotency-Key, zatwierdzony profil, trwały Run |
 | `GET /api/v1/knowledge-index-runs/{run_id}` | Admin + knowledge:index; stan runa w środowisku API |
 | `GET /api/v1/knowledge-indexes/current` | Admin + knowledge:index; metadane aktywnego indeksu lub 404 index-not-configured |
+| `POST /api/v1/assistant/queries` | Operator + assistant:query i cały scope/prawa narzędzi; bounded query |
+| `GET /api/v1/assistant/runs/{trace_id}` | Właściciel z zachowanymi prawami lub admin + assistant:audit; bezpieczny trace |
 
 Forecast-check jest **preflight uprawnień**; nie zwraca prognozy, nie sprawdza
 istnienia produktu w źródle i nie potwierdza gotowości modelu.
@@ -120,8 +122,9 @@ dla UID 10001, read-only mount i własnego odbioru; nie zmieniaj uprawnień na 0
 DB/MLflow, migracje i metryki Compose pozostają dotychczasowym lokalnym stosem.
 MLflow nie uzyskał aplikacyjnego auth przez tę zmianę.
 
-Nie ma OIDC/JWT, MFA, publicznego TLS, tenant isolation, trwałego audit store,
-rate limiter, chronionego serving API lub tool executora. Warstwa domenowa
+Nie ma OIDC/JWT, MFA, publicznego TLS ani tenant isolation.
+[Assistant API](assistant-api.md) ma trace store i wspólne admission PostgreSQL;
+[narzędzia](agent-tools.md) mają własne prawa i bounded executor. Warstwa domenowa
 principal/scope jest wspólna dla przyszłych odczytów; każdy kolejny endpoint
 musi ją egzekwować także dla listy, pojedynczego rekordu i cache.
 

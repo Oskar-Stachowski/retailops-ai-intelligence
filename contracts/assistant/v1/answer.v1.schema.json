@@ -1,0 +1,357 @@
+{
+  "$defs": {
+    "AnswerFreshness": {
+      "additionalProperties": false,
+      "properties": {
+        "inventory": {
+          "$ref": "#/$defs/DomainFreshness"
+        },
+        "predictions": {
+          "$ref": "#/$defs/DomainFreshness"
+        },
+        "sales": {
+          "$ref": "#/$defs/DomainFreshness"
+        }
+      },
+      "required": [
+        "sales",
+        "inventory",
+        "predictions"
+      ],
+      "title": "AnswerFreshness",
+      "type": "object"
+    },
+    "DomainFreshness": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "status": {
+          "enum": [
+            "current",
+            "stale",
+            "missing",
+            "unavailable",
+            "not_requested"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "as_of",
+        "status"
+      ],
+      "title": "DomainFreshness",
+      "type": "object"
+    },
+    "DraftCitation": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "heading": {
+          "maxLength": 1200,
+          "title": "Heading",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 240,
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "source_ref": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Source Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "heading",
+        "chunk_id",
+        "document_status",
+        "source_ref"
+      ],
+      "title": "DraftCitation",
+      "type": "object"
+    },
+    "EvidenceClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "calculation_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Calculation Id"
+        },
+        "claim": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Claim",
+          "type": "string"
+        },
+        "source_ref": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "source_type": {
+          "enum": [
+            "tool",
+            "document",
+            "calculation"
+          ],
+          "title": "Source Type",
+          "type": "string"
+        },
+        "supporting_refs": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Supporting Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "claim",
+        "source_type",
+        "source_ref",
+        "as_of",
+        "supporting_refs"
+      ],
+      "title": "EvidenceClaim",
+      "type": "object"
+    },
+    "RecommendedAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Action",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "priority": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Priority",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "recommendation_id": {
+          "format": "uuid",
+          "title": "Recommendation Id",
+          "type": "string"
+        },
+        "requires_human_review": {
+          "const": true,
+          "title": "Requires Human Review",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "action",
+        "priority",
+        "rationale",
+        "evidence_refs",
+        "requires_human_review",
+        "recommendation_id"
+      ],
+      "title": "RecommendedAction",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:assistant:answer:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "agent_config_version": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Agent Config Version",
+      "type": "string"
+    },
+    "answer_id": {
+      "format": "uuid",
+      "title": "Answer Id",
+      "type": "string"
+    },
+    "citations": {
+      "items": {
+        "$ref": "#/$defs/DraftCitation"
+      },
+      "maxItems": 5,
+      "title": "Citations",
+      "type": "array"
+    },
+    "confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "title": "Confidence",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Created At",
+      "type": "string"
+    },
+    "data_freshness": {
+      "$ref": "#/$defs/AnswerFreshness"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/EvidenceClaim"
+      },
+      "maxItems": 20,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "index_id": {
+      "title": "Index Id",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "maxLength": 2000,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 10,
+      "title": "Limitations",
+      "type": "array"
+    },
+    "outcome": {
+      "enum": [
+        "answered",
+        "insufficient_evidence",
+        "refused"
+      ],
+      "title": "Outcome",
+      "type": "string"
+    },
+    "recommended_actions": {
+      "items": {
+        "$ref": "#/$defs/RecommendedAction"
+      },
+      "maxItems": 5,
+      "title": "Recommended Actions",
+      "type": "array"
+    },
+    "summary": {
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    },
+    "trace_id": {
+      "format": "uuid",
+      "title": "Trace Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "outcome",
+    "summary",
+    "evidence",
+    "recommended_actions",
+    "confidence",
+    "data_freshness",
+    "citations",
+    "limitations",
+    "answer_id",
+    "trace_id",
+    "agent_config_version",
+    "index_id",
+    "created_at"
+  ],
+  "title": "AssistantAnswer",
+  "type": "object"
+}

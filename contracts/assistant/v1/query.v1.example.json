@@ -1,0 +1,14 @@
+{
+  "conversation_id": null,
+  "question": "What evidence is available?",
+  "scope": {
+    "from": "2026-04-01",
+    "product_ids": [
+      "22222222-2222-4222-8222-222222222222"
+    ],
+    "store_ids": [
+      "33333333-3333-4333-8333-333333333333"
+    ],
+    "to": "2026-04-07"
+  }
+}

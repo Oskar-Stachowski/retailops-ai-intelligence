@@ -95,6 +95,52 @@
       ],
       "title": "NodeAudit",
       "type": "object"
+    },
+    "SafeToolAudit": {
+      "additionalProperties": false,
+      "properties": {
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "missing",
+            "unavailable",
+            "not_requested"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "name": {
+          "pattern": "^get_[a-z_]+$|^search_knowledge$",
+          "title": "Name",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "no_data",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "status",
+        "source_refs",
+        "freshness_status"
+      ],
+      "title": "SafeToolAudit",
+      "type": "object"
     }
   },
   "$id": "urn:retailops:agent:safe-trace:1.0",
@@ -262,6 +308,14 @@
       "minimum": 0,
       "title": "Tool Calls",
       "type": "integer"
+    },
+    "tools": {
+      "items": {
+        "$ref": "#/$defs/SafeToolAudit"
+      },
+      "maxItems": 6,
+      "title": "Tools",
+      "type": "array"
     },
     "trace_id": {
       "pattern": "^trace-[0-9a-f]{32}$",

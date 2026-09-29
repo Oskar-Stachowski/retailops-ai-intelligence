@@ -267,7 +267,8 @@ Polityka read-only-review-v1 ustala warunki, priorytet, tekst i refs kandydatów
 Model tylko kopiuje akcje wspierane przez wybrane fakty dla tego samego grain.
 Wyliczenie ilości ani zapis operacyjny nie jest narzędziem agenta. Identity
 wiąże źródła, politykę i expiry; aktualność sprawdza zegar serwera. Kandydat
-pozostaje proposed/requires_human_review, bez deklaracji trwałości/outbox/UI.
+pozostaje proposed/requires_human_review; trwały zapis własny AI dodaje ADR-22,
+outbox/UI należą do AI 10.
 
 Golden ma zapisane typed fixtures, odpowiedzi scripted fake oraz odrębne oracles,
 których runtime nie generuje ani nie przepisuje. Raport porównuje rzeczywisty
@@ -279,3 +280,20 @@ Przyjęcie tego lokalnego profilu nie jest business approval reguł, akceptacją
 jakości realnego LLM ani ponownym pomiarem retrieval AI 11. Syntetyczny pin
 nigdy nie trafia do aktywacji. Pełny agent wymaga realnego modelu, prawdziwych
 źródeł i E2E z AI 10. [Instrukcja](../agent-evaluation.md).
+
+## ADR-22 — Assistant z transakcyjnymi wynikami i rezerwacją przed grafem
+
+HTTP request ma tylko pytanie i źródłowy scope. Planner/resolver i fabryka grafu
+są serwerowymi zależnościami; warstwa HTTP nie wymyśla mapowania ani intencji.
+Brak runtime daje 503. Fake/backend store można wstrzyknąć tylko w testach.
+
+PostgreSQL AI zapisuje running przed wykonaniem i atomowo utrwala odpowiedź,
+bezpieczny trace i pełnych kandydatów do przeglądu. Owner, scope i snapshot
+wymaganych praw ograniczają odczyt także po cofnięciu grants. Admin potrzebuje
+assistant:audit. Publiczny trace nie zawiera odpowiedzi, pytania lub tool payloadu.
+
+Przed grafem wspólny transakcyjny lock rezerwuje pełny budżet tokenów/kosztu.
+Debit nie jest zwracany w oknie; crash/retry nie otwiera nowego budżetu. DB zegar,
+lease i claim blokują późne completion. Retencja/capacity ograniczają własny
+store. Zapis nie publikuje zdarzenia ani nie uruchamia workflow RetailOps.
+[Instrukcja](../assistant-api.md), [odbiór](../evidence/12-assistant.md).

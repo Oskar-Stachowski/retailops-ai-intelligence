@@ -92,6 +92,10 @@ Sprawdza także rzeczywiste wektory pgvector, kompletność i atomowość kandyd
 idempotencję, cache i izolację przestrzeni; fragmenty zachowują się po restarcie.
 Weryfikuje brak haseł w logach. Na końcu zatrzymuje kontenery i pozostawia wolumeny.
 Raport bez sekretów: `.local/persistence-smoke.json`. Porty 8081/5010 muszą być wolne.
+Migracja `0009_assistant` dodaje własne runy/wyniki/sugestie AI. Smoke obejmuje
+[Assistant API](assistant-api.md), współbieżne admission dwóch procesów,
+token/cost debit, rollback po awarii zapisu oraz zachowanie wyników po SIGKILL
+API/bazy. Jego backend jest jawnie scripted i nie mierzy jakości Bedrock.
 Test zapisuje wyłącznie własne dane testowe; uruchamiaj go w deweloperskim checkoutcie.
 
 Required CI wykonuje `make check` (w tym Compose config), testy adaptera i odrębny

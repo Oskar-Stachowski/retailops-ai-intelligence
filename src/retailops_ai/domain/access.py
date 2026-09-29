@@ -10,6 +10,7 @@ Capability = Literal[
     "knowledge:read",
     "knowledge:index",
     "assistant:query",
+    "assistant:audit",
     "sales:read",
     "inventory:read",
     "stockout:read",

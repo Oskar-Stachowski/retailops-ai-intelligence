@@ -39,7 +39,7 @@ class ResourceScope(Contract):
 class AccessGrant(Contract):
     principal_id: Symbol
     roles: list[Role] = Field(min_length=1, max_length=3)
-    capabilities: list[Capability] = Field(min_length=1, max_length=11)
+    capabilities: list[Capability] = Field(min_length=1, max_length=12)
     scope: ResourceScope | None
     knowledge_scope: KnowledgeResourceScope | None = None
 
@@ -49,7 +49,7 @@ class AccessGrant(Contract):
             self.capabilities
         ):
             raise ValueError("duplicate_role_or_capability")
-        if {"access:admin", "knowledge:index"} & set(
+        if {"access:admin", "knowledge:index", "assistant:audit"} & set(
             self.capabilities
         ) and "admin" not in self.roles:
             raise ValueError("administrative_capability_requires_admin_role")

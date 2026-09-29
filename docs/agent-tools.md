@@ -44,8 +44,8 @@ się uzgadniać. Model status wymaga wdrożonego release i evidence oceny.
 5 s oczekiwania na narzędzie, 90 dni, 20 produktów, 5 lokalizacji i 50 wierszy.
 Default limitu odpowiedzi to 20. Jedna sesja ma wspólny budżet także przy
 równoległych wywołaniach. Timeout, błąd i anulowanie zużywają próbę; nie ma
-automatycznego retry ani resetowania deadline. Kolejne kroki agenta dodadzą
-admission wielu sesji oraz budżety modelu/tokenów/kosztu.
+automatycznego retry ani resetowania deadline. [Rozmowa](agent-chat.md) dodaje
+budżety modelu/tokenów/kosztu, a [Assistant API](assistant-api.md) wspólne admission.
 
 Executor ponownie waliduje wynik adaptera: typ, źródło, ilość bajtów, limit,
 unikalne rekordy, cały scope i dokładny okres. Dane przyszłe lub stale oraz
@@ -64,8 +64,8 @@ uprawnienia i budżet kontekstu. Zwrócony materiał ma `untrusted_reference`.
 
 Timeout przerywa oczekiwanie agenta; adapter synchroniczny uruchomiony w wątku
 kończy pracę zgodnie z własnymi timeoutami SQL/SDK z AI 11. Nie rozpoczynamy
-retry po upływie budżetu. Ograniczenie liczby aktywnych sesji i wątków będzie
-częścią admission Assistant API.
+retry po upływie budżetu. Admission Assistant API ogranicza aktywne runy
+w całym środowisku; adapter zachowuje własne timeouty I/O.
 
 ## Inspekcja i weryfikacja
 
@@ -101,12 +101,12 @@ result = await session.execute_json(validated_tool_call_json)
 `ToolFailure.error` ma stały kod, opis i `retryable`; wyjątek adaptera nie jest
 kopiowany. Audit zapisuje nazwę z katalogu, status, duration, error code oraz
 bezpieczne source refs. Pytanie, scope, token, payload i tok rozumowania nie są
-częścią tego zapisu. Trwały, autoryzowany trace należy do kolejnego zakresu API.
+częścią tego zapisu. Trwały, autoryzowany trace opisuje [Assistant API](assistant-api.md).
 
 ## Następny zakres
 
 [Konfiguracja i fake chat](agent-chat.md), [ograniczony graf](agent-graph.md)
 oraz [reguły sugestii i golden fixtures](agent-evaluation.md) mają osobne
-odbiory. Następne bramki podaje [status](STATUS.md): Assistant API, persistence
-trace/odpowiedzi/kandydatów, admission, rzeczywisty chat i narzędzia biznesowe,
+odbiory. [Assistant API](assistant-api.md) utrwala wyniki w bazie AI.
+Następne bramki podaje [status](STATUS.md): rzeczywisty chat i narzędzia biznesowe,
 kwalifikacja realnego modelu oraz integracja sugestii z AI 10.

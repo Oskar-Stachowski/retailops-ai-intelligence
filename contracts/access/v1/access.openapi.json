@@ -359,6 +359,7 @@
                 "knowledge:read",
                 "knowledge:index",
                 "assistant:query",
+                "assistant:audit",
                 "sales:read",
                 "inventory:read",
                 "stockout:read",
@@ -1116,8 +1117,8 @@
             "type": "string"
           },
           "type": {
-            "const": "about:blank",
             "default": "about:blank",
+            "pattern": "^about:blank$|^urn:retailops:problem:[a-z-]+$",
             "title": "Type",
             "type": "string"
           }
