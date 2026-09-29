@@ -6,8 +6,14 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from retailops_ai.agent.evaluation_contracts import (
+    AgentEvaluationRelease,
+    AgentEvaluationReport,
+    AgentGoldenSet,
+)
 from retailops_ai.agent.graph_config import AgentGraphConfig, load_graph_config
 from retailops_ai.agent.graph_contracts import GraphPolicy, GraphRequest, GraphResult, SafeTrace
+from retailops_ai.agent.suggestions import SuggestionCandidate, SuggestionPolicy
 from retailops_ai.data_contracts.identity import canonical_sha256
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -100,6 +106,18 @@ def artifacts() -> dict[str, object]:
         "fixture_only": True,
         "examples_are_synthetic_metadata": True,
     }
+    evaluation_models: dict[str, type[BaseModel]] = {
+        "suggestion-candidate": SuggestionCandidate,
+        "suggestion-policy": SuggestionPolicy,
+        "agent-golden-set": AgentGoldenSet,
+        "agent-evaluation-release": AgentEvaluationRelease,
+        "agent-evaluation-report": AgentEvaluationReport,
+    }
+    for name, model in evaluation_models.items():
+        artifacts[f"{name}.v1.schema.json"] = model.model_json_schema() | {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": f"urn:retailops:agent:{name}:1.0",
+        }
     return artifacts
 
 

@@ -1,0 +1,3920 @@
+{
+  "$defs": {
+    "AnomalyItem": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "detector_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Detector Version",
+          "type": "string"
+        },
+        "expected_units": {
+          "minimum": 0,
+          "title": "Expected Units",
+          "type": "number"
+        },
+        "model_release_ref": {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "title": "Model Release Ref",
+          "type": "string"
+        },
+        "observed_units": {
+          "minimum": 0,
+          "title": "Observed Units",
+          "type": "number"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "window",
+        "expected_units",
+        "observed_units",
+        "detector_version",
+        "model_release_ref"
+      ],
+      "title": "AnomalyItem",
+      "type": "object"
+    },
+    "AnomalyRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_detected_anomalies",
+          "title": "Tool",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool",
+        "window"
+      ],
+      "title": "AnomalyRequest",
+      "type": "object"
+    },
+    "AnomalyResult": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "contract_type": {
+          "const": "agent_tool_result",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "missing",
+            "unavailable"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/AnomalyItem"
+          },
+          "maxItems": 50,
+          "title": "Items",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "fixture",
+            "runtime"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Ref"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "no_data",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool": {
+          "const": "get_detected_anomalies",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "status",
+        "as_of",
+        "freshness_status",
+        "source_ref",
+        "items",
+        "error",
+        "source_kind",
+        "tool"
+      ],
+      "title": "AnomalyResult",
+      "type": "object"
+    },
+    "AnswerDraft": {
+      "additionalProperties": false,
+      "properties": {
+        "citations": {
+          "items": {
+            "$ref": "#/$defs/DraftCitation"
+          },
+          "maxItems": 5,
+          "title": "Citations",
+          "type": "array"
+        },
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "data_freshness": {
+          "$ref": "#/$defs/AnswerFreshness"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceClaim"
+          },
+          "maxItems": 20,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "kind": {
+          "const": "answer",
+          "title": "Kind",
+          "type": "string"
+        },
+        "limitations": {
+          "items": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 10,
+          "title": "Limitations",
+          "type": "array"
+        },
+        "outcome": {
+          "enum": [
+            "answered",
+            "insufficient_evidence",
+            "refused"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "recommended_actions": {
+          "items": {
+            "$ref": "#/$defs/DraftAction"
+          },
+          "maxItems": 5,
+          "title": "Recommended Actions",
+          "type": "array"
+        },
+        "summary": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "outcome",
+        "summary",
+        "evidence",
+        "recommended_actions",
+        "confidence",
+        "data_freshness",
+        "citations",
+        "limitations"
+      ],
+      "title": "AnswerDraft",
+      "type": "object"
+    },
+    "AnswerFreshness": {
+      "additionalProperties": false,
+      "properties": {
+        "inventory": {
+          "$ref": "#/$defs/DomainFreshness"
+        },
+        "predictions": {
+          "$ref": "#/$defs/DomainFreshness"
+        },
+        "sales": {
+          "$ref": "#/$defs/DomainFreshness"
+        }
+      },
+      "required": [
+        "sales",
+        "inventory",
+        "predictions"
+      ],
+      "title": "AnswerFreshness",
+      "type": "object"
+    },
+    "ChatFixture": {
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "maxLength": 131072,
+          "title": "Body",
+          "type": "string"
+        },
+        "event": {
+          "default": "reply",
+          "enum": [
+            "reply",
+            "throttled",
+            "transient",
+            "auth",
+            "schema"
+          ],
+          "title": "Event",
+          "type": "string"
+        },
+        "expected_kind": {
+          "enum": [
+            "tool_plan",
+            "answer"
+          ],
+          "title": "Expected Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "expected_kind",
+        "body"
+      ],
+      "title": "ChatFixture",
+      "type": "object"
+    },
+    "DataLineage": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id"
+      ],
+      "title": "DataLineage",
+      "type": "object"
+    },
+    "DataScope": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "product_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Product Ids",
+          "type": "array"
+        },
+        "selling_location_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Selling Location Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "product_ids",
+        "selling_location_ids",
+        "channel"
+      ],
+      "title": "DataScope",
+      "type": "object"
+    },
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    },
+    "DomainFreshness": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "status": {
+          "enum": [
+            "current",
+            "stale",
+            "missing",
+            "unavailable",
+            "not_requested"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "as_of",
+        "status"
+      ],
+      "title": "DomainFreshness",
+      "type": "object"
+    },
+    "DraftAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Action",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "priority": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Priority",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "requires_human_review": {
+          "const": true,
+          "title": "Requires Human Review",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "action",
+        "priority",
+        "rationale",
+        "evidence_refs",
+        "requires_human_review"
+      ],
+      "title": "DraftAction",
+      "type": "object"
+    },
+    "DraftCitation": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "heading": {
+          "maxLength": 1200,
+          "title": "Heading",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 240,
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "source_ref": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Source Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "heading",
+        "chunk_id",
+        "document_status",
+        "source_ref"
+      ],
+      "title": "DraftCitation",
+      "type": "object"
+    },
+    "EmbeddingConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            8,
+            16,
+            32,
+            64,
+            256,
+            512,
+            1024
+          ],
+          "title": "Dimension",
+          "type": "integer"
+        },
+        "distance": {
+          "const": "cosine",
+          "title": "Distance",
+          "type": "string"
+        },
+        "inference_profile": {
+          "title": "Inference Profile",
+          "type": "null"
+        },
+        "model_id": {
+          "enum": [
+            "sha256-unit-f32-v1",
+            "amazon.titan-embed-text-v2:0"
+          ],
+          "title": "Model Id",
+          "type": "string"
+        },
+        "normalization": {
+          "const": "l2-unit",
+          "title": "Normalization",
+          "type": "string"
+        },
+        "provider": {
+          "enum": [
+            "fake",
+            "bedrock"
+          ],
+          "title": "Provider",
+          "type": "string"
+        },
+        "region": {
+          "pattern": "^(offline|[a-z]{2}-[a-z]+-[0-9])$",
+          "title": "Region",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "transformation_version": {
+          "enum": [
+            "utf8-chunk-body-v1",
+            "utf8-heading-path-body-v1"
+          ],
+          "title": "Transformation Version",
+          "type": "string"
+        },
+        "vector_format": {
+          "const": "float32-big-endian-v1",
+          "title": "Vector Format",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "provider",
+        "model_id",
+        "inference_profile",
+        "region",
+        "dimension",
+        "normalization",
+        "distance",
+        "transformation_version",
+        "vector_format"
+      ],
+      "title": "EmbeddingConfig",
+      "type": "object"
+    },
+    "EvaluationThresholds": {
+      "additionalProperties": false,
+      "properties": {
+        "critical_rate_min": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Critical Rate Min",
+          "type": "number"
+        },
+        "deterministic_rate_min": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Deterministic Rate Min",
+          "type": "number"
+        },
+        "estimated_cost_usd_max": {
+          "const": "0",
+          "default": "0",
+          "title": "Estimated Cost Usd Max",
+          "type": "string"
+        },
+        "latency_p95_ms_max": {
+          "default": 5000.0,
+          "exclusiveMinimum": 0,
+          "maximum": 45000,
+          "title": "Latency P95 Ms Max",
+          "type": "number"
+        },
+        "unnecessary_calls_max": {
+          "const": 0,
+          "default": 0,
+          "title": "Unnecessary Calls Max",
+          "type": "integer"
+        }
+      },
+      "title": "EvaluationThresholds",
+      "type": "object"
+    },
+    "EvidenceClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "calculation_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Calculation Id"
+        },
+        "claim": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Claim",
+          "type": "string"
+        },
+        "source_ref": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "source_type": {
+          "enum": [
+            "tool",
+            "document",
+            "calculation"
+          ],
+          "title": "Source Type",
+          "type": "string"
+        },
+        "supporting_refs": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Supporting Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "claim",
+        "source_type",
+        "source_ref",
+        "as_of",
+        "supporting_refs"
+      ],
+      "title": "EvidenceClaim",
+      "type": "object"
+    },
+    "EvidenceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Commit Pointer",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "expected_result": {
+          "enum": [
+            "success",
+            "passed",
+            "rejected"
+          ],
+          "title": "Expected Result",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "result_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Result Pointer",
+          "type": "string"
+        },
+        "scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Scope",
+          "type": "string"
+        },
+        "verified_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Verified At",
+          "type": "string"
+        },
+        "verified_at_pointer": {
+          "maxLength": 200,
+          "pattern": "^/(?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9_.-]+$",
+          "title": "Verified At Pointer",
+          "type": "string"
+        },
+        "verified_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Verified Commit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "byte_sha256",
+        "verified_at",
+        "verified_commit",
+        "commit_pointer",
+        "verified_at_pointer",
+        "scope",
+        "result_pointer",
+        "expected_result"
+      ],
+      "title": "EvidenceReference",
+      "type": "object"
+    },
+    "ExpectedAnswer": {
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AnswerDraft"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "candidate_types": {
+          "items": {
+            "enum": [
+              "review_replenishment",
+              "investigate_anomaly",
+              "refresh_source_data"
+            ],
+            "type": "string"
+          },
+          "maxItems": 5,
+          "title": "Candidate Types",
+          "type": "array"
+        },
+        "error_code": {
+          "anyOf": [
+            {
+              "enum": [
+                "invalid_scope",
+                "unauthorized",
+                "dependency_unavailable",
+                "budget_exceeded",
+                "deadline_exceeded",
+                "provider_unavailable",
+                "invalid_output",
+                "invalid_evidence",
+                "unauthorized_tool",
+                "invalid_repair",
+                "trace_unavailable",
+                "cancelled"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Error Code"
+        },
+        "extra_evidence_rounds": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Extra Evidence Rounds",
+          "type": "integer"
+        },
+        "model_calls": {
+          "maximum": 6,
+          "minimum": 0,
+          "title": "Model Calls",
+          "type": "integer"
+        },
+        "repairs": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Repairs",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool_attempts": {
+          "maximum": 6,
+          "minimum": 0,
+          "title": "Tool Attempts",
+          "type": "integer"
+        },
+        "tool_calls": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "get_demand_forecast": "#/$defs/ToolRequest",
+                "get_detected_anomalies": "#/$defs/AnomalyRequest",
+                "get_inventory_status": "#/$defs/InventoryRequest",
+                "get_live_operations": "#/$defs/OperationsRequest",
+                "get_model_status": "#/$defs/ModelStatusRequest",
+                "get_sales_summary": "#/$defs/SalesRequest",
+                "get_stockout_risk": "#/$defs/RiskRequest",
+                "search_knowledge": "#/$defs/KnowledgeRequest"
+              },
+              "propertyName": "tool"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/SalesRequest"
+              },
+              {
+                "$ref": "#/$defs/InventoryRequest"
+              },
+              {
+                "$ref": "#/$defs/ToolRequest"
+              },
+              {
+                "$ref": "#/$defs/RiskRequest"
+              },
+              {
+                "$ref": "#/$defs/AnomalyRequest"
+              },
+              {
+                "$ref": "#/$defs/OperationsRequest"
+              },
+              {
+                "$ref": "#/$defs/ModelStatusRequest"
+              },
+              {
+                "$ref": "#/$defs/KnowledgeRequest"
+              }
+            ]
+          },
+          "maxItems": 6,
+          "title": "Tool Calls",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status",
+        "error_code",
+        "answer",
+        "candidate_types",
+        "tool_calls",
+        "model_calls",
+        "tool_attempts"
+      ],
+      "title": "ExpectedAnswer",
+      "type": "object"
+    },
+    "ForecastKey": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "cutoff_policy": {
+          "const": "end_of_day_second_v1",
+          "title": "Cutoff Policy",
+          "type": "string"
+        },
+        "forecast_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Forecast Origin",
+          "type": "string"
+        },
+        "horizon_days": {
+          "maximum": 14,
+          "minimum": 1,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "target_date": {
+          "format": "date",
+          "title": "Target Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "forecast_origin",
+        "business_timezone",
+        "cutoff_policy",
+        "target_date",
+        "horizon_days"
+      ],
+      "title": "ForecastKey",
+      "type": "object"
+    },
+    "ForecastResult": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_type": {
+          "const": "agent_tool_result",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/ToolResult"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "fixture",
+            "runtime"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "tool": {
+          "const": "get_demand_forecast",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "tool",
+        "result",
+        "source_kind"
+      ],
+      "title": "ForecastResult",
+      "type": "object"
+    },
+    "ForecastScope": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "product_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Product Ids",
+          "type": "array"
+        },
+        "selling_location_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Selling Location Ids",
+          "type": "array"
+        },
+        "target_from": {
+          "format": "date",
+          "title": "Target From",
+          "type": "string"
+        },
+        "target_to": {
+          "format": "date",
+          "title": "Target To",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_ids",
+        "selling_location_ids",
+        "channel",
+        "target_from",
+        "target_to"
+      ],
+      "title": "ForecastScope",
+      "type": "object"
+    },
+    "GoldenCase": {
+      "additionalProperties": false,
+      "properties": {
+        "access": {
+          "enum": [
+            "operator",
+            "missing_credentials",
+            "viewer",
+            "foreign_scope",
+            "no_source_capability"
+          ],
+          "title": "Access",
+          "type": "string"
+        },
+        "case_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Case Id",
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "business",
+            "suggestions",
+            "documentation",
+            "safety",
+            "degradation"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "critical": {
+          "title": "Critical",
+          "type": "boolean"
+        },
+        "decision_time": {
+          "pattern": "^2026-08-23T00:00:00Z$",
+          "title": "Decision Time",
+          "type": "string"
+        },
+        "expected": {
+          "$ref": "#/$defs/ExpectedAnswer"
+        },
+        "rag_case_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rag Case Id"
+        },
+        "request_json": {
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Request Json",
+          "type": "string"
+        },
+        "script": {
+          "items": {
+            "$ref": "#/$defs/ChatFixture"
+          },
+          "maxItems": 6,
+          "title": "Script",
+          "type": "array"
+        },
+        "tools": {
+          "items": {
+            "$ref": "#/$defs/ToolFixture"
+          },
+          "maxItems": 6,
+          "title": "Tools",
+          "type": "array"
+        }
+      },
+      "required": [
+        "case_id",
+        "category",
+        "critical",
+        "rag_case_id",
+        "request_json",
+        "access",
+        "decision_time",
+        "tools",
+        "script",
+        "expected"
+      ],
+      "title": "GoldenCase",
+      "type": "object"
+    },
+    "Heading": {
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Level",
+          "type": "integer"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "level",
+        "title"
+      ],
+      "title": "Heading",
+      "type": "object"
+    },
+    "ImplementationReference": {
+      "additionalProperties": false,
+      "properties": {
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 240,
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "path",
+        "byte_sha256"
+      ],
+      "title": "ImplementationReference",
+      "type": "object"
+    },
+    "IndexEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "embedding_id": {
+          "pattern": "^embedding-sha256-[0-9a-f]{64}$",
+          "title": "Embedding Id",
+          "type": "string"
+        },
+        "vector_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Vector Checksum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "embedding_id",
+        "vector_checksum"
+      ],
+      "title": "IndexEntry",
+      "type": "object"
+    },
+    "IndexManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_count": {
+          "maximum": 32768,
+          "minimum": 1,
+          "title": "Chunk Count",
+          "type": "integer"
+        },
+        "chunk_manifest_id": {
+          "pattern": "^chunks-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Manifest Id",
+          "type": "string"
+        },
+        "corpus_id": {
+          "pattern": "^corpus-sha256-[0-9a-f]{64}$",
+          "title": "Corpus Id",
+          "type": "string"
+        },
+        "embedding_config": {
+          "$ref": "#/$defs/EmbeddingConfig"
+        },
+        "embedding_count": {
+          "maximum": 32768,
+          "minimum": 1,
+          "title": "Embedding Count",
+          "type": "integer"
+        },
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/IndexEntry"
+          },
+          "maxItems": 32768,
+          "minItems": 1,
+          "title": "Entries",
+          "type": "array"
+        },
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "index_id": {
+          "pattern": "^index-sha256-[0-9a-f]{64}$",
+          "title": "Index Id",
+          "type": "string"
+        },
+        "lifecycle": {
+          "const": "candidate",
+          "title": "Lifecycle",
+          "type": "string"
+        },
+        "migration_revision": {
+          "enum": [
+            "0002_rag_candidates",
+            "0008_rag_semantic"
+          ],
+          "title": "Migration Revision",
+          "type": "string"
+        },
+        "pgvector_version": {
+          "const": "0.8.6",
+          "title": "Pgvector Version",
+          "type": "string"
+        },
+        "retrieval_version": {
+          "enum": [
+            "not_implemented",
+            "pgvector-cosine-exact-v1"
+          ],
+          "title": "Retrieval Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "semantic_quality": {
+          "enum": [
+            "not_evaluated_fake_vectors",
+            "not_evaluated_real_vectors"
+          ],
+          "title": "Semantic Quality",
+          "type": "string"
+        },
+        "space_id": {
+          "pattern": "^embedding-space-sha256-[0-9a-f]{64}$",
+          "title": "Space Id",
+          "type": "string"
+        },
+        "storage_version": {
+          "const": "pgvector-checked-dimension-v1",
+          "title": "Storage Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "lifecycle",
+        "environment",
+        "semantic_quality",
+        "index_id",
+        "corpus_id",
+        "chunk_manifest_id",
+        "embedding_config",
+        "space_id",
+        "storage_version",
+        "pgvector_version",
+        "migration_revision",
+        "retrieval_version",
+        "chunk_count",
+        "embedding_count",
+        "entries"
+      ],
+      "title": "IndexManifest",
+      "type": "object"
+    },
+    "IndexPin": {
+      "additionalProperties": false,
+      "properties": {
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "generation": {
+          "maximum": 9223372036854775807,
+          "minimum": 1,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "lane": {
+          "enum": [
+            "retrieval",
+            "offline_test"
+          ],
+          "title": "Lane",
+          "type": "string"
+        },
+        "manifest": {
+          "$ref": "#/$defs/IndexManifest"
+        },
+        "purpose": {
+          "enum": [
+            "lifecycle_validation_only",
+            "qualified_semantic_retrieval"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "request_id": {
+          "pattern": "^rag-change-[0-9a-f]{32}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "review_id": {
+          "pattern": "^corpus-review-sha256-[0-9a-f]{64}$",
+          "title": "Review Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "validation_id": {
+          "pattern": "^index-validation-sha256-[0-9a-f]{64}$",
+          "title": "Validation Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "environment",
+        "lane",
+        "purpose",
+        "generation",
+        "request_id",
+        "review_id",
+        "validation_id",
+        "manifest"
+      ],
+      "title": "IndexPin",
+      "type": "object"
+    },
+    "InventoryItem": {
+      "additionalProperties": false,
+      "properties": {
+        "available_units": {
+          "minimum": 0,
+          "title": "Available Units",
+          "type": "number"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "mapping_ref": {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "title": "Mapping Ref",
+          "type": "string"
+        },
+        "physical_units": {
+          "minimum": 0,
+          "title": "Physical Units",
+          "type": "number"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "reserved_units": {
+          "minimum": 0,
+          "title": "Reserved Units",
+          "type": "number"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "stock_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Stock Location Id",
+          "type": "string"
+        },
+        "unit_of_measure": {
+          "const": "unit",
+          "title": "Unit Of Measure",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "stock_location_id",
+        "mapping_ref",
+        "physical_units",
+        "reserved_units",
+        "available_units",
+        "unit_of_measure"
+      ],
+      "title": "InventoryItem",
+      "type": "object"
+    },
+    "InventoryRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_inventory_status",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool"
+      ],
+      "title": "InventoryRequest",
+      "type": "object"
+    },
+    "InventoryResult": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "contract_type": {
+          "const": "agent_tool_result",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "missing",
+            "unavailable"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/InventoryItem"
+          },
+          "maxItems": 50,
+          "title": "Items",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "fixture",
+            "runtime"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Ref"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "no_data",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool": {
+          "const": "get_inventory_status",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "status",
+        "as_of",
+        "freshness_status",
+        "source_ref",
+        "items",
+        "error",
+        "source_kind",
+        "tool"
+      ],
+      "title": "InventoryResult",
+      "type": "object"
+    },
+    "KnowledgeHit": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk": {
+          "$ref": "#/$defs/MarkdownChunk"
+        },
+        "claim_kind": {
+          "enum": [
+            "plan",
+            "implementation",
+            "verified_evidence",
+            "historical_reference"
+          ],
+          "title": "Claim Kind",
+          "type": "string"
+        },
+        "score": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "score",
+        "chunk",
+        "claim_kind"
+      ],
+      "title": "KnowledgeHit",
+      "type": "object"
+    },
+    "KnowledgeRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "retrieval": {
+          "$ref": "#/$defs/RetrievalRequest"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "tool": {
+          "const": "search_knowledge",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "tool",
+        "retrieval"
+      ],
+      "title": "KnowledgeRequest",
+      "type": "object"
+    },
+    "KnowledgeResult": {
+      "additionalProperties": false,
+      "properties": {
+        "content_trust": {
+          "const": "untrusted_reference",
+          "title": "Content Trust",
+          "type": "string"
+        },
+        "context_bytes": {
+          "maximum": 24000,
+          "minimum": 0,
+          "title": "Context Bytes",
+          "type": "integer"
+        },
+        "context_tokens": {
+          "maximum": 6000,
+          "minimum": 0,
+          "title": "Context Tokens",
+          "type": "integer"
+        },
+        "contract_type": {
+          "const": "agent_tool_result",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "index_id": {
+          "pattern": "^index-sha256-[0-9a-f]{64}$",
+          "title": "Index Id",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/KnowledgeHit"
+          },
+          "maxItems": 5,
+          "title": "Items",
+          "type": "array"
+        },
+        "pin_generation": {
+          "minimum": 1,
+          "title": "Pin Generation",
+          "type": "integer"
+        },
+        "provider": {
+          "const": "bedrock",
+          "title": "Provider",
+          "type": "string"
+        },
+        "retrieval_config_id": {
+          "pattern": "^retrieval-config-sha256-[0-9a-f]{64}$",
+          "title": "Retrieval Config Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "runtime",
+            "fixture"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "no_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool": {
+          "const": "search_knowledge",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "tool",
+        "status",
+        "index_id",
+        "pin_generation",
+        "provider",
+        "retrieval_config_id",
+        "content_trust",
+        "items",
+        "context_tokens",
+        "context_bytes",
+        "source_kind"
+      ],
+      "title": "KnowledgeResult",
+      "type": "object"
+    },
+    "MarkdownChunk": {
+      "additionalProperties": false,
+      "properties": {
+        "access_class": {
+          "enum": [
+            "public_project",
+            "project_internal",
+            "restricted"
+          ],
+          "title": "Access Class",
+          "type": "string"
+        },
+        "block_type": {
+          "enum": [
+            "paragraph",
+            "bullet_list",
+            "ordered_list",
+            "blockquote",
+            "fence",
+            "code_block",
+            "table",
+            "html_block",
+            "reference_definition"
+          ],
+          "title": "Block Type",
+          "type": "string"
+        },
+        "byte_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Byte Sha256",
+          "type": "string"
+        },
+        "chunk_id": {
+          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "chunk_index": {
+          "exclusiveMaximum": 4096,
+          "minimum": 0,
+          "title": "Chunk Index",
+          "type": "integer"
+        },
+        "chunker_config_id": {
+          "pattern": "^chunker-config-sha256-[0-9a-f]{64}$",
+          "title": "Chunker Config Id",
+          "type": "string"
+        },
+        "chunker_version": {
+          "const": "markdown-blocks-v1",
+          "title": "Chunker Version",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "content_checksum": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Checksum",
+          "type": "string"
+        },
+        "content_id": {
+          "pattern": "^markdown-sha256-[0-9a-f]{64}$",
+          "title": "Content Id",
+          "type": "string"
+        },
+        "document_id": {
+          "pattern": "^document-sha256-[0-9a-f]{64}$",
+          "title": "Document Id",
+          "type": "string"
+        },
+        "document_status": {
+          "enum": [
+            "specified",
+            "implemented",
+            "verified",
+            "deprecated",
+            "historical"
+          ],
+          "title": "Document Status",
+          "type": "string"
+        },
+        "document_type": {
+          "enum": [
+            "architecture",
+            "contract",
+            "guide",
+            "runbook",
+            "policy",
+            "plan",
+            "evidence",
+            "model_card"
+          ],
+          "title": "Document Type",
+          "type": "string"
+        },
+        "fact_scope": {
+          "maxLength": 600,
+          "minLength": 1,
+          "title": "Fact Scope",
+          "type": "string"
+        },
+        "heading_path": {
+          "items": {
+            "$ref": "#/$defs/Heading"
+          },
+          "maxItems": 6,
+          "title": "Heading Path",
+          "type": "array"
+        },
+        "implementation_refs": {
+          "items": {
+            "$ref": "#/$defs/ImplementationReference"
+          },
+          "maxItems": 8,
+          "title": "Implementation Refs",
+          "type": "array"
+        },
+        "occurrences": {
+          "items": {
+            "$ref": "#/$defs/SourceLocation"
+          },
+          "maxItems": 4096,
+          "minItems": 1,
+          "title": "Occurrences",
+          "type": "array"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "Oskar-Stachowski/retailops-cloud-native-platform",
+            "Oskar-Stachowski/retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 16000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "token_estimate": {
+          "maximum": 4000,
+          "minimum": 1,
+          "title": "Token Estimate",
+          "type": "integer"
+        },
+        "verification": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvidenceReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "title",
+        "byte_sha256",
+        "document_type",
+        "document_status",
+        "access_class",
+        "fact_scope",
+        "implementation_refs",
+        "verification",
+        "repository",
+        "commit_sha",
+        "document_id",
+        "content_id",
+        "source_ref",
+        "chunk_id",
+        "chunk_index",
+        "chunker_version",
+        "chunker_config_id",
+        "heading_path",
+        "block_type",
+        "text",
+        "content_checksum",
+        "token_estimate",
+        "occurrences"
+      ],
+      "title": "MarkdownChunk",
+      "type": "object"
+    },
+    "ModelRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Artifact Sha256",
+          "type": "string"
+        },
+        "config_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "model",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "feature_allowlist_version": {
+          "const": "forecast-observed-sales-v1",
+          "title": "Feature Allowlist Version",
+          "type": "string"
+        },
+        "feature_schema_version": {
+          "const": "1.0",
+          "title": "Feature Schema Version",
+          "type": "string"
+        },
+        "feature_set_id": {
+          "pattern": "^features-sha256-[0-9a-f]{64}$",
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "label_dataset_id": {
+          "pattern": "^labels-sha256-[0-9a-f]{64}$",
+          "title": "Label Dataset Id",
+          "type": "string"
+        },
+        "model_family": {
+          "enum": [
+            "baseline",
+            "random_forest",
+            "hist_gradient_boosting"
+          ],
+          "title": "Model Family",
+          "type": "string"
+        },
+        "model_id": {
+          "pattern": "^model-sha256-[0-9a-f]{64}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "model_name": {
+          "const": "retailops-demand-forecast",
+          "title": "Model Name",
+          "type": "string"
+        },
+        "model_seed": {
+          "minimum": 0,
+          "title": "Model Seed",
+          "type": "integer"
+        },
+        "model_version": {
+          "pattern": "^[1-9][0-9]*$",
+          "title": "Model Version",
+          "type": "string"
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "selection_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Selection Cutoff",
+          "type": "string"
+        },
+        "split_id": {
+          "pattern": "^split-sha256-[0-9a-f]{64}$",
+          "title": "Split Id",
+          "type": "string"
+        },
+        "target_type": {
+          "const": "observed_sales_units",
+          "title": "Target Type",
+          "type": "string"
+        },
+        "training_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Training Cutoff",
+          "type": "string"
+        },
+        "training_lineage": {
+          "$ref": "#/$defs/DataLineage"
+        },
+        "training_run_id": {
+          "pattern": "^run-[0-9a-f]{32}$",
+          "title": "Training Run Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "model_id",
+        "model_name",
+        "model_version",
+        "target_type",
+        "feature_schema_version",
+        "feature_allowlist_version",
+        "model_family",
+        "training_run_id",
+        "training_lineage",
+        "feature_set_id",
+        "label_dataset_id",
+        "split_id",
+        "training_cutoff",
+        "selection_cutoff",
+        "model_seed",
+        "artifact_sha256",
+        "config_sha256",
+        "provenance"
+      ],
+      "title": "ModelRecord",
+      "type": "object"
+    },
+    "ModelStatusItem": {
+      "additionalProperties": false,
+      "properties": {
+        "alias": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Alias"
+        },
+        "approved": {
+          "const": true,
+          "title": "Approved",
+          "type": "boolean"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "deployed_release_ref": {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "title": "Deployed Release Ref",
+          "type": "string"
+        },
+        "deployment_environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Deployment Environment",
+          "type": "string"
+        },
+        "evaluation_ref": {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "title": "Evaluation Ref",
+          "type": "string"
+        },
+        "model_id": {
+          "pattern": "^model-sha256-[0-9a-f]{64}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "model_id",
+        "deployed_release_ref",
+        "deployment_environment",
+        "alias",
+        "evaluation_ref",
+        "approved"
+      ],
+      "title": "ModelStatusItem",
+      "type": "object"
+    },
+    "ModelStatusRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_model_status",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool"
+      ],
+      "title": "ModelStatusRequest",
+      "type": "object"
+    },
+    "ModelStatusResult": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "contract_type": {
+          "const": "agent_tool_result",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "missing",
+            "unavailable"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ModelStatusItem"
+          },
+          "maxItems": 50,
+          "title": "Items",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "fixture",
+            "runtime"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Ref"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "no_data",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool": {
+          "const": "get_model_status",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "status",
+        "as_of",
+        "freshness_status",
+        "source_ref",
+        "items",
+        "error",
+        "source_kind",
+        "tool"
+      ],
+      "title": "ModelStatusResult",
+      "type": "object"
+    },
+    "OperationsItem": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "lag_seconds": {
+          "minimum": 0,
+          "title": "Lag Seconds",
+          "type": "number"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "stream_status": {
+          "enum": [
+            "healthy",
+            "degraded",
+            "stopped"
+          ],
+          "title": "Stream Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "stream_status",
+        "lag_seconds"
+      ],
+      "title": "OperationsItem",
+      "type": "object"
+    },
+    "OperationsRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_live_operations",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool"
+      ],
+      "title": "OperationsRequest",
+      "type": "object"
+    },
+    "OperationsResult": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "contract_type": {
+          "const": "agent_tool_result",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "missing",
+            "unavailable"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/OperationsItem"
+          },
+          "maxItems": 50,
+          "title": "Items",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "fixture",
+            "runtime"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Ref"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "no_data",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool": {
+          "const": "get_live_operations",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "status",
+        "as_of",
+        "freshness_status",
+        "source_ref",
+        "items",
+        "error",
+        "source_kind",
+        "tool"
+      ],
+      "title": "OperationsResult",
+      "type": "object"
+    },
+    "PredictionInterval": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Calibration Version",
+          "type": "string"
+        },
+        "lower": {
+          "minimum": 0,
+          "title": "Lower",
+          "type": "number"
+        },
+        "method": {
+          "const": "validation_residual_quantiles",
+          "title": "Method",
+          "type": "string"
+        },
+        "nominal_coverage": {
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "Nominal Coverage",
+          "type": "number"
+        },
+        "upper": {
+          "minimum": 0,
+          "title": "Upper",
+          "type": "number"
+        }
+      },
+      "required": [
+        "lower",
+        "upper",
+        "nominal_coverage",
+        "method",
+        "calibration_version"
+      ],
+      "title": "PredictionInterval",
+      "type": "object"
+    },
+    "PredictionRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_type": {
+          "const": "prediction",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "feature_set_id": {
+          "pattern": "^features-sha256-[0-9a-f]{64}$",
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "unknown"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "inference_run_id": {
+          "pattern": "^run-[0-9a-f]{32}$",
+          "title": "Inference Run Id",
+          "type": "string"
+        },
+        "interval": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PredictionInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "interval_reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "not_calibrated",
+                "insufficient_calibration"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Interval Reason"
+        },
+        "key": {
+          "$ref": "#/$defs/ForecastKey"
+        },
+        "lineage": {
+          "$ref": "#/$defs/DataLineage"
+        },
+        "model": {
+          "$ref": "#/$defs/ModelRecord"
+        },
+        "predicted_units": {
+          "minimum": 0,
+          "title": "Predicted Units",
+          "type": "number"
+        },
+        "prediction_dataset_id": {
+          "pattern": "^predictions-sha256-[0-9a-f]{64}$",
+          "title": "Prediction Dataset Id",
+          "type": "string"
+        },
+        "prediction_id": {
+          "pattern": "^prediction-sha256-[0-9a-f]{64}$",
+          "title": "Prediction Id",
+          "type": "string"
+        },
+        "quality_status": {
+          "enum": [
+            "passed",
+            "warning",
+            "not_evaluable"
+          ],
+          "title": "Quality Status",
+          "type": "string"
+        },
+        "release_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Release Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_type": {
+          "const": "observed_sales_units",
+          "title": "Target Type",
+          "type": "string"
+        },
+        "unit_of_measure": {
+          "const": "unit",
+          "title": "Unit Of Measure",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "prediction_id",
+        "prediction_dataset_id",
+        "key",
+        "target_type",
+        "unit_of_measure",
+        "predicted_units",
+        "interval",
+        "interval_reason",
+        "lineage",
+        "feature_set_id",
+        "inference_run_id",
+        "model",
+        "release_id",
+        "generated_at",
+        "freshness_status",
+        "quality_status"
+      ],
+      "title": "PredictionRecord",
+      "type": "object"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "code_state": {
+          "enum": [
+            "clean",
+            "dirty"
+          ],
+          "title": "Code State",
+          "type": "string"
+        },
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "dirty_patch_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dirty Patch Sha256"
+        },
+        "repository": {
+          "enum": [
+            "retailops-cloud-native-platform",
+            "retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "transform_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Transform Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "code_state",
+        "dirty_patch_sha256",
+        "dependency_lock_sha256",
+        "transform_version"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "RetrievalFilters": {
+      "additionalProperties": false,
+      "properties": {
+        "access_classes": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "public_project",
+                  "project_internal",
+                  "restricted"
+                ],
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Access Classes"
+        },
+        "document_statuses": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "specified",
+                  "implemented",
+                  "verified",
+                  "deprecated",
+                  "historical"
+                ],
+                "type": "string"
+              },
+              "maxItems": 5,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Document Statuses"
+        },
+        "document_types": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "architecture",
+                  "contract",
+                  "guide",
+                  "runbook",
+                  "policy",
+                  "plan",
+                  "evidence",
+                  "model_card"
+                ],
+                "type": "string"
+              },
+              "maxItems": 8,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Document Types"
+        },
+        "repositories": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "Oskar-Stachowski/retailops-cloud-native-platform",
+                  "Oskar-Stachowski/retailops-ai-intelligence"
+                ],
+                "type": "string"
+              },
+              "maxItems": 2,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repositories"
+        }
+      },
+      "title": "RetrievalFilters",
+      "type": "object"
+    },
+    "RetrievalRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "filters": {
+          "$ref": "#/$defs/RetrievalFilters"
+        },
+        "max_context_tokens": {
+          "default": 6000,
+          "maximum": 6000,
+          "minimum": 1,
+          "title": "Max Context Tokens",
+          "type": "integer"
+        },
+        "purpose": {
+          "default": "documentation",
+          "enum": [
+            "documentation",
+            "implementation",
+            "verified_state",
+            "history"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "question": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "top_k": {
+          "default": 5,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Top K",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "question"
+      ],
+      "title": "RetrievalRequest",
+      "type": "object"
+    },
+    "RiskItem": {
+      "additionalProperties": false,
+      "properties": {
+        "calibrated": {
+          "const": true,
+          "title": "Calibrated",
+          "type": "boolean"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "inventory_as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Inventory As Of",
+          "type": "string"
+        },
+        "inventory_source_ref": {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "title": "Inventory Source Ref",
+          "type": "string"
+        },
+        "model_id": {
+          "pattern": "^model-sha256-[0-9a-f]{64}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "model_release_ref": {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "title": "Model Release Ref",
+          "type": "string"
+        },
+        "probability": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Probability",
+          "type": "number"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "threshold": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Threshold",
+          "type": "number"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "window",
+        "probability",
+        "threshold",
+        "calibrated",
+        "model_id",
+        "model_release_ref",
+        "inventory_source_ref",
+        "inventory_as_of"
+      ],
+      "title": "RiskItem",
+      "type": "object"
+    },
+    "RiskRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_stockout_risk",
+          "title": "Tool",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool",
+        "window"
+      ],
+      "title": "RiskRequest",
+      "type": "object"
+    },
+    "RiskResult": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "contract_type": {
+          "const": "agent_tool_result",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "missing",
+            "unavailable"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/RiskItem"
+          },
+          "maxItems": 50,
+          "title": "Items",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "fixture",
+            "runtime"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Ref"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "no_data",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool": {
+          "const": "get_stockout_risk",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "status",
+        "as_of",
+        "freshness_status",
+        "source_ref",
+        "items",
+        "error",
+        "source_kind",
+        "tool"
+      ],
+      "title": "RiskResult",
+      "type": "object"
+    },
+    "SalesItem": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "observed_sales_units": {
+          "minimum": 0,
+          "title": "Observed Sales Units",
+          "type": "number"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "unit_of_measure": {
+          "const": "unit",
+          "title": "Unit Of Measure",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "window",
+        "observed_sales_units",
+        "unit_of_measure"
+      ],
+      "title": "SalesItem",
+      "type": "object"
+    },
+    "SalesRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "grain": {
+          "const": "product_selling_location_channel_period",
+          "title": "Grain",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_sales_summary",
+          "title": "Tool",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool",
+        "window",
+        "grain"
+      ],
+      "title": "SalesRequest",
+      "type": "object"
+    },
+    "SalesResult": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "contract_type": {
+          "const": "agent_tool_result",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "missing",
+            "unavailable"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/SalesItem"
+          },
+          "maxItems": 50,
+          "title": "Items",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "fixture",
+            "runtime"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Ref"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "no_data",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool": {
+          "const": "get_sales_summary",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "status",
+        "as_of",
+        "freshness_status",
+        "source_ref",
+        "items",
+        "error",
+        "source_kind",
+        "tool"
+      ],
+      "title": "SalesResult",
+      "type": "object"
+    },
+    "SourceLocation": {
+      "additionalProperties": false,
+      "properties": {
+        "end_line": {
+          "maximum": 500000,
+          "minimum": 1,
+          "title": "End Line",
+          "type": "integer"
+        },
+        "end_offset": {
+          "exclusiveMinimum": 0,
+          "maximum": 500000,
+          "title": "End Offset",
+          "type": "integer"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "start_line": {
+          "maximum": 500000,
+          "minimum": 1,
+          "title": "Start Line",
+          "type": "integer"
+        },
+        "start_offset": {
+          "maximum": 500000,
+          "minimum": 0,
+          "title": "Start Offset",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_offset",
+        "end_offset",
+        "start_line",
+        "end_line",
+        "source_ref"
+      ],
+      "title": "SourceLocation",
+      "type": "object"
+    },
+    "ToolError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_scope",
+            "unauthorized",
+            "unavailable",
+            "stale",
+            "not_found",
+            "unsupported_grain",
+            "budget_exceeded"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "description": {
+          "enum": [
+            "The requested scope is invalid.",
+            "The requested scope is not authorized.",
+            "The required source is unavailable.",
+            "The requested source is stale.",
+            "The requested output was not found.",
+            "The requested grain is unsupported.",
+            "The tool budget was exceeded."
+          ],
+          "title": "Description",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "description",
+        "retryable"
+      ],
+      "title": "ToolError",
+      "type": "object"
+    },
+    "ToolFixture": {
+      "additionalProperties": false,
+      "properties": {
+        "request": {
+          "discriminator": {
+            "mapping": {
+              "get_demand_forecast": "#/$defs/ToolRequest",
+              "get_detected_anomalies": "#/$defs/AnomalyRequest",
+              "get_inventory_status": "#/$defs/InventoryRequest",
+              "get_live_operations": "#/$defs/OperationsRequest",
+              "get_model_status": "#/$defs/ModelStatusRequest",
+              "get_sales_summary": "#/$defs/SalesRequest",
+              "get_stockout_risk": "#/$defs/RiskRequest",
+              "search_knowledge": "#/$defs/KnowledgeRequest"
+            },
+            "propertyName": "tool"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/SalesRequest"
+            },
+            {
+              "$ref": "#/$defs/InventoryRequest"
+            },
+            {
+              "$ref": "#/$defs/ToolRequest"
+            },
+            {
+              "$ref": "#/$defs/RiskRequest"
+            },
+            {
+              "$ref": "#/$defs/AnomalyRequest"
+            },
+            {
+              "$ref": "#/$defs/OperationsRequest"
+            },
+            {
+              "$ref": "#/$defs/ModelStatusRequest"
+            },
+            {
+              "$ref": "#/$defs/KnowledgeRequest"
+            }
+          ],
+          "title": "Request"
+        },
+        "result": {
+          "discriminator": {
+            "mapping": {
+              "get_demand_forecast": "#/$defs/ForecastResult",
+              "get_detected_anomalies": "#/$defs/AnomalyResult",
+              "get_inventory_status": "#/$defs/InventoryResult",
+              "get_live_operations": "#/$defs/OperationsResult",
+              "get_model_status": "#/$defs/ModelStatusResult",
+              "get_sales_summary": "#/$defs/SalesResult",
+              "get_stockout_risk": "#/$defs/RiskResult",
+              "search_knowledge": "#/$defs/KnowledgeResult"
+            },
+            "propertyName": "tool"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/SalesResult"
+            },
+            {
+              "$ref": "#/$defs/InventoryResult"
+            },
+            {
+              "$ref": "#/$defs/ForecastResult"
+            },
+            {
+              "$ref": "#/$defs/RiskResult"
+            },
+            {
+              "$ref": "#/$defs/AnomalyResult"
+            },
+            {
+              "$ref": "#/$defs/OperationsResult"
+            },
+            {
+              "$ref": "#/$defs/ModelStatusResult"
+            },
+            {
+              "$ref": "#/$defs/KnowledgeResult"
+            }
+          ],
+          "title": "Result"
+        }
+      },
+      "required": [
+        "request",
+        "result"
+      ],
+      "title": "ToolFixture",
+      "type": "object"
+    },
+    "ToolRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/ForecastScope"
+        },
+        "tool": {
+          "const": "get_demand_forecast",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "tool",
+        "as_of",
+        "scope",
+        "limit"
+      ],
+      "title": "ToolRequest",
+      "type": "object"
+    },
+    "ToolResult": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "As Of"
+        },
+        "contract_type": {
+          "const": "tool_result",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "unknown",
+            "missing",
+            "unavailable"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/PredictionRecord"
+          },
+          "maxItems": 50,
+          "title": "Items",
+          "type": "array"
+        },
+        "request": {
+          "$ref": "#/$defs/ToolRequest"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "pattern": "^predictions-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Ref"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "no_data",
+            "error"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tool": {
+          "const": "get_demand_forecast",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "tool",
+        "request",
+        "status",
+        "as_of",
+        "freshness_status",
+        "source_ref",
+        "items",
+        "error"
+      ],
+      "title": "ToolResult",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:agent:agent-golden-set:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/GoldenCase"
+      },
+      "maxItems": 50,
+      "minItems": 30,
+      "title": "Cases",
+      "type": "array"
+    },
+    "fixture_only": {
+      "const": true,
+      "title": "Fixture Only",
+      "type": "boolean"
+    },
+    "labels_origin": {
+      "const": "authored_oracles_not_runtime_policy_or_ranker_output",
+      "title": "Labels Origin",
+      "type": "string"
+    },
+    "labels_state": {
+      "const": "proposed",
+      "title": "Labels State",
+      "type": "string"
+    },
+    "pin": {
+      "$ref": "#/$defs/IndexPin"
+    },
+    "provider": {
+      "const": "fake",
+      "title": "Provider",
+      "type": "string"
+    },
+    "rag_set_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Rag Set Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "set_version": {
+      "const": "agent-canonical-golden-v1",
+      "title": "Set Version",
+      "type": "string"
+    },
+    "thresholds": {
+      "$ref": "#/$defs/EvaluationThresholds"
+    }
+  },
+  "required": [
+    "schema_version",
+    "set_version",
+    "provider",
+    "fixture_only",
+    "labels_state",
+    "labels_origin",
+    "rag_set_sha256",
+    "pin",
+    "thresholds",
+    "cases"
+  ],
+  "title": "AgentGoldenSet",
+  "type": "object"
+}

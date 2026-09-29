@@ -35,6 +35,7 @@ Kanoniczna walidacja jest celowo ograniczona do zamkniętych intentów, literaln
 obserwacji/cytatów i jednego wzoru; nie jest ogólnym testem rozumienia języka.
 
 Trace jest ograniczony i autoryzowany, ale w pamięci; restart go usuwa.
-Otwarte: polityka sugestii, golden odpowiedzi, Assistant API, trwały trace,
-admission, adapter/circuit breaker/real chat smoke i źródła oraz E2E z AI 10.
+Bieżące bramki podaje [status](../STATUS.md), a
+[kolejny zakres](12-evaluation.md) opisuje politykę kandydatów i golden
+kanonicznych odpowiedzi na fixtures.
 Nie wykonano zdalnego CI ani publikacji tego zakresu na main.

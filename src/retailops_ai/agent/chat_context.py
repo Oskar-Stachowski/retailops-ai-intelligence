@@ -1,6 +1,6 @@
 """Reference snapshots come from authorized tool execution, never from caller payloads."""
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 from retailops_ai.agent.chat_config import ResolvedChatConfig
@@ -8,6 +8,7 @@ from retailops_ai.agent.chat_contracts import (
     AnswerDraft,
     AnswerFreshness,
     DomainFreshness,
+    DraftAction,
     DraftCitation,
     EvidenceClaim,
 )
@@ -118,6 +119,7 @@ class EvidenceSnapshot:
         *,
         calculations: Mapping[str, EvidenceClaim] | None = None,
         expected_freshness: AnswerFreshness | None = None,
+        authorized_actions: Sequence[DraftAction] = (),
     ) -> None:
         tools = {tool_result_ref(output): output for output in self.outputs}
         citations = self.citations()
@@ -146,6 +148,5 @@ class EvidenceSnapshot:
                     raise InvalidEvidence("unregistered_or_modified_calculation")
         if answer.data_freshness != (expected_freshness or self.freshness()):
             raise InvalidEvidence("invented_data_freshness")
-        if answer.recommended_actions:
-            # Later server policy may create suggestions; model proposals cannot authorize them.
-            raise InvalidEvidence("suggestion_policy_not_implemented")
+        if answer.recommended_actions != list(authorized_actions):
+            raise InvalidEvidence("actions_require_exact_server_policy")

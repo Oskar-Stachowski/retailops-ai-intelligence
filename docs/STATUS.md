@@ -59,13 +59,23 @@ konfliktujące prognozy i niejednoznaczny mapping mają kontrolowane wyniki.
 Bezpieczny trace ma odczyt właściciela, scope, retencję i limit w pamięci.
 [Odbiór](evidence/12-graph.md) podaje testy i granice profilu.
 
-Następny zakres bez AI 10: deterministyczna polityka sugestii z fixtures oraz
-wersjonowany golden odpowiedzi i pomiary grafu. Dalej pozostają rzeczywiste źródła
-ML/operacyjne, Assistant API, trwały trace, admission, golden odpowiedzi,
-adapter chat Bedrock z circuit breaker i smoke oraz E2E sugestii pozostają
-do realizacji. Pełne AI 12 wymaga AI 10. Obecny profil sprawdza kanoniczne fakty
-i literalne cytaty; nie potwierdza jakości dowolnych odpowiedzi LLM ani działania
-rzeczywistego chat modelu. Trace nie jest jeszcze trwały po restarcie.
+[Czwarty zakres](agent-evaluation.md) dodaje deterministyczną politykę trzech
+kandydatów do przeglądu przez człowieka, wiązanie do wybranych faktów i expiry.
+Wersjonowany golden obejmuje 50 przypadków, w tym sześć pytań z AI 11,
+niezależnie zapisane oracles i scripted replies. Release wiąże config grafu,
+politykę/prompty v3, schemas, golden, ewaluator i lock. `make agent-evaluate`
+jest bramką `make check`; pomiar dotyczy jawnych fixtures i kanonicznych twierdzeń.
+[Odbiór](evidence/12-evaluation.md) podaje wyniki oraz ograniczenia.
+
+Następny zakres bez AI 10: Assistant API, trwały zapis bezpiecznego trace,
+odpowiedzi/kandydatów i admission. Dalej pozostają rzeczywisty adapter chat
+Bedrock z circuit breaker i bounded smoke, realne źródła ML/operacyjne oraz
+kwalifikacja rzeczywistego modelu i retrieval na golden set. Pełne AI 12 wymaga
+AI 10 i E2E sugestii/outbox/v2/read API/UI. Obecny profil sprawdza kanoniczne
+fakty i literalne cytaty; nie potwierdza jakości swobodnych odpowiedzi LLM ani
+rzeczywistego chat modelu. Trace nie jest trwały po restarcie, kandydaci nie są
+utrwalonymi sugestiami RetailOps. Etykiety golden i progi polityki są lokalnym
+profilem developmentu, bez niezależnego business/model approval.
 
 ## Fundament i dalsza praca
 
@@ -86,7 +96,7 @@ kontynuować [rozpoczęte narzędzia **AI 12**](agent-tools.md). Pełne zamknię
 Odbiór dotyczy lokalnego retrieval na konkretnym zatwierdzonym snapshotcie.
 Zmiana dokumentacji na `main` nie aktualizuje automatycznie korpusu. Kolejna
 wersja wymaga nowego snapshotu, przeglądu i ewaluacji.
-Generowanie odpowiedzi, ewaluacja groundedness i pełna ścieżka agenta
-pozostają do realizacji w AI 12. Pipeline danych, modele, integracja zdarzeń oraz
+Generowanie swobodnych odpowiedzi, ewaluacja rzeczywistego modelu i pełna
+ścieżka agenta pozostają do realizacji w AI 12. Pipeline danych, modele, integracja zdarzeń oraz
 wdrożenie AWS/EKS mają dalsze bramki. Limit AWS na proces nie zastępuje wspólnego
 budżetu wielu replik ani produkcyjnego IAM. Nie deklarujemy wdrożenia w chmurze.

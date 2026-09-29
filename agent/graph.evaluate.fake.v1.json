@@ -32,7 +32,7 @@
       "vector_format": "float32-big-endian-v1"
     },
     "graph_version": "bounded-langgraph-v1",
-    "knowledge_index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+    "knowledge_index_id": "index-sha256-d3b837775022ec5edac1209ee8f816d4715c025113aca8a1d6f9d76b1c57c085",
     "model": {
       "inference_profile": null,
       "max_output_tokens": 400,

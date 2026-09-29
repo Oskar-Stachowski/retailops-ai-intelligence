@@ -20,6 +20,7 @@ from retailops_ai.agent.chat_contracts import (
 )
 from retailops_ai.agent.execution import ToolSession
 from retailops_ai.agent.graph_contracts import GraphPolicy, GraphRequest
+from retailops_ai.agent.suggestions import SuggestionCandidate, candidates
 from retailops_ai.agent.tools import (
     INPUT,
     AnomalyItem,
@@ -45,7 +46,7 @@ POLICY_SPEC = {
     "deployment_policy": "deployed-release-from-model-status-only-v1",
     "calculation": "sales-period-difference-v1: current minus previous; same grain, unit, equal disjoint periods",
     "conflicts": "same-measurement-different-value-blocks-answer-v1",
-    "suggestions": "disabled-until-deterministic-policy-scope",
+    "suggestions": "read-only-review-v1: server candidates, exact actions, selected grain evidence, expiry",
     "refusal_gate": "explicit-write-execution-or-secret-request-patterns-v1",
 }
 
@@ -85,6 +86,12 @@ def required_calls(request: GraphRequest) -> tuple[ToolInput, ...]:
                 "get_sales_summary",
                 "get_inventory_status",
                 "get_detected_anomalies",
+            ),
+            "recommendations": (
+                "get_stockout_risk",
+                "get_inventory_status",
+                "get_demand_forecast",
+                "get_model_status",
             ),
             "refuse": (),
         }[request.intent],
@@ -163,6 +170,19 @@ class Catalogue:
     freshness_json: str
     required_ids: tuple[str, ...]
     blocking: bool
+    candidates_json: tuple[str, ...] = ()
+
+    def suggestions(self, facts: tuple[Fact, ...]) -> tuple[SuggestionCandidate, ...]:
+        if self.expected_outcome != "answered":
+            return ()
+        authorized = []
+        for raw in self.candidates_json:
+            candidate = SuggestionCandidate.model_validate_json(raw)
+            grain = f"product={candidate.product_id}; selling_location={candidate.selling_location_id}; channel={candidate.channel}"
+            refs = {fact.claim.source_ref for fact in facts if grain in fact.claim.claim}
+            if set(candidate.evidence_refs) <= refs:
+                authorized.append(candidate)
+        return tuple(authorized)
 
     def payload(self) -> dict[str, object]:
         return {
@@ -171,6 +191,8 @@ class Catalogue:
             "expected_outcome": self.expected_outcome,
             "limitations": self.limitations,
             "data_freshness": json.loads(self.freshness_json),
+            "suggestion_candidates": [json.loads(raw) for raw in self.candidates_json],
+            "action_rule": "Copy all candidate draft actions whose evidence_refs are covered by selected claims for that candidate grain; do not change any field.",
             "summary_rule": "Join selected evidence.claim strings with a newline, in the same order; no other assertions.",
         }
 
@@ -188,7 +210,10 @@ class Catalogue:
                     "outcome": self.expected_outcome,
                     "summary": summary,
                     "evidence": [fact.claim.model_dump(mode="json") for fact in facts],
-                    "recommended_actions": [],
+                    "recommended_actions": [
+                        candidate.draft_action().model_dump(mode="json")
+                        for candidate in self.suggestions(facts)
+                    ],
                     "confidence": "medium" if self.expected_outcome == "answered" else "low",
                     "data_freshness": json.loads(self.freshness_json),
                     "citations": [],
@@ -333,7 +358,13 @@ class EvidencePolicy:
                 "Conflicting values exist for the same measurement; no source is selected as truth."
             )
         facts = [fact for fact in facts if fact.measurement not in conflicts]
-        if self.request.intent in {"sales", "sales_comparison", "forecast", "investigation"}:
+        if self.request.intent in {
+            "sales",
+            "sales_comparison",
+            "forecast",
+            "investigation",
+            "recommendations",
+        }:
             limitations.append("Observed sales do not identify uncensored demand.")
         if self.request.intent == "forecast":
             limitations.append(
@@ -341,6 +372,10 @@ class EvidencePolicy:
             )
         if self.request.intent == "investigation":
             limitations.append("Cross-signal observations do not establish a causal explanation.")
+        if self.request.intent == "recommendations":
+            limitations.append(
+                "Review candidates do not compute replenishment quantities or authorize orders; the sales forecast does not identify uncensored demand."
+            )
         for cid, code in self.failures.items():
             tool = next(call.tool for call in self.calls if call_id(call) == cid)
             limitations.append(f"{tool}: {code}; this source cannot support a current fact.")
@@ -385,6 +420,12 @@ class EvidencePolicy:
             AnswerFreshness.model_validate_json(json.dumps(freshness)).model_dump_json(),
             required,
             blocking,
+            tuple(
+                candidate.model_dump_json()
+                for candidate in candidates(tools, self.policy.suggestions)
+            )
+            if outcome == "answered"
+            else (),
         )
 
     def _differences(self, sales: list[tuple[SalesResult, str]]) -> list[Fact]:
@@ -484,4 +525,5 @@ class EvidencePolicy:
             answer,
             calculations=calculations,
             expected_freshness=AnswerFreshness.model_validate_json(catalogue.freshness_json),
+            authorized_actions=expected.recommended_actions,
         )

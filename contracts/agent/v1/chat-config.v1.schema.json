@@ -315,7 +315,8 @@
           "default": "v1",
           "enum": [
             "v1",
-            "v2"
+            "v2",
+            "v3"
           ],
           "title": "Resource Version",
           "type": "string"

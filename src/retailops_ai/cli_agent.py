@@ -12,6 +12,36 @@ from retailops_ai.security.local import strict_json
 
 
 def run_agent_command(args: argparse.Namespace) -> int:
+    if args.command == "agent-evaluate":
+        from retailops_ai.agent.evaluation import evaluate_sync, load_evaluation
+
+        try:
+            config = load_graph_config(args.config)
+            suite, release = load_evaluation(
+                args.golden, args.release, config, args.rag_golden, args.lock
+            )
+            report = evaluate_sync(suite, release, config)
+            if args.output is not None:
+                with args.output.open("x", encoding="utf-8") as output:
+                    output.write(report.model_dump_json(indent=2) + "\n")
+        except (OSError, ValueError, TimeoutError, RecursionError):
+            print("agent_evaluation_failed", file=sys.stderr)
+            return 2
+        print(
+            json.dumps(
+                {
+                    "status": report.status,
+                    "release_id": report.release_id,
+                    "fixture_only": True,
+                    "aws_executed": False,
+                    "case_pass": report.metrics["case_pass"].model_dump(mode="json"),
+                    "critical_cases": report.metrics["critical_cases"].model_dump(mode="json"),
+                    "failed_gates": report.failed_gates,
+                },
+                sort_keys=True,
+            )
+        )
+        return 0 if report.status == "passed" else 1
     if args.command == "agent-graph-check":
         try:
             resolved_graph = load_graph_config(args.path)

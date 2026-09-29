@@ -13,6 +13,8 @@ wersjonowane prompty, kontrolę draftów oraz budżet rozmowy;
 [odbiór drugiego zakresu](evidence/12-chat.md) podaje jego granice.
 [Graf i sprawdzalne dowody](agent-graph.md) opisują skończony przebieg,
 kontrolę liczb/znaczenia i bezpieczny ślad; [odbiór](evidence/12-graph.md).
+[Sugestie i ewaluacja](agent-evaluation.md) opisują reguły serwera, 50 pytań
+golden i wersjonowany fixture release; [odbiór](evidence/12-evaluation.md).
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
@@ -73,7 +75,7 @@ etykiety i progi. Worker zachowuje pełny raport także po niezaliczonym progu.
 | `src/retailops_ai/` | CLI/settings oraz warstwy api/domain/pipelines/adapters lokalnego serwera |
 | `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: korpus, fragmenty, kandydacki indeks i lifecycle |
 | `knowledge/` | Przypięty rejestr RAG, konfiguracje, golden set oraz osobne zgody właściciela |
-| `agent/` | Wersjonowana konfiguracja maszynowa chat/budżetu; prompty są zasobami pakietu |
+| `agent/` | Wersjonowane konfiguracje grafu, golden fixtures i release ewaluacji; prompty są zasobami pakietu |
 | `tests/` | Konfiguracja, HTTP i socket, awarie, korelacja, kontrakty oraz bramki CI |
 | `scripts/` | Kontroler Compose, rzeczywisty smoke, kontrakty i bramki workflow |
 | `.github/` | Required CI, szablon PR, wskaźnik do security |

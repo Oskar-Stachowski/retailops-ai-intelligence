@@ -9,8 +9,10 @@ korpus, wersjonowane fragmenty i rzeczywiste embeddings Bedrock, pgvector,
 filtry uprawnień/statusów, 44 pytania golden, trwałe runy oraz kwalifikację,
 atomową aktywację i rollback. Aktualny odbiór i granice opisuje
 [status](docs/STATUS.md). [AI 12 jest rozpoczęty](docs/agent-tools.md): typowany
-katalog narzędzi, uprawnienia, budżet i adapter wiedzy. Generowanie odpowiedzi
-oraz rzeczywiste narzędzia biznesowe pozostają kolejnym zakresem.
+katalog narzędzi, uprawnienia, budżet, adapter wiedzy, ograniczony graf i
+kanoniczne odpowiedzi. [Reguły sugestii i golden](docs/agent-evaluation.md)
+obejmują 50 przypadków offline. Rzeczywiste narzędzia biznesowe, Bedrock chat
+i Assistant API pozostają do realizacji.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).
 [Uruchomienie stosu](docs/local-stack.md) i [HTTP](docs/http-service.md).

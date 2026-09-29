@@ -31,6 +31,16 @@ def main(argv: list[str] | None = None) -> int:
         "agent-graph-check", help="Check the bounded graph manifest offline."
     )
     graph_config.add_argument("path", type=Path)
+    evaluate = commands.add_parser(
+        "agent-evaluate", help="Evaluate the frozen canonical fixture profile; no AWS."
+    )
+    evaluate.add_argument("--provider", choices=["fake"], required=True)
+    evaluate.add_argument("--config", type=Path, required=True)
+    evaluate.add_argument("--golden", type=Path, required=True)
+    evaluate.add_argument("--release", type=Path, required=True)
+    evaluate.add_argument("--rag-golden", type=Path, required=True)
+    evaluate.add_argument("--lock", type=Path, required=True)
+    evaluate.add_argument("--output", type=Path)
     agent_check = commands.add_parser(
         "agent-tool-check", help="Validate an agent tool contract offline."
     )
@@ -103,6 +113,7 @@ def main(argv: list[str] | None = None) -> int:
         "agent-tool-check",
         "agent-config-check",
         "agent-graph-check",
+        "agent-evaluate",
     }:
         from retailops_ai.cli_agent import run_agent_command
 

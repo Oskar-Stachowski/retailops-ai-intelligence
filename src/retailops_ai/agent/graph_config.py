@@ -24,6 +24,7 @@ BOUND_MODULES = (
     "graph_traces.py",
     "graph_contracts.py",
     "evidence.py",
+    "suggestions.py",
     "chat.py",
     "chat_context.py",
     "execution.py",
@@ -58,7 +59,7 @@ class AgentGraphConfig(Versioned):
     @model_validator(mode="after")
     def chat_binding(self) -> Self:
         if self.chat.graph_version != self.graph_version or any(
-            prompt.resource_version != "v2" for prompt in self.chat.prompts
+            prompt.resource_version != "v3" for prompt in self.chat.prompts
         ):
             raise ValueError("graph_chat_profile_mismatch")
         return self

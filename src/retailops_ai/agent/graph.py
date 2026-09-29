@@ -24,6 +24,7 @@ from retailops_ai.agent.graph_contracts import (
     SafeTrace,
 )
 from retailops_ai.agent.graph_traces import MemoryTraces, TraceUnavailable
+from retailops_ai.agent.suggestions import SuggestionCandidate
 from retailops_ai.agent.tools import (
     AnomalyResult,
     ForecastResult,
@@ -101,6 +102,7 @@ class _Execution:
         self.repair_destination = "tools"
         self.trace: SafeTrace | None = None
         self.persist_attempted = False
+        self.suggestions: tuple[SuggestionCandidate, ...] = ()
 
     def guard(self) -> None:
         if self.runner.executor.timer() >= self.deadline:
@@ -235,6 +237,12 @@ class _Execution:
         if self.answer is None:
             raise ChatFailure("invalid_output")
         self.validate_answer(self.snapshot(), self.answer)
+        if self.tools is not None:
+            self.catalogue = self.policy.build(self.tools, self.snapshot())
+            selected = tuple(
+                fact for fact in self.catalogue.facts if fact.claim in self.answer.evidence
+            )
+            self.suggestions = self.catalogue.suggestions(selected)
         return "persist_trace"
 
     def error_code(self, exc: Exception) -> GraphCode:
@@ -442,4 +450,5 @@ class _Execution:
             error_code=self.error,
             answer=self.answer,
             trace=self.trace,
+            suggestions=list(self.suggestions) if not self.error else [],
         )

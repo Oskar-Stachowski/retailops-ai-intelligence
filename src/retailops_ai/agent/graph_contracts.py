@@ -6,6 +6,7 @@ from typing import Annotated, Literal, Self
 from pydantic import Field, model_validator
 
 from retailops_ai.agent.chat_contracts import AnswerDraft
+from retailops_ai.agent.suggestions import SuggestionCandidate, SuggestionPolicy
 from retailops_ai.agent.tools import DataScope
 from retailops_ai.data_contracts.common import (
     Contract,
@@ -28,6 +29,7 @@ Intent = Literal[
     "documentation",
     "verified_state",
     "investigation",
+    "recommendations",
     "refuse",
 ]
 GraphCode = Literal[
@@ -61,7 +63,7 @@ class GraphRequest(Versioned):
             raise ValueError("invalid_graph_question")
         if (self.window.end - self.window.start).days >= 90:
             raise ValueError("graph_period_outside_budget")
-        if self.intent in {"forecast", "risk"}:
+        if self.intent in {"forecast", "risk", "recommendations"}:
             if (
                 not self.as_of.date()
                 < self.window.start
@@ -92,6 +94,9 @@ class GraphPolicy(Versioned):
     max_catalogue_facts: Annotated[int, Field(ge=5, le=40)] = 40
     trace_retention_seconds: Annotated[int, Field(ge=1, le=900)] = 900
     trace_capacity: Annotated[int, Field(ge=1, le=100)] = 100
+    suggestions: SuggestionPolicy = Field(
+        default_factory=lambda: SuggestionPolicy(schema_version="1.0")
+    )
 
 
 class NodeAudit(Contract):
@@ -133,6 +138,7 @@ class GraphResult(Contract):
     error_code: GraphCode | None
     answer: AnswerDraft | None
     trace: SafeTrace | None
+    suggestions: list[SuggestionCandidate] = Field(default_factory=list, max_length=5)
 
     @model_validator(mode="after")
     def outcome(self) -> Self:
@@ -140,4 +146,10 @@ class GraphResult(Contract):
             raise ValueError("graph_result_outcome_mismatch")
         if self.status == "failed" and (self.answer is not None or self.error_code is None):
             raise ValueError("failed_graph_requires_canonical_error")
+        if self.status == "failed" and self.suggestions:
+            raise ValueError("failed_graph_has_no_suggestions")
+        if self.answer is not None and self.answer.recommended_actions != [
+            candidate.draft_action() for candidate in self.suggestions
+        ]:
+            raise ValueError("graph_suggestions_must_match_validated_actions")
         return self

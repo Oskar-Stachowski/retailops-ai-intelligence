@@ -17,7 +17,7 @@ make agent-security-test
 CLI sprawdza konfigurację, kod/schematy, prompty i wersję LangGraph bez
 wykonania providera/narzędzi. [Manifest](../agent/graph.fake.v1.json) wiąże
 `bounded-langgraph-v1`, politykę `typed-facts-v1`, kod granic wykonania,
-schematy, budżet, chat model, prompty v2 i przestrzeń wiedzy AI 11.
+schematy, budżet, chat model, prompty v3 i przestrzeń wiedzy AI 11.
 Zmiana powiązanego składnika zmienia config ID i wymaga ponownej kontroli.
 `make contracts` nie przepisuje zatwierdzonych checksum manifestu.
 
@@ -37,7 +37,7 @@ ale nie zmienia produktu, dat, okresu ani źródła i nie powtarza próbowanego 
 Wiersze: domyślnie 5, maksymalnie 20. Katalog: do 40 faktów, odpowiedź: do 5.
 
 Intenty: sales, sales_comparison, inventory, forecast, risk, anomalies,
-operations, model, documentation, verified_state, investigation, refuse.
+operations, model, documentation, verified_state, investigation, recommendations, refuse.
 To kontrolowane wejście, nie klasyfikator dowolnego pytania naturalnego.
 Jawne polecenia zapisu, kodu i ujawnienia sekretu mają dodatkową zachowawczą
 regułę odmowy. Katalog i uprawnienia nie dopuszczają takich narzędzi niezależnie
@@ -81,8 +81,11 @@ swobodnych odpowiedzi wymaga golden set.
 - Observed sales nie dowodzą uncensored demand; cross-signal observations
   nie ustalają przyczyny. Odpowiednie limitations są obowiązkowe.
 
-Modelowe sugestie i replenishment quantities są odrzucane. Deterministyczna
-polityka kandydatów oraz ich producent/outbox/E2E pozostają otwarte.
+Modelowe sugestie i replenishment quantities są odrzucane.
+[Deterministyczna polityka](agent-evaluation.md) tworzy wyłącznie kandydatów
+do przeglądu przez człowieka; draft action musi dokładnie odpowiadać regule
+i wybranym dowodom tego samego grain. Trwały producent/outbox/E2E pozostają
+otwarte. Wersjonowany golden sprawdza ten kanoniczny profil na fixtures.
 
 ## Bezpieczny ślad
 

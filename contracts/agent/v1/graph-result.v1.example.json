@@ -2,9 +2,10 @@
   "answer": null,
   "error_code": "dependency_unavailable",
   "status": "failed",
+  "suggestions": [],
   "trace": {
-    "chat_config_id": "agent-chat-config-sha256-8a155743209998caddc013bc640b6bd6740a08d8a30d9794831513603a44ffd8",
-    "config_id": "agent-graph-config-sha256-85759d3cee6a8cc64c3a2048a2db424181cd3511be14a0624ba1eb9499bfa13e",
+    "chat_config_id": "agent-chat-config-sha256-4eb68fa07ff4511bb4b7bf1830d3146d1401f1781f5fe1ae7098e1a2aa26659f",
+    "config_id": "agent-graph-config-sha256-1e300f4b074d22a10ecd56dd1fe59c867509461db935b9a1c755f511190964bd",
     "correlation_id": "correlation-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     "created_at": "2026-08-23T00:00:00Z",
     "error_code": "dependency_unavailable",

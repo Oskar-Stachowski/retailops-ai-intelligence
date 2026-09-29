@@ -358,6 +358,9 @@
           "title": "Schema Version",
           "type": "string"
         },
+        "suggestions": {
+          "$ref": "#/$defs/SuggestionPolicy"
+        },
         "trace_capacity": {
           "default": 100,
           "maximum": 100,
@@ -467,7 +470,8 @@
           "default": "v1",
           "enum": [
             "v1",
-            "v2"
+            "v2",
+            "v3"
           ],
           "title": "Resource Version",
           "type": "string"
@@ -556,6 +560,55 @@
         "size_estimator"
       ],
       "title": "RetrievalConfig",
+      "type": "object"
+    },
+    "SuggestionPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "lifetime_seconds": {
+          "default": 300,
+          "maximum": 300,
+          "minimum": 1,
+          "title": "Lifetime Seconds",
+          "type": "integer"
+        },
+        "max_candidates": {
+          "default": 5,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Max Candidates",
+          "type": "integer"
+        },
+        "minimum_stockout_probability": {
+          "default": 0.8,
+          "maximum": 1,
+          "minimum": 0.8,
+          "title": "Minimum Stockout Probability",
+          "type": "number"
+        },
+        "operations_lag_seconds": {
+          "default": 60.0,
+          "maximum": 3600,
+          "minimum": 60,
+          "title": "Operations Lag Seconds",
+          "type": "number"
+        },
+        "policy_version": {
+          "const": "read-only-review-v1",
+          "default": "read-only-review-v1",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version"
+      ],
+      "title": "SuggestionPolicy",
       "type": "object"
     },
     "ToolPolicy": {

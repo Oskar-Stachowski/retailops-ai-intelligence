@@ -97,6 +97,26 @@ class PolicyFixture(ScriptedChatProvider):
         self.seen = []
         self.started = asyncio.Event()
 
+    def actions(self, policy, claims):
+        result = []
+        for candidate in policy.get("suggestion_candidates", []):
+            grain = f"product={candidate['product_id']}; selling_location={candidate['selling_location_id']}; channel={candidate['channel']}"
+            refs = {claim["source_ref"] for claim in claims if grain in claim["claim"]}
+            if set(candidate["evidence_refs"]) <= refs:
+                result.append(
+                    {
+                        key: candidate[key]
+                        for key in (
+                            "action",
+                            "priority",
+                            "rationale",
+                            "evidence_refs",
+                            "requires_human_review",
+                        )
+                    }
+                )
+        return result
+
     def input_token_bound(self, request):
         return 100
 
@@ -117,7 +137,7 @@ class PolicyFixture(ScriptedChatProvider):
                 "outcome": policy["expected_outcome"],
                 "summary": "\n".join(claim["claim"] for claim in claims),
                 "evidence": claims,
-                "recommended_actions": [],
+                "recommended_actions": self.actions(policy, claims),
                 "confidence": "medium",
                 "data_freshness": policy["data_freshness"],
                 "citations": [
@@ -199,7 +219,7 @@ def test_complete_graph_returns_only_typed_grounded_claims_and_a_safe_trace(inte
     assert result.status == "succeeded", result.model_dump_json()
     assert result.answer.outcome == "answered"
     assert result.answer.summary == "\n".join(claim.claim for claim in result.answer.evidence)
-    assert result.answer.recommended_actions == []
+    assert all(action.requires_human_review for action in result.answer.recommended_actions)
     assert result.trace.fixture_only and result.trace.model_calls == 2
     assert (
         result.trace.nodes[0].node == "validate_auth"
@@ -619,7 +639,7 @@ def test_shipped_graph_manifest_loads_and_changes_are_versioned():
     resolved = load_graph_config(CONFIG)
     assert resolved.config_id == settings().config_id
     assert settings(policy={"max_selected_facts": 4}).config_id != resolved.config_id
-    assert all(prompt.resource_version == "v2" for prompt in resolved.config.chat.prompts)
+    assert all(prompt.resource_version == "v3" for prompt in resolved.config.chat.prompts)
 
 
 @pytest.mark.parametrize(

@@ -259,3 +259,23 @@ wspólny runtime potwierdzają testy tego zakresu. [Instrukcja](../agent-graph.m
 Źródła: [PyPI LangGraph](https://pypi.org/project/langgraph/1.2.12/),
 [Graph API](https://docs.langchain.com/oss/python/langgraph/graph-api),
 [compile i wyłączenie checkpointera](https://reference.langchain.com/python/langgraph/graph/state/StateGraph/compile).
+
+
+## ADR-21 — kwalifikacja sugestii przez reguły i niezależne oracles fixtures
+
+Polityka read-only-review-v1 ustala warunki, priorytet, tekst i refs kandydatów.
+Model tylko kopiuje akcje wspierane przez wybrane fakty dla tego samego grain.
+Wyliczenie ilości ani zapis operacyjny nie jest narzędziem agenta. Identity
+wiąże źródła, politykę i expiry; aktualność sprawdza zegar serwera. Kandydat
+pozostaje proposed/requires_human_review, bez deklaracji trwałości/outbox/UI.
+
+Golden ma zapisane typed fixtures, odpowiedzi scripted fake oraz odrębne oracles,
+których runtime nie generuje ani nie przepisuje. Raport porównuje rzeczywisty
+graf z etykietą, wiąże config/model/index/prompt/schema/policy/golden/evaluator
+i lock oraz podaje numerator/denominator. Krytyczny failure blokuje lokalną
+bramkę. Zmiana oracle w teście powoduje failed, bez dopasowania runtime do label.
+
+Przyjęcie tego lokalnego profilu nie jest business approval reguł, akceptacją
+jakości realnego LLM ani ponownym pomiarem retrieval AI 11. Syntetyczny pin
+nigdy nie trafia do aktywacji. Pełny agent wymaga realnego modelu, prawdziwych
+źródeł i E2E z AI 10. [Instrukcja](../agent-evaluation.md).

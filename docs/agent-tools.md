@@ -105,7 +105,8 @@ częścią tego zapisu. Trwały, autoryzowany trace należy do kolejnego zakresu
 
 ## Następny zakres
 
-Wersjonowana konfiguracja/prompty, fake chat provider i testy błędów modelu,
-następnie ograniczony graf i walidacja odpowiedzi. Assistant API, persistence
-trace, admission, golden odpowiedzi, rzeczywisty chat Bedrock i integracja
-sugestii pozostają otwarte. Pełne AI 12 wymaga AI 10 oraz odebranego AI 11.
+[Konfiguracja i fake chat](agent-chat.md), [ograniczony graf](agent-graph.md)
+oraz [reguły sugestii i golden fixtures](agent-evaluation.md) mają osobne
+odbiory. Następne bramki podaje [status](STATUS.md): Assistant API, persistence
+trace/odpowiedzi/kandydatów, admission, rzeczywisty chat i narzędzia biznesowe,
+kwalifikacja realnego modelu oraz integracja sugestii z AI 10.

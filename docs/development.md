@@ -96,3 +96,9 @@ snapshotów nie aktualizuje zatwierdzonych powiązań konfiguracji po cichu.
 oraz `make agent-security-test` dla narzędzi, rozmowy i pełnego grafu.
 Testy działają bez AWS/AI 10; target nie zastępuje golden jakości odpowiedzi
 ani rzeczywistego smoke.
+
+[Reguły sugestii i ewaluacja](agent-evaluation.md) dodają
+`make agent-evaluate PROVIDER=fake`, również wykonywane przez `make check`.
+Golden/release/config/lock muszą mieć zgodne wiązania. Raport ma jawne liczniki
+i oznaczenie fixture; błędna bramka kończy CLI kodem 1. Zmiana schemas nie
+przepisuje oracles ani zatwierdzonych checksum konfiguracji.

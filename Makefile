@@ -1,8 +1,9 @@
 UV ?= $(if $(wildcard .tools/bin/uv),.tools/bin/uv,uv)
 GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
+PROVIDER ?= fake
 
-.PHONY: bootstrap lint type-check test docs-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke agent-security-test
+.PHONY: bootstrap lint type-check test docs-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke agent-security-test agent-evaluate
 
 bootstrap:
 	$(UV) sync --locked
@@ -23,7 +24,7 @@ docs-check:
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check contracts-check package compose-config
+check: lint type-check test docs-check contracts-check agent-evaluate package compose-config
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner
@@ -52,7 +53,10 @@ contracts-check:
 	$(UV) run --locked python scripts/update_agent_graph_contracts.py --check
 
 agent-security-test:
-	$(UV) run --locked pytest tests/test_agent_tools.py tests/test_agent_chat.py tests/test_agent_graph.py
+	$(UV) run --locked pytest tests/test_agent_tools.py tests/test_agent_chat.py tests/test_agent_graph.py tests/test_agent_suggestions.py tests/test_agent_evaluation.py
+
+agent-evaluate:
+	$(UV) run --locked retailops-ai agent-evaluate --provider "$(PROVIDER)" --config agent/graph.evaluate.fake.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock
 
 compose-up:
 	$(UV) run --locked python scripts/local_stack.py up

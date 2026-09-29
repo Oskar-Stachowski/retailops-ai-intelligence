@@ -61,13 +61,6 @@
   "knowledge_test_backend": "Synthetic vectors and pinned backend spy",
   "remote_ci": "not_run",
   "published_to_main": false,
-  "remaining": [
-    "deterministic_suggestion_candidate_policy",
-    "versioned_answer_golden_evaluation",
-    "assistant_api_durable_safe_trace_and_admission",
-    "real_bedrock_chat_adapter_circuit_breaker_and_bounded_smoke",
-    "real_business_tools_and_ai10_suggestion_outbox_e2e"
-  ],
   "checksums": [
     {
       "path": "Makefile",
@@ -233,5 +226,6 @@
       "path": "uv.lock",
       "sha256": "b00e58676e3ff07d7af9de4eaa4fe426574bc2a6c90439977a70f2831378f84a"
     }
-  ]
+  ],
+  "current_status_document": "docs/STATUS.md"
 }
