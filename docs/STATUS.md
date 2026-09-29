@@ -22,8 +22,8 @@ przez pełne smoke i przypięte rewizje. Końcowy odbiór RetailOps określa wej
 do 04/06 oraz odrębne readiness use cases.
 Branch `ai/03-04-importer` ma osobny worktree; AI 12 rozwija się niezależnie.
 Branch 03 jest opublikowany w [PR #5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/5).
-[Required CI implementacji 5190134](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36537300250)
-ma success: 743 testy, pełne check i rzeczywisty Compose/persistence.
+Przypięte wyniki Required CI, testów i rzeczywistego Compose/persistence
+znajdują się w [końcowym evidence cross-repo](evidence/03-06-cross-repo.md).
 
 ## Etap 11
 
