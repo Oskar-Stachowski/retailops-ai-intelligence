@@ -469,6 +469,8 @@ def build_curated(
     initial = verify_import(
         import_root, allow_evaluation_truth=allow_evaluation_truth, limits=limits
     )
+    if initial.manifest["schema_version"] == "1.1.0":
+        raise SnapshotError("inventory_curated_contract_not_yet_supported")
     with tempfile.TemporaryDirectory(prefix=".curated-build-", dir=root) as tmp:
         stage = Path(tmp)
         # Seal a bounded private input to prevent input mutation during transform.

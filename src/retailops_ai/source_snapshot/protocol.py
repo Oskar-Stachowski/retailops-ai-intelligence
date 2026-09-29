@@ -256,6 +256,12 @@ def check_lineage(manifest: dict[str, Any], contract: dict[str, Any], allow_trut
 def inspect_snapshot(root: Path, allow_truth: bool, limits: Limits) -> Snapshot:
     contract = contract_document()
     manifest = read_json(root, "snapshot_manifest.json")
+    if manifest.get("schema_version") == "1.1.0":
+        from retailops_ai.source_snapshot.inventory_protocol import (
+            inspect_snapshot as inspect_inventory,
+        )
+
+        return inspect_inventory(root, allow_truth, limits)
     if (
         manifest.get("schema_version") not in contract["supported_snapshot_versions"]
         or manifest.get("source", {}).get("schema_version")
@@ -292,6 +298,13 @@ def inspect_snapshot(root: Path, allow_truth: bool, limits: Limits) -> Snapshot:
 
 def verify_metadata(root: Path, snapshot: Snapshot, required: tuple[str, ...]) -> None:
     manifest = snapshot.manifest
+    if manifest["schema_version"] == "1.1.0":
+        from retailops_ai.source_snapshot.inventory_protocol import (
+            verify_metadata as verify_inventory,
+        )
+
+        verify_inventory(root, snapshot, required)
+        return
     source, descriptor = manifest["source"], manifest["descriptor"]
     metadata = {r["path"]: r for r in manifest["metadata_files"]}
     schema_names = BASE_SCHEMAS | {t["table"] + ".arrow.json" for t in manifest["tables"]}

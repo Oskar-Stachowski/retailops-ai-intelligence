@@ -53,6 +53,7 @@ packages = ["src/retailops_ai"]
 "contracts/source_snapshot/v1/snapshot_manifest.schema.json" = "retailops_ai/source_snapshot/snapshot_manifest.schema.json"
 "uv.lock" = "retailops_ai/source_snapshot/dependencies.lock"
 "contracts/curated/v1/curated_manifest.schema.json" = "retailops_ai/curated/curated_manifest.schema.json"
+"contracts/source_snapshot/v1_1" = "retailops_ai/source_snapshot/v1_1"
 
 [tool.uv]
 required-version = "==0.12.19"

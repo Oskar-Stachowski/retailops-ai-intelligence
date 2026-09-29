@@ -1,0 +1,340 @@
+{
+  "contract_version": "inventory-label-qualification-1.0.0",
+  "policy_version": "active-physical-window-1.0.0",
+  "grain": [
+    "product_id",
+    "stock_location_id",
+    "origin"
+  ],
+  "data_class": "simulation_truth",
+  "window": {
+    "additionalProperties": false,
+    "properties": {
+      "product_id": {
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        "title": "Product Id",
+        "type": "string"
+      },
+      "stock_location_id": {
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        "title": "Stock Location Id",
+        "type": "string"
+      },
+      "origin": {
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+        "title": "Origin",
+        "type": "string"
+      },
+      "window_end_at": {
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+        "title": "Window End At",
+        "type": "string"
+      },
+      "evaluated_at": {
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+        "title": "Evaluated At",
+        "type": "string"
+      },
+      "status": {
+        "enum": [
+          "evaluable",
+          "already_stockout",
+          "not_evaluable"
+        ],
+        "title": "Status",
+        "type": "string"
+      },
+      "reason": {
+        "anyOf": [
+          {
+            "enum": [
+              "inactive_lifecycle",
+              "inactive_assortment",
+              "dimension_not_available",
+              "route_missing",
+              "calendar_missing",
+              "inventory_unknown",
+              "origin_state_unavailable",
+              "incomplete_window",
+              "outcomes_not_available",
+              "window_inactive_lifecycle",
+              "window_inactive_assortment",
+              "window_dimension_not_available",
+              "window_route_missing",
+              "window_calendar_missing",
+              "inventory_coverage_incomplete",
+              "sales_coverage_incomplete"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Reason"
+      },
+      "incident_stockout": {
+        "anyOf": [
+          {
+            "enum": [
+              0,
+              1
+            ],
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Incident Stockout"
+      },
+      "label_available_at": {
+        "anyOf": [
+          {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Label Available At"
+      },
+      "origin_route_ids": {
+        "items": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "type": "string"
+        },
+        "title": "Origin Route Ids",
+        "type": "array"
+      },
+      "window_route_ids": {
+        "items": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "type": "string"
+        },
+        "title": "Window Route Ids",
+        "type": "array"
+      },
+      "inventory_coverage_id": {
+        "anyOf": [
+          {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "title": "Inventory Coverage Id"
+      },
+      "covered_sales_days": {
+        "minimum": 0,
+        "title": "Covered Sales Days",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "product_id",
+      "stock_location_id",
+      "origin",
+      "window_end_at",
+      "evaluated_at",
+      "status",
+      "reason",
+      "incident_stockout",
+      "label_available_at",
+      "origin_route_ids",
+      "window_route_ids",
+      "inventory_coverage_id",
+      "covered_sales_days"
+    ],
+    "title": "QualifiedWindow",
+    "type": "object"
+  },
+  "manifest": {
+    "$defs": {
+      "Artifact": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Sha256",
+            "type": "string"
+          },
+          "size_bytes": {
+            "minimum": 0,
+            "title": "Size Bytes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "path",
+          "sha256",
+          "size_bytes"
+        ],
+        "title": "Artifact",
+        "type": "object"
+      },
+      "QualificationDescriptor": {
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "const": "inventory_label_qualification",
+            "title": "Role",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "inventory-label-qualification-1.0.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "policy_version": {
+            "const": "active-physical-window-1.0.0",
+            "title": "Policy Version",
+            "type": "string"
+          },
+          "data_class": {
+            "const": "simulation_truth",
+            "title": "Data Class",
+            "type": "string"
+          },
+          "parent_source_id": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "title": "Parent Source Id",
+            "type": "string"
+          },
+          "evaluated_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Evaluated At",
+            "type": "string"
+          },
+          "horizon_days": {
+            "const": 7,
+            "title": "Horizon Days",
+            "type": "integer"
+          },
+          "grain": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Grain",
+            "type": "array"
+          },
+          "qualification_schema_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Qualification Schema Sha256",
+            "type": "string"
+          },
+          "rows": {
+            "minimum": 0,
+            "title": "Rows",
+            "type": "integer"
+          },
+          "windows_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Windows Sha256",
+            "type": "string"
+          },
+          "report_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Report Sha256",
+            "type": "string"
+          },
+          "code_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Code Sha256",
+            "type": "string"
+          },
+          "dependency_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Dependency Sha256",
+            "type": "string"
+          },
+          "python_version": {
+            "title": "Python Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "role",
+          "schema_version",
+          "policy_version",
+          "data_class",
+          "parent_source_id",
+          "evaluated_at",
+          "horizon_days",
+          "grain",
+          "qualification_schema_sha256",
+          "rows",
+          "windows_sha256",
+          "report_sha256",
+          "code_sha256",
+          "dependency_sha256",
+          "python_version"
+        ],
+        "title": "QualificationDescriptor",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "schema_version": {
+        "const": "inventory-label-qualification-1.0.0",
+        "title": "Schema Version",
+        "type": "string"
+      },
+      "qualification_id": {
+        "pattern": "^inventory-labels-sha256-[0-9a-f]{64}$",
+        "title": "Qualification Id",
+        "type": "string"
+      },
+      "descriptor": {
+        "$ref": "#/$defs/QualificationDescriptor"
+      },
+      "provenance": {
+        "additionalProperties": true,
+        "title": "Provenance",
+        "type": "object"
+      },
+      "windows": {
+        "$ref": "#/$defs/Artifact"
+      },
+      "report": {
+        "$ref": "#/$defs/Artifact"
+      },
+      "source_ready": {
+        "const": false,
+        "title": "Source Ready",
+        "type": "boolean"
+      },
+      "inventory_ready": {
+        "const": false,
+        "title": "Inventory Ready",
+        "type": "boolean"
+      },
+      "model_ready": {
+        "const": false,
+        "title": "Model Ready",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "schema_version",
+      "qualification_id",
+      "descriptor",
+      "provenance",
+      "windows",
+      "report",
+      "source_ready",
+      "inventory_ready",
+      "model_ready"
+    ],
+    "title": "QualificationManifest",
+    "type": "object"
+  }
+}

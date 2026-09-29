@@ -34,10 +34,12 @@ reports/
 api-access-policy.json
 api-client-credentials.json
 
-# One reviewed, bounded upstream contract fixture; generated datasets remain ignored.
+# Reviewed, bounded versioned upstream fixtures; generated datasets remain ignored.
 !data/
 /data/*
 !data/fixtures/
 /data/fixtures/*
 !data/fixtures/ai-smoke-v1/
 !data/fixtures/ai-smoke-v1/**
+!data/fixtures/inventory-v1_1.zip
+!data/fixtures/inventory-v1_1.md
