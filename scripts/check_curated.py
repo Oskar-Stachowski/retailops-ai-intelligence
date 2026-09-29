@@ -168,7 +168,7 @@ def worker(snapshot: Path, workspace: Path, truth: bool) -> dict[str, Any]:
                     "row_count",
                     "content_sha256",
                     "grain",
-                    "date_range",
+                    "schema",
                     "field_ranges",
                 )
             }
