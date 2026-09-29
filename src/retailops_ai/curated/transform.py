@@ -41,7 +41,7 @@ def normalize(row: dict[str, Any]) -> dict[str, Any]:
 
 
 class Index:
-    def __init__(self, path: Path) -> None:
+    def __init__(self, path: Path, specs: dict[str, Any] | None = None) -> None:
         self.db = sqlite3.connect(path)
         self.db.execute("PRAGMA cache_size=-2048")
         self.db.execute("PRAGMA temp_store=FILE")
@@ -60,11 +60,20 @@ class Index:
         self.db.execute(
             "CREATE INDEX history_lookup ON records(json_extract(CAST(body AS TEXT),'$.observation_id'),json_extract(CAST(body AS TEXT),'$.version')) WHERE kind='daily_demand_versions'"
         )
-        self.columns = {k: v["schema"] for k, v in contract_document()["fact_tables"].items()}
+        self.specs = specs or contract_document()["fact_tables"]
+        self.columns = {k: v["schema"] for k, v in self.specs.items()}
 
     def add(self, table: str, raw: dict[str, Any]) -> None:
         row = normalize(raw)
-        self.db.execute("INSERT INTO records VALUES (?,?,?)", (table, row["id"], encoded(row)))
+        self.db.execute(
+            "INSERT INTO records VALUES (?,?,?)",
+            (
+                table,
+                row.get("id")
+                or canonical_json([cell(row[k]) for k in self.specs[table]["grain"]]).decode(),
+                encoded(row),
+            ),
+        )
         if table in {"channel_assignments", "fulfillment_routes", "assortment"}:
             self.db.execute(
                 "INSERT INTO intervals VALUES (?,?,?,?,?,?,?,?,?,?)",
@@ -89,6 +98,9 @@ class Index:
         if result is None:
             raise Reject("missing_" + table + "_reference")
         return decoded(result[0], self.columns[table])
+
+    def native(self, table: str, *key: Any) -> dict[str, Any]:
+        return self.get(table, canonical_json([cell(k) for k in key]).decode())
 
     def interval(
         self,

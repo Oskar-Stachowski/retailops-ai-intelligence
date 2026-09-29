@@ -71,6 +71,10 @@ def verify_snapshot(
     verify_metadata(root, snapshot, required_use_cases)
     with tempfile.TemporaryDirectory(prefix=".typed-verify-", dir=scratch) as temporary:
         verify_tables(root, snapshot, Path(temporary), limits)
+        if snapshot.manifest["schema_version"] == "1.1.0":
+            from retailops_ai.source_snapshot.inventory_projection import verify_projection
+
+            verify_projection(root, snapshot, Path(temporary), limits)
     return snapshot
 
 
@@ -130,6 +134,10 @@ def copy_snapshot(source: Path, target: Path, snapshot: Snapshot, limits: Limits
 
 
 def receipt(snapshot: Snapshot) -> dict[str, Any]:
+    if snapshot.manifest["schema_version"] == "1.1.0":
+        from retailops_ai.source_snapshot.inventory_protocol import resource_bytes as handoff_bytes
+    else:
+        handoff_bytes = resource_bytes
     code = {
         p.name: hashlib.sha256(p.read_bytes()).hexdigest()
         for p in sorted(Path(__file__).parent.glob("*.py"))
@@ -155,7 +163,7 @@ def receipt(snapshot: Snapshot) -> dict[str, Any]:
             "code_files": code,
             "code_sha256": json_sha256(code),
             "dependency_sha256": hashlib.sha256(resource_bytes("dependencies.lock")).hexdigest(),
-            "handoff_sha256": hashlib.sha256(resource_bytes("contract.json")).hexdigest(),
+            "handoff_sha256": hashlib.sha256(handoff_bytes("contract.json")).hexdigest(),
             "pyarrow_version": pa.__version__,
         },
     }
@@ -190,8 +198,7 @@ def verify_import(
         document.get("schema_version") != IMPORT_VERSION
         or implementation.get("version") != IMPORT_VERSION
         or implementation.get("code_sha256") != json_sha256(implementation.get("code_files"))
-        or implementation.get("handoff_sha256")
-        != hashlib.sha256(resource_bytes("contract.json")).hexdigest()
+        or implementation.get("handoff_sha256") != receipt(snapshot)["importer"]["handoff_sha256"]
         or any(
             document.get(k) != v
             for k, v in {

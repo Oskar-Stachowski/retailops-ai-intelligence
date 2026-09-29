@@ -25,6 +25,17 @@ Branch 03 jest opublikowany w [PR #5](https://github.com/Oskar-Stachowski/retail
 Przypięte wyniki Required CI, testów i rzeczywistego Compose/persistence
 znajdują się w [końcowym evidence cross-repo](evidence/03-06-cross-repo.md).
 
+## Etap 06 — inventory
+
+**AI 06 ma [końcowy odbiór](evidence/06-inventory-complete.md).**
+[Snapshot/import/curated 1.1](reference/inventory-snapshot-11.md) obsługuje
+source 2.7, 43 facts/plans i oddzielne private evaluation truth. Ledger, historyczny
+routing, sprzedaż/zwroty, orders/plans/receipts i snapshots są niezależnie uzgadniane.
+Curated zachowuje causal availability, fizyczny grain i odczyty as-of bez future fallback.
+Pełny pipeline obu profili dwukrotnie spełnia budżet 300 s / 1024 MiB.
+Inventory readiness dotyczy danych; modele 04/05/08 wymagają własnej oceny.
+AI 04 i AI 12 zachowują odrębne branche/worktrees.
+
 ## Etap 11
 
 - Zatwierdzony korpus: 29 dokumentów, 451 fragmentów, przypięte źródła Git,

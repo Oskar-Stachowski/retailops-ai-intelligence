@@ -28,8 +28,8 @@ def hashes(root: Path) -> dict[str, str]:
 def worker(
     snapshot: Path, workspace: Path, truth: bool, *, pipeline_only: bool = False
 ) -> dict[str, Any]:
-    from retailops_ai.curated.builder import build_curated, iter_rows, verify_curated
-    from retailops_ai.curated.reader import rows_as_of
+    from retailops_ai.curated.builder import build_curated, iter_rows
+    from retailops_ai.curated.reader import CuratedReader
     from retailops_ai.source_snapshot.importer import import_snapshot
 
     before = hashes(snapshot)
@@ -53,7 +53,8 @@ def worker(
             imported.directory, workspace / "data/generated", allow_evaluation_truth=truth
         )
     )
-    verified = verify_curated(first.directory)
+    reader = CuratedReader(first.directory)
+    verified = reader.manifest
     if (
         first.status != "published"
         or (second is not None and second.status != "reused")
@@ -102,7 +103,7 @@ def worker(
             tuple(
                 row[k] for k in ("business_date", "product_id", "selling_location_id", "channel")
             ): row
-            for row in rows_as_of(first.directory, origin)
+            for row in reader.rows(origin)
         }
         if set(observed) != set(expected) or any(
             observed[key][field] != value[field]
@@ -136,6 +137,43 @@ def worker(
                 )
             ):
                 raise ValueError("real_late_correction_boundary_failed")
+    inventory_checks = []
+    if verified["schema_version"] == "1.1.0":
+        native_spec = next(
+            t
+            for t in imported.snapshot.manifest["tables"]
+            if t["table"] == "inventory_daily_snapshots"
+        )
+        source_rows = list(iter_rows(snapshot, native_spec["files"], 8192))
+        cutoff = min(r["snapshot_at"] for r in source_rows)
+        for origin in (cutoff - timedelta(microseconds=1), origins[1]):
+            expected_native: dict[tuple[str, str], dict[str, Any]] = {}
+            for row in source_rows:
+                if row["snapshot_at"] > origin or row["status"] != "known":
+                    continue
+                key = (row["product_id"], row["stock_location_id"])
+                if (
+                    key not in expected_native
+                    or row["snapshot_at"] > expected_native[key]["snapshot_at"]
+                ):
+                    expected_native[key] = row
+            actual = {
+                (r["product_id"], r["stock_location_id"]): r
+                for r in reader.rows(origin, table="inventory_daily_snapshots")
+            }
+            if set(actual) != set(expected_native) or any(
+                actual[key][field] != row[field]
+                for key, row in expected_native.items()
+                for field in ("on_hand", "available_qty", "snapshot_at", "movement_count")
+            ):
+                raise ValueError("independent_inventory_as_of_failed")
+            inventory_checks.append(
+                {
+                    "origin": origin.isoformat(),
+                    "physical_positions": len(actual),
+                    "status": "passed",
+                }
+            )
     elapsed = time.monotonic() - start
     peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (
         1024**2 if sys.platform == "darwin" else 1024
@@ -162,6 +200,7 @@ def worker(
         "extra_idempotence_checks": "separate_required_ci" if pipeline_only else "passed",
         "evaluation_truth_in_curated": False,
         "as_of_checks": comparisons,
+        "inventory_as_of_checks": inventory_checks,
         "late_correction": {
             "status": "passed" if correction is not None else "not_present",
             "observation_id": correction["observation_id"] if correction else None,
