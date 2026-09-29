@@ -34,6 +34,8 @@ rozszerza typed import o source 2.7, native ledger i private qualification.
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.
 [Magazyn MLflow AI 05.1](mlflow-store.md) opisuje backup, restore i retencję.
+[Import evidence AI 05.2](mlflow-evidence.md) opisuje historyczny run bez
+rejestracji modelu i [odbiór](evidence/05-02-import.md).
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)

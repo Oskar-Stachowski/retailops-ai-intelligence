@@ -69,6 +69,14 @@ oraz odczyt po odtworzeniu. Kolejny zakres to import evidence 04.8 do
 MLflow. Model pozostaje `not_ready`; registry, promocja, batch i API nie
 są jeszcze częścią odbioru 05.1.
 
+**AI 05.2 — historyczne evidence 04.8 w MLflow:** [importer i semantyka
+runu](mlflow-evidence.md) zachowują oryginalne ID, czasy eksportu, lineage,
+metryki wraz z ważnością i pełne archiwum z sumami kontrolnymi. [Odbiór
+lokalny](evidence/05-02-import.md) potwierdza rzeczywisty import i powtórzenie
+bez drugiego runu. Quality nadal ma 145 passed, 79 failed, 8 not_ready;
+status modelu to `not_ready`. Registry, promocja, batch i API pozostają do
+wykonania w kolejnych zakresach AI 05.
+
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
 identity i transportu bez generatora/DB.
