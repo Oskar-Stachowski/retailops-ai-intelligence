@@ -36,7 +36,8 @@ To **odbiór kontraktu i transportu**, nie typed import dowolnego snapshotu.
 [03.4 dostarcza importer](source-snapshot-import.md): odczyt Parquet,
 recomputed canonical hashes, idempotentną atomową publikację i konflikty
 w `data/generated/snapshots/`.
-03.5 doda curated i kwarantannę, a 03.6 sprawdzi oba smoke dwukrotnie end-to-end.
+[03.5 curated](curated.md) dostarcza mapping, kwarantannę i historyczny as-of;
+03.6 sprawdzi oba smoke dwukrotnie end-to-end.
 
 ## Zasady dla importera i curated
 

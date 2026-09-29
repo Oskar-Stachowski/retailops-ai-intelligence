@@ -99,7 +99,8 @@ Niegotowy stockout blokuje import wymagający stockout. To nie kwalifikuje model
 Wersje `daily_demand_versions`, null/zero, availability, mikrosekundy, currency
 i pełny return tail są kopiowane bez collapse, normalizacji do latest lub joinów.
 Watermark pozostaje deklaracją źródła, nie maksimum czasu odczytanych zdarzeń.
-Odczyt as-of i mapping curated mają własny odbiór w 03.5/03.6.
+[Curated 03.5](curated.md) dostarcza odczyt as-of i mapping; pełny cross-repo
+odbiór pozostaje w 03.6.
 
 Truth snapshot jest domyślnie odrzucany. Tylko jawne
 `--allow-evaluation-truth` przyjmuje cztery znane tabele pod `evaluation_truth/`.
@@ -129,7 +130,7 @@ Check uruchamia dwa świeże procesy: import → reimport → verify, niezmienno
 wejścia/publikacji oraz limit **300 s / 1024 MiB** na przebieg smoke.
 [Evidence 03.4](evidence/03-04-importer.md) opisuje oba profile, truth i wheel.
 Wyniki smoke nie kwalifikują ai-dev/ai-training end-to-end. Kolejny zakres to
-**03.5 curated**, następnie 03.6; 04/06 jeszcze nie są otwarte.
+**03.6 cross-repo**, obejmujący [curated](curated.md); 04/06 jeszcze nie są otwarte.
 
 Reader korzysta z [ParquetFile.iter_batches](https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html#pyarrow.parquet.ParquetFile.iter_batches).
 Linuxowa gwarancja odmowy nadpisania jest opisana w

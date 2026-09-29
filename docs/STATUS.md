@@ -13,8 +13,11 @@ identity i transportu bez generatora/DB.
 **AI 03.4 — typed importer odebrany lokalnie:** [CLI i runbook](source-snapshot-import.md)
 opisują pełną weryfikację Parquet, canonical hashes, gates, atomową publikację
 i niezmienny reimport. [Evidence](evidence/03-04-importer.md) podaje testy obu
-smoke, partycje, truth opt-in i odłączony wheel. Kolejny zakres to 03.5 curated,
-a potem 03.6 bramka cross-repo. 04/06 pozostają zamknięte.
+smoke, partycje, truth opt-in i odłączony wheel.
+**AI 03.5 — curated:** [runbook](curated.md) opisuje jawne mappings,
+normalizację, quarantine, immutable IDs i odczyt z pełnej historii wersji.
+[Evidence](evidence/03-05-curated.md) podaje 743 testy i pomiary smoke/as-of.
+Kolejny zakres to 03.6 bramka cross-repo. 04/06 pozostają zamknięte.
 Branch `ai/03-04-importer` ma osobny worktree; AI 12 rozwija się niezależnie.
 Publikacja branchy 03 i zdalne Required CI nie zostały wykonane.
 
@@ -50,8 +53,8 @@ wykonywalne kontrakty danych/run/tool, jawne migracje i Required CI.
 [Uruchomienie](local-stack.md), [uprawnienia](access-control.md),
 [kontrakty](data-contracts.md), [odbiór zdalny](evidence/01-remote-ci.md).
 
-Najbliższy zakres danych to **AI 03.5**: curated w AI-intelligence,
-następnie bramka cross-repo 03.6. Upstream ma lokalny odbiór Parquet,
+Najbliższy zakres danych to **AI 03.6**: pełna bramka cross-repo.
+Upstream ma lokalny odbiór Parquet,
 immutable eksportera i handoff fixture. Równolegle można przygotować
 interfejsy i test doubles **AI 12**. Pełne zamknięcie agenta wymaga **AI 10 i 11**;
 11 jest gotowy, 10 nadal należy do późniejszego ciągu danych/ML/integracji.

@@ -1,0 +1,142 @@
+{
+  "limits": {
+    "rss_mib_per_run": 1024,
+    "seconds_per_run": 300
+  },
+  "runs": [
+    {
+      "as_of_checks": [
+        {
+          "origin": "2026-05-18T23:59:59+00:00",
+          "selected_observations": 627,
+          "source_versions": 2406,
+          "status": "passed"
+        },
+        {
+          "origin": "2026-07-31T23:59:59+00:00",
+          "selected_observations": 2385,
+          "source_versions": 2406,
+          "status": "passed"
+        }
+      ],
+      "curated_bytes": 5940704,
+      "curated_dataset_id": "curated-sha256-a1073a9c1aac2b213d144f1285056b81a699f095e87c88746956b55f265c4c38",
+      "curated_files": 31,
+      "evaluation_truth_in_curated": false,
+      "input_unchanged": true,
+      "peak_rss_mib": 100.53125,
+      "producer_commit": "b5d2804001085d9dee4b37ddfb90d8697d05ae4e",
+      "profile": "ai-temporal-smoke",
+      "quarantine_rows": 0,
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast_model": "not_ready",
+        "forecast_source": "passed",
+        "inventory_ready": false,
+        "rag": "not_applicable",
+        "replay": "not_ready",
+        "stockout": "not_ready"
+      },
+      "rebuild_unchanged": true,
+      "rows": 52973,
+      "seconds": 134.65155495800718,
+      "snapshot_id": "snapshot-sha256-d84c7b9630c6a34f7807abc7560253bf8e7ba3d7d962abee8aca580cf909b767",
+      "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22",
+      "status": "passed",
+      "tables": 25,
+      "transform": {
+        "code_files": {
+          "contracts/curated/v1/curated_manifest.schema.json": "fa6c1bec58e12d555df79e2a183aa6436ae7f5bb9a5e8e9f11f2d67ca43425be",
+          "curated/__init__.py": "90b6f440253a1b7dd698de16dd7bb6e757ef638723b6adc2ab5c352d367dddc2",
+          "curated/builder.py": "c008f5857f110fdb6c40a080bf12ed754b602d761b20bfef6a5dcbfca1a9db6f",
+          "curated/cli.py": "5c4ccff7e751fcb77b3279f28745994135311d314be286f70e2f28831f27e01a",
+          "curated/contract.py": "14d8df6b28fbcc824dc32b190721125135d002c9eb5e58ebf598358f9b9a4e7c",
+          "curated/reader.py": "acdcc64426389097d5e619b15eb7c214ab66b71c29c5e2e8e059fa946ba31c11",
+          "curated/transform.py": "808a239bebd8bc1a565de95736e99c8837d577b4cb12e83bc417cf1b1018b61c",
+          "source_snapshot/__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+          "source_snapshot/canonical.py": "e21bb102037bb7bab2e1cf77359e1a23478197aaf1095092167fad16bd6e7cbb",
+          "source_snapshot/cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+          "source_snapshot/files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+          "source_snapshot/importer.py": "54b24d28a22068cada571d37094510b8e1dcc2d3e6c0eb65567bc702b9bc0112",
+          "source_snapshot/protocol.py": "eda46d150967182f3c943b201909629e6c16b976dc21c44faa9fbb68d915f6ae",
+          "source_snapshot/publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+          "source_snapshot/tables.py": "1f5562f10ba4bd4cfbbefa3331adb4f300c8b1672d4fb867779176325a6c001d"
+        },
+        "code_sha256": "562353ec212e4b24985d0e253c280778fe16eb478116a54752ab98029a294a41",
+        "dependency_sha256": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d",
+        "handoff_sha256": "0b99b7a5ea09dffed17a7fbc6c2ebc38cabea4340d73d6729bbdbe5b08d74a8b",
+        "pyarrow_version": "25.0.1",
+        "python_version": "3.11.15",
+        "version": "1.0.0"
+      }
+    },
+    {
+      "as_of_checks": [
+        {
+          "origin": "2026-05-18T23:59:59+00:00",
+          "selected_observations": 627,
+          "source_versions": 2406,
+          "status": "passed"
+        },
+        {
+          "origin": "2026-07-31T23:59:59+00:00",
+          "selected_observations": 2385,
+          "source_versions": 2406,
+          "status": "passed"
+        }
+      ],
+      "curated_bytes": 5940704,
+      "curated_dataset_id": "curated-sha256-a1073a9c1aac2b213d144f1285056b81a699f095e87c88746956b55f265c4c38",
+      "curated_files": 31,
+      "evaluation_truth_in_curated": false,
+      "input_unchanged": true,
+      "peak_rss_mib": 99.859375,
+      "producer_commit": "b5d2804001085d9dee4b37ddfb90d8697d05ae4e",
+      "profile": "ai-temporal-smoke",
+      "quarantine_rows": 0,
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast_model": "not_ready",
+        "forecast_source": "passed",
+        "inventory_ready": false,
+        "rag": "not_applicable",
+        "replay": "not_ready",
+        "stockout": "not_ready"
+      },
+      "rebuild_unchanged": true,
+      "rows": 52973,
+      "seconds": 122.13686629100994,
+      "snapshot_id": "snapshot-sha256-d84c7b9630c6a34f7807abc7560253bf8e7ba3d7d962abee8aca580cf909b767",
+      "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22",
+      "status": "passed",
+      "tables": 25,
+      "transform": {
+        "code_files": {
+          "contracts/curated/v1/curated_manifest.schema.json": "fa6c1bec58e12d555df79e2a183aa6436ae7f5bb9a5e8e9f11f2d67ca43425be",
+          "curated/__init__.py": "90b6f440253a1b7dd698de16dd7bb6e757ef638723b6adc2ab5c352d367dddc2",
+          "curated/builder.py": "c008f5857f110fdb6c40a080bf12ed754b602d761b20bfef6a5dcbfca1a9db6f",
+          "curated/cli.py": "5c4ccff7e751fcb77b3279f28745994135311d314be286f70e2f28831f27e01a",
+          "curated/contract.py": "14d8df6b28fbcc824dc32b190721125135d002c9eb5e58ebf598358f9b9a4e7c",
+          "curated/reader.py": "acdcc64426389097d5e619b15eb7c214ab66b71c29c5e2e8e059fa946ba31c11",
+          "curated/transform.py": "808a239bebd8bc1a565de95736e99c8837d577b4cb12e83bc417cf1b1018b61c",
+          "source_snapshot/__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+          "source_snapshot/canonical.py": "e21bb102037bb7bab2e1cf77359e1a23478197aaf1095092167fad16bd6e7cbb",
+          "source_snapshot/cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+          "source_snapshot/files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+          "source_snapshot/importer.py": "54b24d28a22068cada571d37094510b8e1dcc2d3e6c0eb65567bc702b9bc0112",
+          "source_snapshot/protocol.py": "eda46d150967182f3c943b201909629e6c16b976dc21c44faa9fbb68d915f6ae",
+          "source_snapshot/publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+          "source_snapshot/tables.py": "1f5562f10ba4bd4cfbbefa3331adb4f300c8b1672d4fb867779176325a6c001d"
+        },
+        "code_sha256": "562353ec212e4b24985d0e253c280778fe16eb478116a54752ab98029a294a41",
+        "dependency_sha256": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d",
+        "handoff_sha256": "0b99b7a5ea09dffed17a7fbc6c2ebc38cabea4340d73d6729bbdbe5b08d74a8b",
+        "pyarrow_version": "25.0.1",
+        "python_version": "3.11.15",
+        "version": "1.0.0"
+      }
+    }
+  ],
+  "scope": "import/build/rebuild/verify/as-of; generation and cross-repo 03.6 excluded",
+  "status": "passed"
+}

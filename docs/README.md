@@ -10,7 +10,8 @@ zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
 opisują wersje, lineage i walidację offline.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
 registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
-sprawdza typed Parquet i publikuje immutable source; kolejny zakres to 03.5 curated.
+sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)
+normalizuje fakty, mapuje lokalizacje, zachowuje kwarantannę i odczyt as-of.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.
