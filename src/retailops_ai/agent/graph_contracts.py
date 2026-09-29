@@ -6,6 +6,7 @@ from typing import Annotated, Literal, Self
 from pydantic import Field, model_validator
 
 from retailops_ai.agent.chat_contracts import AnswerDraft
+from retailops_ai.agent.document_evidence import DocumentEvidenceRule, question_key
 from retailops_ai.agent.suggestions import SuggestionCandidate, SuggestionPolicy
 from retailops_ai.agent.tools import DataScope
 from retailops_ai.data_contracts.common import (
@@ -97,6 +98,14 @@ class GraphPolicy(Versioned):
     suggestions: SuggestionPolicy = Field(
         default_factory=lambda: SuggestionPolicy(schema_version="1.0")
     )
+    document_rules: Annotated[tuple[DocumentEvidenceRule, ...], Field(max_length=50)] = ()
+
+    @model_validator(mode="after")
+    def document_questions(self) -> Self:
+        keys = [(row.intent, question_key(row.question)) for row in self.document_rules]
+        if len(set(keys)) != len(keys):
+            raise ValueError("ambiguous_document_question_rules")
+        return self
 
 
 class NodeAudit(Contract):

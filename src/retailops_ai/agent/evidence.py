@@ -18,6 +18,7 @@ from retailops_ai.agent.chat_contracts import (
     DomainFreshness,
     EvidenceClaim,
 )
+from retailops_ai.agent.document_evidence import question_key
 from retailops_ai.agent.execution import ToolSession
 from retailops_ai.agent.graph_contracts import GraphPolicy, GraphRequest
 from retailops_ai.agent.suggestions import SuggestionCandidate, candidates
@@ -39,10 +40,10 @@ from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.data_contracts.prediction import PredictionRecord
 
 POLICY_SPEC = {
-    "version": "typed-facts-v1",
+    "version": "typed-facts-v2",
     "numeric_policy": "exact-decimal-from-typed-values-v1",
     "language": "canonical-claims-and-summary-only-v1",
-    "document_policy": "literal-quote-with-status-and-fact-scope-v1",
+    "document_policy": "question-requirements-and-exact-source-quotes-v1",
     "deployment_policy": "deployed-release-from-model-status-only-v1",
     "calculation": "sales-period-difference-v1: current minus previous; same grain, unit, equal disjoint periods",
     "conflicts": "same-measurement-different-value-blocks-answer-v1",
@@ -142,6 +143,7 @@ class Fact:
     value: str
     claim_json: str
     call_ids: tuple[str, ...]
+    document_requirement_ids: tuple[str, ...] = ()
 
     @property
     def claim(self) -> EvidenceClaim:
@@ -155,11 +157,16 @@ class Fact:
                 "value": self.value,
                 "claim": self.claim.model_dump(mode="json"),
                 "calls": self.call_ids,
+                "document_requirements": self.document_requirement_ids,
             }
         )
 
     def payload(self) -> dict[str, object]:
-        return {"fact_id": self.fact_id, "evidence": self.claim.model_dump(mode="json")}
+        return {
+            "fact_id": self.fact_id,
+            "evidence": self.claim.model_dump(mode="json"),
+            "document_requirement_ids": self.document_requirement_ids,
+        }
 
 
 @dataclass(frozen=True)
@@ -171,6 +178,7 @@ class Catalogue:
     required_ids: tuple[str, ...]
     blocking: bool
     candidates_json: tuple[str, ...] = ()
+    required_document_ids: tuple[str, ...] = ()
 
     def suggestions(self, facts: tuple[Fact, ...]) -> tuple[SuggestionCandidate, ...]:
         if self.expected_outcome != "answered":
@@ -189,6 +197,7 @@ class Catalogue:
             "policy": POLICY_SPEC,
             "facts": [fact.payload() for fact in self.facts],
             "expected_outcome": self.expected_outcome,
+            "required_document_ids": self.required_document_ids,
             "limitations": self.limitations,
             "data_freshness": json.loads(self.freshness_json),
             "suggestion_candidates": [json.loads(raw) for raw in self.candidates_json],
@@ -232,6 +241,15 @@ class EvidencePolicy:
         )
         self.calls = () if self.refused else required_calls(self.request)
         self.failures: dict[str, str] = {}
+        self.document_rule = next(
+            (
+                row
+                for row in self.policy.document_rules
+                if row.intent == self.request.intent
+                and question_key(row.question) == question_key(self.request.question)
+            ),
+            None,
+        )
 
     def build(self, tools: ToolSession, snapshot: EvidenceSnapshot) -> Catalogue:
         facts: list[Fact] = []
@@ -258,7 +276,7 @@ class EvidencePolicy:
                     )
                     if citation is None:
                         continue
-                    quote = chunk.text[:240]
+                    quotes = self.document_rule.matching_quotes(chunk) if self.document_rule else {}
                     prefix = {
                         "specified": "Planned specification",
                         "implemented": "Implementation documentation",
@@ -266,18 +284,25 @@ class EvidencePolicy:
                         "historical": "Historical reference",
                         "deprecated": "Deprecated reference",
                     }[chunk.document_status]
-                    text = f"{prefix}; scope={chunk.fact_scope}; revision={chunk.commit_sha}; literal quote={json.dumps(quote, ensure_ascii=False)}"
-                    claim = EvidenceClaim(
-                        claim=text,
-                        source_type="document",
-                        source_ref=citation.source_ref,
-                        as_of=None,
-                        supporting_refs=[],
-                        calculation_id=None,
-                    )
-                    facts.append(
-                        Fact("document:" + chunk.chunk_id, quote, claim.model_dump_json(), (cid,))
-                    )
+                    for quote, requirement_ids in quotes.items():
+                        text = f"{prefix}; scope={chunk.fact_scope}; revision={chunk.commit_sha}; literal quote={json.dumps(quote, ensure_ascii=False)}"
+                        claim = EvidenceClaim(
+                            claim=text,
+                            source_type="document",
+                            source_ref=citation.source_ref,
+                            as_of=None,
+                            supporting_refs=[],
+                            calculation_id=None,
+                        )
+                        facts.append(
+                            Fact(
+                                "document:" + chunk.chunk_id + ":" + canonical_sha256(quote),
+                                quote,
+                                claim.model_dump_json(),
+                                (cid,),
+                                requirement_ids,
+                            )
+                        )
                 if output.items and any(cid in fact.call_ids for fact in facts):
                     successful.add(cid)
                 continue
@@ -383,6 +408,22 @@ class EvidencePolicy:
             facts = facts[: self.policy.max_catalogue_facts]
             limitations.append("The fact catalogue is truncated by the configured bound.")
         complete = set(required) <= successful
+        document_ids = (
+            tuple(row.requirement_id for row in self.document_rule.requirements)
+            if self.document_rule
+            else ()
+        )
+        if self.request.intent in {"documentation", "verified_state"}:
+            covered = {key for fact in facts for key in fact.document_requirement_ids}
+            missing = sorted(set(document_ids) - covered)
+            if not self.document_rule:
+                complete = False
+                limitations.append("No document evidence rule matches this question and purpose.")
+            elif missing:
+                complete = False
+                limitations.append(
+                    "Required document evidence is missing: " + ", ".join(missing) + "."
+                )
         ambiguous_mapping = any(len(locations) > 1 for locations in inventory_locations.values())
         if ambiguous_mapping:
             limitations.append(
@@ -426,6 +467,7 @@ class EvidencePolicy:
             )
             if outcome == "answered"
             else (),
+            document_ids,
         )
 
     def _differences(self, sales: list[tuple[SalesResult, str]]) -> list[Fact]:
@@ -502,17 +544,22 @@ class EvidencePolicy:
             covered = {cid for fact in selected for cid in fact.call_ids}
             if not set(catalogue.required_ids) <= covered:
                 raise InvalidEvidence("selected_facts_omit_required_evidence")
+            document_covered = {key for fact in selected for key in fact.document_requirement_ids}
+            if not set(catalogue.required_document_ids) <= document_covered:
+                raise InvalidEvidence("selected_facts_omit_document_requirements")
             if self.request.intent == "sales_comparison" and not any(
                 f.claim.source_type == "calculation" for f in selected
             ):
                 raise InvalidEvidence("comparison_requires_registered_difference")
         expected = catalogue.render(tuple(selected))
         citations = snapshot.citations()
-        needed = [
-            citations[claim.source_ref]
-            for claim in expected.evidence
-            if claim.source_type == "document"
-        ]
+        needed = list(
+            {
+                claim.source_ref: citations[claim.source_ref]
+                for claim in expected.evidence
+                if claim.source_type == "document"
+            }.values()
+        )
         expected = expected.model_copy(update={"citations": needed})
         if answer != expected:
             raise InvalidEvidence("noncanonical_summary_confidence_status_or_limitations")

@@ -233,6 +233,101 @@
       "title": "ChatPricing",
       "type": "object"
     },
+    "DocumentEvidenceRule": {
+      "additionalProperties": false,
+      "properties": {
+        "intent": {
+          "enum": [
+            "documentation",
+            "verified_state"
+          ],
+          "title": "Intent",
+          "type": "string"
+        },
+        "question": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/$defs/DocumentRequirement"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Requirements",
+          "type": "array"
+        }
+      },
+      "required": [
+        "question",
+        "intent",
+        "requirements"
+      ],
+      "title": "DocumentEvidenceRule",
+      "type": "object"
+    },
+    "DocumentRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "maxLength": 400,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "requirement_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "supports": {
+          "items": {
+            "$ref": "#/$defs/DocumentSupport"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Supports",
+          "type": "array"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "description",
+        "supports"
+      ],
+      "title": "DocumentRequirement",
+      "type": "object"
+    },
+    "DocumentSupport": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "chunk_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Chunk Sha256",
+          "type": "string"
+        },
+        "quote": {
+          "maxLength": 800,
+          "minLength": 1,
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "chunk_sha256",
+        "quote"
+      ],
+      "title": "DocumentSupport",
+      "type": "object"
+    },
     "EmbeddingConfig": {
       "additionalProperties": false,
       "properties": {
@@ -321,6 +416,15 @@
     "GraphPolicy": {
       "additionalProperties": false,
       "properties": {
+        "document_rules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/DocumentEvidenceRule"
+          },
+          "maxItems": 50,
+          "title": "Document Rules",
+          "type": "array"
+        },
         "max_catalogue_facts": {
           "default": 40,
           "maximum": 40,
@@ -471,7 +575,8 @@
           "enum": [
             "v1",
             "v2",
-            "v3"
+            "v3",
+            "v4"
           ],
           "title": "Resource Version",
           "type": "string"
@@ -709,7 +814,7 @@
       "type": "string"
     },
     "evidence_policy_version": {
-      "const": "typed-facts-v1",
+      "const": "typed-facts-v2",
       "title": "Evidence Policy Version",
       "type": "string"
     },

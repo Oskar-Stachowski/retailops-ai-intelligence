@@ -17,8 +17,8 @@ make agent-security-test
 
 CLI sprawdza konfigurację, kod/schematy, prompty i wersję LangGraph bez
 wykonania providera/narzędzi. [Manifest](../agent/graph.fake.v1.json) wiąże
-`bounded-langgraph-v1`, politykę `typed-facts-v1`, kod granic wykonania,
-schematy, budżet, chat model, prompty v3 i przestrzeń wiedzy AI 11.
+`bounded-langgraph-v1`, politykę `typed-facts-v2`, kod granic wykonania,
+schematy, budżet, chat model, prompty v4 i przestrzeń wiedzy AI 11.
 Zmiana powiązanego składnika zmienia config ID i wymaga ponownej kontroli.
 `make contracts` nie przepisuje zatwierdzonych checksum manifestu.
 
@@ -59,7 +59,13 @@ identyczne. Claim zachowuje dwa okresy, refs i source as-of. Decimal operuje na
 reprezentacji wartości typed float z precyzją obejmującą ich skończony zakres:
 `0.3 - 0.1 = 0.2`, bez artefaktu arytmetyki binarnej. Nie ma eval/Python LLM.
 
-Dokument wspiera ograniczony literalny cytat ze statusem, fact scope i rewizją.
+Dokument wspiera literalny cytat dopiero po sprawdzeniu
+[reguły pytania i kompletności dowodów](agent-document-evidence.md).
+Reguła serwera wiąże wymagane informacje z konkretnymi fragmentami źródeł.
+Każde wymaganie musi być pokryte w pobranych oraz w wybranych faktach.
+Brak reguły lub wymaganej informacji daje `insufficient_evidence`.
+Cytat ma do 800 znaków, status, fact scope i rewizję; nie jest automatycznie
+pierwszymi 240 znakami dokumentu.
 Specified pozostaje planem, historical/deprecated odniesieniem historycznym.
 Verified_state dopuszcza tylko pobraną wiedzę verified. Model nie dopisze do
 cytatu „EKS wdrożono”. Wersja wdrożonego modelu pochodzi z typed model status;

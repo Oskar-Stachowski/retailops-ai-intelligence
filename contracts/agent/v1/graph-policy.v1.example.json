@@ -1,4 +1,5 @@
 {
+  "document_rules": [],
   "max_catalogue_facts": 40,
   "max_extra_evidence_rounds": 1,
   "max_selected_facts": 5,

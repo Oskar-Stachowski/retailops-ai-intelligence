@@ -1,5 +1,8 @@
 # AI 12 — rzeczywiste próby Bedrock
 
+Ten raport opisuje poprzednią serię. Bieżący odbiór poprawki dokumentacji
+i kolejny rzeczywisty test: [dowody dokumentowe](12-document-evidence.md).
+
 Data: **2026-09-29**. [Metadane](12-bedrock-real.json),
 [budżet wszystkich prób](12-bedrock-budget.json),
 [aktualna instrukcja](../agent-bedrock.md).

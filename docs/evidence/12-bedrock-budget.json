@@ -108,13 +108,39 @@
       "receipt": "12-bedrock-runs/sonnet-3.json",
       "sha256": "147292dee62c6d223aa22df225bf10bca46407c1edea8f2184409fdd97ee36ed",
       "status": "failed"
+    },
+    {
+      "accounted_usd": "0.2439129",
+      "accounting": "reported_estimate_or_reservation",
+      "attempt": 4,
+      "completed_cases": 6,
+      "inference_requests": 11,
+      "model": "sonnet",
+      "passed_cases": 6,
+      "receipt": "12-bedrock-runs/sonnet-4-documents.json",
+      "scope": "document_golden_v2",
+      "sha256": "afb4782c12db0749fd02b320ab2ce7abc7b333ecbed59a33dc55a2953217b286",
+      "status": "passed"
     }
   ],
-  "campaign_cap_usd": "1.00",
+  "budget_approvals": [
+    {
+      "campaign_cap_usd": "1.00",
+      "scope": "earlier_owner_approval"
+    },
+    {
+      "approval_text": "Tak, możesz zwiększyć łączny budżet do 1,50 USD",
+      "approved_at": "2026-09-29T10:06:25.688380+00:00",
+      "approved_by": "project_owner_in_session",
+      "campaign_cap_usd": "1.50"
+    }
+  ],
+  "campaign_cap_usd": "1.50",
   "created_at": "2026-09-29T09:35:37.221545+00:00",
-  "estimated_or_reserved_usd": "0.9283581",
+  "estimated_or_reserved_usd": "1.1722710",
   "new_paid_calls_planned": false,
   "not_an_aws_invoice": true,
-  "remaining_usd": "0.0716419",
-  "schema_version": "1.0"
+  "remaining_usd": "0.3277290",
+  "schema_version": "1.0",
+  "updated_at": "2026-09-29T10:07:43.141012+00:00"
 }

@@ -1,12 +1,12 @@
 {
   "acceptance_scope": "canonical_fixture_invariants_only",
   "dependency_lock_sha256": "b00e58676e3ff07d7af9de4eaa4fe426574bc2a6c90439977a70f2831378f84a",
-  "evaluator_sha256": "fc29f3ab7617803fdae6ff64bf7e9712ffc4eaddaafbc269113a2661fb185738",
+  "evaluator_sha256": "54d0dec3a46dead67a64feba627da849ff2ee965e38b00bf1f3a6703fbf12a58",
   "fixture_only": true,
-  "golden_sha256": "a6c6b154852ca1863af54a2e0c4f8e0b2a63dfb0cad0f1ad1f5c63d1e9800703",
-  "graph_config_id": "agent-graph-config-sha256-218230215d86b3c651d5fbe4a4a5932c465ad682ce7555f1848cf27bf3361f66",
+  "golden_sha256": "44d8686bc95bedb479d51aac1fe49360f245efd75ee803c526691583a8be6f83",
+  "graph_config_id": "agent-graph-config-sha256-53aba9d5abc5f4c7f758c882d68485493acf0bd2b4d33ad73f67363bff541a94",
   "provider": "fake",
-  "release_id": "agent-evaluation-release-sha256-8243143ec9d6cc5a4d324f1c4a55c44971d46c1d8f86894111b9283a29c35981",
+  "release_id": "agent-evaluation-release-sha256-d61ec083bc24d6b4ac01cd72fddebdf33579ff6f6fe4e67a05de3e58b0137f1d",
   "schema_version": "1.0",
-  "set_version": "agent-canonical-golden-v1"
+  "set_version": "agent-canonical-golden-v2"
 }

@@ -63,7 +63,7 @@ Bezpieczny trace ma odczyt właściciela, scope, retencję i limit w pamięci.
 kandydatów do przeglądu przez człowieka, wiązanie do wybranych faktów i expiry.
 Wersjonowany golden obejmuje 50 przypadków, w tym sześć pytań z AI 11,
 niezależnie zapisane oracles i scripted replies. Release wiąże config grafu,
-politykę/prompty v3, schemas, golden, ewaluator i lock. `make agent-evaluate`
+politykę/prompty v4, schemas, golden, ewaluator i lock. `make agent-evaluate`
 jest bramką `make check`; pomiar dotyczy jawnych fixtures i kanonicznych twierdzeń.
 [Odbiór](evidence/12-evaluation.md) podaje wyniki oraz ograniczenia.
 
@@ -78,22 +78,31 @@ fake jest dopuszczony wyłącznie w testach.
 [Chat Bedrock](agent-bedrock.md) ma adapter Converse/CountTokens, kontrolę
 formularza/dostępu konta, zweryfikowane profile EU, circuit breaker i ograniczony
 smoke. Formularz oraz aktywacja Haiku 4.5 i Sonnet 4.6 zostały wykonane po
-potwierdzeniu danych projektu osobistego. Zgoda kosztowa wynosi **1,00 USD
+potwierdzeniu danych projektu osobistego. Zgoda kosztowa wynosi **1,50 USD
 łącznie**; [rejestr wszystkich prób](evidence/12-bedrock-budget.json) zachowuje
-**0,9283581 USD** szacunków/rezerw, w tym pełny cap przerwanej próby.
+**1,1722710 USD** szacunków/rezerw, w tym pełny cap przerwanej próby.
 
-[Ostatni rzeczywisty smoke Sonnet](evidence/12-bedrock-real.md): **5/6**, w tym
-3/3 przypadki biznesowe i 2/2 zabezpieczenia serwera. Przypadek dokumentacji
-pozostaje `invalid_evidence`: fixture nie zawiera odpowiedzi na pytanie, a
-model zwraca `insufficient_evidence` zamiast oczekiwanego przez zamrożoną
-etykietę `answered`. Potrzebna jest niezależna korekta semantyki fixture/golden
-oraz ponowna kwalifikacja. Nie zmieniono etykiet ani progów w tej serii.
-Sonnet jest kandydatem do dalszej oceny; nie uzyskał pełnego odbioru jakości.
+[Poprzedni mieszany test Sonnet](evidence/12-bedrock-real.md): **5/6**, w tym
+3/3 przypadki biznesowe i 2/2 zabezpieczenia serwera. Historyczny przypadek dokumentacji
+dał `invalid_evidence`: fixture nie zawierał odpowiedzi, chociaż etykieta
+wymagała `answered`. Wynik i koszt tej próby pozostają zachowane.
+[Bieżąca poprawka dowodów dokumentowych](agent-document-evidence.md) wprowadza
+`typed-facts-v2`, prompty v4 oraz golden v2. Pytanie musi mieć jawne wymagania
+i pobrane źródła pokrywające każde z nich; sam cytat, score lub status
+`verified` nie wystarcza. Sześć oryginalnych pytań ma poprawione fixtures/etykiety
+opisane w [przeglądzie](evidence/12-document-label-review.json).
+[Ponowny test Sonnet](evidence/12-bedrock-runs/sonnet-4-documents.json)
+zaliczył **6/6 pytań dokumentacji**, bez napraw: pięć kompletnych odpowiedzi
+i jedno poprawne `insufficient_evidence`. Koszt szacowany wyniósł
+**0,2439129 USD**; z łącznego limitu pozostaje **0,3277290 USD**.
+[Odbiór poprawki](evidence/12-document-evidence.md) zawiera pełne wyniki.
+Sonnet zaliczył ten ograniczony test; pełny golden rzeczywistego
+modelu i retrieval nadal wymaga odbioru.
 Test używa rzeczywistego chatu i syntetycznych narzędzi/retrieval.
 
 Następny zakres bez AI 10: planner rzeczywistych pytań, resolver source IDs,
-podłączenie runtime Assistant do RAG oraz poprawne semantycznie przypadki
-dokumentacji i ponowny odbiór rzeczywistego modelu. Dalej pozostają realne źródła ML/operacyjne oraz
+podłączenie runtime Assistant do RAG, zatwierdzone powiązania pytań z
+rzeczywistymi źródłami oraz ponowny odbiór rzeczywistego modelu. Dalej pozostają realne źródła ML/operacyjne oraz
 kwalifikacja rzeczywistego modelu i retrieval na golden set. Pełne AI 12 wymaga
 AI 10 i E2E sugestii/outbox/v2/read API/UI. Obecny profil sprawdza kanoniczne
 fakty i literalne cytaty; nie potwierdza jakości swobodnych odpowiedzi LLM ani

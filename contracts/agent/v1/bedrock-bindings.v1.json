@@ -1,13 +1,18 @@
 {
   "comparison": {
-    "graph_config_id": "agent-graph-config-sha256-22b062e5e995c0f12a3e6ea356feb51b876d3a94e84aab3d9c9be7ab5e7add6e",
-    "offline_release_id": "agent-evaluation-release-sha256-8243143ec9d6cc5a4d324f1c4a55c44971d46c1d8f86894111b9283a29c35981",
-    "profile_id": "bedrock-smoke-profile-sha256-d401c433ac8f101a1c2930a39bfe60a7d3f0d156f687bebb2956b2d6c5043fa7"
+    "graph_config_id": "agent-graph-config-sha256-77c7bd5589eb26532f484ad32f93037a105a2c92726977dce867bceb2fa88e21",
+    "offline_release_id": "agent-evaluation-release-sha256-d61ec083bc24d6b4ac01cd72fddebdf33579ff6f6fe4e67a05de3e58b0137f1d",
+    "profile_id": "bedrock-smoke-profile-sha256-c6c9514e76e227ca8fa5d53a93cc261892aad5615daf1fea1314310f58b1c209"
+  },
+  "documents": {
+    "graph_config_id": "agent-graph-config-sha256-3ed34a784a05e282bd276e2431ddc67112f12e89892bac7afaf017070c822d5e",
+    "offline_release_id": "agent-evaluation-release-sha256-d61ec083bc24d6b4ac01cd72fddebdf33579ff6f6fe4e67a05de3e58b0137f1d",
+    "profile_id": "bedrock-smoke-profile-sha256-3a894bf60c6d72263b55c5caeb8624129a967e2fe9a464486613bb3e31c0bb70"
   },
   "fixture_sources": true,
-  "graph_config_id": "agent-graph-config-sha256-169214dddad92306a801b3f7ea5b7ce763d627ee39698abfcf522314b697d998",
-  "offline_release_id": "agent-evaluation-release-sha256-8243143ec9d6cc5a4d324f1c4a55c44971d46c1d8f86894111b9283a29c35981",
-  "profile_id": "bedrock-smoke-profile-sha256-681372d28935c55a59b9ff21a8b08745e39f76418b7c0ebd2784997b83194bfe",
+  "graph_config_id": "agent-graph-config-sha256-b9dbf31f55246e4f959204457394d650595702ff046fa5b115c96855dfc5e9fd",
+  "offline_release_id": "agent-evaluation-release-sha256-d61ec083bc24d6b4ac01cd72fddebdf33579ff6f6fe4e67a05de3e58b0137f1d",
+  "profile_id": "bedrock-smoke-profile-sha256-3ab51779d4881d0ec036977ce13257b9296d1b65cd6f68e49b957861a464c0c7",
   "provider_invoked": false,
   "schema_version": "1.0",
   "transport_version": "converse-json-counted-v1"

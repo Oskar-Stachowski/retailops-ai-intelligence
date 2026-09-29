@@ -42,36 +42,36 @@
       "temperature": 0.0
     },
     "profile": "agent-bounded-v1",
-    "prompt_version": "prompts-v3",
+    "prompt_version": "prompts-v4",
     "prompts": [
       {
         "name": "policy",
-        "resource_version": "v3",
+        "resource_version": "v4",
         "sha256": "4f71cd6be32ed612e6750ef977648669f133a494a110b5857db42009dfb6bef8"
       },
       {
         "name": "tool_selection",
-        "resource_version": "v3",
+        "resource_version": "v4",
         "sha256": "572f1b6bc660aef3714738c249cd913a698cef3f88903b6699c9f79eb17b07c7"
       },
       {
         "name": "evidence",
-        "resource_version": "v3",
-        "sha256": "8d2c217b30ddc9f648e78de388008b08c2b0e1a2e2babbfc991e52f1612922c9"
+        "resource_version": "v4",
+        "sha256": "479452c87995779bc024cb5da23a7486f7a074a588892c9c55264971d13b5115"
       },
       {
         "name": "response",
-        "resource_version": "v3",
-        "sha256": "d6b04ce627d0c7fcb5a4aa589a60f046d38475957803b8c45f84339395ce998c"
+        "resource_version": "v4",
+        "sha256": "cba6113494dd6b73f94baba1d25e586ef5d00b7da681b5ff0169cb032fc33185"
       },
       {
         "name": "refusal",
-        "resource_version": "v3",
+        "resource_version": "v4",
         "sha256": "4c5b42d42f62bf3609773b2c834d305300f99d8bd7280503af86526b6c09481b"
       },
       {
         "name": "examples",
-        "resource_version": "v3",
+        "resource_version": "v4",
         "sha256": "cc13ebe587e1f26b0263eae818f276a6ec8f7c5d050aa4552e32c60782d57a4e"
       }
     ],
@@ -105,11 +105,12 @@
     },
     "tool_schemas_sha256": "c724b1fce12a8cf790249749280710aef045767d8c0ab5adb4f40163ec115dbe"
   },
-  "code_sha256": "54bba07ab85cc1e16767c24ced1f6c097bf104ada324f3a45e84f3252a084238",
-  "evidence_policy_version": "typed-facts-v1",
+  "code_sha256": "ec4650311d4991fca1be13fab330b4e299bd72b3b81b92fc7be38dc10e797f7e",
+  "evidence_policy_version": "typed-facts-v2",
   "graph_version": "bounded-langgraph-v1",
   "langgraph_version": "1.2.12",
   "policy": {
+    "document_rules": [],
     "max_catalogue_facts": 40,
     "max_extra_evidence_rounds": 1,
     "max_selected_facts": 5,

@@ -462,13 +462,37 @@ def test_conflicting_forecasts_are_reported_without_selecting_one_as_truth():
 
 def test_document_quote_is_cited_with_its_status_and_cannot_become_a_deployment_claim(semantic_pin):
     pin, candidate = semantic_pin
+    # This test authorizes one known fixture excerpt for this exact synthetic question.
+    # Generic retrieval results alone are deliberately insufficient.
+    chunk = candidate.chunks.chunks[0]
+    query = request("documentation")
     resolved = settings(
         chat={
             "knowledge_index_id": pin.manifest.index_id,
             "embeddings": pin.manifest.embedding_config.model_dump(mode="json"),
-        }
+        },
+        policy={
+            "document_rules": [
+                {
+                    "question": query.question,
+                    "intent": "documentation",
+                    "requirements": [
+                        {
+                            "requirement_id": "fixture-evidence",
+                            "description": "The explicitly selected fixture excerpt",
+                            "supports": [
+                                {
+                                    "chunk_id": chunk.chunk_id,
+                                    "chunk_sha256": canonical_sha256(chunk.model_dump(mode="json")),
+                                    "quote": chunk.text[:240],
+                                }
+                            ],
+                        }
+                    ],
+                }
+            ]
+        },
     )
-    query = request("documentation")
     runner, bearer, query = harness(
         query,
         resolved=resolved,
@@ -639,7 +663,7 @@ def test_shipped_graph_manifest_loads_and_changes_are_versioned():
     resolved = load_graph_config(CONFIG)
     assert resolved.config_id == settings().config_id
     assert settings(policy={"max_selected_facts": 4}).config_id != resolved.config_id
-    assert all(prompt.resource_version == "v3" for prompt in resolved.config.chat.prompts)
+    assert all(prompt.resource_version == "v4" for prompt in resolved.config.chat.prompts)
 
 
 @pytest.mark.parametrize(

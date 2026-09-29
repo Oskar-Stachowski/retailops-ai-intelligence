@@ -92,7 +92,7 @@ class ModelBudget(Contract):
 class PromptFile(Contract):
     name: PromptName
     sha256: Sha256
-    resource_version: Literal["v1", "v2", "v3"] = "v1"
+    resource_version: Literal["v1", "v2", "v3", "v4"] = "v1"
 
 
 def tool_schemas_checksum() -> str:

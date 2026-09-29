@@ -81,6 +81,15 @@ extra/repair/provider failure. Sześć pytań pochodzi bez zmian z AI 11; reszta
 jest nowa i dotyczy typed tools lub granic grafu. Hash źródłowego golden i
 powiązanie question/case ID są sprawdzane przed wykonaniem.
 
+Aktualna wersja znaczenia etykiet to `agent-canonical-golden-v2`
+(format pliku/kontraktu pozostaje v1). [Przegląd dokumentów](evidence/12-document-label-review.json)
+wiąże zmianę z poprzednią wersją, pytaniami i źródłami użytymi przy autorstwie.
+Pięć przypadków ma wystarczające dowody; szósty zachowuje nietrafny dokument
+`verified` i wymaga `insufficient_evidence`. Pytanie health/ready wymaga
+obu informacji, a nie jednego przypadkowego cytatu. Pozostałe 42 przypadki
+biznesowe i bezpieczeństwa pozostają niezmienione; dwa negatywne testy
+dokumentacji otrzymały spójne pytania/źródła. Progów nie obniżono.
+
 Typed outputs, scripted replies i oczekiwane odpowiedzi są zapisanymi fixtures.
 Fake nie odczytuje katalogu serwera w celu konstruowania odpowiedzi. Oracles
 zostały opisane niezależnie od runtime EvidencePolicy; polecenia testowe i
@@ -96,7 +105,7 @@ ani rzeczywistych sekcji AI 11. Osobny
 [profil grafu](../agent/graph.fake.v1.json) nadal wskazuje użytkowy indeks AI 11.
 
 [Evaluation release](../agent/evaluation-release.fake.v1.json) wiąże config ID
-grafu (kod, tool/response schemas, prompty v3, model, retrieval, index, budżety
+grafu (kod, tool/response schemas, prompty v4, model, retrieval, index, budżety
 i politykę), golden hash, kod Python całego pakietu (w tym ewaluator i jego
 zależności aplikacyjne/schemas) oraz dependency lock. Hash nie
 uwierzytelnia autora ani nie zastępuje zatwierdzenia. Zmiana powiązanego pliku

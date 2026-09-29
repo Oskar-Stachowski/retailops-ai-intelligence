@@ -23,6 +23,10 @@ def main() -> int:
     comparison_profile = BedrockSmokeProfile.model_validate_json(
         (ROOT / "agent/sonnet-smoke.v1.json").read_bytes()
     )
+    documents = load_graph_config(ROOT / "agent/graph.document-smoke.v1.json")
+    document_profile = BedrockSmokeProfile.model_validate_json(
+        (ROOT / "agent/document-smoke.v1.json").read_bytes()
+    )
     artifacts = {
         "circuit-policy.v1.schema.json": CircuitPolicy.model_json_schema(),
         "bedrock-smoke-profile.v1.schema.json": BedrockSmokeProfile.model_json_schema(),
@@ -38,6 +42,11 @@ def main() -> int:
                 "graph_config_id": comparison.config_id,
                 "profile_id": comparison_profile.profile_id(),
                 "offline_release_id": comparison_profile.offline_release_id,
+            },
+            "documents": {
+                "graph_config_id": documents.config_id,
+                "profile_id": document_profile.profile_id(),
+                "offline_release_id": document_profile.offline_release_id,
             },
         },
     }

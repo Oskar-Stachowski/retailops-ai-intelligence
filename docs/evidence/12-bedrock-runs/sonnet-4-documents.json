@@ -1,0 +1,977 @@
+{
+  "ai12_closed": false,
+  "aws_executed": true,
+  "case_ids": [
+    "document-1",
+    "document-2",
+    "document-3",
+    "document-4",
+    "document-5",
+    "document-6"
+  ],
+  "cases": [
+    {
+      "answer": {
+        "citations": [
+          {
+            "chunk_id": "chunk-sha256-5a3601dab1a345329f7420a139619291ebcf0ef166fe4cef37c9dfe48f6cd9b8",
+            "commit_sha": "1111111111111111111111111111111111111111",
+            "document_status": "specified",
+            "heading": "Document requirement 1-0",
+            "path": "docs/agent-evaluation-document-1-0.md",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-1-0.md#L1-L1"
+          }
+        ],
+        "confidence": "medium",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": null,
+            "calculation_id": null,
+            "claim": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"Local development requires Python 3.11.15, uv 0.12.19 and Make. Run make bootstrap from the repository root to install the locked dependencies. Then run make serve to start the local diagnostic API on port 8081 with .env.example. Use make serve ENV_FILE=.env for a private local configuration. Ctrl+C stops the process.\"",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-1-0.md#L1-L1",
+            "source_type": "document",
+            "supporting_refs": []
+          }
+        ],
+        "kind": "answer",
+        "limitations": [],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"Local development requires Python 3.11.15, uv 0.12.19 and Make. Run make bootstrap from the repository root to install the locked dependencies. Then run make serve to start the local diagnostic API on port 8081 with .env.example. Use make serve ENV_FILE=.env for a private local configuration. Ctrl+C stops the process.\""
+      },
+      "case_id": "document-1",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 1,
+      "critical": false,
+      "error_code": null,
+      "outcome": "answered",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-55aebe10c76cd2311e9c4ddebd8977e1d514740edaff4ccb3d640885f7526472",
+        "config_id": "agent-graph-config-sha256-3ed34a784a05e282bd276e2431ddc67112f12e89892bac7afaf017070c822d5e",
+        "correlation_id": "correlation-962d2756f4664128a89eaf6f6a111ae2",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0.0441342",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6",
+        "input_tokens": 9259,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 57.84187499375548,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 6702.193791003083,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 4.978541997843422,
+            "error_code": null,
+            "node": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 42.63329099921975,
+            "error_code": null,
+            "node": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 5794.368083996233,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 101.66779201244935,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 823,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 0,
+        "request_sha256": "e833f7cbae8aeae0055f2680dc103ed3632a69949535d91127070866bf7c915e",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [
+          "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-1-0.md#L1-L1",
+          "tool-result-sha256-bd89958c5771c9704f77af988124b4639310f34087eb59585c882d7f96ae6108"
+        ],
+        "source_refs_total": 2,
+        "status": "succeeded",
+        "tool_calls": 1,
+        "tools": [
+          {
+            "freshness_status": "not_requested",
+            "name": "search_knowledge",
+            "source_refs": [
+              "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "trace-d353ae1267464c7e8c064dcc495f4be8"
+      }
+    },
+    {
+      "answer": {
+        "citations": [
+          {
+            "chunk_id": "chunk-sha256-d188021a31ec4d301541128d77234ae88fcb095a1803d91a2e283cc0fbc8cfec",
+            "commit_sha": "1111111111111111111111111111111111111111",
+            "document_status": "specified",
+            "heading": "Document requirement 2-0",
+            "path": "docs/agent-evaluation-document-2-0.md",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-2-0.md#L1-L1"
+          }
+        ],
+        "confidence": "medium",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": null,
+            "calculation_id": null,
+            "claim": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"Before a commit, run make check for lint, types, tests, documentation, contracts, offline agent evaluation, packaging and Compose configuration. Run make secrets for the Git history and current-file secret scans; make ci-local combines both groups.\"",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-2-0.md#L1-L1",
+            "source_type": "document",
+            "supporting_refs": []
+          }
+        ],
+        "kind": "answer",
+        "limitations": [],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"Before a commit, run make check for lint, types, tests, documentation, contracts, offline agent evaluation, packaging and Compose configuration. Run make secrets for the Git history and current-file secret scans; make ci-local combines both groups.\""
+      },
+      "case_id": "document-2",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 1,
+      "critical": false,
+      "error_code": null,
+      "outcome": "answered",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-55aebe10c76cd2311e9c4ddebd8977e1d514740edaff4ccb3d640885f7526472",
+        "config_id": "agent-graph-config-sha256-3ed34a784a05e282bd276e2431ddc67112f12e89892bac7afaf017070c822d5e",
+        "correlation_id": "correlation-e2bcd18d8549471f86f115d8cc9065fa",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0.0429000",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6",
+        "input_tokens": 9200,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 102.62662499735598,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 2024.9127080023754,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1.0555830085650086,
+            "error_code": null,
+            "node": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 50.472292001359165,
+            "error_code": null,
+            "node": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 10899.049792002188,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 58.280708006350324,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 760,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 0,
+        "request_sha256": "05575a24449b84a12d5ee71c09896089f711800859ba305b7ee09b3784479d66",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [
+          "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-2-0.md#L1-L1",
+          "tool-result-sha256-accf1302a98ae326d6ee62906e2a509007a1fbdf2e4b9aeacb1c0a73e54b47c7"
+        ],
+        "source_refs_total": 2,
+        "status": "succeeded",
+        "tool_calls": 1,
+        "tools": [
+          {
+            "freshness_status": "not_requested",
+            "name": "search_knowledge",
+            "source_refs": [
+              "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "trace-15c6148ae5e34a35a7099def57436be2"
+      }
+    },
+    {
+      "answer": {
+        "citations": [
+          {
+            "chunk_id": "chunk-sha256-e40fd077c9ee5bddc7fec29d74d329682250f2e974b2c744c7671f18ffd958f4",
+            "commit_sha": "1111111111111111111111111111111111111111",
+            "document_status": "specified",
+            "heading": "Document requirement 3-0",
+            "path": "docs/agent-evaluation-document-3-0.md",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-3-0.md#L1-L1"
+          }
+        ],
+        "confidence": "medium",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": null,
+            "calculation_id": null,
+            "claim": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"GET /api/v1/identity returns the principal, roles, capabilities and configured scope of the verified Bearer token. POST /api/v1/access/forecast-check checks forecast:read and the entire requested scope; it does not return a forecast.\"",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-3-0.md#L1-L1",
+            "source_type": "document",
+            "supporting_refs": []
+          }
+        ],
+        "kind": "answer",
+        "limitations": [],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"GET /api/v1/identity returns the principal, roles, capabilities and configured scope of the verified Bearer token. POST /api/v1/access/forecast-check checks forecast:read and the entire requested scope; it does not return a forecast.\""
+      },
+      "case_id": "document-3",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 1,
+      "critical": false,
+      "error_code": null,
+      "outcome": "answered",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-55aebe10c76cd2311e9c4ddebd8977e1d514740edaff4ccb3d640885f7526472",
+        "config_id": "agent-graph-config-sha256-3ed34a784a05e282bd276e2431ddc67112f12e89892bac7afaf017070c822d5e",
+        "correlation_id": "correlation-cd8f49f05df5434ea8787d3193bef0a8",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0.0430287",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6",
+        "input_tokens": 9219,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 59.469458006788045,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 2368.964416993549,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1.6202080005314201,
+            "error_code": null,
+            "node": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 50.37870901287533,
+            "error_code": null,
+            "node": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 5063.276917004259,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 84.45529200253077,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 764,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 0,
+        "request_sha256": "62d5f746174b854994e97dd86f7314d4b528903b5f8912a4b87b1dfd44445c5f",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [
+          "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-3-0.md#L1-L1",
+          "tool-result-sha256-5fe1c7fb2b242c754ba74a3ef94704ca71286018bc8b83ac2851aca391468856"
+        ],
+        "source_refs_total": 2,
+        "status": "succeeded",
+        "tool_calls": 1,
+        "tools": [
+          {
+            "freshness_status": "not_requested",
+            "name": "search_knowledge",
+            "source_refs": [
+              "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "trace-166999cc181240d092d090d61a739799"
+      }
+    },
+    {
+      "answer": {
+        "citations": [
+          {
+            "chunk_id": "chunk-sha256-32112fe91d1d13c27b9cd633128b9fb3ddffd9833fe79437dcd55c26cb32e806",
+            "commit_sha": "1111111111111111111111111111111111111111",
+            "document_status": "specified",
+            "heading": "Document requirement 4-0",
+            "path": "docs/agent-evaluation-document-4-0.md",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-4-0.md#L1-L1"
+          }
+        ],
+        "confidence": "medium",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": null,
+            "calculation_id": null,
+            "claim": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"Grants, revoked flags and token rotation are loaded as a process snapshot. Restart every API process after such changes. Credential expiry is checked on each request and does not require a restart. There is no automatic hot reload of the authorization policy.\"",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-4-0.md#L1-L1",
+            "source_type": "document",
+            "supporting_refs": []
+          }
+        ],
+        "kind": "answer",
+        "limitations": [],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"Grants, revoked flags and token rotation are loaded as a process snapshot. Restart every API process after such changes. Credential expiry is checked on each request and does not require a restart. There is no automatic hot reload of the authorization policy.\""
+      },
+      "case_id": "document-4",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 1,
+      "critical": false,
+      "error_code": null,
+      "outcome": "answered",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-55aebe10c76cd2311e9c4ddebd8977e1d514740edaff4ccb3d640885f7526472",
+        "config_id": "agent-graph-config-sha256-3ed34a784a05e282bd276e2431ddc67112f12e89892bac7afaf017070c822d5e",
+        "correlation_id": "correlation-4ac43fee5aef442eb982774b51738b91",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0.0425040",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6",
+        "input_tokens": 9210,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 72.37749999330845,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 2175.53524998948,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 2.2541249927598983,
+            "error_code": null,
+            "node": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 35.82404099870473,
+            "error_code": null,
+            "node": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 4933.707457996206,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 62.69970900029875,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 734,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 0,
+        "request_sha256": "caa7d33456b9e4f21fc0bbf11c7b11a60102030df1c4727bc0231046e1295235",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [
+          "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-4-0.md#L1-L1",
+          "tool-result-sha256-3785f87356dbe6684c972937fc10e9efb65f72e1da92c5ca8c801be6da36bb5d"
+        ],
+        "source_refs_total": 2,
+        "status": "succeeded",
+        "tool_calls": 1,
+        "tools": [
+          {
+            "freshness_status": "not_requested",
+            "name": "search_knowledge",
+            "source_refs": [
+              "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "trace-7a20011fcccc4c008e02afeafb28cf85"
+      }
+    },
+    {
+      "answer": {
+        "citations": [],
+        "confidence": "low",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [],
+        "kind": "answer",
+        "limitations": [
+          "Required document evidence is missing: metrics-controls."
+        ],
+        "outcome": "insufficient_evidence",
+        "recommended_actions": [],
+        "summary": "The authorized sources do not provide sufficient consistent evidence for this bounded request."
+      },
+      "case_id": "document-5",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 0,
+      "critical": false,
+      "error_code": null,
+      "outcome": "insufficient_evidence",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-55aebe10c76cd2311e9c4ddebd8977e1d514740edaff4ccb3d640885f7526472",
+        "config_id": "agent-graph-config-sha256-3ed34a784a05e282bd276e2431ddc67112f12e89892bac7afaf017070c822d5e",
+        "correlation_id": "correlation-c0f1cd816daf433fbb5535ce6abc6800",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0.0183513",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6",
+        "input_tokens": 4986,
+        "model_calls": 1,
+        "nodes": [
+          {
+            "duration_ms": 87.35741699638311,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1993.959832994733,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1.3480830093612894,
+            "error_code": null,
+            "node": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 32.135417000972666,
+            "error_code": null,
+            "node": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 29.91354200639762,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 74.54245799453929,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 115,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 0,
+        "request_sha256": "9928506f0de5374442c4aaf3253548905e4f8a89af8d25257d215e26ba5151c1",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [
+          "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-example-5.md#L1-L1",
+          "tool-result-sha256-fe2f6727352f1a8f3e72e2d058b81f2cf02233d17441c3db9f1f4c170d24e625"
+        ],
+        "source_refs_total": 2,
+        "status": "succeeded",
+        "tool_calls": 1,
+        "tools": [
+          {
+            "freshness_status": "not_requested",
+            "name": "search_knowledge",
+            "source_refs": [
+              "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "trace-4761b14f1c5f4cc8b046ee79a4bec947"
+      }
+    },
+    {
+      "answer": {
+        "citations": [
+          {
+            "chunk_id": "chunk-sha256-b0c86c7aa57ee5dbc0d534be0442c8b2af1aee476ff464118286f26fc520287b",
+            "commit_sha": "1111111111111111111111111111111111111111",
+            "document_status": "specified",
+            "heading": "Document requirement 6-0",
+            "path": "docs/agent-evaluation-document-6-0.md",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-6-0.md#L1-L3"
+          },
+          {
+            "chunk_id": "chunk-sha256-e297760ee0b0461e1ba384a070a9cfd2daa3f853711e5f256efb59ecbe5c8301",
+            "commit_sha": "1111111111111111111111111111111111111111",
+            "document_status": "specified",
+            "heading": "Document requirement 6-1",
+            "path": "docs/agent-evaluation-document-6-1.md",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-6-1.md#L1-L1"
+          }
+        ],
+        "confidence": "medium",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": null,
+            "calculation_id": null,
+            "claim": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"GET /health reports that the API process responds to requests. It does not probe dependencies or prove readiness of a database or model.\"",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-6-0.md#L1-L3",
+            "source_type": "document",
+            "supporting_refs": []
+          },
+          {
+            "as_of": null,
+            "calculation_id": null,
+            "claim": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"GET /ready evaluates the dependencies required by the configured role. A failed required dependency produces 503; an optional failure can produce degraded with 200. Readiness does not certify model quality.\"",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-6-1.md#L1-L1",
+            "source_type": "document",
+            "supporting_refs": []
+          }
+        ],
+        "kind": "answer",
+        "limitations": [],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Planned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"GET /health reports that the API process responds to requests. It does not probe dependencies or prove readiness of a database or model.\"\nPlanned specification; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"GET /ready evaluates the dependencies required by the configured role. A failed required dependency produces 503; an optional failure can produce degraded with 200. Readiness does not certify model quality.\""
+      },
+      "case_id": "document-6",
+      "checks": {
+        "action_policy": true,
+        "answer": true,
+        "outcome": true,
+        "schema": true,
+        "tools": true
+      },
+      "citations": 2,
+      "critical": true,
+      "error_code": null,
+      "outcome": "answered",
+      "passed": true,
+      "status": "succeeded",
+      "trace": {
+        "chat_config_id": "agent-chat-config-sha256-55aebe10c76cd2311e9c4ddebd8977e1d514740edaff4ccb3d640885f7526472",
+        "config_id": "agent-graph-config-sha256-3ed34a784a05e282bd276e2431ddc67112f12e89892bac7afaf017070c822d5e",
+        "correlation_id": "correlation-48e4d1f1242a418e899e2c10e5d3bd09",
+        "created_at": "2026-08-23T00:00:00Z",
+        "error_code": null,
+        "estimated_cost": "0.0529947",
+        "extra_evidence_rounds": 0,
+        "fixture_only": false,
+        "index_id": "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6",
+        "input_tokens": 10174,
+        "model_calls": 2,
+        "nodes": [
+          {
+            "duration_ms": 67.75329100491945,
+            "error_code": null,
+            "node": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 3177.2055420005927,
+            "error_code": null,
+            "node": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 1.829166998504661,
+            "error_code": null,
+            "node": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 36.53466700052377,
+            "error_code": null,
+            "node": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 8324.973000009777,
+            "error_code": null,
+            "node": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 66.98137499915902,
+            "error_code": null,
+            "node": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "node": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "output_tokens": 1177,
+        "owner_id": "agent-evaluation-fixture-operator",
+        "release_refs": [],
+        "release_refs_total": 0,
+        "repairs": 0,
+        "request_sha256": "be451dc6fc785b31a691720709d8dad8064ced7f5bd5b567b19d1ac3656c259c",
+        "schema_version": "1.0",
+        "scope": {
+          "channel": "store",
+          "product_ids": [
+            "p-101"
+          ],
+          "selling_location_ids": [
+            "s-03"
+          ]
+        },
+        "source_refs": [
+          "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-6-0.md#L1-L3",
+          "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-6-1.md#L1-L1",
+          "tool-result-sha256-5596b4dd2c2d8d6dd84db68269558b13e9210a70ff2f97a3c8e53b186d5d5654"
+        ],
+        "source_refs_total": 3,
+        "status": "succeeded",
+        "tool_calls": 1,
+        "tools": [
+          {
+            "freshness_status": "not_requested",
+            "name": "search_knowledge",
+            "source_refs": [
+              "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "trace-2f45fe22518644baa924f7158bd29d71"
+      }
+    }
+  ],
+  "cases_passed": 6,
+  "cases_total": 6,
+  "circuit": {
+    "failures": 0,
+    "inflight": 0,
+    "state": "closed"
+  },
+  "count_requests": 11,
+  "created_at": "2026-09-29T10:07:43.141012+00:00",
+  "data_sources": "frozen_fixtures",
+  "estimated_or_reserved_usd": "0.2439129",
+  "inference_requests": 11,
+  "max_calls": 36,
+  "model": {
+    "inference_profile": "eu.anthropic.claude-sonnet-4-6",
+    "max_output_tokens": 1500,
+    "model_id": "anthropic.claude-sonnet-4-6",
+    "provider": "bedrock",
+    "region": "eu-central-1",
+    "temperature": 0.0
+  },
+  "model_access": {
+    "availability": {
+      "agreement": "AVAILABLE",
+      "authorization": "AUTHORIZED",
+      "entitlement": "AVAILABLE",
+      "region": "AVAILABLE"
+    },
+    "reason": null,
+    "status": "passed",
+    "use_case_form_present": true
+  },
+  "offline_gates_passed": true,
+  "offline_release_id": "agent-evaluation-release-sha256-d61ec083bc24d6b4ac01cd72fddebdf33579ff6f6fe4e67a05de3e58b0137f1d",
+  "pricing": {
+    "currency": "USD",
+    "input_per_million": "3.3",
+    "kind": "reviewed_provider_rates",
+    "max_run_cost": "0.11",
+    "max_smoke_cost": "0.35",
+    "output_per_million": "16.5",
+    "rate_version": "aws-sonnet46-frankfurt-20260928"
+  },
+  "profile_id": "bedrock-smoke-profile-sha256-3a894bf60c6d72263b55c5caeb8624129a967e2fe9a464486613bb3e31c0bb70",
+  "provider_diagnostics": [],
+  "real_chat": true,
+  "real_retrieval_measured": false,
+  "reason": null,
+  "runtime_graph_config_id": "agent-graph-config-sha256-3ed34a784a05e282bd276e2431ddc67112f12e89892bac7afaf017070c822d5e",
+  "schema_version": "1.0",
+  "scope": "real_chat_over_fixture_evidence_only",
+  "status": "passed",
+  "transport_version": "converse-json-counted-v1",
+  "verified_destination_regions": [
+    "eu-central-1",
+    "eu-north-1",
+    "eu-south-1",
+    "eu-south-2",
+    "eu-west-1",
+    "eu-west-3"
+  ],
+  "worst_case_estimated_usd": "0.35"
+}

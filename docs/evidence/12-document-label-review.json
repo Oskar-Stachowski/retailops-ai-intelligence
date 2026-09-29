@@ -1,0 +1,111 @@
+{
+  "authoring_reference_commit": "2a423ecdf99ad0b0ac5bd5ce13af67d8a3143182",
+  "cases": [
+    {
+      "case_id": "document-1",
+      "expected_outcome": "answered",
+      "old_fixture_supported_question": false,
+      "question": "Jak rozpocząć pracę lokalną nad pakietem AI?",
+      "requirements": [
+        {
+          "authoring_reference": "docs/development.md; docs/http-service.md",
+          "id": "local-start",
+          "meaning": "Local prerequisites, dependency install and server start",
+          "quote": "Local development requires Python 3.11.15, uv 0.12.19 and Make. Run make bootstrap from the repository root to install the locked dependencies. Then run make serve to start the local diagnostic API on port 8081 with .env.example. Use make serve ENV_FILE=.env for a private local configuration. Ctrl+C stops the process."
+        }
+      ]
+    },
+    {
+      "case_id": "document-2",
+      "expected_outcome": "answered",
+      "old_fixture_supported_question": false,
+      "question": "Jakie kontrole należy uruchomić przed commitem AI?",
+      "requirements": [
+        {
+          "authoring_reference": "docs/development.md; Makefile",
+          "id": "precommit-checks",
+          "meaning": "The full local quality gates and secret scan",
+          "quote": "Before a commit, run make check for lint, types, tests, documentation, contracts, offline agent evaluation, packaging and Compose configuration. Run make secrets for the Git history and current-file secret scans; make ci-local combines both groups."
+        }
+      ]
+    },
+    {
+      "case_id": "document-3",
+      "expected_outcome": "answered",
+      "old_fixture_supported_question": false,
+      "question": "Które endpointy zwracają zweryfikowaną tożsamość i scope?",
+      "requirements": [
+        {
+          "authoring_reference": "docs/access-control.md",
+          "id": "identity-endpoint",
+          "meaning": "Endpoint returning the authenticated principal and scope",
+          "quote": "GET /api/v1/identity returns the principal, roles, capabilities and configured scope of the verified Bearer token. POST /api/v1/access/forecast-check checks forecast:read and the entire requested scope; it does not return a forecast."
+        }
+      ]
+    },
+    {
+      "case_id": "document-4",
+      "expected_outcome": "answered",
+      "old_fixture_supported_question": false,
+      "question": "Kiedy zmiana grantów lub revoke wymaga restartu procesu?",
+      "requirements": [
+        {
+          "authoring_reference": "docs/access-control.md",
+          "id": "policy-restart",
+          "meaning": "Changes requiring restart and per-request expiry",
+          "quote": "Grants, revoked flags and token rotation are loaded as a process snapshot. Restart every API process after such changes. Credential expiry is checked on each request and does not require a restart. There is no automatic hot reload of the authorization policy."
+        }
+      ]
+    },
+    {
+      "case_id": "document-5",
+      "expected_outcome": "insufficient_evidence",
+      "old_fixture_supported_question": false,
+      "question": "Jak zabezpieczono odczyt metryk diagnostycznych?",
+      "rationale": "A verified generic fixture says nothing about metrics authorization; the required source is not retrieved.",
+      "requirements": [
+        {
+          "authoring_reference": "docs/http-service.md; docs/evidence/01-http.md",
+          "id": "metrics-controls",
+          "meaning": "Verified diagnostic metrics access controls",
+          "quote": "Verified local diagnostic test: /metrics returned 404 without a configured metrics token and 401 for missing or wrong authorization. The dedicated metrics token was compared in constant time; the API identity token did not grant metrics access."
+        }
+      ]
+    },
+    {
+      "case_id": "document-6",
+      "expected_outcome": "answered",
+      "old_fixture_supported_question": false,
+      "question": "Co sprawdzają health i ready serwisu AI?",
+      "requirements": [
+        {
+          "authoring_reference": "docs/http-service.md",
+          "id": "health-meaning",
+          "meaning": "What health checks",
+          "quote": "GET /health reports that the API process responds to requests. It does not probe dependencies or prove readiness of a database or model."
+        },
+        {
+          "authoring_reference": "docs/http-service.md",
+          "id": "ready-meaning",
+          "meaning": "What ready checks",
+          "quote": "GET /ready evaluates the dependencies required by the configured role. A failed required dependency produces 503; an optional failure can produce degraded with 200. Readiness does not certify model quality."
+        }
+      ]
+    }
+  ],
+  "fixture_vectors_generated": false,
+  "human_approval": false,
+  "labels_state": "proposed",
+  "new_set_sha256": "44d8686bc95bedb479d51aac1fe49360f245efd75ee803c526691583a8be6f83",
+  "old_set_sha256": "a6c6b154852ca1863af54a2e0c4f8e0b2a63dfb0cad0f1ad1f5c63d1e9800703",
+  "oracle_origin": "authored_from_question_and_source_not_model_output_or_EvidencePolicy",
+  "other_changes": [
+    "forged-citation now uses relevant source before forging citation metadata",
+    "verified-without-evidence uses a known requirement but receives no hits"
+  ],
+  "preserved_rag_questions": 6,
+  "schema_version": "1.0",
+  "scope": "offline_document_fixture_review",
+  "synthetic_pin_updated": true,
+  "unchanged_business_safety_cases": 42
+}

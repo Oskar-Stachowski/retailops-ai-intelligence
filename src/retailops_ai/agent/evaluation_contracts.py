@@ -69,7 +69,7 @@ class EvaluationThresholds(Contract):
 
 
 class AgentGoldenSet(Versioned):
-    set_version: Literal["agent-canonical-golden-v1"]
+    set_version: Literal["agent-canonical-golden-v2"]
     provider: Literal["fake"]
     fixture_only: Literal[True]
     labels_state: Literal["proposed"]
@@ -102,7 +102,7 @@ class AgentEvaluationRelease(Versioned):
     golden_sha256: Sha256
     evaluator_sha256: Sha256
     dependency_lock_sha256: Sha256
-    set_version: Literal["agent-canonical-golden-v1"]
+    set_version: Literal["agent-canonical-golden-v2"]
     provider: Literal["fake"]
     fixture_only: Literal[True]
     acceptance_scope: Literal["canonical_fixture_invariants_only"]

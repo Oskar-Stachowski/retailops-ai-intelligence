@@ -348,9 +348,9 @@ def test_cancelled_sdk_work_keeps_slot_and_late_success_cannot_recover():
         release.set()
 
 
-def smoke_inputs():
+def smoke_inputs(variant="bedrock"):
     offline = load_graph_config(ROOT / "agent/graph.evaluate.fake.v1.json")
-    runtime = load_graph_config(ROOT / "agent/graph.bedrock-smoke.v1.json")
+    runtime = load_graph_config(ROOT / f"agent/graph.{variant}-smoke.v1.json")
     suite, release = load_evaluation(
         ROOT / "agent/golden.canonical.v1.json",
         ROOT / "agent/evaluation-release.fake.v1.json",
@@ -359,7 +359,7 @@ def smoke_inputs():
         ROOT / "uv.lock",
     )
     profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/bedrock-smoke.v1.json").read_bytes()
+        (ROOT / f"agent/{variant}-smoke.v1.json").read_bytes()
     )
     return profile, suite, release, offline, runtime
 
@@ -387,8 +387,12 @@ def test_comparison_profile_uses_the_same_cases_oracles_and_policy():
     assert comparison.config_id != runtime.config_id
 
 
-def test_real_transport_smoke_over_fixtures_compares_frozen_labels_without_echoing_runtime_policy():
-    profile, suite, release, offline, runtime = smoke_inputs()
+@pytest.mark.parametrize("variant", ["bedrock", "document"])
+def test_real_transport_smoke_over_fixtures_compares_frozen_labels_without_echoing_runtime_policy(
+    variant,
+):
+    profile, suite, release, offline, runtime = smoke_inputs(variant)
+    verify_smoke(profile, suite, release, offline, runtime)
     scripted = []
     for case_id in profile.case_ids:
         scripted.extend(next(case for case in suite.cases if case.case_id == case_id).script)

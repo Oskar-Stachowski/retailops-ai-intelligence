@@ -1,7 +1,7 @@
 # Chat Bedrock i ograniczony test
 
 AI 12 ma adapter Converse, kontrolę dostępu konta i zweryfikowane europejskie
-profile Haiku 4.5 oraz Sonnet 4.6. [Bieżący wynik i koszt](evidence/12-bedrock-real.md)
+profile Haiku 4.5 oraz Sonnet 4.6. [Bieżący wynik i koszt](evidence/12-document-evidence.md)
 odnoszą się do rzeczywistych wywołań modelu. Standardowe Assistant API wymaga
 jeszcze planner/resolvera i podłączenia źródeł; sam test CLI go nie uruchamia.
 
@@ -30,9 +30,21 @@ scope. Ostatnie dwa przypadki kontroluje serwer bez modelu.
 na zamrożonych dowodach, nie ponowny odbiór embeddings/RAG, realnych źródeł ML
 ani AI 10. Nie zamyka AI 12. Etykiety i progi nie są dopasowywane do modelu.
 
-Bieżący kandydat do dalszej kwalifikacji to **Sonnet 4.6**. Ostatni wynik to
-5/6, z otwartym problemem semantyki fixture dokumentacji. Haiku pozostaje
+Bieżący kandydat do dalszej kwalifikacji to **Sonnet 4.6**. Poprzedni test
+mieszany zaliczył 5/6 dla wcześniejszych etykiet.
+[Poprawka dokumentacji](agent-document-evidence.md) ma osobny odbiór offline
+i rzeczywisty test; zachowuje historyczną ocenę modelu. Haiku pozostaje
 profilem porównawczym; nie jest modelem zakwalifikowanym do runtime.
+Nowy [test dokumentacji](evidence/12-bedrock-runs/sonnet-4-documents.json)
+Sonnet zaliczył 6/6 bez napraw. To odbiór sześciu przypadków z syntetycznymi
+źródłami; pełna kwalifikacja rzeczywistego modelu i retrieval pozostaje otwarta.
+
+Osobny [profil dokumentacji](../agent/document-smoke.v1.json) wybiera sześć
+oryginalnych pytań dokumentacji z golden v2. [Konfiguracja](../agent/graph.document-smoke.v1.json)
+używa Sonnet 4.6, identycznej polityki i limitów per run, z cap całego testu
+0,35 USD. [Propozycja bez AWS](evidence/12-document-smoke-proposal.json) jest
+zapisem przygotowania przed testem. Właściciel zatwierdził następnie limit
+łączny 1,50 USD; wykonanie miało cap 0,35 USD i koszt 0,2439129 USD.
 
 ## Dostęp, tokeny i koszt
 
@@ -55,16 +67,17 @@ awarii/throttle i jedną naprawę JSON. Wszystko zużywa wspólny budżet. Run m
 próbę i najwyżej sześć prób. Circuit breaker oraz dwa miejsca dla operacji SDK
 obejmują też operacje nadal trwające po anulowaniu coroutine.
 
-Właściciel zatwierdził **1,00 USD łącznie na obecną serię testów i porównanie**.
-To nie jest 1 USD na każdą próbę. Haiku ma cap smoke 0,15 USD, Sonnet 0,25 USD.
+Właściciel zatwierdził **1,50 USD łącznie na obecną serię testów i porównanie**.
+Zestawienie kosztów/rezerw wynosi 1,1722710 USD; pozostaje 0,3277290 USD.
+Limit dotyczy wszystkich prób łącznie. Haiku ma cap smoke 0,15 USD, Sonnet 0,25 USD w teście mieszanym i 0,35 USD w teście dokumentacji.
 Limit kosztu całego smoke pozostaje nadrzędny wobec sumy limitów tokenów pytań.
 Run ma limit odpowiednio 0,04 i 0,11 USD. [Cennik i SKU](evidence/12-bedrock-real-pricing.json)
 pochodzą z publikacji AWS z 2026-09-28. Koszt dotyczy modelu według tych stawek,
 nie całego rachunku konta. Nie utworzono provisioned ani reserved throughput.
 
-SmokeBudget łączy sesje jednego procesu. Rejestr w [odbiorze](evidence/12-bedrock-real.md)
+SmokeBudget łączy sesje jednego procesu. [Rejestr kosztów](evidence/12-bedrock-budget.json)
 łączy wszystkie próby tej serii, także nieudane i niepewne rezerwacje. Przed
-kolejnym procesem trzeba odjąć je od 1 USD; samo CLI nie zapewnia limitu między
+kolejnym procesem trzeba odjąć je od zatwierdzonego limitu łącznego; samo CLI nie zapewnia limitu między
 procesami. Przerwane wykonanie bez końcowego kosztu zachowuje pełny cap próby.
 
 ## Uruchomienie

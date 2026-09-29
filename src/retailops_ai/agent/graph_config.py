@@ -24,6 +24,7 @@ BOUND_MODULES = (
     "graph_traces.py",
     "graph_contracts.py",
     "evidence.py",
+    "document_evidence.py",
     "suggestions.py",
     "chat.py",
     "chat_context.py",
@@ -54,7 +55,7 @@ def graph_schema_checksum() -> str:
 
 class AgentGraphConfig(Versioned):
     graph_version: Literal["bounded-langgraph-v1"]
-    evidence_policy_version: Literal["typed-facts-v1"]
+    evidence_policy_version: Literal["typed-facts-v2"]
     langgraph_version: Literal["1.2.12"]
     code_sha256: Sha256
     schemas_sha256: Sha256
@@ -64,7 +65,7 @@ class AgentGraphConfig(Versioned):
     @model_validator(mode="after")
     def chat_binding(self) -> Self:
         if self.chat.graph_version != self.graph_version or any(
-            prompt.resource_version != "v3" for prompt in self.chat.prompts
+            prompt.resource_version != "v4" for prompt in self.chat.prompts
         ):
             raise ValueError("graph_chat_profile_mismatch")
         return self
