@@ -1,0 +1,105 @@
+{
+  "activation_file_present": false,
+  "interpretation": [
+    "The checkpoint cap covers compressed payload plus checkpoint manifest; the selected frozen cap can be lower.",
+    "This upper bound is not the selected 64-cohort disk budget. A completed pilot receipt, retained and transient byte accounting, and actual free-space preflight remain mandatory.",
+    "The v1 source pilot measured generation, ordinary qualification and snapshot export. A roughly 21-fold v2 ledger microbenchmark improvement cannot be applied to total elapsed time or unchanged verification/export/AI phases.",
+    "The larger technical limits do not change forecast quality gates, method, planned cohort count, dataset configuration or previously reported failures."
+  ],
+  "measured_development_pilot": {
+    "cohort_preparation_elapsed_seconds": 1406.4392969579785,
+    "complete_verified_checkpoint_bytes": null,
+    "complete_verified_checkpoint_status": "pending",
+    "excluded_from_final_qualification": true,
+    "final_test_seeds_opened": [],
+    "preparation_receipt": {
+      "path": "reports/ai04-v12-development-cohortpilot-r2.json",
+      "sha256": "f8d6a8ce4e850ab7d9a961ba0f6505d9e87a1af61284aa912dca8a3029d49742"
+    },
+    "prepared_artifacts_preserved": true,
+    "prepared_cohort_tree_bytes": 357648916,
+    "seed": 710001,
+    "source_implementation_version": "inventory-source-indexed-movement-1.0.0",
+    "source_pilot_tree_bytes": 496588067,
+    "source_qualification_snapshot_seconds": 5307.402690958988,
+    "source_receipt": {
+      "path": "/private/tmp/retailops-ai04-intermittent-source/data/generated/ai04-v12-development/sourcepilot/development-receipt.json",
+      "sha256": "42c21e423658608457699c2f082bbf77c23659e80349176f225a22f5ade63e9f"
+    },
+    "source_seconds": {
+      "qualification": 789.7399827500049,
+      "snapshot": 546.7418847089866,
+      "source_core": 2891.2648045419774,
+      "source_total": 3970.920823499997,
+      "total": 5307.402690958988
+    },
+    "subsequent_r2_replay_error": "symlink_directory",
+    "subsequent_r2_replay_status": "failed"
+  },
+  "model_status": "not_ready",
+  "new_final_source_generation_started": false,
+  "previous_stage_b_ci": {
+    "ai_commit": "fb6371a2aaefba0be1c38299f07fe117dbdb76ea",
+    "covers_this_resource_revision": false,
+    "full_pytest_passed_per_run": 1134,
+    "required_ci_run_ids": [
+      36757506772,
+      36757514207
+    ]
+  },
+  "quality_threshold_changes": false,
+  "recorded_at": "2026-09-30T18:52:11.920458+00:00",
+  "resource_plan_version": "forecast-functional-resource-plan-1.1.0",
+  "scope": "operational_capacity_only_before_final_campaign_freeze",
+  "technical_backstops": {
+    "failure_preservation_and_upload_reserve_minutes": 30,
+    "maximum_complete_checkpoint_bytes": 805306368,
+    "maximum_standalone_run_bytes": 68719476736,
+    "worker_timeout_seconds": 14400,
+    "workflow_job_timeout_minutes": 270
+  },
+  "validation": {
+    "functional_v11_code_pins": {
+      "files": 24,
+      "status": "passed"
+    },
+    "input_1_2_implementation_freeze": "passed",
+    "mypy": {
+      "source_files": 190,
+      "status": "passed"
+    },
+    "no_cohort_inputs_or_recipe_code_changes": true,
+    "pytest": {
+      "boundary_checks": [
+        "768 MiB cap accepted and cap plus one byte rejected across preparation and transport",
+        "A smaller frozen byte allowance still wins over the global cap",
+        "All 64 retained checkpoints and prediction allowances remain counted",
+        "Insufficient actual disk still blocks the plan without creating data",
+        "Standalone aggregate 64 GiB accepted and one byte over rejected using mocked sizes",
+        "240-minute worker timeout and at least 30-minute workflow cleanup reserve"
+      ],
+      "errors": 0,
+      "failures": 0,
+      "junit_suite_seconds": 17.083,
+      "receipt_path": "reports/ai04-v12-resource-revision-tests.xml",
+      "receipt_sha256": "2ec5adb0e7f33004dcfddb574c41f7fc2909989ceb7fd41c3422379b09bf1a4f",
+      "skipped": 0,
+      "test_files": [
+        "tests/test_forecast_functional_v12_remote.py",
+        "tests/test_forecast_functional_v12_checkpoint_download.py",
+        "tests/test_forecast_functional_v12_checkpoint_import.py",
+        "tests/test_forecast_functional_v12_resources.py",
+        "tests/test_forecast_functional_v12_run.py"
+      ],
+      "tests": 82
+    },
+    "quality_protocol_freeze": {
+      "files": 11,
+      "protocol_version": "forecast-quality-2.0.0",
+      "status": "passed"
+    },
+    "remote_ci_for_this_revision": "pending_after_publication",
+    "ruff": "passed"
+  },
+  "version": "forecast-functional-resource-revision-evidence-1.1.0"
+}

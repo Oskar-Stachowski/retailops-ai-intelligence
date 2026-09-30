@@ -58,7 +58,7 @@ jobs:
   canary:
     needs: plan
     runs-on: ubuntu-24.04
-    timeout-minutes: 210
+    timeout-minutes: 270
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -126,7 +126,7 @@ jobs:
     needs: [plan, canary]
     if: needs.plan.outputs.has_remaining == 'true'
     runs-on: ubuntu-24.04
-    timeout-minutes: 210
+    timeout-minutes: 270
     strategy:
       fail-fast: false
       max-parallel: ${{ fromJSON(needs.plan.outputs.max_parallel) }}

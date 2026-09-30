@@ -16,7 +16,10 @@ from retailops_ai.source_snapshot.files import SnapshotError
 
 MIB = 1024**2
 GIB = 1024**3
-VERSION = "forecast-functional-resource-plan-1.0.0"
+VERSION = "forecast-functional-resource-plan-1.1.0"
+# Technical backstop, not the selected per-cohort budget. The frozen plan still
+# requires a measured pilot and complete retained/transient free-space accounting.
+MAX_CHECKPOINT_BYTES = 768 * MIB
 
 
 def resource_plan(
@@ -45,7 +48,7 @@ def resource_plan(
     )
     if any(type(value) is not int or value <= 0 for value in values) or (
         not 1 <= cohort_count <= 256
-        or max_checkpoint_bytes > 400 * MIB
+        or max_checkpoint_bytes > MAX_CHECKPOINT_BYTES
         or max_expanded_checkpoint_bytes > MAX_TOTAL_BYTES
         or cohort_count * max_scoring_rows_per_cohort > DEFAULT_MAX_ROWS
         or safety_bytes < 2 * GIB

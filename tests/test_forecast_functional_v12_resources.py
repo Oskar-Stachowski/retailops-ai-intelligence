@@ -10,6 +10,7 @@ import pytest
 
 from retailops_ai.forecasting.functional_v12_resources import (
     GIB,
+    MAX_CHECKPOINT_BYTES,
     MIB,
     disk_preflight,
     resource_plan,
@@ -105,3 +106,43 @@ def test_download_and_import_reserve_is_on_archive_device(
     assert receipt["archive_remaining_budget_bytes"] == archive_budget
     assert receipt["status"] == "blocked_insufficient_space"
     assert receipt["additional_free_bytes_required"] == 1
+
+
+def test_measured_archive_budget_can_exceed_old_cap_but_keeps_full_64_cohort_cost(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    inputs = {
+        "cohort_count": 64,
+        "max_checkpoint_bytes": 512 * MIB,
+        "max_expanded_checkpoint_bytes": 2 * GIB,
+        "max_prediction_bytes_per_cohort": 32 * MIB,
+        "max_scoring_rows_per_cohort": 500000,
+        "pilot_receipt_sha256": "a" * 64,
+    }
+    selected = resource_plan(**inputs)
+    assert selected["version"] == "forecast-functional-resource-plan-1.1.0"
+    assert selected["max_checkpoint_bytes"] == 512 * MIB < MAX_CHECKPOINT_BYTES
+    assert selected["retained_budget_bytes"] == 34 * GIB
+    backstop = resource_plan(**(inputs | {"max_checkpoint_bytes": MAX_CHECKPOINT_BYTES}))
+    assert MAX_CHECKPOINT_BYTES == 768 * MIB
+    assert backstop["retained_budget_bytes"] == 50 * GIB
+    assert backstop["resource_limits_are_quality_thresholds"] is False
+    assert backstop["cohort_count"] == selected["cohort_count"] == 64
+    # A larger permitted archive does not assert that actual free space is sufficient.
+    monkeypatch.setattr(
+        shutil,
+        "disk_usage",
+        lambda _: type("Disk", (), {"free": selected["initial_free_bytes_required"]})(),
+    )
+    assert (
+        disk_preflight(selected, archive_volume=tmp_path, work_volume=tmp_path)["status"]
+        == "passed"
+    )
+    receipt = disk_preflight(backstop, archive_volume=tmp_path, work_volume=tmp_path)
+    assert receipt["status"] == "blocked_insufficient_space"
+    assert receipt["additional_free_bytes_required"] == 66 * 256 * MIB
+    assert list(tmp_path.iterdir()) == []
+    with pytest.raises(SnapshotError, match="invalid_or_unmeasured"):
+        resource_plan(**(inputs | {"max_checkpoint_bytes": MAX_CHECKPOINT_BYTES + 1}))
+    with pytest.raises(SnapshotError, match="arithmetic_or_policy_drift"):
+        validate_resource_plan(selected | {"version": "forecast-functional-resource-plan-1.0.0"})

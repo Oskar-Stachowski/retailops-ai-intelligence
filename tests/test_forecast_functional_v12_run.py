@@ -353,3 +353,21 @@ def test_symlinks_are_never_cloned(tmp_path):
     with pytest.raises(SnapshotError, match="unsafe_output_path"):
         run.export_run(tmp_path / "absent", tmp_path / "absent", [], output / "new", "a" * 40)
     assert not (source / "new").exists()
+
+
+def test_standalone_backstop_counts_all_retained_payloads_without_allocating_gibibytes(
+    tmp_path, monkeypatch
+):
+    source = tmp_path / "source"
+    source.mkdir()
+    (source / "checkpoint").write_bytes(b"fixture")
+    (source / "predictions").write_bytes(b"fixture")
+    assert run.MAX_BYTES == 64 * 1024**3
+    # Synthetic measured file sizes exercise accounting without creating huge test data.
+    sizes = {"checkpoint": 48 * 1024**3, "predictions": 16 * 1024**3}
+    monkeypatch.setattr(run, "file_hash", lambda root, name: (sizes[name], "a" * 64))
+    receipts = run._receipts({"source": source})
+    assert sum(value["size_bytes"] for value in receipts.values()) == run.MAX_BYTES
+    sizes["predictions"] += 1
+    with pytest.raises(SnapshotError, match="payload_budget"):
+        run._receipts({"source": source})

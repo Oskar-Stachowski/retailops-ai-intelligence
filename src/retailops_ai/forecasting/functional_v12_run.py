@@ -41,7 +41,7 @@ from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
 
 VERSION = "forecast-functional-v12-run-1.0.0"
 MAX_FILES = 20000
-MAX_BYTES = 32 * 1024**3
+MAX_BYTES = 64 * 1024**3
 MIN_FREE_BYTES = 1024**3
 ROLES = ["validation", "development_holdout"]
 

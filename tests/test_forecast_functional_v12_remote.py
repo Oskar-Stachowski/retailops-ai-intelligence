@@ -207,6 +207,21 @@ def test_reviewed_standard_runner_parallelism_requires_exact_freeze_binding(plan
         remote.read_plan(root)
 
 
+def test_remote_backstop_matches_versioned_resource_policy_but_selected_cap_can_be_lower(
+    plan_files,
+):
+    from retailops_ai.forecasting.functional_v12_resources import MAX_CHECKPOINT_BYTES, VERSION
+
+    root, body, write, _ = plan_files
+    assert VERSION == "forecast-functional-resource-plan-1.1.0"
+    assert remote.MAX_CHECKPOINT_BYTES == MAX_CHECKPOINT_BYTES == 768 * 1024**2
+    body = deepcopy(body)
+    body["remote_preparation"]["max_checkpoint_bytes"] = 512 * 1024**2
+    write(body)
+    selected = remote.read_plan(root)["freeze"]["descriptor"]["remote_preparation"]
+    assert selected["max_checkpoint_bytes"] == 512 * 1024**2
+
+
 @pytest.mark.parametrize("actual", [None, "2", "01", "not-a-number"])
 def test_new_or_unknown_run_blocks_plan_and_preflight_before_code_or_generator(
     plan_files, tmp_path, monkeypatch, actual
@@ -438,14 +453,14 @@ def test_workflow_has_only_explicit_triggers_and_bounded_prep_matrix():
     assert job["if"] == "needs.plan.outputs.has_remaining == 'true'"
     assert canary["needs"] == "plan"
     assert canary["strategy"]["max-parallel"] == 1
-    assert canary["timeout-minutes"] == 210
+    assert canary["timeout-minutes"] == 270
     assert canary["steps"] == job["steps"]
     assert canary["env"] == job["env"]
     assert canary["strategy"]["matrix"] == "${{ fromJSON(needs.plan.outputs.canary_matrix) }}"
     assert job["strategy"]["matrix"] == "${{ fromJSON(needs.plan.outputs.remaining_matrix) }}"
     assert job["runs-on"] == "ubuntu-24.04"
-    assert job["timeout-minutes"] == 210
-    assert remote.WORKER_TIMEOUT_SECONDS == 180 * 60
+    assert job["timeout-minutes"] == 270
+    assert remote.WORKER_TIMEOUT_SECONDS == 240 * 60
     for worker in (canary, job):
         assert worker["timeout-minutes"] * 60 - remote.WORKER_TIMEOUT_SECONDS >= 30 * 60
     assert job["strategy"]["fail-fast"] is False
@@ -549,5 +564,5 @@ def test_worker_timeout_terminates_process_group_before_preservation(monkeypatch
     monkeypatch.setattr(remote.os, "killpg", lambda pid, sig: signals.append((pid, sig)))
     with pytest.raises(remote.PreparationError, match="worker_timeout"):
         remote._worker_process(["unused-fixture-worker"])
-    assert waits[0] == 180 * 60
+    assert waits[0] == 240 * 60
     assert signals == [(123456, remote.signal.SIGTERM), (123456, remote.signal.SIGKILL)]

@@ -32,6 +32,7 @@ from import_forecast_cohort_checkpoint import import_checkpoint_zip
 
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.forecasting.functional_v12_archive import verify_checkpoint
+from retailops_ai.forecasting.functional_v12_resources import MAX_CHECKPOINT_BYTES
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
     checked_directory,
@@ -146,7 +147,7 @@ def validate_artifact(
         or not re.fullmatch(r"[0-9a-f]{40}", control_commit)
         or not re.fullmatch(r"functional-v12-freeze-sha256-[0-9a-f]{64}", freeze_id)
         or type(maximum_bytes) is not int
-        or not 1 <= maximum_bytes <= 400 * MIB
+        or not 1 <= maximum_bytes <= MAX_CHECKPOINT_BYTES
         or metadata.get("id") != artifact_id
         or metadata.get("name") != f"ai04-{freeze_id}-seed-{seed}"
         or metadata.get("url") != expected_url
@@ -327,7 +328,7 @@ def retrieve_checkpoint(
         body["resource_plan"]["max_checkpoint_bytes"],
         body["remote_preparation"]["max_checkpoint_bytes"],
     )
-    if type(maximum) is not int or not 1 <= maximum <= 400 * MIB:
+    if type(maximum) is not int or not 1 <= maximum <= MAX_CHECKPOINT_BYTES:
         raise SnapshotError("cohort_download_invalid_budget")
     output = output.absolute()
     output.mkdir(parents=True, exist_ok=True)

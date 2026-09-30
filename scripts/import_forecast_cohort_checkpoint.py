@@ -11,6 +11,7 @@ from typing import Any
 
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.forecasting.functional_v12_archive import verify_checkpoint
+from retailops_ai.forecasting.functional_v12_resources import MAX_CHECKPOINT_BYTES
 from retailops_ai.source_snapshot.files import SnapshotError, checked_directory, file_hash
 from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
 
@@ -31,7 +32,7 @@ def import_checkpoint_zip(
         archive.is_symlink()
         or not archive.is_file()
         or type(maximum_bytes) is not int
-        or not 1 <= maximum_bytes <= 400 * 1024**2
+        or not 1 <= maximum_bytes <= MAX_CHECKPOINT_BYTES
         or archive.stat().st_size > maximum_bytes + 1024**2
         or not freeze_id.startswith("functional-v12-freeze-sha256-")
         or type(seed) is not int

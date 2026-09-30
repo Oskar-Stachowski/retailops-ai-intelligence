@@ -49,12 +49,13 @@ RUNNER_PATH = "scripts/prepare_forecast_functional_v12_remote.py"
 WORKFLOW_PATH = ".github/workflows/ai04-cohort-preparation.yml"
 SOURCE_MODULE = "data.inventory.source_cohort_batch_v2"
 SOURCE_MODULE_PATH = "data/inventory/source_cohort_batch_v2.py"
-MAX_CHECKPOINT_BYTES = 400 * 1024**2
+# Mirrors resource-plan 1.1.0 without importing AI dependencies in the source venv.
+MAX_CHECKPOINT_BYTES = 768 * 1024**2
 MIN_FREE_BYTES = 8 * 1024**3
 # Source generation, ordinary qualification/export, both full AI verifications,
 # compact replay and checkpoint sealing share one technical deadline. The workflow
 # reserves a further 30 minutes for setup, failure preservation and upload.
-WORKER_TIMEOUT_SECONDS = 180 * 60
+WORKER_TIMEOUT_SECONDS = 240 * 60
 
 
 class PreparationError(ValueError):

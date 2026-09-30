@@ -68,3 +68,24 @@ def test_wrong_seed_checksum_and_traversal_are_rejected(tmp_path: Path) -> None:
         MODULE.import_checkpoint_zip(archive, tmp_path / "imported", **options)
     assert not (tmp_path / "escaped").exists()
     assert not list((tmp_path / "imported").iterdir())
+
+
+def test_backstop_expansion_does_not_override_selected_import_budget(tmp_path: Path) -> None:
+    archive, checkpoint, options = fixture(tmp_path)
+    total = sum(path.stat().st_size for path in checkpoint.iterdir())
+    assert MODULE.MAX_CHECKPOINT_BYTES == 768 * 1024**2
+    result = MODULE.import_checkpoint_zip(
+        archive, tmp_path / "imported", **(options | {"maximum_bytes": MODULE.MAX_CHECKPOINT_BYTES})
+    )
+    assert result["checkpoint_bytes"] == total
+    with pytest.raises(SnapshotError, match="input_or_budget"):
+        MODULE.import_checkpoint_zip(
+            archive,
+            tmp_path / "over-backstop",
+            **(options | {"maximum_bytes": MODULE.MAX_CHECKPOINT_BYTES + 1}),
+        )
+    with pytest.raises(SnapshotError, match="inventory_or_expansion_budget"):
+        MODULE.import_checkpoint_zip(
+            archive, tmp_path / "under-selected-budget", **(options | {"maximum_bytes": total - 1})
+        )
+    assert archive.exists() and checkpoint.exists()

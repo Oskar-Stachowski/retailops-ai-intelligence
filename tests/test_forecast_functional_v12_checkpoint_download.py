@@ -331,3 +331,44 @@ def test_offline_resume_reverifies_checkpoint_and_receipt(tmp_path, monkeypatch,
         MODULE.retrieve_checkpoint(**options)
     assert archive.exists()
     assert not list(options["output"].rglob("*.zip"))
+
+
+def test_download_backstop_and_frozen_lower_limit_are_both_enforced(tmp_path, monkeypatch):
+    from retailops_ai.forecasting.functional_v12_resources import MAX_CHECKPOINT_BYTES
+
+    archive, _, metadata, options = fixture(tmp_path)
+    assert MODULE.MAX_CHECKPOINT_BYTES == MAX_CHECKPOINT_BYTES == 768 * MODULE.MIB
+    identity = {
+        "artifact_id": 17,
+        "run_id": 19,
+        "control_commit": options["control_commit"],
+        "freeze_id": options["freeze"]["freeze_id"],
+        "seed": options["seed"],
+        "maximum_bytes": MAX_CHECKPOINT_BYTES,
+        "remote": True,
+    }
+    boundary = metadata | {"size_in_bytes": MAX_CHECKPOINT_BYTES + MODULE.MIB}
+    assert MODULE.validate_artifact(boundary, **identity) == metadata["digest"].removeprefix(
+        "sha256:"
+    )
+    with pytest.raises(SnapshotError, match="identity_run_or_budget"):
+        MODULE.validate_artifact(
+            boundary, **(identity | {"maximum_bytes": MAX_CHECKPOINT_BYTES + 1})
+        )
+    with pytest.raises(SnapshotError, match="identity_run_or_budget"):
+        MODULE.validate_artifact(
+            boundary | {"size_in_bytes": MAX_CHECKPOINT_BYTES + MODULE.MIB + 1}, **identity
+        )
+    # Remote backstop is larger, but frozen local resource allowance still wins.
+    options["freeze"]["descriptor"]["remote_preparation"]["max_checkpoint_bytes"] = (
+        MAX_CHECKPOINT_BYTES
+    )
+    options["freeze"]["descriptor"]["resource_plan"]["max_checkpoint_bytes"] = 128
+    options["freeze"]["freeze_id"] = "functional-v12-freeze-sha256-" + canonical_sha256(
+        options["freeze"]["descriptor"]
+    )
+    metadata["name"] = f"ai04-{options['freeze']['freeze_id']}-seed-{options['seed']}"
+    monkeypatch.setattr(MODULE, "open_get", forbid_network)
+    with pytest.raises(SnapshotError, match="inventory_or_expansion_budget"):
+        MODULE.retrieve_checkpoint(local_zip=archive, metadata=metadata, **options)
+    assert archive.exists()
