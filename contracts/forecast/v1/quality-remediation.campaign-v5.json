@@ -1,0 +1,184 @@
+{
+  "backtest": {
+    "development_holdout_days": 14,
+    "folds": 3,
+    "initial_train_days": 14,
+    "label_tail_days": 15,
+    "mode": "rolling",
+    "purge_days": 15,
+    "step_days": 14,
+    "validation_days": 14
+  },
+  "budget": {
+    "cpu_threads": 1,
+    "fit_rss_bytes": 1073741824,
+    "fit_wall_seconds": 120.0,
+    "frozen_configuration_per_family": 1,
+    "model_families": [
+      "random_forest",
+      "hist_gradient_boosting"
+    ]
+  },
+  "calibration_recipe": "second_half_validation_signed_residual_equal_tail_quantiles_by_volume_category_with_audited_minimum_sample_fallback",
+  "created_at": "2026-09-30",
+  "failure_policy": "retain_every_failed_and_not_ready_gate_no_threshold_changes_no_holdout_reselection",
+  "holdout_origins": [
+    [
+      "2026-07-29",
+      "2026-08-11"
+    ],
+    [
+      "2026-08-12",
+      "2026-08-25"
+    ],
+    [
+      "2026-08-26",
+      "2026-09-08"
+    ]
+  ],
+  "origins": {
+    "end": "2026-09-08",
+    "start": "2026-06-01"
+  },
+  "point_recipe": "per_origin_known_volume_and_category_validation_only_bias_correction_and_baseline_fallback",
+  "portfolio_final_test": "not_included_not_opened",
+  "preflight": "before_training_require_each_original_critical_volume_bin_in_each_evaluation_role_at_least_30_origin_known_feature_rows",
+  "previous_campaign_status": "not_ready_no_high_volume_preliminary_origin_known_source_history",
+  "previous_development_holdout_last_origin": "2026-07-17",
+  "quality_thresholds": {
+    "baseline_fallback": "retain_validation_baseline_without_improvement_requirement",
+    "critical_dimensions": [
+      "horizon",
+      "category",
+      "channel",
+      "volume"
+    ],
+    "interval_lower_bound": "clip_at_zero_observed_sales_nonnegative",
+    "intervals": "per_fold_method_horizon_absolute_validation_residual_quantile",
+    "inventory_segments": "deferred_until_verified_inventory_after_ai06",
+    "low_volume_upper_exclusive": 5.0,
+    "mape": "positive_actuals_only_diagnostic_with_coverage",
+    "max_groups": 4000,
+    "maximum_absolute_normalized_bias": 0.1,
+    "maximum_critical_segment_relative_regression": 0.1,
+    "maximum_mean_width_to_mean_actual": 2.0,
+    "medium_volume_upper_exclusive": 20.0,
+    "minimum_calibration_rows": 50,
+    "minimum_eligibility_coverage": 0.8,
+    "minimum_empirical_coverage": 0.8,
+    "minimum_global_rows": 100,
+    "minimum_prediction_coverage": 1.0,
+    "minimum_relative_improvement": 0.05,
+    "minimum_segment_rows": 30,
+    "nominal_coverage": 0.9,
+    "portfolio_final_test": "not_included_not_opened",
+    "primary_metric": "mae",
+    "quantile": "ceil_n_plus_1_times_nominal_unattainable_rank_not_ready",
+    "required_volume_bins": [
+      "zero",
+      "low",
+      "medium",
+      "high"
+    ],
+    "use": "development_diagnostics_on_previously_observed_data",
+    "version": "forecast-development-quality-1.0.0",
+    "volume_basis": "origin_known_rolling_28_mean_not_target_outcome",
+    "zero_denominator": "null_not_evaluable_blocks_quality_gate"
+  },
+  "resolved_split": {
+    "folds": [
+      {
+        "development_holdout": {
+          "end": "2026-08-11",
+          "start": "2026-07-29"
+        },
+        "evaluation_cutoff": "2026-08-26T23:59:59Z",
+        "name": "rolling-01",
+        "purge_days": 15,
+        "selection_cutoff": "2026-07-28T23:59:59Z",
+        "train": {
+          "end": "2026-06-14",
+          "start": "2026-06-01"
+        },
+        "training_cutoff": "2026-06-29T23:59:59Z",
+        "validation": {
+          "end": "2026-07-13",
+          "start": "2026-06-30"
+        }
+      },
+      {
+        "development_holdout": {
+          "end": "2026-08-25",
+          "start": "2026-08-12"
+        },
+        "evaluation_cutoff": "2026-09-09T23:59:59Z",
+        "name": "rolling-02",
+        "purge_days": 15,
+        "selection_cutoff": "2026-08-11T23:59:59Z",
+        "train": {
+          "end": "2026-06-28",
+          "start": "2026-06-15"
+        },
+        "training_cutoff": "2026-07-13T23:59:59Z",
+        "validation": {
+          "end": "2026-07-27",
+          "start": "2026-07-14"
+        }
+      },
+      {
+        "development_holdout": {
+          "end": "2026-09-08",
+          "start": "2026-08-26"
+        },
+        "evaluation_cutoff": "2026-09-23T23:59:59Z",
+        "name": "rolling-03",
+        "purge_days": 15,
+        "selection_cutoff": "2026-08-25T23:59:59Z",
+        "train": {
+          "end": "2026-07-12",
+          "start": "2026-06-29"
+        },
+        "training_cutoff": "2026-07-27T23:59:59Z",
+        "validation": {
+          "end": "2026-08-10",
+          "start": "2026-07-28"
+        }
+      }
+    ],
+    "label_policy": "latest_complete_known_version_at_role_cutoff",
+    "minimum_eligible_rows_per_role": 1,
+    "missing_label": "censored_never_zero",
+    "portfolio_final_test": "not_included_not_opened",
+    "protocol": "fixed_origin_development_only",
+    "version": "forecast-development-split-1.0.0"
+  },
+  "selection_recipe": "first_half_validation_correction_fit_last_half_validation_selection_before_holdout",
+  "source": {
+    "days": 162,
+    "end_date": "2026-09-30",
+    "products": 100,
+    "profile": "ai-dev",
+    "seed": 42,
+    "source_version": "2.7",
+    "stores": 2,
+    "warehouses": 2
+  },
+  "source_rationale": "standard_ai_dev_100_products_two_stores_for_volume_representation_keeps_14_day_train_under_original_50000_row_limit_no_seed_search",
+  "source_repository_commit": "f0cfa92dc0c7f4748be70c4a20c39c0e0eb0d846",
+  "source_snapshot_verifier_commit": "f0cfa92dc0c7f4748be70c4a20c39c0e0eb0d846",
+  "source_verification_change": {
+    "as_of_order_index": {
+      "commit": "f0cfa92dc0c7f4748be70c4a20c39c0e0eb0d846",
+      "controlled_58_table_parity": "passed",
+      "regenerated_data": false,
+      "source_tests": 353
+    },
+    "controlled_58_table_identity_and_temporal_context_parity": "passed",
+    "parent_commit": "d4ee7a4e4217a59871c654f204f16de74017d13b",
+    "quality_thresholds_and_generator_distribution": "unchanged",
+    "scope": "position_indexes_for_reorder_snapshot_and_inventory_window_verification",
+    "source_tests": 207
+  },
+  "supersedes_campaign": "quality-remediation.campaign-v4.json",
+  "version": "forecast-quality-remediation-campaign-5.0.0"
+}
