@@ -25,6 +25,7 @@ from retailops_ai.forecasting.remediation import (
     interval,
     load_remediation,
     observations,
+    predict,
     residual_quantiles,
     verify_remediation,
 )
@@ -119,6 +120,18 @@ def test_signed_quantiles_clip_zero_and_audited_sparse_group_fallback():
         for cell in calibration.values():
             cell["status"] = "not_ready"
         assert interval(row, "remediated", 10.0, calibration) == (None, None)
+
+
+def test_perfect_validation_baseline_retains_original_predictions():
+    choices = {"fold": SimpleNamespace(baseline="seasonal_naive7")}
+    with validation_db() as db:
+        db.execute("UPDATE predictions SET units=10.0")
+        recipe, _ = fit_recipe(db, parent(), choices, RemediationPolicy())
+        assert all(not cell["corrected"] for cell in recipe.values())
+        assert all(cell["selected"] == cell["baseline"] for cell in recipe.values())
+        assert all(cell["status"] == "passed" for cell in recipe.values())
+        for row in observations(db):
+            assert predict(row, recipe, choices) == row.predictions["validation_baseline"]
 
 
 def test_original_quality_thresholds_cannot_be_relaxed():

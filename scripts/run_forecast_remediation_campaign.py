@@ -13,6 +13,7 @@ from retailops_ai.forecasting.backtest_contract import BacktestPolicy, plan_back
 from retailops_ai.forecasting.calendar import build_calendar, publish_calendar
 from retailops_ai.forecasting.contract import OriginWindow
 from retailops_ai.forecasting.manifests import build_feature_set
+from retailops_ai.forecasting.quality_contract import QualityPolicy
 from retailops_ai.forecasting.remediation import build_remediation, verify_remediation
 from retailops_ai.forecasting.remediation_preflight import preflight
 from retailops_ai.source_snapshot.importer import import_snapshot
@@ -34,6 +35,11 @@ def main() -> int:
     args = parser.parse_args()
     raw = args.campaign.read_bytes()
     campaign = json.loads(raw)
+    if (
+        QualityPolicy.model_validate_json(json.dumps(campaign["quality_thresholds"]))
+        != QualityPolicy()
+    ):
+        raise ValueError("campaign_requires_unchanged_original_quality_thresholds")
     policy = BacktestPolicy.model_validate_json(json.dumps(campaign["backtest"]))
     window = OriginWindow(
         start=date.fromisoformat(campaign["origins"]["start"]),
