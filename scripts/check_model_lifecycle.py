@@ -43,6 +43,7 @@ def main() -> int:
         ):
             if store.checked_run(command).strip():
                 raise ValueError("lifecycle_target_already_exists")
+        store.require_fresh_test_images(project)
         owned = True
         if store.checked_run(
             store.compose(source, "ps", "--status", "running", "-q", "mlflow")
@@ -85,10 +86,12 @@ def main() -> int:
         print('{"error":"model_lifecycle_smoke_failed"}')
         return 2
     finally:
-        if owned:
-            store.checked_run(store.compose(project, "down", "-v"))
-        if source_stopped:
-            store.checked_run(store.compose(source, "up", "-d", "--wait", "mlflow"))
+        try:
+            if owned:
+                store.cleanup_test_stacks(project)
+        finally:
+            if source_stopped:
+                store.checked_run(store.compose(source, "up", "-d", "--wait", "mlflow"))
 
 
 if __name__ == "__main__":

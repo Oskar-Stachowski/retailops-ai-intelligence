@@ -31,6 +31,9 @@ from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
 BACKUPS = stack.ROOT / ".local" / "mlflow-backups"
 VOLUME_HELPER = stack.ROOT / "scripts" / "mlflow_volume.py"
 PROJECT = re.compile(r"^retailops_ai_[a-z0-9_]{5,50}$")
+TEST_PROJECT = re.compile(
+    r"retailops_ai_(?:inputs|outputs|queue|lifecycle|store_source|store_target|restore)_[0-9a-f]{10}"
+)
 MAX_BUNDLE_FILE = 4 * 1024**3
 DB_DUMP = "metadata.dump"
 ARTIFACTS = "artifacts.tar"
@@ -69,6 +72,71 @@ def checked_run(command: list[str], *, stdin: Any = None, stdout: Any = subproce
     if result.returncode:
         raise ValueError("mlflow_store_compose_command_failed")
     return result.stdout or b""
+
+
+def test_image_tags(project: str) -> list[str]:
+    """Find only the explicitly tagged images of a disposable acceptance project."""
+    if TEST_PROJECT.fullmatch(project) is None:
+        raise ValueError("test_cleanup_requires_disposable_project")
+    tags = (
+        checked_run(
+            [
+                compose(project)[0],
+                "image",
+                "ls",
+                "--filter",
+                f"reference={project}-*:local",
+                "--format",
+                "{{.Repository}}:{{.Tag}}",
+            ]
+        )
+        .decode()
+        .splitlines()
+    )
+    if set(tags) - {f"{project}-api:local", f"{project}-mlflow:local"}:
+        raise ValueError("unexpected_test_image_tag")
+    return sorted(set(tags))
+
+
+def require_fresh_test_images(project: str) -> None:
+    """Call before claiming ownership, including when no containers exist yet."""
+    if test_image_tags(project):
+        raise ValueError("test_project_images_already_exist")
+
+
+def cleanup_test_stacks(*projects: str) -> None:
+    """Remove owned test resources and tags, never shared images or global build cache.
+
+    Call only for projects whose resources and image names were checked fresh before
+    the test's first mutation. A failed build may leave images without containers.
+    """
+    failure: Exception | None = None
+    for project in projects:
+        try:
+            tags = test_image_tags(project)
+            docker = compose(project)[0]
+            for tag in tags:
+                labels = json.loads(
+                    checked_run(
+                        [docker, "image", "inspect", "--format", "{{json .Config.Labels}}", tag]
+                    )
+                )
+                service = tag.removeprefix(project + "-").removesuffix(":local")
+                if (
+                    not isinstance(labels, dict)
+                    or labels.get("com.docker.compose.project") != project
+                    or labels.get("com.docker.compose.service") != service
+                ):
+                    raise ValueError("test_image_ownership_mismatch")
+            checked_run(compose(project, "down", "-v"))
+            if tags:
+                # Remove tags, not IDs: retain other tags and never force removal
+                # of an image used by another container or prune its parent images.
+                checked_run([docker, "image", "rm", "--no-prune", *tags])
+        except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
+            failure = exc
+    if failure is not None:
+        raise ValueError("test_stack_cleanup_failed") from failure
 
 
 def volume_command(project: str, action: str) -> list[str]:

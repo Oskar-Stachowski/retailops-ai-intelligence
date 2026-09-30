@@ -96,6 +96,18 @@ Weryfikuje brak haseł w logach. Na końcu zatrzymuje kontenery i pozostawia wol
 Raport bez sekretów: `.local/persistence-smoke.json`. Porty 8081/5010 muszą być wolne.
 Test zapisuje wyłącznie własne dane testowe; uruchamiaj go w deweloperskim checkoutcie.
 
+Jednorazowe testy AI 05 (`mlflow-store-smoke`, `model-lifecycle-smoke`,
+`lifecycle-store-smoke`, `forecast-queue-smoke`, `forecast-input-store-smoke`
+i `forecast-publication-smoke`) sprzątają również własne obrazy `api:local`
+i `mlflow:local` z prefiksem losowego projektu testowego. Przed rozpoczęciem
+odrzucają kolizję z istniejącym obrazem, a przed usunięciem sprawdzają etykiety
+własności Compose. Sprzątanie działa również po błędzie budowania, gdy kontenery
+jeszcze nie powstały. Nie usuwa obrazów bazowych, innych tagów tego samego obrazu
+ani współdzielonego cache budowania. Nie używa globalnego `prune` ani wymuszonego
+usuwania; błąd sprzątania jest zgłaszany. Po SIGKILL kontrolera lub wyłączeniu
+komputera blok `finally` nie może się wykonać i pozostałości wymagają osobnego
+przeglądu. Zwykłe `make compose-down` nadal zachowuje obrazy i dane checkoutu.
+
 Required CI wykonuje `make check` (w tym Compose config), testy adaptera i odrębny
 `persistence` z rzeczywistym smoke. Wynik tego joba jest wymagany w `required-result`.
 [Dowody tego zakresu](evidence/01-persistence.md) rozróżniają lokalny runtime i

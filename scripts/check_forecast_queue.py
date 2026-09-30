@@ -37,6 +37,7 @@ def main() -> int:
     try:
         stack.environment_file(create=True)
         combined.require_fresh(project)
+        store.require_fresh_test_images(project)
         owned = True
         phase = "setup"
         store.checked_run(store.compose(project, "build", "api", "mlflow"))
@@ -92,9 +93,11 @@ def main() -> int:
         print(json.dumps({"error": "forecast_queue_smoke_failed", "phase": phase}))
         return 2
     finally:
-        if owned:
-            store.checked_run(store.compose(project, "down", "-v"))
-        store.compose = original
+        try:
+            if owned:
+                store.cleanup_test_stacks(project)
+        finally:
+            store.compose = original
 
 
 if __name__ == "__main__":

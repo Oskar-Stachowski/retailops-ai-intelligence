@@ -107,6 +107,8 @@ def main() -> int:
             raise ValueError("preexisting_maintenance_requires_operator_resume")
         combined.require_fresh(source)
         combined.require_fresh(target)
+        store.require_fresh_test_images(source)
+        store.require_fresh_test_images(target)
         owned.append(source)
         phase = "source_setup"
         store.checked_run(store.compose(source, "build", "api", "mlflow"))
@@ -192,14 +194,15 @@ def main() -> int:
         )
         return 2
     finally:
-        if combined.MAINTENANCE.exists():
-            record = json.loads(combined.MAINTENANCE.read_text())
-            if record["project"] in owned:
-                with combined.controller_lock():
-                    combined.resume_maintenance()
-        for project in reversed(owned):
-            store.checked_run(store.compose(project, "down", "-v"))
-        store.compose = original_compose
+        try:
+            if combined.MAINTENANCE.exists():
+                record = json.loads(combined.MAINTENANCE.read_text())
+                if record["project"] in owned:
+                    with combined.controller_lock():
+                        combined.resume_maintenance()
+            store.cleanup_test_stacks(*reversed(owned))
+        finally:
+            store.compose = original_compose
 
 
 if __name__ == "__main__":

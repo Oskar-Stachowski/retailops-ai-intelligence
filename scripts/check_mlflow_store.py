@@ -89,6 +89,7 @@ def main() -> int:
             )
         ):
             raise ValueError("test_target_project_already_exists")
+        store.require_fresh_test_images(target)
         target_owned = True
         code, body = api("/api/2.0/mlflow/experiments/create", data={"name": experiment})
         if code != 200:
@@ -141,7 +142,7 @@ def main() -> int:
         store.checked_run(store.compose(target, "up", "-d", "--wait", "mlflow"))
         check_run(experiment, experiment_id, run_id, artifact_path, proof)
         report["checks"].append("restored_run_and_artifact_read_through_mlflow_http")
-        store.checked_run(store.compose(target, "down", "-v"))
+        store.cleanup_test_stacks(target)
         store.checked_run(store.compose(project, "up", "-d", "--wait", "mlflow"))
         source_stopped = False
         check_run(experiment, experiment_id, run_id, artifact_path, proof)
@@ -157,12 +158,13 @@ def main() -> int:
     finally:
         try:
             if target_owned:
-                store.checked_run(store.compose(target, "down", "-v"))
-            if source_stopped:
-                store.checked_run(store.compose(project, "up", "-d", "--wait", "mlflow"))
-            stack.main(["down"])
-        except (OSError, ValueError):
-            pass
+                store.cleanup_test_stacks(target)
+        finally:
+            try:
+                if source_stopped:
+                    store.checked_run(store.compose(project, "up", "-d", "--wait", "mlflow"))
+            finally:
+                stack.main(["down"])
 
 
 if __name__ == "__main__":

@@ -48,7 +48,8 @@ i zweryfikowanego pakietu.
 `mlflow-store-smoke` uruchamia prawdziwy serwer, zapisuje eksperyment, run
 i plik, robi backup, odtwarza go do jednorazowego projektu i odczytuje run
 oraz identyczne bajty artefaktu przez HTTP. Na końcu usuwa kontenery,
-sieć i wolumeny jednorazowego celu; obraz może pozostać w cache Dockera.
+sieć, wolumeny i własny tag obrazu jednorazowego celu, także po błędzie testu.
+Współdzielony cache budowania pozostaje pod kontrolą Dockera.
 Źródłowe wolumeny i backup pozostają. Test jest częścią
 Required CI `persistence`. [Odbiór lokalny](evidence/05-01-store.md) zawiera
 identyfikator zweryfikowanego pakietu i wynik.
