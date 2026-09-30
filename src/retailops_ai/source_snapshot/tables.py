@@ -39,8 +39,8 @@ def arrow_type(name: str) -> Any:
     raise SnapshotError("unsupported_arrow_type")
 
 
-def arrow_schema(columns: list[dict[str, Any]]) -> Any:
-    metadata = contract_document()["arrow_metadata"]
+def arrow_schema(columns: list[dict[str, Any]], metadata: dict[str, str] | None = None) -> Any:
+    metadata = contract_document()["arrow_metadata"] if metadata is None else metadata
     return pa.schema(
         [pa.field(c["name"], arrow_type(c["type"]), nullable=c["nullable"]) for c in columns],
         metadata={k.encode(): v.encode() for k, v in metadata.items()},
@@ -72,9 +72,14 @@ def part_day(row: dict[str, Any], field: str, dates: sqlite3.Connection) -> str:
 
 
 def verify_table(
-    root: Path, table: dict[str, Any], scratch: Path, dates: sqlite3.Connection, limits: Limits
+    root: Path,
+    table: dict[str, Any],
+    scratch: Path,
+    dates: sqlite3.Connection,
+    limits: Limits,
+    metadata: dict[str, str] | None = None,
 ) -> None:
-    schema = arrow_schema(table["schema"])
+    schema = arrow_schema(table["schema"], metadata)
     if read_json(root, "schemas/" + table["table"] + ".arrow.json") != {
         "table": table["table"],
         "schema": table["schema"],
@@ -158,7 +163,14 @@ def verify_tables(root: Path, snapshot: Snapshot, scratch: Path, limits: Limits)
         dates.execute("PRAGMA cache_size=-2048")
         dates.execute("CREATE TABLE orders (id TEXT PRIMARY KEY, day TEXT NOT NULL)")
         ordered = sorted(snapshot.manifest["tables"], key=lambda t: t["table"] != "orders")
+        metadata = None
+        if snapshot.manifest["schema_version"] == "1.1.0":
+            from retailops_ai.source_snapshot.inventory_protocol import (
+                contract_document as inventory_contract,
+            )
+
+            metadata = inventory_contract()["arrow_metadata"]
         for table in ordered:
-            verify_table(root, table, scratch, dates, limits)
+            verify_table(root, table, scratch, dates, limits, metadata)
     finally:
         dates.close()

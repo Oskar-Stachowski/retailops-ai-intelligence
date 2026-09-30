@@ -90,6 +90,8 @@ packages = ["src/retailops_ai"]
 "contracts/forecast/v1/segment_metric.schema.json" = "retailops_ai/forecasting/segment_metric.schema.json"
 "contracts/forecast/v1/quality.default.json" = "retailops_ai/forecasting/quality.default.json"
 "contracts/forecast/v1/run_manifest.schema.json" = "retailops_ai/forecasting/run_manifest.schema.json"
+"contracts/curated/v1_1" = "retailops_ai/curated/v1_1"
+"contracts/source_snapshot/v1_1" = "retailops_ai/source_snapshot/v1_1"
 
 [tool.uv]
 required-version = "==0.12.19"
