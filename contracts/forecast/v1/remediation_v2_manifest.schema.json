@@ -1,0 +1,531 @@
+{
+  "$defs": {
+    "FileReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "row_count": {
+          "maximum": 10000000,
+          "minimum": 1,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 2147483648,
+          "minimum": 1,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "size_bytes",
+        "sha256",
+        "row_count"
+      ],
+      "title": "FileReceipt",
+      "type": "object"
+    },
+    "QualityPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_fallback": {
+          "const": "retain_validation_baseline_without_improvement_requirement",
+          "default": "retain_validation_baseline_without_improvement_requirement",
+          "title": "Baseline Fallback",
+          "type": "string"
+        },
+        "critical_dimensions": {
+          "default": [
+            "horizon",
+            "category",
+            "channel",
+            "volume"
+          ],
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "const": "horizon",
+              "type": "string"
+            },
+            {
+              "const": "category",
+              "type": "string"
+            },
+            {
+              "const": "channel",
+              "type": "string"
+            },
+            {
+              "const": "volume",
+              "type": "string"
+            }
+          ],
+          "title": "Critical Dimensions",
+          "type": "array"
+        },
+        "interval_lower_bound": {
+          "const": "clip_at_zero_observed_sales_nonnegative",
+          "default": "clip_at_zero_observed_sales_nonnegative",
+          "title": "Interval Lower Bound",
+          "type": "string"
+        },
+        "intervals": {
+          "const": "per_fold_method_horizon_absolute_validation_residual_quantile",
+          "default": "per_fold_method_horizon_absolute_validation_residual_quantile",
+          "title": "Intervals",
+          "type": "string"
+        },
+        "inventory_segments": {
+          "const": "deferred_until_verified_inventory_after_ai06",
+          "default": "deferred_until_verified_inventory_after_ai06",
+          "title": "Inventory Segments",
+          "type": "string"
+        },
+        "low_volume_upper_exclusive": {
+          "default": 5.0,
+          "exclusiveMinimum": 0,
+          "title": "Low Volume Upper Exclusive",
+          "type": "number"
+        },
+        "mape": {
+          "const": "positive_actuals_only_diagnostic_with_coverage",
+          "default": "positive_actuals_only_diagnostic_with_coverage",
+          "title": "Mape",
+          "type": "string"
+        },
+        "max_groups": {
+          "default": 4000,
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Max Groups",
+          "type": "integer"
+        },
+        "maximum_absolute_normalized_bias": {
+          "default": 0.1,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Maximum Absolute Normalized Bias",
+          "type": "number"
+        },
+        "maximum_critical_segment_relative_regression": {
+          "default": 0.1,
+          "minimum": 0,
+          "title": "Maximum Critical Segment Relative Regression",
+          "type": "number"
+        },
+        "maximum_mean_width_to_mean_actual": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "title": "Maximum Mean Width To Mean Actual",
+          "type": "number"
+        },
+        "medium_volume_upper_exclusive": {
+          "default": 20.0,
+          "exclusiveMinimum": 0,
+          "title": "Medium Volume Upper Exclusive",
+          "type": "number"
+        },
+        "minimum_calibration_rows": {
+          "default": 50,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Minimum Calibration Rows",
+          "type": "integer"
+        },
+        "minimum_eligibility_coverage": {
+          "default": 0.8,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Minimum Eligibility Coverage",
+          "type": "number"
+        },
+        "minimum_empirical_coverage": {
+          "default": 0.8,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Minimum Empirical Coverage",
+          "type": "number"
+        },
+        "minimum_global_rows": {
+          "default": 100,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Minimum Global Rows",
+          "type": "integer"
+        },
+        "minimum_prediction_coverage": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Minimum Prediction Coverage",
+          "type": "number"
+        },
+        "minimum_relative_improvement": {
+          "default": 0.05,
+          "exclusiveMaximum": 1,
+          "minimum": 0,
+          "title": "Minimum Relative Improvement",
+          "type": "number"
+        },
+        "minimum_segment_rows": {
+          "default": 30,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Minimum Segment Rows",
+          "type": "integer"
+        },
+        "nominal_coverage": {
+          "default": 0.9,
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "Nominal Coverage",
+          "type": "number"
+        },
+        "portfolio_final_test": {
+          "const": "not_included_not_opened",
+          "default": "not_included_not_opened",
+          "title": "Portfolio Final Test",
+          "type": "string"
+        },
+        "primary_metric": {
+          "const": "mae",
+          "default": "mae",
+          "title": "Primary Metric",
+          "type": "string"
+        },
+        "quantile": {
+          "const": "ceil_n_plus_1_times_nominal_unattainable_rank_not_ready",
+          "default": "ceil_n_plus_1_times_nominal_unattainable_rank_not_ready",
+          "title": "Quantile",
+          "type": "string"
+        },
+        "required_volume_bins": {
+          "default": [
+            "zero",
+            "low",
+            "medium",
+            "high"
+          ],
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "const": "zero",
+              "type": "string"
+            },
+            {
+              "const": "low",
+              "type": "string"
+            },
+            {
+              "const": "medium",
+              "type": "string"
+            },
+            {
+              "const": "high",
+              "type": "string"
+            }
+          ],
+          "title": "Required Volume Bins",
+          "type": "array"
+        },
+        "use": {
+          "const": "development_diagnostics_on_previously_observed_data",
+          "default": "development_diagnostics_on_previously_observed_data",
+          "title": "Use",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-development-quality-1.0.0",
+          "default": "forecast-development-quality-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "volume_basis": {
+          "const": "origin_known_rolling_28_mean_not_target_outcome",
+          "default": "origin_known_rolling_28_mean_not_target_outcome",
+          "title": "Volume Basis",
+          "type": "string"
+        },
+        "zero_denominator": {
+          "const": "null_not_evaluable_blocks_quality_gate",
+          "default": "null_not_evaluable_blocks_quality_gate",
+          "title": "Zero Denominator",
+          "type": "string"
+        }
+      },
+      "title": "QualityPolicy",
+      "type": "object"
+    },
+    "RemediationDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "backtest_id": {
+          "pattern": "^forecast-backtest-sha256-[0-9a-f]{64}$",
+          "title": "Backtest Id",
+          "type": "string"
+        },
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "feature_set_id": {
+          "pattern": "^features-sha256-[0-9a-f]{64}$",
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "gate_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "propertyNames": {
+            "enum": [
+              "passed",
+              "failed",
+              "not_ready"
+            ]
+          },
+          "title": "Gate Counts",
+          "type": "object"
+        },
+        "kind": {
+          "const": "forecast_quality_remediation",
+          "default": "forecast_quality_remediation",
+          "title": "Kind",
+          "type": "string"
+        },
+        "policy": {
+          "$ref": "#/$defs/RemediationPolicy"
+        },
+        "quality_status": {
+          "enum": [
+            "passed",
+            "failed",
+            "not_ready"
+          ],
+          "title": "Quality Status",
+          "type": "string"
+        },
+        "report_sha256": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Report Sha256",
+          "type": "object"
+        }
+      },
+      "required": [
+        "backtest_id",
+        "feature_set_id",
+        "policy",
+        "code_files",
+        "code_sha256",
+        "quality_status",
+        "gate_counts",
+        "report_sha256"
+      ],
+      "title": "RemediationDescriptor",
+      "type": "object"
+    },
+    "RemediationPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration": {
+          "const": "second_half_scaled_shortest_nominal_residual_window",
+          "default": "second_half_scaled_shortest_nominal_residual_window",
+          "title": "Calibration",
+          "type": "string"
+        },
+        "calibration_fallback": {
+          "default": [
+            "volume_category",
+            "volume",
+            "global"
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "const": "volume_category",
+              "type": "string"
+            },
+            {
+              "const": "volume",
+              "type": "string"
+            },
+            {
+              "const": "global",
+              "type": "string"
+            }
+          ],
+          "title": "Calibration Fallback",
+          "type": "array"
+        },
+        "correction": {
+          "const": "first_half_mean_ratio_candidates_with_frozen_baseline_blends",
+          "default": "first_half_mean_ratio_candidates_with_frozen_baseline_blends",
+          "title": "Correction",
+          "type": "string"
+        },
+        "groups": {
+          "const": "origin_known_volume_and_category",
+          "default": "origin_known_volume_and_category",
+          "title": "Groups",
+          "type": "string"
+        },
+        "maximum_correction_ratio": {
+          "default": 2.0,
+          "maximum": 2,
+          "minimum": 2,
+          "title": "Maximum Correction Ratio",
+          "type": "number"
+        },
+        "minimum_correction_ratio": {
+          "default": 0.5,
+          "maximum": 0.5,
+          "minimum": 0.5,
+          "title": "Minimum Correction Ratio",
+          "type": "number"
+        },
+        "minimum_fit_rows": {
+          "default": 30,
+          "maximum": 100000,
+          "minimum": 30,
+          "title": "Minimum Fit Rows",
+          "type": "integer"
+        },
+        "minimum_selection_rows": {
+          "default": 30,
+          "maximum": 100000,
+          "minimum": 30,
+          "title": "Minimum Selection Rows",
+          "type": "integer"
+        },
+        "portfolio_final_test": {
+          "const": "not_included_not_opened",
+          "default": "not_included_not_opened",
+          "title": "Portfolio Final Test",
+          "type": "string"
+        },
+        "quality": {
+          "$ref": "#/$defs/QualityPolicy",
+          "default": {
+            "baseline_fallback": "retain_validation_baseline_without_improvement_requirement",
+            "critical_dimensions": [
+              "horizon",
+              "category",
+              "channel",
+              "volume"
+            ],
+            "interval_lower_bound": "clip_at_zero_observed_sales_nonnegative",
+            "intervals": "per_fold_method_horizon_absolute_validation_residual_quantile",
+            "inventory_segments": "deferred_until_verified_inventory_after_ai06",
+            "low_volume_upper_exclusive": 5.0,
+            "mape": "positive_actuals_only_diagnostic_with_coverage",
+            "max_groups": 4000,
+            "maximum_absolute_normalized_bias": 0.1,
+            "maximum_critical_segment_relative_regression": 0.1,
+            "maximum_mean_width_to_mean_actual": 2.0,
+            "medium_volume_upper_exclusive": 20.0,
+            "minimum_calibration_rows": 50,
+            "minimum_eligibility_coverage": 0.8,
+            "minimum_empirical_coverage": 0.8,
+            "minimum_global_rows": 100,
+            "minimum_prediction_coverage": 1.0,
+            "minimum_relative_improvement": 0.05,
+            "minimum_segment_rows": 30,
+            "nominal_coverage": 0.9,
+            "portfolio_final_test": "not_included_not_opened",
+            "primary_metric": "mae",
+            "quantile": "ceil_n_plus_1_times_nominal_unattainable_rank_not_ready",
+            "required_volume_bins": [
+              "zero",
+              "low",
+              "medium",
+              "high"
+            ],
+            "use": "development_diagnostics_on_previously_observed_data",
+            "version": "forecast-development-quality-1.0.0",
+            "volume_basis": "origin_known_rolling_28_mean_not_target_outcome",
+            "zero_denominator": "null_not_evaluable_blocks_quality_gate"
+          }
+        },
+        "selection": {
+          "const": "two_block_bias_and_mae_guarded_selection_with_baseline_fallback",
+          "default": "two_block_bias_and_mae_guarded_selection_with_baseline_fallback",
+          "title": "Selection",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-quality-remediation-2.0.0",
+          "default": "forecast-quality-remediation-2.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "RemediationPolicy",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:forecast:remediation_v2_manifest:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "descriptor": {
+      "$ref": "#/$defs/RemediationDescriptor"
+    },
+    "forecast_model_status": {
+      "const": "not_ready",
+      "default": "not_ready",
+      "title": "Forecast Model Status",
+      "type": "string"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "receipts": {
+      "additionalProperties": {
+        "$ref": "#/$defs/FileReceipt"
+      },
+      "title": "Receipts",
+      "type": "object"
+    },
+    "remediation_id": {
+      "pattern": "^forecast-remediation-sha256-[0-9a-f]{64}$",
+      "title": "Remediation Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "remediation_id",
+    "descriptor",
+    "receipts",
+    "generated_at"
+  ],
+  "title": "RemediationManifest",
+  "type": "object"
+}

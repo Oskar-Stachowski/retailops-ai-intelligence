@@ -8,13 +8,15 @@ from pathlib import Path
 from typing import Any
 
 from retailops_ai.curated.builder import build_curated
+from retailops_ai.data_contracts.identity import canonical_sha256
+from retailops_ai.forecasting import remediation as legacy_remediation
+from retailops_ai.forecasting import remediation_v2
 from retailops_ai.forecasting.backtest import build_backtest
 from retailops_ai.forecasting.backtest_contract import BacktestPolicy, plan_backtest
 from retailops_ai.forecasting.calendar import build_calendar, publish_calendar
 from retailops_ai.forecasting.contract import OriginWindow
 from retailops_ai.forecasting.manifests import build_feature_set
 from retailops_ai.forecasting.quality_contract import QualityPolicy
-from retailops_ai.forecasting.remediation import build_remediation, verify_remediation
 from retailops_ai.forecasting.remediation_preflight import preflight
 from retailops_ai.forecasting.remediation_source_preflight import source_preflight
 from retailops_ai.source_snapshot.importer import import_snapshot
@@ -28,7 +30,7 @@ def main() -> int:
     parser.add_argument(
         "--campaign",
         type=Path,
-        default=ROOT / "contracts/forecast/v1/quality-remediation.campaign-v8.json",
+        default=ROOT / "contracts/forecast/v1/quality-remediation.campaign-v9.json",
     )
     parser.add_argument(
         "--output", type=Path, default=ROOT / "reports/quality-remediation-campaign.json"
@@ -36,12 +38,30 @@ def main() -> int:
     args = parser.parse_args()
     raw = args.campaign.read_bytes()
     campaign = json.loads(raw)
+    version = campaign.get("remediation_version", "forecast-quality-remediation-1.0.0")
+    if version not in ("forecast-quality-remediation-1.0.0", "forecast-quality-remediation-2.0.0"):
+        raise ValueError("campaign_unknown_remediation_version")
+    engine = remediation_v2 if version.endswith("2.0.0") else legacy_remediation
+    if version.endswith("2.0.0") and (
+        campaign.get("remediation_policy") != engine.RemediationPolicy().model_dump(mode="json")
+        or not campaign.get("remediation_code_sha256")
+        or not campaign.get("resolved_backtest_policy")
+    ):
+        raise ValueError("campaign_requires_frozen_v2_recipe_and_model_policy")
+    if campaign.get("remediation_code_sha256") and (
+        canonical_sha256(engine.code_files()) != campaign["remediation_code_sha256"]
+    ):
+        raise ValueError("campaign_remediation_code_pin_mismatch")
     if (
         QualityPolicy.model_validate_json(json.dumps(campaign["quality_thresholds"]))
         != QualityPolicy()
     ):
         raise ValueError("campaign_requires_unchanged_original_quality_thresholds")
     policy = BacktestPolicy.model_validate_json(json.dumps(campaign["backtest"]))
+    if campaign.get(
+        "resolved_backtest_policy", policy.model_dump(mode="json")
+    ) != policy.model_dump(mode="json"):
+        raise ValueError("campaign_model_policy_changed")
     window = OriginWindow(
         start=date.fromisoformat(campaign["origins"]["start"]),
         end=date.fromisoformat(campaign["origins"]["end"]),
@@ -125,9 +145,9 @@ def main() -> int:
         return 3
     backtest = build_backtest(features, curated.directory, generated / "backtests", policy)
     save("backtest", backtest_dir=str(backtest))
-    remediation = build_remediation(features, backtest, generated / "forecast-remediation")
+    remediation = engine.build_remediation(features, backtest, generated / "forecast-remediation")
     save("remediation", remediation_dir=str(remediation))
-    verified = verify_remediation(remediation, features, backtest)
+    verified = engine.verify_remediation(remediation, features, backtest)
     save(
         "verified",
         status=verified.descriptor.quality_status,
