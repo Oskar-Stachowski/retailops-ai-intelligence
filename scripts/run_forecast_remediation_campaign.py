@@ -68,6 +68,16 @@ def main() -> int:
         provenance["code_state"] != "clean"
     ):
         raise ValueError("campaign_requires_pinned_clean_source_producer")
+    if (
+        campaign.get("source_dataset_id", imported.snapshot.source_id)
+        != imported.snapshot.source_id
+    ):
+        raise ValueError("campaign_source_identity_mismatch")
+    if campaign.get("source_snapshot_verifier_commit") and (
+        imported.snapshot.manifest["exporter"]["git_commit"]
+        != campaign["source_snapshot_verifier_commit"]
+    ):
+        raise ValueError("campaign_snapshot_verifier_revision_mismatch")
     save("import", source=imported.summary())
     curated = build_curated(imported.directory, generated)
     parameters = curated.manifest["descriptor"]["source_parameters"]

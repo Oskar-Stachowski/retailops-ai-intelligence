@@ -163,9 +163,17 @@
     "stores": 1,
     "warehouses": 2
   },
+  "source_dataset_id": "source-sha256-769ee09f12cd24e057574b4fe836b1b09661b3570b2b5b50b2ebf64f149a10be",
   "source_rationale": "standard_ai_dev_product_count_represents_more_intermittent_series_one_store_preserves_original_model_row_and_fit_budgets_no_seed_search",
   "source_repository_commit": "9115c1de2fde4dad6b37f1370f1b7a6d9c45601a",
+  "source_snapshot_verifier_commit": "f0cfa92dc0c7f4748be70c4a20c39c0e0eb0d846",
   "source_verification_change": {
+    "as_of_order_index": {
+      "commit": "f0cfa92dc0c7f4748be70c4a20c39c0e0eb0d846",
+      "controlled_58_table_parity": "passed",
+      "regenerated_data": false,
+      "source_tests": 353
+    },
     "controlled_58_table_identity_and_temporal_context_parity": "passed",
     "parent_commit": "d4ee7a4e4217a59871c654f204f16de74017d13b",
     "quality_thresholds_and_generator_distribution": "unchanged",
