@@ -30,7 +30,7 @@ def main() -> int:
     parser.add_argument(
         "--campaign",
         type=Path,
-        default=ROOT / "contracts/forecast/v1/quality-remediation.campaign-v9.json",
+        default=ROOT / "contracts/forecast/v1/quality-remediation.campaign-v10.json",
     )
     parser.add_argument(
         "--output", type=Path, default=ROOT / "reports/quality-remediation-campaign.json"
@@ -39,10 +39,10 @@ def main() -> int:
     raw = args.campaign.read_bytes()
     campaign = json.loads(raw)
     version = campaign.get("remediation_version", "forecast-quality-remediation-1.0.0")
-    if version not in ("forecast-quality-remediation-1.0.0", "forecast-quality-remediation-2.0.0"):
+    if version not in ("forecast-quality-remediation-1.0.0", "forecast-quality-remediation-2.1.0"):
         raise ValueError("campaign_unknown_remediation_version")
-    engine = remediation_v2 if version.endswith("2.0.0") else legacy_remediation
-    if version.endswith("2.0.0") and (
+    engine = remediation_v2 if version.endswith("2.1.0") else legacy_remediation
+    if version.endswith("2.1.0") and (
         campaign.get("remediation_policy") != engine.RemediationPolicy().model_dump(mode="json")
         or not campaign.get("remediation_code_sha256")
         or not campaign.get("resolved_backtest_policy")

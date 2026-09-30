@@ -239,8 +239,11 @@
   "additionalProperties": false,
   "properties": {
     "calibration": {
-      "const": "second_half_scaled_shortest_nominal_residual_window",
-      "default": "second_half_scaled_shortest_nominal_residual_window",
+      "default": "second_half_validation_signed_residual_equal_tail_quantiles",
+      "enum": [
+        "second_half_scaled_shortest_nominal_residual_window",
+        "second_half_validation_signed_residual_equal_tail_quantiles"
+      ],
       "title": "Calibration",
       "type": "string"
     },
@@ -365,8 +368,11 @@
       "type": "string"
     },
     "version": {
-      "const": "forecast-quality-remediation-2.0.0",
-      "default": "forecast-quality-remediation-2.0.0",
+      "default": "forecast-quality-remediation-2.1.0",
+      "enum": [
+        "forecast-quality-remediation-2.0.0",
+        "forecast-quality-remediation-2.1.0"
+      ],
       "title": "Version",
       "type": "string"
     }

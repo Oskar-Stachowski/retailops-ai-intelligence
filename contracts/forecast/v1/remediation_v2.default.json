@@ -1,5 +1,5 @@
 {
-  "calibration": "second_half_scaled_shortest_nominal_residual_window",
+  "calibration": "second_half_validation_signed_residual_equal_tail_quantiles",
   "calibration_fallback": [
     "volume_category",
     "volume",
@@ -53,5 +53,5 @@
     "zero_denominator": "null_not_evaluable_blocks_quality_gate"
   },
   "selection": "two_block_bias_and_mae_guarded_selection_with_baseline_fallback",
-  "version": "forecast-quality-remediation-2.0.0"
+  "version": "forecast-quality-remediation-2.1.0"
 }

@@ -107,7 +107,7 @@ def test_fit_and_calibration_ignore_holdout_and_use_distinct_validation_origins(
 def test_signed_quantiles_clip_zero_and_audited_sparse_group_fallback():
     policy = RemediationPolicy()
     assert residual_quantiles([0.0] * 49, policy) is None
-    assert residual_quantiles([-0.2] * 95 + [0.8] * 5, policy) == (-0.2, -0.2)
+    assert residual_quantiles([-0.2] * 95 + [0.8] * 5, policy) == (-0.2, 0.8)
     choices = {"fold": SimpleNamespace(baseline="seasonal_naive7")}
     with validation_db() as db:
         recipe, sample = fit_recipe(db, parent(), choices, policy)
@@ -161,7 +161,10 @@ def test_lower_mae_with_severe_underforecast_is_rejected():
 def test_shortest_calibration_window_retains_nominal_rank_and_minimum_sample():
     import math
 
-    policy = RemediationPolicy()
+    policy = RemediationPolicy(
+        version="forecast-quality-remediation-2.0.0",
+        calibration="second_half_scaled_shortest_nominal_residual_window",
+    )
     for residuals in ([0.0] * 95 + [9.0] * 5, list(range(-60, 60)), [-2.0] * 30 + [0.0] * 70):
         lo, hi = residual_quantiles(residuals, policy)
         assert sum(lo <= r <= hi for r in residuals) >= math.ceil(

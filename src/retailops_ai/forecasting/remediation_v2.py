@@ -305,6 +305,13 @@ def residual_quantiles(
     residuals: list[float], policy: RemediationPolicy
 ) -> tuple[float, float] | None:
     n = len(residuals)
+    if policy.calibration == "second_half_validation_signed_residual_equal_tail_quantiles":
+        alpha = (1 - policy.quality.nominal_coverage) / 2
+        lo, hi = math.floor((n + 1) * alpha), math.ceil((n + 1) * (1 - alpha))
+        if n < policy.quality.minimum_calibration_rows or not 1 <= lo <= hi <= n:
+            return None
+        ordered = sorted(residuals)
+        return ordered[lo - 1], ordered[hi - 1]
     rank = math.ceil((n + 1) * policy.quality.nominal_coverage)
     if n < policy.quality.minimum_calibration_rows or not 1 <= rank <= n:
         return None
@@ -326,6 +333,7 @@ def calibrate(
     policy: RemediationPolicy,
 ) -> dict[tuple[str, str, str, str], dict[str, Any]]:
     pools: dict[tuple[str, str, str, str], list[tuple[Observation, float]]] = defaultdict(list)
+    scaled = policy.calibration == "second_half_scaled_shortest_nominal_residual_window"
     for row in rows:
         for method in SCORED:
             units = (
@@ -335,7 +343,7 @@ def calibrate(
                 raise SnapshotError("remediation_calibration_prediction_missing")
             for volume, category in ((row.volume, row.category), (row.volume, "*"), ("*", "*")):
                 pools[row.fold, method, volume, category].append(
-                    (row, (row.actual - units) / residual_scale(units))
+                    (row, (row.actual - units) / (residual_scale(units) if scaled else 1.0))
                 )
     result = {}
     for key, sample in sorted(pools.items()):
@@ -346,8 +354,10 @@ def calibrate(
             "volume": key[2],
             "category": key[3],
             "rows": len(sample),
-            "residual_scale": "max_0_5_sqrt_prediction",
-            "window": "shortest_contains_point_nominal_n_plus_1_rank",
+            "residual_scale": "max_0_5_sqrt_prediction" if scaled else "identity",
+            "window": "shortest_contains_point_nominal_n_plus_1_rank"
+            if scaled
+            else "equal_tail_nominal_n_plus_1_ranks",
             "lower_residual": quantiles[0] if quantiles else None,
             "upper_residual": quantiles[1] if quantiles else None,
             "source_rows_sha256": source_hash([row for row, _ in sample]),
@@ -372,9 +382,14 @@ def interval(
     for volume, category in ((row.volume, row.category), (row.volume, "*"), ("*", "*")):
         cell = calibration.get((row.fold, method, volume, category))
         if cell and cell["status"] == "passed":
+            scale = (
+                residual_scale(units)
+                if cell["residual_scale"] == "max_0_5_sqrt_prediction"
+                else 1.0
+            )
             return (
-                max(0.0, min(units, units + cell["lower_residual"] * residual_scale(units))),
-                max(units, units + cell["upper_residual"] * residual_scale(units)),
+                max(0.0, min(units, units + cell["lower_residual"] * scale)),
+                max(units, units + cell["upper_residual"] * scale),
             ), cell
     return None, None
 
@@ -519,7 +534,7 @@ def assemble(
             "forecast_model_status": "not_ready",
             "limitations": [
                 "synthetic development evidence; no commercial effectiveness claim",
-                "version 2: validation-only guarded blends and scaled shortest residual windows",
+                "validation-only guarded blends; interval recipe declared in versioned policy",
                 "selection and calibration share the second validation block",
                 "serial outcomes and overlapping horizons; no coverage guarantee",
                 "all original zero-denominator and sample gates retained",

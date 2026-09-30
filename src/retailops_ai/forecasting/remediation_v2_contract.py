@@ -11,7 +11,9 @@ from retailops_ai.forecasting.quality_contract import QualityPolicy, QualityStat
 
 
 class RemediationPolicy(Contract):
-    version: Literal["forecast-quality-remediation-2.0.0"] = "forecast-quality-remediation-2.0.0"
+    version: Literal["forecast-quality-remediation-2.0.0", "forecast-quality-remediation-2.1.0"] = (
+        "forecast-quality-remediation-2.1.0"
+    )
     quality: QualityPolicy = QualityPolicy()
     groups: Literal["origin_known_volume_and_category"] = "origin_known_volume_and_category"
     correction: Literal["first_half_mean_ratio_candidates_with_frozen_baseline_blends"] = (
@@ -20,9 +22,10 @@ class RemediationPolicy(Contract):
     selection: Literal["two_block_bias_and_mae_guarded_selection_with_baseline_fallback"] = (
         "two_block_bias_and_mae_guarded_selection_with_baseline_fallback"
     )
-    calibration: Literal["second_half_scaled_shortest_nominal_residual_window"] = (
-        "second_half_scaled_shortest_nominal_residual_window"
-    )
+    calibration: Literal[
+        "second_half_scaled_shortest_nominal_residual_window",
+        "second_half_validation_signed_residual_equal_tail_quantiles",
+    ] = "second_half_validation_signed_residual_equal_tail_quantiles"
     calibration_fallback: tuple[
         Literal["volume_category"], Literal["volume"], Literal["global"]
     ] = ("volume_category", "volume", "global")
@@ -36,6 +39,10 @@ class RemediationPolicy(Contract):
     def frozen_thresholds(self) -> Self:
         if self.quality != QualityPolicy():
             raise ValueError("remediation_must_preserve_original_quality_thresholds")
+        if (self.version == "forecast-quality-remediation-2.0.0") != (
+            self.calibration == "second_half_scaled_shortest_nominal_residual_window"
+        ):
+            raise ValueError("remediation_version_calibration_mismatch")
         return self
 
 
