@@ -8,7 +8,6 @@ import hashlib
 import json
 import os
 import re
-import stat
 import sys
 import tempfile
 import urllib.error
@@ -22,7 +21,7 @@ import mlflow_evidence as tracking
 
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.forecasting.run_contract import ForecastRunManifest
-from retailops_ai.security.local import load_authority, strict_json
+from retailops_ai.security.model_operator import model_operator
 
 MODEL = "retailops-demand-forecast"
 DECISIONS = "retailops/model-decisions"
@@ -154,27 +153,7 @@ def review(run_id: str) -> dict[str, Any]:
 
 
 def principal(policy: Path, credentials: Path) -> str:
-    fd = os.open(credentials, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
-    with os.fdopen(fd, "rb") as stream:
-        info = os.fstat(stream.fileno())
-        if (
-            not stat.S_ISREG(info.st_mode)
-            or info.st_uid != os.geteuid()
-            or info.st_mode & 0o077
-            or info.st_size > 131072
-        ):
-            raise ValueError("invalid_private_credentials")
-        raw = stream.read(131073)
-    strict_json(raw)
-    document = json.loads(raw)
-    if set(document) != {"schema_version", "credentials"} or len(document["credentials"]) != 1:
-        raise ValueError("single_credential_required")
-    token = document["credentials"][0]["bearer_token"]
-    authority = load_authority(policy)
-    actor = authority.authenticate("Bearer " + token)
-    if actor is None or "promoter" not in actor.roles or "model:decide" not in actor.capabilities:
-        raise ValueError("promoter_authorization_required")
-    return actor.principal_id
+    return model_operator(policy, credentials).principal_id
 
 
 def registry() -> dict[str, Any]:
@@ -196,8 +175,8 @@ def registry() -> dict[str, Any]:
         )["registered_model"]
     if not isinstance(model, dict):
         raise ValueError("invalid_registered_model")
-    if model["name"] != MODEL or model.get("aliases") or model.get("latest_versions"):
-        raise ValueError("registry_existing_versions_require_review")
+    if model["name"] != MODEL:
+        raise ValueError("invalid_registered_model_name")
     return model
 
 
