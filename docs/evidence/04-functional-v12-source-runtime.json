@@ -1,0 +1,167 @@
+{
+  "actual_source_environment_probe": {
+    "distribution_count": 13,
+    "full_map_matches_audit_and_constraints": true,
+    "generator_module_imported": false,
+    "new_data_generated": false,
+    "python_version": "3.11.15",
+    "status": "passed"
+  },
+  "ai_parent_commit": "fcc447cccb1bcea3a968eacb956e5a114705c2da",
+  "code_sha256": {
+    ".github/workflows/ai04-cohort-preparation.yml": "e7e01b0b7dc7f6ed95f79c756b770df5b9a26ba01dd2d6457eb70b5c6d140ecb",
+    "contracts/forecast/v2/source-runtime.constraints.txt": "56c1447f0c6e3707ad17083966a620e3c64f540ec07e98de8f7a49ed53766535",
+    "scripts/prepare_forecast_functional_v12_remote.py": "30a86ac576bea839285dc54e1ded79860bc38c82095ace53dd72f71f8f7fb676",
+    "src/retailops_ai/forecasting/functional_v12_campaign.py": "0754930ea9db89be0b5a33d813a06b57f18a90e77244597a6014ce2dec05797e",
+    "tests/test_forecast_functional_v12_campaign.py": "4bc4258db9588c366277b2bb9e4ccfa531f5becf855a1ed92f6255d2df6abbd8",
+    "tests/test_forecast_functional_v12_remote.py": "69ccc22365b5cf93fa6d44ab7cbab34d3f0c21b2d39134864d50d580d0e7186c"
+  },
+  "cohort_inputs_recipe_changed": false,
+  "final_holdouts_opened": false,
+  "guards": [
+    "The reviewed source runtime file is mandatory in AI dependency pins and is checked by plan/control and exact AI checkout before generation.",
+    "The frozen source package map must equal every exact distribution pin in the complete required closure; package names use distribution names such as pydantic-core.",
+    "The reserved GitHub run and attempt are checked before checkout pin verification; repeat generation remains forbidden.",
+    "Installed distribution metadata and Python version are compared before the producer generator module is imported or a generated directory is created.",
+    "The AI preparation process checks the returned source environment before cohort preparation.",
+    "Campaign preparation checks source-stage.environment and both preparation environments against the frozen maps before any holdout is opened, even if a modified archive is resealed."
+  ],
+  "installation": {
+    "environment": "separate source Python 3.11.15 venv",
+    "reason": "Constraints alone do not install optional imported cloudpickle; explicit requirements install every frozen runtime distribution.",
+    "runtime_file": {
+      "bytes": 428,
+      "path": "contracts/forecast/v2/source-runtime.constraints.txt",
+      "sha256": "56c1447f0c6e3707ad17083966a620e3c64f540ec07e98de8f7a49ed53766535"
+    },
+    "source_requirements": [
+      "services/api/requirements-dev.txt",
+      "data/requirements-parquet.txt"
+    ],
+    "workflow_flags": [
+      "--constraint",
+      "--requirement"
+    ]
+  },
+  "limitations": [
+    "This pins the observed producer runtime dependency closure, including imported NumPy/cloudpickle and the conservative jsonschema root; it is not a lock of every unrelated API/development tool.",
+    "Exact distribution versions do not assert identical operating-system/native ABI builds across macOS and Linux. Preserved source bytes, source qualification and full semantic replay remain required."
+  ],
+  "model_status": "not_ready",
+  "producer_runtime_roots": [
+    "jsonschema",
+    "pydantic",
+    "pyarrow",
+    "numpy",
+    "cloudpickle"
+  ],
+  "quality_threshold_changes": false,
+  "recorded_at": "2026-09-30T19:05:57.996275+00:00",
+  "remote_ci_for_this_revision": "pending_after_publication",
+  "runtime_audit": {
+    "bytes": 9617,
+    "path": "/private/tmp/retailops-ai04-intermittent-source/reports/ai04-v12-source-runtime-closure-final.json",
+    "sha256": "7f2fe868bbada2844856f00136829c2b1772ff24c1d38c1ebdfb8b865e7157a3"
+  },
+  "runtime_dependency_edges": {
+    "annotated-types": [],
+    "attrs": [],
+    "cloudpickle": [],
+    "jsonschema": [
+      "attrs",
+      "jsonschema-specifications",
+      "referencing",
+      "rpds-py"
+    ],
+    "jsonschema-specifications": [
+      "referencing"
+    ],
+    "numpy": [],
+    "pyarrow": [],
+    "pydantic": [
+      "annotated-types",
+      "pydantic-core",
+      "typing-extensions",
+      "typing-inspection"
+    ],
+    "pydantic-core": [
+      "typing-extensions"
+    ],
+    "referencing": [
+      "attrs",
+      "rpds-py",
+      "typing-extensions"
+    ],
+    "rpds-py": [],
+    "typing-extensions": [],
+    "typing-inspection": [
+      "typing-extensions"
+    ]
+  },
+  "scope": "source_runtime_reproducibility_and_parent_receipt_binding_before_final_freeze",
+  "source_commit": "15536509baa2ad1f08817e0768740679aa65f6e3",
+  "source_environment": {
+    "packages": {
+      "annotated-types": "0.7.0",
+      "attrs": "26.1.0",
+      "cloudpickle": "3.1.2",
+      "jsonschema": "4.25.1",
+      "jsonschema-specifications": "2025.9.1",
+      "numpy": "2.4.4",
+      "pyarrow": "25.0.1",
+      "pydantic": "2.13.5",
+      "pydantic-core": "2.46.5",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.6.3",
+      "typing-extensions": "4.15.0",
+      "typing-inspection": "0.4.2"
+    },
+    "python_version": "3.11.15"
+  },
+  "source_repository_changed": false,
+  "validation": {
+    "functional_v11_code_pins": {
+      "files": 24,
+      "status": "passed"
+    },
+    "input_1_2_implementation_freeze": "passed",
+    "mypy": {
+      "source_files": 190,
+      "status": "passed"
+    },
+    "previous_attempt_preserved": {
+      "cause": "Four existing tests found checkout pin verification preceding the reserved-run guard; the check was moved after the guard without weakening it.",
+      "failures": 4,
+      "receipt": {
+        "bytes": 31676,
+        "path": "reports/ai04-v12-runtime-closure-tests.xml",
+        "sha256": "99c899f86754d63d0c155fbe22ccdef048854063c0777f38f37582e34efe26d0"
+      },
+      "tests": 126
+    },
+    "pytest": {
+      "errors": 0,
+      "failures": 0,
+      "junit_suite_seconds": 22.716,
+      "receipt": {
+        "bytes": 20839,
+        "path": "reports/ai04-v12-runtime-closure-tests-r2.xml",
+        "sha256": "43f345274369e68b4cc4f6afe965237f4827488c38720798e3b4ed8035b0546c"
+      },
+      "skipped": 0,
+      "tests": 126
+    },
+    "quality_protocol_freeze": {
+      "files": 11,
+      "protocol_version": "forecast-quality-2.0.0",
+      "status": "passed"
+    },
+    "repository_documentation": "passed",
+    "ruff": "passed",
+    "ruff_format": {
+      "files": 324,
+      "status": "passed"
+    }
+  },
+  "version": "forecast-functional-source-runtime-evidence-1.0.0"
+}

@@ -49,6 +49,24 @@ RUNNER_PATH = "scripts/prepare_forecast_functional_v12_remote.py"
 WORKFLOW_PATH = ".github/workflows/ai04-cohort-preparation.yml"
 SOURCE_MODULE = "data.inventory.source_cohort_batch_v2"
 SOURCE_MODULE_PATH = "data/inventory/source_cohort_batch_v2.py"
+SOURCE_CONSTRAINTS_PATH = "contracts/forecast/v2/source-runtime.constraints.txt"
+SOURCE_RUNTIME_DISTRIBUTIONS = frozenset(
+    {
+        "annotated-types",
+        "attrs",
+        "cloudpickle",
+        "jsonschema",
+        "jsonschema-specifications",
+        "numpy",
+        "pyarrow",
+        "pydantic",
+        "pydantic-core",
+        "referencing",
+        "rpds-py",
+        "typing-extensions",
+        "typing-inspection",
+    }
+)
 # Mirrors resource-plan 1.1.0 without importing AI dependencies in the source venv.
 MAX_CHECKPOINT_BYTES = 768 * 1024**2
 MIN_FREE_BYTES = 8 * 1024**3
@@ -120,6 +138,25 @@ def _pins(root: Path, pins: Any) -> None:
         path = safe_path(root, relative)
         if not _hex(expected, 64) or not path.is_file() or sha(path.read_bytes()) != expected:
             raise PreparationError("remote_code_or_dependency_drift:" + relative)
+
+
+def source_runtime_packages(root: Path) -> dict[str, str]:
+    """Strict distribution pins; never resolve dependencies or import producer modules."""
+    path = safe_path(root, SOURCE_CONSTRAINTS_PATH)
+    if not path.is_file() or path.stat().st_size > 4096:
+        raise PreparationError("remote_source_runtime_constraints_missing_or_oversized")
+    packages = {}
+    for line in path.read_text().splitlines():
+        pin = line.strip()
+        if not pin or pin.startswith("#"):
+            continue
+        match = re.fullmatch(r"([a-z0-9]+(?:-[a-z0-9]+)*)==([A-Za-z0-9][A-Za-z0-9.!+_-]*)", pin)
+        if match is None or match[1] in packages:
+            raise PreparationError("remote_source_runtime_constraints_not_exact")
+        packages[match[1]] = match[2]
+    if set(packages) != SOURCE_RUNTIME_DISTRIBUTIONS:
+        raise PreparationError("remote_source_runtime_closure_incomplete")
+    return packages
 
 
 def read_plan(
@@ -195,7 +232,8 @@ def read_plan(
         or set(remote["dependency_files"]) != {"ai", "source"}
         or not {RUNNER_PATH, WORKFLOW_PATH} <= set(remote["ai_code_files"])
         or SOURCE_MODULE_PATH not in remote["source_code_files"]
-        or not {"uv.lock", "pyproject.toml"} <= set(remote["dependency_files"]["ai"])
+        or not {"uv.lock", "pyproject.toml", SOURCE_CONSTRAINTS_PATH}
+        <= set(remote["dependency_files"]["ai"])
         or not {
             "services/api/requirements.txt",
             "services/api/requirements-dev.txt",
@@ -208,6 +246,8 @@ def read_plan(
         env = remote[role + "_environment"]
         if env["python_version"] != "3.11.15" or not env["packages"]:
             raise PreparationError("remote_environment_not_frozen")
+    if source_runtime_packages(control_root) != remote["source_environment"]["packages"]:
+        raise PreparationError("remote_source_runtime_environment_not_complete_constraints")
     provenance = remote.get("source_provenance", {})
     if set(provenance) != {
         "code_files",
@@ -283,10 +323,13 @@ def verify_checkout(
 
 
 def verify_environment(expected: dict[str, Any]) -> dict[str, Any]:
-    actual = {
-        "python_version": platform.python_version(),
-        "packages": {name: importlib.metadata.version(name) for name in expected["packages"]},
-    }
+    try:
+        actual = {
+            "python_version": platform.python_version(),
+            "packages": {name: importlib.metadata.version(name) for name in expected["packages"]},
+        }
+    except importlib.metadata.PackageNotFoundError as error:
+        raise PreparationError("remote_python_or_dependency_environment_missing") from error
     if actual != expected:
         raise PreparationError("remote_python_or_dependency_environment_drift")
     return actual
@@ -313,8 +356,12 @@ def preflight(
     if type(seed) is not int or seed not in body["seeds"]:
         raise PreparationError("remote_seed_not_planned")
     verify_workflow_run(plan)
+    remote = body["remote_preparation"]
+    _pins(
+        control_root,
+        {SOURCE_CONSTRAINTS_PATH: remote["dependency_files"]["ai"][SOURCE_CONSTRAINTS_PATH]},
+    )
     for role, root in (("ai", ai_root), ("source", source_root)):
-        remote = body["remote_preparation"]
         verify_checkout(
             root,
             remote[role + "_commit"],
@@ -479,7 +526,11 @@ def prepare_remote(
         timeout=WORKER_TIMEOUT_SECONDS,
     )
     result = read_json(work / "source-stage.json")
-    if result["seed"] != seed or result["freeze_id"] != plan["freeze"]["freeze_id"]:
+    if (
+        result["seed"] != seed
+        or result["freeze_id"] != plan["freeze"]["freeze_id"]
+        or result.get("environment") != remote["source_environment"]
+    ):
         raise PreparationError("remote_source_receipt_binding")
     snapshot = Path(result["snapshot"]["path"])
     check_source_binding(

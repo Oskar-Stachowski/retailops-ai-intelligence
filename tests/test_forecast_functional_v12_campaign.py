@@ -123,6 +123,11 @@ def archived_campaign(tmp_path, monkeypatch):
             "ai_commit": "a" * 40,
             "source_commit": "b" * 40,
             "github_run_number": 1,
+            "ai_environment": {"python_version": "3.11.15", "packages": {"fixture-ai": "1"}},
+            "source_environment": {
+                "python_version": "3.11.15",
+                "packages": {"numpy": "2.4.4", "pydantic-core": "2.46.5", "fixture-source": "1"},
+            },
         },
         "holdout_metrics_evaluated_before_freeze": False,
         "exposure_registry": str(registry.resolve()),
@@ -289,6 +294,19 @@ def archived_campaign(tmp_path, monkeypatch):
         }
         write(roots["receipts"], "semantic-replay.json", semantic)
         write(roots["receipts"], "recipe-replay.json", replay)
+        write(
+            roots["receipts"],
+            "source-stage.json",
+            {"environment": descriptor["remote_preparation"]["source_environment"]},
+        )
+        write(
+            roots["receipts"],
+            "preparation.json",
+            {
+                role + "_environment": descriptor["remote_preparation"][role + "_environment"]
+                for role in ("ai", "source")
+            },
+        )
         lineage = {
             "freeze_id": freeze["freeze_id"],
             "seed": seed,
@@ -411,6 +429,34 @@ def test_bad_last_semantic_receipt_prevents_first_holdout(archived_campaign):
         score(prepared)
     assert prepared["opened"] == [] and exposure_inventory(prepared["registry"]) == []
     assert list(prepared["output"].glob("failed-*/failure.json"))
+
+
+@pytest.mark.parametrize(
+    ("filename", "field", "package"),
+    [
+        ("source-stage.json", "environment", "numpy"),
+        ("preparation.json", "source_environment", "pydantic-core"),
+        ("preparation.json", "ai_environment", "fixture-ai"),
+    ],
+)
+@pytest.mark.parametrize("missing", [False, True])
+def test_resealed_runtime_receipt_drift_prevents_every_holdout(
+    archived_campaign, filename, field, package, missing
+):
+    prepared = archived_campaign
+    roots, lineage = prepared["parents"][1]
+    receipt = read_json(roots["receipts"], filename)
+    if missing:
+        del receipt[field]["packages"][package]
+    else:
+        receipt[field]["packages"][package] = "0.0.0"
+    (roots["receipts"] / filename).write_bytes(canonical_bytes(receipt) + b"\n")
+    prepared["checkpoints"][1] = seal_checkpoint(
+        roots, prepared["checkpoints"][0].parent, lineage=lineage
+    )
+    with pytest.raises(SnapshotError, match="runtime_environment_binding"):
+        score(prepared)
+    assert prepared["opened"] == [] and exposure_inventory(prepared["registry"]) == []
 
 
 def test_quality_code_registry_and_source_inventory_cannot_drift(archived_campaign):

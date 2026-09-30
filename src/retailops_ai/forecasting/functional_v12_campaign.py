@@ -116,6 +116,19 @@ def _validate_freeze(freeze: dict[str, Any]) -> None:
     run_number = desc["remote_preparation"].get("github_run_number")
     if type(run_number) is not int or run_number <= 0:
         raise SnapshotError("pooled_campaign_frozen_github_run_number")
+    for role in ("ai", "source"):
+        environment = desc["remote_preparation"].get(role + "_environment", {})
+        if (
+            set(environment) != {"python_version", "packages"}
+            or environment["python_version"] != "3.11.15"
+            or not isinstance(environment["packages"], dict)
+            or not environment["packages"]
+            or any(
+                not isinstance(name, str) or not name or not isinstance(version, str) or not version
+                for name, version in environment["packages"].items()
+            )
+        ):
+            raise SnapshotError("pooled_campaign_frozen_runtime_environment")
     dimensions = desc["required_dimensions"]
     if (
         set(dimensions) != {"category", "channel", "volume"}
@@ -259,6 +272,14 @@ def _verify_parents(
     """Bind sealed source bytes, generation parameters and both no-fit replay receipts."""
     desc, lineage = cohort["descriptor"], checkpoint["descriptor"]["lineage"]
     archived = checkpoint["descriptor"]["files"]
+    remote = freeze["descriptor"]["remote_preparation"]
+    source_stage = read_json(root / "receipts", "source-stage.json")
+    preparation = read_json(root / "receipts", "preparation.json")
+    if source_stage.get("environment") != remote["source_environment"] or any(
+        preparation.get(role + "_environment") != remote[role + "_environment"]
+        for role in ("ai", "source")
+    ):
+        raise SnapshotError("pooled_campaign_runtime_environment_binding")
     seal = read_json(root / "cohort", "source_seal.json")
     sealed = seal["descriptor"]
     snapshot_files = {

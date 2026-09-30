@@ -18,6 +18,10 @@ def plan_files(tmp_path, monkeypatch):
     monkeypatch.setenv("GITHUB_RUN_ATTEMPT", "1")
     root = tmp_path / "control"
     root.mkdir()
+    constraints = Path(__file__).resolve().parents[1] / remote.SOURCE_CONSTRAINTS_PATH
+    pinned_constraints = root / remote.SOURCE_CONSTRAINTS_PATH
+    pinned_constraints.parent.mkdir(parents=True)
+    pinned_constraints.write_bytes(constraints.read_bytes())
     body = {
         "version": "forecast-functional-cohort-plan-1.0.0",
         "holdout_metrics_evaluated_before_freeze": False,
@@ -55,7 +59,11 @@ def plan_files(tmp_path, monkeypatch):
             "ai_code_files": {remote.RUNNER_PATH: "c" * 64, remote.WORKFLOW_PATH: "d" * 64},
             "source_code_files": {remote.SOURCE_MODULE_PATH: "e" * 64},
             "dependency_files": {
-                "ai": {"uv.lock": "f" * 64, "pyproject.toml": "f" * 64},
+                "ai": {
+                    "uv.lock": "f" * 64,
+                    "pyproject.toml": "f" * 64,
+                    remote.SOURCE_CONSTRAINTS_PATH: remote.sha(pinned_constraints.read_bytes()),
+                },
                 "source": {
                     "services/api/requirements.txt": "f" * 64,
                     "services/api/requirements-dev.txt": "f" * 64,
@@ -73,7 +81,10 @@ def plan_files(tmp_path, monkeypatch):
                 "code_state": "clean",
             },
             "ai_environment": {"python_version": "3.11.15", "packages": {"pyarrow": "25.0.1"}},
-            "source_environment": {"python_version": "3.11.15", "packages": {"pyarrow": "25.0.1"}},
+            "source_environment": {
+                "python_version": "3.11.15",
+                "packages": remote.source_runtime_packages(root),
+            },
         },
     }
     execution = {
@@ -220,6 +231,109 @@ def test_remote_backstop_matches_versioned_resource_policy_but_selected_cap_can_
     write(body)
     selected = remote.read_plan(root)["freeze"]["descriptor"]["remote_preparation"]
     assert selected["max_checkpoint_bytes"] == 512 * 1024**2
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        "missing_pin",
+        "changed_bytes",
+        "missing_numpy",
+        "missing_core",
+        "missing_cloudpickle",
+        "wrong_version",
+        "missing_constraint_entry",
+        "duplicate_constraint",
+        "range_constraint",
+    ],
+)
+def test_incomplete_or_drifted_source_closure_blocks_before_checkout_and_generation(
+    plan_files, tmp_path, monkeypatch, mutation
+):
+    root, body, write, _ = plan_files
+    body = deepcopy(body)
+    frozen = body["remote_preparation"]
+    pins = frozen["dependency_files"]["ai"]
+    path = root / remote.SOURCE_CONSTRAINTS_PATH
+    if mutation == "missing_pin":
+        del pins[remote.SOURCE_CONSTRAINTS_PATH]
+    elif mutation == "changed_bytes":
+        path.write_text(path.read_text() + "# unreviewed change\n")
+    elif mutation.startswith("missing_") and mutation != "missing_constraint_entry":
+        name = {
+            "missing_numpy": "numpy",
+            "missing_core": "pydantic-core",
+            "missing_cloudpickle": "cloudpickle",
+        }[mutation]
+        del frozen["source_environment"]["packages"][name]
+    elif mutation == "wrong_version":
+        frozen["source_environment"]["packages"]["pydantic-core"] = "0.0.0"
+    else:
+        text = path.read_text()
+        if mutation == "missing_constraint_entry":
+            text = "\n".join(line for line in text.splitlines() if not line.startswith("numpy=="))
+        elif mutation == "duplicate_constraint":
+            text += "numpy==2.4.4\n"
+        else:
+            text = text.replace("numpy==2.4.4", "numpy>=2.4.4")
+        path.write_text(text)
+        pins[remote.SOURCE_CONSTRAINTS_PATH] = remote.sha(path.read_bytes())
+    write(body)
+    calls = []
+    monkeypatch.setattr(remote, "verify_checkout", lambda *args: calls.append("checkout"))
+    monkeypatch.setattr(remote.importlib, "import_module", lambda name: calls.append(name))
+    with pytest.raises(remote.PreparationError, match="pin_inventory|dependency_drift|runtime"):
+        remote.preflight(root, tmp_path, tmp_path, 720001)
+    assert calls == []
+
+
+@pytest.mark.parametrize("package", ["numpy", "pydantic-core", "cloudpickle"])
+@pytest.mark.parametrize("missing", [False, True])
+def test_actual_source_dependency_drift_stops_before_import_or_new_directory(
+    plan_files, tmp_path, monkeypatch, package, missing
+):
+    root, _, _, _ = plan_files
+    plan = remote.read_plan(root)
+    expected = plan["freeze"]["descriptor"]["remote_preparation"]["source_environment"]
+    monkeypatch.setattr(remote.platform, "python_version", lambda: "3.11.15")
+
+    def installed(name):
+        if name == package:
+            if missing:
+                raise remote.importlib.metadata.PackageNotFoundError(name)
+            return "0.0.0"
+        return expected["packages"][name]
+
+    monkeypatch.setattr(remote.importlib.metadata, "version", installed)
+    calls = []
+    monkeypatch.setattr(remote.importlib, "import_module", lambda name: calls.append(name))
+    work = tmp_path / "data/generated/new"
+    with pytest.raises(remote.PreparationError, match="dependency_environment"):
+        remote._source_stage(plan, tmp_path, 720001, work)
+    assert calls == [] and not work.exists()
+
+
+def test_source_constraints_are_exact_distribution_pins_rechecked_with_ai_checkout(
+    plan_files, monkeypatch
+):
+    root, body, _, _ = plan_files
+    packages = remote.source_runtime_packages(root)
+    assert len(packages) == 13
+    assert packages["pydantic-core"] == "2.46.5" and "pydantic_core" not in packages
+    assert packages["cloudpickle"] == "3.1.2"
+    pins = {
+        remote.SOURCE_CONSTRAINTS_PATH: body["remote_preparation"]["dependency_files"]["ai"][
+            remote.SOURCE_CONSTRAINTS_PATH
+        ]
+    }
+    monkeypatch.setattr(
+        remote, "_git", lambda root, *args: "a" * 40 if args[0] == "rev-parse" else ""
+    )
+    remote.verify_checkout(root, "a" * 40, pins, pins)
+    path = root / remote.SOURCE_CONSTRAINTS_PATH
+    path.write_text(path.read_text().replace("numpy==2.4.4", "numpy==2.4.5"))
+    with pytest.raises(remote.PreparationError, match="dependency_drift"):
+        remote.verify_checkout(root, "a" * 40, pins, pins)
 
 
 @pytest.mark.parametrize("actual", [None, "2", "01", "not-a-number"])
@@ -463,6 +577,14 @@ def test_workflow_has_only_explicit_triggers_and_bounded_prep_matrix():
     assert remote.WORKER_TIMEOUT_SECONDS == 240 * 60
     for worker in (canary, job):
         assert worker["timeout-minutes"] * 60 - remote.WORKER_TIMEOUT_SECONDS >= 30 * 60
+        install = next(
+            step["run"]
+            for step in worker["steps"]
+            if step.get("name") == "Install the two pinned dependency sets separately"
+        )
+        assert f"--constraint ai/{remote.SOURCE_CONSTRAINTS_PATH}" in install
+        # Optional imports such as cloudpickle are not installed by a constraint alone.
+        assert f"--requirement ai/{remote.SOURCE_CONSTRAINTS_PATH}" in install
     assert job["strategy"]["fail-fast"] is False
     upload = next(step for step in job["steps"] if "upload-artifact@" in step.get("uses", ""))
     assert upload["with"]["retention-days"] == 1

@@ -99,7 +99,9 @@ jobs:
           uv sync --directory ai --locked --extra snapshot --extra forecast
           uv venv source/services/api/.venv --python 3.11.15
           uv pip install --python source/services/api/.venv/bin/python \
-            -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt
+            -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt \
+            --constraint ai/contracts/forecast/v2/source-runtime.constraints.txt \
+            --requirement ai/contracts/forecast/v2/source-runtime.constraints.txt
       - name: Prepare, independently replay, and seal one planned cohort
         env:
           PLANNED_SEED: ${{ matrix.seed }}
@@ -167,7 +169,9 @@ jobs:
           uv sync --directory ai --locked --extra snapshot --extra forecast
           uv venv source/services/api/.venv --python 3.11.15
           uv pip install --python source/services/api/.venv/bin/python \
-            -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt
+            -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt \
+            --constraint ai/contracts/forecast/v2/source-runtime.constraints.txt \
+            --requirement ai/contracts/forecast/v2/source-runtime.constraints.txt
       - name: Prepare, independently replay, and seal one planned cohort
         env:
           PLANNED_SEED: ${{ matrix.seed }}
