@@ -16,7 +16,7 @@ type-check:
 	$(UV_RUN) mypy
 
 test:
-	$(UV_RUN) pytest
+	$(UV_RUN) python -m pytest
 
 docs-check:
 	$(UV_RUN) python scripts/check_repository.py
