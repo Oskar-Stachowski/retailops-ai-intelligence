@@ -19,6 +19,7 @@ from retailops_ai.forecast_jobs.execution_contracts import (
 from retailops_ai.forecast_jobs.input_store import RegisteredInputs, RegistrationLimits
 from retailops_ai.forecast_jobs.inputs import PreparedInputs
 from retailops_ai.forecast_jobs.publication import OutputManifest, Partition, Publication
+from retailops_ai.forecast_jobs.read_contracts import ForecastPage, ForecastQuery, ReadPolicy
 from retailops_ai.forecast_jobs.runtime import RuntimePin
 
 ROOT = Path(__file__).resolve().parents[1] / "contracts/forecast_jobs/v1"
@@ -44,6 +45,9 @@ def main() -> int:
         ("output_manifest", OutputManifest),
         ("output_partition", Partition),
         ("publication", Publication),
+        ("read_query", ForecastQuery),
+        ("read_page", ForecastPage),
+        ("read_policy", ReadPolicy),
     ):
         expected = json.dumps(model.model_json_schema(), indent=2, sort_keys=True) + "\n"
         path = ROOT / (name + ".schema.json")

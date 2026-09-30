@@ -63,6 +63,7 @@ jobs:
       - run: make forecast-queue-smoke
       - run: make forecast-input-store-smoke
       - run: make forecast-publication-smoke
+      - run: make forecast-read-smoke
   required-result:
     if: always()
     needs: [checks, secrets, persistence]

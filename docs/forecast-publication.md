@@ -84,7 +84,7 @@ cofa całą publikację i zachowuje poprzedni udany pointer. Retry zachowuje
 piny, dostaje nowy token i publikuje najwyżej jeden artefakt na run.
 Dwa równoległe zakończenia nie dublują danych. Starszy origin, a przy tym
 samym origin starsze żądanie, nie zastępuje nowszego udanego wyniku.
-Read API z paginacją i oceną freshness należy do AI 05.7.
+[Read API 05.7a](forecast-read.md) dodaje odczyt z paginacją i oceną freshness.
 
 ## Odbiór i dalsza praca
 
@@ -102,7 +102,7 @@ Bramka jest wymagana przez Required CI; zdalny CI brancha pozostaje nieodebrany.
 
 Pełny odbiór na modelu wymaga spójnego i zakwalifikowanego handoff AI 04,
 importu, review/promocji oraz pomiaru rzeczywistego batchu na jego release.
-Następny niezależny zakres to AI 05.7: scoped forecast/model/evaluation read
-API, paginacja i freshness. Zdarzenia/outbox pozostają w AI 10. Backup pełnego
+Kolejny niezależny zakres to read API modeli/wersji/evaluations w AI 05.7.
+Pełna freshness wymaga też utrwalonego source watermark. Zdarzenia/outbox pozostają w AI 10. Backup pełnego
 schematu `ai` obejmuje nowe tabele; downgrade wymaga
 [backup/restore](lifecycle-backup.md), bez usuwania historii.

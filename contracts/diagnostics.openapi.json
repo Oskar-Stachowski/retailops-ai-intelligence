@@ -84,7 +84,21 @@
                   "input-origin-mismatch",
                   "queue-full",
                   "input-coverage-mismatch",
+                  "input-runtime-incompatible",
                   "run-not-active"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "forecast-read-denied",
+                  "forecast-scope-invalid",
+                  "forecast-scope-limit",
+                  "forecast-output-not-found",
+                  "forecast-view-changed",
+                  "forecast-view-required",
+                  "forecast-read-budget",
+                  "forecast-output-invalid"
                 ],
                 "type": "string"
               },

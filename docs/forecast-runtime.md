@@ -117,7 +117,8 @@ loader odrzuci takie wejście. Przed odbiorem serving należy przygotować
 i zweryfikować spójny pakiet w AI 04, bez przepisywania pinów archiwum.
 
 Rejestr profili i ograniczony supervisor mają [odbiór 05.5b](forecast-input-store.md).
-Pozostaje przyjęcie rzeczywistych profili przez API, integracja z lease
-i transakcją atomowego outputu w AI 05.6 oraz odbiór na zakwalifikowanym
-modelu AI 04. AI 05.7 doda odczyt z paginacją/freshness,
-a AI 10 zdarzenia. Nie ma zdalnego Required CI tego zakresu.
+[Integracja z lease i atomowym outputem 05.6](forecast-publication.md) oraz
+[odczyt prognoz 05.7a](forecast-read.md) mają lokalny odbiór techniczny.
+Pozostaje odbiór na zakwalifikowanym modelu AI 04, read API modeli/evaluations
+i pełny source watermark freshness. AI 10 dodaje zdarzenia.
+Nie ma zdalnego Required CI tego zakresu.

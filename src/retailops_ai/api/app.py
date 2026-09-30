@@ -28,6 +28,7 @@ from retailops_ai.api.models import DependencyStatus, Health, Problem, Ready, Se
 from retailops_ai.config import Settings
 from retailops_ai.domain.readiness import Dependency
 from retailops_ai.forecast_jobs.queue import BatchAdministration, PostgresBatchQueue
+from retailops_ai.forecast_jobs.reader import ForecastReader, PostgresForecastReader
 from retailops_ai.pipelines.readiness import Readiness
 from retailops_ai.pipelines.retrieval import load_retrieval_config
 from retailops_ai.security.local import load_authority
@@ -57,6 +58,7 @@ def create_app(
     knowledge_backend: KnowledgeBackend | None = None,
     index_administration: IndexAdministration | None = None,
     forecast_administration: BatchAdministration | None = None,
+    forecast_reader: ForecastReader | None = None,
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
@@ -67,7 +69,10 @@ def create_app(
     engine = database_engine(settings) if settings.database_url is not None else None
     knowledge_engine = None
     if (
-        knowledge_backend is None or index_administration is None or forecast_administration is None
+        knowledge_backend is None
+        or index_administration is None
+        or forecast_administration is None
+        or forecast_reader is None
     ) and settings.database_url is not None:
         knowledge_engine = index_engine(settings)
     if knowledge_backend is None and knowledge_engine is not None:
@@ -83,6 +88,8 @@ def create_app(
         index_administration = PostgresIndexAdministration(knowledge_engine, settings.app_env)
     if forecast_administration is None and knowledge_engine is not None:
         forecast_administration = PostgresBatchQueue(knowledge_engine, settings.app_env)
+    if forecast_reader is None and knowledge_engine is not None:
+        forecast_reader = PostgresForecastReader(knowledge_engine, settings.app_env)
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
@@ -208,6 +215,7 @@ def create_app(
             settings.app_env,
             index_administration,
             forecast_administration,
+            forecast_reader,
         )
     )
     return app

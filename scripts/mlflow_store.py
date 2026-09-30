@@ -32,7 +32,7 @@ BACKUPS = stack.ROOT / ".local" / "mlflow-backups"
 VOLUME_HELPER = stack.ROOT / "scripts" / "mlflow_volume.py"
 PROJECT = re.compile(r"^retailops_ai_[a-z0-9_]{5,50}$")
 TEST_PROJECT = re.compile(
-    r"retailops_ai_(?:inputs|outputs|queue|lifecycle|store_source|store_target|restore)_[0-9a-f]{10}"
+    r"retailops_ai_(?:inputs|outputs|read|queue|lifecycle|store_source|store_target|restore)_[0-9a-f]{10}"
 )
 MAX_BUNDLE_FILE = 4 * 1024**3
 DB_DUMP = "metadata.dump"

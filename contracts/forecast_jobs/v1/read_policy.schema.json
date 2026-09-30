@@ -1,0 +1,31 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "max_candidate_outputs": {
+      "const": 32,
+      "default": 32,
+      "title": "Max Candidate Outputs",
+      "type": "integer"
+    },
+    "max_origin_age_seconds": {
+      "const": 86400,
+      "default": 86400,
+      "title": "Max Origin Age Seconds",
+      "type": "integer"
+    },
+    "policy_id": {
+      "const": "forecast-read-v1",
+      "default": "forecast-read-v1",
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "title": "ReadPolicy",
+  "type": "object"
+}

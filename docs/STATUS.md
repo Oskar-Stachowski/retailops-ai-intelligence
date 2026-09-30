@@ -112,7 +112,7 @@ wyścig workerów, SIGKILL po częściowym obliczeniu, odrzucenie starego tokenu
 zmianę aliasu bez zmiany pinów oraz zachowanie pełnego stanu po restarcie bazy.
 **Mechanika działa lokalnie na jawnych fixture; AI 05 pozostaje otwarte.**
 Implementację integracji profili i atomowej publikacji opisuje 05.6 poniżej.
-Pozostaje read API z freshness w 05.7 i odbiór qualified release’u.
+Odczyt prognoz opisuje 05.7a poniżej; pozostaje odbiór qualified release’u.
 Nie ma zdalnego Required CI tych zmian. AI 04 jest rozwijane w osobnej sesji;
 jego nowsza kwalifikacja nie została zaimportowana do tego worktree.
 
@@ -127,7 +127,7 @@ zakwalifikowanego release’u i nie opublikowano prognoz.** Archiwum pozostaje
 spójnego pakietu z AI 04 przed servingiem. Nowsze zmiany AI 04 są w osobnej
 sesji. Rejestr i supervisor mają odbiór 05.5b poniżej. Do wykonania:
 odbiór zatwierdzonego, spójnego modelu. Implementację integracji
-z kolejką i atomowym outputem opisuje 05.6 poniżej. Potem 05.7; zdarzenia w AI 10.
+z kolejką i atomowym outputem opisuje 05.6, odczyt prognoz 05.7a poniżej; zdarzenia w AI 10.
 Nowa bramka kontraktów należy do `make check`, bez zdalnego Required CI.
 
 **AI 05.5b — trwałe wejścia i ograniczony preflight:** [runbook](forecast-input-store.md)
@@ -138,7 +138,8 @@ potwierdza rzeczywisty pakiet, wyścig zapisów, rollback limitu JSONB oraz
 SIGKILL/restart bez zmiany treści. Worker odrzucił brak zatwierdzonego release’u;
 nie utworzono prognoz ani runów. Po migracji ponownie odebrano kolejkę fixtures.
 Do wykonania: odbiór zakwalifikowanego, spójnego pakietu AI 04.
-Implementację runu, fencing i publikacji opisuje 05.6 poniżej. Potem read API 05.7 i zdarzenia AI 10.
+Implementację runu, fencing i publikacji opisuje 05.6, a odczyt prognoz 05.7a poniżej.
+Zdarzenia należą do AI 10.
 Brak zdalnego Required CI; AI 05 pozostaje otwarte.
 
 **AI 05.6 — atomowa publikacja i integracja workera:** [runbook](forecast-publication.md)
@@ -151,8 +152,20 @@ tokenu, wygaśnięcie lease podczas publikacji, zachowanie nowszego pointera
 i identyczny pełny stan po restarcie. Ponownie przeszła regresja kolejki.
 Nie zaimportowano qualified release’u AI 04;
 pełny odbiór rzeczywistego batchu czeka na spójny zakwalifikowany handoff.
-Następny zakres to read API 05.7 z paginacją i freshness; zdarzenia AI 10.
+Odczyt prognoz z paginacją i oceną freshness opisuje 05.7a poniżej; zdarzenia AI 10.
 Zdalny Required CI tego brancha pozostaje nieodebrany; AI 05 jest otwarte.
+
+**AI 05.7a — odczyt prognoz:** [runbook](forecast-read.md) opisuje
+`GET /api/v1/forecasts`, oddzielne `forecast:read`, SQL scope przed limitami,
+stable sort, default/max limit 50/200 i hash widoku wymagany dla dalszych stron.
+Każdy odczyt weryfikuje całe manifesty/partycje oraz piny udanych runów.
+[Odbiór](evidence/05-07-read.md) rozdziela testy techniczne od jakości modelu.
+Starszy origin i nowsza nieudana próba dają `stale`; brak osobnego source
+watermark daje `unknown`, bez deklarowania `current` na podstawie replay.
+Do wykonania: read API modeli/wersji/evaluations, wersjonowany source watermark
+i pełny odbiór freshness, spójny qualified handoff AI 04 oraz rzeczywisty
+batch na jego release’ie. Zdalny Required CI nadal nie jest odebrany;
+outbox/zdarzenia pozostają w AI 10. **AI 05 pozostaje otwarte.**
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

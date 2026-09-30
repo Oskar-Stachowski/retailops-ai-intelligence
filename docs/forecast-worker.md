@@ -5,7 +5,8 @@ niezależnie od kwalifikacji modelu AI 04. [Odbiór](evidence/05-04-queue.md)
 używa wyłącznie jawnych fixture `lifecycle_mechanics_only` w `APP_ENV=test`.
 [Pakiet wejścia i loader 05.5a](forecast-runtime.md) są przygotowane osobno.
 [Integracja i atomowa publikacja 05.6](forecast-publication.md) mają oddzielny
-odbiór techniczny PostgreSQL; read API pozostaje w 05.7. Etap 05 nie jest jeszcze zamknięty.
+odbiór techniczny PostgreSQL; [read API prognoz](forecast-read.md) ma zakres 05.7a.
+Etap 05 nie jest jeszcze zamknięty.
 
 ## Przyjęcie i odczyt
 
@@ -136,5 +137,5 @@ nie usuwa zapisanych runów. Backup schematu `ai` obejmuje także nowe tabele.
 [integracja/publikacja 05.6](forecast-publication.md) są zaimplementowane.
 Oba zakresy mają odbiór PostgreSQL na jawnych fixture.
 Pozostaje odbiór na spójnym, zakwalifikowanym release’ie AI 04,
-AI 05.7 z listami forecast/model/evaluation, paginacją i freshness
+read API modeli/wersji/evaluations i pełna freshness z source watermark w AI 05.7
 oraz zdalny Required CI. Zdarzenia i outbox/projekcje należą do AI 10.

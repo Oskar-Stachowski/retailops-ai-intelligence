@@ -123,3 +123,7 @@ forecast-input-store-smoke:
 .PHONY: forecast-publication-smoke
 forecast-publication-smoke:
 	$(UV_RUN) python scripts/check_forecast_publication.py
+
+.PHONY: forecast-read-smoke
+forecast-read-smoke:
+	$(UV_RUN) python scripts/check_forecast_read.py

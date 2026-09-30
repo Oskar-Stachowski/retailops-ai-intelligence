@@ -110,5 +110,6 @@ servingu: archiwum 04.8 pozostaje `not_ready` i ma starszy lock features.
 Przed odbiorem qualified execution trzeba przygotować spójny, zakwalifikowany
 pakiet AI 04. [AI 05.6](forecast-publication.md) ma oddzielny odbiór
 techniczny przyjęcia, fencing i transakcji całego wyniku na PostgreSQL.
-AI 05.7 doda scoped read API z paginacją i freshness; zdarzenia należą do AI 10.
+[AI 05.7a](forecast-read.md) dodaje scoped odczyt prognoz z paginacją i oceną freshness;
+pozostają model/evaluation read API i source watermark. Zdarzenia należą do AI 10.
 AI 05 pozostaje otwarte; zdalny Required CI tego brancha nie został odebrany.
