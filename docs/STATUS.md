@@ -131,10 +131,21 @@ syntetyczne, z zachowaniem dotychczasowych źródeł i wyników.
 stabilizację średniej, dokładne zachowanie mediany i przedziałów baseline'u,
 kompaktowe archiwum i rejestr użycia testów. Strumieniowy evaluator odtworzył
 wszystkie 224 raporty v11 bez różnic, w tym wszystkie 59 błędów.
-Wariant addytywny α50 spełnia 112/112 warunków na własnej walidacji kalibracyjnej;
-**to nie jest niezależna kwalifikacja ani status `ready`**. Trwa pilot wydajności
-na oddzielnym seedzie development; nowy test wymaga wcześniejszego freeze
-metody, całego planu danych oraz pozytywnego preflight miejsca.
+Porównanie 13 wariantów zachowuje wszystkie porażki i nie czyta holdoutów;
+warianty z walidacją i wygładzaniem kategorii spełniają 112/112 warunków
+kalibracji. **To nie jest niezależna kwalifikacja ani status `ready`.**
+[Evidence przygotowania v12](evidence/04-functional-v12-stage-b.json)
+wiąże 168 zaliczonych testów, replay kompaktowych wejść starej v11, kontrolę
+niezmienności wcześniejszych artefaktów i pomiar pojemności indeksu.
+Gotowe są: ocena wszystkich wcześniej zamrożonych kohort, odtwarzanie i
+wznawianie z zachowanych danych oraz samodzielny eksport z kartą modelu,
+signature i przykładem wejścia. Stary importer AI 05 wymaga osobnego adaptera
+do dwóch celów prognozy; ten etap nie nadaje promocji ani gotowości serving.
+Kod etapu A przeszedł pełne CI (1023 testy); końcowe CI nowego kodu jest
+odrębnym warunkiem odbioru. Trwa pełny pilot wydajności na oddzielnym seedzie
+development; nowy test wymaga wcześniejszego freeze metody, całego planu
+danych oraz pozytywnego preflight miejsca. Workflow generacji pozostaje
+nieaktywny bez jawnego pliku wykonania.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

@@ -31,6 +31,8 @@ class FunctionalV12Policy(Contract):
     prior_strength: Annotated[float, Field(ge=0, allow_inf_nan=False)] = 50.0
     hgb_weight: Annotated[float, Field(ge=0, le=1, allow_inf_nan=False)] = 0.5
     zero_estimation: Literal["validation_only", "train_validation_pooled"] = "validation_only"
+    zero_pooling: Literal["global", "category"] = "global"
+    zero_prior_strength: Annotated[float, Field(ge=0, allow_inf_nan=False)] = 50.0
     reference_policy: FunctionalPolicy = FunctionalPolicy()
     median_and_interval: Literal["exact_v11_selected_reference"] = "exact_v11_selected_reference"
     offset_fit: Literal["all_available_validation_forecast_key_weighted_residual"] = (
@@ -39,9 +41,10 @@ class FunctionalV12Policy(Contract):
     shrinkage_support: Literal["unique_cohort_product_location_channel_target_date"] = (
         "unique_cohort_product_location_channel_target_date"
     )
-    zero_pool: Literal["separate_global_zero_no_nonzero_prior_no_category_correction"] = (
-        "separate_global_zero_no_nonzero_prior_no_category_correction"
-    )
+    zero_pool: Literal[
+        "separate_global_zero_no_nonzero_prior_no_category_correction",
+        "separate_zero_pool_optional_category_shrinkage_no_nonzero_prior",
+    ] = "separate_zero_pool_optional_category_shrinkage_no_nonzero_prior"
     evaluation_use: Literal["calibration_diagnostic_not_independent_qualification"] = (
         "calibration_diagnostic_not_independent_qualification"
     )
@@ -180,7 +183,18 @@ def _offsets(statistics: dict[str, Any], policy: FunctionalV12Policy) -> dict[st
             stats = statistics[canonical_bytes([volume, category]).decode()]
             categories[category] = _cell(stats, cell["offset"], policy.prior_strength)
         volumes[volume] = cell | {"categories": categories}
-    return {"global": global_cell, "zero": zero_cell, "volumes": volumes}
+    result = {"global": global_cell, "zero": zero_cell, "volumes": volumes}
+    if policy.zero_pooling == "category":
+        result["zero_categories"] = {
+            group[1]: _cell(
+                statistics[canonical_bytes(group).decode()],
+                zero_cell["offset"],
+                policy.zero_prior_strength,
+            )
+            for group in groups
+            if len(group) == 2 and group[0] == "zero" and zero_cell is not None
+        }
+    return result
 
 
 def _checked(
@@ -244,6 +258,8 @@ def fit_recipe_v12(
             continue
         if row.volume == "zero":
             pools["zero"].append((item, raw))
+            if policy.zero_pooling == "category":
+                pools[canonical_bytes(["zero", row.category]).decode()].append((item, raw))
         else:
             for key in (
                 "global",
@@ -263,6 +279,8 @@ def fit_recipe_v12(
             if not math.isfinite(raw) or raw != 0.0:
                 raise SnapshotError("functional_v12_zero_training_history_not_zero")
             pools["zero"].append((item, raw))
+            if policy.zero_pooling == "category":
+                pools[canonical_bytes(["zero", row.category]).decode()].append((item, raw))
     statistics = {name: _statistics(sample) for name, sample in sorted(pools.items())}
     zero_role_support = {
         role: _statistics(
@@ -318,6 +336,10 @@ def _predict(
         offsets = recipe["offsets"]
         if row.volume == "zero":
             cell, source = offsets["zero"], "zero_pool"
+            if policy.zero_pooling == "category" and row.category in offsets.get(
+                "zero_categories", {}
+            ):
+                cell, source = offsets["zero_categories"][row.category], "zero_category"
         else:
             volume = offsets["volumes"].get(row.volume)
             cell = volume["categories"].get(row.category, volume) if volume else offsets["global"]

@@ -1,0 +1,190 @@
+name: AI04 optional cohort preparation
+
+# Adding this workflow does not authorize generation. The execution file is
+# intentionally absent and may only be added after reviewing the exact freeze.
+on:
+  workflow_dispatch:
+    inputs:
+      execution_sha256:
+        description: SHA256 of the reviewed remote-preparation.execute.json
+        required: true
+        type: string
+  push:
+    branches: ["ai/04-01-task-calendar"]
+    paths: ["contracts/forecast/v2/remote-preparation.execute.json"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai04-preparation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      first_seed: ${{ steps.plan.outputs.first_seed }}
+      canary_matrix: ${{ steps.plan.outputs.canary_matrix }}
+      remaining_matrix: ${{ steps.plan.outputs.remaining_matrix }}
+      has_remaining: ${{ steps.plan.outputs.has_remaining }}
+      ai_commit: ${{ steps.plan.outputs.ai_commit }}
+      source_commit: ${{ steps.plan.outputs.source_commit }}
+      max_parallel: ${{ steps.plan.outputs.max_parallel }}
+      execution_sha256: ${{ steps.plan.outputs.execution_sha256 }}
+      freeze_id: ${{ steps.plan.outputs.freeze_id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+          path: control
+      - name: Validate reviewed activation and immutable freeze without generation
+        id: plan
+        env:
+          EXPECTED_EXECUTION_SHA256: ${{ inputs.execution_sha256 }}
+        shell: bash
+        run: |
+          args=(plan --control-root control --github-output "$GITHUB_OUTPUT")
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            args+=(--expected-execution-sha256 "$EXPECTED_EXECUTION_SHA256")
+          fi
+          python3 control/scripts/prepare_forecast_functional_v12_remote.py "${args[@]}"
+
+  # One planned seed checks preparation/replay/archive mechanics before the rest.
+  # No forecast quality metrics are computed by either job.
+  canary:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 210
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix: ${{ fromJSON(needs.plan.outputs.canary_matrix) }}
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONNOUSERSITE: "1"
+      UV_NO_CACHE: "1"
+    steps:
+      - name: Retain exact activation and freeze
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          path: control
+      - name: Checkout pinned AI implementation
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.plan.outputs.ai_commit }}
+          persist-credentials: false
+          path: ai
+      - name: Checkout pinned public source implementation
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: ${{ needs.plan.outputs.source_commit }}
+          persist-credentials: false
+          path: source
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - name: Install the two pinned dependency sets separately
+        run: |
+          uv sync --directory ai --locked --extra snapshot --extra forecast
+          uv venv source/services/api/.venv --python 3.11.15
+          uv pip install --python source/services/api/.venv/bin/python \
+            -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt
+      - name: Prepare, independently replay, and seal one planned cohort
+        env:
+          PLANNED_SEED: ${{ matrix.seed }}
+          EXECUTION_SHA256: ${{ needs.plan.outputs.execution_sha256 }}
+        run: |
+          ai/.venv/bin/python ai/scripts/prepare_forecast_functional_v12_remote.py prepare \
+            --control-root control --ai-root ai --source-root source \
+            --source-python source/services/api/.venv/bin/python \
+            --seed "$PLANNED_SEED" --expected-execution-sha256 "$EXECUTION_SHA256" \
+            --output "checkpoints/seed-$PLANNED_SEED"
+      - name: Upload verified bounded checkpoint for local assembly
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai04-${{ needs.plan.outputs.freeze_id }}-seed-${{ matrix.seed }}
+          path: checkpoints/seed-${{ matrix.seed }}/verified-upload/functional-checkpoint-sha256-*/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+          overwrite: false
+
+  prepare:
+    # The reviewed freeze permits 4, 8 or 16 standard runners after the single canary.
+    needs: [plan, canary]
+    if: needs.plan.outputs.has_remaining == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 210
+    strategy:
+      fail-fast: false
+      max-parallel: ${{ fromJSON(needs.plan.outputs.max_parallel) }}
+      matrix: ${{ fromJSON(needs.plan.outputs.remaining_matrix) }}
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONNOUSERSITE: "1"
+      UV_NO_CACHE: "1"
+    steps:
+      - name: Retain exact activation and freeze
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          path: control
+      - name: Checkout pinned AI implementation
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.plan.outputs.ai_commit }}
+          persist-credentials: false
+          path: ai
+      - name: Checkout pinned public source implementation
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: ${{ needs.plan.outputs.source_commit }}
+          persist-credentials: false
+          path: source
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - name: Install the two pinned dependency sets separately
+        run: |
+          uv sync --directory ai --locked --extra snapshot --extra forecast
+          uv venv source/services/api/.venv --python 3.11.15
+          uv pip install --python source/services/api/.venv/bin/python \
+            -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt
+      - name: Prepare, independently replay, and seal one planned cohort
+        env:
+          PLANNED_SEED: ${{ matrix.seed }}
+          EXECUTION_SHA256: ${{ needs.plan.outputs.execution_sha256 }}
+        run: |
+          ai/.venv/bin/python ai/scripts/prepare_forecast_functional_v12_remote.py prepare \
+            --control-root control --ai-root ai --source-root source \
+            --source-python source/services/api/.venv/bin/python \
+            --seed "$PLANNED_SEED" --expected-execution-sha256 "$EXECUTION_SHA256" \
+            --output "checkpoints/seed-$PLANNED_SEED"
+      - name: Upload verified bounded checkpoint for local assembly
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai04-${{ needs.plan.outputs.freeze_id }}-seed-${{ matrix.seed }}
+          path: checkpoints/seed-${{ matrix.seed }}/verified-upload/functional-checkpoint-sha256-*/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+          overwrite: false

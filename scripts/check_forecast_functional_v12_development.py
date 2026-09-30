@@ -38,7 +38,9 @@ from retailops_ai.forecasting.quality_v2_contract import ProtocolObservation
 from retailops_ai.source_snapshot.files import SnapshotError
 
 
-def variant_policies(with_hgb: bool = False) -> dict[str, FunctionalV12Policy]:
+def variant_policies(
+    with_hgb: bool = False, with_zero_category: bool = False
+) -> dict[str, FunctionalV12Policy]:
     result = {"baseline": FunctionalV12Policy(mean_variant="baseline")}
     for zero in ("validation_only", "train_validation_pooled"):
         result[f"zero-only-{zero}"] = FunctionalV12Policy.model_validate_json(
@@ -58,6 +60,22 @@ def variant_policies(with_hgb: bool = False) -> dict[str, FunctionalV12Policy]:
                             "hgb_weight": weight,
                             "zero_estimation": zero,
                         }
+                    )
+                )
+    if with_zero_category:
+        for strength in (50.0, 200.0):
+            for zero in ("validation_only", "train_validation_pooled"):
+                result[f"additive-alpha50-zero-category{strength:g}-{zero}"] = (
+                    FunctionalV12Policy.model_validate_json(
+                        json.dumps(
+                            {
+                                "mean_variant": "additive",
+                                "prior_strength": 50.0,
+                                "zero_estimation": zero,
+                                "zero_pooling": "category",
+                                "zero_prior_strength": strength,
+                            }
+                        )
                     )
                 )
     return result
@@ -146,7 +164,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             or campaign["descriptor"]["split_id"] != desc["split_id"]
         ):
             raise SnapshotError("functional_v12_development_campaign_parent_binding")
-    variants = variant_policies(args.with_hgb)
+    variants = variant_policies(args.with_hgb, args.with_zero_category)
     folds = list(desc["folds"])
     report: dict[str, Any] = {
         "started_at": started,
@@ -294,6 +312,7 @@ def main() -> None:
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--run", type=Path)
     parser.add_argument("--with-hgb", action="store_true")
+    parser.add_argument("--with-zero-category", action="store_true")
     args = parser.parse_args()
     result = run(args)
     print(

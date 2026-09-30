@@ -380,3 +380,92 @@ def test_prepared_predictor_cannot_be_changed_by_mutating_the_external_receipt()
     assert predictor.predict(rows[0])[0].mean == 2
     with pytest.raises(SnapshotError, match="recipe_identity_mismatch"):
         predict_pair_v12(rows[0], recipe)
+
+
+def test_rare_zero_category_shrinks_only_to_zero_global_and_unseen_category_falls_back():
+    fold, rows = fixture("zero")
+    rows = [
+        replace(row, category="rare" if index < 2 else "common", actual=0 if index < 2 else 2)
+        for index, row in enumerate(rows)
+    ]
+    policy = FunctionalV12Policy(zero_pooling="category", zero_prior_strength=50)
+    recipe = fit_recipe_v12(rows, fold, policy)
+    global_mean = 476 / 240
+    rare = recipe["offsets"]["zero_categories"]["rare"]
+    assert rare["statistics"]["unique_targets"] == 2
+    assert rare["statistics"]["unique_positive_targets"] == 0
+    assert rare["local_weight"] == pytest.approx(2 / 52)
+    candidate, baseline, meta = predict_pair_v12(rows[0], recipe)
+    assert candidate.mean == pytest.approx(global_mean * 50 / 52)
+    assert meta["mean_source"] == "zero_category"
+    assert candidate.median == baseline.median and candidate.interval == baseline.interval
+    unseen = replace(rows[0], category="unseen", actual=10000, available="2099-01-01")
+    candidate, _, meta = predict_pair_v12(unseen, recipe)
+    assert candidate.mean == pytest.approx(global_mean)
+    assert meta["mean_source"] == "zero_pool"
+    assert recipe["offsets"]["global"] is None
+
+
+def test_zero_category_adjusts_for_category_mix_using_only_fitted_category_rates():
+    fold, rows = fixture("zero")
+    rows = [
+        replace(
+            row,
+            category="higher" if index % 120 < 60 else "lower",
+            actual=4 if index % 120 < 60 else 1,
+        )
+        for index, row in enumerate(rows)
+    ]
+    category_recipe = fit_recipe_v12(
+        rows, fold, FunctionalV12Policy(zero_pooling="category", zero_prior_strength=50)
+    )
+    global_recipe = fit_recipe_v12(rows, fold)
+    higher, lower = rows[0], rows[60]
+    high_prediction = predict_pair_v12(higher, category_recipe)[0].mean
+    low_prediction = predict_pair_v12(lower, category_recipe)[0].mean
+    assert high_prediction == pytest.approx((120 * 4 + 50 * 2.5) / 170)
+    assert low_prediction == pytest.approx((120 + 50 * 2.5) / 170)
+    shifted_actual_mean = 0.9 * 4 + 0.1
+    shifted_category_mean = 0.9 * high_prediction + 0.1 * low_prediction
+    shifted_global_mean = predict_pair_v12(higher, global_recipe)[0].mean
+    assert abs(shifted_category_mean - shifted_actual_mean) < abs(
+        shifted_global_mean - shifted_actual_mean
+    )
+    future = replace(higher, actual=9999, role="development_holdout", available="2099-01-01")
+    assert predict_pair_v12(future, category_recipe) == predict_pair_v12(higher, category_recipe)
+
+
+def test_zero_category_statistics_merge_matches_direct_fit_before_shrinkage():
+    fold, rows = fixture("zero")
+    rows = [
+        replace(row, category="rare" if index % 120 < 4 else "common")
+        for index, row in enumerate(rows)
+    ]
+    left_rows = [CohortObservation(row, "left") for row in rows]
+    right_rows = [
+        CohortObservation(replace(row, actual=cast_actual(row.actual) * 3), "right") for row in rows
+    ]
+    policy = FunctionalV12Policy(zero_pooling="category", zero_prior_strength=200)
+    left = fit_recipe_v12(left_rows, fold, policy)
+    right = fit_recipe_v12(right_rows, fold, policy)
+    direct = fit_recipe_v12([*left_rows, *right_rows], fold, policy)
+    merged = merge_mean_calibration([left, right])
+    bound = bind_pooled_mean(left, merged)
+    assert bound["reference_recipe"] == left["reference_recipe"]
+    for category, direct_cell in direct["offsets"]["zero_categories"].items():
+        merged_cell = merged["offsets"]["zero_categories"][category]
+        assert merged_cell["offset"] == pytest.approx(direct_cell["offset"])
+        assert merged_cell["local_weight"] == direct_cell["local_weight"]
+        for statistic in (
+            "rows",
+            "unique_targets",
+            "unique_positive_targets",
+            "actual_sum",
+            "mean_residual",
+        ):
+            assert merged_cell["statistics"][statistic] == direct_cell["statistics"][statistic]
+    for row in (rows[0], rows[6]):
+        selected, baseline, metadata = predict_pair_v12(row, bound)
+        assert selected.mean == predict_pair_v12(row, direct)[0].mean
+        assert metadata["mean_source"] == "zero_category"
+        assert selected.median == baseline.median and selected.interval == baseline.interval
