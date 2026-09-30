@@ -74,12 +74,14 @@ contracts:
 	$(UV_RUN) python scripts/update_access_contracts.py
 	$(UV_RUN) python scripts/update_knowledge_contracts.py
 	$(UV_RUN) python scripts/update_forecast_contracts.py
+	$(UV_RUN) python scripts/update_model_lifecycle_contracts.py
 
 contracts-check:
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
 	$(UV_RUN) python scripts/update_access_contracts.py --check
 	$(UV_RUN) python scripts/update_knowledge_contracts.py --check
 	$(UV_RUN) python scripts/update_forecast_contracts.py --check
+	$(UV_RUN) python scripts/update_model_lifecycle_contracts.py --check
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up
@@ -95,3 +97,7 @@ compose-smoke:
 
 mlflow-store-smoke:
 	$(UV_RUN) python scripts/check_mlflow_store.py
+
+.PHONY: model-lifecycle-smoke
+model-lifecycle-smoke:
+	$(UV_RUN) python scripts/check_model_lifecycle.py

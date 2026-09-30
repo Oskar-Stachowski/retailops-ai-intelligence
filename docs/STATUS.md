@@ -81,7 +81,17 @@ wykonania w kolejnych zakresach AI 05.
 sprawdziły import 04.8, zapisały audyt z rolą `promoter` oraz powtórzyły
 decyzję bez duplikatu. [Odbiór](evidence/05-03-review.md) wskazuje runy i
 backup. `retailops-demand-forecast` nie ma wersji ani aliasów; pełna
-promocja/rollback AI 05.3 czekają na kwalifikowany, sprawdzony model.
+promocja/rollback na modelu AI 04 czekają na jego kwalifikację.
+
+**AI 05.3b — Registry i recovery:** [mechanizmy lifecycle](mlflow-lifecycle.md)
+utrwalają niezależny audyt w PostgreSQL, wersje, aliasy i niezmienne
+release pins. [Odbiór](evidence/05-03-lifecycle.md) sprawdza dwie promocje,
+rollback, odrzucenie trzeciej wersji, utracone odpowiedzi oraz SIGKILL/restart
+w jednorazowym Registry `retailops-demand-forecast-mechanics`.
+Nie zatwierdza jakości AI 04 ani działającego runtime; pointer oznacza
+zatwierdzony release. AI 05.3 pozostaje otwarte: rzeczywista kwalifikacja
+modelu, wspólny backup/restore MLflow + audytu AI i późniejsze wpięcie
+runtime nadal wymagają odbioru. Zmiany są lokalne, bez zdalnego Required CI.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
@@ -128,7 +138,7 @@ AI 04 i AI 12 zachowują odrębne branche/worktrees.
   PostgreSQL odtworzył wszystkie 44 wyniki golden. Runtime wymaga jawnego
   `RAG_BEDROCK_ENABLED=true` i poświadczeń AWS procesu.
 - 643 testy regresji; dodatkowa kontrola 77 testów po dopracowaniu current/report
-  również przechodzi. Pełny odbiór Compose obejmuje migrację `0008_rag_semantic`,
+  również przechodzi. Historyczny odbiór semantyczny obejmował migrację `0008_rag_semantic`,
   pgvector, HTTP, runy, SQL gates, aktywację/rollback, SIGKILL i trwałość danych.
 
 Nie pozostały otwarte blokady implementacji lub jakości Etapu 11.

@@ -33,6 +33,18 @@ def test_required_ci_cannot_drop_mlflow_restore_smoke():
     )
 
 
+def test_required_ci_cannot_drop_model_lifecycle_recovery():
+    data = workflow()
+    data["jobs"]["persistence"]["steps"] = [
+        step
+        for step in data["jobs"]["persistence"]["steps"]
+        if step.get("run") != "make model-lifecycle-smoke"
+    ]
+    assert "persistence must execute model lifecycle recovery acceptance" in module.workflow_errors(
+        data
+    )
+
+
 @pytest.mark.parametrize(
     "mutation", ["tag", "ignored_failure", "missing_gate", "path_filter", "missing_persistence"]
 )

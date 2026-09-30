@@ -42,9 +42,9 @@ tokenu utwórz nowy katalog i użyj jego plików. Dane poświadczeń i audytu
 operacyjnego są ignorowane przez Git; audyt MLflow jest objęty lokalnym
 backupem metadanych i artefaktów.
 
-To **część AI 05.3**. Wciąż trzeba zbudować dopuszczanie prawdziwego,
-kwalifikowanego model version, kontrolę aliasów i release, role dla
-promote/rollback oraz ich recovery i demonstrację na dwóch sprawnych
-wersjach. Audyt w MLflow jest trwały lokalnie i sprawdzany po SHA, ale
-administracyjny dostęp do MLflow może go zmienić; późniejszy workflow
-promocji wymaga również niezależnego audytu i mechanizmu wznowienia.
+To **część AI 05.3**. Mechanizmy wersji, aliasów, release’ów i recovery są opisane w
+[AI 05.3b](mlflow-lifecycle.md); ich odbiór używa odizolowanych wersji
+testowych. Wciąż trzeba odebrać rzeczywisty kwalifikowany model i runtime. Audyt w MLflow jest trwały lokalnie i sprawdzany po SHA, ale
+administracyjny dostęp do MLflow może go zmienić; workflow
+05.3b dodaje niezależny audyt PostgreSQL i mechanizm wznowienia. Wspólny
+backup obu magazynów pozostaje do wykonania.

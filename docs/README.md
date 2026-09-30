@@ -38,6 +38,8 @@ zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 rejestracji modelu i [odbiór](evidence/05-02-import.md).
 [Review i odrzucenie AI 05.3a](mlflow-registry.md) dokumentują lokalny
 rejestr bez wersji oraz [audyt decyzji](evidence/05-03-review.md).
+[Registry i recovery AI 05.3b](mlflow-lifecycle.md) opisują wersje, aliasy,
+niezależny audyt i [odbiór mechaniki](evidence/05-03-lifecycle.md).
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)
