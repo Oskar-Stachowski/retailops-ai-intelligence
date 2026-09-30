@@ -357,7 +357,8 @@
                 "forecast:read",
                 "access:admin",
                 "knowledge:read",
-                "knowledge:index"
+                "knowledge:index",
+                "model:decide"
               ],
               "type": "string"
             },
@@ -384,7 +385,8 @@
               "enum": [
                 "viewer",
                 "operator",
-                "admin"
+                "admin",
+                "promoter"
               ],
               "type": "string"
             },

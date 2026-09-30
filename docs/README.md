@@ -36,6 +36,8 @@ zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Magazyn MLflow AI 05.1](mlflow-store.md) opisuje backup, restore i retencję.
 [Import evidence AI 05.2](mlflow-evidence.md) opisuje historyczny run bez
 rejestracji modelu i [odbiór](evidence/05-02-import.md).
+[Review i odrzucenie AI 05.3a](mlflow-registry.md) dokumentują lokalny
+rejestr bez wersji oraz [audyt decyzji](evidence/05-03-review.md).
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)

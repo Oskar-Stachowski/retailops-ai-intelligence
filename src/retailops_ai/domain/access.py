@@ -3,8 +3,10 @@
 from dataclasses import dataclass
 from typing import Literal
 
-Role = Literal["viewer", "operator", "admin"]
-Capability = Literal["forecast:read", "access:admin", "knowledge:read", "knowledge:index"]
+Role = Literal["viewer", "operator", "admin", "promoter"]
+Capability = Literal[
+    "forecast:read", "access:admin", "knowledge:read", "knowledge:index", "model:decide"
+]
 Channel = Literal["store", "online"]
 
 

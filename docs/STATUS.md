@@ -1,6 +1,6 @@
 # Aktualny status
 
-Aktualizacja: **2026-09-29**. **Etap 11 — RAG jest odebrany lokalnie.**
+Aktualizacja: **2026-09-30**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
 przygotowanie, kwalifikację, aktywację i rollback. [Końcowy odbiór](evidence/11-completion.md)
 wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodzi
@@ -76,6 +76,12 @@ lokalny](evidence/05-02-import.md) potwierdza rzeczywisty import i powtórzenie
 bez drugiego runu. Quality nadal ma 145 passed, 79 failed, 8 not_ready;
 status modelu to `not_ready`. Registry, promocja, batch i API pozostają do
 wykonania w kolejnych zakresach AI 05.
+
+**AI 05.3a — kontrola registry przed wersją:** [review i odrzucenie](mlflow-registry.md)
+sprawdziły import 04.8, zapisały audyt z rolą `promoter` oraz powtórzyły
+decyzję bez duplikatu. [Odbiór](evidence/05-03-review.md) wskazuje runy i
+backup. `retailops-demand-forecast` nie ma wersji ani aliasów; pełna
+promocja/rollback AI 05.3 czekają na kwalifikowany, sprawdzony model.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

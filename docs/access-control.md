@@ -30,7 +30,8 @@ mieścić w server grant; klient nie nadaje principal, roles ani capabilities.
 Zduplikowane nagłówki Authorization, cookie, query token i forwarded identity
 nie są poświadczeniami. Nie ma login/password endpointu.
 
-Role viewer/operator/admin są metadanymi polityki, bez automatycznej hierarchii.
+Role viewer/operator/admin/promoter są metadanymi polityki, bez automatycznej
+hierarchii.
 Capabilities nadaje się jawnie. Access:admin wymaga roli admin; sam admin nie
 otrzymuje forecast:read. Każda forecast capability wymaga niepustego scope.
 `knowledge:index` również wymaga roli admin i jawnego grantu. Nie wynika z
@@ -41,6 +42,11 @@ klasy dostępu i statusy. Pole jest opcjonalne dla dotychczasowych grantów;
 brak grantu odczytu wiedzy nie daje dostępu do nowego endpointu.
 Identity udostępnia przyznany knowledge scope. [Retrieval](knowledge-retrieval.md)
 opisuje 503 przed użytkową aktywacją oraz natychmiastowe SQL deny dokumentów.
+
+Lokalny CLI [model registry AI 05.3a](mlflow-registry.md) wymaga roli
+`promoter` i capability `model:decide`. `admin` nie otrzymuje ich automatycznie;
+nie ma endpointu HTTP promotion.
+
 Mapa scope jest iloczynem jawnych product IDs × selling locations × channels
 danego principal. Nie ma wildcardów, nieograniczonego default ani tenant resolvera.
 Żądanie wymaga scope; maksymalnie 20 produktów i 5 lokalizacji, jeden kanał.
