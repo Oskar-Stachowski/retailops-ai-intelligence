@@ -17,19 +17,39 @@ from retailops_ai.forecast_jobs.inputs import PreparedInputs
 from retailops_ai.security.local import strict_json
 
 
-def main(*, read: bool = False) -> int:
+def main(*, read: bool = False, catalog: bool = False) -> int:
+    if read and catalog:
+        raise ValueError("ambiguous_acceptance_mode")
+    mode = "catalog" if catalog else "read" if read else "publication"
+    module = {
+        "catalog": "retailops_ai.model_lifecycle.read_acceptance",
+        "read": "retailops_ai.forecast_jobs.read_acceptance",
+        "publication": "retailops_ai.forecast_jobs.publication_acceptance",
+    }[mode]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--report",
         type=Path,
         default=stack.ROOT
-        / ("reports/forecast-read.json" if read else "reports/forecast-publication.json"),
+        / (
+            "reports/model-catalog.json"
+            if catalog
+            else "reports/forecast-read.json"
+            if read
+            else "reports/forecast-publication.json"
+        ),
     )
     args = parser.parse_args()
     raw = (stack.ROOT / "contracts/forecast_jobs/v1/fixture/inputs.json").read_bytes()
     strict_json(raw)
     inputs = PreparedInputs.model_validate_json(raw)
-    project = ("retailops_ai_read_" if read else "retailops_ai_outputs_") + uuid.uuid4().hex[:10]
+    project = (
+        "retailops_ai_catalog_"
+        if catalog
+        else "retailops_ai_read_"
+        if read
+        else "retailops_ai_outputs_"
+    ) + uuid.uuid4().hex[:10]
     owned = False
     target = project
     original = store.compose
@@ -87,17 +107,15 @@ def main(*, read: bool = False) -> int:
             "api-migrate",
             "python",
             "-m",
-            "retailops_ai.forecast_jobs.read_acceptance"
-            if read
-            else "retailops_ai.forecast_jobs.publication_acceptance",
+            module,
         )
-        phase = "read_acceptance" if read else "publication_acceptance"
+        phase = mode + "_acceptance"
         result = subprocess.run(  # noqa: S603 - structured disposable acceptance with private stdin
             command,
             cwd=stack.ROOT,
             input=inputs.model_dump_json().encode(),
             capture_output=True,
-            timeout=240 if read else 180,
+            timeout=240 if read or catalog else 180,
             check=False,
         )
         if result.returncode:
@@ -111,7 +129,7 @@ def main(*, read: bool = False) -> int:
                 re.MULTILINE,
             )
             print(json.dumps({"acceptance_errors": [v.decode() for v in markers]}))
-            raise ValueError("read_acceptance_failed" if read else "publication_acceptance_failed")
+            raise ValueError(mode + "_acceptance_failed")
         report.update(json.loads(result.stdout))
         before = json.loads(store.checked_run([*command, "--inspect"]))
         phase = "database_sigkill_restart"
@@ -122,7 +140,9 @@ def main(*, read: bool = False) -> int:
             raise ValueError("published_output_state_changed_after_restart")
         report.update(after)
         report["checks"].append(
-            "sigkill_database_restart_preserves_read_view_predictions_and_full_publication_state"
+            "sigkill_database_restart_preserves_scoped_catalog_and_full_publication_state"
+            if catalog
+            else "sigkill_database_restart_preserves_read_view_predictions_and_full_publication_state"
             if read
             else "sigkill_database_restart_preserves_complete_forecast_partitions_manifests_pins_history_and_heads"
         )
@@ -143,7 +163,9 @@ def main(*, read: bool = False) -> int:
         print(
             json.dumps(
                 {
-                    "error": "forecast_read_smoke_failed"
+                    "error": "model_catalog_smoke_failed"
+                    if catalog
+                    else "forecast_read_smoke_failed"
                     if read
                     else "forecast_publication_smoke_failed",
                     "phase": phase,

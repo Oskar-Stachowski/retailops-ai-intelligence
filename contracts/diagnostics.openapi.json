@@ -103,6 +103,19 @@
                 "type": "string"
               },
               {
+                "enum": [
+                  "model-read-denied",
+                  "model-scope-invalid",
+                  "model-scope-limit",
+                  "model-not-found",
+                  "model-view-required",
+                  "model-view-changed",
+                  "model-read-budget",
+                  "model-metadata-invalid"
+                ],
+                "type": "string"
+              },
+              {
                 "type": "null"
               }
             ],

@@ -127,3 +127,7 @@ forecast-publication-smoke:
 .PHONY: forecast-read-smoke
 forecast-read-smoke:
 	$(UV_RUN) python scripts/check_forecast_read.py
+
+.PHONY: model-catalog-smoke
+model-catalog-smoke:
+	$(UV_RUN) python scripts/check_model_catalog.py

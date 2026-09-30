@@ -55,6 +55,9 @@ ograniczony batch i transakcję manifestu, partycji oraz pointera.
 [Odczyt prognoz AI 05.7a](forecast-read.md) opisuje scope, stabilną paginację,
 kontrolę kompletności i zachowawczą freshness. [Odbiór](evidence/05-07-read.md)
 wiąże realne HTTP/PostgreSQL z jawnymi ograniczeniami jakości.
+[Katalog modeli i wersji AI 05.7b](model-catalog.md) opisuje metadane ograniczone
+do publikacji w scope użytkownika, bez globalnych ocen i deklaracji wdrożenia.
+[Odbiór katalogu](evidence/05-07-catalog.md) podaje testy i pozostałe bramki.
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)

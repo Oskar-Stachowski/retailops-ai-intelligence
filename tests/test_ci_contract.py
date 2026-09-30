@@ -168,3 +168,13 @@ def test_required_ci_cannot_drop_forecast_read_acceptance():
         if step.get("run") != "make forecast-read-smoke"
     ]
     assert "persistence must execute forecast read acceptance" in module.workflow_errors(data)
+
+
+def test_required_ci_cannot_drop_model_catalog_acceptance():
+    data = workflow()
+    data["jobs"]["persistence"]["steps"] = [
+        step
+        for step in data["jobs"]["persistence"]["steps"]
+        if step.get("run") != "make model-catalog-smoke"
+    ]
+    assert "persistence must execute model catalog acceptance" in module.workflow_errors(data)

@@ -22,6 +22,7 @@ SMOKES = (
     ("check_forecast_input_store", "inputs"),
     ("check_forecast_publication", "outputs"),
     ("check_forecast_read", "read"),
+    ("check_model_catalog", "catalog"),
     ("check_model_lifecycle", "lifecycle"),
     ("check_lifecycle_store", "store_source"),
     ("check_mlflow_store", "restore"),

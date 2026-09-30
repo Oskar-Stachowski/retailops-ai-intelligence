@@ -63,6 +63,7 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make serve` | Lokalny serwer HTTP z jawnym dotenv |
 | `make compose-up/down` | Lokalny stos DB/API/MLflow, jawne migracje, zachowane wolumeny |
 | `make compose-config` | Walidacja Compose bez wypisywania sekretów |
+| `make model-catalog-smoke` | HTTP/PostgreSQL: scoped modele i wersje, piny, paginacja, uszkodzenia i restart; SQL-only stub jakości |
 | `make compose-smoke` | Rzeczywiste próby persistence i awarii, następnie shutdown |
 | `make contracts-check` | Porównanie intelligence/access/knowledge/forecast snapshots z kodem, walidacja struktury rejestru korpusu |
 | `make contracts` | Regeneracja HTTP oraz intelligence/access/knowledge/forecast schemas/examples do przeglądu |

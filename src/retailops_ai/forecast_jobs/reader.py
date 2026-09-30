@@ -10,7 +10,7 @@ from sqlalchemy import Engine, text
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.domain.access import Principal
 from retailops_ai.forecast_jobs.contracts import BatchRun, MechanicsPrediction
-from retailops_ai.forecast_jobs.publication import Publication, grain, receipt
+from retailops_ai.forecast_jobs.publication import OutputManifest, Publication, grain, receipt
 from retailops_ai.forecast_jobs.queue import checked, record
 from retailops_ai.forecast_jobs.read_contracts import (
     ForecastFreshness,
@@ -70,7 +70,10 @@ def resolve_scope(query: ForecastQuery, actor: Principal) -> ReadScope:
 
 
 def verify_publication(output: Publication, run: BatchRun, environment: str) -> None:
-    m = output.manifest
+    verify_manifest(output.manifest, run, environment)
+
+
+def verify_manifest(m: OutputManifest, run: BatchRun, environment: str) -> None:
     i = run.input_ref
     if (
         run.status != "succeeded"

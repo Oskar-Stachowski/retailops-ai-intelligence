@@ -5,6 +5,12 @@ import json
 from pathlib import Path
 
 from retailops_ai.model_lifecycle.contracts import Binding, Qualification, Release, Request
+from retailops_ai.model_lifecycle.read_contracts import (
+    CatalogModel,
+    CatalogQuery,
+    ModelPage,
+    VersionPage,
+)
 
 ROOT = Path(__file__).resolve().parents[1] / "contracts/model_lifecycle/v1"
 
@@ -18,6 +24,10 @@ def main() -> int:
         ("binding", Binding),
         ("decision_request", Request),
         ("release", Release),
+        ("catalog_query", CatalogQuery),
+        ("catalog_model", CatalogModel),
+        ("catalog_models", ModelPage),
+        ("catalog_versions", VersionPage),
     ):
         expected = json.dumps(model.model_json_schema(), indent=2, sort_keys=True) + "\n"
         path = ROOT / (name + ".schema.json")

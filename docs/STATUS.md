@@ -162,10 +162,22 @@ Każdy odczyt weryfikuje całe manifesty/partycje oraz piny udanych runów.
 [Odbiór](evidence/05-07-read.md) rozdziela testy techniczne od jakości modelu.
 Starszy origin i nowsza nieudana próba dają `stale`; brak osobnego source
 watermark daje `unknown`, bez deklarowania `current` na podstawie replay.
-Do wykonania: read API modeli/wersji/evaluations, wersjonowany source watermark
+Do wykonania: scoped read API evaluations, wersjonowany source watermark
 i pełny odbiór freshness, spójny qualified handoff AI 04 oraz rzeczywisty
 batch na jego release’ie. Zdalny Required CI nadal nie jest odebrany;
 outbox/zdarzenia pozostają w AI 10. **AI 05 pozostaje otwarte.**
+
+**AI 05.7b — katalog modeli i wersji:** [runbook](model-catalog.md) opisuje
+trzy endpointy `/models`, szczegół modelu i `/versions`. Katalog obejmuje
+wersje z publikacją w autoryzowanym scope; filtr SQL poprzedza distinct/count
+oraz limit 1000 wersji. Numeric sort, piny enrollment/release i hash paginacji
+chronią odczyt. Nie udostępnia globalnych metryk ani URI plików.
+Head spoza scope pozostaje ukryty, aliases/runtime/drift nie są potwierdzane,
+freshness pozostaje `unknown`. [Odbiór](evidence/05-07-catalog.md) podaje
+rzeczywisty HTTP/PostgreSQL, próby uszkodzenia i restartu oraz granice fixture.
+Scoped evaluations potrzebują osobnego zakresu ocen i zweryfikowanych metryk;
+pełny watermark oraz qualified batch AI 04 nadal pozostają do wykonania.
+Zdalny Required CI tego brancha nie jest odebrany. **AI 05 pozostaje otwarte.**
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

@@ -78,6 +78,11 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
     ):
         errors.append("persistence must execute forecast read acceptance")
     if not any(
+        step.get("run") == "make model-catalog-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute model catalog acceptance")
+    if not any(
         step.get("run") == "make bootstrap check"
         for step in jobs.get("checks", {}).get("steps", [])
     ):
