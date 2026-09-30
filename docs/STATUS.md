@@ -61,6 +61,23 @@ wymaga oddzielnego rozwiązania braków próby i jakości na późniejszych dany
 bez strojenia na final test. Ten branch nie ma jeszcze zdalnej publikacji
 ani Required CI.
 
+**Praca nad blokadami jakości AI 04 — 2026-09-30:**
+[wersjonowana korekta i kalibracja](forecast-remediation.md) zachowują
+oryginalne progi oraz validation-only dopasowanie. Na dotychczasowych danych
+liczba bramek zmieniła się na **192 passed / 32 failed / 8 not_ready**.
+Drugi fold poprawia MAE o 7,32% wobec baseline'u, pokrycie wysokiego wolumenu
+rośnie do 92,62%, a szerokość niskiego wolumenu / średnie actuals spada do 1,024.
+Pozostają bias/regresje części segmentów oraz brak koszyka zero.
+[Evidence](evidence/04-quality-remediation.md) rozróżnia ten pomiar rozwojowy
+od późniejszych kampanii. Kontrola próbek zatrzymuje trening, gdy brakuje
+krytycznego koszyka w danym foldzie. Późniejsza kampania V8 przyjęła 626238
+wierszy bez quarantine, ale górna granica liczebności koszyka zero wyniosła
+0 w validation foldów 1–2 i holdoucie folda 3 (wymagane ≥30). Zakończyła
+się przed cechami i treningiem; metryk nowych holdoutów nie oceniano.
+Regresja kodu: **940 passed**, testy korekty/CI **22 passed**;
+końcowa regresja producenta/weryfikatora źródła **560 passed**.
+Model nadal jest `not_ready`; punkt blokad jakości nie jest jeszcze zamknięty.
+
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
 identity i transportu bez generatora/DB.
