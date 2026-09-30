@@ -32,6 +32,33 @@ def series(row: HistoryContext | InputRow) -> tuple[str, str, str]:
     return row.product_id, row.selling_location_id, row.channel
 
 
+def scoped_inputs(
+    profile: "PreparedInputs", scope: BatchScope, horizon: Literal[7, 14]
+) -> "PreparedInputs":
+    """Derive a content-addressed subset; the queue retains the original registration pin."""
+    profile = PreparedInputs.model_validate_json(profile.model_dump_json())
+    if (
+        not set(scope.product_ids) <= set(profile.scope.product_ids)
+        or not set(scope.selling_location_ids) <= set(profile.scope.selling_location_ids)
+        or scope.channel != profile.scope.channel
+        or horizon > profile.horizon_days
+    ):
+        raise ValueError("prepared_inputs_scope_or_horizon_uncovered")
+    keys = {
+        (p, loc, scope.channel) for p in scope.product_ids for loc in scope.selling_location_ids
+    }
+    return prepared(
+        InputContent(
+            feature_manifest=profile.feature_manifest,
+            as_of_time=profile.as_of_time,
+            scope=scope,
+            horizon_days=horizon,
+            rows=tuple(r for r in profile.rows if series(r) in keys and r.horizon_days <= horizon),
+            histories=tuple(h for h in profile.histories if series(h) in keys),
+        )
+    )
+
+
 class InputContent(Contract):
     schema_version: Literal["1.0"] = "1.0"
     kind: Literal["forecast_inference_inputs"] = "forecast_inference_inputs"

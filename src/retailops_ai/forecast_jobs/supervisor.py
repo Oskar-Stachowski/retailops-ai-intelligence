@@ -100,7 +100,8 @@ def supervise(
                 strict_json(raw)
                 result = RuntimeResult.model_validate_json(raw)
                 if (
-                    result.profile_id != request.inputs.profile_id
+                    result.purpose != request.purpose
+                    or result.profile_id != request.inputs.profile_id
                     or result.release_id != request.release.release_id
                     or len(result.quantities) != len(request.inputs.rows)
                     or result.peak_rss_bytes > request.limits.rss_bytes

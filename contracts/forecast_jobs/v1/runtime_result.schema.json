@@ -22,8 +22,11 @@
       "type": "string"
     },
     "purpose": {
-      "const": "runtime_preflight_only",
       "default": "runtime_preflight_only",
+      "enum": [
+        "runtime_preflight_only",
+        "qualified_forecast_computation"
+      ],
       "title": "Purpose",
       "type": "string"
     },

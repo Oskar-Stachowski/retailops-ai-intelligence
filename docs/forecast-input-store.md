@@ -3,8 +3,8 @@
 Ten zakres dodaje prywatny rejestr prepared inputs w PostgreSQL oraz
 supervisor dla loadera AI 05.5a. [Odbiór](evidence/05-05-input-store.md)
 sprawdza rzeczywisty pakiet, współbieżny zapis, rollback i SIGKILL/restart.
-Nie przyjmuje rzeczywistych runów do kolejki ani nie publikuje prognoz;
-te ścieżki wymagają atomowego outputu AI 05.6 i zakwalifikowanego modelu.
+[AI 05.6](forecast-publication.md) łączy ten rejestr i supervisor z kolejką
+i atomowym outputem. Serving wymaga zakwalifikowanego modelu.
 
 ## Trwała rejestracja
 
@@ -81,8 +81,8 @@ supervisora może pozostać prywatny staging; przed jego usunięciem trzeba
 potwierdzić zakończenie procesów tej próby. Timeout, błąd lub odmowa
 callbacku lease kończą własny proces obliczeń i czekają na jego zakończenie.
 Kernel alarm ogranicza również pracę childa po SIGKILL supervisora.
-Hook heartbeat/lease jest odebrany w testach; nie stanowi jeszcze
-integracji przyjętego rzeczywistego runu z transakcją publikacji.
+Hook heartbeat/lease jest podłączony do przyjętego runu i transakcji
+publikacji w [AI 05.6](forecast-publication.md).
 
 Wynik `runtime_preflight_only` jest typowany, przypina profile/release ID,
 liczbę i hash skończonych, nieujemnych wartości oraz czas/peak RSS.
@@ -108,7 +108,7 @@ python scripts/check_forecast_input_store.py \
 Kontroler usuwa tylko swój projekt i wolumen. Udana rejestracja nie otwiera
 servingu: archiwum 04.8 pozostaje `not_ready` i ma starszy lock features.
 Przed odbiorem qualified execution trzeba przygotować spójny, zakwalifikowany
-pakiet AI 04. Kolejny zakres to AI 05.6: pełny grain wyników, atomowy
-manifest/pointer oraz przyjęcie i zakończenie rzeczywistych zadań z fencing.
+pakiet AI 04. [AI 05.6](forecast-publication.md) ma oddzielny odbiór
+techniczny przyjęcia, fencing i transakcji całego wyniku na PostgreSQL.
 AI 05.7 doda scoped read API z paginacją i freshness; zdarzenia należą do AI 10.
 AI 05 pozostaje otwarte; zdalny Required CI tego brancha nie został odebrany.

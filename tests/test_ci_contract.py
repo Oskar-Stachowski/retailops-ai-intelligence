@@ -146,3 +146,15 @@ def test_required_ci_cannot_drop_forecast_queue():
     ]
     assert "persistence must execute forecast queue acceptance" in module.workflow_errors(data)
     assert "scripts/update_forecast_job_contracts.py --check" in (ROOT / "Makefile").read_text()
+
+
+def test_required_ci_cannot_drop_forecast_publication_acceptance():
+    data = workflow()
+    data["jobs"]["persistence"]["steps"] = [
+        step
+        for step in data["jobs"]["persistence"]["steps"]
+        if step.get("run") != "make forecast-publication-smoke"
+    ]
+    assert "persistence must execute forecast publication acceptance" in module.workflow_errors(
+        data
+    )

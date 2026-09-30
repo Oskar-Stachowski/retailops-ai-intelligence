@@ -23,6 +23,9 @@ class ExecutionLimits(Contract):
 
 
 class RuntimeExecution(Contract):
+    purpose: Literal["runtime_preflight_only", "qualified_forecast_computation"] = (
+        "runtime_preflight_only"
+    )
     environment: Literal["local", "test"]
     compose: bool
     inputs: PreparedInputs
@@ -48,7 +51,9 @@ class RuntimeExecution(Contract):
 
 
 class RuntimeResult(Contract):
-    purpose: Literal["runtime_preflight_only"] = "runtime_preflight_only"
+    purpose: Literal["runtime_preflight_only", "qualified_forecast_computation"] = (
+        "runtime_preflight_only"
+    )
     profile_id: ProfileID
     release_id: ReleaseID
     quantities: tuple[Units, ...] = Field(min_length=1, max_length=1400)

@@ -4,8 +4,8 @@ Ten zakres przygotowuje przyjmowanie zadań, leasing, retry i recovery,
 niezależnie od kwalifikacji modelu AI 04. [Odbiór](evidence/05-04-queue.md)
 używa wyłącznie jawnych fixture `lifecycle_mechanics_only` w `APP_ENV=test`.
 [Pakiet wejścia i loader 05.5a](forecast-runtime.md) są przygotowane osobno.
-Ich integracja z kolejką, publikacja prognoz oraz read API pozostają
-w AI 05.5–05.7. Etap 05 nie jest jeszcze zamknięty.
+[Integracja i atomowa publikacja 05.6](forecast-publication.md) mają oddzielny
+odbiór techniczny PostgreSQL; read API pozostaje w 05.7. Etap 05 nie jest jeszcze zamknięty.
 
 ## Przyjęcie i odczyt
 
@@ -51,10 +51,10 @@ przy powtórzeniu klucza. Historia zawiera wyłącznie zamknięte próby, maksym
 Brak modelu lub niedokończona decyzja lifecycle daje `409`, brak przygotowanego
 wejścia `422`, pełna kolejka `429`, niedostępna/niezgodna baza `503`.
 
-W `APP_ENV=local` istnieje [prywatny rejestr profili 05.5b](forecast-input-store.md),
-lecz kolejka nie przyjmuje jeszcze rzeczywistych wejść przed wdrożeniem
-atomowego outputu 05.6. API odmawia przyjęcia takiego wejścia; mechanics nie
-mogą stać się modelem produkcyjnym lub rzeczywistą prognozą.
+W `APP_ENV=local` kolejka przyjmuje [zarejestrowane rzeczywiste wejścia](forecast-input-store.md)
+po zatwierdzeniu spójnego release’u; pełne warunki i atomowy zapis opisuje
+[AI 05.6](forecast-publication.md). Mechanics zachowują oddzielny namespace
+i nie mogą stać się rzeczywistą prognozą.
 
 ## Piny i przejścia
 
@@ -132,10 +132,9 @@ nie usuwa zapisanych runów. Backup schematu `ai` obejmuje także nowe tabele.
 
 ## Pozostały zakres
 
-[Rejestr i supervisor 05.5b](forecast-input-store.md) mają odbiór lokalny.
-AI 05.6 podłączy je do przyjęcia rzeczywistych profili, lease i transakcji
-zakończenia, a następnie utrwali pełne prognozy w
-ograniczonych partycjach i atomowo opublikuje output manifest/pointer.
-AI 05.7 doda listy forecast/model/evaluation z paginacją i freshness.
-Zdarzenia i outbox/projekcje pozostają w AI 10. Obecny odbiór kolejki
-nie potwierdza tych przyszłych ścieżek ani zdalnego Required CI.
+[Rejestr i supervisor 05.5b](forecast-input-store.md) oraz
+[integracja/publikacja 05.6](forecast-publication.md) są zaimplementowane.
+Oba zakresy mają odbiór PostgreSQL na jawnych fixture.
+Pozostaje odbiór na spójnym, zakwalifikowanym release’ie AI 04,
+AI 05.7 z listami forecast/model/evaluation, paginacją i freshness
+oraz zdalny Required CI. Zdarzenia i outbox/projekcje należą do AI 10.

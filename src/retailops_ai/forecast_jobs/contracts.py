@@ -35,6 +35,7 @@ BatchErrorCode = Literal[
     "input-origin-mismatch",
     "queue-full",
     "input-coverage-mismatch",
+    "input-runtime-incompatible",
     "run-not-active",
 ]
 

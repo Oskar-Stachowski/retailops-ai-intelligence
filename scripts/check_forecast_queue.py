@@ -1,10 +1,12 @@
 """Disposable, no-host-port real queue/worker acceptance and database crash recovery."""
 
+import argparse
 import json
 import re
 import subprocess
 import uuid
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 
 import lifecycle_store as combined
@@ -15,6 +17,9 @@ REPORT = stack.ROOT / "docs/evidence/05-04-queue.json"
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--report", type=Path, default=REPORT)
+    args = parser.parse_args()
     project = "retailops_ai_queue_" + uuid.uuid4().hex[:10]
     owned = False
     target = project
@@ -75,8 +80,13 @@ def main() -> int:
         report["counts"] = after["counts"]
         report["state_sha256"] = after["state_sha256"]
         report["checks"].extend(after["checks"])
-        REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
-        print(json.dumps({"status": "passed", "purpose": report["purpose"], "report": str(REPORT)}))
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        args.report.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+        print(
+            json.dumps(
+                {"status": "passed", "purpose": report["purpose"], "report": str(args.report)}
+            )
+        )
         return 0
     except (OSError, ValueError, KeyError, TypeError):
         print(json.dumps({"error": "forecast_queue_smoke_failed", "phase": phase}))

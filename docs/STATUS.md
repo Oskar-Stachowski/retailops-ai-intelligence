@@ -111,8 +111,8 @@ HTTP/PostgreSQL/MLflow, 9 runów, 12 prób i 2 kompletne wyniki fixture,
 wyścig workerów, SIGKILL po częściowym obliczeniu, odrzucenie starego tokenu,
 zmianę aliasu bez zmiany pinów oraz zachowanie pełnego stanu po restarcie bazy.
 **Mechanika działa lokalnie na jawnych fixture; AI 05 pozostaje otwarte.**
-Do wykonania: przyjęcie rzeczywistych profili i integracja z atomową publikacją
-prognoz w 05.6 oraz read API z freshness w 05.7.
+Implementację integracji profili i atomowej publikacji opisuje 05.6 poniżej.
+Pozostaje read API z freshness w 05.7 i odbiór qualified release’u.
 Nie ma zdalnego Required CI tych zmian. AI 04 jest rozwijane w osobnej sesji;
 jego nowsza kwalifikacja nie została zaimportowana do tego worktree.
 
@@ -126,8 +126,8 @@ zakwalifikowanego release’u i nie opublikowano prognoz.** Archiwum pozostaje
 `not_ready` i ma starszy lock features niż model/runtime, więc wymaga
 spójnego pakietu z AI 04 przed servingiem. Nowsze zmiany AI 04 są w osobnej
 sesji. Rejestr i supervisor mają odbiór 05.5b poniżej. Do wykonania:
-integracja z kolejką i atomowym outputem w 05.6 oraz odbiór zatwierdzonego
-modelu. Potem 05.7; zdarzenia w AI 10.
+odbiór zatwierdzonego, spójnego modelu. Implementację integracji
+z kolejką i atomowym outputem opisuje 05.6 poniżej. Potem 05.7; zdarzenia w AI 10.
 Nowa bramka kontraktów należy do `make check`, bez zdalnego Required CI.
 
 **AI 05.5b — trwałe wejścia i ograniczony preflight:** [runbook](forecast-input-store.md)
@@ -137,10 +137,22 @@ poświadczeń i ogranicza czas, pamięć oraz IO. [Odbiór](evidence/05-05-input
 potwierdza rzeczywisty pakiet, wyścig zapisów, rollback limitu JSONB oraz
 SIGKILL/restart bez zmiany treści. Worker odrzucił brak zatwierdzonego release’u;
 nie utworzono prognoz ani runów. Po migracji ponownie odebrano kolejkę fixtures.
-Do wykonania: integracja rzeczywistych profili i supervisora z przyjęciem
-runu, fencing i atomowym outputem w AI 05.6 oraz odbiór zakwalifikowanego,
-spójnego pakietu AI 04. Potem read API 05.7 i zdarzenia AI 10.
+Do wykonania: odbiór zakwalifikowanego, spójnego pakietu AI 04.
+Implementację runu, fencing i publikacji opisuje 05.6 poniżej. Potem read API 05.7 i zdarzenia AI 10.
 Brak zdalnego Required CI; AI 05 pozostaje otwarte.
+
+**AI 05.6 — atomowa publikacja i integracja workera:** [runbook](forecast-publication.md)
+opisuje przyjęcie zarejestrowanych profili, filtrowany profil wykonania,
+release pins, ograniczony supervisor z heartbeat oraz jedną transakcję
+partycji/manifestu/runu/historii/pointera. [Stan weryfikacji](evidence/05-06-publication.md)
+zawiera testy jednostkowe na synthetic inputs i SQL-only stub gates.
+Odbiór PostgreSQL potwierdza rollback częściowego zapisu, odrzucenie starego
+tokenu, wygaśnięcie lease podczas publikacji, zachowanie nowszego pointera
+i identyczny pełny stan po restarcie. Ponownie przeszła regresja kolejki.
+Nie zaimportowano qualified release’u AI 04;
+pełny odbiór rzeczywistego batchu czeka na spójny zakwalifikowany handoff.
+Następny zakres to read API 05.7 z paginacją i freshness; zdarzenia AI 10.
+Zdalny Required CI tego brancha pozostaje nieodebrany; AI 05 jest otwarte.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

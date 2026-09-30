@@ -25,6 +25,9 @@ from retailops_ai.forecast_jobs.contracts import (
     MechanicsProfile,
     QueuePolicy,
 )
+from retailops_ai.forecast_jobs.execution_contracts import RuntimeResult
+from retailops_ai.forecast_jobs.inputs import PreparedInputs, scoped_inputs
+from retailops_ai.forecast_jobs.publication import publication, receipt, scope_key
 from retailops_ai.model_lifecycle.contracts import MODEL, TEST_MODEL, Release
 
 QUEUE_LOCK = 505040
@@ -49,8 +52,10 @@ class BatchAdministration(Protocol):
 @dataclass(frozen=True)
 class Claim:
     run: BatchRun
-    profile: MechanicsProfile
+    profile: MechanicsProfile | PreparedInputs
     token: str = field(repr=False)
+    release: Release | None = None
+    deadline: datetime | None = None
 
 
 def checked(connection: Connection) -> datetime:
@@ -150,9 +155,15 @@ class PostgresBatchQueue:
         engine: Engine,
         environment: Literal["local", "test"],
         policy: QueuePolicy | None = None,
+        *,
+        mechanics: bool | None = None,
     ) -> None:
         self.engine, self.environment = engine, environment
         self.policy = policy or QueuePolicy()
+        self.mechanics = environment == "test" if mechanics is None else mechanics
+        if self.mechanics and environment != "test":
+            raise ValueError("mechanics_queue_requires_test_environment")
+        self.purpose = "lifecycle_mechanics_only" if self.mechanics else "qualified_forecast"
 
     def submit(self, request: BatchRequest, principal: Principal, key: str) -> BatchRun:
         if "pipeline" not in principal.roles or "forecast:run" not in principal.capabilities:
@@ -175,13 +186,13 @@ class PostgresBatchQueue:
             )
             if old is not None:
                 run = record(old)
-                if run.input_ref.request_hash != request_hash:
+                if run.input_ref.request_hash != request_hash or run.purpose != self.purpose:
                     raise BatchError(409, "idempotency-conflict")
                 authorize_read(run, principal)
                 return run
             if request.as_of > now:
                 raise BatchError(422, "input-from-future")
-            name = TEST_MODEL if self.environment == "test" else MODEL
+            name = TEST_MODEL if self.mechanics else MODEL
             raw_release = connection.scalar(
                 text(
                     "SELECT r.release FROM ai.model_heads h JOIN ai.model_releases r USING(release_id) WHERE h.model_name=:name"
@@ -198,17 +209,57 @@ class PostgresBatchQueue:
             ):
                 raise BatchError(409, "model-decision-incomplete")
             release = Release.model_validate_json(json.dumps(raw_release))
-            if release.binding.model_name != name or any(
-                g.status != "passed" for g in release.binding.qualification.gates.values()
+            if (
+                release.binding.model_name != name
+                or release.binding.qualification.purpose != self.purpose
+                or any(g.status != "passed" for g in release.binding.qualification.gates.values())
             ):
                 raise BatchError(409, "model-not-approved")
-            raw_profile = connection.scalar(
-                text("SELECT profile FROM ai.forecast_batch_profiles WHERE profile_id=:id"),
-                {"id": request.profile_id},
-            )
-            if raw_profile is None or self.environment != "test":
-                raise BatchError(422, "input-not-prepared")
-            profile = MechanicsProfile.model_validate_json(json.dumps(raw_profile))
+            profile: MechanicsProfile | PreparedInputs
+            if self.mechanics:
+                raw_profile = connection.scalar(
+                    text("SELECT profile FROM ai.forecast_batch_profiles WHERE profile_id=:id"),
+                    {"id": request.profile_id},
+                )
+                if raw_profile is None:
+                    raise BatchError(422, "input-not-prepared")
+                profile = MechanicsProfile.model_validate_json(json.dumps(raw_profile))
+                source_id, curated_id, feature_id = (
+                    profile.source_dataset_id,
+                    profile.curated_dataset_id,
+                    profile.feature_set_id,
+                )
+            else:
+                from retailops_ai.forecast_jobs.input_store import registration
+
+                row = (
+                    connection.execute(
+                        text(
+                            "SELECT * FROM ai.forecast_prepared_inputs WHERE environment=:env AND profile_id=:id"
+                        ),
+                        {"env": self.environment, "id": request.profile_id},
+                    )
+                    .mappings()
+                    .first()
+                )
+                if row is None:
+                    raise BatchError(422, "input-not-prepared")
+                profile = registration(row).inputs
+                descriptor = profile.feature_manifest.descriptor
+                source_id, curated_id, feature_id = (
+                    descriptor.parent.source_dataset_id,
+                    descriptor.parent.curated_dataset_id,
+                    profile.feature_manifest.feature_set_id,
+                )
+                if (
+                    descriptor.code.dependency_lock_sha256
+                    != release.binding.qualification.dependency_lock_sha256
+                ):
+                    raise BatchError(422, "input-runtime-incompatible")
+                try:
+                    scoped_inputs(profile, scope, max(request.horizons_days))
+                except ValueError:
+                    raise BatchError(422, "input-coverage-mismatch") from None
             if profile.as_of_time != request.as_of:
                 raise BatchError(422, "input-origin-mismatch")
             counts = connection.execute(
@@ -241,9 +292,9 @@ class PostgresBatchQueue:
                 purpose=release.binding.qualification.purpose,
                 policy=self.policy,
                 input_ref=BatchInput(
-                    source_dataset_id=profile.source_dataset_id,
-                    curated_dataset_id=profile.curated_dataset_id,
-                    feature_set_id=profile.feature_set_id,
+                    source_dataset_id=source_id,
+                    curated_dataset_id=curated_id,
+                    feature_set_id=feature_id,
                     as_of_time=profile.as_of_time,
                     profile_id=profile.profile_id,
                     request_hash=request_hash,
@@ -251,7 +302,11 @@ class PostgresBatchQueue:
                     scope=scope,
                 ),
             )
-            rows = selected(profile, run)
+            rows = (
+                selected(profile, run)
+                if isinstance(profile, MechanicsProfile)
+                else scoped_inputs(profile, scope, max(request.horizons_days)).rows
+            )
             expected = {
                 (p, loc, h)
                 for p in scope.product_ids
@@ -393,10 +448,10 @@ class PostgresBatchQueue:
             now = clock(connection)
             expired = (
                 connection.execute(
-                    text("""SELECT * FROM ai.forecast_batch_runs WHERE environment=:env
+                    text("""SELECT * FROM ai.forecast_batch_runs WHERE environment=:env AND record->>'purpose'=:purpose
              AND ((status='queued' AND run_deadline<=:now) OR (status='running' AND (lease_expires<=:now OR attempt_deadline<=:now)))
              ORDER BY run_id FOR UPDATE"""),
-                    {"env": self.environment, "now": now},
+                    {"env": self.environment, "now": now, "purpose": self.purpose},
                 )
                 .mappings()
                 .all()
@@ -425,9 +480,9 @@ class PostgresBatchQueue:
             chosen = (
                 connection.execute(
                     text(
-                        "SELECT * FROM ai.forecast_batch_runs WHERE environment=:env AND status='queued' AND available_at<=:now AND run_deadline>:now ORDER BY available_at,run_id LIMIT 1 FOR UPDATE SKIP LOCKED"
+                        "SELECT * FROM ai.forecast_batch_runs WHERE environment=:env AND record->>'purpose'=:purpose AND status='queued' AND available_at<=:now AND run_deadline>:now ORDER BY available_at,run_id LIMIT 1 FOR UPDATE SKIP LOCKED"
                     ),
-                    {"env": self.environment, "now": now},
+                    {"env": self.environment, "now": now, "purpose": self.purpose},
                 )
                 .mappings()
                 .first()
@@ -456,15 +511,43 @@ class PostgresBatchQueue:
                 lease=min(now + timedelta(seconds=run.policy.lease_seconds), deadline),
                 deadline=deadline,
             )
-            profile = MechanicsProfile.model_validate_json(
+            profile: MechanicsProfile | PreparedInputs
+            if self.mechanics:
+                profile = MechanicsProfile.model_validate_json(
+                    json.dumps(
+                        connection.scalar(
+                            text(
+                                "SELECT profile FROM ai.forecast_batch_profiles WHERE profile_id=:id"
+                            ),
+                            {"id": run.input_ref.profile_id},
+                        )
+                    )
+                )
+            else:
+                from retailops_ai.forecast_jobs.input_store import registration
+
+                stored = (
+                    connection.execute(
+                        text(
+                            "SELECT * FROM ai.forecast_prepared_inputs WHERE environment=:env AND profile_id=:id"
+                        ),
+                        {"env": self.environment, "id": run.input_ref.profile_id},
+                    )
+                    .mappings()
+                    .one()
+                )
+                profile = registration(stored).inputs
+            release = Release.model_validate_json(
                 json.dumps(
                     connection.scalar(
-                        text("SELECT profile FROM ai.forecast_batch_profiles WHERE profile_id=:id"),
-                        {"id": run.input_ref.profile_id},
+                        text("SELECT release FROM ai.model_releases WHERE release_id=:id"),
+                        {"id": run.release_id},
                     )
                 )
             )
-            return Claim(running, profile, token)
+            if release.binding != run.resolved_model or release.image_digest != run.image_digest:
+                raise ValueError("claimed_release_pin_mismatch")
+            return Claim(running, profile, token, release, deadline)
 
     def _leased(self, connection: Connection, claim: Claim) -> tuple[Any, datetime]:
         row = (
@@ -486,6 +569,7 @@ class PostgresBatchQueue:
             or row["attempt_deadline"] <= now
             or row["run_deadline"] <= now
             or record(row["record"]) != claim.run
+            or claim.run.purpose != self.purpose
         ):
             raise LeaseLost("batch_lease_lost")
         return row, now
@@ -503,6 +587,12 @@ class PostgresBatchQueue:
                 ),
                 deadline=row["attempt_deadline"],
             )
+
+    def execution_budget(self, claim: Claim) -> float:
+        with self.engine.begin() as connection:
+            checked(connection)
+            row, now = self._leased(connection, claim)
+            return float(min(120.0, (row["attempt_deadline"] - now).total_seconds()))
 
     def fail(self, claim: Claim, *, reason: str, retryable: bool) -> None:
         with self.engine.begin() as connection:
@@ -545,6 +635,8 @@ class PostgresBatchQueue:
             != (run.run_id, run.release_id, run.input_ref.profile_id)
         ):
             raise ValueError("mechanics_output_binding_mismatch")
+        if not isinstance(claim.profile, MechanicsProfile):
+            raise ValueError("mechanics_profile_required")
         expected = {
             tuple(r.model_dump(mode="json", exclude={"value"}).items())
             for r in selected(claim.profile, run)
@@ -576,3 +668,60 @@ class PostgresBatchQueue:
             transition_run(run, done)
             self._write(connection, done)
             self._history(connection, done, "mechanics_completed")
+
+    def complete_forecast(self, claim: Claim, result: RuntimeResult) -> None:
+        """All partitions, manifest, current pointer, run and history commit together."""
+        if self.mechanics or not isinstance(claim.profile, PreparedInputs):
+            raise ValueError("qualified_profile_required")
+        with self.engine.begin() as connection:
+            checked(connection)
+            _, now = self._leased(connection, claim)
+            output = publication(claim.run, claim.profile, result, now)
+            m = output.manifest
+            key = scope_key(m.scope, m.horizon_days)
+            connection.execute(
+                text("""INSERT INTO ai.forecast_output_manifests(artifact_id,run_id,environment,scope_key,manifest)
+                VALUES (:id,:run,:env,:scope,CAST(:manifest AS jsonb))"""),
+                {
+                    "id": m.artifact_id,
+                    "run": m.run_id,
+                    "env": self.environment,
+                    "scope": key,
+                    "manifest": m.model_dump_json(),
+                },
+            )
+            for partition in output.partitions:
+                connection.execute(
+                    text("""INSERT INTO ai.forecast_output_partitions(artifact_id,ordinal,partition,sha256)
+                    VALUES (:id,:ordinal,CAST(:partition AS jsonb),:sha)"""),
+                    {
+                        "id": m.artifact_id,
+                        "ordinal": partition.ordinal,
+                        "partition": partition.model_dump_json(),
+                        "sha": receipt(partition).sha256,
+                    },
+                )
+            # Recheck DB time after the last write; the lock alone does not extend a lease.
+            _, now = self._leased(connection, claim)
+            raw = claim.run.model_dump(mode="json")
+            raw.update(
+                status="succeeded",
+                completed_at=now.isoformat(),
+                output_ref=RunOutput(
+                    kind="predictions", artifact_id=m.artifact_id, complete=True
+                ).model_dump(mode="json"),
+            )
+            done = record(raw)
+            transition_run(claim.run, done)
+            self._write(connection, done)
+            self._history(connection, done, "forecast_completed")
+            # A slower old origin cannot displace a more recent successful forecast.
+            connection.execute(
+                text("""INSERT INTO ai.forecast_output_heads(environment,scope_key,artifact_id)
+                VALUES (:env,:scope,:id) ON CONFLICT(environment,scope_key) DO UPDATE SET artifact_id=EXCLUDED.artifact_id
+                WHERE (SELECT ((manifest->>'as_of_time')::timestamptz, (r.record->>'requested_at')::timestamptz, m.run_id)
+                       FROM ai.forecast_output_manifests m JOIN ai.forecast_batch_runs r USING(run_id) WHERE m.artifact_id=EXCLUDED.artifact_id)
+                    > (SELECT ((manifest->>'as_of_time')::timestamptz, (r.record->>'requested_at')::timestamptz, m.run_id)
+                       FROM ai.forecast_output_manifests m JOIN ai.forecast_batch_runs r USING(run_id) WHERE m.artifact_id=ai.forecast_output_heads.artifact_id)"""),
+                {"env": self.environment, "scope": key, "id": m.artifact_id},
+            )

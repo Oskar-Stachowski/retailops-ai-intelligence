@@ -118,9 +118,9 @@ zmigrowany; provision poświadczeń opisuje ten sam runbook 05.3a.
 ## Granica odbioru i pozostały zakres
 
 Pointer oznacza **zatwierdzony release**, nie faktycznie działający worker.
-Odpowiedzi mają `runtime_status=not_integrated`. Integracja release’u z trwałym batchem,
-persisted batch, odczyt prognoz i failure/load rollback runtime pozostają
-w kolejnych zakresach AI 05. Nie wykonano tych operacji na modelu AI 04.
+Odpowiedzi mają `runtime_status=not_integrated`. Ten status nie jest sygnałem pracy procesu: [AI 05.6](forecast-publication.md)
+ma już implementację trwałego batchu i publikacji, a odczyt prognoz
+pozostaje w AI 05.7. Nie wykonano tych operacji na modelu AI 04.
 
 AI 05.3 pozostaje otwarte. Do domknięcia potrzeba rzeczywistej kwalifikacji
 modelu i odbioru na jego artefaktach. [Wspólna procedura backup/restore
@@ -130,5 +130,7 @@ Backup 05.1 nadal kopiuje tylko MLflow; nie jest pełnym backupem lifecycle.
 [Trwała kolejka 05.4a](forecast-worker.md) ma odbiór mechaniki;
 [loader 05.5a](forecast-runtime.md) ma odbiór wejścia i adapterów.
 [Rejestr i ograniczony preflight 05.5b](forecast-input-store.md) mają odbiór lokalny.
-Integracja rzeczywistych profili z kolejką i publikacja wyników pozostają
-otwarte, podczas gdy poprawa/kwalifikacja AI 04 trwa w osobnym branchu/worktree.
+[Integracja i atomowa publikacja 05.6](forecast-publication.md) mają odbiór
+techniczny na fixture, w tym transakcje PostgreSQL.
+Odbiór rzeczywistego release’u pozostaje otwarty;
+poprawa/kwalifikacja AI 04 trwa w osobnym branchu/worktree.

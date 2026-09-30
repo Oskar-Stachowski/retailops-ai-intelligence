@@ -64,6 +64,7 @@ def main() -> int:
         if peak > request.limits.rss_bytes:
             raise ValueError("runtime_executor_memory_limit")
         result = RuntimeResult(
+            purpose=request.purpose,
             profile_id=request.inputs.profile_id,
             release_id=request.release.release_id,
             quantities=quantities,

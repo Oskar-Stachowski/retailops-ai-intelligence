@@ -49,6 +49,9 @@ pakietu z zamrożonym modelem i [odbiór adapterów](evidence/05-05-runtime.md),
 bez publikacji prognoz ani zatwierdzenia jakości AI 04.
 [Trwałe wejścia i supervisor AI 05.5b](forecast-input-store.md) opisują
 prywatną rejestrację, limity procesu i [odbiór PostgreSQL](evidence/05-05-input-store.md).
+[Atomowa publikacja AI 05.6](forecast-publication.md) opisuje przyjęcie profili,
+ograniczony batch i transakcję manifestu, partycji oraz pointera.
+[Bieżący odbiór](evidence/05-06-publication.md) podaje kontrolę i braki.
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)
