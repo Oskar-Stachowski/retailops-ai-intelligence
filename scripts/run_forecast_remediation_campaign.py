@@ -26,7 +26,7 @@ def main() -> int:
     parser.add_argument(
         "--campaign",
         type=Path,
-        default=ROOT / "contracts/forecast/v1/quality-remediation.campaign-v2.json",
+        default=ROOT / "contracts/forecast/v1/quality-remediation.campaign-v4.json",
     )
     parser.add_argument(
         "--output", type=Path, default=ROOT / "reports/quality-remediation-campaign.json"
@@ -63,6 +63,11 @@ def main() -> int:
     imported = import_snapshot(
         args.snapshot_dir, generated, required_use_cases=("forecast_source",)
     )
+    provenance = imported.snapshot.manifest["source"]["provenance"]
+    if provenance["git_commit"] != campaign["source_repository_commit"] or (
+        provenance["code_state"] != "clean"
+    ):
+        raise ValueError("campaign_requires_pinned_clean_source_producer")
     save("import", source=imported.summary())
     curated = build_curated(imported.directory, generated)
     parameters = curated.manifest["descriptor"]["source_parameters"]
