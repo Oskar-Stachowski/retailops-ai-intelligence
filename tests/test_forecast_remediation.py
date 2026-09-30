@@ -185,6 +185,46 @@ def test_preflight_reads_features_only_and_blocks_missing_critical_volume(artifa
 
 
 @pytest.mark.parametrize("artifacts", [37], indirect=True)
+def test_source_sample_bounds_dominate_actual_features_and_never_read_target_outcomes(
+    artifacts, monkeypatch
+):
+    from retailops_ai.forecasting.features import OriginFeatures
+    from retailops_ai.forecasting.remediation_preflight import preflight
+    from retailops_ai.forecasting.remediation_source_preflight import source_preflight
+
+    features, _, curated, calendar = artifacts
+    policy = BacktestPolicy(
+        folds=2,
+        initial_train_days=1,
+        validation_days=2,
+        development_holdout_days=2,
+        step_days=2,
+    )
+    actual = preflight(features, policy)
+
+    def prohibit_targets(*args, **kwargs):
+        raise AssertionError("Source sample bounds must not build or inspect target rows")
+
+    monkeypatch.setattr(OriginFeatures, "targets", prohibit_targets)
+    bounded = source_preflight(curated, calendar, policy)
+    assert bounded["status"] == "not_ready"
+    assert not bounded["target_outcomes_evaluated"] and not bounded["features_materialized"]
+    assert not bounded["target_labels_materialized"]
+    assert bounded["history_rows_selected_only_as_of_origin"]
+    assert bounded["full_feature_preflight_required_if_not_rejected"]
+    assert bounded["model_fits"] == 0 and not bounded["model_quality_qualified"]
+    for upper, measured in zip(bounded["gates"], actual["gates"], strict=True):
+        assert (upper["fold"], upper["role"], upper["volume"]) == (
+            measured["fold"],
+            measured["role"],
+            measured["volume"],
+        )
+        assert upper["potential_feature_rows_upper_bound"] >= measured["feature_eligible_rows"]
+        if upper["volume"] == "zero":
+            assert upper["potential_feature_rows_upper_bound"] == 0
+
+
+@pytest.mark.parametrize("artifacts", [37], indirect=True)
 def test_immutable_remediation_parent_replay_and_rehashed_forgery(artifacts, tmp_path, capsys):
     from retailops_ai.forecasting.cli import main
 

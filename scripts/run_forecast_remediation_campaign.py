@@ -16,6 +16,7 @@ from retailops_ai.forecasting.manifests import build_feature_set
 from retailops_ai.forecasting.quality_contract import QualityPolicy
 from retailops_ai.forecasting.remediation import build_remediation, verify_remediation
 from retailops_ai.forecasting.remediation_preflight import preflight
+from retailops_ai.forecasting.remediation_source_preflight import source_preflight
 from retailops_ai.source_snapshot.importer import import_snapshot
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -99,6 +100,17 @@ def main() -> int:
     calendar = build_calendar(curated.directory, window)
     path = publish_calendar(calendar, generated / "calendars")
     save("calendar", calendar_manifest=str(path))
+    history_sample = source_preflight(curated.directory, calendar, policy)
+    save("source_preflight", source_preflight=history_sample)
+    if history_sample["status"] == "not_ready":
+        save(
+            "blocked_before_features",
+            status="not_ready",
+            reason="critical_source_history_sample_cannot_reach_minimum_rows",
+            model_fits=0,
+            features_materialized=False,
+        )
+        return 3
     features = build_feature_set(curated.directory, calendar, generated / "features")
     save("features", feature_dir=str(features))
     sample = preflight(features, policy)
