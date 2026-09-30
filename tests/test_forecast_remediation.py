@@ -135,6 +135,43 @@ def test_original_quality_thresholds_cannot_be_relaxed():
 
 
 @pytest.mark.parametrize("artifacts", [37], indirect=True)
+def test_preflight_reads_features_only_and_blocks_missing_critical_volume(artifacts, monkeypatch):
+    from retailops_ai.forecasting import remediation_preflight
+
+    features, _, _, _ = artifacts
+    original = remediation_preflight.input_models
+    requested = []
+
+    def features_only(directory, name):
+        requested.append(name)
+        assert name == "features", "preflight must not read target labels"
+        return original(directory, name)
+
+    monkeypatch.setattr(remediation_preflight, "input_models", features_only)
+    report = remediation_preflight.preflight(
+        features,
+        BacktestPolicy(
+            folds=2,
+            initial_train_days=1,
+            validation_days=2,
+            development_holdout_days=2,
+            step_days=2,
+        ),
+    )
+    assert requested == ["features"]
+    assert report["status"] == "not_ready"
+    assert report["model_fits"] == 0 and not report["target_outcomes_read"]
+    assert not report["model_quality_qualified"]
+    assert len(report["gates"]) == 3 * 2 * 4
+    assert all(g["minimum_rows"] == 30 for g in report["gates"])
+    assert all(
+        g["status"] == "not_ready" and g["feature_eligible_rows"] == 0
+        for g in report["gates"]
+        if g["volume"] == "zero"
+    )
+
+
+@pytest.mark.parametrize("artifacts", [37], indirect=True)
 def test_immutable_remediation_parent_replay_and_rehashed_forgery(artifacts, tmp_path, capsys):
     from retailops_ai.forecasting.cli import main
 

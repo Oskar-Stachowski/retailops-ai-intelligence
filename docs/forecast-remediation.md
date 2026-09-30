@@ -3,9 +3,19 @@
 Nowa ścieżka `forecast-quality-remediation-1.0.0` zachowuje wszystkie progi
 [pierwotnej oceny](forecast-quality.md). Nie nadpisuje wcześniejszego backtestu,
 raportu quality ani runu 04.8. Każdy wynik ma osobny content ID i checksumy.
-[Kampania](../contracts/forecast/v1/quality-remediation.campaign.json) zamraża
+[Kampania v2](../contracts/forecast/v1/quality-remediation.campaign-v2.json) zamraża
 źródło, daty i późniejsze development holdouty przed ich oceną. Inventory jest
 obecne w źródle 2.7, ale nie jest dodawane do macierzy cech w tym zakresie.
+
+Kontrola przed treningiem zlicza wyłącznie cechy znane w origin, bez etykiet
+target. Każdy koszyk zero/low/medium/high wymaga co najmniej 30 potencjalnie
+kwalifikowanych wierszy w validation i holdoucie każdego folda. Brak próbki
+zatrzymuje kampanię przed dopasowaniem modeli. Obecność cech nie gwarantuje
+dostępności późniejszych etykiet ani jakości prognozy. Pierwsza
+[kampania](../contracts/forecast/v1/quality-remediation.campaign.json) z 12
+produktami nie miała koszyków zero i high; jej holdouty nie zostały ocenione.
+V2 zwiększa przekrój do 24 produktów i stosuje okna rolling, zachowując progi
+jakości oraz limit zasobów modeli.
 
 Korekta i wybór zależą wyłącznie od wolumenu znanego w origin oraz kategorii.
 Pierwsza połowa originów validation dopasowuje ograniczony współczynnik
@@ -45,6 +55,8 @@ nadal mogą blokować cały wynik. Nie ma wyboru zastępczej metody na holdoucie
   --feature-dir data/generated/features/<feature_set_id> \
   --backtest-dir data/generated/backtests/<backtest_id>
 make forecast-remediation-check
+.venv/bin/python scripts/run_forecast_remediation_campaign.py \
+  --snapshot-dir /absolute/path/to/frozen/source-2.7-snapshot
 ```
 
 Exit 3 oznacza kompletny raport `failed/not_ready`; exit 2 błąd wejścia.

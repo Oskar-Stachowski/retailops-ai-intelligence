@@ -474,6 +474,8 @@ def main(argv: list[str] | None = None) -> int:
             "backtest-verify",
             "quality-evaluate",
             "quality-verify",
+            "quality-remediate",
+            "remediation-verify",
             "run-export",
             "run-verify",
         }:
