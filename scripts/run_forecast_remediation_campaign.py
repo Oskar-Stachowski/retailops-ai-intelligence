@@ -27,7 +27,7 @@ def main() -> int:
     parser.add_argument(
         "--campaign",
         type=Path,
-        default=ROOT / "contracts/forecast/v1/quality-remediation.campaign-v4.json",
+        default=ROOT / "contracts/forecast/v1/quality-remediation.campaign-v5.json",
     )
     parser.add_argument(
         "--output", type=Path, default=ROOT / "reports/quality-remediation-campaign.json"

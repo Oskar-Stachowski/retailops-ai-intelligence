@@ -170,7 +170,6 @@
     "as_of_order_index": {
       "commit": "f0cfa92dc0c7f4748be70c4a20c39c0e0eb0d846",
       "controlled_58_table_parity": "passed",
-      "regenerated_data": false,
       "source_tests": 353
     },
     "controlled_58_table_identity_and_temporal_context_parity": "passed",
