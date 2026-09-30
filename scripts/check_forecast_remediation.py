@@ -7,6 +7,12 @@ from pathlib import Path
 from retailops_ai.forecasting.quality_metrics import SegmentAccumulator, assess_segment
 from retailops_ai.forecasting.remediation import residual_quantiles, verify_remediation
 from retailops_ai.forecasting.remediation_contract import RemediationManifest, RemediationPolicy
+from retailops_ai.forecasting.remediation_v2_contract import (
+    RemediationManifest as RemediationV2Manifest,
+)
+from retailops_ai.forecasting.remediation_v2_contract import (
+    RemediationPolicy as RemediationV2Policy,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -25,6 +31,8 @@ def main() -> int:
     for name, model in (
         ("remediation_policy", RemediationPolicy),
         ("remediation_manifest", RemediationManifest),
+        ("remediation_v2_policy", RemediationV2Policy),
+        ("remediation_v2_manifest", RemediationV2Manifest),
     ):
         schema = model.model_json_schema()
         frozen = json.loads((ROOT / f"contracts/forecast/v1/{name}.schema.json").read_bytes())

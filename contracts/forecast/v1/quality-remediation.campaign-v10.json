@@ -309,6 +309,7 @@
     "stores": 2,
     "warehouses": 2
   },
+  "source_dataset_id": "source-sha256-76994412fcabec320688429d7f88adcd80fe54fb70327b22c1456c27673c2d66",
   "source_rationale": "explicit_paired_synthetic_intermittency_scenario_long_tail_base_rate_0_06_instead_of_0_6_same_seed_dimensions_other_demand_classes_and_dates_no_holdout_outcome_rules_no_claim_of_production_representativeness",
   "source_repository_commit": "1d49c1afe2fab4840dbd00522d3553b03c5165a7",
   "source_snapshot_verifier_commit": "1d49c1afe2fab4840dbd00522d3553b03c5165a7",
