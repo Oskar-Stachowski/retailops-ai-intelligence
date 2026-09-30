@@ -71,8 +71,8 @@ bramki. Testy cleanupu chronią istniejące obrazy i usuwają własny tag po bł
 Katalog sprawdza manifest/run i enrollment/release pins; nie odczytuje
 wartości partycji prognoz ani wszystkich dawnych manifestów wersji.
 Nie potwierdza żywych aliasów, runtime, driftu ani nowej jakości modelu.
-Scoped evaluations potrzebują trwałego zakresu oceny i zweryfikowanych metryk;
-nie wolno udostępniać globalnych ocen na podstawie scope publikacji prognozy.
+[Historyczne evaluations 05.7c](../evaluations.md) mają trwały zakres
+i odtworzone metryki; scope publikacji prognozy nie uprawnia do globalnych ocen.
 Pozostają source watermark freshness, spójny qualified handoff AI 04,
 batch na jego rzeczywistym release'ie oraz zdalny Required CI brancha.
 **AI 05 pozostaje otwarte.** Outbox i zdarzenia należą do AI 10.

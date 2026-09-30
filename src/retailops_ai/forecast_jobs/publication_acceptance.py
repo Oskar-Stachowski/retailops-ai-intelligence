@@ -48,6 +48,7 @@ from retailops_ai.model_lifecycle.mechanics import capsule
 from retailops_ai.security.local import strict_json
 
 TABLES = (
+    "forecast_evaluations",
     "forecast_prepared_inputs",
     "model_decisions",
     "model_steps",

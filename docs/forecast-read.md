@@ -104,7 +104,7 @@ release’y sprawdzają odczyt; nie kwalifikują modelu AI 04. SIGKILL/restart
 zachowuje pełny stan i identyczny widok. Kontroler usuwa własne kontenery,
 wolumeny i tag obrazu, pozostawiając współdzielony cache oraz inne projekty.
 
-Do wykonania w AI 05: scoped read API evaluations, pełny watermark
+Do wykonania w AI 05: pełny watermark
 freshness, handoff i batch na rzeczywistym qualified release AI 04 oraz
 zdalny Required CI. Outbox/zdarzenia należą do AI 10.
 

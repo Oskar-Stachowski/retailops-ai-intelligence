@@ -29,6 +29,7 @@ from retailops_ai.config import Settings
 from retailops_ai.domain.readiness import Dependency
 from retailops_ai.forecast_jobs.queue import BatchAdministration, PostgresBatchQueue
 from retailops_ai.forecast_jobs.reader import ForecastReader, PostgresForecastReader
+from retailops_ai.model_lifecycle.evaluation_store import EvaluationReader, PostgresEvaluations
 from retailops_ai.model_lifecycle.reader import ModelCatalog, PostgresModelCatalog
 from retailops_ai.pipelines.readiness import Readiness
 from retailops_ai.pipelines.retrieval import load_retrieval_config
@@ -61,6 +62,7 @@ def create_app(
     forecast_administration: BatchAdministration | None = None,
     forecast_reader: ForecastReader | None = None,
     model_catalog: ModelCatalog | None = None,
+    evaluation_reader: EvaluationReader | None = None,
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
@@ -76,6 +78,7 @@ def create_app(
         or forecast_administration is None
         or forecast_reader is None
         or model_catalog is None
+        or evaluation_reader is None
     ) and settings.database_url is not None:
         knowledge_engine = index_engine(settings)
     if knowledge_backend is None and knowledge_engine is not None:
@@ -95,6 +98,8 @@ def create_app(
         forecast_reader = PostgresForecastReader(knowledge_engine, settings.app_env)
     if model_catalog is None and knowledge_engine is not None:
         model_catalog = PostgresModelCatalog(knowledge_engine, settings.app_env)
+    if evaluation_reader is None and knowledge_engine is not None:
+        evaluation_reader = PostgresEvaluations(knowledge_engine, settings.app_env)
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
@@ -222,6 +227,7 @@ def create_app(
             forecast_administration,
             forecast_reader,
             model_catalog,
+            evaluation_reader,
         )
     )
     return app

@@ -162,7 +162,7 @@ Każdy odczyt weryfikuje całe manifesty/partycje oraz piny udanych runów.
 [Odbiór](evidence/05-07-read.md) rozdziela testy techniczne od jakości modelu.
 Starszy origin i nowsza nieudana próba dają `stale`; brak osobnego source
 watermark daje `unknown`, bez deklarowania `current` na podstawie replay.
-Do wykonania: scoped read API evaluations, wersjonowany source watermark
+Do wykonania: wersjonowany source watermark
 i pełny odbiór freshness, spójny qualified handoff AI 04 oraz rzeczywisty
 batch na jego release’ie. Zdalny Required CI nadal nie jest odebrany;
 outbox/zdarzenia pozostają w AI 10. **AI 05 pozostaje otwarte.**
@@ -175,9 +175,21 @@ chronią odczyt. Nie udostępnia globalnych metryk ani URI plików.
 Head spoza scope pozostaje ukryty, aliases/runtime/drift nie są potwierdzane,
 freshness pozostaje `unknown`. [Odbiór](evidence/05-07-catalog.md) podaje
 rzeczywisty HTTP/PostgreSQL, próby uszkodzenia i restartu oraz granice fixture.
-Scoped evaluations potrzebują osobnego zakresu ocen i zweryfikowanych metryk;
-pełny watermark oraz qualified batch AI 04 nadal pozostają do wykonania.
+Scoped historyczne evaluations opisuje 05.7c poniżej; pełny watermark
+oraz qualified batch AI 04 nadal pozostają do wykonania.
 Zdalny Required CI tego brancha nie jest odebrany. **AI 05 pozostaje otwarte.**
+
+**AI 05.7c — historyczne oceny:** [runbook](evaluations.md) opisuje listę i szczegół
+`/evaluations`, całkowite pokrycie scope raportu przez grant, filtr statusu,
+immutable import i stabilne strony. Metryki MAE/WAPE zostały odtworzone z
+zapisanych predykcji/etykiet kalkulatorem AI 04, bez treningu. Pierwotny status
+jakości oraz stare code/lock pins są zachowane, bez nowej kwalifikacji modelu.
+[Odbiór](evidence/05-07-evaluations.md) obejmuje HTTP/PostgreSQL, 37 synthetic
+ocen i rzeczywisty historyczny export (12012 memberships), odmowę częściowego
+scope, niezmienność i SIGKILL/restart. Migracja `0013_forecast_evaluations`
+jest wymagana przez readiness/DB guard; trwałego stosu nie zmieniano.
+Pozostają watermark i pełna freshness prognoz, qualified handoff AI 04,
+batch na jego release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

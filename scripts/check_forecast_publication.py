@@ -17,11 +17,20 @@ from retailops_ai.forecast_jobs.inputs import PreparedInputs
 from retailops_ai.security.local import strict_json
 
 
-def main(*, read: bool = False, catalog: bool = False) -> int:
-    if read and catalog:
+def main(*, read: bool = False, catalog: bool = False, evaluations: bool = False) -> int:
+    if sum((read, catalog, evaluations)) > 1:
         raise ValueError("ambiguous_acceptance_mode")
-    mode = "catalog" if catalog else "read" if read else "publication"
+    mode = (
+        "evaluations"
+        if evaluations
+        else "catalog"
+        if catalog
+        else "read"
+        if read
+        else "publication"
+    )
     module = {
+        "evaluations": "retailops_ai.model_lifecycle.evaluation_acceptance",
         "catalog": "retailops_ai.model_lifecycle.read_acceptance",
         "read": "retailops_ai.forecast_jobs.read_acceptance",
         "publication": "retailops_ai.forecast_jobs.publication_acceptance",
@@ -32,24 +41,50 @@ def main(*, read: bool = False, catalog: bool = False) -> int:
         type=Path,
         default=stack.ROOT
         / (
-            "reports/model-catalog.json"
+            "reports/evaluations.json"
+            if evaluations
+            else "reports/model-catalog.json"
             if catalog
             else "reports/forecast-read.json"
             if read
             else "reports/forecast-publication.json"
         ),
     )
+    if evaluations:
+        parser.add_argument("--historical-evidence", type=Path)
     args = parser.parse_args()
     raw = (stack.ROOT / "contracts/forecast_jobs/v1/fixture/inputs.json").read_bytes()
     strict_json(raw)
     inputs = PreparedInputs.model_validate_json(raw)
     project = (
-        "retailops_ai_catalog_"
+        "retailops_ai_evaluations_"
+        if evaluations
+        else "retailops_ai_catalog_"
         if catalog
         else "retailops_ai_read_"
         if read
         else "retailops_ai_outputs_"
     ) + uuid.uuid4().hex[:10]
+    payload = inputs.model_dump_json().encode()
+    if evaluations:
+        from retailops_ai.model_lifecycle.evaluation_contracts import EvaluationEvidence
+
+        historical = None
+        if args.historical_evidence:
+            with args.historical_evidence.open("rb") as stream:
+                evidence_raw = stream.read(65537)
+            if len(evidence_raw) > 65536:
+                raise ValueError("historical_evidence_byte_limit")
+            strict_json(evidence_raw)
+            historical = EvaluationEvidence.model_validate_json(evidence_raw)
+            if historical.descriptor.purpose != "historical_development_evidence":
+                raise ValueError("historical_evidence_purpose_required")
+        payload = json.dumps(
+            dict(
+                fixture=inputs.model_dump(mode="json"),
+                historical_evidence=historical.model_dump(mode="json") if historical else None,
+            )
+        ).encode()
     owned = False
     target = project
     original = store.compose
@@ -113,9 +148,9 @@ def main(*, read: bool = False, catalog: bool = False) -> int:
         result = subprocess.run(  # noqa: S603 - structured disposable acceptance with private stdin
             command,
             cwd=stack.ROOT,
-            input=inputs.model_dump_json().encode(),
+            input=payload,
             capture_output=True,
-            timeout=240 if read or catalog else 180,
+            timeout=240 if read or catalog or evaluations else 180,
             check=False,
         )
         if result.returncode:
@@ -140,7 +175,9 @@ def main(*, read: bool = False, catalog: bool = False) -> int:
             raise ValueError("published_output_state_changed_after_restart")
         report.update(after)
         report["checks"].append(
-            "sigkill_database_restart_preserves_scoped_catalog_and_full_publication_state"
+            "sigkill_database_restart_preserves_scoped_evaluations_and_complete_state"
+            if evaluations
+            else "sigkill_database_restart_preserves_scoped_catalog_and_full_publication_state"
             if catalog
             else "sigkill_database_restart_preserves_read_view_predictions_and_full_publication_state"
             if read
@@ -163,7 +200,9 @@ def main(*, read: bool = False, catalog: bool = False) -> int:
         print(
             json.dumps(
                 {
-                    "error": "model_catalog_smoke_failed"
+                    "error": "evaluation_smoke_failed"
+                    if evaluations
+                    else "model_catalog_smoke_failed"
                     if catalog
                     else "forecast_read_smoke_failed"
                     if read

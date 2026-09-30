@@ -836,6 +836,509 @@
         "title": "DependencyStatus",
         "type": "object"
       },
+      "EvaluationDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_code_commit": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Ai Code Commit",
+            "type": "string"
+          },
+          "backtest_id": {
+            "pattern": "^forecast-backtest-sha256-[0-9a-f]{64}$",
+            "title": "Backtest Id",
+            "type": "string"
+          },
+          "curated_dataset_id": {
+            "pattern": "^curated-sha256-[0-9a-f]{64}$",
+            "title": "Curated Dataset Id",
+            "type": "string"
+          },
+          "dependency_lock_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Dependency Lock Sha256",
+            "type": "string"
+          },
+          "evaluation_id": {
+            "pattern": "^forecast-quality-sha256-[0-9a-f]{64}$",
+            "title": "Evaluation Id",
+            "type": "string"
+          },
+          "evaluation_use": {
+            "const": "development_diagnostics_previously_observed_data",
+            "default": "development_diagnostics_previously_observed_data",
+            "title": "Evaluation Use",
+            "type": "string"
+          },
+          "evidence_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Evidence Sha256",
+            "type": "string"
+          },
+          "feature_set_id": {
+            "pattern": "^features-sha256-[0-9a-f]{64}$",
+            "title": "Feature Set Id",
+            "type": "string"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/EvaluationFreshness"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "label_dataset_id": {
+            "pattern": "^labels-sha256-[0-9a-f]{64}$",
+            "title": "Label Dataset Id",
+            "type": "string"
+          },
+          "metric_verification": {
+            "const": "replayed_from_saved_predictions_and_labels",
+            "default": "replayed_from_saved_predictions_and_labels",
+            "title": "Metric Verification",
+            "type": "string"
+          },
+          "metrics": {
+            "items": {
+              "$ref": "#/components/schemas/EvaluationMetric"
+            },
+            "maxItems": 14,
+            "minItems": 14,
+            "title": "Metrics",
+            "type": "array"
+          },
+          "model_name": {
+            "const": "retailops-demand-forecast",
+            "default": "retailops-demand-forecast",
+            "title": "Model Name",
+            "type": "string"
+          },
+          "original_export_run_id": {
+            "pattern": "^run-[0-9a-f]{32}$",
+            "title": "Original Export Run Id",
+            "type": "string"
+          },
+          "portfolio_final_test": {
+            "const": "not_included_not_opened",
+            "default": "not_included_not_opened",
+            "title": "Portfolio Final Test",
+            "type": "string"
+          },
+          "purpose": {
+            "enum": [
+              "historical_development_evidence",
+              "synthetic_acceptance_only"
+            ],
+            "title": "Purpose",
+            "type": "string"
+          },
+          "quality_status": {
+            "enum": [
+              "passed",
+              "failed",
+              "not_ready"
+            ],
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "quality_verification": {
+            "const": "recorded_status_not_requalified",
+            "default": "recorded_status_not_requalified",
+            "title": "Quality Verification",
+            "type": "string"
+          },
+          "registered_model_version": {
+            "title": "Registered Model Version",
+            "type": "null"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/EvaluationScope"
+          },
+          "serving_eligible": {
+            "const": false,
+            "default": false,
+            "title": "Serving Eligible",
+            "type": "boolean"
+          },
+          "source_code_commit": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Source Code Commit",
+            "type": "string"
+          },
+          "source_dataset_id": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "title": "Source Dataset Id",
+            "type": "string"
+          },
+          "split_id": {
+            "pattern": "^split-sha256-[0-9a-f]{64}$",
+            "title": "Split Id",
+            "type": "string"
+          },
+          "target_type": {
+            "const": "observed_sales_units",
+            "default": "observed_sales_units",
+            "title": "Target Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evaluation_id",
+          "evidence_sha256",
+          "original_export_run_id",
+          "purpose",
+          "scope",
+          "quality_status",
+          "source_dataset_id",
+          "curated_dataset_id",
+          "feature_set_id",
+          "label_dataset_id",
+          "split_id",
+          "backtest_id",
+          "source_code_commit",
+          "ai_code_commit",
+          "dependency_lock_sha256",
+          "generated_at",
+          "freshness",
+          "metrics"
+        ],
+        "title": "EvaluationDetail",
+        "type": "object"
+      },
+      "EvaluationFreshness": {
+        "additionalProperties": false,
+        "properties": {
+          "evaluated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Evaluated At",
+            "type": "string"
+          },
+          "reason": {
+            "const": "historical_evaluation_runtime_not_observed",
+            "default": "historical_evaluation_runtime_not_observed",
+            "title": "Reason",
+            "type": "string"
+          },
+          "status": {
+            "const": "unknown",
+            "default": "unknown",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evaluated_at"
+        ],
+        "title": "EvaluationFreshness",
+        "type": "object"
+      },
+      "EvaluationMetric": {
+        "additionalProperties": false,
+        "properties": {
+          "excluded_rows": {
+            "minimum": 0.0,
+            "title": "Excluded Rows",
+            "type": "integer"
+          },
+          "method": {
+            "enum": [
+              "last_observed",
+              "moving_average",
+              "seasonal_naive7",
+              "random_forest",
+              "hist_gradient_boosting",
+              "validation_selected",
+              "validation_baseline"
+            ],
+            "title": "Method",
+            "type": "string"
+          },
+          "point": {
+            "$ref": "#/components/schemas/MetricResult"
+          },
+          "role": {
+            "enum": [
+              "validation",
+              "development_holdout"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "total_rows": {
+            "minimum": 0.0,
+            "title": "Total Rows",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "role",
+          "method",
+          "total_rows",
+          "excluded_rows",
+          "point"
+        ],
+        "title": "EvaluationMetric",
+        "type": "object"
+      },
+      "EvaluationPage": {
+        "additionalProperties": false,
+        "properties": {
+          "data_status": {
+            "enum": [
+              "available",
+              "no_data"
+            ],
+            "title": "Data Status",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/EvaluationSummary"
+            },
+            "maxItems": 200,
+            "title": "Items",
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/CatalogPagination"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "view_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "View Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items",
+          "pagination",
+          "generated_at",
+          "data_status",
+          "view_sha256"
+        ],
+        "title": "EvaluationPage",
+        "type": "object"
+      },
+      "EvaluationScope": {
+        "additionalProperties": false,
+        "properties": {
+          "channels": {
+            "items": {
+              "enum": [
+                "store",
+                "online"
+              ],
+              "type": "string"
+            },
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Channels",
+            "type": "array"
+          },
+          "product_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 10000,
+            "minItems": 1,
+            "title": "Product Ids",
+            "type": "array"
+          },
+          "selling_location_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 1000,
+            "minItems": 1,
+            "title": "Selling Location Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "product_ids",
+          "selling_location_ids",
+          "channels"
+        ],
+        "title": "EvaluationScope",
+        "type": "object"
+      },
+      "EvaluationSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_code_commit": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Ai Code Commit",
+            "type": "string"
+          },
+          "backtest_id": {
+            "pattern": "^forecast-backtest-sha256-[0-9a-f]{64}$",
+            "title": "Backtest Id",
+            "type": "string"
+          },
+          "curated_dataset_id": {
+            "pattern": "^curated-sha256-[0-9a-f]{64}$",
+            "title": "Curated Dataset Id",
+            "type": "string"
+          },
+          "dependency_lock_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Dependency Lock Sha256",
+            "type": "string"
+          },
+          "evaluation_id": {
+            "pattern": "^forecast-quality-sha256-[0-9a-f]{64}$",
+            "title": "Evaluation Id",
+            "type": "string"
+          },
+          "evaluation_use": {
+            "const": "development_diagnostics_previously_observed_data",
+            "default": "development_diagnostics_previously_observed_data",
+            "title": "Evaluation Use",
+            "type": "string"
+          },
+          "evidence_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Evidence Sha256",
+            "type": "string"
+          },
+          "feature_set_id": {
+            "pattern": "^features-sha256-[0-9a-f]{64}$",
+            "title": "Feature Set Id",
+            "type": "string"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/EvaluationFreshness"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "label_dataset_id": {
+            "pattern": "^labels-sha256-[0-9a-f]{64}$",
+            "title": "Label Dataset Id",
+            "type": "string"
+          },
+          "metric_verification": {
+            "const": "replayed_from_saved_predictions_and_labels",
+            "default": "replayed_from_saved_predictions_and_labels",
+            "title": "Metric Verification",
+            "type": "string"
+          },
+          "model_name": {
+            "const": "retailops-demand-forecast",
+            "default": "retailops-demand-forecast",
+            "title": "Model Name",
+            "type": "string"
+          },
+          "original_export_run_id": {
+            "pattern": "^run-[0-9a-f]{32}$",
+            "title": "Original Export Run Id",
+            "type": "string"
+          },
+          "portfolio_final_test": {
+            "const": "not_included_not_opened",
+            "default": "not_included_not_opened",
+            "title": "Portfolio Final Test",
+            "type": "string"
+          },
+          "purpose": {
+            "enum": [
+              "historical_development_evidence",
+              "synthetic_acceptance_only"
+            ],
+            "title": "Purpose",
+            "type": "string"
+          },
+          "quality_status": {
+            "enum": [
+              "passed",
+              "failed",
+              "not_ready"
+            ],
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "quality_verification": {
+            "const": "recorded_status_not_requalified",
+            "default": "recorded_status_not_requalified",
+            "title": "Quality Verification",
+            "type": "string"
+          },
+          "registered_model_version": {
+            "title": "Registered Model Version",
+            "type": "null"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/EvaluationScope"
+          },
+          "serving_eligible": {
+            "const": false,
+            "default": false,
+            "title": "Serving Eligible",
+            "type": "boolean"
+          },
+          "source_code_commit": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Source Code Commit",
+            "type": "string"
+          },
+          "source_dataset_id": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "title": "Source Dataset Id",
+            "type": "string"
+          },
+          "split_id": {
+            "pattern": "^split-sha256-[0-9a-f]{64}$",
+            "title": "Split Id",
+            "type": "string"
+          },
+          "target_type": {
+            "const": "observed_sales_units",
+            "default": "observed_sales_units",
+            "title": "Target Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evaluation_id",
+          "evidence_sha256",
+          "original_export_run_id",
+          "purpose",
+          "scope",
+          "quality_status",
+          "source_dataset_id",
+          "curated_dataset_id",
+          "feature_set_id",
+          "label_dataset_id",
+          "split_id",
+          "backtest_id",
+          "source_code_commit",
+          "ai_code_commit",
+          "dependency_lock_sha256",
+          "generated_at",
+          "freshness"
+        ],
+        "title": "EvaluationSummary",
+        "type": "object"
+      },
       "EvidenceReference": {
         "additionalProperties": false,
         "properties": {
@@ -2022,6 +2525,102 @@
         "title": "MarkdownChunk",
         "type": "object"
       },
+      "MetricResult": {
+        "additionalProperties": false,
+        "properties": {
+          "absolute_actual_sum": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Absolute Actual Sum"
+          },
+          "absolute_error_sum": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Absolute Error Sum"
+          },
+          "eligible_rows": {
+            "minimum": 0.0,
+            "title": "Eligible Rows",
+            "type": "integer"
+          },
+          "mae": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mae"
+          },
+          "predicted_rows": {
+            "minimum": 0.0,
+            "title": "Predicted Rows",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "passed",
+              "incomplete",
+              "not_evaluable",
+              "selection_not_ready"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "wape": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wape"
+          },
+          "wape_status": {
+            "enum": [
+              "passed",
+              "zero_denominator",
+              "incomplete",
+              "no_rows",
+              "selection_not_ready"
+            ],
+            "title": "Wape Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "eligible_rows",
+          "predicted_rows",
+          "status",
+          "mae",
+          "wape",
+          "absolute_error_sum",
+          "absolute_actual_sum",
+          "wape_status"
+        ],
+        "title": "MetricResult",
+        "type": "object"
+      },
       "ModelPage": {
         "additionalProperties": false,
         "properties": {
@@ -2213,6 +2812,19 @@
                   "model-view-changed",
                   "model-read-budget",
                   "model-metadata-invalid"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "evaluation-read-denied",
+                  "evaluation-scope-invalid",
+                  "evaluation-scope-limit",
+                  "evaluation-not-found",
+                  "evaluation-view-required",
+                  "evaluation-view-changed",
+                  "evaluation-read-budget",
+                  "evaluation-evidence-invalid"
                 ],
                 "type": "string"
               },
@@ -3333,6 +3945,456 @@
           }
         ],
         "summary": "Policy Metadata"
+      }
+    },
+    "/api/v1/evaluations": {
+      "get": {
+        "operationId": "evaluations_api_v1_evaluations_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "selling_location_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selling Location Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "store",
+                    "online"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          },
+          {
+            "in": "query",
+            "name": "quality_status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "passed",
+                    "failed",
+                    "not_ready"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Quality Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 256,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "view_sha256",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "View Sha256"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Evaluations"
+      }
+    },
+    "/api/v1/evaluations/{evaluation_id}": {
+      "get": {
+        "operationId": "evaluation_api_v1_evaluations__evaluation_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "evaluation_id",
+            "required": true,
+            "schema": {
+              "pattern": "^forecast-quality-sha256-[0-9a-f]{64}$",
+              "title": "Evaluation Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "selling_location_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selling Location Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "store",
+                    "online"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Evaluation"
       }
     },
     "/api/v1/forecast-runs": {

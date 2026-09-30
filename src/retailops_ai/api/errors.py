@@ -10,6 +10,7 @@ from retailops_ai.api.models import Problem, Ready
 from retailops_ai.forecast_jobs.contracts import BatchErrorCode
 from retailops_ai.forecast_jobs.read_contracts import ReadErrorCode
 from retailops_ai.knowledge.jobs import IndexErrorCode
+from retailops_ai.model_lifecycle.evaluation_contracts import EvaluationErrorCode
 from retailops_ai.model_lifecycle.read_contracts import CatalogErrorCode
 
 DETAILS = {
@@ -33,7 +34,12 @@ def problem_response(
     *,
     readiness: Ready | None = None,
     headers: dict[str, str] | None = None,
-    code: IndexErrorCode | BatchErrorCode | ReadErrorCode | CatalogErrorCode | None = None,
+    code: IndexErrorCode
+    | BatchErrorCode
+    | ReadErrorCode
+    | CatalogErrorCode
+    | EvaluationErrorCode
+    | None = None,
 ) -> JSONResponse:
     current = CORRELATION_ID.get()
     if current is None:

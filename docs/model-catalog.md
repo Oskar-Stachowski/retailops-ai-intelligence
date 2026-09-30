@@ -93,8 +93,8 @@ i SQL-only stub release'y sprawdzają mechanizm; nie zatwierdzają modelu AI 04.
 Kontroler usuwa własne kontenery, wolumeny i tag obrazu, zachowując inne
 projekty i współdzielony cache. Test należy do persistence Required CI.
 
-**Pozostały zakres 05.7:** scoped API evaluations wymaga trwałego zakresu oceny
-oraz zweryfikowanych raportów/metryk. Scope publikacji prognozy nie uprawnia
-użytkownika do globalnych metryk oceny tego modelu. Pozostają też watermark
+[Historyczne evaluations 05.7c](evaluations.md) mają osobny trwały zakres
+i odtworzone metryki. Scope publikacji prognozy nie uprawnia użytkownika
+do globalnych metryk oceny tego modelu. Pozostają watermark
 freshness prognoz, spójny qualified handoff AI 04, rzeczywisty batch na jego
 release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**

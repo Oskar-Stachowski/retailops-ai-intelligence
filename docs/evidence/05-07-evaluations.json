@@ -1,0 +1,274 @@
+{
+  "bedrock_calls": 0,
+  "checked_at": "2026-09-30T15:41:33.250995+00:00",
+  "checks": [
+    "installed_http_auth_capability_closed_queries_and_status_filters",
+    "whole_report_scope_precedes_counts_and_global_metrics_partial_scope_404",
+    "numeric_mae_wape_reuse_existing_evaluator_with_failed_quality_and_no_serving_claim",
+    "33_outside_reports_do_not_change_view_and_scoped_pages_require_hash",
+    "idempotent_registration_invalid_identity_rejection_and_immutable_sql_rows",
+    "corrupt_point_metric_denominator_or_digest_refuses_entire_read_and_exact_restore",
+    "verified_historical_export_scoped_http_preserves_replayed_metrics_and_original_quality_without_promotion",
+    "sigkill_database_restart_preserves_scoped_evaluations_and_complete_state"
+  ],
+  "counts": {
+    "forecast_batch_attempts": 0,
+    "forecast_batch_runs": 0,
+    "forecast_evaluations": 38,
+    "forecast_output_heads": 0,
+    "forecast_output_manifests": 0,
+    "forecast_output_partitions": 0,
+    "forecast_prepared_inputs": 0,
+    "model_decisions": 0,
+    "model_heads": 0,
+    "model_releases": 0,
+    "model_steps": 0,
+    "model_versions": 0
+  },
+  "evaluation_metadata_sha256": "2e1fbf177a6f780fcf04f0d321a051d9ec7419b09923fbe360ea79df7e33f3b8",
+  "evaluation_view_sha256": "c30fad3fd4eaa71d6f1715a6cc044ca588d03009d4d305de3e0b113ca96f4d48",
+  "forecast_quality_approved": false,
+  "heads_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "historical_evaluation": {
+    "evaluation_id": "forecast-quality-sha256-66143185382f4f2f9353c0383b2661ac37e14293431959273878684014b6aab6",
+    "evaluation_membership_rows": 12012,
+    "evidence_sha256": "f1be6d8e3ef19cc8e33fecbcb55a61bd30f6b17734773c66a29dca01098ece40",
+    "metrics": [
+      {
+        "excluded_rows": 564,
+        "method": "hist_gradient_boosting",
+        "point": {
+          "absolute_actual_sum": 49452.0,
+          "absolute_error_sum": 7881.626772058308,
+          "eligible_rows": 5400,
+          "mae": 1.4595605133441312,
+          "predicted_rows": 5400,
+          "status": "passed",
+          "wape": 0.15937933293007983,
+          "wape_status": "passed"
+        },
+        "role": "development_holdout",
+        "total_rows": 5964
+      },
+      {
+        "excluded_rows": 564,
+        "method": "last_observed",
+        "point": {
+          "absolute_actual_sum": 49452.0,
+          "absolute_error_sum": 12368.0,
+          "eligible_rows": 5400,
+          "mae": 2.29037037037037,
+          "predicted_rows": 5400,
+          "status": "passed",
+          "wape": 0.2501011081452722,
+          "wape_status": "passed"
+        },
+        "role": "development_holdout",
+        "total_rows": 5964
+      },
+      {
+        "excluded_rows": 564,
+        "method": "moving_average",
+        "point": {
+          "absolute_actual_sum": 49452.0,
+          "absolute_error_sum": 9305.500000000004,
+          "eligible_rows": 5400,
+          "mae": 1.7232407407407415,
+          "predicted_rows": 5400,
+          "status": "passed",
+          "wape": 0.1881723691660601,
+          "wape_status": "passed"
+        },
+        "role": "development_holdout",
+        "total_rows": 5964
+      },
+      {
+        "excluded_rows": 564,
+        "method": "random_forest",
+        "point": {
+          "absolute_actual_sum": 49452.0,
+          "absolute_error_sum": 7764.171101218082,
+          "eligible_rows": 5400,
+          "mae": 1.4378094631885336,
+          "predicted_rows": 5400,
+          "status": "passed",
+          "wape": 0.15700418792400878,
+          "wape_status": "passed"
+        },
+        "role": "development_holdout",
+        "total_rows": 5964
+      },
+      {
+        "excluded_rows": 564,
+        "method": "seasonal_naive7",
+        "point": {
+          "absolute_actual_sum": 49452.0,
+          "absolute_error_sum": 8125.0,
+          "eligible_rows": 5400,
+          "mae": 1.5046296296296295,
+          "predicted_rows": 5400,
+          "status": "passed",
+          "wape": 0.1643007360672976,
+          "wape_status": "passed"
+        },
+        "role": "development_holdout",
+        "total_rows": 5964
+      },
+      {
+        "excluded_rows": 564,
+        "method": "validation_baseline",
+        "point": {
+          "absolute_actual_sum": 49452.0,
+          "absolute_error_sum": 8415.666666666679,
+          "eligible_rows": 5400,
+          "mae": 1.558456790123459,
+          "predicted_rows": 5400,
+          "status": "passed",
+          "wape": 0.17017848957912074,
+          "wape_status": "passed"
+        },
+        "role": "development_holdout",
+        "total_rows": 5964
+      },
+      {
+        "excluded_rows": 564,
+        "method": "validation_selected",
+        "point": {
+          "absolute_actual_sum": 49452.0,
+          "absolute_error_sum": 7789.066853389482,
+          "eligible_rows": 5400,
+          "mae": 1.442419787664719,
+          "predicted_rows": 5400,
+          "status": "passed",
+          "wape": 0.15750762058945003,
+          "wape_status": "passed"
+        },
+        "role": "development_holdout",
+        "total_rows": 5964
+      },
+      {
+        "excluded_rows": 576,
+        "method": "hist_gradient_boosting",
+        "point": {
+          "absolute_actual_sum": 49175.0,
+          "absolute_error_sum": 7760.1212045976,
+          "eligible_rows": 5472,
+          "mae": 1.4181508049337719,
+          "predicted_rows": 5472,
+          "status": "passed",
+          "wape": 0.15780622683472495,
+          "wape_status": "passed"
+        },
+        "role": "validation",
+        "total_rows": 6048
+      },
+      {
+        "excluded_rows": 576,
+        "method": "last_observed",
+        "point": {
+          "absolute_actual_sum": 49175.0,
+          "absolute_error_sum": 12507.0,
+          "eligible_rows": 5472,
+          "mae": 2.285635964912281,
+          "predicted_rows": 5472,
+          "status": "passed",
+          "wape": 0.2543365531265887,
+          "wape_status": "passed"
+        },
+        "role": "validation",
+        "total_rows": 6048
+      },
+      {
+        "excluded_rows": 576,
+        "method": "moving_average",
+        "point": {
+          "absolute_actual_sum": 49175.0,
+          "absolute_error_sum": 9415.000000000058,
+          "eligible_rows": 5472,
+          "mae": 1.7205774853801277,
+          "predicted_rows": 5472,
+          "status": "passed",
+          "wape": 0.19145907473309726,
+          "wape_status": "passed"
+        },
+        "role": "validation",
+        "total_rows": 6048
+      },
+      {
+        "excluded_rows": 576,
+        "method": "random_forest",
+        "point": {
+          "absolute_actual_sum": 49175.0,
+          "absolute_error_sum": 7540.320606859293,
+          "eligible_rows": 5472,
+          "mae": 1.3779825670429995,
+          "predicted_rows": 5472,
+          "status": "passed",
+          "wape": 0.15333646378971616,
+          "wape_status": "passed"
+        },
+        "role": "validation",
+        "total_rows": 6048
+      },
+      {
+        "excluded_rows": 576,
+        "method": "seasonal_naive7",
+        "point": {
+          "absolute_actual_sum": 49175.0,
+          "absolute_error_sum": 8851.0,
+          "eligible_rows": 5472,
+          "mae": 1.6175073099415205,
+          "predicted_rows": 5472,
+          "status": "passed",
+          "wape": 0.1799898322318251,
+          "wape_status": "passed"
+        },
+        "role": "validation",
+        "total_rows": 6048
+      },
+      {
+        "excluded_rows": 576,
+        "method": "validation_baseline",
+        "point": {
+          "absolute_actual_sum": 49175.0,
+          "absolute_error_sum": 8620.00000000005,
+          "eligible_rows": 5472,
+          "mae": 1.5752923976608277,
+          "predicted_rows": 5472,
+          "status": "passed",
+          "wape": 0.17529232333502895,
+          "wape_status": "passed"
+        },
+        "role": "validation",
+        "total_rows": 6048
+      },
+      {
+        "excluded_rows": 576,
+        "method": "validation_selected",
+        "point": {
+          "absolute_actual_sum": 49175.0,
+          "absolute_error_sum": 7524.399413497872,
+          "eligible_rows": 5472,
+          "mae": 1.3750729922327982,
+          "predicted_rows": 5472,
+          "status": "passed",
+          "wape": 0.15301269778338328,
+          "wape_status": "passed"
+        },
+        "role": "validation",
+        "total_rows": 6048
+      }
+    ],
+    "original_export_run_id": "run-77a5e7dbff215895baac1709ded1f73f",
+    "quality_status": "not_ready"
+  },
+  "image_digest": "sha256:8bc2df0c1c385a008a34fa9cdc9f261a3fe7d391289cc6257d37dafbe0465972",
+  "input_origin": "controlled_contract_fixture",
+  "mlflow_calls": 0,
+  "project": "retailops_ai_evaluations_359cca33fd",
+  "published_forecast_outputs": 0,
+  "real_http": true,
+  "state_sha256": "f0ce151fd0d9b263c519b3bf3b515cfb09c2125d3bdb07bc7ddd35d2e04948b7",
+  "status": "passed",
+  "synthetic_evaluations": 37
+}

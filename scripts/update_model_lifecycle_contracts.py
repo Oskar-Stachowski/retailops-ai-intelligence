@@ -5,6 +5,12 @@ import json
 from pathlib import Path
 
 from retailops_ai.model_lifecycle.contracts import Binding, Qualification, Release, Request
+from retailops_ai.model_lifecycle.evaluation_contracts import (
+    EvaluationDetail,
+    EvaluationEvidence,
+    EvaluationPage,
+    EvaluationQuery,
+)
 from retailops_ai.model_lifecycle.read_contracts import (
     CatalogModel,
     CatalogQuery,
@@ -28,6 +34,10 @@ def main() -> int:
         ("catalog_model", CatalogModel),
         ("catalog_models", ModelPage),
         ("catalog_versions", VersionPage),
+        ("evaluation_evidence", EvaluationEvidence),
+        ("evaluation_query", EvaluationQuery),
+        ("evaluations", EvaluationPage),
+        ("evaluation", EvaluationDetail),
     ):
         expected = json.dumps(model.model_json_schema(), indent=2, sort_keys=True) + "\n"
         path = ROOT / (name + ".schema.json")

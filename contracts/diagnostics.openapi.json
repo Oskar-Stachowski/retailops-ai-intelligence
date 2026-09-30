@@ -116,6 +116,19 @@
                 "type": "string"
               },
               {
+                "enum": [
+                  "evaluation-read-denied",
+                  "evaluation-scope-invalid",
+                  "evaluation-scope-limit",
+                  "evaluation-not-found",
+                  "evaluation-view-required",
+                  "evaluation-view-changed",
+                  "evaluation-read-budget",
+                  "evaluation-evidence-invalid"
+                ],
+                "type": "string"
+              },
+              {
                 "type": "null"
               }
             ],

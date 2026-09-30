@@ -9,6 +9,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from retailops_ai.adapters.index_jobs import IndexAdministration
 from retailops_ai.adapters.knowledge_search import KnowledgeBackend
+from retailops_ai.api.evaluations import add_evaluation_routes
 from retailops_ai.api.forecast_jobs import add_forecast_routes
 from retailops_ai.api.forecast_read import add_forecast_read_routes
 from retailops_ai.api.index_jobs import add_index_routes
@@ -20,6 +21,7 @@ from retailops_ai.domain.access import Capability, Principal, Role, can_read_for
 from retailops_ai.forecast_jobs.queue import BatchAdministration
 from retailops_ai.forecast_jobs.reader import ForecastReader
 from retailops_ai.knowledge.retrieval import RetrievalRequest, RetrievalResult
+from retailops_ai.model_lifecycle.evaluation_store import EvaluationReader
 from retailops_ai.model_lifecycle.reader import ModelCatalog
 from retailops_ai.pipelines.retrieval import KnowledgeDenied, resolve_scope
 from retailops_ai.security.local import LocalAccess
@@ -64,6 +66,7 @@ def access_router(
     forecast_administration: BatchAdministration | None = None,
     forecast_reader: ForecastReader | None = None,
     model_catalog: ModelCatalog | None = None,
+    evaluation_reader: EvaluationReader | None = None,
 ) -> APIRouter:
     bearer = HTTPBearer(auto_error=False, scheme_name="apiBearer")
 
@@ -162,4 +165,5 @@ def access_router(
     add_forecast_routes(router, verified, forecast_administration)
     add_forecast_read_routes(router, verified, forecast_reader)
     add_model_catalog_routes(router, verified, model_catalog)
+    add_evaluation_routes(router, verified, evaluation_reader)
     return router

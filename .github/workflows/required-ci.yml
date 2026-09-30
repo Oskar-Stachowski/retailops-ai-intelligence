@@ -65,6 +65,7 @@ jobs:
       - run: make forecast-publication-smoke
       - run: make forecast-read-smoke
       - run: make model-catalog-smoke
+      - run: make evaluations-smoke
   required-result:
     if: always()
     needs: [checks, secrets, persistence]

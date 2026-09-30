@@ -11,6 +11,7 @@ Nie używa user_id, roli z body/query/header ani demo-admin RetailOps jako login
 |---|---|
 | `GET /api/v1/identity` | Zweryfikowany token; własny principal, role, capabilities i skonfigurowany scope |
 | `POST /api/v1/access/forecast-check` | Jawne forecast:read i cały dozwolony scope; 200 z decyzją dla tego żądania |
+| `GET /api/v1/evaluations` i `/{evaluation_id}` | Jawne forecast:read; cały scope raportu musi mieścić się w grancie użytkownika |
 | `GET /api/v1/models` i `/models/{model_name}` oraz `/versions` | Jawne forecast:read; katalog wersji z publikacją w dozwolonym scope, bez globalnych ocen |
 | `GET /api/v1/admin/access-policy` | Jawne access:admin; wyłącznie policy ID i liczba principal/credentials |
 | `POST /api/v1/knowledge/search` | Jawne knowledge:read i knowledge_scope; przypięty kwalifikowany indeks, access/status filters i bounded context |

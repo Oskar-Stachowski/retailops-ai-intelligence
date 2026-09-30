@@ -103,7 +103,7 @@ Bramka jest wymagana przez Required CI; zdalny CI brancha pozostaje nieodebrany.
 Pełny odbiór na modelu wymaga spójnego i zakwalifikowanego handoff AI 04,
 importu, review/promocji oraz pomiaru rzeczywistego batchu na jego release.
 Katalog modeli/wersji opisuje [AI 05.7b](model-catalog.md).
-Kolejny zakres to scoped read API evaluations w AI 05.7.
+Historyczne evaluations opisuje [AI 05.7c](evaluations.md).
 Pełna freshness wymaga też utrwalonego source watermark. Zdarzenia/outbox pozostają w AI 10. Backup pełnego
 schematu `ai` obejmuje nowe tabele; downgrade wymaga
 [backup/restore](lifecycle-backup.md), bez usuwania historii.

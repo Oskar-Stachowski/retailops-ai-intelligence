@@ -119,6 +119,7 @@ i zweryfikować spójny pakiet w AI 04, bez przepisywania pinów archiwum.
 Rejestr profili i ograniczony supervisor mają [odbiór 05.5b](forecast-input-store.md).
 [Integracja z lease i atomowym outputem 05.6](forecast-publication.md) oraz
 [odczyt prognoz 05.7a](forecast-read.md) mają lokalny odbiór techniczny.
-Pozostaje odbiór na zakwalifikowanym modelu AI 04, scoped read API evaluations
+[Odczyt historycznych ocen 05.7c](evaluations.md) również przeszedł odbiór.
+Pozostaje odbiór na zakwalifikowanym modelu AI 04
 i pełny source watermark freshness. AI 10 dodaje zdarzenia.
 Nie ma zdalnego Required CI tego zakresu.

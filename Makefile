@@ -131,3 +131,7 @@ forecast-read-smoke:
 .PHONY: model-catalog-smoke
 model-catalog-smoke:
 	$(UV_RUN) python scripts/check_model_catalog.py
+
+.PHONY: evaluations-smoke
+evaluations-smoke:
+	$(UV_RUN) python scripts/check_evaluations.py

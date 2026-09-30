@@ -64,7 +64,12 @@ def read_snapshot(engine: Engine) -> dict[str, Any]:
 
 
 @contextmanager
-def server(products: tuple[str, ...]) -> Iterator[Callable[..., tuple[int, Any]]]:
+def server(
+    products: tuple[str, ...],
+    *,
+    locations: tuple[str, ...] = ("s-1",),
+    channels: tuple[str, ...] = ("store",),
+) -> Iterator[Callable[..., tuple[int, Any]]]:
     """No host port, no logged token, own child with private temporary grants."""
     with tempfile.TemporaryDirectory(prefix="forecast-read-access-") as temporary:
         private = Path(temporary)
@@ -81,8 +86,8 @@ def server(products: tuple[str, ...]) -> Iterator[Callable[..., tuple[int, Any]]
                             "capabilities": [cap],
                             "scope": {
                                 "product_ids": list(ids),
-                                "selling_location_ids": ["s-1"],
-                                "channels": ["store"],
+                                "selling_location_ids": list(locations),
+                                "channels": list(channels),
                             },
                         }
                         for name, role, cap, ids in (
