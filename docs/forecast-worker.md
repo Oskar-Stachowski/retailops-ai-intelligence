@@ -51,8 +51,9 @@ przy powtórzeniu klucza. Historia zawiera wyłącznie zamknięte próby, maksym
 Brak modelu lub niedokończona decyzja lifecycle daje `409`, brak przygotowanego
 wejścia `422`, pełna kolejka `429`, niedostępna/niezgodna baza `503`.
 
-W `APP_ENV=local` nie ma jeszcze ścieżki rejestracji rzeczywistych profili
-inference. API odmawia przyjęcia nieprzygotowanego wejścia; mechanics nie
+W `APP_ENV=local` istnieje [prywatny rejestr profili 05.5b](forecast-input-store.md),
+lecz kolejka nie przyjmuje jeszcze rzeczywistych wejść przed wdrożeniem
+atomowego outputu 05.6. API odmawia przyjęcia takiego wejścia; mechanics nie
 mogą stać się modelem produkcyjnym lub rzeczywistą prognozą.
 
 ## Piny i przejścia
@@ -131,10 +132,9 @@ nie usuwa zapisanych runów. Backup schematu `ai` obejmuje także nowe tabele.
 
 ## Pozostały zakres
 
-AI 05.5 musi zarejestrować rzeczywiste profile w bazie i podłączyć
-[loader i przygotowane cechy](forecast-runtime.md) do supervisora z limitami
-zasobów oraz odebrać wykonanie modelu zakwalifikowanego w AI 04.
-AI 05.6 utrwali pełne prognozy w
+[Rejestr i supervisor 05.5b](forecast-input-store.md) mają odbiór lokalny.
+AI 05.6 podłączy je do przyjęcia rzeczywistych profili, lease i transakcji
+zakończenia, a następnie utrwali pełne prognozy w
 ograniczonych partycjach i atomowo opublikuje output manifest/pointer.
 AI 05.7 doda listy forecast/model/evaluation z paginacją i freshness.
 Zdarzenia i outbox/projekcje pozostają w AI 10. Obecny odbiór kolejki

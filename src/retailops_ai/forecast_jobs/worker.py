@@ -1,4 +1,4 @@
-"""One fenced attempt per supervised child; only test mechanics are enabled at AI 05.4."""
+"""Fenced mechanics attempts and registered-input bounded preflight; qualified queue writes require AI05.6."""
 
 import argparse
 import json
@@ -78,17 +78,45 @@ def main() -> int:
     operations = parser.add_mutually_exclusive_group(required=True)
     operations.add_argument("--once", action="store_true")
     operations.add_argument("--cancel", metavar="RUN_ID")
+    operations.add_argument("--preflight", action="store_true")
     parser.add_argument("--mechanics", action="store_true")
+    parser.add_argument("--profile-id")
+    parser.add_argument("--release-id")
     args = parser.parse_args()
     settings = load_settings()
-    if not args.mechanics or settings.app_env != "test" or settings.database_url is None:
-        parser.error(
-            "AI05.4 enables only --once --mechanics with APP_ENV=test; forecast execution requires AI05.5"
-        )
+    if settings.database_url is None:
+        parser.error("worker_requires_private_database_settings")
+    if args.preflight:
+        if (
+            args.mechanics
+            or not args.profile_id
+            or not args.release_id
+            or settings.image_digest is None
+        ):
+            parser.error("preflight_requires_registered_profile_release_and_runtime_image_pins")
+    elif not args.mechanics or settings.app_env != "test" or args.profile_id or args.release_id:
+        parser.error("qualified_queue_execution_requires_AI05.6; mechanics_requires_APP_ENV_test")
     engine = create_engine(
         settings.database_url.get_secret_value(), connect_args={"connect_timeout": 3}
     )
     try:
+        if args.preflight:
+            from retailops_ai.forecast_jobs.input_store import PostgresInputStore
+            from retailops_ai.forecast_jobs.preflight import result_report, run_preflight
+
+            if settings.image_digest is None:
+                raise ValueError("runtime_image_pin_missing")
+            inputs = PostgresInputStore(engine, settings.app_env).get(args.profile_id).inputs
+            result = run_preflight(
+                engine,
+                inputs,
+                release_id=args.release_id,
+                image_digest=settings.image_digest,
+                environment=settings.app_env,
+                compose=settings.network_mode == "compose",
+            )
+            print(json.dumps(result_report(result)))
+            return 0
         queue = PostgresBatchQueue(engine, settings.app_env)
         if args.cancel:
             if re.fullmatch(r"run-[0-9a-f]{32}", args.cancel) is None:

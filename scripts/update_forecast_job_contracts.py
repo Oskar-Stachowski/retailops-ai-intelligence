@@ -11,6 +11,12 @@ from retailops_ai.forecast_jobs.contracts import (
     MechanicsProfile,
     QueuePolicy,
 )
+from retailops_ai.forecast_jobs.execution_contracts import (
+    ExecutionLimits,
+    RuntimeExecution,
+    RuntimeResult,
+)
+from retailops_ai.forecast_jobs.input_store import RegisteredInputs, RegistrationLimits
 from retailops_ai.forecast_jobs.inputs import PreparedInputs
 from retailops_ai.forecast_jobs.runtime import RuntimePin
 
@@ -29,6 +35,11 @@ def main() -> int:
         ("policy", QueuePolicy),
         ("prepared_inputs", PreparedInputs),
         ("runtime_pin", RuntimePin),
+        ("registered_inputs", RegisteredInputs),
+        ("registration_limits", RegistrationLimits),
+        ("execution_limits", ExecutionLimits),
+        ("runtime_execution", RuntimeExecution),
+        ("runtime_result", RuntimeResult),
     ):
         expected = json.dumps(model.model_json_schema(), indent=2, sort_keys=True) + "\n"
         path = ROOT / (name + ".schema.json")

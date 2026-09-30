@@ -58,6 +58,18 @@ def test_required_ci_cannot_drop_combined_lifecycle_restore():
     )
 
 
+def test_required_ci_cannot_drop_forecast_input_store_acceptance():
+    data = workflow()
+    data["jobs"]["persistence"]["steps"] = [
+        step
+        for step in data["jobs"]["persistence"]["steps"]
+        if step.get("run") != "make forecast-input-store-smoke"
+    ]
+    assert "persistence must execute forecast input store acceptance" in module.workflow_errors(
+        data
+    )
+
+
 @pytest.mark.parametrize(
     "mutation", ["tag", "ignored_failure", "missing_gate", "path_filter", "missing_persistence"]
 )

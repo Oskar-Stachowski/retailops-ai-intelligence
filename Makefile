@@ -115,3 +115,7 @@ forecast-queue-smoke:
 .PHONY: forecast-runtime-check
 forecast-runtime-check:
 	$(UV_RUN) python scripts/check_forecast_runtime.py
+
+.PHONY: forecast-input-store-smoke
+forecast-input-store-smoke:
+	$(UV_RUN) python scripts/check_forecast_input_store.py

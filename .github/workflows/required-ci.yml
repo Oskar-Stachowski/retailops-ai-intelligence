@@ -61,6 +61,7 @@ jobs:
       - run: make model-lifecycle-smoke
       - run: make lifecycle-store-smoke
       - run: make forecast-queue-smoke
+      - run: make forecast-input-store-smoke
   required-result:
     if: always()
     needs: [checks, secrets, persistence]

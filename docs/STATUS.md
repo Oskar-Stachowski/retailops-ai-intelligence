@@ -111,8 +111,8 @@ HTTP/PostgreSQL/MLflow, 9 runów, 12 prób i 2 kompletne wyniki fixture,
 wyścig workerów, SIGKILL po częściowym obliczeniu, odrzucenie starego tokenu,
 zmianę aliasu bez zmiany pinów oraz zachowanie pełnego stanu po restarcie bazy.
 **Mechanika działa lokalnie na jawnych fixture; AI 05 pozostaje otwarte.**
-Do wykonania: rejestracja rzeczywistych profili i integracja loadera z workerem
-w 05.5, atomowa publikacja prognoz w 05.6 oraz read API z freshness w 05.7.
+Do wykonania: przyjęcie rzeczywistych profili i integracja z atomową publikacją
+prognoz w 05.6 oraz read API z freshness w 05.7.
 Nie ma zdalnego Required CI tych zmian. AI 04 jest rozwijane w osobnej sesji;
 jego nowsza kwalifikacja nie została zaimportowana do tego worktree.
 
@@ -125,10 +125,22 @@ diagnostycznym. Peak RSS całej próby: ~310 MiB. **Nie załadowano rzeczywisteg
 zakwalifikowanego release’u i nie opublikowano prognoz.** Archiwum pozostaje
 `not_ready` i ma starszy lock features niż model/runtime, więc wymaga
 spójnego pakietu z AI 04 przed servingiem. Nowsze zmiany AI 04 są w osobnej
-sesji. Do wykonania w 05.5:
-trwała rejestracja inputs, integracja z kolejką/supervisorem i limity zasobów,
-oraz odbiór zatwierdzonego modelu. Potem 05.6–05.7; zdarzenia w AI 10.
+sesji. Rejestr i supervisor mają odbiór 05.5b poniżej. Do wykonania:
+integracja z kolejką i atomowym outputem w 05.6 oraz odbiór zatwierdzonego
+modelu. Potem 05.7; zdarzenia w AI 10.
 Nowa bramka kontraktów należy do `make check`, bez zdalnego Required CI.
+
+**AI 05.5b — trwałe wejścia i ograniczony preflight:** [runbook](forecast-input-store.md)
+opisuje niezmienne profile PostgreSQL, idempotentny zapis, rozdzielenie
+środowisk i limity pojemności. Supervisor loadera nie przekazuje childowi
+poświadczeń i ogranicza czas, pamięć oraz IO. [Odbiór](evidence/05-05-input-store.md)
+potwierdza rzeczywisty pakiet, wyścig zapisów, rollback limitu JSONB oraz
+SIGKILL/restart bez zmiany treści. Worker odrzucił brak zatwierdzonego release’u;
+nie utworzono prognoz ani runów. Po migracji ponownie odebrano kolejkę fixtures.
+Do wykonania: integracja rzeczywistych profili i supervisora z przyjęciem
+runu, fencing i atomowym outputem w AI 05.6 oraz odbiór zakwalifikowanego,
+spójnego pakietu AI 04. Potem read API 05.7 i zdarzenia AI 10.
+Brak zdalnego Required CI; AI 05 pozostaje otwarte.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

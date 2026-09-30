@@ -118,7 +118,7 @@ zmigrowany; provision poświadczeń opisuje ten sam runbook 05.3a.
 ## Granica odbioru i pozostały zakres
 
 Pointer oznacza **zatwierdzony release**, nie faktycznie działający worker.
-Odpowiedzi mają `runtime_status=not_integrated`. Integracja modelu z procesem,
+Odpowiedzi mają `runtime_status=not_integrated`. Integracja release’u z trwałym batchem,
 persisted batch, odczyt prognoz i failure/load rollback runtime pozostają
 w kolejnych zakresach AI 05. Nie wykonano tych operacji na modelu AI 04.
 
@@ -129,5 +129,6 @@ i artefakty oraz zachowuje niedokończone decyzje do recovery.
 Backup 05.1 nadal kopiuje tylko MLflow; nie jest pełnym backupem lifecycle.
 [Trwała kolejka 05.4a](forecast-worker.md) ma odbiór mechaniki;
 [loader 05.5a](forecast-runtime.md) ma odbiór wejścia i adapterów.
-Integracja rzeczywistych profili z workerem i publikacja wyników pozostają
+[Rejestr i ograniczony preflight 05.5b](forecast-input-store.md) mają odbiór lokalny.
+Integracja rzeczywistych profili z kolejką i publikacja wyników pozostają
 otwarte, podczas gdy poprawa/kwalifikacja AI 04 trwa w osobnym branchu/worktree.

@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-09-30T11:10:02.587294+00:00",
+  "checks": [
+    "concurrent_replay_preserves_single_record_bytes_hash_and_database_timestamp",
+    "local_and_test_registration_namespaces_are_independent",
+    "profile_and_actual_jsonb_byte_budgets_refuse_without_partial_registration",
+    "database_blocks_input_and_registration_receipt_update_and_delete",
+    "registered_input_worker_refuses_missing_approved_release_without_run_or_output",
+    "sigkill_database_restart_preserves_full_inputs_receipts_and_hashes"
+  ],
+  "forecast_quality_approved": false,
+  "forecast_runs": 0,
+  "histories": 1,
+  "image_digest": "sha256:351b0cde25caefa949f2511212d34737180161f94aa74d9dae01a67f321194b4",
+  "input_origin": "verified_private_package",
+  "model_releases": 0,
+  "profile_id": "batch-profile-sha256-4ca3b2009a1130f0b64f95dcfc0ae14d87129463eca59b7f9ce429b36e63aa8c",
+  "profile_sha256": "cecb97bdaad1d4b130605b3eed633a2a72db1d517de471e5e47ada23de2f2035",
+  "profiles": 3,
+  "project": "retailops_ai_inputs_497ac67f8d",
+  "published_forecast_outputs": 0,
+  "purpose": "verified_inputs_only",
+  "qualified_release_loaded": false,
+  "rows": 14,
+  "state_sha256": "676f8335043634f33cc9099a3e909b5bad848fadd7b885777dc2f0e3925983b5",
+  "status": "passed",
+  "storage_bytes": 234313
+}

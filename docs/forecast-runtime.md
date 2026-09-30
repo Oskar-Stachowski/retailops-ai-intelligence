@@ -30,8 +30,9 @@ nonfinite numbers i zmienioną treść.
 
 Pakiet przygotowuje zaufany proces z dostępem do danych. Hash potwierdza
 integralność, a nie uprawnienie użytkownika ani autentyczność dowolnego
-pliku klienta. Nie ma publicznego uploadu ani rejestracji takiego profilu
-w kolejce. Ten format nie zastępuje grantów i scope API.
+pliku klienta. [Prywatny rejestr PostgreSQL 05.5b](forecast-input-store.md)
+przechowuje zweryfikowane wejścia. Nie ma publicznego uploadu ani przyjęcia
+takiego profilu do kolejki. Format nie zastępuje grantów i scope API.
 
 Przygotowanie i ponowna kontrola, po zainstalowaniu extras `snapshot` i `forecast`:
 
@@ -91,8 +92,8 @@ python -m retailops_ai.forecast_jobs.runtime_cli release-check \
 Release pochodzi wyłącznie z niezależnego audytu PostgreSQL AI,
 nie z pliku klienta. Polecenie nie promuje modelu, nie zapisuje runu
 ani prognoz. Zwraca liczbę i hash obliczeń oraz czas, bez wartości prognoz
-i bez szczegółów poświadczeń w błędach. Nie stanowi supervisora z limitami
-CPU/RAM/wall time; te limity wymagają integracji z workerem.
+i bez szczegółów poświadczeń w błędach. Polecenie używa teraz
+[supervisora z limitami 05.5b](forecast-input-store.md); nie publikuje wyników.
 
 ## Odbiór i dalszy zakres
 
@@ -115,8 +116,8 @@ Zamrożone archiwum 04.8 ma starszy lock features niż model/runtime;
 loader odrzuci takie wejście. Przed odbiorem serving należy przygotować
 i zweryfikować spójny pakiet w AI 04, bez przepisywania pinów archiwum.
 
-AI 05.5 nadal wymaga niezmiennej rejestracji rzeczywistych profili w bazie,
-przyjęcia ich przez API i wpięcia loadera do procesu z lease oraz limitami
-zasobów, a następnie odbioru na zakwalifikowanym modelu AI 04. AI 05.6
-doda atomowy output manifest/pointer, AI 05.7 odczyt z paginacją/freshness,
+Rejestr profili i ograniczony supervisor mają [odbiór 05.5b](forecast-input-store.md).
+Pozostaje przyjęcie rzeczywistych profili przez API, integracja z lease
+i transakcją atomowego outputu w AI 05.6 oraz odbiór na zakwalifikowanym
+modelu AI 04. AI 05.7 doda odczyt z paginacją/freshness,
 a AI 10 zdarzenia. Nie ma zdalnego Required CI tego zakresu.
