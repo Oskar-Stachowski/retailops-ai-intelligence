@@ -51,13 +51,16 @@ forecast-backtest-check:
 forecast-quality-check:
 	$(UV_RUN) python scripts/check_forecast_quality.py
 
+forecast-remediation-check:
+	$(UV_RUN) python scripts/check_forecast_remediation.py
+
 forecast-run-check:
 	$(UV_RUN) python scripts/check_forecast_run.py
 
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check contracts-check package compose-config
+check: lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check contracts-check package compose-config
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner

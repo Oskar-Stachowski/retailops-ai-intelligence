@@ -66,6 +66,7 @@ def test_make_check_includes_snapshot_gate():
     assert "forecast-models-check" in dependencies.split()
     assert "forecast-backtest-check" in dependencies.split()
     assert "forecast-quality-check" in dependencies.split()
+    assert "forecast-remediation-check" in dependencies.split()
     assert "forecast-run-check" in dependencies.split()
 
 

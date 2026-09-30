@@ -26,6 +26,8 @@ wspólny evaluator i ograniczony trening; wybór pozostaje diagnostyczny.
 kontroluje dojrzałość etykiet i wspólne klucze oraz raportuje pooled MAE/WAPE.
 [Metryki i niepewność 04.7](forecast-quality.md) dodają przekroje, bias,
 kalibrację przedziałów i jawne bramki jakości bez promocji modelu.
+[Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
+validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
 rozszerza typed import o source 2.7, native ledger i private qualification.
 [Odbiór](evidence/06-inventory-handoff.md) obejmuje oba standardowe profile

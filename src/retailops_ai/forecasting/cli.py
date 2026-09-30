@@ -112,6 +112,17 @@ def main(argv: list[str] | None = None) -> int:
     quality_verify.add_argument("--quality-dir", type=Path, required=True)
     quality_verify.add_argument("--feature-dir", type=Path, required=True)
     quality_verify.add_argument("--backtest-dir", type=Path, required=True)
+    remediation = commands.add_parser("quality-remediate")
+    remediation.add_argument("--feature-dir", type=Path, required=True)
+    remediation.add_argument("--backtest-dir", type=Path, required=True)
+    remediation.add_argument("--config", type=Path)
+    remediation.add_argument(
+        "--output-root", type=Path, default=Path("data/generated/forecast-remediation")
+    )
+    remediation_verify = commands.add_parser("remediation-verify")
+    remediation_verify.add_argument("--remediation-dir", type=Path, required=True)
+    remediation_verify.add_argument("--feature-dir", type=Path, required=True)
+    remediation_verify.add_argument("--backtest-dir", type=Path, required=True)
     run_build = commands.add_parser("run-export")
     run_build.add_argument("--source-dir", type=Path, required=True)
     run_build.add_argument("--curated-dir", type=Path, required=True)
@@ -125,7 +136,41 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     summary: dict[str, object]
     try:
-        if args.command in {"run-export", "run-verify"}:
+        if args.command in {"quality-remediate", "remediation-verify"}:
+            from retailops_ai.forecasting.remediation import (
+                build_remediation,
+                load_remediation,
+                verify_remediation,
+            )
+            from retailops_ai.forecasting.remediation_contract import RemediationPolicy
+
+            if args.command == "quality-remediate":
+                remediation_policy = RemediationPolicy()
+                if args.config:
+                    remediation_policy = RemediationPolicy.model_validate_json(
+                        read_bytes(args.config.absolute().parent, args.config.name)
+                    )
+                directory = build_remediation(
+                    args.feature_dir, args.backtest_dir, args.output_root, remediation_policy
+                )
+                remediation_manifest = load_remediation(directory)
+            else:
+                directory = args.remediation_dir
+                remediation_manifest = verify_remediation(
+                    directory, args.feature_dir, args.backtest_dir
+                )
+            summary = {
+                "status": "passed",
+                "quality_status": remediation_manifest.descriptor.quality_status,
+                "gate_counts": remediation_manifest.descriptor.gate_counts,
+                "remediation_id": remediation_manifest.remediation_id,
+                "directory": str(directory),
+                "forecast_model_status": remediation_manifest.forecast_model_status,
+            }
+            if remediation_manifest.descriptor.quality_status != "passed":
+                print(json.dumps(summary, sort_keys=True))
+                return 3
+        elif args.command in {"run-export", "run-verify"}:
             from retailops_ai.forecasting.run import build_run, verify_run
 
             directory = (
