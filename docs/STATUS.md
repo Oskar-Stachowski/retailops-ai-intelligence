@@ -78,6 +78,19 @@ Regresja kodu: **940 passed**, testy korekty/CI **22 passed**;
 końcowa regresja producenta/weryfikatora źródła **560 passed**.
 Model nadal jest `not_ready`; punkt blokad jakości nie jest jeszcze zamknięty.
 
+**Kontynuacja — źródło przerywane i receptura 2.1:**
+[Nowe evidence](evidence/04-quality-intermittent.md) opisuje jawny syntetyczny
+profil `ai-intermittent-v1` i wybór korekty z kontrolą bias/MAE w obu połowach
+validation. Na starym development: **195 passed / 29 failed / 8 not_ready**;
+pooled low mieści się teraz w limicie regresji MAE (+9,84%). Zamrożona
+kampania V10 przyjęła nowe źródło: 616547 wierszy w 43 tabelach. Pierwszy bieg
+zatrzymał brak miejsca na dysku podczas curated, przed cechami, treningiem
+i metrykami nowych holdoutów. Surowa historia ma przypadki zero we wszystkich
+sześciu oknach; pełna kwalifikacja cech pozostaje do sprawdzenia. Kod:
+949 zaliczonych testów przed zmianą zapisu wejść oraz 66 testów po tej zmianie;
+powtórne przeliczenie starego wyniku 2.1 potwierdziło jego tożsamość.
+Punkt 3 pozostaje otwarty.
+
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
 identity i transportu bez generatora/DB.

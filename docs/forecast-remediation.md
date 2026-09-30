@@ -98,3 +98,27 @@ z przypiętych rodziców; przeliczenie hashy sfałszowanego raportu nie wystarcz
 Wynik pozostaje artefaktem rozwojowym. Registry, pełny run treningowy oraz
 dopuszczenie serving wymagają osobnego odbioru AI 05. Portfolio final test
 nie jest otwierany ani używany do strojenia.
+
+## Receptura 2.1 i scenariusz sprzedaży przerywanej
+
+[Kampania 10](../contracts/forecast/v1/quality-remediation.campaign-v10.json)
+zamraża profil `ai-intermittent-v1` oraz recepturę 2.1 przed oceną nowych
+holdoutów. Receptura sprawdza bias i regresję MAE kandydatów w obu blokach
+validation, zachowuje fallback baseline'u i przedziały equal-tail 90%.
+Wersja 1 pozostaje osobną ścieżką. Odrzucony eksperyment 2.0 i wyniki 2.1
+na starych danych opisuje [evidence](evidence/04-quality-intermittent.md).
+
+```bash
+.venv/bin/python -m retailops_ai.forecasting.remediation_v2 \
+  --feature-dir data/generated/features/<feature_set_id> \
+  --backtest-dir data/generated/backtests/<backtest_id>
+.venv/bin/python -m retailops_ai.forecasting.remediation_v2 \
+  --feature-dir data/generated/features/<feature_set_id> \
+  --backtest-dir data/generated/backtests/<backtest_id> \
+  --verify data/generated/forecast-remediation/<remediation_id>
+```
+
+Każda wersja wymaga zgodnego hash kodu dla pełnego replay. Historyczny
+eksperyment 2.0 odtwarza commit `a1bfdb6`; jego przedziały nie są domyślną
+recepturą nowej kampanii. Exit 3 nadal oznacza kompletne, niezaliczone
+quality gates, a nie błąd integralności.
