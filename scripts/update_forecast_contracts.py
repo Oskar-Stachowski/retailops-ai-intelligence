@@ -31,6 +31,7 @@ from retailops_ai.forecasting.model_contract import (
 )
 from retailops_ai.forecasting.preprocessing import FittedState
 from retailops_ai.forecasting.quality_contract import QualityManifest, QualityPolicy, SegmentMetric
+from retailops_ai.forecasting.quality_v2_contract import ProtocolObservation, QualityPolicyV2
 from retailops_ai.forecasting.remediation_contract import RemediationManifest, RemediationPolicy
 from retailops_ai.forecasting.remediation_v2_contract import (
     RemediationManifest as RemediationV2Manifest,
@@ -105,6 +106,17 @@ def artifacts() -> dict[Path, object]:
     )
     result[ROOT / "contracts/forecast/v1/remediation_v2.default.json"] = (
         RemediationV2Policy().model_dump(mode="json")
+    )
+    for v2_name, v2_model in (
+        ("quality_policy", QualityPolicyV2),
+        ("quality_observation", ProtocolObservation),
+    ):
+        schema = v2_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:forecast:{v2_name}:2.0.0"
+        result[ROOT / f"contracts/forecast/v2/{v2_name}.schema.json"] = schema
+    result[ROOT / "contracts/forecast/v2/quality.default.json"] = QualityPolicyV2().model_dump(
+        mode="json"
     )
     calendar = SimpleNamespace(
         descriptor=SimpleNamespace(

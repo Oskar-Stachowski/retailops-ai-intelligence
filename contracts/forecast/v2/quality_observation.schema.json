@@ -1,0 +1,116 @@
+{
+  "$defs": {
+    "CentralInterval": {
+      "additionalProperties": false,
+      "properties": {
+        "lower": {
+          "minimum": 0,
+          "title": "Lower",
+          "type": "number"
+        },
+        "upper": {
+          "minimum": 0,
+          "title": "Upper",
+          "type": "number"
+        }
+      },
+      "required": [
+        "lower",
+        "upper"
+      ],
+      "title": "CentralInterval",
+      "type": "object"
+    },
+    "FunctionalForecast": {
+      "additionalProperties": false,
+      "properties": {
+        "interval": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CentralInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mean": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mean"
+        },
+        "median": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Median"
+        }
+      },
+      "required": [
+        "median",
+        "mean",
+        "interval"
+      ],
+      "title": "FunctionalForecast",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:forecast:quality_observation:2.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actual": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Actual"
+    },
+    "baseline": {
+      "$ref": "#/$defs/FunctionalForecast"
+    },
+    "candidate": {
+      "$ref": "#/$defs/FunctionalForecast"
+    },
+    "exclusion_reasons": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Exclusion Reasons",
+      "type": "array"
+    },
+    "key": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "title": "Key",
+      "type": "string"
+    }
+  },
+  "required": [
+    "key",
+    "actual",
+    "candidate",
+    "baseline"
+  ],
+  "title": "ProtocolObservation",
+  "type": "object"
+}

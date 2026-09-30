@@ -91,6 +91,16 @@ sześciu oknach; pełna kwalifikacja cech pozostaje do sprawdzenia. Kod:
 powtórne przeliczenie starego wyniku 2.1 potwierdziło jego tożsamość.
 Punkt 3 pozostaje otwarty.
 
+**Przygotowanie protokołu jakości 2.0:**
+[Nowe reguły](forecast-quality-v2.md) rozdzielają medianę (MAE) i średnią
+(MSE + bias), wymagają obu i oceniają przedziały przez interval score oraz
+coverage, bez dzielenia przez małą sprzedaż. Poprawne zera dają się ocenić;
+fałszywy popyt i realne pogorszenia nadal są błędami. Stare wyniki, snapshot
+i zablokowana v10 pozostają zachowane z sumami kontrolnymi. Pełnej kampanii
+nie uruchomiono. Planistyczne minimum miejsca to 16 GiB; pozostaje integracja
+dwóch jawnych celów predykcji oraz ryzyko przekroczenia logicznego limitu 4 GiB
+przez pełny panel nowego kalendarza. Szczegóły zamrożenia i testów są w dokumencie.
+
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
 identity i transportu bez generatora/DB.

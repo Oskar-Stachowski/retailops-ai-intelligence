@@ -1,0 +1,197 @@
+{
+  "$id": "urn:retailops:forecast:quality_policy:2.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "baseline_selection": {
+      "const": "validation_only_separately_by_mae_mse_and_interval_score",
+      "default": "validation_only_separately_by_mae_mse_and_interval_score",
+      "title": "Baseline Selection",
+      "type": "string"
+    },
+    "compatibility": {
+      "const": "v1_reports_immutable_single_output_never_relabelled_as_two_targets",
+      "default": "v1_reports_immutable_single_output_never_relabelled_as_two_targets",
+      "title": "Compatibility",
+      "type": "string"
+    },
+    "evaluation_use": {
+      "const": "freeze_before_unseen_development_holdout_no_reselection",
+      "default": "freeze_before_unseen_development_holdout_no_reselection",
+      "title": "Evaluation Use",
+      "type": "string"
+    },
+    "interval_objective": {
+      "const": "central_interval_score_no_regression_against_baseline",
+      "default": "central_interval_score_no_regression_against_baseline",
+      "title": "Interval Objective",
+      "type": "string"
+    },
+    "legacy_width_ratio_threshold": {
+      "default": 2.0,
+      "maximum": 2.0,
+      "minimum": 2.0,
+      "title": "Legacy Width Ratio Threshold",
+      "type": "number"
+    },
+    "maximum_absolute_normalized_mean_bias": {
+      "default": 0.1,
+      "maximum": 0.1,
+      "minimum": 0.1,
+      "title": "Maximum Absolute Normalized Mean Bias",
+      "type": "number"
+    },
+    "maximum_segment_mae_regression": {
+      "default": 0.1,
+      "maximum": 0.1,
+      "minimum": 0.1,
+      "title": "Maximum Segment Mae Regression",
+      "type": "number"
+    },
+    "mean_mse_guard": {
+      "const": "no_regression_against_mean_baseline",
+      "default": "no_regression_against_mean_baseline",
+      "title": "Mean Mse Guard",
+      "type": "string"
+    },
+    "mean_objective": {
+      "const": "mse_with_bias_guard",
+      "default": "mse_with_bias_guard",
+      "title": "Mean Objective",
+      "type": "string"
+    },
+    "median_objective": {
+      "const": "mae",
+      "default": "mae",
+      "title": "Median Objective",
+      "type": "string"
+    },
+    "minimum_calibration_rows": {
+      "const": 50,
+      "default": 50,
+      "title": "Minimum Calibration Rows",
+      "type": "integer"
+    },
+    "minimum_eligibility_coverage": {
+      "default": 0.8,
+      "maximum": 0.8,
+      "minimum": 0.8,
+      "title": "Minimum Eligibility Coverage",
+      "type": "number"
+    },
+    "minimum_empirical_coverage": {
+      "default": 0.8,
+      "maximum": 0.8,
+      "minimum": 0.8,
+      "title": "Minimum Empirical Coverage",
+      "type": "number"
+    },
+    "minimum_global_rows": {
+      "const": 100,
+      "default": 100,
+      "title": "Minimum Global Rows",
+      "type": "integer"
+    },
+    "minimum_prediction_coverage": {
+      "default": 1.0,
+      "maximum": 1.0,
+      "minimum": 1.0,
+      "title": "Minimum Prediction Coverage",
+      "type": "number"
+    },
+    "minimum_relative_mae_improvement": {
+      "default": 0.05,
+      "maximum": 0.05,
+      "minimum": 0.05,
+      "title": "Minimum Relative Mae Improvement",
+      "type": "number"
+    },
+    "minimum_segment_rows": {
+      "const": 30,
+      "default": 30,
+      "title": "Minimum Segment Rows",
+      "type": "integer"
+    },
+    "nominal_coverage": {
+      "default": 0.9,
+      "maximum": 0.9,
+      "minimum": 0.9,
+      "title": "Nominal Coverage",
+      "type": "number"
+    },
+    "perfect_baseline": {
+      "const": "zero_error_tie_passes_positive_error_fails",
+      "default": "zero_error_tie_passes_positive_error_fails",
+      "title": "Perfect Baseline",
+      "type": "string"
+    },
+    "point_contract": {
+      "const": "separate_conditional_median_and_mean",
+      "default": "separate_conditional_median_and_mean",
+      "title": "Point Contract",
+      "type": "string"
+    },
+    "portfolio_final_test": {
+      "const": "not_included_not_opened",
+      "default": "not_included_not_opened",
+      "title": "Portfolio Final Test",
+      "type": "string"
+    },
+    "required_volume_bins": {
+      "default": [
+        "zero",
+        "low",
+        "medium",
+        "high"
+      ],
+      "maxItems": 4,
+      "minItems": 4,
+      "prefixItems": [
+        {
+          "const": "zero",
+          "type": "string"
+        },
+        {
+          "const": "low",
+          "type": "string"
+        },
+        {
+          "const": "medium",
+          "type": "string"
+        },
+        {
+          "const": "high",
+          "type": "string"
+        }
+      ],
+      "title": "Required Volume Bins",
+      "type": "array"
+    },
+    "version": {
+      "const": "forecast-quality-2.0.0",
+      "default": "forecast-quality-2.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "volume_basis": {
+      "const": "origin_known_rolling_28_mean_not_target_outcome",
+      "default": "origin_known_rolling_28_mean_not_target_outcome",
+      "title": "Volume Basis",
+      "type": "string"
+    },
+    "width_to_actual_ratio": {
+      "const": "diagnostic_only_no_denominator_floor",
+      "default": "diagnostic_only_no_denominator_floor",
+      "title": "Width To Actual Ratio",
+      "type": "string"
+    },
+    "zero_actuals": {
+      "const": "absolute_errors_and_false_positive_units_no_ratio_gate",
+      "default": "absolute_errors_and_false_positive_units_no_ratio_gate",
+      "title": "Zero Actuals",
+      "type": "string"
+    }
+  },
+  "title": "QualityPolicyV2",
+  "type": "object"
+}
