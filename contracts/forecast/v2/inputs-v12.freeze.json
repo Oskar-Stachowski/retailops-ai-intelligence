@@ -1,0 +1,25 @@
+{
+  "code_commit": "626504d",
+  "implementation": {
+    "code_files": {
+      "forecasting/features.py": "b069639e0bcd996fdeefca52a7498ca543431eb744b83072d7b1c6b3f1e93283",
+      "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+      "forecasting/features_store.py": "6f6ccfe1a4e1e22cf502e6c001a36d71a3b4afb133cd4798c343c3cff9541625"
+    },
+    "code_sha256": "1b19e3bef31d6e58589b86c9abb1404e3244f475b696fc438466c66fa1efcbf0",
+    "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "logical_output_byte_limit": 5368709120,
+    "physical_output_byte_limit": 2147483648,
+    "pyarrow_version": "25.0.1",
+    "python_version": "3.11.15",
+    "temporary_index_byte_limit": 2147483648,
+    "temporary_index_encoding": "zlib_per_record_canonical_bytes_builder_and_verifier",
+    "version": "forecast-inputs-1.2.0"
+  },
+  "model_fits": 0,
+  "physical_and_index_limit_bytes": 2147483648,
+  "quality_thresholds_changed": false,
+  "reason": "full_280000_row_panel_4290442055_estimated_logical_bytes_plus_10_percent_margin_rounded_up_to_5GiB",
+  "source_dataset_id": "source-sha256-76994412fcabec320688429d7f88adcd80fe54fb70327b22c1456c27673c2d66",
+  "source_regeneration": false
+}

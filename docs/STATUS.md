@@ -97,9 +97,12 @@ Punkt 3 pozostaje otwarty.
 coverage, bez dzielenia przez małą sprzedaż. Poprawne zera dają się ocenić;
 fałszywy popyt i realne pogorszenia nadal są błędami. Stare wyniki, snapshot
 i zablokowana v10 pozostają zachowane z sumami kontrolnymi. Pełnej kampanii
-nie uruchomiono. Planistyczne minimum miejsca to 16 GiB; pozostaje integracja
-dwóch jawnych celów predykcji oraz ryzyko przekroczenia logicznego limitu 4 GiB
-przez pełny panel nowego kalendarza. Szczegóły zamrożenia i testów są w dokumencie.
+nie uruchomiono. Planistyczne minimum miejsca to 16 GiB.
+[Integracja dwóch celów i kampania v11](forecast-functional-v2.md) dodaje pięć
+osobnych modeli, baseline’y mediany/średniej, wybór na walidacji, replay oraz
+eksport v2. Zapis wejść 1.2 usuwa ryzyko pełnego panelu przez kompresję indeksów
+i uzasadniony limit logiczny 5 GiB, bez zmiany progów jakości. Przygotowanie
+pełnych cech i splitu oraz testy regresji są w toku; kwalifikacja pozostaje otwarta.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

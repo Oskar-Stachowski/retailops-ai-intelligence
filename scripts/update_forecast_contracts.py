@@ -14,6 +14,7 @@ from retailops_ai.forecasting.evaluation_contract import (
     EvaluationManifest,
 )
 from retailops_ai.forecasting.features_contract import HistoryContext, InputRow, PanelPolicy
+from retailops_ai.forecasting.functional_contract import FunctionalPipeline, FunctionalPolicy
 from retailops_ai.forecasting.manifest_contract import (
     FeatureManifest,
     FeaturePolicy,
@@ -110,12 +111,17 @@ def artifacts() -> dict[Path, object]:
     for v2_name, v2_model in (
         ("quality_policy", QualityPolicyV2),
         ("quality_observation", ProtocolObservation),
+        ("functional_policy", FunctionalPolicy),
+        ("functional_pipeline", FunctionalPipeline),
     ):
         schema = v2_model.model_json_schema()
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
         schema["$id"] = f"urn:retailops:forecast:{v2_name}:2.0.0"
         result[ROOT / f"contracts/forecast/v2/{v2_name}.schema.json"] = schema
     result[ROOT / "contracts/forecast/v2/quality.default.json"] = QualityPolicyV2().model_dump(
+        mode="json"
+    )
+    result[ROOT / "contracts/forecast/v2/functional.default.json"] = FunctionalPolicy().model_dump(
         mode="json"
     )
     calendar = SimpleNamespace(
