@@ -162,8 +162,8 @@ Każdy odczyt weryfikuje całe manifesty/partycje oraz piny udanych runów.
 [Odbiór](evidence/05-07-read.md) rozdziela testy techniczne od jakości modelu.
 Starszy origin i nowsza nieudana próba dają `stale`; brak osobnego source
 watermark daje `unknown`, bez deklarowania `current` na podstawie replay.
-Do wykonania: wersjonowany source watermark
-i pełny odbiór freshness, spójny qualified handoff AI 04 oraz rzeczywisty
+[Watermark i freshness 05.7d](forecast-freshness.md) mają osobny odbiór poniżej.
+Do wykonania: spójny qualified handoff AI 04 oraz rzeczywisty
 batch na jego release’ie. Zdalny Required CI nadal nie jest odebrany;
 outbox/zdarzenia pozostają w AI 10. **AI 05 pozostaje otwarte.**
 
@@ -175,8 +175,8 @@ chronią odczyt. Nie udostępnia globalnych metryk ani URI plików.
 Head spoza scope pozostaje ukryty, aliases/runtime/drift nie są potwierdzane,
 freshness pozostaje `unknown`. [Odbiór](evidence/05-07-catalog.md) podaje
 rzeczywisty HTTP/PostgreSQL, próby uszkodzenia i restartu oraz granice fixture.
-Scoped historyczne evaluations opisuje 05.7c poniżej; pełny watermark
-oraz qualified batch AI 04 nadal pozostają do wykonania.
+Scoped historyczne evaluations opisuje 05.7c poniżej, watermark 05.7d.
+Qualified batch AI 04 nadal pozostaje do wykonania.
 Zdalny Required CI tego brancha nie jest odebrany. **AI 05 pozostaje otwarte.**
 
 **AI 05.7c — historyczne oceny:** [runbook](evaluations.md) opisuje listę i szczegół
@@ -186,9 +186,22 @@ zapisanych predykcji/etykiet kalkulatorem AI 04, bez treningu. Pierwotny status
 jakości oraz stare code/lock pins są zachowane, bez nowej kwalifikacji modelu.
 [Odbiór](evidence/05-07-evaluations.md) obejmuje HTTP/PostgreSQL, 37 synthetic
 ocen i rzeczywisty historyczny export (12012 memberships), odmowę częściowego
-scope, niezmienność i SIGKILL/restart. Migracja `0013_forecast_evaluations`
-jest wymagana przez readiness/DB guard; trwałego stosu nie zmieniano.
-Pozostają watermark i pełna freshness prognoz, qualified handoff AI 04,
+scope, niezmienność i SIGKILL/restart. Tabela pochodzi z migracji
+`0013_forecast_evaluations`; bieżący DB head to 0014 opisane poniżej.
+Trwałego stosu nie zmieniano. Pozostają qualified handoff AI 04,
+batch na jego release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**
+
+**AI 05.7d — watermark i świeżość:** [runbook](forecast-freshness.md) opisuje
+przypiętą deklarację kompletności źródła, osobną dostępność obserwacji w cutoff,
+wejścia/outputy 1.1 oraz odczyt `forecast-read-v2`. Origin ma maksimum 24 h,
+watermark musi obejmować origin, a obserwacja może mieć lag do 1 dnia zgodnie
+z dobowym close. Starsze artefakty 1.0 zachowują canonical IDs i nie otrzymują
+domyślnego `current`. [Odbiór](evidence/05-07-freshness.md) obejmuje rzeczywisty
+HTTP/PostgreSQL, mixed-version odczyt, atomową odmowę rehashed niezgodnego dowodu,
+tamper/restore i SIGKILL/restart. Przygotowanie 1.1 ze zweryfikowanego archiwum
+AI 04 zachowało parenty i stare locki; nie kwalifikowało modelu ani nie publikowało
+prognoz z tego archiwum. **`0014_forecast_freshness` jest bieżącym head migracji**;
+trwałego stosu nie migrowano. Pozostają qualified handoff AI 04, rzeczywisty
 batch na jego release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)

@@ -1,0 +1,33 @@
+{
+  "as_of_time": "2026-07-12T23:59:59+00:00",
+  "bedrock_calls": 0,
+  "curated_dataset_id": "curated-sha256-aeedd1a49f75eb27b687b328b92e23fee5b8cfa7c2520b2ff5219a8a74bd748a",
+  "dependency_lock_sha256": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d",
+  "feature_set_id": "features-sha256-e7992553d0d3b67f00b5f16e8e0ace55bb88fc3f3d023135bfcd70538e0fdbaf",
+  "input_rows": 14,
+  "mlflow_calls": 0,
+  "observations": [
+    {
+      "channel": "online",
+      "latest_complete_observation_date": "2026-07-11",
+      "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+      "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+    }
+  ],
+  "parent_unchanged": true,
+  "profile_id": "batch-profile-sha256-54a0b5eef185074726fc169e4d6d1c013f81dd5bdfde8b74668fd95af4445ad8",
+  "profile_sha256": "281d4d218f7c31cad47810ca52bb4f5cbd04b4457b162eabfa413c5890926091",
+  "published_forecast_outputs": 0,
+  "purpose": "historical_verified_input_preparation_not_model_qualification",
+  "schema_version": "1.1",
+  "source_archive_modified": false,
+  "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22",
+  "source_watermark": {
+    "as_of_time": "2026-08-01T00:00:00Z",
+    "complete_through": "2026-07-31",
+    "completeness_status": "complete",
+    "meaning": "synthetic_sales_day_close_without_return_guarantee",
+    "policy_version": "daily-demand-1.0.0"
+  },
+  "status": "passed"
+}

@@ -10,10 +10,10 @@ from sqlalchemy import Engine, text
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.domain.access import Principal
 from retailops_ai.forecast_jobs.contracts import BatchRun, MechanicsPrediction
+from retailops_ai.forecast_jobs.freshness import freshness
 from retailops_ai.forecast_jobs.publication import OutputManifest, Publication, grain, receipt
 from retailops_ai.forecast_jobs.queue import checked, record
 from retailops_ai.forecast_jobs.read_contracts import (
-    ForecastFreshness,
     ForecastItem,
     ForecastPage,
     ForecastQuery,
@@ -21,6 +21,7 @@ from retailops_ai.forecast_jobs.read_contracts import (
     ReadErrorCode,
     ReadPolicy,
 )
+from retailops_ai.forecast_jobs.source_freshness import SourceFreshness
 
 ForecastGrain = tuple[str, str, str, int]
 RunOrder = tuple[datetime, datetime, str]
@@ -71,6 +72,15 @@ def resolve_scope(query: ForecastQuery, actor: Principal) -> ReadScope:
 
 def verify_publication(output: Publication, run: BatchRun, environment: str) -> None:
     verify_manifest(output.manifest, run, environment)
+
+
+def verify_source_freshness(m: OutputManifest, input_version: str | None, raw: object) -> None:
+    if m.schema_version == "1.1":
+        source = SourceFreshness.model_validate_json(json.dumps(raw))
+        if input_version != "1.1" or source.scoped(m.scope) != m.source_freshness:
+            raise ValueError("forecast_read_source_freshness_pin_mismatch")
+    elif input_version == "1.1":
+        raise ValueError("forecast_read_source_freshness_downgrade")
 
 
 def verify_manifest(m: OutputManifest, run: BatchRun, environment: str) -> None:
@@ -152,18 +162,7 @@ def projection(
         ):
             continue
         m = output.manifest
-        age = (now - row.forecast_origin).total_seconds()
         newer = unpublished.get(grain(row))
-        reason: Literal[
-            "source_watermark_unavailable", "origin_age_exceeded", "newer_run_unpublished"
-        ]
-        reason = (
-            "newer_run_unpublished"
-            if newer is not None and newer > (row.forecast_origin, run.requested_at, run.run_id)
-            else "origin_age_exceeded"
-            if age > policy.max_origin_age_seconds
-            else "source_watermark_unavailable"
-        )
         raw = row.model_dump(mode="json")
         raw.update(
             prediction_id="prediction-sha256-"
@@ -189,11 +188,12 @@ def projection(
             profile_id=m.profile_id,
             execution_profile_id=m.execution_profile_id,
             generated_at=m.generated_at.isoformat(),
-            freshness=ForecastFreshness(
-                status="unknown" if reason == "source_watermark_unavailable" else "stale",
-                reason=reason,
-                evaluated_at=now,
-                origin_age_seconds=age,
+            freshness=freshness(
+                row,
+                m.source_freshness,
+                now=now,
+                newer_unpublished=newer is not None
+                and newer > (row.forecast_origin, run.requested_at, run.run_id),
             ).model_dump(mode="json"),
         )
         items.append(ForecastItem.model_validate_json(json.dumps(raw)))
@@ -270,9 +270,14 @@ class PostgresForecastReader:
                 conn.execute(text("SET LOCAL statement_timeout='3s'"))
                 rows = conn.execute(
                     text("""
-                    SELECT m.artifact_id, m.manifest, r.record
+                    SELECT m.artifact_id, m.manifest, r.record,
+                           p.profile->>'schema_version' input_version,
+                           CASE WHEN octet_length((p.profile->'source_freshness')::text)<=524288
+                             THEN p.profile->'source_freshness' ELSE NULL END input_freshness
                     FROM ai.forecast_output_manifests m
                     JOIN ai.forecast_batch_runs r ON r.run_id=m.run_id
+                    LEFT JOIN ai.forecast_prepared_inputs p ON p.environment=m.environment
+                         AND p.profile_id=r.profile_id
                     WHERE m.environment=:env
                       AND m.manifest->'scope'->>'channel'=ANY(:channels)
                       AND (m.manifest->'scope'->'product_ids') ?| CAST(:products AS text[])
@@ -306,6 +311,7 @@ class PostgresForecastReader:
                             }
                         )
                     )
+                    verify_source_freshness(output.manifest, row.input_version, row.input_freshness)
                     if output.manifest.artifact_id != row.artifact_id or any(
                         p.ordinal != part.ordinal or p.sha256 != receipt(part).sha256
                         for p, part in zip(stored_parts, output.partitions, strict=True)

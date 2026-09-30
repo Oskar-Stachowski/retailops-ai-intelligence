@@ -7,21 +7,33 @@
       "title": "Max Candidate Outputs",
       "type": "integer"
     },
+    "max_observation_lag_days": {
+      "const": 1,
+      "default": 1,
+      "title": "Max Observation Lag Days",
+      "type": "integer"
+    },
     "max_origin_age_seconds": {
       "const": 86400,
       "default": 86400,
       "title": "Max Origin Age Seconds",
       "type": "integer"
     },
+    "max_source_watermark_origin_lag_seconds": {
+      "const": 0,
+      "default": 0,
+      "title": "Max Source Watermark Origin Lag Seconds",
+      "type": "integer"
+    },
     "policy_id": {
-      "const": "forecast-read-v1",
-      "default": "forecast-read-v1",
+      "const": "forecast-read-v2",
+      "default": "forecast-read-v2",
       "title": "Policy Id",
       "type": "string"
     },
     "schema_version": {
-      "const": "1.0",
-      "default": "1.0",
+      "const": "1.1",
+      "default": "1.1",
       "title": "Schema Version",
       "type": "string"
     }

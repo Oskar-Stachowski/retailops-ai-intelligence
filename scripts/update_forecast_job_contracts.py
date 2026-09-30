@@ -21,6 +21,7 @@ from retailops_ai.forecast_jobs.inputs import PreparedInputs
 from retailops_ai.forecast_jobs.publication import OutputManifest, Partition, Publication
 from retailops_ai.forecast_jobs.read_contracts import ForecastPage, ForecastQuery, ReadPolicy
 from retailops_ai.forecast_jobs.runtime import RuntimePin
+from retailops_ai.forecast_jobs.source_freshness import SourceFreshness
 
 ROOT = Path(__file__).resolve().parents[1] / "contracts/forecast_jobs/v1"
 
@@ -36,6 +37,7 @@ def main() -> int:
         ("mechanics_output", MechanicsOutput),
         ("policy", QueuePolicy),
         ("prepared_inputs", PreparedInputs),
+        ("source_freshness", SourceFreshness),
         ("runtime_pin", RuntimePin),
         ("registered_inputs", RegisteredInputs),
         ("registration_limits", RegistrationLimits),

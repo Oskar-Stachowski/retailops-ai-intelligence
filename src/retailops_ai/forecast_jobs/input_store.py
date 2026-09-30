@@ -37,6 +37,11 @@ class RegisteredInputs(Contract):
             self.profile_sha256 != canonical_sha256(raw)
             or len(canonical_bytes(raw)) > MAX_INPUT_BYTES
             or self.inputs.as_of_time > self.registered_at
+            or (
+                self.inputs.source_freshness is not None
+                and self.inputs.source_freshness.watermark is not None
+                and self.inputs.source_freshness.watermark.as_of_time > self.registered_at
+            )
         ):
             raise ValueError("registered_inputs_integrity_mismatch")
         return self
@@ -79,6 +84,12 @@ class PostgresInputStore:
             now = clock(connection)
             if inputs.as_of_time > now:
                 raise ValueError("prepared_inputs_from_future")
+            if (
+                inputs.source_freshness
+                and inputs.source_freshness.watermark
+                and inputs.source_freshness.watermark.as_of_time > now
+            ):
+                raise ValueError("prepared_inputs_watermark_from_future")
             old = (
                 connection.execute(
                     text(

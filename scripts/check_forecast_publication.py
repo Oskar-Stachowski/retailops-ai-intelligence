@@ -150,7 +150,7 @@ def main(*, read: bool = False, catalog: bool = False, evaluations: bool = False
             cwd=stack.ROOT,
             input=payload,
             capture_output=True,
-            timeout=240 if read or catalog or evaluations else 180,
+            timeout=420 if read else 240 if catalog or evaluations else 180,
             check=False,
         )
         if result.returncode:

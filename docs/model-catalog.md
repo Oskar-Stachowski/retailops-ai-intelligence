@@ -95,6 +95,6 @@ projekty i współdzielony cache. Test należy do persistence Required CI.
 
 [Historyczne evaluations 05.7c](evaluations.md) mają osobny trwały zakres
 i odtworzone metryki. Scope publikacji prognozy nie uprawnia użytkownika
-do globalnych metryk oceny tego modelu. Pozostają watermark
-freshness prognoz, spójny qualified handoff AI 04, rzeczywisty batch na jego
+do globalnych metryk oceny tego modelu. [Freshness prognoz 05.7d](forecast-freshness.md)
+ma osobny odbiór. Pozostają spójny qualified handoff AI 04, rzeczywisty batch na jego
 release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**

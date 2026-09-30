@@ -4,14 +4,27 @@ import json
 import tempfile
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Literal, Self
+from typing import Any, Literal, Self
 
-from pydantic import Field, TypeAdapter, model_validator
+from pydantic import (
+    ConfigDict,
+    Field,
+    SerializerFunctionWrapHandler,
+    TypeAdapter,
+    model_serializer,
+    model_validator,
+)
 
 from retailops_ai.curated.builder import verify_curated
 from retailops_ai.data_contracts.common import Contract, UtcTime
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.forecast_jobs.contracts import BatchScope, ProfileID
+from retailops_ai.forecast_jobs.source_freshness import (
+    SourceFreshness,
+    observations,
+    source_freshness,
+    versioned_schema,
+)
 from retailops_ai.forecasting.contract import make_origin
 from retailops_ai.forecasting.features import OriginFeatures
 from retailops_ai.forecasting.features_contract import TABLES, HistoryContext, InputRow
@@ -49,6 +62,10 @@ def scoped_inputs(
     }
     return prepared(
         InputContent(
+            schema_version=profile.schema_version,
+            source_freshness=profile.source_freshness.scoped(scope)
+            if profile.source_freshness
+            else None,
             feature_manifest=profile.feature_manifest,
             as_of_time=profile.as_of_time,
             scope=scope,
@@ -60,7 +77,9 @@ def scoped_inputs(
 
 
 class InputContent(Contract):
-    schema_version: Literal["1.0"] = "1.0"
+    model_config = ConfigDict(json_schema_extra=versioned_schema)
+    schema_version: Literal["1.0", "1.1"] = "1.0"
+    source_freshness: SourceFreshness | None = None
     kind: Literal["forecast_inference_inputs"] = "forecast_inference_inputs"
     feature_manifest: FeatureManifest
     as_of_time: UtcTime
@@ -69,8 +88,24 @@ class InputContent(Contract):
     rows: tuple[InputRow, ...] = Field(min_length=1, max_length=1400)
     histories: tuple[HistoryContext, ...] = Field(min_length=1, max_length=100)
 
+    @model_serializer(mode="wrap")
+    def versioned_content(self, handler: SerializerFunctionWrapHandler) -> dict[str, Any]:
+        raw: dict[str, Any] = handler(self)
+        if self.schema_version == "1.0":
+            raw.pop("source_freshness", None)
+        return raw
+
     @model_validator(mode="after")
     def coherence(self) -> Self:
+        if (self.schema_version == "1.1") != (self.source_freshness is not None):
+            raise ValueError("inference_inputs_freshness_version_mismatch")
+        if self.source_freshness is not None:
+            self.source_freshness.verify_parent(self.feature_manifest.descriptor.parent)
+            if (
+                self.source_freshness.as_of_time != self.as_of_time
+                or self.source_freshness.observations != observations(self.histories)
+            ):
+                raise ValueError("inference_inputs_freshness_history_mismatch")
         if self.as_of_time.time().isoformat() != "23:59:59":
             raise ValueError("inference_origin_must_close_utc_day")
         expected = {
@@ -181,14 +216,19 @@ def build_inputs_package(
     # Refuse a package changed during either stream, even if each partition was coherent.
     if verify_feature_set(feature_dir) != features:
         raise SnapshotError("inference_features_changed_during_preparation")
+    if verify_curated(curated_dir) != curated:
+        raise SnapshotError("inference_curated_changed_during_preparation")
+    ordered_histories = tuple(sorted(histories, key=series))
     value = prepared(
         InputContent(
+            schema_version="1.1",
+            source_freshness=source_freshness(curated["descriptor"], as_of, ordered_histories),
             feature_manifest=features,
             as_of_time=as_of,
             scope=scope,
             horizon_days=horizon_days,
             rows=tuple(sorted(rows, key=lambda r: (*series(r), r.horizon_days))),
-            histories=tuple(sorted(histories, key=series)),
+            histories=ordered_histories,
         )
     )
     if any(output_root.absolute().is_relative_to(p.absolute()) for p in (feature_dir, curated_dir)):

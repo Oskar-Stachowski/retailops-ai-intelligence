@@ -1,9 +1,15 @@
 """Bounded output partitions and a complete, pinned, content-addressed publication manifest."""
 
 import json
-from typing import Annotated, Literal, Self
+from typing import Annotated, Any, Literal, Self
 
-from pydantic import Field, model_validator
+from pydantic import (
+    ConfigDict,
+    Field,
+    SerializerFunctionWrapHandler,
+    model_serializer,
+    model_validator,
+)
 
 from retailops_ai.data_contracts.common import (
     Contract,
@@ -26,6 +32,7 @@ from retailops_ai.forecast_jobs.contracts import (
 )
 from retailops_ai.forecast_jobs.execution_contracts import RuntimeResult
 from retailops_ai.forecast_jobs.inputs import PreparedInputs, scoped_inputs
+from retailops_ai.forecast_jobs.source_freshness import SourceFreshness, versioned_schema
 from retailops_ai.model_lifecycle.contracts import MODEL, Binding
 
 PARTITION_ROWS = 256
@@ -67,7 +74,9 @@ def receipt(partition: Partition) -> PartitionReceipt:
 
 
 class OutputManifest(Contract):
-    schema_version: Literal["1.0"] = "1.0"
+    model_config = ConfigDict(json_schema_extra=versioned_schema)
+    schema_version: Literal["1.0", "1.1"] = "1.0"
+    source_freshness: SourceFreshness | None = None
     artifact_id: PredictionDatasetID
     kind: Literal["predictions"] = "predictions"
     complete: TrueFlag = True
@@ -93,8 +102,28 @@ class OutputManifest(Contract):
     compute_seconds: Annotated[float, Field(ge=0)]
     peak_rss_bytes: Annotated[int, Field(ge=1, le=1024 * 1024**2)]
 
+    @model_serializer(mode="wrap")
+    def versioned_content(self, handler: SerializerFunctionWrapHandler) -> dict[str, Any]:
+        raw: dict[str, Any] = handler(self)
+        if self.schema_version == "1.0":
+            raw.pop("source_freshness", None)
+        return raw
+
     @model_validator(mode="after")
     def integrity(self) -> Self:
+        if (self.schema_version == "1.1") != (self.source_freshness is not None):
+            raise ValueError("forecast_manifest_freshness_version_mismatch")
+        if self.source_freshness is not None:
+            self.source_freshness.verify_ids(self.source_dataset_id, self.curated_dataset_id)
+            if (
+                self.source_freshness.as_of_time != self.as_of_time
+                or self.source_freshness.scoped(self.scope) != self.source_freshness
+                or (
+                    self.source_freshness.watermark is not None
+                    and self.source_freshness.watermark.as_of_time > self.generated_at
+                )
+            ):
+                raise ValueError("forecast_manifest_freshness_binding_mismatch")
         binding = self.resolved_model
         if (
             binding.model_name != MODEL
@@ -199,7 +228,7 @@ def publication(
         for i in range(0, len(predictions), PARTITION_ROWS)
     )
     raw = dict(
-        schema_version="1.0",
+        schema_version=profile.schema_version,
         kind="predictions",
         complete=True,
         purpose="qualified_forecast",
@@ -224,6 +253,8 @@ def publication(
         compute_seconds=result.compute_seconds,
         peak_rss_bytes=result.peak_rss_bytes,
     )
+    if inputs.source_freshness is not None:
+        raw["source_freshness"] = inputs.source_freshness.model_dump(mode="json")
     manifest = OutputManifest.model_validate_json(
         json.dumps(dict(raw, artifact_id="predictions-sha256-" + canonical_sha256(raw)))
     )

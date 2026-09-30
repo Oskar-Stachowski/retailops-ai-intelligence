@@ -61,6 +61,8 @@ do publikacji w scope użytkownika, bez globalnych ocen i deklaracji wdrożenia.
 [Historyczne oceny AI 05.7c](evaluations.md) udostępniają MAE/WAPE wyłącznie
 w zakresie całego raportu. [Odbiór](evidence/05-07-evaluations.md) wiąże
 odtworzone metryki z archiwum i rzeczywistym HTTP/PostgreSQL.
+[Watermark i świeżość AI 05.7d](forecast-freshness.md) opisują `current/stale/unknown`,
+deklarację kompletności, cutoff i zgodność starszych outputów.
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)

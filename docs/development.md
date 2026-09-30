@@ -65,6 +65,7 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make compose-config` | Walidacja Compose bez wypisywania sekretów |
 | `make evaluations-smoke` | HTTP/PostgreSQL: whole-scope oceny, metryki, statusy, immutable import i SIGKILL/restart; jawne synthetic fixtures |
 | `make model-catalog-smoke` | HTTP/PostgreSQL: scoped modele i wersje, piny, paginacja, uszkodzenia i restart; SQL-only stub jakości |
+| `make forecast-read-smoke` | HTTP/PostgreSQL: scoped prognozy, strony, watermark/current/stale/unknown, rollback i SIGKILL/restart; SQL-only stub jakości |
 | `make compose-smoke` | Rzeczywiste próby persistence i awarii, następnie shutdown |
 | `make contracts-check` | Porównanie intelligence/access/knowledge/forecast snapshots z kodem, walidacja struktury rejestru korpusu |
 | `make contracts` | Regeneracja HTTP oraz intelligence/access/knowledge/forecast schemas/examples do przeglądu |

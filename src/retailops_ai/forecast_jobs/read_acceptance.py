@@ -20,6 +20,7 @@ from retailops_ai.config import load_settings
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.domain.access import Principal
 from retailops_ai.forecast_jobs.contracts import BatchRequest, QueuePolicy
+from retailops_ai.forecast_jobs.freshness_acceptance import probes
 from retailops_ai.forecast_jobs.input_store import PostgresInputStore
 from retailops_ai.forecast_jobs.inputs import MAX_INPUT_BYTES, PreparedInputs
 from retailops_ai.forecast_jobs.publication_acceptance import (
@@ -418,6 +419,14 @@ def main() -> int:
             checks.append(
                 "corrupt_out_of_page_and_out_of_scope_partition_refuses_entire_read_without_leaking_rows"
             )
+            watermark_probes = probes(engine, queue, inputs, pipeline, http, settings.image_digest)
+            checks.extend(
+                [
+                    "pinned_source_watermark_http_current_stale_unknown_and_cutoff_availability",
+                    "future_declaration_rejected_and_rehashed_sql_watermark_mismatch_rolls_back",
+                    "corrupt_watermark_refuses_scoped_read_and_exact_restore_recovers_current",
+                ]
+            )
         report = read_snapshot(engine)
         report.update(
             status="passed",
@@ -425,7 +434,8 @@ def main() -> int:
             purpose="sql_fixture_only",
             forecast_quality_approved=False,
             published_forecast_outputs=0,
-            synthetic_output_manifests=35,
+            synthetic_output_manifests=42,
+            watermark_probes=watermark_probes,
             real_http=True,
             bedrock_calls=0,
             mlflow_calls=0,

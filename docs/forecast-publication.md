@@ -104,6 +104,7 @@ Pełny odbiór na modelu wymaga spójnego i zakwalifikowanego handoff AI 04,
 importu, review/promocji oraz pomiaru rzeczywistego batchu na jego release.
 Katalog modeli/wersji opisuje [AI 05.7b](model-catalog.md).
 Historyczne evaluations opisuje [AI 05.7c](evaluations.md).
-Pełna freshness wymaga też utrwalonego source watermark. Zdarzenia/outbox pozostają w AI 10. Backup pełnego
+[Watermark/freshness 05.7d](forecast-freshness.md) utrwalają dowód w formacie 1.1.
+Zdarzenia/outbox pozostają w AI 10. Backup pełnego
 schematu `ai` obejmuje nowe tabele; downgrade wymaga
 [backup/restore](lifecycle-backup.md), bez usuwania historii.

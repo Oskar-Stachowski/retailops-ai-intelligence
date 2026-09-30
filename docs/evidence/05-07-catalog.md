@@ -73,6 +73,7 @@ wartości partycji prognoz ani wszystkich dawnych manifestów wersji.
 Nie potwierdza żywych aliasów, runtime, driftu ani nowej jakości modelu.
 [Historyczne evaluations 05.7c](../evaluations.md) mają trwały zakres
 i odtworzone metryki; scope publikacji prognozy nie uprawnia do globalnych ocen.
-Pozostają source watermark freshness, spójny qualified handoff AI 04,
+[Freshness prognoz 05.7d](../forecast-freshness.md) ma osobny odbiór.
+Pozostają spójny qualified handoff AI 04,
 batch na jego rzeczywistym release'ie oraz zdalny Required CI brancha.
 **AI 05 pozostaje otwarte.** Outbox i zdarzenia należą do AI 10.

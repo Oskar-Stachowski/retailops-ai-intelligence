@@ -59,19 +59,18 @@ nowej ewaluacji modelu ani monitoringu AI 13.
 
 ## Świeżość i zależności
 
-Polityka `forecast-read-v1` ma budżet wieku origin **86400 s**.
+Polityka `forecast-read-v2` ma budżet wieku origin **86400 s**.
 Starszy origin daje `stale/origin_age_exceeded`, nawet gdy replay opublikowano
 przed chwilą. Nowszy nieopublikowany run dla tego samego produktu, lokalizacji,
 kanału i horyzontu daje `stale/newer_run_unpublished`; dotyczy także nowej
 nieudanej próby tego samego origin. Poprzedni kompletny wynik nadal jest
 widoczny. Udany wynik o nowszym porządku nie jest obniżany przez starszą awarię.
 
-**Manifest 05.6 nie utrwala jeszcze osobnego source watermark.** API nie
-zastępuje go `generated_at` ani datą ostatniej sprzedaży. Jeśli nie ma znanego
-powodu nieaktualności, freshness ma `unknown/source_watermark_unavailable`
-oraz `source_watermark=null`. Ten zakres nie nadaje statusu `current`.
-Do pełnego odbioru świeżości potrzebny jest wersjonowany watermark kompletności
-źródła w handoff/publikacji i jego próg dla danej polityki.
+[Watermark i pełna polityka świeżości 05.7d](forecast-freshness.md) przypinają
+deklarację źródła do wejścia/outputu 1.1. `current` wymaga kompletności do
+origin, obserwacji dostępnej w cutoff z lagiem do 1 dnia oraz wieku origin
+do 24 godzin. Starszy format 1.0 bez watermarku daje `unknown`, o ile znana
+przyczyna nie wymaga `stale`. Envelope read API ma wersję 1.1.
 
 Odczyt działa w transakcji `REPEATABLE READ READ ONLY`. Najpierw SQL ogranicza
 środowisko i scope, potem aplikacja weryfikuje całe manifesty, receipts,
@@ -104,8 +103,7 @@ release’y sprawdzają odczyt; nie kwalifikują modelu AI 04. SIGKILL/restart
 zachowuje pełny stan i identyczny widok. Kontroler usuwa własne kontenery,
 wolumeny i tag obrazu, pozostawiając współdzielony cache oraz inne projekty.
 
-Do wykonania w AI 05: pełny watermark
-freshness, handoff i batch na rzeczywistym qualified release AI 04 oraz
+Do wykonania w AI 05: handoff i batch na rzeczywistym qualified release AI 04 oraz
 zdalny Required CI. Outbox/zdarzenia należą do AI 10.
 
 Katalog modeli i wersji ma osobny zakres [AI 05.7b](model-catalog.md).

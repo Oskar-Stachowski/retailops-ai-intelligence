@@ -111,5 +111,7 @@ Przed odbiorem qualified execution trzeba przygotować spójny, zakwalifikowany
 pakiet AI 04. [AI 05.6](forecast-publication.md) ma oddzielny odbiór
 techniczny przyjęcia, fencing i transakcji całego wyniku na PostgreSQL.
 [AI 05.7a](forecast-read.md) dodaje scoped odczyt prognoz z paginacją i oceną freshness;
-pozostają model/evaluation read API i source watermark. Zdarzenia należą do AI 10.
+[katalog 05.7b](model-catalog.md), [oceny 05.7c](evaluations.md) oraz
+[watermark 05.7d](forecast-freshness.md) mają osobne odbiory.
+Pozostaje qualified batch AI 04. Zdarzenia należą do AI 10.
 AI 05 pozostaje otwarte; zdalny Required CI tego brancha nie został odebrany.

@@ -136,6 +136,6 @@ nie usuwa zapisanych runów. Backup schematu `ai` obejmuje także nowe tabele.
 [Rejestr i supervisor 05.5b](forecast-input-store.md) oraz
 [integracja/publikacja 05.6](forecast-publication.md) są zaimplementowane.
 Oba zakresy mają odbiór PostgreSQL na jawnych fixture.
-Pozostaje odbiór na spójnym, zakwalifikowanym release’ie AI 04,
-pełna freshness z source watermark w AI 05.7
+[Watermark/freshness 05.7d](forecast-freshness.md) mają osobny odbiór.
+Pozostaje odbiór na spójnym, zakwalifikowanym release’ie AI 04
 oraz zdalny Required CI. Zdarzenia i outbox/projekcje należą do AI 10.

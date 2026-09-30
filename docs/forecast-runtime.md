@@ -120,6 +120,6 @@ Rejestr profili i ograniczony supervisor mają [odbiór 05.5b](forecast-input-st
 [Integracja z lease i atomowym outputem 05.6](forecast-publication.md) oraz
 [odczyt prognoz 05.7a](forecast-read.md) mają lokalny odbiór techniczny.
 [Odczyt historycznych ocen 05.7c](evaluations.md) również przeszedł odbiór.
-Pozostaje odbiór na zakwalifikowanym modelu AI 04
-i pełny source watermark freshness. AI 10 dodaje zdarzenia.
+[Watermark/freshness 05.7d](forecast-freshness.md) mają osobny odbiór.
+Pozostaje odbiór na zakwalifikowanym modelu AI 04. AI 10 dodaje zdarzenia.
 Nie ma zdalnego Required CI tego zakresu.

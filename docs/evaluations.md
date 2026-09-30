@@ -108,8 +108,8 @@ JSON scope ani dowolnego URL/model binary. Nie zmienia Registry lub release'u.
 
 ## Migracja i odporność
 
-Wymagana migracja: `0013_forecast_evaluations`; `/ready` i wspólny DB guard
-wymagają tej rewizji. Przy aktualizacji istniejącego stosu uruchom jawne
+Tabela ocen pochodzi z migracji `0013_forecast_evaluations`; `/ready` i wspólny
+DB guard wymagają bieżącego head `0014_forecast_freshness`. Przy aktualizacji istniejącego stosu uruchom jawne
 migracje przed nowym API, zgodnie z [runbookiem Compose](local-stack.md).
 Nowa tabela `ai.forecast_evaluations` znajduje się w schemacie objętym
 [backupem lifecycle](lifecycle-backup.md).
@@ -127,6 +127,6 @@ Nie ma wywołań MLflow ani Bedrock podczas odczytu.
 Kontroler odbioru tworzy własne kontenery/wolumeny bez portów hosta, sprawdza
 SIGKILL/restart oraz usuwa własny stos i tag obrazu. `evaluations-smoke`
 należy do persistence Required CI. **AI 05 pozostaje otwarte:** potrzebne
-są source watermark i pełny odbiór freshness prognoz, spójny qualified
-handoff AI 04 z rzeczywistym batchem oraz zdalny Required CI tego brancha.
+są spójny qualified handoff AI 04 z rzeczywistym batchem oraz zdalny Required CI
+tego brancha. [Freshness prognoz 05.7d](forecast-freshness.md) ma osobny odbiór.
 Outbox/zdarzenia pozostają w AI 10.

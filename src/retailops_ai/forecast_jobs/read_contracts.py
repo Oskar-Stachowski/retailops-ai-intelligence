@@ -60,20 +60,82 @@ class ForecastQuery(Contract):
 
 
 class ReadPolicy(Contract):
-    schema_version: Literal["1.0"] = "1.0"
-    policy_id: Literal["forecast-read-v1"] = "forecast-read-v1"
+    schema_version: Literal["1.1"] = "1.1"
+    policy_id: Literal["forecast-read-v2"] = "forecast-read-v2"
     max_origin_age_seconds: Literal[86400] = 86400
+    max_source_watermark_origin_lag_seconds: Literal[0] = 0
+    max_observation_lag_days: Literal[1] = 1
     max_candidate_outputs: Literal[32] = 32
 
 
+FreshnessReason = Literal[
+    "source_watermark_unavailable",
+    "source_watermark_policy_unsupported",
+    "source_watermark_not_ready",
+    "source_watermark_lag_exceeded",
+    "source_observation_unavailable",
+    "source_observation_lag_exceeded",
+    "origin_age_exceeded",
+    "newer_run_unpublished",
+    "within_policy",
+]
+
+
 class ForecastFreshness(Contract):
-    status: Literal["stale", "unknown"]
-    reason: Literal["source_watermark_unavailable", "origin_age_exceeded", "newer_run_unpublished"]
-    source_watermark: None = None
+    status: Literal["current", "stale", "unknown"]
+    reason: FreshnessReason
+    source_watermark: UtcTime | None
+    source_watermark_as_of: UtcTime | None
+    source_watermark_policy_version: Symbol | None
+    source_completeness_status: Literal["complete", "not_ready", "unavailable"]
+    source_watermark_age_seconds: Annotated[float, Field(ge=0)] | None
+    source_watermark_origin_lag_seconds: Annotated[float, Field(ge=0)] | None
+    latest_complete_observation_date: date | None
+    observation_lag_days: Annotated[int, Field(ge=0)] | None
     evaluated_at: UtcTime
     origin_age_seconds: Annotated[float, Field(ge=0)]
-    policy_id: Literal["forecast-read-v1"] = "forecast-read-v1"
+    policy_id: Literal["forecast-read-v2"] = "forecast-read-v2"
     max_origin_age_seconds: Literal[86400] = 86400
+    max_source_watermark_origin_lag_seconds: Literal[0] = 0
+    max_observation_lag_days: Literal[1] = 1
+
+    @model_validator(mode="after")
+    def consistency(self) -> Self:
+        expected = (
+            "current"
+            if self.reason == "within_policy"
+            else "unknown"
+            if self.reason
+            in {
+                "source_watermark_unavailable",
+                "source_watermark_policy_unsupported",
+                "source_watermark_not_ready",
+                "source_observation_unavailable",
+            }
+            else "stale"
+        )
+        measures = (self.source_watermark_age_seconds, self.source_watermark_origin_lag_seconds)
+        if self.status != expected or (
+            any(v is not None for v in measures)
+            if self.source_watermark is None
+            else any(v is None for v in measures)
+        ):
+            raise ValueError("forecast_freshness_status_or_watermark_mismatch")
+        if (
+            self.source_watermark_as_of is not None
+            and self.source_watermark_as_of > self.evaluated_at
+        ):
+            raise ValueError("forecast_freshness_declaration_from_future")
+        if self.status == "current" and (
+            self.source_watermark is None
+            or self.source_completeness_status != "complete"
+            or self.source_watermark_origin_lag_seconds != 0
+            or self.observation_lag_days is None
+            or self.observation_lag_days > self.max_observation_lag_days
+            or self.origin_age_seconds > self.max_origin_age_seconds
+        ):
+            raise ValueError("forecast_freshness_current_without_complete_daily_inputs")
+        return self
 
 
 class ForecastItem(MechanicsPrediction):
@@ -113,7 +175,7 @@ class Pagination(Contract):
 
 
 class ForecastPage(Contract):
-    schema_version: Literal["1.0"] = "1.0"
+    schema_version: Literal["1.1"] = "1.1"
     items: tuple[ForecastItem, ...] = Field(max_length=200)
     pagination: Pagination
     generated_at: UtcTime

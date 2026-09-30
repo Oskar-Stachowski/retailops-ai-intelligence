@@ -89,6 +89,7 @@ Odczyt jest gotowy dla zweryfikowanych, kompletnych historycznych raportów.
 Częściowy grant nie otrzymuje globalnych metryk; nie ma API przeliczania
 podzbioru danych. Zapisany wynik bramek nie jest nową kwalifikacją modelu.
 Nie ma powiązania z nowym registered version lub potwierdzenia runtime/driftu.
-Pozostają source watermark i pełna freshness prognoz, spójny qualified
-handoff AI 04 z rzeczywistym batchem oraz zdalny Required CI brancha.
+[Freshness prognoz 05.7d](../forecast-freshness.md) ma osobny odbiór.
+Pozostają spójny qualified handoff AI 04 z rzeczywistym batchem
+oraz zdalny Required CI brancha.
 **AI 05 pozostaje otwarte.** Outbox i zdarzenia należą do AI 10.
