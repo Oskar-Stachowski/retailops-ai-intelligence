@@ -42,6 +42,8 @@ rejestr bez wersji oraz [audyt decyzji](evidence/05-03-review.md).
 niezależny audyt i [odbiór mechaniki](evidence/05-03-lifecycle.md).
 [Wspólny backup AI/MLflow 05.3c](lifecycle-backup.md) opisuje blokadę zapisów,
 wznowienie i [odtworzenie do nowego projektu](evidence/05-03-store.md).
+[Kolejka i worker AI 05.4a](forecast-worker.md) opisują trwałe runy, lease,
+retry i [odbiór awarii](evidence/05-04-queue.md) na izolowanych fixture.
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)

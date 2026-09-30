@@ -829,7 +829,8 @@
             "viewer",
             "operator",
             "admin",
-            "promoter"
+            "promoter",
+            "pipeline"
           ],
           "title": "Role",
           "type": "string"

@@ -9,11 +9,13 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from retailops_ai.adapters.index_jobs import IndexAdministration
 from retailops_ai.adapters.knowledge_search import KnowledgeBackend
+from retailops_ai.api.forecast_jobs import add_forecast_routes
 from retailops_ai.api.index_jobs import add_index_routes
 from retailops_ai.api.middleware import single_header
 from retailops_ai.api.models import Problem
 from retailops_ai.data_contracts.common import Contract, Symbol, Versioned
 from retailops_ai.domain.access import Capability, Principal, Role, can_read_forecast
+from retailops_ai.forecast_jobs.queue import BatchAdministration
 from retailops_ai.knowledge.retrieval import RetrievalRequest, RetrievalResult
 from retailops_ai.pipelines.retrieval import KnowledgeDenied, resolve_scope
 from retailops_ai.security.local import LocalAccess
@@ -55,6 +57,7 @@ def access_router(
     knowledge_backend: KnowledgeBackend | None = None,
     environment: Literal["local", "test"] = "local",
     index_administration: IndexAdministration | None = None,
+    forecast_administration: BatchAdministration | None = None,
 ) -> APIRouter:
     bearer = HTTPBearer(auto_error=False, scheme_name="apiBearer")
 
@@ -86,7 +89,7 @@ def access_router(
                 selling_location_ids=sorted(principal.selling_location_ids),
                 channels=sorted(principal.channels),
             )
-            if "forecast:read" in principal.capabilities
+            if {"forecast:read", "forecast:run"} & principal.capabilities
             else None
         )
         return IdentityResponse(
@@ -150,4 +153,5 @@ def access_router(
             raise HTTPException(503) from None
 
     add_index_routes(router, verified, index_administration)
+    add_forecast_routes(router, verified, forecast_administration)
     return router

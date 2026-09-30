@@ -75,6 +75,7 @@ contracts:
 	$(UV_RUN) python scripts/update_knowledge_contracts.py
 	$(UV_RUN) python scripts/update_forecast_contracts.py
 	$(UV_RUN) python scripts/update_model_lifecycle_contracts.py
+	$(UV_RUN) python scripts/update_forecast_job_contracts.py
 
 contracts-check:
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
@@ -82,6 +83,7 @@ contracts-check:
 	$(UV_RUN) python scripts/update_knowledge_contracts.py --check
 	$(UV_RUN) python scripts/update_forecast_contracts.py --check
 	$(UV_RUN) python scripts/update_model_lifecycle_contracts.py --check
+	$(UV_RUN) python scripts/update_forecast_job_contracts.py --check
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up
@@ -105,3 +107,7 @@ model-lifecycle-smoke:
 .PHONY: lifecycle-store-smoke
 lifecycle-store-smoke:
 	$(UV_RUN) python scripts/check_lifecycle_store.py
+
+.PHONY: forecast-queue-smoke
+forecast-queue-smoke:
+	$(UV_RUN) python scripts/check_forecast_queue.py

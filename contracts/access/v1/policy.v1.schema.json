@@ -10,11 +10,12 @@
               "access:admin",
               "knowledge:read",
               "knowledge:index",
-              "model:decide"
+              "model:decide",
+              "forecast:run"
             ],
             "type": "string"
           },
-          "maxItems": 5,
+          "maxItems": 6,
           "minItems": 1,
           "title": "Capabilities",
           "type": "array"
@@ -41,11 +42,12 @@
               "viewer",
               "operator",
               "admin",
-              "promoter"
+              "promoter",
+              "pipeline"
             ],
             "type": "string"
           },
-          "maxItems": 4,
+          "maxItems": 5,
           "minItems": 1,
           "title": "Roles",
           "type": "array"

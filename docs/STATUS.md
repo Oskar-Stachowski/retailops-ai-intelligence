@@ -100,8 +100,21 @@ sekwencji i całego archiwum oraz recovery niedokończonej rejestracji po
 odtworzeniu do nowego projektu. Cel z częściowym restore pozostaje offline;
 istniejący cel nie jest nadpisywany. Testy używają wyłącznie izolowanych
 modeli mechanicznych. **AI 05.3 czeka na kwalifikację rzeczywistego modelu
-AI 04; następny niezależny zakres to AI 05.4 — trwały batch worker.**
+AI 04.**
 Nie ma jeszcze serving prognoz ani zdalnego odbioru Required CI tych zmian.
+
+**AI 05.4a — trwała kolejka i worker:** [runbook](forecast-worker.md) opisuje
+POST202/GET runów, oddzielny grant `pipeline` + `forecast:run`, scope,
+przypięte release/data/policy, leasing z heartbeat, automatyczny bounded retry
+i prywatne anulowanie. [Odbiór](evidence/05-04-queue.md) potwierdza rzeczywiste
+HTTP/PostgreSQL/MLflow, 9 runów, 12 prób i 2 kompletne wyniki fixture,
+wyścig workerów, SIGKILL po częściowym obliczeniu, odrzucenie starego tokenu,
+zmianę aliasu bez zmiany pinów oraz zachowanie pełnego stanu po restarcie bazy.
+**Mechanika działa lokalnie na jawnych fixture; AI 05 pozostaje otwarte.**
+Do wykonania: rzeczywisty profil cech i adapter zatwierdzonego modelu w 05.5,
+atomowa publikacja prognoz w 05.6 oraz read API z freshness w 05.7.
+Nie ma zdalnego Required CI tych zmian. AI 04 jest rozwijane w osobnej sesji;
+jego nowsza kwalifikacja nie została zaimportowana do tego worktree.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

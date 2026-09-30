@@ -1,0 +1,69 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "attempt_timeout_seconds": {
+      "default": 120,
+      "maximum": 300,
+      "minimum": 2,
+      "title": "Attempt Timeout Seconds",
+      "type": "integer"
+    },
+    "heartbeat_seconds": {
+      "default": 5.0,
+      "maximum": 10,
+      "minimum": 0.1,
+      "title": "Heartbeat Seconds",
+      "type": "number"
+    },
+    "lease_seconds": {
+      "default": 30,
+      "maximum": 60,
+      "minimum": 2,
+      "title": "Lease Seconds",
+      "type": "integer"
+    },
+    "max_attempts": {
+      "default": 3,
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Max Attempts",
+      "type": "integer"
+    },
+    "max_pending": {
+      "default": 100,
+      "maximum": 100,
+      "minimum": 1,
+      "title": "Max Pending",
+      "type": "integer"
+    },
+    "max_pending_per_principal": {
+      "default": 20,
+      "maximum": 20,
+      "minimum": 1,
+      "title": "Max Pending Per Principal",
+      "type": "integer"
+    },
+    "retry_backoff_seconds": {
+      "default": 5,
+      "maximum": 30,
+      "minimum": 0,
+      "title": "Retry Backoff Seconds",
+      "type": "integer"
+    },
+    "run_timeout_seconds": {
+      "default": 600,
+      "maximum": 900,
+      "minimum": 2,
+      "title": "Run Timeout Seconds",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "title": "QueuePolicy",
+  "type": "object"
+}

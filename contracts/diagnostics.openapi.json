@@ -69,6 +69,26 @@
                 "type": "string"
               },
               {
+                "enum": [
+                  "database-not-ready",
+                  "scope-denied",
+                  "batch-scope-limit",
+                  "forecast-run-not-found",
+                  "forecast-run-denied",
+                  "invalid-idempotency-key",
+                  "idempotency-conflict",
+                  "input-from-future",
+                  "model-not-approved",
+                  "model-decision-incomplete",
+                  "input-not-prepared",
+                  "input-origin-mismatch",
+                  "queue-full",
+                  "input-coverage-mismatch",
+                  "run-not-active"
+                ],
+                "type": "string"
+              },
+              {
                 "type": "null"
               }
             ],

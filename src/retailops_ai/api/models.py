@@ -6,6 +6,7 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field
 
 from retailops_ai.contracts import ApplicationInfo
+from retailops_ai.forecast_jobs.contracts import BatchErrorCode
 from retailops_ai.knowledge.jobs import IndexErrorCode
 
 
@@ -45,4 +46,4 @@ class Problem(Contract):
     instance: str = Field(pattern=r"^urn:uuid:[0-9a-f-]{36}$")
     correlation_id: UUID
     readiness: Ready | None = None
-    code: IndexErrorCode | None = None
+    code: IndexErrorCode | BatchErrorCode | None = None

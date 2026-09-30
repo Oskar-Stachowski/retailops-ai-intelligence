@@ -121,7 +121,8 @@
           "access:admin",
           "knowledge:read",
           "knowledge:index",
-          "model:decide"
+          "model:decide",
+          "forecast:run"
         ],
         "type": "string"
       },
@@ -150,7 +151,8 @@
           "viewer",
           "operator",
           "admin",
-          "promoter"
+          "promoter",
+          "pipeline"
         ],
         "type": "string"
       },
