@@ -136,7 +136,8 @@
           "enum": [
             "viewer",
             "operator",
-            "admin"
+            "admin",
+            "promoter"
           ],
           "title": "Role",
           "type": "string"
