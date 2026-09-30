@@ -59,6 +59,7 @@ jobs:
       - run: make bootstrap compose-smoke
       - run: make mlflow-store-smoke
       - run: make model-lifecycle-smoke
+      - run: make lifecycle-store-smoke
   required-result:
     if: always()
     needs: [checks, secrets, persistence]

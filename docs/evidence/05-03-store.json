@@ -1,0 +1,52 @@
+{
+  "artifact_bytes": 21432,
+  "artifact_files": 60,
+  "backup_id": "lifecycle-backup-sha256-de4d7af1b19d3239359882d63eb15ccf6c1b5a549b9cd3ed6a23131780e2ffa0",
+  "checked_at": "2026-09-30T08:20:18.992010+00:00",
+  "checks": [
+    "sigkill_backup_retains_fence_and_explicit_resume_restores_services",
+    "both_fenced_databases_reject_application_connections",
+    "coherent_offline_both_databases_and_all_artifacts_verified",
+    "fresh_target_all_table_rows_sequences_and_artifact_bytes_match",
+    "repeated_restore_refuses_existing_target",
+    "restored_pending_registration_resumes_without_duplicate_version",
+    "restored_decision_replay_retains_approved_release_and_rejection",
+    "all_four_restored_capsules_pass_checksum_and_load",
+    "restored_append_only_audit_trigger_blocks_update",
+    "restored_api_ready_and_dependencies_survive_sigkill_restart"
+  ],
+  "files": {
+    "ai.dump": {
+      "sha256": "78e4c2a17a86ff3946726c6c2d5b25d3c4483f876357d850a2167cf087a24229",
+      "size_bytes": 92018
+    },
+    "artifacts.tar": {
+      "sha256": "939b2cc414ea8ed807ce16f3ac61d58275c11015819abeae00424d85791ec0b9",
+      "size_bytes": 81920
+    },
+    "mlflow.dump": {
+      "sha256": "33eaa3a3647bb03a75d69cf32bead5a9bb61df1bb2ede5e4485af26dce970ab7",
+      "size_bytes": 129447
+    },
+    "state.json": {
+      "sha256": "49886932329410b99bbadd054d2c031ea60551ecf0481706449793e04abfaf8e",
+      "size_bytes": 11328
+    }
+  },
+  "forecast_quality_approved": false,
+  "pins": {
+    "Dockerfile.api": "38f0cbbcae1f207489c2a1ba889b0dd54af911626fdef3e442c7e37a6470aab0",
+    "Dockerfile.mlflow": "f0d876f1ac050083c594813acbec59792bdbf91a508fce41be1c21944fb360c2",
+    "application_sha256": "50292275ebe060cbe155c3e6bc686fa930a5f53466aa1461f1232bf362f74704",
+    "compose.yaml": "5b8abbf8acfbc4573a3b930854a4896692d536543e7fa61a57de9b8e744958f0",
+    "pyproject.toml": "82a3a9b292f6b7684f0b73836f11a4760a17494a534eba0d91229557e9763535",
+    "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587"
+  },
+  "purpose": "lifecycle_mechanics_only",
+  "release_id": "model-release-sha256-4a071e16d6e01dff7e1d942b8356880f23a80338ca33fdd07d5f22b9b21c4c63",
+  "runtime_status": "not_integrated",
+  "source_project": "retailops_ai_store_source_13267e5ad6",
+  "state_sha256": "777f8e15e27bb99fa9c3fca786aed6a75b8093e164ceb1c5f718768eca4c749b",
+  "status": "passed",
+  "target_project": "retailops_ai_store_target_e539c0bc05"
+}

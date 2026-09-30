@@ -40,6 +40,8 @@ rejestracji modelu i [odbiór](evidence/05-02-import.md).
 rejestr bez wersji oraz [audyt decyzji](evidence/05-03-review.md).
 [Registry i recovery AI 05.3b](mlflow-lifecycle.md) opisują wersje, aliasy,
 niezależny audyt i [odbiór mechaniki](evidence/05-03-lifecycle.md).
+[Wspólny backup AI/MLflow 05.3c](lifecycle-backup.md) opisuje blokadę zapisów,
+wznowienie i [odtworzenie do nowego projektu](evidence/05-03-store.md).
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)

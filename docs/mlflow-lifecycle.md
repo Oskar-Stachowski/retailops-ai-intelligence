@@ -123,7 +123,9 @@ persisted batch, odczyt prognoz i failure/load rollback runtime pozostają
 w kolejnych zakresach AI 05. Nie wykonano tych operacji na modelu AI 04.
 
 AI 05.3 pozostaje otwarte. Do domknięcia potrzeba rzeczywistej kwalifikacji
-modelu i odbioru na jego artefaktach oraz wspólnej procedury backup/restore
-MLflow i niezależnego audytu AI. Backup 05.1 nadal kopiuje tylko MLflow;
-nie jest pełnym backupem tego lifecycle. Kolejny zakres techniczny może
-objąć tę procedurę, podczas gdy poprawa/kwalifikacja AI 04 trwa równolegle.
+modelu i odbioru na jego artefaktach. [Wspólna procedura backup/restore
+05.3c](lifecycle-backup.md) obejmuje dane aplikacji AI, metadane MLflow
+i artefakty oraz zachowuje niedokończone decyzje do recovery.
+Backup 05.1 nadal kopiuje tylko MLflow; nie jest pełnym backupem lifecycle.
+Następny niezależny zakres techniczny to trwały worker 05.4, podczas gdy
+poprawa/kwalifikacja AI 04 trwa w osobnym branchu/worktree.

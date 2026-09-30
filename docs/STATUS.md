@@ -89,9 +89,19 @@ release pins. [Odbiór](evidence/05-03-lifecycle.md) sprawdza dwie promocje,
 rollback, odrzucenie trzeciej wersji, utracone odpowiedzi oraz SIGKILL/restart
 w jednorazowym Registry `retailops-demand-forecast-mechanics`.
 Nie zatwierdza jakości AI 04 ani działającego runtime; pointer oznacza
-zatwierdzony release. AI 05.3 pozostaje otwarte: rzeczywista kwalifikacja
-modelu, wspólny backup/restore MLflow + audytu AI i późniejsze wpięcie
+zatwierdzony release. Rzeczywista kwalifikacja modelu i późniejsze wpięcie
 runtime nadal wymagają odbioru. Zmiany są lokalne, bez zdalnego Required CI.
+
+**AI 05.3c — wspólny backup/restore:** [procedura](lifecycle-backup.md)
+wiąże dane aplikacji AI, metadane MLflow i pełny wolumen artefaktów w jednym
+pakiecie. [Odbiór](evidence/05-03-store.md) sprawdza blokadę zapisów ról
+aplikacji, SIGKILL kontrolera i jawne wznowienie, checksumy każdej tabeli,
+sekwencji i całego archiwum oraz recovery niedokończonej rejestracji po
+odtworzeniu do nowego projektu. Cel z częściowym restore pozostaje offline;
+istniejący cel nie jest nadpisywany. Testy używają wyłącznie izolowanych
+modeli mechanicznych. **AI 05.3 czeka na kwalifikację rzeczywistego modelu
+AI 04; następny niezależny zakres to AI 05.4 — trwały batch worker.**
+Nie ma jeszcze serving prognoz ani zdalnego odbioru Required CI tych zmian.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

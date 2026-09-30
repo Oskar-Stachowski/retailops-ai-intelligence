@@ -24,7 +24,8 @@ wersji w właściwym forecast Registry. Model AI 04 nie został promowany.
 
 To dowód mechaniki, **nie** portfolio model-quality gate ani udanego
 persisted forecast/API. Worker/runtime pozostają `not_integrated`.
-Wspólny backup/restore niezależnego audytu AI i MLflow jest nadal otwarty.
+Wspólny backup/restore niezależnego audytu AI i MLflow ma osobny
+[odbiór 05.3c](05-03-store.md).
 [Runbook i braki](../mlflow-lifecycle.md) opisują dokładną granicę odbioru.
 
 ## Weryfikacja repozytorium

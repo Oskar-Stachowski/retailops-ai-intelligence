@@ -9,3 +9,10 @@ paths = ['(^|/)([.]local|[.]venv|[.]tools|[.]mypy_cache|[.]ruff_cache|[.]pytest_
 description = "SHA-256 of contracts/access/v1/access.openapi.json in golden-job evidence; not a credential"
 regexTarget = "secret"
 regexes = ['^b14f586702ee5c90f34bdeeb99bc7667dcaa2c6c5465b4f6e51ca0bfa7ce37d1$']
+
+[[allowlists]]
+description = "Exact SHA-256 of Dockerfile.api in combined-store evidence; not a credential"
+condition = "AND"
+paths = ['(^|/)docs/evidence/05-03-store[.]json$']
+regexTarget = "secret"
+regexes = ['^38f0cbbcae1f207489c2a1ba889b0dd54af911626fdef3e442c7e37a6470aab0$']

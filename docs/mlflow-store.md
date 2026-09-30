@@ -3,7 +3,9 @@
 Tracking z AI 01 działa już na MLflow 3.16.1. Serwer korzysta z osobnej bazy
 PostgreSQL `retailops_mlflow` i roli `mlflow_app`; binaries trafiają do
 trwałego wolumenu `mlflow_artifacts`. Baza domenowa RetailOps nie jest
-podłączona. Wersje serwera, obrazu i sterownika są przypięte w
+podłączona. [Backup całego lifecycle 05.3c](lifecycle-backup.md) dodatkowo
+obejmuje niezależną bazę aplikacji AI. Wersje serwera, obrazu i sterownika
+są przypięte w
 `Dockerfile.mlflow`, `compose.yaml` i `uv.lock`; port 5010 jest związany tylko
 z loopback. [Lokalny stos](local-stack.md) opisuje uruchomienie i uprawnienia.
 
@@ -23,7 +25,8 @@ make mlflow-store-smoke
 zatrzymuje serwer MLflow, wykonuje `pg_dump` bazy metadanych i eksportuje
 wolumen artefaktów przez jednorazowy kontener. Po zakończeniu przywraca serwer
 do poprzedniego stanu. Nie kopiuje samego wolumenu PostgreSQL ani bazy AI;
-te zasoby wymagają osobnej procedury. Pakiet pod `.local/mlflow-backups/`
+kopię bazy AI wraz z MLflow zapewnia [procedura 05.3c](lifecycle-backup.md).
+Pakiet pod `.local/mlflow-backups/`
 zawiera `metadata.dump`, `artifacts.tar` i manifest z SHA-256 obu plików,
 wersją kontraktu, identyfikatorem projektu i pinami konfiguracji.
 Katalog ma uprawnienia 0700, pliki 0600; pakiet nie trafia do Git.

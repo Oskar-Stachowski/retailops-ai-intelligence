@@ -101,3 +101,7 @@ mlflow-store-smoke:
 .PHONY: model-lifecycle-smoke
 model-lifecycle-smoke:
 	$(UV_RUN) python scripts/check_model_lifecycle.py
+
+.PHONY: lifecycle-store-smoke
+lifecycle-store-smoke:
+	$(UV_RUN) python scripts/check_lifecycle_store.py
