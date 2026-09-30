@@ -164,7 +164,7 @@
     "warehouses": 2
   },
   "source_rationale": "standard_ai_dev_product_count_represents_more_intermittent_series_one_store_preserves_original_model_row_and_fit_budgets_no_seed_search",
-  "source_repository_commit": "9115c1d",
+  "source_repository_commit": "9115c1de2fde4dad6b37f1370f1b7a6d9c45601a",
   "source_verification_change": {
     "controlled_58_table_identity_and_temporal_context_parity": "passed",
     "parent_commit": "d4ee7a4e4217a59871c654f204f16de74017d13b",
