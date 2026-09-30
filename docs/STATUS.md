@@ -1,6 +1,6 @@
 # Aktualny status
 
-Aktualizacja: **2026-09-29**. **Etap 11 — RAG jest odebrany lokalnie.**
+Aktualizacja: **2026-09-30**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
 przygotowanie, kwalifikację, aktywację i rollback. [Końcowy odbiór](evidence/11-completion.md)
 wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodzi
@@ -58,8 +58,8 @@ walidację i sposób importu w AI 05 bez przypisywania historycznego treningu
 do MLflow. **AI 04 jest zrealizowane jako development evidence, lecz model
 nie przeszedł bramki jakości i nie jest gotowy do serving.** Dopuszczenie
 wymaga oddzielnego rozwiązania braków próby i jakości na późniejszych danych,
-bez strojenia na final test. Ten branch nie ma jeszcze zdalnej publikacji
-ani Required CI.
+bez strojenia na final test. Stan późniejszej publikacji i Required CI jest
+podany w sekcji kampanii v11 poniżej.
 
 **Praca nad blokadami jakości AI 04 — 2026-09-30:**
 [wersjonowana korekta i kalibracja](forecast-remediation.md) zachowują
@@ -86,7 +86,7 @@ pooled low mieści się teraz w limicie regresji MAE (+9,84%). Zamrożona
 kampania V10 przyjęła nowe źródło: 616547 wierszy w 43 tabelach. Pierwszy bieg
 zatrzymał brak miejsca na dysku podczas curated, przed cechami, treningiem
 i metrykami nowych holdoutów. Surowa historia ma przypadki zero we wszystkich
-sześciu oknach; pełna kwalifikacja cech pozostaje do sprawdzenia. Kod:
+sześciu oknach; na etapie v10 pełna kwalifikacja cech nie była zakończona. Kod:
 949 zaliczonych testów przed zmianą zapisu wejść oraz 66 testów po tej zmianie;
 powtórne przeliczenie starego wyniku 2.1 potwierdziło jego tożsamość.
 Punkt 3 pozostaje otwarty.
@@ -96,18 +96,32 @@ Punkt 3 pozostaje otwarty.
 (MSE + bias), wymagają obu i oceniają przedziały przez interval score oraz
 coverage, bez dzielenia przez małą sprzedaż. Poprawne zera dają się ocenić;
 fałszywy popyt i realne pogorszenia nadal są błędami. Stare wyniki, snapshot
-i zablokowana v10 pozostają zachowane z sumami kontrolnymi. Pełnej kampanii
-nie uruchomiono. Planistyczne minimum miejsca to 16 GiB.
+i zablokowana v10 pozostają zachowane z sumami kontrolnymi. Sam freeze protokołu
+poprzedzał uruchomienie kampanii. Planistyczne minimum miejsca to 16 GiB.
 [Integracja dwóch celów i kampania v11](forecast-functional-v2.md) dodaje pięć
 osobnych modeli, baseline’y mediany/średniej, wybór na walidacji, replay oraz
 eksport v2. Zapis wejść 1.2 usuwa ryzyko pełnego panelu przez kompresję indeksów
 i uzasadniony limit logiczny 5 GiB, bez zmiany progów jakości. Przygotowanie
 danych zakończono: 254 800 cech i zweryfikowany split. Wszystkie 32 kontrole
 próbki przeszły (najmniejszy koszyk: 528 wierszy). [Freeze v11](../contracts/forecast/v2/campaign-v11.freeze.json)
-zapisano przed treningiem i oceną nowych holdoutów; pełna kwalifikacja jest w toku.
+zapisano przed treningiem i oceną nowych holdoutów. Kampania zakończyła ocenę:
+**165 passed / 59 failed / 0 braków próby**, w tym holdouty **67 passed / 45 failed**
+i walidacja diagnostyczna **98 passed / 14 failed**. Globalna poprawa MAE wynosi
+4,78% przy wymaganiu >5%; zachowano także nadmierny bias koszyka zero,
+regresję MAE Home Improvement oraz regresje MSE i interval score.
+**Model nadal jest `not_ready`, a punkt 3 pozostaje otwarty.** Niezależne
+odtworzenie i eksport przeszły; [końcowe evidence v11](evidence/04-functional-campaign-v11.json)
+wiąże komplet wyników z archiwum 5621 plików / 494 382 216 B oraz potwierdza
+zachowanie wszystkich 3070 wcześniejszych plików i 11 plików freeze protokołu.
+Dalsza kwalifikacja zmienionej receptury wymaga
+nowych, niewykorzystanych danych; holdoutów v11 nie wolno ponownie traktować
+jako niezależnego testu.
 [Evidence przygotowania](evidence/04-functional-preparation-v11.json) zachowuje
 975 zaliczonych przypadków testowych, zielone Required CI dla `5aa8047`,
 kontrolę zachowania 3070 plików oraz 31,2 GiB wolnego miejsca przed startem.
+Required CI dla kodu i freeze `7fd6a41` przeszło wszystkie 4 zadania;
+Required CI źródła `1d49c1a` przeszło 26 zadań po ponowieniu instalacji zależności
+Ubuntu na nowym runnerze, bez zmiany kodu lub limitów czasu.
 Robocze PR-y: [AI #7](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/7)
 i [źródło #77](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/77).
 

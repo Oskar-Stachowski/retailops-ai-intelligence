@@ -31,7 +31,7 @@ i kategorii, z globalną konfiguracją dla nieobserwowanej grupy.
   Brak wymaganej globalnej poprawy w drugiej połowie pozostawia dokładny baseline.
 - Kandydaci średniej obejmują wartości bez korekty oraz mnożnik obliczony
   w pierwszej połowie, ograniczony z góry ustaloną regułą do 0,5–2,0.
-  Gdy suma prognoz wynosi zero, kandydatem jest przesunięcie o średni popyt.
+  Gdy suma prognoz wynosi zero, kandydatem jest przesunięcie o średnią sprzedaż.
   Wybrany kandydat musi przejść MSE i bias w obu połowach; inaczej zostaje baseline.
   Samo pozostawienie baseline’u nie zwalnia z testu bias na holdoucie.
 - Kalibracja granic używa kwantyli reszt końców przedziału i co najmniej
@@ -97,6 +97,19 @@ Nie oznacza zgody na strojenie do wyników holdoutu. Biblioteczna weryfikacja
 predykcje z drzew, kalibrację, wybór i raporty bez fitów. Wszystkie identyfikatory
 i sumy muszą się zgadzać.
 
+Pełny replay egzekwuje także wersje bibliotek, system i architekturę zapisane
+we freeze. Dla wyeksportowanego runu używa się jego kompletu rodziców:
+
+```sh
+.venv/bin/python -m retailops_ai.forecasting.functional_campaign verify \
+  --features "$FORECAST_V11_RUN/features" \
+  --split "$FORECAST_V11_RUN/split" \
+  --output "$FORECAST_V11_RUN/campaign"
+```
+
+`FORECAST_V11_RUN` wskazuje katalog z `run_manifest.json`. To odtworzenie
+zapisanych modeli, a nie nowa kwalifikacja lub ponowny trening.
+
 Eksport `functional_run` kopiuje source, curated, features, split i campaign,
 weryfikuje kopie oraz zapisuje model card i handoff. Zachowuje `not_ready`, jeśli
 jakakolwiek obowiązkowa bramka nie przeszła. Format v2 wymaga importera dla dwóch
@@ -112,3 +125,63 @@ brak przedziałów przy małej próbce, komplet koszyków, dwa foldy i replay be
 treningu. Test eksportu wykrywa naruszenie sum i zachowuje blokady. Osobne testy
 zamrożonego protokołu nadal sprawdzają zero sprzedaży, mały mianownik oraz
 zgodność celów MAE i bias.
+
+## Wynik kampanii v11 — 2026-09-30
+
+Ocena została zakończona na zachowanym snapshotcie, po zamrożeniu protokołu
+i receptury. Trzy foldy obejmują 15 fitów oraz 214 032 predykcje walidacyjne
+i testowe, w tym 90 454 eligible klucze development holdout. Wszystkie
+32 wcześniejsze kontrole próbki przeszły; każdy obowiązkowy segment ma
+komplet predykcji i wystarczającą próbkę. Model pozostaje **`not_ready`**.
+[Końcowe evidence](evidence/04-functional-campaign-v11.json) potwierdza
+niezależne odtworzenie bez fitów, eksport i sprawdzenie sum kontrolnych.
+Archiwum `functional-run-sha256-137af4ca4ed80004340e12e1037a234ba3fd9f135598b7d7737fcd241fa48f70`
+ma 5621 plików i 494 382 216 B, łącznie z manifestem. Kampania ma ID
+`forecast-functional-sha256-0131e7295648e6e3a2cd1a98fac9cd686c7587820775f6f065a5f6798a683c26`.
+Końcowa kontrola potwierdziła niezmienność wszystkich 3070 zachowanych plików
+oraz 11 plików freeze protokołu. Źródła nie generowano ponownie.
+
+| Zakres | Passed | Failed | Not ready z powodu braków |
+|---|---:|---:|---:|
+| Validation — diagnostyka dopasowania i wyboru | 98 | 14 | 0 |
+| Development holdout — ocena zamrożonej receptury | 67 | 45 | 0 |
+| Łącznie | 165 | 59 | 0 |
+
+Liczby obejmują przekroje każdego folda oraz pooled, więc nie oznaczają tylu
+niezależnych zbiorów. Nie są bezpośrednim porównaniem ze starymi kampaniami:
+zmieniły się dane, cele i protokół. Dawne błędy pozostają w dawnych raportach.
+
+| Pooled holdout | Wynik | Wymaganie / baseline |
+|---|---:|---:|
+| MAE mediany | 2,552934; poprawa 4,7797% | baseline 2,681081; poprawa >5% |
+| MSE średniej | 31,333540 | nie więcej niż 32,497176 |
+| Normalized bias średniej | −1,7127% | wartość bezwzględna ≤10% |
+| Coverage przedziału | 95,4131% | ≥80% |
+| Interval score | 9,935083 | nie więcej niż 10,159534 |
+
+Wynik globalny nie spełnia wymogu poprawy MAE. Pozostałe globalne miary
+nie usuwają błędów szczegółowych:
+
+- Koszyk `zero` oznacza zerową **historię rolling 28**, a nie same zerowe
+  przyszłe etykiety. Jego 4841 kluczy ma łącznie 213 jednostek actuals;
+  prognoza średniej daje około 7,63, czyli bias −96,42%. To rzeczywiste
+  niedoszacowanie sprzedaży w ocenianych kluczach. Diagnostyczny iloraz szerokości
+  przedziału przez średnie actuals wynosi 5,70 i sam nie jest powodem odrzucenia.
+- Pooled `high` ma MSE 487,814174 wobec 478,790794 baseline’u, czyli regresję
+  około 1,88%. Pooled `low` i `medium` przechodzą wszystkie reguły.
+- `Home Improvement` w pierwszym foldzie ma regresję MAE mediany 20,66%
+  przy limicie 10%, a także regresję MSE średniej.
+- W holdoutach 23 oceny mają regresję interval score, 18 regresję MSE,
+  7 nadmierny bias, 2 niewystarczającą globalną poprawę MAE i 1 regresję
+  MAE krytycznego segmentu. Jedna ocena może mieć kilka przyczyn odrzucenia.
+
+Żaden próg nie został zmieniony po obejrzeniu tych wyników. Dalsza receptura
+może powstawać na danych rozwojowych; jej kwalifikacja wymaga osobnych,
+dotąd niewykorzystanych danych, zamrożenia przed oceną i ponownego oszacowania
+miejsca. Ponowne strojenie i zaliczenie na holdoutach v11 nie zamknie AI 04.
+Portfolio final test pozostaje poza kampanią; model nie został promowany.
+
+[Osobny wheel v11](evidence/04-functional-v11-wheel.json) zawiera zapis freeze
+kampanii. Odczyt kampanii z rozpakowanego wheela poza repozytorium potwierdził
+zgodność 24 plików kodu, środowiska i identyfikatora kampanii oraz zachowanie
+statusu `not_ready`. Sumy trzech wcześniejszych pakietów pozostały bez zmian.
