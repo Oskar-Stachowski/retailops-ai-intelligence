@@ -125,6 +125,17 @@ Ubuntu na nowym runnerze, bez zmiany kodu lub limitów czasu.
 Robocze PR-y: [AI #7](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/7)
 i [źródło #77](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/77).
 
+**Dalsza praca nad v12:** użytkownik zezwolił na oddzielne, niezależne dane
+syntetyczne, z zachowaniem dotychczasowych źródeł i wyników.
+[Przygotowanie następnej kampanii](forecast-functional-v12.md) obejmuje
+stabilizację średniej, dokładne zachowanie mediany i przedziałów baseline'u,
+kompaktowe archiwum i rejestr użycia testów. Strumieniowy evaluator odtworzył
+wszystkie 224 raporty v11 bez różnic, w tym wszystkie 59 błędów.
+Wariant addytywny α50 spełnia 112/112 warunków na własnej walidacji kalibracyjnej;
+**to nie jest niezależna kwalifikacja ani status `ready`**. Trwa pilot wydajności
+na oddzielnym seedzie development; nowy test wymaga wcześniejszego freeze
+metody, całego planu danych oraz pozytywnego preflight miejsca.
+
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
 identity i transportu bez generatora/DB.
