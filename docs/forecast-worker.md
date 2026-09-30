@@ -3,8 +3,9 @@
 Ten zakres przygotowuje przyjmowanie zadań, leasing, retry i recovery,
 niezależnie od kwalifikacji modelu AI 04. [Odbiór](evidence/05-04-queue.md)
 używa wyłącznie jawnych fixture `lifecycle_mechanics_only` w `APP_ENV=test`.
-Rzeczywiste ładowanie modelu i przygotowanych cech, publikacja prognoz oraz
-ich read API pozostają w AI 05.5–05.7. Etap 05 nie jest jeszcze zamknięty.
+[Pakiet wejścia i loader 05.5a](forecast-runtime.md) są przygotowane osobno.
+Ich integracja z kolejką, publikacja prognoz oraz read API pozostają
+w AI 05.5–05.7. Etap 05 nie jest jeszcze zamknięty.
 
 ## Przyjęcie i odczyt
 
@@ -130,9 +131,10 @@ nie usuwa zapisanych runów. Backup schematu `ai` obejmuje także nowe tabele.
 
 ## Pozostały zakres
 
-AI 05.5 musi podłączyć zweryfikowany pakiet rzeczywistych cech i model
-zakwalifikowany w AI 04, z kompatybilnością release/config/schema oraz
-czasem cold load i pomiarem pamięci. AI 05.6 utrwali pełne prognozy w
+AI 05.5 musi zarejestrować rzeczywiste profile w bazie i podłączyć
+[loader i przygotowane cechy](forecast-runtime.md) do supervisora z limitami
+zasobów oraz odebrać wykonanie modelu zakwalifikowanego w AI 04.
+AI 05.6 utrwali pełne prognozy w
 ograniczonych partycjach i atomowo opublikuje output manifest/pointer.
 AI 05.7 doda listy forecast/model/evaluation z paginacją i freshness.
 Zdarzenia i outbox/projekcje pozostają w AI 10. Obecny odbiór kolejki

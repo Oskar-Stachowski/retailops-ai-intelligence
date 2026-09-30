@@ -127,5 +127,7 @@ modelu i odbioru na jego artefaktach. [Wspólna procedura backup/restore
 05.3c](lifecycle-backup.md) obejmuje dane aplikacji AI, metadane MLflow
 i artefakty oraz zachowuje niedokończone decyzje do recovery.
 Backup 05.1 nadal kopiuje tylko MLflow; nie jest pełnym backupem lifecycle.
-Następny niezależny zakres techniczny to trwały worker 05.4, podczas gdy
-poprawa/kwalifikacja AI 04 trwa w osobnym branchu/worktree.
+[Trwała kolejka 05.4a](forecast-worker.md) ma odbiór mechaniki;
+[loader 05.5a](forecast-runtime.md) ma odbiór wejścia i adapterów.
+Integracja rzeczywistych profili z workerem i publikacja wyników pozostają
+otwarte, podczas gdy poprawa/kwalifikacja AI 04 trwa w osobnym branchu/worktree.

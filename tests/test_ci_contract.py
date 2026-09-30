@@ -104,6 +104,8 @@ def test_make_check_includes_snapshot_gate():
     assert "forecast-backtest-check" in dependencies.split()
     assert "forecast-quality-check" in dependencies.split()
     assert "forecast-run-check" in dependencies.split()
+    assert "forecast-runtime-check" in dependencies.split()
+    assert "scripts/check_forecast_runtime.py" in makefile
 
 
 @pytest.mark.parametrize(

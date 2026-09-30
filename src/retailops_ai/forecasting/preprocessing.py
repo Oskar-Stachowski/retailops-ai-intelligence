@@ -227,6 +227,21 @@ def transform(row: InputRow, state: FittedState, *, feature_set_id: str) -> tupl
     state = FittedState.model_validate_json(state.model_dump_json())
     if feature_set_id != state.descriptor.feature_set_id:
         raise SnapshotError("forecast_preprocessing_feature_set_mismatch")
+    return _transform_values(row, state)
+
+
+def transform_inference(
+    row: InputRow, state: FittedState, *, policy: FeaturePolicy
+) -> tuple[float, ...]:
+    """New inference data can share a recipe; fitted medians/vocabulary remain unchanged."""
+    state = FittedState.model_validate_json(state.model_dump_json())
+    policy = FeaturePolicy.model_validate_json(policy.model_dump_json())
+    if policy != state.descriptor.policy:
+        raise SnapshotError("forecast_inference_feature_policy_mismatch")
+    return _transform_values(InputRow.model_validate_json(row.model_dump_json()), state)
+
+
+def _transform_values(row: InputRow, state: FittedState) -> tuple[float, ...]:
     values = {v.name: v.value for v in row.values}
     output: list[float] = []
     for fill in state.descriptor.numeric:

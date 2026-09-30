@@ -44,6 +44,9 @@ niezależny audyt i [odbiór mechaniki](evidence/05-03-lifecycle.md).
 wznowienie i [odtworzenie do nowego projektu](evidence/05-03-store.md).
 [Kolejka i worker AI 05.4a](forecast-worker.md) opisują trwałe runy, lease,
 retry i [odbiór awarii](evidence/05-04-queue.md) na izolowanych fixture.
+[Wejście i loader AI 05.5a](forecast-runtime.md) opisują zgodność nowego
+pakietu z zamrożonym modelem i [odbiór adapterów](evidence/05-05-runtime.md),
+bez publikacji prognoz ani zatwierdzenia jakości AI 04.
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)

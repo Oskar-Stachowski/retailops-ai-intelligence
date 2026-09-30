@@ -111,10 +111,24 @@ HTTP/PostgreSQL/MLflow, 9 runów, 12 prób i 2 kompletne wyniki fixture,
 wyścig workerów, SIGKILL po częściowym obliczeniu, odrzucenie starego tokenu,
 zmianę aliasu bez zmiany pinów oraz zachowanie pełnego stanu po restarcie bazy.
 **Mechanika działa lokalnie na jawnych fixture; AI 05 pozostaje otwarte.**
-Do wykonania: rzeczywisty profil cech i adapter zatwierdzonego modelu w 05.5,
-atomowa publikacja prognoz w 05.6 oraz read API z freshness w 05.7.
+Do wykonania: rejestracja rzeczywistych profili i integracja loadera z workerem
+w 05.5, atomowa publikacja prognoz w 05.6 oraz read API z freshness w 05.7.
 Nie ma zdalnego Required CI tych zmian. AI 04 jest rozwijane w osobnej sesji;
 jego nowsza kwalifikacja nie została zaimportowana do tego worktree.
+
+**AI 05.5a — pakiet wejścia i loader release’u:** [runbook](forecast-runtime.md)
+opisuje zweryfikowane features/curated, pełny grain, historię, niezmienne
+profile, image/lock/schema/config pins oraz inferencję RF/HGB/baseline bez
+refit. [Odbiór](evidence/05-05-runtime.md) potwierdza po 14 wartości na
+rzeczywistych archiwalnych artefaktach AI 04; RF/HGB zgadzają się z adapterem
+diagnostycznym. Peak RSS całej próby: ~310 MiB. **Nie załadowano rzeczywistego
+zakwalifikowanego release’u i nie opublikowano prognoz.** Archiwum pozostaje
+`not_ready` i ma starszy lock features niż model/runtime, więc wymaga
+spójnego pakietu z AI 04 przed servingiem. Nowsze zmiany AI 04 są w osobnej
+sesji. Do wykonania w 05.5:
+trwała rejestracja inputs, integracja z kolejką/supervisorem i limity zasobów,
+oraz odbiór zatwierdzonego modelu. Potem 05.6–05.7; zdarzenia w AI 10.
+Nowa bramka kontraktów należy do `make check`, bez zdalnego Required CI.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,

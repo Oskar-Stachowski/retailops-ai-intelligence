@@ -11,6 +11,8 @@ from retailops_ai.forecast_jobs.contracts import (
     MechanicsProfile,
     QueuePolicy,
 )
+from retailops_ai.forecast_jobs.inputs import PreparedInputs
+from retailops_ai.forecast_jobs.runtime import RuntimePin
 
 ROOT = Path(__file__).resolve().parents[1] / "contracts/forecast_jobs/v1"
 
@@ -25,6 +27,8 @@ def main() -> int:
         ("mechanics_profile", MechanicsProfile),
         ("mechanics_output", MechanicsOutput),
         ("policy", QueuePolicy),
+        ("prepared_inputs", PreparedInputs),
+        ("runtime_pin", RuntimePin),
     ):
         expected = json.dumps(model.model_json_schema(), indent=2, sort_keys=True) + "\n"
         path = ROOT / (name + ".schema.json")

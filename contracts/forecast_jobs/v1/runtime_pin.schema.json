@@ -1,0 +1,21 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "dependency_lock_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Dependency Lock Sha256",
+      "type": "string"
+    },
+    "image_digest": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Image Digest",
+      "type": "string"
+    }
+  },
+  "required": [
+    "image_digest",
+    "dependency_lock_sha256"
+  ],
+  "title": "RuntimePin",
+  "type": "object"
+}
