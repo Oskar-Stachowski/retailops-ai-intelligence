@@ -102,7 +102,14 @@ nie uruchomiono. Planistyczne minimum miejsca to 16 GiB.
 osobnych modeli, baseline’y mediany/średniej, wybór na walidacji, replay oraz
 eksport v2. Zapis wejść 1.2 usuwa ryzyko pełnego panelu przez kompresję indeksów
 i uzasadniony limit logiczny 5 GiB, bez zmiany progów jakości. Przygotowanie
-pełnych cech i splitu oraz testy regresji są w toku; kwalifikacja pozostaje otwarta.
+danych zakończono: 254 800 cech i zweryfikowany split. Wszystkie 32 kontrole
+próbki przeszły (najmniejszy koszyk: 528 wierszy). [Freeze v11](../contracts/forecast/v2/campaign-v11.freeze.json)
+zapisano przed treningiem i oceną nowych holdoutów; pełna kwalifikacja jest w toku.
+[Evidence przygotowania](evidence/04-functional-preparation-v11.json) zachowuje
+975 zaliczonych przypadków testowych, zielone Required CI dla `5aa8047`,
+kontrolę zachowania 3070 plików oraz 31,2 GiB wolnego miejsca przed startem.
+Robocze PR-y: [AI #7](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/7)
+i [źródło #77](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/77).
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
