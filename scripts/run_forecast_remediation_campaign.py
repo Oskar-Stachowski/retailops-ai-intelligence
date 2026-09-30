@@ -15,6 +15,7 @@ from retailops_ai.forecasting.backtest import build_backtest
 from retailops_ai.forecasting.backtest_contract import BacktestPolicy, plan_backtest
 from retailops_ai.forecasting.calendar import build_calendar, publish_calendar
 from retailops_ai.forecasting.contract import OriginWindow
+from retailops_ai.forecasting.features_store import implementation as input_implementation
 from retailops_ai.forecasting.manifests import build_feature_set
 from retailops_ai.forecasting.quality_contract import QualityPolicy
 from retailops_ai.forecasting.remediation_preflight import preflight
@@ -38,6 +39,8 @@ def main() -> int:
     args = parser.parse_args()
     raw = args.campaign.read_bytes()
     campaign = json.loads(raw)
+    if campaign.get("input_implementation", input_implementation()) != input_implementation():
+        raise ValueError("campaign_feature_input_implementation_changed")
     version = campaign.get("remediation_version", "forecast-quality-remediation-1.0.0")
     if version not in ("forecast-quality-remediation-1.0.0", "forecast-quality-remediation-2.1.0"):
         raise ValueError("campaign_unknown_remediation_version")

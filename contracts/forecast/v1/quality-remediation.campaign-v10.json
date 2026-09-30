@@ -40,6 +40,23 @@
       "2026-09-08"
     ]
   ],
+  "input_implementation": {
+    "code_files": {
+      "forecasting/features.py": "b069639e0bcd996fdeefca52a7498ca543431eb744b83072d7b1c6b3f1e93283",
+      "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+      "forecasting/features_store.py": "5f6faf5a1f71037f8322c9c97831d05c87b6efabeb04c8908074b66a77759c0c"
+    },
+    "code_sha256": "96f9720c3043adef0579f33a78141664fd8719182f3d60274ad94ab75ae41057",
+    "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "logical_output_byte_limit": 4294967296,
+    "physical_output_byte_limit": 2147483648,
+    "pyarrow_version": "25.0.1",
+    "python_version": "3.11.15",
+    "temporary_index_byte_limit": 2147483648,
+    "temporary_index_encoding": "zlib_per_record_canonical_bytes",
+    "version": "forecast-inputs-1.1.0"
+  },
+  "input_storage_rationale": "same_canonical_feature_values_and_full_population_zlib_compressed_temporary_sort_index_4GiB_expanded_metadata_2GiB_physical_output_2GiB_temporary_index_model_budgets_unchanged",
   "origins": {
     "end": "2026-09-08",
     "start": "2026-06-01"

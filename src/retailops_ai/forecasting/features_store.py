@@ -8,6 +8,7 @@ import os
 import platform
 import sqlite3
 import tempfile
+import zlib
 from collections import Counter
 from collections.abc import Iterator
 from contextlib import contextmanager
@@ -48,6 +49,9 @@ from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
 MAX_ORIGIN_INPUT_ROWS = 250_000
 MAX_OUTPUT_ROWS = 10_000_000
 MAX_OUTPUT_BYTES = 2 * 1024**3
+# Repeated provenance expands far beyond the compressed Parquet/index footprint.
+# Keep physical output and temporary index bounded at 2 GiB independently.
+MAX_LOGICAL_OUTPUT_BYTES = 4 * 1024**3
 KEYS = ("forecast_origin", "product_id", "selling_location_id", "channel")
 
 
@@ -147,7 +151,11 @@ def implementation() -> dict[str, Any]:
         for name in ("features.py", "features_contract.py", "features_store.py")
     }
     return {
-        "version": "forecast-inputs-1.0.0",
+        "version": "forecast-inputs-1.1.0",
+        "logical_output_byte_limit": MAX_LOGICAL_OUTPUT_BYTES,
+        "physical_output_byte_limit": MAX_OUTPUT_BYTES,
+        "temporary_index_byte_limit": MAX_OUTPUT_BYTES,
+        "temporary_index_encoding": "zlib_per_record_canonical_bytes",
         "code_files": hashes,
         "code_sha256": canonical_sha256(hashes),
         "dependency_lock_sha256": hashlib.sha256(resource_bytes("dependencies.lock")).hexdigest(),
@@ -224,16 +232,24 @@ class Writer:
         key_names = (*KEYS, "target_date") if isinstance(model, InputRow) else KEYS
         raw = canonical_bytes(logical)
         self.budget["logical_bytes"] += len(raw)
-        if self.budget["logical_bytes"] > MAX_OUTPUT_BYTES:
+        if self.budget["logical_bytes"] > MAX_LOGICAL_OUTPUT_BYTES:
             raise SnapshotError("forecast_output_logical_byte_limit")
         key = canonical_bytes([logical[k] for k in key_names])
         try:
-            self.db.execute("INSERT INTO output VALUES (?,?,?)", (self.artifact, key, raw))
+            self.db.execute(
+                "INSERT INTO output VALUES (?,?,?)",
+                (self.artifact, key, zlib.compress(raw, level=1)),
+            )
         except sqlite3.IntegrityError as exc:
             raise SnapshotError("duplicate_forecast_input_key") from exc
         self.count += 1
         if self.count > MAX_OUTPUT_ROWS or len(raw) > 1024**2:
             raise SnapshotError("forecast_output_row_limit")
+        index_bytes = self.db.execute(
+            "SELECT page_count * page_size FROM pragma_page_count(), pragma_page_size()"
+        ).fetchone()[0]
+        if index_bytes > MAX_OUTPUT_BYTES:
+            raise SnapshotError("forecast_output_index_byte_limit")
         self.buffer.append(physical_row(model))
         self.buffer_bytes += len(raw)
         if len(self.buffer) >= 256 or self.buffer_bytes >= 16 * 1024**2:
@@ -270,7 +286,7 @@ class Writer:
         for (body,) in self.db.execute(
             "SELECT body FROM output WHERE artifact=? ORDER BY key", (self.artifact,)
         ):
-            digest.update(body + b"\n")
+            digest.update(zlib.decompress(body) + b"\n")
         return {"row_count": self.count, "content_sha256": digest.hexdigest(), "files": self.refs}
 
 
@@ -496,7 +512,10 @@ def verify_inputs(root: Path) -> dict[str, Any]:
                                         )
                                     raw = canonical_bytes(model.model_dump(mode="json"))
                                     logical_bytes += len(raw)
-                                    if logical_bytes > MAX_OUTPUT_BYTES or len(raw) > 1024**2:
+                                    if (
+                                        logical_bytes > MAX_LOGICAL_OUTPUT_BYTES
+                                        or len(raw) > 1024**2
+                                    ):
                                         raise SnapshotError("forecast_inputs_logical_byte_limit")
                                     logical = model.model_dump(mode="json")
                                     key_names = (
