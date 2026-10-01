@@ -28,8 +28,15 @@ Promocja, odrzucenie, rollback i odzyskiwanie po utracie odpowiedzi są odebrane
 na małych fixture, również na rzeczywistych jednorazowych PostgreSQL/MLflow
 z restartem usług. Head i ukończenie decyzji zapisują się atomowo; nie powstaje
 druga wersja przy wznowieniu utraconej odpowiedzi. Nowy head migracji to
-`0015_v12_lifecycle`; trwałego stosu nie migrowano. Worker/publikacja/API,
-backup/restore v12 i odbiór rzeczywistego modelu nadal czekają na osobny odbiór.
+`0015_v12_lifecycle`, po którym dodano kolejkę opisaną poniżej; trwałego stosu nie migrowano.
+
+**AI 05 — kolejka i worker v12:** [prywatne zadania obliczeń](forecast-v12-worker.md)
+przypinają release i wejście, dzielą batch zgodnie z limitami oraz zapisują
+kompletny wynik mediany/średniej/przedziału z historią próby. Kontrola lease,
+retry i anulowania blokuje zapis częściowego wyniku. Odbiór używa jawnych
+fixture i osobnego PostgreSQL/MLflow; nie kwalifikuje rzeczywistej kampanii.
+Bieżący head migracji to `0016_v12_queue`; trwałego stosu nie migrowano.
+Publikacja/API, backup/restore v12 i odbiór rzeczywistego modelu pozostają otwarte.
 
 Aktualizacja: **2026-09-30**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
@@ -218,7 +225,7 @@ jakości oraz stare code/lock pins są zachowane, bez nowej kwalifikacji modelu.
 [Odbiór](evidence/05-07-evaluations.md) obejmuje HTTP/PostgreSQL, 37 synthetic
 ocen i rzeczywisty historyczny export (12012 memberships), odmowę częściowego
 scope, niezmienność i SIGKILL/restart. Tabela pochodzi z migracji
-`0013_forecast_evaluations`; bieżący DB head to `0015_v12_lifecycle` opisane powyżej.
+`0013_forecast_evaluations`; bieżący DB head to `0016_v12_queue` opisane powyżej.
 Trwałego stosu nie zmieniano. Pozostają qualified handoff AI 04,
 batch na jego release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**
 
@@ -232,7 +239,7 @@ HTTP/PostgreSQL, mixed-version odczyt, atomową odmowę rehashed niezgodnego dow
 tamper/restore i SIGKILL/restart. Przygotowanie 1.1 ze zweryfikowanego archiwum
 AI 04 zachowało parenty i stare locki; nie kwalifikowało modelu ani nie publikowało
 prognoz z tego archiwum. Migracja freshness to `0014_forecast_freshness`;
-**bieżący head to `0015_v12_lifecycle`** opisane powyżej;
+**bieżący head to `0016_v12_queue`** opisane powyżej;
 trwałego stosu nie migrowano. Pozostają qualified handoff AI 04, rzeczywisty
 batch na jego release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**
 

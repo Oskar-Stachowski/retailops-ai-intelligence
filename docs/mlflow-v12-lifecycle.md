@@ -105,7 +105,8 @@ a nowa promocja wymaga aktualnej kwalifikacji i przeglądu.
 ## Migracja i odbiór
 
 Nowy head to **`0015_v12_lifecycle`**, po `0014_forecast_freshness`.
-Wspólny DB guard i readiness wymagają dokładnie tej rewizji. Istniejący stos
+Po nim dodano [kolejkę v12](forecast-v12-worker.md); wspólny DB guard i readiness
+wymagają obecnie dokładnie `0016_v12_queue`. Istniejący stos
 potrzebuje jawnej migracji przed uruchomieniem nowego kodu, według
 [runbooka Compose](local-stack.md). CLI nie migruje bazy automatycznie.
 Downgrade historii wymaga backup/restore; migracja nie usuwa istniejących tabel.
@@ -126,7 +127,8 @@ usuwa własne kontenery i anonimowe wolumeny. Nie buduje i nie pobiera obrazów.
 [Dowód przygotowania](evidence/05-v12-lifecycle.json) odróżnia ten odbiór
 mechaniki od kwalifikacji rzeczywistej kampanii.
 
-Pozostają kolejka/worker v12, dzielenie batchu zgodnie z limitami, atomowa
-publikacja wszystkich trzech celów, odczyt API i sprawdzenie spójnego
+[Kolejka/worker v12](forecast-v12-worker.md) zapisują kompletny receipt obliczeń
+z dzieleniem batchu zgodnie z limitami. Pozostają atomowa publikacja wszystkich
+trzech celów, odczyt API i sprawdzenie spójnego
 backup/restore v12. Końcowy odbiór wymaga rzeczywistego eksportu i źródła,
 rzeczywistych raportów operatora oraz Required CI. **AI 05 pozostaje otwarte.**

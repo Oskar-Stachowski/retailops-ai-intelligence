@@ -151,7 +151,8 @@ nie zaliczają rzeczywistego modelu. [Dowód przygotowania](evidence/05-v12-rele
 rozróżnia te granice. Nie odczytano danych aktywnej kampanii AI 04.
 
 [Lifecycle v12 w MLflow/DB](mlflow-v12-lifecycle.md) dodaje rejestrację,
-decyzje i aktywny release head. Następne zakresy to trwała kolejka/worker,
-atomowa publikacja wszystkich trzech celów i read API.
+decyzje i aktywny release head, a [kolejka/worker v12](forecast-v12-worker.md)
+kompletny receipt obliczeń. Następne zakresy to atomowa publikacja wszystkich
+trzech celów i read API.
 Rzeczywisty odbiór tych elementów wymaga końcowego eksportu i źródła AI 04;
 AI 05 pozostaje otwarte.

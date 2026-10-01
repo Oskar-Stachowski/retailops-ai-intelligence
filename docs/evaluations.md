@@ -109,7 +109,7 @@ JSON scope ani dowolnego URL/model binary. Nie zmienia Registry lub release'u.
 ## Migracja i odporność
 
 Tabela ocen pochodzi z migracji `0013_forecast_evaluations`; `/ready` i wspólny
-DB guard wymagają bieżącego head `0015_v12_lifecycle`. Przy aktualizacji istniejącego stosu uruchom jawne
+DB guard wymagają bieżącego head `0016_v12_queue`. Przy aktualizacji istniejącego stosu uruchom jawne
 migracje przed nowym API, zgodnie z [runbookiem Compose](local-stack.md).
 Nowa tabela `ai.forecast_evaluations` znajduje się w schemacie objętym
 [backupem lifecycle](lifecycle-backup.md).

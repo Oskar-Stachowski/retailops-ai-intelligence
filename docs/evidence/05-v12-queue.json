@@ -1,0 +1,260 @@
+{
+  "active_ai04_head": "ad00c0a584add2c05c4dd2838f327ef3de9df9cb",
+  "active_ai04_worktree_modified": false,
+  "active_campaign_data_read": false,
+  "base_commit": "4f3b44183f1452c8dc62d9a8317ef34828d446d3",
+  "checks": {
+    "documentation_links": "passed",
+    "final_worker_lease_and_maximum_scope_targeted_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 8
+    },
+    "git_diff_check": "passed",
+    "isolated_postgresql_mlflow_acceptance_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 2
+    },
+    "isolated_service_restart_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 2
+    },
+    "legacy_forecast_job_and_v12_inference_lifecycle_schema_snapshots": "passed",
+    "mypy_repository": "passed_259_source_files",
+    "owned_docker_containers_absent": "passed",
+    "portable_legacy_regression_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 316
+    },
+    "portable_unit_pytest_before_final_heartbeat_callbacks": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 21
+    },
+    "ruff_format_repository": "passed_422_files",
+    "ruff_repository": "passed",
+    "staged_secret_scan": "passed_no_leaks",
+    "v12_batch_schema_snapshots": "passed"
+  },
+  "database_revision": "0016_v12_queue",
+  "docker_builds": 0,
+  "files": {
+    "Makefile": {
+      "sha256": "0db05c663166adcb586b94d854867b8966b95a76d8c9231c6a9b50f61471ffc0",
+      "size_bytes": 4981
+    },
+    "contracts/forecast_jobs/v12/policy.schema.json": {
+      "sha256": "934fabd09e2f5841221f7174f81f91cf67ec85bf40f16dd98d58e6dce0dfb4f1",
+      "size_bytes": 1029
+    },
+    "contracts/forecast_jobs/v12/receipt.schema.json": {
+      "sha256": "2740f8392d5fc32b677feefa71360a4bbd2f8fad64492187e1a092c412951fe3",
+      "size_bytes": 18053
+    },
+    "contracts/forecast_jobs/v12/request.schema.json": {
+      "sha256": "0cd4e8386085331ba3bdf86260b4043b39f4f7f0a6e358ae308e3ad6c033740d",
+      "size_bytes": 1086
+    },
+    "contracts/forecast_jobs/v12/run.schema.json": {
+      "sha256": "6f91a50627ccdcef019f68fcd58892d00046ba8554a16572960bdce73c0e4231",
+      "size_bytes": 16685
+    },
+    "docs/README.md": {
+      "sha256": "54de59cc023bb04023b8e1a27dcca8499c5f985776945f79e468fee750932893",
+      "size_bytes": 9816
+    },
+    "docs/STATUS.md": {
+      "sha256": "d9a23944a89b07d9fdab04b874122eab37cfec9f985260de9ff161bdf29a3d71",
+      "size_bytes": 22133
+    },
+    "docs/evaluations.md": {
+      "sha256": "066bbfdf01942dae69c087fbde4ef2074d1adf2d59cf599d11a39eb786d9b0d7",
+      "size_bytes": 7423
+    },
+    "docs/forecast-freshness.md": {
+      "sha256": "02b0a38584a7164e5864b2e63a3d92128906b88416c17731e2c4245eeed05c04",
+      "size_bytes": 5905
+    },
+    "docs/forecast-v12-release.md": {
+      "sha256": "49c112fbcdbd4f81e7c253939f24695717035d7e1ca6ced9e11919c824b75595",
+      "size_bytes": 8714
+    },
+    "docs/forecast-v12-runtime.md": {
+      "sha256": "3feb55bb3744628172d8e297c2f01140715840f6d3d224c50578173a4990bc48",
+      "size_bytes": 6129
+    },
+    "docs/forecast-v12-worker.md": {
+      "sha256": "dc68440115d6371063ebfb20df1452173b3ed87e6cc8564b88a27d13a97d89b8",
+      "size_bytes": 7789
+    },
+    "docs/mlflow-v12-lifecycle.md": {
+      "sha256": "c0533af5b47b2065a4c61d5b1848819790a26f8a4f8393c8e1f986cf425679fb",
+      "size_bytes": 7462
+    },
+    "reports/ai05-v12-queue-acceptance-tests.xml": {
+      "sha256": "82b7fb6c1e78e2abfb57d5fb64343b9cbe8e455d4df394377e134d39a924d412",
+      "size_bytes": 509
+    },
+    "reports/ai05-v12-queue-acceptance.json": {
+      "sha256": "e4f8eea0f4ff282639673d7a617685f0d3b8bf9a12c0050fb000284af6d4edd5",
+      "size_bytes": 3277
+    },
+    "reports/ai05-v12-queue-regression-tests.xml": {
+      "sha256": "d359bdd11f0857a746aff2e587a2308b13a228e3dafd35c7dc169bce4eae1532",
+      "size_bytes": 42910
+    },
+    "reports/ai05-v12-queue-restart-tests.xml": {
+      "sha256": "a2ed89daf9fdee805d30061654da1c63df08eb5f4bdb0890db94611886fff060",
+      "size_bytes": 508
+    },
+    "reports/ai05-v12-queue-secret-scan.json": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "size_bytes": 3
+    },
+    "reports/ai05-v12-queue-unit-tests.xml": {
+      "sha256": "c5492c173f1292fc186d493f9c68d887486823c94fa6c0836992715be2fe99bd",
+      "size_bytes": 2576
+    },
+    "reports/ai05-v12-queue-worker-final-tests.xml": {
+      "sha256": "0ae9e4a2e108652ee75cd872380bc92b573cb8b3826ed6bf30b10f02a480c7f5",
+      "size_bytes": 1166
+    },
+    "scripts/check_v12_lifecycle.py": {
+      "sha256": "917c21e70f8ee963a86f4398e17c4d9f2d415ce21a70f34e1045c38a69ffe4d5",
+      "size_bytes": 11056
+    },
+    "scripts/check_v12_queue.py": {
+      "sha256": "9e2b48d5d6097018d19fd1a46dbbf2e49c68b8da37fc3325089fd3cb2829d231",
+      "size_bytes": 207
+    },
+    "scripts/forecast_v12_queue.py": {
+      "sha256": "6f2a223d04513a4e300fbda18b64310c248bc43b33fbf768b91f696a12dfba14",
+      "size_bytes": 2741
+    },
+    "scripts/update_v12_batch_contracts.py": {
+      "sha256": "46430294e8d6546330046b4ad47da4cdce8edb9de80b0e38325cae992cf5223d",
+      "size_bytes": 1345
+    },
+    "src/retailops_ai/adapters/database.py": {
+      "sha256": "94865cc8ec9f9a1f276225fd06336bb03d590df086bef5fd54f1c82c6d7eeb6b",
+      "size_bytes": 1302
+    },
+    "src/retailops_ai/forecast_jobs/v12_batch.py": {
+      "sha256": "b89711795a04aa9a0ee3ae11bd71bdbc54a9a5aa9ea49a376f5200bee12eb5fe",
+      "size_bytes": 11578
+    },
+    "src/retailops_ai/forecast_jobs/v12_queue.py": {
+      "sha256": "8ee04a55f115054b49a258d061af7b79ea1f3dc90f3203f617aa5dccdad38022",
+      "size_bytes": 23758
+    },
+    "src/retailops_ai/forecast_jobs/v12_worker.py": {
+      "sha256": "b02fdbe1ce5435904b514f606dd8825678afb8d09f8d808328ba67926bcb193e",
+      "size_bytes": 9000
+    },
+    "src/retailops_ai/migrations/versions/0016_v12_queue.py": {
+      "sha256": "129a2116f7693041721d475097d87133f0bf9454fd478719d27c7b651d9d7734",
+      "size_bytes": 9141
+    },
+    "src/retailops_ai/security/model_operator.py": {
+      "sha256": "32386761ad189595cca79e10c11866748ae27a716049e2f66bfbbbc212a51661",
+      "size_bytes": 2090
+    },
+    "tests/check_v12_queue.py": {
+      "sha256": "c8d9f96762d59d85e86cbd50862e4bc2f9988e1572a5055e19f115fee7a09db5",
+      "size_bytes": 13949
+    },
+    "tests/test_v12_queue.py": {
+      "sha256": "1bad69d5fb998695239281fd255fcada7429d0787150f4a4ebd068e1fdbf5d60",
+      "size_bytes": 15741
+    }
+  },
+  "fixture_boundary": "Portable tests and real-service acceptance use explicit small full-export/source/predictor/review doubles and invented repeated series. Actual PostgreSQL, MLflow HTTP, admission, worker integration, transactions, leases, retries, cancellation and service restart are exercised. No fixture qualifies the real AI04 campaign; native predictor code was not changed or retested in this step.",
+  "image_pulls": 0,
+  "isolated_services": {
+    "aliases": {
+      "candidate": "6",
+      "champion": "6",
+      "rollback": "5"
+    },
+    "checked_at": "2026-10-01T10:56:07.970791+00:00",
+    "checks": [
+      "real_http_approval_import_and_idempotent_repeat_preserve_original_campaign_evidence",
+      "postgres_advisory_lock_excludes_concurrent_operator",
+      "version_cannot_be_enrolled_under_a_different_registration_decision",
+      "real_version_registration_and_atomic_database_release_head",
+      "real_mlflow_lost_create_response_recovers_one_version_without_post_retry",
+      "partial_alias_promotion_recovers_with_previous_head_preserved_until_completion",
+      "reject_and_exact_previous_release_rollback_and_old_replay",
+      "deferred_database_guard_rejects_head_commit_without_completed_decision",
+      "post_head_crash_rolls_back_release_head_and_completion_then_recovers_atomically",
+      "real_sql_immutable_history_and_head_deletion_or_old_pointer_rejected",
+      "old_database_revision_refused",
+      "v12_queue_atomic_idempotent_admission_with_registered_source_and_approved_release",
+      "partial_v12_batch_has_no_receipt_then_retry_keeps_old_release_and_commits_all_560_functional_rows",
+      "cancel_and_expired_lease_recovery_fence_old_workers_and_preserve_pins",
+      "real_v12_sql_rejects_pin_mutations_terminal_shortcuts_and_history_deletion",
+      "postgres_and_mlflow_restart_preserves_bound_release_aliases_and_completed_history",
+      "v12_queue_receipt_pins_attempt_history_and_cancellation_survive_service_restart"
+    ],
+    "computed_fixture_parts": 4,
+    "computed_fixture_rows": 560,
+    "docker_builds": 0,
+    "fixture_boundary": "Real PostgreSQL, MLflow, queue, transactions, lease expiry/retry/cancel and worker integration. Full-export/source/predictor/review use explicit small doubles, including invented repeated series for chunk tests. No real source or model is qualified.",
+    "image_pulls": 0,
+    "images": {
+      "db": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+      "mlflow": "sha256:06058cc872276873e9759c635e773342aca4731e240f6d20d88ea43774083984"
+    },
+    "migration_revision": "0016_v12_queue",
+    "model_name": "retailops-demand-forecast-v12-mechanics",
+    "model_version": "6",
+    "original_campaign_mlflow_run_id": "46805a83b9cf4f9e94e094b06bcf9604",
+    "owned_containers_and_anonymous_volumes_removed": true,
+    "persistent_source_stack_changed": false,
+    "prediction_model_refits": 0,
+    "published_forecast_outputs": 0,
+    "purpose": "isolated_v12_lifecycle_mechanics_only",
+    "queue_cancelled_profile_id": "batch-profile-sha256-4ec0cb103d489e170db7e2b64e757c15d746b87231574a79830796d235e204d1",
+    "queue_cancelled_run_id": "run-dc705f54faa21ec93600d46ff3969401",
+    "queue_profile_id": "batch-profile-sha256-b9f22a5ba298ad97ed532f4dd59b1e5b6f5de13ef708ba7f0d9c1b84879b7ffe",
+    "queue_receipt_id": "v12-computation-sha256-c11805bb2120874b09f8e62692a491f4d505c738aac1e72000cb307eb5c7d511",
+    "queue_run_id": "run-9ea2788b6d50f804325329a38500f26f",
+    "real_export_accepted": false,
+    "real_model_approved": false,
+    "real_production_model_registered": false,
+    "registered_fixture_versions": 6,
+    "release_id": "v12-model-release-sha256-c6896e49190ddf1be8ad4ee848cfd0d362ed0a776bd5e84071fa605b9aa72f71",
+    "status": "passed",
+    "version": "ai05-v12-lifecycle-acceptance-1.0.0"
+  },
+  "new_real_source_generation": false,
+  "persistent_database_migrated": false,
+  "persistent_mlflow_written": false,
+  "persistent_source_stack_changed": false,
+  "prediction_model_refits": 0,
+  "published_forecast_outputs": 0,
+  "real_final_export_accepted": false,
+  "real_model_approved": false,
+  "real_production_model_registered": false,
+  "recorded_at": "2026-10-01T11:08:30.166949+00:00",
+  "release_boundary": "A succeeded v12 run has one complete private computation receipt preserving median/mean/interval and immutable model/input pins. It has no published forecast output. Existing v1 HTTP contracts remain unchanged.",
+  "remaining": [
+    "Add atomic median/mean/interval publication and scoped v12 read API.",
+    "Accept coherent combined v12 database/MLflow/publication backup and restore.",
+    "Accept the completed real AI04 export, fully verified compatible sources and authentic operator review.",
+    "Run the real end-to-end batch and Required CI before completing AI05.",
+    "Explicitly migrate the persistent database before deploying code requiring revision 0016_v12_queue."
+  ],
+  "scope": "private_durable_v12_computation_queue_worker_bounded_batch_and_complete_receipts",
+  "status": "local_v12_queue_worker_atomic_receipts_recovery_and_restart_passed",
+  "test_boundary": "The 21-test baseline predates final heartbeat callbacks. Eight targeted tests cover the final worker, complete/maximal batch, failure, fencing, image pin and exhausted budget. These counts overlap; the final 22-test unit suite was not rerun in full.",
+  "version": "ai05-v12-queue-evidence-1.0.0"
+}

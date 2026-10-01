@@ -9,7 +9,8 @@ from retailops_ai.domain.access import Principal
 from retailops_ai.security.local import load_authority, strict_json
 
 
-def model_operator(policy: Path, credentials: Path) -> Principal:
+def private_principal(policy: Path, credentials: Path) -> Principal:
+    """Authenticate one local caller; the operation must check its own role/capability."""
     fd = os.open(credentials, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
     with os.fdopen(fd, "rb") as stream:
         info = os.fstat(stream.fileno())
@@ -40,11 +41,13 @@ def model_operator(policy: Path, credentials: Path) -> Principal:
     ):
         raise ValueError("invalid_operator_credential_shape")
     actor = load_authority(policy).authenticate("Bearer " + credential["bearer_token"])
-    if (
-        actor is None
-        or "promoter" not in actor.roles
-        or "model:decide" not in actor.capabilities
-        or actor.principal_id != credential["principal_id"]
-    ):
+    if actor is None or actor.principal_id != credential["principal_id"]:
+        raise ValueError("promoter_authorization_required")
+    return actor
+
+
+def model_operator(policy: Path, credentials: Path) -> Principal:
+    actor = private_principal(policy, credentials)
+    if "promoter" not in actor.roles or "model:decide" not in actor.capabilities:
         raise ValueError("promoter_authorization_required")
     return actor
