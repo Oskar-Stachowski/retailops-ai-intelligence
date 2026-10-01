@@ -307,6 +307,23 @@ def verify_inputs_from_capsule(root: Path) -> PreparedInputs:
     return PreparedInputs.model_validate_json(canonical_bytes(read_json(root, "inputs.json")))
 
 
+def verify_approved_capsule(release_dir: Path, *, release_id: str) -> V12InferenceRelease:
+    """Verify the private approval bytes; full export/wheel acceptance remains a separate step."""
+    _private(
+        release_dir, QUALIFICATION_FILES | {"release.json"} | {f"reports/{g}.json" for g in GATES}
+    )
+    release = V12InferenceRelease.model_validate_json(
+        canonical_bytes(read_json(release_dir, "release.json"))
+    )
+    if release.release_id != release_id:
+        raise ValueError("v12_inference_release_or_image_pin")
+    qualification = _qualification(release_dir)
+    if qualification != release.qualification:
+        raise ValueError("v12_inference_qualification_pin")
+    _reports(release_dir, release.approval)
+    return release
+
+
 def load_approved_v12(
     release_dir: Path,
     root: Path,
@@ -316,18 +333,10 @@ def load_approved_v12(
     image_digest: str,
     verify_timeout_seconds: int = 3600,
 ) -> LoadedV12Inference:
-    _private(
-        release_dir, QUALIFICATION_FILES | {"release.json"} | {f"reports/{g}.json" for g in GATES}
-    )
-    release = V12InferenceRelease.model_validate_json(
-        canonical_bytes(read_json(release_dir, "release.json"))
-    )
-    if release.release_id != release_id or release.approval.image_digest != image_digest:
+    release = verify_approved_capsule(release_dir, release_id=release_id)
+    if release.approval.image_digest != image_digest:
         raise ValueError("v12_inference_release_or_image_pin")
-    qualification = _qualification(release_dir)
-    if qualification != release.qualification:
-        raise ValueError("v12_inference_qualification_pin")
-    _reports(release_dir, release.approval)
+    qualification = release.qualification
     loaded = _bound_export(qualification, root, python, verify_timeout_seconds)
     if (
         source_policy(loaded, verify_inputs_from_capsule(release_dir))

@@ -150,7 +150,8 @@ Pełny verifier, odbiór źródła i raporty decyzji są w tej próbie jawnymi d
 nie zaliczają rzeczywistego modelu. [Dowód przygotowania](evidence/05-v12-release.json)
 rozróżnia te granice. Nie odczytano danych aktywnej kampanii AI 04.
 
-Następny zakres to lifecycle v12 w MLflow/DB z aktywnym release head,
-trwała kolejka/worker, atomowa publikacja wszystkich trzech celów i read API.
+[Lifecycle v12 w MLflow/DB](mlflow-v12-lifecycle.md) dodaje rejestrację,
+decyzje i aktywny release head. Następne zakresy to trwała kolejka/worker,
+atomowa publikacja wszystkich trzech celów i read API.
 Rzeczywisty odbiór tych elementów wymaga końcowego eksportu i źródła AI 04;
 AI 05 pozostaje otwarte.

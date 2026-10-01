@@ -1,0 +1,279 @@
+{
+  "active_ai04_worktree_modified": false,
+  "active_campaign_data_read": false,
+  "base_commit": "39d8fad6458f5a7333b46ea4825f876365fa9d52",
+  "checks": {
+    "documentation_links": "passed",
+    "explicit_pinned_native_wheel_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 2
+    },
+    "git_diff_check": "passed",
+    "isolated_postgresql_mlflow_acceptance_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 1
+    },
+    "isolated_service_restart_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 1
+    },
+    "legacy_lifecycle_and_forecast_job_schema_snapshots": "passed",
+    "mypy_repository": "passed_252_source_files",
+    "portable_regression_pytest_including_unit": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 352
+    },
+    "portable_unit_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 29
+    },
+    "ruff_format_repository": "passed_412_files",
+    "ruff_repository": "passed",
+    "staged_secret_scan": "passed_no_leaks",
+    "v12_schema_snapshots": "passed"
+  },
+  "database_revision": "0015_v12_lifecycle",
+  "docker_builds": 0,
+  "files": {
+    "Makefile": {
+      "sha256": "ff29b2948b37e56473b0dfd1a756ad56bed22278df3ff4abe6fc8ff931a85432",
+      "size_bytes": 4774
+    },
+    "contracts/model_lifecycle/v12/binding.schema.json": {
+      "sha256": "51490db395cbe3e14b2c03a4fa42f820efe75ba9ce1a1a4d8c05c0f09cd41aa1",
+      "size_bytes": 11027
+    },
+    "contracts/model_lifecycle/v12/release.schema.json": {
+      "sha256": "2b3c15c1c47ecb372d10e59e0fef85fcdc79d661a7460025684bb6ae9633997b",
+      "size_bytes": 12160
+    },
+    "contracts/model_lifecycle/v12/request.schema.json": {
+      "sha256": "8f615fc56e8c5bc839df026cf73265f5cd214e65215c06b968a50db06a398368",
+      "size_bytes": 1199
+    },
+    "contracts/model_lifecycle/v12/source.schema.json": {
+      "sha256": "be752cd2510a57b61350994c49b4de91b5488f5664a82b4bf0247010748dcd53",
+      "size_bytes": 10930
+    },
+    "docs/README.md": {
+      "sha256": "9ab9ae4b46bc930778d45d02f88347427266b4874ba4ec4c478b3d2c1e6f411b",
+      "size_bytes": 9678
+    },
+    "docs/STATUS.md": {
+      "sha256": "88565dd040fee220591722e3c54875eabd77be031b32545163e698b7fa259974",
+      "size_bytes": 21633
+    },
+    "docs/evaluations.md": {
+      "sha256": "c12effc448e67d92673e9b980c732470f91f2dd5b08a682f82db9fd9f1f5034e",
+      "size_bytes": 7427
+    },
+    "docs/forecast-freshness.md": {
+      "sha256": "e9fec27e727fd6fa8ab289a19d173710a95a70e1131e7a2ed43656020253eebf",
+      "size_bytes": 5912
+    },
+    "docs/forecast-v12-release.md": {
+      "sha256": "9fd0d60394b64499179f76f20856749249afd764e9e3608cc9582a59794e9b97",
+      "size_bytes": 8662
+    },
+    "docs/forecast-v12-runtime.md": {
+      "sha256": "6a3e9445d588ab2448af8afbafc755fd50e77ced07e66bc20a860c5073472f6c",
+      "size_bytes": 6095
+    },
+    "docs/mlflow-v12-lifecycle.md": {
+      "sha256": "a1b362df69c84d70a266c58b0acb0c0a25cde93ff11ac4036e1b1c03fcb06988",
+      "size_bytes": 7329
+    },
+    "reports/ai05-v12-lifecycle-acceptance-tests.xml": {
+      "sha256": "879769228c8b2b90521c65a3fc33d421c7f3dd6e7f4ba62592c1f32f27382625",
+      "size_bytes": 389
+    },
+    "reports/ai05-v12-lifecycle-acceptance.json": {
+      "sha256": "effc410398dd1345c45b8c56840a08288c355992319e796e4139feb82291ba8e",
+      "size_bytes": 2251
+    },
+    "reports/ai05-v12-lifecycle-native-tests.xml": {
+      "sha256": "f1540a46967ed5f17fa54132e3cfaf410fb5e79e9ad00a238fac226b7500e9df",
+      "size_bytes": 548
+    },
+    "reports/ai05-v12-lifecycle-regression-tests.xml": {
+      "sha256": "2646bc10e10af35859a87ed3b03a69abe20308b7019eb0edf6b10071f07dd208",
+      "size_bytes": 48088
+    },
+    "reports/ai05-v12-lifecycle-restart-tests.xml": {
+      "sha256": "9dd3f96be93cc43ac096afe3a0ddf998d095bb8765abf8cb1a1e1d1072a19f92",
+      "size_bytes": 389
+    },
+    "reports/ai05-v12-lifecycle-secret-scan.json": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "size_bytes": 3
+    },
+    "reports/ai05-v12-lifecycle-unit-tests.xml": {
+      "sha256": "b3b2dcc94e10005721dead4d5b1ecd17c70264ff7fc54356a07e9cbc8e3606c8",
+      "size_bytes": 4248
+    },
+    "reports/ai05-v12-native-inference-smoke.json": {
+      "sha256": "f0e13e78380a6b0ee7bb7bcd73d8a6d9328a927ed1c82f2eb551b4ff9f4e07c5",
+      "size_bytes": 1183
+    },
+    "scripts/check_v12_lifecycle.py": {
+      "sha256": "b87f9c6c9ff9be0b3e2027faa774dc8e18f1f33cd45e3d370cfed6e0e685c473",
+      "size_bytes": 10670
+    },
+    "scripts/mlflow_v12_lifecycle.py": {
+      "sha256": "07c1a7d6ff33b460aaf87f81ed4209ded5ff71403d8e4a46ac898fe23b2cbfa7",
+      "size_bytes": 5163
+    },
+    "scripts/update_v12_lifecycle_contracts.py": {
+      "sha256": "566b8c6450f29cdbd124e9b0a55d310c461db7e16d32a59b28b584e7a4b6fcd0",
+      "size_bytes": 1370
+    },
+    "src/retailops_ai/adapters/database.py": {
+      "sha256": "dd4a1ccd2c56c0f0e8e410d08ba72df309027fb2ca2dddb87062b00064ac9fce",
+      "size_bytes": 1306
+    },
+    "src/retailops_ai/migrations/versions/0015_v12_lifecycle.py": {
+      "sha256": "8ae1556649f2d4c6442f1f30557455c1b525cc79ad99b51a68d45ed5748c3da6",
+      "size_bytes": 7791
+    },
+    "src/retailops_ai/model_lifecycle/journal.py": {
+      "sha256": "eba61d58c8b3db8f24350afbba512e4f96a84a3e8b6bdee847546a95b2f3adc6",
+      "size_bytes": 7185
+    },
+    "src/retailops_ai/model_lifecycle/v12_journal.py": {
+      "sha256": "8d887c790bf74a65b971e35d8475f476d3769ba085eda258df0f9640148e6207",
+      "size_bytes": 6811
+    },
+    "src/retailops_ai/model_lifecycle/v12_lifecycle.py": {
+      "sha256": "7ac6120bbe002270042dacf5c09775ebb8bdae12c8f04192df604bb169d9a445",
+      "size_bytes": 11548
+    },
+    "src/retailops_ai/model_lifecycle/v12_lifecycle_contracts.py": {
+      "sha256": "a0ea8bd17f1ad4ac59c8505a8f7784b003f36ad4bd8f92b08546d4d671252ef4",
+      "size_bytes": 4338
+    },
+    "src/retailops_ai/model_lifecycle/v12_mlflow.py": {
+      "sha256": "a6f232a943583a41bcc7ab2ff0cecbb9eeecab838c25fd499640caa40eef9f4b",
+      "size_bytes": 13898
+    },
+    "src/retailops_ai/model_lifecycle/v12_registry.py": {
+      "sha256": "e50b7e26658b3a336a25b36f49a3bf7505275d51600651cc621e2bc689101638",
+      "size_bytes": 23161
+    },
+    "src/retailops_ai/model_lifecycle/v12_release.py": {
+      "sha256": "303b424536b79e97a6456c2e3597abbeb211b4f8a81deda38d1106f08187a906",
+      "size_bytes": 13803
+    },
+    "tests/check_v12_lifecycle.py": {
+      "sha256": "0b8ce44aa23c5e9433a5f7c01f5d8efcc3864e7822d35ddf4709b9febeeddb67",
+      "size_bytes": 15846
+    },
+    "tests/test_v12_lifecycle.py": {
+      "sha256": "91c1961138221cefa092804ed3a1a43dcde3e15287184c9634fe3364b95815c5",
+      "size_bytes": 19517
+    }
+  },
+  "fixture_boundary": "Portable tests and the real-service acceptance use explicit small export/source/prediction/review doubles. Native tests use the actual pinned AI04 predictor with invented validation rows and explicit full-export/source/review doubles. No fixture qualifies the real campaign.",
+  "image_pulls": 0,
+  "isolated_services": {
+    "aliases": {
+      "candidate": "4",
+      "champion": "4",
+      "rollback": "1"
+    },
+    "checked_at": "2026-10-01T10:02:33.959997+00:00",
+    "checks": [
+      "real_http_approval_import_and_idempotent_repeat_preserve_original_campaign_evidence",
+      "postgres_advisory_lock_excludes_concurrent_operator",
+      "version_cannot_be_enrolled_under_a_different_registration_decision",
+      "real_version_registration_and_atomic_database_release_head",
+      "real_mlflow_lost_create_response_recovers_one_version_without_post_retry",
+      "partial_alias_promotion_recovers_with_previous_head_preserved_until_completion",
+      "reject_and_exact_previous_release_rollback_and_old_replay",
+      "deferred_database_guard_rejects_head_commit_without_completed_decision",
+      "post_head_crash_rolls_back_release_head_and_completion_then_recovers_atomically",
+      "real_sql_immutable_history_and_head_deletion_or_old_pointer_rejected",
+      "old_database_revision_refused",
+      "postgres_and_mlflow_restart_preserves_bound_release_aliases_and_completed_history"
+    ],
+    "docker_builds": 0,
+    "fixture_boundary": "Original export verifier, source reconstruction, review and prediction are explicit small doubles. Real PostgreSQL, MLflow HTTP, model versions, aliases, transactions and restart are exercised.",
+    "image_pulls": 0,
+    "images": {
+      "db": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+      "mlflow": "sha256:06058cc872276873e9759c635e773342aca4731e240f6d20d88ea43774083984"
+    },
+    "migration_revision": "0015_v12_lifecycle",
+    "model_name": "retailops-demand-forecast-v12-mechanics",
+    "model_version": "4",
+    "original_campaign_mlflow_run_id": "c3c8985341ae4c6ca84b9598587cf8f3",
+    "owned_containers_and_anonymous_volumes_removed": true,
+    "persistent_source_stack_changed": false,
+    "prediction_model_refits": 0,
+    "published_forecast_outputs": 0,
+    "purpose": "isolated_v12_lifecycle_mechanics_only",
+    "real_export_accepted": false,
+    "real_model_approved": false,
+    "real_production_model_registered": false,
+    "registered_fixture_versions": 4,
+    "release_id": "v12-model-release-sha256-d9141fb0a6022a487e4062af29afdc6b6df8bafec56b2a5c6c3db53df31de4bc",
+    "status": "passed",
+    "version": "ai05-v12-lifecycle-acceptance-1.0.0"
+  },
+  "native_inference_smoke": {
+    "activated_as_champion": false,
+    "active_ai04_modified": false,
+    "active_campaign_read": false,
+    "code_sha256": "1961a96c8a1bbdfe7b4259f24b3dcb2a20def08723d5ef7000c40ed5f68a44fe",
+    "cold_load_seconds": 0.2949471669853665,
+    "compute_seconds": 0.010970292030833662,
+    "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "fixture_fitting": "small_independent_invented_validation_rows_only",
+    "forecast_rows": 14,
+    "full_run_verifier": "explicit_transport_double_not_real_quality_evidence",
+    "identical_repeat": true,
+    "input_provenance": "explicit_source_reconstruction_double_not_real_source_acceptance",
+    "installed_ai04_package": "/private/tmp/retailops-ai04-stage-b-ci/.venv/lib/python3.11/site-packages/retailops_ai/__init__.py",
+    "model_refits": 0,
+    "original_predictor_match": true,
+    "outside_development_holdout": true,
+    "peak_rss_bytes": 82460672,
+    "predictions_sha256": "99c3da6725e4b7a6d6e4f3101d3c10ce6bbecb5ac4cc6d2d8fab288cd389c683",
+    "published_forecast_outputs": 0,
+    "real_export_accepted": false,
+    "real_model_approved": false,
+    "registered_in_mlflow": false,
+    "review": "ten_explicit_fixture_reports_not_real_review",
+    "status": "native_inference_and_private_review_passed_on_explicit_fixture"
+  },
+  "new_real_source_generation": false,
+  "persistent_database_migrated": false,
+  "persistent_mlflow_written": false,
+  "persistent_source_stack_changed": false,
+  "prediction_model_refits": 0,
+  "published_forecast_outputs": 0,
+  "real_final_export_accepted": false,
+  "real_model_approved": false,
+  "real_production_model_registered": false,
+  "recorded_at": "2026-10-01T10:14:12.090872+00:00",
+  "release_boundary": "New v12 registry/model release is separate from the original evidence and the local approval capsule. Worker, publication and read API remain unintegrated. Interrupted metadata decisions can reconcile after approval expiry, without renewing inference permission.",
+  "remaining": [
+    "Accept the completed real AI04 export and compatible fully verified inference source packages.",
+    "Review actual security/license/freshness and all ten gates with an authenticated operator.",
+    "Add durable v12 queue/worker and bounded batch splitting using immutable database releases.",
+    "Add atomic median/mean/interval publication, read API and coherent v12 backup/restore acceptance.",
+    "Run real end-to-end acceptance and Required CI before completing AI05."
+  ],
+  "scope": "separate_v12_approval_tracking_registry_decisions_and_immutable_database_release_head",
+  "status": "local_v12_registry_database_history_recovery_and_restart_passed",
+  "version": "ai05-v12-lifecycle-evidence-1.0.0"
+}

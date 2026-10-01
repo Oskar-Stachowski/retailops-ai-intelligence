@@ -151,18 +151,18 @@ def metadata(evidence: V12Evidence) -> dict[str, Any]:
     return {"params": params, "tags": tags, "metrics": projected_metrics(evidence)}
 
 
-def _experiment(client: Tracking) -> str:
+def _experiment(client: Tracking, name: str = EXPERIMENT) -> str:
     try:
         response = client.api(
             "/api/2.0/mlflow/experiments/get-by-name?experiment_name="
-            + urllib.parse.quote(EXPERIMENT, safe="")
+            + urllib.parse.quote(name, safe="")
         )
         return str(response["experiment"]["experiment_id"])
     except ValueError as error:
         if str(error) != "v12_mlflow_resource_missing":
             raise
         return str(
-            client.api("/api/2.0/mlflow/experiments/create", {"name": EXPERIMENT})["experiment_id"]
+            client.api("/api/2.0/mlflow/experiments/create", {"name": name})["experiment_id"]
         )
 
 

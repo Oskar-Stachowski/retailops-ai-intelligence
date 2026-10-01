@@ -27,6 +27,9 @@ kontroluje dojrzałość etykiet i wspólne klucze oraz raportuje pooled MAE/WAP
 [Metryki i niepewność 04.7](forecast-quality.md) dodają przekroje, bias,
 kalibrację przedziałów i jawne bramki jakości bez promocji modelu.
 [Plikowy run 04.8](forecast-run.md) utrwala komplet dowodów do AI 05.
+[Adapter v12](mlflow-v12-evidence.md), [loader offline](forecast-v12-runtime.md),
+[kwalifikacja inference](forecast-v12-release.md) i [lifecycle v12](mlflow-v12-lifecycle.md)
+opisują przygotowanie obsługi nowego eksportu oraz osobne bramki dopuszczenia.
 [Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
 rozszerza typed import o source 2.7, native ledger i private qualification.
 [Odbiór](evidence/06-inventory-complete.md) obejmuje curated 1.1 i oba profile.

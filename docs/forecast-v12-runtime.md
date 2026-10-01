@@ -109,5 +109,5 @@ installed predictor double do sprawdzenia granicy procesu.
 14 prognoz zgodziło się dokładnie z oryginalnym predictorem; powtórzenie
 zachowało hash. Rzeczywisty final export i production serving nadal czekają
 na osobny odbiór. Po [kontrakcie inference/przeglądu](forecast-v12-release.md)
-pozostają lifecycle v12 w MLflow/DB, worker, publikacja i read API v12
-z zachowaniem wszystkich trzech celów.
+oraz [lifecycle v12 w MLflow/DB](mlflow-v12-lifecycle.md) pozostają worker,
+publikacja i read API v12 z zachowaniem wszystkich trzech celów.

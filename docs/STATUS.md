@@ -20,8 +20,16 @@ parents, powtarzalną próbę prognoz i decyzję uwierzytelnionego operatora z 1
 raportami. Wersja, źródło, limity i ważność są przypięte; brak jakości, podmiana
 pakietu albo utrata lease powodują odmowę. Rzeczywisty algorytm dał 14 prognoz
 identycznych z oryginałem na osobnej fixture. Nie dopuszczono rzeczywistego
-modelu ani nie zmieniono aliasów MLflow. Lifecycle v12 w MLflow/DB,
-worker/publikacja/API v12 i końcowy eksport nadal czekają na osobny odbiór.
+modelu ani nie zmieniono aliasów trwałego stosu.
+
+**AI 05 — lifecycle v12 i trwały release:** [rejestracja i decyzje](mlflow-v12-lifecycle.md)
+wiążą osobny namespace MLflow z kapsułą przeglądu i immutable historią bazy.
+Promocja, odrzucenie, rollback i odzyskiwanie po utracie odpowiedzi są odebrane
+na małych fixture, również na rzeczywistych jednorazowych PostgreSQL/MLflow
+z restartem usług. Head i ukończenie decyzji zapisują się atomowo; nie powstaje
+druga wersja przy wznowieniu utraconej odpowiedzi. Nowy head migracji to
+`0015_v12_lifecycle`; trwałego stosu nie migrowano. Worker/publikacja/API,
+backup/restore v12 i odbiór rzeczywistego modelu nadal czekają na osobny odbiór.
 
 Aktualizacja: **2026-09-30**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
@@ -210,7 +218,7 @@ jakości oraz stare code/lock pins są zachowane, bez nowej kwalifikacji modelu.
 [Odbiór](evidence/05-07-evaluations.md) obejmuje HTTP/PostgreSQL, 37 synthetic
 ocen i rzeczywisty historyczny export (12012 memberships), odmowę częściowego
 scope, niezmienność i SIGKILL/restart. Tabela pochodzi z migracji
-`0013_forecast_evaluations`; bieżący DB head to 0014 opisane poniżej.
+`0013_forecast_evaluations`; bieżący DB head to `0015_v12_lifecycle` opisane powyżej.
 Trwałego stosu nie zmieniano. Pozostają qualified handoff AI 04,
 batch na jego release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**
 
@@ -223,7 +231,8 @@ domyślnego `current`. [Odbiór](evidence/05-07-freshness.md) obejmuje rzeczywis
 HTTP/PostgreSQL, mixed-version odczyt, atomową odmowę rehashed niezgodnego dowodu,
 tamper/restore i SIGKILL/restart. Przygotowanie 1.1 ze zweryfikowanego archiwum
 AI 04 zachowało parenty i stare locki; nie kwalifikowało modelu ani nie publikowało
-prognoz z tego archiwum. **`0014_forecast_freshness` jest bieżącym head migracji**;
+prognoz z tego archiwum. Migracja freshness to `0014_forecast_freshness`;
+**bieżący head to `0015_v12_lifecycle`** opisane powyżej;
 trwałego stosu nie migrowano. Pozostają qualified handoff AI 04, rzeczywisty
 batch na jego release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**
 

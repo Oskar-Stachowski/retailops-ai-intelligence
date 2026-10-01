@@ -78,6 +78,7 @@ contracts:
 	$(UV_RUN) python scripts/update_forecast_job_contracts.py
 	$(UV_RUN) python scripts/update_v12_runtime_contracts.py
 	$(UV_RUN) python scripts/update_v12_inference_contracts.py
+	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py
 
 contracts-check:
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
@@ -88,6 +89,7 @@ contracts-check:
 	$(UV_RUN) python scripts/update_forecast_job_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_runtime_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_inference_contracts.py --check
+	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py --check
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up
@@ -103,6 +105,10 @@ compose-smoke:
 
 mlflow-store-smoke:
 	$(UV_RUN) python scripts/check_mlflow_store.py
+
+.PHONY: v12-lifecycle-smoke
+v12-lifecycle-smoke:
+	$(UV_RUN) python scripts/check_v12_lifecycle.py
 
 .PHONY: model-lifecycle-smoke
 model-lifecycle-smoke:

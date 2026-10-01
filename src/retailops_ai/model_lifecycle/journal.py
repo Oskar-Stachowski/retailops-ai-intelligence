@@ -12,7 +12,7 @@ from sqlalchemy.engine import Connection
 from retailops_ai.model_lifecycle.contracts import Binding, Release
 
 
-class PostgresJournal:
+class PostgresLock:
     def __init__(self, engine: Engine) -> None:
         self.engine = engine
         self.connection: Connection | None = None
@@ -51,6 +51,8 @@ class PostgresJournal:
             raise ValueError("model_lock_required")
         self.connection.commit()
 
+
+class PostgresJournal(PostgresLock):
     def decision(self, decision_id: str) -> dict[str, Any] | None:
         value = self.query(
             "SELECT record FROM ai.model_decisions WHERE decision_id=:id", id=decision_id
