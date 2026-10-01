@@ -26,6 +26,8 @@ dla treningu RF/HGB. Przy ręcznym uruchomieniu całych testów użyj
 [CLI curated](curated.md) buduje dane i odczytuje historię as-of z tego samego extra.
 [CLI forecast](forecasting.md) definiuje zadanie i buduje przypięty kalendarz
 bez modeli, DB i AWS.
+[Adapter eksportu v12 do MLflow](mlflow-v12-evidence.md) korzysta z osobnego
+przypiętego wheel AI 04 i zachowuje oddzielne cele prognozy.
 Wszystkie polecenia projektu korzystają z tego samego pakietu, także
 `uv run --locked python -m retailops_ai`. `config-check` niczego nie tworzy,
 nie sprawdza DB, nie wykonuje zapytań sieciowych i nie potwierdza readiness usług.
