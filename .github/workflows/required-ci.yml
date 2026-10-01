@@ -66,8 +66,8 @@ jobs:
       - run: make forecast-read-smoke
       - run: make model-catalog-smoke
       - run: make evaluations-smoke
-      - name: Accept v12 registry, jobs, publication and restart
-        run: make v12-publication-smoke
+      - name: Accept v12 registry, jobs, publication, metadata and restart
+        run: make v12-metadata-smoke
   required-result:
     if: always()
     needs: [checks, secrets, persistence]

@@ -121,7 +121,8 @@ Przed wdrożeniem wymagany jest odbiór całego rzeczywistego przepływu.
 ## Migracja i odbiór
 
 Migracja kolejki to **`0016_v12_queue`**, po `0015_v12_lifecycle`.
-Bieżący head to `0017_v12_outputs` opisany w [publikacji v12](forecast-v12-publication.md).
+Po kolejce dodano `0017_v12_outputs` opisany w [publikacji v12](forecast-v12-publication.md)
+oraz bieżący head `0018_v12_evaluations` w [katalogu i ocenach](forecast-v12-metadata.md).
 Tabele `ai.v12_batch_runs`, `ai.v12_batch_attempts` i `ai.v12_batch_receipts`
 są oddzielne od kolejki/publikacji v1. Readiness i wspólny DB guard wymagają
 jawnej migracji według [runbooka Compose](local-stack.md). Trwałego stosu

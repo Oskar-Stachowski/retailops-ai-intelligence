@@ -74,6 +74,7 @@ def tests(
     work: Path,
     include_queue: bool = False,
     include_outputs: bool = False,
+    include_metadata: bool = False,
 ) -> None:
     env = {key: os.environ[key] for key in ("PATH", "TMPDIR") if key in os.environ}
     env["AI05_V12_PRIVATE_INVOCATION"] = str(invocation)
@@ -83,6 +84,8 @@ def tests(
     prefix = "ai05-v12-queue-" if include_queue else "ai05-v12-lifecycle-"
     if include_outputs:
         prefix = "ai05-v12-publication-"
+    if include_metadata:
+        prefix = "ai05-v12-metadata-"
     result = None
     try:
         with (work / (name + ".log")).open("wb") as log:
@@ -95,6 +98,7 @@ def tests(
                     "tests/check_v12_lifecycle.py",
                     *(["tests/check_v12_queue.py"] if include_queue else []),
                     *(["tests/check_v12_publication.py"] if include_outputs else []),
+                    *(["tests/check_v12_metadata.py"] if include_metadata else []),
                     "--junitxml=" + str(ROOT / "reports" / (prefix + name + "-tests.xml")),
                 ],
                 cwd=ROOT,
@@ -113,7 +117,10 @@ def tests(
         raise ValueError("v12_acceptance_tests_failed")
 
 
-def main(*, include_queue: bool = False, include_outputs: bool = False) -> int:
+def main(
+    *, include_queue: bool = False, include_outputs: bool = False, include_metadata: bool = False
+) -> int:
+    include_outputs = include_outputs or include_metadata
     include_queue = include_queue or include_outputs
     owner = uuid.uuid4().hex
     names = {role: "retailops-ai05-v12-" + role + "-" + owner[:12] for role in IMAGES}
@@ -121,7 +128,9 @@ def main(*, include_queue: bool = False, include_outputs: bool = False) -> int:
     cleaned = False
     report: dict[str, Any] = dict(status="running", purpose="isolated_v12_mechanics_only")
     report_path = (
-        ROOT / "reports/ai05-v12-publication-acceptance.json"
+        ROOT / "reports/ai05-v12-metadata-acceptance.json"
+        if include_metadata
+        else ROOT / "reports/ai05-v12-publication-acceptance.json"
         if include_outputs
         else ROOT / "reports/ai05-v12-queue-acceptance.json"
         if include_queue
@@ -227,6 +236,7 @@ def main(*, include_queue: bool = False, include_outputs: bool = False) -> int:
                 work=work,
                 include_queue=include_queue,
                 include_outputs=include_outputs,
+                include_metadata=include_metadata,
             )
             print("Registry/recovery/database guards passed; checking restart.", flush=True)
             stage = "restart"
@@ -244,6 +254,7 @@ def main(*, include_queue: bool = False, include_outputs: bool = False) -> int:
                 work=work,
                 include_queue=include_queue,
                 include_outputs=include_outputs,
+                include_metadata=include_metadata,
             )
             report = json.loads(state.read_bytes())
         report.update(

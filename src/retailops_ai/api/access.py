@@ -17,6 +17,7 @@ from retailops_ai.api.middleware import single_header
 from retailops_ai.api.model_catalog import add_model_catalog_routes
 from retailops_ai.api.models import Problem
 from retailops_ai.api.v12_forecast_jobs import add_v12_forecast_routes
+from retailops_ai.api.v12_metadata import add_v12_metadata_routes
 from retailops_ai.data_contracts.common import Contract, Symbol, Versioned
 from retailops_ai.domain.access import Capability, Principal, Role, can_read_forecast
 from retailops_ai.forecast_jobs.queue import BatchAdministration
@@ -27,6 +28,8 @@ from retailops_ai.forecast_jobs.v12_reader import V12ForecastReader
 from retailops_ai.knowledge.retrieval import RetrievalRequest, RetrievalResult
 from retailops_ai.model_lifecycle.evaluation_store import EvaluationReader
 from retailops_ai.model_lifecycle.reader import ModelCatalog
+from retailops_ai.model_lifecycle.v12_catalog import V12ModelCatalog
+from retailops_ai.model_lifecycle.v12_evaluation_store import V12EvaluationReader
 from retailops_ai.pipelines.retrieval import KnowledgeDenied, resolve_scope
 from retailops_ai.security.local import LocalAccess
 from retailops_ai.security.models import KnowledgeResourceScope, ResourceScope
@@ -73,6 +76,8 @@ def access_router(
     evaluation_reader: EvaluationReader | None = None,
     v12_forecast_reader: V12ForecastReader | None = None,
     v12_forecast_administration: V12JobAdministration | None = None,
+    v12_model_catalog: V12ModelCatalog | None = None,
+    v12_evaluation_reader: V12EvaluationReader | None = None,
 ) -> APIRouter:
     bearer = HTTPBearer(auto_error=False, scheme_name="apiBearer")
 
@@ -174,6 +179,7 @@ def access_router(
     add_forecast_read_routes(
         router, verified, v12_forecast_reader, path="/forecasts/v12", response_model=V12ForecastPage
     )
+    add_v12_metadata_routes(router, verified, v12_model_catalog, v12_evaluation_reader)
     add_model_catalog_routes(router, verified, model_catalog)
     add_evaluation_routes(router, verified, evaluation_reader)
     return router

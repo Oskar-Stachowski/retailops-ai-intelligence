@@ -81,13 +81,15 @@ Export/source/predictor/review pozostają jawnymi małymi doubles.
 Wbudowana konfiguracja API wybiera namespace `retailops-demand-forecast-v12`.
 Namespace mechanics wymaga jawnego wstrzyknięcia backendu w testach;
 samo `APP_ENV=test` go nie włącza.
-Migracja pozostaje `0017_v12_outputs`; trwałego stosu nie migrowano.
+Migracja publikacji to `0017_v12_outputs`; późniejszy head `0018_v12_evaluations`
+opisuje [katalog i oceny v12](forecast-v12-metadata.md). Trwałego stosu nie migrowano.
 Dotychczasowe 17 ścieżek OpenAPI i ich 60 definicji schema pozostały identyczne.
-Job `persistence` Required CI uruchamia teraz `make v12-publication-smoke`,
-który obejmuje registry, kolejkę/API, publikację/odczyt i restart.
+Job `persistence` Required CI uruchamia teraz `make v12-metadata-smoke`,
+który obejmuje registry, kolejkę/API, publikację/odczyt, katalog/oceny i restart.
 Runner używa tych samych digestów obrazów co Compose/Dockerfile,
 także gdy cache nie zawiera osobnego mutable tagu. Nie wykonuje build/pull.
 Zmiana workflow jest przygotowana lokalnie; zdalny wynik pozostaje nieodebrany.
 
-Do ukończenia AI 05 pozostają katalog modeli/evaluations v12, wspólny
+[Katalog i oceny v12](forecast-v12-metadata.md) są podłączone osobno.
+Do ukończenia AI 05 pozostają wspólny
 backup/restore, Required CI, rzeczywisty handoff i pełny odbiór serving.

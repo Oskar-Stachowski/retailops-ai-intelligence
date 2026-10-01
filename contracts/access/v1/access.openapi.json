@@ -3779,6 +3779,987 @@
         "title": "SourceLocation",
         "type": "object"
       },
+      "V12ApprovedRelease": {
+        "additionalProperties": false,
+        "properties": {
+          "image_digest": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "title": "Image Digest",
+            "type": "string"
+          },
+          "model_version": {
+            "pattern": "^[1-9][0-9]{0,9}$",
+            "title": "Model Version",
+            "type": "string"
+          },
+          "release_id": {
+            "pattern": "^v12-model-release-sha256-[0-9a-f]{64}$",
+            "title": "Release Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "model_version",
+          "image_digest"
+        ],
+        "title": "V12ApprovedRelease",
+        "type": "object"
+      },
+      "V12ArtifactReceipt": {
+        "additionalProperties": false,
+        "description": "Campaign artifacts use AI 04's byte budget, including empty retained files.",
+        "properties": {
+          "sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Sha256",
+            "type": "string"
+          },
+          "size_bytes": {
+            "maximum": 68719476736.0,
+            "minimum": 0.0,
+            "title": "Size Bytes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "sha256",
+          "size_bytes"
+        ],
+        "title": "V12ArtifactReceipt",
+        "type": "object"
+      },
+      "V12CalibrationEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "minimum_rows": {
+            "anyOf": [
+              {
+                "maximum": 50000000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimum Rows"
+          },
+          "missing_evidence_rows": {
+            "maximum": 50000000.0,
+            "minimum": 0.0,
+            "title": "Missing Evidence Rows",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "minimum_rows",
+          "missing_evidence_rows"
+        ],
+        "title": "V12CalibrationEvidence",
+        "type": "object"
+      },
+      "V12CatalogModel": {
+        "additionalProperties": false,
+        "properties": {
+          "approved_release": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/V12ApprovedRelease"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "deployed_model_version": {
+            "title": "Deployed Model Version",
+            "type": "null"
+          },
+          "deployment_status": {
+            "const": "not_attested",
+            "default": "not_attested",
+            "title": "Deployment Status",
+            "type": "string"
+          },
+          "drift_status": {
+            "const": "not_run",
+            "default": "not_run",
+            "title": "Drift Status",
+            "type": "string"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/CatalogFreshness"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "model_name": {
+            "enum": [
+              "retailops-demand-forecast-v12",
+              "retailops-demand-forecast-v12-mechanics"
+            ],
+            "title": "Model Name",
+            "type": "string"
+          },
+          "registry_aliases": {
+            "title": "Registry Aliases",
+            "type": "null"
+          },
+          "visible_version_count": {
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "title": "Visible Version Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "model_name",
+          "visible_version_count",
+          "approved_release",
+          "freshness",
+          "generated_at"
+        ],
+        "title": "V12CatalogModel",
+        "type": "object"
+      },
+      "V12CatalogVersion": {
+        "additionalProperties": false,
+        "properties": {
+          "approval_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Approval Sha256",
+            "type": "string"
+          },
+          "approval_valid_until": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Approval Valid Until",
+            "type": "string"
+          },
+          "campaign_mlflow_run_id": {
+            "pattern": "^[0-9a-f]{32}$",
+            "title": "Campaign Mlflow Run Id",
+            "type": "string"
+          },
+          "code_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Code Sha256",
+            "type": "string"
+          },
+          "cohort_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Cohort Id",
+            "type": "string"
+          },
+          "dependency_lock_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Dependency Lock Sha256",
+            "type": "string"
+          },
+          "evaluation_id": {
+            "pattern": "^v12-evaluation-sha256-[0-9a-f]{64}$",
+            "title": "Evaluation Id",
+            "type": "string"
+          },
+          "evaluation_scope": {
+            "const": "whole_campaign_scope_required",
+            "default": "whole_campaign_scope_required",
+            "title": "Evaluation Scope",
+            "type": "string"
+          },
+          "flavor": {
+            "const": "forecast-functional-v12",
+            "default": "forecast-functional-v12",
+            "title": "Flavor",
+            "type": "string"
+          },
+          "fold": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Fold",
+            "type": "string"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/CatalogFreshness"
+          },
+          "mlflow_run_id": {
+            "pattern": "^[0-9a-f]{32}$",
+            "title": "Mlflow Run Id",
+            "type": "string"
+          },
+          "model_name": {
+            "enum": [
+              "retailops-demand-forecast-v12",
+              "retailops-demand-forecast-v12-mechanics"
+            ],
+            "title": "Model Name",
+            "type": "string"
+          },
+          "model_version": {
+            "pattern": "^[1-9][0-9]{0,9}$",
+            "title": "Model Version",
+            "type": "string"
+          },
+          "original_export_run_id": {
+            "pattern": "^functional-v12-run-sha256-[0-9a-f]{64}$",
+            "title": "Original Export Run Id",
+            "type": "string"
+          },
+          "recipe_artifact": {
+            "$ref": "#/components/schemas/V12ArtifactReceipt"
+          },
+          "recipe_id": {
+            "pattern": "^functional-v12-recipe-sha256-[0-9a-f]{64}$",
+            "title": "Recipe Id",
+            "type": "string"
+          },
+          "runtime_pin_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Runtime Pin Sha256",
+            "type": "string"
+          },
+          "snapshot_id": {
+            "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+            "title": "Snapshot Id",
+            "type": "string"
+          },
+          "source_dataset_id": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "title": "Source Dataset Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "approved_release_recorded",
+              "previously_published"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "visible_last_published_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Visible Last Published At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "model_name",
+          "model_version",
+          "status",
+          "original_export_run_id",
+          "mlflow_run_id",
+          "campaign_mlflow_run_id",
+          "cohort_id",
+          "fold",
+          "recipe_id",
+          "recipe_artifact",
+          "source_dataset_id",
+          "snapshot_id",
+          "code_sha256",
+          "dependency_lock_sha256",
+          "approval_sha256",
+          "runtime_pin_sha256",
+          "approval_valid_until",
+          "evaluation_id",
+          "visible_last_published_at",
+          "freshness"
+        ],
+        "title": "V12CatalogVersion",
+        "type": "object"
+      },
+      "V12CohortLineage": {
+        "additionalProperties": false,
+        "properties": {
+          "cohort_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Cohort Id",
+            "type": "string"
+          },
+          "prepared_cohort_id": {
+            "pattern": "^forecast-cohort-sha256-[0-9a-f]{64}$",
+            "title": "Prepared Cohort Id",
+            "type": "string"
+          },
+          "snapshot_id": {
+            "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+            "title": "Snapshot Id",
+            "type": "string"
+          },
+          "source_dataset_id": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "title": "Source Dataset Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "cohort_id",
+          "prepared_cohort_id",
+          "source_dataset_id",
+          "snapshot_id"
+        ],
+        "title": "V12CohortLineage",
+        "type": "object"
+      },
+      "V12EvaluationDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_code_commit": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Ai Code Commit",
+            "type": "string"
+          },
+          "campaign_id": {
+            "pattern": "^functional-v12-campaign-sha256-[0-9a-f]{64}$",
+            "title": "Campaign Id",
+            "type": "string"
+          },
+          "code_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Code Sha256",
+            "type": "string"
+          },
+          "cohort_lineage": {
+            "items": {
+              "$ref": "#/components/schemas/V12CohortLineage"
+            },
+            "maxItems": 64,
+            "minItems": 1,
+            "title": "Cohort Lineage",
+            "type": "array"
+          },
+          "dependency_lock_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Dependency Lock Sha256",
+            "type": "string"
+          },
+          "evaluation_id": {
+            "pattern": "^v12-evaluation-sha256-[0-9a-f]{64}$",
+            "title": "Evaluation Id",
+            "type": "string"
+          },
+          "evidence_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Evidence Sha256",
+            "type": "string"
+          },
+          "execution_failure_recorded": {
+            "title": "Execution Failure Recorded",
+            "type": "boolean"
+          },
+          "export_manifest": {
+            "$ref": "#/components/schemas/V12ArtifactReceipt"
+          },
+          "exported_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Exported At",
+            "type": "string"
+          },
+          "failed_reasons": {
+            "patternProperties": {
+              "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+                "maximum": 50000000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              }
+            },
+            "title": "Failed Reasons",
+            "type": "object"
+          },
+          "forecast_model_status": {
+            "enum": [
+              "ready",
+              "not_ready"
+            ],
+            "title": "Forecast Model Status",
+            "type": "string"
+          },
+          "freeze_id": {
+            "pattern": "^functional-v12-freeze-sha256-[0-9a-f]{64}$",
+            "title": "Freeze Id",
+            "type": "string"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/EvaluationFreshness"
+          },
+          "input_complete": {
+            "title": "Input Complete",
+            "type": "boolean"
+          },
+          "membership_rows": {
+            "maximum": 50000000.0,
+            "minimum": 0.0,
+            "title": "Membership Rows",
+            "type": "integer"
+          },
+          "membership_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Membership Sha256",
+            "type": "string"
+          },
+          "metric_verification": {
+            "const": "pinned_original_export_and_replay_verified",
+            "default": "pinned_original_export_and_replay_verified",
+            "title": "Metric Verification",
+            "type": "string"
+          },
+          "metrics_report": {
+            "$ref": "#/components/schemas/V12ArtifactReceipt"
+          },
+          "model_name": {
+            "enum": [
+              "retailops-demand-forecast-v12",
+              "retailops-demand-forecast-v12-mechanics"
+            ],
+            "title": "Model Name",
+            "type": "string"
+          },
+          "original_export_run_id": {
+            "pattern": "^functional-v12-run-sha256-[0-9a-f]{64}$",
+            "title": "Original Export Run Id",
+            "type": "string"
+          },
+          "portfolio_final_test": {
+            "const": "not_included_not_opened",
+            "default": "not_included_not_opened",
+            "title": "Portfolio Final Test",
+            "type": "string"
+          },
+          "quality_status": {
+            "enum": [
+              "passed",
+              "not_ready"
+            ],
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "quality_verification": {
+            "const": "recorded_status_not_requalified",
+            "default": "recorded_status_not_requalified",
+            "title": "Quality Verification",
+            "type": "string"
+          },
+          "registered_model_version": {
+            "title": "Registered Model Version",
+            "type": "null"
+          },
+          "replay_id": {
+            "pattern": "^functional-v12-replay-sha256-[0-9a-f]{64}$",
+            "title": "Replay Id",
+            "type": "string"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/EvaluationScope"
+          },
+          "segment_counts": {
+            "additionalProperties": {
+              "maximum": 50000000.0,
+              "minimum": 0.0,
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "passed",
+                "failed",
+                "not_ready"
+              ]
+            },
+            "title": "Segment Counts",
+            "type": "object"
+          },
+          "segments": {
+            "items": {
+              "$ref": "#/components/schemas/V12EvaluationSegment"
+            },
+            "maxItems": 10000,
+            "minItems": 1,
+            "title": "Segments",
+            "type": "array"
+          },
+          "serving_eligible": {
+            "const": false,
+            "default": false,
+            "title": "Serving Eligible",
+            "type": "boolean"
+          },
+          "source_code_commit": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Source Code Commit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "model_name",
+          "original_export_run_id",
+          "campaign_id",
+          "freeze_id",
+          "replay_id",
+          "exported_at",
+          "scope",
+          "cohort_lineage",
+          "membership_rows",
+          "membership_sha256",
+          "source_code_commit",
+          "ai_code_commit",
+          "code_sha256",
+          "dependency_lock_sha256",
+          "export_manifest",
+          "metrics_report",
+          "quality_status",
+          "forecast_model_status",
+          "input_complete",
+          "execution_failure_recorded",
+          "segment_counts",
+          "failed_reasons",
+          "evaluation_id",
+          "evidence_sha256",
+          "freshness",
+          "segments"
+        ],
+        "title": "V12EvaluationDetail",
+        "type": "object"
+      },
+      "V12EvaluationPage": {
+        "additionalProperties": false,
+        "properties": {
+          "data_status": {
+            "enum": [
+              "available",
+              "no_data"
+            ],
+            "title": "Data Status",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/V12EvaluationSummary"
+            },
+            "maxItems": 200,
+            "title": "Items",
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/CatalogPagination"
+          },
+          "version": {
+            "const": "forecast-v12-evaluation-page-1.0.0",
+            "default": "forecast-v12-evaluation-page-1.0.0",
+            "title": "Version",
+            "type": "string"
+          },
+          "view_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "View Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items",
+          "pagination",
+          "generated_at",
+          "data_status",
+          "view_sha256"
+        ],
+        "title": "V12EvaluationPage",
+        "type": "object"
+      },
+      "V12EvaluationSegment": {
+        "additionalProperties": false,
+        "properties": {
+          "baseline": {
+            "$ref": "#/components/schemas/V12FunctionalMetrics"
+          },
+          "calibration_evidence": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/V12CalibrationEvidence"
+            },
+            "propertyNames": {
+              "enum": [
+                "candidate",
+                "baseline"
+              ]
+            },
+            "title": "Calibration Evidence",
+            "type": "object"
+          },
+          "candidate": {
+            "$ref": "#/components/schemas/V12FunctionalMetrics"
+          },
+          "diagnostics": {
+            "$ref": "#/components/schemas/V12MetricDiagnostics"
+          },
+          "dimension": {
+            "enum": [
+              "global",
+              "horizon",
+              "category",
+              "channel",
+              "volume"
+            ],
+            "title": "Dimension",
+            "type": "string"
+          },
+          "eligibility_coverage": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eligibility Coverage"
+          },
+          "eligible_rows": {
+            "maximum": 50000000.0,
+            "minimum": 0.0,
+            "title": "Eligible Rows",
+            "type": "integer"
+          },
+          "failed_reasons": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 32,
+            "title": "Failed Reasons",
+            "type": "array"
+          },
+          "fold": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Fold",
+            "type": "string"
+          },
+          "has_measurable_failures": {
+            "title": "Has Measurable Failures",
+            "type": "boolean"
+          },
+          "legacy_width_ratio_exceeded": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Legacy Width Ratio Exceeded"
+          },
+          "not_ready_reasons": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 32,
+            "title": "Not Ready Reasons",
+            "type": "array"
+          },
+          "perfect_median_baseline_tied": {
+            "title": "Perfect Median Baseline Tied",
+            "type": "boolean"
+          },
+          "protocol_version": {
+            "const": "forecast-quality-2.0.0",
+            "title": "Protocol Version",
+            "type": "string"
+          },
+          "relative_median_mae_change": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Relative Median Mae Change"
+          },
+          "retained_median_baseline": {
+            "title": "Retained Median Baseline",
+            "type": "boolean"
+          },
+          "role": {
+            "enum": [
+              "validation",
+              "development_holdout"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "scope": {
+            "const": "segment_component_not_campaign_qualification",
+            "title": "Scope",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "passed",
+              "failed",
+              "not_ready"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "total_rows": {
+            "maximum": 50000000.0,
+            "minimum": 0.0,
+            "title": "Total Rows",
+            "type": "integer"
+          },
+          "value": {
+            "maxLength": 256,
+            "minLength": 1,
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "fold",
+          "role",
+          "dimension",
+          "value",
+          "protocol_version",
+          "scope",
+          "retained_median_baseline",
+          "eligible_rows",
+          "total_rows",
+          "eligibility_coverage",
+          "candidate",
+          "baseline",
+          "relative_median_mae_change",
+          "perfect_median_baseline_tied",
+          "diagnostics",
+          "legacy_width_ratio_exceeded",
+          "status",
+          "has_measurable_failures",
+          "not_ready_reasons",
+          "failed_reasons",
+          "calibration_evidence"
+        ],
+        "title": "V12EvaluationSegment",
+        "type": "object"
+      },
+      "V12EvaluationSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_code_commit": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Ai Code Commit",
+            "type": "string"
+          },
+          "campaign_id": {
+            "pattern": "^functional-v12-campaign-sha256-[0-9a-f]{64}$",
+            "title": "Campaign Id",
+            "type": "string"
+          },
+          "code_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Code Sha256",
+            "type": "string"
+          },
+          "cohort_lineage": {
+            "items": {
+              "$ref": "#/components/schemas/V12CohortLineage"
+            },
+            "maxItems": 64,
+            "minItems": 1,
+            "title": "Cohort Lineage",
+            "type": "array"
+          },
+          "dependency_lock_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Dependency Lock Sha256",
+            "type": "string"
+          },
+          "evaluation_id": {
+            "pattern": "^v12-evaluation-sha256-[0-9a-f]{64}$",
+            "title": "Evaluation Id",
+            "type": "string"
+          },
+          "evidence_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Evidence Sha256",
+            "type": "string"
+          },
+          "execution_failure_recorded": {
+            "title": "Execution Failure Recorded",
+            "type": "boolean"
+          },
+          "export_manifest": {
+            "$ref": "#/components/schemas/V12ArtifactReceipt"
+          },
+          "exported_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Exported At",
+            "type": "string"
+          },
+          "failed_reasons": {
+            "patternProperties": {
+              "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+                "maximum": 50000000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              }
+            },
+            "title": "Failed Reasons",
+            "type": "object"
+          },
+          "forecast_model_status": {
+            "enum": [
+              "ready",
+              "not_ready"
+            ],
+            "title": "Forecast Model Status",
+            "type": "string"
+          },
+          "freeze_id": {
+            "pattern": "^functional-v12-freeze-sha256-[0-9a-f]{64}$",
+            "title": "Freeze Id",
+            "type": "string"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/EvaluationFreshness"
+          },
+          "input_complete": {
+            "title": "Input Complete",
+            "type": "boolean"
+          },
+          "membership_rows": {
+            "maximum": 50000000.0,
+            "minimum": 0.0,
+            "title": "Membership Rows",
+            "type": "integer"
+          },
+          "membership_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Membership Sha256",
+            "type": "string"
+          },
+          "metric_verification": {
+            "const": "pinned_original_export_and_replay_verified",
+            "default": "pinned_original_export_and_replay_verified",
+            "title": "Metric Verification",
+            "type": "string"
+          },
+          "metrics_report": {
+            "$ref": "#/components/schemas/V12ArtifactReceipt"
+          },
+          "model_name": {
+            "enum": [
+              "retailops-demand-forecast-v12",
+              "retailops-demand-forecast-v12-mechanics"
+            ],
+            "title": "Model Name",
+            "type": "string"
+          },
+          "original_export_run_id": {
+            "pattern": "^functional-v12-run-sha256-[0-9a-f]{64}$",
+            "title": "Original Export Run Id",
+            "type": "string"
+          },
+          "portfolio_final_test": {
+            "const": "not_included_not_opened",
+            "default": "not_included_not_opened",
+            "title": "Portfolio Final Test",
+            "type": "string"
+          },
+          "quality_status": {
+            "enum": [
+              "passed",
+              "not_ready"
+            ],
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "quality_verification": {
+            "const": "recorded_status_not_requalified",
+            "default": "recorded_status_not_requalified",
+            "title": "Quality Verification",
+            "type": "string"
+          },
+          "registered_model_version": {
+            "title": "Registered Model Version",
+            "type": "null"
+          },
+          "replay_id": {
+            "pattern": "^functional-v12-replay-sha256-[0-9a-f]{64}$",
+            "title": "Replay Id",
+            "type": "string"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/EvaluationScope"
+          },
+          "segment_counts": {
+            "additionalProperties": {
+              "maximum": 50000000.0,
+              "minimum": 0.0,
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "passed",
+                "failed",
+                "not_ready"
+              ]
+            },
+            "title": "Segment Counts",
+            "type": "object"
+          },
+          "serving_eligible": {
+            "const": false,
+            "default": false,
+            "title": "Serving Eligible",
+            "type": "boolean"
+          },
+          "source_code_commit": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Source Code Commit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "model_name",
+          "original_export_run_id",
+          "campaign_id",
+          "freeze_id",
+          "replay_id",
+          "exported_at",
+          "scope",
+          "cohort_lineage",
+          "membership_rows",
+          "membership_sha256",
+          "source_code_commit",
+          "ai_code_commit",
+          "code_sha256",
+          "dependency_lock_sha256",
+          "export_manifest",
+          "metrics_report",
+          "quality_status",
+          "forecast_model_status",
+          "input_complete",
+          "execution_failure_recorded",
+          "segment_counts",
+          "failed_reasons",
+          "evaluation_id",
+          "evidence_sha256",
+          "freshness"
+        ],
+        "title": "V12EvaluationSummary",
+        "type": "object"
+      },
       "V12Forecast": {
         "additionalProperties": false,
         "properties": {
@@ -4091,6 +5072,40 @@
         "title": "V12ForecastPage",
         "type": "object"
       },
+      "V12FunctionalMetrics": {
+        "additionalProperties": false,
+        "properties": {
+          "actual_sum": {
+            "minimum": 0.0,
+            "title": "Actual Sum",
+            "type": "integer"
+          },
+          "interval": {
+            "$ref": "#/components/schemas/V12IntervalMetrics"
+          },
+          "mean": {
+            "$ref": "#/components/schemas/V12PointMetrics"
+          },
+          "median": {
+            "$ref": "#/components/schemas/V12PointMetrics"
+          },
+          "rows": {
+            "maximum": 50000000.0,
+            "minimum": 0.0,
+            "title": "Rows",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "rows",
+          "actual_sum",
+          "median",
+          "mean",
+          "interval"
+        ],
+        "title": "V12FunctionalMetrics",
+        "type": "object"
+      },
       "V12Interval": {
         "additionalProperties": false,
         "properties": {
@@ -4110,6 +5125,73 @@
           "upper"
         ],
         "title": "V12Interval",
+        "type": "object"
+      },
+      "V12IntervalMetrics": {
+        "additionalProperties": false,
+        "properties": {
+          "complete": {
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "coverage": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Coverage"
+          },
+          "mean_score": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean Score"
+          },
+          "mean_width": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean Width"
+          },
+          "width_to_mean_actual": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width To Mean Actual"
+          }
+        },
+        "required": [
+          "complete",
+          "mean_width",
+          "width_to_mean_actual",
+          "mean_score",
+          "coverage"
+        ],
+        "title": "V12IntervalMetrics",
         "type": "object"
       },
       "V12JobAttempts": {
@@ -4379,6 +5461,179 @@
         "title": "V12JobRun",
         "type": "object"
       },
+      "V12MetricDiagnostics": {
+        "additionalProperties": false,
+        "properties": {
+          "mean_mae_above_legacy_regression_limit": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean Mae Above Legacy Regression Limit"
+          },
+          "median_bias_above_legacy_mean_limit": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Bias Above Legacy Mean Limit"
+          }
+        },
+        "required": [
+          "mean_mae_above_legacy_regression_limit",
+          "median_bias_above_legacy_mean_limit"
+        ],
+        "title": "V12MetricDiagnostics",
+        "type": "object"
+      },
+      "V12ModelPage": {
+        "additionalProperties": false,
+        "properties": {
+          "data_status": {
+            "enum": [
+              "available",
+              "no_data"
+            ],
+            "title": "Data Status",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/V12CatalogModel"
+            },
+            "maxItems": 200,
+            "title": "Items",
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/CatalogPagination"
+          },
+          "version": {
+            "const": "forecast-v12-model-page-1.0.0",
+            "default": "forecast-v12-model-page-1.0.0",
+            "title": "Version",
+            "type": "string"
+          },
+          "view_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "View Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items",
+          "pagination",
+          "generated_at",
+          "data_status",
+          "view_sha256"
+        ],
+        "title": "V12ModelPage",
+        "type": "object"
+      },
+      "V12PointMetrics": {
+        "additionalProperties": false,
+        "properties": {
+          "bias_units": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bias Units"
+          },
+          "complete": {
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "mae": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mae"
+          },
+          "mse": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mse"
+          },
+          "normalized_bias": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Normalized Bias"
+          },
+          "wape": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wape"
+          },
+          "zero_actual_excess_units": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Zero Actual Excess Units"
+          }
+        },
+        "required": [
+          "complete",
+          "mae",
+          "mse",
+          "bias_units",
+          "normalized_bias",
+          "wape",
+          "zero_actual_excess_units"
+        ],
+        "title": "V12PointMetrics",
+        "type": "object"
+      },
       "V12Prediction": {
         "additionalProperties": false,
         "properties": {
@@ -4462,6 +5717,56 @@
           "recipe_id"
         ],
         "title": "V12PredictionMetadata",
+        "type": "object"
+      },
+      "V12VersionPage": {
+        "additionalProperties": false,
+        "properties": {
+          "data_status": {
+            "enum": [
+              "available",
+              "no_data"
+            ],
+            "title": "Data Status",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/V12CatalogVersion"
+            },
+            "maxItems": 200,
+            "title": "Items",
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/CatalogPagination"
+          },
+          "version": {
+            "const": "forecast-v12-version-page-1.0.0",
+            "default": "forecast-v12-version-page-1.0.0",
+            "title": "Version",
+            "type": "string"
+          },
+          "view_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "View Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items",
+          "pagination",
+          "generated_at",
+          "data_status",
+          "view_sha256"
+        ],
+        "title": "V12VersionPage",
         "type": "object"
       },
       "VersionPage": {
@@ -5023,6 +6328,475 @@
           }
         ],
         "summary": "Evaluations"
+      }
+    },
+    "/api/v1/evaluations/v12": {
+      "get": {
+        "operationId": "reports_api_v1_evaluations_v12_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "selling_location_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selling Location Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "store",
+                    "online"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          },
+          {
+            "in": "query",
+            "name": "quality_status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "passed",
+                    "not_ready"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Quality Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 256,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "view_sha256",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "View Sha256"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V12EvaluationPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Reports"
+      }
+    },
+    "/api/v1/evaluations/v12/{evaluation_id}": {
+      "get": {
+        "operationId": "report_api_v1_evaluations_v12__evaluation_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "evaluation_id",
+            "required": true,
+            "schema": {
+              "pattern": "^v12-evaluation-sha256-[0-9a-f]{64}$",
+              "title": "Evaluation Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "selling_location_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selling Location Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "store",
+                    "online"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V12EvaluationDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Report"
       }
     },
     "/api/v1/evaluations/{evaluation_id}": {
@@ -7661,6 +9435,705 @@
           }
         ],
         "summary": "Models"
+      }
+    },
+    "/api/v1/models/v12": {
+      "get": {
+        "operationId": "models_api_v1_models_v12_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "selling_location_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selling Location Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "store",
+                    "online"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 1000,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "view_sha256",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "View Sha256"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V12ModelPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Models"
+      }
+    },
+    "/api/v1/models/v12/{model_name}": {
+      "get": {
+        "operationId": "model_api_v1_models_v12__model_name__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_name",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "title": "Model Name",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "selling_location_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selling Location Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "store",
+                    "online"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V12CatalogModel"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Model"
+      }
+    },
+    "/api/v1/models/v12/{model_name}/versions": {
+      "get": {
+        "operationId": "versions_api_v1_models_v12__model_name__versions_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_name",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "title": "Model Name",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "selling_location_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selling Location Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "store",
+                    "online"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 1000,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "view_sha256",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "View Sha256"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V12VersionPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Versions"
       }
     },
     "/api/v1/models/{model_name}": {

@@ -1,0 +1,260 @@
+{
+  "active_ai04_campaign_read": false,
+  "actual_http_boundary": "Real ASGI application using TestClient with real PostgreSQL backends; no separately deployed TCP HTTP server accepted.",
+  "actual_service_checks": [
+    "real_http_approval_import_and_idempotent_repeat_preserve_original_campaign_evidence",
+    "postgres_advisory_lock_excludes_concurrent_operator",
+    "version_cannot_be_enrolled_under_a_different_registration_decision",
+    "real_version_registration_and_atomic_database_release_head",
+    "real_mlflow_lost_create_response_recovers_one_version_without_post_retry",
+    "partial_alias_promotion_recovers_with_previous_head_preserved_until_completion",
+    "reject_and_exact_previous_release_rollback_and_old_replay",
+    "deferred_database_guard_rejects_head_commit_without_completed_decision",
+    "post_head_crash_rolls_back_release_head_and_completion_then_recovers_atomically",
+    "real_sql_immutable_history_and_head_deletion_or_old_pointer_rejected",
+    "old_database_revision_refused",
+    "v12_queue_atomic_idempotent_admission_with_registered_source_and_approved_release",
+    "v12_job_asgi_202_location_sql_idempotency_conflict_scope_and_private_projection",
+    "partial_v12_batch_has_no_receipt_then_retry_keeps_old_release_and_commits_all_560_functional_rows",
+    "cancel_and_expired_lease_recovery_fence_old_workers_and_preserve_pins",
+    "real_v12_sql_rejects_pin_mutations_terminal_shortcuts_and_history_deletion",
+    "v12_public_job_output_reference_requires_verified_complete_publication",
+    "v12_publication_registry_disagreement_and_post_insert_crash_leave_no_partial_output",
+    "v12_atomic_idempotent_publication_preserves_560_exact_functional_rows_and_old_model_pin",
+    "v12_sql_refuses_partial_publication_and_output_mutation_or_deletion",
+    "v12_scoped_authenticated_asgi_http_pagination_and_pre_fetch_byte_budget",
+    "v12_read_rejects_rehashed_functional_corruption_outside_visible_scope_and_page",
+    "v12_mechanics_outputs_are_invisible_to_default_production_reader",
+    "v12_catalog_only_includes_verified_complete_scoped_publication_and_old_immutable_model_pin",
+    "v12_catalog_authenticated_http_rejects_rehashed_corruption_outside_visible_scope",
+    "v12_catalog_and_evaluations_never_attest_live_aliases_or_deployment",
+    "v12_evaluation_scope_includes_excluded_product_and_is_filtered_before_counts_and_byte_budget",
+    "v12_evaluation_immutable_idempotent_sql_and_authenticated_read_only_http",
+    "v12_evaluation_preserves_original_failed_not_ready_nullable_mean_median_interval_and_lineage",
+    "v12_evaluation_rehashed_metric_corruption_outside_first_page_is_rejected_against_original_receipt",
+    "v12_catalog_and_evaluation_mechanics_hidden_from_default_production_namespace",
+    "postgres_and_mlflow_restart_preserves_bound_release_aliases_and_completed_history",
+    "v12_queue_receipt_pins_attempt_history_and_cancellation_survive_service_restart",
+    "v12_published_functionals_scoped_view_and_immutable_receipt_survive_postgresql_mlflow_restart",
+    "v12_catalog_original_evaluations_and_scoped_views_survive_restart"
+  ],
+  "ai04_source_contract_read_only": true,
+  "ai04_worktree_modified": false,
+  "ai_test_database_backend": "postgresql",
+  "base_commit": "ad0182f9a505d667500dc3ad3bd0c23e64545094",
+  "checked_at": "2026-10-01T14:00:11.575594+00:00",
+  "checks": {
+    "actionlint": "passed",
+    "documentation_links": "passed",
+    "git_diff_check": "passed",
+    "mypy": "passed_276_sources",
+    "new_metadata_tests_included_in_regression": 18,
+    "new_openapi_paths": 5,
+    "real_services_after_restart": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 4
+    },
+    "real_services_before_restart": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 4
+    },
+    "regression": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 295
+    },
+    "ruff": "passed",
+    "ruff_format": "passed_450_files",
+    "schema_snapshots": "passed",
+    "staged_secret_scan": "passed_no_leaks",
+    "unchanged_existing_openapi_paths": 20,
+    "unchanged_existing_schema_definitions": 64
+  },
+  "computed_fixture_rows": 560,
+  "docker_builds": 0,
+  "files": {
+    ".github/workflows/required-ci.yml": {
+      "sha256": "e5efa7c61010947efff60ac7a826bd5ecd1206395100b3155689e61540c51507",
+      "size_bytes": 2647
+    },
+    "Makefile": {
+      "sha256": "01554e4ccc0517b02186ddd58501f4564498624a52a619cd6e2d5a819105c1ba",
+      "size_bytes": 5182
+    },
+    "contracts/access/v1/access.openapi.json": {
+      "sha256": "7bdddc1a5ed0c951837d037332fc677aa3a19080e96b2248eacfe3986e9310dc",
+      "size_bytes": 294362
+    },
+    "contracts/model_lifecycle/v12/catalog-model.schema.json": {
+      "sha256": "a76cabea7bfc34932f40b09171946fd70a52c9d399d3377dc771f10ec655e8f1",
+      "size_bytes": 2095
+    },
+    "contracts/model_lifecycle/v12/catalog-version.schema.json": {
+      "sha256": "1a8412b2f5247bb6510b19cde37e0059e761327dab9edc3ab0097073d5c50997",
+      "size_bytes": 3756
+    },
+    "contracts/model_lifecycle/v12/evaluation-detail.schema.json": {
+      "sha256": "908875c92d08033ab4a5b506b4cae7d83ad737b9dde3a00735b3120c65fe5334",
+      "size_bytes": 11348
+    },
+    "contracts/model_lifecycle/v12/evaluation-evidence.schema.json": {
+      "sha256": "58ba65d798b28094dcc44055c777921645ca57de30b4abf718adb41cdd4fe708",
+      "size_bytes": 5783
+    },
+    "contracts/model_lifecycle/v12/evaluation-page.schema.json": {
+      "sha256": "bd38e7b10a0cd34041f0de8c74f7c3008c69d7c725887a1cfcfead765d4421a6",
+      "size_bytes": 7245
+    },
+    "contracts/model_lifecycle/v12/evaluation-query.schema.json": {
+      "sha256": "b517bcd65858998bc50ddfee485a235a94fbed5f69bf1a074e3e5b7da15f9394",
+      "size_bytes": 930
+    },
+    "contracts/model_lifecycle/v12/model-page.schema.json": {
+      "sha256": "b30b0ec1fe8bf4b7636ae5de26b63b4c2110b9fec8f3479f2390102c876f5f46",
+      "size_bytes": 3378
+    },
+    "contracts/model_lifecycle/v12/version-page.schema.json": {
+      "sha256": "a8ceace6f81c7a0a3d7127cd18e6ec77dd9dce418a3285f0b3d10b087b3e043f",
+      "size_bytes": 5049
+    },
+    "docs/README.md": {
+      "sha256": "bcef6be8ee4b603132c2c69ad366d638a3b7f2ceeec19afbcadbb313b6efdc6d",
+      "size_bytes": 10288
+    },
+    "docs/STATUS.md": {
+      "sha256": "344de832106125b57fa7c00d9b4ba859022fbe3fba295af5d6144915c5329590",
+      "size_bytes": 23954
+    },
+    "docs/forecast-v12-jobs-api.md": {
+      "sha256": "084f8a1a4516a2f8f94cc51d148e77b6f02925e89f7afa645d1d8d0787c3914c",
+      "size_bytes": 5308
+    },
+    "docs/forecast-v12-metadata.md": {
+      "sha256": "077e741c1708ed583778bb063dc82ae493acc7083083f44c64f789ec184ea3ae",
+      "size_bytes": 6476
+    },
+    "docs/forecast-v12-publication.md": {
+      "sha256": "03230825a186d5f77a1fd9a8d3a837a3817041fe78e58ebb3218b33c05579a29",
+      "size_bytes": 6981
+    },
+    "docs/forecast-v12-worker.md": {
+      "sha256": "b62e6987aee720e24497e7a7a59daf8d1860ad4d96ef7ddc0c7f99e81e015710",
+      "size_bytes": 8160
+    },
+    "reports/ai05-v12-metadata-acceptance-tests.xml": {
+      "sha256": "2b47eb4abd2e55c38b870fe6eba07de90f0a156b02591658c4970482b6da2878",
+      "size_bytes": 751
+    },
+    "reports/ai05-v12-metadata-acceptance.json": {
+      "sha256": "1ca1e67c76206e29c487ee22b6b57f6ba8dba925f0c70fc8c3f961021a6398fa",
+      "size_bytes": 5806
+    },
+    "reports/ai05-v12-metadata-regression-tests.xml": {
+      "sha256": "39a795065e42cc20f96faef47ea4588a7298fa84a349958d7a736f2d0dfec4db",
+      "size_bytes": 38653
+    },
+    "reports/ai05-v12-metadata-restart-tests.xml": {
+      "sha256": "80871573535d5d75163201c87a942d614ea95a6978fcf3e1b44c4cc49517fcdb",
+      "size_bytes": 749
+    },
+    "scripts/check_v12_lifecycle.py": {
+      "sha256": "cc51bb3e050be757cb7707c99338c5ea7471471091e349080da6d74367675388",
+      "size_bytes": 12749
+    },
+    "scripts/check_v12_metadata.py": {
+      "sha256": "da66d0c3b7271155f567ca9162896044eb983a88aa83e2eb476579b43ee9e99f",
+      "size_bytes": 199
+    },
+    "scripts/register_v12_evaluation.py": {
+      "sha256": "3ad356a493af7ede88837ad2cd670ede01e950bc646bf1706174865966008228",
+      "size_bytes": 2101
+    },
+    "scripts/update_v12_lifecycle_contracts.py": {
+      "sha256": "228e3f4fcee382673a9bb8ee0b63329733a939449a4877ae28b171f50e15b1cf",
+      "size_bytes": 1949
+    },
+    "src/retailops_ai/adapters/database.py": {
+      "sha256": "909375565de6964fe45fef02c53aeb5d091b0867730f14b867f3607a05bf4c0a",
+      "size_bytes": 1308
+    },
+    "src/retailops_ai/api/access.py": {
+      "sha256": "638f93f0178f0f98835ecb6918837128ddad28ee029ef27343e018a6d9641949",
+      "size_bytes": 8147
+    },
+    "src/retailops_ai/api/app.py": {
+      "sha256": "68547f80d369e6bc53aa291a2cb742be5616d9f1908088939165254778042969",
+      "size_bytes": 11540
+    },
+    "src/retailops_ai/api/v12_metadata.py": {
+      "sha256": "05bc393165351ffaabbeed600e58bbd9e4d7c910e9b53a7c9fb9931b6223c3a9",
+      "size_bytes": 5937
+    },
+    "src/retailops_ai/migrations/versions/0018_v12_evaluations.py": {
+      "sha256": "b80b250412e294c727b9291807e2fbd3dc03db909ec504c1e68590db4789d672",
+      "size_bytes": 2148
+    },
+    "src/retailops_ai/model_lifecycle/v12_catalog.py": {
+      "sha256": "383bd796410ac22d10146fcf3d5ed6305832bb1e99a7443229a70d426507deef",
+      "size_bytes": 13480
+    },
+    "src/retailops_ai/model_lifecycle/v12_evaluation_importer.py": {
+      "sha256": "aafc219567202a9a9397ff07657ca7e875904a2cd2f303c76a8caaf64e3b1264",
+      "size_bytes": 7427
+    },
+    "src/retailops_ai/model_lifecycle/v12_evaluation_store.py": {
+      "sha256": "5a433ee959f8e2b5adab4a0091e21d9d27fb84027d3e38b5c352e2cff742cad8",
+      "size_bytes": 10072
+    },
+    "src/retailops_ai/model_lifecycle/v12_metadata_contracts.py": {
+      "sha256": "d0725ff75fcaa71734ee8c7c74471c79bad88a5135a21821f52fcc4368a8f40b",
+      "size_bytes": 10898
+    },
+    "tests/check_v12_metadata.py": {
+      "sha256": "08608c1790dca4d59097503a732369d999267682a57b7bec4b815793b4cbbf14",
+      "size_bytes": 15119
+    },
+    "tests/test_access.py": {
+      "sha256": "b38ab043f0bad050f7428be47ad6bd5736b69937f2479eaa99836fdd9b54be1c",
+      "size_bytes": 21257
+    },
+    "tests/test_v12_metadata.py": {
+      "sha256": "818ac5812226c05615afb33532d430ac98346be338c7bd0902ddb095559ce382",
+      "size_bytes": 10646
+    },
+    "tests/v12_evaluation_fixture.py": {
+      "sha256": "d4e1cd31f6004e4e8235763d28a807d9b5a868ea6a8d83ed4a7e999b134ede8f",
+      "size_bytes": 5459
+    }
+  },
+  "fixture_boundary": "Original export verifier, source reconstruction, predictor and approval review are explicit small doubles. Two invented two-product evaluations include an excluded product. Real PostgreSQL AI, MLflow HTTP with SQLite test metadata, ASGI TestClient, database constraints and service restart are exercised. No real export/model qualified.",
+  "image_pulls": 0,
+  "migration_revision": "0018_v12_evaluations",
+  "mlflow_production_postgresql_metadata_accepted": false,
+  "mlflow_test_metadata_backend": "sqlite",
+  "owned_containers_and_anonymous_volumes_removed": true,
+  "persistent_source_stack_changed": false,
+  "persistent_stack_migrated": false,
+  "published_fixture_forecast_outputs": 1,
+  "published_fixture_rows": 560,
+  "published_forecast_outputs": 0,
+  "purpose": "Read-only scoped catalog plus immutable original full-campaign evaluation reports, without requalification or serving promotion.",
+  "real_v12_evaluations_recorded": 0,
+  "recorded_fixture_evaluations": 2,
+  "registered_fixture_versions": 6,
+  "remaining": [
+    "combined_v12_postgresql_mlflow_artifacts_backup_and_restore",
+    "real_final_ai04_export_and_inference_source",
+    "real_v12_model_qualification_and_operator_review",
+    "real_batch_publication_and_serving_measurements",
+    "remote_required_ci",
+    "explicit_persistent_environment_migration"
+  ],
+  "required_ci": "prepared_locally_remote_result_not_accepted",
+  "status": "local_mechanics_accepted_real_handoff_pending",
+  "version": "ai05-v12-metadata-evidence-1.0.0"
+}

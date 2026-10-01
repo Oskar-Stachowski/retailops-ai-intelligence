@@ -11,6 +11,16 @@ from retailops_ai.model_lifecycle.v12_lifecycle_contracts import (
     V12ModelRelease,
     V12RegistrySource,
 )
+from retailops_ai.model_lifecycle.v12_metadata_contracts import (
+    V12CatalogModel,
+    V12CatalogVersion,
+    V12EvaluationDetail,
+    V12EvaluationEvidence,
+    V12EvaluationPage,
+    V12EvaluationQuery,
+    V12ModelPage,
+    V12VersionPage,
+)
 
 ROOT = Path(__file__).resolve().parents[1] / "contracts/model_lifecycle/v12"
 SCHEMAS: dict[str, type[Contract]] = {
@@ -18,6 +28,14 @@ SCHEMAS: dict[str, type[Contract]] = {
     "binding": V12Binding,
     "request": V12LifecycleRequest,
     "release": V12ModelRelease,
+    "catalog-model": V12CatalogModel,
+    "catalog-version": V12CatalogVersion,
+    "model-page": V12ModelPage,
+    "version-page": V12VersionPage,
+    "evaluation-evidence": V12EvaluationEvidence,
+    "evaluation-query": V12EvaluationQuery,
+    "evaluation-page": V12EvaluationPage,
+    "evaluation-detail": V12EvaluationDetail,
 }
 
 
