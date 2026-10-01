@@ -7,9 +7,11 @@ import signal
 import subprocess
 import tempfile
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Literal, overload
 
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.forecast_jobs.inputs import PreparedInputs
@@ -24,17 +26,24 @@ from retailops_ai.forecast_jobs.v12_contracts import (
     V12RuntimePin,
     V12RuntimeResult,
 )
+from retailops_ai.forecast_jobs.v12_inference_contracts import V12InferenceResult
 from retailops_ai.forecasting.features_contract import InputRow
 from retailops_ai.forecasting.manifest_contract import FeaturePolicy
 from retailops_ai.model_lifecycle.v12_evidence import V12Evidence, load_evidence
+from retailops_ai.model_lifecycle.v12_release_contracts import V12InferenceContext, V12SourcePolicy
 from retailops_ai.source_snapshot.files import checked_directory, decode_json, file_hash, read_json
 
 
-def prediction_key(pin: V12RuntimePin, row: InputRow) -> str:
+def prediction_key(
+    pin: V12RuntimePin,
+    row: InputRow,
+    *,
+    role: Literal["development_holdout", "inference"] = "development_holdout",
+) -> str:
     return canonical_bytes(
         [
             pin.fold.name,
-            "development_holdout",
+            role,
             row.forecast_origin.isoformat(),
             row.product_id,
             row.selling_location_id,
@@ -44,7 +53,9 @@ def prediction_key(pin: V12RuntimePin, row: InputRow) -> str:
     ).decode()
 
 
-def validate_inputs(pin: V12RuntimePin, inputs: PreparedInputs) -> None:
+def validate_inputs(
+    pin: V12RuntimePin, inputs: PreparedInputs, *, source_policy: V12SourcePolicy | None = None
+) -> None:
     parent = inputs.feature_manifest.descriptor.parent
     if (
         len(inputs.rows) > MAX_ROWS
@@ -53,14 +64,27 @@ def validate_inputs(pin: V12RuntimePin, inputs: PreparedInputs) -> None:
         or inputs.feature_manifest.descriptor.code.dependency_lock_sha256
         != pin.dependency_lock_sha256
         or inputs.feature_manifest.descriptor.resolved_policy != FeaturePolicy()
+        or (
+            source_policy is not None
+            and (
+                pin.forecast_model_status != "ready"
+                or inputs.schema_version != "1.1"
+                or inputs.source_freshness is None
+                or inputs.feature_manifest.feature_set_id != source_policy.feature_set_id
+                or parent.curated_descriptor_sha256 != source_policy.curated_descriptor_sha256
+            )
+        )
     ):
         raise ValueError("v12_runtime_input_parent_policy_or_budget")
     if (
         inputs.as_of_time <= pin.fold.selection_cutoff
         or inputs.as_of_time > datetime.now(UTC)
-        or not pin.fold.development_holdout.start
-        <= inputs.as_of_time.date()
-        <= pin.fold.development_holdout.end
+        or (
+            source_policy is None
+            and not pin.fold.development_holdout.start
+            <= inputs.as_of_time.date()
+            <= pin.fold.development_holdout.end
+        )
     ):
         raise ValueError("v12_runtime_origin_outside_bound_holdout")
 
@@ -159,7 +183,33 @@ def load_v12(
     return LoadedV12Forecast(evidence.root, python, pin)
 
 
-def _execute(loaded: LoadedV12Forecast, request: V12Execution) -> V12RuntimeResult:
+@overload
+def _execute(
+    loaded: LoadedV12Forecast,
+    request: V12Execution,
+    *,
+    inference: None = None,
+    tick: Callable[[], None] | None = None,
+) -> V12RuntimeResult: ...
+
+
+@overload
+def _execute(
+    loaded: LoadedV12Forecast,
+    request: V12Execution,
+    *,
+    inference: V12InferenceContext,
+    tick: Callable[[], None] | None = None,
+) -> V12InferenceResult: ...
+
+
+def _execute(
+    loaded: LoadedV12Forecast,
+    request: V12Execution,
+    *,
+    inference: V12InferenceContext | None = None,
+    tick: Callable[[], None] | None = None,
+) -> V12RuntimeResult | V12InferenceResult:
     root = checked_directory(loaded.root)
     if not loaded.python.is_absolute() or not loaded.python.is_file():
         raise ExecutionError("v12_runtime_interpreter_required")
@@ -170,7 +220,10 @@ def _execute(loaded: LoadedV12Forecast, request: V12Execution) -> V12RuntimeResu
     ):
         if file_hash(root, name) != (receipt.size_bytes, receipt.sha256):
             raise ExecutionError("v12_runtime_loaded_artifact_changed")
-    payload = canonical_bytes({"root": str(root), **request.model_dump(mode="json")})
+    document = {"root": str(root), **request.model_dump(mode="json")}
+    if inference is not None:
+        document["inference"] = inference.model_dump(mode="json")
+    payload = canonical_bytes(document)
     if len(payload) > MAX_REQUEST_BYTES:
         raise ExecutionError("v12_runtime_request_limit")
     executor = Path(__file__).with_name("v12_executor.py")
@@ -198,6 +251,8 @@ def _execute(loaded: LoadedV12Forecast, request: V12Execution) -> V12RuntimeResu
             )
             try:
                 while child.poll() is None:
+                    if tick is not None:
+                        tick()
                     if time.monotonic() - started > request.limits.wall_seconds:
                         raise ExecutionError("v12_runtime_wall_limit")
                     if tree_rss(child.pid) > request.limits.rss_bytes:
@@ -218,17 +273,27 @@ def _execute(loaded: LoadedV12Forecast, request: V12Execution) -> V12RuntimeResu
                     work / "stderr"
                 ).stat().st_size > MAX_STDERR_BYTES:
                     raise ExecutionError("v12_runtime_output_limit")
-                result = V12RuntimeResult.model_validate_json(
-                    canonical_bytes(decode_json((work / "stdout").read_bytes()))
+                raw = canonical_bytes(decode_json((work / "stdout").read_bytes()))
+                result: V12RuntimeResult | V12InferenceResult
+                if inference is None:
+                    result = V12RuntimeResult.model_validate_json(raw)
+                else:
+                    result = V12InferenceResult.model_validate_json(raw)
+                    if result.inference != inference:
+                        raise ExecutionError("v12_inference_result_approval_binding")
+                role: Literal["development_holdout", "inference"] = (
+                    "inference" if inference is not None else "development_holdout"
                 )
                 if (
                     result.pin != request.pin
                     or result.profile_id != request.inputs.profile_id
                     or [p.key for p in result.predictions]
-                    != [prediction_key(request.pin, row) for row in request.inputs.rows]
+                    != [prediction_key(request.pin, row, role=role) for row in request.inputs.rows]
                     or result.peak_rss_bytes > request.limits.rss_bytes
                 ):
                     raise ExecutionError("v12_runtime_result_pin_or_count")
+                if tick is not None:
+                    tick()
                 for name, receipt in (
                     ("run_manifest.json", request.pin.manifest),
                     ("signature.json", request.pin.signature),

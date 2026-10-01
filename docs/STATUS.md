@@ -12,8 +12,16 @@ wiążą run/cohort/fold/recipe oraz źródło i środowisko. Oryginalny predict
 działa w izolowanym podprocesie; bazowe prognozy pochodzą z historii as-of,
 wynik zachowuje medianę/średnią/przedział. Testy obejmują osobne fixtures;
 próba przypiętego wheel dała 14 wyników identycznych z oryginalnym predictorem.
-Końcowy eksport, rzeczywiste wejście, kontrakt inference/release, rejestracja,
-promocja, worker/publikacja/API v12 i pełny odbiór serving pozostają dalszą pracą.
+Końcowy eksport, rzeczywiste wejście i pełny odbiór serving pozostają dalszą pracą.
+
+**AI 05 — inference i prywatne dopuszczenie v12:** [kwalifikacja i przegląd](forecast-v12-release.md)
+dodają jawny kontrakt inference poza oknem oceny, weryfikację feature/curated
+parents, powtarzalną próbę prognoz i decyzję uwierzytelnionego operatora z 10
+raportami. Wersja, źródło, limity i ważność są przypięte; brak jakości, podmiana
+pakietu albo utrata lease powodują odmowę. Rzeczywisty algorytm dał 14 prognoz
+identycznych z oryginałem na osobnej fixture. Nie dopuszczono rzeczywistego
+modelu ani nie zmieniono aliasów MLflow. Lifecycle v12 w MLflow/DB,
+worker/publikacja/API v12 i końcowy eksport nadal czekają na osobny odbiór.
 
 Aktualizacja: **2026-09-30**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,

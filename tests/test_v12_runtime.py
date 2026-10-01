@@ -401,10 +401,8 @@ def test_unsupported_hgb_recipe_is_refused_without_fallback(tmp_path, prepared_i
         )
 
 
-def test_installed_child_boundary_uses_explicit_v12_predictor_double(
-    loaded, prepared_input, tmp_path
-):
-    """Portable subprocess test; the real AI04 predictor is separately checked with its wheel."""
+def installed_double(tmp_path, loaded):
+    """Test-only installed predictor double, shared by offline/inference boundary tests."""
     environment = tmp_path / "operator-test-wheel"
     subprocess.run([sys.executable, "-m", "venv", "--without-pip", str(environment)], check=True)
     version = f"python{sys.version_info.major}.{sys.version_info.minor}"
@@ -447,6 +445,14 @@ def test_installed_child_boundary_uses_explicit_v12_predictor_double(
         "        return Forecast(base | {'mean':base['mean']+1}),Forecast(base),{'selected':None,'baseline':None,'mean_source':'unit_double','exact_reference_median':True,'exact_reference_interval':True,'recipe_id':self.recipe['recipe_id']}\n"
     )
     installed = runtime.LoadedV12Forecast(loaded.root, environment / "bin/python", loaded.pin)
+    return installed
+
+
+def test_installed_child_boundary_uses_explicit_v12_predictor_double(
+    loaded, prepared_input, tmp_path
+):
+    """Portable subprocess test; the real AI04 predictor is separately checked with its wheel."""
+    installed = installed_double(tmp_path, loaded)
     before = file_hash(loaded.root, loaded.pin.recipe_path)
     first = installed.predict(prepared_input)
     second = installed.predict(prepared_input)
@@ -455,4 +461,4 @@ def test_installed_child_boundary_uses_explicit_v12_predictor_double(
     assert first.predictions[0].candidate.mean == first.predictions[0].baseline.mean + 1
     assert first.model_refits == 0 and first.serving_eligible is False
     assert file_hash(loaded.root, loaded.pin.recipe_path) == before
-    assert not list(package.rglob("*.pyc"))
+    assert not list((tmp_path / "operator-test-wheel").rglob("*.pyc"))

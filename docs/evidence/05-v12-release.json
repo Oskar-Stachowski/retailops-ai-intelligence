@@ -1,0 +1,174 @@
+{
+  "activated_as_champion": false,
+  "active_ai04_worktree_modified": false,
+  "active_campaign_data_read": false,
+  "base_commit": "cfd457db53c38d146622e97607604221838fb515",
+  "checks": {
+    "documentation_links": "passed",
+    "explicit_pinned_native_wheel_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 2
+    },
+    "git_diff_check": "passed",
+    "legacy_forecast_job_schema_snapshots": "passed",
+    "mypy_repository": "passed_244_source_files",
+    "portable_regression_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 163
+    },
+    "ruff_format_repository": "passed_401_files",
+    "ruff_repository": "passed",
+    "staged_secret_scan": "passed_no_leaks",
+    "v12_schema_snapshots": "passed"
+  },
+  "docker_builds": 0,
+  "files": {
+    "Makefile": {
+      "sha256": "0b49219899c7921541e293312078fd67aabfc82fc657bb488f32f14d313499ed",
+      "size_bytes": 4547
+    },
+    "contracts/forecast/v12_inference/approval_request.schema.json": {
+      "sha256": "5ee9d7818a3c1517203c9f25a8d0e606c9a6c32db7caff604140dceefda89be2",
+      "size_bytes": 1267
+    },
+    "contracts/forecast/v12_inference/context.schema.json": {
+      "sha256": "482d96d4c1258085db2377f196f8a5563349bfe794c447d8d67f4774b4277e4e",
+      "size_bytes": 1901
+    },
+    "contracts/forecast/v12_inference/qualification.schema.json": {
+      "sha256": "fddb1d0c65d450bafaf54760c353324aa67d5a939044e5178479ef799b087227",
+      "size_bytes": 7767
+    },
+    "contracts/forecast/v12_inference/release.schema.json": {
+      "sha256": "a38925f5738af561f3800cc817ab689745d9c20164fdea765f4c562aaafb7edf",
+      "size_bytes": 10095
+    },
+    "contracts/forecast/v12_inference/result.schema.json": {
+      "sha256": "4b611d9bae68423ec9fce4195234cddab0878d347a76ca999d41e576398c3abd",
+      "size_bytes": 8959
+    },
+    "contracts/forecast/v12_inference/source_policy.schema.json": {
+      "sha256": "88d431ad969ac879785ea0cf2d401e4f5b23a364b2e04637db70aac7670e492f",
+      "size_bytes": 983
+    },
+    "docs/STATUS.md": {
+      "sha256": "fcea82fe2592b4f2dbe4047dacf0e6a96b4c52475f8a6f8048c91704dbf05cd4",
+      "size_bytes": 21007
+    },
+    "docs/forecast-v12-release.md": {
+      "sha256": "da241e59689ef126c209dc52e311455b95f089b2cdd7f57b52ba376889b54e58",
+      "size_bytes": 8606
+    },
+    "docs/forecast-v12-runtime.md": {
+      "sha256": "27b977ca547d9087e473e3d182d20e7f53906283bd543b521dce7fa377cffd39",
+      "size_bytes": 6064
+    },
+    "reports/ai05-v12-native-inference-smoke.json": {
+      "sha256": "1ce3a1d7d4ce6615a5825dfe32a74c078a451b3a28ed8c2003f297d957501ceb",
+      "size_bytes": 1183
+    },
+    "reports/ai05-v12-native-inference-tests.xml": {
+      "sha256": "4bcc176c031f3930f25f4eec866df7ff6c36a2a76c4d3bedda33db7da13faae0",
+      "size_bytes": 549
+    },
+    "reports/ai05-v12-release-regression-tests.xml": {
+      "sha256": "4ff69cce049f860a6058370339fdf21bca26dd59bc5866284569ec7fbb161a2c",
+      "size_bytes": 21981
+    },
+    "scripts/mlflow_v12_release.py": {
+      "sha256": "788af1cad83b8c8148fc6ee89cd4631304389951c23dd2b405216a109526552a",
+      "size_bytes": 4681
+    },
+    "scripts/update_v12_inference_contracts.py": {
+      "sha256": "5a85d3992d644e2c2acc681a68610b424a5affdd83cc02e8caa1a45d1b84e9d1",
+      "size_bytes": 1586
+    },
+    "src/retailops_ai/forecast_jobs/v12_executor.py": {
+      "sha256": "43ce89f02374752630d82eb9d098cc984c0bc995b3f827c761166c688b0240b0",
+      "size_bytes": 13630
+    },
+    "src/retailops_ai/forecast_jobs/v12_inference.py": {
+      "sha256": "350e41ed50ae06e3694691ef4442f58b0ca05f7006fc1d69b93b8d2b841991af",
+      "size_bytes": 4366
+    },
+    "src/retailops_ai/forecast_jobs/v12_inference_contracts.py": {
+      "sha256": "04028f6cb9e716caf9a63ba54fc0c15b355e186a57485510635e9de0af62c9ad",
+      "size_bytes": 1631
+    },
+    "src/retailops_ai/forecast_jobs/v12_runtime.py": {
+      "sha256": "e0c96076ac6969891939f53fcb367d4ee2f04a0db4c110eba0325f763e0962be",
+      "size_bytes": 12671
+    },
+    "src/retailops_ai/model_lifecycle/v12_release.py": {
+      "sha256": "20faada6dca23eb9748d537f4b809e12f9de0172c1ca8da7c1d80673a404de60",
+      "size_bytes": 13408
+    },
+    "src/retailops_ai/model_lifecycle/v12_release_contracts.py": {
+      "sha256": "98b9cba15b05b0581ba986c9b245592b02a56cc4b490de895c7b50ac08a090d7",
+      "size_bytes": 5621
+    },
+    "tests/check_v12_native.py": {
+      "sha256": "d024aca498d9ccb4d1a376e68a7363e10a4b187d49b10a82d9a990b18050c9bc",
+      "size_bytes": 13857
+    },
+    "tests/test_v12_inference.py": {
+      "sha256": "065722fd1e1e35ad7b14a39eaf131063d98c509b14f61d9e02ebcc040c646c8d",
+      "size_bytes": 26474
+    },
+    "tests/test_v12_runtime.py": {
+      "sha256": "e63729477445c22897cfa117bbc27303a9656f890289e2bac9e72a9c7eada990",
+      "size_bytes": 20365
+    }
+  },
+  "fixture_boundary": "Portable tests use explicit export/source/predictor/review doubles. Native tests use the actual pinned AI04 algorithm, tiny invented validation rows, and explicit full-export/source/review doubles. These never qualify the real campaign or source.",
+  "native_algorithm_smoke": {
+    "activated_as_champion": false,
+    "active_ai04_modified": false,
+    "active_campaign_read": false,
+    "code_sha256": "1961a96c8a1bbdfe7b4259f24b3dcb2a20def08723d5ef7000c40ed5f68a44fe",
+    "cold_load_seconds": 0.3372926249867305,
+    "compute_seconds": 0.012431750015821308,
+    "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "fixture_fitting": "small_independent_invented_validation_rows_only",
+    "forecast_rows": 14,
+    "full_run_verifier": "explicit_transport_double_not_real_quality_evidence",
+    "identical_repeat": true,
+    "input_provenance": "explicit_source_reconstruction_double_not_real_source_acceptance",
+    "installed_ai04_package": "/private/tmp/retailops-ai04-stage-b-ci/.venv/lib/python3.11/site-packages/retailops_ai/__init__.py",
+    "model_refits": 0,
+    "original_predictor_match": true,
+    "outside_development_holdout": true,
+    "peak_rss_bytes": 82526208,
+    "predictions_sha256": "99c3da6725e4b7a6d6e4f3101d3c10ce6bbecb5ac4cc6d2d8fab288cd389c683",
+    "published_forecast_outputs": 0,
+    "real_export_accepted": false,
+    "real_model_approved": false,
+    "registered_in_mlflow": false,
+    "review": "ten_explicit_fixture_reports_not_real_review",
+    "status": "native_inference_and_private_review_passed_on_explicit_fixture"
+  },
+  "new_real_source_generation": false,
+  "published_forecast_outputs": 0,
+  "real_database_written": false,
+  "real_final_export_accepted": false,
+  "real_mlflow_written": false,
+  "real_model_approved": false,
+  "recorded_at": "2026-10-01T09:11:32.403261+00:00",
+  "release_boundary": "Local approval capsule only; not an MLflow registered version, alias, or durable database release head.",
+  "remaining": [
+    "Accept the completed real AI04 export and fully verified compatible inference source packages.",
+    "Review actual security/license/freshness and all ten gates with an authenticated operator.",
+    "Add v12 lifecycle/registry integration and an active immutable database release head.",
+    "Add durable v12 queue/worker, bounded batch splitting, atomic multi-functional publication and read API.",
+    "Run real end-to-end acceptance and Required CI before completing AI05."
+  ],
+  "scope": "v12_inference_role_verified_parent_acceptance_private_review_and_expiring_pinned_prediction",
+  "serving_eligible": false,
+  "source_policy": "Same verified feature package, cohort source/snapshot, curated descriptor, code/lock and recipe. Changed source or feature package requires a new qualification and operator review.",
+  "status": "portable_private_review_checks_and_pinned_native_inference_passed",
+  "version": "ai05-v12-inference-release-evidence-1.0.0"
+}

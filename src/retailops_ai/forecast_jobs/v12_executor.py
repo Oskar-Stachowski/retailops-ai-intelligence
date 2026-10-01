@@ -8,6 +8,7 @@ import hashlib
 import resource
 import sys
 import time
+from copy import deepcopy
 from datetime import UTC, datetime
 from importlib import import_module
 from pathlib import Path
@@ -15,6 +16,22 @@ from typing import Any, cast
 
 MAX_REQUEST_BYTES = 4 * 1024**2
 MAX_ROWS = 256
+
+
+def inference_schema(schema: dict[str, Any]) -> dict[str, Any]:
+    """Change only the role; retain the frozen category/channel/grain/null-label constraints."""
+    result = deepcopy(schema)
+    row = result["properties"]["row"]
+    fields = row["properties"]
+    if (
+        fields["role"] != {"enum": ["validation", "development_holdout"]}
+        or fields["actual"] != {"type": "null"}
+        or fields["label_available_at"] != {"type": "null"}
+        or not {"role", "actual", "label_available_at"} <= set(row["required"])
+    ):
+        raise ValueError("v12_inference_original_signature_boundary")
+    fields["role"] = {"enum": ["inference"]}
+    return result
 
 
 def main() -> None:
@@ -139,10 +156,15 @@ def main() -> None:
     ] != expected:
         raise ValueError("v12_runtime_input_scope")
     origin = datetime.fromisoformat(inputs["as_of_time"])
+    inference = request.get("inference")
+    role = "inference" if inference is not None else "development_holdout"
     if (
         origin <= fold.selection_cutoff
         or origin > datetime.now(UTC)
-        or not fold.development_holdout.start <= origin.date() <= fold.development_holdout.end
+        or (
+            inference is None
+            and not fold.development_holdout.start <= origin.date() <= fold.development_holdout.end
+        )
         or any(row.forecast_origin != origin for row in rows)
     ):
         raise ValueError("v12_runtime_input_origin")
@@ -152,6 +174,29 @@ def main() -> None:
         or signature["deployable_service_contract"] is not False
     ):
         raise ValueError("v12_runtime_input_signature")
+    if inference is not None:
+        source = inference["source_policy"]
+        approved = inference["purpose"] == "qualified_forecast_v12"
+        if (
+            descriptor["forecast_model_status"] != "ready"
+            or descriptor["quality_qualification_status"] != "passed"
+            or inference["version"] != "forecast-v12-inference-context-1.0.0"
+            or inference["purpose"]
+            not in ("serving_load_predict_acceptance", "qualified_forecast_v12")
+            or inference["serving_eligible"] is not approved
+            or (inference["release_id"] is not None) != approved
+            or (inference["qualification_id"] is not None) != approved
+            or source["version"] != "forecast-v12-source-policy-1.0.0"
+            or source["mode"] != "same_verified_feature_package"
+            or source["input_role"] != "inference"
+            or source["source_change"] != "new_qualification_and_review_required"
+            or source["feature_set_id"] != feature_manifest.feature_set_id
+            or source["curated_descriptor_sha256"] != parent.curated_descriptor_sha256
+        ):
+            raise ValueError("v12_inference_source_or_approval_binding")
+        schema = inference_schema(schema)
+        if canonical_sha256(schema) != source["input_schema_sha256"]:
+            raise ValueError("v12_inference_schema_binding")
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
     policy = FeaturePolicy()
     historical = {}
@@ -189,7 +234,7 @@ def main() -> None:
         key = canonical_bytes(
             [
                 fold.name,
-                "development_holdout",
+                role,
                 origin.isoformat(),
                 row.product_id,
                 row.selling_location_id,
@@ -200,7 +245,7 @@ def main() -> None:
         compact = {
             "key": key,
             "fold": fold.name,
-            "role": "development_holdout",
+            "role": role,
             "origin": origin.isoformat(),
             "volume": volume_bin(cast(float | None, values["rolling_mean_28"]), QualityPolicy()),
             "category": values["category_id"],
@@ -242,9 +287,12 @@ def main() -> None:
         "generated_at": datetime.now(UTC).isoformat(),
         "model_refits": 0,
         "source_generation": False,
-        "serving_eligible": False,
         "published_forecast_outputs": 0,
     }
+    if inference is None:
+        result["serving_eligible"] = False
+    else:
+        result["inference"] = inference
     sys.stdout.buffer.write(canonical_bytes(result))
 
 

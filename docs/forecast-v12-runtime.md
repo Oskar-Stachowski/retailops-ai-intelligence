@@ -36,8 +36,9 @@ Origin musi zamykać dzień UTC, być późniejszy od `selection_cutoff`, nie by
 w przyszłości i należeć do okna `development_holdout` wskazanego folda.
 Ten ostatni warunek zachowuje rolę obecną w sygnaturze eksportu. Nie odczytuje
 holdout labels i nie wykonuje ponownej oceny tego okna.
-Przyszłe serving wymaga osobnej roli/kontraktu inference, polityki wyboru
-receptury dla nowych danych i odbioru zgodności nowego źródła.
+[Osobny kontrakt inference i prywatny przegląd](forecast-v12-release.md) dopuszcza
+daty poza tym oknem, po odbiorze źródła i jawnej decyzji. Nowe źródło lub feature
+package wymagają kolejnej kwalifikacji; kontrakt offline zachowuje tę granicę.
 
 Obsługiwane są empiryczne warianty `baseline`, `zero_only`, `additive`.
 `hgb_blend` powoduje odmowę: potrzebuje osobno przypiętego modelu produkującego
@@ -93,7 +94,8 @@ Exit 0 oznacza ukończoną próbę offline; exit 1 daje
 tests od próby rzeczywistego predictora z przypiętego wheel AI 04.
 Ta druga używa małych wymyślonych validation rows i jawnego transport double
 pełnego eksportu, nie aktywnej kampanii ani rzeczywistej kwalifikacji źródła.
-Próbę rzeczywistego algorytmu uruchamia się osobno ze wskazanym wheel:
+Próbę rzeczywistego algorytmu (offline oraz osobnej ścieżki inference) uruchamia
+się osobno ze wskazanym wheel:
 
 ```bash
 AI04_VERIFIER_PYTHON=/private/path/pinned-ai04-venv/bin/python \
@@ -106,5 +108,6 @@ installed predictor double do sprawdzenia granicy procesu.
 
 14 prognoz zgodziło się dokładnie z oryginalnym predictorem; powtórzenie
 zachowało hash. Rzeczywisty final export i production serving nadal czekają
-na osobny odbiór. Kolejny zakres to kontrakt inference/release, worker,
-publikacja i read API v12 z zachowaniem wszystkich trzech celów.
+na osobny odbiór. Po [kontrakcie inference/przeglądu](forecast-v12-release.md)
+pozostają lifecycle v12 w MLflow/DB, worker, publikacja i read API v12
+z zachowaniem wszystkich trzech celów.
