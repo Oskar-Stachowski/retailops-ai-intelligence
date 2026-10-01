@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import IntegrityError
+from test_access import bearer, problem
 from test_v12_inference import actor as promoter
 from test_v12_lifecycle import artifacts as artifacts
 from test_v12_lifecycle import inputs as inputs
@@ -20,11 +21,12 @@ from test_v12_lifecycle import serving as serving
 from test_v12_lifecycle import tables as tables
 from test_v12_lifecycle import timeline as timeline
 from test_v12_queue import IMAGE, actor, expanded
+from v12_http_fixture import PATH, job_client
 
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.forecast_jobs.contracts import BatchRequest, QueuePolicy
 from retailops_ai.forecast_jobs.input_store import PostgresInputStore
-from retailops_ai.forecast_jobs.queue import BatchError, LeaseLost
+from retailops_ai.forecast_jobs.queue import LeaseLost
 from retailops_ai.forecast_jobs.v12_queue import PostgresV12Queue
 from retailops_ai.forecast_jobs.v12_worker import preload, registry_guard, run_attempt
 from retailops_ai.model_lifecycle import v12_mlflow
@@ -78,6 +80,21 @@ def test_queue_compute_retry_cancel_fencing_and_restart(request, tmp_path, monke
                 queue.get(state["queue_cancelled_run_id"], actor(small_profile)).status
                 == "cancelled"
             )
+            api, token = job_client(tmp_path / "http-restart", queue, profile)
+            with api:
+                location = PATH + "/" + state["queue_run_id"]
+                result = api.get(location, headers=bearer(token))
+                assert result.status_code == 200 and result.json()["attempt"] == 2
+                assert result.json()["computation_receipt_id"] == state["queue_receipt_id"]
+                assert result.json()["publication_status"] == (
+                    "published" if "publication_id" in state else "awaiting_publication"
+                )
+                if "publication_id" in state:
+                    assert result.json()["output_ref"]["artifact_id"] == state["publication_id"]
+                assert [
+                    r["status"]
+                    for r in api.get(location + "/attempts", headers=bearer(token)).json()["items"]
+                ] == ["failed", "succeeded"]
             state["checks"].append(
                 "v12_queue_receipt_pins_attempt_history_and_cancellation_survive_service_restart"
             )
@@ -113,16 +130,51 @@ def test_queue_compute_retry_cancel_fencing_and_restart(request, tmp_path, monke
         request_body = BatchRequest(
             profile_id=profile.profile_id, as_of=profile.as_of_time, channel="store"
         )
-        run = queue.submit(request_body, principal, "v12-computation")
-        assert queue.submit(request_body, principal, "v12-computation").run_id == run.run_id
-        with pytest.raises(BatchError, match="idempotency-conflict"):
-            queue.submit(
-                request_body.model_copy(update=dict(horizons_days=(7,))),
-                principal,
-                "v12-computation",
+        api, token = job_client(tmp_path / "http-submit", queue, profile)
+        request_label = "v12-computation"
+        headers = {**bearer(token), "Idempotency-Key": request_label}
+        with api:
+            body = request_body.model_dump(mode="json")
+            admitted = api.post(PATH, headers=headers, json=body)
+            assert admitted.status_code == 202
+            run = queue.get(admitted.json()["run_id"], principal)
+            assert admitted.headers["location"] == PATH + "/" + run.run_id
+            assert admitted.json()["publication_status"] == "not_computed"
+            assert admitted.json()["output_ref"] is None
+            assert "source_uri" not in admitted.text and "recipe_path" not in admitted.text
+            repeated = api.post(PATH, headers=headers, json=body)
+            assert repeated.status_code == 202 and repeated.json()["run_id"] == run.run_id
+            conflict = api.post(PATH, headers=headers, json={**body, "horizons_days": [7]})
+            problem(conflict, 409)
+            assert conflict.json()["code"] == "idempotency-conflict"
+            spoofed = api.post(
+                PATH,
+                headers={**bearer(token), "Idempotency-Key": "foreign"},
+                json={**body, "product_ids": ["outside"]},
             )
+            problem(spoofed, 403)
+        foreign_api, foreign_token = job_client(
+            tmp_path / "http-foreign", queue, profile, pipeline=False, foreign=True
+        )
+        with foreign_api:
+            problem(foreign_api.get(PATH + "/" + run.run_id, headers=bearer(foreign_token)), 404)
+            problem(foreign_api.get(PATH + "/run-" + "b" * 32, headers=bearer(foreign_token)), 404)
+            problem(
+                foreign_api.post(
+                    PATH, headers={**bearer(foreign_token), "Idempotency-Key": "viewer"}, json=body
+                ),
+                403,
+            )
+        default_api, default_token = job_client(
+            tmp_path / "http-default-namespace", PostgresV12Queue(engine, "test"), profile
+        )
+        with default_api:
+            problem(default_api.get(PATH + "/" + run.run_id, headers=bearer(default_token)), 404)
         state["checks"].append(
             "v12_queue_atomic_idempotent_admission_with_registered_source_and_approved_release"
+        )
+        state["checks"].append(
+            "v12_job_asgi_202_location_sql_idempotency_conflict_scope_and_private_projection"
         )
         # A later promotion must not repin this queued run or its retry.
         version2 = lifecycle.execute(decision(imported, "register", "queue-register2"), promoter())[
@@ -185,6 +237,18 @@ def test_queue_compute_retry_cancel_fencing_and_restart(request, tmp_path, monke
         assert (
             receipt.release.release_id == run.release_id and receipt.published_forecast_outputs == 0
         )
+        api, token = job_client(tmp_path / "http-computed", queue, profile)
+        with api:
+            location = PATH + "/" + run.run_id
+            status = api.get(location, headers=bearer(token))
+            assert status.status_code == 200
+            assert status.json()["resolved_model"]["model_version"] == version
+            assert status.json()["computation_receipt_id"] == receipt.artifact_id
+            assert status.json()["publication_status"] == "awaiting_publication"
+            assert status.json()["output_ref"] is None
+            history = api.get(location + "/attempts", headers=bearer(token))
+            assert history.status_code == 200 and history.json()["pagination"]["total"] == 2
+            assert [r["status"] for r in history.json()["items"]] == ["failed", "succeeded"]
         with pytest.raises(LeaseLost):
             queue.complete(claim, receipt)
         state["checks"].append(

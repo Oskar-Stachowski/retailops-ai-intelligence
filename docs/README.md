@@ -34,6 +34,8 @@ opisują przygotowanie obsługi nowego eksportu oraz osobne bramki dopuszczenia.
 dzielenie batchu i pełny receipt obliczeń przed publikacją.
 [Publikacja i odczyt v12](forecast-v12-publication.md) zachowują medianę,
 średnią, przedział i baseline oraz ograniczają dane do scope użytkownika.
+[API zadań v12](forecast-v12-jobs-api.md) przyjmuje trwałe zlecenia,
+pokazuje stan i historię prób oraz rozróżnia obliczenie i publikację prognoz.
 [Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
 rozszerza typed import o source 2.7, native ledger i private qualification.
 [Odbiór](evidence/06-inventory-complete.md) obejmuje curated 1.1 i oba profile.

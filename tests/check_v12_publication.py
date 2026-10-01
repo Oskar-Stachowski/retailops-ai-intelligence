@@ -11,6 +11,7 @@ from sqlalchemy import create_engine, event, text
 from sqlalchemy.exc import IntegrityError
 from test_access import bearer, policy_file, problem
 from test_v12_queue import actor
+from v12_http_fixture import PATH, job_client
 
 from retailops_ai.api.app import create_app
 from retailops_ai.config import Settings
@@ -109,6 +110,15 @@ def test_atomic_publication_scoped_http_and_restart(tmp_path, monkeypatch):
         output = publisher.publish(run_id, principal)
         assert publisher.publish(run_id, principal) == output
         assert len(output.rows) == 560
+        api, token = job_client(tmp_path / "http-published", queue, profile)
+        with api:
+            result = api.get(PATH + "/" + run_id, headers=bearer(token))
+            assert result.status_code == 200 and result.json()["publication_status"] == "published"
+            assert result.json()["output_ref"]["artifact_id"] == output.artifact_id
+            assert result.json()["computation_receipt_id"] == output.receipt_id
+        state["checks"].append(
+            "v12_public_job_output_reference_requires_verified_complete_publication"
+        )
         with pytest.raises(ValueError, match="complete_receipt_required"):
             publisher.publish(
                 state["queue_cancelled_run_id"],
@@ -223,6 +233,9 @@ def test_atomic_publication_scoped_http_and_restart(tmp_path, monkeypatch):
             try:
                 replace_document(corrupt)
                 problem(client.get(uri, headers=headers, params=dict(limit=1)), 503)
+                api, token = job_client(tmp_path / "http-corrupt", queue, profile)
+                with api:
+                    problem(api.get(PATH + "/" + run_id, headers=bearer(token)), 503)
             finally:
                 replace_document(output.model_dump(mode="json"))
         state["checks"].extend(

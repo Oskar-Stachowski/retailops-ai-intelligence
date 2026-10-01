@@ -20,7 +20,10 @@ from retailops_ai.migrations.runner import migrate
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "reports/ai05-v12-lifecycle-acceptance.json"
-IMAGES = {"db": "pgvector/pgvector:0.8.6-pg16-trixie", "mlflow": "ghcr.io/mlflow/mlflow:v3.16.1"}
+IMAGES = {
+    "db": "pgvector/pgvector:0.8.6-pg16-trixie@sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+    "mlflow": "ghcr.io/mlflow/mlflow:v3.16.1@sha256:06058cc872276873e9759c635e773342aca4731e240f6d20d88ea43774083984",
+}
 OWNER_LABEL = "retailops.ai05.v12.acceptance_owner"
 
 

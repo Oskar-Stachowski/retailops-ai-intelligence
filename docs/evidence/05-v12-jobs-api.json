@@ -1,0 +1,219 @@
+{
+  "active_ai04_campaign_read": false,
+  "actual_http_boundary": "Real ASGI application with TestClient and real PostgreSQL queue. No separately deployed TCP HTTP server accepted.",
+  "actual_service_checks": [
+    "real_http_approval_import_and_idempotent_repeat_preserve_original_campaign_evidence",
+    "postgres_advisory_lock_excludes_concurrent_operator",
+    "version_cannot_be_enrolled_under_a_different_registration_decision",
+    "real_version_registration_and_atomic_database_release_head",
+    "real_mlflow_lost_create_response_recovers_one_version_without_post_retry",
+    "partial_alias_promotion_recovers_with_previous_head_preserved_until_completion",
+    "reject_and_exact_previous_release_rollback_and_old_replay",
+    "deferred_database_guard_rejects_head_commit_without_completed_decision",
+    "post_head_crash_rolls_back_release_head_and_completion_then_recovers_atomically",
+    "real_sql_immutable_history_and_head_deletion_or_old_pointer_rejected",
+    "old_database_revision_refused",
+    "v12_queue_atomic_idempotent_admission_with_registered_source_and_approved_release",
+    "v12_job_asgi_202_location_sql_idempotency_conflict_scope_and_private_projection",
+    "partial_v12_batch_has_no_receipt_then_retry_keeps_old_release_and_commits_all_560_functional_rows",
+    "cancel_and_expired_lease_recovery_fence_old_workers_and_preserve_pins",
+    "real_v12_sql_rejects_pin_mutations_terminal_shortcuts_and_history_deletion",
+    "v12_public_job_output_reference_requires_verified_complete_publication",
+    "v12_publication_registry_disagreement_and_post_insert_crash_leave_no_partial_output",
+    "v12_atomic_idempotent_publication_preserves_560_exact_functional_rows_and_old_model_pin",
+    "v12_sql_refuses_partial_publication_and_output_mutation_or_deletion",
+    "v12_scoped_authenticated_asgi_http_pagination_and_pre_fetch_byte_budget",
+    "v12_read_rejects_rehashed_functional_corruption_outside_visible_scope_and_page",
+    "v12_mechanics_outputs_are_invisible_to_default_production_reader",
+    "postgres_and_mlflow_restart_preserves_bound_release_aliases_and_completed_history",
+    "v12_queue_receipt_pins_attempt_history_and_cancellation_survive_service_restart",
+    "v12_published_functionals_scoped_view_and_immutable_receipt_survive_postgresql_mlflow_restart"
+  ],
+  "ai04_worktree_modified": false,
+  "base_commit": "1ea83f6ba419558237185c886b7443dbf7177ff9",
+  "checks": {
+    "access_and_v12_schema_snapshots": "passed",
+    "actionlint": "passed",
+    "api_access_legacy_queue_publication_runtime_http_regression": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 184
+    },
+    "documentation_local_links": "passed",
+    "git_diff_check": "passed",
+    "mypy": "passed_268_source_files",
+    "new_openapi_paths": 3,
+    "real_postgresql_mlflow_asgi_after_restart": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 3
+    },
+    "real_postgresql_mlflow_asgi_before_restart": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 3
+    },
+    "ruff": "passed",
+    "ruff_format": "passed_438_files",
+    "staged_secret_scan": "passed_no_leaks",
+    "unchanged_existing_openapi_paths": 17,
+    "unchanged_existing_schema_definitions": 60,
+    "v12_job_and_runner_failure_boundaries": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 13
+    },
+    "v12_job_boundaries": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 11
+    }
+  },
+  "docker_builds": 0,
+  "files": {
+    ".github/workflows/required-ci.yml": {
+      "sha256": "7749d98c99d4eaedbc26f91bcfe86b884ab1a3990da8380a3d2982c25e4a0fb1",
+      "size_bytes": 2640
+    },
+    "contracts/access/v1/access.openapi.json": {
+      "sha256": "f2e799b1540aca757c4e47ef9f416549319061c0ef3134cc70b9fce455b2683f",
+      "size_bytes": 225362
+    },
+    "contracts/forecast_jobs/v12/job_attempts.schema.json": {
+      "sha256": "313fba521cd1324ca26ca0b4a821eea067a452d1377fa3bdbd0f436a6e260866",
+      "size_bytes": 8684
+    },
+    "contracts/forecast_jobs/v12/job_run.schema.json": {
+      "sha256": "ea39308117a8641266c7f01e82c69578d3a3e961408b4827486160b0cf977cab",
+      "size_bytes": 7540
+    },
+    "docs/README.md": {
+      "sha256": "8705fdd50738fc72b0db78292a277f6d90515abc8e32c337f747c1a4566deb5e",
+      "size_bytes": 10125
+    },
+    "docs/STATUS.md": {
+      "sha256": "5fd2bc87d49e3ab0b62df1d10d60973bb7a961698b7d57ccb95ea52cf3e133bb",
+      "size_bytes": 23253
+    },
+    "docs/forecast-v12-jobs-api.md": {
+      "sha256": "1afb7770880b0081997213cc6ca32a3210b75d6e8a867db428f3fa082760d125",
+      "size_bytes": 5153
+    },
+    "docs/forecast-v12-publication.md": {
+      "sha256": "c48347764a43885e46adffcf3f5048b3a58c4c3244456a681a67534a26fbec5b",
+      "size_bytes": 6885
+    },
+    "docs/forecast-v12-worker.md": {
+      "sha256": "88d1748d39652f18773a4a0b5f67241e856981a3bb9e779d940ea9081c04ac69",
+      "size_bytes": 8068
+    },
+    "reports/ai05-v12-jobs-api-boundary-tests.xml": {
+      "sha256": "2b638f8bbe42b6a7c8cd9d3d5c3e36c6b7a59b477ed5ecb986547c0de6723b14",
+      "size_bytes": 2072
+    },
+    "reports/ai05-v12-jobs-api-regression-tests.xml": {
+      "sha256": "6babcc3180355275e69814c16aed9be8ab708c95c8fa5bd91d2bbbfaaf2f9384",
+      "size_bytes": 24478
+    },
+    "reports/ai05-v12-jobs-api-tests.xml": {
+      "sha256": "086c2da86321fe2baefcfca7dfcd24db6438c355c3b5a73e5414aaac9f22d275",
+      "size_bytes": 1797
+    },
+    "reports/ai05-v12-publication-acceptance-tests.xml": {
+      "sha256": "1992dec17ee4ee5cb16f36af06fe9de284bf873349ed452f6c10d05395252108",
+      "size_bytes": 631
+    },
+    "reports/ai05-v12-publication-acceptance.json": {
+      "sha256": "a2c9ee6ebd26147771a1f85337212ed7502abf86415a9750db7b31e70c344fbc",
+      "size_bytes": 4437
+    },
+    "reports/ai05-v12-publication-restart-tests.xml": {
+      "sha256": "7a71d5729d15fdd558541727c0ca5332a933987c9468213d4c643f855027c012",
+      "size_bytes": 627
+    },
+    "scripts/check_v12_lifecycle.py": {
+      "sha256": "6d44ecef77c628633f21f617dbaf67093d0e46d9d1bf4fd43c010f5532509abe",
+      "size_bytes": 12276
+    },
+    "scripts/update_v12_batch_contracts.py": {
+      "sha256": "94b76094abd61925350a6e6474ec63e94d5f3d68d0b167d39bfe3514268e75b5",
+      "size_bytes": 1804
+    },
+    "src/retailops_ai/api/access.py": {
+      "sha256": "bcdc79314e6dc33c310b354ea62752ef68fbaa78a910ba6a7abcfafc315f60a5",
+      "size_bytes": 7726
+    },
+    "src/retailops_ai/api/app.py": {
+      "sha256": "eaece58fd2a0347edf3673efa7ad8fa7660d07112e0e4e12d4a1997fd0ddb40a",
+      "size_bytes": 10760
+    },
+    "src/retailops_ai/api/v12_forecast_jobs.py": {
+      "sha256": "1e15296d8155b4d4f52e367d57841eb9006e631c0f72344d619cfc0b0197f39e",
+      "size_bytes": 4095
+    },
+    "src/retailops_ai/forecast_jobs/v12_administration.py": {
+      "sha256": "488a7193c0518920c7c7d90f6b6c5f0bc1c360dfaa3a2ef5c96a4dfe20914db1",
+      "size_bytes": 7829
+    },
+    "src/retailops_ai/forecast_jobs/v12_job_contracts.py": {
+      "sha256": "f7c0f5e70dbdedcb49dd03221ac2048137da0f54eb103c6270814b0ada59a621",
+      "size_bytes": 4550
+    },
+    "tests/check_v12_publication.py": {
+      "sha256": "a4aa537e77a9d616b5ff6be499fa0041b88f972ff8cc005644c65f0a6f34e4bb",
+      "size_bytes": 12619
+    },
+    "tests/check_v12_queue.py": {
+      "sha256": "766587e2e42f69da01004a9efe0b27419eb2913d1978684c96433292408f253e",
+      "size_bytes": 17652
+    },
+    "tests/test_access.py": {
+      "sha256": "b3831e88881bf35e5eb95467954fc9d153a917c56b6571c046b883570e0d4434",
+      "size_bytes": 21257
+    },
+    "tests/test_v12_jobs_api.py": {
+      "sha256": "44c53f3e6b6e3305a5c621406e9b5dc7e89fd3da31ec1d212f9e4280293b3147",
+      "size_bytes": 10783
+    },
+    "tests/v12_http_fixture.py": {
+      "sha256": "a4905cf354d7bcf91cf19d81e59936d51eea2d00532c8bf0e5b950ca168f4a55",
+      "size_bytes": 1543
+    }
+  },
+  "fixture_boundary": "Real PostgreSQL, MLflow, queue, transactions, lease expiry/retry/cancel and worker integration. Full-export/source/predictor/review use explicit small doubles, including invented repeated series for chunk tests. No real source or model is qualified.",
+  "image_pulls": 0,
+  "images": {
+    "db": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+    "mlflow": "sha256:06058cc872276873e9759c635e773342aca4731e240f6d20d88ea43774083984"
+  },
+  "migration_head": "0017_v12_outputs",
+  "new_real_source_generation": false,
+  "owned_containers_and_anonymous_volumes_removed": true,
+  "persistent_database_migrated": false,
+  "persistent_mlflow_written": false,
+  "persistent_source_stack_changed": false,
+  "published_fixture_forecast_outputs": 1,
+  "published_fixture_rows": 560,
+  "published_real_or_production_forecast_outputs": 0,
+  "real_final_export_accepted": false,
+  "real_model_approved": false,
+  "recorded_at": "2026-10-01T12:34:50.401768+00:00",
+  "remaining": [
+    "Scoped v12 model catalog and original evaluation read API.",
+    "Coherent combined v12 database/MLflow/queue/publication backup and restore acceptance.",
+    "Remote Required CI acceptance and explicit persistent migration before deployment.",
+    "Completed qualified real AI04 export, compatible verified sources and authentic operator review.",
+    "Real end-to-end model/batch/publication/read, resource measurements and final serving acceptance."
+  ],
+  "remote_required_ci_accepted": false,
+  "required_ci_v12_mechanics_wired": true,
+  "runner_digest_references_match_accepted_images": true,
+  "scope": "v12_durable_http_admission_scoped_status_attempt_history_and_verified_publication_reference",
+  "status": "local_v12_authenticated_sql_jobs_safe_publication_reference_and_restart_passed",
+  "version": "ai05-v12-jobs-api-evidence-1.0.0"
+}

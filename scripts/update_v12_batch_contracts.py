@@ -8,6 +8,7 @@ from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.forecast_jobs.contracts import BatchRequest, QueuePolicy
 from retailops_ai.forecast_jobs.read_contracts import ForecastQuery
 from retailops_ai.forecast_jobs.v12_batch import V12BatchReceipt, V12BatchRun
+from retailops_ai.forecast_jobs.v12_job_contracts import V12JobAttempts, V12JobRun
 from retailops_ai.forecast_jobs.v12_publication import V12Publication
 from retailops_ai.forecast_jobs.v12_read_contracts import V12ForecastPage
 
@@ -20,6 +21,8 @@ SCHEMAS: dict[str, type[Contract]] = {
     "publication": V12Publication,
     "read_query": ForecastQuery,
     "read_page": V12ForecastPage,
+    "job_run": V12JobRun,
+    "job_attempts": V12JobAttempts,
 }
 
 

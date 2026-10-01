@@ -1,5 +1,13 @@
 # Aktualny status
 
+**AI 05 — zadania v12 w API:** [runbook](forecast-v12-jobs-api.md)
+opisuje POST202/Location i GET stanu/historii na tej samej trwałej kolejce
+co CLI. Metadane ograniczają cały scope i nie ujawniają prywatnych kapsuł.
+Sukces obliczeń daje receipt; referencja prognozy wymaga osobnej publikacji
+i weryfikacji całego outputu. Namespace testowy jest jawnie wstrzykiwany;
+domyślne API używa produkcyjnej nazwy v12. Rzeczywisty model AI 04,
+katalog/evaluations v12, backup/restore i zdalny Required CI pozostają otwarte.
+
 **AI 05 — adapter eksportu v12:** [import kampanii do MLflow](mlflow-v12-evidence.md)
 obsługuje pełny run, osobne metryki mediany/średniej/przedziału, oryginalne
 identyfikatory, wszystkie artefakty, powtórzenia oraz zachowanie failed import.

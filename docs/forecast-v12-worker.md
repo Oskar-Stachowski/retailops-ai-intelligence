@@ -5,6 +5,8 @@ w PostgreSQL. Worker zachowuje medianę, średnią i przedział oraz oryginalne
 baseline’y, metadane i wartości null. Udany run oznacza kompletny receipt
 obliczeń: `published_forecast_outputs=0`. [Publikacja i API v12](forecast-v12-publication.md)
 są osobnym krokiem po sukcesie; dotychczasowe endpointy v1 zachowują swój kontrakt.
+Zlecanie i odczyt trwałych zadań są także dostępne przez
+[uwierzytelnione API v12](forecast-v12-jobs-api.md), z bezpieczną projekcją metadanych.
 
 ## Przyjęcie zadania
 

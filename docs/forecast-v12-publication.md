@@ -4,6 +4,8 @@
 obliczeń. Osobna publikacja udostępnia wynik po ponownym sprawdzeniu modelu.
 Nie uruchamia inferencji ponownie i nie zmienia receipt, runu ani eksportu
 AI 04. Samo `succeeded` w kolejce nie oznacza opublikowania prognoz.
+[API zadań v12](forecast-v12-jobs-api.md) rozróżnia receipt obliczeń i
+referencję zweryfikowanych, opublikowanych prognoz.
 
 ## Publikacja
 
