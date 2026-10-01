@@ -1,0 +1,84 @@
+{
+  "aws_calls": 0,
+  "calendar_id": "forecast-calendar-sha256-99e550133430b33febcf884afbbc30d199d937b460743998c53914143a675724",
+  "curated_dataset_id": "curated-sha256-aeedd1a49f75eb27b687b328b92e23fee5b8cfa7c2520b2ff5219a8a74bd748a",
+  "feature_columns": 36,
+  "forecast_model_status": "not_ready",
+  "implementation": {
+    "code_files": {
+      "forecasting/features.py": "b069639e0bcd996fdeefca52a7498ca543431eb744b83072d7b1c6b3f1e93283",
+      "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+      "forecasting/features_store.py": "384e4c1971a835891d12d90a25bc7e169045f35f9b2976b0467e8fd7910a0037"
+    },
+    "code_sha256": "924a0afc001463ef35a1d44850437dc1d619ea7394966021ba4e91c9d9299756",
+    "dependency_lock_sha256": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d",
+    "pyarrow_version": "25.0.1",
+    "python_version": "3.11.15",
+    "version": "forecast-inputs-1.0.0"
+  },
+  "input_files_unchanged": true,
+  "inputs_id": "forecast-inputs-sha256-48d3e1457092e1ff31d50216b67122704349b64c99e588eb38fff43f37a6d780",
+  "origin_window": {
+    "end": "2026-07-17",
+    "start": "2026-05-19"
+  },
+  "origins": 60,
+  "policy": {
+    "closed_history_policy": "confirmed_closed_zero_is_known_history",
+    "history_days": 28,
+    "lag_days": [
+      1,
+      7,
+      14,
+      28
+    ],
+    "lag_definition": "sales_at_origin_date_plus_1_minus_k",
+    "minimum_active_history_days": 28,
+    "minimum_known_history_days": 7,
+    "preprocessing": "none_no_fitted_encoding_or_imputation",
+    "promotion_policy": "highest_priority_known_offer_without_future_basket_quantity",
+    "rolling_days": [
+      7,
+      14,
+      28
+    ],
+    "rolling_definition": "origin_date_plus_1_minus_window_through_origin_date",
+    "rolling_missing_policy": "available_observations_only_with_count",
+    "rolling_std_ddof": 0,
+    "schema_version": "1.0.0",
+    "target_closed_policy": "retain_row_not_scoring_eligible"
+  },
+  "profile": "ai-temporal-smoke",
+  "published_bytes_unchanged": true,
+  "repeatable_identity": true,
+  "scope": "AI 04.2 draft panel/features; no split, preprocessing or model qualification",
+  "seconds": 351.458,
+  "snapshot_id": "snapshot-sha256-d84c7b9630c6a34f7807abc7560253bf8e7ba3d7d962abee8aca580cf909b767",
+  "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22",
+  "stats": {
+    "active_history_points": 40257,
+    "active_target_rows": 20076,
+    "history_closed": 4478,
+    "history_missing": 1440,
+    "history_observed_positive": 29887,
+    "history_observed_zero": 4452,
+    "insufficient_history_target_rows": 252,
+    "missing_origin_lag_1_units": 20076,
+    "missing_origin_lag_28_units": 252,
+    "potential_history_points": 40320,
+    "potential_target_rows": 20160,
+    "target_calendar_eligible": 18008,
+    "target_closed": 2068
+  },
+  "status": "passed",
+  "tables": {
+    "features": {
+      "content_sha256": "3b33354178b957fb9f7e39bb57d341c2d089d24b38def72a9f023c89e936ac1c",
+      "row_count": 20076
+    },
+    "history": {
+      "content_sha256": "8b8b926de27ee763173e24d44b145f91cb49433bc9053e9be3cdb0c8de958bb0",
+      "row_count": 1440
+    }
+  }
+}

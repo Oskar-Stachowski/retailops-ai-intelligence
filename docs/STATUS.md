@@ -1,11 +1,46 @@
 # Aktualny status
 
-Aktualizacja: **2026-09-29**. **Etap 11 — RAG jest odebrany lokalnie.**
+Aktualizacja: **2026-10-01**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
 przygotowanie, kwalifikację, aktywację i rollback. [Końcowy odbiór](evidence/11-completion.md)
 wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodzi
 przez chroniony `main` oraz Required CI; stan wykonania pokazuje
 [workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
+
+**AI 04 — `ready`, finalna wersja v12, z jawną akceptacją trzech odstępstw.**
+Właściciel projektu zakończył iterację developerską na v12 2026-10-01.
+[Decyzja odbioru](evidence/04-v12-acceptance.md) obowiązuje po przyjęciu tego
+commitu przez PR i zielonym Required CI chronionego `main`.
+[Wersjonowany zapis decyzji](evidence/04-v12-acceptance.json) wiąże akceptację
+z jednym konkretnym eksportem, pełnymi metrykami i dowodami odtworzenia.
+
+Pełna kampania v12 obejmuje **64/64 kohorty i 27 396 096 wierszy prognoz**.
+Oryginalny protokół jakości nadal daje **221 passed / 3 failed** oraz
+`forecast_model_status=not_ready` i `quality_qualification_status=not_ready`.
+Zaakceptowane odstępstwa MSE wynoszą **+0,204738%, +0,000619%, +0,043292%**.
+Nie przepisano ich na zaliczone i nie zmieniono progów oceny.
+`stage_status=ready` oznacza świadomy odbiór etapu przez właściciela,
+nie nowy wynik statystyczny ani zgodę na wdrożenie produkcyjne.
+
+[Finalne v12](forecast-functional-v12.md) ma zaliczony niezależny replay,
+trwały eksport **663 plików / 31 994 594 655 B** i weryfikację rzeczywistego
+runu z odłączonego wheel. Kontrola `make forecast-acceptance-check` sprawdza
+oryginalne sumy SHA-256, komplet metryk i dokładny zakres trzech wyjątków.
+Nie dopuszcza innego runu, v13 ani rozszerzenia decyzji na promocję modelu.
+
+V13 jest **superseded**: [przygotowanie 36900199207](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36900199207)
+zostało anulowane po wyborze v12. Lokalne oczekiwanie na ocenę i kolektor
+zatrzymano przed oceną holdoutów v13. Zachowano istniejące pliki, rezerwacje
+seedów, freeze i historię; automatyczne uruchamianie generacji po pushu wyłączono.
+
+Odbiór kodu: [PR #7](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/7),
+bez omijania ochrony `main` i Required CI. Źródło zostało przyjęte przez
+[PR #77](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/77).
+Dalsze prace AI 05 korzystają z eksportu v12 i osobnego adaptera dwóch celów;
+MLflow, promocja, batch i serving mają własny odbiór. Portfolio final test
+pozostaje nietknięty. Historyczne wyniki [04.7](evidence/04-07-quality.md),
+[04.8](evidence/04-08-handoff.md), [korekt](evidence/04-quality-remediation.md)
+i [v11](forecast-functional-v2.md) zachowują pierwotne statusy.
 
 **AI 03.3 — kontrakt handoff odebrany lokalnie:** [snapshot źródła](source-snapshot-handoff.md)
 ma wspólną wersję 1.0.0, pełny mały fixture oraz niezależną walidację schema,
@@ -20,7 +55,7 @@ normalizację, quarantine, immutable IDs i odczyt z pełnej historii wersji.
 [AI 03.6 — bramka cross-repo](evidence/03-06-cross-repo.md) wiąże oba repo
 przez pełne smoke i przypięte rewizje. Końcowy odbiór RetailOps określa wejście
 do 04/06 oraz odrębne readiness use cases.
-Branch `ai/03-04-importer` ma osobny worktree; AI 12 rozwija się niezależnie.
+AI 12 rozwija się w osobnym worktree; forecasting zaczyna się od main z AI 03.
 Branch 03 jest opublikowany w [PR #5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/5).
 Przypięte wyniki Required CI, testów i rzeczywistego Compose/persistence
 znajdują się w [końcowym evidence cross-repo](evidence/03-06-cross-repo.md).

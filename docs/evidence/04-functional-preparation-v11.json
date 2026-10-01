@@ -1,0 +1,984 @@
+{
+  "ai04-campaign-v11-freeze": {
+    "code_commit": "5aa80470789f1e21a8d83de3a9204088584d9a49",
+    "free_bytes": {
+      "/private/tmp/retailops-ai-04-forecasting": 33489567744,
+      "/var/folders/wp/y5rmm5lj5qz3_zbz6hfb1l000000gn/T": 33489567744
+    },
+    "freeze_id": "functional-freeze-sha256-22192755c4e9cf000e5c4cae688f62f23a2860acf56ca16f0db3c30977df9805",
+    "freeze_sha256": "ff9b57c3f74e7068461acbc17fa8d94cbbd1e1c667cbead9a8ba54cb28885617",
+    "portfolio_final_test": "not_included_not_opened",
+    "protocol_freeze": {
+      "files": 11,
+      "protocol_version": "forecast-quality-2.0.0",
+      "status": "passed"
+    },
+    "required_free_bytes": 17179869184,
+    "retained": {
+      "bytes": 1215327427,
+      "files": 3070,
+      "status": "passed"
+    },
+    "source_regenerated": false,
+    "started_at": "2026-09-30T14:44:28.978778+00:00",
+    "status": "frozen",
+    "test_receipts": {
+      "effective_tests": 975,
+      "files": {
+        "/private/tmp/retailops-ai-04-forecasting/reports/ai04-ci-entrypoint-tests.xml": {
+          "sha256": "f3b77d57889a965f62d2611fb2c37aaef9b92480603a91d6d8f0632f799059e1",
+          "tests": 17
+        },
+        "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-freeze-verification.xml": {
+          "sha256": "7e6f82a72cbc8954677b74c730b74e85caf3d9b6f1160aea2dc82eee6caee0b2",
+          "tests": 22
+        },
+        "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-full-regression.xml": {
+          "sha256": "bd84cbec86fb9d5ead9e6a991b6e3da604d3053c8c589e51c21c036ca0b3114e",
+          "tests": 974
+        },
+        "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-loopback-verification.xml": {
+          "sha256": "bcaedac90440e0b794e7cedc29b4f6eeb575f8e2930f4fc0743580c69b264973",
+          "tests": 2
+        }
+      },
+      "resolved_failures": [
+        {
+          "original_failure": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-full-regression.xml",
+          "passed_rerun": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-loopback-verification.xml",
+          "test": [
+            "tests.test_server_process",
+            "test_cli_serves_real_http_and_exits_cleanly"
+          ]
+        },
+        {
+          "original_failure": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-full-regression.xml",
+          "passed_rerun": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-loopback-verification.xml",
+          "test": [
+            "tests.test_server_process",
+            "test_local_credentials_and_scope_over_real_loopback"
+          ]
+        }
+      ],
+      "status": "passed"
+    }
+  },
+  "ai04-ci-5aa8047": {
+    "head_sha": "5aa80470789f1e21a8d83de3a9204088584d9a49",
+    "jobs": {
+      "checks": "success",
+      "persistence": "success",
+      "required-result": "success",
+      "secrets": "success"
+    },
+    "pr": 7,
+    "prior_ci_failure": {
+      "fix_commit": "5aa80470789f1e21a8d83de3a9204088584d9a49",
+      "head_sha": "af93e5b3ec694652e361c7dbf9f76fc37bd69aac",
+      "reason": "pytest_console_entrypoint_did_not_include_repository_scripts_on_sys_path",
+      "run_id": 36728089458,
+      "thresholds_changed": false
+    },
+    "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+    "required_ci_run_id": 36728529163,
+    "status": "success",
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36728529163"
+  },
+  "ai04-functional-wheel-pin-verification": {
+    "lockfile_bytes_identical": true,
+    "new_wheel_code_pins": 24,
+    "old_wheels_unchanged": {
+      "old_root": "acb465f6e63951c19026addd0620ca3c610b8894db320a756f395e946afad998",
+      "protocol_v2": "2971e8544913ed1b3d69bacd5f98581102072519fc4a1b5cd1fa63db1a014e52"
+    },
+    "status": "passed"
+  },
+  "ai04-quality-v2-data-preparation": {
+    "calendar_manifest": "/private/tmp/retailops-ai-04-forecasting/data/generated/calendars/forecast-calendar-sha256-c95f4815e5e06874d486f840c3cb176093bc8a8bbe7416a21555b0d0da66cf53.json",
+    "curated": {
+      "accepted_rows": 616547,
+      "curated_dataset_id": "curated-sha256-496f5a3934428c5f5eb1911eb7fcf25faf7ff1bb85b4389b1e5b26c039d5ccbf",
+      "destination": "/private/tmp/retailops-ai-04-forecasting/data/generated/curated/curated-sha256-496f5a3934428c5f5eb1911eb7fcf25faf7ff1bb85b4389b1e5b26c039d5ccbf",
+      "parent_source_dataset_id": "source-sha256-76994412fcabec320688429d7f88adcd80fe54fb70327b22c1456c27673c2d66",
+      "readiness": {
+        "anomaly": "not_ready",
+        "forecast_model": "not_ready",
+        "forecast_source": "passed",
+        "inventory_ready": true,
+        "rag": "not_applicable",
+        "replay": "not_ready",
+        "stockout": "not_ready"
+      },
+      "rejected_rows": 0,
+      "status": "published",
+      "tables": 43
+    },
+    "curated_dir": "/private/tmp/retailops-ai-04-forecasting/data/generated/curated/curated-sha256-496f5a3934428c5f5eb1911eb7fcf25faf7ff1bb85b4389b1e5b26c039d5ccbf",
+    "elapsed_seconds": 821.2185865830106,
+    "freeze": {
+      "files": 11,
+      "protocol_version": "forecast-quality-2.0.0",
+      "status": "passed"
+    },
+    "model_fits": 0,
+    "scope": "new_data_preparation_from_retained_snapshot_no_regeneration_no_model_fit",
+    "source_dataset_id": "source-sha256-76994412fcabec320688429d7f88adcd80fe54fb70327b22c1456c27673c2d66",
+    "source_preflight": {
+      "backtest_policy": {
+        "aggregate": "pool_error_and_actual_sums_no_mean_of_wape",
+        "anchoring": "calendar_start_unused_origins_retained_as_purged",
+        "development_holdout_days": 14,
+        "development_holdout_use": "diagnostic_previously_observed_data_not_fresh_final_test",
+        "evaluation_overlap": "same_role_origins_must_not_repeat_across_folds",
+        "folds": 3,
+        "history": "earlier_observations_allowed_as_of_each_origin",
+        "initial_train_days": 14,
+        "label_tail_days": 15,
+        "minimum_eligible_rows_per_role": 1,
+        "mode": "rolling",
+        "model": {
+          "baseline": {
+            "candidates": [
+              "last_observed",
+              "moving_average",
+              "seasonal_naive7"
+            ],
+            "closed_history": "confirmed_closed_zero_is_observed",
+            "common_keys": "all_split_memberships_no_model_specific_drops",
+            "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+            "missing_history": "skip_unknown_never_impute_zero",
+            "moving_average_calendar_days": 7,
+            "moving_average_minimum_known_days": 1,
+            "origin_mode": "fixed_origin_no_recursive_actuals",
+            "portfolio_final_test": "not_included_not_opened",
+            "required_prediction_coverage": 1.0,
+            "schema_version": "1.0.0",
+            "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+            "selection_metric": "mae",
+            "selection_role": "validation_only_per_fold",
+            "tie_break": "candidate_order"
+          },
+          "cpu_threads": 1,
+          "fit_cpu_seconds": 90.0,
+          "fit_rss_bytes": 1073741824,
+          "fit_wall_seconds": 120.0,
+          "grid": "one_frozen_configuration_per_family",
+          "hgb": {
+            "categorical_features": null,
+            "early_stopping": false,
+            "l2_regularization": 0.0,
+            "learning_rate": 0.1,
+            "loss": "squared_error",
+            "max_bins": 255,
+            "max_iter": 100,
+            "max_leaf_nodes": 31,
+            "min_samples_leaf": 20,
+            "validation_fraction": null
+          },
+          "legacy_retailops_serving": "unchanged_rejection_not_overridden",
+          "max_matrix_bytes": 67108864,
+          "max_train_rows": 50000,
+          "minimum_relative_improvement": 0.05,
+          "monitor_interval_seconds": 0.05,
+          "portfolio_final_test": "not_included_not_opened",
+          "postprocessing": "clip_negative_to_zero_no_rounding",
+          "primary_metric": "validation_mae",
+          "random_state": 42,
+          "rf": {
+            "bootstrap": true,
+            "criterion": "squared_error",
+            "max_depth": 12,
+            "max_features": 1.0,
+            "min_samples_leaf": 2,
+            "min_samples_split": 2,
+            "n_estimators": 64,
+            "n_jobs": 1
+          },
+          "schema_version": "1.0.0",
+          "selection_use": "diagnostic_only_pending_04_6_to_04_8",
+          "strategy": "direct_global_with_horizon_feature",
+          "target_type": "observed_sales_units",
+          "tie_break": "baseline_then_rf_then_hgb"
+        },
+        "portfolio_final_test": "not_included_not_opened",
+        "purge_days": 15,
+        "selection": "validation_only_independently_per_fold",
+        "step_days": 14,
+        "validation_days": 14,
+        "version": "forecast-chronological-backtest-1.0.0"
+      },
+      "calendar_id": "forecast-calendar-sha256-c95f4815e5e06874d486f840c3cb176093bc8a8bbe7416a21555b0d0da66cf53",
+      "curated_dataset_id": "curated-sha256-496f5a3934428c5f5eb1911eb7fcf25faf7ff1bb85b4389b1e5b26c039d5ccbf",
+      "features_materialized": false,
+      "full_feature_preflight_required_if_not_rejected": true,
+      "gates": [
+        {
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 1876,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "zero"
+        },
+        {
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 25130,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "low"
+        },
+        {
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 8022,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "medium"
+        },
+        {
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 644,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "high"
+        },
+        {
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 2254,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "zero"
+        },
+        {
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 24668,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "low"
+        },
+        {
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 7798,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "medium"
+        },
+        {
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 952,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "high"
+        },
+        {
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 1526,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "zero"
+        },
+        {
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 25508,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "low"
+        },
+        {
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 7826,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "medium"
+        },
+        {
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 812,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "high"
+        },
+        {
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 2086,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "zero"
+        },
+        {
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 25004,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "low"
+        },
+        {
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 7966,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "medium"
+        },
+        {
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 616,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "high"
+        },
+        {
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 2170,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "zero"
+        },
+        {
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 24780,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "low"
+        },
+        {
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 7784,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "medium"
+        },
+        {
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 938,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "high"
+        },
+        {
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 1414,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "zero"
+        },
+        {
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 26152,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "low"
+        },
+        {
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 7448,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "medium"
+        },
+        {
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 658,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "high"
+        },
+        {
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 5572,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "zero"
+        },
+        {
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 75418,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "low"
+        },
+        {
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 23632,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "medium"
+        },
+        {
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 2394,
+          "role": "validation",
+          "status": "not_rejected",
+          "volume": "high"
+        },
+        {
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 5754,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "zero"
+        },
+        {
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 75824,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "low"
+        },
+        {
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 23212,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "medium"
+        },
+        {
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "potential_feature_rows_upper_bound": 2226,
+          "role": "development_holdout",
+          "status": "not_rejected",
+          "volume": "high"
+        }
+      ],
+      "history_rows_selected_only_as_of_origin": true,
+      "model_fits": 0,
+      "model_quality_qualified": false,
+      "scope": "origin-known history conservative sample upper bounds before target features",
+      "source_integrity_index_may_contain_later_observations": true,
+      "status": "not_rejected",
+      "target_eligibility_assessed": false,
+      "target_labels_materialized": false,
+      "target_outcomes_evaluated": false
+    },
+    "status": "not_rejected",
+    "step": "source_preflight",
+    "test_metrics_evaluated": false
+  },
+  "ai04-quality-v2-feature-preparation-attempt-2": {
+    "calendar_manifest": "/private/tmp/retailops-ai-04-forecasting/data/generated/calendars/forecast-calendar-sha256-c95f4815e5e06874d486f840c3cb176093bc8a8bbe7416a21555b0d0da66cf53.json",
+    "curated_dir": "/private/tmp/retailops-ai-04-forecasting/data/generated/curated/curated-sha256-496f5a3934428c5f5eb1911eb7fcf25faf7ff1bb85b4389b1e5b26c039d5ccbf",
+    "feature_dir": "/private/tmp/retailops-ai-04-forecasting/data/generated/features/features-sha256-b1a38743b5db24a48e7de12d19ca0bff63bd046ee798ebb1cac2ec76611e2754",
+    "input_pin": {
+      "code_commit": "626504d",
+      "implementation": {
+        "code_files": {
+          "forecasting/features.py": "b069639e0bcd996fdeefca52a7498ca543431eb744b83072d7b1c6b3f1e93283",
+          "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+          "forecasting/features_store.py": "6f6ccfe1a4e1e22cf502e6c001a36d71a3b4afb133cd4798c343c3cff9541625"
+        },
+        "code_sha256": "1b19e3bef31d6e58589b86c9abb1404e3244f475b696fc438466c66fa1efcbf0",
+        "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+        "logical_output_byte_limit": 5368709120,
+        "physical_output_byte_limit": 2147483648,
+        "pyarrow_version": "25.0.1",
+        "python_version": "3.11.15",
+        "temporary_index_byte_limit": 2147483648,
+        "temporary_index_encoding": "zlib_per_record_canonical_bytes_builder_and_verifier",
+        "version": "forecast-inputs-1.2.0"
+      },
+      "model_fits": 0,
+      "physical_and_index_limit_bytes": 2147483648,
+      "quality_thresholds_changed": false,
+      "reason": "full_280000_row_panel_4290442055_estimated_logical_bytes_plus_10_percent_margin_rounded_up_to_5GiB",
+      "source_dataset_id": "source-sha256-76994412fcabec320688429d7f88adcd80fe54fb70327b22c1456c27673c2d66",
+      "source_regeneration": false
+    },
+    "model_fits": 0,
+    "preflight": {
+      "backtest_policy": {
+        "aggregate": "pool_error_and_actual_sums_no_mean_of_wape",
+        "anchoring": "calendar_start_unused_origins_retained_as_purged",
+        "development_holdout_days": 14,
+        "development_holdout_use": "diagnostic_previously_observed_data_not_fresh_final_test",
+        "evaluation_overlap": "same_role_origins_must_not_repeat_across_folds",
+        "folds": 3,
+        "history": "earlier_observations_allowed_as_of_each_origin",
+        "initial_train_days": 14,
+        "label_tail_days": 15,
+        "minimum_eligible_rows_per_role": 1,
+        "mode": "rolling",
+        "model": {
+          "baseline": {
+            "candidates": [
+              "last_observed",
+              "moving_average",
+              "seasonal_naive7"
+            ],
+            "closed_history": "confirmed_closed_zero_is_observed",
+            "common_keys": "all_split_memberships_no_model_specific_drops",
+            "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+            "missing_history": "skip_unknown_never_impute_zero",
+            "moving_average_calendar_days": 7,
+            "moving_average_minimum_known_days": 1,
+            "origin_mode": "fixed_origin_no_recursive_actuals",
+            "portfolio_final_test": "not_included_not_opened",
+            "required_prediction_coverage": 1.0,
+            "schema_version": "1.0.0",
+            "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+            "selection_metric": "mae",
+            "selection_role": "validation_only_per_fold",
+            "tie_break": "candidate_order"
+          },
+          "cpu_threads": 1,
+          "fit_cpu_seconds": 90.0,
+          "fit_rss_bytes": 1073741824,
+          "fit_wall_seconds": 120.0,
+          "grid": "one_frozen_configuration_per_family",
+          "hgb": {
+            "categorical_features": null,
+            "early_stopping": false,
+            "l2_regularization": 0.0,
+            "learning_rate": 0.1,
+            "loss": "squared_error",
+            "max_bins": 255,
+            "max_iter": 100,
+            "max_leaf_nodes": 31,
+            "min_samples_leaf": 20,
+            "validation_fraction": null
+          },
+          "legacy_retailops_serving": "unchanged_rejection_not_overridden",
+          "max_matrix_bytes": 67108864,
+          "max_train_rows": 50000,
+          "minimum_relative_improvement": 0.05,
+          "monitor_interval_seconds": 0.05,
+          "portfolio_final_test": "not_included_not_opened",
+          "postprocessing": "clip_negative_to_zero_no_rounding",
+          "primary_metric": "validation_mae",
+          "random_state": 42,
+          "rf": {
+            "bootstrap": true,
+            "criterion": "squared_error",
+            "max_depth": 12,
+            "max_features": 1.0,
+            "min_samples_leaf": 2,
+            "min_samples_split": 2,
+            "n_estimators": 64,
+            "n_jobs": 1
+          },
+          "schema_version": "1.0.0",
+          "selection_use": "diagnostic_only_pending_04_6_to_04_8",
+          "strategy": "direct_global_with_horizon_feature",
+          "target_type": "observed_sales_units",
+          "tie_break": "baseline_then_rf_then_hgb"
+        },
+        "portfolio_final_test": "not_included_not_opened",
+        "purge_days": 15,
+        "selection": "validation_only_independently_per_fold",
+        "step_days": 14,
+        "validation_days": 14,
+        "version": "forecast-chronological-backtest-1.0.0"
+      },
+      "excluded_feature_rows": {
+        "pooled:development_holdout": 16562,
+        "pooled:validation": 16198,
+        "rolling-01:development_holdout": 6097,
+        "rolling-01:validation": 5096,
+        "rolling-02:development_holdout": 5369,
+        "rolling-02:validation": 5096,
+        "rolling-03:development_holdout": 5096,
+        "rolling-03:validation": 6006
+      },
+      "feature_set_id": "features-sha256-b1a38743b5db24a48e7de12d19ca0bff63bd046ee798ebb1cac2ec76611e2754",
+      "gates": [
+        {
+          "feature_eligible_rows": 1608,
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "zero"
+        },
+        {
+          "feature_eligible_rows": 21540,
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "low"
+        },
+        {
+          "feature_eligible_rows": 6876,
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "medium"
+        },
+        {
+          "feature_eligible_rows": 552,
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "high"
+        },
+        {
+          "feature_eligible_rows": 1863,
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "zero"
+        },
+        {
+          "feature_eligible_rows": 20423,
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "low"
+        },
+        {
+          "feature_eligible_rows": 6473,
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "medium"
+        },
+        {
+          "feature_eligible_rows": 816,
+          "fold": "rolling-01",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "high"
+        },
+        {
+          "feature_eligible_rows": 1308,
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "zero"
+        },
+        {
+          "feature_eligible_rows": 21864,
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "low"
+        },
+        {
+          "feature_eligible_rows": 6708,
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "medium"
+        },
+        {
+          "feature_eligible_rows": 696,
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "high"
+        },
+        {
+          "feature_eligible_rows": 1766,
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "zero"
+        },
+        {
+          "feature_eligible_rows": 21237,
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "low"
+        },
+        {
+          "feature_eligible_rows": 6772,
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "medium"
+        },
+        {
+          "feature_eligible_rows": 528,
+          "fold": "rolling-02",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "high"
+        },
+        {
+          "feature_eligible_rows": 1799,
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "zero"
+        },
+        {
+          "feature_eligible_rows": 20584,
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "low"
+        },
+        {
+          "feature_eligible_rows": 6479,
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "medium"
+        },
+        {
+          "feature_eligible_rows": 804,
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "high"
+        },
+        {
+          "feature_eligible_rows": 1212,
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "zero"
+        },
+        {
+          "feature_eligible_rows": 22416,
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "low"
+        },
+        {
+          "feature_eligible_rows": 6384,
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "medium"
+        },
+        {
+          "feature_eligible_rows": 564,
+          "fold": "rolling-03",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "high"
+        },
+        {
+          "feature_eligible_rows": 4715,
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "zero"
+        },
+        {
+          "feature_eligible_rows": 63988,
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "low"
+        },
+        {
+          "feature_eligible_rows": 20063,
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "medium"
+        },
+        {
+          "feature_eligible_rows": 2052,
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "role": "validation",
+          "status": "passed",
+          "volume": "high"
+        },
+        {
+          "feature_eligible_rows": 4841,
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "zero"
+        },
+        {
+          "feature_eligible_rows": 64076,
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "low"
+        },
+        {
+          "feature_eligible_rows": 19629,
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "medium"
+        },
+        {
+          "feature_eligible_rows": 1908,
+          "fold": "pooled",
+          "minimum_rows": 30,
+          "role": "development_holdout",
+          "status": "passed",
+          "volume": "high"
+        }
+      ],
+      "model_fits": 0,
+      "model_quality_qualified": false,
+      "scope": "origin-known feature sample upper bounds before labels or training",
+      "status": "passed",
+      "target_outcomes_read": false
+    },
+    "status": "passed",
+    "step": "feature_preflight",
+    "test_metrics_evaluated": false
+  },
+  "ai04-quality-v2-split-preparation": {
+    "counts": {
+      "closed_target": 48321,
+      "purged_origin": 443352,
+      "rolling-01:development_holdout:eligible": 29575,
+      "rolling-01:development_holdout:total": 35672,
+      "rolling-01:purged:eligible": 0,
+      "rolling-01:purged:total": 147784,
+      "rolling-01:train:eligible": 30303,
+      "rolling-01:train:total": 35672,
+      "rolling-01:validation:eligible": 30576,
+      "rolling-01:validation:total": 35672,
+      "rolling-02:development_holdout:eligible": 30303,
+      "rolling-02:development_holdout:total": 35672,
+      "rolling-02:purged:eligible": 0,
+      "rolling-02:purged:total": 147784,
+      "rolling-02:train:eligible": 30576,
+      "rolling-02:train:total": 35672,
+      "rolling-02:validation:eligible": 30576,
+      "rolling-02:validation:total": 35672,
+      "rolling-03:development_holdout:eligible": 30576,
+      "rolling-03:development_holdout:total": 35672,
+      "rolling-03:purged:eligible": 0,
+      "rolling-03:purged:total": 147784,
+      "rolling-03:train:eligible": 30576,
+      "rolling-03:train:total": 35672,
+      "rolling-03:validation:eligible": 29666,
+      "rolling-03:validation:total": 35672
+    },
+    "curated_dir": "/private/tmp/retailops-ai-04-forecasting/data/generated/curated/curated-sha256-496f5a3934428c5f5eb1911eb7fcf25faf7ff1bb85b4389b1e5b26c039d5ccbf",
+    "feature_dir": "/private/tmp/retailops-ai-04-forecasting/data/generated/features/features-sha256-b1a38743b5db24a48e7de12d19ca0bff63bd046ee798ebb1cac2ec76611e2754",
+    "model_fits": 0,
+    "split_dir": "/private/tmp/retailops-ai-04-forecasting/data/generated/functional-splits/split-sha256-b061fc47d6e31f48e1e050f19f99f27d60ef60132495f7c095e8ebd24952bf19",
+    "split_id": "split-sha256-b061fc47d6e31f48e1e050f19f99f27d60ef60132495f7c095e8ebd24952bf19",
+    "split_policy": {
+      "folds": [
+        {
+          "development_holdout": {
+            "end": "2026-08-11",
+            "start": "2026-07-29"
+          },
+          "evaluation_cutoff": "2026-08-26T23:59:59Z",
+          "name": "rolling-01",
+          "purge_days": 15,
+          "selection_cutoff": "2026-07-28T23:59:59Z",
+          "train": {
+            "end": "2026-06-14",
+            "start": "2026-06-01"
+          },
+          "training_cutoff": "2026-06-29T23:59:59Z",
+          "validation": {
+            "end": "2026-07-13",
+            "start": "2026-06-30"
+          }
+        },
+        {
+          "development_holdout": {
+            "end": "2026-08-25",
+            "start": "2026-08-12"
+          },
+          "evaluation_cutoff": "2026-09-09T23:59:59Z",
+          "name": "rolling-02",
+          "purge_days": 15,
+          "selection_cutoff": "2026-08-11T23:59:59Z",
+          "train": {
+            "end": "2026-06-28",
+            "start": "2026-06-15"
+          },
+          "training_cutoff": "2026-07-13T23:59:59Z",
+          "validation": {
+            "end": "2026-07-27",
+            "start": "2026-07-14"
+          }
+        },
+        {
+          "development_holdout": {
+            "end": "2026-09-08",
+            "start": "2026-08-26"
+          },
+          "evaluation_cutoff": "2026-09-23T23:59:59Z",
+          "name": "rolling-03",
+          "purge_days": 15,
+          "selection_cutoff": "2026-08-25T23:59:59Z",
+          "train": {
+            "end": "2026-07-12",
+            "start": "2026-06-29"
+          },
+          "training_cutoff": "2026-07-27T23:59:59Z",
+          "validation": {
+            "end": "2026-08-10",
+            "start": "2026-07-28"
+          }
+        }
+      ],
+      "label_policy": "latest_complete_known_version_at_role_cutoff",
+      "minimum_eligible_rows_per_role": 1,
+      "missing_label": "censored_never_zero",
+      "portfolio_final_test": "not_included_not_opened",
+      "protocol": "fixed_origin_development_only",
+      "version": "forecast-development-split-1.0.0"
+    },
+    "status": "passed",
+    "step": "split_verified",
+    "test_metrics_evaluated": false
+  }
+}

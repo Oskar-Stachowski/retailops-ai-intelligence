@@ -1,0 +1,137 @@
+{
+  "$id": "urn:retailops:forecast:panel_policy:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "closed_history_policy": {
+      "const": "confirmed_closed_zero_is_known_history",
+      "default": "confirmed_closed_zero_is_known_history",
+      "title": "Closed History Policy",
+      "type": "string"
+    },
+    "history_days": {
+      "const": 28,
+      "default": 28,
+      "title": "History Days",
+      "type": "integer"
+    },
+    "lag_days": {
+      "default": [
+        1,
+        7,
+        14,
+        28
+      ],
+      "maxItems": 4,
+      "minItems": 4,
+      "prefixItems": [
+        {
+          "const": 1,
+          "type": "integer"
+        },
+        {
+          "const": 7,
+          "type": "integer"
+        },
+        {
+          "const": 14,
+          "type": "integer"
+        },
+        {
+          "const": 28,
+          "type": "integer"
+        }
+      ],
+      "title": "Lag Days",
+      "type": "array"
+    },
+    "lag_definition": {
+      "const": "sales_at_origin_date_plus_1_minus_k",
+      "default": "sales_at_origin_date_plus_1_minus_k",
+      "title": "Lag Definition",
+      "type": "string"
+    },
+    "minimum_active_history_days": {
+      "const": 28,
+      "default": 28,
+      "title": "Minimum Active History Days",
+      "type": "integer"
+    },
+    "minimum_known_history_days": {
+      "const": 7,
+      "default": 7,
+      "title": "Minimum Known History Days",
+      "type": "integer"
+    },
+    "preprocessing": {
+      "const": "none_no_fitted_encoding_or_imputation",
+      "default": "none_no_fitted_encoding_or_imputation",
+      "title": "Preprocessing",
+      "type": "string"
+    },
+    "promotion_policy": {
+      "const": "highest_priority_known_offer_without_future_basket_quantity",
+      "default": "highest_priority_known_offer_without_future_basket_quantity",
+      "title": "Promotion Policy",
+      "type": "string"
+    },
+    "rolling_days": {
+      "default": [
+        7,
+        14,
+        28
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "prefixItems": [
+        {
+          "const": 7,
+          "type": "integer"
+        },
+        {
+          "const": 14,
+          "type": "integer"
+        },
+        {
+          "const": 28,
+          "type": "integer"
+        }
+      ],
+      "title": "Rolling Days",
+      "type": "array"
+    },
+    "rolling_definition": {
+      "const": "origin_date_plus_1_minus_window_through_origin_date",
+      "default": "origin_date_plus_1_minus_window_through_origin_date",
+      "title": "Rolling Definition",
+      "type": "string"
+    },
+    "rolling_missing_policy": {
+      "const": "available_observations_only_with_count",
+      "default": "available_observations_only_with_count",
+      "title": "Rolling Missing Policy",
+      "type": "string"
+    },
+    "rolling_std_ddof": {
+      "default": 0,
+      "maximum": 0,
+      "minimum": 0,
+      "title": "Rolling Std Ddof",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "target_closed_policy": {
+      "const": "retain_row_not_scoring_eligible",
+      "default": "retain_row_not_scoring_eligible",
+      "title": "Target Closed Policy",
+      "type": "string"
+    }
+  },
+  "title": "PanelPolicy",
+  "type": "object"
+}

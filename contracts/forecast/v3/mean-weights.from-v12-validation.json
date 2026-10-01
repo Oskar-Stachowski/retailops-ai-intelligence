@@ -1,0 +1,516 @@
+{
+  "development_campaign_id": "functional-v12-campaign-sha256-f845efee1a294f1bc3a4cb1c8541bac670903f80ed54a63cd94d3b3384c2cefb",
+  "holdout_labels_used": false,
+  "missing_group": "retain_reference_mean",
+  "qualification_use": "fixed_before_new_independent_test",
+  "selector_receipt_sha256": "1c7a2943f8617becc31c5f2283793f224982d78fda32cdc79e6e7befd61d64f2",
+  "standard_validation_receipt_sha256": "78f66484e54b7e2c57a083105f56c33e018feec3792b6779766989b3c30c8e0d",
+  "version": "development-validation-mean-weights-1.0.0",
+  "weights": [
+    {
+      "category": "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "28b88987-7084-5c08-a3c5-2b8ffa807492",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 1.0
+    },
+    {
+      "category": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 1.0
+    },
+    {
+      "category": "445dff34-464a-5d4e-b54d-324bf9aca10e",
+      "fold": "rolling-01",
+      "selection_status": "no_admissible_validation_weight",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 1.0
+    },
+    {
+      "category": "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+      "fold": "rolling-01",
+      "selection_status": "no_admissible_validation_weight",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.75
+    },
+    {
+      "category": "d916b3fd-e110-5a11-af32-41fdef07aaa0",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 1.0
+    },
+    {
+      "category": "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 1.0
+    },
+    {
+      "category": "28b88987-7084-5c08-a3c5-2b8ffa807492",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.75
+    },
+    {
+      "category": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 1.0
+    },
+    {
+      "category": "445dff34-464a-5d4e-b54d-324bf9aca10e",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 1.0
+    },
+    {
+      "category": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 1.0
+    },
+    {
+      "category": "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 1.0
+    },
+    {
+      "category": "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 1.0
+    },
+    {
+      "category": "d916b3fd-e110-5a11-af32-41fdef07aaa0",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 1.0
+    },
+    {
+      "category": "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "28b88987-7084-5c08-a3c5-2b8ffa807492",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "445dff34-464a-5d4e-b54d-324bf9aca10e",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "d916b3fd-e110-5a11-af32-41fdef07aaa0",
+      "fold": "rolling-01",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.25
+    },
+    {
+      "category": "28b88987-7084-5c08-a3c5-2b8ffa807492",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.5
+    },
+    {
+      "category": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.25
+    },
+    {
+      "category": "445dff34-464a-5d4e-b54d-324bf9aca10e",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.25
+    },
+    {
+      "category": "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.25
+    },
+    {
+      "category": "d916b3fd-e110-5a11-af32-41fdef07aaa0",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.25
+    },
+    {
+      "category": "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.5
+    },
+    {
+      "category": "28b88987-7084-5c08-a3c5-2b8ffa807492",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.5
+    },
+    {
+      "category": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.5
+    },
+    {
+      "category": "445dff34-464a-5d4e-b54d-324bf9aca10e",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.5
+    },
+    {
+      "category": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.5
+    },
+    {
+      "category": "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.5
+    },
+    {
+      "category": "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.5
+    },
+    {
+      "category": "d916b3fd-e110-5a11-af32-41fdef07aaa0",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.5
+    },
+    {
+      "category": "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.25
+    },
+    {
+      "category": "28b88987-7084-5c08-a3c5-2b8ffa807492",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.25
+    },
+    {
+      "category": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.25
+    },
+    {
+      "category": "445dff34-464a-5d4e-b54d-324bf9aca10e",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.5
+    },
+    {
+      "category": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.25
+    },
+    {
+      "category": "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.25
+    },
+    {
+      "category": "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.25
+    },
+    {
+      "category": "d916b3fd-e110-5a11-af32-41fdef07aaa0",
+      "fold": "rolling-02",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.25
+    },
+    {
+      "category": "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.25
+    },
+    {
+      "category": "28b88987-7084-5c08-a3c5-2b8ffa807492",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "445dff34-464a-5d4e-b54d-324bf9aca10e",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 1.0
+    },
+    {
+      "category": "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "d916b3fd-e110-5a11-af32-41fdef07aaa0",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "high",
+      "weight": 0.0
+    },
+    {
+      "category": "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.75
+    },
+    {
+      "category": "28b88987-7084-5c08-a3c5-2b8ffa807492",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 1.0
+    },
+    {
+      "category": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 1.0
+    },
+    {
+      "category": "445dff34-464a-5d4e-b54d-324bf9aca10e",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 1.0
+    },
+    {
+      "category": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.75
+    },
+    {
+      "category": "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.75
+    },
+    {
+      "category": "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.75
+    },
+    {
+      "category": "d916b3fd-e110-5a11-af32-41fdef07aaa0",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "low",
+      "weight": 0.75
+    },
+    {
+      "category": "197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "28b88987-7084-5c08-a3c5-2b8ffa807492",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "445dff34-464a-5d4e-b54d-324bf9aca10e",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.0
+    },
+    {
+      "category": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "655e5f7a-c40d-5c55-b071-175c1b2d6502",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 1.0
+    },
+    {
+      "category": "c8956032-5a0a-57f1-9118-b9b2c526cbda",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.0
+    },
+    {
+      "category": "d916b3fd-e110-5a11-af32-41fdef07aaa0",
+      "fold": "rolling-03",
+      "selection_status": "selected",
+      "volume": "medium",
+      "weight": 0.0
+    }
+  ],
+  "zero_volume": "unchanged_separate_v12_zero_estimator"
+}

@@ -1,0 +1,21 @@
+{
+  "aws_calls": 0,
+  "comparison_id": "forecast-model-comparison-sha256-b4dc6946a69971c7c8130bf400ed779eaa6b44b410d6ba7df70300d9f521fcab",
+  "copied_parents_outside_checkout": true,
+  "forecast_model_status": "not_ready",
+  "implementation_loaded_from_wheel": true,
+  "matches_checkout_comparison": true,
+  "model_default_config_packaged": true,
+  "prediction_rows": 100380,
+  "schemas_packaged": [
+    "model_policy.schema.json",
+    "model_pipeline.schema.json",
+    "model_prediction.schema.json",
+    "model_comparison.schema.json",
+    "forecast_value.schema.json"
+  ],
+  "scope": "extracted wheel outside checkout, copied immutable temporal parents; fit, shared evaluator, independent retraining/replay",
+  "status": "passed",
+  "wheel_sha256": "3f7976e0ee8f0064addbf72f40fdee7bba4f5f0f2658e668668992d28e3fbcd2",
+  "worker_implementation_pinned_to_loaded_package": true
+}

@@ -1,0 +1,115 @@
+{
+  "$id": "urn:retailops:forecast:membership:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "business_timezone": {
+      "const": "UTC",
+      "title": "Business Timezone",
+      "type": "string"
+    },
+    "channel": {
+      "enum": [
+        "store",
+        "online"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "cutoff_policy": {
+      "const": "end_of_day_second_v1",
+      "title": "Cutoff Policy",
+      "type": "string"
+    },
+    "eligible": {
+      "title": "Eligible",
+      "type": "boolean"
+    },
+    "fold": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Fold",
+      "type": "string"
+    },
+    "forecast_origin": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Forecast Origin",
+      "type": "string"
+    },
+    "horizon_days": {
+      "maximum": 14,
+      "minimum": 1,
+      "title": "Horizon Days",
+      "type": "integer"
+    },
+    "label_content_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Label Content Sha256"
+    },
+    "product_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "reasons": {
+      "items": {
+        "enum": [
+          "purged_origin",
+          "insufficient_history",
+          "stale_history",
+          "unknown_calendar",
+          "closed_target",
+          "censored_label"
+        ],
+        "type": "string"
+      },
+      "title": "Reasons",
+      "type": "array"
+    },
+    "role": {
+      "enum": [
+        "train",
+        "validation",
+        "development_holdout",
+        "purged"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "selling_location_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Selling Location Id",
+      "type": "string"
+    },
+    "target_date": {
+      "format": "date",
+      "title": "Target Date",
+      "type": "string"
+    }
+  },
+  "required": [
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "forecast_origin",
+    "business_timezone",
+    "cutoff_policy",
+    "target_date",
+    "horizon_days",
+    "fold",
+    "role",
+    "eligible",
+    "reasons",
+    "label_content_sha256"
+  ],
+  "title": "Membership",
+  "type": "object"
+}

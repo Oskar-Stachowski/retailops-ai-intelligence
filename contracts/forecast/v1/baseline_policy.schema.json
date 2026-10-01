@@ -1,0 +1,124 @@
+{
+  "$id": "urn:retailops:forecast:baseline_policy:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "candidates": {
+      "default": [
+        "last_observed",
+        "moving_average",
+        "seasonal_naive7"
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "prefixItems": [
+        {
+          "const": "last_observed",
+          "type": "string"
+        },
+        {
+          "const": "moving_average",
+          "type": "string"
+        },
+        {
+          "const": "seasonal_naive7",
+          "type": "string"
+        }
+      ],
+      "title": "Candidates",
+      "type": "array"
+    },
+    "closed_history": {
+      "const": "confirmed_closed_zero_is_observed",
+      "default": "confirmed_closed_zero_is_observed",
+      "title": "Closed History",
+      "type": "string"
+    },
+    "common_keys": {
+      "const": "all_split_memberships_no_model_specific_drops",
+      "default": "all_split_memberships_no_model_specific_drops",
+      "title": "Common Keys",
+      "type": "string"
+    },
+    "incomplete_candidate": {
+      "const": "not_ready_no_selection_no_partial_metrics",
+      "default": "not_ready_no_selection_no_partial_metrics",
+      "title": "Incomplete Candidate",
+      "type": "string"
+    },
+    "missing_history": {
+      "const": "skip_unknown_never_impute_zero",
+      "default": "skip_unknown_never_impute_zero",
+      "title": "Missing History",
+      "type": "string"
+    },
+    "moving_average_calendar_days": {
+      "default": 7,
+      "enum": [
+        7,
+        14,
+        28
+      ],
+      "title": "Moving Average Calendar Days",
+      "type": "integer"
+    },
+    "moving_average_minimum_known_days": {
+      "default": 1,
+      "maximum": 28,
+      "minimum": 1,
+      "title": "Moving Average Minimum Known Days",
+      "type": "integer"
+    },
+    "origin_mode": {
+      "const": "fixed_origin_no_recursive_actuals",
+      "default": "fixed_origin_no_recursive_actuals",
+      "title": "Origin Mode",
+      "type": "string"
+    },
+    "portfolio_final_test": {
+      "const": "not_included_not_opened",
+      "default": "not_included_not_opened",
+      "title": "Portfolio Final Test",
+      "type": "string"
+    },
+    "required_prediction_coverage": {
+      "default": 1.0,
+      "maximum": 1,
+      "minimum": 1,
+      "title": "Required Prediction Coverage",
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seasonal_missing": {
+      "const": "last_known_same_weekday_within_28_days_or_insufficient_data",
+      "default": "last_known_same_weekday_within_28_days_or_insufficient_data",
+      "title": "Seasonal Missing",
+      "type": "string"
+    },
+    "selection_metric": {
+      "const": "mae",
+      "default": "mae",
+      "title": "Selection Metric",
+      "type": "string"
+    },
+    "selection_role": {
+      "const": "validation_only_per_fold",
+      "default": "validation_only_per_fold",
+      "title": "Selection Role",
+      "type": "string"
+    },
+    "tie_break": {
+      "const": "candidate_order",
+      "default": "candidate_order",
+      "title": "Tie Break",
+      "type": "string"
+    }
+  },
+  "title": "BaselinePolicy",
+  "type": "object"
+}

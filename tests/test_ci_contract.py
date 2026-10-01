@@ -58,6 +58,16 @@ def test_make_check_includes_snapshot_gate():
     assert "scripts/update_intelligence_contracts.py --check" in makefile
     assert "scripts/update_access_contracts.py --check" in makefile
     assert "scripts/update_knowledge_contracts.py --check" in makefile
+    assert "scripts/update_forecast_contracts.py --check" in makefile
+    assert "forecast-calendar-check" in dependencies.split()
+    assert "forecast-features-check" in dependencies.split()
+    assert "forecast-manifests-check" in dependencies.split()
+    assert "forecast-baselines-check" in dependencies.split()
+    assert "forecast-models-check" in dependencies.split()
+    assert "forecast-backtest-check" in dependencies.split()
+    assert "forecast-quality-check" in dependencies.split()
+    assert "forecast-remediation-check" in dependencies.split()
+    assert "forecast-run-check" in dependencies.split()
 
 
 @pytest.mark.parametrize(

@@ -1,0 +1,169 @@
+{
+  "aws_calls": 0,
+  "forecast_model_status": "not_ready",
+  "policy": {
+    "aggregate": "pool_error_and_actual_sums_no_mean_of_wape",
+    "anchoring": "calendar_start_unused_origins_retained_as_purged",
+    "development_holdout_days": 6,
+    "development_holdout_use": "diagnostic_previously_observed_data_not_fresh_final_test",
+    "evaluation_overlap": "same_role_origins_must_not_repeat_across_folds",
+    "folds": 3,
+    "history": "earlier_observations_allowed_as_of_each_origin",
+    "initial_train_days": 6,
+    "label_tail_days": 15,
+    "minimum_eligible_rows_per_role": 1,
+    "mode": "expanding",
+    "model": {
+      "baseline": {
+        "candidates": [
+          "last_observed",
+          "moving_average",
+          "seasonal_naive7"
+        ],
+        "closed_history": "confirmed_closed_zero_is_observed",
+        "common_keys": "all_split_memberships_no_model_specific_drops",
+        "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+        "missing_history": "skip_unknown_never_impute_zero",
+        "moving_average_calendar_days": 7,
+        "moving_average_minimum_known_days": 1,
+        "origin_mode": "fixed_origin_no_recursive_actuals",
+        "portfolio_final_test": "not_included_not_opened",
+        "required_prediction_coverage": 1.0,
+        "schema_version": "1.0.0",
+        "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+        "selection_metric": "mae",
+        "selection_role": "validation_only_per_fold",
+        "tie_break": "candidate_order"
+      },
+      "cpu_threads": 1,
+      "fit_cpu_seconds": 90.0,
+      "fit_rss_bytes": 1073741824,
+      "fit_wall_seconds": 120.0,
+      "grid": "one_frozen_configuration_per_family",
+      "hgb": {
+        "categorical_features": null,
+        "early_stopping": false,
+        "l2_regularization": 0.0,
+        "learning_rate": 0.1,
+        "loss": "squared_error",
+        "max_bins": 255,
+        "max_iter": 100,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "validation_fraction": null
+      },
+      "legacy_retailops_serving": "unchanged_rejection_not_overridden",
+      "max_matrix_bytes": 67108864,
+      "max_train_rows": 50000,
+      "minimum_relative_improvement": 0.05,
+      "monitor_interval_seconds": 0.05,
+      "portfolio_final_test": "not_included_not_opened",
+      "postprocessing": "clip_negative_to_zero_no_rounding",
+      "primary_metric": "validation_mae",
+      "random_state": 42,
+      "rf": {
+        "bootstrap": true,
+        "criterion": "squared_error",
+        "max_depth": 12,
+        "max_features": 1.0,
+        "min_samples_leaf": 2,
+        "min_samples_split": 2,
+        "n_estimators": 64,
+        "n_jobs": 1
+      },
+      "schema_version": "1.0.0",
+      "selection_use": "diagnostic_only_pending_04_6_to_04_8",
+      "strategy": "direct_global_with_horizon_feature",
+      "target_type": "observed_sales_units",
+      "tie_break": "baseline_then_rf_then_hgb"
+    },
+    "portfolio_final_test": "not_included_not_opened",
+    "purge_days": 15,
+    "selection": "validation_only_independently_per_fold",
+    "step_days": 6,
+    "validation_days": 6,
+    "version": "forecast-chronological-backtest-1.0.0"
+  },
+  "pooled_zero_example": {
+    "absolute_actual_sum": 1000.0,
+    "absolute_error_sum": 100.0,
+    "eligible_rows": 2,
+    "mae": 50.0,
+    "predicted_rows": 2,
+    "status": "passed",
+    "wape": 0.1,
+    "wape_status": "passed"
+  },
+  "portfolio_final_test": "not_included_not_opened",
+  "resolved_split": {
+    "folds": [
+      {
+        "development_holdout": {
+          "end": "2026-07-05",
+          "start": "2026-06-30"
+        },
+        "evaluation_cutoff": "2026-07-20T23:59:59Z",
+        "name": "expanding-01",
+        "purge_days": 15,
+        "selection_cutoff": "2026-06-29T23:59:59Z",
+        "train": {
+          "end": "2026-05-24",
+          "start": "2026-05-19"
+        },
+        "training_cutoff": "2026-06-08T23:59:59Z",
+        "validation": {
+          "end": "2026-06-14",
+          "start": "2026-06-09"
+        }
+      },
+      {
+        "development_holdout": {
+          "end": "2026-07-11",
+          "start": "2026-07-06"
+        },
+        "evaluation_cutoff": "2026-07-26T23:59:59Z",
+        "name": "expanding-02",
+        "purge_days": 15,
+        "selection_cutoff": "2026-07-05T23:59:59Z",
+        "train": {
+          "end": "2026-05-30",
+          "start": "2026-05-19"
+        },
+        "training_cutoff": "2026-06-14T23:59:59Z",
+        "validation": {
+          "end": "2026-06-20",
+          "start": "2026-06-15"
+        }
+      },
+      {
+        "development_holdout": {
+          "end": "2026-07-17",
+          "start": "2026-07-12"
+        },
+        "evaluation_cutoff": "2026-08-01T23:59:59Z",
+        "name": "expanding-03",
+        "purge_days": 15,
+        "selection_cutoff": "2026-07-11T23:59:59Z",
+        "train": {
+          "end": "2026-06-05",
+          "start": "2026-05-19"
+        },
+        "training_cutoff": "2026-06-20T23:59:59Z",
+        "validation": {
+          "end": "2026-06-26",
+          "start": "2026-06-21"
+        }
+      }
+    ],
+    "label_policy": "latest_complete_known_version_at_role_cutoff",
+    "minimum_eligible_rows_per_role": 1,
+    "missing_label": "censored_never_zero",
+    "portfolio_final_test": "not_included_not_opened",
+    "protocol": "fixed_origin_development_only",
+    "version": "forecast-development-split-1.0.0"
+  },
+  "scope": "chronological planner and pooled metric components only",
+  "seconds": 0.001,
+  "status": "passed",
+  "temporal_qualification": "not_ready"
+}

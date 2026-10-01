@@ -1,0 +1,95 @@
+{
+  "acceptance_basis": "explicit_owner_acceptance_of_enumerated_deviations",
+  "accepted_deviations": [
+    {
+      "baseline_mse": 75.9235980283434,
+      "candidate_mse": 76.07904214977603,
+      "dimension": "category",
+      "failed_reasons": [
+        "mean_mse_regression"
+      ],
+      "fold": "rolling-01",
+      "relative_mse_regression_pct": 0.20473755916388114,
+      "role": "development_holdout",
+      "value": "655e5f7a-c40d-5c55-b071-175c1b2d6502"
+    },
+    {
+      "baseline_mse": 63.43517285981103,
+      "candidate_mse": 63.435565786076204,
+      "dimension": "category",
+      "failed_reasons": [
+        "mean_mse_regression"
+      ],
+      "fold": "rolling-03",
+      "relative_mse_regression_pct": 0.0006194138794990423,
+      "role": "development_holdout",
+      "value": "655e5f7a-c40d-5c55-b071-175c1b2d6502"
+    },
+    {
+      "baseline_mse": 56.026941195456835,
+      "candidate_mse": 56.05119618490188,
+      "dimension": "category",
+      "failed_reasons": [
+        "mean_mse_regression"
+      ],
+      "fold": "rolling-03",
+      "relative_mse_regression_pct": 0.043291653849952816,
+      "role": "development_holdout",
+      "value": "d916b3fd-e110-5a11-af32-41fdef07aaa0"
+    }
+  ],
+  "authorization_text": "doprowadź AI 04 do ready. uznajemy V12 za finalne",
+  "authorized_at": "2026-10-01T18:46:08.563655+00:00",
+  "authorized_by": "project_owner",
+  "business_impact_validated": false,
+  "campaign_id": "functional-v12-campaign-sha256-f845efee1a294f1bc3a4cb1c8541bac670903f80ed54a63cd94d3b3384c2cefb",
+  "changes_original_artifacts": false,
+  "changes_quality_protocol": false,
+  "effective_on": "merge_of_acceptance_commit_through_protected_main_and_successful_required_ci",
+  "evidence": {
+    "completion.json": {
+      "sha256": "ee84614e1188a7c1595fffb8d3c978441fa762a445c780ba794662e73e244c30",
+      "size_bytes": 1675
+    },
+    "detached-verification.json": {
+      "sha256": "e0608d6d85682e588ccf070e48c27faca635b6f90e102fcc868aa6b846cd2c2c",
+      "size_bytes": 955
+    },
+    "export-receipt.json": {
+      "sha256": "f72f14bc7ab3984971ce4af1273ea432adaf5693272a7d83554e04c728c5d734",
+      "size_bytes": 727
+    },
+    "metrics.json": {
+      "sha256": "ba376ed1ef5cff27e2d43e1d255b2296b5b26ac878617b1d5e88f7624e743558",
+      "size_bytes": 456702
+    },
+    "replay_receipt.json": {
+      "sha256": "339b25e7881e6a3bd34031468fb266bdd2d135d13a0c4cf8afe7de7e0b348f17",
+      "size_bytes": 24246
+    },
+    "run_manifest.json": {
+      "sha256": "29bf6837ca2cb7504213168743239b037041f375763bc8f01ae28c1f6d09b26e",
+      "size_bytes": 113148
+    }
+  },
+  "freeze_id": "functional-v12-freeze-sha256-c2c375e5bdcb55454a5aaf3775ed60dd2647f0ebbdeac93b264be3b8d92c5c95",
+  "original_model_status": "not_ready",
+  "original_quality_status": "not_ready",
+  "original_segment_counts": {
+    "failed": 3,
+    "passed": 221
+  },
+  "portfolio_final_test_opened": false,
+  "production_deployment_authorized": false,
+  "registry_promotion_authorized": false,
+  "replay_id": "functional-v12-replay-sha256-fdd96895ce52dd70bba4a879f1efc9acda660c698cf550b03be0ad0e7b72e7a3",
+  "run_id": "functional-v12-run-sha256-345a725d435a477374292cb9483350fb5c50c8ba87d06668c727e0a9f964fb6b",
+  "scope": "development_stage_final_deliverable",
+  "selected_version": "v12",
+  "stage": "AI 04",
+  "stage_status": "ready",
+  "statistical_insignificance_established": false,
+  "superseded_campaign": "v13",
+  "superseded_workflow_run_id": 36900199207,
+  "version": "ai04-stage-acceptance-1.0.0"
+}

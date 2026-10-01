@@ -1,6 +1,8 @@
 # RetailOps AI Intelligence
 
-**Status: etapy 01 i 11 odebrane lokalnie.** Dalszy rozwój AI jest w realizacji.
+**Status: AI 04 — finalna v12, `ready` z zaakceptowanymi odstępstwami jakościowymi.**
+[Decyzja i zakres odbioru](docs/evidence/04-v12-acceptance.md) obowiązują po
+chronionym merge i Required CI. Etapy 01 i 11 są odebrane lokalnie.
 Obecny zakres: pakiet Python, konfiguracja, CLI, lokalny serwis diagnostyczny HTTP,
 PostgreSQL/pgvector, oddzielny MLflow, migracje, Compose, wykonywalne kontrakty
 danych/run/tool, lokalne poświadczenia i scope API oraz kontrole CI.

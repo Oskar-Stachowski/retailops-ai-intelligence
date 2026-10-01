@@ -1,0 +1,241 @@
+{
+  "$defs": {
+    "ArtifactReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "size_bytes",
+        "sha256"
+      ],
+      "title": "ArtifactReceipt",
+      "type": "object"
+    },
+    "ForecastRunDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "ai_code_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Ai Code Commit",
+          "type": "string"
+        },
+        "backtest_id": {
+          "title": "Backtest Id",
+          "type": "string"
+        },
+        "comparison_id": {
+          "title": "Comparison Id",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "data_seed": {
+          "minimum": 0,
+          "title": "Data Seed",
+          "type": "integer"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "feature_set_id": {
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "gate_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "title": "Gate Counts",
+          "type": "object"
+        },
+        "kind": {
+          "const": "forecast_evidence_export",
+          "default": "forecast_evidence_export",
+          "title": "Kind",
+          "type": "string"
+        },
+        "label_dataset_id": {
+          "title": "Label Dataset Id",
+          "type": "string"
+        },
+        "model_seed": {
+          "minimum": 0,
+          "title": "Model Seed",
+          "type": "integer"
+        },
+        "portfolio_final_test": {
+          "const": "not_included_not_opened",
+          "default": "not_included_not_opened",
+          "title": "Portfolio Final Test",
+          "type": "string"
+        },
+        "quality_id": {
+          "title": "Quality Id",
+          "type": "string"
+        },
+        "quality_status": {
+          "enum": [
+            "passed",
+            "failed",
+            "not_ready"
+          ],
+          "title": "Quality Status",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_code_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Source Code Commit",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "split_id": {
+          "title": "Split Id",
+          "type": "string"
+        },
+        "task": {
+          "const": "daily_observed_sales_forecast",
+          "default": "daily_observed_sales_forecast",
+          "title": "Task",
+          "type": "string"
+        },
+        "training_completed_at": {
+          "default": null,
+          "title": "Training Completed At",
+          "type": "null"
+        },
+        "training_run_id": {
+          "default": null,
+          "title": "Training Run Id",
+          "type": "null"
+        },
+        "training_started_at": {
+          "default": null,
+          "title": "Training Started At",
+          "type": "null"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "snapshot_id",
+        "curated_dataset_id",
+        "feature_set_id",
+        "label_dataset_id",
+        "split_id",
+        "comparison_id",
+        "backtest_id",
+        "quality_id",
+        "source_code_commit",
+        "ai_code_commit",
+        "dependency_lock_sha256",
+        "data_seed",
+        "model_seed",
+        "quality_status",
+        "gate_counts"
+      ],
+      "title": "ForecastRunDescriptor",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:forecast:run_manifest:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "completed_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Completed At",
+      "type": "string"
+    },
+    "descriptor": {
+      "$ref": "#/$defs/ForecastRunDescriptor"
+    },
+    "forecast_model_status": {
+      "const": "not_ready",
+      "default": "not_ready",
+      "title": "Forecast Model Status",
+      "type": "string"
+    },
+    "mlflow_run_id": {
+      "default": null,
+      "title": "Mlflow Run Id",
+      "type": "null"
+    },
+    "receipts": {
+      "additionalProperties": {
+        "$ref": "#/$defs/ArtifactReceipt"
+      },
+      "title": "Receipts",
+      "type": "object"
+    },
+    "registered_model_version": {
+      "default": null,
+      "title": "Registered Model Version",
+      "type": "null"
+    },
+    "run_id": {
+      "pattern": "^run-[0-9a-f]{32}$",
+      "title": "Run Id",
+      "type": "string"
+    },
+    "run_status": {
+      "const": "export_succeeded",
+      "default": "export_succeeded",
+      "title": "Run Status",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "serving_alias": {
+      "default": null,
+      "title": "Serving Alias",
+      "type": "null"
+    },
+    "started_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Started At",
+      "type": "string"
+    },
+    "training_executed_in_this_run": {
+      "const": false,
+      "default": false,
+      "title": "Training Executed In This Run",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "run_id",
+    "descriptor",
+    "started_at",
+    "completed_at",
+    "receipts"
+  ],
+  "title": "ForecastRunManifest",
+  "type": "object"
+}

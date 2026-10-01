@@ -1,0 +1,54 @@
+{
+  "base_commit": "5f5e56ba29d4183c1e9737d97268d0f93742745b",
+  "candidate_unscored_development_holdout_origins": [
+    [
+      "2026-07-29",
+      "2026-08-11"
+    ],
+    [
+      "2026-08-12",
+      "2026-08-25"
+    ],
+    [
+      "2026-08-26",
+      "2026-09-08"
+    ]
+  ],
+  "file_sha256": {
+    "contracts/forecast/v1/quality-remediation.campaign-v10.json": "15aada6373287fab0d2d2ac71fbdac4f4dbde6873e0336422f3fff5088c2add4",
+    "contracts/forecast/v2/quality.default.json": "6d12b07ac4783a6228385d58d221272abb70805d28a4892b9d91113dd8e1bec3",
+    "contracts/forecast/v2/quality_observation.schema.json": "865a30affe3da11c3e8a4c2148bb5721f564eab99fc306dfd60d5e255ffd5938",
+    "contracts/forecast/v2/quality_policy.schema.json": "b48618560fed8b22385cf4a60e85a40508dfbcddd8f505cb4f19e21dec158876",
+    "docs/evidence/04-quality-protocol-v2-retained.json": "8bc9d6a768fff59621a611b847b0356c639edd662d0f125f15ff4884e6bf47ac",
+    "scripts/forecast_quality_v2_preflight.py": "c1ddf6f5672aed9bb130866799e7c60d2511d4a2347cbf06e8b016beadbb2663",
+    "src/retailops_ai/forecasting/quality_v2.py": "7ac6a2bc7e11633704bff636e5fa86793ad19a2b261511964e3f9368ca4db0c2",
+    "src/retailops_ai/forecasting/quality_v2_contract.py": "6c87af085df7961f5245037dcbe6b1d4e2fcb3080efc2595dc60879b3b2466ce",
+    "tests/test_forecast_quality_v2.py": "b1b1d0770de9173b0bca4ea356a485b579d5437dc34b9004d78d135be9668239",
+    "tests/test_forecast_quality_v2_preflight.py": "161df1fef944afcec04b6e6508f54dc82b5eed904c3afb117f79d8e2ef4b562a",
+    "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587"
+  },
+  "frozen_at": "2026-09-30T13:11:11.203651+00:00",
+  "full_run_requirements": [
+    "independent_frozen_dual_target_model_and_baseline_contract",
+    "verify_all_as_of_and_calibration_receipts_and_required_segments",
+    "resolve_logical_input_budget_risk_without_row_dropping",
+    "at_least_16_GiB_free_recheck_immediately_before_start"
+  ],
+  "method_references": [
+    "https://arxiv.org/abs/0912.0902",
+    "https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf"
+  ],
+  "model_fits": 0,
+  "new_test_outcomes_evaluated": false,
+  "old_failures": "retained_without_rescoring_or_reclassification",
+  "original_v10_campaign_sha256": "15aada6373287fab0d2d2ac71fbdac4f4dbde6873e0336422f3fff5088c2add4",
+  "portfolio_final_test": "not_included_not_opened",
+  "protocol_version": "forecast-quality-2.0.0",
+  "scope": "evaluation_protocol_only_model_recipe_and_full_campaign_not_yet_qualified",
+  "snapshot_id": "snapshot-sha256-ffe024c05fe2400d904cd7753e550a4ff900f7e68fdc86f0cbba8ecdb54e12f7",
+  "source_dataset_id": "source-sha256-76994412fcabec320688429d7f88adcd80fe54fb70327b22c1456c27673c2d66",
+  "source_regenerated": false,
+  "source_repository_commit": "1d49c1afe2fab4840dbd00522d3553b03c5165a7",
+  "user_decision": "separate_median_MAE_and_mean_bias_both_required",
+  "v10_blocked_report_sha256": "0564b340cc915dcee470e7127c55c0f1afc949ba7c58c89696561867d4d1af6e"
+}

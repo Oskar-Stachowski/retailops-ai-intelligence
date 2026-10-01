@@ -1,0 +1,12 @@
+{
+  "artifact_files": 557,
+  "aws_calls": 0,
+  "detached_parent_replay": true,
+  "forecast_model_status": "not_ready",
+  "loaded_run_module": "/private/tmp/retailops-ai-04-forecasting/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/forecasting/run.py",
+  "new_training_fits": 0,
+  "quality_status": "not_ready",
+  "run_id": "run-77a5e7dbff215895baac1709ded1f73f",
+  "status": "passed",
+  "wheel_sha256": "65782e33506f839569efaaca05126ba13aa0ea4f6e52e06abadb0ac9aa6bec1c"
+}

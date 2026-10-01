@@ -1,0 +1,57 @@
+{
+  "availability_delay_seconds": 0,
+  "availability_rule": "curated_available_at_lte_forecast_origin",
+  "business_timezone": "UTC",
+  "calendar_version": "forecast-utc-daily-1.0.0",
+  "cutoff_policy": "end_of_day_second_v1",
+  "cutoff_precision": "seconds",
+  "cutoff_time_utc": "23:59:59",
+  "day_step": "calendar_day_including_closed_days",
+  "delayed_data_policy": "exclude_until_a_new_origin_never_fill_missing_with_zero",
+  "evaluation_protocol": "fixed_origin_multi_horizon",
+  "forecast_grain": [
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "forecast_origin",
+    "target_date"
+  ],
+  "history_policy": "one_boundary_for_all_horizons_and_models",
+  "horizon_days": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "inventory_features_enabled": false,
+  "missing_availability_policy": "exclude",
+  "model_name": "retailops-demand-forecast",
+  "observation_grain": [
+    "business_date",
+    "product_id",
+    "selling_location_id",
+    "channel"
+  ],
+  "observation_history": "daily_demand_versions_latest_known_version",
+  "quantity_policy": "saleable_units_no_pack_or_fx_conversion",
+  "reporting_windows_days": [
+    7,
+    14
+  ],
+  "schema_version": "1.0.0",
+  "simulation_truth_features_enabled": false,
+  "source_operational_outputs_as_targets": false,
+  "source_timestamp_precision": "microseconds_no_rounding",
+  "target_type": "observed_sales_units",
+  "task": "daily_observed_sales_forecast"
+}

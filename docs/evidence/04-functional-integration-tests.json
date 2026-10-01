@@ -1,0 +1,36 @@
+{
+  "effective_tests": 975,
+  "files": {
+    "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-freeze-verification.xml": {
+      "sha256": "7e6f82a72cbc8954677b74c730b74e85caf3d9b6f1160aea2dc82eee6caee0b2",
+      "tests": 22
+    },
+    "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-full-regression.xml": {
+      "sha256": "bd84cbec86fb9d5ead9e6a991b6e3da604d3053c8c589e51c21c036ca0b3114e",
+      "tests": 974
+    },
+    "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-loopback-verification.xml": {
+      "sha256": "bcaedac90440e0b794e7cedc29b4f6eeb575f8e2930f4fc0743580c69b264973",
+      "tests": 2
+    }
+  },
+  "resolved_failures": [
+    {
+      "original_failure": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-full-regression.xml",
+      "passed_rerun": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-loopback-verification.xml",
+      "test": [
+        "tests.test_server_process",
+        "test_cli_serves_real_http_and_exits_cleanly"
+      ]
+    },
+    {
+      "original_failure": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-full-regression.xml",
+      "passed_rerun": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-loopback-verification.xml",
+      "test": [
+        "tests.test_server_process",
+        "test_local_credentials_and_scope_over_real_loopback"
+      ]
+    }
+  ],
+  "status": "passed"
+}

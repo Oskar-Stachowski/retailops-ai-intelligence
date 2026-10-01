@@ -1,0 +1,474 @@
+{
+  "$defs": {
+    "CodePin": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "pyarrow_version": {
+          "title": "Pyarrow Version",
+          "type": "string"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-manifests-1.0.0",
+          "default": "forecast-manifests-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code_files",
+        "code_sha256",
+        "dependency_lock_sha256",
+        "python_version",
+        "pyarrow_version"
+      ],
+      "title": "CodePin",
+      "type": "object"
+    },
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    },
+    "FeaturePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "closed_target": {
+          "const": "retain_in_coverage_exclude_from_scoring",
+          "default": "retain_in_coverage_exclude_from_scoring",
+          "title": "Closed Target",
+          "type": "string"
+        },
+        "cold_start": {
+          "const": "insufficient_data_no_prediction",
+          "default": "insufficient_data_no_prediction",
+          "title": "Cold Start",
+          "type": "string"
+        },
+        "columns": {
+          "default": [
+            "origin_lag_1_units",
+            "origin_lag_7_units",
+            "origin_lag_14_units",
+            "origin_lag_28_units",
+            "rolling_mean_7",
+            "rolling_std_7",
+            "rolling_count_7",
+            "rolling_mean_14",
+            "rolling_std_14",
+            "rolling_count_14",
+            "rolling_mean_28",
+            "rolling_std_28",
+            "rolling_count_28",
+            "target_weekday",
+            "target_week_of_year",
+            "target_month",
+            "target_quarter",
+            "target_is_weekend",
+            "target_is_public_holiday",
+            "target_is_easter",
+            "target_is_christmas",
+            "target_is_black_friday",
+            "target_is_cyber_monday",
+            "target_location_open",
+            "target_is_category_season",
+            "category_id",
+            "brand",
+            "country_code",
+            "calendar_jurisdiction",
+            "channel",
+            "planned_regular_price_minor_units",
+            "currency",
+            "planned_promotion_offered",
+            "planned_promotion_type",
+            "planned_promotion_discount_basis_points",
+            "planned_promotion_minimum_quantity"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "inventory": {
+          "const": "excluded",
+          "default": "excluded",
+          "title": "Inventory",
+          "type": "string"
+        },
+        "maximum_observation_age_days": {
+          "default": 3,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Maximum Observation Age Days",
+          "type": "integer"
+        },
+        "minimum_active_history_days": {
+          "default": 28,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Minimum Active History Days",
+          "type": "integer"
+        },
+        "minimum_known_history_days": {
+          "default": 7,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Minimum Known History Days",
+          "type": "integer"
+        },
+        "missing_features": {
+          "const": "retain_nullable_values_and_fit_train_only",
+          "default": "retain_nullable_values_and_fit_train_only",
+          "title": "Missing Features",
+          "type": "string"
+        },
+        "preprocessing": {
+          "$ref": "#/$defs/PreprocessingRecipe",
+          "default": {
+            "boolean_missing": "train_mode_tie_false_with_indicator",
+            "categorical": "train_vocabulary_one_hot_with_missing_and_unknown",
+            "entirely_missing": "constant_zero_with_indicator",
+            "fit_scope": "eligible_train_rows_of_one_fold_only",
+            "numeric_missing": "train_median_with_indicator",
+            "output_numbers": "float64_model_inputs_raw_money_remains_exact",
+            "scaling": "none",
+            "version": "forecast-train-only-1.0.0"
+          }
+        },
+        "stale_history": {
+          "const": "block_run_no_partial_success",
+          "default": "block_run_no_partial_success",
+          "title": "Stale History",
+          "type": "string"
+        },
+        "truth": {
+          "const": "excluded",
+          "default": "excluded",
+          "title": "Truth",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-features-1.0.0",
+          "default": "forecast-features-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "FeaturePolicy",
+      "type": "object"
+    },
+    "FittedDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "categorical": {
+          "items": {
+            "$ref": "#/$defs/Vocabulary"
+          },
+          "title": "Categorical",
+          "type": "array"
+        },
+        "code": {
+          "$ref": "#/$defs/CodePin"
+        },
+        "feature_set_id": {
+          "pattern": "^features-sha256-[0-9a-f]{64}$",
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "fold": {
+          "$ref": "#/$defs/FoldPlan"
+        },
+        "numeric": {
+          "items": {
+            "$ref": "#/$defs/NumericFill"
+          },
+          "title": "Numeric",
+          "type": "array"
+        },
+        "output_columns": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4096,
+          "title": "Output Columns",
+          "type": "array"
+        },
+        "policy": {
+          "$ref": "#/$defs/FeaturePolicy"
+        },
+        "recipe": {
+          "$ref": "#/$defs/PreprocessingRecipe"
+        },
+        "split_id": {
+          "pattern": "^split-sha256-[0-9a-f]{64}$",
+          "title": "Split Id",
+          "type": "string"
+        },
+        "train_content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Train Content Sha256",
+          "type": "string"
+        },
+        "train_rows": {
+          "maximum": 50000,
+          "minimum": 1,
+          "title": "Train Rows",
+          "type": "integer"
+        },
+        "version": {
+          "const": "forecast-preprocessing-1.0.0",
+          "default": "forecast-preprocessing-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feature_set_id",
+        "split_id",
+        "fold",
+        "policy",
+        "recipe",
+        "code",
+        "train_content_sha256",
+        "train_rows",
+        "numeric",
+        "categorical",
+        "output_columns"
+      ],
+      "title": "FittedDescriptor",
+      "type": "object"
+    },
+    "FoldPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "development_holdout": {
+          "$ref": "#/$defs/DateWindow"
+        },
+        "evaluation_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Evaluation Cutoff",
+          "type": "string"
+        },
+        "name": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "purge_days": {
+          "default": 15,
+          "maximum": 90,
+          "minimum": 14,
+          "title": "Purge Days",
+          "type": "integer"
+        },
+        "selection_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Selection Cutoff",
+          "type": "string"
+        },
+        "train": {
+          "$ref": "#/$defs/DateWindow"
+        },
+        "training_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Training Cutoff",
+          "type": "string"
+        },
+        "validation": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "name",
+        "train",
+        "validation",
+        "development_holdout",
+        "training_cutoff",
+        "selection_cutoff",
+        "evaluation_cutoff"
+      ],
+      "title": "FoldPlan",
+      "type": "object"
+    },
+    "NumericFill": {
+      "additionalProperties": false,
+      "properties": {
+        "known_count": {
+          "minimum": 0,
+          "title": "Known Count",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "train_median",
+            "train_mode",
+            "entirely_missing_constant_zero"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "value",
+        "known_count",
+        "reason"
+      ],
+      "title": "NumericFill",
+      "type": "object"
+    },
+    "PreprocessingRecipe": {
+      "additionalProperties": false,
+      "properties": {
+        "boolean_missing": {
+          "const": "train_mode_tie_false_with_indicator",
+          "default": "train_mode_tie_false_with_indicator",
+          "title": "Boolean Missing",
+          "type": "string"
+        },
+        "categorical": {
+          "const": "train_vocabulary_one_hot_with_missing_and_unknown",
+          "default": "train_vocabulary_one_hot_with_missing_and_unknown",
+          "title": "Categorical",
+          "type": "string"
+        },
+        "entirely_missing": {
+          "const": "constant_zero_with_indicator",
+          "default": "constant_zero_with_indicator",
+          "title": "Entirely Missing",
+          "type": "string"
+        },
+        "fit_scope": {
+          "const": "eligible_train_rows_of_one_fold_only",
+          "default": "eligible_train_rows_of_one_fold_only",
+          "title": "Fit Scope",
+          "type": "string"
+        },
+        "numeric_missing": {
+          "const": "train_median_with_indicator",
+          "default": "train_median_with_indicator",
+          "title": "Numeric Missing",
+          "type": "string"
+        },
+        "output_numbers": {
+          "const": "float64_model_inputs_raw_money_remains_exact",
+          "default": "float64_model_inputs_raw_money_remains_exact",
+          "title": "Output Numbers",
+          "type": "string"
+        },
+        "scaling": {
+          "const": "none",
+          "default": "none",
+          "title": "Scaling",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-train-only-1.0.0",
+          "default": "forecast-train-only-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "PreprocessingRecipe",
+      "type": "object"
+    },
+    "Vocabulary": {
+      "additionalProperties": false,
+      "properties": {
+        "categories": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "title": "Categories",
+          "type": "array"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "categories"
+      ],
+      "title": "Vocabulary",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:forecast:preprocessing:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "descriptor": {
+      "$ref": "#/$defs/FittedDescriptor"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "preprocessing_id": {
+      "pattern": "^forecast-preprocessing-sha256-[0-9a-f]{64}$",
+      "title": "Preprocessing Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "preprocessing_id",
+    "descriptor",
+    "generated_at"
+  ],
+  "title": "FittedState",
+  "type": "object"
+}

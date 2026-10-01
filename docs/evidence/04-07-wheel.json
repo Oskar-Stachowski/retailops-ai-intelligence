@@ -1,0 +1,21 @@
+{
+  "aws_calls": 0,
+  "copied_artifacts_outside_checkout": true,
+  "default_config_packaged": true,
+  "forecast_model_status": "not_ready",
+  "implementation_loaded_from_wheel": true,
+  "new_model_fits": 0,
+  "packaged_code_and_lock_pins_match": true,
+  "quality_id": "forecast-quality-sha256-66143185382f4f2f9353c0383b2661ac37e14293431959273878684014b6aab6",
+  "quality_status": "not_ready",
+  "receipt_and_segment_type_validation": true,
+  "schemas_packaged": [
+    "quality_policy.schema.json",
+    "quality_manifest.schema.json",
+    "segment_metric.schema.json"
+  ],
+  "scope": "detached wheel artifact integrity, segment types, code/config/schema packaging and metric/quantile components; no new source replay or fitting",
+  "status": "passed",
+  "wheel_sha256": "86dd8b7caac5a8130317415825223415cd29d59834b4245f859612aced01c067",
+  "zero_and_quantile_components": true
+}

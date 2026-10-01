@@ -1,0 +1,18 @@
+{
+  "isolated_validation": {
+    "campaign_id": "forecast-functional-sha256-0131e7295648e6e3a2cd1a98fac9cd686c7587820775f6f065a5f6798a683c26",
+    "code_files": 24,
+    "freeze_id": "functional-freeze-sha256-22192755c4e9cf000e5c4cae688f62f23a2860acf56ca16f0db3c30977df9805",
+    "heads": 5,
+    "isolated_campaign_load": "passed",
+    "quality_status": "not_ready"
+  },
+  "old_wheels_retained": {
+    "dist/functional-v2/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl": "176fedc15b4a9dbbc8195303ba29eb375c124fbc9422b3adb3a4fd0f6de63dd6",
+    "dist/quality-v2/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl": "2971e8544913ed1b3d69bacd5f98581102072519fc4a1b5cd1fa63db1a014e52",
+    "dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl": "acb465f6e63951c19026addd0620ca3c610b8894db320a756f395e946afad998"
+  },
+  "wheel": "/private/tmp/retailops-ai-04-forecasting/dist/functional-v11/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+  "wheel_bytes": 491748,
+  "wheel_sha256": "f7e99bd07a4f671c0045895f3639a14cc64a275bbc786f79fcb07f1e8686a54c"
+}

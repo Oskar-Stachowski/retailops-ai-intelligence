@@ -29,9 +29,14 @@ dependencies = [
 retailops-ai = "retailops_ai.cli:main"
 retailops-ai-snapshot = "retailops_ai.source_snapshot.cli:main"
 retailops-ai-curated = "retailops_ai.curated.cli:main"
+retailops-ai-forecast = "retailops_ai.forecasting.cli:main"
 
 [project.optional-dependencies]
 snapshot = ["pyarrow==25.0.1", "jsonschema==4.26.0"]
+forecast = [
+    "psutil==7.2.2",
+    "scikit-learn==1.9.1",
+]
 
 [dependency-groups]
 dev = [
@@ -53,6 +58,46 @@ packages = ["src/retailops_ai"]
 "contracts/source_snapshot/v1/snapshot_manifest.schema.json" = "retailops_ai/source_snapshot/snapshot_manifest.schema.json"
 "uv.lock" = "retailops_ai/source_snapshot/dependencies.lock"
 "contracts/curated/v1/curated_manifest.schema.json" = "retailops_ai/curated/curated_manifest.schema.json"
+"contracts/forecast/v1/task.schema.json" = "retailops_ai/forecasting/task.schema.json"
+"contracts/forecast/v1/calendar_manifest.schema.json" = "retailops_ai/forecasting/calendar_manifest.schema.json"
+"contracts/forecast/v1/history_context.schema.json" = "retailops_ai/forecasting/history_context.schema.json"
+"contracts/forecast/v1/input_row.schema.json" = "retailops_ai/forecasting/input_row.schema.json"
+"contracts/forecast/v1/panel_policy.schema.json" = "retailops_ai/forecasting/panel_policy.schema.json"
+"contracts/forecast/v1/feature_policy.schema.json" = "retailops_ai/forecasting/feature_policy.schema.json"
+"contracts/forecast/v1/feature_manifest.schema.json" = "retailops_ai/forecasting/feature_manifest.schema.json"
+"contracts/forecast/v1/split_policy.schema.json" = "retailops_ai/forecasting/split_policy.schema.json"
+"contracts/forecast/v1/split_manifest.schema.json" = "retailops_ai/forecasting/split_manifest.schema.json"
+"contracts/forecast/v1/label_point.schema.json" = "retailops_ai/forecasting/label_point.schema.json"
+"contracts/forecast/v1/membership.schema.json" = "retailops_ai/forecasting/membership.schema.json"
+"contracts/forecast/v1/preprocessing.schema.json" = "retailops_ai/forecasting/preprocessing.schema.json"
+"contracts/forecast/v1/features.default.json" = "retailops_ai/forecasting/features.default.json"
+"contracts/forecast/v1/split.temporal.default.json" = "retailops_ai/forecasting/split.temporal.default.json"
+"contracts/forecast/v1/baseline_policy.schema.json" = "retailops_ai/forecasting/baseline_policy.schema.json"
+"contracts/forecast/v1/baseline_prediction.schema.json" = "retailops_ai/forecasting/baseline_prediction.schema.json"
+"contracts/forecast/v1/evaluation_manifest.schema.json" = "retailops_ai/forecasting/evaluation_manifest.schema.json"
+"contracts/forecast/v1/baselines.default.json" = "retailops_ai/forecasting/baselines.default.json"
+"contracts/forecast/v1/model_policy.schema.json" = "retailops_ai/forecasting/model_policy.schema.json"
+"contracts/forecast/v1/model_pipeline.schema.json" = "retailops_ai/forecasting/model_pipeline.schema.json"
+"contracts/forecast/v1/model_prediction.schema.json" = "retailops_ai/forecasting/model_prediction.schema.json"
+"contracts/forecast/v1/model_comparison.schema.json" = "retailops_ai/forecasting/model_comparison.schema.json"
+"contracts/forecast/v1/forecast_value.schema.json" = "retailops_ai/forecasting/forecast_value.schema.json"
+"contracts/forecast/v1/models.default.json" = "retailops_ai/forecasting/models.default.json"
+"contracts/forecast/v1/backtest_policy.schema.json" = "retailops_ai/forecasting/backtest_policy.schema.json"
+"contracts/forecast/v1/backtest_manifest.schema.json" = "retailops_ai/forecasting/backtest_manifest.schema.json"
+"contracts/forecast/v1/backtest.default.json" = "retailops_ai/forecasting/backtest.default.json"
+"contracts/forecast/v1/quality_policy.schema.json" = "retailops_ai/forecasting/quality_policy.schema.json"
+"contracts/forecast/v1/quality_manifest.schema.json" = "retailops_ai/forecasting/quality_manifest.schema.json"
+"contracts/forecast/v1/segment_metric.schema.json" = "retailops_ai/forecasting/segment_metric.schema.json"
+"contracts/forecast/v1/quality.default.json" = "retailops_ai/forecasting/quality.default.json"
+"contracts/forecast/v1/run_manifest.schema.json" = "retailops_ai/forecasting/run_manifest.schema.json"
+"contracts/forecast/v1/remediation_policy.schema.json" = "retailops_ai/forecasting/remediation_policy.schema.json"
+"contracts/forecast/v1/remediation_manifest.schema.json" = "retailops_ai/forecasting/remediation_manifest.schema.json"
+"contracts/forecast/v1/remediation.default.json" = "retailops_ai/forecasting/remediation.default.json"
+"contracts/forecast/v1/remediation_v2_policy.schema.json" = "retailops_ai/forecasting/remediation_v2_policy.schema.json"
+"contracts/forecast/v1/remediation_v2_manifest.schema.json" = "retailops_ai/forecasting/remediation_v2_manifest.schema.json"
+"contracts/forecast/v1/remediation_v2.default.json" = "retailops_ai/forecasting/remediation_v2.default.json"
+"contracts/forecast/v2" = "retailops_ai/forecasting/v2"
+"contracts/forecast/v3" = "retailops_ai/forecasting/v3"
 "contracts/curated/v1_1" = "retailops_ai/curated/v1_1"
 "contracts/source_snapshot/v1_1" = "retailops_ai/source_snapshot/v1_1"
 

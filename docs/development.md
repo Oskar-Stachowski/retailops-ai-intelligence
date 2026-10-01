@@ -19,10 +19,13 @@ make check UV=.tools/bin/uv
 ```
 
 Przy uv dostępnym w PATH można użyć `make bootstrap` i `make check` bez override.
-Kontrole instalują opcjonalny extra `snapshot` dla typed importera; przy ręcznym
-uruchomieniu całych testów użyj `uv run --locked --extra snapshot pytest`.
+Kontrole instalują opcjonalne extras `snapshot` dla typed importera i `forecast`
+dla treningu RF/HGB. Przy ręcznym uruchomieniu całych testów użyj
+`uv run --locked --extra snapshot --extra forecast pytest`.
 [Osobne CLI importera](source-snapshot-import.md) nie wymaga konfiguracji API/DB.
 [CLI curated](curated.md) buduje dane i odczytuje historię as-of z tego samego extra.
+[CLI forecast](forecasting.md) definiuje zadanie i buduje przypięty kalendarz
+bez modeli, DB i AWS.
 Wszystkie polecenia projektu korzystają z tego samego pakietu, także
 `uv run --locked python -m retailops_ai`. `config-check` niczego nie tworzy,
 nie sprawdza DB, nie wykonuje zapytań sieciowych i nie potwierdza readiness usług.
@@ -46,6 +49,13 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make handoff-check` | Odbiór przypiętego fixture source snapshot 1.0.0 |
 | `make snapshot-import-check` | Dwa świeże import/reimport/verify, immutable bytes i limity zasobów smoke |
 | `make curated-check` | Dwa świeże import/build/rebuild/verify/as-of, mapping/quarantine i zasoby smoke |
+| `make forecast-calendar-check` | Zweryfikowany parent, powtarzalny kalendarz, historia i znane plany z jednym cutoffem |
+| `make forecast-features-check` | Aktywny panel, typed Parquet inputs, zgodność z historią i niezmienny rerun |
+| `make forecast-manifests-check` | Formalny feature set i schema smoke; krótki calendar nie udaje kwalifikacji splitu |
+| `make forecast-baselines-check` | Baseline'y as-of i brak kwalifikacji krótkiego fixture; z jawnymi rodzicami temporalny evaluator, replay i immutable rerun |
+| `make forecast-models-check` | Ograniczony trening RF/HGB i portable JSON; z jawnymi rodzicami temporalny trening, niezależny retraining/replay i immutable rerun |
+| `make forecast-backtest-check` | Expanding/rolling planner i pooled metryki; z jawnymi rodzicami pełny backtest, niezależny source rebuild/training i immutable rerun |
+| `make forecast-quality-check` | Metryki zer i kalibracja; z jawnymi rodzicami przekroje, przedziały, quality gates, niezależny replay oraz immutable rerun |
 | `make package` | Wheel i sdist w ignorowanym `dist/` |
 | `make check` | Wszystkie powyższe |
 | `make secrets` | Gitleaks 8.30.1: historia Git i aktualny katalog, z redakcją |
@@ -54,8 +64,8 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make compose-up/down` | Lokalny stos DB/API/MLflow, jawne migracje, zachowane wolumeny |
 | `make compose-config` | Walidacja Compose bez wypisywania sekretów |
 | `make compose-smoke` | Rzeczywiste próby persistence i awarii, następnie shutdown |
-| `make contracts-check` | Porównanie intelligence/access/knowledge snapshots z kodem, walidacja struktury rejestru korpusu |
-| `make contracts` | Regeneracja HTTP oraz intelligence/access/knowledge schemas/examples do przeglądu |
+| `make contracts-check` | Porównanie intelligence/access/knowledge/forecast snapshots z kodem, walidacja struktury rejestru korpusu |
+| `make contracts` | Regeneracja HTTP oraz intelligence/access/knowledge/forecast schemas/examples do przeglądu |
 
 Gitleaks jest osobnym narzędziem; zainstaluj wersję 8.30.1 z
 [oficjalnego wydania](https://github.com/gitleaks/gitleaks/releases/tag/v8.30.1)

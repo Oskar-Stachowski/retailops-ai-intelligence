@@ -12,6 +12,22 @@ opisują wersje, lineage i walidację offline.
 registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
 sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)
 normalizuje fakty, mapuje lokalizacje, zachowuje kwarantannę i odczyt as-of.
+[Forecasting 04.1](forecasting.md) definiuje zadanie, kalendarz i granice wiedzy;
+[odbiór](evidence/04-01-calendar.md) potwierdza lokalne testy i smoke.
+[Panel i cechy 04.2](forecast-features.md) zachowują aktywny kalendarz,
+braki/zera, kategorię i znane plany oraz przypiętą historię dla wszystkich horyzontów.
+[Manifesty i split 04.3](forecast-manifests.md) opisują dojrzałe etykiety,
+pełne coverage i preprocessing dopasowany wyłącznie na train.
+[Baseline'y i evaluator 04.4](forecast-baselines.md) zachowują wspólne klucze,
+wybierają na validation i raportują poprawne MAE/WAPE.
+[Modele RF i HGB 04.5](forecast-models.md) mają pełny train-only pipeline,
+wspólny evaluator i ograniczony trening; wybór pozostaje diagnostyczny.
+[Backtesting 04.6](forecast-backtesting.md) wyznacza chronologiczne foldy,
+kontroluje dojrzałość etykiet i wspólne klucze oraz raportuje pooled MAE/WAPE.
+[Metryki i niepewność 04.7](forecast-quality.md) dodają przekroje, bias,
+kalibrację przedziałów i jawne bramki jakości bez promocji modelu.
+[Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
+validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
 rozszerza typed import o source 2.7, native ledger i private qualification.
 [Odbiór](evidence/06-inventory-handoff.md) obejmuje oba standardowe profile
@@ -72,7 +88,7 @@ etykiety i progi. Worker zachowuje pełny raport także po niezaliczonym progu.
 | Lokalizacja | Bieżąca zawartość |
 |---|---|
 | `src/retailops_ai/` | CLI/settings oraz warstwy api/domain/pipelines/adapters lokalnego serwera |
-| `contracts/` | Diagnostyczne OpenAPI/CLI, access/v1, intelligence/v1 oraz knowledge/v1: korpus, fragmenty, kandydacki indeks i lifecycle |
+| `contracts/` | OpenAPI/CLI, access/intelligence/knowledge oraz source_snapshot, curated i forecast/v1 |
 | `knowledge/` | Przypięty rejestr RAG, konfiguracje, golden set oraz osobne zgody właściciela |
 | `tests/` | Konfiguracja, HTTP i socket, awarie, korelacja, kontrakty oraz bramki CI |
 | `scripts/` | Kontroler Compose, rzeczywisty smoke, kontrakty i bramki workflow |

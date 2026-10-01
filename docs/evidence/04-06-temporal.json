@@ -1,0 +1,1363 @@
+{
+  "aws_calls": 0,
+  "backtest_id": "forecast-backtest-sha256-0f8e578af20d95d6d6062e7d00f13b30b4522b30b1bb5ab68e9371483a5f3f22",
+  "comparison_descriptor": {
+    "code": {
+      "code_files": {
+        "forecasting/baselines.py": "fb339916e02683932b254e73d05d0a43ce7aec4eca7c818441e6a99f7f4a2560",
+        "forecasting/evaluation.py": "3eed80ae124780d447d698aae748d818f10df9054a5b00b56abc53e678aad1b8",
+        "forecasting/evaluation_contract.py": "d154ad2c5fc01756b7905933dcab1827541250034101cfcf92acea948e9ee26a",
+        "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+        "forecasting/manifest_contract.py": "6cc088e4ec6cd1e15399745affef8feaf7978325a346431d9679f20f526add2b",
+        "forecasting/manifest_io.py": "0a290464dbb1957d9e0ea96c53246e9d55046852d7d2f046ae594051d99c3346",
+        "forecasting/manifests.py": "8ea6b52b5c4ac9b4cda1c17146e22c4b3ee550100e9dc39cac0a0b367d58feeb",
+        "forecasting/model_contract.py": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+        "forecasting/model_trees.py": "7b6d77b382b74c7c548e8d395d443f1bce02bea1922c298ef1602d0cfc407bdd",
+        "forecasting/model_worker.py": "5662e8de5fb3d65c05a82e717144ab1064b3e447b00a1e96531488831085c859",
+        "forecasting/models.py": "16814cc2022f87a15e32ebfe4d2b474ac486ec84d58fad9838afe986556a57be",
+        "forecasting/preprocessing.py": "26b8df57f41a1bcd0e5468233fd532e6e7d92be7c9fb49f1a7f9502b2cc447cb",
+        "forecasting/splits.py": "7564af16532313a4b94950c10d9ea8b16d31d82affd9161b708bef5601a04ba1"
+      },
+      "code_sha256": "6cb79cafdd5a6de3bf94dcc3512d700fd10178aeaee7d2cbdc0ad52040ea937e",
+      "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+      "machine": "arm64",
+      "system": "Darwin",
+      "version": "forecast-models-1.0.0",
+      "versions": {
+        "joblib": "1.6.0",
+        "numpy": "2.4.6",
+        "psutil": "7.2.2",
+        "pyarrow": "25.0.1",
+        "python": "3.11.15",
+        "scikit-learn": "1.9.1",
+        "scipy": "1.17.1",
+        "threadpoolctl": "3.7.0"
+      }
+    },
+    "coverage_counts": {
+      "expanding-01:development_holdout:eligible": 1824,
+      "expanding-01:development_holdout:excluded:closed_target": 192,
+      "expanding-01:development_holdout:hist_gradient_boosting:predicted": 1824,
+      "expanding-01:development_holdout:last_observed:predicted": 1824,
+      "expanding-01:development_holdout:moving_average:predicted": 1824,
+      "expanding-01:development_holdout:random_forest:predicted": 1824,
+      "expanding-01:development_holdout:seasonal_naive7:predicted": 1824,
+      "expanding-01:development_holdout:total": 2016,
+      "expanding-01:purged:eligible": 0,
+      "expanding-01:purged:excluded:purged_origin": 14028,
+      "expanding-01:purged:total": 14028,
+      "expanding-01:train:eligible": 1526,
+      "expanding-01:train:excluded:closed_target": 272,
+      "expanding-01:train:excluded:insufficient_history": 252,
+      "expanding-01:train:hist_gradient_boosting:predicted": 1526,
+      "expanding-01:train:last_observed:predicted": 1526,
+      "expanding-01:train:moving_average:predicted": 1526,
+      "expanding-01:train:random_forest:predicted": 1526,
+      "expanding-01:train:seasonal_naive7:predicted": 1526,
+      "expanding-01:train:total": 2016,
+      "expanding-01:validation:eligible": 1824,
+      "expanding-01:validation:excluded:closed_target": 192,
+      "expanding-01:validation:hist_gradient_boosting:predicted": 1824,
+      "expanding-01:validation:last_observed:predicted": 1824,
+      "expanding-01:validation:moving_average:predicted": 1824,
+      "expanding-01:validation:random_forest:predicted": 1824,
+      "expanding-01:validation:seasonal_naive7:predicted": 1824,
+      "expanding-01:validation:total": 2016,
+      "expanding-02:development_holdout:eligible": 1821,
+      "expanding-02:development_holdout:excluded:closed_target": 192,
+      "expanding-02:development_holdout:hist_gradient_boosting:predicted": 1821,
+      "expanding-02:development_holdout:last_observed:predicted": 1821,
+      "expanding-02:development_holdout:moving_average:predicted": 1821,
+      "expanding-02:development_holdout:random_forest:predicted": 1821,
+      "expanding-02:development_holdout:seasonal_naive7:predicted": 1821,
+      "expanding-02:development_holdout:total": 2013,
+      "expanding-02:purged:eligible": 0,
+      "expanding-02:purged:excluded:purged_origin": 12015,
+      "expanding-02:purged:total": 12015,
+      "expanding-02:train:eligible": 3302,
+      "expanding-02:train:excluded:closed_target": 512,
+      "expanding-02:train:excluded:insufficient_history": 252,
+      "expanding-02:train:hist_gradient_boosting:predicted": 3302,
+      "expanding-02:train:last_observed:predicted": 3302,
+      "expanding-02:train:moving_average:predicted": 3302,
+      "expanding-02:train:random_forest:predicted": 3302,
+      "expanding-02:train:seasonal_naive7:predicted": 3302,
+      "expanding-02:train:total": 4032,
+      "expanding-02:validation:eligible": 1824,
+      "expanding-02:validation:excluded:closed_target": 192,
+      "expanding-02:validation:hist_gradient_boosting:predicted": 1824,
+      "expanding-02:validation:last_observed:predicted": 1824,
+      "expanding-02:validation:moving_average:predicted": 1824,
+      "expanding-02:validation:random_forest:predicted": 1824,
+      "expanding-02:validation:seasonal_naive7:predicted": 1824,
+      "expanding-02:validation:total": 2016,
+      "expanding-03:development_holdout:eligible": 1755,
+      "expanding-03:development_holdout:excluded:closed_target": 180,
+      "expanding-03:development_holdout:hist_gradient_boosting:predicted": 1755,
+      "expanding-03:development_holdout:last_observed:predicted": 1755,
+      "expanding-03:development_holdout:moving_average:predicted": 1755,
+      "expanding-03:development_holdout:random_forest:predicted": 1755,
+      "expanding-03:development_holdout:seasonal_naive7:predicted": 1755,
+      "expanding-03:development_holdout:total": 1935,
+      "expanding-03:purged:eligible": 0,
+      "expanding-03:purged:excluded:purged_origin": 10077,
+      "expanding-03:purged:total": 10077,
+      "expanding-03:train:eligible": 5094,
+      "expanding-03:train:excluded:closed_target": 736,
+      "expanding-03:train:excluded:insufficient_history": 252,
+      "expanding-03:train:hist_gradient_boosting:predicted": 5094,
+      "expanding-03:train:last_observed:predicted": 5094,
+      "expanding-03:train:moving_average:predicted": 5094,
+      "expanding-03:train:random_forest:predicted": 5094,
+      "expanding-03:train:seasonal_naive7:predicted": 5094,
+      "expanding-03:train:total": 6048,
+      "expanding-03:validation:eligible": 1824,
+      "expanding-03:validation:excluded:closed_target": 192,
+      "expanding-03:validation:hist_gradient_boosting:predicted": 1824,
+      "expanding-03:validation:last_observed:predicted": 1824,
+      "expanding-03:validation:moving_average:predicted": 1824,
+      "expanding-03:validation:random_forest:predicted": 1824,
+      "expanding-03:validation:seasonal_naive7:predicted": 1824,
+      "expanding-03:validation:total": 2016
+    },
+    "feature_set_id": "features-sha256-e7992553d0d3b67f00b5f16e8e0ace55bb88fc3f3d023135bfcd70538e0fdbaf",
+    "label_dataset_id": "labels-sha256-62030a83d6409d3c223cf12fd21c89148cb626ae39082d64b266ae6878d9f769",
+    "metrics": {
+      "expanding-01:development_holdout:hist_gradient_boosting": {
+        "absolute_actual_sum": 16560.0,
+        "absolute_error_sum": 2805.613066335199,
+        "eligible_rows": 1824,
+        "mae": 1.5381650582978066,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.1694210788849758,
+        "wape_status": "passed"
+      },
+      "expanding-01:development_holdout:last_observed": {
+        "absolute_actual_sum": 16560.0,
+        "absolute_error_sum": 2968.0,
+        "eligible_rows": 1824,
+        "mae": 1.6271929824561404,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.17922705314009663,
+        "wape_status": "passed"
+      },
+      "expanding-01:development_holdout:moving_average": {
+        "absolute_actual_sum": 16560.0,
+        "absolute_error_sum": 3117.6666666666756,
+        "eligible_rows": 1824,
+        "mae": 1.7092470760233966,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.18826489533011326,
+        "wape_status": "passed"
+      },
+      "expanding-01:development_holdout:random_forest": {
+        "absolute_actual_sum": 16560.0,
+        "absolute_error_sum": 2567.2254580012996,
+        "eligible_rows": 1824,
+        "mae": 1.4074700975884318,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.15502569190829105,
+        "wape_status": "passed"
+      },
+      "expanding-01:development_holdout:seasonal_naive7": {
+        "absolute_actual_sum": 16560.0,
+        "absolute_error_sum": 2670.0,
+        "eligible_rows": 1824,
+        "mae": 1.4638157894736843,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.161231884057971,
+        "wape_status": "passed"
+      },
+      "expanding-01:train:hist_gradient_boosting": {
+        "absolute_actual_sum": 16507.0,
+        "absolute_error_sum": 946.7036815292141,
+        "eligible_rows": 1526,
+        "mae": 0.6203824911724863,
+        "predicted_rows": 1526,
+        "status": "passed",
+        "wape": 0.05735164969583899,
+        "wape_status": "passed"
+      },
+      "expanding-01:train:last_observed": {
+        "absolute_actual_sum": 16507.0,
+        "absolute_error_sum": 3758.0,
+        "eligible_rows": 1526,
+        "mae": 2.4626474442988204,
+        "predicted_rows": 1526,
+        "status": "passed",
+        "wape": 0.2276609923062943,
+        "wape_status": "passed"
+      },
+      "expanding-01:train:moving_average": {
+        "absolute_actual_sum": 16507.0,
+        "absolute_error_sum": 4145.666666666654,
+        "eligible_rows": 1526,
+        "mae": 2.7166885102664837,
+        "predicted_rows": 1526,
+        "status": "passed",
+        "wape": 0.25114597847377806,
+        "wape_status": "passed"
+      },
+      "expanding-01:train:random_forest": {
+        "absolute_actual_sum": 16507.0,
+        "absolute_error_sum": 627.3318807888021,
+        "eligible_rows": 1526,
+        "mae": 0.41109559684718355,
+        "predicted_rows": 1526,
+        "status": "passed",
+        "wape": 0.03800399108189266,
+        "wape_status": "passed"
+      },
+      "expanding-01:train:seasonal_naive7": {
+        "absolute_actual_sum": 16507.0,
+        "absolute_error_sum": 4008.0,
+        "eligible_rows": 1526,
+        "mae": 2.6264744429882043,
+        "predicted_rows": 1526,
+        "status": "passed",
+        "wape": 0.24280608226812866,
+        "wape_status": "passed"
+      },
+      "expanding-01:validation:hist_gradient_boosting": {
+        "absolute_actual_sum": 16420.0,
+        "absolute_error_sum": 2863.428575882385,
+        "eligible_rows": 1824,
+        "mae": 1.569862157830255,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.17438663677724633,
+        "wape_status": "passed"
+      },
+      "expanding-01:validation:last_observed": {
+        "absolute_actual_sum": 16420.0,
+        "absolute_error_sum": 3022.0,
+        "eligible_rows": 1824,
+        "mae": 1.656798245614035,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.1840438489646772,
+        "wape_status": "passed"
+      },
+      "expanding-01:validation:moving_average": {
+        "absolute_actual_sum": 16420.0,
+        "absolute_error_sum": 3290.3333333333203,
+        "eligible_rows": 1824,
+        "mae": 1.8039108187134432,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.2003857084855859,
+        "wape_status": "passed"
+      },
+      "expanding-01:validation:random_forest": {
+        "absolute_actual_sum": 16420.0,
+        "absolute_error_sum": 2636.7354230410065,
+        "eligible_rows": 1824,
+        "mae": 1.4455786310531833,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.16058072003903814,
+        "wape_status": "passed"
+      },
+      "expanding-01:validation:seasonal_naive7": {
+        "absolute_actual_sum": 16420.0,
+        "absolute_error_sum": 3092.0,
+        "eligible_rows": 1824,
+        "mae": 1.6951754385964912,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.18830694275274057,
+        "wape_status": "passed"
+      },
+      "expanding-02:development_holdout:hist_gradient_boosting": {
+        "absolute_actual_sum": 16570.0,
+        "absolute_error_sum": 2628.674266178447,
+        "eligible_rows": 1821,
+        "mae": 1.4435333696751493,
+        "predicted_rows": 1821,
+        "status": "passed",
+        "wape": 0.1586405712841549,
+        "wape_status": "passed"
+      },
+      "expanding-02:development_holdout:last_observed": {
+        "absolute_actual_sum": 16570.0,
+        "absolute_error_sum": 4512.0,
+        "eligible_rows": 1821,
+        "mae": 2.4777594728171333,
+        "predicted_rows": 1821,
+        "status": "passed",
+        "wape": 0.27229933614966806,
+        "wape_status": "passed"
+      },
+      "expanding-02:development_holdout:moving_average": {
+        "absolute_actual_sum": 16570.0,
+        "absolute_error_sum": 3338.1666666666642,
+        "eligible_rows": 1821,
+        "mae": 1.8331502837268887,
+        "predicted_rows": 1821,
+        "status": "passed",
+        "wape": 0.2014584590625627,
+        "wape_status": "passed"
+      },
+      "expanding-02:development_holdout:random_forest": {
+        "absolute_actual_sum": 16570.0,
+        "absolute_error_sum": 2603.7785140070473,
+        "eligible_rows": 1821,
+        "mae": 1.429861896763892,
+        "predicted_rows": 1821,
+        "status": "passed",
+        "wape": 0.15713811188938126,
+        "wape_status": "passed"
+      },
+      "expanding-02:development_holdout:seasonal_naive7": {
+        "absolute_actual_sum": 16570.0,
+        "absolute_error_sum": 2598.0,
+        "eligible_rows": 1821,
+        "mae": 1.42668863261944,
+        "predicted_rows": 1821,
+        "status": "passed",
+        "wape": 0.1567893783946892,
+        "wape_status": "passed"
+      },
+      "expanding-02:train:hist_gradient_boosting": {
+        "absolute_actual_sum": 33101.0,
+        "absolute_error_sum": 1912.431239026755,
+        "eligible_rows": 3302,
+        "mae": 0.5791736035816945,
+        "predicted_rows": 3302,
+        "status": "passed",
+        "wape": 0.05777563333514864,
+        "wape_status": "passed"
+      },
+      "expanding-02:train:last_observed": {
+        "absolute_actual_sum": 33101.0,
+        "absolute_error_sum": 10290.0,
+        "eligible_rows": 3302,
+        "mae": 3.1162931556632345,
+        "predicted_rows": 3302,
+        "status": "passed",
+        "wape": 0.3108667411860669,
+        "wape_status": "passed"
+      },
+      "expanding-02:train:moving_average": {
+        "absolute_actual_sum": 33101.0,
+        "absolute_error_sum": 8448.500000000036,
+        "eligible_rows": 3302,
+        "mae": 2.5586008479709377,
+        "predicted_rows": 3302,
+        "status": "passed",
+        "wape": 0.25523398084650123,
+        "wape_status": "passed"
+      },
+      "expanding-02:train:random_forest": {
+        "absolute_actual_sum": 33101.0,
+        "absolute_error_sum": 1182.3081884980652,
+        "eligible_rows": 3302,
+        "mae": 0.3580582036638598,
+        "predicted_rows": 3302,
+        "status": "passed",
+        "wape": 0.0357182015195331,
+        "wape_status": "passed"
+      },
+      "expanding-02:train:seasonal_naive7": {
+        "absolute_actual_sum": 33101.0,
+        "absolute_error_sum": 8626.0,
+        "eligible_rows": 3302,
+        "mae": 2.6123561477892188,
+        "predicted_rows": 3302,
+        "status": "passed",
+        "wape": 0.2605963566055406,
+        "wape_status": "passed"
+      },
+      "expanding-02:validation:hist_gradient_boosting": {
+        "absolute_actual_sum": 16405.0,
+        "absolute_error_sum": 2498.125032313476,
+        "eligible_rows": 1824,
+        "mae": 1.369586092277125,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.15227827079021494,
+        "wape_status": "passed"
+      },
+      "expanding-02:validation:last_observed": {
+        "absolute_actual_sum": 16405.0,
+        "absolute_error_sum": 4655.0,
+        "eligible_rows": 1824,
+        "mae": 2.5520833333333335,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.28375495275830537,
+        "wape_status": "passed"
+      },
+      "expanding-02:validation:moving_average": {
+        "absolute_actual_sum": 16405.0,
+        "absolute_error_sum": 3289.6666666666747,
+        "eligible_rows": 1824,
+        "mae": 1.8035453216374313,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.2005282942192426,
+        "wape_status": "passed"
+      },
+      "expanding-02:validation:random_forest": {
+        "absolute_actual_sum": 16405.0,
+        "absolute_error_sum": 2514.0462256749056,
+        "eligible_rows": 1824,
+        "mae": 1.3783148167077333,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.15324877937670867,
+        "wape_status": "passed"
+      },
+      "expanding-02:validation:seasonal_naive7": {
+        "absolute_actual_sum": 16405.0,
+        "absolute_error_sum": 2763.0,
+        "eligible_rows": 1824,
+        "mae": 1.5148026315789473,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.16842426089606827,
+        "wape_status": "passed"
+      },
+      "expanding-03:development_holdout:hist_gradient_boosting": {
+        "absolute_actual_sum": 16322.0,
+        "absolute_error_sum": 2447.3394395446358,
+        "eligible_rows": 1755,
+        "mae": 1.3944954071479405,
+        "predicted_rows": 1755,
+        "status": "passed",
+        "wape": 0.14994114934105107,
+        "wape_status": "passed"
+      },
+      "expanding-03:development_holdout:last_observed": {
+        "absolute_actual_sum": 16322.0,
+        "absolute_error_sum": 4888.0,
+        "eligible_rows": 1755,
+        "mae": 2.785185185185185,
+        "predicted_rows": 1755,
+        "status": "passed",
+        "wape": 0.2994731037863007,
+        "wape_status": "passed"
+      },
+      "expanding-03:development_holdout:moving_average": {
+        "absolute_actual_sum": 16322.0,
+        "absolute_error_sum": 2849.6666666666665,
+        "eligible_rows": 1755,
+        "mae": 1.623741690408357,
+        "predicted_rows": 1755,
+        "status": "passed",
+        "wape": 0.1745905322060205,
+        "wape_status": "passed"
+      },
+      "expanding-03:development_holdout:random_forest": {
+        "absolute_actual_sum": 16322.0,
+        "absolute_error_sum": 2593.167129209719,
+        "eligible_rows": 1755,
+        "mae": 1.4775881078118056,
+        "predicted_rows": 1755,
+        "status": "passed",
+        "wape": 0.15887557463605678,
+        "wape_status": "passed"
+      },
+      "expanding-03:development_holdout:seasonal_naive7": {
+        "absolute_actual_sum": 16322.0,
+        "absolute_error_sum": 2857.0,
+        "eligible_rows": 1755,
+        "mae": 1.6279202279202278,
+        "predicted_rows": 1755,
+        "status": "passed",
+        "wape": 0.17503982355103542,
+        "wape_status": "passed"
+      },
+      "expanding-03:train:hist_gradient_boosting": {
+        "absolute_actual_sum": 49031.0,
+        "absolute_error_sum": 2948.943197950184,
+        "eligible_rows": 5094,
+        "mae": 0.5789052214272054,
+        "predicted_rows": 5094,
+        "status": "passed",
+        "wape": 0.06014446366482805,
+        "wape_status": "passed"
+      },
+      "expanding-03:train:last_observed": {
+        "absolute_actual_sum": 49031.0,
+        "absolute_error_sum": 16667.0,
+        "eligible_rows": 5094,
+        "mae": 3.2718884962701216,
+        "predicted_rows": 5094,
+        "status": "passed",
+        "wape": 0.33992780077909895,
+        "wape_status": "passed"
+      },
+      "expanding-03:train:moving_average": {
+        "absolute_actual_sum": 49031.0,
+        "absolute_error_sum": 11952.333333333316,
+        "eligible_rows": 5094,
+        "mae": 2.346355189111369,
+        "predicted_rows": 5094,
+        "status": "passed",
+        "wape": 0.24377094763177,
+        "wape_status": "passed"
+      },
+      "expanding-03:train:random_forest": {
+        "absolute_actual_sum": 49031.0,
+        "absolute_error_sum": 1746.3054677331195,
+        "eligible_rows": 5094,
+        "mae": 0.34281614992797793,
+        "predicted_rows": 5094,
+        "status": "passed",
+        "wape": 0.03561635430101608,
+        "wape_status": "passed"
+      },
+      "expanding-03:train:seasonal_naive7": {
+        "absolute_actual_sum": 49031.0,
+        "absolute_error_sum": 13426.0,
+        "eligible_rows": 5094,
+        "mae": 2.635649784059678,
+        "predicted_rows": 5094,
+        "status": "passed",
+        "wape": 0.2738267626603577,
+        "wape_status": "passed"
+      },
+      "expanding-03:validation:hist_gradient_boosting": {
+        "absolute_actual_sum": 16350.0,
+        "absolute_error_sum": 2398.5675964016978,
+        "eligible_rows": 1824,
+        "mae": 1.3150041646939132,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.1467013820429173,
+        "wape_status": "passed"
+      },
+      "expanding-03:validation:last_observed": {
+        "absolute_actual_sum": 16350.0,
+        "absolute_error_sum": 4830.0,
+        "eligible_rows": 1824,
+        "mae": 2.648026315789474,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.29541284403669726,
+        "wape_status": "passed"
+      },
+      "expanding-03:validation:moving_average": {
+        "absolute_actual_sum": 16350.0,
+        "absolute_error_sum": 2835.0000000000095,
+        "eligible_rows": 1824,
+        "mae": 1.554276315789479,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.17339449541284463,
+        "wape_status": "passed"
+      },
+      "expanding-03:validation:random_forest": {
+        "absolute_actual_sum": 16350.0,
+        "absolute_error_sum": 2389.538958143398,
+        "eligible_rows": 1824,
+        "mae": 1.310054253368091,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.14614917175188977,
+        "wape_status": "passed"
+      },
+      "expanding-03:validation:seasonal_naive7": {
+        "absolute_actual_sum": 16350.0,
+        "absolute_error_sum": 2996.0,
+        "eligible_rows": 1824,
+        "mae": 1.6425438596491229,
+        "predicted_rows": 1824,
+        "status": "passed",
+        "wape": 0.18324159021406727,
+        "wape_status": "passed"
+      }
+    },
+    "models": {
+      "expanding-01:hist_gradient_boosting": "model-sha256-1ec73c43aa8919cb29ee31e743669c493ac5fed19932602a9e64d490412168c1",
+      "expanding-01:random_forest": "model-sha256-bf6cf8d61ec07e15b61f6aa6ce72394f0135fd379d7b4f64ea0a2f672fdf1421",
+      "expanding-02:hist_gradient_boosting": "model-sha256-a794e6271d26133b13420a2c9a5f92255c5fb735e1bdd74b153f6b25e3247fe3",
+      "expanding-02:random_forest": "model-sha256-ac5048193955397f72bee055a1b7c56cc71c896a706df9eae9773384a9b439b0",
+      "expanding-03:hist_gradient_boosting": "model-sha256-b280f58c575a8d19069ddfb4d2f7b0bb07169ef4e49173143ad433a929f0bc6b",
+      "expanding-03:random_forest": "model-sha256-8e288ed3523f505526620e13dfb5b5b94c6275dce666586b7e760ffd10625105"
+    },
+    "parent": {
+      "business_timezone": "UTC",
+      "curated_dataset_id": "curated-sha256-aeedd1a49f75eb27b687b328b92e23fee5b8cfa7c2520b2ff5219a8a74bd748a",
+      "curated_descriptor_sha256": "aeedd1a49f75eb27b687b328b92e23fee5b8cfa7c2520b2ff5219a8a74bd748a",
+      "forecast_source_status": "passed",
+      "snapshot_id": "snapshot-sha256-d84c7b9630c6a34f7807abc7560253bf8e7ba3d7d962abee8aca580cf909b767",
+      "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22"
+    },
+    "policy": {
+      "baseline": {
+        "candidates": [
+          "last_observed",
+          "moving_average",
+          "seasonal_naive7"
+        ],
+        "closed_history": "confirmed_closed_zero_is_observed",
+        "common_keys": "all_split_memberships_no_model_specific_drops",
+        "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+        "missing_history": "skip_unknown_never_impute_zero",
+        "moving_average_calendar_days": 7,
+        "moving_average_minimum_known_days": 1,
+        "origin_mode": "fixed_origin_no_recursive_actuals",
+        "portfolio_final_test": "not_included_not_opened",
+        "required_prediction_coverage": 1.0,
+        "schema_version": "1.0.0",
+        "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+        "selection_metric": "mae",
+        "selection_role": "validation_only_per_fold",
+        "tie_break": "candidate_order"
+      },
+      "cpu_threads": 1,
+      "fit_cpu_seconds": 90.0,
+      "fit_rss_bytes": 1073741824,
+      "fit_wall_seconds": 120.0,
+      "grid": "one_frozen_configuration_per_family",
+      "hgb": {
+        "categorical_features": null,
+        "early_stopping": false,
+        "l2_regularization": 0.0,
+        "learning_rate": 0.1,
+        "loss": "squared_error",
+        "max_bins": 255,
+        "max_iter": 100,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "validation_fraction": null
+      },
+      "legacy_retailops_serving": "unchanged_rejection_not_overridden",
+      "max_matrix_bytes": 67108864,
+      "max_train_rows": 50000,
+      "minimum_relative_improvement": 0.05,
+      "monitor_interval_seconds": 0.05,
+      "portfolio_final_test": "not_included_not_opened",
+      "postprocessing": "clip_negative_to_zero_no_rounding",
+      "primary_metric": "validation_mae",
+      "random_state": 42,
+      "rf": {
+        "bootstrap": true,
+        "criterion": "squared_error",
+        "max_depth": 12,
+        "max_features": 1.0,
+        "min_samples_leaf": 2,
+        "min_samples_split": 2,
+        "n_estimators": 64,
+        "n_jobs": 1
+      },
+      "schema_version": "1.0.0",
+      "selection_use": "diagnostic_only_pending_04_6_to_04_8",
+      "strategy": "direct_global_with_horizon_feature",
+      "target_type": "observed_sales_units",
+      "tie_break": "baseline_then_rf_then_hgb"
+    },
+    "prediction_rows": 301140,
+    "predictions_content_sha256": "13709d6a745addd513e414776fed9ae1770f0a8fa6e6b51c2d1570cfb7bf8999",
+    "role": "supervised_model_comparison",
+    "selections": [
+      {
+        "baseline": "last_observed",
+        "fold": "expanding-01",
+        "selected": "random_forest",
+        "selection_sha256": "d36100b7dd4b58bf7e508c608b2664227fa6eb60e79e7ca256c46989af61c463",
+        "status": "selected",
+        "validation_grain_sha256": "c5ae14b8fc5f3238fa10c824ee6f6ccba134581574027cb8dc0d9fe9f50202ad",
+        "validation_metrics": {
+          "hist_gradient_boosting": {
+            "absolute_actual_sum": 16420.0,
+            "absolute_error_sum": 2863.428575882385,
+            "eligible_rows": 1824,
+            "mae": 1.569862157830255,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.17438663677724633,
+            "wape_status": "passed"
+          },
+          "last_observed": {
+            "absolute_actual_sum": 16420.0,
+            "absolute_error_sum": 3022.0,
+            "eligible_rows": 1824,
+            "mae": 1.656798245614035,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.1840438489646772,
+            "wape_status": "passed"
+          },
+          "moving_average": {
+            "absolute_actual_sum": 16420.0,
+            "absolute_error_sum": 3290.3333333333203,
+            "eligible_rows": 1824,
+            "mae": 1.8039108187134432,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.2003857084855859,
+            "wape_status": "passed"
+          },
+          "random_forest": {
+            "absolute_actual_sum": 16420.0,
+            "absolute_error_sum": 2636.7354230410065,
+            "eligible_rows": 1824,
+            "mae": 1.4455786310531833,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.16058072003903814,
+            "wape_status": "passed"
+          },
+          "seasonal_naive7": {
+            "absolute_actual_sum": 16420.0,
+            "absolute_error_sum": 3092.0,
+            "eligible_rows": 1824,
+            "mae": 1.6951754385964912,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.18830694275274057,
+            "wape_status": "passed"
+          }
+        }
+      },
+      {
+        "baseline": "seasonal_naive7",
+        "fold": "expanding-02",
+        "selected": "hist_gradient_boosting",
+        "selection_sha256": "56f4d3b39e051c90e7f103de38625d386e72f571313811deec6b008142709a15",
+        "status": "selected",
+        "validation_grain_sha256": "c1351719736f92920fc90d91383081c95731dd6ee01d9cfab4e4052aba06f94e",
+        "validation_metrics": {
+          "hist_gradient_boosting": {
+            "absolute_actual_sum": 16405.0,
+            "absolute_error_sum": 2498.125032313476,
+            "eligible_rows": 1824,
+            "mae": 1.369586092277125,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.15227827079021494,
+            "wape_status": "passed"
+          },
+          "last_observed": {
+            "absolute_actual_sum": 16405.0,
+            "absolute_error_sum": 4655.0,
+            "eligible_rows": 1824,
+            "mae": 2.5520833333333335,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.28375495275830537,
+            "wape_status": "passed"
+          },
+          "moving_average": {
+            "absolute_actual_sum": 16405.0,
+            "absolute_error_sum": 3289.6666666666747,
+            "eligible_rows": 1824,
+            "mae": 1.8035453216374313,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.2005282942192426,
+            "wape_status": "passed"
+          },
+          "random_forest": {
+            "absolute_actual_sum": 16405.0,
+            "absolute_error_sum": 2514.0462256749056,
+            "eligible_rows": 1824,
+            "mae": 1.3783148167077333,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.15324877937670867,
+            "wape_status": "passed"
+          },
+          "seasonal_naive7": {
+            "absolute_actual_sum": 16405.0,
+            "absolute_error_sum": 2763.0,
+            "eligible_rows": 1824,
+            "mae": 1.5148026315789473,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.16842426089606827,
+            "wape_status": "passed"
+          }
+        }
+      },
+      {
+        "baseline": "moving_average",
+        "fold": "expanding-03",
+        "selected": "random_forest",
+        "selection_sha256": "8276acfa9da7d0c99d00f049e8311084296a5c628813c12494c94eca6abaf063",
+        "status": "selected",
+        "validation_grain_sha256": "a0428c20744bb69986c97dc1440915cb137a7b14d315af5997bf948dcdb9efea",
+        "validation_metrics": {
+          "hist_gradient_boosting": {
+            "absolute_actual_sum": 16350.0,
+            "absolute_error_sum": 2398.5675964016978,
+            "eligible_rows": 1824,
+            "mae": 1.3150041646939132,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.1467013820429173,
+            "wape_status": "passed"
+          },
+          "last_observed": {
+            "absolute_actual_sum": 16350.0,
+            "absolute_error_sum": 4830.0,
+            "eligible_rows": 1824,
+            "mae": 2.648026315789474,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.29541284403669726,
+            "wape_status": "passed"
+          },
+          "moving_average": {
+            "absolute_actual_sum": 16350.0,
+            "absolute_error_sum": 2835.0000000000095,
+            "eligible_rows": 1824,
+            "mae": 1.554276315789479,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.17339449541284463,
+            "wape_status": "passed"
+          },
+          "random_forest": {
+            "absolute_actual_sum": 16350.0,
+            "absolute_error_sum": 2389.538958143398,
+            "eligible_rows": 1824,
+            "mae": 1.310054253368091,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.14614917175188977,
+            "wape_status": "passed"
+          },
+          "seasonal_naive7": {
+            "absolute_actual_sum": 16350.0,
+            "absolute_error_sum": 2996.0,
+            "eligible_rows": 1824,
+            "mae": 1.6425438596491229,
+            "predicted_rows": 1824,
+            "status": "passed",
+            "wape": 0.18324159021406727,
+            "wape_status": "passed"
+          }
+        }
+      }
+    ],
+    "split_id": "split-sha256-5253779cea9e09691ee59dd6602e3076cfad691e3652b843a4a87cd1bf8cb05b",
+    "status": "passed"
+  },
+  "descriptor": {
+    "code": {
+      "code_files": {
+        "forecasting/backtest.py": "c49116ee14c1235832c8c08d3e186538477cfab5486a2dba2f517160fd61e3ec",
+        "forecasting/backtest_contract.py": "6992a0fb87bf7239db55841d29e0abdbf5c242789d0a6c039fcd4182f0aa6f46"
+      },
+      "code_sha256": "94aef03ae485bb4badb96fbea60981d8e641e8beaf06d961068d9b19f95dee53",
+      "model": {
+        "code_files": {
+          "forecasting/baselines.py": "fb339916e02683932b254e73d05d0a43ce7aec4eca7c818441e6a99f7f4a2560",
+          "forecasting/evaluation.py": "3eed80ae124780d447d698aae748d818f10df9054a5b00b56abc53e678aad1b8",
+          "forecasting/evaluation_contract.py": "d154ad2c5fc01756b7905933dcab1827541250034101cfcf92acea948e9ee26a",
+          "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+          "forecasting/manifest_contract.py": "6cc088e4ec6cd1e15399745affef8feaf7978325a346431d9679f20f526add2b",
+          "forecasting/manifest_io.py": "0a290464dbb1957d9e0ea96c53246e9d55046852d7d2f046ae594051d99c3346",
+          "forecasting/manifests.py": "8ea6b52b5c4ac9b4cda1c17146e22c4b3ee550100e9dc39cac0a0b367d58feeb",
+          "forecasting/model_contract.py": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+          "forecasting/model_trees.py": "7b6d77b382b74c7c548e8d395d443f1bce02bea1922c298ef1602d0cfc407bdd",
+          "forecasting/model_worker.py": "5662e8de5fb3d65c05a82e717144ab1064b3e447b00a1e96531488831085c859",
+          "forecasting/models.py": "16814cc2022f87a15e32ebfe4d2b474ac486ec84d58fad9838afe986556a57be",
+          "forecasting/preprocessing.py": "26b8df57f41a1bcd0e5468233fd532e6e7d92be7c9fb49f1a7f9502b2cc447cb",
+          "forecasting/splits.py": "7564af16532313a4b94950c10d9ea8b16d31d82affd9161b708bef5601a04ba1"
+        },
+        "code_sha256": "6cb79cafdd5a6de3bf94dcc3512d700fd10178aeaee7d2cbdc0ad52040ea937e",
+        "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+        "machine": "arm64",
+        "system": "Darwin",
+        "version": "forecast-models-1.0.0",
+        "versions": {
+          "joblib": "1.6.0",
+          "numpy": "2.4.6",
+          "psutil": "7.2.2",
+          "pyarrow": "25.0.1",
+          "python": "3.11.15",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.17.1",
+          "threadpoolctl": "3.7.0"
+        }
+      },
+      "version": "forecast-backtest-1.0.0"
+    },
+    "comparison_descriptor_sha256": "25ff34ce2996dde712e7183a4e3b2ce57585566afd68992353308e4cef6bb7c3",
+    "comparison_id": "forecast-model-comparison-sha256-25ff34ce2996dde712e7183a4e3b2ce57585566afd68992353308e4cef6bb7c3",
+    "comparison_status": "passed",
+    "feature_set_id": "features-sha256-e7992553d0d3b67f00b5f16e8e0ace55bb88fc3f3d023135bfcd70538e0fdbaf",
+    "folds": [
+      {
+        "common_grain_sha256": "ea232be8be684144a9ecd1f3727e085b43133f27f29327bef7b636ce1c57bddc",
+        "common_prediction_keys": 20076,
+        "eligible_counts": {
+          "development_holdout": 1824,
+          "purged": 0,
+          "train": 1526,
+          "validation": 1824
+        },
+        "eligible_train_rows": 1526,
+        "future_training_labels": 0,
+        "latest_train_label_available_at": "2026-06-08T00:00:00Z",
+        "model_ids": {
+          "hist_gradient_boosting": "model-sha256-1ec73c43aa8919cb29ee31e743669c493ac5fed19932602a9e64d490412168c1",
+          "random_forest": "model-sha256-bf6cf8d61ec07e15b61f6aa6ce72394f0135fd379d7b4f64ea0a2f672fdf1421"
+        },
+        "model_specific_key_drops": 0,
+        "plan": {
+          "development_holdout": {
+            "end": "2026-07-05",
+            "start": "2026-06-30"
+          },
+          "evaluation_cutoff": "2026-07-20T23:59:59Z",
+          "name": "expanding-01",
+          "purge_days": 15,
+          "selection_cutoff": "2026-06-29T23:59:59Z",
+          "train": {
+            "end": "2026-05-24",
+            "start": "2026-05-19"
+          },
+          "training_cutoff": "2026-06-08T23:59:59Z",
+          "validation": {
+            "end": "2026-06-14",
+            "start": "2026-06-09"
+          }
+        },
+        "status": "passed",
+        "train_labels_content_sha256": "f672e54725ab3e110dbffe1c57846688e8cea9f6ab6e17c0c54c46ef08cf2ce7"
+      },
+      {
+        "common_grain_sha256": "079cccbf220b464d8e5b5a5a73a637962181b4bd55a01ac6cb54350a07f6e675",
+        "common_prediction_keys": 20076,
+        "eligible_counts": {
+          "development_holdout": 1821,
+          "purged": 0,
+          "train": 3302,
+          "validation": 1824
+        },
+        "eligible_train_rows": 3302,
+        "future_training_labels": 0,
+        "latest_train_label_available_at": "2026-06-14T00:00:00Z",
+        "model_ids": {
+          "hist_gradient_boosting": "model-sha256-a794e6271d26133b13420a2c9a5f92255c5fb735e1bdd74b153f6b25e3247fe3",
+          "random_forest": "model-sha256-ac5048193955397f72bee055a1b7c56cc71c896a706df9eae9773384a9b439b0"
+        },
+        "model_specific_key_drops": 0,
+        "plan": {
+          "development_holdout": {
+            "end": "2026-07-11",
+            "start": "2026-07-06"
+          },
+          "evaluation_cutoff": "2026-07-26T23:59:59Z",
+          "name": "expanding-02",
+          "purge_days": 15,
+          "selection_cutoff": "2026-07-05T23:59:59Z",
+          "train": {
+            "end": "2026-05-30",
+            "start": "2026-05-19"
+          },
+          "training_cutoff": "2026-06-14T23:59:59Z",
+          "validation": {
+            "end": "2026-06-20",
+            "start": "2026-06-15"
+          }
+        },
+        "status": "passed",
+        "train_labels_content_sha256": "8b82462af7a5608fe7d5824ff84153e5d691ef5f35158529b1c8446188703d1f"
+      },
+      {
+        "common_grain_sha256": "2e09fa0323e87ec11009e8d090a9fe88fa4f9946bd1d89677ac9dad578e00800",
+        "common_prediction_keys": 20076,
+        "eligible_counts": {
+          "development_holdout": 1755,
+          "purged": 0,
+          "train": 5094,
+          "validation": 1824
+        },
+        "eligible_train_rows": 5094,
+        "future_training_labels": 0,
+        "latest_train_label_available_at": "2026-06-20T00:00:00Z",
+        "model_ids": {
+          "hist_gradient_boosting": "model-sha256-b280f58c575a8d19069ddfb4d2f7b0bb07169ef4e49173143ad433a929f0bc6b",
+          "random_forest": "model-sha256-8e288ed3523f505526620e13dfb5b5b94c6275dce666586b7e760ffd10625105"
+        },
+        "model_specific_key_drops": 0,
+        "plan": {
+          "development_holdout": {
+            "end": "2026-07-17",
+            "start": "2026-07-12"
+          },
+          "evaluation_cutoff": "2026-08-01T23:59:59Z",
+          "name": "expanding-03",
+          "purge_days": 15,
+          "selection_cutoff": "2026-07-11T23:59:59Z",
+          "train": {
+            "end": "2026-06-05",
+            "start": "2026-05-19"
+          },
+          "training_cutoff": "2026-06-20T23:59:59Z",
+          "validation": {
+            "end": "2026-06-26",
+            "start": "2026-06-21"
+          }
+        },
+        "status": "passed",
+        "train_labels_content_sha256": "18cf46cf2d2bef378b0c648f564101245354fcc5ad1ed780a32b1ce6cd9e5ce6"
+      }
+    ],
+    "label_dataset_id": "labels-sha256-62030a83d6409d3c223cf12fd21c89148cb626ae39082d64b266ae6878d9f769",
+    "origin_window": {
+      "end": "2026-07-17",
+      "start": "2026-05-19"
+    },
+    "parent": {
+      "business_timezone": "UTC",
+      "curated_dataset_id": "curated-sha256-aeedd1a49f75eb27b687b328b92e23fee5b8cfa7c2520b2ff5219a8a74bd748a",
+      "curated_descriptor_sha256": "aeedd1a49f75eb27b687b328b92e23fee5b8cfa7c2520b2ff5219a8a74bd748a",
+      "forecast_source_status": "passed",
+      "snapshot_id": "snapshot-sha256-d84c7b9630c6a34f7807abc7560253bf8e7ba3d7d962abee8aca580cf909b767",
+      "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22"
+    },
+    "policy": {
+      "aggregate": "pool_error_and_actual_sums_no_mean_of_wape",
+      "anchoring": "calendar_start_unused_origins_retained_as_purged",
+      "development_holdout_days": 6,
+      "development_holdout_use": "diagnostic_previously_observed_data_not_fresh_final_test",
+      "evaluation_overlap": "same_role_origins_must_not_repeat_across_folds",
+      "folds": 3,
+      "history": "earlier_observations_allowed_as_of_each_origin",
+      "initial_train_days": 6,
+      "label_tail_days": 15,
+      "minimum_eligible_rows_per_role": 1,
+      "mode": "expanding",
+      "model": {
+        "baseline": {
+          "candidates": [
+            "last_observed",
+            "moving_average",
+            "seasonal_naive7"
+          ],
+          "closed_history": "confirmed_closed_zero_is_observed",
+          "common_keys": "all_split_memberships_no_model_specific_drops",
+          "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+          "missing_history": "skip_unknown_never_impute_zero",
+          "moving_average_calendar_days": 7,
+          "moving_average_minimum_known_days": 1,
+          "origin_mode": "fixed_origin_no_recursive_actuals",
+          "portfolio_final_test": "not_included_not_opened",
+          "required_prediction_coverage": 1.0,
+          "schema_version": "1.0.0",
+          "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+          "selection_metric": "mae",
+          "selection_role": "validation_only_per_fold",
+          "tie_break": "candidate_order"
+        },
+        "cpu_threads": 1,
+        "fit_cpu_seconds": 90.0,
+        "fit_rss_bytes": 1073741824,
+        "fit_wall_seconds": 120.0,
+        "grid": "one_frozen_configuration_per_family",
+        "hgb": {
+          "categorical_features": null,
+          "early_stopping": false,
+          "l2_regularization": 0.0,
+          "learning_rate": 0.1,
+          "loss": "squared_error",
+          "max_bins": 255,
+          "max_iter": 100,
+          "max_leaf_nodes": 31,
+          "min_samples_leaf": 20,
+          "validation_fraction": null
+        },
+        "legacy_retailops_serving": "unchanged_rejection_not_overridden",
+        "max_matrix_bytes": 67108864,
+        "max_train_rows": 50000,
+        "minimum_relative_improvement": 0.05,
+        "monitor_interval_seconds": 0.05,
+        "portfolio_final_test": "not_included_not_opened",
+        "postprocessing": "clip_negative_to_zero_no_rounding",
+        "primary_metric": "validation_mae",
+        "random_state": 42,
+        "rf": {
+          "bootstrap": true,
+          "criterion": "squared_error",
+          "max_depth": 12,
+          "max_features": 1.0,
+          "min_samples_leaf": 2,
+          "min_samples_split": 2,
+          "n_estimators": 64,
+          "n_jobs": 1
+        },
+        "schema_version": "1.0.0",
+        "selection_use": "diagnostic_only_pending_04_6_to_04_8",
+        "strategy": "direct_global_with_horizon_feature",
+        "target_type": "observed_sales_units",
+        "tie_break": "baseline_then_rf_then_hgb"
+      },
+      "portfolio_final_test": "not_included_not_opened",
+      "purge_days": 15,
+      "selection": "validation_only_independently_per_fold",
+      "step_days": 6,
+      "validation_days": 6,
+      "version": "forecast-chronological-backtest-1.0.0"
+    },
+    "pooled_metrics": {
+      "development_holdout:hist_gradient_boosting": {
+        "absolute_actual_sum": 49452.0,
+        "absolute_error_sum": 7881.626772058282,
+        "eligible_rows": 5400,
+        "mae": 1.4595605133441263,
+        "predicted_rows": 5400,
+        "status": "passed",
+        "wape": 0.1593793329300793,
+        "wape_status": "passed"
+      },
+      "development_holdout:last_observed": {
+        "absolute_actual_sum": 49452.0,
+        "absolute_error_sum": 12368.0,
+        "eligible_rows": 5400,
+        "mae": 2.29037037037037,
+        "predicted_rows": 5400,
+        "status": "passed",
+        "wape": 0.2501011081452722,
+        "wape_status": "passed"
+      },
+      "development_holdout:moving_average": {
+        "absolute_actual_sum": 49452.0,
+        "absolute_error_sum": 9305.500000000007,
+        "eligible_rows": 5400,
+        "mae": 1.7232407407407422,
+        "predicted_rows": 5400,
+        "status": "passed",
+        "wape": 0.18817236916606017,
+        "wape_status": "passed"
+      },
+      "development_holdout:random_forest": {
+        "absolute_actual_sum": 49452.0,
+        "absolute_error_sum": 7764.171101218066,
+        "eligible_rows": 5400,
+        "mae": 1.4378094631885308,
+        "predicted_rows": 5400,
+        "status": "passed",
+        "wape": 0.15700418792400844,
+        "wape_status": "passed"
+      },
+      "development_holdout:seasonal_naive7": {
+        "absolute_actual_sum": 49452.0,
+        "absolute_error_sum": 8125.0,
+        "eligible_rows": 5400,
+        "mae": 1.5046296296296295,
+        "predicted_rows": 5400,
+        "status": "passed",
+        "wape": 0.1643007360672976,
+        "wape_status": "passed"
+      },
+      "development_holdout:validation_selected": {
+        "absolute_actual_sum": 49452.0,
+        "absolute_error_sum": 7789.066853389466,
+        "eligible_rows": 5400,
+        "mae": 1.442419787664716,
+        "predicted_rows": 5400,
+        "status": "passed",
+        "wape": 0.1575076205894497,
+        "wape_status": "passed"
+      },
+      "validation:hist_gradient_boosting": {
+        "absolute_actual_sum": 49175.0,
+        "absolute_error_sum": 7760.121204597559,
+        "eligible_rows": 5472,
+        "mae": 1.4181508049337643,
+        "predicted_rows": 5472,
+        "status": "passed",
+        "wape": 0.15780622683472412,
+        "wape_status": "passed"
+      },
+      "validation:last_observed": {
+        "absolute_actual_sum": 49175.0,
+        "absolute_error_sum": 12507.0,
+        "eligible_rows": 5472,
+        "mae": 2.285635964912281,
+        "predicted_rows": 5472,
+        "status": "passed",
+        "wape": 0.2543365531265887,
+        "wape_status": "passed"
+      },
+      "validation:moving_average": {
+        "absolute_actual_sum": 49175.0,
+        "absolute_error_sum": 9415.000000000004,
+        "eligible_rows": 5472,
+        "mae": 1.7205774853801177,
+        "predicted_rows": 5472,
+        "status": "passed",
+        "wape": 0.19145907473309615,
+        "wape_status": "passed"
+      },
+      "validation:random_forest": {
+        "absolute_actual_sum": 49175.0,
+        "absolute_error_sum": 7540.32060685931,
+        "eligible_rows": 5472,
+        "mae": 1.3779825670430026,
+        "predicted_rows": 5472,
+        "status": "passed",
+        "wape": 0.15333646378971652,
+        "wape_status": "passed"
+      },
+      "validation:seasonal_naive7": {
+        "absolute_actual_sum": 49175.0,
+        "absolute_error_sum": 8851.0,
+        "eligible_rows": 5472,
+        "mae": 1.6175073099415205,
+        "predicted_rows": 5472,
+        "status": "passed",
+        "wape": 0.1799898322318251,
+        "wape_status": "passed"
+      },
+      "validation:validation_selected": {
+        "absolute_actual_sum": 49175.0,
+        "absolute_error_sum": 7524.39941349788,
+        "eligible_rows": 5472,
+        "mae": 1.3750729922327998,
+        "predicted_rows": 5472,
+        "status": "passed",
+        "wape": 0.15301269778338344,
+        "wape_status": "passed"
+      }
+    },
+    "resolved_split": {
+      "folds": [
+        {
+          "development_holdout": {
+            "end": "2026-07-05",
+            "start": "2026-06-30"
+          },
+          "evaluation_cutoff": "2026-07-20T23:59:59Z",
+          "name": "expanding-01",
+          "purge_days": 15,
+          "selection_cutoff": "2026-06-29T23:59:59Z",
+          "train": {
+            "end": "2026-05-24",
+            "start": "2026-05-19"
+          },
+          "training_cutoff": "2026-06-08T23:59:59Z",
+          "validation": {
+            "end": "2026-06-14",
+            "start": "2026-06-09"
+          }
+        },
+        {
+          "development_holdout": {
+            "end": "2026-07-11",
+            "start": "2026-07-06"
+          },
+          "evaluation_cutoff": "2026-07-26T23:59:59Z",
+          "name": "expanding-02",
+          "purge_days": 15,
+          "selection_cutoff": "2026-07-05T23:59:59Z",
+          "train": {
+            "end": "2026-05-30",
+            "start": "2026-05-19"
+          },
+          "training_cutoff": "2026-06-14T23:59:59Z",
+          "validation": {
+            "end": "2026-06-20",
+            "start": "2026-06-15"
+          }
+        },
+        {
+          "development_holdout": {
+            "end": "2026-07-17",
+            "start": "2026-07-12"
+          },
+          "evaluation_cutoff": "2026-08-01T23:59:59Z",
+          "name": "expanding-03",
+          "purge_days": 15,
+          "selection_cutoff": "2026-07-11T23:59:59Z",
+          "train": {
+            "end": "2026-06-05",
+            "start": "2026-05-19"
+          },
+          "training_cutoff": "2026-06-20T23:59:59Z",
+          "validation": {
+            "end": "2026-06-26",
+            "start": "2026-06-21"
+          }
+        }
+      ],
+      "label_policy": "latest_complete_known_version_at_role_cutoff",
+      "minimum_eligible_rows_per_role": 1,
+      "missing_label": "censored_never_zero",
+      "portfolio_final_test": "not_included_not_opened",
+      "protocol": "fixed_origin_development_only",
+      "version": "forecast-development-split-1.0.0"
+    },
+    "role": "chronological_development_backtest",
+    "split_id": "split-sha256-5253779cea9e09691ee59dd6602e3076cfad691e3652b843a4a87cd1bf8cb05b",
+    "status": "passed",
+    "target_type": "observed_sales_units"
+  },
+  "forecast_model_status": "not_ready",
+  "independent_source_rebuild_and_retraining": true,
+  "parents_unchanged": true,
+  "portfolio_final_test": "not_included_not_opened",
+  "predictions": {
+    "content_sha256": "13709d6a745addd513e414776fed9ae1770f0a8fa6e6b51c2d1570cfb7bf8999",
+    "files": [
+      {
+        "path": "predictions.jsonl",
+        "row_count": 301140,
+        "sha256": "13709d6a745addd513e414776fed9ae1770f0a8fa6e6b51c2d1570cfb7bf8999",
+        "size_bytes": 157577037
+      }
+    ],
+    "row_count": 301140
+  },
+  "repeatable_and_immutable": true,
+  "resources": {
+    "expanding-01:hist_gradient_boosting": {
+      "cpu_seconds": 1.700100464,
+      "peak_rss_bytes": 192348160,
+      "status": "passed",
+      "threads": 1,
+      "wall_seconds": 1.7674135830020532
+    },
+    "expanding-01:random_forest": {
+      "cpu_seconds": 1.964025712,
+      "peak_rss_bytes": 253755392,
+      "status": "passed",
+      "threads": 1,
+      "wall_seconds": 2.3237813750019995
+    },
+    "expanding-02:hist_gradient_boosting": {
+      "cpu_seconds": 1.8877684000000001,
+      "peak_rss_bytes": 204341248,
+      "status": "passed",
+      "threads": 1,
+      "wall_seconds": 1.9656358329957584
+    },
+    "expanding-02:random_forest": {
+      "cpu_seconds": 2.48808952,
+      "peak_rss_bytes": 308985856,
+      "status": "passed",
+      "threads": 1,
+      "wall_seconds": 2.7425335830048425
+    },
+    "expanding-03:hist_gradient_boosting": {
+      "cpu_seconds": 2.069409472,
+      "peak_rss_bytes": 203030528,
+      "status": "passed",
+      "threads": 1,
+      "wall_seconds": 2.170123333999072
+    },
+    "expanding-03:random_forest": {
+      "cpu_seconds": 2.969180048,
+      "peak_rss_bytes": 339460096,
+      "status": "passed",
+      "threads": 1,
+      "wall_seconds": 3.276851083006477
+    }
+  },
+  "scope": "AI 04.6 chronological development backtest, not model release",
+  "seconds": 1489.662,
+  "status": "passed"
+}

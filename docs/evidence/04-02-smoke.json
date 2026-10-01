@@ -1,0 +1,85 @@
+{
+  "aws_calls": 0,
+  "calendar_id": "forecast-calendar-sha256-83598117e5bdcb3645d5b9e87594c301d302e27ddc4ad27c52ecd7e31e736c6f",
+  "curated_dataset_id": "curated-sha256-a5f0613c535ad004481ae104840537687da61551a3aceaa61d78af5eeb4cc10c",
+  "feature_columns": 36,
+  "forecast_model_status": "not_ready",
+  "implementation": {
+    "code_files": {
+      "forecasting/features.py": "b069639e0bcd996fdeefca52a7498ca543431eb744b83072d7b1c6b3f1e93283",
+      "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+      "forecasting/features_store.py": "384e4c1971a835891d12d90a25bc7e169045f35f9b2976b0467e8fd7910a0037"
+    },
+    "code_sha256": "924a0afc001463ef35a1d44850437dc1d619ea7394966021ba4e91c9d9299756",
+    "dependency_lock_sha256": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d",
+    "pyarrow_version": "25.0.1",
+    "python_version": "3.11.15",
+    "version": "forecast-inputs-1.0.0"
+  },
+  "input_files_unchanged": true,
+  "inputs_id": "forecast-inputs-sha256-3d510e86ef6b571a84ec7012740bba4f666f71fd2ee72c5a2baf98ea3f7dbe19",
+  "origin_window": {
+    "end": "2026-07-17",
+    "start": "2026-07-16"
+  },
+  "origins": 2,
+  "policy": {
+    "closed_history_policy": "confirmed_closed_zero_is_known_history",
+    "history_days": 28,
+    "lag_days": [
+      1,
+      7,
+      14,
+      28
+    ],
+    "lag_definition": "sales_at_origin_date_plus_1_minus_k",
+    "minimum_active_history_days": 28,
+    "minimum_known_history_days": 7,
+    "preprocessing": "none_no_fitted_encoding_or_imputation",
+    "promotion_policy": "highest_priority_known_offer_without_future_basket_quantity",
+    "rolling_days": [
+      7,
+      14,
+      28
+    ],
+    "rolling_definition": "origin_date_plus_1_minus_window_through_origin_date",
+    "rolling_missing_policy": "available_observations_only_with_count",
+    "rolling_std_ddof": 0,
+    "schema_version": "1.0.0",
+    "target_closed_policy": "retain_row_not_scoring_eligible"
+  },
+  "profile": "ai-smoke",
+  "published_bytes_unchanged": true,
+  "repeatable_identity": true,
+  "scope": "AI 04.2 draft panel/features; no split, preprocessing or model qualification",
+  "seconds": 40.411,
+  "snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+  "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+  "stats": {
+    "active_history_points": 1655,
+    "active_target_rows": 1518,
+    "history_closed": 142,
+    "history_missing": 114,
+    "history_observed_positive": 1244,
+    "history_observed_zero": 155,
+    "insufficient_history_target_rows": 1518,
+    "missing_origin_lag_14_units": 224,
+    "missing_origin_lag_1_units": 1518,
+    "missing_origin_lag_28_units": 1518,
+    "potential_history_points": 3360,
+    "potential_target_rows": 1680,
+    "target_calendar_eligible": 1374,
+    "target_closed": 144
+  },
+  "status": "passed",
+  "tables": {
+    "features": {
+      "content_sha256": "cb9ec5b6125c792ca04d49facc6a411383a866ae793a5c2d57fe46f035d2de9b",
+      "row_count": 1518
+    },
+    "history": {
+      "content_sha256": "9dfb906eb97e9c9f7f243ed4680de311d9f5ec80545587637b8af1f325490e07",
+      "row_count": 114
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "baseline_selection": "validation_only_separately_by_mae_mse_and_interval_score",
+  "compatibility": "v1_reports_immutable_single_output_never_relabelled_as_two_targets",
+  "evaluation_use": "freeze_before_unseen_development_holdout_no_reselection",
+  "interval_objective": "central_interval_score_no_regression_against_baseline",
+  "legacy_width_ratio_threshold": 2.0,
+  "maximum_absolute_normalized_mean_bias": 0.1,
+  "maximum_segment_mae_regression": 0.1,
+  "mean_mse_guard": "no_regression_against_mean_baseline",
+  "mean_objective": "mse_with_bias_guard",
+  "median_objective": "mae",
+  "minimum_calibration_rows": 50,
+  "minimum_eligibility_coverage": 0.8,
+  "minimum_empirical_coverage": 0.8,
+  "minimum_global_rows": 100,
+  "minimum_prediction_coverage": 1.0,
+  "minimum_relative_mae_improvement": 0.05,
+  "minimum_segment_rows": 30,
+  "nominal_coverage": 0.9,
+  "perfect_baseline": "zero_error_tie_passes_positive_error_fails",
+  "point_contract": "separate_conditional_median_and_mean",
+  "portfolio_final_test": "not_included_not_opened",
+  "required_volume_bins": [
+    "zero",
+    "low",
+    "medium",
+    "high"
+  ],
+  "version": "forecast-quality-2.0.0",
+  "volume_basis": "origin_known_rolling_28_mean_not_target_outcome",
+  "width_to_actual_ratio": "diagnostic_only_no_denominator_floor",
+  "zero_actuals": "absolute_errors_and_false_positive_units_no_ratio_gate"
+}
