@@ -84,12 +84,13 @@ samo `APP_ENV=test` go nie włącza.
 Migracja publikacji to `0017_v12_outputs`; późniejszy head `0018_v12_evaluations`
 opisuje [katalog i oceny v12](forecast-v12-metadata.md). Trwałego stosu nie migrowano.
 Dotychczasowe 17 ścieżek OpenAPI i ich 60 definicji schema pozostały identyczne.
-Job `persistence` Required CI uruchamia teraz `make v12-metadata-smoke`,
-który obejmuje registry, kolejkę/API, publikację/odczyt, katalog/oceny i restart.
-Runner używa tych samych digestów obrazów co Compose/Dockerfile,
-także gdy cache nie zawiera osobnego mutable tagu. Nie wykonuje build/pull.
+Job `persistence` Required CI uruchamia teraz `make v12-backup-smoke`,
+który obejmuje registry, kolejkę/API, publikację/odczyt, katalog/oceny,
+[wspólną kopię i odtworzenie](forecast-v12-backup.md) oraz restart.
+Runner używa już zbudowanego obrazu MLflow z przypiętym sterownikiem
+PostgreSQL i sprawdza jego wersje. Nie wykonuje build/pull.
 Zmiana workflow jest przygotowana lokalnie; zdalny wynik pozostaje nieodebrany.
 
 [Katalog i oceny v12](forecast-v12-metadata.md) są podłączone osobno.
-Do ukończenia AI 05 pozostają wspólny
-backup/restore, Required CI, rzeczywisty handoff i pełny odbiór serving.
+Do ukończenia AI 05 pozostają zdalny Required CI, rzeczywisty handoff
+i pełny odbiór serving.

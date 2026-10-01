@@ -268,14 +268,22 @@ SELECT coalesce(json_agg(tablename ORDER BY tablename),'[]'::json)
         )
         if not tables or len(tables) > 256:
             raise ValueError("lifecycle_schema_not_initialized")
+        if any(not isinstance(name, str) or IDENTIFIER.fullmatch(name) is None for name in tables):
+            raise ValueError("lifecycle_table_invalid")
+        counts_query = " UNION ALL ".join(
+            f"SELECT '{name}' name,count(*) n FROM {schema}.\"{name}\""  # noqa: S608 - fixed schema and strict IDENTIFIER
+            for name in tables
+        )
+        counts = json.loads(
+            sql(project, database, "SELECT json_object_agg(name,n) FROM (" + counts_query + ") c;")  # noqa: S608 - fixed schema and strict IDENTIFIER
+        )
+        if set(counts) != set(tables) or any(type(n) is not int or n < 0 for n in counts.values()):
+            raise ValueError("lifecycle_table_count_invalid")
+        total_rows += sum(counts.values())
+        if total_rows > MAX_ROWS:
+            raise ValueError("lifecycle_inventory_row_limit")
         rows: dict[str, Any] = {}
         for name in tables:
-            if not isinstance(name, str) or IDENTIFIER.fullmatch(name) is None:
-                raise ValueError("lifecycle_table_invalid")
-            count = int(sql(project, database, f'SELECT count(*) FROM {schema}."{name}";').strip())  # noqa: S608 - fixed schema and strict IDENTIFIER
-            total_rows += count
-            if total_rows > MAX_ROWS:
-                raise ValueError("lifecycle_inventory_row_limit")
             with tempfile.TemporaryFile() as output:
                 sql(
                     project,
@@ -288,7 +296,7 @@ SELECT coalesce(json_agg(tablename ORDER BY tablename),'[]'::json)
                     raise ValueError("lifecycle_inventory_byte_limit")
                 output.seek(0)
                 checksum = hashlib.file_digest(output, "sha256").hexdigest()
-            rows[name] = {"rows": count, "sha256": checksum}
+            rows[name] = {"rows": counts[name], "sha256": checksum}
         sequences = json.loads(
             sql(
                 project,
@@ -537,7 +545,11 @@ def require_fresh(project: str) -> None:
 
 
 def restore(
-    bundle: Path, project: str, *, on_created: Callable[[], None] | None = None
+    bundle: Path,
+    project: str,
+    *,
+    on_created: Callable[[], None] | None = None,
+    build_images: bool = True,
 ) -> dict[str, Any]:
     manifest = verify_bundle(bundle)
     if manifest["pins"] != pins():
@@ -548,8 +560,10 @@ def restore(
         require_fresh(project)
         if on_created is not None:
             on_created()
-        store.checked_run(store.compose(project, "build", "api", "mlflow"))
-        store.checked_run(store.compose(project, "up", "-d", "--wait", "db"))
+        if build_images:
+            store.checked_run(store.compose(project, "build", "api", "mlflow"))
+        cache_options = [] if build_images else ["--no-build", "--pull", "never"]
+        store.checked_run(store.compose(project, "up", *cache_options, "-d", "--wait", "db"))
         previous = limits(project)
         fence(project, previous)
         # This schema is created empty by init.sh. No CASCADE: refuse unexpected content.

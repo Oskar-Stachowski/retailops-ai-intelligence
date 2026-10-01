@@ -142,7 +142,8 @@ fencing, anulowanie, atomowy receipt oraz restart usług. Używa namespace
 oraz anonimowe wolumeny; nie buduje ani nie pobiera obrazów.
 [Dowód przygotowania](evidence/05-v12-queue.json) opisuje granice fixture.
 
-Po [publikacji i read API](forecast-v12-publication.md) pozostają
-spójny backup/restore v12 i Required CI. Rzeczywisty handoff, źródło,
+Po [publikacji i read API](forecast-v12-publication.md)
+[wspólny backup/restore v12](forecast-v12-backup.md) ma osobny odbiór.
+Zdalny Required CI pozostaje otwarty. Rzeczywisty handoff, źródło,
 przegląd operatora i końcowy batch nadal wymagają ukończonego AI 04.
 **AI 05 pozostaje otwarte.**

@@ -193,8 +193,9 @@ def test_resume_refuses_recreated_database_or_unexpected_limits(
     assert store.MAINTENANCE.exists()
 
 
+@pytest.mark.parametrize("build_images", [True, False])
 def test_partial_restore_never_unfences_or_starts_target(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, build_images: bool
 ) -> None:
     archive = bundle(tmp_path)
     commands: list[list[str]] = []
@@ -223,8 +224,12 @@ def test_partial_restore_never_unfences_or_starts_target(
 
     monkeypatch.setattr(store, "set_limits", forbidden)
     with pytest.raises(ValueError, match="simulated_restore_failure"):
-        store.restore(archive, "retailops_ai_target_test")
+        store.restore(archive, "retailops_ai_target_test", build_images=build_images)
     assert not any("up" in command and "mlflow" in command for command in commands)
+    if not build_images:
+        assert not any("build" in command for command in commands)
+        startup = next(command for command in commands if "up" in command)
+        assert "--no-build" in startup and startup[startup.index("--pull") + 1] == "never"
 
 
 def test_fence_never_interpolates_unvalidated_limits(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -279,3 +284,57 @@ def test_state_inventory_rejects_invalid_or_unbounded_row_counts(bad: Any) -> No
     state["ai_revision"] = "0009_model_lifecycle"
     with pytest.raises(ValueError):
         store.validate_state(state)
+
+
+def inventory_sql(monkeypatch: pytest.MonkeyPatch, tables: list[str], counts: dict[str, Any]):
+    copied = []
+
+    def sql(project, database, query, *, stdout=None):
+        if "schemaname NOT IN" in query:
+            return b"0"
+        if "json_agg(tablename" in query:
+            return json.dumps(tables).encode()
+        if "json_object_agg(name,n)" in query:
+            return json.dumps(counts).encode()
+        if query.startswith("COPY"):
+            copied.append((database, query))
+            stdout.write(b'{"proof": 1}\n' if '"populated"' in query else b"")
+            return b""
+        if "json_agg(sequencename" in query:
+            return b"[]"
+        if "version_num" in query:
+            return b"0018_v12_evaluations"
+        pytest.fail("Unexpected inventory SQL")
+
+    monkeypatch.setattr(store, "sql", sql)
+    return copied
+
+
+def test_inventory_preserves_empty_and_populated_table_bytes(monkeypatch: pytest.MonkeyPatch):
+    import hashlib
+
+    copied = inventory_sql(monkeypatch, ["empty", "populated"], {"empty": 0, "populated": 1})
+    result = store.database_inventory("retailops_ai_source_test")
+    for database in store.DATABASES:
+        assert result[database]["tables"] == {
+            "empty": {"rows": 0, "sha256": hashlib.sha256(b"").hexdigest()},
+            "populated": {"rows": 1, "sha256": hashlib.sha256(b'{"proof": 1}\n').hexdigest()},
+        }
+    assert len(copied) == 4 and result["ai_revision"] == "0018_v12_evaluations"
+
+
+@pytest.mark.parametrize(
+    "counts", [{"proof": True}, {"proof": -1}, {"proof": 1_000_001}, {}, {"other": 1}]
+)
+def test_inventory_refuses_invalid_counts_and_budget_before_copy(monkeypatch, counts):
+    copied = inventory_sql(monkeypatch, ["proof"], counts)
+    with pytest.raises(ValueError, match="lifecycle_(table_count_invalid|inventory_row_limit)"):
+        store.database_inventory("retailops_ai_source_test")
+    assert copied == []
+
+
+def test_inventory_checks_identifiers_before_assembling_count_sql(monkeypatch):
+    copied = inventory_sql(monkeypatch, ['proof";DROP SCHEMA ai;--'], {})
+    with pytest.raises(ValueError, match="lifecycle_table_invalid"):
+        store.database_inventory("retailops_ai_source_test")
+    assert copied == []

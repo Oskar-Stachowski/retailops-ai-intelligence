@@ -124,6 +124,10 @@ v12-publication-smoke:
 v12-metadata-smoke:
 	$(UV_RUN) python scripts/check_v12_metadata.py
 
+.PHONY: v12-backup-smoke
+v12-backup-smoke:
+	$(UV_RUN) python scripts/check_v12_backup.py
+
 .PHONY: model-lifecycle-smoke
 model-lifecycle-smoke:
 	$(UV_RUN) python scripts/check_model_lifecycle.py

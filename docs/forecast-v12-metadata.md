@@ -115,11 +115,11 @@ oceny obejmują dwa produkty; jeden ma wyłączone członkostwo.
 Ten test nie odbiera produkcyjnego backendu PostgreSQL dla metadanych
 MLflow ani osobno wdrożonego serwera TCP HTTP.
 
-Required CI uruchamia `make v12-metadata-smoke`, obejmujący również
-poprzednie kroki v12. Runner używa cache przypiętych obrazów, bez build/pull,
-i usuwa wyłącznie swoje kontenery oraz anonimowe wolumeny.
+Required CI uruchamia teraz `make v12-backup-smoke`, obejmujący również
+ten odbiór i [wspólne odtworzenie v12](forecast-v12-backup.md).
+`v12-metadata-smoke` pozostaje samodzielnym testem z backendem SQLite.
 [Evidence](evidence/05-v12-metadata.json) opisuje lokalny wynik i granice.
 Zdalny wynik Required CI pozostaje nieodebrany. Do zakończenia AI 05
-pozostają wspólny backup/restore v12, rzeczywisty końcowy eksport,
+pozostają rzeczywisty końcowy eksport,
 kwalifikacja i przegląd modelu, pełny odbiór serving oraz jawna migracja
 trwałego środowiska. Aktywnej kampanii AI 04 nie odczytywano ani nie zmieniano.

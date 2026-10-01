@@ -121,6 +121,7 @@ pozostają bez zmian. Błąd/timeout zastępuje wcześniejszy wynik odbioru stat
 błędu i zachowuje prywatny log, zamiast pozostawiać stary raport `passed`.
 
 [Dowód przygotowania](evidence/05-v12-publication.json) oddziela mechanikę
-od kwalifikacji rzeczywistego modelu. Pozostają spójny backup/restore v12,
+od kwalifikacji rzeczywistego modelu. [Backup/restore v12](forecast-v12-backup.md)
+ma osobny odbiór. Pozostają
 Required CI, rzeczywisty handoff AI 04, źródło i przegląd operatora,
 a następnie końcowy batch i publikacja. **AI 05 pozostaje otwarte.**

@@ -47,6 +47,9 @@ istniejący `init.sh` celu; poświadczenia nie trafiają do pakietu.
 Plikowe snapshoty/curated i artefakty poza wolumenem MLflow nie należą do
 tej kopii. Chroni ona obecny stan aplikacji w PostgreSQL i magazynie MLflow,
 nie stan całego hosta lub przyszłego worker storage.
+Zakres v12, wraz z kolejką, publikacjami i ocenami do rewizji
+`0018_v12_evaluations`, sprawdza [osobny odbiór](forecast-v12-backup.md)
+na rzeczywistych bazach PostgreSQL AI i MLflow.
 
 Katalogi pakietów mają 0700, pliki 0600; publikacja pakietu jest atomowa
 i nie nadpisuje istniejącej kopii. Kontroler serializuje własne operacje.
@@ -124,4 +127,6 @@ Pakiety nie trafiają do Git i nie mają automatycznej retencji. Zasady
 zachowania aktywnych/rollback artefaktów opisuje [magazyn MLflow](mlflow-store.md).
 Kopia poza hostem, szyfrowanie i harmonogram pozostają decyzją przed
 produkcją. Ten odbiór jest lokalny i dotyczy mechaniki; AI 05 nadal wymaga
-kwalifikowanego modelu AI 04 oraz batch/runtime/API z kolejnych zakresów.
+kwalifikowanego modelu AI 04 oraz rzeczywistego batch/runtime/serving.
+Mechanika batch/API v12 i jej odtworzenie mają późniejszy odbiór
+opisany [tutaj](forecast-v12-backup.md).
