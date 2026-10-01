@@ -28,6 +28,8 @@ dla treningu RF/HGB. Przy ręcznym uruchomieniu całych testów użyj
 bez modeli, DB i AWS.
 [Adapter eksportu v12 do MLflow](mlflow-v12-evidence.md) korzysta z osobnego
 przypiętego wheel AI 04 i zachowuje oddzielne cele prognozy.
+[Loader i prognozy v12 offline](forecast-v12-runtime.md) sprawdzają jawnie
+przypiętą recepturę oraz wejście bez etykiet, bez publikacji serving.
 Wszystkie polecenia projektu korzystają z tego samego pakietu, także
 `uv run --locked python -m retailops_ai`. `config-check` niczego nie tworzy,
 nie sprawdza DB, nie wykonuje zapytań sieciowych i nie potwierdza readiness usług.

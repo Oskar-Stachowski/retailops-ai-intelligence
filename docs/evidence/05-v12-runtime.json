@@ -1,0 +1,128 @@
+{
+  "active_ai04_worktree_modified": false,
+  "active_campaign_data_read": false,
+  "base_commit": "6e188bdccaefcf4b201e1af71ae4d3d51f1b006b",
+  "checks": {
+    "additional_explicit_native_wheel_test": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 1
+    },
+    "documentation_links": "passed",
+    "git_diff_check": "passed",
+    "mypy_repository": "passed_238_source_files",
+    "pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 112
+    },
+    "ruff_format_repository": "passed",
+    "ruff_repository": "passed",
+    "schema_snapshots": "passed"
+  },
+  "docker_builds": 0,
+  "files": {
+    "contracts/forecast/v12_offline/execution.schema.json": {
+      "sha256": "f26c9e6db4be37afe91ddad71d3912638f9a013143f62f03fa0b2932ff854a54",
+      "size_bytes": 23422
+    },
+    "contracts/forecast/v12_offline/runtime_pin.schema.json": {
+      "sha256": "5c84035db49cc0664c3de1c12ae6a9d61a49cc4f4ca8495aeaab70eac34accb9",
+      "size_bytes": 3764
+    },
+    "contracts/forecast/v12_offline/runtime_result.schema.json": {
+      "sha256": "fcc3b72a0a0104fc2098b4af369cbf3a11fe8b41a156394d8edfdb14ea2ff443",
+      "size_bytes": 7223
+    },
+    "docs/forecast-v12-runtime.md": {
+      "sha256": "1c0d44e234078e5566bbcfd32b6a6d9b0822f57cfcfa1594c4bbb5d5879b022b",
+      "size_bytes": 5855
+    },
+    "reports/ai05-v12-native-runtime-smoke.json": {
+      "sha256": "490903389be2a5d97943b6333a9637d4237960606061b1a930e86c1194f52347",
+      "size_bytes": 1042
+    },
+    "reports/ai05-v12-runtime-tests.xml": {
+      "sha256": "1e45b0a581a6eaef3350438aa9e639066fc90e3346e2c540c529c890dc51f44b",
+      "size_bytes": 15071
+    },
+    "scripts/check_v12_runtime.py": {
+      "sha256": "90ab66d4ffef21e0494ff3187277013fabfa0ce0b566022aceb17f4d685208aa",
+      "size_bytes": 2173
+    },
+    "scripts/update_v12_runtime_contracts.py": {
+      "sha256": "b43f52d7725974f694bbabe6eb60088c4fad28901aa3f41eab1d135142a3cdb4",
+      "size_bytes": 1335
+    },
+    "src/retailops_ai/forecast_jobs/v12_contracts.py": {
+      "sha256": "5bfdfe819525ca0a374f3552dec2b452dd4fd2a317278195d7e2c5c8f0ac1edc",
+      "size_bytes": 5393
+    },
+    "src/retailops_ai/forecast_jobs/v12_executor.py": {
+      "sha256": "e398520cface5e1f95a2dc1d686488ab52b94dc0aee664c92948b74e88c75b0d",
+      "size_bytes": 11343
+    },
+    "src/retailops_ai/forecast_jobs/v12_runtime.py": {
+      "sha256": "18a25bd2afda95c0e3c195f0523074c1d65293779033582a03cbe081de61ef53",
+      "size_bytes": 10489
+    },
+    "tests/check_v12_native.py": {
+      "sha256": "e354c7a0fcf0607ae9b91d8deaef2ffc9d0b0858469014f6f6ea4882b12f147d",
+      "size_bytes": 9075
+    },
+    "tests/test_v12_runtime.py": {
+      "sha256": "3f7057f804b1d3f5451c7c24abc24682c74f52bde967d7555537c4206ffa8fa0",
+      "size_bytes": 20132
+    }
+  },
+  "fixture_boundary": "Portable tests use explicit transport/predictor doubles. Native test fits tiny invented validation fixtures, doubles full-run verification/input provenance, and never qualifies a model.",
+  "limits": {
+    "default_rss_bytes": 536870912,
+    "default_wall_seconds": 60,
+    "max_request_bytes": 4194304,
+    "max_result_bytes": 1048576,
+    "max_rows": 256,
+    "max_stderr_bytes": 16384,
+    "maximum_rss_bytes": 1073741824,
+    "maximum_wall_seconds": 120
+  },
+  "native_algorithm_smoke": {
+    "active_ai04_modified": false,
+    "active_campaign_read": false,
+    "code_sha256": "1961a96c8a1bbdfe7b4259f24b3dcb2a20def08723d5ef7000c40ed5f68a44fe",
+    "cold_load_seconds": 0.2881087079877034,
+    "compute_seconds": 0.011154000007081777,
+    "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "fixture_fitting": "small_independent_invented_validation_rows_only",
+    "forecast_rows": 14,
+    "full_run_verifier": "explicit_transport_double_not_real_quality_evidence",
+    "identical_repeat": true,
+    "input_provenance": "explicit_test_fixture_with_pinned_lock_claim_not_real_source_acceptance",
+    "installed_ai04_package": "/private/tmp/retailops-ai04-stage-b-ci/.venv/lib/python3.11/site-packages/retailops_ai/__init__.py",
+    "original_predictor_match": true,
+    "peak_rss_bytes": 82493440,
+    "prediction_model_refits": 0,
+    "predictions_sha256": "08260eba39c09a11329d0e41851e35b1839b309c786e399033be914a65b9e68e",
+    "published_forecast_outputs": 0,
+    "real_export_accepted": false,
+    "serving_eligible": false,
+    "status": "native_algorithm_load_predict_passed_on_explicit_fixture"
+  },
+  "new_quality_qualification": false,
+  "new_real_source_generation": false,
+  "published_forecast_outputs": 0,
+  "real_final_export_accepted": false,
+  "real_mlflow_written": false,
+  "recorded_at": "2026-10-01T08:19:15.961545+00:00",
+  "remaining": [
+    "Accept the completed real AI04 export and source-verified compatible inference inputs.",
+    "Define production inference role, recipe selection and source-change policy.",
+    "Separately accept v12 release/registry/promotion, worker/publication and read API preserving all three targets."
+  ],
+  "scope": "offline_v12_recipe_load_label_free_predict_and_typed_contracts",
+  "serving_eligible": false,
+  "status": "portable_fixture_checks_and_pinned_native_algorithm_smoke_passed",
+  "version": "ai05-v12-offline-runtime-evidence-1.0.0"
+}

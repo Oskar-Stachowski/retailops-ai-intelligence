@@ -1,0 +1,168 @@
+"""Local acceptance with the real pinned AI04 algorithm and explicit tiny transport fixtures."""
+
+import json
+import os
+import subprocess
+from datetime import timedelta
+from pathlib import Path
+
+import pytest
+from test_v12_evidence import verifier_receipt
+from test_v12_runtime import COHORT, plan, runtime_fixture
+from test_v12_runtime import artifacts as artifacts
+from test_v12_runtime import prepared_input as prepared_input
+from test_v12_runtime import tables as tables
+from test_v12_runtime import timeline as timeline
+
+from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
+from retailops_ai.forecast_jobs.inputs import PreparedInputs
+from retailops_ai.forecast_jobs.v12_runtime import load_v12
+from retailops_ai.forecasting.manifest_contract import FoldPlan
+from retailops_ai.model_lifecycle import v12_evidence
+
+REPORT = Path(__file__).resolve().parents[1] / "reports/ai05-v12-native-runtime-smoke.json"
+
+
+@pytest.fixture
+def verifier_python():
+    value = os.environ.get("AI04_VERIFIER_PYTHON")
+    if not value:
+        pytest.fail(
+            "AI04_VERIFIER_PYTHON is required for this explicit local acceptance", pytrace=False
+        )
+    python = Path(value)
+    if not python.is_absolute() or not python.is_file():
+        pytest.fail("Absolute installed AI04 interpreter is required", pytrace=False)
+    return python
+
+
+GEN = r"""
+import json,sys
+from datetime import datetime,timedelta
+import retailops_ai
+from retailops_ai.data_contracts.common import end_of_day
+from retailops_ai.data_contracts.identity import canonical_bytes,canonical_sha256
+from retailops_ai.forecasting.functional_recipe import Observation,empirical_baselines
+from retailops_ai.forecasting.functional_v12_recipe import CohortObservation,fit_recipe_v12,bind_pooled_mean,merge_mean_calibration,PreparedV12Predictor
+from retailops_ai.forecasting.functional_v12_campaign import campaign_code
+from retailops_ai.forecasting.functional_v12_run import _input_schema
+from retailops_ai.forecasting.functional_v12_cohort import observation_from_compact
+from retailops_ai.forecasting.manifest_contract import FoldPlan
+from retailops_ai.forecasting.features_contract import InputRow,HistoryContext
+from retailops_ai.forecasting.quality_contract import QualityPolicy
+from retailops_ai.forecasting.quality_metrics import volume_bin
+request=json.loads(sys.stdin.buffer.read())
+fold=FoldPlan.model_validate_json(canonical_bytes(request['fold']))
+inputs=request['inputs']; cohort=request['cohort']
+first=InputRow.model_validate_json(canonical_bytes(inputs['rows'][0]))
+values={v.name:v.value for v in first.values}
+volume=volume_bin(values['rolling_mean_28'],QualityPolicy())
+sample=[]
+for day in sorted({fold.validation.start,fold.validation.end}):
+    for i in range(120):
+        origin=end_of_day(day).isoformat(); target=(day+timedelta(days=1)).isoformat()
+        points={name+':'+functional:2.0 for name in ('history7','history28','weekday28') for functional in ('median','mean')}
+        row=Observation(key=canonical_bytes([fold.name,'validation',origin,str(i),'unit-location','store',target]).decode(),fold=fold.name,role='validation',origin=origin,volume=volume,category=values['category_id'],channel='store',horizon=1,reasons=(),actual=15 if i%5==0 else 0,available=end_of_day(day+timedelta(days=2)).isoformat(),points=points,bands={name:(0.0,15.0) for name in ('history7','history28','weekday28')})
+        sample.append(CohortObservation(row,cohort))
+recipe=fit_recipe_v12(sample,fold)
+recipe=bind_pooled_mean(recipe,merge_mean_calibration([recipe]))
+refs={cohort:{fold.name:{'recipe_id':recipe['recipe_id']}}}
+plan={'split_policy':{'folds':[request['fold']]},'method_policy':recipe['policy'],'required_dimensions':{'category':[values['category_id']],'channel':['store'],'volume':['zero','low','medium','high']}}
+schema=_input_schema(plan,refs)
+predictor=PreparedV12Predictor(recipe)
+histories={h.content_sha256():h for h in [HistoryContext.model_validate_json(canonical_bytes(value)) for value in inputs['histories']]}
+expected=[]
+for value in inputs['rows']:
+    row=InputRow.model_validate_json(canonical_bytes(value)); history=histories[row.history_context_sha256]
+    points,bands=empirical_baselines(row,history); values={v.name:v.value for v in row.values}
+    compact={'key':canonical_bytes([fold.name,'development_holdout',row.forecast_origin.isoformat(),row.product_id,row.selling_location_id,row.channel,row.target_date.isoformat()]).decode(),'fold':fold.name,'role':'development_holdout','origin':row.forecast_origin.isoformat(),'volume':volume_bin(values['rolling_mean_28'],QualityPolicy()),'category':values['category_id'],'channel':row.channel,'horizon':row.horizon_days,'eligible':True,'reasons':[],'actual':None,'label_available_at':None,'baseline_points':points,'baseline_bands':{name:list(band) if band is not None else None for name,band in bands.items()}}
+    candidate,baseline,metadata=predictor.predict(observation_from_compact(compact,cohort))
+    expected.append({'key':compact['key'],'candidate':candidate.model_dump(mode='json'),'baseline':baseline.model_dump(mode='json'),'metadata':metadata})
+print(json.dumps({'recipe':recipe,'code':campaign_code(),'signature_schema':schema,'expected':expected,'package_file':retailops_ai.__file__}))
+"""
+
+
+def test_real_pinned_predictor_matches_reference_without_touching_campaign(
+    prepared_input, tmp_path, monkeypatch, verifier_python
+):
+    PYTHON = verifier_python
+    original = plan()
+    fold_raw = original.model_dump(mode="json")
+    fold_raw["train"] = {
+        "start": (original.train.start - timedelta(days=1)).isoformat(),
+        "end": (original.train.end - timedelta(days=1)).isoformat(),
+    }
+    fold_raw["validation"]["start"] = (original.validation.start - timedelta(days=1)).isoformat()
+    fold_raw["training_cutoff"] = (original.training_cutoff - timedelta(days=1)).isoformat()
+    fold = FoldPlan.model_validate_json(canonical_bytes(fold_raw))
+    completed = subprocess.run(
+        [str(PYTHON), "-I", "-B", "-c", GEN],
+        input=canonical_bytes(
+            {
+                "inputs": prepared_input.model_dump(mode="json"),
+                "fold": fold.model_dump(mode="json"),
+                "cohort": COHORT,
+            }
+        ),
+        capture_output=True,
+        check=False,
+        timeout=60,
+        env={"OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"},
+    )
+    assert completed.returncode == 0, completed.stderr.decode()
+    native = json.loads(completed.stdout)
+    raw = prepared_input.model_dump(mode="json")
+    raw["feature_manifest"]["descriptor"]["code"]["dependency_lock_sha256"] = native["code"][
+        "dependency_lock_sha256"
+    ]
+    raw["feature_manifest"]["feature_set_id"] = "features-sha256-" + canonical_sha256(
+        raw["feature_manifest"]["descriptor"]
+    )
+    raw["profile_id"] = "batch-profile-sha256-" + canonical_sha256(
+        {key: value for key, value in raw.items() if key != "profile_id"}
+    )
+    inputs = PreparedInputs.model_validate_json(canonical_bytes(raw))
+    root, run_id, recipe_id = runtime_fixture(
+        tmp_path,
+        inputs,
+        recipe=native["recipe"],
+        code=native["code"],
+        signature_schema=native["signature_schema"],
+        fold=fold,
+    )
+    monkeypatch.setattr(v12_evidence, "verify_with_wheel", lambda root, *_: verifier_receipt(root))
+    loaded = load_v12(
+        root, PYTHON, run_id=run_id, cohort_id=COHORT, fold=plan().name, recipe_id=recipe_id
+    )
+    first = loaded.predict(inputs)
+    second = loaded.predict(inputs)
+    assert [row.model_dump(mode="json") for row in first.predictions] == native["expected"]
+    assert (
+        first.predictions_sha256
+        == second.predictions_sha256
+        == canonical_sha256(native["expected"])
+    )
+    assert first.model_refits == 0 and first.serving_eligible is False
+    report = {
+        "status": "native_algorithm_load_predict_passed_on_explicit_fixture",
+        "full_run_verifier": "explicit_transport_double_not_real_quality_evidence",
+        "input_provenance": "explicit_test_fixture_with_pinned_lock_claim_not_real_source_acceptance",
+        "active_campaign_read": False,
+        "active_ai04_modified": False,
+        "real_export_accepted": False,
+        "fixture_fitting": "small_independent_invented_validation_rows_only",
+        "forecast_rows": len(first.predictions),
+        "original_predictor_match": True,
+        "identical_repeat": True,
+        "installed_ai04_package": native["package_file"],
+        "code_sha256": native["code"]["code_sha256"],
+        "dependency_lock_sha256": native["code"]["dependency_lock_sha256"],
+        "predictions_sha256": first.predictions_sha256,
+        "cold_load_seconds": first.cold_load_seconds,
+        "compute_seconds": first.compute_seconds,
+        "peak_rss_bytes": first.peak_rss_bytes,
+        "prediction_model_refits": first.model_refits,
+        "serving_eligible": False,
+        "published_forecast_outputs": 0,
+    }
+    REPORT.write_bytes(canonical_bytes(report) + b"\n")

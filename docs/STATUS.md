@@ -5,8 +5,15 @@ obsługuje pełny run, osobne metryki mediany/średniej/przedziału, oryginalne
 identyfikatory, wszystkie artefakty, powtórzenia oraz zachowanie failed import.
 Oryginalny verifier działa przez osobny przypięty wheel AI 04. Adapter jest
 testowany na małych fixtures bez odczytu aktywnej kampanii; rzeczywisty import
-czeka na końcowy eksport. Rejestracja, promocja, loader/batch/API v12 i pełny
-odbiór serving pozostają dalszą pracą AI 05.
+czeka na końcowy eksport.
+
+**AI 05 — loader v12 offline:** [odczyt i prognozy](forecast-v12-runtime.md)
+wiążą run/cohort/fold/recipe oraz źródło i środowisko. Oryginalny predictor
+działa w izolowanym podprocesie; bazowe prognozy pochodzą z historii as-of,
+wynik zachowuje medianę/średnią/przedział. Testy obejmują osobne fixtures;
+próba przypiętego wheel dała 14 wyników identycznych z oryginalnym predictorem.
+Końcowy eksport, rzeczywiste wejście, kontrakt inference/release, rejestracja,
+promocja, worker/publikacja/API v12 i pełny odbiór serving pozostają dalszą pracą.
 
 Aktualizacja: **2026-09-30**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
