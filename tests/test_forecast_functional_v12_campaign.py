@@ -22,6 +22,7 @@ from retailops_ai.forecasting.functional_v12_recipe import (
 )
 from retailops_ai.forecasting.functional_v12_resources import resource_plan
 from retailops_ai.forecasting.manifest_contract import SplitPolicy
+from retailops_ai.forecasting.mean_validation_weights import FrozenMeanWeights, MeanWeight
 from retailops_ai.forecasting.quality_v2_contract import QualityPolicyV2
 from retailops_ai.source_snapshot.files import SnapshotError, file_hash, read_json
 
@@ -364,6 +365,39 @@ def score(prepared, **kwargs):
         prepared["output"],
         **kwargs,
     )
+
+
+def test_new_recipe_freeze_requires_complete_weight_inventory(archived_campaign):
+    descriptor = deepcopy(archived_campaign["freeze"]["descriptor"])
+    groups = tuple(
+        MeanWeight(fold=fold["name"], volume=volume, category=category, weight=0.5)
+        for fold in descriptor["split_policy"]["folds"]
+        for volume in sorted(descriptor["required_dimensions"]["volume"])
+        if volume != "zero"
+        for category in sorted(descriptor["required_dimensions"]["category"])
+    )
+    weights = FrozenMeanWeights(
+        development_campaign_id="functional-v12-campaign-sha256-" + "a" * 64,
+        selector_receipt_sha256="b" * 64,
+        standard_validation_receipt_sha256="c" * 64,
+        weights=groups,
+    )
+    old = FunctionalV12Policy.model_validate_json(canonical_bytes(descriptor["method_policy"]))
+    policy = FunctionalV12Policy.model_validate_json(
+        canonical_bytes(
+            old.model_dump(mode="json")
+            | {
+                "version": "forecast-functional-recipe-3.0.0",
+                "mean_weights": weights.model_dump(mode="json"),
+            }
+        )
+    )
+    descriptor["method_policy"] = policy.model_dump(mode="json")
+    assert campaign.make_freeze(descriptor)["descriptor"] == descriptor
+    descriptor["method_policy"]["mean_weights"]["weights"].pop()
+    with pytest.raises(SnapshotError, match="frozen_mean_weight_inventory"):
+        campaign.make_freeze(descriptor)
+    assert archived_campaign["opened"] == []
 
 
 def test_all_recipes_precede_exposure_and_failures_survive_no_fit_replay(

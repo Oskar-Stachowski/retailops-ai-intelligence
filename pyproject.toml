@@ -97,6 +97,7 @@ packages = ["src/retailops_ai"]
 "contracts/forecast/v1/remediation_v2_manifest.schema.json" = "retailops_ai/forecasting/remediation_v2_manifest.schema.json"
 "contracts/forecast/v1/remediation_v2.default.json" = "retailops_ai/forecasting/remediation_v2.default.json"
 "contracts/forecast/v2" = "retailops_ai/forecasting/v2"
+"contracts/forecast/v3" = "retailops_ai/forecasting/v3"
 "contracts/curated/v1_1" = "retailops_ai/curated/v1_1"
 "contracts/source_snapshot/v1_1" = "retailops_ai/source_snapshot/v1_1"
 

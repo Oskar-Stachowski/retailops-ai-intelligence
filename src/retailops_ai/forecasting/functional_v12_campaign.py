@@ -95,6 +95,16 @@ def _validate_freeze(freeze: dict[str, Any]) -> None:
         raise SnapshotError("pooled_campaign_freeze_identity_or_seed_budget")
     policy = FunctionalV12Policy.model_validate_json(canonical_bytes(desc["method_policy"]))
     split = SplitPolicy.model_validate_json(canonical_bytes(desc["split_policy"]))
+    if policy.mean_weights is not None:
+        expected_weights = {
+            (fold.name, volume, category)
+            for fold in split.folds
+            for volume in desc["required_dimensions"]["volume"]
+            if volume != "zero"
+            for category in desc["required_dimensions"]["category"]
+        }
+        if set(policy.mean_weights.lookup()) != expected_weights:
+            raise SnapshotError("pooled_campaign_frozen_mean_weight_inventory")
     window = OriginWindow.model_validate_json(canonical_bytes(desc["origin_window"]))
     if (
         desc["method_policy"] != policy.model_dump(mode="json")

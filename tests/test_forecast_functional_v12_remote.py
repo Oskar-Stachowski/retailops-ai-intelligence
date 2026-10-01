@@ -141,6 +141,38 @@ def test_absent_activation_exact_raw_hash_and_preregistered_seed_fail_before_gen
     assert calls == []
 
 
+@pytest.mark.parametrize("directory", ["contracts/forecast/v2", "contracts/forecast/v3"])
+def test_versioned_freeze_paths_use_the_same_immutable_activation(plan_files, directory):
+    root, _, _, _ = plan_files
+    execution_path = root / remote.EXECUTION_PATH
+    execution = json.loads(execution_path.read_bytes())
+    raw = (root / execution["freeze_path"]).read_bytes()
+    execution["freeze_path"] = directory + "/versioned.freeze.json"
+    destination = root / execution["freeze_path"]
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(raw)
+    execution_path.write_bytes(remote.canonical(execution) + b"\n")
+    expected = remote.sha(execution_path.read_bytes())
+    plan = remote.read_plan(root, expected_execution_sha256=expected)
+    assert plan["execution"]["freeze_path"] == execution["freeze_path"]
+    assert plan["execution"]["freeze_sha256"] == remote.sha(raw)
+
+
+@pytest.mark.parametrize("directory", ["contracts/forecast/v4", "contracts/other"])
+def test_unreviewed_freeze_path_scope_is_rejected(plan_files, directory):
+    root, _, _, _ = plan_files
+    execution_path = root / remote.EXECUTION_PATH
+    execution = json.loads(execution_path.read_bytes())
+    raw = (root / execution["freeze_path"]).read_bytes()
+    execution["freeze_path"] = directory + "/unreviewed.freeze.json"
+    destination = root / execution["freeze_path"]
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(raw)
+    execution_path.write_bytes(remote.canonical(execution) + b"\n")
+    with pytest.raises(remote.PreparationError, match="freeze_path_scope"):
+        remote.read_plan(root)
+
+
 @pytest.mark.parametrize(
     "mutation",
     [

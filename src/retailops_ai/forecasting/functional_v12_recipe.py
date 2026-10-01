@@ -20,13 +20,19 @@ from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha2
 from retailops_ai.forecasting.functional_contract import FunctionalPolicy
 from retailops_ai.forecasting.functional_recipe import Observation, calibrated_band, fit_recipe
 from retailops_ai.forecasting.manifest_contract import FoldPlan
+from retailops_ai.forecasting.mean_validation_weights import FrozenMeanWeights
 from retailops_ai.forecasting.quality_v2 import assess_segment_v2
 from retailops_ai.forecasting.quality_v2_contract import FunctionalForecast, ProtocolObservation
 from retailops_ai.source_snapshot.files import SnapshotError
 
 
 class FunctionalV12Policy(Contract):
-    version: Literal["forecast-functional-recipe-2.0.0"] = "forecast-functional-recipe-2.0.0"
+    version: Literal["forecast-functional-recipe-2.0.0", "forecast-functional-recipe-3.0.0"] = (
+        "forecast-functional-recipe-2.0.0"
+    )
+    mean_weights: FrozenMeanWeights | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
     mean_variant: Literal["baseline", "zero_only", "additive", "hgb_blend"] = "additive"
     prior_strength: Annotated[float, Field(ge=0, allow_inf_nan=False)] = 50.0
     hgb_weight: Annotated[float, Field(ge=0, le=1, allow_inf_nan=False)] = 0.5
@@ -48,6 +54,12 @@ class FunctionalV12Policy(Contract):
     evaluation_use: Literal["calibration_diagnostic_not_independent_qualification"] = (
         "calibration_diagnostic_not_independent_qualification"
     )
+
+    def model_post_init(self, context: object) -> None:
+        if (self.version == "forecast-functional-recipe-3.0.0") != (self.mean_weights is not None):
+            raise ValueError("recipe_version_requires_explicit_frozen_mean_weights")
+        if self.mean_weights is not None and self.mean_variant != "additive":
+            raise ValueError("frozen_mean_weights_require_additive_reference_correction")
 
 
 @dataclass(frozen=True)
@@ -322,7 +334,10 @@ def fit_recipe_v12(
 
 
 def _predict(
-    value: Input, recipe: dict[str, Any], policy: FunctionalV12Policy
+    value: Input,
+    recipe: dict[str, Any],
+    policy: FunctionalV12Policy,
+    mean_weights: dict[tuple[str, str, str], float] | None = None,
 ) -> tuple[FunctionalForecast, FunctionalForecast, dict[str, Any]]:
     row = _wrap(value).observation
     baseline, calibration = _reference_prediction(row, recipe["reference_recipe"])
@@ -350,7 +365,16 @@ def _predict(
                 if volume
                 else "global"
             )
-        mean = max(0.0, mean + cell["offset"]) if mean is not None and cell is not None else None
+        weight = (
+            mean_weights.get((row.fold, row.volume, row.category), 0.0)
+            if mean_weights is not None and row.volume != "zero"
+            else 1.0
+        )
+        mean = (
+            max(0.0, mean + (weight * cell["offset"] if weight else 0.0))
+            if mean is not None and (cell is not None or weight == 0)
+            else None
+        )
         if cell is None:
             source += "_unavailable"
     candidate = FunctionalForecast(median=baseline.median, mean=mean, interval=baseline.interval)
@@ -542,11 +566,12 @@ class PreparedV12Predictor:
         _verify_identity(recipe)
         self.recipe = json.loads(canonical_bytes(recipe))
         self.policy = FunctionalV12Policy.model_validate_json(canonical_bytes(recipe["policy"]))
+        self.mean_weights = self.policy.mean_weights.lookup() if self.policy.mean_weights else None
 
     def predict(
         self, value: Input
     ) -> tuple[FunctionalForecast, FunctionalForecast, dict[str, Any]]:
-        return _predict(value, self.recipe, self.policy)
+        return _predict(value, self.recipe, self.policy, self.mean_weights)
 
 
 def predict_pair_v12(

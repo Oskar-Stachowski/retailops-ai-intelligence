@@ -195,7 +195,9 @@ def read_plan(
     ):
         raise PreparationError("remote_execution_not_authorized_or_not_immutable")
     freeze_file = safe_path(control_root, execution["freeze_path"])
-    if not execution["freeze_path"].startswith("contracts/forecast/v2/"):
+    if not execution["freeze_path"].startswith(
+        ("contracts/forecast/v2/", "contracts/forecast/v3/")
+    ):
         raise PreparationError("remote_freeze_path_scope")
     freeze = read_json(freeze_file)
     body = freeze["descriptor"]
