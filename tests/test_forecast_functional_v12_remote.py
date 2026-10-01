@@ -587,11 +587,9 @@ def test_workflow_has_only_explicit_triggers_and_bounded_prep_matrix():
     root = Path(__file__).parents[1]
     workflow = yaml.safe_load((root / remote.WORKFLOW_PATH).read_text())
     trigger = workflow.get("on", workflow.get(True))  # YAML 1.1 treats `on` as a boolean.
-    assert set(trigger) == {"workflow_dispatch", "push"}
-    assert trigger["push"] == {
-        "branches": ["ai/04-01-task-calendar"],
-        "paths": [remote.EXECUTION_PATH],
-    }
+    assert set(trigger) == {"workflow_dispatch"}
+    assert not (root / remote.EXECUTION_PATH).exists()
+    assert trigger["workflow_dispatch"]["inputs"]["execution_sha256"]["required"] is True
     assert workflow["permissions"] == {"contents": "read"}
     job = workflow["jobs"]["prepare"]
     canary = workflow["jobs"]["canary"]

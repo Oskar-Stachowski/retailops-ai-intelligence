@@ -1,7 +1,7 @@
 name: AI04 optional cohort preparation
 
-# Adding this workflow does not authorize generation. The execution file is
-# intentionally absent and may only be added after reviewing the exact freeze.
+# V12 is the accepted final AI04 deliverable. Further preparation is manual,
+# requires a new reviewed activation, and is not part of this acceptance.
 on:
   workflow_dispatch:
     inputs:
@@ -9,9 +9,6 @@ on:
         description: SHA256 of the reviewed remote-preparation.execute.json
         required: true
         type: string
-  push:
-    branches: ["ai/04-01-task-calendar"]
-    paths: ["contracts/forecast/v2/remote-preparation.execute.json"]
 
 permissions:
   contents: read

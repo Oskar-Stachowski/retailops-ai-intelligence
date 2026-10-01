@@ -1,9 +1,20 @@
-# AI04 v13: fixed validation mean correction
+# AI04 v13 — retained development, superseded by final v12
 
-AI04 remains **not_ready**. Complete v12 qualification evaluated all 64 fixed
+Status as of 2026-10-01: **superseded, not selected for AI04 acceptance**.
+The owner selected [v12 as final](evidence/04-v12-acceptance.md) and explicitly
+accepted its three recorded MSE deviations. V13 preparation run
+[36900199207](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36900199207)
+was cancelled, and the local collector, waiting evaluator and observer stopped
+before forecast holdout evaluation. No v13 qualification result is claimed.
+Existing evidence, reserved seeds and immutable freeze remain retained;
+v13 code is retained as development functionality and is not the selected run.
+
+## Historical proposal before the owner accepted v12
+
+At the time of this proposal AI04 was **not_ready**. Complete v12 qualification evaluated all 64 fixed
 cohorts and passed 221 of 224 gates. Three real mean-MSE regressions remain
-failed; independent replay and durable export of that result continue on the
-unchanged v12 implementation. The old sources, snapshots and campaign results
+failed. Independent replay, durable export and detached-wheel verification
+subsequently completed on the unchanged v12 implementation. The old sources, snapshots and campaign results
 are retained.
 
 The next recipe uses the same separate median/MAE and mean/MSE-plus-bias goals.
