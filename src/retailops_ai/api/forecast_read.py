@@ -17,12 +17,17 @@ from retailops_ai.domain.access import Principal
 from retailops_ai.forecast_jobs.queue import BatchError
 from retailops_ai.forecast_jobs.read_contracts import ForecastPage, ForecastQuery
 from retailops_ai.forecast_jobs.reader import ForecastReader, ForecastReadError
+from retailops_ai.forecast_jobs.v12_read_contracts import V12ForecastPage
+from retailops_ai.forecast_jobs.v12_reader import V12ForecastReader
 
 
 def add_forecast_read_routes(
     router: APIRouter,
     verified: Callable[..., object],
-    backend: ForecastReader | None,
+    backend: ForecastReader | V12ForecastReader | None,
+    *,
+    path: str = "/forecasts",
+    response_model: type[ForecastPage] | type[V12ForecastPage] = ForecastPage,
 ) -> None:
     async def reader(principal: Annotated[Principal, Depends(verified)]) -> Principal:
         if "forecast:read" not in principal.capabilities:
@@ -30,8 +35,8 @@ def add_forecast_read_routes(
         return principal
 
     @router.get(
-        "/forecasts",
-        response_model=ForecastPage,
+        path,
+        response_model=response_model,
         responses={409: {"model": Problem}, 429: {"model": Problem}, 503: {"model": Problem}},
     )
     def forecasts(
@@ -47,7 +52,7 @@ def add_forecast_read_routes(
         limit: Annotated[int, Query(ge=1, le=200)] = 50,
         offset: Annotated[int, Query(ge=0, le=2800)] = 0,
         view_sha256: Annotated[Sha256 | None, Query()] = None,
-    ) -> ForecastPage | JSONResponse:
+    ) -> ForecastPage | V12ForecastPage | JSONResponse:
         if any(
             k not in ForecastQuery.model_fields or len(request.query_params.getlist(k)) != 1
             for k in request.query_params

@@ -29,6 +29,7 @@ from retailops_ai.config import Settings
 from retailops_ai.domain.readiness import Dependency
 from retailops_ai.forecast_jobs.queue import BatchAdministration, PostgresBatchQueue
 from retailops_ai.forecast_jobs.reader import ForecastReader, PostgresForecastReader
+from retailops_ai.forecast_jobs.v12_reader import PostgresV12ForecastReader, V12ForecastReader
 from retailops_ai.model_lifecycle.evaluation_store import EvaluationReader, PostgresEvaluations
 from retailops_ai.model_lifecycle.reader import ModelCatalog, PostgresModelCatalog
 from retailops_ai.pipelines.readiness import Readiness
@@ -63,6 +64,7 @@ def create_app(
     forecast_reader: ForecastReader | None = None,
     model_catalog: ModelCatalog | None = None,
     evaluation_reader: EvaluationReader | None = None,
+    v12_forecast_reader: V12ForecastReader | None = None,
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
@@ -77,6 +79,7 @@ def create_app(
         or index_administration is None
         or forecast_administration is None
         or forecast_reader is None
+        or v12_forecast_reader is None
         or model_catalog is None
         or evaluation_reader is None
     ) and settings.database_url is not None:
@@ -96,6 +99,8 @@ def create_app(
         forecast_administration = PostgresBatchQueue(knowledge_engine, settings.app_env)
     if forecast_reader is None and knowledge_engine is not None:
         forecast_reader = PostgresForecastReader(knowledge_engine, settings.app_env)
+    if v12_forecast_reader is None and knowledge_engine is not None:
+        v12_forecast_reader = PostgresV12ForecastReader(knowledge_engine, settings.app_env)
     if model_catalog is None and knowledge_engine is not None:
         model_catalog = PostgresModelCatalog(knowledge_engine, settings.app_env)
     if evaluation_reader is None and knowledge_engine is not None:
@@ -228,6 +233,7 @@ def create_app(
             forecast_reader,
             model_catalog,
             evaluation_reader,
+            v12_forecast_reader,
         )
     )
     return app

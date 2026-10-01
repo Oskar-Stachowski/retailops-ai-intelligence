@@ -2,14 +2,13 @@
 
 from datetime import datetime
 
-from retailops_ai.data_contracts.common import end_of_day
-from retailops_ai.forecast_jobs.contracts import MechanicsPrediction
+from retailops_ai.data_contracts.common import ForecastKey, end_of_day
 from retailops_ai.forecast_jobs.read_contracts import ForecastFreshness, FreshnessReason, ReadPolicy
 from retailops_ai.forecast_jobs.source_freshness import SourceFreshness, observation_key
 
 
 def freshness(
-    row: MechanicsPrediction,
+    row: ForecastKey,
     evidence: SourceFreshness | None,
     *,
     now: datetime,

@@ -10,7 +10,9 @@ from sqlalchemy import create_engine
 
 from retailops_ai.config import load_settings
 from retailops_ai.forecast_jobs.contracts import BatchRequest
+from retailops_ai.forecast_jobs.v12_output_store import PostgresV12Publisher
 from retailops_ai.forecast_jobs.v12_queue import PostgresV12Queue
+from retailops_ai.model_lifecycle.v12_registry import MLflowV12Registry
 from retailops_ai.security.local import strict_json
 from retailops_ai.security.model_operator import private_principal
 
@@ -24,7 +26,7 @@ def main() -> int:
     commands = parser.add_subparsers(dest="command", required=True)
     submit = commands.add_parser("submit")
     submit.add_argument("--idempotency-key", required=True)
-    for name in ("get", "attempts", "receipt"):
+    for name in ("get", "attempts", "receipt", "publish"):
         commands.add_parser(name).add_argument("--run-id", required=True)
     args = parser.parse_args()
     engine = None
@@ -52,6 +54,15 @@ def main() -> int:
             result = [run.model_dump(mode="json") for run in queue.attempts(args.run_id, actor)]
         elif args.command == "receipt":
             result = queue.output(args.run_id, actor).model_dump(mode="json")
+        elif args.command == "publish":
+            registry = MLflowV12Registry(
+                compose=settings.network_mode == "compose", environment=settings.app_env
+            )
+            result = (
+                PostgresV12Publisher(queue, registry)
+                .publish(args.run_id, actor)
+                .model_dump(mode="json")
+            )
         else:
             result = queue.get(args.run_id, actor).model_dump(mode="json")
         print(json.dumps(result, sort_keys=True))

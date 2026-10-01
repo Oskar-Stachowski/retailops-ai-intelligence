@@ -116,6 +116,10 @@ v12-lifecycle-smoke:
 v12-queue-smoke:
 	$(UV_RUN) python scripts/check_v12_queue.py
 
+.PHONY: v12-publication-smoke
+v12-publication-smoke:
+	$(UV_RUN) python scripts/check_v12_publication.py
+
 .PHONY: model-lifecycle-smoke
 model-lifecycle-smoke:
 	$(UV_RUN) python scripts/check_model_lifecycle.py

@@ -334,9 +334,25 @@ def test_mean_can_be_outside_quantiles_and_missing_outputs_remain_null():
     ],
 )
 def test_versioned_offline_schema_snapshots_match_contracts(name, model):
-    assert (
-        ROOT / "contracts/forecast/v12_offline" / (name + ".schema.json")
-    ).read_bytes() == canonical_bytes(model.model_json_schema()) + b"\n"
+    def schema_content(value):
+        # Python's cached unions can reorder StrictInt/StrictFloat after unrelated
+        # imports. JSON Schema anyOf order has no meaning; every alternative and
+        # every other schema constraint must still match exactly.
+        if isinstance(value, dict):
+            return {
+                key: sorted((schema_content(item) for item in child), key=canonical_bytes)
+                if key == "anyOf"
+                else schema_content(child)
+                for key, child in value.items()
+            }
+        if isinstance(value, list):
+            return [schema_content(item) for item in value]
+        return value
+
+    saved = json.loads(
+        (ROOT / "contracts/forecast/v12_offline" / (name + ".schema.json")).read_bytes()
+    )
+    assert schema_content(saved) == schema_content(model.model_json_schema())
 
 
 @pytest.mark.parametrize("change", ["negative", "nonfinite", "wrong_interval", "median_outside"])

@@ -35,8 +35,17 @@ przypinają release i wejście, dzielą batch zgodnie z limitami oraz zapisują
 kompletny wynik mediany/średniej/przedziału z historią próby. Kontrola lease,
 retry i anulowania blokuje zapis częściowego wyniku. Odbiór używa jawnych
 fixture i osobnego PostgreSQL/MLflow; nie kwalifikuje rzeczywistej kampanii.
-Bieżący head migracji to `0016_v12_queue`; trwałego stosu nie migrowano.
-Publikacja/API, backup/restore v12 i odbiór rzeczywistego modelu pozostają otwarte.
+Migracja kolejki to `0016_v12_queue`; trwałego stosu nie migrowano.
+
+**AI 05 — publikacja i odczyt v12:** [runbook](forecast-v12-publication.md)
+opisuje osobną, idempotentną publikację kompletnego receipt oraz
+`GET /api/v1/forecasts/v12`, z zachowaniem mediany/średniej/przedziału,
+baseline i null. Odczyt ogranicza scope, sprawdza cały wynik i świeżość,
+stabilizuje paginację i blokuje częściową odpowiedź po uszkodzeniu.
+Odbiór używa małych jawnych doubles, rzeczywistych PostgreSQL/MLflow
+oraz aplikacji ASGI; nie jest kwalifikacją rzeczywistego modelu AI 04.
+Bieżący head migracji to `0017_v12_outputs`; trwałego stosu nie migrowano.
+Backup/restore v12, Required CI i odbiór rzeczywistego przepływu pozostają otwarte.
 
 Aktualizacja: **2026-09-30**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
@@ -225,7 +234,7 @@ jakości oraz stare code/lock pins są zachowane, bez nowej kwalifikacji modelu.
 [Odbiór](evidence/05-07-evaluations.md) obejmuje HTTP/PostgreSQL, 37 synthetic
 ocen i rzeczywisty historyczny export (12012 memberships), odmowę częściowego
 scope, niezmienność i SIGKILL/restart. Tabela pochodzi z migracji
-`0013_forecast_evaluations`; bieżący DB head to `0016_v12_queue` opisane powyżej.
+`0013_forecast_evaluations`; bieżący DB head to `0017_v12_outputs` opisane powyżej.
 Trwałego stosu nie zmieniano. Pozostają qualified handoff AI 04,
 batch na jego release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**
 
@@ -239,7 +248,7 @@ HTTP/PostgreSQL, mixed-version odczyt, atomową odmowę rehashed niezgodnego dow
 tamper/restore i SIGKILL/restart. Przygotowanie 1.1 ze zweryfikowanego archiwum
 AI 04 zachowało parenty i stare locki; nie kwalifikowało modelu ani nie publikowało
 prognoz z tego archiwum. Migracja freshness to `0014_forecast_freshness`;
-**bieżący head to `0016_v12_queue`** opisane powyżej;
+**bieżący head to `0017_v12_outputs`** opisane powyżej;
 trwałego stosu nie migrowano. Pozostają qualified handoff AI 04, rzeczywisty
 batch na jego release'ie oraz zdalny Required CI. **AI 05 pozostaje otwarte.**
 

@@ -110,5 +110,5 @@ installed predictor double do sprawdzenia granicy procesu.
 zachowało hash. Rzeczywisty final export i production serving nadal czekają
 na osobny odbiór. Po odbiorach [inference/przeglądu](forecast-v12-release.md),
 [lifecycle v12 w MLflow/DB](mlflow-v12-lifecycle.md) oraz
-[kolejki/workera v12](forecast-v12-worker.md) pozostają publikacja i read API
-z zachowaniem wszystkich trzech celów.
+[kolejki/workera v12](forecast-v12-worker.md) oraz [publikacji i read API](forecast-v12-publication.md)
+pozostają spójny backup/restore i odbiór rzeczywistego przepływu.

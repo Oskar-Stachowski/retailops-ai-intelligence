@@ -13,6 +13,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal, overload
 
+from retailops_ai.data_contracts.common import ForecastKey
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.forecast_jobs.inputs import PreparedInputs
 from retailops_ai.forecast_jobs.supervisor import ExecutionError, tree_rss
@@ -27,7 +28,6 @@ from retailops_ai.forecast_jobs.v12_contracts import (
     V12RuntimeResult,
 )
 from retailops_ai.forecast_jobs.v12_inference_contracts import V12InferenceResult
-from retailops_ai.forecasting.features_contract import InputRow
 from retailops_ai.forecasting.manifest_contract import FeaturePolicy
 from retailops_ai.model_lifecycle.v12_evidence import V12Evidence, load_evidence
 from retailops_ai.model_lifecycle.v12_release_contracts import V12InferenceContext, V12SourcePolicy
@@ -36,7 +36,7 @@ from retailops_ai.source_snapshot.files import checked_directory, decode_json, f
 
 def prediction_key(
     pin: V12RuntimePin,
-    row: InputRow,
+    row: ForecastKey,
     *,
     role: Literal["development_holdout", "inference"] = "development_holdout",
 ) -> str:

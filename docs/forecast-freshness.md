@@ -85,7 +85,7 @@ opublikować 1.0 dla profilu 1.1. Schematy JSON opisują tę zależność.
 Migracja freshness: **`0014_forecast_freshness`**, przed uruchomieniem nowego API
 i workera zgodnie z [runbookiem Compose](local-stack.md). Migracja rozszerza
 constraints i dodaje trigger; nie przepisuje istniejących danych ani identity.
-Readiness/DB guard wymagają obecnie head **`0016_v12_queue`** opisanego w
+Readiness/DB guard wymagają obecnie head **`0017_v12_outputs`** opisanego w
 [kolejce v12](forecast-v12-worker.md). Trwałego stosu nie migrowano w tym
 odbiorze; użyto własnego jednorazowego projektu.
 

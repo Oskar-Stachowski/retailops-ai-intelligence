@@ -4,7 +4,8 @@
 osobnego rejestru `retailops-demand-forecast-v12`. Rejestr zachowuje oryginalny
 format mediany, średniej i przedziału. Każda wersja wiąże immutable approval ID,
 sumy kontrolne, oryginalny run kampanii, recepturę, źródło i przegląd operatora.
-Dotychczasowy katalog modeli, worker, publikacja i `/api/v1` obsługują nadal v1.
+Dotychczasowy katalog modeli i endpointy v1 zachowują swój kontrakt;
+[publikacja i odczyt v12](forecast-v12-publication.md) mają osobny zakres.
 Odpowiedzi nowych decyzji mają `runtime_status=not_integrated`.
 
 ## Import dopuszczenia
@@ -106,7 +107,7 @@ a nowa promocja wymaga aktualnej kwalifikacji i przeglądu.
 
 Nowy head to **`0015_v12_lifecycle`**, po `0014_forecast_freshness`.
 Po nim dodano [kolejkę v12](forecast-v12-worker.md); wspólny DB guard i readiness
-wymagają obecnie dokładnie `0016_v12_queue`. Istniejący stos
+wymagają obecnie dokładnie `0017_v12_outputs` opisane w [publikacji v12](forecast-v12-publication.md). Istniejący stos
 potrzebuje jawnej migracji przed uruchomieniem nowego kodu, według
 [runbooka Compose](local-stack.md). CLI nie migruje bazy automatycznie.
 Downgrade historii wymaga backup/restore; migracja nie usuwa istniejących tabel.
@@ -128,7 +129,7 @@ usuwa własne kontenery i anonimowe wolumeny. Nie buduje i nie pobiera obrazów.
 mechaniki od kwalifikacji rzeczywistej kampanii.
 
 [Kolejka/worker v12](forecast-v12-worker.md) zapisują kompletny receipt obliczeń
-z dzieleniem batchu zgodnie z limitami. Pozostają atomowa publikacja wszystkich
-trzech celów, odczyt API i sprawdzenie spójnego
+z dzieleniem batchu zgodnie z limitami. Po [publikacji i API v12](forecast-v12-publication.md)
+pozostaje sprawdzenie spójnego
 backup/restore v12. Końcowy odbiór wymaga rzeczywistego eksportu i źródła,
 rzeczywistych raportów operatora oraz Required CI. **AI 05 pozostaje otwarte.**

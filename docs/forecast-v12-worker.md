@@ -3,8 +3,8 @@
 V12 ma osobne trwałe zadania obliczeń, przypięte do dopuszczonego release’u
 w PostgreSQL. Worker zachowuje medianę, średnią i przedział oraz oryginalne
 baseline’y, metadane i wartości null. Udany run oznacza kompletny receipt
-obliczeń: `published_forecast_outputs=0`. Atomowa publikacja prognoz i API
-pozostają osobnym zakresem; dotychczasowe endpointy v1 nie przyjmują v12.
+obliczeń: `published_forecast_outputs=0`. [Publikacja i API v12](forecast-v12-publication.md)
+są osobnym krokiem po sukcesie; dotychczasowe endpointy v1 zachowują swój kontrakt.
 
 ## Przyjęcie zadania
 
@@ -118,7 +118,8 @@ Przed wdrożeniem wymagany jest odbiór całego rzeczywistego przepływu.
 
 ## Migracja i odbiór
 
-Nowy head to **`0016_v12_queue`**, po `0015_v12_lifecycle`.
+Migracja kolejki to **`0016_v12_queue`**, po `0015_v12_lifecycle`.
+Bieżący head to `0017_v12_outputs` opisany w [publikacji v12](forecast-v12-publication.md).
 Tabele `ai.v12_batch_runs`, `ai.v12_batch_attempts` i `ai.v12_batch_receipts`
 są oddzielne od kolejki/publikacji v1. Readiness i wspólny DB guard wymagają
 jawnej migracji według [runbooka Compose](local-stack.md). Trwałego stosu
@@ -138,7 +139,7 @@ fencing, anulowanie, atomowy receipt oraz restart usług. Używa namespace
 oraz anonimowe wolumeny; nie buduje ani nie pobiera obrazów.
 [Dowód przygotowania](evidence/05-v12-queue.json) opisuje granice fixture.
 
-Pozostają atomowa publikacja mediany/średniej/przedziału, read API,
+Po [publikacji i read API](forecast-v12-publication.md) pozostają
 spójny backup/restore v12 i Required CI. Rzeczywisty handoff, źródło,
 przegląd operatora i końcowy batch nadal wymagają ukończonego AI 04.
 **AI 05 pozostaje otwarte.**

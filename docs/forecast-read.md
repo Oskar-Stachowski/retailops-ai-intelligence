@@ -1,5 +1,8 @@
 # AI 05.7a — odczyt opublikowanych prognoz
 
+Format v12 ma osobny endpoint i [runbook publikacji/odczytu](forecast-v12-publication.md).
+Poniższy kontrakt v1 zachowuje dotychczasowe pola i zachowanie.
+
 `GET /api/v1/forecasts` czyta kompletne wyniki z PostgreSQL. Wymaga ważnej
 tożsamości i osobnej capability `forecast:read`; `pipeline` z samym
 `forecast:run` oraz administrator bez tej capability nie otrzymują danych.

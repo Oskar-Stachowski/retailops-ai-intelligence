@@ -152,7 +152,7 @@ rozróżnia te granice. Nie odczytano danych aktywnej kampanii AI 04.
 
 [Lifecycle v12 w MLflow/DB](mlflow-v12-lifecycle.md) dodaje rejestrację,
 decyzje i aktywny release head, a [kolejka/worker v12](forecast-v12-worker.md)
-kompletny receipt obliczeń. Następne zakresy to atomowa publikacja wszystkich
-trzech celów i read API.
+kompletny receipt obliczeń. [Publikacja i read API](forecast-v12-publication.md)
+zachowują wszystkie trzy cele. Pozostają backup/restore i odbiór rzeczywistego przepływu.
 Rzeczywisty odbiór tych elementów wymaga końcowego eksportu i źródła AI 04;
 AI 05 pozostaje otwarte.

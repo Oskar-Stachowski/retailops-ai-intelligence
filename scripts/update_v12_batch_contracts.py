@@ -6,7 +6,10 @@ from pathlib import Path
 from retailops_ai.data_contracts.common import Contract
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.forecast_jobs.contracts import BatchRequest, QueuePolicy
+from retailops_ai.forecast_jobs.read_contracts import ForecastQuery
 from retailops_ai.forecast_jobs.v12_batch import V12BatchReceipt, V12BatchRun
+from retailops_ai.forecast_jobs.v12_publication import V12Publication
+from retailops_ai.forecast_jobs.v12_read_contracts import V12ForecastPage
 
 ROOT = Path(__file__).resolve().parents[1] / "contracts/forecast_jobs/v12"
 SCHEMAS: dict[str, type[Contract]] = {
@@ -14,6 +17,9 @@ SCHEMAS: dict[str, type[Contract]] = {
     "policy": QueuePolicy,
     "run": V12BatchRun,
     "receipt": V12BatchReceipt,
+    "publication": V12Publication,
+    "read_query": ForecastQuery,
+    "read_page": V12ForecastPage,
 }
 
 

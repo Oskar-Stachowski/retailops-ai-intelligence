@@ -20,6 +20,8 @@ from retailops_ai.data_contracts.common import Contract, Symbol, Versioned
 from retailops_ai.domain.access import Capability, Principal, Role, can_read_forecast
 from retailops_ai.forecast_jobs.queue import BatchAdministration
 from retailops_ai.forecast_jobs.reader import ForecastReader
+from retailops_ai.forecast_jobs.v12_read_contracts import V12ForecastPage
+from retailops_ai.forecast_jobs.v12_reader import V12ForecastReader
 from retailops_ai.knowledge.retrieval import RetrievalRequest, RetrievalResult
 from retailops_ai.model_lifecycle.evaluation_store import EvaluationReader
 from retailops_ai.model_lifecycle.reader import ModelCatalog
@@ -67,6 +69,7 @@ def access_router(
     forecast_reader: ForecastReader | None = None,
     model_catalog: ModelCatalog | None = None,
     evaluation_reader: EvaluationReader | None = None,
+    v12_forecast_reader: V12ForecastReader | None = None,
 ) -> APIRouter:
     bearer = HTTPBearer(auto_error=False, scheme_name="apiBearer")
 
@@ -164,6 +167,9 @@ def access_router(
     add_index_routes(router, verified, index_administration)
     add_forecast_routes(router, verified, forecast_administration)
     add_forecast_read_routes(router, verified, forecast_reader)
+    add_forecast_read_routes(
+        router, verified, v12_forecast_reader, path="/forecasts/v12", response_model=V12ForecastPage
+    )
     add_model_catalog_routes(router, verified, model_catalog)
     add_evaluation_routes(router, verified, evaluation_reader)
     return router

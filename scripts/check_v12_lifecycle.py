@@ -64,44 +64,68 @@ def wait_ready(url: str, mlflow_port: int) -> None:
         engine.dispose()
 
 
-def tests(invocation: Path, *, inspect: bool, work: Path, include_queue: bool = False) -> None:
+def tests(
+    invocation: Path,
+    *,
+    inspect: bool,
+    work: Path,
+    include_queue: bool = False,
+    include_outputs: bool = False,
+) -> None:
     env = {key: os.environ[key] for key in ("PATH", "TMPDIR") if key in os.environ}
     env["AI05_V12_PRIVATE_INVOCATION"] = str(invocation)
     if inspect:
         env["AI05_V12_RESTART_INSPECT"] = "1"
     name = "restart" if inspect else "acceptance"
     prefix = "ai05-v12-queue-" if include_queue else "ai05-v12-lifecycle-"
-    with (work / (name + ".log")).open("wb") as log:
-        result = subprocess.run(  # noqa: S603 - fixed explicit local acceptance test
-            [
-                sys.executable,
-                "-m",
-                "pytest",
-                "-q",
-                "tests/check_v12_lifecycle.py",
-                *(["tests/check_v12_queue.py"] if include_queue else []),
-                "--junitxml=" + str(ROOT / "reports" / (prefix + name + "-tests.xml")),
-            ],
-            cwd=ROOT,
-            env=env,
-            stdout=log,
-            stderr=log,
-            timeout=300 if include_queue else 180,
-            check=False,
-        )
+    if include_outputs:
+        prefix = "ai05-v12-publication-"
+    result = None
+    try:
+        with (work / (name + ".log")).open("wb") as log:
+            result = subprocess.run(  # noqa: S603 - fixed explicit local acceptance test
+                [
+                    sys.executable,
+                    "-m",
+                    "pytest",
+                    "-q",
+                    "tests/check_v12_lifecycle.py",
+                    *(["tests/check_v12_queue.py"] if include_queue else []),
+                    *(["tests/check_v12_publication.py"] if include_outputs else []),
+                    "--junitxml=" + str(ROOT / "reports" / (prefix + name + "-tests.xml")),
+                ],
+                cwd=ROOT,
+                env=env,
+                stdout=log,
+                stderr=log,
+                timeout=600 if include_outputs else 300 if include_queue else 180,
+                check=False,
+            )
+    finally:
+        if result is None or result.returncode:
+            destination = ROOT / "reports" / (prefix + name + ".log")
+            destination.write_bytes((work / (name + ".log")).read_bytes())
+            destination.chmod(0o600)
     if result.returncode:
-        destination = ROOT / "reports" / (prefix + name + ".log")
-        destination.write_bytes((work / (name + ".log")).read_bytes())
-        destination.chmod(0o600)
         raise ValueError("v12_acceptance_tests_failed")
 
 
-def main(*, include_queue: bool = False) -> int:
+def main(*, include_queue: bool = False, include_outputs: bool = False) -> int:
+    include_queue = include_queue or include_outputs
     owner = uuid.uuid4().hex
     names = {role: "retailops-ai05-v12-" + role + "-" + owner[:12] for role in IMAGES}
     engine = None
     cleaned = False
-    report: dict[str, Any] = {}
+    report: dict[str, Any] = dict(status="running", purpose="isolated_v12_mechanics_only")
+    report_path = (
+        ROOT / "reports/ai05-v12-publication-acceptance.json"
+        if include_outputs
+        else ROOT / "reports/ai05-v12-queue-acceptance.json"
+        if include_queue
+        else REPORT
+    )
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(json.dumps(report) + "\n")
     stage = "cached_images"
     password = ""
     try:
@@ -194,7 +218,13 @@ def main(*, include_queue: bool = False) -> int:
             invocation.write_text(json.dumps(control))
             invocation.chmod(0o600)
             stage = "acceptance_tests"
-            tests(invocation, inspect=False, work=work, include_queue=include_queue)
+            tests(
+                invocation,
+                inspect=False,
+                work=work,
+                include_queue=include_queue,
+                include_outputs=include_outputs,
+            )
             print("Registry/recovery/database guards passed; checking restart.", flush=True)
             stage = "restart"
             docker("restart", names["db"], names["mlflow"])
@@ -205,13 +235,20 @@ def main(*, include_queue: bool = False) -> int:
             invocation.write_text(json.dumps(control))
             wait_ready(url, mlflow_port)
             stage = "restart_tests"
-            tests(invocation, inspect=True, work=work, include_queue=include_queue)
+            tests(
+                invocation,
+                inspect=True,
+                work=work,
+                include_queue=include_queue,
+                include_outputs=include_outputs,
+            )
             report = json.loads(state.read_bytes())
         report.update(
             images=pinned, docker_builds=0, image_pulls=0, persistent_source_stack_changed=False
         )
         return_code = 0
     except Exception as error:
+        report.update(status="failed", failed_stage=stage)
         diagnostics: dict[str, Any] = {
             "stage": stage,
             "error": str(error)[-4096:],
@@ -263,10 +300,7 @@ def main(*, include_queue: bool = False) -> int:
             report["owned_containers_and_anonymous_volumes_removed"] = cleaned
             if not cleaned:
                 report["status"] = "cleanup_failed"
-            destination = (
-                ROOT / "reports/ai05-v12-queue-acceptance.json" if include_queue else REPORT
-            )
-            destination.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+            report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     if not cleaned:
         sys.stderr.write("v12_acceptance_owned_cleanup_incomplete\n")
         return 1

@@ -3779,6 +3779,424 @@
         "title": "SourceLocation",
         "type": "object"
       },
+      "V12Forecast": {
+        "additionalProperties": false,
+        "properties": {
+          "interval": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/V12Interval"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "mean": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean"
+          },
+          "median": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median"
+          }
+        },
+        "required": [
+          "median",
+          "mean",
+          "interval"
+        ],
+        "title": "V12Forecast",
+        "type": "object"
+      },
+      "V12ForecastItem": {
+        "additionalProperties": false,
+        "properties": {
+          "approval_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Approval Sha256",
+            "type": "string"
+          },
+          "approval_valid_until": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Approval Valid Until",
+            "type": "string"
+          },
+          "business_timezone": {
+            "const": "UTC",
+            "title": "Business Timezone",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "curated_dataset_id": {
+            "pattern": "^curated-sha256-[0-9a-f]{64}$",
+            "title": "Curated Dataset Id",
+            "type": "string"
+          },
+          "cutoff_policy": {
+            "const": "end_of_day_second_v1",
+            "title": "Cutoff Policy",
+            "type": "string"
+          },
+          "execution_profile_id": {
+            "pattern": "^batch-profile-sha256-[0-9a-f]{64}$",
+            "title": "Execution Profile Id",
+            "type": "string"
+          },
+          "feature_set_id": {
+            "pattern": "^features-sha256-[0-9a-f]{64}$",
+            "title": "Feature Set Id",
+            "type": "string"
+          },
+          "forecast_origin": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Forecast Origin",
+            "type": "string"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/ForecastFreshness"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "horizon_days": {
+            "maximum": 14.0,
+            "minimum": 1.0,
+            "title": "Horizon Days",
+            "type": "integer"
+          },
+          "image_digest": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "title": "Image Digest",
+            "type": "string"
+          },
+          "inference_run_id": {
+            "pattern": "^run-[0-9a-f]{32}$",
+            "title": "Inference Run Id",
+            "type": "string"
+          },
+          "model_name": {
+            "enum": [
+              "retailops-demand-forecast-v12",
+              "retailops-demand-forecast-v12-mechanics"
+            ],
+            "title": "Model Name",
+            "type": "string"
+          },
+          "model_version": {
+            "pattern": "^[1-9][0-9]*$",
+            "title": "Model Version",
+            "type": "string"
+          },
+          "prediction": {
+            "$ref": "#/components/schemas/V12Prediction"
+          },
+          "prediction_dataset_id": {
+            "pattern": "^v12-forecasts-sha256-[0-9a-f]{64}$",
+            "title": "Prediction Dataset Id",
+            "type": "string"
+          },
+          "prediction_id": {
+            "pattern": "^prediction-sha256-[0-9a-f]{64}$",
+            "title": "Prediction Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "profile_id": {
+            "pattern": "^batch-profile-sha256-[0-9a-f]{64}$",
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "quality_status": {
+            "const": "passed_at_publication",
+            "default": "passed_at_publication",
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "receipt_id": {
+            "pattern": "^v12-computation-sha256-[0-9a-f]{64}$",
+            "title": "Receipt Id",
+            "type": "string"
+          },
+          "release_id": {
+            "pattern": "^v12-model-release-sha256-[0-9a-f]{64}$",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "runtime_pin_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Runtime Pin Sha256",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Selling Location Id",
+            "type": "string"
+          },
+          "source_dataset_id": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "title": "Source Dataset Id",
+            "type": "string"
+          },
+          "target_date": {
+            "format": "date",
+            "title": "Target Date",
+            "type": "string"
+          },
+          "target_type": {
+            "const": "observed_sales_units",
+            "default": "observed_sales_units",
+            "title": "Target Type",
+            "type": "string"
+          },
+          "unit_of_measure": {
+            "const": "unit",
+            "default": "unit",
+            "title": "Unit Of Measure",
+            "type": "string"
+          }
+        },
+        "required": [
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "forecast_origin",
+          "business_timezone",
+          "cutoff_policy",
+          "target_date",
+          "horizon_days",
+          "prediction",
+          "execution_profile_id",
+          "prediction_id",
+          "prediction_dataset_id",
+          "model_name",
+          "model_version",
+          "approval_sha256",
+          "runtime_pin_sha256",
+          "image_digest",
+          "release_id",
+          "receipt_id",
+          "source_dataset_id",
+          "curated_dataset_id",
+          "feature_set_id",
+          "inference_run_id",
+          "profile_id",
+          "generated_at",
+          "approval_valid_until",
+          "freshness"
+        ],
+        "title": "V12ForecastItem",
+        "type": "object"
+      },
+      "V12ForecastPage": {
+        "additionalProperties": false,
+        "properties": {
+          "data_status": {
+            "enum": [
+              "available",
+              "no_data"
+            ],
+            "title": "Data Status",
+            "type": "string"
+          },
+          "freshness_policy": {
+            "$ref": "#/components/schemas/ReadPolicy",
+            "default": {
+              "max_candidate_outputs": 32,
+              "max_observation_lag_days": 1,
+              "max_origin_age_seconds": 86400,
+              "max_source_watermark_origin_lag_seconds": 0,
+              "policy_id": "forecast-read-v2",
+              "schema_version": "1.1"
+            }
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/V12ForecastItem"
+            },
+            "maxItems": 200,
+            "title": "Items",
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/Pagination"
+          },
+          "selection": {
+            "enum": [
+              "latest_per_series_horizon",
+              "origin",
+              "inference_run"
+            ],
+            "title": "Selection",
+            "type": "string"
+          },
+          "version": {
+            "const": "forecast-v12-read-page-1.0.0",
+            "default": "forecast-v12-read-page-1.0.0",
+            "title": "Version",
+            "type": "string"
+          },
+          "view_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "View Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items",
+          "pagination",
+          "generated_at",
+          "data_status",
+          "selection",
+          "view_sha256"
+        ],
+        "title": "V12ForecastPage",
+        "type": "object"
+      },
+      "V12Interval": {
+        "additionalProperties": false,
+        "properties": {
+          "lower": {
+            "minimum": 0.0,
+            "title": "Lower",
+            "type": "number"
+          },
+          "upper": {
+            "minimum": 0.0,
+            "title": "Upper",
+            "type": "number"
+          }
+        },
+        "required": [
+          "lower",
+          "upper"
+        ],
+        "title": "V12Interval",
+        "type": "object"
+      },
+      "V12Prediction": {
+        "additionalProperties": false,
+        "properties": {
+          "baseline": {
+            "$ref": "#/components/schemas/V12Forecast"
+          },
+          "candidate": {
+            "$ref": "#/components/schemas/V12Forecast"
+          },
+          "key": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "title": "Key",
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/V12PredictionMetadata"
+          }
+        },
+        "required": [
+          "key",
+          "candidate",
+          "baseline",
+          "metadata"
+        ],
+        "title": "V12Prediction",
+        "type": "object"
+      },
+      "V12PredictionMetadata": {
+        "additionalProperties": false,
+        "properties": {
+          "baseline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline"
+          },
+          "exact_reference_interval": {
+            "const": true,
+            "title": "Exact Reference Interval",
+            "type": "boolean"
+          },
+          "exact_reference_median": {
+            "const": true,
+            "title": "Exact Reference Median",
+            "type": "boolean"
+          },
+          "mean_source": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Mean Source",
+            "type": "string"
+          },
+          "recipe_id": {
+            "pattern": "^functional-v12-recipe-sha256-[0-9a-f]{64}$",
+            "title": "Recipe Id",
+            "type": "string"
+          },
+          "selected": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected"
+          }
+        },
+        "required": [
+          "selected",
+          "baseline",
+          "mean_source",
+          "exact_reference_median",
+          "exact_reference_interval",
+          "recipe_id"
+        ],
+        "title": "V12PredictionMetadata",
+        "type": "object"
+      },
       "VersionPage": {
         "additionalProperties": false,
         "properties": {
@@ -5152,6 +5570,315 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ForecastPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Forecasts"
+      }
+    },
+    "/api/v1/forecasts/v12": {
+      "get": {
+        "operationId": "forecasts_api_v1_forecasts_v12_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "selling_location_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selling Location Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "store",
+                    "online"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          },
+          {
+            "in": "query",
+            "name": "target_from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Target From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "target_to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Target To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "as_of",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "As Of"
+            }
+          },
+          {
+            "in": "query",
+            "name": "inference_run_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^run-[0-9a-f]{32}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Inference Run Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 2800,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "view_sha256",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "View Sha256"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V12ForecastPage"
                 }
               }
             },
