@@ -1,6 +1,28 @@
 {
   "ai05_session_modified": false,
   "ai07_complete": false,
+  "container_packaging": {
+    "api_build": "passed",
+    "contract_hashes": {
+      "manifest.schema.json": "ff7926b233baaae1c2a92b0ff2e7e834537e63c5c88e99e216afbee8d08ac2e1",
+      "point.schema.json": "ff952ff60bd72129975c1c666a5f427bd474362d3c01ea5c1bec48e9f8d550ba",
+      "policy.default.json": "4a835a751462ec4d339d4ca06df5c7e5ee24b1109297c3f493c83471ccae0d79",
+      "policy.schema.json": "c58e53f0786862a3a5293347b45ec9bfceb72b321a1b4797cecf3384cd67a1a5"
+    },
+    "contract_readback": "passed",
+    "curated_1_2_schema_sha256": "a844d14b9e68d425899ce8663854a4e8f5115fcb679ffe036c7015aa754424f9",
+    "image_digest": "sha256:d7962c27465412c46200cb4d7cb89d4d97e31e47cf12372040e946096ec61ba1",
+    "image_tag": "retailops-ai07-inputs-package:verify",
+    "initial_ci_run": 37027787322,
+    "resolved_issue": "Dockerfile.api must copy contracts/anomaly before building the package",
+    "status": "passed",
+    "verification_container": {
+      "network": "none",
+      "ports": [],
+      "read_only": true,
+      "volumes": []
+    }
+  },
   "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
   "editable_acceptance": {
     "fixture_sha256": "c344a5cfeea086e1054add724c830d747815e9eab425a19a17c1d0691671066c",

@@ -71,6 +71,13 @@ separately for both source variants (1219 unique cases total). Ruff/format,
 full Mypy (199 modules), documentation links and all existing wire contract
 snapshot checks passed. The remote Required CI checks the final PR head.
 
+The initial remote persistence job exposed a missing `contracts/anomaly` copy in
+the API Docker build context. `Dockerfile.api` now includes it before package
+installation. The API image builds successfully; a separate read-only container
+without network, ports or volumes reads all four anomaly contracts and the
+curated 1.2 schema with matching checksums. The image digest and hashes are in
+the receipt. No existing service was started or stopped by that local check.
+
 Raw DQ coverage/integration, return-focused features, evaluation labels/splits,
 threshold selection, Isolation Forest, multi-seed observation/episode evaluation
 and AI05 lifecycle integration remain unqualified. There are no anomaly alerts,
