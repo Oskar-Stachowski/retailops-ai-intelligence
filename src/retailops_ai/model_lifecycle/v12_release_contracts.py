@@ -17,6 +17,7 @@ from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.forecast_jobs.contracts import BatchScope, ProfileID
 from retailops_ai.forecast_jobs.v12_contracts import MAX_ROWS, V12ExecutionLimits, V12RuntimePin
 from retailops_ai.model_lifecycle.contracts import GATE_SCHEMA, GATES, Gate, Receipt
+from retailops_ai.model_lifecycle.v12_development import V12DevelopmentAcceptance
 
 QualificationID = Annotated[str, Field(pattern=r"^v12-qualification-sha256-[0-9a-f]{64}$")]
 ReleaseID = Annotated[str, Field(pattern=r"^v12-inference-release-sha256-[0-9a-f]{64}$")]
@@ -41,6 +42,9 @@ class V12InferenceContext(Contract):
     )
     purpose: Literal["serving_load_predict_acceptance", "qualified_forecast_v12"]
     source_policy: V12SourcePolicy
+    development_acceptance: V12DevelopmentAcceptance | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
     qualification_id: QualificationID | None = None
     release_id: ReleaseID | None = None
     serving_eligible: FalseFlag | TrueFlag
@@ -63,6 +67,9 @@ class V12Qualification(Contract):
     purpose: Literal["serving_load_predict_acceptance"] = "serving_load_predict_acceptance"
     pin: V12RuntimePin
     source_policy: V12SourcePolicy
+    development_acceptance: V12DevelopmentAcceptance | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
     limits: V12ExecutionLimits
     smoke_profile_id: ProfileID
     smoke_scope: BatchScope
@@ -78,8 +85,10 @@ class V12Qualification(Contract):
 
     @model_validator(mode="after")
     def qualification_identity(self) -> Self:
+        if self.development_acceptance is not None:
+            self.development_acceptance.verify_pin(self.pin)
         if (
-            self.pin.forecast_model_status != "ready"
+            (self.pin.forecast_model_status != "ready" and self.development_acceptance is None)
             or not self.created_at < self.valid_until <= self.created_at + timedelta(days=7)
             or self.qualification_id
             != "v12-qualification-sha256-"
@@ -140,6 +149,7 @@ class V12InferenceRelease(Contract):
         return V12InferenceContext(
             purpose="qualified_forecast_v12",
             source_policy=self.qualification.source_policy,
+            development_acceptance=self.qualification.development_acceptance,
             qualification_id=self.qualification.qualification_id,
             release_id=self.release_id,
             serving_eligible=True,

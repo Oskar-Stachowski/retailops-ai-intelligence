@@ -8,7 +8,11 @@ from collections import Counter
 from retailops_ai.data_contracts.common import ForecastKey
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.model_lifecycle.v12_evidence import V12Evidence
-from retailops_ai.model_lifecycle.v12_lifecycle_contracts import MODEL, TEST_MODEL
+from retailops_ai.model_lifecycle.v12_lifecycle_contracts import (
+    DEVELOPMENT_MODEL,
+    MODEL,
+    TEST_MODEL,
+)
 from retailops_ai.model_lifecycle.v12_metadata_contracts import (
     V12EvaluationDescriptor,
     V12EvaluationEvidence,
@@ -21,7 +25,7 @@ MAX_LINE_BYTES = 16 * 1024
 
 
 def project_evaluation(evidence: V12Evidence, *, model: str = MODEL) -> V12EvaluationEvidence:
-    if model not in {MODEL, TEST_MODEL}:
+    if model not in {MODEL, TEST_MODEL, DEVELOPMENT_MODEL}:
         raise ValueError("v12_evaluation_namespace")
     evidence.verify_bytes()
     metrics = evidence.metrics

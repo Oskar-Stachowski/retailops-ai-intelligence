@@ -3,6 +3,7 @@
 import json
 import os
 import stat
+from copy import deepcopy
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -77,6 +78,50 @@ def test_real_services_decisions_recovery_guards_and_restart(request, tmp_path, 
             state_file.write_bytes(canonical_bytes(state) + b"\n")
             return
         package, loaded = request.getfixturevalue("serving")
+        # Only database mechanics here: the real campaign/source is not qualified by a fixture.
+        from retailops_ai.forecast_jobs.v12_executor import ACCEPTED_MANIFEST, ACCEPTED_RUN
+        from retailops_ai.model_lifecycle.v12_development import read_development_acceptance
+
+        development = loaded.release.model_dump(mode="json")
+        development["qualification"]["pin"]["forecast_model_status"] = "not_ready"
+        development["qualification"]["pin"]["run_id"] = ACCEPTED_RUN
+        development["qualification"]["pin"]["manifest"]["sha256"] = ACCEPTED_MANIFEST
+        development["qualification"]["development_acceptance"] = read_development_acceptance(
+            Path(__file__).resolve().parents[1] / "docs/evidence/04-v12-acceptance.json"
+        ).model_dump(mode="json")
+        with engine.connect() as connection:
+
+            def capsule_valid(value):
+                return connection.scalar(
+                    text("SELECT ai.v12_approved_capsule_valid(CAST(:value AS jsonb))"),
+                    dict(value=json.dumps(value)),
+                )
+
+            assert capsule_valid(development) is True
+            for target, value in (
+                ("run_id", "functional-v12-run-sha256-" + "a" * 64),
+                ("forecast_model_status", "ready"),
+            ):
+                changed = deepcopy(development)
+                changed["qualification"]["pin"][target] = value
+                assert capsule_valid(changed) is False
+            changed = deepcopy(development)
+            changed["qualification"]["development_acceptance"][
+                "production_deployment_authorized"
+            ] = True
+            assert capsule_valid(changed) is False
+            changed = deepcopy(development)
+            changed["qualification"]["source_packages_verified"] = False
+            assert capsule_valid(changed) is False
+            assert "retailops-demand-forecast-v12-development" in connection.scalar(
+                text(
+                    "SELECT pg_get_constraintdef(oid) FROM pg_constraint WHERE conname='v12_development_namespace' "
+                    "AND conrelid='ai.v12_model_versions'::regclass"
+                )
+            )
+        checks.append(
+            "v12_development_owner_acceptance_sql_is_exact_scoped_and_preserves_all_other_gates"
+        )
         evidence = load_evidence(loaded.export.root, loaded.export.python)
         campaign = v12_mlflow.import_evidence(
             evidence, v12_mlflow.LocalTracking(control["mlflow_port"]), tmp_path / "campaign-import"

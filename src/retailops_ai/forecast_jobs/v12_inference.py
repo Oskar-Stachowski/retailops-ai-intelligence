@@ -10,6 +10,7 @@ from retailops_ai.forecast_jobs.v12_contracts import V12Execution, V12ExecutionL
 from retailops_ai.forecast_jobs.v12_executor import inference_schema
 from retailops_ai.forecast_jobs.v12_inference_contracts import V12InferenceResult
 from retailops_ai.forecast_jobs.v12_runtime import LoadedV12Forecast, _execute, validate_inputs
+from retailops_ai.model_lifecycle.v12_development import V12DevelopmentAcceptance
 from retailops_ai.model_lifecycle.v12_release_contracts import (
     V12InferenceContext,
     V12InferenceRelease,
@@ -18,7 +19,11 @@ from retailops_ai.model_lifecycle.v12_release_contracts import (
 from retailops_ai.source_snapshot.files import file_hash, read_json
 
 
-def source_policy(loaded: LoadedV12Forecast, inputs: PreparedInputs) -> V12SourcePolicy:
+def source_policy(
+    loaded: LoadedV12Forecast,
+    inputs: PreparedInputs,
+    development_acceptance: V12DevelopmentAcceptance | None = None,
+) -> V12SourcePolicy:
     if file_hash(loaded.root, "signature.json") != (
         loaded.pin.signature.size_bytes,
         loaded.pin.signature.sha256,
@@ -30,20 +35,29 @@ def source_policy(loaded: LoadedV12Forecast, inputs: PreparedInputs) -> V12Sourc
         curated_descriptor_sha256=inputs.feature_manifest.descriptor.parent.curated_descriptor_sha256,
         input_schema_sha256=canonical_sha256(schema),
     )
-    validate_inputs(loaded.pin, inputs, source_policy=policy)
+    validate_inputs(
+        loaded.pin, inputs, source_policy=policy, development_acceptance=development_acceptance
+    )
     return policy
 
 
 def predict_acceptance(
-    loaded: LoadedV12Forecast, inputs: PreparedInputs, *, limits: V12ExecutionLimits
+    loaded: LoadedV12Forecast,
+    inputs: PreparedInputs,
+    *,
+    limits: V12ExecutionLimits,
+    development_acceptance: V12DevelopmentAcceptance | None = None,
 ) -> V12InferenceResult:
     """Ready export load/predict probe; no approval, registration or published outputs."""
-    policy = source_policy(loaded, inputs)
+    policy = source_policy(loaded, inputs, development_acceptance)
     request = V12Execution.model_validate_json(
         V12Execution(pin=loaded.pin, inputs=inputs, limits=limits).model_dump_json()
     )
     context = V12InferenceContext(
-        purpose="serving_load_predict_acceptance", source_policy=policy, serving_eligible=False
+        purpose="serving_load_predict_acceptance",
+        source_policy=policy,
+        development_acceptance=development_acceptance,
+        serving_eligible=False,
     )
     return _execute(loaded, request, inference=context)
 
@@ -77,8 +91,16 @@ class LoadedV12Inference:
         ):
             raise ValueError("v12_inference_unreviewed_resource_limit")
         inputs = PreparedInputs.model_validate_json(inputs.model_dump_json())
-        validate_inputs(self.export.pin, inputs, source_policy=qualification.source_policy)
-        if source_policy(self.export, inputs) != qualification.source_policy:
+        validate_inputs(
+            self.export.pin,
+            inputs,
+            source_policy=qualification.source_policy,
+            development_acceptance=qualification.development_acceptance,
+        )
+        if (
+            source_policy(self.export, inputs, qualification.development_acceptance)
+            != qualification.source_policy
+        ):
             raise ValueError("v12_inference_source_policy_changed")
         request = V12Execution.model_validate_json(
             canonical_bytes(

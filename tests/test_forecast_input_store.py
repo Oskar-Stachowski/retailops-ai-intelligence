@@ -164,7 +164,11 @@ def test_supervisor_bounds_wall_and_output_and_reaps_child(
 def test_supervisor_enforces_actual_rss_and_kills_own_child(prepared_input, monkeypatch):
     request = execution(prepared_input, rss_bytes=128 * 1024**2, wall_seconds=10.0)
     children = replace_child(
-        monkeypatch, "import time; value=bytearray(256*1024**2); time.sleep(5)"
+        monkeypatch,
+        "import time; value=bytearray(256*1024**2)\n"
+        # calloc may reserve zero pages without making them resident on macOS.
+        "for i in range(0,len(value),4096): value[i]=1\n"
+        "time.sleep(30)",
     )
     with pytest.raises(ExecutionError, match="memory_limit"):
         supervise(request)

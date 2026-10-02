@@ -116,6 +116,9 @@ class V12Prediction(Contract):
     candidate: V12Forecast
     baseline: V12Forecast
     metadata: V12PredictionMetadata
+    exclusion_reason: Literal["closed_target"] | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
 
     @model_validator(mode="after")
     def retained_reference(self) -> Self:
@@ -123,6 +126,14 @@ class V12Prediction(Contract):
             self.candidate.median != self.baseline.median
             or self.candidate.interval != self.baseline.interval
             or self.metadata.selected != self.metadata.baseline
+            or (
+                self.exclusion_reason is not None
+                and any(
+                    v is not None
+                    for forecast in (self.candidate, self.baseline)
+                    for v in (forecast.median, forecast.mean, forecast.interval)
+                )
+            )
         ):
             raise ValueError("v12_runtime_exact_reference_changed")
         return self

@@ -6,6 +6,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from retailops_ai.forecast_jobs.inputs import verify_inputs_package
+from retailops_ai.model_lifecycle.v12_development import read_development_acceptance
 from retailops_ai.model_lifecycle.v12_release import approve_v12, load_approved_v12, qualify_v12
 from retailops_ai.model_lifecycle.v12_release_contracts import V12ApprovalRequest
 from retailops_ai.security.model_operator import model_operator
@@ -25,6 +26,7 @@ def main() -> int:
                 command.add_argument("--" + field, required=True)
             for field in ("inputs-dir", "feature-dir", "curated-dir", "output-root"):
                 command.add_argument("--" + field, type=Path, required=True)
+            command.add_argument("--development-acceptance", type=Path)
             command.add_argument("--valid-seconds", type=int, default=86400)
         elif name == "approve":
             for field in (
@@ -58,6 +60,9 @@ def main() -> int:
                 feature_dir=args.feature_dir,
                 curated_dir=args.curated_dir,
                 output_root=args.output_root,
+                development_acceptance=read_development_acceptance(args.development_acceptance)
+                if args.development_acceptance
+                else None,
                 valid_until=datetime.now(UTC) + timedelta(seconds=args.valid_seconds),
                 **common,
             )

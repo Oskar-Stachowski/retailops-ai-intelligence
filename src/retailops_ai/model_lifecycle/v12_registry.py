@@ -19,6 +19,7 @@ from retailops_ai.model_lifecycle.engine import require_promoter
 from retailops_ai.model_lifecycle.mlflow import MLflowRegistry
 from retailops_ai.model_lifecycle.v12_evidence import V12ArtifactReceipt
 from retailops_ai.model_lifecycle.v12_lifecycle_contracts import (
+    DEVELOPMENT_MODEL,
     MODEL,
     TEST_MODEL,
     V12Binding,
@@ -66,7 +67,9 @@ class MLflowV12Registry:
         self.environment = environment
 
     def namespace(self, model: str) -> None:
-        if model not in {MODEL, TEST_MODEL} or (model == TEST_MODEL and self.environment != "test"):
+        if model not in {MODEL, TEST_MODEL, DEVELOPMENT_MODEL} or (
+            model == TEST_MODEL and self.environment != "test"
+        ):
             raise ValueError("v12_registry_namespace_or_environment")
 
     def api(self, path: str, payload: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -117,13 +120,18 @@ class MLflowV12Registry:
         run = self.api(API + "runs/get?run_id=" + source.campaign_mlflow_run_id)["run"]
         tags, params = _tags(run), _params(run)
         pin = source.approval.qualification.pin
+        accepted = source.approval.qualification.development_acceptance
+        if accepted is not None:
+            accepted.verify_pin(pin)
+        expected_status = "not_ready" if accepted else "ready"
+        expected_quality = "not_ready" if accepted else "passed"
         if (
             run["info"]["run_id"] != source.campaign_mlflow_run_id
             or run["info"]["status"] != "FINISHED"
             or tags.get("retailops.import_kind") != "v12_campaign_evidence"
             or tags.get("retailops.import_status") != "verified"
-            or tags.get("retailops.original_model_status") != "ready"
-            or tags.get("retailops.quality_status") != "passed"
+            or tags.get("retailops.original_model_status") != expected_status
+            or tags.get("retailops.quality_status") != expected_quality
             or tags.get("retailops.independent_replay") != "passed"
             or any(
                 tags.get("retailops." + name + "_eligible") != "false"
@@ -155,8 +163,8 @@ class MLflowV12Registry:
         if (
             manifest["run_id"] != pin.run_id
             or pin.run_id != "functional-v12-run-sha256-" + canonical_sha256(descriptor)
-            or descriptor["forecast_model_status"] != "ready"
-            or descriptor["quality_qualification_status"] != "passed"
+            or descriptor["forecast_model_status"] != expected_status
+            or descriptor["quality_qualification_status"] != expected_quality
             or any(
                 descriptor[name] != getattr(pin, name)
                 for name in ("campaign_id", "freeze_id", "replay_id")
@@ -206,7 +214,7 @@ class MLflowV12Registry:
             or pin.cohort_id not in recipe["support"]["cohort_ids"]
             or handoff["independent_replay"] != "passed"
             or handoff["all_preregistered_cohorts_included"] is not True
-            or metrics["status"] != "passed"
+            or metrics["status"] != expected_quality
             or replay["replay_id"] != pin.replay_id
             or signature["deployable_service_contract"] is not False
             or signature["input_schema_sha256"] != canonical_sha256(signature["input_schema"])

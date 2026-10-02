@@ -24,6 +24,11 @@ Operator wskazuje osobny, wcześniej zweryfikowany interpreter z zainstalowanym
 wheel AI 04 zgodnym z kodem i lockiem eksportu. To zaufany input operatora;
 eksport nigdy nie wskazuje interpretera ani wykonywalnego kodu.
 
+Przy małej rezerwie miejsca na macOS dostępny jest jawny
+[transport APFS do lokalnego artifact store](forecast-v12-development.md).
+Standardowy transport przed nowym importem zachowuje domyślnie 50 GiB
+wolnego miejsca; powtórzenie ukończonego importu tylko sprawdza istniejące bajty.
+
 Podproces `-I -B` importuje weryfikator z `site-packages`, bez `PYTHONPATH`,
 poświadczeń AWS/DB/MLflow i zapisu bytecode. Oryginalny `verify_run` sprawdza
 bajty, checkpointy, niezależny replay, quality gates i kontrakt raportów.

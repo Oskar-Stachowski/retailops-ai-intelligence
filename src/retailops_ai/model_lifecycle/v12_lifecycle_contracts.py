@@ -15,8 +15,13 @@ from retailops_ai.model_lifecycle.v12_release_contracts import (
 from retailops_ai.source_snapshot.files import relative_path
 
 MODEL = "retailops-demand-forecast-v12"
+DEVELOPMENT_MODEL = "retailops-demand-forecast-v12-development"
 TEST_MODEL = "retailops-demand-forecast-v12-mechanics"
-ModelName = Literal["retailops-demand-forecast-v12", "retailops-demand-forecast-v12-mechanics"]
+ModelName = Literal[
+    "retailops-demand-forecast-v12",
+    "retailops-demand-forecast-v12-mechanics",
+    "retailops-demand-forecast-v12-development",
+]
 DatabaseReleaseID = Annotated[str, Field(pattern=r"^v12-model-release-sha256-[0-9a-f]{64}$")]
 
 
@@ -47,6 +52,9 @@ class V12RegistrySource(Contract):
 
     @model_validator(mode="after")
     def artifact_inventory(self) -> Self:
+        accepted = self.approval.qualification.development_acceptance is not None
+        if accepted != (self.model_name == DEVELOPMENT_MODEL):
+            raise ValueError("v12_development_requires_separate_namespace")
         if (
             set(self.files) != capsule_names()
             or self.files["release.json"].sha256 != self.approval_sha256
@@ -113,3 +121,13 @@ def database_release(**content: object) -> V12ModelRelease:
     raw = {"version": "forecast-v12-database-release-1.0.0", **content}
     raw["release_id"] = "v12-model-release-sha256-" + canonical_sha256(raw)
     return V12ModelRelease.model_validate_json(canonical_bytes(raw))
+
+
+def model_namespace(environment: str, *, mechanics: bool = False, development: bool = False) -> str:
+    if (
+        environment not in {"local", "test"}
+        or (mechanics and environment != "test")
+        or (mechanics and development)
+    ):
+        raise ValueError("v12_namespace_environment")
+    return DEVELOPMENT_MODEL if development else TEST_MODEL if mechanics else MODEL

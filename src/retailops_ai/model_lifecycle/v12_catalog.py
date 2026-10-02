@@ -22,10 +22,9 @@ from retailops_ai.model_lifecycle.read_contracts import (
 )
 from retailops_ai.model_lifecycle.reader import CatalogError, authorized
 from retailops_ai.model_lifecycle.v12_lifecycle_contracts import (
-    MODEL,
-    TEST_MODEL,
     V12Binding,
     V12ModelRelease,
+    model_namespace,
 )
 from retailops_ai.model_lifecycle.v12_metadata_contracts import (
     V12ApprovedRelease,
@@ -121,12 +120,17 @@ def page(
 
 class PostgresV12Catalog:
     def __init__(
-        self, engine: Engine, environment: Literal["local", "test"], *, mechanics: bool = False
+        self,
+        engine: Engine,
+        environment: Literal["local", "test"],
+        *,
+        mechanics: bool = False,
+        development: bool = False,
     ) -> None:
         if environment not in {"local", "test"} or (mechanics and environment != "test"):
             raise ValueError("v12_catalog_environment")
         self.engine, self.environment = engine, environment
-        self.name = TEST_MODEL if mechanics else MODEL
+        self.name = model_namespace(environment, mechanics=mechanics, development=development)
 
     def models(self, query: CatalogQuery, actor: Principal) -> V12ModelPage:
         result = page(self._snapshot(query, actor), query, actor, models=True)

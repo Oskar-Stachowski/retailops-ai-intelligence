@@ -78,9 +78,9 @@ expected=[]
 for value in inputs['rows']:
     row=InputRow.model_validate_json(canonical_bytes(value)); history=histories[row.history_context_sha256]
     points,bands=empirical_baselines(row,history); values={v.name:v.value for v in row.values}
-    compact={'key':canonical_bytes([fold.name,role,row.forecast_origin.isoformat(),row.product_id,row.selling_location_id,row.channel,row.target_date.isoformat()]).decode(),'fold':fold.name,'role':role,'origin':row.forecast_origin.isoformat(),'volume':volume_bin(values['rolling_mean_28'],QualityPolicy()),'category':values['category_id'],'channel':row.channel,'horizon':row.horizon_days,'eligible':True,'reasons':[],'actual':None,'label_available_at':None,'baseline_points':points,'baseline_bands':{name:list(band) if band is not None else None for name,band in bands.items()}}
+    compact={'key':canonical_bytes([fold.name,role,row.forecast_origin.isoformat(),row.product_id,row.selling_location_id,row.channel,row.target_date.isoformat()]).decode(),'fold':fold.name,'role':role,'origin':row.forecast_origin.isoformat(),'volume':volume_bin(values['rolling_mean_28'],QualityPolicy()),'category':values['category_id'],'channel':row.channel,'horizon':row.horizon_days,'eligible':row.target_calendar_eligible,'reasons':[] if row.target_calendar_eligible else ['closed_target'],'actual':None,'label_available_at':None,'baseline_points':points,'baseline_bands':{name:list(band) if band is not None else None for name,band in bands.items()}}
     candidate,baseline,metadata=predictor.predict(observation_from_compact(compact,cohort))
-    expected.append({'key':compact['key'],'candidate':candidate.model_dump(mode='json'),'baseline':baseline.model_dump(mode='json'),'metadata':metadata})
+    expected.append({'key':compact['key'],'candidate':candidate.model_dump(mode='json'),'baseline':baseline.model_dump(mode='json'),'metadata':metadata}|({'exclusion_reason':'closed_target'} if not row.target_calendar_eligible else {}))
 print(json.dumps({'recipe':recipe,'code':campaign_code(),'signature_schema':schema,'expected':expected,'package_file':retailops_ai.__file__}))
 """
 
@@ -171,8 +171,9 @@ def test_real_pinned_predictor_matches_reference_without_touching_campaign(
     REPORT.write_bytes(canonical_bytes(report) + b"\n")
 
 
+@pytest.mark.parametrize("closed", [False, True])
 def test_real_pinned_inference_predictor_outside_holdout_after_explicit_fixture_review(
-    prepared_input, tmp_path, monkeypatch, verifier_python
+    prepared_input, tmp_path, monkeypatch, verifier_python, closed
 ):
     """Actual algorithm proof; full export/source/review remain explicit independent doubles."""
     original = plan()
@@ -189,6 +190,16 @@ def test_real_pinned_inference_predictor_outside_holdout_after_explicit_fixture_
     }
     fold = FoldPlan.model_validate_json(canonical_bytes(raw_fold))
     base = freshness_inputs(prepared_input)
+    if closed:
+        raw = base.model_dump(mode="json")
+        raw["rows"][0]["target_calendar_eligible"] = False
+        next(v for v in raw["rows"][0]["values"] if v["name"] == "target_location_open")[
+            "value"
+        ] = False
+        raw["profile_id"] = "batch-profile-sha256-" + canonical_sha256(
+            {k: v for k, v in raw.items() if k != "profile_id"}
+        )
+        base = PreparedInputs.model_validate_json(canonical_bytes(raw))
     completed = subprocess.run(
         [str(verifier_python), "-I", "-B", "-c", GEN],
         input=canonical_bytes(
@@ -242,6 +253,11 @@ def test_real_pinned_inference_predictor_outside_holdout_after_explicit_fixture_
     first, second = serving.predict(inputs), serving.predict(inputs)
     assert [p.model_dump(mode="json") for p in first.predictions] == native["expected"]
     assert first.predictions_sha256 == second.predictions_sha256
+    if closed:
+        excluded = first.predictions[0]
+        assert excluded.exclusion_reason == "closed_target"
+        for prediction in (excluded.candidate, excluded.baseline):
+            assert prediction.median is prediction.mean is prediction.interval is None
     report = dict(
         status="native_inference_and_private_review_passed_on_explicit_fixture",
         full_run_verifier="explicit_transport_double_not_real_quality_evidence",
@@ -268,6 +284,11 @@ def test_real_pinned_inference_predictor_outside_holdout_after_explicit_fixture_
         model_refits=first.model_refits,
         published_forecast_outputs=first.published_forecast_outputs,
     )
-    (REPORT.parent / "ai05-v12-native-inference-smoke.json").write_bytes(
-        canonical_bytes(report) + b"\n"
-    )
+    (
+        REPORT.parent
+        / (
+            "ai05-v12-native-closed-calendar-smoke.json"
+            if closed
+            else "ai05-v12-native-inference-smoke.json"
+        )
+    ).write_bytes(canonical_bytes(report) + b"\n")

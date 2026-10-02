@@ -303,7 +303,7 @@ def inventory_sql(monkeypatch: pytest.MonkeyPatch, tables: list[str], counts: di
         if "json_agg(sequencename" in query:
             return b"[]"
         if "version_num" in query:
-            return b"0018_v12_evaluations"
+            return b"0019_v12_development"
         pytest.fail("Unexpected inventory SQL")
 
     monkeypatch.setattr(store, "sql", sql)
@@ -320,7 +320,7 @@ def test_inventory_preserves_empty_and_populated_table_bytes(monkeypatch: pytest
             "empty": {"rows": 0, "sha256": hashlib.sha256(b"").hexdigest()},
             "populated": {"rows": 1, "sha256": hashlib.sha256(b'{"proof": 1}\n').hexdigest()},
         }
-    assert len(copied) == 4 and result["ai_revision"] == "0018_v12_evaluations"
+    assert len(copied) == 4 and result["ai_revision"] == "0019_v12_development"
 
 
 @pytest.mark.parametrize(

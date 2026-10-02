@@ -26,6 +26,7 @@ from retailops_ai.forecast_jobs.inputs import (
     series,
 )
 from retailops_ai.forecast_jobs.v12_contracts import MAX_REQUEST_BYTES, MAX_ROWS, V12Execution, Zero
+from retailops_ai.forecast_jobs.v12_executor import calendar_exclusion
 from retailops_ai.forecast_jobs.v12_inference_contracts import V12InferenceResult
 from retailops_ai.forecast_jobs.v12_runtime import prediction_key, validate_inputs
 from retailops_ai.model_lifecycle.v12_lifecycle_contracts import (
@@ -146,7 +147,12 @@ def chunks(
                         histories=tuple(h for h in selected.histories if series(h) in keys),
                     )
                 )
-                validate_inputs(pin, part, source_policy=policy)
+                validate_inputs(
+                    pin,
+                    part,
+                    source_policy=policy,
+                    development_acceptance=release.binding.approval.qualification.development_acceptance,
+                )
                 # Reserve room for the fixed local path and inference context in the executor envelope.
                 document = {
                     "root": "x" * 4096,
@@ -245,6 +251,8 @@ def verify_receipt(
             or [p.key for p in part.predictions]
             != [prediction_key(part.pin, row, role="inference") for row in inputs.rows]
             or part.peak_rss_bytes > release.binding.approval.qualification.limits.rss_bytes
+            or [p.exclusion_reason for p in part.predictions]
+            != [calendar_exclusion(row.model_dump(mode="json")) for row in inputs.rows]
         ):
             raise ValueError("v12_batch_receipt_coverage_or_resource")
         if not run.started_at or not run.started_at <= part.generated_at <= output.generated_at:

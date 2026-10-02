@@ -27,8 +27,10 @@ from retailops_ai.forecast_jobs.v12_contracts import (
     V12RuntimePin,
     V12RuntimeResult,
 )
+from retailops_ai.forecast_jobs.v12_executor import calendar_exclusion
 from retailops_ai.forecast_jobs.v12_inference_contracts import V12InferenceResult
 from retailops_ai.forecasting.manifest_contract import FeaturePolicy
+from retailops_ai.model_lifecycle.v12_development import V12DevelopmentAcceptance
 from retailops_ai.model_lifecycle.v12_evidence import V12Evidence, load_evidence
 from retailops_ai.model_lifecycle.v12_release_contracts import V12InferenceContext, V12SourcePolicy
 from retailops_ai.source_snapshot.files import checked_directory, decode_json, file_hash, read_json
@@ -54,8 +56,14 @@ def prediction_key(
 
 
 def validate_inputs(
-    pin: V12RuntimePin, inputs: PreparedInputs, *, source_policy: V12SourcePolicy | None = None
+    pin: V12RuntimePin,
+    inputs: PreparedInputs,
+    *,
+    source_policy: V12SourcePolicy | None = None,
+    development_acceptance: V12DevelopmentAcceptance | None = None,
 ) -> None:
+    if development_acceptance is not None:
+        development_acceptance.verify_pin(pin)
     parent = inputs.feature_manifest.descriptor.parent
     if (
         len(inputs.rows) > MAX_ROWS
@@ -67,7 +75,7 @@ def validate_inputs(
         or (
             source_policy is not None
             and (
-                pin.forecast_model_status != "ready"
+                (pin.forecast_model_status != "ready" and development_acceptance is None)
                 or inputs.schema_version != "1.1"
                 or inputs.source_freshness is None
                 or inputs.feature_manifest.feature_set_id != source_policy.feature_set_id
@@ -290,6 +298,11 @@ def _execute(
                     or [p.key for p in result.predictions]
                     != [prediction_key(request.pin, row, role=role) for row in request.inputs.rows]
                     or result.peak_rss_bytes > request.limits.rss_bytes
+                    or [p.exclusion_reason for p in result.predictions]
+                    != [
+                        calendar_exclusion(row.model_dump(mode="json"))
+                        for row in request.inputs.rows
+                    ]
                 ):
                     raise ExecutionError("v12_runtime_result_pin_or_count")
                 if tick is not None:

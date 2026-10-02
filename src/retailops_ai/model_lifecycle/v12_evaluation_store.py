@@ -12,7 +12,7 @@ from retailops_ai.forecast_jobs.queue import checked
 from retailops_ai.model_lifecycle.evaluation_contracts import EvaluationFreshness
 from retailops_ai.model_lifecycle.evaluation_store import EvaluationError, authorized
 from retailops_ai.model_lifecycle.read_contracts import CatalogPagination, CatalogScope
-from retailops_ai.model_lifecycle.v12_lifecycle_contracts import MODEL, TEST_MODEL
+from retailops_ai.model_lifecycle.v12_lifecycle_contracts import model_namespace
 from retailops_ai.model_lifecycle.v12_metadata_contracts import (
     V12EvaluationDetail,
     V12EvaluationEvidence,
@@ -100,12 +100,17 @@ def projection(
 
 class PostgresV12Evaluations:
     def __init__(
-        self, engine: Engine, environment: Literal["local", "test"], *, mechanics: bool = False
+        self,
+        engine: Engine,
+        environment: Literal["local", "test"],
+        *,
+        mechanics: bool = False,
+        development: bool = False,
     ) -> None:
         if environment not in {"local", "test"} or (mechanics and environment != "test"):
             raise ValueError("v12_evaluation_environment")
         self.engine, self.environment = engine, environment
-        self.model = TEST_MODEL if mechanics else MODEL
+        self.model = model_namespace(environment, mechanics=mechanics, development=development)
 
     def register(self, evidence: V12EvaluationEvidence, actor: Principal) -> V12EvaluationEvidence:
         if "promoter" not in actor.roles or "model:decide" not in actor.capabilities:

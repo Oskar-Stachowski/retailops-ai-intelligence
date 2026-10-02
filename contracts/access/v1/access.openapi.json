@@ -3900,7 +3900,8 @@
           "model_name": {
             "enum": [
               "retailops-demand-forecast-v12",
-              "retailops-demand-forecast-v12-mechanics"
+              "retailops-demand-forecast-v12-mechanics",
+              "retailops-demand-forecast-v12-development"
             ],
             "title": "Model Name",
             "type": "string"
@@ -3993,7 +3994,8 @@
           "model_name": {
             "enum": [
               "retailops-demand-forecast-v12",
-              "retailops-demand-forecast-v12-mechanics"
+              "retailops-demand-forecast-v12-mechanics",
+              "retailops-demand-forecast-v12-development"
             ],
             "title": "Model Name",
             "type": "string"
@@ -4213,7 +4215,8 @@
           "model_name": {
             "enum": [
               "retailops-demand-forecast-v12",
-              "retailops-demand-forecast-v12-mechanics"
+              "retailops-demand-forecast-v12-mechanics",
+              "retailops-demand-forecast-v12-development"
             ],
             "title": "Model Name",
             "type": "string"
@@ -4660,7 +4663,8 @@
           "model_name": {
             "enum": [
               "retailops-demand-forecast-v12",
-              "retailops-demand-forecast-v12-mechanics"
+              "retailops-demand-forecast-v12-mechanics",
+              "retailops-demand-forecast-v12-development"
             ],
             "title": "Model Name",
             "type": "string"
@@ -4887,7 +4891,8 @@
           "model_name": {
             "enum": [
               "retailops-demand-forecast-v12",
-              "retailops-demand-forecast-v12-mechanics"
+              "retailops-demand-forecast-v12-mechanics",
+              "retailops-demand-forecast-v12-development"
             ],
             "title": "Model Name",
             "type": "string"
@@ -5252,7 +5257,8 @@
           "model_name": {
             "enum": [
               "retailops-demand-forecast-v12",
-              "retailops-demand-forecast-v12-mechanics"
+              "retailops-demand-forecast-v12-mechanics",
+              "retailops-demand-forecast-v12-development"
             ],
             "title": "Model Name",
             "type": "string"
@@ -5642,6 +5648,18 @@
           },
           "candidate": {
             "$ref": "#/components/schemas/V12Forecast"
+          },
+          "exclusion_reason": {
+            "anyOf": [
+              {
+                "const": "closed_target",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exclusion Reason"
           },
           "key": {
             "maxLength": 1024,

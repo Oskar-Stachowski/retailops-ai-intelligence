@@ -13,6 +13,7 @@ from retailops_ai.model_lifecycle.contracts import Version
 from retailops_ai.model_lifecycle.v12_journal import PostgresV12Journal
 from retailops_ai.model_lifecycle.v12_lifecycle import V12Lifecycle
 from retailops_ai.model_lifecycle.v12_lifecycle_contracts import (
+    DEVELOPMENT_MODEL,
     MODEL,
     TEST_MODEL,
     V12LifecycleRequest,
@@ -34,12 +35,12 @@ def main() -> int:
         upload.add_argument("--" + name, type=Path, required=True)
     for name in ("release-id", "image-digest", "campaign-run-id"):
         upload.add_argument("--" + name, required=True)
-    upload.add_argument("--model", choices=(MODEL, TEST_MODEL), default=MODEL)
+    upload.add_argument("--model", choices=(MODEL, TEST_MODEL, DEVELOPMENT_MODEL), default=MODEL)
     upload.add_argument("--work-dir", type=Path, default=Path(".local/mlflow-v12-approvals"))
     upload.add_argument("--verify-timeout-seconds", type=int, default=3600)
     commands.add_parser("decide")
     review = commands.add_parser("review")
-    review.add_argument("--model", choices=(MODEL, TEST_MODEL), default=MODEL)
+    review.add_argument("--model", choices=(MODEL, TEST_MODEL, DEVELOPMENT_MODEL), default=MODEL)
     args = parser.parse_args()
     engine = None
     try:

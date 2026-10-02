@@ -116,19 +116,27 @@ def create_app(
     if forecast_reader is None and knowledge_engine is not None:
         forecast_reader = PostgresForecastReader(knowledge_engine, settings.app_env)
     if v12_forecast_reader is None and knowledge_engine is not None:
-        v12_forecast_reader = PostgresV12ForecastReader(knowledge_engine, settings.app_env)
+        v12_forecast_reader = PostgresV12ForecastReader(
+            knowledge_engine, settings.app_env, development=settings.v12_development_mode
+        )
     if v12_forecast_administration is None and knowledge_engine is not None:
         v12_forecast_administration = PostgresV12JobAdministration(
-            PostgresV12Queue(knowledge_engine, settings.app_env)
+            PostgresV12Queue(
+                knowledge_engine, settings.app_env, development=settings.v12_development_mode
+            )
         )
     if model_catalog is None and knowledge_engine is not None:
         model_catalog = PostgresModelCatalog(knowledge_engine, settings.app_env)
     if evaluation_reader is None and knowledge_engine is not None:
         evaluation_reader = PostgresEvaluations(knowledge_engine, settings.app_env)
     if v12_model_catalog is None and knowledge_engine is not None:
-        v12_model_catalog = PostgresV12Catalog(knowledge_engine, settings.app_env)
+        v12_model_catalog = PostgresV12Catalog(
+            knowledge_engine, settings.app_env, development=settings.v12_development_mode
+        )
     if v12_evaluation_reader is None and knowledge_engine is not None:
-        v12_evaluation_reader = PostgresV12Evaluations(knowledge_engine, settings.app_env)
+        v12_evaluation_reader = PostgresV12Evaluations(
+            knowledge_engine, settings.app_env, development=settings.v12_development_mode
+        )
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)

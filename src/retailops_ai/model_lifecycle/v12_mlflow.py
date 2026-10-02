@@ -11,6 +11,7 @@ import stat
 import urllib.error
 import urllib.parse
 import urllib.request
+from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Protocol
@@ -202,7 +203,13 @@ def _verify_remote(client: Tracking, run: dict[str, Any], evidence: V12Evidence)
             raise ValueError("v12_mlflow_remote_checksum")
 
 
-def import_evidence(evidence: V12Evidence, client: Tracking, work: Path) -> dict[str, Any]:
+def import_evidence(
+    evidence: V12Evidence,
+    client: Tracking,
+    work: Path,
+    *,
+    before_upload: Callable[[], None] | None = None,
+) -> dict[str, Any]:
     """Serialize local imports; stream every original artifact and reject ambiguous retries."""
     evidence.verify_bytes()
     if work.absolute().is_relative_to(evidence.root) or evidence.root.is_relative_to(
@@ -223,10 +230,15 @@ def import_evidence(evidence: V12Evidence, client: Tracking, work: Path) -> dict
         if not stat.S_ISREG(info.st_mode) or info.st_mode & 0o077:
             raise ValueError("v12_mlflow_private_regular_lock_required")
         fcntl.flock(lock, fcntl.LOCK_EX)
-        return _import_locked(evidence, client)
+        return _import_locked(evidence, client, before_upload=before_upload)
 
 
-def _import_locked(evidence: V12Evidence, client: Tracking) -> dict[str, Any]:
+def _import_locked(
+    evidence: V12Evidence,
+    client: Tracking,
+    *,
+    before_upload: Callable[[], None] | None = None,
+) -> dict[str, Any]:
     record = metadata(evidence)
     experiment = _experiment(client)
     matches = _matches(client, experiment, evidence.run_id)
@@ -248,6 +260,8 @@ def _import_locked(evidence: V12Evidence, client: Tracking) -> dict[str, Any]:
         _verify_remote(client, run, evidence)
         evidence.verify_bytes()
         return _result("already_imported", run, evidence)
+    if before_upload is not None:
+        before_upload()
     now = datetime.now(UTC)
     tags = record["tags"] | {
         "retailops.imported_at": now.isoformat(),

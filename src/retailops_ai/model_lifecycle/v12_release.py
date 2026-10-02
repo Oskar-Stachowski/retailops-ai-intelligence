@@ -26,6 +26,7 @@ from retailops_ai.forecast_jobs.v12_inference import (
 from retailops_ai.forecast_jobs.v12_inference_contracts import V12InferenceResult
 from retailops_ai.forecast_jobs.v12_runtime import LoadedV12Forecast, load_v12, prediction_key
 from retailops_ai.model_lifecycle.contracts import GATES, Receipt
+from retailops_ai.model_lifecycle.v12_development import V12DevelopmentAcceptance
 from retailops_ai.model_lifecycle.v12_release_contracts import (
     V12ApprovalRequest,
     V12InferenceRelease,
@@ -124,6 +125,7 @@ def qualify_v12(
     output_root: Path,
     valid_until: datetime,
     limits: V12ExecutionLimits | None = None,
+    development_acceptance: V12DevelopmentAcceptance | None = None,
     verify_timeout_seconds: int = 3600,
 ) -> Path:
     """Verify the whole export and both data parents, then probe the inference role twice."""
@@ -138,7 +140,9 @@ def qualify_v12(
         recipe_id=recipe_id,
         verify_timeout_seconds=verify_timeout_seconds,
     )
-    if loaded.pin.forecast_model_status != "ready":
+    if development_acceptance is not None:
+        development_acceptance.verify_pin(loaded.pin)
+    if loaded.pin.forecast_model_status != "ready" and development_acceptance is None:
         raise ValueError("v12_qualification_model_not_ready")
     inputs = verify_inputs_package(inputs_dir)
     # A declared source ID alone is insufficient: reconstruct from verified immutable parents.
@@ -153,8 +157,12 @@ def qualify_v12(
         )
         if verify_inputs_package(verified) != inputs:
             raise ValueError("v12_qualification_inputs_not_from_verified_parents")
-    first = predict_acceptance(loaded, inputs, limits=limits)
-    second = predict_acceptance(loaded, inputs, limits=limits)
+    first = predict_acceptance(
+        loaded, inputs, limits=limits, development_acceptance=development_acceptance
+    )
+    second = predict_acceptance(
+        loaded, inputs, limits=limits, development_acceptance=development_acceptance
+    )
     if first.predictions_sha256 != second.predictions_sha256:
         raise ValueError("v12_qualification_prediction_not_repeatable")
     smoke_raw = _json(first.model_dump(mode="json"))
@@ -165,7 +173,7 @@ def qualify_v12(
         version="forecast-v12-qualification-1.0.0",
         purpose="serving_load_predict_acceptance",
         pin=loaded.pin.model_dump(mode="json"),
-        source_policy=source_policy(loaded, inputs).model_dump(mode="json"),
+        source_policy=source_policy(loaded, inputs, development_acceptance).model_dump(mode="json"),
         limits=limits.model_dump(mode="json"),
         smoke_profile_id=inputs.profile_id,
         smoke_scope=inputs.scope.model_dump(mode="json"),
@@ -179,6 +187,8 @@ def qualify_v12(
         repeatability_verified=True,
         serving_eligible=False,
     )
+    if development_acceptance is not None:
+        raw["development_acceptance"] = development_acceptance.model_dump(mode="json")
     raw["qualification_id"] = "v12-qualification-sha256-" + canonical_sha256(raw)
     qualification = V12Qualification.model_validate_json(canonical_bytes(raw))
     return _publish(
@@ -206,6 +216,7 @@ def _qualification(root: Path) -> V12Qualification:
         or smoke.pin != qualification.pin
         or smoke.inference.purpose != "serving_load_predict_acceptance"
         or smoke.inference.source_policy != qualification.source_policy
+        or smoke.inference.development_acceptance != qualification.development_acceptance
         or smoke.profile_id != inputs.profile_id
         or smoke.profile_id != qualification.smoke_profile_id
         or inputs.scope != qualification.smoke_scope
@@ -280,7 +291,10 @@ def approve_v12(
         raise ValueError("v12_approval_wrong_qualification")
     loaded = _bound_export(qualification, root, python, verify_timeout_seconds)
     inputs = verify_inputs_from_capsule(qualification_dir)
-    if source_policy(loaded, inputs) != qualification.source_policy:
+    if (
+        source_policy(loaded, inputs, qualification.development_acceptance)
+        != qualification.source_policy
+    ):
         raise ValueError("v12_approval_source_policy_changed")
     inventory(reports_dir, {f"reports/{gate}.json" for gate in GATES})
     reports = _reports(reports_dir, request)
@@ -339,7 +353,9 @@ def load_approved_v12(
     qualification = release.qualification
     loaded = _bound_export(qualification, root, python, verify_timeout_seconds)
     if (
-        source_policy(loaded, verify_inputs_from_capsule(release_dir))
+        source_policy(
+            loaded, verify_inputs_from_capsule(release_dir), qualification.development_acceptance
+        )
         != qualification.source_policy
     ):
         raise ValueError("v12_inference_source_policy_changed")

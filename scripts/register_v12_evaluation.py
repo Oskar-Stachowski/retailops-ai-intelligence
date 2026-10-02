@@ -11,6 +11,7 @@ from retailops_ai.config import load_settings
 from retailops_ai.model_lifecycle.v12_evaluation_importer import project_evaluation
 from retailops_ai.model_lifecycle.v12_evaluation_store import PostgresV12Evaluations
 from retailops_ai.model_lifecycle.v12_evidence import load_evidence
+from retailops_ai.model_lifecycle.v12_lifecycle_contracts import model_namespace
 from retailops_ai.security.model_operator import model_operator
 
 
@@ -19,6 +20,7 @@ def main() -> int:
     for name in ("run-dir", "verifier-python", "policy-file", "credentials-file"):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--env-file", type=Path)
+    parser.add_argument("--development", action="store_true")
     args = parser.parse_args()
     engine = None
     try:
@@ -26,13 +28,18 @@ def main() -> int:
         settings = load_settings(args.env_file)
         if settings.database_url is None:
             raise ValueError("v12_evaluation_database_required")
-        evidence = project_evaluation(load_evidence(args.run_dir, args.verifier_python))
+        evidence = project_evaluation(
+            load_evidence(args.run_dir, args.verifier_python),
+            model=model_namespace(settings.app_env, development=args.development),
+        )
         engine = create_engine(
             settings.database_url.get_secret_value(),
             connect_args={"connect_timeout": 3},
             hide_parameters=True,
         )
-        result = PostgresV12Evaluations(engine, settings.app_env).register(evidence, actor)
+        result = PostgresV12Evaluations(
+            engine, settings.app_env, development=args.development
+        ).register(evidence, actor)
         print(
             json.dumps(
                 dict(

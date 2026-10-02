@@ -28,8 +28,13 @@ class V12InferenceResult(Contract):
 
     @model_validator(mode="after")
     def result_identity(self) -> Self:
+        if self.inference.development_acceptance is not None:
+            self.inference.development_acceptance.verify_pin(self.pin)
         if (
-            self.pin.forecast_model_status != "ready"
+            (
+                self.pin.forecast_model_status != "ready"
+                and self.inference.development_acceptance is None
+            )
             or self.predictions_sha256
             != canonical_sha256([p.model_dump(mode="json") for p in self.predictions])
             or any(p.metadata.recipe_id != self.pin.recipe_id for p in self.predictions)

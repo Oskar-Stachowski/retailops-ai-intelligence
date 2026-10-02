@@ -18,6 +18,37 @@ MAX_REQUEST_BYTES = 4 * 1024**2
 MAX_ROWS = 256
 
 
+ACCEPTED_RUN = (
+    "functional-v12-run-sha256-345a725d435a477374292cb9483350fb5c50c8ba87d06668c727e0a9f964fb6b"
+)
+ACCEPTED_MANIFEST = "29bf6837ca2cb7504213168743239b037041f375763bc8f01ae28c1f6d09b26e"
+ACCEPTED_DECISION = "11cd0e1fdd10629543bcb66aaedb3bd9b7b7fc5b31473575b998d951c93f00d2"
+ACCEPTED_DECISION_BYTES = 3513
+
+
+def development_acceptance_matches(
+    acceptance: dict[str, Any] | None,
+    run_id: str = ACCEPTED_RUN,
+    manifest_sha256: str = ACCEPTED_MANIFEST,
+) -> bool:
+    """Shared parent/isolated-child check; never a quality or production override."""
+    return (
+        acceptance
+        == {
+            "version": "v12-development-acceptance-1.0.0",
+            "scope": "local_development_only",
+            "decision": {"sha256": ACCEPTED_DECISION, "size_bytes": ACCEPTED_DECISION_BYTES},
+            "production_deployment_authorized": False,
+            "original_quality_reclassified": False,
+        }
+        and acceptance["production_deployment_authorized"] is False
+        and acceptance["original_quality_reclassified"] is False
+        and type(acceptance["decision"]["size_bytes"]) is int
+        and run_id == ACCEPTED_RUN
+        and manifest_sha256 == ACCEPTED_MANIFEST
+    )
+
+
 def inference_schema(schema: dict[str, Any]) -> dict[str, Any]:
     """Change only the role; retain the frozen category/channel/grain/null-label constraints."""
     result = deepcopy(schema)
@@ -32,6 +63,21 @@ def inference_schema(schema: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("v12_inference_original_signature_boundary")
     fields["role"] = {"enum": ["inference"]}
     return result
+
+
+def calendar_exclusion(row: dict[str, Any]) -> str | None:
+    """A confirmed closure is retained; unknown or contradictory calendars fail closed."""
+    values = [v for v in row["values"] if v["name"] == "target_location_open"]
+    if len(values) != 1:
+        raise ValueError("v12_runtime_calendar_unavailable")
+    value = values[0]
+    if value["kind"] != "calendar" or value["status"] != "available":
+        raise ValueError("v12_runtime_calendar_unavailable")
+    if row["target_calendar_eligible"] is True and value["value"] is True:
+        return None
+    if row["target_calendar_eligible"] is False and value["value"] is False:
+        return "closed_target"
+    raise ValueError("v12_runtime_calendar_contradiction")
 
 
 def main() -> None:
@@ -178,8 +224,22 @@ def main() -> None:
         source = inference["source_policy"]
         approved = inference["purpose"] == "qualified_forecast_v12"
         if (
-            descriptor["forecast_model_status"] != "ready"
-            or descriptor["quality_qualification_status"] != "passed"
+            not (
+                (
+                    descriptor["forecast_model_status"] == "ready"
+                    and descriptor["quality_qualification_status"] == "passed"
+                    and inference.get("development_acceptance") is None
+                )
+                or (
+                    descriptor["forecast_model_status"] == "not_ready"
+                    and descriptor["quality_qualification_status"] == "not_ready"
+                    and development_acceptance_matches(
+                        inference.get("development_acceptance"),
+                        pin["run_id"],
+                        pin["manifest"]["sha256"],
+                    )
+                )
+            )
             or inference["version"] != "forecast-v12-inference-context-1.0.0"
             or inference["purpose"]
             not in ("serving_load_predict_acceptance", "qualified_forecast_v12")
@@ -226,9 +286,9 @@ def main() -> None:
             or len(known) < policy.minimum_known_history_days
             or not known
             or (origin.date() - max(known)).days > policy.maximum_observation_age_days
-            or not row.target_calendar_eligible
         ):
             raise ValueError("v12_runtime_history_or_calendar_not_eligible")
+        exclusion = calendar_exclusion(row.model_dump(mode="json"))
         points, bands = empirical_baselines(row, history)
         values = {value.name: value.value for value in row.values}
         key = canonical_bytes(
@@ -251,8 +311,8 @@ def main() -> None:
             "category": values["category_id"],
             "channel": row.channel,
             "horizon": row.horizon_days,
-            "eligible": True,
-            "reasons": [],
+            "eligible": exclusion is None,
+            "reasons": [exclusion] if exclusion else [],
             "actual": None,
             "label_available_at": None,
             "baseline_points": points,
@@ -266,14 +326,15 @@ def main() -> None:
         candidate, baseline, metadata = predictor.predict(
             observation_from_compact(compact, pin["cohort_id"])
         )
-        predictions.append(
-            {
-                "key": key,
-                "candidate": candidate.model_dump(mode="json"),
-                "baseline": baseline.model_dump(mode="json"),
-                "metadata": metadata,
-            }
-        )
+        prediction = {
+            "key": key,
+            "candidate": candidate.model_dump(mode="json"),
+            "baseline": baseline.model_dump(mode="json"),
+            "metadata": metadata,
+        }
+        if exclusion is not None:
+            prediction["exclusion_reason"] = exclusion
+        predictions.append(prediction)
     peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     peak_bytes = int(peak if sys.platform == "darwin" else peak * 1024)
     result = {

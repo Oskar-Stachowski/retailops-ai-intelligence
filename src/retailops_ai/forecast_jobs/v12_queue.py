@@ -23,7 +23,10 @@ from retailops_ai.forecast_jobs.v12_batch import (
     chunks,
     verify_receipt,
 )
-from retailops_ai.model_lifecycle.v12_lifecycle_contracts import MODEL, TEST_MODEL, V12ModelRelease
+from retailops_ai.model_lifecycle.v12_lifecycle_contracts import (
+    V12ModelRelease,
+    model_namespace,
+)
 
 QUEUE_LOCK = 505060
 
@@ -66,12 +69,13 @@ class PostgresV12Queue:
         policy: QueuePolicy | None = None,
         *,
         mechanics: bool = False,
+        development: bool = False,
     ) -> None:
         if environment not in {"local", "test"} or (mechanics and environment != "test"):
             raise ValueError("v12_queue_environment")
         self.engine, self.environment = engine, environment
         self.policy = QueuePolicy.model_validate_json((policy or QueuePolicy()).model_dump_json())
-        self.model = TEST_MODEL if mechanics else MODEL
+        self.model = model_namespace(environment, mechanics=mechanics, development=development)
 
     def _guard(
         self, connection: Connection, release: V12ModelRelease | None = None

@@ -23,6 +23,7 @@ def main() -> int:
     parser.add_argument("--policy-file", type=Path, required=True)
     parser.add_argument("--credentials-file", type=Path, required=True)
     parser.add_argument("--mechanics", action="store_true")
+    parser.add_argument("--development", action="store_true")
     commands = parser.add_subparsers(dest="command", required=True)
     submit = commands.add_parser("submit")
     submit.add_argument("--idempotency-key", required=True)
@@ -40,7 +41,9 @@ def main() -> int:
             hide_parameters=True,
             connect_args={"connect_timeout": 3},
         )
-        queue = PostgresV12Queue(engine, settings.app_env, mechanics=args.mechanics)
+        queue = PostgresV12Queue(
+            engine, settings.app_env, mechanics=args.mechanics, development=args.development
+        )
         result: dict[str, Any] | list[dict[str, Any]]
         if args.command == "submit":
             raw = sys.stdin.buffer.read(16385)

@@ -112,3 +112,9 @@ na osobny odbiór. Po odbiorach [inference/przeglądu](forecast-v12-release.md),
 [lifecycle v12 w MLflow/DB](mlflow-v12-lifecycle.md) oraz
 [kolejki/workera v12](forecast-v12-worker.md) oraz [publikacji i read API](forecast-v12-publication.md)
 pozostają spójny backup/restore i odbiór rzeczywistego przepływu.
+## Zamknięte dni
+
+Kompletny zakres 7/14 dni zachowuje również dni, w których źródłowy kalendarz
+potwierdza zamknięcie sklepu. Oryginalny predictor zwraca brak wartości, a
+adapter wiąże go z `exclusion_reason=closed_target`. Jest to `null`, nie zero.
+Brak kalendarza, nieznany status lub sprzeczne flagi nadal powodują odmowę.

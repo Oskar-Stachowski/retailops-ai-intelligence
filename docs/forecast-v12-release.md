@@ -12,7 +12,9 @@ Dotychczasowy worker i `/api/v1` nadal obsługują kontrakt jednej quantity.
 `qualify_v12` wymaga jawnych run/cohort/fold/recipe IDs i całego zakończonego
 eksportu. Oryginalny verifier AI 04 sprawdza wszystkie artefakty i znaczenia
 przez osobny przypięty wheel. `forecast_model_status=not_ready` kończy odbiór
-odmową, przed odczytem wejść i próbą prognozowania.
+odmową, przed odczytem wejść i próbą prognozowania. Wyjątkiem jest oddzielny
+[lokalny odbiór dokładnie zaakceptowanego v12](forecast-v12-development.md),
+z zachowaniem oryginalnego statusu i osobnej przestrzeni developerskiej.
 
 Pakiet `PreparedInputs` jest ponownie budowany z pełnych, zweryfikowanych
 feature/curated parents i porównywany z dostarczonym `inputs.json`.

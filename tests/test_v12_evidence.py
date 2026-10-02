@@ -280,6 +280,23 @@ def test_verified_repeat_checks_every_remote_file_and_does_not_create_second_run
     assert len(client.runs) == 1
 
 
+def test_upload_capacity_guard_blocks_new_run_but_allows_verified_repeat(evidence, tmp_path):
+    client = MemoryTracking()
+    work = tmp_path / "work"
+
+    def no_capacity():
+        raise ValueError("disk_reserve")
+
+    with pytest.raises(ValueError, match="disk_reserve"):
+        tracking.import_evidence(evidence, client, work, before_upload=no_capacity)
+    assert not client.runs and not client.artifacts
+    tracking.import_evidence(evidence, client, work)
+    assert (
+        tracking.import_evidence(evidence, client, work, before_upload=no_capacity)["status"]
+        == "already_imported"
+    )
+
+
 def test_upload_failure_is_retained_and_never_automatically_retried(evidence, tmp_path):
     client = MemoryTracking()
     client.corrupt = True

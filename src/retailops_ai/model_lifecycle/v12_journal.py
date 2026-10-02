@@ -8,6 +8,7 @@ from typing import Any
 from retailops_ai.adapters.database import EXPECTED_REVISION
 from retailops_ai.model_lifecycle.journal import PostgresLock
 from retailops_ai.model_lifecycle.v12_lifecycle_contracts import (
+    DEVELOPMENT_MODEL,
     MODEL,
     TEST_MODEL,
     V12Binding,
@@ -18,7 +19,7 @@ from retailops_ai.model_lifecycle.v12_lifecycle_contracts import (
 class PostgresV12Journal(PostgresLock):
     @contextmanager
     def locked(self, model: str) -> Iterator[None]:
-        if model not in {MODEL, TEST_MODEL}:
+        if model not in {MODEL, TEST_MODEL, DEVELOPMENT_MODEL}:
             raise ValueError("v12_journal_namespace")
         with super().locked(model):
             revision = self.query("SELECT version_num FROM ai.alembic_version").scalar_one()

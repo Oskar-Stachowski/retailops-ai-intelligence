@@ -27,7 +27,7 @@ from retailops_ai.forecast_jobs.v12_publication import (
 )
 from retailops_ai.forecast_jobs.v12_queue import record
 from retailops_ai.forecast_jobs.v12_read_contracts import V12ForecastItem, V12ForecastPage
-from retailops_ai.model_lifecycle.v12_lifecycle_contracts import MODEL, TEST_MODEL
+from retailops_ai.model_lifecycle.v12_lifecycle_contracts import model_namespace
 
 MAX_READ_BYTES = 16 * 1024**2
 
@@ -169,12 +169,17 @@ def projection(
 
 class PostgresV12ForecastReader:
     def __init__(
-        self, engine: Engine, environment: Literal["local", "test"], *, mechanics: bool = False
+        self,
+        engine: Engine,
+        environment: Literal["local", "test"],
+        *,
+        mechanics: bool = False,
+        development: bool = False,
     ) -> None:
         if environment not in {"local", "test"} or (mechanics and environment != "test"):
             raise ValueError("v12_read_environment")
         self.engine, self.environment = engine, environment
-        self.model = TEST_MODEL if mechanics else MODEL
+        self.model = model_namespace(environment, mechanics=mechanics, development=development)
 
     def read(self, query: ForecastQuery, principal: Principal) -> V12ForecastPage:
         query = ForecastQuery.model_validate_json(query.model_dump_json())

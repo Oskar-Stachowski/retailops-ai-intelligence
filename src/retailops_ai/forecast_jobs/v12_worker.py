@@ -160,6 +160,7 @@ def main() -> int:
     operation.add_argument("--cancel")
     parser.add_argument("--env-file", type=Path)
     parser.add_argument("--mechanics", action="store_true")
+    parser.add_argument("--development", action="store_true")
     parser.add_argument("--release-id")
     parser.add_argument("--approval-dir", type=Path)
     parser.add_argument("--run-dir", type=Path)
@@ -176,7 +177,9 @@ def main() -> int:
             connect_args={"connect_timeout": 3},
             hide_parameters=True,
         )
-        queue = PostgresV12Queue(engine, settings.app_env, mechanics=args.mechanics)
+        queue = PostgresV12Queue(
+            engine, settings.app_env, mechanics=args.mechanics, development=args.development
+        )
         if args.cancel:
             if any((args.release_id, args.approval_dir, args.run_dir, args.verifier_python)):
                 raise ValueError("v12_cancel_no_assets")
