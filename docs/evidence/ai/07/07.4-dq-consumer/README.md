@@ -13,6 +13,14 @@ wire contracts and secrets checks passed. Full-suite and Required CI results
 are recorded separately in the PR before final acceptance; this receipt does
 not substitute targeted tests for those checks.
 
+Initial Required CI at `296d0a03290575f49f29d18d29ecde227453389a` passed all
+1255 tests in 1492.36–1536.77 s. The 30-minute whole-job limit then cancelled
+checks during the existing fresh-process anomaly-input gate. Both persistence
+and secrets gates passed. The checks job budget is extended to 45 minutes to
+cover the full suite and subsequent independent acceptance gates. Per-process
+300 s/1024 MiB budgets and every required check remain enforced. Final Required
+CI is verified on the resulting head and recorded in the PR.
+
 Both public scenario families ran twice in fresh editable processes and twice
 from a detached installed wheel. Producer `data` and `services` namespaces were
 unavailable; every loaded AI module in wheel runs came from the installed wheel.
