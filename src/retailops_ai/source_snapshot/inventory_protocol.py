@@ -1,4 +1,4 @@
-"""Snapshot 1.1 / source 2.7 metadata. No producer runtime dependency."""
+"""Inventory/anomaly snapshot metadata without a producer runtime dependency."""
 
 from __future__ import annotations
 
@@ -35,25 +35,44 @@ RESOURCE_NAMES = {
     "inventory_label_qualification.v1.schema.json": "qualification.schema.json",
     "source_snapshot_handoff.v1_1.json": "contract.json",
 }
+ANOMALY_RESOURCE_NAMES = {
+    "anomaly_snapshot.v1_2.schema.json": "snapshot_manifest.schema.json",
+    "anomaly_source_dataset.v2_8.schema.json": "source_manifest.schema.json",
+    "inventory_source_tables.v1.schema.json": "inventory_tables.schema.json",
+    "inventory_label_qualification.v1.schema.json": "qualification.schema.json",
+    "business_anomaly_plan.v1.schema.json": "anomaly_plan.schema.json",
+    "business_physical_anomaly_plan.v1.schema.json": "physical_plan.schema.json",
+    "source_snapshot_handoff.v1_2.json": "contract.json",
+}
 
 
-def resource_bytes(name: str) -> bytes:
-    packaged = files("retailops_ai.source_snapshot").joinpath("v1_1", name)
+def resource_names(version: str) -> dict[str, str]:
+    if version == "1.2.0":
+        return ANOMALY_RESOURCE_NAMES
+    if version == VERSION:
+        return RESOURCE_NAMES
+    raise SnapshotError("unsupported_inventory_snapshot_version")
+
+
+def resource_bytes(name: str, version: str = VERSION) -> bytes:
+    resource_names(version)
+    directory = "v1_2" if version == "1.2.0" else "v1_1"
+    packaged = files("retailops_ai.source_snapshot").joinpath(directory, name)
     if packaged.is_file():
         return packaged.read_bytes()
     return (
-        Path(__file__).absolute().parents[3] / "contracts/source_snapshot/v1_1" / name
+        Path(__file__).absolute().parents[3] / "contracts/source_snapshot" / directory / name
     ).read_bytes()
 
 
-def contract_document() -> dict[str, Any]:
-    return decode_json(resource_bytes("contract.json"))
+def contract_document(version: str = VERSION) -> dict[str, Any]:
+    return decode_json(resource_bytes("contract.json", version))
 
 
-def validate_schema(document: Any, name: str) -> None:
+def validate_schema(document: Any, name: str, version: str = VERSION) -> None:
     try:
         Draft202012Validator(
-            decode_json(resource_bytes(name)), format_checker=FormatChecker()
+            decode_json(resource_bytes(name, version)), format_checker=FormatChecker()
         ).validate(document)
     except ValidationError as exc:
         raise SnapshotError("invalid_inventory_snapshot_schema") from exc
@@ -143,8 +162,10 @@ def check_lineage(manifest: dict[str, Any], contract: dict[str, Any], allow_trut
 
 
 def inspect_snapshot(root: Path, allow_truth: bool, limits: Limits) -> Snapshot:
-    manifest, contract = read_json(root, "snapshot_manifest.json"), contract_document()
-    validate_schema(manifest, "snapshot_manifest.schema.json")
+    manifest = read_json(root, "snapshot_manifest.json")
+    version = manifest.get("schema_version", "")
+    contract = contract_document(version)
+    validate_schema(manifest, "snapshot_manifest.schema.json", version)
     check_lineage(manifest, contract, allow_truth)
     refs = (*manifest["metadata_files"], *(r for t in manifest["tables"] for r in t["files"]))
     names = [r["path"] for r in refs]
@@ -167,32 +188,37 @@ def inspect_snapshot(root: Path, allow_truth: bool, limits: Limits) -> Snapshot:
 
 
 def verify_metadata(root: Path, snapshot: Snapshot, required: tuple[str, ...]) -> None:
-    manifest, contract = snapshot.manifest, contract_document()
+    manifest = snapshot.manifest
+    version = manifest["schema_version"]
+    contract = contract_document(version)
+    resources = resource_names(version)
     source, desc = manifest["source"], manifest["descriptor"]
     metadata = {r["path"]: r for r in manifest["metadata_files"]}
     expected = {
         "manifests/dataset_manifest.v2.json",
         *("reports/" + n for n in contract["reports"]),
-        *("schemas/" + n for n in RESOURCE_NAMES),
+        *("schemas/" + n for n in resources),
         *("schemas/" + t["table"] + ".arrow.json" for t in manifest["tables"]),
     }
     if desc["include_evaluation_truth"]:
         expected |= {"evaluation_truth/qualification/" + n for n in contract["qualification_files"]}
+        if version == "1.2.0":
+            expected |= {contract["scenario_file"], contract["configuration_file"]}
     if set(metadata) != expected or set(source["reports"]) != set(contract["reports"]):
         raise SnapshotError("metadata_inventory_mismatch")
     if read_json(root, "manifests/dataset_manifest.v2.json") != source:
         raise SnapshotError("source_manifest_copy_mismatch")
     if {p: r["sha256"] for p, r in metadata.items() if p.startswith("schemas/")} != desc["schemas"]:
         raise SnapshotError("schema_fingerprint_mismatch")
-    for source_name, packaged_name in RESOURCE_NAMES.items():
-        if read_bytes(root, "schemas/" + source_name) != resource_bytes(packaged_name):
+    for source_name, packaged_name in resources.items():
+        if read_bytes(root, "schemas/" + source_name) != resource_bytes(packaged_name, version):
             raise SnapshotError("unreviewed_inventory_contract")
     if source["descriptor"]["table_schema_sha256"] != json_sha256(
         contract["source_table_contract"]
     ):
         raise SnapshotError("native_table_contract_fingerprint_mismatch")
     if desc["qualification"]["qualification_schema_sha256"] != json_sha256(
-        decode_json(resource_bytes("qualification.schema.json"))
+        decode_json(resource_bytes("qualification.schema.json", version))
     ):
         raise SnapshotError("qualification_schema_fingerprint_mismatch")
     for name, report in source["reports"].items():
@@ -204,7 +230,8 @@ def verify_metadata(root: Path, snapshot: Snapshot, required: tuple[str, ...]) -
     report = read_json(root, "reports/source_report.json")
     checks = report.get("checks", [])
     if (
-        report.get("policy_version") != "inventory-source-acceptance-1.0.0"
+        report.get("policy_version")
+        != contract.get("source_policy_version", "inventory-source-acceptance-1.0.0")
         or report.get("status") != "passed"
         or report.get("facts_ready") is not True
         or report.get("source_ready") is not False
@@ -229,18 +256,56 @@ def verify_metadata(root: Path, snapshot: Snapshot, required: tuple[str, ...]) -
         or not cases
         or len(set(required)) != len(required)
         or len(set(cases)) != len(cases)
-        or not {*required, *cases} <= USE_CASES
+        or not {*required, *cases} <= set(contract.get("supported_use_cases", USE_CASES))
     ):
         raise SnapshotError("invalid_required_use_cases")
     if desc["include_evaluation_truth"]:
         verify_qualification(root, snapshot)
+        if version == "1.2.0":
+            verify_anomaly_truth(root, snapshot, contract)
+
+
+def verify_anomaly_truth(root: Path, snapshot: Snapshot, contract: dict[str, Any]) -> None:
+    """Check private lineage and plan schemas; no generator or detector fits here."""
+    source = snapshot.manifest["source"]
+    for field, name in (
+        ("scenario", "scenario_file"),
+        ("inventory_configuration", "configuration_file"),
+    ):
+        ref = source[field]
+        if file_hash(root, contract[name]) != (ref["size_bytes"], ref["sha256"]):
+            raise SnapshotError("private_anomaly_copy_mismatch")
+    scenario = read_json(root, contract["scenario_file"])
+    if (
+        set(scenario) != {"data_class", "plan", "effects"}
+        or scenario["data_class"] != "simulation_truth"
+    ):
+        raise SnapshotError("invalid_anomaly_truth_document")
+    plan = scenario["plan"]
+    schema_name = (
+        "physical_plan.schema.json"
+        if plan.get("contract_version") == "business-physical-anomaly-plan-1.0.0"
+        else "anomaly_plan.schema.json"
+    )
+    validate_schema(plan, schema_name, "1.2.0")
+    parent = source["descriptor"]
+    if (
+        json_sha256(plan) != parent["scenario_plan_sha256"]
+        or json_sha256(decode_json(resource_bytes(schema_name, "1.2.0")))
+        != parent["scenario_schema_sha256"]
+        or json_sha256(read_json(root, contract["configuration_file"]))
+        != parent["inventory_configuration_sha256"]
+    ):
+        raise SnapshotError("private_anomaly_binding_mismatch")
 
 
 def verify_qualification(root: Path, snapshot: Snapshot) -> None:
     desc = snapshot.manifest["descriptor"]
     prefix = "evaluation_truth/qualification/"
     qmanifest = read_json(root, prefix + "qualification_manifest.json")
-    schema = decode_json(resource_bytes("qualification.schema.json"))
+    schema = decode_json(
+        resource_bytes("qualification.schema.json", snapshot.manifest["schema_version"])
+    )
     try:
         Draft202012Validator(schema["manifest"]).validate(qmanifest)
     except ValidationError as exc:
