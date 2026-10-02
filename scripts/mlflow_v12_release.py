@@ -27,6 +27,11 @@ def main() -> int:
             for field in ("inputs-dir", "feature-dir", "curated-dir", "output-root"):
                 command.add_argument("--" + field, type=Path, required=True)
             command.add_argument("--development-acceptance", type=Path)
+            command.add_argument(
+                "--allow-new-source",
+                action="store_true",
+                help="Pin a separately verified inference snapshot; requires new qualification and review.",
+            )
             command.add_argument("--valid-seconds", type=int, default=86400)
         elif name == "approve":
             for field in (
@@ -60,6 +65,7 @@ def main() -> int:
                 feature_dir=args.feature_dir,
                 curated_dir=args.curated_dir,
                 output_root=args.output_root,
+                allow_new_source=args.allow_new_source,
                 development_acceptance=read_development_acceptance(args.development_acceptance)
                 if args.development_acceptance
                 else None,

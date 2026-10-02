@@ -148,7 +148,9 @@ def inference_result(loaded, inputs, context):
     return V12InferenceResult.model_validate_json(canonical_bytes(raw))
 
 
-def qualify_fixture(tmp_path, inputs, loaded, monkeypatch, *, transport=True):
+def qualify_fixture(
+    tmp_path, inputs, loaded, monkeypatch, *, transport=True, allow_new_source=False
+):
     source_calls = []
     package = publish_inputs_package(inputs, tmp_path / "input-packages")
 
@@ -177,6 +179,7 @@ def qualify_fixture(tmp_path, inputs, loaded, monkeypatch, *, transport=True):
         curated_dir=tmp_path / "curated-double",
         output_root=tmp_path / "qualifications",
         valid_until=datetime.now(UTC) + timedelta(days=1),
+        allow_new_source=allow_new_source,
     )
     assert len(source_calls) == 1
     assert source_calls[0][2]["as_of"] == inputs.as_of_time

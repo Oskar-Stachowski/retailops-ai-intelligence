@@ -25,8 +25,18 @@ ImageDigest = Annotated[str, Field(pattern=r"^sha256:[0-9a-f]{64}$")]
 
 
 class V12SourcePolicy(Contract):
-    version: Literal["forecast-v12-source-policy-1.0.0"] = "forecast-v12-source-policy-1.0.0"
-    mode: Literal["same_verified_feature_package"] = "same_verified_feature_package"
+    version: Literal["forecast-v12-source-policy-1.0.0", "forecast-v12-source-policy-1.1.0"] = (
+        "forecast-v12-source-policy-1.0.0"
+    )
+    mode: Literal["same_verified_feature_package", "verified_inference_snapshot"] = (
+        "same_verified_feature_package"
+    )
+    source_dataset_id: Annotated[str, Field(pattern=r"^source-sha256-[0-9a-f]{64}$")] | None = (
+        Field(default=None, exclude_if=lambda value: value is None)
+    )
+    snapshot_id: Annotated[str, Field(pattern=r"^snapshot-sha256-[0-9a-f]{64}$")] | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
     feature_set_id: Annotated[str, Field(pattern=r"^features-sha256-[0-9a-f]{64}$")]
     curated_descriptor_sha256: Sha256
     input_role: Literal["inference"] = "inference"
@@ -34,6 +44,18 @@ class V12SourcePolicy(Contract):
     source_change: Literal["new_qualification_and_review_required"] = (
         "new_qualification_and_review_required"
     )
+
+    @model_validator(mode="after")
+    def source_boundary(self) -> Self:
+        legacy = self.version == "forecast-v12-source-policy-1.0.0"
+        if (
+            self.mode
+            != ("same_verified_feature_package" if legacy else "verified_inference_snapshot")
+            or (self.source_dataset_id is not None) != (not legacy)
+            or (self.snapshot_id is not None) != (not legacy)
+        ):
+            raise ValueError("v12_source_policy_version_or_lineage")
+        return self
 
 
 class V12InferenceContext(Contract):

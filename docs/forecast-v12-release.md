@@ -23,9 +23,15 @@ Produkcja wymaga wejścia v1.1 z dowodem świeżości źródła; jego brak nie m
 być ukryty przez użycie starszego v1.0. `unknown` lub historyczny watermark
 pozostają takimi danymi — receipt odbioru nie twierdzi, że źródło jest aktualne.
 
-Polityka jest celowo jawna: ta sama kohorta, receptura, source/snapshot IDs,
-feature package ID, curated descriptor SHA, lock i domyślna FeaturePolicy.
-Nowy feature package lub inne źródło wymagają nowej kwalifikacji i przeglądu.
+Domyślna polityka 1.0 zachowuje source/snapshot IDs treningu. Jawna opcja
+`qualify --allow-new-source` tworzy politykę 1.1 `verified_inference_snapshot`,
+która przypina osobne source/snapshot IDs wejścia, feature package ID oraz
+curated descriptor SHA. W obu przypadkach kohorta, receptura, lock,
+sygnatura i domyślna FeaturePolicy pozostają przypięte do niezmienionego modelu.
+Nowy feature package lub inne źródło wymagają nowej kwalifikacji i wszystkich
+10 raportów przeglądu; wykonanie nie wybiera samodzielnie innego źródła.
+Opcja nie jest dostępna dla offline replay. Polityka 1.0 nie otrzymuje nowych
+pól w serializacji, więc hashe dotychczasowych kwalifikacji pozostają zgodne.
 Nie ma automatycznego mapowania kohorty na inne dane ani wyboru po metrykach.
 Późniejszy worker ma pobierać wejścia z zaufanego magazynu, po jego odbiorze
 źródła. Walidacja samych obiektów JSON nie dowodzi pochodzenia obserwacji.
@@ -57,6 +63,11 @@ Przykład po ukończeniu AI 04, z uprzednio przygotowanymi pakietami danych:
   --curated-dir /private/path/verified-curated \
   --output-root /private/path/v12-qualifications
 ```
+
+Dla osobno zweryfikowanego nowego snapshotu dodaj `--allow-new-source` do
+powyższej komendy. Przyszły kalendarz i plany muszą być znane na moment origin,
+a watermark obserwacji nadal opisuje rzeczywiste zakończone dni.
+Sama nowa kwalifikacja nie zmienia `stale/unknown` w `current`.
 
 ## Prywatny przegląd
 

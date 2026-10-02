@@ -23,6 +23,8 @@ def source_policy(
     loaded: LoadedV12Forecast,
     inputs: PreparedInputs,
     development_acceptance: V12DevelopmentAcceptance | None = None,
+    *,
+    allow_new_source: bool = False,
 ) -> V12SourcePolicy:
     if file_hash(loaded.root, "signature.json") != (
         loaded.pin.signature.size_bytes,
@@ -30,7 +32,14 @@ def source_policy(
     ):
         raise ValueError("v12_inference_signature_changed")
     schema = inference_schema(read_json(loaded.root, "signature.json")["input_schema"])
+    lineage = inputs.feature_manifest.descriptor.parent
     policy = V12SourcePolicy(
+        version="forecast-v12-source-policy-1.1.0"
+        if allow_new_source
+        else "forecast-v12-source-policy-1.0.0",
+        mode="verified_inference_snapshot" if allow_new_source else "same_verified_feature_package",
+        source_dataset_id=lineage.source_dataset_id if allow_new_source else None,
+        snapshot_id=lineage.snapshot_id if allow_new_source else None,
         feature_set_id=inputs.feature_manifest.feature_set_id,
         curated_descriptor_sha256=inputs.feature_manifest.descriptor.parent.curated_descriptor_sha256,
         input_schema_sha256=canonical_sha256(schema),
@@ -47,9 +56,12 @@ def predict_acceptance(
     *,
     limits: V12ExecutionLimits,
     development_acceptance: V12DevelopmentAcceptance | None = None,
+    allow_new_source: bool = False,
 ) -> V12InferenceResult:
     """Ready export load/predict probe; no approval, registration or published outputs."""
-    policy = source_policy(loaded, inputs, development_acceptance)
+    policy = source_policy(
+        loaded, inputs, development_acceptance, allow_new_source=allow_new_source
+    )
     request = V12Execution.model_validate_json(
         V12Execution(pin=loaded.pin, inputs=inputs, limits=limits).model_dump_json()
     )
@@ -98,7 +110,13 @@ class LoadedV12Inference:
             development_acceptance=qualification.development_acceptance,
         )
         if (
-            source_policy(self.export, inputs, qualification.development_acceptance)
+            source_policy(
+                self.export,
+                inputs,
+                qualification.development_acceptance,
+                allow_new_source=qualification.source_policy.version
+                == "forecast-v12-source-policy-1.1.0",
+            )
             != qualification.source_policy
         ):
             raise ValueError("v12_inference_source_policy_changed")

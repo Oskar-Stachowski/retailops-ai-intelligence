@@ -27,7 +27,7 @@ from retailops_ai.forecast_jobs.v12_contracts import (
     V12RuntimePin,
     V12RuntimeResult,
 )
-from retailops_ai.forecast_jobs.v12_executor import calendar_exclusion
+from retailops_ai.forecast_jobs.v12_executor import calendar_exclusion, input_source_matches
 from retailops_ai.forecast_jobs.v12_inference_contracts import V12InferenceResult
 from retailops_ai.forecasting.manifest_contract import FeaturePolicy
 from retailops_ai.model_lifecycle.v12_development import V12DevelopmentAcceptance
@@ -67,8 +67,11 @@ def validate_inputs(
     parent = inputs.feature_manifest.descriptor.parent
     if (
         len(inputs.rows) > MAX_ROWS
-        or parent.source_dataset_id != pin.source_dataset_id
-        or parent.snapshot_id != pin.snapshot_id
+        or not input_source_matches(
+            pin.model_dump(mode="json"),
+            parent.model_dump(mode="json"),
+            source_policy.model_dump(mode="json") if source_policy is not None else None,
+        )
         or inputs.feature_manifest.descriptor.code.dependency_lock_sha256
         != pin.dependency_lock_sha256
         or inputs.feature_manifest.descriptor.resolved_policy != FeaturePolicy()

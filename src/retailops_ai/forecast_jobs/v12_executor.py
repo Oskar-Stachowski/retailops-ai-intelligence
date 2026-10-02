@@ -85,6 +85,28 @@ def inference_schema(schema: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
+def input_source_matches(
+    pin: dict[str, Any], parent: dict[str, Any], source: dict[str, Any] | None
+) -> bool:
+    """Offline/legacy inputs retain training lineage; a new reviewed policy pins its own input."""
+    expected = pin
+    if source is not None:
+        if source.get("version") == "forecast-v12-source-policy-1.0.0":
+            if source.get("mode") != "same_verified_feature_package" or any(
+                source.get(key) is not None for key in ("source_dataset_id", "snapshot_id")
+            ):
+                return False
+        elif source.get("version") == "forecast-v12-source-policy-1.1.0":
+            if source.get("mode") != "verified_inference_snapshot" or any(
+                not isinstance(source.get(key), str) for key in ("source_dataset_id", "snapshot_id")
+            ):
+                return False
+            expected = source
+        else:
+            return False
+    return all(parent.get(key) == expected.get(key) for key in ("source_dataset_id", "snapshot_id"))
+
+
 def calendar_exclusion(row: dict[str, Any]) -> str | None:
     """A confirmed closure is retained; unknown or contradictory calendars fail closed."""
     values = [v for v in row["values"] if v["name"] == "target_location_open"]
@@ -189,12 +211,13 @@ def main() -> None:
         canonical_bytes(inputs["feature_manifest"])
     )
     parent = feature_manifest.descriptor.parent
+    inference = request.get("inference")
+    source = inference["source_policy"] if inference is not None else None
     if (
         inputs["profile_id"]
         != "batch-profile-sha256-"
         + canonical_sha256({key: value for key, value in inputs.items() if key != "profile_id"})
-        or parent.source_dataset_id != pin["source_dataset_id"]
-        or parent.snapshot_id != pin["snapshot_id"]
+        or not input_source_matches(pin, parent.model_dump(mode="json"), source)
         or feature_manifest.descriptor.code.dependency_lock_sha256 != pin["dependency_lock_sha256"]
         or feature_manifest.descriptor.resolved_policy != FeaturePolicy()
         or not 1 <= len(inputs["rows"]) <= MAX_ROWS
@@ -222,7 +245,6 @@ def main() -> None:
     ] != expected:
         raise ValueError("v12_runtime_input_scope")
     origin = datetime.fromisoformat(inputs["as_of_time"])
-    inference = request.get("inference")
     role = "inference" if inference is not None else "development_holdout"
     if (
         origin <= fold.selection_cutoff
@@ -266,8 +288,8 @@ def main() -> None:
             or inference["serving_eligible"] is not approved
             or (inference["release_id"] is not None) != approved
             or (inference["qualification_id"] is not None) != approved
-            or source["version"] != "forecast-v12-source-policy-1.0.0"
-            or source["mode"] != "same_verified_feature_package"
+            or inputs["schema_version"] != "1.1"
+            or inputs.get("source_freshness") is None
             or source["input_role"] != "inference"
             or source["source_change"] != "new_qualification_and_review_required"
             or source["feature_set_id"] != feature_manifest.feature_set_id

@@ -24,7 +24,12 @@ from retailops_ai.forecast_jobs.v12_inference import (
     source_policy,
 )
 from retailops_ai.forecast_jobs.v12_inference_contracts import V12InferenceResult
-from retailops_ai.forecast_jobs.v12_runtime import LoadedV12Forecast, load_v12, prediction_key
+from retailops_ai.forecast_jobs.v12_runtime import (
+    LoadedV12Forecast,
+    load_v12,
+    prediction_key,
+    validate_inputs,
+)
 from retailops_ai.model_lifecycle.contracts import GATES, Receipt
 from retailops_ai.model_lifecycle.v12_development import V12DevelopmentAcceptance
 from retailops_ai.model_lifecycle.v12_release_contracts import (
@@ -126,6 +131,7 @@ def qualify_v12(
     valid_until: datetime,
     limits: V12ExecutionLimits | None = None,
     development_acceptance: V12DevelopmentAcceptance | None = None,
+    allow_new_source: bool = False,
     verify_timeout_seconds: int = 3600,
 ) -> Path:
     """Verify the whole export and both data parents, then probe the inference role twice."""
@@ -158,10 +164,18 @@ def qualify_v12(
         if verify_inputs_package(verified) != inputs:
             raise ValueError("v12_qualification_inputs_not_from_verified_parents")
     first = predict_acceptance(
-        loaded, inputs, limits=limits, development_acceptance=development_acceptance
+        loaded,
+        inputs,
+        limits=limits,
+        development_acceptance=development_acceptance,
+        allow_new_source=allow_new_source,
     )
     second = predict_acceptance(
-        loaded, inputs, limits=limits, development_acceptance=development_acceptance
+        loaded,
+        inputs,
+        limits=limits,
+        development_acceptance=development_acceptance,
+        allow_new_source=allow_new_source,
     )
     if first.predictions_sha256 != second.predictions_sha256:
         raise ValueError("v12_qualification_prediction_not_repeatable")
@@ -173,7 +187,9 @@ def qualify_v12(
         version="forecast-v12-qualification-1.0.0",
         purpose="serving_load_predict_acceptance",
         pin=loaded.pin.model_dump(mode="json"),
-        source_policy=source_policy(loaded, inputs, development_acceptance).model_dump(mode="json"),
+        source_policy=source_policy(
+            loaded, inputs, development_acceptance, allow_new_source=allow_new_source
+        ).model_dump(mode="json"),
         limits=limits.model_dump(mode="json"),
         smoke_profile_id=inputs.profile_id,
         smoke_scope=inputs.scope.model_dump(mode="json"),
@@ -210,6 +226,12 @@ def _qualification(root: Path) -> V12Qualification:
     smoke_raw, inputs_raw = read_bytes(root, "smoke.json"), read_bytes(root, "inputs.json")
     inputs = PreparedInputs.model_validate_json(canonical_bytes(decode_json(inputs_raw)))
     smoke = V12InferenceResult.model_validate_json(canonical_bytes(decode_json(smoke_raw)))
+    validate_inputs(
+        qualification.pin,
+        inputs,
+        source_policy=qualification.source_policy,
+        development_acceptance=qualification.development_acceptance,
+    )
     if (
         receipt(smoke_raw) != qualification.smoke
         or receipt(inputs_raw) != qualification.inputs
@@ -292,7 +314,13 @@ def approve_v12(
     loaded = _bound_export(qualification, root, python, verify_timeout_seconds)
     inputs = verify_inputs_from_capsule(qualification_dir)
     if (
-        source_policy(loaded, inputs, qualification.development_acceptance)
+        source_policy(
+            loaded,
+            inputs,
+            qualification.development_acceptance,
+            allow_new_source=qualification.source_policy.version
+            == "forecast-v12-source-policy-1.1.0",
+        )
         != qualification.source_policy
     ):
         raise ValueError("v12_approval_source_policy_changed")
@@ -354,7 +382,11 @@ def load_approved_v12(
     loaded = _bound_export(qualification, root, python, verify_timeout_seconds)
     if (
         source_policy(
-            loaded, verify_inputs_from_capsule(release_dir), qualification.development_acceptance
+            loaded,
+            verify_inputs_from_capsule(release_dir),
+            qualification.development_acceptance,
+            allow_new_source=qualification.source_policy.version
+            == "forecast-v12-source-policy-1.1.0",
         )
         != qualification.source_policy
     ):
