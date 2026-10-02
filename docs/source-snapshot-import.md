@@ -136,7 +136,7 @@ i wskazuje aktualną decyzję wejścia do 04/06.
 Reader korzysta z [ParquetFile.iter_batches](https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html#pyarrow.parquet.ParquetFile.iter_batches).
 Linuxowa gwarancja odmowy nadpisania jest opisana w
 [rename(2)](https://man7.org/linux/man-pages/man2/rename.2.html).
-# Anomaly source handoff
+## Anomaly source handoff
 
 Snapshot 1.2/source 2.8 import is described in
 [the anomaly handoff reference](reference/anomaly-snapshot-12.md).
