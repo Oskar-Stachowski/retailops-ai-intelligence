@@ -6,6 +6,7 @@ import json
 import sys
 import tarfile
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 import pytest
@@ -17,6 +18,54 @@ import local_stack as stack  # noqa: E402
 import mlflow_store as store  # noqa: E402
 
 from retailops_ai.source_snapshot.files import SnapshotError, file_hash  # noqa: E402
+
+
+def test_failed_command_retains_source_location_without_raw_secrets(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    private_output = "postgresql://operator:private-password@db/private"
+    diagnostic = {
+        "error": "model_lifecycle_acceptance_failed",
+        "exception_type": "ValueError",
+        "acceptance_frames": [{"function": "require", "line": 28}],
+    }
+    monkeypatch.setattr(
+        store.subprocess,
+        "run",
+        lambda *_, **__: SimpleNamespace(
+            returncode=2,
+            stdout=private_output.encode(),
+            stderr=(private_output + "\n" + json.dumps(diagnostic)).encode(),
+        ),
+    )
+    with pytest.raises(store.ComposeCommandError) as caught:
+        store.checked_run(["docker", "compose", "run"])
+    assert caught.value.diagnostic == diagnostic
+    assert private_output not in str(caught.value) + json.dumps(caught.value.diagnostic)
+
+
+@pytest.mark.parametrize(
+    "mutation", ["message", "exception_type", "function", "line", "too_many_frames"]
+)
+def test_child_diagnostic_rejects_extra_or_untrusted_details(mutation: str) -> None:
+    record = {
+        "error": "model_lifecycle_acceptance_failed",
+        "exception_type": "ValueError",
+        "acceptance_frames": [{"function": "require", "line": 28}],
+    }
+    if mutation == "message":
+        record["message"] = "private-password"
+    elif mutation == "exception_type":
+        record["exception_type"] = "private-password"
+    elif mutation == "function":
+        record["acceptance_frames"][0]["function"] = "private-password"
+    elif mutation == "line":
+        record["acceptance_frames"][0]["line"] = "private-password"
+    else:
+        record["acceptance_frames"] *= 9
+    error = store.ComposeCommandError(json.dumps(record).encode())
+    assert error.diagnostic is None
+    assert "private-password" not in str(error)
 
 
 def bundle(

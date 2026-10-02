@@ -19,6 +19,7 @@ def main() -> int:
         "checked_at": datetime.now(UTC).isoformat(),
         "target_project": project,
     }
+    stage = "initialize"
     try:
         stack.environment_file(create=True)
         docker = store.compose(project)[0]
@@ -50,10 +51,13 @@ def main() -> int:
         ).strip():
             store.checked_run(store.compose(source, "stop", "mlflow"))
             source_stopped = True
+        stage = "build"
         store.checked_run(store.compose(project, "build", "api", "mlflow"))
+        stage = "database_and_migrations"
         store.checked_run(store.compose(project, "up", "-d", "--wait", "db"))
         store.checked_run(store.compose(project, "run", "--rm", "-T", "api-migrate"))
         store.checked_run(store.compose(project, "run", "--rm", "-T", "mlflow-migrate"))
+        stage = "mlflow_start"
         store.checked_run(store.compose(project, "up", "-d", "--wait", "mlflow"))
         acceptance = store.compose(
             project,
@@ -67,9 +71,12 @@ def main() -> int:
             "-m",
             "retailops_ai.model_lifecycle.acceptance",
         )
+        stage = "registry_decisions"
         report.update(json.loads(store.checked_run(acceptance)))
+        stage = "restart"
         store.checked_run(store.compose(project, "kill", "-s", "SIGKILL", "mlflow", "db"))
         store.checked_run(store.compose(project, "up", "-d", "--wait", "db", "mlflow"))
+        stage = "restart_inspection"
         inspection = json.loads(store.checked_run([*acceptance, "--inspect"]))
         if inspection["release_id"] != report["release_id"] or inspection["status"] != "passed":
             raise ValueError("lifecycle_restart_inspection_mismatch")
@@ -82,8 +89,18 @@ def main() -> int:
             )
         )
         return 0
-    except (OSError, ValueError, KeyError, TypeError):
-        print('{"error":"model_lifecycle_smoke_failed"}')
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        print(
+            json.dumps(
+                {
+                    "error": "model_lifecycle_smoke_failed",
+                    "stage": stage,
+                    "child_diagnostic": error.diagnostic
+                    if isinstance(error, store.ComposeCommandError)
+                    else None,
+                }
+            )
+        )
         return 2
     finally:
         try:

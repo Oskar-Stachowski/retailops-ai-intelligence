@@ -7,6 +7,7 @@ import json
 import sys
 import tempfile
 import time
+import traceback
 from pathlib import Path
 from typing import Any
 
@@ -316,8 +317,23 @@ def main() -> int:
     try:
         print(json.dumps(run_acceptance(inspect=args.inspect), sort_keys=True))
         return 0
-    except Exception:
-        print('{"error":"model_lifecycle_acceptance_failed"}', file=sys.stderr)
+    except Exception as error:
+        # Only source locations, never exception messages, SQL, URLs or credentials.
+        frames = [
+            {"function": frame.name, "line": frame.lineno}
+            for frame in traceback.extract_tb(error.__traceback__)
+            if Path(frame.filename).name == "acceptance.py"
+        ]
+        print(
+            json.dumps(
+                {
+                    "error": "model_lifecycle_acceptance_failed",
+                    "exception_type": type(error).__name__,
+                    "acceptance_frames": frames,
+                }
+            ),
+            file=sys.stderr,
+        )
         return 2
 
 

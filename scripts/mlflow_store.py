@@ -40,6 +40,45 @@ ARTIFACTS = "artifacts.tar"
 MANIFEST = "manifest.json"
 
 
+class ComposeCommandError(ValueError):
+    """Retain a bounded child diagnostic without exposing raw command output."""
+
+    def __init__(self, stderr: bytes) -> None:
+        super().__init__("mlflow_store_compose_command_failed")
+        self.diagnostic: dict[str, Any] | None = None
+        for line in stderr[-8192:].splitlines():
+            try:
+                record = json.loads(line)
+            except (ValueError, UnicodeDecodeError):
+                continue
+            if (
+                not isinstance(record, dict)
+                or set(record) != {"error", "exception_type", "acceptance_frames"}
+                or record["error"] != "model_lifecycle_acceptance_failed"
+                or record["exception_type"]
+                not in {
+                    "ValueError",
+                    "IntegrityError",
+                    "OperationalError",
+                    "TimeoutError",
+                    "KeyError",
+                    "TypeError",
+                }
+                or not isinstance(record["acceptance_frames"], list)
+                or len(record["acceptance_frames"]) > 8
+            ):
+                continue
+            if all(
+                isinstance(frame, dict)
+                and set(frame) == {"function", "line"}
+                and frame["function"] in {"main", "run_acceptance", "require", "source", "request"}
+                and type(frame["line"]) is int
+                and 0 < frame["line"] < 10000
+                for frame in record["acceptance_frames"]
+            ):
+                self.diagnostic = record
+
+
 def compose(project: str, *args: str) -> list[str]:
     if PROJECT.fullmatch(project) is None:
         raise ValueError("invalid_mlflow_project")
@@ -70,7 +109,7 @@ def checked_run(command: list[str], *, stdin: Any = None, stdout: Any = subproce
         timeout=900,
     )
     if result.returncode:
-        raise ValueError("mlflow_store_compose_command_failed")
+        raise ComposeCommandError(result.stderr)
     return result.stdout or b""
 
 
