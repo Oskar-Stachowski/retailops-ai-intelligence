@@ -69,6 +69,13 @@ powyższej komendy. Przyszły kalendarz i plany muszą być znane na moment orig
 a watermark obserwacji nadal opisuje rzeczywiste zakończone dni.
 Sama nowa kwalifikacja nie zmienia `stale/unknown` w `current`.
 
+Źródło 2.7 z generatora `0.9.1` deklaruje datę kompletności w przypiętym
+`forecast_watermarks`. Importer dopuszcza wyłącznie zapisane w repo warianty
+schematów i niezależnie porównuje tę deklarację z typowanymi obserwacjami
+oraz ich czasem dostępności. Curated przenosi tę samą deklarację do wejścia.
+Przyszłe plany pozostają osobne; nie rozszerzają daty kompletnych obserwacji.
+Dotychczasowe schematy source 2.7 oraz ich historyczne importy nadal są przyjmowane.
+
 ## Prywatny przegląd
 
 `approve` uwierzytelnia jednego operatora przez istniejące prywatne pliki

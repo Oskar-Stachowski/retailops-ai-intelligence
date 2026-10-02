@@ -51,6 +51,8 @@ def contract_document() -> dict[str, Any]:
 
 
 def validate_schema(document: Any, name: str) -> None:
+    if document.get("source", {}).get("descriptor", {}).get("generator_version") == "0.9.1":
+        name = "forecast_" + name
     try:
         Draft202012Validator(
             decode_json(resource_bytes(name)), format_checker=FormatChecker()
@@ -62,6 +64,25 @@ def validate_schema(document: Any, name: str) -> None:
 def check_lineage(manifest: dict[str, Any], contract: dict[str, Any], allow_truth: bool) -> None:
     source, desc = manifest["source"], manifest["descriptor"]
     parent, qualification = source["descriptor"], desc["qualification"]
+    planned = parent["generator_version"] == "0.9.1"
+    if planned:
+        requested, resolved = source["requested_parameters"], parent["resolved_parameters"]
+        declarations = parent.get("forecast_watermarks")
+        if (
+            requested.get("forecast_plan_version") != "known-forecast-plans-1.0.0"
+            or requested.get("forecast_plan_version") != resolved.get("forecast_plan_version")
+            or requested.get("forecast_plan_days") != resolved.get("forecast_plan_days")
+            or type(requested.get("forecast_plan_days")) is not int
+            or not 1 <= requested["forecast_plan_days"] <= 14
+            or not isinstance(declarations, dict)
+            or set(declarations) != {"daily_demand_observations"}
+        ):
+            raise SnapshotError("forecast_plan_source_lineage_mismatch")
+    elif (
+        parent.get("forecast_watermarks") is not None
+        or "forecast_plan_days" in parent["resolved_parameters"]
+    ):
+        raise SnapshotError("forecast_plan_source_lineage_mismatch")
     if (
         source["dataset_id"] != manifest["source_dataset_id"]
         or source["dataset_id"] != desc["parent_source_dataset_id"]
@@ -184,9 +205,23 @@ def verify_metadata(root: Path, snapshot: Snapshot, required: tuple[str, ...]) -
         raise SnapshotError("source_manifest_copy_mismatch")
     if {p: r["sha256"] for p, r in metadata.items() if p.startswith("schemas/")} != desc["schemas"]:
         raise SnapshotError("schema_fingerprint_mismatch")
-    for source_name, packaged_name in RESOURCE_NAMES.items():
-        if read_bytes(root, "schemas/" + source_name) != resource_bytes(packaged_name):
-            raise SnapshotError("unreviewed_inventory_contract")
+    planned = source["descriptor"]["generator_version"] == "0.9.1"
+    schema_variants = (True,) if planned else (False, True)
+    if not any(
+        all(
+            read_bytes(root, "schemas/" + source_name)
+            == resource_bytes(
+                "forecast_" + packaged_name
+                if extended
+                and packaged_name
+                in ("source_manifest.schema.json", "snapshot_manifest.schema.json")
+                else packaged_name
+            )
+            for source_name, packaged_name in RESOURCE_NAMES.items()
+        )
+        for extended in schema_variants
+    ):
+        raise SnapshotError("unreviewed_inventory_contract")
     if source["descriptor"]["table_schema_sha256"] != json_sha256(
         contract["source_table_contract"]
     ):
