@@ -18,6 +18,26 @@ MAX_REQUEST_BYTES = 4 * 1024**2
 MAX_ROWS = 256
 
 
+def peak_rss_bytes() -> int:
+    """Measure this executable's memory, excluding pre-exec parent usage on Linux."""
+    if sys.platform == "linux":
+        with Path("/proc/self/status").open("rb") as stream:
+            raw = stream.read(65537)
+        values = [line.split() for line in raw.splitlines() if line.startswith(b"VmHWM:")]
+        if (
+            len(raw) > 65536
+            or len(values) != 1
+            or len(values[0]) != 3
+            or values[0][2] != b"kB"
+            or not values[0][1].isdigit()
+            or int(values[0][1]) <= 0
+        ):
+            raise ValueError("runtime_memory_measurement_unavailable")
+        return int(values[0][1]) * 1024
+    peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    return int(peak * (1 if sys.platform == "darwin" else 1024))
+
+
 ACCEPTED_RUN = (
     "functional-v12-run-sha256-345a725d435a477374292cb9483350fb5c50c8ba87d06668c727e0a9f964fb6b"
 )
@@ -335,8 +355,7 @@ def main() -> None:
         if exclusion is not None:
             prediction["exclusion_reason"] = exclusion
         predictions.append(prediction)
-    peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    peak_bytes = int(peak if sys.platform == "darwin" else peak * 1024)
+    peak_bytes = peak_rss_bytes()
     result = {
         "pin": pin,
         "profile_id": inputs["profile_id"],

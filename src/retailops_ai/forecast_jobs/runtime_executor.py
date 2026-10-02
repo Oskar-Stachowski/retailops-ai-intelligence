@@ -26,6 +26,7 @@ def main() -> int:
             RuntimeResult,
         )
         from retailops_ai.forecast_jobs.runtime import load_release
+        from retailops_ai.forecast_jobs.v12_executor import peak_rss_bytes
         from retailops_ai.model_lifecycle.mlflow import MLflowRegistry
         from retailops_ai.security.local import strict_json
         from retailops_ai.source_snapshot.protocol import resource_bytes
@@ -58,9 +59,7 @@ def main() -> int:
         cold_seconds = time.monotonic() - cold
         started = time.monotonic()
         quantities = model.predict(request.inputs)
-        peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (
-            1 if sys.platform == "darwin" else 1024
-        )
+        peak = peak_rss_bytes()
         if peak > request.limits.rss_bytes:
             raise ValueError("runtime_executor_memory_limit")
         result = RuntimeResult(
