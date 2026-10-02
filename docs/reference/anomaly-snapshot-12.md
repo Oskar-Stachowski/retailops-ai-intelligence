@@ -31,8 +31,9 @@ without changing input or previously published files. The frozen
 `data/fixtures/anomaly-v1_2.zip` exercises demand and physical sources in public
 and private forms in CI, independently of the producer implementation.
 
-This milestone qualifies transport/import only. Curated 1.0/1.1 builders reject
-snapshot 1.2 explicitly. Anomaly curation, offline DQ integration, PIT-safe
-expected/residual features, detector training/evaluation and MLflow/serving remain
-the next AI07 work. No existing forecast/model receives readiness for these new
-source IDs merely because import succeeds.
+The import milestone qualifies transport only. The subsequent
+[curated 1.2 and demand-input slice](anomaly-inputs.md) preserves operational
+grains and builds PIT-safe expected/residual features. Offline DQ integration,
+return-focused inputs, detector training/evaluation and MLflow/serving remain open.
+No existing forecast/model receives readiness for these new source IDs merely
+because import succeeds.

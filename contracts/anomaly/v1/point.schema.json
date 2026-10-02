@@ -1,0 +1,321 @@
+{
+  "$defs": {
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "available_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Available At",
+          "type": "string"
+        },
+        "business_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Business Date"
+        },
+        "record_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Record Sha256",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "fit",
+            "observed",
+            "known_plan",
+            "inventory_context"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "table": {
+          "enum": [
+            "daily_demand_versions",
+            "price_plans",
+            "promotion_plans",
+            "inventory_daily_snapshots"
+          ],
+          "title": "Table",
+          "type": "string"
+        }
+      },
+      "required": [
+        "table",
+        "record_sha256",
+        "available_at",
+        "business_date",
+        "role"
+      ],
+      "title": "Reference",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "business_date": {
+      "format": "date",
+      "title": "Business Date",
+      "type": "string"
+    },
+    "channel": {
+      "enum": [
+        "store",
+        "online"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "currency": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Currency"
+    },
+    "dq_status": {
+      "enum": [
+        "canonical_source_valid",
+        "invalid_input",
+        "unavailable"
+      ],
+      "title": "Dq Status",
+      "type": "string"
+    },
+    "expected_units": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Expected Units"
+    },
+    "fit_cutoff": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Fit Cutoff",
+      "type": "string"
+    },
+    "history_days": {
+      "maximum": 28,
+      "minimum": 0,
+      "title": "History Days",
+      "type": "integer"
+    },
+    "insufficient_history": {
+      "title": "Insufficient History",
+      "type": "boolean"
+    },
+    "inventory_status": {
+      "enum": [
+        "available",
+        "unavailable"
+      ],
+      "title": "Inventory Status",
+      "type": "string"
+    },
+    "observation_status": {
+      "enum": [
+        "observed_positive",
+        "observed_zero",
+        "closed",
+        "unavailable",
+        "invalid"
+      ],
+      "title": "Observation Status",
+      "type": "string"
+    },
+    "observed_units": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Observed Units"
+    },
+    "on_hand": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "On Hand"
+    },
+    "planned_price": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Planned Price"
+    },
+    "product_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "promotion_offered": {
+      "title": "Promotion Offered",
+      "type": "boolean"
+    },
+    "raw_dq_completeness": {
+      "const": "not_qualified",
+      "default": "not_qualified",
+      "title": "Raw Dq Completeness",
+      "type": "string"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "references": {
+      "items": {
+        "$ref": "#/$defs/Reference"
+      },
+      "maxItems": 32,
+      "title": "References",
+      "type": "array"
+    },
+    "residual_count": {
+      "maximum": 21,
+      "minimum": 0,
+      "title": "Residual Count",
+      "type": "integer"
+    },
+    "residual_units": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Residual Units"
+    },
+    "robust_scale_units": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Robust Scale Units"
+    },
+    "scale_floor_applied": {
+      "title": "Scale Floor Applied",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring_origin": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Scoring Origin",
+      "type": "string"
+    },
+    "selling_location_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Selling Location Id",
+      "type": "string"
+    },
+    "standardized_residual": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Standardized Residual"
+    },
+    "status": {
+      "enum": [
+        "ready_input",
+        "insufficient_data",
+        "closed",
+        "invalid_input"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "stock_location_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Stock Location Id"
+    }
+  },
+  "required": [
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "business_date",
+    "fit_cutoff",
+    "scoring_origin",
+    "observation_status",
+    "observed_units",
+    "expected_units",
+    "residual_units",
+    "robust_scale_units",
+    "standardized_residual",
+    "history_days",
+    "residual_count",
+    "insufficient_history",
+    "scale_floor_applied",
+    "status",
+    "reason_codes",
+    "planned_price",
+    "currency",
+    "promotion_offered",
+    "stock_location_id",
+    "on_hand",
+    "inventory_status",
+    "dq_status",
+    "references"
+  ],
+  "title": "Point",
+  "type": "object"
+}

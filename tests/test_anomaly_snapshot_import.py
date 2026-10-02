@@ -131,6 +131,7 @@ def test_public_truth_insertion_and_unknown_version_fail_closed(fixture, tmp_pat
 
 def test_import_does_not_claim_curated_or_model_readiness(fixture, tmp_path):
     imported = import_snapshot(fixture / "demand/public", tmp_path / "import/data/generated")
-    with pytest.raises(SnapshotError, match="unsupported_curated_snapshot_version"):
-        build_curated(imported.directory, tmp_path / "curated/data/generated")
-    assert not list((tmp_path / "curated/data/generated").rglob("curated_manifest.json"))
+    curated = build_curated(imported.directory, tmp_path / "curated/data/generated")
+    assert curated.manifest["schema_version"] == "1.2.0"
+    assert curated.manifest["readiness"]["anomaly"] == "not_ready"
+    assert curated.manifest["readiness"]["forecast_model"] == "not_ready"

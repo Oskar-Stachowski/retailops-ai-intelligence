@@ -1,5 +1,10 @@
 # Curated 1.0.0 — budowa i odczyt historyczny
 
+Curated 1.1 zachowuje także fizyczne tabele inventory. Curated 1.2 obsługuje
+anomaly source 2.8/snapshot 1.2 z tymi samymi grain i regułami availability;
+43 tabele operacyjne są niezależne od prywatnej truth. Szczegóły i osobny zbiór
+cech sprzedaży opisuje [AI07 anomaly inputs](reference/anomaly-inputs.md).
+
 Repo AI przyjmuje już zweryfikowany [import source](source-snapshot-import.md).
 Osobne CLI `retailops-ai-curated` nie uruchamia API, generatora, bazy ani AWS.
 Wymaga tego samego extra `snapshot`; nie zmienia CLI używanego przez AI 12.

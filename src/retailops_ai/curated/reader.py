@@ -36,7 +36,7 @@ def _rows_as_of(
     if origin.tzinfo is None or origin.utcoffset() != UTC.utcoffset(origin):
         raise SnapshotError("as_of_origin_requires_utc")
     version = document["schema_version"]
-    inventory = version == "1.1.0" and table in {
+    inventory = version in {"1.1.0", "1.2.0"} and table in {
         "inventory_daily_snapshots",
         "delivery_plan_versions",
         "inventory_ledger",
