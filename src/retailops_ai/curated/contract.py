@@ -209,6 +209,11 @@ def handoff_bytes(version: str = VERSION) -> bytes:
 
 def watermarks(snapshot: Any) -> dict[str, Any]:
     if snapshot.manifest["schema_version"] == "1.1.0":
-        context = snapshot.manifest["source"]["descriptor"]["context"]
-        return {"inventory": context["projection"], "source_context": context}
+        parent = snapshot.manifest["source"]["descriptor"]
+        context = parent["context"]
+        return {
+            "inventory": context["projection"],
+            "source_context": context,
+            **(parent.get("forecast_watermarks") or {}),
+        }
     return dict(snapshot.manifest["source"]["watermarks"])

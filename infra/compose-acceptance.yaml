@@ -1,0 +1,6 @@
+# Disposable acceptance services are accessed only inside their own Compose network.
+services:
+  api:
+    ports: !reset []
+  mlflow:
+    ports: !reset []

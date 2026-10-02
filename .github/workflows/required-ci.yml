@@ -19,7 +19,7 @@ concurrency:
 jobs:
   checks:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -57,6 +57,17 @@ jobs:
           python-version: "3.11.15"
           enable-cache: true
       - run: make bootstrap compose-smoke
+      - run: make mlflow-store-smoke
+      - run: make model-lifecycle-smoke
+      - run: make lifecycle-store-smoke
+      - run: make forecast-queue-smoke
+      - run: make forecast-input-store-smoke
+      - run: make forecast-publication-smoke
+      - run: make forecast-read-smoke
+      - run: make model-catalog-smoke
+      - run: make evaluations-smoke
+      - name: Accept v12 registry, jobs, publication, metadata, backup and recovery
+        run: make v12-backup-smoke
   required-result:
     if: always()
     needs: [checks, secrets, persistence]

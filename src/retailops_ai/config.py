@@ -21,6 +21,8 @@ class Settings(BaseSettings):
         default="INFO", validation_alias="LOG_LEVEL"
     )
 
+    v12_development_mode: bool = Field(default=False, validation_alias="V12_DEVELOPMENT_MODE")
+
     network_mode: Literal["local", "compose"] = Field(
         default="local", validation_alias="NETWORK_MODE"
     )

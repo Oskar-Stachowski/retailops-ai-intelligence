@@ -1,0 +1,24 @@
+{
+  "artifact_archive_bytes": 10240,
+  "artifact_archive_sha256": "1abeaa75a62d7c2d066d084b39f825aef8b5f5cf0b7b3b89b81ab7e45e9fd6d2",
+  "artifact_bytes": 136,
+  "artifact_files": 4,
+  "backup_id": "mlflow-backup-sha256-ff4c2512e8d91db12712fd7ce80cf2ae5ebd7b6e4b3d9f319fc70026393c6c63",
+  "checked_at": "2026-09-29T18:32:51.943878+00:00",
+  "checks": [
+    "source_run_and_artifact_persisted",
+    "offline_consistent_bundle_verified",
+    "source_recovered_after_backup",
+    "fresh_target_restore_metadata_and_volume",
+    "restored_run_and_artifact_read_through_mlflow_http",
+    "source_unchanged_after_isolated_restore"
+  ],
+  "compose_sha256": "5b8abbf8acfbc4573a3b930854a4896692d536543e7fa61a57de9b8e744958f0",
+  "dockerfile_sha256": "f0d876f1ac050083c594813acbec59792bdbf91a508fce41be1c21944fb360c2",
+  "metadata_dump_bytes": 127684,
+  "metadata_dump_sha256": "2780a24eaffd29809a67f83c0bdf7f02037e4301962d80ebd7f40490ab5e3934",
+  "scope": "real_local_mlflow_metadata_and_artifact_backup_restore",
+  "source_project": "retailops_ai_38bbe8f51a",
+  "status": "passed",
+  "target_project": "retailops_ai_restore_b10788f848"
+}

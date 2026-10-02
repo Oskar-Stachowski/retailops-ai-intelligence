@@ -1,0 +1,64 @@
+{
+  "adapter_results": [
+    {
+      "batch_seconds": 0.07205162500031292,
+      "cold_load_seconds": 2.3896400000085123,
+      "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+      "family": "random_forest",
+      "model_bytes": 4415272,
+      "model_id": "model-sha256-8e288ed3523f505526620e13dfb5b5b94c6275dce666586b7e760ffd10625105",
+      "model_lock_compatible": true,
+      "model_sha256": "b923ed5957c6f987fb60470213437a65543b743e8e3b077b405f7f9d13ce0cb5",
+      "prediction_sha256": "f44427a11e21ea0010de6e5e484f06a4f5d09c7482ac5ad0b89aa53e0e2586b7",
+      "rows": 14
+    },
+    {
+      "batch_seconds": 0.02982720799627714,
+      "cold_load_seconds": 0.24729825000395067,
+      "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+      "family": "hist_gradient_boosting",
+      "model_bytes": 541375,
+      "model_id": "model-sha256-b280f58c575a8d19069ddfb4d2f7b0bb07169ef4e49173143ad433a929f0bc6b",
+      "model_lock_compatible": true,
+      "model_sha256": "a787386978016dfceb0e423e9ec46b1099ace3de0301e84af5bc8d3c520f3566",
+      "prediction_sha256": "c34a5f8eb1b8e48441f2c256cd0ebc403c7eb028a3a812a53bfb02f36d5aaf08",
+      "rows": 14
+    },
+    {
+      "family": "baseline",
+      "prediction_sha256": "b552a9e8a050994fa48b4c144e79b2c772dd1e679d7628b8459a305e4a6919fa",
+      "recipe": "seasonal_naive7",
+      "rows": 14
+    }
+  ],
+  "as_of": "2026-07-12T23:59:59+00:00",
+  "aws_calls": 0,
+  "curated_dataset_id": "curated-sha256-aeedd1a49f75eb27b687b328b92e23fee5b8cfa7c2520b2ff5219a8a74bd748a",
+  "feature_set_id": "features-sha256-e7992553d0d3b67f00b5f16e8e0ace55bb88fc3f3d023135bfcd70538e0fdbaf",
+  "forecast_quality_approved": false,
+  "input_dependency_lock_sha256": "ceec3f85508dc36be9e76381aee00b61ebeaeb7273312776e658c6a01d0c942d",
+  "input_lock_compatible": false,
+  "mlflow_mutations": 0,
+  "peak_rss_bytes": 324632576,
+  "profile_id": "batch-profile-sha256-4ca3b2009a1130f0b64f95dcfc0ae14d87129463eca59b7f9ce429b36e63aa8c",
+  "publication_blockers": [
+    "no_approved_qualified_release",
+    "atomic_forecast_publication_not_implemented",
+    "archived_input_dependency_lock_mismatch"
+  ],
+  "published_forecast_outputs": 0,
+  "qualified_release_loaded": false,
+  "rows": 14,
+  "run_id": "run-77a5e7dbff215895baac1709ded1f73f",
+  "runtime_dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "scope": "AI05.5a runtime mechanics",
+  "source_dataset_id": "source-sha256-94829460645140b79a6f68e87194f74d2c8e55392e2702a9fecbe6b771116d22",
+  "source_gate_counts": {
+    "failed": 79,
+    "not_ready": 8,
+    "passed": 145
+  },
+  "source_quality_status": "not_ready",
+  "status": "passed",
+  "total_seconds": 158.20285470798262
+}

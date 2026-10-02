@@ -1,0 +1,43 @@
+{
+  "bedrock_calls": 0,
+  "checked_at": "2026-09-30T14:02:05.298868+00:00",
+  "checks": [
+    "real_http_401_403_422_scoped_counts_and_invisible_pin_404",
+    "stable_scope_filtered_pagination_and_bounded_closed_date_queries",
+    "ready_classic_forecast_read_without_mlflow_or_bedrock",
+    "old_origin_is_stale_without_fabricated_intervals",
+    "latest_per_series_horizon_keeps_uncovered_days_and_numeric_release_pins",
+    "changed_latest_view_conflicts_while_original_run_stays_readable",
+    "failed_newer_attempt_keeps_previous_complete_predictions_explicitly_stale",
+    "sql_scope_filter_precedes_candidate_budget_and_pin_recovers_bounded_history",
+    "corrupt_out_of_page_and_out_of_scope_partition_refuses_entire_read_without_leaking_rows",
+    "sigkill_database_restart_preserves_read_view_predictions_and_full_publication_state"
+  ],
+  "counts": {
+    "forecast_batch_attempts": 36,
+    "forecast_batch_runs": 36,
+    "forecast_output_heads": 3,
+    "forecast_output_manifests": 35,
+    "forecast_output_partitions": 36,
+    "forecast_prepared_inputs": 1,
+    "model_decisions": 2,
+    "model_heads": 1,
+    "model_releases": 2,
+    "model_steps": 2,
+    "model_versions": 2
+  },
+  "forecast_quality_approved": false,
+  "heads_sha256": "50d2ab637e96d7bafd3682f0823ee6294eb8ca70d0f432fd8679ef2a3759effd",
+  "image_digest": "sha256:67f328b57c9cd9baf3491296cb35e9e5dba9beff84f73f059647b1ad70407d0f",
+  "input_origin": "controlled_contract_fixture",
+  "mlflow_calls": 0,
+  "project": "retailops_ai_read_9e01e7070c",
+  "published_forecast_outputs": 0,
+  "purpose": "sql_fixture_only",
+  "read_predictions_sha256": "7bf273178dd265873e3f869eecee36abae4566a4ee01353878a615818cad6e24",
+  "read_view_sha256": "0732303d84f64930e2a61c0c84fc91ce876db6af0f1df5af4ef036127b0a7373",
+  "real_http": true,
+  "state_sha256": "78a862a03611ac438f4181148306e2688a256b06261f30025100bf6408efa152",
+  "status": "passed",
+  "synthetic_output_manifests": 35
+}

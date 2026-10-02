@@ -11,6 +11,8 @@ Nie używa user_id, roli z body/query/header ani demo-admin RetailOps jako login
 |---|---|
 | `GET /api/v1/identity` | Zweryfikowany token; własny principal, role, capabilities i skonfigurowany scope |
 | `POST /api/v1/access/forecast-check` | Jawne forecast:read i cały dozwolony scope; 200 z decyzją dla tego żądania |
+| `GET /api/v1/evaluations` i `/{evaluation_id}` | Jawne forecast:read; cały scope raportu musi mieścić się w grancie użytkownika |
+| `GET /api/v1/models` i `/models/{model_name}` oraz `/versions` | Jawne forecast:read; katalog wersji z publikacją w dozwolonym scope, bez globalnych ocen |
 | `GET /api/v1/admin/access-policy` | Jawne access:admin; wyłącznie policy ID i liczba principal/credentials |
 | `POST /api/v1/knowledge/search` | Jawne knowledge:read i knowledge_scope; przypięty kwalifikowany indeks, access/status filters i bounded context |
 | `POST /api/v1/knowledge-index-runs` | Admin + jawne knowledge:index; wymagany Idempotency-Key, zatwierdzony profil, trwały Run |
@@ -30,7 +32,8 @@ mieścić w server grant; klient nie nadaje principal, roles ani capabilities.
 Zduplikowane nagłówki Authorization, cookie, query token i forwarded identity
 nie są poświadczeniami. Nie ma login/password endpointu.
 
-Role viewer/operator/admin są metadanymi polityki, bez automatycznej hierarchii.
+Role viewer/operator/admin/promoter są metadanymi polityki, bez automatycznej
+hierarchii.
 Capabilities nadaje się jawnie. Access:admin wymaga roli admin; sam admin nie
 otrzymuje forecast:read. Każda forecast capability wymaga niepustego scope.
 `knowledge:index` również wymaga roli admin i jawnego grantu. Nie wynika z
@@ -41,6 +44,11 @@ klasy dostępu i statusy. Pole jest opcjonalne dla dotychczasowych grantów;
 brak grantu odczytu wiedzy nie daje dostępu do nowego endpointu.
 Identity udostępnia przyznany knowledge scope. [Retrieval](knowledge-retrieval.md)
 opisuje 503 przed użytkową aktywacją oraz natychmiastowe SQL deny dokumentów.
+
+Lokalny CLI [model registry AI 05.3a](mlflow-registry.md) wymaga roli
+`promoter` i capability `model:decide`. `admin` nie otrzymuje ich automatycznie;
+nie ma endpointu HTTP promotion.
+
 Mapa scope jest iloczynem jawnych product IDs × selling locations × channels
 danego principal. Nie ma wildcardów, nieograniczonego default ani tenant resolvera.
 Żądanie wymaga scope; maksymalnie 20 produktów i 5 lokalizacji, jeden kanał.
@@ -121,7 +129,9 @@ DB/MLflow, migracje i metryki Compose pozostają dotychczasowym lokalnym stosem.
 MLflow nie uzyskał aplikacyjnego auth przez tę zmianę.
 
 Nie ma OIDC/JWT, MFA, publicznego TLS, tenant isolation, trwałego audit store,
-rate limiter, chronionego serving API lub tool executora. Warstwa domenowa
+rate limiter, publicznego serving API lub tool executora.
+Lokalne scoped read API prognoz i [modeli/wersji](model-catalog.md) ma kontrolę
+`forecast:read`; nie uruchamia inference ani promocji modelu. Warstwa domenowa
 principal/scope jest wspólna dla przyszłych odczytów; każdy kolejny endpoint
 musi ją egzekwować także dla listy, pojedynczego rekordu i cache.
 

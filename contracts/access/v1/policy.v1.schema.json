@@ -9,11 +9,13 @@
               "forecast:read",
               "access:admin",
               "knowledge:read",
-              "knowledge:index"
+              "knowledge:index",
+              "model:decide",
+              "forecast:run"
             ],
             "type": "string"
           },
-          "maxItems": 4,
+          "maxItems": 6,
           "minItems": 1,
           "title": "Capabilities",
           "type": "array"
@@ -39,11 +41,13 @@
             "enum": [
               "viewer",
               "operator",
-              "admin"
+              "admin",
+              "promoter",
+              "pipeline"
             ],
             "type": "string"
           },
-          "maxItems": 3,
+          "maxItems": 5,
           "minItems": 1,
           "title": "Roles",
           "type": "array"

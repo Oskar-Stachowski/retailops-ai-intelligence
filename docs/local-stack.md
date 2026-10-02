@@ -41,6 +41,8 @@ kontraktów dataset/run/prediction.
 MLflow ma własne tabele w osobnej bazie. Role nie mogą łączyć się do bazy drugiej
 aplikacji i nie mają superuser/createdb/createrole. Stos nie łączy się z operacyjną
 bazą RetailOps i nie tworzy brokera. Nie należy tu zapisywać danych klientów.
+[Backup, restore i retencja MLflow](mlflow-store.md) obejmują zarówno tę bazę,
+jak i wolumen artefaktów; są odbierane osobnym testem AI 05.1.
 
 Własny artifact root API nie jest jeszcze magazynem danych biznesowych; ten zakres
 zapisuje duże artefakty przez MLflow. Importer i immutable storage danych będą w 03.
@@ -93,6 +95,18 @@ idempotencję, cache i izolację przestrzeni; fragmenty zachowują się po resta
 Weryfikuje brak haseł w logach. Na końcu zatrzymuje kontenery i pozostawia wolumeny.
 Raport bez sekretów: `.local/persistence-smoke.json`. Porty 8081/5010 muszą być wolne.
 Test zapisuje wyłącznie własne dane testowe; uruchamiaj go w deweloperskim checkoutcie.
+
+Jednorazowe testy AI 05 (`mlflow-store-smoke`, `model-lifecycle-smoke`,
+`lifecycle-store-smoke`, `forecast-queue-smoke`, `forecast-input-store-smoke`
+i `forecast-publication-smoke`) sprzątają również własne obrazy `api:local`
+i `mlflow:local` z prefiksem losowego projektu testowego. Przed rozpoczęciem
+odrzucają kolizję z istniejącym obrazem, a przed usunięciem sprawdzają etykiety
+własności Compose. Sprzątanie działa również po błędzie budowania, gdy kontenery
+jeszcze nie powstały. Nie usuwa obrazów bazowych, innych tagów tego samego obrazu
+ani współdzielonego cache budowania. Nie używa globalnego `prune` ani wymuszonego
+usuwania; błąd sprzątania jest zgłaszany. Po SIGKILL kontrolera lub wyłączeniu
+komputera blok `finally` nie może się wykonać i pozostałości wymagają osobnego
+przeglądu. Zwykłe `make compose-down` nadal zachowuje obrazy i dane checkoutu.
 
 Required CI wykonuje `make check` (w tym Compose config), testy adaptera i odrębny
 `persistence` z rzeczywistym smoke. Wynik tego joba jest wymagany w `required-result`.

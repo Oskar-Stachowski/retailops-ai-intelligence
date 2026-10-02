@@ -20,6 +20,7 @@ from retailops_ai.data_contracts.common import (
 )
 from retailops_ai.data_contracts.model import ModelRecord
 from retailops_ai.knowledge.jobs import KnowledgeRunInput, KnowledgeRunOutput
+from retailops_ai.model_lifecycle.contracts import Binding
 
 
 class RunInput(DataLineage):
@@ -63,7 +64,7 @@ class RunRecord(Versioned):
     completed_at: UtcTime | None
     requested_by: Symbol
     input_ref: RunInput | KnowledgeRunInput
-    resolved_model: ModelRecord | None
+    resolved_model: ModelRecord | Binding | None
     output_ref: RunOutput | KnowledgeRunOutput | None
     error: RunError | None
 
@@ -95,7 +96,7 @@ class RunRecord(Versioned):
             raise ValueError("forecast_run_requires_pinned_model_without_labels")
         if (
             isinstance(self.input_ref, RunInput)
-            and self.resolved_model is not None
+            and isinstance(self.resolved_model, ModelRecord)
             and self.resolved_model.selection_cutoff > self.input_ref.as_of_time
         ):
             raise ValueError("model_selected_after_inference_origin")
@@ -148,6 +149,7 @@ class MLRunRecord(RunRecord):
 
     run_type: Literal["training", "forecast_batch"]
     input_ref: RunInput
+    resolved_model: ModelRecord | None
     output_ref: RunOutput | None
     error: MLRunError | None
 

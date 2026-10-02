@@ -27,6 +27,21 @@ from retailops_ai.api.middleware import HttpObservation, single_header
 from retailops_ai.api.models import DependencyStatus, Health, Problem, Ready, ServiceVersion
 from retailops_ai.config import Settings
 from retailops_ai.domain.readiness import Dependency
+from retailops_ai.forecast_jobs.queue import BatchAdministration, PostgresBatchQueue
+from retailops_ai.forecast_jobs.reader import ForecastReader, PostgresForecastReader
+from retailops_ai.forecast_jobs.v12_administration import (
+    PostgresV12JobAdministration,
+    V12JobAdministration,
+)
+from retailops_ai.forecast_jobs.v12_queue import PostgresV12Queue
+from retailops_ai.forecast_jobs.v12_reader import PostgresV12ForecastReader, V12ForecastReader
+from retailops_ai.model_lifecycle.evaluation_store import EvaluationReader, PostgresEvaluations
+from retailops_ai.model_lifecycle.reader import ModelCatalog, PostgresModelCatalog
+from retailops_ai.model_lifecycle.v12_catalog import PostgresV12Catalog, V12ModelCatalog
+from retailops_ai.model_lifecycle.v12_evaluation_store import (
+    PostgresV12Evaluations,
+    V12EvaluationReader,
+)
 from retailops_ai.pipelines.readiness import Readiness
 from retailops_ai.pipelines.retrieval import load_retrieval_config
 from retailops_ai.security.local import load_authority
@@ -55,6 +70,14 @@ def create_app(
     tracer: Tracer | None = None,
     knowledge_backend: KnowledgeBackend | None = None,
     index_administration: IndexAdministration | None = None,
+    forecast_administration: BatchAdministration | None = None,
+    forecast_reader: ForecastReader | None = None,
+    model_catalog: ModelCatalog | None = None,
+    evaluation_reader: EvaluationReader | None = None,
+    v12_forecast_reader: V12ForecastReader | None = None,
+    v12_forecast_administration: V12JobAdministration | None = None,
+    v12_model_catalog: V12ModelCatalog | None = None,
+    v12_evaluation_reader: V12EvaluationReader | None = None,
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
@@ -65,7 +88,16 @@ def create_app(
     engine = database_engine(settings) if settings.database_url is not None else None
     knowledge_engine = None
     if (
-        knowledge_backend is None or index_administration is None
+        knowledge_backend is None
+        or index_administration is None
+        or forecast_administration is None
+        or forecast_reader is None
+        or v12_forecast_reader is None
+        or v12_forecast_administration is None
+        or model_catalog is None
+        or evaluation_reader is None
+        or v12_model_catalog is None
+        or v12_evaluation_reader is None
     ) and settings.database_url is not None:
         knowledge_engine = index_engine(settings)
     if knowledge_backend is None and knowledge_engine is not None:
@@ -79,6 +111,32 @@ def create_app(
         )
     if index_administration is None and knowledge_engine is not None:
         index_administration = PostgresIndexAdministration(knowledge_engine, settings.app_env)
+    if forecast_administration is None and knowledge_engine is not None:
+        forecast_administration = PostgresBatchQueue(knowledge_engine, settings.app_env)
+    if forecast_reader is None and knowledge_engine is not None:
+        forecast_reader = PostgresForecastReader(knowledge_engine, settings.app_env)
+    if v12_forecast_reader is None and knowledge_engine is not None:
+        v12_forecast_reader = PostgresV12ForecastReader(
+            knowledge_engine, settings.app_env, development=settings.v12_development_mode
+        )
+    if v12_forecast_administration is None and knowledge_engine is not None:
+        v12_forecast_administration = PostgresV12JobAdministration(
+            PostgresV12Queue(
+                knowledge_engine, settings.app_env, development=settings.v12_development_mode
+            )
+        )
+    if model_catalog is None and knowledge_engine is not None:
+        model_catalog = PostgresModelCatalog(knowledge_engine, settings.app_env)
+    if evaluation_reader is None and knowledge_engine is not None:
+        evaluation_reader = PostgresEvaluations(knowledge_engine, settings.app_env)
+    if v12_model_catalog is None and knowledge_engine is not None:
+        v12_model_catalog = PostgresV12Catalog(
+            knowledge_engine, settings.app_env, development=settings.v12_development_mode
+        )
+    if v12_evaluation_reader is None and knowledge_engine is not None:
+        v12_evaluation_reader = PostgresV12Evaluations(
+            knowledge_engine, settings.app_env, development=settings.v12_development_mode
+        )
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
@@ -198,6 +256,19 @@ def create_app(
         return Response(metrics.render(), headers={"Content-Type": CONTENT_TYPE_LATEST})
 
     app.include_router(
-        access_router(authority, knowledge_backend, settings.app_env, index_administration)
+        access_router(
+            authority,
+            knowledge_backend,
+            settings.app_env,
+            index_administration,
+            forecast_administration,
+            forecast_reader,
+            model_catalog,
+            evaluation_reader,
+            v12_forecast_reader,
+            v12_forecast_administration,
+            v12_model_catalog,
+            v12_evaluation_reader,
+        )
     )
     return app

@@ -9,12 +9,27 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from retailops_ai.adapters.index_jobs import IndexAdministration
 from retailops_ai.adapters.knowledge_search import KnowledgeBackend
+from retailops_ai.api.evaluations import add_evaluation_routes
+from retailops_ai.api.forecast_jobs import add_forecast_routes
+from retailops_ai.api.forecast_read import add_forecast_read_routes
 from retailops_ai.api.index_jobs import add_index_routes
 from retailops_ai.api.middleware import single_header
+from retailops_ai.api.model_catalog import add_model_catalog_routes
 from retailops_ai.api.models import Problem
+from retailops_ai.api.v12_forecast_jobs import add_v12_forecast_routes
+from retailops_ai.api.v12_metadata import add_v12_metadata_routes
 from retailops_ai.data_contracts.common import Contract, Symbol, Versioned
 from retailops_ai.domain.access import Capability, Principal, Role, can_read_forecast
+from retailops_ai.forecast_jobs.queue import BatchAdministration
+from retailops_ai.forecast_jobs.reader import ForecastReader
+from retailops_ai.forecast_jobs.v12_administration import V12JobAdministration
+from retailops_ai.forecast_jobs.v12_read_contracts import V12ForecastPage
+from retailops_ai.forecast_jobs.v12_reader import V12ForecastReader
 from retailops_ai.knowledge.retrieval import RetrievalRequest, RetrievalResult
+from retailops_ai.model_lifecycle.evaluation_store import EvaluationReader
+from retailops_ai.model_lifecycle.reader import ModelCatalog
+from retailops_ai.model_lifecycle.v12_catalog import V12ModelCatalog
+from retailops_ai.model_lifecycle.v12_evaluation_store import V12EvaluationReader
 from retailops_ai.pipelines.retrieval import KnowledgeDenied, resolve_scope
 from retailops_ai.security.local import LocalAccess
 from retailops_ai.security.models import KnowledgeResourceScope, ResourceScope
@@ -55,6 +70,14 @@ def access_router(
     knowledge_backend: KnowledgeBackend | None = None,
     environment: Literal["local", "test"] = "local",
     index_administration: IndexAdministration | None = None,
+    forecast_administration: BatchAdministration | None = None,
+    forecast_reader: ForecastReader | None = None,
+    model_catalog: ModelCatalog | None = None,
+    evaluation_reader: EvaluationReader | None = None,
+    v12_forecast_reader: V12ForecastReader | None = None,
+    v12_forecast_administration: V12JobAdministration | None = None,
+    v12_model_catalog: V12ModelCatalog | None = None,
+    v12_evaluation_reader: V12EvaluationReader | None = None,
 ) -> APIRouter:
     bearer = HTTPBearer(auto_error=False, scheme_name="apiBearer")
 
@@ -86,7 +109,7 @@ def access_router(
                 selling_location_ids=sorted(principal.selling_location_ids),
                 channels=sorted(principal.channels),
             )
-            if "forecast:read" in principal.capabilities
+            if {"forecast:read", "forecast:run"} & principal.capabilities
             else None
         )
         return IdentityResponse(
@@ -150,4 +173,13 @@ def access_router(
             raise HTTPException(503) from None
 
     add_index_routes(router, verified, index_administration)
+    add_v12_forecast_routes(router, verified, v12_forecast_administration)
+    add_forecast_routes(router, verified, forecast_administration)
+    add_forecast_read_routes(router, verified, forecast_reader)
+    add_forecast_read_routes(
+        router, verified, v12_forecast_reader, path="/forecasts/v12", response_model=V12ForecastPage
+    )
+    add_v12_metadata_routes(router, verified, v12_model_catalog, v12_evaluation_reader)
+    add_model_catalog_routes(router, verified, model_catalog)
+    add_evaluation_routes(router, verified, evaluation_reader)
     return router

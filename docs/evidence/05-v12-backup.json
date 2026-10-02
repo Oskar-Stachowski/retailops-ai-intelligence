@@ -1,0 +1,676 @@
+{
+  "acceptance_checks": [
+    "real_http_approval_import_and_idempotent_repeat_preserve_original_campaign_evidence",
+    "postgres_advisory_lock_excludes_concurrent_operator",
+    "version_cannot_be_enrolled_under_a_different_registration_decision",
+    "real_version_registration_and_atomic_database_release_head",
+    "real_mlflow_lost_create_response_recovers_one_version_without_post_retry",
+    "partial_alias_promotion_recovers_with_previous_head_preserved_until_completion",
+    "reject_and_exact_previous_release_rollback_and_old_replay",
+    "deferred_database_guard_rejects_head_commit_without_completed_decision",
+    "post_head_crash_rolls_back_release_head_and_completion_then_recovers_atomically",
+    "real_sql_immutable_history_and_head_deletion_or_old_pointer_rejected",
+    "old_database_revision_refused",
+    "v12_queue_atomic_idempotent_admission_with_registered_source_and_approved_release",
+    "v12_job_asgi_202_location_sql_idempotency_conflict_scope_and_private_projection",
+    "partial_v12_batch_has_no_receipt_then_retry_keeps_old_release_and_commits_all_560_functional_rows",
+    "cancel_and_expired_lease_recovery_fence_old_workers_and_preserve_pins",
+    "real_v12_sql_rejects_pin_mutations_terminal_shortcuts_and_history_deletion",
+    "v12_public_job_output_reference_requires_verified_complete_publication",
+    "v12_publication_registry_disagreement_and_post_insert_crash_leave_no_partial_output",
+    "v12_atomic_idempotent_publication_preserves_560_exact_functional_rows_and_old_model_pin",
+    "v12_sql_refuses_partial_publication_and_output_mutation_or_deletion",
+    "v12_scoped_authenticated_asgi_http_pagination_and_pre_fetch_byte_budget",
+    "v12_read_rejects_rehashed_functional_corruption_outside_visible_scope_and_page",
+    "v12_mechanics_outputs_are_invisible_to_default_production_reader",
+    "v12_catalog_only_includes_verified_complete_scoped_publication_and_old_immutable_model_pin",
+    "v12_catalog_authenticated_http_rejects_rehashed_corruption_outside_visible_scope",
+    "v12_catalog_and_evaluations_never_attest_live_aliases_or_deployment",
+    "v12_evaluation_scope_includes_excluded_product_and_is_filtered_before_counts_and_byte_budget",
+    "v12_evaluation_immutable_idempotent_sql_and_authenticated_read_only_http",
+    "v12_evaluation_preserves_original_failed_not_ready_nullable_mean_median_interval_and_lineage",
+    "v12_evaluation_rehashed_metric_corruption_outside_first_page_is_rejected_against_original_receipt",
+    "v12_catalog_and_evaluation_mechanics_hidden_from_default_production_namespace",
+    "v12_backup_prepared_queued_job_and_lost_registry_reply_with_unfinished_decision",
+    "v12_queued_job_preserves_exact_input_release_model_and_idempotency_state_after_restore",
+    "v12_pending_registration_recovers_original_mlflow_version_without_second_create",
+    "v12_recovered_registration_preserves_champion_and_resumed_job_can_be_claimed_and_cancelled",
+    "v12_restored_queue_state_visible_through_authenticated_asgi_http",
+    "postgres_and_mlflow_restart_preserves_bound_release_aliases_and_completed_history",
+    "v12_queue_receipt_pins_attempt_history_and_cancellation_survive_service_restart",
+    "v12_published_functionals_scoped_view_and_immutable_receipt_survive_postgresql_mlflow_restart",
+    "v12_catalog_original_evaluations_and_scoped_views_survive_restart",
+    "v12_restored_recovered_decision_and_resumed_queue_survive_restart",
+    "v12_sigkill_backup_retains_both_database_fences_and_explicit_resume_restores_prior_service",
+    "v12_coherent_backup_verifies_all_ai_and_mlflow_postgresql_tables_sequences_and_artifact_bytes",
+    "v12_corrupt_unreferenced_artifact_keeps_partial_target_offline_and_both_database_connections_fenced",
+    "v12_fresh_target_restore_matches_entire_database_state_and_all_artifacts_before_startup",
+    "v12_existing_target_restore_is_refused_before_mutation",
+    "v12_post_restore_registry_queue_publication_catalog_evaluations_and_recovery_survive_sigkill_restart"
+  ],
+  "ai04_active_campaign_read": false,
+  "ai04_worktree_modified": false,
+  "ai_test_database_backend": "postgresql",
+  "artifact_bytes": 466682,
+  "artifact_files": 43,
+  "backed_up_ai_registered_versions": 6,
+  "backed_up_mlflow_registered_versions": 7,
+  "backed_up_sequences": {
+    "retailops_ai": {},
+    "retailops_mlflow": {
+      "experiments_experiment_id_seq": {
+        "is_called": true,
+        "last_value": 2
+      }
+    }
+  },
+  "backed_up_tables": {
+    "retailops_ai": {
+      "alembic_version": {
+        "rows": 1,
+        "sha256": "4bf1a07f0a0843e72672bddac7ae3fdfda741608a1bdba560a7fa3371a3eb2c2"
+      },
+      "forecast_batch_attempts": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "forecast_batch_profiles": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "forecast_batch_runs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "forecast_evaluations": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "forecast_mechanics_outputs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "forecast_output_heads": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "forecast_output_manifests": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "forecast_output_partitions": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "forecast_prepared_inputs": {
+        "rows": 2,
+        "sha256": "00e90ec4a59f8b398c50e336df6d34203fc8a81b577edde958427a660b308c9d"
+      },
+      "knowledge_index_runs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "model_decisions": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "model_heads": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "model_releases": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "model_steps": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "model_versions": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_active_indexes": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_build_profiles": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_corpus_reviews": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_document_denials": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_embedding_spaces": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_embeddings": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_index_changes": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_index_chunks": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_index_reports": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_indexes": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_qualifications": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rag_semantic_releases": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "service_metadata": {
+        "rows": 1,
+        "sha256": "1ed84faf1a4185ecbb54aa364be951d599543a66c99468e7a9c6798fcc0773cb"
+      },
+      "v12_batch_attempts": {
+        "rows": 6,
+        "sha256": "71f0bf3b42e595dd1b79dc31d789a32b5d8b5b8be5e4894ba9832625550b85d0"
+      },
+      "v12_batch_receipts": {
+        "rows": 1,
+        "sha256": "88049a1e3c3f751899944854f9dcc60af6ad43e10b5514e1c3c65e6d53f3d24b"
+      },
+      "v12_batch_runs": {
+        "rows": 5,
+        "sha256": "bdd9e0e704e124a5edbd36715e953f364f7691dc46734e7e4e65dccc8db7645a"
+      },
+      "v12_evaluations": {
+        "rows": 2,
+        "sha256": "a4171971cfbacd9d14639ed8ce26043aff7a381903dbb6eb1b6b3a8a10b7a7a8"
+      },
+      "v12_forecast_outputs": {
+        "rows": 1,
+        "sha256": "ae4b7fe891853f58869c83901871a3fd3ca6f29a945efd6bece70440f2ceb231"
+      },
+      "v12_model_decisions": {
+        "rows": 14,
+        "sha256": "de2eb731f03d65ec3b91e991bf1717768f033bdce9865b127f9148dc4c5a1f62"
+      },
+      "v12_model_heads": {
+        "rows": 1,
+        "sha256": "c228a6b4a537e599b9122dbbd186f371e5d62a662e4d7230bad0d370f3c36098"
+      },
+      "v12_model_releases": {
+        "rows": 6,
+        "sha256": "a3efbfd6559c571147f3743c256007f25b916dcce58e56fbc718e39240239320"
+      },
+      "v12_model_steps": {
+        "rows": 39,
+        "sha256": "901c9887a40e196ac6503c2c2ed0bbb4952dd149bf9276629b0363c31ecb9598"
+      },
+      "v12_model_versions": {
+        "rows": 6,
+        "sha256": "1386a846d07c30ee93fecdee1dc854d68e72f761eba230b984dabd4a14f04283"
+      }
+    },
+    "retailops_mlflow": {
+      "alembic_version": {
+        "rows": 1,
+        "sha256": "838d0d6893a4803fabe12e4a9b6ff06404cc84350aeae4c27c019cdc36fbd0a8"
+      },
+      "assessments": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "budget_policies": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "datasets": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint_bindings": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint_model_mappings": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoint_tags": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "endpoints": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "entity_associations": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "evaluation_dataset_records": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "evaluation_dataset_tags": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "evaluation_datasets": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "experiment_tags": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "experiments": {
+        "rows": 3,
+        "sha256": "d8de4c71462c4d8031e12a9c33f5fedd3d703e2bf53d23de066624666332ff37"
+      },
+      "guardrail_configs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "guardrails": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "input_tags": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "inputs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "issues": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "jobs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "label_schemas": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "latest_metrics": {
+        "rows": 16,
+        "sha256": "bdfec29fa2fc032922d493b2d6d9b69324629095dc4f78c422a75127b59311db"
+      },
+      "logged_model_metrics": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "logged_model_params": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "logged_model_tags": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "logged_models": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mcp_access_endpoints": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mcp_server_aliases": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mcp_server_tags": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mcp_server_version_tags": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mcp_server_versions": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mcp_servers": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "metrics": {
+        "rows": 16,
+        "sha256": "bdfec29fa2fc032922d493b2d6d9b69324629095dc4f78c422a75127b59311db"
+      },
+      "model_definitions": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "model_version_tags": {
+        "rows": 14,
+        "sha256": "c379a7c249b2ae22150e91e705d5f02db2135bce2be5cca798ded69f5e18fed8"
+      },
+      "model_versions": {
+        "rows": 7,
+        "sha256": "7ecac6bd4029ef8e9f7fa92280a8b254a088206ad1ef3326097ff0e068496b51"
+      },
+      "online_scoring_configs": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "params": {
+        "rows": 18,
+        "sha256": "f5e90297cf20ea7820a0de18b993ff09a15e58198b3504d369a30e4b2f90bee7"
+      },
+      "registered_model_aliases": {
+        "rows": 3,
+        "sha256": "63087642f24fb7d756c459e895bd3e292ce338072e13e2a83732571fe96b9596"
+      },
+      "registered_model_tags": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "registered_models": {
+        "rows": 1,
+        "sha256": "50b5d35e864fa22a57020671326091f781cd6215114371fd2da15ea862f4fb4d"
+      },
+      "review_queue_items": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "review_queue_label_schemas": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "review_queue_users": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "review_queues": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "runs": {
+        "rows": 3,
+        "sha256": "50ff16d864fc94c75c70783f58eb798d822ec4b140c966ae3e599177ef8d824f"
+      },
+      "scorer_versions": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "scorers": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "secrets": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "span_metrics": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "spans": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "tags": {
+        "rows": 33,
+        "sha256": "66ed2c46d90f325d31aa3cf725a208bae184d22c760d490b04fa2972fd91740f"
+      },
+      "trace_info": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "trace_metrics": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "trace_request_metadata": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "trace_tags": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "webhook_events": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "webhooks": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "workspaces": {
+        "rows": 1,
+        "sha256": "6bc29114c224620f29a9cf54df6328f7ef5c6fd08f100ce5b71fe51b0657f3b3"
+      }
+    }
+  },
+  "backup_files": {
+    "ai.dump": {
+      "sha256": "43315c4f1c4d6bfc0ac3d4bc11d0fe5c859d1eab596fc5ae8c2c21cce10c9cbc",
+      "size_bytes": 367802
+    },
+    "artifacts.tar": {
+      "sha256": "32b519521b9dca8927b54929a437401f8a421de2821f04c1a3cf07c2be870573",
+      "size_bytes": 512000
+    },
+    "mlflow.dump": {
+      "sha256": "06ff654000a7f2dfe5880a57afa323bed972df03099789df43c0092815034523",
+      "size_bytes": 130876
+    },
+    "state.json": {
+      "sha256": "428e2f53943a286b5eb199deef3c7e0fd9d88416091718a51eae332f43b4e6f7",
+      "size_bytes": 14086
+    }
+  },
+  "backup_id": "lifecycle-backup-sha256-235833ae8930a93af4324af64d23b58c6e7efe92a40684231a98f26a10fba89e",
+  "backup_scope_excludes": [
+    "operator_private_directories",
+    "host_credentials_configuration",
+    "local_worker_wheel_verifier_predictor_and_runtime_environment",
+    "source_snapshot_curated_packages_outside_mlflow"
+  ],
+  "base_commit": "d87ba086c8c77987f13da4e12d7f65cf6f96b597",
+  "cached_image_ids": {
+    "db": "sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b",
+    "mlflow": "sha256:f59b204e962c43c987f873f8dc61ba2042a63140004a88ecde7de43c01554d56"
+  },
+  "checked_at": "2026-10-01T14:52:15.757607+00:00",
+  "checks": {
+    "actionlint": "passed",
+    "documentation_links": "passed",
+    "git_diff_check": "passed",
+    "mypy": "passed_278_sources",
+    "native_recording_note": "In the first successful native run, the restored/restart four-test inspection receipts overwrote the matching single-state-test JUnit files. The final JSON retains completed state checks from both successful single-test subprocesses. Separate state/native filenames and private receipt permissions were subsequently fixed and verified by the two new portable receipt tests; no second full Docker run was needed for this logging-only change.",
+    "native_restart": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 4
+    },
+    "native_restored": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 4
+    },
+    "native_source": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 4
+    },
+    "native_test_calls_completed": 15,
+    "pending_preparation": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 1
+    },
+    "regression": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 48
+    },
+    "ruff": "passed",
+    "ruff_format": "passed_455_files",
+    "schema_snapshots": "passed_access_v12_batch_v12_lifecycle",
+    "staged_scan_nonempty": true,
+    "staged_secret_scan": "passed_no_leaks",
+    "state_recovery": "passed_runner_and_state_receipt",
+    "state_restart": "passed_runner_and_state_receipt"
+  },
+  "computed_fixture_rows": 560,
+  "docker_builds": 0,
+  "files": {
+    ".github/workflows/required-ci.yml": {
+      "sha256": "c95f086c2d64dd913a4890d171dc795ab8982a5440d8ef4b68122001e492b8fa",
+      "size_bytes": 2654
+    },
+    "Makefile": {
+      "sha256": "76e6e2c31944fd5a485dc4c83164357c80f96f61c407812fdfbe08641fe6e478",
+      "size_bytes": 5272
+    },
+    "docs/README.md": {
+      "sha256": "18ccf5c95f94e7ab6702ab61304cfd0c6be44ff8ef78bb37a4a9edc64c912c12",
+      "size_bytes": 10435
+    },
+    "docs/STATUS.md": {
+      "sha256": "995d9519757bb3dda0c73ed40ebcf7444f0d7c7128b5ec6ecb85688ce5631b89",
+      "size_bytes": 24722
+    },
+    "docs/forecast-v12-backup.md": {
+      "sha256": "2093f0d2bbd848b44f93330ca9792214406812e164b691bbe67a1a78ad8114b8",
+      "size_bytes": 6028
+    },
+    "docs/forecast-v12-jobs-api.md": {
+      "sha256": "27e7616c3c02d8261b80085812aaced7c80599683939e728a7fe3cd7d0493e16",
+      "size_bytes": 5336
+    },
+    "docs/forecast-v12-metadata.md": {
+      "sha256": "d269399aa7c8ad2436f00c550cbd9c77ca20ec610bc4e95df833dda7a6a8c211",
+      "size_bytes": 6446
+    },
+    "docs/forecast-v12-publication.md": {
+      "sha256": "303f31e9da52acbbd7c5211ed015426e7a3119f9cef7ba2605bf2ba6538a63fb",
+      "size_bytes": 7017
+    },
+    "docs/forecast-v12-worker.md": {
+      "sha256": "aab6cfbf81263750ae380336f417bf5a8044122356f5f53a0b766c35a4767e17",
+      "size_bytes": 8218
+    },
+    "docs/lifecycle-backup.md": {
+      "sha256": "5ef7613e2a401b829eba00a63b2c95c34ea516fb602de7c9995b6dd0cf6290d4",
+      "size_bytes": 6878
+    },
+    "reports/ai05-v12-backup-acceptance.json": {
+      "sha256": "84325428b8088e9f611ff610acccbaf46c2b8f1466ae61298a1f80a66199b1fb",
+      "size_bytes": 35592
+    },
+    "reports/ai05-v12-backup-prepare-tests.xml": {
+      "sha256": "055aed860144d207af86c090d7f3ca1fd7c371cf4859c837ddfdfc6683651aa3",
+      "size_bytes": 371
+    },
+    "reports/ai05-v12-backup-regression-tests.xml": {
+      "sha256": "55a47319dd873063f45bf1752b344f2fa93442c5b9477ab1c10d9ae677539f9b",
+      "size_bytes": 6731
+    },
+    "reports/ai05-v12-backup-restart-tests.xml": {
+      "sha256": "b28880cdad1adbcc7bfba0fdc8e0c34d5e48bbe8cc39b93b4e8c0982afa07374",
+      "size_bytes": 749
+    },
+    "reports/ai05-v12-backup-restored-tests.xml": {
+      "sha256": "587990a93a738ea641b67d91709222abc7f50bfde087c4a1703e42503dcda7ab",
+      "size_bytes": 748
+    },
+    "reports/ai05-v12-backup-source-tests.xml": {
+      "sha256": "7559403c73102c847a530f57a2e150656b30b6563e590b78279272ffde25c07d",
+      "size_bytes": 752
+    },
+    "scripts/check_v12_backup.py": {
+      "sha256": "5e021e53a26d28a1e1d10b8183a77696c7a113d1341d799a55cb3996db4163ac",
+      "size_bytes": 14706
+    },
+    "scripts/lifecycle_store.py": {
+      "sha256": "c7a76f7a731fb3053ae34e9920022c08a3bbb6e374ca94fe3b1af02738589ff1",
+      "size_bytes": 25880
+    },
+    "scripts/v12_backup_fixture_stack.py": {
+      "sha256": "07def0ffecce3c238b27fef97218669f4b0c8b1ea3c0e272b3603918903f4a7e",
+      "size_bytes": 8450
+    },
+    "tests/check_v12_backup.py": {
+      "sha256": "595d07b5686a190ef9a33dd90c1922d81c888a5538b0c5b769a534e4849241bf",
+      "size_bytes": 8495
+    },
+    "tests/test_lifecycle_store.py": {
+      "sha256": "757aeb33b9742ee6bbb2dbcb28fddedead5d07998bebb65fc5155e89dbdb9fba",
+      "size_bytes": 13109
+    },
+    "tests/test_v12_backup_runner.py": {
+      "sha256": "8149a43e63cc8b54a6e0fce09a2c9b42ab74f986d71cacfaf4c7385fefb40911",
+      "size_bytes": 5006
+    }
+  },
+  "fixture_boundary": "Actual PostgreSQL for both AI and MLflow metadata, actual MLflow HTTP/registry/artifact volume, actual role connection fences, pg_dump/restore, whole-state verification, queue constraints, authenticated ASGI TestClient and SIGKILL/restart. Original export verification, predictor, source reconstruction and review use explicit small doubles. No real AI04 export/model is qualified; no deployed API container or real-model worker is accepted.",
+  "image_pulls": 0,
+  "measured_native_elapsed_seconds": 567.6,
+  "migration_revision": "0018_v12_evaluations",
+  "mlflow_postgresql_driver": "psycopg2-binary==2.9.11",
+  "mlflow_test_metadata_backend": "postgresql",
+  "mlflow_version": "3.16.1",
+  "owned_test_resources_removed": true,
+  "pending_registry_created_version": "7",
+  "persistent_source_stack_changed": false,
+  "persistent_stack_migrated": false,
+  "private_verified_fixture_bundle_retained": true,
+  "published_fixture_forecast_outputs": 1,
+  "published_forecast_outputs": 0,
+  "purpose": "Coherent recovery of all persisted v12 application and MLflow state, including a queued job and an unfinished registry decision.",
+  "queued_job_deadline_policy_seconds": 900,
+  "queued_model_version": "6",
+  "real_model_approved": false,
+  "real_v12_evaluations_recorded": 0,
+  "recorded_fixture_evaluations": 2,
+  "registered_fixture_versions_after_recovery": 7,
+  "remaining": [
+    "real_final_ai04_export_and_inference_source",
+    "real_v12_model_qualification_and_operator_review",
+    "real_batch_publication_and_serving_measurements",
+    "remote_required_ci",
+    "explicit_persistent_environment_migration"
+  ],
+  "required_ci": "prepared_locally_remote_result_not_accepted",
+  "state_sha256": "ab5e2f4e2296ed8c73de335834b2b574c473f74c54c855074540427b648da293",
+  "status": "local_mechanics_accepted_real_handoff_pending",
+  "table_summary": {
+    "retailops_ai": {
+      "rows": 85,
+      "tables": 39
+    },
+    "retailops_mlflow": {
+      "rows": 116,
+      "tables": 59
+    }
+  },
+  "test_compose_sha256": "b8e101273bc702e9856f1978ad1e395e031dc1b6d79a891ed4912eb6b36f87df",
+  "version": "ai05-v12-backup-evidence-1.0.0"
+}

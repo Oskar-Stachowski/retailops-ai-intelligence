@@ -7,6 +7,7 @@ from numpy.typing import NDArray
 
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.forecasting.features_contract import InputRow
+from retailops_ai.forecasting.manifest_contract import FeaturePolicy
 from retailops_ai.forecasting.model_contract import (
     ForecastValue,
     LearnedEstimator,
@@ -14,7 +15,7 @@ from retailops_ai.forecasting.model_contract import (
     ModelPipeline,
     TreeNode,
 )
-from retailops_ai.forecasting.preprocessing import FittedState, transform
+from retailops_ai.forecasting.preprocessing import FittedState, transform, transform_inference
 from retailops_ai.source_snapshot.files import SnapshotError
 
 
@@ -175,6 +176,14 @@ class ForecastAdapter:
     def diagnose_train(self, rows: list[InputRow], *, feature_set_id: str) -> tuple[float, ...]:
         return self._predict(rows, feature_set_id=feature_set_id, train_diagnostic=True)
 
+    def infer(self, rows: list[InputRow], *, policy: FeaturePolicy) -> tuple[float, ...]:
+        """Portable inference on new verified data with the frozen training recipe."""
+        if len(rows) > 256:
+            raise SnapshotError("forecast_adapter_batch_or_feature_binding_invalid")
+        if policy != self.state.descriptor.policy:
+            raise SnapshotError("forecast_inference_feature_policy_mismatch")
+        return self._values(rows, train_diagnostic=False, inference_policy=policy)
+
     def _predict(
         self, rows: list[InputRow], *, feature_set_id: str, train_diagnostic: bool
     ) -> tuple[float, ...]:
@@ -182,6 +191,17 @@ class ForecastAdapter:
             return ()
         if len(rows) > 256 or feature_set_id != self.pipeline.descriptor.feature_set_id:
             raise SnapshotError("forecast_adapter_batch_or_feature_binding_invalid")
+        return self._values(rows, train_diagnostic=train_diagnostic)
+
+    def _values(
+        self,
+        rows: list[InputRow],
+        *,
+        train_diagnostic: bool,
+        inference_policy: FeaturePolicy | None = None,
+    ) -> tuple[float, ...]:
+        if not rows:
+            return ()
         safe = [InputRow.model_validate_json(row.model_dump_json()) for row in rows]
         fold = self.state.descriptor.fold
         policy = self.state.descriptor.policy
@@ -202,7 +222,13 @@ class ForecastAdapter:
         matrix = np.asarray(
             [
                 (
-                    *transform(row, self.state, feature_set_id=feature_set_id),
+                    *(
+                        transform(
+                            row, self.state, feature_set_id=self.pipeline.descriptor.feature_set_id
+                        )
+                        if inference_policy is None
+                        else transform_inference(row, self.state, policy=inference_policy)
+                    ),
                     float(row.horizon_days),
                 )
                 for row in safe

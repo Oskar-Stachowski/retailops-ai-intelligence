@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-09-30T06:51:14.420309+00:00",
+  "checks": [
+    "database_lock_serializes_independent_operator_sessions",
+    "first_release_has_explicit_null_previous_version",
+    "lost_registration_response_recovers_without_duplicate_version",
+    "partial_alias_change_resumes_from_actual_registry_state",
+    "old_decision_replay_and_alias_changes_do_not_rewrite_pins",
+    "rollback_restores_exact_model_checksum_config_schema_and_image",
+    "rejected_candidate_cannot_replace_champion",
+    "append_only_decision_trigger_blocks_update",
+    "sigkill_restart_retains_versions_artifacts_decisions_and_release"
+  ],
+  "forecast_quality_approved": false,
+  "model_name": "retailops-demand-forecast-mechanics",
+  "purpose": "lifecycle_mechanics_only",
+  "release_id": "model-release-sha256-85049c1101e3a82033ef1c37d9c0e4d3b3e6b45b66c389ad81d2d5b6cbddc0f5",
+  "runtime_status": "not_integrated",
+  "sources": {
+    "1": {
+      "qualification_sha256": "17a94b6b3727894fd35bb0554c699a3fcc2db5e05e0a66d2932b1fe2891063c8",
+      "run_id": "3c8fce756d2d4839a0a73e8aef80dc6c"
+    },
+    "2": {
+      "qualification_sha256": "8220847990e3dad9b8a090ed000d30a7a4c66cdf812e0008b438b435b90c6c80",
+      "run_id": "ac77f7c3fcaf419dbe68be3d0cb82fb8"
+    },
+    "3": {
+      "qualification_sha256": "a5ed3d06774b710ca2b8cec80b4170287b8d9e4718f5a7f7c3e1c82b46c83d9a",
+      "run_id": "3157b65055534c84b2ce4d64ba11d7f0"
+    }
+  },
+  "status": "passed",
+  "target_project": "retailops_ai_lifecycle_82722d5c2c",
+  "versions": [
+    "1",
+    "2",
+    "3"
+  ]
+}

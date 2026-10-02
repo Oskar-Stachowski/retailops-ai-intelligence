@@ -91,6 +91,66 @@
           "type": "string"
         },
         {
+          "enum": [
+            "database-not-ready",
+            "scope-denied",
+            "batch-scope-limit",
+            "forecast-run-not-found",
+            "forecast-run-denied",
+            "invalid-idempotency-key",
+            "idempotency-conflict",
+            "input-from-future",
+            "model-not-approved",
+            "model-decision-incomplete",
+            "input-not-prepared",
+            "input-origin-mismatch",
+            "queue-full",
+            "input-coverage-mismatch",
+            "input-runtime-incompatible",
+            "run-not-active"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "forecast-read-denied",
+            "forecast-scope-invalid",
+            "forecast-scope-limit",
+            "forecast-output-not-found",
+            "forecast-view-changed",
+            "forecast-view-required",
+            "forecast-read-budget",
+            "forecast-output-invalid"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "model-read-denied",
+            "model-scope-invalid",
+            "model-scope-limit",
+            "model-not-found",
+            "model-view-required",
+            "model-view-changed",
+            "model-read-budget",
+            "model-metadata-invalid"
+          ],
+          "type": "string"
+        },
+        {
+          "enum": [
+            "evaluation-read-denied",
+            "evaluation-scope-invalid",
+            "evaluation-scope-limit",
+            "evaluation-not-found",
+            "evaluation-view-required",
+            "evaluation-view-changed",
+            "evaluation-read-budget",
+            "evaluation-evidence-invalid"
+          ],
+          "type": "string"
+        },
+        {
           "type": "null"
         }
       ],

@@ -26,6 +26,10 @@ dla treningu RF/HGB. Przy ręcznym uruchomieniu całych testów użyj
 [CLI curated](curated.md) buduje dane i odczytuje historię as-of z tego samego extra.
 [CLI forecast](forecasting.md) definiuje zadanie i buduje przypięty kalendarz
 bez modeli, DB i AWS.
+[Adapter eksportu v12 do MLflow](mlflow-v12-evidence.md) korzysta z osobnego
+przypiętego wheel AI 04 i zachowuje oddzielne cele prognozy.
+[Loader i prognozy v12 offline](forecast-v12-runtime.md) sprawdzają jawnie
+przypiętą recepturę oraz wejście bez etykiet, bez publikacji serving.
 Wszystkie polecenia projektu korzystają z tego samego pakietu, także
 `uv run --locked python -m retailops_ai`. `config-check` niczego nie tworzy,
 nie sprawdza DB, nie wykonuje zapytań sieciowych i nie potwierdza readiness usług.
@@ -63,6 +67,9 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make serve` | Lokalny serwer HTTP z jawnym dotenv |
 | `make compose-up/down` | Lokalny stos DB/API/MLflow, jawne migracje, zachowane wolumeny |
 | `make compose-config` | Walidacja Compose bez wypisywania sekretów |
+| `make evaluations-smoke` | HTTP/PostgreSQL: whole-scope oceny, metryki, statusy, immutable import i SIGKILL/restart; jawne synthetic fixtures |
+| `make model-catalog-smoke` | HTTP/PostgreSQL: scoped modele i wersje, piny, paginacja, uszkodzenia i restart; SQL-only stub jakości |
+| `make forecast-read-smoke` | HTTP/PostgreSQL: scoped prognozy, strony, watermark/current/stale/unknown, rollback i SIGKILL/restart; SQL-only stub jakości |
 | `make compose-smoke` | Rzeczywiste próby persistence i awarii, następnie shutdown |
 | `make contracts-check` | Porównanie intelligence/access/knowledge/forecast snapshots z kodem, walidacja struktury rejestru korpusu |
 | `make contracts` | Regeneracja HTTP oraz intelligence/access/knowledge/forecast schemas/examples do przeglądu |
