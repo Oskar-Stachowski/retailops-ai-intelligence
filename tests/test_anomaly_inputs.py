@@ -3,14 +3,18 @@
 import hashlib
 import json
 import shutil
+from datetime import timedelta
 from pathlib import Path
 from zipfile import ZipFile
 
+import pyarrow as pa
+import pyarrow.parquet as pq
 import pytest
 
 from retailops_ai.anomalies.contract import MODEL_FEATURES, TABLES, Point, Policy
 from retailops_ai.anomalies.store import Manifest, build_inputs, input_id, verify_inputs
-from retailops_ai.curated.builder import build_curated
+from retailops_ai.curated.builder import build_curated, iter_rows, verify_curated
+from retailops_ai.curated.contract import Digest, descriptor_id
 from retailops_ai.curated.reader import rows_as_of
 from retailops_ai.source_snapshot.files import SnapshotError, canonical_json
 from retailops_ai.source_snapshot.importer import import_snapshot
@@ -136,6 +140,36 @@ def test_scoring_policy_is_part_of_identity(prepared):
         curated.directory, root / "delayed/data/generated", Policy(scoring_delay_hours=48)
     )
     assert delayed.manifest.anomaly_input_id != inputs.manifest.anomaly_input_id
+
+
+def test_resealed_early_curated_inventory_is_rejected(prepared, tmp_path):
+    _, _, _, curated, _ = prepared
+    root = Path(shutil.copytree(curated.directory, tmp_path / "curated-corrupt"))
+    document = json.loads((root / "curated_manifest.json").read_text())
+    table = next(t for t in document["tables"] if t["table"] == "inventory_daily_snapshots")
+    ref = table["files"][0]
+    path = root / ref["path"]
+    arrow = pq.ParquetFile(path).read()
+    rows = arrow.to_pylist()
+    rows[0]["curated_available_at"] -= timedelta(microseconds=1)
+    pq.write_table(pa.Table.from_pylist(rows, schema=arrow.schema), path)
+    ref.update(bytes=path.stat().st_size, sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+    digest = Digest(tmp_path / "reseal.sqlite", table["schema"], table["grain"])
+    try:
+        for row in iter_rows(root, table["files"], 8192):
+            digest.add(row)
+        table.update(digest.summary())
+    finally:
+        digest.close()
+    document["descriptor"]["tables"] = [
+        {k: v for k, v in t.items() if k != "files"} for t in document["tables"]
+    ]
+    document["curated_dataset_id"] = descriptor_id(document["descriptor"])
+    raw = canonical_json(document) + b"\n"
+    (root / "curated_manifest.json").write_bytes(raw)
+    (root / "manifest.sha256").write_text(hashlib.sha256(raw).hexdigest() + "\n")
+    with pytest.raises(SnapshotError, match="causal_projection"):
+        verify_curated(root)
 
 
 def test_reviewed_schemas_match_runtime_models():

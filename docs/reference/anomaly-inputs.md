@@ -115,3 +115,5 @@ means the demand residual can be computed, while detector readiness stays
 `not_qualified` and curated anomaly readiness stays `not_ready`.
 
 [Data card](../cards/anomaly-inputs.md) records the same scope and limits.
+[Acceptance evidence](../evidence/ai/07/07.4-demand-inputs/README.md) pins the runtime,
+artifact identities and measured fresh-process/wheel results.

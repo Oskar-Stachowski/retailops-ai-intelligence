@@ -1,0 +1,225 @@
+{
+  "ai05_session_modified": false,
+  "ai07_complete": false,
+  "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "editable_acceptance": {
+    "fixture_sha256": "c344a5cfeea086e1054add724c830d747815e9eab425a19a17c1d0691671066c",
+    "limits": {
+      "peak_rss_mib": 1024,
+      "seconds_per_process": 300
+    },
+    "runs": [
+      {
+        "cases": [
+          {
+            "anomaly_input_id": "anomaly-inputs-sha256-3030113dcb9b86fdcd4d9d560d7c5283db3adb28a85b6821d10ebe13aad18fb8",
+            "case": "demand",
+            "content_sha256": "3830ab7b92a9701e658ff931713d817bd8413d7402e68db2a7fcc4688b74a135",
+            "curated_dataset_id": "curated-sha256-f28d0f49e09eb392c7effc8f3edcc446fecf6a599b8f9ff8d414e6a05fff81c9",
+            "file_bytes": 2547588,
+            "row_count": 678,
+            "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+            "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8",
+            "status_counts": {
+              "closed": 60,
+              "insufficient_data": 360,
+              "ready_input": 258
+            }
+          },
+          {
+            "anomaly_input_id": "anomaly-inputs-sha256-5b042571f531d9430c3f7b0e15ae089bd1e96f8582f1010ca9f2d68fc186e904",
+            "case": "physical",
+            "content_sha256": "24be1a510644b93fecc3772006410fdc93439d07635de571b4e6c2bf9a999e5e",
+            "curated_dataset_id": "curated-sha256-2d9969a004df97bd2d976b4a409a5d598f0a46006f33df56bbbd2e6de4a61a70",
+            "file_bytes": 2547686,
+            "row_count": 678,
+            "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+            "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721",
+            "status_counts": {
+              "closed": 60,
+              "insufficient_data": 360,
+              "ready_input": 258
+            }
+          }
+        ],
+        "elapsed_seconds": 53.338,
+        "peak_rss_mib": 106.641,
+        "producer_available": false,
+        "status": "passed"
+      },
+      {
+        "cases": [
+          {
+            "anomaly_input_id": "anomaly-inputs-sha256-3030113dcb9b86fdcd4d9d560d7c5283db3adb28a85b6821d10ebe13aad18fb8",
+            "case": "demand",
+            "content_sha256": "3830ab7b92a9701e658ff931713d817bd8413d7402e68db2a7fcc4688b74a135",
+            "curated_dataset_id": "curated-sha256-f28d0f49e09eb392c7effc8f3edcc446fecf6a599b8f9ff8d414e6a05fff81c9",
+            "file_bytes": 2547588,
+            "row_count": 678,
+            "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+            "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8",
+            "status_counts": {
+              "closed": 60,
+              "insufficient_data": 360,
+              "ready_input": 258
+            }
+          },
+          {
+            "anomaly_input_id": "anomaly-inputs-sha256-5b042571f531d9430c3f7b0e15ae089bd1e96f8582f1010ca9f2d68fc186e904",
+            "case": "physical",
+            "content_sha256": "24be1a510644b93fecc3772006410fdc93439d07635de571b4e6c2bf9a999e5e",
+            "curated_dataset_id": "curated-sha256-2d9969a004df97bd2d976b4a409a5d598f0a46006f33df56bbbd2e6de4a61a70",
+            "file_bytes": 2547686,
+            "row_count": 678,
+            "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+            "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721",
+            "status_counts": {
+              "closed": 60,
+              "insufficient_data": 360,
+              "ready_input": 258
+            }
+          }
+        ],
+        "elapsed_seconds": 53.995,
+        "peak_rss_mib": 106.578,
+        "producer_available": false,
+        "status": "passed"
+      }
+    ],
+    "status": "passed"
+  },
+  "full_tests": {
+    "additional_curated_semantic_cases": {
+      "cases": 2,
+      "passed": 2,
+      "reason": "added after full suite collection; both demand and physical variants passed",
+      "seconds": 36.42
+    },
+    "full_regression_run": {
+      "cases": 1217,
+      "junit": "/private/tmp/ai07-inputs-full-tests.xml",
+      "passed": 1217,
+      "seconds": 922.89
+    },
+    "status": "passed",
+    "unique_cases": 1219
+  },
+  "installed_wheel_acceptance": [
+    {
+      "cases": [
+        {
+          "anomaly_input_id": "anomaly-inputs-sha256-3030113dcb9b86fdcd4d9d560d7c5283db3adb28a85b6821d10ebe13aad18fb8",
+          "case": "demand",
+          "content_sha256": "3830ab7b92a9701e658ff931713d817bd8413d7402e68db2a7fcc4688b74a135",
+          "curated_dataset_id": "curated-sha256-f28d0f49e09eb392c7effc8f3edcc446fecf6a599b8f9ff8d414e6a05fff81c9",
+          "file_bytes": 2547588,
+          "row_count": 678,
+          "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+          "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8",
+          "status_counts": {
+            "closed": 60,
+            "insufficient_data": 360,
+            "ready_input": 258
+          }
+        },
+        {
+          "anomaly_input_id": "anomaly-inputs-sha256-5b042571f531d9430c3f7b0e15ae089bd1e96f8582f1010ca9f2d68fc186e904",
+          "case": "physical",
+          "content_sha256": "24be1a510644b93fecc3772006410fdc93439d07635de571b4e6c2bf9a999e5e",
+          "curated_dataset_id": "curated-sha256-2d9969a004df97bd2d976b4a409a5d598f0a46006f33df56bbbd2e6de4a61a70",
+          "file_bytes": 2547686,
+          "row_count": 678,
+          "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+          "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721",
+          "status_counts": {
+            "closed": 60,
+            "insufficient_data": 360,
+            "ready_input": 258
+          }
+        }
+      ],
+      "elapsed_seconds": 52.185,
+      "package_path": "/private/tmp/ai07-inputs-installed-wheel/retailops_ai/__init__.py",
+      "peak_rss_mib": 111.625,
+      "producer_available": false,
+      "runtime_commit_sha": "277e2c57cf9bbb34fded95854413e256be68dc52",
+      "status": "passed",
+      "wheel_sha256": "0e19af10545d3ac69e0e81e996bb8e5fbf2b967be7ff07e99932193f0fdb1b27"
+    },
+    {
+      "cases": [
+        {
+          "anomaly_input_id": "anomaly-inputs-sha256-3030113dcb9b86fdcd4d9d560d7c5283db3adb28a85b6821d10ebe13aad18fb8",
+          "case": "demand",
+          "content_sha256": "3830ab7b92a9701e658ff931713d817bd8413d7402e68db2a7fcc4688b74a135",
+          "curated_dataset_id": "curated-sha256-f28d0f49e09eb392c7effc8f3edcc446fecf6a599b8f9ff8d414e6a05fff81c9",
+          "file_bytes": 2547588,
+          "row_count": 678,
+          "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+          "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8",
+          "status_counts": {
+            "closed": 60,
+            "insufficient_data": 360,
+            "ready_input": 258
+          }
+        },
+        {
+          "anomaly_input_id": "anomaly-inputs-sha256-5b042571f531d9430c3f7b0e15ae089bd1e96f8582f1010ca9f2d68fc186e904",
+          "case": "physical",
+          "content_sha256": "24be1a510644b93fecc3772006410fdc93439d07635de571b4e6c2bf9a999e5e",
+          "curated_dataset_id": "curated-sha256-2d9969a004df97bd2d976b4a409a5d598f0a46006f33df56bbbd2e6de4a61a70",
+          "file_bytes": 2547686,
+          "row_count": 678,
+          "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+          "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721",
+          "status_counts": {
+            "closed": 60,
+            "insufficient_data": 360,
+            "ready_input": 258
+          }
+        }
+      ],
+      "elapsed_seconds": 53.277,
+      "package_path": "/private/tmp/ai07-inputs-installed-wheel/retailops_ai/__init__.py",
+      "peak_rss_mib": 106.797,
+      "producer_available": false,
+      "runtime_commit_sha": "277e2c57cf9bbb34fded95854413e256be68dc52",
+      "status": "passed",
+      "wheel_sha256": "0e19af10545d3ac69e0e81e996bb8e5fbf2b967be7ff07e99932193f0fdb1b27"
+    }
+  ],
+  "milestone": "AI07.4 curated 1.2 and demand input foundation",
+  "producer_artifact_runtime_sha": "b59aca8e2fe70a76efde2192b63b5bf839104bac",
+  "readiness": {
+    "curated_anomaly": "not_ready",
+    "detector": "not_qualified",
+    "forecast_requalification_inherited": false,
+    "raw_dq_completeness": "not_qualified"
+  },
+  "remaining": [
+    "raw DQ integration with proven coverage",
+    "return-focused inputs",
+    "evaluation labels and temporal split manifests",
+    "validation baseline thresholds",
+    "Isolation Forest pipeline",
+    "multi-seed observation and episode evaluation",
+    "MLflow/batch/read-only serving"
+  ],
+  "runtime_commit_sha": "277e2c57cf9bbb34fded95854413e256be68dc52",
+  "runtime_repository": "retailops-ai-intelligence",
+  "static_checks": {
+    "documentation_links": "passed",
+    "existing_wire_contract_snapshots": "passed",
+    "format": "passed",
+    "mypy": "passed",
+    "mypy_modules": 199,
+    "ruff": "passed",
+    "wheel_build_and_offline_install": "passed"
+  },
+  "status": "passed",
+  "targeted_tests": {
+    "count": 21,
+    "scope": "19 temporal/input acceptance cases plus 2 resealed curated 1.2 semantic counterexamples",
+    "status": "passed"
+  }
+}
