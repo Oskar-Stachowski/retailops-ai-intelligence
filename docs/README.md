@@ -27,6 +27,9 @@ kontroluje dojrzałość etykiet i wspólne klucze oraz raportuje pooled MAE/WAP
 [Metryki i niepewność 04.7](forecast-quality.md) dodają przekroje, bias,
 kalibrację przedziałów i jawne bramki jakości bez promocji modelu.
 [Plikowy run 04.8](forecast-run.md) utrwala komplet dowodów do AI 05.
+[Rzeczywisty lokalny przepływ finalnego v12](evidence/05-v12-real-serving.md)
+jest odebrany: pełny import, dwa trwałe zadania, API, restart i rollback.
+AI 05 wymaga jeszcze świeżego małego snapshotu i zdalnego Required CI.
 [Adapter v12](mlflow-v12-evidence.md), [loader offline](forecast-v12-runtime.md),
 [kwalifikacja inference](forecast-v12-release.md) i [lifecycle v12](mlflow-v12-lifecycle.md)
 opisują przygotowanie obsługi nowego eksportu oraz osobne bramki dopuszczenia.

@@ -77,4 +77,5 @@ Testy przenośne używają jawnych małych doubles. Odbiór bazy z rzeczywistymi
 PostgreSQL i MLflow sprawdza również dokładną decyzję developerską, odmowę
 innego runu i zachowanie wszystkich pozostałych bramek. Test backup/restore
 pozostaje odbiorem mechaniki na fixtures; nie oznacza backupu całej kampanii.
-Rzeczywisty import i ścieżka prognozy wymagają osobnych raportów.
+Rzeczywisty import i ścieżka prognozy mają
+[osobny raport lokalnego odbioru](evidence/05-v12-real-serving.md).

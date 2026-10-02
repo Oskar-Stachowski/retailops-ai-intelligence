@@ -1,82 +1,29 @@
 # Aktualny status
 
-**AI 05 — backup i odtworzenie v12:** [procedura i granice](forecast-v12-backup.md)
-obejmują cały stan obu baz PostgreSQL oraz wszystkie pliki MLflow.
-Odbiór na osobnych fixture sprawdza przerwany backup, zablokowany uszkodzony
-cel, zgodność wszystkich tabel/sekwencji/plików, odzyskanie niedokończonej
-rejestracji i przypiętego zadania oraz odczyt po restarcie.
-Nie przebudowuje obrazów i usuwa wyłącznie własne zasoby testowe.
-Prywatne środowisko workera i źródła poza MLflow wymagają osobnej kopii.
-Rzeczywisty handoff, kwalifikacja/serving, zdalny Required CI oraz jawna
-migracja trwałego środowiska pozostają otwarte; trwałego stosu nie zmieniono.
+**AI 05 — rzeczywisty lokalny przepływ finalnego v12 jest odebrany.**
+[Raport i pomiary](evidence/05-v12-real-serving.md) oraz
+[wersjonowany zapis dowodów](evidence/05-v12-real-serving.json) obejmują cały
+import 664 plików / około 29,8 GiB, kwalifikację oryginalnego predictora,
+dwie działające wersje registry, dwa trwałe batch’e i 28 opublikowanych wierszy.
+Restart zachowuje zadanie i input; rollback nie przepina wcześniej przyjętego
+runa; odrzucenie kandydata nie zmienia runtime. Wyniki obu wydań są identyczne.
 
-**AI 05 — katalog i oceny v12:** [odczyt i import raportów](forecast-v12-metadata.md)
-udostępniają wersje z kompletnych, zweryfikowanych publikacji oraz oryginalne
-metryki kampanii. Raport wymaga dostępu do całego zakresu, także produktów
-wyłączonych z obliczeń. Mean/median/interval, null i powody braku gotowości
-pozostają zachowane; API nie przelicza jakości ani nie potwierdza wdrożenia.
-Migracja to `0018_v12_evaluations`; trwałego stosu nie migrowano.
-Odbiór używa małych doubles, osobnego PostgreSQL AI i MLflow z testowym
-backendem SQLite, z odczytem po restarcie. Późniejszy odbiór backupu opisany
-wyżej używa PostgreSQL także dla MLflow. Rzeczywisty handoff/serving
-i zdalny Required CI pozostają otwarte.
+To osobny [lokalny namespace developerski](forecast-v12-development.md).
+Domyślne API nie pokazuje jego danych. Pełna ocena 100 produktów / 2 lokalizacji
+zachowuje 221 passed, 3 failed i oryginalne `not_ready`; ograniczony viewer
+nie widzi zbiorczego raportu. Origin 2026-09-16 pozostaje historyczny i API
+zwraca `stale`. Nie było refitu ani zmiany oryginalnych artefaktów AI 04.
 
-**AI 05 — zadania v12 w API:** [runbook](forecast-v12-jobs-api.md)
-opisuje POST202/Location i GET stanu/historii na tej samej trwałej kolejce
-co CLI. Metadane ograniczają cały scope i nie ujawniają prywatnych kapsuł.
-Sukces obliczeń daje receipt; referencja prognozy wymaga osobnej publikacji
-i weryfikacji całego outputu. Namespace testowy jest jawnie wstrzykiwany;
-domyślne API używa produkcyjnej nazwy v12. Rzeczywisty model AI 04,
-zdalny Required CI pozostają otwarte. Odtworzenie opisano powyżej.
+Nowy odbiór [backup/restore](forecast-v12-backup.md) sprawdza cały stan obu baz
+PostgreSQL i artefaktów na małych fixture z head `0019_v12_development`.
+Nie jest niezależnym backupem rzeczywistej kampanii; klon APFS na tym samym
+dysku także nim nie jest. Osobny trwały stos odbioru ma tę migrację;
+dotychczasowego długotrwałego stosu nie zmieniono.
 
-**AI 05 — adapter eksportu v12:** [import kampanii do MLflow](mlflow-v12-evidence.md)
-obsługuje pełny run, osobne metryki mediany/średniej/przedziału, oryginalne
-identyfikatory, wszystkie artefakty, powtórzenia oraz zachowanie failed import.
-Oryginalny verifier działa przez osobny przypięty wheel AI 04. Adapter jest
-testowany na małych fixtures bez odczytu aktywnej kampanii; rzeczywisty import
-czeka na końcowy eksport.
-
-**AI 05 — loader v12 offline:** [odczyt i prognozy](forecast-v12-runtime.md)
-wiążą run/cohort/fold/recipe oraz źródło i środowisko. Oryginalny predictor
-działa w izolowanym podprocesie; bazowe prognozy pochodzą z historii as-of,
-wynik zachowuje medianę/średnią/przedział. Testy obejmują osobne fixtures;
-próba przypiętego wheel dała 14 wyników identycznych z oryginalnym predictorem.
-Końcowy eksport, rzeczywiste wejście i pełny odbiór serving pozostają dalszą pracą.
-
-**AI 05 — inference i prywatne dopuszczenie v12:** [kwalifikacja i przegląd](forecast-v12-release.md)
-dodają jawny kontrakt inference poza oknem oceny, weryfikację feature/curated
-parents, powtarzalną próbę prognoz i decyzję uwierzytelnionego operatora z 10
-raportami. Wersja, źródło, limity i ważność są przypięte; brak jakości, podmiana
-pakietu albo utrata lease powodują odmowę. Rzeczywisty algorytm dał 14 prognoz
-identycznych z oryginałem na osobnej fixture. Nie dopuszczono rzeczywistego
-modelu ani nie zmieniono aliasów trwałego stosu.
-
-**AI 05 — lifecycle v12 i trwały release:** [rejestracja i decyzje](mlflow-v12-lifecycle.md)
-wiążą osobny namespace MLflow z kapsułą przeglądu i immutable historią bazy.
-Promocja, odrzucenie, rollback i odzyskiwanie po utracie odpowiedzi są odebrane
-na małych fixture, również na rzeczywistych jednorazowych PostgreSQL/MLflow
-z restartem usług. Head i ukończenie decyzji zapisują się atomowo; nie powstaje
-druga wersja przy wznowieniu utraconej odpowiedzi. Nowy head migracji to
-`0015_v12_lifecycle`, po którym dodano kolejkę opisaną poniżej; trwałego stosu nie migrowano.
-
-**AI 05 — kolejka i worker v12:** [prywatne zadania obliczeń](forecast-v12-worker.md)
-przypinają release i wejście, dzielą batch zgodnie z limitami oraz zapisują
-kompletny wynik mediany/średniej/przedziału z historią próby. Kontrola lease,
-retry i anulowania blokuje zapis częściowego wyniku. Odbiór używa jawnych
-fixture i osobnego PostgreSQL/MLflow; nie kwalifikuje rzeczywistej kampanii.
-Migracja kolejki to `0016_v12_queue`; trwałego stosu nie migrowano.
-
-**AI 05 — publikacja i odczyt v12:** [runbook](forecast-v12-publication.md)
-opisuje osobną, idempotentną publikację kompletnego receipt oraz
-`GET /api/v1/forecasts/v12`, z zachowaniem mediany/średniej/przedziału,
-baseline i null. Odczyt ogranicza scope, sprawdza cały wynik i świeżość,
-stabilizuje paginację i blokuje częściową odpowiedź po uszkodzeniu.
-Odbiór używa małych jawnych doubles, rzeczywistych PostgreSQL/MLflow
-oraz aplikacji ASGI; nie jest kwalifikacją rzeczywistego modelu AI 04.
-Migracja publikacji to `0017_v12_outputs`; po niej dodano katalog i oceny
-opisane wyżej. Trwałego stosu nie migrowano.
-Backup/restore v12 opisano powyżej; Required CI i odbiór rzeczywistego
-przepływu pozostają otwarte.
+**AI 05 pozostaje otwarte:** świeży mały snapshot wymaga osobnej kwalifikacji
+nowego źródła i odbioru batch/API. Zdalny Required CI jest kolejną bramką.
+Produkcji nie dopuszczono. Historyczne raporty poszczególnych przyrostów
+zachowują swoje wcześniejsze wyniki i granice.
 
 Aktualizacja: **2026-10-02**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,

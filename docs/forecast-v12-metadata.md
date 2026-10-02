@@ -100,7 +100,8 @@ Verifier sprawdza oryginalny eksport i replay przed projekcją. Importer
 ponownie sprawdza bajty przed i po odczycie członkostwa, zgodność cohort,
 fold/role/kluczy i liczników raportu. Nie wykonuje nowych refitów.
 Nie ma publicznego endpointu zapisu oceny ani promocji modelu.
-Przed użyciem potrzebna jest migracja `0018_v12_evaluations`.
+Migracja ocen to `0018_v12_evaluations`; przed użyciem wymagany jest aktualny
+head `0019_v12_development`, opisany w [lokalnym dopuszczeniu](forecast-v12-development.md).
 Trwałego stosu w tym przyroście nie migrowano.
 
 ## Odbiór i dalsza praca

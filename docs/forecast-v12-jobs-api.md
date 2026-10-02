@@ -81,8 +81,10 @@ Export/source/predictor/review pozostają jawnymi małymi doubles.
 Wbudowana konfiguracja API wybiera namespace `retailops-demand-forecast-v12`.
 Namespace mechanics wymaga jawnego wstrzyknięcia backendu w testach;
 samo `APP_ENV=test` go nie włącza.
-Migracja publikacji to `0017_v12_outputs`; późniejszy head `0018_v12_evaluations`
-opisuje [katalog i oceny v12](forecast-v12-metadata.md). Trwałego stosu nie migrowano.
+Migracja publikacji to `0017_v12_outputs`; `0018_v12_evaluations`
+opisuje [katalog i oceny v12](forecast-v12-metadata.md), a aktualny head
+`0019_v12_development` [lokalne dopuszczenie](forecast-v12-development.md).
+Dotychczasowego długotrwałego stosu nie migrowano.
 Dotychczasowe 17 ścieżek OpenAPI i ich 60 definicji schema pozostały identyczne.
 Job `persistence` Required CI uruchamia teraz `make v12-backup-smoke`,
 który obejmuje registry, kolejkę/API, publikację/odczyt, katalog/oceny,

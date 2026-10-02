@@ -96,8 +96,9 @@ podzbiorem. Niezgodność daje 503 `forecast-output-invalid`, bez częściowej o
 
 ## Migracja i odbiór
 
-Migracja publikacji to `0017_v12_outputs`, po `0016_v12_queue`. Bieżący head
-`0018_v12_evaluations` opisuje [katalog i oceny](forecast-v12-metadata.md). Tabela jest
+Migracja publikacji to `0017_v12_outputs`, po `0016_v12_queue`.
+`0018_v12_evaluations` opisuje [katalog i oceny](forecast-v12-metadata.md).
+Aktualny head `0019_v12_development` opisuje [lokalne dopuszczenie](forecast-v12-development.md). Tabela jest
 oddzielna od publikacji v1. Przed wdrożeniem należy jawnie migrować bazę
 według [runbooka Compose](local-stack.md). Trwałego stosu nie migrowano.
 Downgrade wymaga backup/restore.

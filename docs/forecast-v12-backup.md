@@ -8,7 +8,7 @@ ich wejścia i historię, kompletne wyniki, publikacje oraz oryginalne oceny.
 Używamy istniejącego [kontrolera wspólnego backupu](lifecycle-backup.md).
 Nie ma osobnego eksportu kilku tabel v12: kontroler sprawdza wszystkie
 tabele i sekwencje schematów `ai` i MLflow `public`, również puste.
-Zachowuje ich liczby wierszy, SHA-256, rewizję `0018_v12_evaluations`
+Zachowuje ich liczby wierszy, SHA-256, rewizję `0019_v12_development`
 oraz checksum całego archiwum plików, także niepowiązanych z aktywnym modelem.
 Zestawienie liczby wierszy jest wykonywane jednym zapytaniem na bazę;
 limit wierszy i poprawność nazw są sprawdzane przed kopiowaniem treści.
