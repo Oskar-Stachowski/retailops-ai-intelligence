@@ -85,14 +85,15 @@
     "status": "passed",
     "transport": "native_apfs_clone_with_http_checksum_verification"
   },
-  "checked_at": "2026-10-02T09:23:01.276486+00:00",
+  "checked_at": "2026-10-02T16:26:14.595006+00:00",
   "current_read_api_image": {
-    "free_bytes_after": 57835626496,
-    "image": "sha256:faccf6b15d3410c4be3dd52bc27318bc8d47305c77ff7f5c62b7f87acbee1e5b",
+    "checked_at": "2026-10-02T15:52:15.084948+00:00",
+    "image": "sha256:04b9ad62e9990fa7acf512adfb21668da07fb53e4eb8403d99325ee69da2a6a8",
+    "preserved_tag": true,
     "scope": "local_development_only",
-    "size_bytes": 187042078,
+    "size_bytes": 187042504,
     "status": "built",
-    "tag": "retailops_ai_v12_source_9050d5849e-api:local"
+    "tag": "retailops-ai05-v12-fresh-api:20261002"
   },
   "flow": {
     "checks": [
@@ -195,7 +196,293 @@
     "total_published_rows": 28,
     "working_registry_versions": 2
   },
-  "free_bytes_at_acceptance": 58180808704,
+  "free_bytes_at_acceptance": 54703304704,
+  "fresh_inference": {
+    "api_upgrade": {
+      "checked_at": "2026-10-02T15:51:40.671351+00:00",
+      "credentials_unchanged": true,
+      "default_namespace_hidden": true,
+      "explicit_pipeline_products": 2,
+      "image_digest": "sha256:04b9ad62e9990fa7acf512adfb21668da07fb53e4eb8403d99325ee69da2a6a8",
+      "only_owned_api_services_recreated": true,
+      "original_predictions_retained": true,
+      "preserved_previous_api_image": "sha256:faccf6b15d3410c4be3dd52bc27318bc8d47305c77ff7f5c62b7f87acbee1e5b",
+      "production_deployment_authorized": false,
+      "scope": "local_development_only",
+      "status": "passed"
+    },
+    "approval": {
+      "approval_id": "v12-inference-release-sha256-28efa375db3dd6a5dcbefae1e1681930c0bf552fabccea6c10393a1e3b424ad6",
+      "elapsed_seconds": 194.45957862504292,
+      "image_digest": "sha256:04b9ad62e9990fa7acf512adfb21668da07fb53e4eb8403d99325ee69da2a6a8",
+      "original_quality_status": "not_ready",
+      "production_deployment_authorized": false,
+      "registry_version_created": false,
+      "scope": "local_development_only",
+      "status": "locally_approved"
+    },
+    "flow": {
+      "api_first_page_seconds": 0.10081070801243186,
+      "batch_seconds": 3.3050300840404816,
+      "checked_at": "2026-10-02T16:06:41.546830+00:00",
+      "checks": [
+        "full_original_archive_verified_before_queue_deadline_starts",
+        "real_tcp_202_idempotency_auth_scope_conflict_and_exact_new_source_release",
+        "original_frozen_predictor_exact_repeatable_functionals_and_atomic_idempotent_publication",
+        "tcp_current_freshness_watermark_pagination_exact_lineage_and_default_namespace_isolation",
+        "original_two_jobs_and_all_224_evaluation_segments_preserved",
+        "fresh_sql_job_publication_current_api_view_historical_outputs_and_evaluation_survive_full_service_restart"
+      ],
+      "closed_rows": 3,
+      "curated_dataset_id": "curated-sha256-1d2b30564c3896f4b114ef647c6539cb62047f45e77dea1b61a0c97d0813f837",
+      "current_rows": 14,
+      "elapsed_seconds": 239.64610316697508,
+      "feature_set_id": "features-sha256-1a3e510dd6b1503b9f63862e900926d8c918b1a40c69bf6aa581e561a45cf5a4",
+      "freshness": {
+        "evaluated_at": "2026-10-02T16:06:14.009117Z",
+        "latest_complete_observation_date": "2026-09-30",
+        "max_observation_lag_days": 1,
+        "max_origin_age_seconds": 86400,
+        "max_source_watermark_origin_lag_seconds": 0,
+        "observation_lag_days": 1,
+        "origin_age_seconds": 57975.009117,
+        "policy_id": "forecast-read-v2",
+        "reason": "within_policy",
+        "source_completeness_status": "complete",
+        "source_watermark": "2026-10-01T23:59:59Z",
+        "source_watermark_age_seconds": 57975.009117,
+        "source_watermark_as_of": "2026-10-02T00:00:00Z",
+        "source_watermark_origin_lag_seconds": 0.0,
+        "source_watermark_policy_version": "daily-demand-1.0.0",
+        "status": "current"
+      },
+      "freshness_after_restart": {
+        "evaluated_at": "2026-10-02T16:06:38.715810Z",
+        "latest_complete_observation_date": "2026-09-30",
+        "max_observation_lag_days": 1,
+        "max_origin_age_seconds": 86400,
+        "max_source_watermark_origin_lag_seconds": 0,
+        "observation_lag_days": 1,
+        "origin_age_seconds": 57999.71581,
+        "policy_id": "forecast-read-v2",
+        "reason": "within_policy",
+        "source_completeness_status": "complete",
+        "source_watermark": "2026-10-01T23:59:59Z",
+        "source_watermark_age_seconds": 57999.71581,
+        "source_watermark_as_of": "2026-10-02T00:00:00Z",
+        "source_watermark_origin_lag_seconds": 0.0,
+        "source_watermark_policy_version": "daily-demand-1.0.0",
+        "status": "current"
+      },
+      "image_digest": "sha256:04b9ad62e9990fa7acf512adfb21668da07fb53e4eb8403d99325ee69da2a6a8",
+      "independent_campaign_backup": false,
+      "mean_median_interval_exactly_preserved": true,
+      "model_refits": 0,
+      "model_version": "4",
+      "original_quality_reclassified": false,
+      "original_segment_counts": {
+        "failed": 3,
+        "passed": 221
+      },
+      "predictions_sha256": "fd1781dfde3f9de32780f65a0e64319a18ab0fc6fc24721caa4d8df6f517652f",
+      "preflight_seconds": 206.87379270797828,
+      "production_deployment_authorized": false,
+      "profile_id": "batch-profile-sha256-f4ee6668bc7d8ee61068ba5fb10c6a3b91721658f4ce498e0ce355f86ec100d5",
+      "publication_id": "v12-forecasts-sha256-bc70b4f038d76a2af20a30656b2c9b086b15592e03a4d7c0530d1c4eae94eb40",
+      "published_rows": 14,
+      "receipt_id": "v12-computation-sha256-4a5afea1304d81fae0b6c3d581a4e10bb8d5941378709632cb739e0bdc10ccf4",
+      "release_id": "v12-model-release-sha256-3d4dcc63f23bf97368cc947a71a51c9cfbdb75b891be8ff3f5ea1bfbb19cbfa2",
+      "run_id": "run-d0541e4d2c30cc4edc93c64f438fd7e2",
+      "scope": "local_development_only",
+      "source_dataset_id": "source-sha256-fefb6fc4934763ab722c78fe3b9f91e737f5ea1b6731d7a937b033a16495d265",
+      "source_generation": false,
+      "stage": "fresh_end_to_end_current_and_restart_passed",
+      "stage_status": "fresh_local_pipeline_passed",
+      "status": "passed",
+      "total_historical_and_fresh_published_rows": 42,
+      "view_sha256": "588722b34e2e97d17a6bc9077389740eb47dbd7712e7f5a0936ce107149268ee",
+      "worker_image_physical_attestation": false
+    },
+    "immutable_training_pin_sha256": "29a0d01b7d4cdb66894764d5e2d8bb785323300ed532f4d4fa5f0e6f06bb39f6",
+    "preparation": {
+      "closed_rows": 3,
+      "elapsed_seconds": 47.89901804202236,
+      "feature_lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+      "feature_rows": 294,
+      "feature_set_id": "features-sha256-1a3e510dd6b1503b9f63862e900926d8c918b1a40c69bf6aa581e561a45cf5a4",
+      "histories": 21,
+      "model_refits": 0,
+      "origin": "2026-10-01",
+      "production_deployment_authorized": false,
+      "purpose": "fresh_synthetic_source_for_local_development_only",
+      "rows": 14,
+      "scope": {
+        "channel": "store",
+        "product_ids": [
+          "33984f28-9177-56c9-8021-e9489ff6a02e"
+        ],
+        "selling_location_ids": [
+          "a2bf632d-148c-5158-9315-23eb98ca2f26"
+        ]
+      },
+      "selection": "first_complete_known_calendar_series_including_confirmed_closed_days",
+      "snapshot_id": "snapshot-sha256-5220ea648765ab854e944d9a49a336946905a1890e71a9b3730e5700511b0e1c",
+      "source_dataset_id": "source-sha256-fefb6fc4934763ab722c78fe3b9f91e737f5ea1b6731d7a937b033a16495d265",
+      "source_watermark": {
+        "as_of_time": "2026-10-02T00:00:00Z",
+        "complete_through": "2026-10-01",
+        "completeness_status": "complete",
+        "meaning": "synthetic_sales_day_close_without_return_guarantee",
+        "policy_version": "daily-demand-1.0.0"
+      },
+      "stage": "completed",
+      "status": "source_features_prepared"
+    },
+    "producer": {
+      "actual_generation_base_commit": "599735a5fd13328e05f6100a07f644f4676e1ced",
+      "actual_generation_code_commit": "4fafaa0a8ef27861569bb9f497d193ba7c92ce4b",
+      "forecast_plan_days": 14,
+      "forecast_plan_version": "known-forecast-plans-1.0.0",
+      "future_observations_generated": false,
+      "generator_version": "0.9.1",
+      "observed_days": 56,
+      "ordinary_snapshot_schema_bytes_preserved": true,
+      "review_base_commit": "6ccbe3de0aefc97cc221a279d5fe83aa338b3601",
+      "review_code_commit": "f1cf180ba25a5750994591d90597a00d141323bb",
+      "review_pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/81",
+      "reviewed_snapshot_schema": {
+        "sha256": "22721a53b4a722b933968bb645b9ecf418bef9ea36f06fe01cf07e15b615fe79",
+        "size_bytes": 22627
+      },
+      "reviewed_source_schema": {
+        "sha256": "c9d8410bfe254d18d1bc6c67a75442b02269054e183fc49fffc2a40bdd4309e6",
+        "size_bytes": 24546
+      }
+    },
+    "promotion": {
+      "active_release_id": "v12-model-release-sha256-3d4dcc63f23bf97368cc947a71a51c9cfbdb75b891be8ff3f5ea1bfbb19cbfa2",
+      "after": {
+        "candidate": "4",
+        "champion": "4",
+        "rollback": "1"
+      },
+      "before": {
+        "candidate": "4",
+        "champion": "1",
+        "rollback": "2"
+      },
+      "decision_replayed_without_new_release": true,
+      "previous_release_id": "v12-model-release-sha256-ef0d32aea600b511e1d321a89cb5d630ca6942a195fba41076f3a0cc192b9d5d",
+      "production_deployment_authorized": false,
+      "request": {
+        "action": "promote",
+        "approval_id": "v12-inference-release-sha256-28efa375db3dd6a5dcbefae1e1681930c0bf552fabccea6c10393a1e3b424ad6",
+        "approval_sha256": "fc9f3bdf8c883ee0d68f4b49f28e9997290c8290df24071b7cefc0f976aa3962",
+        "decision_id": "decision-ai05-development-promote-fresh",
+        "image_digest": "sha256:04b9ad62e9990fa7acf512adfb21668da07fb53e4eb8403d99325ee69da2a6a8",
+        "mlflow_run_id": null,
+        "model_name": "retailops-demand-forecast-v12-development",
+        "model_version": "4",
+        "reason": "Controlled local promote of the separately reviewed final v12 development release; immutable queued and published pins are retained; no production deployment."
+      },
+      "result": {
+        "action": "promote",
+        "decision_id": "decision-ai05-development-promote-fresh",
+        "model_name": "retailops-demand-forecast-v12-development",
+        "model_version": "4",
+        "release_id": "v12-model-release-sha256-3d4dcc63f23bf97368cc947a71a51c9cfbdb75b891be8ff3f5ea1bfbb19cbfa2",
+        "replayed": false,
+        "runtime_status": "not_integrated"
+      },
+      "scope": "local_development_only",
+      "status": "passed"
+    },
+    "qualification": {
+      "closed_rows": 3,
+      "cold_load_seconds": 0.5512107500107959,
+      "compute_seconds": 0.013869791990146041,
+      "elapsed_seconds": 230.5788045419613,
+      "model_refits": 0,
+      "origin": "2026-10-01T23:59:59+00:00",
+      "original_model_status": "not_ready",
+      "outside_development_holdout": true,
+      "peak_rss_bytes": 83165184,
+      "predictions_sha256": "fd1781dfde3f9de32780f65a0e64319a18ab0fc6fc24721caa4d8df6f517652f",
+      "production_deployment_authorized": false,
+      "qualification_id": "v12-qualification-sha256-f072bd57a09d1a4b584d27a1084e357e2afb9618ab891404eb7dc87ed480cc02",
+      "repeatability_verified": true,
+      "rows": 14,
+      "scope": "local_development_only",
+      "source_generation": false,
+      "status": "passed"
+    },
+    "registration": {
+      "approval_id": "v12-inference-release-sha256-28efa375db3dd6a5dcbefae1e1681930c0bf552fabccea6c10393a1e3b424ad6",
+      "approval_sha256": "fc9f3bdf8c883ee0d68f4b49f28e9997290c8290df24071b7cefc0f976aa3962",
+      "elapsed_seconds": 207.98729133297456,
+      "mlflow_run_id": "8231090abfd74854bf4f5589805024fe",
+      "model_name": "retailops-demand-forecast-v12-development",
+      "model_version": "4",
+      "status": "registered"
+    },
+    "review_reports": {
+      "features": {
+        "sha256": "05dda94df54ad31f44d9f4998becf73ed077f97ea2c1fd63bcab6946a3641b62",
+        "size_bytes": 1104
+      },
+      "freshness_drift_compatibility": {
+        "sha256": "740735a6192bf2580d291e95c8212d2d4eb58d4c9fa64064c882d97d98c19260",
+        "size_bytes": 2124
+      },
+      "model_card": {
+        "sha256": "0f1568c057274c66d6cf293a751af43b86cee2ab0fd396c6e4228b5e10a8d56f",
+        "size_bytes": 1035
+      },
+      "pit": {
+        "sha256": "ce287081fc17822eb29dcbf2dbc7bd65d2c91466818c05429de1d6705a1586ea",
+        "size_bytes": 686
+      },
+      "protocol": {
+        "sha256": "7b0ede9d4240e2606dbf77d8f9f96825b69601999cbea45b808e5856a16a11b9",
+        "size_bytes": 613
+      },
+      "resources": {
+        "sha256": "7e8228096b71a78ba70d203508989a20a382515675103957e689736f3070b6a6",
+        "size_bytes": 515
+      },
+      "security_license": {
+        "sha256": "19c51781e41878149d73108cb2d13ac330bfc6c6d34c248b620e1eb64928628c",
+        "size_bytes": 968
+      },
+      "segments": {
+        "sha256": "e21025b2320f7b4206569ef084c7d27b46729d38c4a0ebd08c2baf42d8428ae5",
+        "size_bytes": 1658
+      },
+      "signature": {
+        "sha256": "64be2e71d02da1ae3bd5184ba27e21ea58c298eadd72c4b8a6077da7a33e6bf3",
+        "size_bytes": 691
+      },
+      "source": {
+        "sha256": "b0a98fcde4e26068a9e5457a3062df3b713e5d3e787a53272ef750bd916f57d4",
+        "size_bytes": 2710
+      }
+    },
+    "source_policy": {
+      "curated_descriptor_sha256": "1d2b30564c3896f4b114ef647c6539cb62047f45e77dea1b61a0c97d0813f837",
+      "feature_set_id": "features-sha256-1a3e510dd6b1503b9f63862e900926d8c918b1a40c69bf6aa581e561a45cf5a4",
+      "input_role": "inference",
+      "input_schema_sha256": "46006eaa9d0feb2e2ab1e3355149b6553c370370217e21e54a4d817bde1cd3ab",
+      "mode": "verified_inference_snapshot",
+      "snapshot_id": "snapshot-sha256-5220ea648765ab854e944d9a49a336946905a1890e71a9b3730e5700511b0e1c",
+      "source_change": "new_qualification_and_review_required",
+      "source_dataset_id": "source-sha256-fefb6fc4934763ab722c78fe3b9f91e737f5ea1b6731d7a937b033a16495d265",
+      "version": "forecast-v12-source-policy-1.1.0"
+    }
+  },
+  "future_operator_work": [
+    "separate_migration_of_the_long_lived_stack_before_its_use",
+    "independent_campaign_backup_before_production"
+  ],
   "metadata": {
     "checks": [
       "real_tcp_original_full_campaign_evaluation_preserved_221_passed_3_failed",
@@ -219,6 +506,14 @@
     "whole_scope_products": 100
   },
   "operational_helpers": {
+    "ai05-prepare-fresh-v12-source.py": {
+      "sha256": "5dab24cb610bc54d822e795ee6901116d1a6f75b6df256100eb838e923085715",
+      "size_bytes": 3245
+    },
+    "ai05-qualify-fresh-v12.py": {
+      "sha256": "b865b773ed317ae0be35fc7de8c28ad8c3306d316712a4678470cda145b9a3ee",
+      "size_bytes": 4470
+    },
     "ai05-qualify-real-v12.py": {
       "sha256": "aaacd9a194ab1ca7c8711388c9e7117564cf7fe13cc36d64f8cfacabd11f7e0a",
       "size_bytes": 4446
@@ -235,13 +530,29 @@
       "sha256": "9474331c7d50d1d09fbd36bb08bb7e43464706ad3ca1f97dcb44011158f1e5bf",
       "size_bytes": 5678
     },
+    "ai05-register-fresh-v12.py": {
+      "sha256": "9c8704cc6a1bd5af5c293446e823666e89cfc6bc63dd2c8ac7f9a947c5a47101",
+      "size_bytes": 5149
+    },
     "ai05-register-real-v12.py": {
       "sha256": "b2867b342c44e751a0d4c4ff20cc550c006a77c3b46fc77b696dbb91ef6d5994",
       "size_bytes": 4877
     },
+    "ai05-review-fresh-v12.py": {
+      "sha256": "3b8843f8345b1605e3a49d44e41b20a86fc5a03e52a5e3db8509aa6d69837e3c",
+      "size_bytes": 9689
+    },
     "ai05-review-real-v12.py": {
       "sha256": "d4b139b19821744afe3c26008e96ca41ebd4141e947160be69257325df1bfd5e",
       "size_bytes": 8732
+    },
+    "ai05-run-fresh-v12-flow.py": {
+      "sha256": "f9ad6f03409267e3264ebe3c00617e0a0faa5ae8f9b92f7be1efba29627cd2a1",
+      "size_bytes": 12793
+    },
+    "ai05-upgrade-fresh-api.py": {
+      "sha256": "48bde331e4cc6fafd954f3511162c909914d06dfa9cc29a5f5c6ff8cdc1daa3f",
+      "size_bytes": 4874
     },
     "ai05-verify-real-v12-import.py": {
       "sha256": "7449763310fd83e7b8b1344dce5d9ed3a5f585186ec637d43b37ac0026b764c4",
@@ -326,14 +637,25 @@
     "status": "passed"
   },
   "remaining": [
-    "fresh_small_snapshot_and_explicit_new_source_qualification",
-    "remote_required_ci",
-    "separate_operator_migration_of_the_long_lived_stack"
+    "remote_required_ci_for_both_reviewed_changes",
+    "protected_pr_integration"
   ],
   "scope": "local_development_only",
-  "stage_status": "open",
-  "status": "local_historical_pipeline_passed",
+  "stage_status": "local_complete_publication_pending",
+  "status": "local_historical_and_fresh_pipeline_passed",
   "validation": {
+    "backup_isolation_regression": {
+      "errors": "0",
+      "failures": "0",
+      "file": "ai05-backup-isolation-regression.xml",
+      "receipt": {
+        "sha256": "434570319af4b27bef194742351445bca177cbf19a9dae385a5cc7eca28652ad",
+        "size_bytes": 6132
+      },
+      "skipped": "0",
+      "tests": "44",
+      "time": "0.769"
+    },
     "bounded_publication_regression": {
       "errors": "0",
       "failures": "0",
@@ -401,6 +723,18 @@
       "skipped": "0",
       "tests": "1",
       "time": "19.082"
+    },
+    "forecast_watermark_regression": {
+      "errors": "0",
+      "failures": "0",
+      "file": "ai05-forecast-watermark-regression.xml",
+      "receipt": {
+        "sha256": "8abf6334e89657f173c11ace00d9b38d073338baffecd8d8c84d61740cee8b90",
+        "size_bytes": 6955
+      },
+      "skipped": "0",
+      "tests": "45",
+      "time": "20.289"
     },
     "full_local_suite": {
       "errors": "0",
@@ -476,7 +810,62 @@
       "timestamp": "2026-10-02T13:11:11.238909+02:00"
     },
     "mypy_sources": 319,
+    "new_source_clean_linux": {
+      "failed": 0,
+      "log": {
+        "sha256": "e25c726f829d3052c4127e0526b6758af744ba0959b4d457934c450262dd5f37",
+        "size_bytes": 100
+      },
+      "network": "none",
+      "passed": 60
+    },
+    "new_source_regression": {
+      "errors": "0",
+      "failures": "0",
+      "file": "ai05-new-source-regression.xml",
+      "receipt": {
+        "sha256": "bb8356d273180c429967637cc3dd05b323c62ff71006277b79c6b5cadc60bb9a",
+        "size_bytes": 21946
+      },
+      "skipped": "0",
+      "tests": "163",
+      "time": "427.653"
+    },
     "package_built": true,
+    "previous_complete_remote_checks": {
+      "commit": "4894945b186efef140a6294ec8da0a443cfb572c",
+      "elapsed_seconds": 2298.22,
+      "failed": 1,
+      "failure": "test_restore_requires_empty_target_before_writing depended on local compose.env; fixed in e6419d0",
+      "full_remote_suite_passed": false,
+      "passed": 1707,
+      "persistence": "success",
+      "run_id": 37000420697
+    },
+    "producer_current_main_full_suite": {
+      "errors": "0",
+      "failures": "0",
+      "file": "ai05-forecast-source-final-regression.xml",
+      "receipt": {
+        "sha256": "74cbf834eedb5907613ee05dd58fc8991d325c23a056d7298af349fdfaa177a1",
+        "size_bytes": 113088
+      },
+      "skipped": "0",
+      "tests": "772",
+      "time": "183.597"
+    },
+    "producer_watermark_subset": {
+      "errors": "0",
+      "failures": "0",
+      "file": "ai05-forecast-watermark-regression.xml",
+      "receipt": {
+        "sha256": "89230ca4c69ede4bcad34fb2fa6f6898ccdbe2b7cf7bd825638836d8276dafd9",
+        "size_bytes": 8574
+      },
+      "skipped": "0",
+      "tests": "56",
+      "time": "25.727"
+    },
     "publication_lock_native": {
       "checked_at": "2026-10-02T10:52:40.031351+00:00",
       "checks": [
@@ -529,8 +918,29 @@
       "status": "passed",
       "winner_row_lock_delay_seconds": 4.5
     },
-    "remote_required_ci": "pending",
-    "ruff_files": 532,
+    "remote_required_ci": "pending_for_final_publication_head",
+    "reviewed_ai_code_commit": "556d349027ca9376a0ce130855a30ac8c2f861bd",
+    "reviewed_code_required_ci": {
+      "checks_log": {
+        "sha256": "a73034a47062c979386f65a7cee3438af88d9d048ee571ccc7217de004bee6a3",
+        "size_bytes": 46120
+      },
+      "commit": "556d349027ca9376a0ce130855a30ac8c2f861bd",
+      "failed_tests": 0,
+      "gates": {
+        "checks": "success",
+        "persistence": "success",
+        "required_result": "success",
+        "secrets": "success"
+      },
+      "passed_tests": 1730,
+      "pull_request_run_id": 37028425021,
+      "push_run_id": 37028419039,
+      "pytest_elapsed_seconds": 2261.81,
+      "run_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37028425021",
+      "status": "passed"
+    },
+    "ruff_files": 534,
     "safe_lifecycle_diagnostic_regression": {
       "errors": "0",
       "failures": "0",
@@ -544,7 +954,20 @@
       "tests": "52",
       "time": "1.014",
       "timestamp": "2026-10-02T12:16:58.517469+02:00"
+    },
+    "source_remote_required_ci": "pending",
+    "source_schema_compatibility_followup": {
+      "failed_job_id": 110919367457,
+      "failed_run_id": 37031537280,
+      "fix_commit": "f1cf180ba25a5750994591d90597a00d141323bb",
+      "new_run_id": 37033310043,
+      "ordinary_schema_sha256": {
+        "snapshot": "ec040a294eff7a898eba59572dc7cf2deec01b29a48ed555b493154ce0694447",
+        "source": "22938590dcf0183e8c5a7f83a648a7e037dad794e71a0e26158bb6aef43f75a9"
+      },
+      "pinned_independent_consumer": "2574c06794b7b4f86393f23db1d9e97c16413706",
+      "reason": "unreviewed_inventory_contract from expanded metadata schema bytes in ordinary snapshots"
     }
   },
-  "version": "ai05-real-v12-development-acceptance-1.0.0"
+  "version": "ai05-real-v12-development-acceptance-1.1.0"
 }

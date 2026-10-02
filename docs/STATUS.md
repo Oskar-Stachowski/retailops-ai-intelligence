@@ -1,18 +1,28 @@
 # Aktualny status
 
-**AI 05 — rzeczywisty lokalny przepływ finalnego v12 jest odebrany.**
+**AI 05 — lokalny przepływ finalnego v12 jest odebrany także na świeżym snapshocie.**
 [Raport i pomiary](evidence/05-v12-real-serving.md) oraz
 [wersjonowany zapis dowodów](evidence/05-v12-real-serving.json) obejmują cały
 import 664 plików / około 29,8 GiB, kwalifikację oryginalnego predictora,
-dwie działające wersje registry, dwa trwałe batch’e i 28 opublikowanych wierszy.
+trzy działające wersje registry, trzy udane trwałe batch’e i 42 opublikowane wiersze.
 Restart zachowuje zadanie i input; rollback nie przepina wcześniej przyjętego
-runa; odrzucenie kandydata nie zmienia runtime. Wyniki obu wydań są identyczne.
+runa; odrzucenie kandydata nie zmienia runtime. Wyniki obu historycznych wydań są identyczne.
+
+Świeży source ma 56 dni historii do 2026-10-01 oraz 14 dni jawnych znanych
+planów, bez przyszłych obserwacji. Pełny import i niezależna kontrola watermarku,
+osobna source policy 1.1.0, wszystkie 10 raportów, wersja development 4 i worker
+dały **14/14 `current`**, w tym 3 potwierdzone zamknięte dni jako `null`.
+Batch z publikacją trwał 3,31 s, pierwsza strona API około 0,10 s.
+Restart PostgreSQL/MLflow/API zachował job, dokładny hash i aktualny odczyt.
+Kod producenta na aktualnym `main` przeszedł 772/772 testów danych.
+Kod AI 05 z 556d349 ma zielony Required CI oraz 1730/1730 testów;
+późniejszy commit raportu wymaga własnej kontroli publikacji.
 
 To osobny [lokalny namespace developerski](forecast-v12-development.md).
 Domyślne API nie pokazuje jego danych. Pełna ocena 100 produktów / 2 lokalizacji
 zachowuje 221 passed, 3 failed i oryginalne `not_ready`; ograniczony viewer
 nie widzi zbiorczego raportu. Origin 2026-09-16 pozostaje historyczny i API
-zwraca `stale`. Nie było refitu ani zmiany oryginalnych artefaktów AI 04.
+zwraca `stale` dla wcześniejszych prognoz. Nie było refitu ani zmiany oryginalnych artefaktów AI 04.
 
 Nowy odbiór [backup/restore](forecast-v12-backup.md) sprawdza cały stan obu baz
 PostgreSQL i artefaktów na małych fixture z head `0019_v12_development`.
@@ -20,8 +30,10 @@ Nie jest niezależnym backupem rzeczywistej kampanii; klon APFS na tym samym
 dysku także nim nie jest. Osobny trwały stos odbioru ma tę migrację;
 dotychczasowego długotrwałego stosu nie zmieniono.
 
-**AI 05 pozostaje otwarte:** świeży mały snapshot wymaga osobnej kwalifikacji
-nowego źródła i odbioru batch/API. Zdalny Required CI jest kolejną bramką.
+**Formalna publikacja AI 05 pozostaje otwarta:** wymagane są zielone Required CI
+bieżących commitów i integracja [AI PR #8](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/8)
+oraz [source PR #81](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/81).
+Lokalny świeży snapshot, kwalifikacja i odbiór batch/API są zakończone.
 Produkcji nie dopuszczono. Historyczne raporty poszczególnych przyrostów
 zachowują swoje wcześniejsze wyniki i granice.
 
