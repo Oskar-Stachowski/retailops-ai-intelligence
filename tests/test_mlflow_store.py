@@ -135,6 +135,11 @@ def test_backup_receipts_and_unsafe_archive_rejected(tmp_path: Path) -> None:
 def test_restore_requires_empty_target_before_writing(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    monkeypatch.setattr(stack, "LOCAL", tmp_path / "compose.env")
+    stack.environment_file(create=True)
+    monkeypatch.setattr(
+        store.shutil, "which", lambda name: "/unit-test/docker" if name == "docker" else None
+    )
     archive = bundle(tmp_path)
     commands: list[list[str]] = []
 
