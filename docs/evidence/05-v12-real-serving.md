@@ -4,7 +4,8 @@ Odbiór z 2026-10-02 używa oryginalnego, końcowego eksportu AI 04 oraz
 źródeł odtworzonych z zachowanego snapshotu. [Zapis dowodów](05-v12-real-serving.json)
 wiąże import, kwalifikację, dwa trwałe zadania, decyzje registry i odczyt API.
 To lokalny przepływ developerski. **AI 05 pozostaje otwarte**, ponieważ
-trzeba jeszcze odebrać świeży mały snapshot i zdalny Required CI.
+trzeba jeszcze odebrać świeży mały snapshot. Wynik Required CI należy
+sprawdzać dla aktualnego commita [PR #8](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/8).
 
 | Sprawdzenie | Rzeczywisty wynik |
 |---|---|
@@ -55,6 +56,34 @@ Cleanup nadal odmawia usunięcia bez dokładnej zgodności projektu i usługi;
 nie używa globalnego prune. Poprawka ma 57 testów oraz osobny odbiór dwóch
 pustych obrazów `scratch` z rzeczywistym Compose i usunięciem tylko ich tagów.
 To dowód oznaczenia własności, nie dodatkowy odbiór modelu czy backupu.
+
+Kolejny Required CI przeszedł registry, restart, oba backupy oraz kolejkę,
+ale wykrył zbyt wąskie założenie testu współbieżności. Drugi identyczny request
+może otrzymać SQLSTATE `55P03` po 3 s oczekiwania na blokadę. Test ponawia go
+dopiero po zakończeniu pierwszej transakcji i wymaga jednego zadania.
+Konkurencyjne publikacje wymagają jednego sukcesu i dokładnie jednego nowego
+manifestu z dwoma kompletnymi partycjami; inne błędy SQL nadal kończą test.
+Natywna próba wymusiła blokady po 4,5 s przy niezmienionym limicie 3 s:
+drugi request i druga publikacja otrzymały odmowę, a retry i restart nie
+utworzyły duplikatów. Kontrole mają 62 testy regresji.
+
+Pełny job `checks` zakończył się po 30 minutach na około 96% testów.
+Przed zatrzymaniem ujawnił zależność unit testów backupu od lokalnego
+`compose.env` oraz błąd subprocess testu inference. Fixture backupu tworzy
+teraz własną prywatną konfigurację i nie wymaga prawdziwego Docker CLI;
+34 przypadki przeszły w czystym Linuxie bez sieci. Limit całego joba wynosi
+45 minut; nie zmieniono zestawu kontroli ani limitów workera.
+
+Pomiar pamięci Linuxa też został poprawiony. `getrusage().ru_maxrss`
+zachowuje użycie pamięci sprzed `exec`, co potwierdza
+[dokumentacja Linux](https://www.man7.org/linux/man-pages/man2/getrusage.2.html).
+Izolowana próba z rodzicem używającym 650 MiB wykazała odziedziczony wynik
+około 663 MiB, choć bieżący program potrzebował około 20 MiB. Receipt
+korzysta teraz z `VmHWM` bieżącego procesu. Rzeczywista dodatkowa alokacja
+64 MiB podniosła pomiar do około 84 MiB. Brak lub niepoprawny pomiar blokuje
+wykonanie; supervisor i limity pozostają wymagane. Przeszło 108 testów
+pomiaru i runtime v1/v12. Pierwotne receipt i pomiary rzeczywistego v12
+z macOS pozostają niezmienione.
 
 Nowy odbiór [backup/restore](../forecast-v12-backup.md) działa z rewizją
 `0019_v12_development`, prawdziwymi PostgreSQL dla AI i MLflow oraz 43 małymi
