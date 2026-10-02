@@ -1,0 +1,118 @@
+{
+  "$defs": {
+    "EventDelivery": {
+      "additionalProperties": false,
+      "properties": {
+        "body_utf8": {
+          "maxLength": 65536,
+          "title": "Body Utf8",
+          "type": "string"
+        },
+        "kind": {
+          "const": "event",
+          "title": "Kind",
+          "type": "string"
+        },
+        "offset": {
+          "exclusiveMaximum": 1024,
+          "minimum": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "partition": {
+          "const": 0,
+          "title": "Partition",
+          "type": "integer"
+        },
+        "received_at": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+          "title": "Received At",
+          "type": "string"
+        },
+        "record_id": {
+          "pattern": "^raw-record-sha256-[0-9a-f]{64}$",
+          "title": "Record Id",
+          "type": "string"
+        },
+        "topic": {
+          "const": "retailops.sales.v1",
+          "title": "Topic",
+          "type": "string"
+        }
+      },
+      "required": [
+        "record_id",
+        "received_at",
+        "kind",
+        "topic",
+        "partition",
+        "offset",
+        "body_utf8"
+      ],
+      "title": "EventDelivery",
+      "type": "object"
+    },
+    "ProgressDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "after_offset": {
+          "exclusiveMaximum": 1024,
+          "minimum": -1,
+          "title": "After Offset",
+          "type": "integer"
+        },
+        "complete_through": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+          "title": "Complete Through",
+          "type": "string"
+        },
+        "kind": {
+          "const": "progress",
+          "title": "Kind",
+          "type": "string"
+        },
+        "received_at": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+          "title": "Received At",
+          "type": "string"
+        },
+        "record_id": {
+          "pattern": "^raw-record-sha256-[0-9a-f]{64}$",
+          "title": "Record Id",
+          "type": "string"
+        },
+        "scope": {
+          "const": "selected_sales_fixture",
+          "title": "Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "record_id",
+        "received_at",
+        "kind",
+        "scope",
+        "after_offset",
+        "complete_through"
+      ],
+      "title": "ProgressDeclaration",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "discriminator": {
+    "mapping": {
+      "event": "#/$defs/EventDelivery",
+      "progress": "#/$defs/ProgressDeclaration"
+    },
+    "propertyName": "kind"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/EventDelivery"
+    },
+    {
+      "$ref": "#/$defs/ProgressDeclaration"
+    }
+  ]
+}

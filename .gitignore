@@ -45,3 +45,6 @@ api-client-credentials.json
 !data/fixtures/inventory-v1_1.md
 !data/fixtures/anomaly-v1_2.zip
 !data/fixtures/anomaly-v1_2.md
+!data/fixtures/raw-dq-v1.zip
+!data/fixtures/raw-dq-v1.md
+!data/fixtures/raw-dq-v1.lineage.json

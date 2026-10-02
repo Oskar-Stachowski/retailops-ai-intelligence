@@ -1,0 +1,800 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://retailops.local/contracts/realtime-events-v1.schema.json",
+  "title": "RetailOps legacy realtime envelope and payloads v1.0",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "topic",
+    "schema_version",
+    "source",
+    "correlation_id",
+    "occurred_at",
+    "ingested_at",
+    "payload"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "format": "uuid",
+      "minLength": 1
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "alert_created",
+        "anomaly_detected",
+        "forecast_generated",
+        "inventory_snapshot_recorded",
+        "order_created",
+        "price_changed",
+        "promotion_ended",
+        "promotion_started",
+        "replenishment_completed",
+        "return_completed",
+        "sale_completed",
+        "stock_changed",
+        "workflow_action_performed"
+      ]
+    },
+    "topic": {
+      "type": "string",
+      "enum": [
+        "retailops.intelligence.v1",
+        "retailops.inventory.v1",
+        "retailops.operations.v1",
+        "retailops.pricing.v1",
+        "retailops.sales.v1"
+      ]
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "source": {
+      "type": "string",
+      "not": {"const": "retailops.consumer.quarantine"},
+      "minLength": 1
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ingested_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "event_type": {
+          "const": "alert_created"
+        },
+        "topic": {
+          "const": "retailops.operations.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/alert_created"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "anomaly_detected"
+        },
+        "topic": {
+          "const": "retailops.intelligence.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/anomaly_detected"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "forecast_generated"
+        },
+        "topic": {
+          "const": "retailops.intelligence.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/forecast_generated"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "inventory_snapshot_recorded"
+        },
+        "topic": {
+          "const": "retailops.inventory.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/inventory_snapshot_recorded"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "order_created"
+        },
+        "topic": {
+          "const": "retailops.sales.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/order_created"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "price_changed"
+        },
+        "topic": {
+          "const": "retailops.pricing.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/price_changed"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "promotion_ended"
+        },
+        "topic": {
+          "const": "retailops.pricing.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/promotion_ended"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "promotion_started"
+        },
+        "topic": {
+          "const": "retailops.pricing.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/promotion_started"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "replenishment_completed"
+        },
+        "topic": {
+          "const": "retailops.inventory.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/replenishment_completed"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "return_completed"
+        },
+        "topic": {
+          "const": "retailops.sales.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/return_completed"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "sale_completed"
+        },
+        "topic": {
+          "const": "retailops.sales.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/sale_completed"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "stock_changed"
+        },
+        "topic": {
+          "const": "retailops.inventory.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/stock_changed"
+        }
+      }
+    },
+    {
+      "properties": {
+        "event_type": {
+          "const": "workflow_action_performed"
+        },
+        "topic": {
+          "const": "retailops.operations.v1"
+        },
+        "payload": {
+          "$ref": "#/$defs/workflow_action_performed"
+        }
+      }
+    }
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "alert_created": {
+      "type": "object",
+      "required": [
+        "product_id",
+        "alert_id",
+        "severity",
+        "title"
+      ],
+      "properties": {
+        "alert_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alert_type": {
+          "type": "string"
+        },
+        "anomaly_id": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recommended_action": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "anomaly_detected": {
+      "type": "object",
+      "required": [
+        "product_id",
+        "store_id",
+        "severity"
+      ],
+      "properties": {
+        "actual": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "anomaly_id": {
+          "type": "string"
+        },
+        "anomaly_type": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "expected": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "metric": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "score": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "severity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "store_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "forecast_generated": {
+      "type": "object",
+      "required": [
+        "product_id",
+        "store_id",
+        "predicted_demand"
+      ],
+      "properties": {
+        "confidence": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "forecast_date": {
+          "type": "string"
+        },
+        "forecast_id": {
+          "type": "string"
+        },
+        "horizon": {
+          "type": "string"
+        },
+        "model_version": {
+          "type": "string"
+        },
+        "predicted_demand": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$",
+          "minLength": 1
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "store_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "inventory_snapshot_recorded": {
+      "type": "object",
+      "required": [
+        "inventory_snapshot_id",
+        "product_id",
+        "warehouse_id",
+        "stock_quantity",
+        "recorded_at"
+      ],
+      "properties": {
+        "inventory_snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recorded_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stock_quantity": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$",
+          "minLength": 1
+        },
+        "unit_of_measure": {
+          "type": "string"
+        },
+        "warehouse_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "order_created": {
+      "type": "object",
+      "required": [
+        "store_id",
+        "channel",
+        "order_total"
+      ],
+      "properties": {
+        "channel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currency": {
+          "type": "string"
+        },
+        "customer_segment": {
+          "type": "string"
+        },
+        "order_id": {
+          "type": "string"
+        },
+        "order_total": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$",
+          "minLength": 1
+        },
+        "priority": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "store_code": {
+          "type": "string"
+        },
+        "store_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "price_changed": {
+      "type": "object",
+      "required": [
+        "product_id",
+        "old_price",
+        "new_price"
+      ],
+      "properties": {
+        "currency": {
+          "type": "string"
+        },
+        "effective_from": {
+          "type": "string"
+        },
+        "effective_to": {
+          "type": "string"
+        },
+        "new_price": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$",
+          "minLength": 1
+        },
+        "old_price": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "price_history_id": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string"
+        },
+        "sku": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "promotion_ended": {
+      "type": "object",
+      "required": [
+        "promotion_id",
+        "product_id",
+        "ended_at"
+      ],
+      "properties": {
+        "ended_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "post_promotion_effect": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promotion_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "promotion_started": {
+      "type": "object",
+      "required": [
+        "promotion_id",
+        "product_id",
+        "starts_at",
+        "ends_at"
+      ],
+      "properties": {
+        "discount_percent": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "ends_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_uplift": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promotion_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promotion_type": {
+          "type": "string"
+        },
+        "starts_at": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "replenishment_completed": {
+      "type": "object",
+      "required": [
+        "replenishment_id",
+        "product_id",
+        "warehouse_id",
+        "quantity"
+      ],
+      "properties": {
+        "lead_time_days": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$",
+          "minLength": 1
+        },
+        "replenishment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "supplier_id": {
+          "type": "string"
+        },
+        "warehouse_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "return_completed": {
+      "type": "object",
+      "required": [
+        "product_id",
+        "store_id",
+        "channel",
+        "quantity",
+        "refund_amount",
+        "reason"
+      ],
+      "properties": {
+        "channel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "order_id": {
+          "type": "string"
+        },
+        "order_item_id": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "refund_amount": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$",
+          "minLength": 1
+        },
+        "return_id": {
+          "type": "string"
+        },
+        "store_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "sale_completed": {
+      "type": "object",
+      "required": [
+        "product_id",
+        "store_id",
+        "channel",
+        "quantity",
+        "total_amount"
+      ],
+      "properties": {
+        "channel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currency": {
+          "type": "string"
+        },
+        "data_quality_status": {
+          "type": "string"
+        },
+        "latent_demand": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "observed_sales": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "order_id": {
+          "type": "string"
+        },
+        "order_item_id": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promotion_applied": {
+          "type": "boolean"
+        },
+        "quantity": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$",
+          "minLength": 1
+        },
+        "sale_id": {
+          "type": "string"
+        },
+        "sku": {
+          "type": "string"
+        },
+        "stockout_flag": {
+          "type": "boolean"
+        },
+        "store_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "total_amount": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$",
+          "minLength": 1
+        },
+        "unit_price": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "stock_changed": {
+      "type": "object",
+      "required": [
+        "product_id",
+        "warehouse_id",
+        "quantity_delta"
+      ],
+      "properties": {
+        "movement_type": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quantity_delta": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string"
+        },
+        "reason_code": {
+          "type": "string"
+        },
+        "stock_after": {
+          "type": "string",
+          "pattern": "^(?:|-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)$"
+        },
+        "stock_movement_id": {
+          "type": "string"
+        },
+        "store_id": {
+          "type": "string"
+        },
+        "warehouse_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "workflow_action_performed": {
+      "type": "object",
+      "required": [
+        "workflow_action_id",
+        "alert_id",
+        "action_type",
+        "new_status"
+      ],
+      "properties": {
+        "action_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alert_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "comment": {
+          "type": "string"
+        },
+        "new_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "previous_status": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "string"
+        },
+        "workflow_action_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

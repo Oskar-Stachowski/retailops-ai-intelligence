@@ -1,0 +1,76 @@
+{
+  "contract_name": "retailops_realtime_events",
+  "version": "1.1.0",
+  "status": "legacy-v1-executable",
+  "owner": "RetailOps platform",
+  "schema_file": "realtime-events.v1.schema.json",
+  "supported_schema_versions": [
+    "1.0"
+  ],
+  "event_type_topics": {
+    "alert_created": "retailops.operations.v1",
+    "anomaly_detected": "retailops.intelligence.v1",
+    "forecast_generated": "retailops.intelligence.v1",
+    "inventory_snapshot_recorded": "retailops.inventory.v1",
+    "order_created": "retailops.sales.v1",
+    "price_changed": "retailops.pricing.v1",
+    "promotion_ended": "retailops.pricing.v1",
+    "promotion_started": "retailops.pricing.v1",
+    "replenishment_completed": "retailops.inventory.v1",
+    "return_completed": "retailops.sales.v1",
+    "sale_completed": "retailops.sales.v1",
+    "stock_changed": "retailops.inventory.v1",
+    "workflow_action_performed": "retailops.operations.v1"
+  },
+  "supported_event_types": [
+    "alert_created",
+    "anomaly_detected",
+    "forecast_generated",
+    "inventory_snapshot_recorded",
+    "order_created",
+    "price_changed",
+    "promotion_ended",
+    "promotion_started",
+    "replenishment_completed",
+    "return_completed",
+    "sale_completed",
+    "stock_changed",
+    "workflow_action_performed"
+  ],
+  "supported_topics": [
+    "retailops.intelligence.v1",
+    "retailops.inventory.v1",
+    "retailops.operations.v1",
+    "retailops.pricing.v1",
+    "retailops.sales.v1"
+  ],
+  "envelope": {
+    "required_fields": [
+      "event_id",
+      "event_type",
+      "topic",
+      "schema_version",
+      "source",
+      "correlation_id",
+      "occurred_at",
+      "ingested_at",
+      "payload"
+    ],
+    "idempotency_key": "event_id",
+    "ordering_hint": "occurred_at",
+    "payload_format": "json"
+  },
+  "identity": {
+    "generator_event_id": "uuid5(seed, source, event_type, natural_key, canonical revision digest)",
+    "revision_digest": "sha256(canonical JSON of payload, occurred_at and ingested_at)",
+    "replay": "same source, natural key and revision => same event_id",
+    "new_revision": "changed facts or availability => new event_id",
+    "legacy_external_ids": "accepted as provided; business-key revision curation belongs to AI 10"
+  },
+  "persistence": {
+    "event_log_table": "realtime_event_log",
+    "metric_observation_table": "live_metric_observations",
+    "consumer_state_table": "realtime_consumer_state"
+  },
+  "claim_boundary": "Legacy v1 event validation and producer identity only. Durable ACK/DLQ, business-key replacement and intelligence.v2 are separate AI 10 work."
+}

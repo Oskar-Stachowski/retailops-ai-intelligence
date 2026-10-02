@@ -1,0 +1,244 @@
+{
+  "$defs": {
+    "Binding": {
+      "additionalProperties": false,
+      "properties": {
+        "projection": {
+          "const": "legacy_sale_completed_operational_allowlist_v1",
+          "title": "Projection",
+          "type": "string"
+        },
+        "selection_policy": {
+          "const": "chronological_equally_spaced_inclusive_endpoints_v1",
+          "title": "Selection Policy",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "source_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Descriptor Sha256",
+          "type": "string"
+        },
+        "source_event_count": {
+          "maximum": 512,
+          "minimum": 12,
+          "title": "Source Event Count",
+          "type": "integer"
+        },
+        "source_events_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Events Sha256",
+          "type": "string"
+        },
+        "source_facts_ready": {
+          "const": true,
+          "title": "Source Facts Ready",
+          "type": "boolean"
+        },
+        "source_sales_count": {
+          "maximum": 100000,
+          "minimum": 12,
+          "title": "Source Sales Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "source_descriptor_sha256",
+        "source_events_sha256",
+        "source_event_count",
+        "source_sales_count",
+        "source_facts_ready",
+        "selection_policy",
+        "projection"
+      ],
+      "title": "Binding",
+      "type": "object"
+    },
+    "Descriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "binding_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Binding Sha256",
+          "type": "string"
+        },
+        "curated_completeness": {
+          "const": "not_qualified",
+          "default": "not_qualified",
+          "title": "Curated Completeness",
+          "type": "string"
+        },
+        "evaluation_truth": {
+          "const": "excluded",
+          "default": "excluded",
+          "title": "Evaluation Truth",
+          "type": "string"
+        },
+        "input_records": {
+          "maximum": 2048,
+          "minimum": 1,
+          "title": "Input Records",
+          "type": "integer"
+        },
+        "model_readiness": {
+          "const": "not_qualified",
+          "default": "not_qualified",
+          "title": "Model Readiness",
+          "type": "string"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "raw_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Raw Sha256",
+          "type": "string"
+        },
+        "replay_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Replay Sha256",
+          "type": "string"
+        },
+        "runtime": {
+          "$ref": "#/$defs/Runtime"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "const": "offline_selected_sales_only",
+          "default": "offline_selected_sales_only",
+          "title": "Scope",
+          "type": "string"
+        },
+        "source_binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "transport_durability_proven": {
+          "const": false,
+          "default": false,
+          "title": "Transport Durability Proven",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "parent",
+        "source_binding",
+        "raw_sha256",
+        "binding_sha256",
+        "runtime",
+        "replay_sha256",
+        "input_records"
+      ],
+      "title": "Descriptor",
+      "type": "object"
+    },
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "qualification_id": {
+          "title": "Qualification Id",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "curated_dataset_id",
+        "curated_descriptor_sha256",
+        "source_dataset_id",
+        "snapshot_id",
+        "qualification_id"
+      ],
+      "title": "Parent",
+      "type": "object"
+    },
+    "Runtime": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "contract_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Contract Files",
+          "type": "object"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "version": {
+          "const": "ai-selected-sales-replay-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "code_files",
+        "contract_files",
+        "dependency_lock_sha256",
+        "python_version"
+      ],
+      "title": "Runtime",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "descriptor": {
+      "$ref": "#/$defs/Descriptor"
+    },
+    "dq_replay_id": {
+      "pattern": "^dq-replay-sha256-[0-9a-f]{64}$",
+      "title": "Dq Replay Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "dq_replay_id",
+    "descriptor"
+  ],
+  "title": "Manifest",
+  "type": "object"
+}
