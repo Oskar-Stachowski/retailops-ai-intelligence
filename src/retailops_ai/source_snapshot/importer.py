@@ -71,7 +71,7 @@ def verify_snapshot(
     verify_metadata(root, snapshot, required_use_cases)
     with tempfile.TemporaryDirectory(prefix=".typed-verify-", dir=scratch) as temporary:
         verify_tables(root, snapshot, Path(temporary), limits)
-        if snapshot.manifest["schema_version"] == "1.1.0":
+        if snapshot.manifest["schema_version"] in {"1.1.0", "1.2.0"}:
             from retailops_ai.source_snapshot.inventory_projection import verify_projection
 
             verify_projection(root, snapshot, Path(temporary), limits)
@@ -134,8 +134,13 @@ def copy_snapshot(source: Path, target: Path, snapshot: Snapshot, limits: Limits
 
 
 def receipt(snapshot: Snapshot) -> dict[str, Any]:
-    if snapshot.manifest["schema_version"] == "1.1.0":
-        from retailops_ai.source_snapshot.inventory_protocol import resource_bytes as handoff_bytes
+    if snapshot.manifest["schema_version"] in {"1.1.0", "1.2.0"}:
+        from retailops_ai.source_snapshot.inventory_protocol import (
+            resource_bytes as inventory_bytes,
+        )
+
+        def handoff_bytes(name: str) -> bytes:
+            return inventory_bytes(name, snapshot.manifest["schema_version"])
     else:
         handoff_bytes = resource_bytes
     code = {
