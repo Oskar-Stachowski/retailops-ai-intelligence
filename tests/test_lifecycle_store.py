@@ -21,6 +21,12 @@ from retailops_ai.source_snapshot.files import SnapshotError, file_hash  # noqa:
 def isolated_controller(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(store, "LOCK", tmp_path / "controller.lock")
     monkeypatch.setattr(store, "MAINTENANCE", tmp_path / "maintenance.json")
+    monkeypatch.setattr(store.stack, "LOCAL", tmp_path / "compose.env")
+    store.stack.environment_file(create=True)
+    # These unit cases capture Docker commands; they never need an installed daemon/CLI.
+    monkeypatch.setattr(
+        legacy.shutil, "which", lambda name: "/unit-test/docker" if name == "docker" else None
+    )
 
 
 def bundle(

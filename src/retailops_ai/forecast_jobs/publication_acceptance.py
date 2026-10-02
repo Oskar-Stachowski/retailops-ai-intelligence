@@ -5,8 +5,9 @@ import hashlib
 import json
 import sys
 import time
+import traceback
 from concurrent.futures import ThreadPoolExecutor
-from typing import Any
+from typing import Any, Literal
 
 from psycopg.errors import CheckViolation
 from sqlalchemy import Engine, create_engine, event, text
@@ -15,7 +16,7 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from retailops_ai.config import load_settings
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.domain.access import Principal
-from retailops_ai.forecast_jobs.contracts import BatchRequest, BatchScope, QueuePolicy
+from retailops_ai.forecast_jobs.contracts import BatchRequest, BatchRun, BatchScope, QueuePolicy
 from retailops_ai.forecast_jobs.execution_contracts import RuntimeResult
 from retailops_ai.forecast_jobs.input_store import PostgresInputStore
 from retailops_ai.forecast_jobs.inputs import (
@@ -199,6 +200,33 @@ def result_for(claim: Claim) -> RuntimeResult:
     )
 
 
+def competing_completion(
+    queue: PostgresBatchQueue, claim: Claim
+) -> Literal["succeeded", "lease_lost", "publication_busy"]:
+    """A duplicate publisher may hit the bounded row-lock wait before its winner commits."""
+    try:
+        queue.complete_forecast(claim, result_for(claim))
+        return "succeeded"
+    except LeaseLost:
+        return "lease_lost"
+    except SQLAlchemyError as error:
+        if getattr(getattr(error, "orig", None), "sqlstate", None) == "55P03":
+            return "publication_busy"
+        raise
+
+
+def competing_submission(
+    queue: PostgresBatchQueue, request: BatchRequest, actor: Principal, key: str
+) -> BatchRun | None:
+    """A bounded busy response can be replayed after the competing transaction ends."""
+    try:
+        return queue.submit(request, actor, key)
+    except SQLAlchemyError as error:
+        if getattr(getattr(error, "orig", None), "sqlstate", None) == "55P03":
+            return None
+        raise
+
+
 def snapshot(engine: Engine) -> dict[str, Any]:
     with engine.connect() as connection:
         checked(connection)
@@ -273,8 +301,19 @@ def main() -> int:
         release = stub_release(inputs, settings.image_digest)
         seed_stub(engine, release)
         with ThreadPoolExecutor(max_workers=2) as pool:
-            runs = list(pool.map(lambda _: queue.submit(request, actor, "first"), range(2)))
+            admitted = list(
+                pool.map(lambda _: competing_submission(queue, request, actor, "first"), range(2))
+            )
+        require(any(run is not None for run in admitted), "no_concurrent_admission_succeeded")
+        # The pool has joined: repeat a timed-out identical request only after its winner ends.
+        runs = [
+            run if run is not None else queue.submit(request, actor, "first") for run in admitted
+        ]
         require(runs[0] == runs[1], "qualified_replay_created_duplicate")
+        require(
+            snapshot(engine)["counts"]["forecast_batch_runs"] == 1,
+            "concurrent_admission_changed_run_count",
+        )
         claim = queue.claim()
         require(claim is not None, "qualified_claim_missing")
         if claim is None:
@@ -437,18 +476,21 @@ def main() -> int:
         if concurrent is None:
             raise ValueError("concurrent_claim_missing")
 
-        def complete(_: int) -> str:
-            try:
-                queue.complete_forecast(concurrent, result_for(concurrent))
-                return "succeeded"
-            except LeaseLost:
-                return "lease_lost"
-
+        before_race = snapshot(engine)
         with ThreadPoolExecutor(max_workers=2) as pool:
+            outcomes = sorted(pool.map(lambda _: competing_completion(queue, concurrent), range(2)))
             require(
-                sorted(pool.map(complete, range(2))) == ["lease_lost", "succeeded"],
+                outcomes in (["lease_lost", "succeeded"], ["publication_busy", "succeeded"]),
                 "duplicate_publication_race",
             )
+        after_race = snapshot(engine)
+        require(
+            after_race["counts"]["forecast_output_manifests"]
+            == before_race["counts"]["forecast_output_manifests"] + 1
+            and after_race["counts"]["forecast_output_partitions"]
+            == before_race["counts"]["forecast_output_partitions"] + 2,
+            "duplicate_publication_race_changed_output_count",
+        )
         checks.append("concurrent_completion_commits_exactly_one_output")
 
         # Complete an earlier request after a later one; preserve the later pointer.
@@ -552,6 +594,12 @@ def main() -> int:
         )
         return 0
     except SQLAlchemyError as exc:
+        locations = [
+            frame.lineno
+            for frame in traceback.extract_tb(exc.__traceback__)
+            if frame.filename == __file__
+        ]
+        print(json.dumps({"publication_failure_line": locations[0] if locations else 0}))
         marker = type(exc.orig).__name__.lower() if hasattr(exc, "orig") else "sqlalchemy_error"
         raise RuntimeError("publication_database_" + marker) from None
     finally:

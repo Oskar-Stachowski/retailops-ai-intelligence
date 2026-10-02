@@ -5,7 +5,9 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
+from psycopg.errors import LockNotAvailable, QueryCanceled
 from pydantic import ValidationError
+from sqlalchemy.exc import OperationalError
 
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.forecast_jobs import worker
@@ -19,11 +21,49 @@ from retailops_ai.forecast_jobs.contracts import (
 from retailops_ai.forecast_jobs.inputs import PreparedInputs, scoped_inputs
 from retailops_ai.forecast_jobs.publication import Publication, publication
 from retailops_ai.forecast_jobs.publication_acceptance import (
+    competing_completion,
+    competing_submission,
     expanded_fixture,
     result_for,
     stub_release,
 )
 from retailops_ai.forecast_jobs.queue import Claim, LeaseLost
+
+
+@pytest.mark.parametrize("busy", [False, True])
+def test_duplicate_publisher_can_lose_lease_or_bounded_lock_wait(claim, busy):
+    class Duplicate:
+        def complete_forecast(self, *_):
+            if busy:
+                raise OperationalError("private SQL", {}, LockNotAvailable())
+            raise LeaseLost("batch_lease_lost")
+
+    assert competing_completion(Duplicate(), claim) == (
+        "publication_busy" if busy else "lease_lost"
+    )
+
+
+def test_duplicate_publisher_does_not_hide_other_database_failures(claim):
+    class Broken:
+        def complete_forecast(self, *_):
+            raise OperationalError("private SQL", {}, QueryCanceled())
+
+    with pytest.raises(OperationalError):
+        competing_completion(Broken(), claim)
+
+
+@pytest.mark.parametrize("unexpected", [False, True])
+def test_duplicate_admission_accepts_only_bounded_lock_contention(claim, unexpected):
+    class Contended:
+        def submit(self, *_):
+            error = QueryCanceled() if unexpected else LockNotAvailable()
+            raise OperationalError("private SQL", {}, error)
+
+    if unexpected:
+        with pytest.raises(OperationalError):
+            competing_submission(Contended(), None, None, "same-key")
+    else:
+        assert competing_submission(Contended(), None, None, "same-key") is None
 
 
 @pytest.fixture(scope="module")

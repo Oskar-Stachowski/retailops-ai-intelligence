@@ -154,6 +154,9 @@ def main(*, read: bool = False, catalog: bool = False, evaluations: bool = False
             check=False,
         )
         if result.returncode:
+            for line in result.stdout.decode(errors="replace").splitlines():
+                if re.fullmatch(r'\{"publication_failure_line": [0-9]{1,4}\}', line):
+                    print(line)
             if read:
                 for line in result.stdout.decode(errors="replace").splitlines():
                     if re.fullmatch(r'\{"read_sqlstate": "[A-Z0-9]{5}"\}', line):
