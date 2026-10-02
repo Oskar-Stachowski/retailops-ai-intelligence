@@ -39,7 +39,7 @@ class EvaluationReader(Protocol):
     ) -> EvaluationDetail: ...
 
 
-def authorized(scope: CatalogScope, actor: Principal) -> ReadScope:
+def authorized(scope: CatalogScope, actor: Principal, *, campaign: bool = False) -> ReadScope:
     try:
         return resolve_scope(
             ForecastQuery(
@@ -48,6 +48,8 @@ def authorized(scope: CatalogScope, actor: Principal) -> ReadScope:
                 channel=scope.channel,
             ),
             actor,
+            max_products=200 if campaign else 20,
+            max_locations=100 if campaign else 5,
         )
     except ForecastReadError as exc:
         codes: dict[str, EvaluationErrorCode] = {

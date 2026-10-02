@@ -76,7 +76,7 @@ class V12CatalogSnapshot:
 def page(
     snapshot: V12CatalogSnapshot, query: CatalogQuery, actor: Principal, *, models: bool
 ) -> V12ModelPage | V12VersionPage:
-    scope = authorized(query, actor)
+    scope = authorized(query, actor, campaign=True)
     items = (
         (snapshot.summary(),)
         if models and snapshot.versions
@@ -139,13 +139,13 @@ class PostgresV12Catalog:
         return result
 
     def model(self, name: str, scope: CatalogScope, actor: Principal) -> V12CatalogModel:
-        authorized(scope, actor)
+        authorized(scope, actor, campaign=True)
         if name != self.name:
             raise CatalogError(404, "model-not-found")
         return self._snapshot(scope, actor).summary()
 
     def versions(self, name: str, query: CatalogQuery, actor: Principal) -> V12VersionPage:
-        authorized(query, actor)
+        authorized(query, actor, campaign=True)
         if name != self.name:
             raise CatalogError(404, "model-not-found")
         snapshot = self._snapshot(query, actor)
@@ -157,7 +157,7 @@ class PostgresV12Catalog:
         return result
 
     def _snapshot(self, request: CatalogScope, actor: Principal) -> V12CatalogSnapshot:
-        scope = authorized(request, actor)
+        scope = authorized(request, actor, campaign=True)
         params = dict(
             env=self.environment,
             model=self.name,

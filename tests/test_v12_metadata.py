@@ -13,6 +13,8 @@ from retailops_ai.api.app import create_app
 from retailops_ai.config import Settings
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.domain.access import Principal
+from retailops_ai.forecast_jobs.read_contracts import ForecastQuery
+from retailops_ai.forecast_jobs.reader import ForecastReadError, resolve_scope
 from retailops_ai.model_lifecycle import v12_evaluation_importer as importer
 from retailops_ai.model_lifecycle.evaluation_store import EvaluationError
 from retailops_ai.model_lifecycle.read_contracts import CatalogQuery
@@ -128,6 +130,44 @@ def test_whole_scope_filter_precedes_count_and_pagination(report):
         projection((report,), V12EvaluationQuery(), viewer(), datetime.now(UTC)).pagination.total
         == 1
     )
+
+
+def test_campaign_metadata_accepts_broad_grant_without_expanding_forecast_budget(report):
+    actor = viewer()
+    broad = Principal(
+        actor.principal_id,
+        actor.roles,
+        actor.capabilities,
+        actor.product_ids | frozenset(f"p-extra-{i}" for i in range(98)),
+        actor.selling_location_ids | frozenset(f"s-extra-{i}" for i in range(5)),
+        actor.channels,
+    )
+    now = datetime.now(UTC)
+    assert projection((report,), V12EvaluationQuery(), broad, now).pagination.total == 1
+    assert projection((report,), V12EvaluationQuery(product_id="p-101"), broad, now).items == ()
+    snapshot = V12CatalogSnapshot(TEST_MODEL, (), None, now)
+    assert page(snapshot, CatalogQuery(), broad, models=True).pagination.total == 0
+    with pytest.raises(ForecastReadError, match="forecast-scope-limit"):
+        resolve_scope(ForecastQuery(), broad)
+
+
+@pytest.mark.parametrize("products,locations", [(201, 1), (2, 101)])
+def test_campaign_metadata_still_bounds_scope_before_fetch(report, products, locations):
+    actor = viewer()
+    broad = Principal(
+        actor.principal_id,
+        actor.roles,
+        actor.capabilities,
+        frozenset(f"p-{i}" for i in range(products)),
+        frozenset(f"s-{i}" for i in range(locations)),
+        actor.channels,
+    )
+    now = datetime.now(UTC)
+    with pytest.raises(EvaluationError, match="evaluation-scope-limit"):
+        projection((report,), V12EvaluationQuery(), broad, now)
+    snapshot = V12CatalogSnapshot(TEST_MODEL, (), None, now)
+    with pytest.raises(CatalogError, match="model-scope-limit"):
+        page(snapshot, CatalogQuery(), broad, models=True)
 
 
 def test_evaluation_view_binds_identity_scope_and_evidence(report):

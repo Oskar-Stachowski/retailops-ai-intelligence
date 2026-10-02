@@ -23,6 +23,12 @@ Szczegóły przyjmują wyłącznie filtry zakresu. Nieznane lub powtórzone
 parametry są odrzucane. Kolejna strona wymaga SHA widoku z pierwszej strony;
 zmiana danych, użytkownika lub zakresu daje 409.
 
+Katalog i oceny v12 przyjmują zakres przyznany w polityce dostępu do
+200 produktów i 100 lokalizacji. Raport całej kampanii 100 produktów
+nie podlega limitowi odczytu dziennych prognoz 20 produktów / 5 lokalizacji.
+Limity bajtów, zapytań i pełnego zakresu raportu nadal obowiązują. Odczyt
+prognoz, zlecanie batcha i historyczne endpointy v1 zachowują swoje limity.
+
 Domyślne backendy wybierają `retailops-demand-forecast-v12`, również przy
 `APP_ENV=test`. Osobny namespace `retailops-demand-forecast-v12-mechanics`
 wymaga jawnego wstrzyknięcia backendu testowego. Dotychczasowe 20 ścieżek

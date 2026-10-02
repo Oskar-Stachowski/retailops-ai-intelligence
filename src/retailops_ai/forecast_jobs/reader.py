@@ -44,7 +44,13 @@ class ReadScope:
     channels: tuple[str, ...]
 
 
-def resolve_scope(query: ForecastQuery, actor: Principal) -> ReadScope:
+def resolve_scope(
+    query: ForecastQuery,
+    actor: Principal,
+    *,
+    max_products: int = 20,
+    max_locations: int = 5,
+) -> ReadScope:
     if "forecast:read" not in actor.capabilities:
         raise ForecastReadError(403, "forecast-read-denied")
     products = (query.product_id,) if query.product_id else tuple(sorted(actor.product_ids))
@@ -65,7 +71,7 @@ def resolve_scope(query: ForecastQuery, actor: Principal) -> ReadScope:
         )
     ):
         raise ForecastReadError(422, "forecast-scope-invalid")
-    if len(products) > 20 or len(locations) > 5:
+    if len(products) > max_products or len(locations) > max_locations:
         raise ForecastReadError(422, "forecast-scope-limit")
     return ReadScope(products, locations, channels)
 

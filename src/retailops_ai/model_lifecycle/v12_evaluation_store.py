@@ -53,7 +53,7 @@ def projection(
     actor: Principal,
     now: datetime,
 ) -> V12EvaluationPage:
-    scope = authorized(query, actor)
+    scope = authorized(query, actor, campaign=True)
     selected = sorted(
         (
             e
@@ -166,7 +166,7 @@ class PostgresV12Evaluations:
         identity: str | None = None,
         status: str | None = None,
     ) -> tuple[tuple[V12EvaluationEvidence, ...], datetime]:
-        scope = authorized(query, actor)
+        scope = authorized(query, actor, campaign=True)
         params = dict(
             env=self.environment,
             model=self.model,
