@@ -1,5 +1,8 @@
 # Dokumentacja RetailOps AI
 
+[Zwroty według doby i dostępności — AI07](reference/return-inputs.md) zachowują
+ogon po historii sprzedaży, odczyt as-of i niekompletne obserwacje bez fałszywych zer.
+
 Zacznij od [statusu](STATUS.md), [decyzji](architecture/decisions.md) i
 [poleceń lokalnych](development.md). [Contributing](contributing.md) opisuje
 zmiany i PR-y, [security](security.md) — granice dostępu i zgłoszenia.

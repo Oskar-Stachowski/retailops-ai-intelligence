@@ -89,6 +89,25 @@ def test_sales_and_returns_use_causal_availability_and_original_stock(prepared):
         assert all(r["curated_available_at"] is None for r in table_rows(curated, name))
 
 
+def test_curated_1_1_native_return_queries_keep_full_tail_and_latest_cohorts(prepared):
+    from retailops_ai.curated.reader import CuratedReader
+
+    _, _, curated = prepared
+    events = table_rows(curated, "return_events")
+    cohorts = table_rows(curated, "daily_return_cohorts")
+    origin = max(r["curated_available_at"] for r in cohorts)
+    reader = CuratedReader(curated.directory)
+    assert {r["id"] for r in reader.rows(origin, table="return_events")} == {
+        r["id"] for r in events
+    }
+    selected = list(reader.rows(origin, table="daily_return_cohorts"))
+    assert selected and all(r["snapshot_kind"] == "return_tail" for r in selected)
+    assert len(selected) * 2 == len(cohorts)
+    assert len(list(reader.rows(origin, table="return_policies"))) == len(
+        table_rows(curated, "return_policies")
+    )
+
+
 def test_inventory_snapshot_is_unavailable_before_its_cutoff(prepared):
     _, _, curated = prepared
     snapshots = table_rows(curated, "inventory_daily_snapshots")
