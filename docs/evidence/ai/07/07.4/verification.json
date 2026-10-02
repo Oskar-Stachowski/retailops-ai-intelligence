@@ -1,0 +1,369 @@
+{
+  "cases": {
+    "demand": {
+      "business_types": [
+        "multi_day_spike",
+        "one_day_spike",
+        "sustained_drop"
+      ],
+      "input_unchanged": true,
+      "snapshots": {
+        "private": {
+          "rows": 22099,
+          "snapshot_id": "snapshot-sha256-e2d6d71d002f97f264ebe3bc40c857d271402142b8003c714122f69e8fab9ad3",
+          "snapshot_manifest_sha256": "0d1a2dbff0a6cdb4c0d984f31b263c9375cc5ce1a52a4e36f75bcf9fd7182d40",
+          "tables": 55
+        },
+        "public": {
+          "rows": 13625,
+          "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+          "snapshot_manifest_sha256": "47418eacd17ed5876927f71f7bf1a5f15a83a378c2594bb0215c983b5fd47e40",
+          "tables": 43
+        }
+      },
+      "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8",
+      "source_facts_ready": true,
+      "source_schema_version": "2.8.0",
+      "source_tables": 58
+    },
+    "physical": {
+      "business_types": [
+        "inventory_censored_episode",
+        "return_spike"
+      ],
+      "input_unchanged": true,
+      "snapshots": {
+        "private": {
+          "rows": 21983,
+          "snapshot_id": "snapshot-sha256-f41473169ed50d5b97200804e4030a47aa7cd73bf156e64d00bba1d2959fd6be",
+          "snapshot_manifest_sha256": "f678901bd67397140cd2a1dd2f2d383da14340ae39c14ff4409dbcfbb7644d08",
+          "tables": 55
+        },
+        "public": {
+          "rows": 13603,
+          "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+          "snapshot_manifest_sha256": "62f1a4c6bf8c319e51f942ff955fcfa37eb810a92c02f737bbc70c611be12028",
+          "tables": 43
+        }
+      },
+      "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721",
+      "source_facts_ready": true,
+      "source_schema_version": "2.8.0",
+      "source_tables": 58
+    }
+  },
+  "consumer_runtime_commit": "17f4709a02bab1c6efc00f41d3512315e97c57fd",
+  "detached_wheel": {
+    "run1": {
+      "attempt": "run1",
+      "package_path": "/private/tmp/ai07-handoff-wheel/lib/python3.11/site-packages/retailops_ai/__init__.py",
+      "producer_module_unavailable": true,
+      "runs": [
+        {
+          "case": "demand",
+          "importer": {
+            "code_files": {
+              "__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+              "canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+              "cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+              "files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+              "importer.py": "461b50df97a9c4d218d3f3ea72f19961352725c85e4b1af1c61fa8bc614b7365",
+              "inventory_projection.py": "a6eac44834f62b1d42eced0ca7bcc0c636c4cc7a07ec5f35da433e0cc3297fd7",
+              "inventory_protocol.py": "3f13b4596a33dce7c52d0ed3d94a28829b91fe751fa1c0c7b8c6978aa609bc1a",
+              "protocol.py": "e27fa3feeca9f05f2f24b96e737eaf87643f7ec5962e36d1607ffbbe66e0cc86",
+              "publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+              "tables.py": "677f8aab2e5a188a57bbff9d46b48b9b68e38b7a5b73d1e05f0cfe563647421d"
+            },
+            "code_sha256": "e110f180831c779403cb05459b774609cf32541951900053e749e54eaf9f85a8",
+            "dependency_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "handoff_sha256": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c",
+            "pyarrow_version": "25.0.1",
+            "version": "1.0.0"
+          },
+          "input_unchanged": true,
+          "peak_rss_mib": 70.140625,
+          "reimport_unchanged": true,
+          "rows": 13625,
+          "seconds": 9.681764208013192,
+          "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+          "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8",
+          "status": "passed",
+          "tables": 43,
+          "variant": "public"
+        },
+        {
+          "case": "demand",
+          "importer": {
+            "code_files": {
+              "__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+              "canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+              "cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+              "files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+              "importer.py": "461b50df97a9c4d218d3f3ea72f19961352725c85e4b1af1c61fa8bc614b7365",
+              "inventory_projection.py": "a6eac44834f62b1d42eced0ca7bcc0c636c4cc7a07ec5f35da433e0cc3297fd7",
+              "inventory_protocol.py": "3f13b4596a33dce7c52d0ed3d94a28829b91fe751fa1c0c7b8c6978aa609bc1a",
+              "protocol.py": "e27fa3feeca9f05f2f24b96e737eaf87643f7ec5962e36d1607ffbbe66e0cc86",
+              "publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+              "tables.py": "677f8aab2e5a188a57bbff9d46b48b9b68e38b7a5b73d1e05f0cfe563647421d"
+            },
+            "code_sha256": "e110f180831c779403cb05459b774609cf32541951900053e749e54eaf9f85a8",
+            "dependency_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "handoff_sha256": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c",
+            "pyarrow_version": "25.0.1",
+            "version": "1.0.0"
+          },
+          "input_unchanged": true,
+          "peak_rss_mib": 71.625,
+          "reimport_unchanged": true,
+          "rows": 22099,
+          "seconds": 15.651884125021752,
+          "snapshot_id": "snapshot-sha256-e2d6d71d002f97f264ebe3bc40c857d271402142b8003c714122f69e8fab9ad3",
+          "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8",
+          "status": "passed",
+          "tables": 55,
+          "variant": "private"
+        },
+        {
+          "case": "physical",
+          "importer": {
+            "code_files": {
+              "__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+              "canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+              "cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+              "files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+              "importer.py": "461b50df97a9c4d218d3f3ea72f19961352725c85e4b1af1c61fa8bc614b7365",
+              "inventory_projection.py": "a6eac44834f62b1d42eced0ca7bcc0c636c4cc7a07ec5f35da433e0cc3297fd7",
+              "inventory_protocol.py": "3f13b4596a33dce7c52d0ed3d94a28829b91fe751fa1c0c7b8c6978aa609bc1a",
+              "protocol.py": "e27fa3feeca9f05f2f24b96e737eaf87643f7ec5962e36d1607ffbbe66e0cc86",
+              "publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+              "tables.py": "677f8aab2e5a188a57bbff9d46b48b9b68e38b7a5b73d1e05f0cfe563647421d"
+            },
+            "code_sha256": "e110f180831c779403cb05459b774609cf32541951900053e749e54eaf9f85a8",
+            "dependency_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "handoff_sha256": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c",
+            "pyarrow_version": "25.0.1",
+            "version": "1.0.0"
+          },
+          "input_unchanged": true,
+          "peak_rss_mib": 71.625,
+          "reimport_unchanged": true,
+          "rows": 13603,
+          "seconds": 10.288535707979463,
+          "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+          "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721",
+          "status": "passed",
+          "tables": 43,
+          "variant": "public"
+        },
+        {
+          "case": "physical",
+          "importer": {
+            "code_files": {
+              "__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+              "canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+              "cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+              "files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+              "importer.py": "461b50df97a9c4d218d3f3ea72f19961352725c85e4b1af1c61fa8bc614b7365",
+              "inventory_projection.py": "a6eac44834f62b1d42eced0ca7bcc0c636c4cc7a07ec5f35da433e0cc3297fd7",
+              "inventory_protocol.py": "3f13b4596a33dce7c52d0ed3d94a28829b91fe751fa1c0c7b8c6978aa609bc1a",
+              "protocol.py": "e27fa3feeca9f05f2f24b96e737eaf87643f7ec5962e36d1607ffbbe66e0cc86",
+              "publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+              "tables.py": "677f8aab2e5a188a57bbff9d46b48b9b68e38b7a5b73d1e05f0cfe563647421d"
+            },
+            "code_sha256": "e110f180831c779403cb05459b774609cf32541951900053e749e54eaf9f85a8",
+            "dependency_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "handoff_sha256": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c",
+            "pyarrow_version": "25.0.1",
+            "version": "1.0.0"
+          },
+          "input_unchanged": true,
+          "peak_rss_mib": 71.625,
+          "reimport_unchanged": true,
+          "rows": 21983,
+          "seconds": 16.510803291981574,
+          "snapshot_id": "snapshot-sha256-f41473169ed50d5b97200804e4030a47aa7cd73bf156e64d00bba1d2959fd6be",
+          "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721",
+          "status": "passed",
+          "tables": 55,
+          "variant": "private"
+        }
+      ],
+      "status": "passed"
+    },
+    "run2": {
+      "attempt": "run2",
+      "package_path": "/private/tmp/ai07-handoff-wheel/lib/python3.11/site-packages/retailops_ai/__init__.py",
+      "producer_module_unavailable": true,
+      "runs": [
+        {
+          "case": "demand",
+          "importer": {
+            "code_files": {
+              "__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+              "canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+              "cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+              "files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+              "importer.py": "461b50df97a9c4d218d3f3ea72f19961352725c85e4b1af1c61fa8bc614b7365",
+              "inventory_projection.py": "a6eac44834f62b1d42eced0ca7bcc0c636c4cc7a07ec5f35da433e0cc3297fd7",
+              "inventory_protocol.py": "3f13b4596a33dce7c52d0ed3d94a28829b91fe751fa1c0c7b8c6978aa609bc1a",
+              "protocol.py": "e27fa3feeca9f05f2f24b96e737eaf87643f7ec5962e36d1607ffbbe66e0cc86",
+              "publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+              "tables.py": "677f8aab2e5a188a57bbff9d46b48b9b68e38b7a5b73d1e05f0cfe563647421d"
+            },
+            "code_sha256": "e110f180831c779403cb05459b774609cf32541951900053e749e54eaf9f85a8",
+            "dependency_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "handoff_sha256": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c",
+            "pyarrow_version": "25.0.1",
+            "version": "1.0.0"
+          },
+          "input_unchanged": true,
+          "peak_rss_mib": 70.765625,
+          "reimport_unchanged": true,
+          "rows": 13625,
+          "seconds": 9.72368125000503,
+          "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+          "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8",
+          "status": "passed",
+          "tables": 43,
+          "variant": "public"
+        },
+        {
+          "case": "demand",
+          "importer": {
+            "code_files": {
+              "__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+              "canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+              "cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+              "files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+              "importer.py": "461b50df97a9c4d218d3f3ea72f19961352725c85e4b1af1c61fa8bc614b7365",
+              "inventory_projection.py": "a6eac44834f62b1d42eced0ca7bcc0c636c4cc7a07ec5f35da433e0cc3297fd7",
+              "inventory_protocol.py": "3f13b4596a33dce7c52d0ed3d94a28829b91fe751fa1c0c7b8c6978aa609bc1a",
+              "protocol.py": "e27fa3feeca9f05f2f24b96e737eaf87643f7ec5962e36d1607ffbbe66e0cc86",
+              "publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+              "tables.py": "677f8aab2e5a188a57bbff9d46b48b9b68e38b7a5b73d1e05f0cfe563647421d"
+            },
+            "code_sha256": "e110f180831c779403cb05459b774609cf32541951900053e749e54eaf9f85a8",
+            "dependency_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "handoff_sha256": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c",
+            "pyarrow_version": "25.0.1",
+            "version": "1.0.0"
+          },
+          "input_unchanged": true,
+          "peak_rss_mib": 71.1875,
+          "reimport_unchanged": true,
+          "rows": 22099,
+          "seconds": 15.620457125012763,
+          "snapshot_id": "snapshot-sha256-e2d6d71d002f97f264ebe3bc40c857d271402142b8003c714122f69e8fab9ad3",
+          "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8",
+          "status": "passed",
+          "tables": 55,
+          "variant": "private"
+        },
+        {
+          "case": "physical",
+          "importer": {
+            "code_files": {
+              "__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+              "canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+              "cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+              "files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+              "importer.py": "461b50df97a9c4d218d3f3ea72f19961352725c85e4b1af1c61fa8bc614b7365",
+              "inventory_projection.py": "a6eac44834f62b1d42eced0ca7bcc0c636c4cc7a07ec5f35da433e0cc3297fd7",
+              "inventory_protocol.py": "3f13b4596a33dce7c52d0ed3d94a28829b91fe751fa1c0c7b8c6978aa609bc1a",
+              "protocol.py": "e27fa3feeca9f05f2f24b96e737eaf87643f7ec5962e36d1607ffbbe66e0cc86",
+              "publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+              "tables.py": "677f8aab2e5a188a57bbff9d46b48b9b68e38b7a5b73d1e05f0cfe563647421d"
+            },
+            "code_sha256": "e110f180831c779403cb05459b774609cf32541951900053e749e54eaf9f85a8",
+            "dependency_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "handoff_sha256": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c",
+            "pyarrow_version": "25.0.1",
+            "version": "1.0.0"
+          },
+          "input_unchanged": true,
+          "peak_rss_mib": 71.1875,
+          "reimport_unchanged": true,
+          "rows": 13603,
+          "seconds": 10.135989125003107,
+          "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+          "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721",
+          "status": "passed",
+          "tables": 43,
+          "variant": "public"
+        },
+        {
+          "case": "physical",
+          "importer": {
+            "code_files": {
+              "__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+              "canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+              "cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+              "files.py": "2610b636f27a4808be878e398daf8670eff75c8aa0a00f3db67d26d2c5b9e0ba",
+              "importer.py": "461b50df97a9c4d218d3f3ea72f19961352725c85e4b1af1c61fa8bc614b7365",
+              "inventory_projection.py": "a6eac44834f62b1d42eced0ca7bcc0c636c4cc7a07ec5f35da433e0cc3297fd7",
+              "inventory_protocol.py": "3f13b4596a33dce7c52d0ed3d94a28829b91fe751fa1c0c7b8c6978aa609bc1a",
+              "protocol.py": "e27fa3feeca9f05f2f24b96e737eaf87643f7ec5962e36d1607ffbbe66e0cc86",
+              "publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+              "tables.py": "677f8aab2e5a188a57bbff9d46b48b9b68e38b7a5b73d1e05f0cfe563647421d"
+            },
+            "code_sha256": "e110f180831c779403cb05459b774609cf32541951900053e749e54eaf9f85a8",
+            "dependency_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "handoff_sha256": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c",
+            "pyarrow_version": "25.0.1",
+            "version": "1.0.0"
+          },
+          "input_unchanged": true,
+          "peak_rss_mib": 71.1875,
+          "reimport_unchanged": true,
+          "rows": 21983,
+          "seconds": 16.669068332994357,
+          "snapshot_id": "snapshot-sha256-f41473169ed50d5b97200804e4030a47aa7cd73bf156e64d00bba1d2959fd6be",
+          "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721",
+          "status": "passed",
+          "tables": 55,
+          "variant": "private"
+        }
+      ],
+      "status": "passed"
+    }
+  },
+  "fixture": {
+    "bytes": 5625801,
+    "path": "data/fixtures/anomaly-v1_2.zip",
+    "sha256": "c344a5cfeea086e1054add724c830d747815e9eab425a19a17c1d0691671066c"
+  },
+  "producer_runtime_commit": "b59aca8e2fe70a76efde2192b63b5bf839104bac",
+  "profile": {
+    "days": 30,
+    "name": "ai-smoke",
+    "products": 8,
+    "stores": 3,
+    "warehouses": 2
+  },
+  "readiness": {
+    "ai05_session_modified": false,
+    "ai07_ready": false,
+    "anomaly_features": "not_implemented",
+    "broker_durability_proven": false,
+    "curated_anomaly": "not_implemented",
+    "detectors": "not_implemented",
+    "model_ready": false,
+    "transport_import": "passed"
+  },
+  "scope": "AI07 versioned process/DQ source and snapshot transport/import only",
+  "seed": 42,
+  "status": "passed",
+  "validation": {
+    "consumer_anomaly_tests": 8,
+    "consumer_mypy_modules": 193,
+    "consumer_regression_tests": 94,
+    "consumer_ruff": "passed",
+    "producer_mypy_new_modules": 5,
+    "producer_ruff": "passed",
+    "producer_tests": 55
+  },
+  "wheel": {
+    "bytes": 642962,
+    "sha256": "95edfd1f89ae1d50c899335a3a61f3a3914c777aef77c67f384c87084bd07fa0"
+  }
+}

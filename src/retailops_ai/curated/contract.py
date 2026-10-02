@@ -188,10 +188,10 @@ def descriptor_id(descriptor: dict[str, Any]) -> str:
 
 
 def source_contract(version: str = VERSION) -> dict[str, Any]:
-    if version == "1.1.0":
+    if version in {"1.1.0", "1.2.0"}:
         from retailops_ai.source_snapshot.inventory_protocol import contract_document as inventory
 
-        return inventory()
+        return inventory(version)
     if version != VERSION:
         raise SnapshotError("unsupported_curated_version")
     return contract_document()
@@ -200,15 +200,15 @@ def source_contract(version: str = VERSION) -> dict[str, Any]:
 def handoff_bytes(version: str = VERSION) -> bytes:
     from retailops_ai.source_snapshot.protocol import resource_bytes
 
-    if version == "1.1.0":
+    if version in {"1.1.0", "1.2.0"}:
         from retailops_ai.source_snapshot.inventory_protocol import resource_bytes as inventory
 
-        return inventory("contract.json")
+        return inventory("contract.json", version)
     return resource_bytes("contract.json")
 
 
 def watermarks(snapshot: Any) -> dict[str, Any]:
-    if snapshot.manifest["schema_version"] == "1.1.0":
+    if snapshot.manifest["schema_version"] in {"1.1.0", "1.2.0"}:
         context = snapshot.manifest["source"]["descriptor"]["context"]
         return {"inventory": context["projection"], "source_context": context}
     return dict(snapshot.manifest["source"]["watermarks"])

@@ -264,8 +264,9 @@ def verify_snapshots(
 
 
 def verify_projection(root: Path, snapshot: Snapshot, scratch: Path, limits: Limits) -> None:
-    contract = contract_document()
-    models = decode_json(resource_bytes("inventory_tables.schema.json"))["properties"]
+    version = snapshot.manifest["schema_version"]
+    contract = contract_document(version)
+    models = decode_json(resource_bytes("inventory_tables.schema.json", version))["properties"]
     facts = Facts(scratch / "native-facts.sqlite")
     try:
         for table in snapshot.manifest["tables"]:
