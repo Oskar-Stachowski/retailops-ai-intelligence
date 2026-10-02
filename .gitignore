@@ -43,3 +43,5 @@ api-client-credentials.json
 !data/fixtures/ai-smoke-v1/**
 !data/fixtures/inventory-v1_1.zip
 !data/fixtures/inventory-v1_1.md
+!data/fixtures/anomaly-v1_2.zip
+!data/fixtures/anomaly-v1_2.md
