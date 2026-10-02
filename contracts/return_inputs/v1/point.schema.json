@@ -1,0 +1,140 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "as_of_time": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "As Of Time",
+      "type": "string"
+    },
+    "business_date": {
+      "format": "date",
+      "title": "Business Date",
+      "type": "string"
+    },
+    "channel": {
+      "enum": [
+        "store",
+        "online"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "coverage_status": {
+      "const": "not_qualified",
+      "default": "not_qualified",
+      "title": "Coverage Status",
+      "type": "string"
+    },
+    "currency": {
+      "enum": [
+        "PLN",
+        "EUR"
+      ],
+      "title": "Currency",
+      "type": "string"
+    },
+    "known_event_count": {
+      "minimum": 0,
+      "title": "Known Event Count",
+      "type": "integer"
+    },
+    "known_refund_amount": {
+      "pattern": "^(?:0|[1-9][0-9]*)\\.[0-9]{2}$",
+      "title": "Known Refund Amount",
+      "type": "string"
+    },
+    "known_refunded_units": {
+      "minimum": 0,
+      "title": "Known Refunded Units",
+      "type": "integer"
+    },
+    "known_rejected_units": {
+      "minimum": 0,
+      "title": "Known Rejected Units",
+      "type": "integer"
+    },
+    "latest_member_available_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Latest Member Available At"
+    },
+    "member_records_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Member Records Sha256",
+      "type": "string"
+    },
+    "observed_return_units": {
+      "default": null,
+      "title": "Observed Return Units",
+      "type": "null"
+    },
+    "product_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "reason_codes": {
+      "default": [
+        "return_event_day_coverage_unavailable"
+      ],
+      "items": {
+        "const": "return_event_day_coverage_unavailable",
+        "type": "string"
+      },
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selling_location_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Selling Location Id",
+      "type": "string"
+    },
+    "source_stock_location_ids": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+        "type": "string"
+      },
+      "maxItems": 1000,
+      "title": "Source Stock Location Ids",
+      "type": "array"
+    },
+    "status": {
+      "const": "insufficient_data",
+      "default": "insufficient_data",
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "business_date",
+    "as_of_time",
+    "currency",
+    "known_event_count",
+    "known_refunded_units",
+    "known_rejected_units",
+    "known_refund_amount",
+    "source_stock_location_ids",
+    "member_records_sha256",
+    "latest_member_available_at"
+  ],
+  "title": "Point",
+  "type": "object"
+}

@@ -22,6 +22,7 @@ PLAN_KEYS = {
     "price_plans": "plan_key",
     "promotion_plans": "promotion_key",
 }
+RETURN_TABLES = {"return_events", "daily_return_cohorts", "return_policies"}
 
 
 def _rows_as_of(
@@ -36,6 +37,7 @@ def _rows_as_of(
     if origin.tzinfo is None or origin.utcoffset() != UTC.utcoffset(origin):
         raise SnapshotError("as_of_origin_requires_utc")
     version = document["schema_version"]
+    returns = version in {"1.1.0", "1.2.0"} and table in RETURN_TABLES
     inventory = version in {"1.1.0", "1.2.0"} and table in {
         "inventory_daily_snapshots",
         "delivery_plan_versions",
@@ -51,6 +53,7 @@ def _rows_as_of(
     }
     if (
         not inventory
+        and not returns
         and table != "daily_demand_versions"
         and (table not in PLAN_KEYS or business_date is None)
     ):
@@ -72,7 +75,28 @@ def _rows_as_of(
                 if available is None or available > origin:
                     continue
                 revision = row.get("version", 1)
-                if inventory:
+                if returns:
+                    if table == "return_events":
+                        if row["returned_at"] > origin or (
+                            business_date is not None and row["returned_at"].date() != business_date
+                        ):
+                            continue
+                        key = [row["id"]]
+                    elif table == "daily_return_cohorts":
+                        if (
+                            row["as_of_time"] > origin
+                            or row["business_date"] > origin.date()
+                            or (business_date is not None and row["business_date"] != business_date)
+                        ):
+                            continue
+                        key = [row[k] for k in spec["grain"] if k != "as_of_time"]
+                        at = row["as_of_time"] - datetime(1970, 1, 1, tzinfo=UTC)
+                        revision = (at.days * 86400 + at.seconds) * 1000000 + at.microseconds
+                    else:
+                        if row["known_at"] > origin:
+                            continue
+                        key = [row[k] for k in spec["grain"]]
+                elif inventory:
                     if table == "inventory_daily_snapshots":
                         if row["snapshot_at"] > origin or (
                             business_date is not None and row["business_date"] != business_date
