@@ -43,6 +43,8 @@ PostgreSQL, pliki MLflow, zadania oraz niedokończone decyzje rejestracji.
 [Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
 rozszerza typed import o source 2.7, native ledger i private qualification.
 [Odbiór](evidence/06-inventory-complete.md) obejmuje curated 1.1 i oba profile.
+[Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
+validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.

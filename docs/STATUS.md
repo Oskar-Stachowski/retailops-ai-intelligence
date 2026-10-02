@@ -78,66 +78,47 @@ opisane wyżej. Trwałego stosu nie migrowano.
 Backup/restore v12 opisano powyżej; Required CI i odbiór rzeczywistego
 przepływu pozostają otwarte.
 
-Aktualizacja: **2026-09-30**. **Etap 11 — RAG jest odebrany lokalnie.**
+Aktualizacja: **2026-10-02**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
 przygotowanie, kwalifikację, aktywację i rollback. [Końcowy odbiór](evidence/11-completion.md)
 wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodzi
 przez chroniony `main` oraz Required CI; stan wykonania pokazuje
 [workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
 
-**AI 04.1–04.8 — zadanie, modele, backtesting, jakość i evidence runu:**
-[kontrakt i polecenia](forecasting.md) definiują observed sales, grain,
-cutoff 23:59:59 UTC, horyzonty 1–14 i okna 7/14 z jedną granicą wiedzy.
-Manifest wiąże kalendarz ze zweryfikowanym curated AI 03; inventory i truth
-features są wyłączone. [Panel i cechy](forecast-features.md) mają kalendarzowe
-lagi 1/7/14/28, rolling z count, zero/missing/closed, kategorię, kalendarz
-i znane plany ceny/promocji. Typed draft inputs zachowują cold start i coverage.
-[Formalne manifests 04.3](forecast-manifests.md) wiążą feature/label/split IDs,
-minimum/freshness, mature labels i wszystkie oceniane klucze. Preprocessing
-dopasowuje się tylko na eligible train jednego folda; development holdout
-jest oddzielony, portfolio final test pozostaje poza tym protokołem.
-[Odbiór 04.1](evidence/04-01-calendar.md), [04.2](evidence/04-02-features.md)
-i [04.3](evidence/04-03-manifests.md) podają lokalne kontrole i powtarzalne smoke.
-[Baseline'y i evaluator 04.4](forecast-baselines.md) porównują last observed,
-średnią kalendarzową 7 dni i seasonal naive7 na identycznych eligible keys.
-Wybór według MAE używa tylko validation; h=8–14 nie odczytują przyszłych actuals.
-Raport zachowuje coverage i brakujące predykcje, z poprawnym MAE/WAPE dla zer.
-[Odbiór 04.4](evidence/04-04-baselines.md) dokumentuje temporalny pomiar i replay.
-[Modele RF i HGB 04.5](forecast-models.md) mają pełny train-only pipeline,
-direct horizon feature, wspólny evaluator i egzekwowane limity CPU/RAM/czasu.
-Wybór diagnostyczny wymaga poprawy validation MAE >5% wobec najlepszego baseline'u.
-[Odbiór 04.5](evidence/04-05-models.md) wiąże pomiary z artefaktami i replay.
-W jednofoldowym odbiorze 04.5 wybrano HGB: MAE lepsze od seasonal naive7
-o 6,7% na validation i 2,2% na development holdout. To pomiar protokołu,
-bez kwalifikacji produkcyjnej jakości lub zmiany odrzucenia RF w RetailOps.
-[Backtesting 04.6](forecast-backtesting.md) dodaje expanding/rolling-origin
-plan, trzy odrębne treningi z mature labels, rozłączne okna oceny i pooled
-MAE/WAPE. [Odbiór 04.6](evidence/04-06-backtesting.md) zapisuje wynik,
-audyt wspólnych kluczy i niezależne odtworzenie ze źródła.
-Na temporalnym fixture wybory validation to RF/HGB/RF; wspólne holdouty
-mają 5400 ocenianych kluczy, pooled MAE strategii 1,442420 i WAPE 0,157508.
-Wynik jest development evidence; portfolio final test pozostaje nietknięty.
-Branch `ai/04-01-task-calendar` jest osobny od AI 12.
-[Ocena jakości 04.7](forecast-quality.md) dodaje RMSE, bias, under/overforecast,
-MAPE z pokryciem, przekroje i przedziały kalibrowane tylko na validation.
-[Odbiór 04.7](evidence/04-07-quality.md) zachowuje pełne wyniki oraz blokady:
-**145 bramek passed, 79 failed, 8 not_ready**. Pooled holdout strategii ma
-RMSE 2,216533, normalized bias −4,37% i empirical interval coverage 91,67%
-przy nominalnym 90%, ale wynik globalny nie zalicza krytycznych segmentów.
-Brakuje próby koszyka zero; część kategorii ma nadmierny bias/regresję,
-a przedziały dla wysokiego wolumenu pokrywają tylko 69,37% obserwacji.
-Niski wolumen ma MAE o 28,63% gorsze od zamrożonego baseline'u i zbyt
-szerokie przedziały. Drugi fold nie poprawia globalnego holdout MAE.
-Progi nie zostały poluzowane; model pozostaje `not_ready`.
-[Plikowy run 04.8](forecast-run.md) utrwala komplet rodziców, predykcje,
-modele, config, metryki, card, signature i blokady w jednym archiwum
-z checksumami. [Odbiór 04.8](evidence/04-08-handoff.md) wskazuje jego ID,
-walidację i sposób importu w AI 05 bez przypisywania historycznego treningu
-do MLflow. **AI 04 jest zrealizowane jako development evidence, lecz model
-nie przeszedł bramki jakości i nie jest gotowy do serving.** Dopuszczenie
-wymaga oddzielnego rozwiązania braków próby i jakości na późniejszych danych,
-bez strojenia na final test. Ten branch nie ma jeszcze zdalnej publikacji
-ani Required CI.
+**AI 04 — `ready`, finalna wersja v12, z jawną akceptacją trzech odstępstw.**
+Właściciel projektu zakończył iterację developerską na v12 2026-10-01.
+[Decyzja odbioru](evidence/04-v12-acceptance.md) obowiązuje po przyjęciu tego
+commitu przez PR i zielonym Required CI chronionego `main`.
+[Wersjonowany zapis decyzji](evidence/04-v12-acceptance.json) wiąże akceptację
+z jednym konkretnym eksportem, pełnymi metrykami i dowodami odtworzenia.
+
+Pełna kampania v12 obejmuje **64/64 kohorty i 27 396 096 wierszy prognoz**.
+Oryginalny protokół jakości nadal daje **221 passed / 3 failed** oraz
+`forecast_model_status=not_ready` i `quality_qualification_status=not_ready`.
+Zaakceptowane odstępstwa MSE wynoszą **+0,204738%, +0,000619%, +0,043292%**.
+Nie przepisano ich na zaliczone i nie zmieniono progów oceny.
+`stage_status=ready` oznacza świadomy odbiór etapu przez właściciela,
+nie nowy wynik statystyczny ani zgodę na wdrożenie produkcyjne.
+
+[Finalne v12](forecast-functional-v12.md) ma zaliczony niezależny replay,
+trwały eksport **663 plików / 31 994 594 655 B** i weryfikację rzeczywistego
+runu z odłączonego wheel. Kontrola `make forecast-acceptance-check` sprawdza
+oryginalne sumy SHA-256, komplet metryk i dokładny zakres trzech wyjątków.
+Nie dopuszcza innego runu, v13 ani rozszerzenia decyzji na promocję modelu.
+
+V13 jest **superseded**: [przygotowanie 36900199207](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36900199207)
+zostało anulowane po wyborze v12. Lokalne oczekiwanie na ocenę i kolektor
+zatrzymano przed oceną holdoutów v13. Zachowano istniejące pliki, rezerwacje
+seedów, freeze i historię; automatyczne uruchamianie generacji po pushu wyłączono.
+
+Odbiór kodu: [PR #7](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/7),
+bez omijania ochrony `main` i Required CI. Źródło zostało przyjęte przez
+[PR #77](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/77).
+Dalsze prace AI 05 korzystają z eksportu v12 i osobnego adaptera dwóch celów;
+MLflow, promocja, batch i serving mają własny odbiór. Portfolio final test
+pozostaje nietknięty. Historyczne wyniki [04.7](evidence/04-07-quality.md),
+[04.8](evidence/04-08-handoff.md), [korekt](evidence/04-quality-remediation.md)
+i [v11](forecast-functional-v2.md) zachowują pierwotne statusy.
 
 **AI 05.1 — lokalny tracking i magazyn MLflow:** istniejący z AI 01
 PostgreSQL, rola i trwały wolumen mają teraz [backup/restore i politykę

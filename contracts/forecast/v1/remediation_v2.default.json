@@ -1,0 +1,57 @@
+{
+  "calibration": "second_half_validation_signed_residual_equal_tail_quantiles",
+  "calibration_fallback": [
+    "volume_category",
+    "volume",
+    "global"
+  ],
+  "correction": "first_half_mean_ratio_candidates_with_frozen_baseline_blends",
+  "groups": "origin_known_volume_and_category",
+  "maximum_correction_ratio": 2.0,
+  "minimum_correction_ratio": 0.5,
+  "minimum_fit_rows": 30,
+  "minimum_selection_rows": 30,
+  "portfolio_final_test": "not_included_not_opened",
+  "quality": {
+    "baseline_fallback": "retain_validation_baseline_without_improvement_requirement",
+    "critical_dimensions": [
+      "horizon",
+      "category",
+      "channel",
+      "volume"
+    ],
+    "interval_lower_bound": "clip_at_zero_observed_sales_nonnegative",
+    "intervals": "per_fold_method_horizon_absolute_validation_residual_quantile",
+    "inventory_segments": "deferred_until_verified_inventory_after_ai06",
+    "low_volume_upper_exclusive": 5.0,
+    "mape": "positive_actuals_only_diagnostic_with_coverage",
+    "max_groups": 4000,
+    "maximum_absolute_normalized_bias": 0.1,
+    "maximum_critical_segment_relative_regression": 0.1,
+    "maximum_mean_width_to_mean_actual": 2.0,
+    "medium_volume_upper_exclusive": 20.0,
+    "minimum_calibration_rows": 50,
+    "minimum_eligibility_coverage": 0.8,
+    "minimum_empirical_coverage": 0.8,
+    "minimum_global_rows": 100,
+    "minimum_prediction_coverage": 1.0,
+    "minimum_relative_improvement": 0.05,
+    "minimum_segment_rows": 30,
+    "nominal_coverage": 0.9,
+    "portfolio_final_test": "not_included_not_opened",
+    "primary_metric": "mae",
+    "quantile": "ceil_n_plus_1_times_nominal_unattainable_rank_not_ready",
+    "required_volume_bins": [
+      "zero",
+      "low",
+      "medium",
+      "high"
+    ],
+    "use": "development_diagnostics_on_previously_observed_data",
+    "version": "forecast-development-quality-1.0.0",
+    "volume_basis": "origin_known_rolling_28_mean_not_target_outcome",
+    "zero_denominator": "null_not_evaluable_blocks_quality_gate"
+  },
+  "selection": "two_block_bias_and_mae_guarded_selection_with_baseline_fallback",
+  "version": "forecast-quality-remediation-2.1.0"
+}

@@ -8,6 +8,7 @@ import os
 import platform
 import sqlite3
 import tempfile
+import zlib
 from collections import Counter
 from collections.abc import Iterator
 from contextlib import contextmanager
@@ -48,6 +49,9 @@ from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
 MAX_ORIGIN_INPUT_ROWS = 250_000
 MAX_OUTPUT_ROWS = 10_000_000
 MAX_OUTPUT_BYTES = 2 * 1024**3
+# Repeated provenance expands far beyond the compressed Parquet/index footprint.
+# Keep physical output and temporary index bounded at 2 GiB independently.
+MAX_LOGICAL_OUTPUT_BYTES = 5 * 1024**3
 KEYS = ("forecast_origin", "product_id", "selling_location_id", "channel")
 
 
@@ -147,7 +151,11 @@ def implementation() -> dict[str, Any]:
         for name in ("features.py", "features_contract.py", "features_store.py")
     }
     return {
-        "version": "forecast-inputs-1.0.0",
+        "version": "forecast-inputs-1.2.0",
+        "logical_output_byte_limit": MAX_LOGICAL_OUTPUT_BYTES,
+        "physical_output_byte_limit": MAX_OUTPUT_BYTES,
+        "temporary_index_byte_limit": MAX_OUTPUT_BYTES,
+        "temporary_index_encoding": "zlib_per_record_canonical_bytes_builder_and_verifier",
         "code_files": hashes,
         "code_sha256": canonical_sha256(hashes),
         "dependency_lock_sha256": hashlib.sha256(resource_bytes("dependencies.lock")).hexdigest(),
@@ -224,16 +232,24 @@ class Writer:
         key_names = (*KEYS, "target_date") if isinstance(model, InputRow) else KEYS
         raw = canonical_bytes(logical)
         self.budget["logical_bytes"] += len(raw)
-        if self.budget["logical_bytes"] > MAX_OUTPUT_BYTES:
+        if self.budget["logical_bytes"] > MAX_LOGICAL_OUTPUT_BYTES:
             raise SnapshotError("forecast_output_logical_byte_limit")
         key = canonical_bytes([logical[k] for k in key_names])
         try:
-            self.db.execute("INSERT INTO output VALUES (?,?,?)", (self.artifact, key, raw))
+            self.db.execute(
+                "INSERT INTO output VALUES (?,?,?)",
+                (self.artifact, key, zlib.compress(raw, level=1)),
+            )
         except sqlite3.IntegrityError as exc:
             raise SnapshotError("duplicate_forecast_input_key") from exc
         self.count += 1
         if self.count > MAX_OUTPUT_ROWS or len(raw) > 1024**2:
             raise SnapshotError("forecast_output_row_limit")
+        index_bytes = self.db.execute(
+            "SELECT page_count * page_size FROM pragma_page_count(), pragma_page_size()"
+        ).fetchone()[0]
+        if index_bytes > MAX_OUTPUT_BYTES:
+            raise SnapshotError("forecast_output_index_byte_limit")
         self.buffer.append(physical_row(model))
         self.buffer_bytes += len(raw)
         if len(self.buffer) >= 256 or self.buffer_bytes >= 16 * 1024**2:
@@ -270,7 +286,7 @@ class Writer:
         for (body,) in self.db.execute(
             "SELECT body FROM output WHERE artifact=? ORDER BY key", (self.artifact,)
         ):
-            digest.update(body + b"\n")
+            digest.update(zlib.decompress(body) + b"\n")
         return {"row_count": self.count, "content_sha256": digest.hexdigest(), "files": self.refs}
 
 
@@ -347,7 +363,7 @@ def build_inputs(curated_dir: Path, calendar: CalendarManifest, output_root: Pat
             "policy": PanelPolicy().model_dump(mode="json"),
             "feature_types": FEATURE_TYPES,
             "implementation": implementation(),
-            "stats": dict(stats),
+            "stats": {**dict(stats), "logical_output_bytes": budget["logical_bytes"]},
             "tables": {
                 name: {k: v for k, v in spec.items() if k != "files"}
                 for name, spec in tables.items()
@@ -439,12 +455,24 @@ def verify_inputs(root: Path) -> dict[str, Any]:
     names = {"inputs_manifest.json", calendar_ref["path"]}
     total_bytes = 0
     logical_bytes = 0
+    input_code = descriptor["implementation"]
+    logical_limit = {
+        "forecast-inputs-1.0.0": 2 * 1024**3,
+        "forecast-inputs-1.1.0": 4 * 1024**3,
+        "forecast-inputs-1.2.0": MAX_LOGICAL_OUTPUT_BYTES,
+    }.get(input_code["version"])
+    if (
+        logical_limit is None
+        or input_code.get("logical_output_byte_limit", logical_limit) != logical_limit
+    ):
+        raise SnapshotError("forecast_inputs_unsupported_logical_budget")
     if set(manifest["tables"]) != {"history", "features"}:
         raise SnapshotError("forecast_inputs_tables_mismatch")
     with tempfile.TemporaryDirectory(prefix="forecast-inputs-verify-") as temporary:
         db = sqlite3.connect(Path(temporary) / "rows.sqlite")
         try:
             db.execute("PRAGMA temp_store=FILE")
+            db.execute("PRAGMA cache_size=-4096")
             db.execute(
                 "CREATE TABLE output (artifact TEXT, key BLOB, body BLOB, PRIMARY KEY(artifact,key))"
             )
@@ -496,7 +524,7 @@ def verify_inputs(root: Path) -> dict[str, Any]:
                                         )
                                     raw = canonical_bytes(model.model_dump(mode="json"))
                                     logical_bytes += len(raw)
-                                    if logical_bytes > MAX_OUTPUT_BYTES or len(raw) > 1024**2:
+                                    if logical_bytes > logical_limit or len(raw) > 1024**2:
                                         raise SnapshotError("forecast_inputs_logical_byte_limit")
                                     logical = model.model_dump(mode="json")
                                     key_names = (
@@ -509,9 +537,18 @@ def verify_inputs(root: Path) -> dict[str, Any]:
                                         (
                                             name,
                                             canonical_bytes([logical[k] for k in key_names]),
-                                            raw,
+                                            zlib.compress(raw, level=1),
                                         ),
                                     )
+                                    if (
+                                        db.execute(
+                                            "SELECT page_count * page_size FROM pragma_page_count(), pragma_page_size()"
+                                        ).fetchone()[0]
+                                        > MAX_OUTPUT_BYTES
+                                    ):
+                                        raise SnapshotError(
+                                            "forecast_inputs_verification_index_byte_limit"
+                                        )
                                     count += 1
                                     file_rows += 1
                                     if count > MAX_OUTPUT_ROWS:
@@ -524,7 +561,7 @@ def verify_inputs(root: Path) -> dict[str, Any]:
                 for (body,) in db.execute(
                     "SELECT body FROM output WHERE artifact=? ORDER BY key", (name,)
                 ):
-                    digest.update(body + b"\n")
+                    digest.update(zlib.decompress(body) + b"\n")
                 logical_spec = {"row_count": count, "content_sha256": digest.hexdigest()}
                 if (
                     descriptor["tables"][name] != logical_spec
@@ -533,10 +570,17 @@ def verify_inputs(root: Path) -> dict[str, Any]:
                     raise SnapshotError("forecast_inputs_logical_content_mismatch")
             db.execute("CREATE TABLE history_contexts (hash TEXT PRIMARY KEY, body BLOB)")
             for (body,) in db.execute("SELECT body FROM output WHERE artifact='history'"):
-                context = HistoryContext.model_validate_json(body)
+                context = HistoryContext.model_validate_json(zlib.decompress(body))
                 db.execute(
                     "INSERT INTO history_contexts VALUES (?,?)", (context.content_sha256(), body)
                 )
+                if (
+                    db.execute(
+                        "SELECT page_count * page_size FROM pragma_page_count(), pragma_page_size()"
+                    ).fetchone()[0]
+                    > MAX_OUTPUT_BYTES
+                ):
+                    raise SnapshotError("forecast_inputs_verification_index_byte_limit")
 
             @lru_cache(maxsize=128)
             def linked_history(identifier: str) -> tuple[HistoryContext, dict[str, Any]]:
@@ -545,14 +589,14 @@ def verify_inputs(root: Path) -> dict[str, Any]:
                 ).fetchone()
                 if record is None:
                     raise SnapshotError("forecast_inputs_missing_history_context")
-                context = HistoryContext.model_validate_json(record[0])
+                context = HistoryContext.model_validate_json(zlib.decompress(record[0]))
                 view = OriginFeatures(
                     {t: [] for t in TABLES}, make_origin(context.forecast_origin.date())
                 )
                 return context, view.historical_values(context)
 
             for (body,) in db.execute("SELECT body FROM output WHERE artifact='features'"):
-                row = InputRow.model_validate_json(body)
+                row = InputRow.model_validate_json(zlib.decompress(body))
                 context, observed = linked_history(row.history_context_sha256)
                 if (
                     any(getattr(context, k) != getattr(row, k) for k in KEYS)
@@ -562,6 +606,11 @@ def verify_inputs(root: Path) -> dict[str, Any]:
                     or {v.name: v for v in row.values if v.kind == "observed"} != observed
                 ):
                     raise SnapshotError("forecast_inputs_history_or_statistics_mismatch")
+            if (
+                input_code["version"] == "forecast-inputs-1.2.0"
+                and descriptor["stats"].get("logical_output_bytes") != logical_bytes
+            ):
+                raise SnapshotError("forecast_inputs_logical_size_receipt_mismatch")
         except sqlite3.IntegrityError as exc:
             raise SnapshotError("duplicate_forecast_input_key") from exc
         finally:

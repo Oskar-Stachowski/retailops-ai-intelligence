@@ -1,0 +1,339 @@
+{
+  "backtest_policy": {
+    "aggregate": "pool_error_and_actual_sums_no_mean_of_wape",
+    "anchoring": "calendar_start_unused_origins_retained_as_purged",
+    "development_holdout_days": 14,
+    "development_holdout_use": "diagnostic_previously_observed_data_not_fresh_final_test",
+    "evaluation_overlap": "same_role_origins_must_not_repeat_across_folds",
+    "folds": 3,
+    "history": "earlier_observations_allowed_as_of_each_origin",
+    "initial_train_days": 14,
+    "label_tail_days": 15,
+    "minimum_eligible_rows_per_role": 1,
+    "mode": "rolling",
+    "model": {
+      "baseline": {
+        "candidates": [
+          "last_observed",
+          "moving_average",
+          "seasonal_naive7"
+        ],
+        "closed_history": "confirmed_closed_zero_is_observed",
+        "common_keys": "all_split_memberships_no_model_specific_drops",
+        "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+        "missing_history": "skip_unknown_never_impute_zero",
+        "moving_average_calendar_days": 7,
+        "moving_average_minimum_known_days": 1,
+        "origin_mode": "fixed_origin_no_recursive_actuals",
+        "portfolio_final_test": "not_included_not_opened",
+        "required_prediction_coverage": 1.0,
+        "schema_version": "1.0.0",
+        "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+        "selection_metric": "mae",
+        "selection_role": "validation_only_per_fold",
+        "tie_break": "candidate_order"
+      },
+      "cpu_threads": 1,
+      "fit_cpu_seconds": 90.0,
+      "fit_rss_bytes": 1073741824,
+      "fit_wall_seconds": 120.0,
+      "grid": "one_frozen_configuration_per_family",
+      "hgb": {
+        "categorical_features": null,
+        "early_stopping": false,
+        "l2_regularization": 0.0,
+        "learning_rate": 0.1,
+        "loss": "squared_error",
+        "max_bins": 255,
+        "max_iter": 100,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "validation_fraction": null
+      },
+      "legacy_retailops_serving": "unchanged_rejection_not_overridden",
+      "max_matrix_bytes": 67108864,
+      "max_train_rows": 50000,
+      "minimum_relative_improvement": 0.05,
+      "monitor_interval_seconds": 0.05,
+      "portfolio_final_test": "not_included_not_opened",
+      "postprocessing": "clip_negative_to_zero_no_rounding",
+      "primary_metric": "validation_mae",
+      "random_state": 42,
+      "rf": {
+        "bootstrap": true,
+        "criterion": "squared_error",
+        "max_depth": 12,
+        "max_features": 1.0,
+        "min_samples_leaf": 2,
+        "min_samples_split": 2,
+        "n_estimators": 64,
+        "n_jobs": 1
+      },
+      "schema_version": "1.0.0",
+      "selection_use": "diagnostic_only_pending_04_6_to_04_8",
+      "strategy": "direct_global_with_horizon_feature",
+      "target_type": "observed_sales_units",
+      "tie_break": "baseline_then_rf_then_hgb"
+    },
+    "portfolio_final_test": "not_included_not_opened",
+    "purge_days": 15,
+    "selection": "validation_only_independently_per_fold",
+    "step_days": 14,
+    "validation_days": 14,
+    "version": "forecast-chronological-backtest-1.0.0"
+  },
+  "code": {
+    "forecasting/baselines.py": "fb339916e02683932b254e73d05d0a43ce7aec4eca7c818441e6a99f7f4a2560",
+    "forecasting/evaluation.py": "3eed80ae124780d447d698aae748d818f10df9054a5b00b56abc53e678aad1b8",
+    "forecasting/evaluation_contract.py": "d154ad2c5fc01756b7905933dcab1827541250034101cfcf92acea948e9ee26a",
+    "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+    "forecasting/features_store.py": "6f6ccfe1a4e1e22cf502e6c001a36d71a3b4afb133cd4798c343c3cff9541625",
+    "forecasting/functional_campaign.py": "79ebca4e877c7809df3a95344d343e2266a76680c7cda4897072d4bb6d290bcf",
+    "forecasting/functional_contract.py": "e7b38de848b20be9a88c8c6ed17365ad87c40772c1077d8ed3a83b9bd6116894",
+    "forecasting/functional_models.py": "0e199cbc174dbb88a902c678118ba758ac83b26c60f4a37caf2667fa91fa0290",
+    "forecasting/functional_preprocessing.py": "4fcaf4cc88fde5bb7bc9601a4414897b46addccd110d1a380299132e596a4c54",
+    "forecasting/functional_recipe.py": "1d50014cc300d67cc0dab89d32657ba32a5474f010121de31f0d52b2e3b7347a",
+    "forecasting/functional_worker.py": "46eff7c8a399b54305917a36dbc8e0d7710a81bfd5f973b6558636a88b30b16e",
+    "forecasting/manifest_contract.py": "6cc088e4ec6cd1e15399745affef8feaf7978325a346431d9679f20f526add2b",
+    "forecasting/manifest_io.py": "0a290464dbb1957d9e0ea96c53246e9d55046852d7d2f046ae594051d99c3346",
+    "forecasting/manifests.py": "8ea6b52b5c4ac9b4cda1c17146e22c4b3ee550100e9dc39cac0a0b367d58feeb",
+    "forecasting/model_contract.py": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+    "forecasting/model_trees.py": "7b6d77b382b74c7c548e8d395d443f1bce02bea1922c298ef1602d0cfc407bdd",
+    "forecasting/model_worker.py": "5662e8de5fb3d65c05a82e717144ab1064b3e447b00a1e96531488831085c859",
+    "forecasting/models.py": "16814cc2022f87a15e32ebfe4d2b474ac486ec84d58fad9838afe986556a57be",
+    "forecasting/preprocessing.py": "26b8df57f41a1bcd0e5468233fd532e6e7d92be7c9fb49f1a7f9502b2cc447cb",
+    "forecasting/quality_contract.py": "9a8b973443e3c7d2749c79765a355d926272ad1c0970485087208a89e9a80287",
+    "forecasting/quality_metrics.py": "1b3d13eec3d40d439e7421cf719c5e8a6ebfc673f025aed05c0baabd669704b0",
+    "forecasting/quality_v2.py": "7ac6a2bc7e11633704bff636e5fa86793ad19a2b261511964e3f9368ca4db0c2",
+    "forecasting/quality_v2_contract.py": "6c87af085df7961f5245037dcbe6b1d4e2fcb3080efc2595dc60879b3b2466ce",
+    "forecasting/splits.py": "7564af16532313a4b94950c10d9ea8b16d31d82affd9161b708bef5601a04ba1"
+  },
+  "code_commit": "5aa80470789f1e21a8d83de3a9204088584d9a49",
+  "disk_reserve_bytes": 17179869184,
+  "feature_set_id": "features-sha256-b1a38743b5db24a48e7de12d19ca0bff63bd046ee798ebb1cac2ec76611e2754",
+  "freeze_id": "functional-freeze-sha256-22192755c4e9cf000e5c4cae688f62f23a2860acf56ca16f0db3c30977df9805",
+  "frozen_at": "2026-09-30T14:44:28.979062+00:00",
+  "input_freeze_sha256": "a9eb8ea2d2b11a5f505f8b8d9bd243322aef3004fce0b538b992d4f0c2b4caaa",
+  "model_environment": {
+    "code_files": {
+      "forecasting/baselines.py": "fb339916e02683932b254e73d05d0a43ce7aec4eca7c818441e6a99f7f4a2560",
+      "forecasting/evaluation.py": "3eed80ae124780d447d698aae748d818f10df9054a5b00b56abc53e678aad1b8",
+      "forecasting/evaluation_contract.py": "d154ad2c5fc01756b7905933dcab1827541250034101cfcf92acea948e9ee26a",
+      "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+      "forecasting/manifest_contract.py": "6cc088e4ec6cd1e15399745affef8feaf7978325a346431d9679f20f526add2b",
+      "forecasting/manifest_io.py": "0a290464dbb1957d9e0ea96c53246e9d55046852d7d2f046ae594051d99c3346",
+      "forecasting/manifests.py": "8ea6b52b5c4ac9b4cda1c17146e22c4b3ee550100e9dc39cac0a0b367d58feeb",
+      "forecasting/model_contract.py": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+      "forecasting/model_trees.py": "7b6d77b382b74c7c548e8d395d443f1bce02bea1922c298ef1602d0cfc407bdd",
+      "forecasting/model_worker.py": "5662e8de5fb3d65c05a82e717144ab1064b3e447b00a1e96531488831085c859",
+      "forecasting/models.py": "16814cc2022f87a15e32ebfe4d2b474ac486ec84d58fad9838afe986556a57be",
+      "forecasting/preprocessing.py": "26b8df57f41a1bcd0e5468233fd532e6e7d92be7c9fb49f1a7f9502b2cc447cb",
+      "forecasting/splits.py": "7564af16532313a4b94950c10d9ea8b16d31d82affd9161b708bef5601a04ba1"
+    },
+    "code_sha256": "6cb79cafdd5a6de3bf94dcc3512d700fd10178aeaee7d2cbdc0ad52040ea937e",
+    "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "machine": "arm64",
+    "system": "Darwin",
+    "version": "forecast-models-1.0.0",
+    "versions": {
+      "joblib": "1.6.0",
+      "numpy": "2.4.6",
+      "psutil": "7.2.2",
+      "pyarrow": "25.0.1",
+      "python": "3.11.15",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.17.1",
+      "threadpoolctl": "3.7.0"
+    }
+  },
+  "model_fits_before_freeze": 0,
+  "new_holdout_metrics_evaluated_before_freeze": false,
+  "original_v10_report_preserved": true,
+  "parent": {
+    "business_timezone": "UTC",
+    "curated_dataset_id": "curated-sha256-496f5a3934428c5f5eb1911eb7fcf25faf7ff1bb85b4389b1e5b26c039d5ccbf",
+    "curated_descriptor_sha256": "496f5a3934428c5f5eb1911eb7fcf25faf7ff1bb85b4389b1e5b26c039d5ccbf",
+    "forecast_source_status": "passed",
+    "snapshot_id": "snapshot-sha256-ffe024c05fe2400d904cd7753e550a4ff900f7e68fdc86f0cbba8ecdb54e12f7",
+    "source_dataset_id": "source-sha256-76994412fcabec320688429d7f88adcd80fe54fb70327b22c1456c27673c2d66"
+  },
+  "policy": {
+    "baseline_candidates": [
+      "history7",
+      "history28",
+      "weekday28"
+    ],
+    "baseline_statistics": "empirical_median_mean_and_inverted_cdf_05_95_of_as_of_history",
+    "heads": [
+      "rf_mean",
+      "hgb_mean",
+      "hgb_median",
+      "hgb_lower",
+      "hgb_upper"
+    ],
+    "interval_calibration": "first_half_endpoint_residual_quantiles_05_95",
+    "interval_fallback": [
+      "volume_category",
+      "volume",
+      "global"
+    ],
+    "interval_gate": "second_block_score_no_regression_and_coverage_or_baseline",
+    "max_index_bytes": 2147483648,
+    "max_prediction_bytes": 2147483648,
+    "maximum_correction_ratio": 2.0,
+    "mean_gate": "both_blocks_bias_guard_and_mse_no_regression_or_exact_baseline",
+    "median_gate": "both_blocks_mae_guard_second_block_global_5pct_or_exact_baseline",
+    "minimum_correction_ratio": 0.5,
+    "minimum_group_rows": 30,
+    "model": {
+      "baseline": {
+        "candidates": [
+          "last_observed",
+          "moving_average",
+          "seasonal_naive7"
+        ],
+        "closed_history": "confirmed_closed_zero_is_observed",
+        "common_keys": "all_split_memberships_no_model_specific_drops",
+        "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+        "missing_history": "skip_unknown_never_impute_zero",
+        "moving_average_calendar_days": 7,
+        "moving_average_minimum_known_days": 1,
+        "origin_mode": "fixed_origin_no_recursive_actuals",
+        "portfolio_final_test": "not_included_not_opened",
+        "required_prediction_coverage": 1.0,
+        "schema_version": "1.0.0",
+        "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+        "selection_metric": "mae",
+        "selection_role": "validation_only_per_fold",
+        "tie_break": "candidate_order"
+      },
+      "cpu_threads": 1,
+      "fit_cpu_seconds": 90.0,
+      "fit_rss_bytes": 1073741824,
+      "fit_wall_seconds": 120.0,
+      "grid": "one_frozen_configuration_per_family",
+      "hgb": {
+        "categorical_features": null,
+        "early_stopping": false,
+        "l2_regularization": 0.0,
+        "learning_rate": 0.1,
+        "loss": "squared_error",
+        "max_bins": 255,
+        "max_iter": 100,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "validation_fraction": null
+      },
+      "legacy_retailops_serving": "unchanged_rejection_not_overridden",
+      "max_matrix_bytes": 67108864,
+      "max_train_rows": 50000,
+      "minimum_relative_improvement": 0.05,
+      "monitor_interval_seconds": 0.05,
+      "portfolio_final_test": "not_included_not_opened",
+      "postprocessing": "clip_negative_to_zero_no_rounding",
+      "primary_metric": "validation_mae",
+      "random_state": 42,
+      "rf": {
+        "bootstrap": true,
+        "criterion": "squared_error",
+        "max_depth": 12,
+        "max_features": 1.0,
+        "min_samples_leaf": 2,
+        "min_samples_split": 2,
+        "n_estimators": 64,
+        "n_jobs": 1
+      },
+      "schema_version": "1.0.0",
+      "selection_use": "diagnostic_only_pending_04_6_to_04_8",
+      "strategy": "direct_global_with_horizon_feature",
+      "target_type": "observed_sales_units",
+      "tie_break": "baseline_then_rf_then_hgb"
+    },
+    "point_correction": "first_half_median_residual_or_mean_ratio_candidates_identity_retained",
+    "portfolio_final_test": "not_included_not_opened",
+    "quality": {
+      "baseline_selection": "validation_only_separately_by_mae_mse_and_interval_score",
+      "compatibility": "v1_reports_immutable_single_output_never_relabelled_as_two_targets",
+      "evaluation_use": "freeze_before_unseen_development_holdout_no_reselection",
+      "interval_objective": "central_interval_score_no_regression_against_baseline",
+      "legacy_width_ratio_threshold": 2.0,
+      "maximum_absolute_normalized_mean_bias": 0.1,
+      "maximum_segment_mae_regression": 0.1,
+      "mean_mse_guard": "no_regression_against_mean_baseline",
+      "mean_objective": "mse_with_bias_guard",
+      "median_objective": "mae",
+      "minimum_calibration_rows": 50,
+      "minimum_eligibility_coverage": 0.8,
+      "minimum_empirical_coverage": 0.8,
+      "minimum_global_rows": 100,
+      "minimum_prediction_coverage": 1.0,
+      "minimum_relative_mae_improvement": 0.05,
+      "minimum_segment_rows": 30,
+      "nominal_coverage": 0.9,
+      "perfect_baseline": "zero_error_tie_passes_positive_error_fails",
+      "point_contract": "separate_conditional_median_and_mean",
+      "portfolio_final_test": "not_included_not_opened",
+      "required_volume_bins": [
+        "zero",
+        "low",
+        "medium",
+        "high"
+      ],
+      "version": "forecast-quality-2.0.0",
+      "volume_basis": "origin_known_rolling_28_mean_not_target_outcome",
+      "width_to_actual_ratio": "diagnostic_only_no_denominator_floor",
+      "zero_actuals": "absolute_errors_and_false_positive_units_no_ratio_gate"
+    },
+    "reused_model_policy_scope": "estimator_hyperparameters_resources_only_selection_is_functional_recipe",
+    "selection_groups": "origin_known_volume_category",
+    "tie_break": "baseline_candidate_order_then_identity_then_head_order",
+    "validation_partition": "first_half_calibration_second_half_selection",
+    "version": "forecast-functional-recipe-1.0.0"
+  },
+  "portfolio_final_test": "not_included_not_opened",
+  "preparation_report_sha256": "5fe881bcba7a1657ed7bbcf3a9ce84db6025860f9c969bc632750a7f717a677c",
+  "quality_freeze_sha256": "d00f1edeedff8de6419957b2ac6a1515709cc2e52f68d57241727314176955f2",
+  "source_regenerated": false,
+  "split_id": "split-sha256-b061fc47d6e31f48e1e050f19f99f27d60ef60132495f7c095e8ebd24952bf19",
+  "test_receipts": {
+    "effective_tests": 975,
+    "files": {
+      "/private/tmp/retailops-ai-04-forecasting/reports/ai04-ci-entrypoint-tests.xml": {
+        "sha256": "f3b77d57889a965f62d2611fb2c37aaef9b92480603a91d6d8f0632f799059e1",
+        "tests": 17
+      },
+      "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-freeze-verification.xml": {
+        "sha256": "7e6f82a72cbc8954677b74c730b74e85caf3d9b6f1160aea2dc82eee6caee0b2",
+        "tests": 22
+      },
+      "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-full-regression.xml": {
+        "sha256": "bd84cbec86fb9d5ead9e6a991b6e3da604d3053c8c589e51c21c036ca0b3114e",
+        "tests": 974
+      },
+      "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-loopback-verification.xml": {
+        "sha256": "bcaedac90440e0b794e7cedc29b4f6eeb575f8e2930f4fc0743580c69b264973",
+        "tests": 2
+      }
+    },
+    "resolved_failures": [
+      {
+        "original_failure": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-full-regression.xml",
+        "passed_rerun": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-loopback-verification.xml",
+        "test": [
+          "tests.test_server_process",
+          "test_cli_serves_real_http_and_exits_cleanly"
+        ]
+      },
+      {
+        "original_failure": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-full-regression.xml",
+        "passed_rerun": "/private/tmp/retailops-ai-04-forecasting/reports/ai04-functional-loopback-verification.xml",
+        "test": [
+          "tests.test_server_process",
+          "test_local_credentials_and_scope_over_real_loopback"
+        ]
+      }
+    ],
+    "status": "passed"
+  },
+  "version": "ai04-campaign-v11-functional-v1"
+}

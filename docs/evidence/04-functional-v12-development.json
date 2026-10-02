@@ -1,0 +1,5422 @@
+{
+  "archive_development": {
+    "archive_bytes": 99649404,
+    "archive_sha256": "0e2dacf7dcf24056405349f9c807af373677dc5f204b5014ccfee6455d21e41e",
+    "checkpoint_id": "functional-checkpoint-sha256-78777a2ef2a040943c8f3ba00131aa32bff8957e5a70851f364683f7327a20e2",
+    "payload_files": 263,
+    "source_regenerated": false
+  },
+  "cache_id": "forecast-development-sha256-20ccd01733076ad7ce2c20e530d50cbb26347da0c88f32507f456d28f92c8883",
+  "code": {
+    "scripts/check_forecast_functional_v12_development.py": "13e4d2bf706d639e3005f8a456fb5efb5e0043242fa0b522c4a9a8236cc20abc",
+    "src/retailops_ai/forecasting/functional_development.py": "8d8cd24aa347ca5cd2e9ca8a81f056766b89ba51aa3db24aafe4dbf48e1dc7a9",
+    "src/retailops_ai/forecasting/functional_v12_quality.py": "314ddbe3dcf2270418fb625744bf0db37253ce3c7933ce6afb4ce0456541684e",
+    "src/retailops_ai/forecasting/functional_v12_recipe.py": "832caeb36e7269606c00e9a659c8c8a45df64f5ac935a0a6cc0cae49a32289a5"
+  },
+  "development_report": {
+    "bytes": 4044895,
+    "path": "reports/ai04-v12-development-additive.json",
+    "sha256": "c6002cffd8038c04f179485a344b42bf9f91ba7adb4787d038deb882643c6297"
+  },
+  "generated_at": "2026-09-30T16:52:03.800597+00:00",
+  "holdout_rows_read": 0,
+  "model_fits": 0,
+  "model_status": "not_ready",
+  "new_final_holdouts_generated": false,
+  "new_final_holdouts_opened": false,
+  "qualification_warning": "Validation calibrates these recipes. No validation pass count is independent test evidence. Previous real forecast regressions remain preserved.",
+  "quality_freeze": {
+    "files": 11,
+    "protocol_version": "forecast-quality-2.0.0",
+    "status": "passed"
+  },
+  "retained": {
+    "bytes": 1215327427,
+    "files": 3070,
+    "status": "passed"
+  },
+  "scope": "v12_development_stage_a_not_independent_qualification",
+  "streaming_parity": {
+    "campaign_id": "forecast-functional-sha256-0131e7295648e6e3a2cd1a98fac9cd686c7587820775f6f065a5f6798a683c26",
+    "different_segments": 0,
+    "examples": [],
+    "failed_reasons": {
+      "absolute_normalized_mean_bias_exceeded": 11,
+      "critical_segment_median_mae_regression": 1,
+      "global_median_mae_improvement_below_minimum": 2,
+      "interval_score_regression": 27,
+      "mean_mse_regression": 24
+    },
+    "new_holdouts_opened": false,
+    "old_segments_sha256": "9c791b074caf17a96d50d581d8994f76cdf3c3a2dfb8ac94724021c9e79b379f",
+    "prediction_rows": 214032,
+    "predictions_sha256": "b25963cb65fed2038d809acefe4a34726d0ef8eb56c9d028a25928378837fc96",
+    "purpose": "streaming_quality_parity_on_already_exposed_v11_only",
+    "seconds": 19.97274345799815,
+    "segment_count": 224,
+    "segment_counts": {
+      "failed": 59,
+      "passed": 165
+    },
+    "status": "passed"
+  },
+  "test_receipt": {
+    "bytes": 9565,
+    "errors": "0",
+    "failures": "0",
+    "hostname": "Oskars-MacBook-Air.local",
+    "name": "pytest",
+    "path": "reports/ai04-v12-development-components-tests.xml",
+    "sha256": "cbdcad5a846fd0272b85abad9d236645e2ed2ed8c6fb222b65cc586b92db41d2",
+    "skipped": "0",
+    "tests": "57",
+    "time": "21.272",
+    "timestamp": "2026-09-30T18:50:29.015692+02:00"
+  },
+  "v11_code_pins": {
+    "forecasting/baselines.py": "fb339916e02683932b254e73d05d0a43ce7aec4eca7c818441e6a99f7f4a2560",
+    "forecasting/evaluation.py": "3eed80ae124780d447d698aae748d818f10df9054a5b00b56abc53e678aad1b8",
+    "forecasting/evaluation_contract.py": "d154ad2c5fc01756b7905933dcab1827541250034101cfcf92acea948e9ee26a",
+    "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+    "forecasting/features_store.py": "6f6ccfe1a4e1e22cf502e6c001a36d71a3b4afb133cd4798c343c3cff9541625",
+    "forecasting/functional_campaign.py": "79ebca4e877c7809df3a95344d343e2266a76680c7cda4897072d4bb6d290bcf",
+    "forecasting/functional_contract.py": "e7b38de848b20be9a88c8c6ed17365ad87c40772c1077d8ed3a83b9bd6116894",
+    "forecasting/functional_models.py": "0e199cbc174dbb88a902c678118ba758ac83b26c60f4a37caf2667fa91fa0290",
+    "forecasting/functional_preprocessing.py": "4fcaf4cc88fde5bb7bc9601a4414897b46addccd110d1a380299132e596a4c54",
+    "forecasting/functional_recipe.py": "1d50014cc300d67cc0dab89d32657ba32a5474f010121de31f0d52b2e3b7347a",
+    "forecasting/functional_worker.py": "46eff7c8a399b54305917a36dbc8e0d7710a81bfd5f973b6558636a88b30b16e",
+    "forecasting/manifest_contract.py": "6cc088e4ec6cd1e15399745affef8feaf7978325a346431d9679f20f526add2b",
+    "forecasting/manifest_io.py": "0a290464dbb1957d9e0ea96c53246e9d55046852d7d2f046ae594051d99c3346",
+    "forecasting/manifests.py": "8ea6b52b5c4ac9b4cda1c17146e22c4b3ee550100e9dc39cac0a0b367d58feeb",
+    "forecasting/model_contract.py": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+    "forecasting/model_trees.py": "7b6d77b382b74c7c548e8d395d443f1bce02bea1922c298ef1602d0cfc407bdd",
+    "forecasting/model_worker.py": "5662e8de5fb3d65c05a82e717144ab1064b3e447b00a1e96531488831085c859",
+    "forecasting/models.py": "16814cc2022f87a15e32ebfe4d2b474ac486ec84d58fad9838afe986556a57be",
+    "forecasting/preprocessing.py": "26b8df57f41a1bcd0e5468233fd532e6e7d92be7c9fb49f1a7f9502b2cc447cb",
+    "forecasting/quality_contract.py": "9a8b973443e3c7d2749c79765a355d926272ad1c0970485087208a89e9a80287",
+    "forecasting/quality_metrics.py": "1b3d13eec3d40d439e7421cf719c5e8a6ebfc673f025aed05c0baabd669704b0",
+    "forecasting/quality_v2.py": "7ac6a2bc7e11633704bff636e5fa86793ad19a2b261511964e3f9368ca4db0c2",
+    "forecasting/quality_v2_contract.py": "6c87af085df7961f5245037dcbe6b1d4e2fcb3080efc2595dc60879b3b2466ce",
+    "forecasting/splits.py": "7564af16532313a4b94950c10d9ea8b16d31d82affd9161b708bef5601a04ba1"
+  },
+  "variants": {
+    "additive-alpha0-train_validation_pooled": {
+      "failed_reasons": {
+        "absolute_normalized_mean_bias_exceeded": 3,
+        "mean_mse_regression": 2
+      },
+      "failed_segments": [
+        {
+          "baseline": {
+            "actual_sum": 10034,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9706959706959707,
+              "mean_score": 10.293956043956044,
+              "mean_width": 8.975274725274724,
+              "width_to_mean_actual": 1.9535579031293602
+            },
+            "mean": {
+              "bias_units": -0.14843220051553385,
+              "complete": true,
+              "mae": 2.867610398860399,
+              "mse": 36.93829551150153,
+              "normalized_bias": -0.03230774625532449,
+              "wape": 0.6241639536686377,
+              "zero_actual_excess_units": 1693.037037037037
+            },
+            "median": {
+              "bias_units": -0.029990842490842492,
+              "complete": true,
+              "mae": 2.95260989010989,
+              "mse": 47.93875915750916,
+              "normalized_bias": -0.006527805461431134,
+              "wape": 0.6426649392066972,
+              "zero_actual_excess_units": 1758.5
+            },
+            "rows": 2184
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 10034,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9706959706959707,
+              "mean_score": 10.293956043956044,
+              "mean_width": 8.975274725274724,
+              "width_to_mean_actual": 1.9535579031293602
+            },
+            "mean": {
+              "bias_units": 0.0569334955506936,
+              "complete": true,
+              "mae": 2.84497111948003,
+              "mse": 37.037112853256055,
+              "normalized_bias": 0.012392142144978555,
+              "wape": 0.6192362891114596,
+              "zero_actual_excess_units": 1790.0407910415026
+            },
+            "median": {
+              "bias_units": -0.029990842490842492,
+              "complete": true,
+              "mae": 2.95260989010989,
+              "mse": 47.93875915750916,
+              "normalized_bias": -0.006527805461431134,
+              "wape": 0.6426649392066972,
+              "zero_actual_excess_units": 1758.5
+            },
+            "rows": 2184
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "horizon",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 2184,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2548,
+          "value": "1"
+        },
+        {
+          "baseline": {
+            "actual_sum": 91,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9844527363184079,
+              "mean_score": 0.7139303482587065,
+              "mean_width": 0.40298507462686567,
+              "width_to_mean_actual": 7.120879120879121
+            },
+            "mean": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1608
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 91,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9844527363184079,
+              "mean_score": 0.7139303482587065,
+              "mean_width": 0.40298507462686567,
+              "width_to_mean_actual": 7.120879120879121
+            },
+            "mean": {
+              "bias_units": -0.011252903058158606,
+              "complete": true,
+              "mae": 0.09679950808164474,
+              "mse": 0.05351600865939394,
+              "normalized_bias": -0.1988425067859235,
+              "wape": 1.7104792197284038,
+              "zero_actual_excess_units": 68.77947043888285
+            },
+            "median": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1608
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 1608,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 1876,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 24,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9900611620795107,
+              "mean_score": 0.41896024464831805,
+              "mean_width": 0.22018348623853212,
+              "width_to_mean_actual": 12.0
+            },
+            "mean": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1308
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 24,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9900611620795107,
+              "mean_score": 0.41896024464831805,
+              "mean_width": 0.22018348623853212,
+              "width_to_mean_actual": 12.0
+            },
+            "mean": {
+              "bias_units": 0.007625402120814966,
+              "complete": true,
+              "mae": 0.043369474562135114,
+              "mse": 0.018070098613408515,
+              "normalized_bias": 0.41558441558441567,
+              "wape": 2.3636363636363638,
+              "zero_actual_excess_units": 33.350649350649356
+            },
+            "median": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1308
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 1308,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 1526,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 9894,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9706959706959707,
+              "mean_score": 9.594093406593407,
+              "mean_width": 8.605082417582418,
+              "width_to_mean_actual": 1.8994845360824744
+            },
+            "mean": {
+              "bias_units": -0.1081645977479311,
+              "complete": true,
+              "mae": 2.6737679758513093,
+              "mse": 33.12350432846189,
+              "normalized_bias": -0.02387623625242384,
+              "wape": 0.5902071214129027,
+              "zero_actual_excess_units": 1748.4444444444443
+            },
+            "median": {
+              "bias_units": 0.005494505494505495,
+              "complete": true,
+              "mae": 2.7554945054945055,
+              "mse": 41.614010989010985,
+              "normalized_bias": 0.001212856276531231,
+              "wape": 0.6082474226804123,
+              "zero_actual_excess_units": 1832.0
+            },
+            "rows": 2184
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 9894,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9706959706959707,
+              "mean_score": 9.594093406593407,
+              "mean_width": 8.605082417582418,
+              "width_to_mean_actual": 1.8994845360824744
+            },
+            "mean": {
+              "bias_units": 0.07978809217320525,
+              "complete": true,
+              "mae": 2.673371661783763,
+              "mse": 33.16341194203337,
+              "normalized_bias": 0.017612410886019836,
+              "wape": 0.5901196391081199,
+              "zero_actual_excess_units": 1843.6126703956113
+            },
+            "median": {
+              "bias_units": 0.005494505494505495,
+              "complete": true,
+              "mae": 2.7554945054945055,
+              "mse": 41.614010989010985,
+              "normalized_bias": 0.001212856276531231,
+              "wape": 0.6082474226804123,
+              "zero_actual_excess_units": 1832.0
+            },
+            "rows": 2184
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "horizon",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 2184,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2548,
+          "value": "3"
+        },
+        {
+          "baseline": {
+            "actual_sum": 78,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9710950528071151,
+              "mean_score": 0.671484157865481,
+              "mean_width": 0.0933852140077821,
+              "width_to_mean_actual": 2.1538461538461537
+            },
+            "mean": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1799
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 78,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9710950528071151,
+              "mean_score": 0.671484157865481,
+              "mean_width": 0.0933852140077821,
+              "width_to_mean_actual": 2.1538461538461537
+            },
+            "mean": {
+              "bias_units": 0.006136066909659571,
+              "complete": true,
+              "mae": 0.08855908854332163,
+              "mse": 0.04151520616894443,
+              "normalized_bias": 0.1415228765445842,
+              "wape": 2.04253590114661,
+              "zero_actual_excess_units": 85.17829232995659
+            },
+            "median": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1799
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8290322580645161,
+          "eligible_rows": 1799,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2170,
+          "value": "zero"
+        }
+      ],
+      "model_status": "not_ready",
+      "segment_counts": {
+        "failed": 5,
+        "passed": 107
+      }
+    },
+    "additive-alpha0-validation_only": {
+      "failed_reasons": {
+        "mean_mse_regression": 2
+      },
+      "failed_segments": [
+        {
+          "baseline": {
+            "actual_sum": 10034,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9706959706959707,
+              "mean_score": 10.293956043956044,
+              "mean_width": 8.975274725274724,
+              "width_to_mean_actual": 1.9535579031293602
+            },
+            "mean": {
+              "bias_units": -0.14843220051553385,
+              "complete": true,
+              "mae": 2.867610398860399,
+              "mse": 36.93829551150153,
+              "normalized_bias": -0.03230774625532449,
+              "wape": 0.6241639536686377,
+              "zero_actual_excess_units": 1693.037037037037
+            },
+            "median": {
+              "bias_units": -0.029990842490842492,
+              "complete": true,
+              "mae": 2.95260989010989,
+              "mse": 47.93875915750916,
+              "normalized_bias": -0.006527805461431134,
+              "wape": 0.6426649392066972,
+              "zero_actual_excess_units": 1758.5
+            },
+            "rows": 2184
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 10034,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9706959706959707,
+              "mean_score": 10.293956043956044,
+              "mean_width": 8.975274725274724,
+              "width_to_mean_actual": 1.9535579031293602
+            },
+            "mean": {
+              "bias_units": 0.05752602478681459,
+              "complete": true,
+              "mae": 2.8455018195784687,
+              "mse": 37.037111421320546,
+              "normalized_bias": 0.012521112032529706,
+              "wape": 0.6193518012716142,
+              "zero_actual_excess_units": 1791.267357474842
+            },
+            "median": {
+              "bias_units": -0.029990842490842492,
+              "complete": true,
+              "mae": 2.95260989010989,
+              "mse": 47.93875915750916,
+              "normalized_bias": -0.006527805461431134,
+              "wape": 0.6426649392066972,
+              "zero_actual_excess_units": 1758.5
+            },
+            "rows": 2184
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "horizon",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 2184,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2548,
+          "value": "1"
+        },
+        {
+          "baseline": {
+            "actual_sum": 9894,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9706959706959707,
+              "mean_score": 9.594093406593407,
+              "mean_width": 8.605082417582418,
+              "width_to_mean_actual": 1.8994845360824744
+            },
+            "mean": {
+              "bias_units": -0.1081645977479311,
+              "complete": true,
+              "mae": 2.6737679758513093,
+              "mse": 33.12350432846189,
+              "normalized_bias": -0.02387623625242384,
+              "wape": 0.5902071214129027,
+              "zero_actual_excess_units": 1748.4444444444443
+            },
+            "median": {
+              "bias_units": 0.005494505494505495,
+              "complete": true,
+              "mae": 2.7554945054945055,
+              "mse": 41.614010989010985,
+              "normalized_bias": 0.001212856276531231,
+              "wape": 0.6082474226804123,
+              "zero_actual_excess_units": 1832.0
+            },
+            "rows": 2184
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 9894,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9706959706959707,
+              "mean_score": 9.594093406593407,
+              "mean_width": 8.605082417582418,
+              "width_to_mean_actual": 1.8994845360824744
+            },
+            "mean": {
+              "bias_units": 0.07941161187746608,
+              "complete": true,
+              "mae": 2.67301765792359,
+              "mse": 33.16339946193145,
+              "normalized_bias": 0.017529306684898514,
+              "wape": 0.5900414963518416,
+              "zero_actual_excess_units": 1842.8149816973555
+            },
+            "median": {
+              "bias_units": 0.005494505494505495,
+              "complete": true,
+              "mae": 2.7554945054945055,
+              "mse": 41.614010989010985,
+              "normalized_bias": 0.001212856276531231,
+              "wape": 0.6082474226804123,
+              "zero_actual_excess_units": 1832.0
+            },
+            "rows": 2184
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "horizon",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 2184,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2548,
+          "value": "3"
+        }
+      ],
+      "model_status": "not_ready",
+      "segment_counts": {
+        "failed": 2,
+        "passed": 110
+      }
+    },
+    "additive-alpha200-train_validation_pooled": {
+      "failed_reasons": {
+        "absolute_normalized_mean_bias_exceeded": 3,
+        "mean_mse_regression": 1
+      },
+      "failed_segments": [
+        {
+          "baseline": {
+            "actual_sum": 14894,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9786255411255411,
+              "mean_score": 8.30275974025974,
+              "mean_width": 7.658820346320346,
+              "width_to_mean_actual": 1.9005639854975156
+            },
+            "mean": {
+              "bias_units": 0.03968253968253969,
+              "complete": true,
+              "mae": 2.0837842712842716,
+              "mse": 19.834257756132757,
+              "normalized_bias": 0.009847365829640572,
+              "wape": 0.5170986079405577,
+              "zero_actual_excess_units": 2280.0833333333335
+            },
+            "median": {
+              "bias_units": -0.10254329004329005,
+              "complete": true,
+              "mae": 2.1090367965367967,
+              "mse": 24.484983766233768,
+              "normalized_bias": -0.025446488518866658,
+              "wape": 0.5233651134685108,
+              "zero_actual_excess_units": 2334.5
+            },
+            "rows": 3696
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 144,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 144,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 14894,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9786255411255411,
+              "mean_score": 8.30275974025974,
+              "mean_width": 7.658820346320346,
+              "width_to_mean_actual": 1.9005639854975156
+            },
+            "mean": {
+              "bias_units": 0.08535891422797556,
+              "complete": true,
+              "mae": 2.09723264986091,
+              "mse": 19.840326772570688,
+              "normalized_bias": 0.02118212347163943,
+              "wape": 0.5204358717527812,
+              "zero_actual_excess_units": 2323.1192046918486
+            },
+            "median": {
+              "bias_units": -0.10254329004329005,
+              "complete": true,
+              "mae": 2.1090367965367967,
+              "mse": 24.484983766233768,
+              "normalized_bias": -0.025446488518866658,
+              "wape": 0.5233651134685108,
+              "zero_actual_excess_units": 2334.5
+            },
+            "rows": 3696
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3696,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb"
+        },
+        {
+          "baseline": {
+            "actual_sum": 91,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9844527363184079,
+              "mean_score": 0.7139303482587065,
+              "mean_width": 0.40298507462686567,
+              "width_to_mean_actual": 7.120879120879121
+            },
+            "mean": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1608
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 91,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9844527363184079,
+              "mean_score": 0.7139303482587065,
+              "mean_width": 0.40298507462686567,
+              "width_to_mean_actual": 7.120879120879121
+            },
+            "mean": {
+              "bias_units": -0.011252903058158606,
+              "complete": true,
+              "mae": 0.09679950808164474,
+              "mse": 0.05351600865939394,
+              "normalized_bias": -0.1988425067859235,
+              "wape": 1.7104792197284038,
+              "zero_actual_excess_units": 68.77947043888285
+            },
+            "median": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1608
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 1608,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 1876,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 24,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9900611620795107,
+              "mean_score": 0.41896024464831805,
+              "mean_width": 0.22018348623853212,
+              "width_to_mean_actual": 12.0
+            },
+            "mean": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1308
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 24,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9900611620795107,
+              "mean_score": 0.41896024464831805,
+              "mean_width": 0.22018348623853212,
+              "width_to_mean_actual": 12.0
+            },
+            "mean": {
+              "bias_units": 0.007625402120814966,
+              "complete": true,
+              "mae": 0.043369474562135114,
+              "mse": 0.018070098613408515,
+              "normalized_bias": 0.41558441558441567,
+              "wape": 2.3636363636363638,
+              "zero_actual_excess_units": 33.350649350649356
+            },
+            "median": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1308
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 1308,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 1526,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 78,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9710950528071151,
+              "mean_score": 0.671484157865481,
+              "mean_width": 0.0933852140077821,
+              "width_to_mean_actual": 2.1538461538461537
+            },
+            "mean": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1799
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 78,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9710950528071151,
+              "mean_score": 0.671484157865481,
+              "mean_width": 0.0933852140077821,
+              "width_to_mean_actual": 2.1538461538461537
+            },
+            "mean": {
+              "bias_units": 0.006136066909659571,
+              "complete": true,
+              "mae": 0.08855908854332163,
+              "mse": 0.04151520616894443,
+              "normalized_bias": 0.1415228765445842,
+              "wape": 2.04253590114661,
+              "zero_actual_excess_units": 85.17829232995659
+            },
+            "median": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1799
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8290322580645161,
+          "eligible_rows": 1799,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2170,
+          "value": "zero"
+        }
+      ],
+      "model_status": "not_ready",
+      "segment_counts": {
+        "failed": 4,
+        "passed": 108
+      }
+    },
+    "additive-alpha200-validation_only": {
+      "failed_reasons": {
+        "mean_mse_regression": 1
+      },
+      "failed_segments": [
+        {
+          "baseline": {
+            "actual_sum": 14894,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9786255411255411,
+              "mean_score": 8.30275974025974,
+              "mean_width": 7.658820346320346,
+              "width_to_mean_actual": 1.9005639854975156
+            },
+            "mean": {
+              "bias_units": 0.03968253968253969,
+              "complete": true,
+              "mae": 2.0837842712842716,
+              "mse": 19.834257756132757,
+              "normalized_bias": 0.009847365829640572,
+              "wape": 0.5170986079405577,
+              "zero_actual_excess_units": 2280.0833333333335
+            },
+            "median": {
+              "bias_units": -0.10254329004329005,
+              "complete": true,
+              "mae": 2.1090367965367967,
+              "mse": 24.484983766233768,
+              "normalized_bias": -0.025446488518866658,
+              "wape": 0.5233651134685108,
+              "zero_actual_excess_units": 2334.5
+            },
+            "rows": 3696
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 144,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 144,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 14894,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9786255411255411,
+              "mean_score": 8.30275974025974,
+              "mean_width": 7.658820346320346,
+              "width_to_mean_actual": 1.9005639854975156
+            },
+            "mean": {
+              "bias_units": 0.0860530868192256,
+              "complete": true,
+              "mae": 2.097823305486798,
+              "mse": 19.840294013434274,
+              "normalized_bias": 0.021354384912304136,
+              "wape": 0.5205824450838731,
+              "zero_actual_excess_units": 2325.4935672371203
+            },
+            "median": {
+              "bias_units": -0.10254329004329005,
+              "complete": true,
+              "mae": 2.1090367965367967,
+              "mse": 24.484983766233768,
+              "normalized_bias": -0.025446488518866658,
+              "wape": 0.5233651134685108,
+              "zero_actual_excess_units": 2334.5
+            },
+            "rows": 3696
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3696,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "42c5eb6c-ad87-5271-aa04-cafcd641d9eb"
+        }
+      ],
+      "model_status": "not_ready",
+      "segment_counts": {
+        "failed": 1,
+        "passed": 111
+      }
+    },
+    "additive-alpha50-train_validation_pooled": {
+      "failed_reasons": {
+        "absolute_normalized_mean_bias_exceeded": 3
+      },
+      "failed_segments": [
+        {
+          "baseline": {
+            "actual_sum": 91,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9844527363184079,
+              "mean_score": 0.7139303482587065,
+              "mean_width": 0.40298507462686567,
+              "width_to_mean_actual": 7.120879120879121
+            },
+            "mean": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1608
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 91,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9844527363184079,
+              "mean_score": 0.7139303482587065,
+              "mean_width": 0.40298507462686567,
+              "width_to_mean_actual": 7.120879120879121
+            },
+            "mean": {
+              "bias_units": -0.011252903058158606,
+              "complete": true,
+              "mae": 0.09679950808164474,
+              "mse": 0.05351600865939394,
+              "normalized_bias": -0.1988425067859235,
+              "wape": 1.7104792197284038,
+              "zero_actual_excess_units": 68.77947043888285
+            },
+            "median": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1608
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 1608,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 1876,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 24,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9900611620795107,
+              "mean_score": 0.41896024464831805,
+              "mean_width": 0.22018348623853212,
+              "width_to_mean_actual": 12.0
+            },
+            "mean": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1308
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 24,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9900611620795107,
+              "mean_score": 0.41896024464831805,
+              "mean_width": 0.22018348623853212,
+              "width_to_mean_actual": 12.0
+            },
+            "mean": {
+              "bias_units": 0.007625402120814966,
+              "complete": true,
+              "mae": 0.043369474562135114,
+              "mse": 0.018070098613408515,
+              "normalized_bias": 0.41558441558441567,
+              "wape": 2.3636363636363638,
+              "zero_actual_excess_units": 33.350649350649356
+            },
+            "median": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1308
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 1308,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 1526,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 78,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9710950528071151,
+              "mean_score": 0.671484157865481,
+              "mean_width": 0.0933852140077821,
+              "width_to_mean_actual": 2.1538461538461537
+            },
+            "mean": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1799
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 78,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9710950528071151,
+              "mean_score": 0.671484157865481,
+              "mean_width": 0.0933852140077821,
+              "width_to_mean_actual": 2.1538461538461537
+            },
+            "mean": {
+              "bias_units": 0.006136066909659571,
+              "complete": true,
+              "mae": 0.08855908854332163,
+              "mse": 0.04151520616894443,
+              "normalized_bias": 0.1415228765445842,
+              "wape": 2.04253590114661,
+              "zero_actual_excess_units": 85.17829232995659
+            },
+            "median": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1799
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8290322580645161,
+          "eligible_rows": 1799,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2170,
+          "value": "zero"
+        }
+      ],
+      "model_status": "not_ready",
+      "segment_counts": {
+        "failed": 3,
+        "passed": 109
+      }
+    },
+    "additive-alpha50-validation_only": {
+      "failed_reasons": {},
+      "failed_segments": [],
+      "model_status": "not_ready",
+      "segment_counts": {
+        "passed": 112
+      }
+    },
+    "baseline": {
+      "failed_reasons": {
+        "absolute_normalized_mean_bias_exceeded": 6
+      },
+      "failed_segments": [
+        {
+          "baseline": {
+            "actual_sum": 16496,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9778138528138528,
+              "mean_score": 10.071428571428571,
+              "mean_width": 9.454545454545455,
+              "width_to_mean_actual": 2.1183317167798257
+            },
+            "mean": {
+              "bias_units": -0.5416065416065416,
+              "complete": true,
+              "mae": 3.1019320185986854,
+              "mse": 45.897286355619684,
+              "normalized_bias": -0.12134928332794483,
+              "wape": 0.6950012573193951,
+              "zero_actual_excess_units": 3814.5925925925926
+            },
+            "median": {
+              "bias_units": -0.6060606060606061,
+              "complete": true,
+              "mae": 3.1101190476190474,
+              "mse": 60.38284632034632,
+              "normalized_bias": -0.13579049466537343,
+              "wape": 0.6968355965082444,
+              "zero_actual_excess_units": 3618.0
+            },
+            "rows": 3696
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 420,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 420,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 16496,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9778138528138528,
+              "mean_score": 10.071428571428571,
+              "mean_width": 9.454545454545455,
+              "width_to_mean_actual": 2.1183317167798257
+            },
+            "mean": {
+              "bias_units": -0.5416065416065416,
+              "complete": true,
+              "mae": 3.1019320185986854,
+              "mse": 45.897286355619684,
+              "normalized_bias": -0.12134928332794483,
+              "wape": 0.6950012573193951,
+              "zero_actual_excess_units": 3814.5925925925926
+            },
+            "median": {
+              "bias_units": -0.6060606060606061,
+              "complete": true,
+              "mae": 3.1101190476190474,
+              "mse": 60.38284632034632,
+              "normalized_bias": -0.13579049466537343,
+              "wape": 0.6968355965082444,
+              "zero_actual_excess_units": 3618.0
+            },
+            "rows": 3696
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3696,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+        },
+        {
+          "baseline": {
+            "actual_sum": 91,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9844527363184079,
+              "mean_score": 0.7139303482587065,
+              "mean_width": 0.40298507462686567,
+              "width_to_mean_actual": 7.120879120879121
+            },
+            "mean": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1608
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 91,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9844527363184079,
+              "mean_score": 0.7139303482587065,
+              "mean_width": 0.40298507462686567,
+              "width_to_mean_actual": 7.120879120879121
+            },
+            "mean": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1608
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 1608,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 1876,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 20553,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9689980158730159,
+              "mean_score": 10.328373015873016,
+              "mean_width": 9.157738095238095,
+              "width_to_mean_actual": 1.7965260545905706
+            },
+            "mean": {
+              "bias_units": -0.6160438712522045,
+              "complete": true,
+              "mae": 3.1197457378012934,
+              "mse": 38.43074003649814,
+              "normalized_bias": -0.12085286278834664,
+              "wape": 0.6120184311202654,
+              "zero_actual_excess_units": 2764.462962962963
+            },
+            "median": {
+              "bias_units": -0.984375,
+              "complete": true,
+              "mae": 3.163938492063492,
+              "mse": 46.765625,
+              "normalized_bias": -0.1931104948182747,
+              "wape": 0.6206879774242203,
+              "zero_actual_excess_units": 2762.0
+            },
+            "rows": 4032
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 20553,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9689980158730159,
+              "mean_score": 10.328373015873016,
+              "mean_width": 9.157738095238095,
+              "width_to_mean_actual": 1.7965260545905706
+            },
+            "mean": {
+              "bias_units": -0.6160438712522045,
+              "complete": true,
+              "mae": 3.1197457378012934,
+              "mse": 38.43074003649814,
+              "normalized_bias": -0.12085286278834664,
+              "wape": 0.6120184311202654,
+              "zero_actual_excess_units": 2764.462962962963
+            },
+            "median": {
+              "bias_units": -0.984375,
+              "complete": true,
+              "mae": 3.163938492063492,
+              "mse": 46.765625,
+              "normalized_bias": -0.1931104948182747,
+              "wape": 0.6206879774242203,
+              "zero_actual_excess_units": 2762.0
+            },
+            "rows": 4032
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 4032,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4704,
+          "value": "197c13ee-8ab3-580d-8ccc-a0c3195d9925"
+        },
+        {
+          "baseline": {
+            "actual_sum": 24,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9900611620795107,
+              "mean_score": 0.41896024464831805,
+              "mean_width": 0.22018348623853212,
+              "width_to_mean_actual": 12.0
+            },
+            "mean": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1308
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 24,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9900611620795107,
+              "mean_score": 0.41896024464831805,
+              "mean_width": 0.22018348623853212,
+              "width_to_mean_actual": 12.0
+            },
+            "mean": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1308
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 1308,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 1526,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 78,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9710950528071151,
+              "mean_score": 0.671484157865481,
+              "mean_width": 0.0933852140077821,
+              "width_to_mean_actual": 2.1538461538461537
+            },
+            "mean": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1799
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 78,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9710950528071151,
+              "mean_score": 0.671484157865481,
+              "mean_width": 0.0933852140077821,
+              "width_to_mean_actual": 2.1538461538461537
+            },
+            "mean": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1799
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8290322580645161,
+          "eligible_rows": 1799,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2170,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 193,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9809119830328739,
+              "mean_score": 0.6159066808059386,
+              "mean_width": 0.23414634146341465,
+              "width_to_mean_actual": 5.72020725388601
+            },
+            "mean": {
+              "bias_units": -0.04093319194061506,
+              "complete": true,
+              "mae": 0.04093319194061506,
+              "mse": 0.04093319194061506,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.04093319194061506,
+              "complete": true,
+              "mae": 0.04093319194061506,
+              "mse": 0.04093319194061506,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 4715
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 193,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9809119830328739,
+              "mean_score": 0.6159066808059386,
+              "mean_width": 0.23414634146341465,
+              "width_to_mean_actual": 5.72020725388601
+            },
+            "mean": {
+              "bias_units": -0.04093319194061506,
+              "complete": true,
+              "mae": 0.04093319194061506,
+              "mse": 0.04093319194061506,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.04093319194061506,
+              "complete": true,
+              "mae": 0.04093319194061506,
+              "mse": 0.04093319194061506,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 4715
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8461952620244078,
+          "eligible_rows": 4715,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "pooled",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 5572,
+          "value": "zero"
+        }
+      ],
+      "model_status": "not_ready",
+      "segment_counts": {
+        "failed": 6,
+        "passed": 106
+      }
+    },
+    "zero-only-train_validation_pooled": {
+      "failed_reasons": {
+        "absolute_normalized_mean_bias_exceeded": 5,
+        "mean_mse_regression": 18
+      },
+      "failed_segments": [
+        {
+          "baseline": {
+            "actual_sum": 19483,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9712301587301587,
+              "mean_score": 10.310019841269842,
+              "mean_width": 9.283234126984127,
+              "width_to_mean_actual": 1.9211620387004054
+            },
+            "mean": {
+              "bias_units": 0.11127645502645502,
+              "complete": true,
+              "mae": 2.8260490152851263,
+              "mse": 34.15960969650206,
+              "normalized_bias": 0.023028623244195794,
+              "wape": 0.5848498501067407,
+              "zero_actual_excess_units": 3317.4444444444443
+            },
+            "median": {
+              "bias_units": 0.15500992063492064,
+              "complete": true,
+              "mae": 2.8100198412698414,
+              "mse": 39.27827380952381,
+              "normalized_bias": 0.03207924857568136,
+              "wape": 0.5815326181799517,
+              "zero_actual_excess_units": 3085.5
+            },
+            "rows": 4032
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 19483,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9712301587301587,
+              "mean_score": 10.310019841269842,
+              "mean_width": 9.283234126984127,
+              "width_to_mean_actual": 1.9211620387004054
+            },
+            "mean": {
+              "bias_units": 0.1131655857240732,
+              "complete": true,
+              "mae": 2.8279381459827446,
+              "mse": 34.159695348057085,
+              "normalized_bias": 0.023419578177871127,
+              "wape": 0.585240805040416,
+              "zero_actual_excess_units": 3325.061419417241
+            },
+            "median": {
+              "bias_units": 0.15500992063492064,
+              "complete": true,
+              "mae": 2.8100198412698414,
+              "mse": 39.27827380952381,
+              "normalized_bias": 0.03207924857568136,
+              "wape": 0.5815326181799517,
+              "zero_actual_excess_units": 3085.5
+            },
+            "rows": 4032
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 4032,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4704,
+          "value": "197c13ee-8ab3-580d-8ccc-a0c3195d9925"
+        },
+        {
+          "baseline": {
+            "actual_sum": 15747,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9818840579710145,
+              "mean_score": 7.816511387163561,
+              "mean_width": 7.1074016563147,
+              "width_to_mean_actual": 1.7440147329650093
+            },
+            "mean": {
+              "bias_units": -0.36493558776167473,
+              "complete": true,
+              "mae": 2.1102196917414306,
+              "mse": 16.544812727381167,
+              "normalized_bias": -0.08954792094437741,
+              "wape": 0.5178058607283221,
+              "zero_actual_excess_units": 1289.9259259259259
+            },
+            "median": {
+              "bias_units": 0.23964803312629399,
+              "complete": true,
+              "mae": 1.888975155279503,
+              "mse": 22.208721532091097,
+              "normalized_bias": 0.058804851717787515,
+              "wape": 0.4635168603543532,
+              "zero_actual_excess_units": 922.0
+            },
+            "rows": 3864
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 15747,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9818840579710145,
+              "mean_score": 7.816511387163561,
+              "mean_width": 7.1074016563147,
+              "width_to_mean_actual": 1.7440147329650093
+            },
+            "mean": {
+              "bias_units": -0.3629643209467688,
+              "complete": true,
+              "mae": 2.11212055617009,
+              "mse": 16.544831700530597,
+              "normalized_bias": -0.08906421135062645,
+              "wape": 0.5182722949794392,
+              "zero_actual_excess_units": 1297.406883488494
+            },
+            "median": {
+              "bias_units": 0.23964803312629399,
+              "complete": true,
+              "mae": 1.888975155279503,
+              "mse": 22.208721532091097,
+              "normalized_bias": 0.058804851717787515,
+              "wape": 0.4635168603543532,
+              "zero_actual_excess_units": 922.0
+            },
+            "rows": 3864
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3864,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4508,
+          "value": "28b88987-7084-5c08-a3c5-2b8ffa807492"
+        },
+        {
+          "baseline": {
+            "actual_sum": 16496,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9778138528138528,
+              "mean_score": 10.071428571428571,
+              "mean_width": 9.454545454545455,
+              "width_to_mean_actual": 2.1183317167798257
+            },
+            "mean": {
+              "bias_units": -0.5416065416065416,
+              "complete": true,
+              "mae": 3.1019320185986854,
+              "mse": 45.897286355619684,
+              "normalized_bias": -0.12134928332794483,
+              "wape": 0.6950012573193951,
+              "zero_actual_excess_units": 3814.5925925925926
+            },
+            "median": {
+              "bias_units": -0.6060606060606061,
+              "complete": true,
+              "mae": 3.1101190476190474,
+              "mse": 60.38284632034632,
+              "normalized_bias": -0.13579049466537343,
+              "wape": 0.6968355965082444,
+              "zero_actual_excess_units": 3618.0
+            },
+            "rows": 3696
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 420,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 420,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 16496,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9778138528138528,
+              "mean_score": 10.071428571428571,
+              "mean_width": 9.454545454545455,
+              "width_to_mean_actual": 2.1183317167798257
+            },
+            "mean": {
+              "bias_units": -0.5416065416065416,
+              "complete": true,
+              "mae": 3.1019320185986854,
+              "mse": 45.897286355619684,
+              "normalized_bias": -0.12134928332794483,
+              "wape": 0.6950012573193951,
+              "zero_actual_excess_units": 3814.5925925925926
+            },
+            "median": {
+              "bias_units": -0.6060606060606061,
+              "complete": true,
+              "mae": 3.1101190476190474,
+              "mse": 60.38284632034632,
+              "normalized_bias": -0.13579049466537343,
+              "wape": 0.6968355965082444,
+              "zero_actual_excess_units": 3618.0
+            },
+            "rows": 3696
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3696,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+        },
+        {
+          "baseline": {
+            "actual_sum": 91,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9844527363184079,
+              "mean_score": 0.7139303482587065,
+              "mean_width": 0.40298507462686567,
+              "width_to_mean_actual": 7.120879120879121
+            },
+            "mean": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1608
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 91,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9844527363184079,
+              "mean_score": 0.7139303482587065,
+              "mean_width": 0.40298507462686567,
+              "width_to_mean_actual": 7.120879120879121
+            },
+            "mean": {
+              "bias_units": -0.011252903058158606,
+              "complete": true,
+              "mae": 0.09679950808164474,
+              "mse": 0.05351600865939394,
+              "normalized_bias": -0.1988425067859235,
+              "wape": 1.7104792197284038,
+              "zero_actual_excess_units": 68.77947043888285
+            },
+            "median": {
+              "bias_units": -0.056592039800995024,
+              "complete": true,
+              "mae": 0.056592039800995024,
+              "mse": 0.056592039800995024,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1608
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 1608,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 1876,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 9965,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9752747252747253,
+              "mean_score": 9.53617216117216,
+              "mean_width": 8.780677655677655,
+              "width_to_mean_actual": 1.924435524335173
+            },
+            "mean": {
+              "bias_units": -0.1919982024148691,
+              "complete": true,
+              "mae": 2.666357176773843,
+              "mse": 31.560529887208126,
+              "normalized_bias": -0.042079686309490626,
+              "wape": 0.5843777294605192,
+              "zero_actual_excess_units": 1753.138888888889
+            },
+            "median": {
+              "bias_units": -0.08127289377289378,
+              "complete": true,
+              "mae": 2.488782051282051,
+              "mse": 35.33047161172161,
+              "normalized_bias": -0.017812343201204214,
+              "wape": 0.5454591068740592,
+              "zero_actual_excess_units": 1623.5
+            },
+            "rows": 2184
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 9965,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9752747252747253,
+              "mean_score": 9.53617216117216,
+              "mean_width": 8.780677655677655,
+              "width_to_mean_actual": 1.924435524335173
+            },
+            "mean": {
+              "bias_units": -0.19089216559454655,
+              "complete": true,
+              "mae": 2.667439427856095,
+              "mse": 31.560534829699158,
+              "normalized_bias": -0.04183727944390263,
+              "wape": 0.5846149232752345,
+              "zero_actual_excess_units": 1755.5284992784993
+            },
+            "median": {
+              "bias_units": -0.08127289377289378,
+              "complete": true,
+              "mae": 2.488782051282051,
+              "mse": 35.33047161172161,
+              "normalized_bias": -0.017812343201204214,
+              "wape": 0.5454591068740592,
+              "zero_actual_excess_units": 1623.5
+            },
+            "rows": 2184
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "horizon",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 2184,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2548,
+          "value": "8"
+        },
+        {
+          "baseline": {
+            "actual_sum": 9757,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9739010989010989,
+              "mean_score": 9.604395604395604,
+              "mean_width": 8.752747252747254,
+              "width_to_mean_actual": 1.9592087731884804
+            },
+            "mean": {
+              "bias_units": -0.11168769502102835,
+              "complete": true,
+              "mae": 2.6355989689323023,
+              "mse": 29.981513906475325,
+              "normalized_bias": -0.025000094898629283,
+              "wape": 0.5899506147533204,
+              "zero_actual_excess_units": 1786.3148148148148
+            },
+            "median": {
+              "bias_units": 0.041437728937728936,
+              "complete": true,
+              "mae": 2.4059065934065935,
+              "mse": 31.91609432234432,
+              "normalized_bias": 0.009275392026237573,
+              "wape": 0.5385364353797274,
+              "zero_actual_excess_units": 1655.0
+            },
+            "rows": 2184
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 9757,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9739010989010989,
+              "mean_score": 9.604395604395604,
+              "mean_width": 8.752747252747254,
+              "width_to_mean_actual": 1.9592087731884804
+            },
+            "mean": {
+              "bias_units": -0.11059355106974156,
+              "complete": true,
+              "mae": 2.6366693271455177,
+              "mse": 29.981518540060666,
+              "normalized_bias": -0.024755182488092196,
+              "wape": 0.5901902029810198,
+              "zero_actual_excess_units": 1788.6784511784513
+            },
+            "median": {
+              "bias_units": 0.041437728937728936,
+              "complete": true,
+              "mae": 2.4059065934065935,
+              "mse": 31.91609432234432,
+              "normalized_bias": 0.009275392026237573,
+              "wape": 0.5385364353797274,
+              "zero_actual_excess_units": 1655.0
+            },
+            "rows": 2184
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "horizon",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 2184,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2548,
+          "value": "9"
+        },
+        {
+          "baseline": {
+            "actual_sum": 9814,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9716117216117216,
+              "mean_score": 9.56959706959707,
+              "mean_width": 8.727106227106226,
+              "width_to_mean_actual": 1.9421234970450376
+            },
+            "mean": {
+              "bias_units": -0.144243487993488,
+              "complete": true,
+              "mae": 2.671207264957265,
+              "mse": 31.283391502045053,
+              "normalized_bias": -0.03209983470325838,
+              "wape": 0.5944484070375654,
+              "zero_actual_excess_units": 1754.4351851851852
+            },
+            "median": {
+              "bias_units": -0.0086996336996337,
+              "complete": true,
+              "mae": 2.5054945054945055,
+              "mse": 35.44482600732601,
+              "normalized_bias": -0.0019360097819441614,
+              "wape": 0.5575708171999185,
+              "zero_actual_excess_units": 1634.0
+            },
+            "rows": 2184
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 9814,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9716117216117216,
+              "mean_score": 9.56959706959707,
+              "mean_width": 8.727106227106226,
+              "width_to_mean_actual": 1.9421234970450376
+            },
+            "mean": {
+              "bias_units": -0.14313745117316545,
+              "complete": true,
+              "mae": 2.672289516039516,
+              "mse": 31.283396444536077,
+              "normalized_bias": -0.03185369812127505,
+              "wape": 0.5946892503597211,
+              "zero_actual_excess_units": 1756.8247955747956
+            },
+            "median": {
+              "bias_units": -0.0086996336996337,
+              "complete": true,
+              "mae": 2.5054945054945055,
+              "mse": 35.44482600732601,
+              "normalized_bias": -0.0019360097819441614,
+              "wape": 0.5575708171999185,
+              "zero_actual_excess_units": 1634.0
+            },
+            "rows": 2184
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "horizon",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 2184,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2548,
+          "value": "10"
+        },
+        {
+          "baseline": {
+            "actual_sum": 9976,
+            "interval": {
+              "complete": true,
+              "coverage": 0.972985347985348,
+              "mean_score": 9.750686813186814,
+              "mean_width": 8.71588827838828,
+              "width_to_mean_actual": 1.9081295108259826
+            },
+            "mean": {
+              "bias_units": -0.21044040835707503,
+              "complete": true,
+              "mae": 2.7041319020485686,
+              "mse": 32.20053394465046,
+              "normalized_bias": -0.046070754997178415,
+              "wape": 0.5920032151237042,
+              "zero_actual_excess_units": 1732.4814814814815
+            },
+            "median": {
+              "bias_units": -0.09615384615384616,
+              "complete": true,
+              "mae": 2.5567765567765566,
+              "mse": 35.93246336996337,
+              "normalized_bias": -0.021050521251002405,
+              "wape": 0.5597433841218925,
+              "zero_actual_excess_units": 1572.5
+            },
+            "rows": 2184
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 9976,
+            "interval": {
+              "complete": true,
+              "coverage": 0.972985347985348,
+              "mean_score": 9.750686813186814,
+              "mean_width": 8.71588827838828,
+              "width_to_mean_actual": 1.9081295108259826
+            },
+            "mean": {
+              "bias_units": -0.20932247866771675,
+              "complete": true,
+              "mae": 2.7052260459998556,
+              "mse": 32.200539196047174,
+              "normalized_bias": -0.0458260117692756,
+              "wape": 0.5922427510488858,
+              "zero_actual_excess_units": 1734.8970658970659
+            },
+            "median": {
+              "bias_units": -0.09615384615384616,
+              "complete": true,
+              "mae": 2.5567765567765566,
+              "mse": 35.93246336996337,
+              "normalized_bias": -0.021050521251002405,
+              "wape": 0.5597433841218925,
+              "zero_actual_excess_units": 1572.5
+            },
+            "rows": 2184
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "horizon",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 2184,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2548,
+          "value": "12"
+        },
+        {
+          "baseline": {
+            "actual_sum": 9976,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9748168498168498,
+              "mean_score": 9.734203296703297,
+              "mean_width": 8.754349816849818,
+              "width_to_mean_actual": 1.9165497193263836
+            },
+            "mean": {
+              "bias_units": -0.20714200922534257,
+              "complete": true,
+              "mae": 2.6824760887260886,
+              "mse": 31.840591782046253,
+              "normalized_bias": -0.04534865157860346,
+              "wape": 0.5872622070747572,
+              "zero_actual_excess_units": 1738.7592592592594
+            },
+            "median": {
+              "bias_units": -0.09684065934065934,
+              "complete": true,
+              "mae": 2.53731684981685,
+              "mse": 36.09443681318681,
+              "normalized_bias": -0.021200882117080995,
+              "wape": 0.5554831595829992,
+              "zero_actual_excess_units": 1627.5
+            },
+            "rows": 2184
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 9976,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9748168498168498,
+              "mean_score": 9.734203296703297,
+              "mean_width": 8.754349816849818,
+              "width_to_mean_actual": 1.9165497193263836
+            },
+            "mean": {
+              "bias_units": -0.20602407953598428,
+              "complete": true,
+              "mae": 2.683570232677375,
+              "mse": 31.840597033442975,
+              "normalized_bias": -0.04510390835070065,
+              "wape": 0.5875017429999386,
+              "zero_actual_excess_units": 1741.1748436748437
+            },
+            "median": {
+              "bias_units": -0.09684065934065934,
+              "complete": true,
+              "mae": 2.53731684981685,
+              "mse": 36.09443681318681,
+              "normalized_bias": -0.021200882117080995,
+              "wape": 0.5554831595829992,
+              "zero_actual_excess_units": 1627.5
+            },
+            "rows": 2184
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "horizon",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 2184,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2548,
+          "value": "13"
+        },
+        {
+          "baseline": {
+            "actual_sum": 20553,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9689980158730159,
+              "mean_score": 10.328373015873016,
+              "mean_width": 9.157738095238095,
+              "width_to_mean_actual": 1.7965260545905706
+            },
+            "mean": {
+              "bias_units": -0.6160438712522045,
+              "complete": true,
+              "mae": 3.1197457378012934,
+              "mse": 38.43074003649814,
+              "normalized_bias": -0.12085286278834664,
+              "wape": 0.6120184311202654,
+              "zero_actual_excess_units": 2764.462962962963
+            },
+            "median": {
+              "bias_units": -0.984375,
+              "complete": true,
+              "mae": 3.163938492063492,
+              "mse": 46.765625,
+              "normalized_bias": -0.1931104948182747,
+              "wape": 0.6206879774242203,
+              "zero_actual_excess_units": 2762.0
+            },
+            "rows": 4032
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 20553,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9689980158730159,
+              "mean_score": 10.328373015873016,
+              "mean_width": 9.157738095238095,
+              "width_to_mean_actual": 1.7965260545905706
+            },
+            "mean": {
+              "bias_units": -0.6140339763851669,
+              "complete": true,
+              "mae": 3.1217556326683313,
+              "mse": 38.43079224155962,
+              "normalized_bias": -0.1204585701739402,
+              "wape": 0.6124127237346719,
+              "zero_actual_excess_units": 2772.5668590668593
+            },
+            "median": {
+              "bias_units": -0.984375,
+              "complete": true,
+              "mae": 3.163938492063492,
+              "mse": 46.765625,
+              "normalized_bias": -0.1931104948182747,
+              "wape": 0.6206879774242203,
+              "zero_actual_excess_units": 2762.0
+            },
+            "rows": 4032
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 4032,
+          "failed_reasons": [
+            "mean_mse_regression",
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4704,
+          "value": "197c13ee-8ab3-580d-8ccc-a0c3195d9925"
+        },
+        {
+          "baseline": {
+            "actual_sum": 16980,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9829192546583851,
+              "mean_score": 9.086438923395445,
+              "mean_width": 8.486024844720497,
+              "width_to_mean_actual": 1.931095406360424
+            },
+            "mean": {
+              "bias_units": -0.1838768115942029,
+              "complete": true,
+              "mae": 2.609903381642512,
+              "mse": 29.715497038187255,
+              "normalized_bias": -0.04184334511189635,
+              "wape": 0.5939144091087554,
+              "zero_actual_excess_units": 3626.0833333333335
+            },
+            "median": {
+              "bias_units": -0.2531055900621118,
+              "complete": true,
+              "mae": 2.6972049689440993,
+              "mse": 37.49560041407867,
+              "normalized_bias": -0.05759717314487633,
+              "wape": 0.6137809187279152,
+              "zero_actual_excess_units": 3582.0
+            },
+            "rows": 3864
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 16980,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9829192546583851,
+              "mean_score": 9.086438923395445,
+              "mean_width": 8.486024844720497,
+              "width_to_mean_actual": 1.931095406360424
+            },
+            "mean": {
+              "bias_units": -0.18274750611707133,
+              "complete": true,
+              "mae": 2.611032687119644,
+              "mse": 29.71552637079705,
+              "normalized_bias": -0.041586358282471356,
+              "wape": 0.5941713959381805,
+              "zero_actual_excess_units": 3630.4469696969695
+            },
+            "median": {
+              "bias_units": -0.2531055900621118,
+              "complete": true,
+              "mae": 2.6972049689440993,
+              "mse": 37.49560041407867,
+              "normalized_bias": -0.05759717314487633,
+              "wape": 0.6137809187279152,
+              "zero_actual_excess_units": 3582.0
+            },
+            "rows": 3864
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3864,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4508,
+          "value": "445dff34-464a-5d4e-b54d-324bf9aca10e"
+        },
+        {
+          "baseline": {
+            "actual_sum": 17243,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9832251082251082,
+              "mean_score": 10.718614718614718,
+              "mean_width": 9.641774891774892,
+              "width_to_mean_actual": 2.066693730789306
+            },
+            "mean": {
+              "bias_units": -0.05965909090909091,
+              "complete": true,
+              "mae": 3.023313492063492,
+              "mse": 54.181363486050984,
+              "normalized_bias": -0.012787797946992982,
+              "wape": 0.648040750836088,
+              "zero_actual_excess_units": 4190.75
+            },
+            "median": {
+              "bias_units": -0.22348484848484848,
+              "complete": true,
+              "mae": 2.9453463203463204,
+              "mse": 62.72767857142857,
+              "normalized_bias": -0.0479034970712753,
+              "wape": 0.63132865510642,
+              "zero_actual_excess_units": 3646.5
+            },
+            "rows": 3696
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 17243,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9832251082251082,
+              "mean_score": 10.718614718614718,
+              "mean_width": 9.641774891774892,
+              "width_to_mean_actual": 2.066693730789306
+            },
+            "mean": {
+              "bias_units": -0.057972465845842466,
+              "complete": true,
+              "mae": 3.0250001171267407,
+              "mse": 54.181407294494186,
+              "normalized_bias": -0.012426273488733618,
+              "wape": 0.6484022752943475,
+              "zero_actual_excess_units": 4196.983766233766
+            },
+            "median": {
+              "bias_units": -0.22348484848484848,
+              "complete": true,
+              "mae": 2.9453463203463204,
+              "mse": 62.72767857142857,
+              "normalized_bias": -0.0479034970712753,
+              "wape": 0.63132865510642,
+              "zero_actual_excess_units": 3646.5
+            },
+            "rows": 3696
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3696,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+        },
+        {
+          "baseline": {
+            "actual_sum": 18029,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9678030303030303,
+              "mean_score": 10.237012987012987,
+              "mean_width": 9.409090909090908,
+              "width_to_mean_actual": 1.9288923401186975
+            },
+            "mean": {
+              "bias_units": -0.10290404040404041,
+              "complete": true,
+              "mae": 2.9027076318742986,
+              "mse": 34.14684655193914,
+              "normalized_bias": -0.021095642206075398,
+              "wape": 0.5950639196520832,
+              "zero_actual_excess_units": 3204.8333333333335
+            },
+            "median": {
+              "bias_units": 0.019209956709956708,
+              "complete": true,
+              "mae": 2.846590909090909,
+              "mse": 39.605248917748916,
+              "normalized_bias": 0.003938099728215652,
+              "wape": 0.5835598202895336,
+              "zero_actual_excess_units": 3138.0
+            },
+            "rows": 3696
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 18029,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9678030303030303,
+              "mean_score": 10.237012987012987,
+              "mean_width": 9.409090909090908,
+              "width_to_mean_actual": 1.9288923401186975
+            },
+            "mean": {
+              "bias_units": -0.102819709150878,
+              "complete": true,
+              "mae": 2.902791963127461,
+              "mse": 34.14684874236131,
+              "normalized_bias": -0.02107835404191276,
+              "wape": 0.5950812078162458,
+              "zero_actual_excess_units": 3205.1450216450216
+            },
+            "median": {
+              "bias_units": 0.019209956709956708,
+              "complete": true,
+              "mae": 2.846590909090909,
+              "mse": 39.605248917748916,
+              "normalized_bias": 0.003938099728215652,
+              "wape": 0.5835598202895336,
+              "zero_actual_excess_units": 3138.0
+            },
+            "rows": 3696
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3696,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "c8956032-5a0a-57f1-9118-b9b2c526cbda"
+        },
+        {
+          "baseline": {
+            "actual_sum": 18771,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9756944444444444,
+              "mean_score": 9.322420634920634,
+              "mean_width": 8.494047619047619,
+              "width_to_mean_actual": 1.8245165414735494
+            },
+            "mean": {
+              "bias_units": 0.08721891534391536,
+              "complete": true,
+              "mae": 2.729423868312757,
+              "mse": 36.337380687014175,
+              "normalized_bias": 0.0187345728339815,
+              "wape": 0.5862786765242681,
+              "zero_actual_excess_units": 3610.1666666666665
+            },
+            "median": {
+              "bias_units": 0.20634920634920634,
+              "complete": true,
+              "mae": 2.6498015873015874,
+              "mse": 45.799727182539684,
+              "normalized_bias": 0.04432369079963774,
+              "wape": 0.5691758563741942,
+              "zero_actual_excess_units": 3739.0
+            },
+            "rows": 4032
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 18771,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9756944444444444,
+              "mean_score": 9.322420634920634,
+              "mean_width": 8.494047619047619,
+              "width_to_mean_actual": 1.8245165414735494
+            },
+            "mean": {
+              "bias_units": 0.08830116642616644,
+              "complete": true,
+              "mae": 2.730506119395008,
+              "mse": 36.3374087974319,
+              "normalized_bias": 0.018967039743769808,
+              "wape": 0.5865111434340564,
+              "zero_actual_excess_units": 3614.530303030303
+            },
+            "median": {
+              "bias_units": 0.20634920634920634,
+              "complete": true,
+              "mae": 2.6498015873015874,
+              "mse": 45.799727182539684,
+              "normalized_bias": 0.04432369079963774,
+              "wape": 0.5691758563741942,
+              "zero_actual_excess_units": 3739.0
+            },
+            "rows": 4032
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 4032,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4704,
+          "value": "d916b3fd-e110-5a11-af32-41fdef07aaa0"
+        },
+        {
+          "baseline": {
+            "actual_sum": 24,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9900611620795107,
+              "mean_score": 0.41896024464831805,
+              "mean_width": 0.22018348623853212,
+              "width_to_mean_actual": 12.0
+            },
+            "mean": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1308
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 24,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9900611620795107,
+              "mean_score": 0.41896024464831805,
+              "mean_width": 0.22018348623853212,
+              "width_to_mean_actual": 12.0
+            },
+            "mean": {
+              "bias_units": 0.007625402120814966,
+              "complete": true,
+              "mae": 0.043369474562135114,
+              "mse": 0.018070098613408515,
+              "normalized_bias": 0.41558441558441567,
+              "wape": 2.3636363636363638,
+              "zero_actual_excess_units": 33.350649350649356
+            },
+            "median": {
+              "bias_units": -0.01834862385321101,
+              "complete": true,
+              "mae": 0.01834862385321101,
+              "mse": 0.01834862385321101,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1308
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 1308,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 1526,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 9939,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9743589743589743,
+              "mean_score": 9.533424908424909,
+              "mean_width": 8.640567765567766,
+              "width_to_mean_actual": 1.89868195995573
+            },
+            "mean": {
+              "bias_units": -0.1277599715099715,
+              "complete": true,
+              "mae": 2.740244708994709,
+              "mse": 34.71710539332067,
+              "normalized_bias": -0.02807402935685459,
+              "wape": 0.6021425137784933,
+              "zero_actual_excess_units": 1799.138888888889
+            },
+            "median": {
+              "bias_units": -0.007554945054945055,
+              "complete": true,
+              "mae": 2.7827380952380953,
+              "mse": 42.652129120879124,
+              "normalized_bias": -0.0016601267733172352,
+              "wape": 0.6114800281718483,
+              "zero_actual_excess_units": 1819.5
+            },
+            "rows": 2184
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 9939,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9743589743589743,
+              "mean_score": 9.533424908424909,
+              "mean_width": 8.640567765567766,
+              "width_to_mean_actual": 1.89868195995573
+            },
+            "mean": {
+              "bias_units": -0.124813930575508,
+              "complete": true,
+              "mae": 2.74305477880912,
+              "mse": 34.717115232041365,
+              "normalized_bias": -0.02742666509476904,
+              "wape": 0.602759999690021,
+              "zero_actual_excess_units": 1805.4245618266602
+            },
+            "median": {
+              "bias_units": -0.007554945054945055,
+              "complete": true,
+              "mae": 2.7827380952380953,
+              "mse": 42.652129120879124,
+              "normalized_bias": -0.0016601267733172352,
+              "wape": 0.6114800281718483,
+              "zero_actual_excess_units": 1819.5
+            },
+            "rows": 2184
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "horizon",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 2184,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2548,
+          "value": "1"
+        },
+        {
+          "baseline": {
+            "actual_sum": 17188,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9794337606837606,
+              "mean_score": 9.018429487179487,
+              "mean_width": 8.398771367521368,
+              "width_to_mean_actual": 1.8294740516639516
+            },
+            "mean": {
+              "bias_units": -0.43457680436847107,
+              "complete": true,
+              "mae": 2.547082739791073,
+              "mse": 26.963688998877398,
+              "normalized_bias": -0.09466229669278309,
+              "wape": 0.5548218395262845,
+              "zero_actual_excess_units": 2947.435185185185
+            },
+            "median": {
+              "bias_units": -0.12980769230769232,
+              "complete": true,
+              "mae": 2.4503205128205128,
+              "mse": 33.0221688034188,
+              "normalized_bias": -0.028275541075168723,
+              "wape": 0.5337444728880615,
+              "zero_actual_excess_units": 3183.0
+            },
+            "rows": 3744
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 17188,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9794337606837606,
+              "mean_score": 9.018429487179487,
+              "mean_width": 8.398771367521368,
+              "width_to_mean_actual": 1.8294740516639516
+            },
+            "mean": {
+              "bias_units": -0.4320518962086135,
+              "complete": true,
+              "mae": 2.5496076479509306,
+              "mse": 26.963813965388347,
+              "normalized_bias": -0.09411230506196469,
+              "wape": 0.5553718311571029,
+              "zero_actual_excess_units": 2956.888441335692
+            },
+            "median": {
+              "bias_units": -0.12980769230769232,
+              "complete": true,
+              "mae": 2.4503205128205128,
+              "mse": 33.0221688034188,
+              "normalized_bias": -0.028275541075168723,
+              "wape": 0.5337444728880615,
+              "zero_actual_excess_units": 3183.0
+            },
+            "rows": 3744
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8305235137533274,
+          "eligible_rows": 3744,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4508,
+          "value": "445dff34-464a-5d4e-b54d-324bf9aca10e"
+        },
+        {
+          "baseline": {
+            "actual_sum": 16781,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9721137757947574,
+              "mean_score": 10.304238706079197,
+              "mean_width": 9.236196319018404,
+              "width_to_mean_actual": 1.9737202788868362
+            },
+            "mean": {
+              "bias_units": -0.09309351180516826,
+              "complete": true,
+              "mae": 2.784532440974159,
+              "mse": 43.60936434901159,
+              "normalized_bias": -0.01989353038158235,
+              "wape": 0.5950380390521026,
+              "zero_actual_excess_units": 3677.25
+            },
+            "median": {
+              "bias_units": -0.2587841606246514,
+              "complete": true,
+              "mae": 2.7175125488008924,
+              "mse": 49.872699386503065,
+              "normalized_bias": -0.05530063762588642,
+              "wape": 0.5807162862761457,
+              "zero_actual_excess_units": 3272.0
+            },
+            "rows": 3586
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 16781,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9721137757947574,
+              "mean_score": 10.304238706079197,
+              "mean_width": 9.236196319018404,
+              "width_to_mean_actual": 1.9737202788868362
+            },
+            "mean": {
+              "bias_units": -0.08811103855939739,
+              "complete": true,
+              "mae": 2.7894597067601428,
+              "mse": 43.6095557415301,
+              "normalized_bias": -0.018828805451045767,
+              "wape": 0.5960909664764836,
+              "zero_actual_excess_units": 3695.018162083936
+            },
+            "median": {
+              "bias_units": -0.2587841606246514,
+              "complete": true,
+              "mae": 2.7175125488008924,
+              "mse": 49.872699386503065,
+              "normalized_bias": -0.05530063762588642,
+              "wape": 0.5807162862761457,
+              "zero_actual_excess_units": 3272.0
+            },
+            "rows": 3586
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8316326530612245,
+          "eligible_rows": 3586,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+        },
+        {
+          "baseline": {
+            "actual_sum": 78,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9710950528071151,
+              "mean_score": 0.671484157865481,
+              "mean_width": 0.0933852140077821,
+              "width_to_mean_actual": 2.1538461538461537
+            },
+            "mean": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "median": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1799
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 78,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9710950528071151,
+              "mean_score": 0.671484157865481,
+              "mean_width": 0.0933852140077821,
+              "width_to_mean_actual": 2.1538461538461537
+            },
+            "mean": {
+              "bias_units": 0.006136066909659571,
+              "complete": true,
+              "mae": 0.08855908854332163,
+              "mse": 0.04151520616894443,
+              "normalized_bias": 0.1415228765445842,
+              "wape": 2.04253590114661,
+              "zero_actual_excess_units": 85.17829232995659
+            },
+            "median": {
+              "bias_units": -0.0433574207893274,
+              "complete": true,
+              "mae": 0.0433574207893274,
+              "mse": 0.0433574207893274,
+              "normalized_bias": -1.0,
+              "wape": 1.0,
+              "zero_actual_excess_units": 0.0
+            },
+            "rows": 1799
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": true,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "volume",
+          "eligibility_coverage": 0.8290322580645161,
+          "eligible_rows": 1799,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 2170,
+          "value": "zero"
+        },
+        {
+          "baseline": {
+            "actual_sum": 59301,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9693553774215097,
+              "mean_score": 10.422261189044756,
+              "mean_width": 9.311706746826987,
+              "width_to_mean_actual": 1.8805247803578353
+            },
+            "mean": {
+              "bias_units": -0.227756438803533,
+              "complete": true,
+              "mae": 2.9603651747940325,
+              "mse": 36.94154844897844,
+              "normalized_bias": -0.0459960390400012,
+              "wape": 0.5978538866685779,
+              "zero_actual_excess_units": 8919.203703703704
+            },
+            "median": {
+              "bias_units": -0.2744238476953908,
+              "complete": true,
+              "mae": 2.9848446893787575,
+              "mse": 44.484448062792254,
+              "normalized_bias": -0.05542065057924824,
+              "wape": 0.6027975919461729,
+              "zero_actual_excess_units": 8800.5
+            },
+            "rows": 11976
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 59301,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9693553774215097,
+              "mean_score": 10.422261189044756,
+              "mean_width": 9.311706746826987,
+              "width_to_mean_actual": 1.8805247803578353
+            },
+            "mean": {
+              "bias_units": -0.2250964732001126,
+              "complete": true,
+              "mae": 2.962917689605855,
+              "mse": 36.94155409180854,
+              "normalized_bias": -0.045458851672729776,
+              "wape": 0.5983693740530467,
+              "zero_actual_excess_units": 8950.416036430179
+            },
+            "median": {
+              "bias_units": -0.2744238476953908,
+              "complete": true,
+              "mae": 2.9848446893787575,
+              "mse": 44.484448062792254,
+              "normalized_bias": -0.05542065057924824,
+              "wape": 0.6027975919461729,
+              "zero_actual_excess_units": 8800.5
+            },
+            "rows": 11976
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8486394557823129,
+          "eligible_rows": 11976,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "pooled",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 14112,
+          "value": "197c13ee-8ab3-580d-8ccc-a0c3195d9925"
+        },
+        {
+          "baseline": {
+            "actual_sum": 52022,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9811715481171548,
+              "mean_score": 9.302214086471409,
+              "mean_width": 8.700749651324966,
+              "width_to_mean_actual": 1.918707469916574
+            },
+            "mean": {
+              "bias_units": -0.29773942352394234,
+              "complete": true,
+              "mae": 2.633955782840023,
+              "mse": 30.303591627877164,
+              "normalized_bias": -0.0656581190009355,
+              "wape": 0.5808454257956391,
+              "zero_actual_excess_units": 10113.537037037036
+            },
+            "median": {
+              "bias_units": -0.19429916317991633,
+              "complete": true,
+              "mae": 2.629968619246862,
+              "mse": 38.41252615062761,
+              "normalized_bias": -0.042847256929760484,
+              "wape": 0.5799661681596248,
+              "zero_actual_excess_units": 10086.0
+            },
+            "rows": 11472
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 52022,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9811715481171548,
+              "mean_score": 9.302214086471409,
+              "mean_width": 8.700749651324966,
+              "width_to_mean_actual": 1.918707469916574
+            },
+            "mean": {
+              "bias_units": -0.29530194939755566,
+              "complete": true,
+              "mae": 2.6363063095284436,
+              "mse": 30.303611250755214,
+              "normalized_bias": -0.06512060212004073,
+              "wape": 0.581363768846071,
+              "zero_actual_excess_units": 10141.001009710773
+            },
+            "median": {
+              "bias_units": -0.19429916317991633,
+              "complete": true,
+              "mae": 2.629968619246862,
+              "mse": 38.41252615062761,
+              "normalized_bias": -0.042847256929760484,
+              "wape": 0.5799661681596248,
+              "zero_actual_excess_units": 10086.0
+            },
+            "rows": 11472
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8482697426796806,
+          "eligible_rows": 11472,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "pooled",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 13524,
+          "value": "445dff34-464a-5d4e-b54d-324bf9aca10e"
+        },
+        {
+          "baseline": {
+            "actual_sum": 50520,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9777737292767353,
+              "mean_score": 10.365367097832028,
+              "mean_width": 9.446256148660959,
+              "width_to_mean_actual": 2.0526722090261287
+            },
+            "mean": {
+              "bias_units": -0.2328394162061497,
+              "complete": true,
+              "mae": 2.971783634609286,
+              "mse": 47.93895703865643,
+              "normalized_bias": -0.050596023577021206,
+              "wape": 0.6457688190962142,
+              "zero_actual_excess_units": 11682.592592592593
+            },
+            "median": {
+              "bias_units": -0.36381854618327564,
+              "complete": true,
+              "mae": 2.9263982510475497,
+              "mse": 57.739114592822006,
+              "normalized_bias": -0.07905779889152811,
+              "wape": 0.6359065716547901,
+              "zero_actual_excess_units": 10536.5
+            },
+            "rows": 10978
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 50520,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9777737292767353,
+              "mean_score": 10.365367097832028,
+              "mean_width": 9.446256148660959,
+              "width_to_mean_actual": 2.0526722090261287
+            },
+            "mean": {
+              "bias_units": -0.2306440331406459,
+              "complete": true,
+              "mae": 2.9739609839755006,
+              "mse": 47.93903430679065,
+              "normalized_bias": -0.05011896666306435,
+              "wape": 0.6462419572858877,
+              "zero_actual_excess_units": 11706.594520910296
+            },
+            "median": {
+              "bias_units": -0.36381854618327564,
+              "complete": true,
+              "mae": 2.9263982510475497,
+              "mse": 57.739114592822006,
+              "normalized_bias": -0.07905779889152811,
+              "wape": 0.6359065716547901,
+              "zero_actual_excess_units": 10536.5
+            },
+            "rows": 10978
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8486394557823129,
+          "eligible_rows": 10978,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "pooled",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 12936,
+          "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+        }
+      ],
+      "model_status": "not_ready",
+      "segment_counts": {
+        "failed": 22,
+        "passed": 90
+      }
+    },
+    "zero-only-validation_only": {
+      "failed_reasons": {
+        "absolute_normalized_mean_bias_exceeded": 2,
+        "mean_mse_regression": 12
+      },
+      "failed_segments": [
+        {
+          "baseline": {
+            "actual_sum": 19483,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9712301587301587,
+              "mean_score": 10.310019841269842,
+              "mean_width": 9.283234126984127,
+              "width_to_mean_actual": 1.9211620387004054
+            },
+            "mean": {
+              "bias_units": 0.11127645502645502,
+              "complete": true,
+              "mae": 2.8260490152851263,
+              "mse": 34.15960969650206,
+              "normalized_bias": 0.023028623244195794,
+              "wape": 0.5848498501067407,
+              "zero_actual_excess_units": 3317.4444444444443
+            },
+            "median": {
+              "bias_units": 0.15500992063492064,
+              "complete": true,
+              "mae": 2.8100198412698414,
+              "mse": 39.27827380952381,
+              "normalized_bias": 0.03207924857568136,
+              "wape": 0.5815326181799517,
+              "zero_actual_excess_units": 3085.5
+            },
+            "rows": 4032
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 19483,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9712301587301587,
+              "mean_score": 10.310019841269842,
+              "mean_width": 9.283234126984127,
+              "width_to_mean_actual": 1.9211620387004054
+            },
+            "mean": {
+              "bias_units": 0.11363445668482981,
+              "complete": true,
+              "mae": 2.8284070169435016,
+              "mse": 34.15974314062576,
+              "normalized_bias": 0.02351661085835004,
+              "wape": 0.585337837720895,
+              "zero_actual_excess_units": 3326.9519071310115
+            },
+            "median": {
+              "bias_units": 0.15500992063492064,
+              "complete": true,
+              "mae": 2.8100198412698414,
+              "mse": 39.27827380952381,
+              "normalized_bias": 0.03207924857568136,
+              "wape": 0.5815326181799517,
+              "zero_actual_excess_units": 3085.5
+            },
+            "rows": 4032
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 4032,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4704,
+          "value": "197c13ee-8ab3-580d-8ccc-a0c3195d9925"
+        },
+        {
+          "baseline": {
+            "actual_sum": 15747,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9818840579710145,
+              "mean_score": 7.816511387163561,
+              "mean_width": 7.1074016563147,
+              "width_to_mean_actual": 1.7440147329650093
+            },
+            "mean": {
+              "bias_units": -0.36493558776167473,
+              "complete": true,
+              "mae": 2.1102196917414306,
+              "mse": 16.544812727381167,
+              "normalized_bias": -0.08954792094437741,
+              "wape": 0.5178058607283221,
+              "zero_actual_excess_units": 1289.9259259259259
+            },
+            "median": {
+              "bias_units": 0.23964803312629399,
+              "complete": true,
+              "mae": 1.888975155279503,
+              "mse": 22.208721532091097,
+              "normalized_bias": 0.058804851717787515,
+              "wape": 0.4635168603543532,
+              "zero_actual_excess_units": 922.0
+            },
+            "rows": 3864
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 15747,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9818840579710145,
+              "mean_score": 7.816511387163561,
+              "mean_width": 7.1074016563147,
+              "width_to_mean_actual": 1.7440147329650093
+            },
+            "mean": {
+              "bias_units": -0.3624750642920662,
+              "complete": true,
+              "mae": 2.112592339372839,
+              "mse": 16.544864097585087,
+              "normalized_bias": -0.08894415751727593,
+              "wape": 0.5183880611758843,
+              "zero_actual_excess_units": 1299.26361249309
+            },
+            "median": {
+              "bias_units": 0.23964803312629399,
+              "complete": true,
+              "mae": 1.888975155279503,
+              "mse": 22.208721532091097,
+              "normalized_bias": 0.058804851717787515,
+              "wape": 0.4635168603543532,
+              "zero_actual_excess_units": 922.0
+            },
+            "rows": 3864
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3864,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4508,
+          "value": "28b88987-7084-5c08-a3c5-2b8ffa807492"
+        },
+        {
+          "baseline": {
+            "actual_sum": 16496,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9778138528138528,
+              "mean_score": 10.071428571428571,
+              "mean_width": 9.454545454545455,
+              "width_to_mean_actual": 2.1183317167798257
+            },
+            "mean": {
+              "bias_units": -0.5416065416065416,
+              "complete": true,
+              "mae": 3.1019320185986854,
+              "mse": 45.897286355619684,
+              "normalized_bias": -0.12134928332794483,
+              "wape": 0.6950012573193951,
+              "zero_actual_excess_units": 3814.5925925925926
+            },
+            "median": {
+              "bias_units": -0.6060606060606061,
+              "complete": true,
+              "mae": 3.1101190476190474,
+              "mse": 60.38284632034632,
+              "normalized_bias": -0.13579049466537343,
+              "wape": 0.6968355965082444,
+              "zero_actual_excess_units": 3618.0
+            },
+            "rows": 3696
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 420,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 420,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 16496,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9778138528138528,
+              "mean_score": 10.071428571428571,
+              "mean_width": 9.454545454545455,
+              "width_to_mean_actual": 2.1183317167798257
+            },
+            "mean": {
+              "bias_units": -0.5416065416065416,
+              "complete": true,
+              "mae": 3.1019320185986854,
+              "mse": 45.897286355619684,
+              "normalized_bias": -0.12134928332794483,
+              "wape": 0.6950012573193951,
+              "zero_actual_excess_units": 3814.5925925925926
+            },
+            "median": {
+              "bias_units": -0.6060606060606061,
+              "complete": true,
+              "mae": 3.1101190476190474,
+              "mse": 60.38284632034632,
+              "normalized_bias": -0.13579049466537343,
+              "wape": 0.6968355965082444,
+              "zero_actual_excess_units": 3618.0
+            },
+            "rows": 3696
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3696,
+          "failed_reasons": [
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-01",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+        },
+        {
+          "baseline": {
+            "actual_sum": 20553,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9689980158730159,
+              "mean_score": 10.328373015873016,
+              "mean_width": 9.157738095238095,
+              "width_to_mean_actual": 1.7965260545905706
+            },
+            "mean": {
+              "bias_units": -0.6160438712522045,
+              "complete": true,
+              "mae": 3.1197457378012934,
+              "mse": 38.43074003649814,
+              "normalized_bias": -0.12085286278834664,
+              "wape": 0.6120184311202654,
+              "zero_actual_excess_units": 2764.462962962963
+            },
+            "median": {
+              "bias_units": -0.984375,
+              "complete": true,
+              "mae": 3.163938492063492,
+              "mse": 46.765625,
+              "normalized_bias": -0.1931104948182747,
+              "wape": 0.6206879774242203,
+              "zero_actual_excess_units": 2762.0
+            },
+            "rows": 4032
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 20553,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9689980158730159,
+              "mean_score": 10.328373015873016,
+              "mean_width": 9.157738095238095,
+              "width_to_mean_actual": 1.7965260545905706
+            },
+            "mean": {
+              "bias_units": -0.6146240372635632,
+              "complete": true,
+              "mae": 3.1211655717899345,
+              "mse": 38.43076608849793,
+              "normalized_bias": -0.12057432580385768,
+              "wape": 0.6122969681047543,
+              "zero_actual_excess_units": 2770.187733605165
+            },
+            "median": {
+              "bias_units": -0.984375,
+              "complete": true,
+              "mae": 3.163938492063492,
+              "mse": 46.765625,
+              "normalized_bias": -0.1931104948182747,
+              "wape": 0.6206879774242203,
+              "zero_actual_excess_units": 2762.0
+            },
+            "rows": 4032
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": true
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 4032,
+          "failed_reasons": [
+            "mean_mse_regression",
+            "absolute_normalized_mean_bias_exceeded"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4704,
+          "value": "197c13ee-8ab3-580d-8ccc-a0c3195d9925"
+        },
+        {
+          "baseline": {
+            "actual_sum": 16980,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9829192546583851,
+              "mean_score": 9.086438923395445,
+              "mean_width": 8.486024844720497,
+              "width_to_mean_actual": 1.931095406360424
+            },
+            "mean": {
+              "bias_units": -0.1838768115942029,
+              "complete": true,
+              "mae": 2.609903381642512,
+              "mse": 29.715497038187255,
+              "normalized_bias": -0.04184334511189635,
+              "wape": 0.5939144091087554,
+              "zero_actual_excess_units": 3626.0833333333335
+            },
+            "median": {
+              "bias_units": -0.2531055900621118,
+              "complete": true,
+              "mae": 2.6972049689440993,
+              "mse": 37.49560041407867,
+              "normalized_bias": -0.05759717314487633,
+              "wape": 0.6137809187279152,
+              "zero_actual_excess_units": 3582.0
+            },
+            "rows": 3864
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 16980,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9829192546583851,
+              "mean_score": 9.086438923395445,
+              "mean_width": 8.486024844720497,
+              "width_to_mean_actual": 1.931095406360424
+            },
+            "mean": {
+              "bias_units": -0.18307904533971545,
+              "complete": true,
+              "mae": 2.6107011478969997,
+              "mse": 29.71551167610018,
+              "normalized_bias": -0.04166180395716493,
+              "wape": 0.5940959502634868,
+              "zero_actual_excess_units": 3629.1659021406726
+            },
+            "median": {
+              "bias_units": -0.2531055900621118,
+              "complete": true,
+              "mae": 2.6972049689440993,
+              "mse": 37.49560041407867,
+              "normalized_bias": -0.05759717314487633,
+              "wape": 0.6137809187279152,
+              "zero_actual_excess_units": 3582.0
+            },
+            "rows": 3864
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3864,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4508,
+          "value": "445dff34-464a-5d4e-b54d-324bf9aca10e"
+        },
+        {
+          "baseline": {
+            "actual_sum": 17243,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9832251082251082,
+              "mean_score": 10.718614718614718,
+              "mean_width": 9.641774891774892,
+              "width_to_mean_actual": 2.066693730789306
+            },
+            "mean": {
+              "bias_units": -0.05965909090909091,
+              "complete": true,
+              "mae": 3.023313492063492,
+              "mse": 54.181363486050984,
+              "normalized_bias": -0.012787797946992982,
+              "wape": 0.648040750836088,
+              "zero_actual_excess_units": 4190.75
+            },
+            "median": {
+              "bias_units": -0.22348484848484848,
+              "complete": true,
+              "mae": 2.9453463203463204,
+              "mse": 62.72767857142857,
+              "normalized_bias": -0.0479034970712753,
+              "wape": 0.63132865510642,
+              "zero_actual_excess_units": 3646.5
+            },
+            "rows": 3696
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 17243,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9832251082251082,
+              "mean_score": 10.718614718614718,
+              "mean_width": 9.641774891774892,
+              "width_to_mean_actual": 2.066693730789306
+            },
+            "mean": {
+              "bias_units": -0.058467621827713576,
+              "complete": true,
+              "mae": 3.0245049611448698,
+              "mse": 54.181385347868996,
+              "normalized_bias": -0.01253240910950701,
+              "wape": 0.6482961396735741,
+              "zero_actual_excess_units": 4195.15366972477
+            },
+            "median": {
+              "bias_units": -0.22348484848484848,
+              "complete": true,
+              "mae": 2.9453463203463204,
+              "mse": 62.72767857142857,
+              "normalized_bias": -0.0479034970712753,
+              "wape": 0.63132865510642,
+              "zero_actual_excess_units": 3646.5
+            },
+            "rows": 3696
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3696,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+        },
+        {
+          "baseline": {
+            "actual_sum": 18029,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9678030303030303,
+              "mean_score": 10.237012987012987,
+              "mean_width": 9.409090909090908,
+              "width_to_mean_actual": 1.9288923401186975
+            },
+            "mean": {
+              "bias_units": -0.10290404040404041,
+              "complete": true,
+              "mae": 2.9027076318742986,
+              "mse": 34.14684655193914,
+              "normalized_bias": -0.021095642206075398,
+              "wape": 0.5950639196520832,
+              "zero_actual_excess_units": 3204.8333333333335
+            },
+            "median": {
+              "bias_units": 0.019209956709956708,
+              "complete": true,
+              "mae": 2.846590909090909,
+              "mse": 39.605248917748916,
+              "normalized_bias": 0.003938099728215652,
+              "wape": 0.5835598202895336,
+              "zero_actual_excess_units": 3138.0
+            },
+            "rows": 3696
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 18029,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9678030303030303,
+              "mean_score": 10.237012987012987,
+              "mean_width": 9.409090909090908,
+              "width_to_mean_actual": 1.9288923401186975
+            },
+            "mean": {
+              "bias_units": -0.10284446694997156,
+              "complete": true,
+              "mae": 2.9027672053283675,
+              "mse": 34.14684764503004,
+              "normalized_bias": -0.02108342946625408,
+              "wape": 0.5950761323919045,
+              "zero_actual_excess_units": 3205.053516819572
+            },
+            "median": {
+              "bias_units": 0.019209956709956708,
+              "complete": true,
+              "mae": 2.846590909090909,
+              "mse": 39.605248917748916,
+              "normalized_bias": 0.003938099728215652,
+              "wape": 0.5835598202895336,
+              "zero_actual_excess_units": 3138.0
+            },
+            "rows": 3696
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 3696,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "c8956032-5a0a-57f1-9118-b9b2c526cbda"
+        },
+        {
+          "baseline": {
+            "actual_sum": 18771,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9756944444444444,
+              "mean_score": 9.322420634920634,
+              "mean_width": 8.494047619047619,
+              "width_to_mean_actual": 1.8245165414735494
+            },
+            "mean": {
+              "bias_units": 0.08721891534391536,
+              "complete": true,
+              "mae": 2.729423868312757,
+              "mse": 36.337380687014175,
+              "normalized_bias": 0.0187345728339815,
+              "wape": 0.5862786765242681,
+              "zero_actual_excess_units": 3610.1666666666665
+            },
+            "median": {
+              "bias_units": 0.20634920634920634,
+              "complete": true,
+              "mae": 2.6498015873015874,
+              "mse": 45.799727182539684,
+              "normalized_bias": 0.04432369079963774,
+              "wape": 0.5691758563741942,
+              "zero_actual_excess_units": 3739.0
+            },
+            "rows": 4032
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 18771,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9756944444444444,
+              "mean_score": 9.322420634920634,
+              "mean_width": 8.494047619047619,
+              "width_to_mean_actual": 1.8245165414735494
+            },
+            "mean": {
+              "bias_units": 0.08798344133779916,
+              "complete": true,
+              "mae": 2.730188394306641,
+              "mse": 36.337394715014064,
+              "normalized_bias": 0.018898792577593426,
+              "wape": 0.58644289626788,
+              "zero_actual_excess_units": 3613.249235474006
+            },
+            "median": {
+              "bias_units": 0.20634920634920634,
+              "complete": true,
+              "mae": 2.6498015873015874,
+              "mse": 45.799727182539684,
+              "normalized_bias": 0.04432369079963774,
+              "wape": 0.5691758563741942,
+              "zero_actual_excess_units": 3739.0
+            },
+            "rows": 4032
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8571428571428571,
+          "eligible_rows": 4032,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-02",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4704,
+          "value": "d916b3fd-e110-5a11-af32-41fdef07aaa0"
+        },
+        {
+          "baseline": {
+            "actual_sum": 17188,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9794337606837606,
+              "mean_score": 9.018429487179487,
+              "mean_width": 8.398771367521368,
+              "width_to_mean_actual": 1.8294740516639516
+            },
+            "mean": {
+              "bias_units": -0.43457680436847107,
+              "complete": true,
+              "mae": 2.547082739791073,
+              "mse": 26.963688998877398,
+              "normalized_bias": -0.09466229669278309,
+              "wape": 0.5548218395262845,
+              "zero_actual_excess_units": 2947.435185185185
+            },
+            "median": {
+              "bias_units": -0.12980769230769232,
+              "complete": true,
+              "mae": 2.4503205128205128,
+              "mse": 33.0221688034188,
+              "normalized_bias": -0.028275541075168723,
+              "wape": 0.5337444728880615,
+              "zero_actual_excess_units": 3183.0
+            },
+            "rows": 3744
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 17188,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9794337606837606,
+              "mean_score": 9.018429487179487,
+              "mean_width": 8.398771367521368,
+              "width_to_mean_actual": 1.8294740516639516
+            },
+            "mean": {
+              "bias_units": -0.4323649273997847,
+              "complete": true,
+              "mae": 2.5492946167597594,
+              "mse": 26.963784900157865,
+              "normalized_bias": -0.09418049151645298,
+              "wape": 0.5553036447026145,
+              "zero_actual_excess_units": 2955.716452555947
+            },
+            "median": {
+              "bias_units": -0.12980769230769232,
+              "complete": true,
+              "mae": 2.4503205128205128,
+              "mse": 33.0221688034188,
+              "normalized_bias": -0.028275541075168723,
+              "wape": 0.5337444728880615,
+              "zero_actual_excess_units": 3183.0
+            },
+            "rows": 3744
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8305235137533274,
+          "eligible_rows": 3744,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4508,
+          "value": "445dff34-464a-5d4e-b54d-324bf9aca10e"
+        },
+        {
+          "baseline": {
+            "actual_sum": 16781,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9721137757947574,
+              "mean_score": 10.304238706079197,
+              "mean_width": 9.236196319018404,
+              "width_to_mean_actual": 1.9737202788868362
+            },
+            "mean": {
+              "bias_units": -0.09309351180516826,
+              "complete": true,
+              "mae": 2.784532440974159,
+              "mse": 43.60936434901159,
+              "normalized_bias": -0.01989353038158235,
+              "wape": 0.5950380390521026,
+              "zero_actual_excess_units": 3677.25
+            },
+            "median": {
+              "bias_units": -0.2587841606246514,
+              "complete": true,
+              "mae": 2.7175125488008924,
+              "mse": 49.872699386503065,
+              "normalized_bias": -0.05530063762588642,
+              "wape": 0.5807162862761457,
+              "zero_actual_excess_units": 3272.0
+            },
+            "rows": 3586
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 16781,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9721137757947574,
+              "mean_score": 10.304238706079197,
+              "mean_width": 9.236196319018404,
+              "width_to_mean_actual": 1.9737202788868362
+            },
+            "mean": {
+              "bias_units": -0.0887287519320653,
+              "complete": true,
+              "mae": 2.7888488378569782,
+              "mse": 43.60950523075177,
+              "normalized_bias": -0.018960807128799606,
+              "wape": 0.595960427421198,
+              "zero_actual_excess_units": 3692.8153140633685
+            },
+            "median": {
+              "bias_units": -0.2587841606246514,
+              "complete": true,
+              "mae": 2.7175125488008924,
+              "mse": 49.872699386503065,
+              "normalized_bias": -0.05530063762588642,
+              "wape": 0.5807162862761457,
+              "zero_actual_excess_units": 3272.0
+            },
+            "rows": 3586
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8316326530612245,
+          "eligible_rows": 3586,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "rolling-03",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 4312,
+          "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+        },
+        {
+          "baseline": {
+            "actual_sum": 59301,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9693553774215097,
+              "mean_score": 10.422261189044756,
+              "mean_width": 9.311706746826987,
+              "width_to_mean_actual": 1.8805247803578353
+            },
+            "mean": {
+              "bias_units": -0.227756438803533,
+              "complete": true,
+              "mae": 2.9603651747940325,
+              "mse": 36.94154844897844,
+              "normalized_bias": -0.0459960390400012,
+              "wape": 0.5978538866685779,
+              "zero_actual_excess_units": 8919.203703703704
+            },
+            "median": {
+              "bias_units": -0.2744238476953908,
+              "complete": true,
+              "mae": 2.9848446893787575,
+              "mse": 44.484448062792254,
+              "normalized_bias": -0.05542065057924824,
+              "wape": 0.6027975919461729,
+              "zero_actual_excess_units": 8800.5
+            },
+            "rows": 11976
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 84,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 59301,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9693553774215097,
+              "mean_score": 10.422261189044756,
+              "mean_width": 9.311706746826987,
+              "width_to_mean_actual": 1.8805247803578353
+            },
+            "mean": {
+              "bias_units": -0.22530430516073993,
+              "complete": true,
+              "mae": 2.9627231790997746,
+              "mse": 36.94155918977043,
+              "normalized_bias": -0.0455008239086191,
+              "wape": 0.5983300921215309,
+              "zero_actual_excess_units": 8948.006809739532
+            },
+            "median": {
+              "bias_units": -0.2744238476953908,
+              "complete": true,
+              "mae": 2.9848446893787575,
+              "mse": 44.484448062792254,
+              "normalized_bias": -0.05542065057924824,
+              "wape": 0.6027975919461729,
+              "zero_actual_excess_units": 8800.5
+            },
+            "rows": 11976
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8486394557823129,
+          "eligible_rows": 11976,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "pooled",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 14112,
+          "value": "197c13ee-8ab3-580d-8ccc-a0c3195d9925"
+        },
+        {
+          "baseline": {
+            "actual_sum": 52022,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9811715481171548,
+              "mean_score": 9.302214086471409,
+              "mean_width": 8.700749651324966,
+              "width_to_mean_actual": 1.918707469916574
+            },
+            "mean": {
+              "bias_units": -0.29773942352394234,
+              "complete": true,
+              "mae": 2.633955782840023,
+              "mse": 30.303591627877164,
+              "normalized_bias": -0.0656581190009355,
+              "wape": 0.5808454257956391,
+              "zero_actual_excess_units": 10113.537037037036
+            },
+            "median": {
+              "bias_units": -0.19429916317991633,
+              "complete": true,
+              "mae": 2.629968619246862,
+              "mse": 38.41252615062761,
+              "normalized_bias": -0.042847256929760484,
+              "wape": 0.5799661681596248,
+              "zero_actual_excess_units": 10086.0
+            },
+            "rows": 11472
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 81,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 52022,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9811715481171548,
+              "mean_score": 9.302214086471409,
+              "mean_width": 8.700749651324966,
+              "width_to_mean_actual": 1.918707469916574
+            },
+            "mean": {
+              "bias_units": -0.2952097379768702,
+              "complete": true,
+              "mae": 2.6363769411141154,
+              "mse": 30.303606430876844,
+              "normalized_bias": -0.06510026746512351,
+              "wape": 0.5813793446707379,
+              "zero_actual_excess_units": 10141.935077195238
+            },
+            "median": {
+              "bias_units": -0.19429916317991633,
+              "complete": true,
+              "mae": 2.629968619246862,
+              "mse": 38.41252615062761,
+              "normalized_bias": -0.042847256929760484,
+              "wape": 0.5799661681596248,
+              "zero_actual_excess_units": 10086.0
+            },
+            "rows": 11472
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8482697426796806,
+          "eligible_rows": 11472,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "pooled",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": false,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 13524,
+          "value": "445dff34-464a-5d4e-b54d-324bf9aca10e"
+        },
+        {
+          "baseline": {
+            "actual_sum": 50520,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9777737292767353,
+              "mean_score": 10.365367097832028,
+              "mean_width": 9.446256148660959,
+              "width_to_mean_actual": 2.0526722090261287
+            },
+            "mean": {
+              "bias_units": -0.2328394162061497,
+              "complete": true,
+              "mae": 2.971783634609286,
+              "mse": 47.93895703865643,
+              "normalized_bias": -0.050596023577021206,
+              "wape": 0.6457688190962142,
+              "zero_actual_excess_units": 11682.592592592593
+            },
+            "median": {
+              "bias_units": -0.36381854618327564,
+              "complete": true,
+              "mae": 2.9263982510475497,
+              "mse": 57.739114592822006,
+              "normalized_bias": -0.07905779889152811,
+              "wape": 0.6359065716547901,
+              "zero_actual_excess_units": 10536.5
+            },
+            "rows": 10978
+          },
+          "calibration_evidence": {
+            "baseline": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            },
+            "candidate": {
+              "minimum_rows": 60,
+              "missing_evidence_rows": 0
+            }
+          },
+          "candidate": {
+            "actual_sum": 50520,
+            "interval": {
+              "complete": true,
+              "coverage": 0.9777737292767353,
+              "mean_score": 10.365367097832028,
+              "mean_width": 9.446256148660959,
+              "width_to_mean_actual": 2.0526722090261287
+            },
+            "mean": {
+              "bias_units": -0.23101251707791887,
+              "complete": true,
+              "mae": 2.973594735806823,
+              "mse": 47.939010418434144,
+              "normalized_bias": -0.050199038251809054,
+              "wape": 0.6461623715298357,
+              "zero_actual_excess_units": 11702.561576380731
+            },
+            "median": {
+              "bias_units": -0.36381854618327564,
+              "complete": true,
+              "mae": 2.9263982510475497,
+              "mse": 57.739114592822006,
+              "normalized_bias": -0.07905779889152811,
+              "wape": 0.6359065716547901,
+              "zero_actual_excess_units": 10536.5
+            },
+            "rows": 10978
+          },
+          "diagnostics": {
+            "mean_mae_above_legacy_regression_limit": false,
+            "median_bias_above_legacy_mean_limit": false
+          },
+          "dimension": "category",
+          "eligibility_coverage": 0.8486394557823129,
+          "eligible_rows": 10978,
+          "failed_reasons": [
+            "mean_mse_regression"
+          ],
+          "fold": "pooled",
+          "has_measurable_failures": true,
+          "legacy_width_ratio_exceeded": true,
+          "not_ready_reasons": [],
+          "perfect_median_baseline_tied": false,
+          "protocol_version": "forecast-quality-2.0.0",
+          "relative_median_mae_change": 0.0,
+          "retained_median_baseline": true,
+          "role": "validation",
+          "scope": "segment_component_not_campaign_qualification",
+          "status": "failed",
+          "total_rows": 12936,
+          "value": "4c17cc52-89f8-58a1-937b-4fb5fe940ff1"
+        }
+      ],
+      "model_status": "not_ready",
+      "segment_counts": {
+        "failed": 13,
+        "passed": 99
+      }
+    }
+  }
+}

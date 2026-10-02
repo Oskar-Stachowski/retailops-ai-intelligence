@@ -1,0 +1,9 @@
+{
+  "isolated_import": {
+    "code_files": 24,
+    "heads": 5,
+    "schema": true
+  },
+  "wheel_bytes": 486638,
+  "wheel_sha256": "176fedc15b4a9dbbc8195303ba29eb375c124fbc9422b3adb3a4fd0f6de63dd6"
+}

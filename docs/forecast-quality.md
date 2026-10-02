@@ -1,5 +1,9 @@
 # Metryki, przedziały i bramki jakości AI 04.7
 
+Ten dokument opisuje niezmienioną wersję 1. [Protokół 2.0](forecast-quality-v2.md)
+rozdziela ocenę mediany i średniej oraz naprawia ocenę zer i przedziałów;
+nie zmienia historycznych raportów ani wyników wersji 1.
+
 Raport korzysta z niezmiennego [backtestu 04.6](forecast-backtesting.md)
 i jego wspólnych kluczy, etykiet oraz predykcji. Rozszerza dotychczasowy
 evaluator MAE/WAPE o dodatkowe statystyki; kontroluje zgodność jego wyników.

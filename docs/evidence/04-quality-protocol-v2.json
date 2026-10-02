@@ -1,0 +1,110 @@
+{
+  "checks": {
+    "contract_snapshots": "passed",
+    "documentation": "passed",
+    "format": "passed",
+    "isolated_wheel_and_two_schemas": "passed",
+    "mypy_src_and_scripts": "passed_166_files",
+    "previous_wheel_preserved": "passed",
+    "ruff": "passed"
+  },
+  "forecast_model_status": "not_ready",
+  "freeze": {
+    "bytes": 2998,
+    "path": "contracts/forecast/v2/quality.freeze.json",
+    "sha256": "d00f1edeedff8de6419957b2ac6a1515709cc2e52f68d57241727314176955f2"
+  },
+  "legacy_results_reclassified": false,
+  "model_fits": 0,
+  "new_data_generated": false,
+  "new_test_outcomes_evaluated": false,
+  "new_wheel": {
+    "bytes": 448357,
+    "path": "dist/quality-v2/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "sha256": "2971e8544913ed1b3d69bacd5f98581102072519fc4a1b5cd1fa63db1a014e52"
+  },
+  "preflight": {
+    "disk_status": "passed",
+    "full_campaign_status": "not_ready",
+    "model_fits": 0,
+    "new_data_generated": false,
+    "new_test_outcomes_evaluated": false,
+    "observed_free_bytes": 41033883648,
+    "observed_free_bytes_by_path": {
+      "/private/tmp/retailops-ai-04-forecasting": 41033883648,
+      "/var/folders/wp/y5rmm5lj5qz3_zbz6hfb1l000000gn/T": 41033883648
+    },
+    "protocol_freeze": {
+      "files": 11,
+      "protocol_version": "forecast-quality-2.0.0",
+      "status": "passed"
+    },
+    "remaining_requirements": [
+      "freeze_model_and_baselines_with_explicit_median_mean_and_central_interval_outputs",
+      "verify_as_of_calibration_and_complete_critical_segment_inventory",
+      "resolve_full_panel_logical_byte_budget_risk_without_dropping_rows"
+    ],
+    "retained": {
+      "bytes": 1215327427,
+      "files": 3070,
+      "status": "passed"
+    },
+    "space_estimate": {
+      "assumptions": [
+        "one_sequential_campaign_no_parallel_model_runs_or_duplicate_exports",
+        "workspace_and_system_temp_on_same_filesystem_check_both_at_start",
+        "current_verify_inputs_stores_uncompressed_canonical_bodies_in_SQLite",
+        "no_new_source_generation_no_full_source_copy_for_backup",
+        "uncapped_indexes_make_this_a_planning_reserve_not_a_guaranteed_maximum",
+        "stop_before_test_scoring_if_resource_budget_or_dual_forecast_contract_unresolved"
+      ],
+      "basis": "old_one_store_91_origins_measured_logical_bytes_scaled_to_full_two_store_100_origin_panel",
+      "components_bytes": {
+        "new_persistent_curated_features_predictions_reports": 3221225472,
+        "other_nested_indexes_source_quality_or_output": 2147483648,
+        "sealed_source_and_replay_staging": 1073741824,
+        "sqlite_journal_and_sort_reserve": 2145221028,
+        "system_and_estimation_margin": 2147483648,
+        "uncompressed_feature_verification_index": 6435663083
+      },
+      "existing_logical_byte_limit": 4294967296,
+      "feature_rows_upper_bound": 280000,
+      "history_rows_upper_bound": 20000,
+      "logical_budget_risk": true,
+      "logical_feature_bytes_estimate": 4290442055,
+      "logical_feature_bytes_with_10_percent_uncertainty": 4719486261,
+      "minimum_free_bytes_before_full_run": 17179869184,
+      "old_feature_rows": 127400,
+      "old_history_rows": 9100,
+      "old_logical_bytes": 1952151135,
+      "planned_origins": 100,
+      "planned_series_upper_bound": 200,
+      "required_free_gib": 16,
+      "scope": "additional_free_space_existing_retained_artifacts_already_on_disk_not_deleted"
+    }
+  },
+  "preservation": {
+    "bytes": 977698,
+    "path": "docs/evidence/04-quality-protocol-v2-retained.json",
+    "sha256": "8bc9d6a768fff59621a611b847b0356c639edd662d0f125f15ff4884e6bf47ac"
+  },
+  "previous_development_gate_counts": {
+    "failed": 29,
+    "not_ready": 8,
+    "passed": 195
+  },
+  "protocol_version": "forecast-quality-2.0.0",
+  "status": "evaluation_protocol_frozen_full_campaign_not_run",
+  "test_report": {
+    "bytes": 4105,
+    "path": "reports/ai04-quality-protocol-v2-regression.xml",
+    "sha256": "0fd04a7c0631455f0ba565130582d316045c38688ec942efdf8c928d7dd6d13c"
+  },
+  "tests": {
+    "errors": 0.0,
+    "failures": 0.0,
+    "skipped": 0.0,
+    "tests": 26.0,
+    "time": 47.444
+  }
+}
