@@ -124,8 +124,8 @@ def cleanup_test_stacks(*projects: str) -> None:
                 service = tag.removeprefix(project + "-").removesuffix(":local")
                 if (
                     not isinstance(labels, dict)
-                    or labels.get("com.docker.compose.project") != project
-                    or labels.get("com.docker.compose.service") != service
+                    or labels.get("retailops.ai.build_project") != project
+                    or labels.get("retailops.ai.build_service") != service
                 ):
                     raise ValueError("test_image_ownership_mismatch")
             checked_run(compose(project, "down", "-v"))

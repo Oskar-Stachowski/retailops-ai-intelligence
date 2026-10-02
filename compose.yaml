@@ -49,6 +49,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api
+      labels:
+        retailops.ai.build_project: ${COMPOSE_PROJECT_NAME:?use_controller}
+        retailops.ai.build_service: api
     image: ${COMPOSE_PROJECT_NAME:?use_controller}-api:local
     environment:
       APP_ENV: local
@@ -74,6 +77,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.mlflow
+      labels:
+        retailops.ai.build_project: ${COMPOSE_PROJECT_NAME:?use_controller}
+        retailops.ai.build_service: mlflow
     image: ${COMPOSE_PROJECT_NAME:?use_controller}-mlflow:local
     environment:
       MLFLOW_BACKEND_STORE_URI: postgresql+psycopg2://mlflow_app@db:5432/retailops_mlflow

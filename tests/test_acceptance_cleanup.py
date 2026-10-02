@@ -40,8 +40,8 @@ class DockerState:
     def build(self, project: str, service: str = "api") -> str:
         tag = f"{project}-{service}:local"
         self.images[tag] = {
-            "com.docker.compose.project": project,
-            "com.docker.compose.service": service,
+            "retailops.ai.build_project": project,
+            "retailops.ai.build_service": service,
         }
         return tag
 
@@ -110,7 +110,7 @@ def test_cleanup_rejects_persistent_or_invalid_project(docker: DockerState, proj
     assert not docker.commands
 
 
-@pytest.mark.parametrize("label", ["com.docker.compose.project", "com.docker.compose.service"])
+@pytest.mark.parametrize("label", ["retailops.ai.build_project", "retailops.ai.build_service"])
 def test_wrong_image_owner_prevents_deletion(docker: DockerState, label: str) -> None:
     tag = docker.build(PROJECT)
     docker.images[tag][label] = "unrelated"
@@ -120,10 +120,22 @@ def test_wrong_image_owner_prevents_deletion(docker: DockerState, label: str) ->
     assert not any("down" in command or "rm" in command for command in docker.commands)
 
 
+def test_automatic_compose_labels_do_not_replace_explicit_build_ownership(docker: DockerState):
+    tag = docker.build(PROJECT)
+    docker.images[tag] = {
+        "com.docker.compose.project": PROJECT,
+        "com.docker.compose.service": "api",
+    }
+    with pytest.raises(ValueError, match="test_stack_cleanup_failed"):
+        store.cleanup_test_stacks(PROJECT)
+    assert tag in docker.images
+    assert not any("down" in command or "rm" in command for command in docker.commands)
+
+
 def test_cleanup_attempts_other_owned_projects_and_reports_failure(docker: DockerState) -> None:
     other = "retailops_ai_store_target_1234567890"
     protected = docker.build(PROJECT)
-    docker.images[protected]["com.docker.compose.project"] = "unrelated"
+    docker.images[protected]["retailops.ai.build_project"] = "unrelated"
     removed = docker.build(other)
     with pytest.raises(ValueError, match="test_stack_cleanup_failed"):
         store.cleanup_test_stacks(PROJECT, other)

@@ -371,6 +371,34 @@
       "time": "1698.220"
     },
     "full_local_suite_single_failure": "pre-fix macOS allocation reserved zero pages without resident RSS; corrected fixture passed separately",
+    "image_ownership_native": {
+      "actual_model_serving": false,
+      "base_image": "scratch",
+      "labels": {
+        "api": {
+          "retailops.ai.build_project": "retailops_ai_restore_e58512c356",
+          "retailops.ai.build_service": "api"
+        },
+        "mlflow": {
+          "retailops.ai.build_project": "retailops_ai_restore_e58512c356",
+          "retailops.ai.build_service": "mlflow"
+        }
+      },
+      "owned_tags_removed": true,
+      "project": "retailops_ai_restore_e58512c356",
+      "purpose": "native_compose_build_labels_and_owned_tag_cleanup_only",
+      "real_compose_sha256": "6239ec8779bfab312495f288c257e46d530bcbd1ffa7cc08b06f7ab4ecfd3ff4",
+      "status": "passed"
+    },
+    "image_ownership_tests": {
+      "failed": 0,
+      "passed": 57
+    },
+    "initial_remote_persistence_failure": {
+      "fix": "explicit project/service build labels; strict owner check retained",
+      "reason": "test_image_ownership_mismatch",
+      "run_id": 36990020366
+    },
     "mypy_sources": 319,
     "package_built": true,
     "remote_required_ci": "pending",

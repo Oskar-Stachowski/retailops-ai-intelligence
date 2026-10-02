@@ -48,6 +48,14 @@ niezmienione limity forecastu i historycznych endpointów. Ruff sprawdził
 530 plików, mypy 319 źródeł; kontrakty, dokumentacja i budowanie pakietu przeszły.
 Nie oznacza to, że jeden pełny lokalny przebieg był cały zielony.
 
+Pierwszy zdalny Required CI zatrzymał się w sprzątaniu osobnego testu
+MLflow store: obraz nie miał oczekiwanych automatycznych etykiet właściciela.
+Compose zapisuje teraz jawne `retailops.ai.build_project/build_service`.
+Cleanup nadal odmawia usunięcia bez dokładnej zgodności projektu i usługi;
+nie używa globalnego prune. Poprawka ma 57 testów oraz osobny odbiór dwóch
+pustych obrazów `scratch` z rzeczywistym Compose i usunięciem tylko ich tagów.
+To dowód oznaczenia własności, nie dodatkowy odbiór modelu czy backupu.
+
 Nowy odbiór [backup/restore](../forecast-v12-backup.md) działa z rewizją
 `0019_v12_development`, prawdziwymi PostgreSQL dla AI i MLflow oraz 43 małymi
 plikami fixture. Trwał 418 s i porównał cały stan obu baz i artefaktów.
