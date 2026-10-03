@@ -1,0 +1,48 @@
+{
+  "accepted_ai05_main": "f4ae14fe6588b91506383a709b5a0185208a4ea6",
+  "ai05_runtime_mutated": false,
+  "anomaly_detector_qualified": false,
+  "fresh_source_read_only": {
+    "curated_dataset_id": "curated-sha256-5fad63f8f120f1950dd29084bd08545038873dac7260ad7e921c2f23444a29f4",
+    "elapsed_seconds": 76.779,
+    "producer_available": false,
+    "published_bytes_unchanged_on_retry": true,
+    "readiness": {
+      "anomaly": "not_ready",
+      "forecast_model": "not_ready",
+      "forecast_source": "passed",
+      "inventory_ready": true,
+      "rag": "not_applicable",
+      "replay": "not_ready",
+      "stockout": "not_ready"
+    },
+    "row_count": 27587,
+    "snapshot_id": "snapshot-sha256-5220ea648765ab854e944d9a49a336946905a1890e71a9b3730e5700511b0e1c",
+    "source_bytes_unchanged": true,
+    "source_dataset_id": "source-sha256-fefb6fc4934763ab722c78fe3b9f91e737f5ea1b6731d7a937b033a16495d265",
+    "status": "passed",
+    "table_count": 43,
+    "watermark": {
+      "as_of_time": "2026-10-02T00:00:00+00:00",
+      "complete_through": "2026-10-01",
+      "completeness_status": "complete",
+      "meaning": "synthetic_sales_day_close_without_return_guarantee",
+      "policy_version": "daily-demand-1.0.0"
+    }
+  },
+  "preceding_ai07_head": "90d54633dbb46956d21e71ad1c227f056a83af61",
+  "runtime_commit": "146e2d1bb9223ec3b5745b9cb433674d33c63073",
+  "scope": "AI07 input compatibility with accepted AI05 main; anomaly detector lifecycle remains open",
+  "static_checks": {
+    "documentation": "passed",
+    "http_and_runtime_contracts": "passed",
+    "mypy_sources": 338,
+    "ruff_and_format_files": 573,
+    "scoped_git_and_working_tree_secrets": "passed"
+  },
+  "targeted_tests": {
+    "elapsed_seconds": 53.25,
+    "new_schema_boundary_cases": 6,
+    "passed": 73
+  }
+}

@@ -2,6 +2,8 @@
 
 [Zwroty według doby i dostępności — AI07](reference/return-inputs.md) zachowują
 ogon po historii sprzedaży, odczyt as-of i niekompletne obserwacje bez fałszywych zer.
+[Integracja z gotowym fundamentem AI05](evidence/ai/07/07.4-ai05-integration/README.md)
+zachowuje wersje snapshotów, deklaracje kompletności i oddzielne bramki modeli.
 
 Zacznij od [statusu](STATUS.md), [decyzji](architecture/decisions.md) i
 [poleceń lokalnych](development.md). [Contributing](contributing.md) opisuje
