@@ -10,12 +10,11 @@
     "documentation_links": "passed",
     "mypy": "passed_345_sources",
     "ruff": "passed_585_files",
-    "staged_secrets": "passed",
-    "working_tree_and_history_secrets": "passed"
+    "staged_secrets": "passed"
   },
   "cli": {
     "command": "installed retailops-ai-full-raw-dq build + verify",
-    "full_dq_replay_id": "full-dq-replay-sha256-2d2311641f45cabecd52926aacc2869aef80d5ac149f72d0592346e7228566c3",
+    "full_dq_replay_id": "full-dq-replay-sha256-bc0d358897153253399acd14dc0c620ee54f6ce7cb775558fc1ff2384e53f541",
     "status": "passed"
   },
   "editable": {
@@ -30,7 +29,7 @@
           {
             "case": "demand",
             "curated_dataset_id": "curated-sha256-113658ee399e38eb6740d61b04387f1e0e7bc9cd70119ed048efbc2ce035c5be",
-            "full_dq_replay_id": "full-dq-replay-sha256-2d2311641f45cabecd52926aacc2869aef80d5ac149f72d0592346e7228566c3",
+            "full_dq_replay_id": "full-dq-replay-sha256-bc0d358897153253399acd14dc0c620ee54f6ce7cb775558fc1ff2384e53f541",
             "publication_bytes": 5008714,
             "replay_sha256": "b8e3ffb3b73e8883cda1c1b81f1efb903c765cf9ff883675a70f6403ca574534",
             "report": {
@@ -63,7 +62,7 @@
           {
             "case": "physical",
             "curated_dataset_id": "curated-sha256-b0c78581b1ebae0630d2a647b391f85e87d42e6ec3b69f2dbe7621a49ec5d8d3",
-            "full_dq_replay_id": "full-dq-replay-sha256-a1ae4be56551bebdf581911de7b75b911038de4becbab31b35bd65dfc1360da1",
+            "full_dq_replay_id": "full-dq-replay-sha256-2a186f20f92d226054eb06ffb275d7928e2528f12968287404822e6582c22f9c",
             "publication_bytes": 5019562,
             "replay_sha256": "4dbf57d84feed1e0db43c68831b37812d5f2694cddd50e64553f70b248f0f550",
             "report": {
@@ -94,8 +93,8 @@
             "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09"
           }
         ],
-        "elapsed_seconds": 218.56,
-        "peak_rss_mib": 138.047,
+        "elapsed_seconds": 134.715,
+        "peak_rss_mib": 149.031,
         "private_fault_plan_available": false,
         "producer_available": false,
         "status": "passed"
@@ -105,7 +104,7 @@
           {
             "case": "demand",
             "curated_dataset_id": "curated-sha256-113658ee399e38eb6740d61b04387f1e0e7bc9cd70119ed048efbc2ce035c5be",
-            "full_dq_replay_id": "full-dq-replay-sha256-2d2311641f45cabecd52926aacc2869aef80d5ac149f72d0592346e7228566c3",
+            "full_dq_replay_id": "full-dq-replay-sha256-bc0d358897153253399acd14dc0c620ee54f6ce7cb775558fc1ff2384e53f541",
             "publication_bytes": 5008714,
             "replay_sha256": "b8e3ffb3b73e8883cda1c1b81f1efb903c765cf9ff883675a70f6403ca574534",
             "report": {
@@ -138,7 +137,7 @@
           {
             "case": "physical",
             "curated_dataset_id": "curated-sha256-b0c78581b1ebae0630d2a647b391f85e87d42e6ec3b69f2dbe7621a49ec5d8d3",
-            "full_dq_replay_id": "full-dq-replay-sha256-a1ae4be56551bebdf581911de7b75b911038de4becbab31b35bd65dfc1360da1",
+            "full_dq_replay_id": "full-dq-replay-sha256-2a186f20f92d226054eb06ffb275d7928e2528f12968287404822e6582c22f9c",
             "publication_bytes": 5019562,
             "replay_sha256": "4dbf57d84feed1e0db43c68831b37812d5f2694cddd50e64553f70b248f0f550",
             "report": {
@@ -169,8 +168,8 @@
             "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09"
           }
         ],
-        "elapsed_seconds": 235.025,
-        "peak_rss_mib": 138.312,
+        "elapsed_seconds": 143.743,
+        "peak_rss_mib": 155.516,
         "private_fault_plan_available": false,
         "producer_available": false,
         "status": "passed"
@@ -179,6 +178,44 @@
     "status": "passed"
   },
   "full_regression_and_final_head_ci": "recorded_in_pull_request_after_completion",
+  "historical_evidence": {
+    "editable_seconds": [
+      218.56,
+      235.025
+    ],
+    "final_head_ci": {
+      "head": "69aa386edda81ffccca20431b961f0661d47664b",
+      "persistence": "passed",
+      "pytest_passed": 1953,
+      "pytest_seconds": 3443.68,
+      "run_id": 37115023515,
+      "status": "failed_full_dq_resource_limit"
+    },
+    "local_regression": "1953 tests passed, then full DQ worker exceeded 360-second subprocess timeout",
+    "qualifies_current_runtime": false,
+    "resource_retry": {
+      "failed_attempt_log_sha256": "9608105ac8c2ae2df7912d4f98692806adb21d1879f5c2b24e8305ac89ffd831",
+      "first_editable_attempt": "failed_resource_limit_during_concurrent_acceptance_runs",
+      "limits_unchanged": true,
+      "retry_status": "passed"
+    },
+    "runtime_commit": "b85ddcd2a8edc611c65154e4249b2cb0d69769d3",
+    "targeted_tests": {
+      "first_run": {
+        "failed": 4,
+        "passed": 98,
+        "reason": "Two expected error-code assertions per profile corrected; runtime rejected every invalid input.",
+        "seconds": 361.84
+      },
+      "junit_suite_seconds": 406.222,
+      "passed": 104,
+      "seconds": 415.28
+    },
+    "wheel_seconds": [
+      287.119,
+      255.992
+    ]
+  },
   "installed_wheel": {
     "fixture_sha256": "e899afaeb045a30d62b47fe2f8c9dfb6449ae2fc8f6959750c08e254c7c99775",
     "limits": {
@@ -191,7 +228,7 @@
           {
             "case": "demand",
             "curated_dataset_id": "curated-sha256-113658ee399e38eb6740d61b04387f1e0e7bc9cd70119ed048efbc2ce035c5be",
-            "full_dq_replay_id": "full-dq-replay-sha256-2d2311641f45cabecd52926aacc2869aef80d5ac149f72d0592346e7228566c3",
+            "full_dq_replay_id": "full-dq-replay-sha256-bc0d358897153253399acd14dc0c620ee54f6ce7cb775558fc1ff2384e53f541",
             "publication_bytes": 5008714,
             "replay_sha256": "b8e3ffb3b73e8883cda1c1b81f1efb903c765cf9ff883675a70f6403ca574534",
             "report": {
@@ -224,7 +261,7 @@
           {
             "case": "physical",
             "curated_dataset_id": "curated-sha256-b0c78581b1ebae0630d2a647b391f85e87d42e6ec3b69f2dbe7621a49ec5d8d3",
-            "full_dq_replay_id": "full-dq-replay-sha256-a1ae4be56551bebdf581911de7b75b911038de4becbab31b35bd65dfc1360da1",
+            "full_dq_replay_id": "full-dq-replay-sha256-2a186f20f92d226054eb06ffb275d7928e2528f12968287404822e6582c22f9c",
             "publication_bytes": 5019562,
             "replay_sha256": "4dbf57d84feed1e0db43c68831b37812d5f2694cddd50e64553f70b248f0f550",
             "report": {
@@ -255,8 +292,8 @@
             "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09"
           }
         ],
-        "elapsed_seconds": 287.119,
-        "peak_rss_mib": 138.844,
+        "elapsed_seconds": 129.601,
+        "peak_rss_mib": 150.578,
         "private_fault_plan_available": false,
         "producer_available": false,
         "status": "passed"
@@ -266,7 +303,7 @@
           {
             "case": "demand",
             "curated_dataset_id": "curated-sha256-113658ee399e38eb6740d61b04387f1e0e7bc9cd70119ed048efbc2ce035c5be",
-            "full_dq_replay_id": "full-dq-replay-sha256-2d2311641f45cabecd52926aacc2869aef80d5ac149f72d0592346e7228566c3",
+            "full_dq_replay_id": "full-dq-replay-sha256-bc0d358897153253399acd14dc0c620ee54f6ce7cb775558fc1ff2384e53f541",
             "publication_bytes": 5008714,
             "replay_sha256": "b8e3ffb3b73e8883cda1c1b81f1efb903c765cf9ff883675a70f6403ca574534",
             "report": {
@@ -299,7 +336,7 @@
           {
             "case": "physical",
             "curated_dataset_id": "curated-sha256-b0c78581b1ebae0630d2a647b391f85e87d42e6ec3b69f2dbe7621a49ec5d8d3",
-            "full_dq_replay_id": "full-dq-replay-sha256-a1ae4be56551bebdf581911de7b75b911038de4becbab31b35bd65dfc1360da1",
+            "full_dq_replay_id": "full-dq-replay-sha256-2a186f20f92d226054eb06ffb275d7928e2528f12968287404822e6582c22f9c",
             "publication_bytes": 5019562,
             "replay_sha256": "4dbf57d84feed1e0db43c68831b37812d5f2694cddd50e64553f70b248f0f550",
             "report": {
@@ -330,8 +367,8 @@
             "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09"
           }
         ],
-        "elapsed_seconds": 255.992,
-        "peak_rss_mib": 142.531,
+        "elapsed_seconds": 168.123,
+        "peak_rss_mib": 142.672,
         "private_fault_plan_available": false,
         "producer_available": false,
         "status": "passed"
@@ -409,8 +446,8 @@
             "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721"
           }
         ],
-        "elapsed_seconds": 106.658,
-        "peak_rss_mib": 106.094,
+        "elapsed_seconds": 80.18,
+        "peak_rss_mib": 115.922,
         "producer_available": false,
         "status": "passed"
       },
@@ -477,8 +514,8 @@
             "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721"
           }
         ],
-        "elapsed_seconds": 92.577,
-        "peak_rss_mib": 105.891,
+        "elapsed_seconds": 86.54,
+        "peak_rss_mib": 116.219,
         "producer_available": false,
         "status": "passed"
       }
@@ -489,6 +526,14 @@
   "parent_ai_commit": "75592255f637801986ffad0a66a5a9c6bbe3d94f",
   "producer_commit": "1fc2787d21a49911fcf663cfd67b4407f3a85986",
   "producer_runtime_commit": "ae1178ccfc7f3019645a364acb4ca210f8a05c95",
+  "publication_optimization": {
+    "corrupted_staged_aggregate_blocked_before_publication": true,
+    "existing_destination_independently_verified_before_reuse": true,
+    "limits_unchanged": true,
+    "public_verify_independently_reconstructs_parent_and_replay": true,
+    "staged_bytes_checked_against_independent_material": true,
+    "unchanged_operational_replay_hashes": true
+  },
   "qualification": {
     "business_event_day_completeness": "not_qualified",
     "evaluation_truth_in_runtime": false,
@@ -496,30 +541,19 @@
     "parent_fact_coverage": "verified",
     "transport_durability_proven": false
   },
-  "resource_retry": {
-    "failed_attempt_log_sha256": "9608105ac8c2ae2df7912d4f98692806adb21d1879f5c2b24e8305ac89ffd831",
-    "first_editable_attempt": "failed_resource_limit_during_concurrent_acceptance_runs",
-    "limits_unchanged": true,
-    "retry_status": "passed"
-  },
-  "runtime_commit": "b85ddcd2a8edc611c65154e4249b2cb0d69769d3",
+  "runtime_commit": "bd1f2259a48149453f58729c80b11a69d51e1dfb",
   "scope": "independent_finite_parent_operational_replay",
   "status": "passed",
   "targeted_tests": {
-    "first_run": {
-      "failed": 4,
-      "passed": 98,
-      "reason": "Two expected error-code assertions per profile corrected; runtime rejected every invalid input.",
-      "seconds": 361.84
-    },
-    "junit_suite_seconds": 406.222,
-    "passed": 104,
-    "seconds": 415.28
+    "junit_suite_seconds": 257.949,
+    "passed": 106,
+    "pytest_reported_seconds": 257.96
   },
   "wheel": {
-    "bytes": 934717,
-    "locked_requirements_sha256": "61c51f45a343db48f582d1b308bcafaeea10854f75603f4ec7280a865320a925",
-    "repository_on_import_path": false,
-    "sha256": "4eb4dc254ffebdc6a783ee8958606856fc7da2aa2de0afe535df0f8337ffb8e9"
+    "bytes": 935018,
+    "dependencies": "uv.lock exported with --locked --all-extras --no-dev --no-emit-project --no-hashes",
+    "loaded_from": "isolated site-packages",
+    "python_version": "3.11.15",
+    "sha256": "9b687624da9c7402051fb1db33d89704c3dfa3fc3cf2ebdffe76d417e4328a0f"
   }
 }
