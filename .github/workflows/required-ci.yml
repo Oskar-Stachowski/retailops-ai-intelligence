@@ -66,6 +66,12 @@ jobs:
       - run: make forecast-read-smoke
       - run: make model-catalog-smoke
       - run: make evaluations-smoke
+      - name: Verify AI10 forecast contracts and transactional outbox
+        run: |
+          docker pull postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+          make intelligence-delivery-bootstrap
+          uv run --locked --project tools/intelligence-delivery python scripts/intelligence_outbox.py --help
+          make integration-replay-test integration-failure-test
       - name: Accept v12 registry, jobs, publication, metadata, backup and recovery
         run: make v12-backup-smoke
   required-result:

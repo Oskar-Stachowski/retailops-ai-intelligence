@@ -8,6 +8,10 @@ kwalifikację jakości, aktywację i rollback Etapu 11. Historyczne evidence
 zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
+[Integracja wyników AI 10](intelligence-integration-v2.md) opisuje pierwszy przyrost
+forecast v2, atomowy outbox i trwały odczyt po stronie RetailOps.
+Etap pozostaje w toku; [dowód przyrostu](evidence/10-forecast-integration.md)
+rozdziela wykonane kontrole od pełnego odbioru AI 10.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
 registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
 sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)

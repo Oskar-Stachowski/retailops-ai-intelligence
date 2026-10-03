@@ -1,0 +1,88 @@
+[project]
+name = "retailops-ai-intelligence-delivery"
+version = "0.1.0.dev0"
+requires-python = ">=3.11.15,<3.12"
+dependencies = [
+    "retailops-ai-intelligence[snapshot,forecast]==0.1.0.dev0",
+    "confluent-kafka==2.15.1",
+]
+
+[tool.uv]
+required-version = "==0.12.19"
+package = false
+# Preserve every version in the frozen ML dependency graph.
+constraint-dependencies = [
+    "alembic==1.20.0",
+    "annotated-doc==0.0.5",
+    "annotated-types==0.8.0",
+    "anyio==4.15.1",
+    "ast-serialize==0.11.2",
+    "attrs==26.1.0",
+    "boto3==1.43.103",
+    "botocore==1.43.103",
+    "click==8.5.0",
+    "cloudpickle==3.1.2",
+    "colorama==0.4.6",
+    "fastapi==0.141.1",
+    "greenlet==3.5.6",
+    "h11==0.16.0",
+    "hatchling==1.32.4",
+    "httpcore2==2.13.1",
+    "httpx2==2.13.1",
+    "idna==3.20",
+    "iniconfig==2.3.0",
+    "jmespath==1.1.0",
+    "joblib==1.6.0",
+    "jsonschema-specifications==2025.9.1",
+    "jsonschema==4.26.0",
+    "librt==0.15.0",
+    "mako==1.4.3",
+    "markdown-it-py==4.2.0",
+    "markupsafe==3.0.3",
+    "mdurl==0.1.2",
+    "mypy-extensions==1.1.0",
+    "mypy==2.3.1",
+    "narwhals==2.26.0",
+    "numpy==2.4.6",
+    "opentelemetry-api==1.45.0",
+    "opentelemetry-sdk==1.45.0",
+    "opentelemetry-semantic-conventions==0.66b0",
+    "packaging==26.3",
+    "pathspec==1.1.1",
+    "pluggy==1.6.0",
+    "prometheus-client==0.26.0",
+    "psutil==7.2.2",
+    "psycopg-binary==3.3.6",
+    "psycopg==3.3.6",
+    "pyarrow==25.0.1",
+    "pydantic-core==2.46.5",
+    "pydantic-settings==2.15.0",
+    "pydantic==2.13.5",
+    "pygments==2.21.0",
+    "pytest==9.1.1",
+    "python-dateutil==2.9.0.post0",
+    "python-dotenv==1.2.3",
+    "pyyaml==6.0.3",
+    "referencing==0.37.0",
+    "rpds-py==2026.6.3",
+    "ruff==0.16.9",
+    "s3transfer==0.19.2",
+    "scikit-learn==1.9.1",
+    "scipy==1.17.1",
+    "six==1.17.0",
+    "sqlalchemy==2.1.1",
+    "starlette==1.7.0",
+    "threadpoolctl==3.7.0",
+    "tomlkit==0.15.1",
+    "trove-classifiers==2026.9.21.13",
+    "truststore==0.10.4",
+    "types-pyyaml==6.0.12.20260906",
+    "typing-extensions==4.16.0",
+    "typing-inspection==0.4.4",
+    "tzdata==2026.4",
+    "urllib3==2.8.0",
+    "uvicorn==0.54.0",
+]
+
+[tool.uv.sources]
+retailops-ai-intelligence = { path = "../..", editable = true }

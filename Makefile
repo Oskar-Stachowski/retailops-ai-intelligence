@@ -86,8 +86,10 @@ contracts:
 	$(UV_RUN) python scripts/update_v12_inference_contracts.py
 	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py
+	$(UV_RUN) python scripts/update_intelligence_event_contracts.py
 
 contracts-check:
+	$(UV_RUN) python scripts/check_intelligence_delivery.py
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
 	$(UV_RUN) python scripts/update_access_contracts.py --check
 	$(UV_RUN) python scripts/update_knowledge_contracts.py --check
@@ -98,6 +100,7 @@ contracts-check:
 	$(UV_RUN) python scripts/update_v12_inference_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py --check
+	$(UV_RUN) python scripts/update_intelligence_event_contracts.py --check
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up
@@ -169,3 +172,19 @@ model-catalog-smoke:
 .PHONY: evaluations-smoke
 evaluations-smoke:
 	$(UV_RUN) python scripts/check_evaluations.py
+
+.PHONY: integration-replay-test integration-failure-test
+integration-replay-test:
+	$(UV_RUN) python scripts/check_intelligence_delivery.py
+	$(UV_RUN) python scripts/update_intelligence_event_contracts.py --check
+	$(UV_RUN) python -m pytest tests/test_intelligence_events.py tests/test_intelligence_delivery.py
+
+integration-failure-test:
+	REQUIRE_AI10_OUTBOX_TESTS=1 $(UV_RUN) python -m pytest tests/test_intelligence_outbox.py
+
+.PHONY: intelligence-delivery-bootstrap intelligence-outbox
+intelligence-delivery-bootstrap:
+	$(UV) sync --locked --project tools/intelligence-delivery
+
+intelligence-outbox:
+	$(UV) run --locked --project tools/intelligence-delivery python scripts/intelligence_outbox.py $(ARGS)

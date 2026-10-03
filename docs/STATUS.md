@@ -1,5 +1,12 @@
 # Aktualny status
 
+**2026-10-03 — AI 10 rozpoczęty, pierwszy przyrost forecast v2.**
+[Instrukcja](intelligence-integration-v2.md) i [dowód](evidence/10-forecast-integration.md)
+obejmują atomowy outbox, schemat wyników ML oraz osobny projektor/read API
+RetailOps. Head bazy tej gałęzi to `0020_intelligence_outbox`.
+AI 10 pozostaje `in_progress`; trzech modeli, UI, snapshot/replay i całego E2E
+jeszcze nie odebrano. Historyczne pomiary AI 05 poniżej zachowują swój zakres.
+
 **AI 05 — lokalny przepływ finalnego v12 jest odebrany także na świeżym snapshocie.**
 [Raport i pomiary](evidence/05-v12-real-serving.md) oraz
 [wersjonowany zapis dowodów](evidence/05-v12-real-serving.json) obejmują cały
