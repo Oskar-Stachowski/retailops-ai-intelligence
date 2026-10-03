@@ -1,0 +1,647 @@
+{
+  "schema_version": "1.0.0",
+  "scope": "AI08 development-only model card and larger-profile resource design",
+  "base_commit": "4a7a76f813eb98b52d23d25742ef567d707eb284",
+  "recorded_at_utc": "2026-10-03T09:37:11.289808+00:00",
+  "profile": "ai-temporal-smoke",
+  "descriptor": {
+    "content_sha256": "2abf10d037376f5766de486cd6cb9278a144370c8c2bd7dccb8f216762e4e4c2",
+    "implementation": {
+      "code_sha256": "8f50477bcc069b40d588756353de28a6ad53976e4822eacc71e9a37077a1f412",
+      "explanation_code": {
+        "__init__.py": "849928118a7f7fa327d14c11693c8895fe11a07f968df9808caa66b1e8377b7b",
+        "card.py": "69782bb7be404759a0598cfffd28184746e91cc00f7ccceadaa2e84e0dbc7396",
+        "cli.py": "2cb2184d6ea2a4c5c753c82f241acbf71b8c4c4d317193d76bc0e00371a57d60",
+        "diagnostics.py": "a13d9b5bc60bffa75d1378881b37f9c11c3403727e5d1ebed0b746a9f576888e"
+      },
+      "training": {
+        "preparation": {
+          "code_files": {
+            "retailops_ai.data_contracts/common.py": "9f4cbd1533e8ea7eef0eb0bb84e51920c759d9648ffe4370482cac7ed4cc686a",
+            "retailops_ai.source_snapshot/__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+            "retailops_ai.source_snapshot/canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+            "retailops_ai.source_snapshot/cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+            "retailops_ai.source_snapshot/files.py": "2c1019d1f8217bba6d10ac8dd82a272c15465b92eed5c80f369a160f29b3270a",
+            "retailops_ai.source_snapshot/importer.py": "cd61025000b5bffec68bbcbdf19db5d04a33537afc89e6fadeda6df9c7c612a0",
+            "retailops_ai.source_snapshot/inventory_projection.py": "c66da418866362eea8d856afa34195f16108dc5f4cbe725da250a43460a483ae",
+            "retailops_ai.source_snapshot/inventory_protocol.py": "f9d32a45212905e8840c611232b580d1a3991253b0fe1ba95033a1187646cf11",
+            "retailops_ai.source_snapshot/protocol.py": "34584dc93fb1f491ac255ee3a514135af4a0ee4b2d3cfca10b760115b6c061c6",
+            "retailops_ai.source_snapshot/publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+            "retailops_ai.source_snapshot/tables.py": "332502d4f236e83dbd5326951be11042481cf998e78b9296437690f38e8feb79",
+            "retailops_ai.stockout/__init__.py": "6dad8820c040913c19a51991c133c7811e05a32efae6eaefc87a25e54424d06a",
+            "retailops_ai.stockout/artifacts.py": "5f9cffe890c5472ff9b651b09f5ae2069acd83b04ffc35efa0b3feac34973df9",
+            "retailops_ai.stockout/cli.py": "eb378529f1a7662450b746d14868a9cc0780e230815719ec828e4e50a1d04a8b",
+            "retailops_ai.stockout/contract.py": "efdfed0a2a5a61f9a2705893a5949c7df414f94baca918a016179030593dce03",
+            "retailops_ai.stockout/dataset.py": "a358eb98a9dd8a203e103003df2e4c9ce665816dfbfbd3931b99cd1310355647",
+            "retailops_ai.stockout/feature_contract.py": "c0cd50a06fc97afdd53f76da105ee780b6c894cde9e1e3f0b864a8a9fe15d6a3",
+            "retailops_ai.stockout/feature_dataset.py": "404f51656427494fa22e651f2df9ddc89567a1cd411f497d5a5a59e0345567c2",
+            "retailops_ai.stockout/features.py": "28bc48b32e60109d9e0ad8c72de6bab3083d04748c302dc89371d460923fb60a",
+            "retailops_ai.stockout/labels.py": "df52ccf67071d0e40ea91b40e608d87c6dc3f3a124a3e6f338a5a6402239d7bd",
+            "retailops_ai.stockout/prepare.py": "9672b8cba7313c8a6921d7342a2fe077449dbd7505fb2ff67c886e0d3459329e",
+            "retailops_ai.stockout/split.py": "45ef4c3a4f870da83c62524e5f1bcd5b5f7f9f3a6b46d6737cf88f7edc16b332",
+            "retailops_ai.stockout/upstream.py": "c68a9856c0e5b00a525dfc2fdec2dbcd15393b1f68228c802e0631632a65b51a",
+            "retailops_ai.stockout/upstream_contract.py": "ef697eb68f9b8d7c3e9bcb1284681ae7c58f642c483d702ac5cf6df27dff52d8",
+            "retailops_ai.stockout/upstream_dataset.py": "640df15152fe7c108500cb108a4503267af5a2957b84e3a974af2295bf632e2b"
+          },
+          "code_sha256": "8a044e155d9ce687736be74af703a6c6771d5f4ad94b06109d2fe4712324d442",
+          "curated_code_sha256": "605be92b95b3f703da11cb9101de9c18fe15fd4e2688f4ed3e4339ede700fe5f",
+          "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+          "python_version": "3.11.15"
+        },
+        "python": "3.11.15",
+        "training_code": {
+          "__init__.py": "4f8ec399a373e1a74fdc92affbcc1a442cedf00642bd8f0dd11ddfda586ea6c3",
+          "cli.py": "89389368249dcf023355bad0569d2b849afe189c7942a28ffa9772d4c2fb0fb2",
+          "contract.py": "357a5443bfdc0e649968a6ca8e54627b63a1c676a1a7d036d094938bd441a9f1",
+          "development.py": "72457fc43ebb3567bbb246ab06e1e9ed156cf32c803c5b076e6f372f1a4837ce",
+          "evaluation.py": "2b12b61849e9243adcc07e24a94cc78c454a15263a116735fc5bd51643565bc3",
+          "inputs.py": "2467be59dc90de2c813b341329c7e0e1e4bb1fcb94fbf771e100149de6a0ec3d",
+          "pipeline.py": "f598f13be7bdc47008bf9b57f3235a94bdd84b25c92b729096bc23f09ab854d9",
+          "retailops_ai.forecasting.model_contract": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+          "retailops_ai.forecasting.model_trees": "b38ae31b8ab1c37c17f695fac103d0872adb5afa2c5e18b244187e839cf65d23"
+        },
+        "training_code_sha256": "9914c2bfb18218987044adb7e15047d1a0c133bd4ad542bb13fe73c18c3492b9",
+        "versions": {
+          "numpy": "2.4.6",
+          "scikit-learn": "1.9.1",
+          "scipy": "1.17.1",
+          "threadpoolctl": "3.7.0"
+        }
+      }
+    },
+    "parents": {
+      "comparison_id": "comparison-sha256-0a2dcaf2832d2e829c2775730d819552ec9b9c5dbd357b6e0f05582ca798723f",
+      "curated_dataset_id": "curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+      "development_id": "development-sha256-18e71a00d92d1f5b22af4df603e01d8084155e61aa4e30102402db0d25a6f462",
+      "feature_dataset_id": "features-sha256-6e366900938378d07d1814d7bb46789265049a7b8742be65d2c5123d83141949",
+      "label_dataset_id": "labels-sha256-a0e221a244cc31809487cf9f09c3e865798bce469883977fa84e7cbdc153ebb0",
+      "source_dataset_id": "source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+      "split_id": "split-sha256-e596f7b54f42f7d96899cf2926f4188840685a3984cea63e35c0721cbc946627",
+      "upstream_id": "upstream-sha256-a56a4fb27af6d68f6f9bd77142733a5d6c89e483596faa5c98bd19f6e8c2cd17"
+    },
+    "policy": {
+      "grouping": "numeric_with_missing_indicator_or_whole_one_hot_category",
+      "minimum_rows": 2,
+      "random_state": 42,
+      "repeats": 5,
+      "scoring": "uncalibrated_tune_AP_and_Brier",
+      "version": "stockout-development-explanation-1.0.0"
+    },
+    "role": "stockout_development_model_card",
+    "schema_version": "1.0.0",
+    "selected_model_id": "risk-model-sha256-6e377789f4063493847af3cbe286f282ccda3c6804ae3a748b38437fb45dcba2"
+  },
+  "development_classes": {
+    "calibration": {
+      "0": 67,
+      "1": 63
+    },
+    "train": {
+      "0": 193,
+      "1": 147
+    },
+    "tune": {
+      "0": 73,
+      "1": 62
+    }
+  },
+  "native": {
+    "scope": "native model card CLI",
+    "profile": "ai-temporal-smoke",
+    "development_only": true,
+    "final_test_outcomes_evaluated": false,
+    "inputs_unchanged": true,
+    "input_files": 278,
+    "input_fingerprint_sha256": "d24f2cdd6250b45c32dbebcbac5197cfda66b28445a86fbbea6dcd35771b9d71",
+    "training_identity_unchanged": true,
+    "development_id": "development-sha256-18e71a00d92d1f5b22af4df603e01d8084155e61aa4e30102402db0d25a6f462",
+    "selected_model_id": "risk-model-sha256-6e377789f4063493847af3cbe286f282ccda3c6804ae3a748b38437fb45dcba2",
+    "producer_package_unavailable": true,
+    "native_bytes_and_ids_identical": true,
+    "artifact": {
+      "id": "stockout-card-sha256-09addf3fdde943a93fd1432ec1a74d1532b19622ee09a2753567104344aac38a",
+      "sha256": "9f4bb54afebfee0302cb24aa77fad856165bbe7344dca30597aa0db108ddf11c",
+      "bytes": 256528,
+      "private_0600": true
+    },
+    "metrics": {
+      "without_truth_opt_in": {
+        "seconds": 2.059869,
+        "exit_code": 2,
+        "peak_child_rss_bytes": 165953536
+      },
+      "build": {
+        "seconds": 118.427688,
+        "exit_code": 0,
+        "peak_child_rss_bytes": 278544384
+      },
+      "rebuild": {
+        "seconds": 130.395679,
+        "exit_code": 0,
+        "peak_child_rss_bytes": 305774592
+      },
+      "verify": {
+        "seconds": 135.193174,
+        "exit_code": 0,
+        "peak_child_rss_bytes": 305774592
+      },
+      "resealed_card_rejection": {
+        "seconds": 129.829734,
+        "exit_code": 2,
+        "peak_child_rss_bytes": 305774592
+      },
+      "resealed_model_parent_rejection": {
+        "seconds": 127.019501,
+        "exit_code": 2,
+        "peak_child_rss_bytes": 324567040
+      }
+    },
+    "readiness": {
+      "calibration_generalization_evaluated": false,
+      "final_test_outcomes_evaluated": false,
+      "full_training_profile_measured": false,
+      "model_card_development_complete": true,
+      "model_ready": false,
+      "production_promoted": false,
+      "threshold_policy_ready": false
+    },
+    "top_importance": [
+      {
+        "AP_drop_mean": 0.232721622796,
+        "AP_drop_repeats": [
+          0.176797416656,
+          0.274896013444,
+          0.22992614802,
+          0.254709955293,
+          0.227278580568
+        ],
+        "AP_drop_std": 0.032945786416,
+        "Brier_increase_mean": 0.404788290531,
+        "Brier_increase_repeats": [
+          0.347197747119,
+          0.45229795507,
+          0.400169275335,
+          0.425103265753,
+          0.399173209377
+        ],
+        "Brier_increase_std": 0.034754572566,
+        "feature_group": "observed_sales_mean",
+        "transformed_columns": [
+          "observed_sales_mean",
+          "missing:observed_sales_mean"
+        ]
+      },
+      {
+        "AP_drop_mean": 0.008640116136,
+        "AP_drop_repeats": [
+          0.009321855947,
+          0.009153730354,
+          0.008156504353,
+          0.009153730354,
+          0.007414759673
+        ],
+        "AP_drop_std": 0.000738613176,
+        "Brier_increase_mean": 0.000111044275,
+        "Brier_increase_repeats": [
+          0.00012964091,
+          0.000112934084,
+          6.1660002e-05,
+          0.000129657004,
+          0.000121329374
+        ],
+        "Brier_increase_std": 2.5457532e-05,
+        "feature_group": "category_id",
+        "transformed_columns": [
+          "category_id=197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+          "category_id=28b88987-7084-5c08-a3c5-2b8ffa807492",
+          "category_id=42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+          "category_id=445dff34-464a-5d4e-b54d-324bf9aca10e",
+          "category_id=4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+          "category_id=655e5f7a-c40d-5c55-b071-175c1b2d6502",
+          "category_id=c8956032-5a0a-57f1-9118-b9b2c526cbda",
+          "category_id=d916b3fd-e110-5a11-af32-41fdef07aaa0"
+        ]
+      },
+      {
+        "AP_drop_mean": 0.007637594306,
+        "AP_drop_repeats": [
+          0.001175843482,
+          0.011646296295,
+          0.001649302841,
+          0.011948204359,
+          0.011768324554
+        ],
+        "AP_drop_std": 0.005085820316,
+        "Brier_increase_mean": 5.8187319e-05,
+        "Brier_increase_repeats": [
+          -0.000100728853,
+          0.000162853532,
+          -8.6714866e-05,
+          0.00014749915,
+          0.00016802763
+        ],
+        "Brier_increase_std": 0.000124296022,
+        "feature_group": "days_of_supply_in_stock",
+        "transformed_columns": [
+          "days_of_supply_in_stock",
+          "missing:days_of_supply_in_stock"
+        ]
+      },
+      {
+        "AP_drop_mean": 0.005149915953,
+        "AP_drop_repeats": [
+          0.00273258532,
+          0.008298139459,
+          0.003368387885,
+          0.003232323232,
+          0.008118143869
+        ],
+        "AP_drop_std": 0.002506638374,
+        "Brier_increase_mean": 0.00057615676,
+        "Brier_increase_repeats": [
+          0.000607527164,
+          0.000689060367,
+          0.000695516132,
+          0.000180496875,
+          0.000708183261
+        ],
+        "Brier_increase_std": 0.000200975485,
+        "feature_group": "observed_sales_std",
+        "transformed_columns": [
+          "observed_sales_std",
+          "missing:observed_sales_std"
+        ]
+      },
+      {
+        "AP_drop_mean": 0.003336498599,
+        "AP_drop_repeats": [
+          -0.000222352979,
+          0.007834844905,
+          -0.001002699024,
+          0.003335838274,
+          0.006736861817
+        ],
+        "AP_drop_std": 0.003557854705,
+        "Brier_increase_mean": 0.000185253602,
+        "Brier_increase_repeats": [
+          5.432541e-05,
+          0.00022013578,
+          -3.7407657e-05,
+          0.000170733938,
+          0.000518480539
+        ],
+        "Brier_increase_std": 0.000189308218,
+        "feature_group": "history_in_stock_days",
+        "transformed_columns": [
+          "history_in_stock_days",
+          "missing:history_in_stock_days"
+        ]
+      }
+    ],
+    "category_segments": {
+      "not_evaluable": 5,
+      "total": 8
+    },
+    "coefficient_tables": 3,
+    "local_factual_context_rows": 135,
+    "rehashed_card_and_parent_changes_rejected": true
+  },
+  "installed": {
+    "scope": "installed wheel",
+    "profile": "ai-temporal-smoke",
+    "development_only": true,
+    "final_test_outcomes_evaluated": false,
+    "inputs_unchanged": true,
+    "input_files": 278,
+    "input_fingerprint_sha256": "d24f2cdd6250b45c32dbebcbac5197cfda66b28445a86fbbea6dcd35771b9d71",
+    "training_identity_unchanged": true,
+    "development_id": "development-sha256-18e71a00d92d1f5b22af4df603e01d8084155e61aa4e30102402db0d25a6f462",
+    "selected_model_id": "risk-model-sha256-6e377789f4063493847af3cbe286f282ccda3c6804ae3a748b38437fb45dcba2",
+    "producer_package_unavailable": true,
+    "native_bytes_and_ids_identical": true,
+    "artifact": {
+      "id": "stockout-card-sha256-09addf3fdde943a93fd1432ec1a74d1532b19622ee09a2753567104344aac38a",
+      "sha256": "9f4bb54afebfee0302cb24aa77fad856165bbe7344dca30597aa0db108ddf11c",
+      "bytes": 256528,
+      "private_0600": true
+    },
+    "metrics": {
+      "without_truth_opt_in": {
+        "seconds": 2.442476,
+        "exit_code": 2,
+        "peak_child_rss_bytes": 161071104
+      },
+      "build": {
+        "seconds": 134.276751,
+        "exit_code": 0,
+        "peak_child_rss_bytes": 303923200
+      },
+      "verify": {
+        "seconds": 136.552969,
+        "exit_code": 0,
+        "peak_child_rss_bytes": 303923200
+      }
+    },
+    "readiness": {
+      "calibration_generalization_evaluated": false,
+      "final_test_outcomes_evaluated": false,
+      "full_training_profile_measured": false,
+      "model_card_development_complete": true,
+      "model_ready": false,
+      "production_promoted": false,
+      "threshold_policy_ready": false
+    },
+    "top_importance": [
+      {
+        "AP_drop_mean": 0.232721622796,
+        "AP_drop_repeats": [
+          0.176797416656,
+          0.274896013444,
+          0.22992614802,
+          0.254709955293,
+          0.227278580568
+        ],
+        "AP_drop_std": 0.032945786416,
+        "Brier_increase_mean": 0.404788290531,
+        "Brier_increase_repeats": [
+          0.347197747119,
+          0.45229795507,
+          0.400169275335,
+          0.425103265753,
+          0.399173209377
+        ],
+        "Brier_increase_std": 0.034754572566,
+        "feature_group": "observed_sales_mean",
+        "transformed_columns": [
+          "observed_sales_mean",
+          "missing:observed_sales_mean"
+        ]
+      },
+      {
+        "AP_drop_mean": 0.008640116136,
+        "AP_drop_repeats": [
+          0.009321855947,
+          0.009153730354,
+          0.008156504353,
+          0.009153730354,
+          0.007414759673
+        ],
+        "AP_drop_std": 0.000738613176,
+        "Brier_increase_mean": 0.000111044275,
+        "Brier_increase_repeats": [
+          0.00012964091,
+          0.000112934084,
+          6.1660002e-05,
+          0.000129657004,
+          0.000121329374
+        ],
+        "Brier_increase_std": 2.5457532e-05,
+        "feature_group": "category_id",
+        "transformed_columns": [
+          "category_id=197c13ee-8ab3-580d-8ccc-a0c3195d9925",
+          "category_id=28b88987-7084-5c08-a3c5-2b8ffa807492",
+          "category_id=42c5eb6c-ad87-5271-aa04-cafcd641d9eb",
+          "category_id=445dff34-464a-5d4e-b54d-324bf9aca10e",
+          "category_id=4c17cc52-89f8-58a1-937b-4fb5fe940ff1",
+          "category_id=655e5f7a-c40d-5c55-b071-175c1b2d6502",
+          "category_id=c8956032-5a0a-57f1-9118-b9b2c526cbda",
+          "category_id=d916b3fd-e110-5a11-af32-41fdef07aaa0"
+        ]
+      },
+      {
+        "AP_drop_mean": 0.007637594306,
+        "AP_drop_repeats": [
+          0.001175843482,
+          0.011646296295,
+          0.001649302841,
+          0.011948204359,
+          0.011768324554
+        ],
+        "AP_drop_std": 0.005085820316,
+        "Brier_increase_mean": 5.8187319e-05,
+        "Brier_increase_repeats": [
+          -0.000100728853,
+          0.000162853532,
+          -8.6714866e-05,
+          0.00014749915,
+          0.00016802763
+        ],
+        "Brier_increase_std": 0.000124296022,
+        "feature_group": "days_of_supply_in_stock",
+        "transformed_columns": [
+          "days_of_supply_in_stock",
+          "missing:days_of_supply_in_stock"
+        ]
+      },
+      {
+        "AP_drop_mean": 0.005149915953,
+        "AP_drop_repeats": [
+          0.00273258532,
+          0.008298139459,
+          0.003368387885,
+          0.003232323232,
+          0.008118143869
+        ],
+        "AP_drop_std": 0.002506638374,
+        "Brier_increase_mean": 0.00057615676,
+        "Brier_increase_repeats": [
+          0.000607527164,
+          0.000689060367,
+          0.000695516132,
+          0.000180496875,
+          0.000708183261
+        ],
+        "Brier_increase_std": 0.000200975485,
+        "feature_group": "observed_sales_std",
+        "transformed_columns": [
+          "observed_sales_std",
+          "missing:observed_sales_std"
+        ]
+      },
+      {
+        "AP_drop_mean": 0.003336498599,
+        "AP_drop_repeats": [
+          -0.000222352979,
+          0.007834844905,
+          -0.001002699024,
+          0.003335838274,
+          0.006736861817
+        ],
+        "AP_drop_std": 0.003557854705,
+        "Brier_increase_mean": 0.000185253602,
+        "Brier_increase_repeats": [
+          5.432541e-05,
+          0.00022013578,
+          -3.7407657e-05,
+          0.000170733938,
+          0.000518480539
+        ],
+        "Brier_increase_std": 0.000189308218,
+        "feature_group": "history_in_stock_days",
+        "transformed_columns": [
+          "history_in_stock_days",
+          "missing:history_in_stock_days"
+        ]
+      }
+    ],
+    "category_segments": {
+      "not_evaluable": 5,
+      "total": 8
+    },
+    "coefficient_tables": 3,
+    "local_factual_context_rows": 135,
+    "wheel_sha256": "d4f7f33f88b9054e6f28d889e94751b5bcfe0307b6ec5aec5d95acb62ea2dec4"
+  },
+  "resources": {
+    "scope": "read-only local temporal smoke inventory and resource design",
+    "measured_at_utc": "2026-10-03T08:53:00.770510+00:00",
+    "source_revision": "08639e9188badb352ed64686a088fe237badad41",
+    "profile": "ai-temporal-smoke",
+    "measured_origins": 1632,
+    "artifacts": {
+      "features": {
+        "bytes": 10249881,
+        "sha256": "1b32b9892a96e15b7cfe985808848d830e909a7bb826a73705abc95d018230ac"
+      },
+      "upstream": {
+        "bytes": 2127982,
+        "sha256": "9a0cfe036e004aa5f4d3a2e9b58001070e0d62dee5b59557e93e39913a24c1f1"
+      },
+      "comparison": {
+        "bytes": 1407074,
+        "sha256": "4423b50bbb5231806a2e12a0cf7e573d4455eb7340e6c5fdfac72c09424b478d"
+      },
+      "labels": {
+        "bytes": 666623,
+        "sha256": "3b721f3feae53597c7b32c382802d6b4d8098bcb1dc326a8d5ee468dc81627de"
+      },
+      "split": {
+        "bytes": 483435,
+        "sha256": "9f0635e1b8efbed92a8a9acdfd7f0676f02635d331977b7c97b9e696621be170"
+      },
+      "development": {
+        "bytes": 864342,
+        "sha256": "3c18ceca09ccb47660e808d9a41bf8bee32e397603b0838f472189580a12fcce"
+      }
+    },
+    "source_sizes": {
+      "facts": {
+        "files": 98,
+        "logical_bytes": 3401889
+      },
+      "private": {
+        "files": 127,
+        "logical_bytes": 5517528
+      },
+      "curated": {
+        "files": 46,
+        "logical_bytes": 7005380
+      }
+    },
+    "disk": {
+      "free_bytes": 48048082944,
+      "total_bytes": 245107195904
+    },
+    "extrapolation": {
+      "method": "current_feature_JSON_bytes_per_origin_times_upper_physical_grain_before_lifecycle",
+      "warning": "not_measured_memory_time_total_generator_bytes_or_quality",
+      "profiles": [
+        {
+          "name": "illustrative_32_products_102_days_2_stocks",
+          "upper_origins": 6528,
+          "estimated_feature_json_bytes": 40999524
+        },
+        {
+          "name": "ai-dev",
+          "upper_origins": 109500,
+          "estimated_feature_json_bytes": 687721795
+        },
+        {
+          "name": "ai-training",
+          "upper_origins": 584000,
+          "estimated_feature_json_bytes": 3667849574
+        }
+      ]
+    },
+    "implemented_limits_changed": false,
+    "larger_profile_generated": false,
+    "larger_profile_acceptance": "not_ready",
+    "proposed_pilot_budget": {
+      "status": "design_not_executed",
+      "max_new_scratch_bytes": 5368709120,
+      "max_process_tree_rss_bytes": 1073741824,
+      "max_prepare_seconds": 600,
+      "min_free_disk_before_start_bytes": 37580963840,
+      "reserved_disk_bytes": 32212254720,
+      "origin_batch_size": 256,
+      "max_partition_bytes": 16777216
+    }
+  },
+  "readiness": {
+    "calibration_generalization_evaluated": false,
+    "final_test_outcomes_evaluated": false,
+    "full_training_profile_measured": false,
+    "model_card_development_complete": true,
+    "model_ready": false,
+    "production_promoted": false,
+    "threshold_policy_ready": false
+  },
+  "acceptance": {
+    "full_ci": "all_required_gates_passed_after_documentation_fix",
+    "targeted_tests": 49,
+    "new_tests": 18,
+    "targeted_seconds": 9.8,
+    "targeted_warnings": 1,
+    "targeted_warning": "sandbox physical-core discovery unavailable; logical fallback; model thread limit remains one",
+    "mypy_source_files": 344,
+    "package_matches_installed_acceptance": true,
+    "full_ci_initial_exit_code": 2,
+    "final_gate_rerun_exit_code": 0,
+    "initial_failure": "false positive in Polish prose in resource doc lines 67-68",
+    "resolution": "rephrased documentation; scanner configuration unchanged",
+    "rerun": "make docs-check secrets",
+    "full_tests": 1853,
+    "full_test_warnings": 0,
+    "full_test_seconds": 1859.67,
+    "full_ci_initial_completed_at_utc": "2026-10-03T09:23:55.211282+00:00",
+    "all_gates_completed_at_utc": "2026-10-03T09:35:06.224764+00:00",
+    "all_check_targets_passed": true,
+    "secret_scans": [
+      "git history",
+      "working directory"
+    ],
+    "package_built": true,
+    "ruff_formatted_files": 576
+  },
+  "commands": {
+    "module": "retailops_ai.stockout_explanation.cli",
+    "native": [
+      "build",
+      "build",
+      "verify"
+    ],
+    "installed": [
+      "build",
+      "verify"
+    ],
+    "verification_opt_in": "--allow-evaluation-truth",
+    "same_immutable_preparation_parents": true,
+    "same_immutable_development_parent": true,
+    "python": "3.11.15"
+  },
+  "previous_slice_ci": [
+    {
+      "event": "pull_request",
+      "run_id": 37109266353,
+      "conclusion": "success",
+      "head_sha": "4a7a76f813eb98b52d23d25742ef567d707eb284"
+    },
+    {
+      "event": "push",
+      "run_id": 37109263232,
+      "conclusion": "success",
+      "head_sha": "4a7a76f813eb98b52d23d25742ef567d707eb284"
+    }
+  ],
+  "current_slice_remote_ci": "requires_publication_of_new_commit"
+}

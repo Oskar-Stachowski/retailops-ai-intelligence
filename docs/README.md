@@ -30,8 +30,9 @@ kalibrację przedziałów i jawne bramki jakości bez promocji modelu.
 [Rzeczywisty lokalny przepływ finalnego v12](evidence/05-v12-real-serving.md)
 jest odebrany: pełny import, trzy udane trwałe zadania / 42 wiersze, API,
 restart i rollback. Świeży mały snapshot daje 14/14 `current` po restarcie.
-Formalna publikacja AI 05 wymaga jeszcze zdalnego Required CI i integracji
-osobnych PR-ów AI oraz producenta źródła.
+AI 05 ma scalone PR-y i zielone Required CI obu mainów;
+[końcowy odbiór publikacji](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/evidence/ai/05/final/README.md)
+zastępuje wcześniejsze informacje o oczekiwaniu na CI.
 [Adapter v12](mlflow-v12-evidence.md), [loader offline](forecast-v12-runtime.md),
 [kwalifikacja inference](forecast-v12-release.md) i [lifecycle v12](mlflow-v12-lifecycle.md)
 opisują przygotowanie obsługi nowego eksportu oraz osobne bramki dopuszczenia.
@@ -48,6 +49,32 @@ PostgreSQL, pliki MLflow, zadania oraz niedokończone decyzje rejestracji.
 [Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
 rozszerza typed import o source 2.7, native ledger i private qualification.
 [Odbiór](evidence/06-inventory-complete.md) obejmuje curated 1.1 i oba profile.
+[Etykiety nowych braków AI 08](reference/stockout-labels.md) rozdzielają
+nowy brak, istniejący brak i niepełne okna obserwacji.
+[Lokalny odbiór etykiet](evidence/08-01-stockout-labels.md) obejmuje prywatny
+handoff AI 06, niezależne odtworzenie ledgeru i zainstalowany wheel.
+[Cechy PIT i podział w czasie](reference/stockout-features.md) obejmują
+znany zapas, obserwowaną sprzedaż, znane plany dostaw i wykluczanie
+okien przekraczających granice train/tune/calibration/test.
+[Odbiór 102 dni](evidence/08-02-stockout-features.md) wiąże 1632 origin
+z pełnym odtworzeniem cech i licznikami wyłączeń.
+[Historyczny forecast upstream](reference/stockout-upstream.md) dodaje
+prognozę stałego baseline na granicy wiedzy każdego dnia oraz identyczne
+wejścia wariantów z tą cechą i bez niej; [odbiór](evidence/08-03-stockout-upstream.md)
+obejmuje pokrycie prognozą wszystkich dopuszczonych okien splitu.
+[Porównanie LR/HGB na development](reference/stockout-training.md) oddziela
+train, wybór na tune i dopasowanie sigmoid na calibration, z wejściami
+z forecastem i bez niego oraz kontrolą cenzorowania sprzedaży.
+[Odbiór modeli](evidence/08-04-stockout-models.md) ujawnia ograniczenia
+małej próby, metryki rankingowe i ilustracyjne capacity, bez final test.
+[Karta modelu i diagnostyka cech](reference/stockout-model-card.md) dodaje
+współczynniki LR, znaczenie grup wejść na tune i faktyczny kontekst PIT.
+[Odbiór karty](evidence/08-05-stockout-card.md) zachowuje granice development;
+[projekt większego profilu](reference/stockout-profile-resources.md) określa
+partycjonowanie i pomiary potrzebne przed dalszą generacją.
+[Partycje cech v2](reference/stockout-partitions.md) dodają ograniczony
+zapis Parquet i indeks faktów znanych w origin; [odbiór 102 dni](evidence/08-06-stockout-partitions.md)
+zachowuje każde pole 1632 punktów oraz wyniki modeli development.
 [Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
 validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują

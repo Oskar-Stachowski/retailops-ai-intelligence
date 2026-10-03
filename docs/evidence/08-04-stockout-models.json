@@ -1,0 +1,1302 @@
+{
+  "base_commit": "aa6b9537271f9d13666bccb8ff76ec99bfa103f0",
+  "base_main": "f4ae14fe6588b91506383a709b5a0185208a4ea6",
+  "boundaries": {
+    "ai05_runtime_unchanged": true,
+    "calibration_generalization_evaluated": false,
+    "final_test_outcomes_evaluated": false,
+    "full_training_profile_measured": false,
+    "model_ready": false,
+    "original_v12_unchanged": true,
+    "production_promoted": false,
+    "threshold_policy_ready": false
+  },
+  "calibration_fit_diagnostics": {
+    "hist_gradient_boosting:raw_sales_only": {
+      "generalization": "not_evaluated",
+      "positives": 63,
+      "raw_brier": 0.075459912659,
+      "rows": 130,
+      "sigmoid_brier_in_sample": 0.051276550505
+    },
+    "hist_gradient_boosting:with_upstream": {
+      "generalization": "not_evaluated",
+      "positives": 63,
+      "raw_brier": 0.073577412273,
+      "rows": 130,
+      "sigmoid_brier_in_sample": 0.046355691544
+    },
+    "hist_gradient_boosting:without_upstream": {
+      "generalization": "not_evaluated",
+      "positives": 63,
+      "raw_brier": 0.075504820118,
+      "rows": 130,
+      "sigmoid_brier_in_sample": 0.053564202046
+    },
+    "logistic_regression:raw_sales_only": {
+      "generalization": "not_evaluated",
+      "positives": 63,
+      "raw_brier": 0.075214422739,
+      "rows": 130,
+      "sigmoid_brier_in_sample": 0.040519406116
+    },
+    "logistic_regression:with_upstream": {
+      "generalization": "not_evaluated",
+      "positives": 63,
+      "raw_brier": 0.074043746117,
+      "rows": 130,
+      "sigmoid_brier_in_sample": 0.034744239524
+    },
+    "logistic_regression:without_upstream": {
+      "generalization": "not_evaluated",
+      "positives": 63,
+      "raw_brier": 0.074665922872,
+      "rows": 130,
+      "sigmoid_brier_in_sample": 0.037205009023
+    }
+  },
+  "capacity_per_origin": [
+    {
+      "as_of": "2026-06-05T23:59:59.999999Z",
+      "capacity": 3,
+      "eligible": 13
+    },
+    {
+      "as_of": "2026-06-06T23:59:59.999999Z",
+      "capacity": 3,
+      "eligible": 13
+    },
+    {
+      "as_of": "2026-06-07T23:59:59.999999Z",
+      "capacity": 3,
+      "eligible": 12
+    },
+    {
+      "as_of": "2026-06-08T23:59:59.999999Z",
+      "capacity": 3,
+      "eligible": 11
+    },
+    {
+      "as_of": "2026-06-09T23:59:59.999999Z",
+      "capacity": 3,
+      "eligible": 14
+    },
+    {
+      "as_of": "2026-06-10T23:59:59.999999Z",
+      "capacity": 3,
+      "eligible": 11
+    },
+    {
+      "as_of": "2026-06-11T23:59:59.999999Z",
+      "capacity": 3,
+      "eligible": 11
+    },
+    {
+      "as_of": "2026-06-12T23:59:59.999999Z",
+      "capacity": 3,
+      "eligible": 14
+    },
+    {
+      "as_of": "2026-06-13T23:59:59.999999Z",
+      "capacity": 2,
+      "eligible": 10
+    },
+    {
+      "as_of": "2026-06-14T23:59:59.999999Z",
+      "capacity": 3,
+      "eligible": 14
+    },
+    {
+      "as_of": "2026-06-15T23:59:59.999999Z",
+      "capacity": 3,
+      "eligible": 12
+    }
+  ],
+  "comparison_cost_without_parent_replay": {
+    "RSS_scope": "whole process cumulative peak including preceding input loading",
+    "inputs_unchanged": true,
+    "models": 6,
+    "native_bytes_and_ids_identical": true,
+    "process_cpu_seconds": 0.385635,
+    "profile": "102-day temporal smoke; not full ai-training acceptance",
+    "scope": "six train fits, six fixed sigmoid fits and complete development comparison; parent replay excluded from timers",
+    "wall_seconds": 0.465793,
+    "whole_process_peak_rss_bytes": 285769728
+  },
+  "descriptor": {
+    "categorical_lineage_sha256": "4211a7023aa092e9de2aa324d2cf321dd11f58c62254c8955f012d20e99488cc",
+    "development_keys": {
+      "calibration": "95309e7487fd0d5ff36a529138a26c1840b9107a09e8b6e0ec082b65d37dd24a",
+      "train": "3e5f72d2d49466002d289e7542247fbd31bfff17773db72350bd552bc235c23c",
+      "tune": "12958e42a1aff20119a18c3ecd2000c2b98e186369523d98e9fed2f88b212e57"
+    },
+    "development_labels": {
+      "calibration": "3e57cd87a3f90229dd403462d37fa7c6cdd0bbf2488632687366fc88a98f41f8",
+      "train": "a113dccc9058f93a07e153bfa4d67881dd193e836a04113e571ecc8df32375ab",
+      "tune": "d736a69c203c205cde60003b0b741ae6a15e1734773a8f4a8b480cbcc632b2b2"
+    },
+    "implementation": {
+      "preparation": {
+        "code_files": {
+          "retailops_ai.data_contracts/common.py": "9f4cbd1533e8ea7eef0eb0bb84e51920c759d9648ffe4370482cac7ed4cc686a",
+          "retailops_ai.source_snapshot/__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+          "retailops_ai.source_snapshot/canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+          "retailops_ai.source_snapshot/cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+          "retailops_ai.source_snapshot/files.py": "2c1019d1f8217bba6d10ac8dd82a272c15465b92eed5c80f369a160f29b3270a",
+          "retailops_ai.source_snapshot/importer.py": "cd61025000b5bffec68bbcbdf19db5d04a33537afc89e6fadeda6df9c7c612a0",
+          "retailops_ai.source_snapshot/inventory_projection.py": "c66da418866362eea8d856afa34195f16108dc5f4cbe725da250a43460a483ae",
+          "retailops_ai.source_snapshot/inventory_protocol.py": "f9d32a45212905e8840c611232b580d1a3991253b0fe1ba95033a1187646cf11",
+          "retailops_ai.source_snapshot/protocol.py": "34584dc93fb1f491ac255ee3a514135af4a0ee4b2d3cfca10b760115b6c061c6",
+          "retailops_ai.source_snapshot/publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+          "retailops_ai.source_snapshot/tables.py": "332502d4f236e83dbd5326951be11042481cf998e78b9296437690f38e8feb79",
+          "retailops_ai.stockout/__init__.py": "6dad8820c040913c19a51991c133c7811e05a32efae6eaefc87a25e54424d06a",
+          "retailops_ai.stockout/artifacts.py": "5f9cffe890c5472ff9b651b09f5ae2069acd83b04ffc35efa0b3feac34973df9",
+          "retailops_ai.stockout/cli.py": "eb378529f1a7662450b746d14868a9cc0780e230815719ec828e4e50a1d04a8b",
+          "retailops_ai.stockout/contract.py": "efdfed0a2a5a61f9a2705893a5949c7df414f94baca918a016179030593dce03",
+          "retailops_ai.stockout/dataset.py": "a358eb98a9dd8a203e103003df2e4c9ce665816dfbfbd3931b99cd1310355647",
+          "retailops_ai.stockout/feature_contract.py": "c0cd50a06fc97afdd53f76da105ee780b6c894cde9e1e3f0b864a8a9fe15d6a3",
+          "retailops_ai.stockout/feature_dataset.py": "404f51656427494fa22e651f2df9ddc89567a1cd411f497d5a5a59e0345567c2",
+          "retailops_ai.stockout/features.py": "28bc48b32e60109d9e0ad8c72de6bab3083d04748c302dc89371d460923fb60a",
+          "retailops_ai.stockout/labels.py": "df52ccf67071d0e40ea91b40e608d87c6dc3f3a124a3e6f338a5a6402239d7bd",
+          "retailops_ai.stockout/prepare.py": "9672b8cba7313c8a6921d7342a2fe077449dbd7505fb2ff67c886e0d3459329e",
+          "retailops_ai.stockout/split.py": "45ef4c3a4f870da83c62524e5f1bcd5b5f7f9f3a6b46d6737cf88f7edc16b332",
+          "retailops_ai.stockout/upstream.py": "c68a9856c0e5b00a525dfc2fdec2dbcd15393b1f68228c802e0631632a65b51a",
+          "retailops_ai.stockout/upstream_contract.py": "ef697eb68f9b8d7c3e9bcb1284681ae7c58f642c483d702ac5cf6df27dff52d8",
+          "retailops_ai.stockout/upstream_dataset.py": "640df15152fe7c108500cb108a4503267af5a2957b84e3a974af2295bf632e2b"
+        },
+        "code_sha256": "8a044e155d9ce687736be74af703a6c6771d5f4ad94b06109d2fe4712324d442",
+        "curated_code_sha256": "605be92b95b3f703da11cb9101de9c18fe15fd4e2688f4ed3e4339ede700fe5f",
+        "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+        "python_version": "3.11.15"
+      },
+      "python": "3.11.15",
+      "training_code": {
+        "__init__.py": "4f8ec399a373e1a74fdc92affbcc1a442cedf00642bd8f0dd11ddfda586ea6c3",
+        "cli.py": "89389368249dcf023355bad0569d2b849afe189c7942a28ffa9772d4c2fb0fb2",
+        "contract.py": "357a5443bfdc0e649968a6ca8e54627b63a1c676a1a7d036d094938bd441a9f1",
+        "development.py": "72457fc43ebb3567bbb246ab06e1e9ed156cf32c803c5b076e6f372f1a4837ce",
+        "evaluation.py": "2b12b61849e9243adcc07e24a94cc78c454a15263a116735fc5bd51643565bc3",
+        "inputs.py": "2467be59dc90de2c813b341329c7e0e1e4bb1fcb94fbf771e100149de6a0ec3d",
+        "pipeline.py": "f598f13be7bdc47008bf9b57f3235a94bdd84b25c92b729096bc23f09ab854d9",
+        "retailops_ai.forecasting.model_contract": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+        "retailops_ai.forecasting.model_trees": "b38ae31b8ab1c37c17f695fac103d0872adb5afa2c5e18b244187e839cf65d23"
+      },
+      "training_code_sha256": "9914c2bfb18218987044adb7e15047d1a0c133bd4ad542bb13fe73c18c3492b9",
+      "versions": {
+        "numpy": "2.4.6",
+        "scikit-learn": "1.9.1",
+        "scipy": "1.17.1",
+        "threadpoolctl": "3.7.0"
+      }
+    },
+    "model_ids": {
+      "hist_gradient_boosting:raw_sales_only": "risk-model-sha256-9f1e1ba86dc5d672fbaf97262f1e9b285872ff4adced048590fd20c86d3412f6",
+      "hist_gradient_boosting:with_upstream": "risk-model-sha256-f7ae73a7674ca082377fbd4d699d38060e3ac6583c4f678e62cf53e41f963d1e",
+      "hist_gradient_boosting:without_upstream": "risk-model-sha256-6e377789f4063493847af3cbe286f282ccda3c6804ae3a748b38437fb45dcba2",
+      "logistic_regression:raw_sales_only": "risk-model-sha256-996a2450bd5ecb1dabc360a359d2c7baae17d5c715c9ad25ab1a15883da4a1e7",
+      "logistic_regression:with_upstream": "risk-model-sha256-3ee6af57b967cb5cad93eda2f38ed63023e9e45a59d7227b5533a88859283b01",
+      "logistic_regression:without_upstream": "risk-model-sha256-2d0cde5cbe1ef0dc01b9b0e5be423995c984e6024a2b6b001cc5eb5efc69ada4"
+    },
+    "parents": {
+      "comparison_id": "comparison-sha256-0a2dcaf2832d2e829c2775730d819552ec9b9c5dbd357b6e0f05582ca798723f",
+      "curated_dataset_id": "curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+      "feature_dataset_id": "features-sha256-6e366900938378d07d1814d7bb46789265049a7b8742be65d2c5123d83141949",
+      "label_dataset_id": "labels-sha256-a0e221a244cc31809487cf9f09c3e865798bce469883977fa84e7cbdc153ebb0",
+      "source_dataset_id": "source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+      "split_id": "split-sha256-e596f7b54f42f7d96899cf2926f4188840685a3984cea63e35c0721cbc946627",
+      "upstream_id": "upstream-sha256-a56a4fb27af6d68f6f9bd77142733a5d6c89e483596faa5c98bd19f6e8c2cd17"
+    },
+    "pipelines_sha256": "8bce06b02cbd3d1b5bc8b88e21e36dc643d7346663687a5b895ff590847873d4",
+    "policy": {
+      "calibration": "fixed_regularized_sigmoid_separate_calibration_period",
+      "calibration_reporting": "in_sample_fit_diagnostic_not_generalization",
+      "capacity_fraction": 0.2,
+      "capacity_unit": "ceil_fraction_per_origin_physical_keys_lexical_ties",
+      "categories": "train_only_stock_location_and_PIT_category_unknown_all_zero",
+      "configurations": "one_frozen_configuration_per_family",
+      "cost_interpretation": "fixed_exploratory_units_not_validated_business_savings",
+      "cpu_threads": 1,
+      "false_attention_cost": 1.0,
+      "final_test": "no_outcome_scoring_selection_calibration_or_threshold_access",
+      "hgb_early_stopping": false,
+      "hgb_l2_regularization": 1.0,
+      "hgb_learning_rate": 0.1,
+      "hgb_max_iter": 80,
+      "hgb_max_leaf_nodes": 15,
+      "hgb_min_samples_leaf": 20,
+      "imputation": "train_median_empty_zero_all_column_missing_indicators",
+      "lr_C": 1.0,
+      "lr_max_iter": 1000,
+      "lr_tol": 1e-08,
+      "minimum_calibration_per_class": 10,
+      "missed_incident_cost": 5.0,
+      "random_state": 42,
+      "sampling": "all_eligible_rows_natural_prevalence_no_class_weights",
+      "selection": "tune_AP_then_Brier_then_LR_without_upstream",
+      "version": "stockout-development-models-1.0.0"
+    },
+    "results_sha256": "f41924fd87940e630c03956c639f2a497e00276c35a5c28b6ee58c8c3793f59a",
+    "role": "stockout_development_comparison",
+    "schema_version": "1.0.0",
+    "selection": {
+      "model_id": "risk-model-sha256-6e377789f4063493847af3cbe286f282ccda3c6804ae3a748b38437fb45dcba2",
+      "name": "hist_gradient_boosting:without_upstream",
+      "provisional": true,
+      "role": "tune"
+    },
+    "split_policy": {
+      "calibration_until": "2026-07-13T00:00:00Z",
+      "evaluated_at": "2026-08-01T00:00:00Z",
+      "final_test": "membership_only_no_outcome_metrics_no_training_access",
+      "purge": "outcome_end_and_availability_strictly_before_next_role",
+      "start_at": "2026-04-21T00:00:00Z",
+      "test_until": "2026-08-01T00:00:00Z",
+      "train_until": "2026-06-05T00:00:00Z",
+      "tune_until": "2026-06-24T00:00:00Z",
+      "version": "stockout-temporal-split-1.0.0"
+    }
+  },
+  "installed_wheel": {
+    "artifact_sha256": "8206a970a2460720d469e78b87da36d4f8c0147cdf9bf1dde51fbea245641fcf",
+    "artifacts_private_0600": true,
+    "development_id": "development-sha256-18e71a00d92d1f5b22af4df603e01d8084155e61aa4e30102402db0d25a6f462",
+    "input_files": 277,
+    "input_fingerprint_sha256": "46c5ee08c777e42a9a14ebd39d200fcf354a410356fd2e3fb2a864856aded2e4",
+    "inputs_unchanged": true,
+    "metrics": {
+      "build": {
+        "exit_code": 0,
+        "peak_child_rss_bytes": 294256640,
+        "seconds": 99.803298
+      },
+      "rebuild": {
+        "exit_code": 0,
+        "peak_child_rss_bytes": 314540032,
+        "seconds": 103.335347
+      },
+      "resealed_model_rejection": {
+        "exit_code": 2,
+        "peak_child_rss_bytes": 314540032,
+        "seconds": 101.91515
+      },
+      "verify": {
+        "exit_code": 0,
+        "peak_child_rss_bytes": 314540032,
+        "seconds": 98.815547
+      }
+    },
+    "native_bytes_and_ids_identical": true,
+    "producer_package_unavailable": true,
+    "rehashed_model_change_rejected": true,
+    "scope": "installed wheel offline CLI; development only"
+  },
+  "measurement": {
+    "RSS": "cumulative RUSAGE_CHILDREN maximum of an individual CLI child; not combined tree memory or full-training acceptance",
+    "machine": "arm64",
+    "system": "Darwin"
+  },
+  "native": {
+    "artifact": {
+      "bytes": 864342,
+      "id": "development-sha256-18e71a00d92d1f5b22af4df603e01d8084155e61aa4e30102402db0d25a6f462",
+      "private_0600": true,
+      "sha256": "3c18ceca09ccb47660e808d9a41bf8bee32e397603b0838f472189580a12fcce"
+    },
+    "input_files": 277,
+    "input_fingerprint_sha256": "46c5ee08c777e42a9a14ebd39d200fcf354a410356fd2e3fb2a864856aded2e4",
+    "inputs_unchanged": true,
+    "metrics": {
+      "build": {
+        "exit_code": 0,
+        "peak_child_rss_bytes": 267436032,
+        "seconds": 98.985839
+      },
+      "rebuild": {
+        "exit_code": 0,
+        "peak_child_rss_bytes": 322797568,
+        "seconds": 88.462749
+      },
+      "verify": {
+        "exit_code": 0,
+        "peak_child_rss_bytes": 322797568,
+        "seconds": 97.638981
+      },
+      "without_truth_opt_in": {
+        "exit_code": 2,
+        "peak_child_rss_bytes": 166166528,
+        "seconds": 1.60958
+      }
+    }
+  },
+  "previous_slice_remote_ci": [
+    {
+      "conclusion": "success",
+      "event": "pull_request",
+      "head_sha": "aa6b9537271f9d13666bccb8ff76ec99bfa103f0",
+      "run_id": 37105793127,
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37105793127"
+    },
+    {
+      "conclusion": "success",
+      "event": "push",
+      "head_sha": "aa6b9537271f9d13666bccb8ff76ec99bfa103f0",
+      "run_id": 37105791373,
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37105791373"
+    }
+  ],
+  "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+  "report": {
+    "calibration_generalization": "not_evaluated_fit_diagnostics_only",
+    "caution": "synthetic_temporal_smoke_overlapping_7d_windows_not_independent_episodes",
+    "common_development_keys_identical": true,
+    "coverage": {
+      "calibration": {
+        "eligible": 130,
+        "forecast_available": 130
+      },
+      "final_test": {
+        "eligible_membership_only": 131,
+        "outcomes_evaluated": false
+      },
+      "raw_global_upstream_forecast_ready": false,
+      "train": {
+        "eligible": 340,
+        "forecast_available": 340
+      },
+      "tune": {
+        "eligible": 135,
+        "forecast_available": 135
+      }
+    },
+    "final_test_outcomes_evaluated": false,
+    "full_training_profile_measured": false,
+    "model_ready": false,
+    "model_specific_drops": 0,
+    "models_compared": 6,
+    "production_promoted": false,
+    "raw_global_upstream_forecast_ready": false,
+    "selected_on_tune": "hist_gradient_boosting:without_upstream",
+    "selection_provisional": true,
+    "sigmoid_fitted_models": 6,
+    "sigmoid_monotone_models": 6,
+    "threshold_policy_ready": false,
+    "thresholds_fitted": false,
+    "upstream_campaign_development_coverage_complete": true
+  },
+  "schema_version": "1.0.0",
+  "scope": "native 102-day temporal smoke; development only, no final outcomes",
+  "selected_calibration_reliability_in_sample": [
+    {
+      "count": 63,
+      "lower": 0.0,
+      "mean_probability": 0.080785051501,
+      "observed_rate": 0.031746031746,
+      "upper": 0.2,
+      "upper_inclusive": false
+    },
+    {
+      "count": 12,
+      "lower": 0.2,
+      "mean_probability": 0.259088386558,
+      "observed_rate": 0.583333333333,
+      "upper": 0.4,
+      "upper_inclusive": false
+    },
+    {
+      "count": 0,
+      "lower": 0.4,
+      "mean_probability": null,
+      "observed_rate": null,
+      "upper": 0.6,
+      "upper_inclusive": false
+    },
+    {
+      "count": 0,
+      "lower": 0.6,
+      "mean_probability": null,
+      "observed_rate": null,
+      "upper": 0.8,
+      "upper_inclusive": false
+    },
+    {
+      "count": 55,
+      "lower": 0.8,
+      "mean_probability": 0.99639056631,
+      "observed_rate": 0.981818181818,
+      "upper": 1.0,
+      "upper_inclusive": true
+    }
+  ],
+  "selected_segments": {
+    "calibration_raw_diagnostic": {
+      "category:197c13ee-8ab3-580d-8ccc-a0c3195d9925": {
+        "average_precision": null,
+        "brier": 1.2829562e-05,
+        "negatives": 0,
+        "positives": 9,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 9,
+        "status": "not_evaluable"
+      },
+      "category:28b88987-7084-5c08-a3c5-2b8ffa807492": {
+        "average_precision": null,
+        "brier": 0.551604867125,
+        "negatives": 0,
+        "positives": 16,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 16,
+        "status": "not_evaluable"
+      },
+      "category:42c5eb6c-ad87-5271-aa04-cafcd641d9eb": {
+        "average_precision": null,
+        "brier": 1.546862e-06,
+        "negatives": 22,
+        "positives": 0,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 22,
+        "status": "not_evaluable"
+      },
+      "category:445dff34-464a-5d4e-b54d-324bf9aca10e": {
+        "average_precision": null,
+        "brier": 2.6211147e-05,
+        "negatives": 0,
+        "positives": 12,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 12,
+        "status": "not_evaluable"
+      },
+      "category:4c17cc52-89f8-58a1-937b-4fb5fe940ff1": {
+        "average_precision": null,
+        "brier": 1.546862e-06,
+        "negatives": 22,
+        "positives": 0,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 22,
+        "status": "not_evaluable"
+      },
+      "category:655e5f7a-c40d-5c55-b071-175c1b2d6502": {
+        "average_precision": 1.0,
+        "brier": 2.9395681e-05,
+        "negatives": 11,
+        "positives": 8,
+        "reason": null,
+        "roc_auc": 1.0,
+        "rows": 19,
+        "status": "passed"
+      },
+      "category:c8956032-5a0a-57f1-9118-b9b2c526cbda": {
+        "average_precision": 0.954365079365,
+        "brier": 0.04943876082,
+        "negatives": 12,
+        "positives": 8,
+        "reason": null,
+        "roc_auc": 0.973958333333,
+        "rows": 20,
+        "status": "passed"
+      },
+      "category:d916b3fd-e110-5a11-af32-41fdef07aaa0": {
+        "average_precision": null,
+        "brier": 1.1694527e-05,
+        "negatives": 0,
+        "positives": 10,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 10,
+        "status": "not_evaluable"
+      },
+      "historical_inventory_constraint:false": {
+        "average_precision": null,
+        "brier": 8.364252e-06,
+        "negatives": 66,
+        "positives": 0,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 66,
+        "status": "not_evaluable"
+      },
+      "historical_inventory_constraint:true": {
+        "average_precision": 0.994653143616,
+        "brier": 0.15336054023,
+        "negatives": 1,
+        "positives": 63,
+        "reason": null,
+        "roc_auc": 0.706349206349,
+        "rows": 64,
+        "status": "passed"
+      },
+      "stock_location:af89475f-8f1b-536e-86e0-f114c3261eb6": {
+        "average_precision": 0.985632183908,
+        "brier": 0.129802924397,
+        "negatives": 44,
+        "positives": 24,
+        "reason": null,
+        "roc_auc": 0.99053030303,
+        "rows": 68,
+        "status": "passed"
+      },
+      "stock_location:d07cb367-ec18-59c1-bfcc-be6270c0cdf6": {
+        "average_precision": 0.996639733785,
+        "brier": 0.015952060587,
+        "negatives": 23,
+        "positives": 39,
+        "reason": null,
+        "roc_auc": 0.994983277592,
+        "rows": 62,
+        "status": "passed"
+      }
+    },
+    "calibration_sigmoid_in_sample": {
+      "category:197c13ee-8ab3-580d-8ccc-a0c3195d9925": {
+        "average_precision": null,
+        "brier": 1.1554592e-05,
+        "negatives": 0,
+        "positives": 9,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 9,
+        "status": "not_evaluable"
+      },
+      "category:28b88987-7084-5c08-a3c5-2b8ffa807492": {
+        "average_precision": null,
+        "brier": 0.330805764376,
+        "negatives": 0,
+        "positives": 16,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 16,
+        "status": "not_evaluable"
+      },
+      "category:42c5eb6c-ad87-5271-aa04-cafcd641d9eb": {
+        "average_precision": null,
+        "brier": 0.006389275229,
+        "negatives": 22,
+        "positives": 0,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 22,
+        "status": "not_evaluable"
+      },
+      "category:445dff34-464a-5d4e-b54d-324bf9aca10e": {
+        "average_precision": null,
+        "brier": 1.9426312e-05,
+        "negatives": 0,
+        "positives": 12,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 12,
+        "status": "not_evaluable"
+      },
+      "category:4c17cc52-89f8-58a1-937b-4fb5fe940ff1": {
+        "average_precision": null,
+        "brier": 0.006389275229,
+        "negatives": 22,
+        "positives": 0,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 22,
+        "status": "not_evaluable"
+      },
+      "category:655e5f7a-c40d-5c55-b071-175c1b2d6502": {
+        "average_precision": 1.0,
+        "brier": 0.015547679089,
+        "negatives": 11,
+        "positives": 8,
+        "reason": null,
+        "roc_auc": 1.0,
+        "rows": 19,
+        "status": "passed"
+      },
+      "category:c8956032-5a0a-57f1-9118-b9b2c526cbda": {
+        "average_precision": 0.954365079365,
+        "brier": 0.054673734587,
+        "negatives": 12,
+        "positives": 8,
+        "reason": null,
+        "roc_auc": 0.973958333333,
+        "rows": 20,
+        "status": "passed"
+      },
+      "category:d916b3fd-e110-5a11-af32-41fdef07aaa0": {
+        "average_precision": null,
+        "brier": 1.0822435e-05,
+        "negatives": 0,
+        "positives": 10,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 10,
+        "status": "not_evaluable"
+      },
+      "historical_inventory_constraint:false": {
+        "average_precision": null,
+        "brier": 0.01031499158,
+        "negatives": 66,
+        "positives": 0,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 66,
+        "status": "not_evaluable"
+      },
+      "historical_inventory_constraint:true": {
+        "average_precision": 0.994653143616,
+        "brier": 0.098164950338,
+        "negatives": 1,
+        "positives": 63,
+        "reason": null,
+        "roc_auc": 0.706349206349,
+        "rows": 64,
+        "status": "passed"
+      },
+      "stock_location:af89475f-8f1b-536e-86e0-f114c3261eb6": {
+        "average_precision": 0.985632183908,
+        "brier": 0.085785107667,
+        "negatives": 44,
+        "positives": 24,
+        "reason": null,
+        "roc_auc": 0.99053030303,
+        "rows": 68,
+        "status": "passed"
+      },
+      "stock_location:d07cb367-ec18-59c1-bfcc-be6270c0cdf6": {
+        "average_precision": 0.996639733785,
+        "brier": 0.018225144267,
+        "negatives": 23,
+        "positives": 39,
+        "reason": null,
+        "roc_auc": 0.994983277592,
+        "rows": 62,
+        "status": "passed"
+      }
+    },
+    "tune": {
+      "category:197c13ee-8ab3-580d-8ccc-a0c3195d9925": {
+        "average_precision": null,
+        "brier": 3.1815139e-05,
+        "negatives": 0,
+        "positives": 13,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 13,
+        "status": "not_evaluable"
+      },
+      "category:28b88987-7084-5c08-a3c5-2b8ffa807492": {
+        "average_precision": 0.964646464646,
+        "brier": 0.219474238499,
+        "negatives": 7,
+        "positives": 11,
+        "reason": null,
+        "roc_auc": 0.954545454545,
+        "rows": 18,
+        "status": "passed"
+      },
+      "category:42c5eb6c-ad87-5271-aa04-cafcd641d9eb": {
+        "average_precision": null,
+        "brier": 1.546862e-06,
+        "negatives": 22,
+        "positives": 0,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 22,
+        "status": "not_evaluable"
+      },
+      "category:445dff34-464a-5d4e-b54d-324bf9aca10e": {
+        "average_precision": null,
+        "brier": 0.000267872424,
+        "negatives": 0,
+        "positives": 13,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 13,
+        "status": "not_evaluable"
+      },
+      "category:4c17cc52-89f8-58a1-937b-4fb5fe940ff1": {
+        "average_precision": null,
+        "brier": 1.546862e-06,
+        "negatives": 22,
+        "positives": 0,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 22,
+        "status": "not_evaluable"
+      },
+      "category:655e5f7a-c40d-5c55-b071-175c1b2d6502": {
+        "average_precision": 1.0,
+        "brier": 3.5518086e-05,
+        "negatives": 11,
+        "positives": 7,
+        "reason": null,
+        "roc_auc": 1.0,
+        "rows": 18,
+        "status": "passed"
+      },
+      "category:c8956032-5a0a-57f1-9118-b9b2c526cbda": {
+        "average_precision": 1.0,
+        "brier": 1.6230541e-05,
+        "negatives": 11,
+        "positives": 6,
+        "reason": null,
+        "roc_auc": 1.0,
+        "rows": 17,
+        "status": "passed"
+      },
+      "category:d916b3fd-e110-5a11-af32-41fdef07aaa0": {
+        "average_precision": null,
+        "brier": 2.039179e-06,
+        "negatives": 0,
+        "positives": 12,
+        "reason": "ranking_requires_both_classes",
+        "roc_auc": null,
+        "rows": 12,
+        "status": "not_evaluable"
+      },
+      "historical_inventory_constraint:false": {
+        "average_precision": 0.477678571429,
+        "brier": 0.052633736703,
+        "negatives": 71,
+        "positives": 4,
+        "reason": null,
+        "roc_auc": 0.93485915493,
+        "rows": 75,
+        "status": "passed"
+      },
+      "historical_inventory_constraint:true": {
+        "average_precision": 1.0,
+        "brier": 0.000131829257,
+        "negatives": 2,
+        "positives": 58,
+        "reason": null,
+        "roc_auc": 1.0,
+        "rows": 60,
+        "status": "passed"
+      },
+      "stock_location:af89475f-8f1b-536e-86e0-f114c3261eb6": {
+        "average_precision": 0.965320910973,
+        "brier": 0.053396092547,
+        "negatives": 51,
+        "positives": 23,
+        "reason": null,
+        "roc_auc": 0.981670929241,
+        "rows": 74,
+        "status": "passed"
+      },
+      "stock_location:d07cb367-ec18-59c1-bfcc-be6270c0cdf6": {
+        "average_precision": 1.0,
+        "brier": 6.7691141e-05,
+        "negatives": 22,
+        "positives": 39,
+        "reason": null,
+        "roc_auc": 1.0,
+        "rows": 61,
+        "status": "passed"
+      }
+    }
+  },
+  "selected_tune_threshold_costs": [
+    {
+      "cost": 20.0,
+      "cost_unit": "exploratory_attention_and_missed_incident_units",
+      "false_negative": 4,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 0.935483870968,
+      "selected": 58,
+      "threshold": 0.1,
+      "true_negative": 73,
+      "true_positive": 58
+    },
+    {
+      "cost": 20.0,
+      "cost_unit": "exploratory_attention_and_missed_incident_units",
+      "false_negative": 4,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 0.935483870968,
+      "selected": 58,
+      "threshold": 0.25,
+      "true_negative": 73,
+      "true_positive": 58
+    },
+    {
+      "cost": 20.0,
+      "cost_unit": "exploratory_attention_and_missed_incident_units",
+      "false_negative": 4,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 0.935483870968,
+      "selected": 58,
+      "threshold": 0.5,
+      "true_negative": 73,
+      "true_positive": 58
+    },
+    {
+      "cost": 20.0,
+      "cost_unit": "exploratory_attention_and_missed_incident_units",
+      "false_negative": 4,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 0.935483870968,
+      "selected": 58,
+      "threshold": 0.75,
+      "true_negative": 73,
+      "true_positive": 58
+    },
+    {
+      "cost": 20.0,
+      "cost_unit": "exploratory_attention_and_missed_incident_units",
+      "false_negative": 4,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 0.935483870968,
+      "selected": 58,
+      "threshold": 0.9,
+      "true_negative": 73,
+      "true_positive": 58
+    }
+  ],
+  "tune_comparison": {
+    "hist_gradient_boosting:raw_sales_only": {
+      "AP_no_skill_reference": 0.459259259259,
+      "PR_AUC_convention": "sklearn_average_precision_non_interpolated",
+      "average_precision": 0.992826685431,
+      "brier": 0.029316221851,
+      "capacity": {
+        "cost": 150.0,
+        "cost_unit": "exploratory_attention_and_missed_incident_units",
+        "false_negative": 30,
+        "false_positive": 0,
+        "precision": 1.0,
+        "recall": 0.516129032258,
+        "selected": 32,
+        "true_negative": 73,
+        "true_positive": 32
+      },
+      "negatives": 73,
+      "positives": 62,
+      "prevalence": 0.459259259259,
+      "reliability": [
+        {
+          "count": 77,
+          "lower": 0.0,
+          "mean_probability": 0.00249363956,
+          "observed_rate": 0.051948051948,
+          "upper": 0.2,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.2,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.4,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.4,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.6,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.6,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.8,
+          "upper_inclusive": false
+        },
+        {
+          "count": 58,
+          "lower": 0.8,
+          "mean_probability": 0.996290269535,
+          "observed_rate": 1.0,
+          "upper": 1.0,
+          "upper_inclusive": true
+        }
+      ],
+      "roc_auc": 0.994034467521,
+      "rows": 135,
+      "status": "passed",
+      "train_prevalence_constant_brier": 0.249064141997
+    },
+    "hist_gradient_boosting:with_upstream": {
+      "AP_no_skill_reference": 0.459259259259,
+      "PR_AUC_convention": "sklearn_average_precision_non_interpolated",
+      "average_precision": 0.986247788047,
+      "brier": 0.02933914091,
+      "capacity": {
+        "cost": 150.0,
+        "cost_unit": "exploratory_attention_and_missed_incident_units",
+        "false_negative": 30,
+        "false_positive": 0,
+        "precision": 1.0,
+        "recall": 0.516129032258,
+        "selected": 32,
+        "true_negative": 73,
+        "true_positive": 32
+      },
+      "negatives": 73,
+      "positives": 62,
+      "prevalence": 0.459259259259,
+      "reliability": [
+        {
+          "count": 77,
+          "lower": 0.0,
+          "mean_probability": 0.002326303318,
+          "observed_rate": 0.051948051948,
+          "upper": 0.2,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.2,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.4,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.4,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.6,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.6,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.8,
+          "upper_inclusive": false
+        },
+        {
+          "count": 58,
+          "lower": 0.8,
+          "mean_probability": 0.995196437093,
+          "observed_rate": 1.0,
+          "upper": 1.0,
+          "upper_inclusive": true
+        }
+      ],
+      "roc_auc": 0.986964206805,
+      "rows": 135,
+      "status": "passed",
+      "train_prevalence_constant_brier": 0.249064141997
+    },
+    "hist_gradient_boosting:without_upstream": {
+      "AP_no_skill_reference": 0.459259259259,
+      "PR_AUC_convention": "sklearn_average_precision_non_interpolated",
+      "average_precision": 0.994293634467,
+      "brier": 0.029299555616,
+      "capacity": {
+        "cost": 150.0,
+        "cost_unit": "exploratory_attention_and_missed_incident_units",
+        "false_negative": 30,
+        "false_positive": 0,
+        "precision": 1.0,
+        "recall": 0.516129032258,
+        "selected": 32,
+        "true_negative": 73,
+        "true_positive": 32
+      },
+      "negatives": 73,
+      "positives": 62,
+      "prevalence": 0.459259259259,
+      "reliability": [
+        {
+          "count": 77,
+          "lower": 0.0,
+          "mean_probability": 0.002373660141,
+          "observed_rate": 0.051948051948,
+          "upper": 0.2,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.2,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.4,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.4,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.6,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.6,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.8,
+          "upper_inclusive": false
+        },
+        {
+          "count": 58,
+          "lower": 0.8,
+          "mean_probability": 0.994715660803,
+          "observed_rate": 1.0,
+          "upper": 1.0,
+          "upper_inclusive": true
+        }
+      ],
+      "roc_auc": 0.995249668582,
+      "rows": 135,
+      "status": "passed",
+      "train_prevalence_constant_brier": 0.249064141997
+    },
+    "logistic_regression:raw_sales_only": {
+      "AP_no_skill_reference": 0.459259259259,
+      "PR_AUC_convention": "sklearn_average_precision_non_interpolated",
+      "average_precision": 0.988746025461,
+      "brier": 0.030149487439,
+      "capacity": {
+        "cost": 150.0,
+        "cost_unit": "exploratory_attention_and_missed_incident_units",
+        "false_negative": 30,
+        "false_positive": 0,
+        "precision": 1.0,
+        "recall": 0.516129032258,
+        "selected": 32,
+        "true_negative": 73,
+        "true_positive": 32
+      },
+      "negatives": 73,
+      "positives": 62,
+      "prevalence": 0.459259259259,
+      "reliability": [
+        {
+          "count": 77,
+          "lower": 0.0,
+          "mean_probability": 0.000770826338,
+          "observed_rate": 0.051948051948,
+          "upper": 0.2,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.2,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.4,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.4,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.6,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.6,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.8,
+          "upper_inclusive": false
+        },
+        {
+          "count": 58,
+          "lower": 0.8,
+          "mean_probability": 0.987163517169,
+          "observed_rate": 1.0,
+          "upper": 1.0,
+          "upper_inclusive": true
+        }
+      ],
+      "roc_auc": 0.988510826337,
+      "rows": 135,
+      "status": "passed",
+      "train_prevalence_constant_brier": 0.249064141997
+    },
+    "logistic_regression:with_upstream": {
+      "AP_no_skill_reference": 0.459259259259,
+      "PR_AUC_convention": "sklearn_average_precision_non_interpolated",
+      "average_precision": 0.992183841426,
+      "brier": 0.029693271143,
+      "capacity": {
+        "cost": 150.0,
+        "cost_unit": "exploratory_attention_and_missed_incident_units",
+        "false_negative": 30,
+        "false_positive": 0,
+        "precision": 1.0,
+        "recall": 0.516129032258,
+        "selected": 32,
+        "true_negative": 73,
+        "true_positive": 32
+      },
+      "negatives": 73,
+      "positives": 62,
+      "prevalence": 0.459259259259,
+      "reliability": [
+        {
+          "count": 77,
+          "lower": 0.0,
+          "mean_probability": 0.001037794807,
+          "observed_rate": 0.051948051948,
+          "upper": 0.2,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.2,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.4,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.4,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.6,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.6,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.8,
+          "upper_inclusive": false
+        },
+        {
+          "count": 58,
+          "lower": 0.8,
+          "mean_probability": 0.992110806311,
+          "observed_rate": 1.0,
+          "upper": 1.0,
+          "upper_inclusive": true
+        }
+      ],
+      "roc_auc": 0.992487847989,
+      "rows": 135,
+      "status": "passed",
+      "train_prevalence_constant_brier": 0.249064141997
+    },
+    "logistic_regression:without_upstream": {
+      "AP_no_skill_reference": 0.459259259259,
+      "PR_AUC_convention": "sklearn_average_precision_non_interpolated",
+      "average_precision": 0.990402402627,
+      "brier": 0.029949786049,
+      "capacity": {
+        "cost": 150.0,
+        "cost_unit": "exploratory_attention_and_missed_incident_units",
+        "false_negative": 30,
+        "false_positive": 0,
+        "precision": 1.0,
+        "recall": 0.516129032258,
+        "selected": 32,
+        "true_negative": 73,
+        "true_positive": 32
+      },
+      "negatives": 73,
+      "positives": 62,
+      "prevalence": 0.459259259259,
+      "reliability": [
+        {
+          "count": 77,
+          "lower": 0.0,
+          "mean_probability": 0.000889049378,
+          "observed_rate": 0.051948051948,
+          "upper": 0.2,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.2,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.4,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.4,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.6,
+          "upper_inclusive": false
+        },
+        {
+          "count": 0,
+          "lower": 0.6,
+          "mean_probability": null,
+          "observed_rate": null,
+          "upper": 0.8,
+          "upper_inclusive": false
+        },
+        {
+          "count": 58,
+          "lower": 0.8,
+          "mean_probability": 0.989011616469,
+          "observed_rate": 1.0,
+          "upper": 1.0,
+          "upper_inclusive": true
+        }
+      ],
+      "roc_auc": 0.990499337163,
+      "rows": 135,
+      "status": "passed",
+      "train_prevalence_constant_brier": 0.249064141997
+    }
+  },
+  "verification": {
+    "full_ci": "passed",
+    "full_ci_completed_at_utc": "2026-10-03T08:13:37.295049+00:00",
+    "full_ci_exit_code": 0,
+    "full_test_seconds": 1555.79,
+    "full_test_warnings": 0,
+    "full_tests": 1835,
+    "installed_wheel": "passed",
+    "mypy_source_files": 340,
+    "package_matches_installed_acceptance": true,
+    "remote_ci_for_this_commit": "pending_publication",
+    "required_check_targets": [
+      "lint",
+      "type-check",
+      "test",
+      "docs-check",
+      "forecast-runtime-check",
+      "handoff-check",
+      "snapshot-import-check",
+      "curated-check",
+      "forecast-calendar-check",
+      "forecast-features-check",
+      "forecast-manifests-check",
+      "forecast-baselines-check",
+      "forecast-models-check",
+      "forecast-backtest-check",
+      "forecast-quality-check",
+      "forecast-run-check",
+      "contracts-check",
+      "package",
+      "compose-config",
+      "forecast-remediation-check",
+      "forecast-acceptance-check"
+    ],
+    "ruff_formatted_files": 568,
+    "secret_scans": [
+      "git history",
+      "working directory"
+    ],
+    "targeted_seconds": 9.13,
+    "targeted_tests": 47,
+    "targeted_warning": "sandbox physical-core discovery unavailable; library fell back to logical count; threadpool limit remains 1",
+    "targeted_warnings": 1
+  }
+}
