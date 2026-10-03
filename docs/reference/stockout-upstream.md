@@ -3,7 +3,8 @@
 Przyrost dodaje prognozę obserwowanej sprzedaży na kolejne 7 dni jako
 dodatkową cechę [ryzyka nowego braku](stockout-labels.md). Przygotowuje też
 identyczny grain dla wariantów z prognozą i bez niej. Porównanie jakości
-LR/HGB, kalibracja oraz ablation modeli są kolejnymi krokami;
+LR/HGB, kalibracja oraz ablation modeli mają osobny
+[przyrost development](stockout-training.md). Artefakt przygotowania zachowuje
 `model_ready=false`, `ablation_model_results=pending`.
 
 ## Jeden historyczny origin, bez dopasowania do przyszłości

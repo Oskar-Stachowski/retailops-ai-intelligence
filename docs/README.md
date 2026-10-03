@@ -62,6 +62,11 @@ z pełnym odtworzeniem cech i licznikami wyłączeń.
 prognozę stałego baseline na granicy wiedzy każdego dnia oraz identyczne
 wejścia wariantów z tą cechą i bez niej; [odbiór](evidence/08-03-stockout-upstream.md)
 obejmuje pokrycie prognozą wszystkich dopuszczonych okien splitu.
+[Porównanie LR/HGB na development](reference/stockout-training.md) oddziela
+train, wybór na tune i dopasowanie sigmoid na calibration, z wejściami
+z forecastem i bez niego oraz kontrolą cenzorowania sprzedaży.
+[Odbiór modeli](evidence/08-04-stockout-models.md) ujawnia ograniczenia
+małej próby, metryki rankingowe i ilustracyjne capacity, bez final test.
 [Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
 validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują

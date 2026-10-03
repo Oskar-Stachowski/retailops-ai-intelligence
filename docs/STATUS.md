@@ -1,5 +1,20 @@
 # Aktualny status
 
+**AI 08 — LR/HGB mają pierwsze wyniki development na próbce 102 dni.**
+[Kontrakt](reference/stockout-training.md) i
+[odbiór](evidence/08-04-stockout-models.md) obejmują sześć porównywalnych
+wariantów, 340 punktów train, 135 tune oraz osobny sigmoid na 130 punktach
+calibration. Wybór provisional opiera się tylko na tune. Kalibracja po
+dopasowaniu jest diagnostyką in-sample; final test nie jest oceniany.
+Natywny build/rebuild/replay oraz zainstalowany wheel odtworzyły identyczne
+modele; test ponownie zahashowanej zmiany wag został odrzucony. Regresja
+ma 47/47 testów. Pełny `make ci-local` przeszedł: 1835/1835 testów,
+wszystkie targety, pakiet i skany sekretów. Przyrost wymaga własnego
+zdalnego CI w draft PR #14. Pięć z ośmiu kategorii tune
+ma ranking `not_evaluable` z powodu jednej klasy, bez wyjątku jakości.
+Model card/importance, pełny profil i niezależna ocena, threshold policy
+oraz lifecycle/batch/read API pozostają otwarte; cały AI 08 nie jest ready.
+
 **AI 08 — historyczna prognoza bazowa ma odbiór natywnej próbki 102 dni.**
 [Kontrakt](reference/stockout-upstream.md) i
 [dowody](evidence/08-03-stockout-upstream.md) obejmują rekonstrukcję prognozy
@@ -8,8 +23,8 @@ Prognoza jest dostępna dla 1015/1104 bazowych punktów `eligible` i wszystkich
 736 punktów dopuszczonych przez split (340/135/130/131).
 Regresja ma 102/102 testów; zainstalowany wheel odtworzył identyczne wyniki
 z publicznych danych, bez etykiet i truth. Pełny `make ci-local` przeszedł:
-1816/1816 testów, wszystkie targety, pakiet i skany sekretów. Przyrost trafia
-do draft PR #14 i wymaga własnego zdalnego CI.
+1816/1816 testów, wszystkie targety, pakiet i skany sekretów. Commit
+`aa6b953` ma zielone Required CI PR i push; draft PR #14 pozostaje otwarty.
 Nie ma jeszcze wyników porównania modeli, kalibracji lub final test;
 cały AI 08 nie jest ready.
 
