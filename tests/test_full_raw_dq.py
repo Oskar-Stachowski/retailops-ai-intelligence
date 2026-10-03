@@ -30,6 +30,22 @@ ROOT = Path(__file__).parents[1]
 LINEAGE = json.loads((ROOT / "data/fixtures/full-raw-dq-v2.lineage.json").read_bytes())
 
 
+@pytest.mark.parametrize("version", [1, 2])
+def test_boolean_partition_cannot_borrow_an_integer_capture_identity(version):
+    from retailops_ai.raw_dq.contract import parse_capture as parse_v1
+
+    record = delivery(None)
+    if version == 1:
+        record.pop("contract_version")
+        record = seal(record)
+    # Keep the integer-0 record ID while replacing the transport value with false.
+    # Python considers False == 0, but canonical JSON and OPS07 do not.
+    record["partition"] = False
+    parser = parse_v1 if version == 1 else parse_capture
+    with pytest.raises(SnapshotError, match="capture_identity_mismatch"):
+        parser(record)
+
+
 def hashes(root):
     return {
         p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()

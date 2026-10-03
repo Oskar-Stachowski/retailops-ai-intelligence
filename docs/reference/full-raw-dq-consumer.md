@@ -43,7 +43,7 @@ Event IDs cannot hijack another parent fact. Exact duplicate events and
 alternative IDs for the same unchanged business fact are deduplicated. Only
 sales SKU and return order ID may be absent as redundant context. Any other
 field, money, quantity, route, source or clock change is rejected. Contiguous
-capture offsets, monotonic receipt times and advancing explicit progress are
+capture offsets, canonical JSON types (including integer partition 0), monotonic receipt times and advancing explicit progress are
 mandatory. Native facts cannot arrive before their availability.
 
 Each accepted arrival creates an immutable aggregate revision at `received_at`.

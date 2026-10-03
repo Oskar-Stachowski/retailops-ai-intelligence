@@ -86,7 +86,9 @@ class Binding(Contract):
 def parse_capture(payload: dict[str, Any]) -> Delivery | Progress:
     value = ADAPTER.validate_json(canonical_json(payload))
     normalized = value.model_dump(mode="json")
-    if normalized != payload or value.record_id != "raw-record-sha256-" + json_sha256(
+    if canonical_json(normalized) != canonical_json(
+        payload
+    ) or value.record_id != "raw-record-sha256-" + json_sha256(
         {k: v for k, v in normalized.items() if k != "record_id"}
     ):
         raise SnapshotError("full_dq_capture_identity_mismatch")

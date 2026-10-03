@@ -38,3 +38,9 @@ replay identities and published bytes. Each met 300 s / 1024 MiB; producer code
 and private fault plans were unavailable. Installed CLI build/verify passed.
 Operational receipts, facts, revisions, aggregates, missing IDs and quarantine
 match the frozen producer digest, consulted only after replay.
+
+Final review found that Python equality could treat `partition=false` as integer
+`0` while borrowing the integer record ID. Both offline consumers now compare
+canonical JSON bytes before verifying the seal; two regressions require rejection.
+Valid v1/v2 captures retain their operational behavior. Current runtime and
+wheel acceptance must be rebuilt; earlier measurements remain historical.
