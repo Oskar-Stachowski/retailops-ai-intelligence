@@ -1,12 +1,12 @@
 UV ?= $(if $(wildcard .tools/bin/uv),.tools/bin/uv,uv)
 GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
-UV_RUN = $(UV) run --locked --extra snapshot --extra forecast
+UV_RUN = $(UV) run --locked --extra snapshot --extra forecast --extra streaming
 
 .PHONY: bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke mlflow-store-smoke forecast-acceptance-check forecast-remediation-check
 
 bootstrap:
-	$(UV) sync --locked --extra snapshot --extra forecast
+	$(UV) sync --locked --extra snapshot --extra forecast --extra streaming
 
 lint:
 	$(UV_RUN) ruff check .
@@ -86,6 +86,7 @@ contracts:
 	$(UV_RUN) python scripts/update_v12_inference_contracts.py
 	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py
+	$(UV_RUN) python scripts/update_intelligence_event_contracts.py
 
 contracts-check:
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
@@ -98,6 +99,7 @@ contracts-check:
 	$(UV_RUN) python scripts/update_v12_inference_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py --check
+	$(UV_RUN) python scripts/update_intelligence_event_contracts.py --check
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up
@@ -169,3 +171,11 @@ model-catalog-smoke:
 .PHONY: evaluations-smoke
 evaluations-smoke:
 	$(UV_RUN) python scripts/check_evaluations.py
+
+.PHONY: integration-replay-test integration-failure-test
+integration-replay-test:
+	$(UV_RUN) python scripts/update_intelligence_event_contracts.py --check
+	$(UV_RUN) python -m pytest tests/test_intelligence_events.py
+
+integration-failure-test:
+	REQUIRE_AI10_OUTBOX_TESTS=1 $(UV_RUN) python -m pytest tests/test_intelligence_outbox.py

@@ -32,6 +32,7 @@ retailops-ai-curated = "retailops_ai.curated.cli:main"
 retailops-ai-forecast = "retailops_ai.forecasting.cli:main"
 
 [project.optional-dependencies]
+streaming = ["confluent-kafka==2.15.1"]
 snapshot = ["pyarrow==25.0.1", "jsonschema==4.26.0"]
 forecast = [
     "psutil==7.2.2",

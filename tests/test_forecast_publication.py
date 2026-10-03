@@ -1,5 +1,6 @@
 """Content, authorization and worker wiring; qualifications here are explicit test stubs."""
 
+import hashlib
 import json
 from datetime import UTC, datetime
 from pathlib import Path
@@ -18,7 +19,7 @@ from retailops_ai.forecast_jobs.contracts import (
     BatchScope,
     QueuePolicy,
 )
-from retailops_ai.forecast_jobs.inputs import PreparedInputs, scoped_inputs
+from retailops_ai.forecast_jobs.inputs import InputContent, PreparedInputs, prepared, scoped_inputs
 from retailops_ai.forecast_jobs.publication import Publication, publication
 from retailops_ai.forecast_jobs.publication_acceptance import (
     competing_completion,
@@ -28,6 +29,7 @@ from retailops_ai.forecast_jobs.publication_acceptance import (
     stub_release,
 )
 from retailops_ai.forecast_jobs.queue import Claim, LeaseLost
+from retailops_ai.source_snapshot.protocol import resource_bytes
 
 
 @pytest.mark.parametrize("busy", [False, True])
@@ -68,11 +70,20 @@ def test_duplicate_admission_accepts_only_bounded_lock_contention(claim, unexpec
 
 @pytest.fixture(scope="module")
 def inputs():
-    return expanded_fixture(
+    profile = expanded_fixture(
         PreparedInputs.model_validate_json(
             Path("contracts/forecast_jobs/v1/fixture/inputs.json").read_bytes()
         )
     )
+    # This synthetic wiring fixture is qualified against this checkout's lock.
+    # Preserve the immutable historical fixture and rebuild both content identities.
+    raw = profile.model_dump(mode="json", exclude={"profile_id"})
+    manifest = raw["feature_manifest"]
+    manifest["descriptor"]["code"]["dependency_lock_sha256"] = hashlib.sha256(
+        resource_bytes("dependencies.lock")
+    ).hexdigest()
+    manifest["feature_set_id"] = "features-sha256-" + canonical_sha256(manifest["descriptor"])
+    return prepared(InputContent.model_validate_json(json.dumps(raw)))
 
 
 @pytest.fixture
@@ -264,15 +275,21 @@ def test_worker_lost_lease_never_writes_failure_or_result(monkeypatch, claim):
     assert not queue.completed and not queue.failed
 
 
-def test_wrong_runtime_image_publishes_nothing(monkeypatch, claim):
+@pytest.mark.parametrize("wrong_pin", ["image", "dependencies"])
+def test_wrong_runtime_pin_publishes_nothing(monkeypatch, claim, wrong_pin):
     queue = Queue()
 
     def compute(*args, **kwargs):
-        pytest.fail("wrong image entered computation")
+        pytest.fail("wrong runtime pin entered computation")
 
     monkeypatch.setattr(worker, "supervise", compute)
+    image_digest = claim.run.image_digest
+    if wrong_pin == "image":
+        image_digest = "sha256:" + "b" * 64
+    else:
+        monkeypatch.setattr(worker, "resource_bytes", lambda _: b"mismatched dependency lock")
     assert (
-        worker.run_forecast_attempt(queue, claim, compose=False, image_digest="sha256:" + "b" * 64)
+        worker.run_forecast_attempt(queue, claim, compose=False, image_digest=image_digest)
         == "failed"
     )
     assert not queue.completed and len(queue.failed) == 1
