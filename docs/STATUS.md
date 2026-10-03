@@ -1,5 +1,20 @@
 # Aktualny status
 
+**AI 08 — rozpoczęty; pierwszy zakres etykiet ma odbiór lokalny.**
+[Kontrakt](reference/stockout-labels.md) i
+[dowody](evidence/08-01-stockout-labels.md) obejmują 60 okien małego handoff
+AI 06, 73 testy regresji i identyczny wynik z zainstalowanego wheel.
+Pełny zestaw lokalnych bramek przeszedł, w tym 1766/1766 testów;
+zdalny Required CI pozostaje do odebrania.
+Cały AI 08 nie jest ready: pozostają cechy, temporalny split, trening,
+kalibracja, ocena jakości i registry/batch/read API.
+
+**AI 05 — ready po scaleniu PR-ów i zielonym Required CI obu mainów.**
+[Końcowy raport publikacji](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/evidence/ai/05/final/README.md)
+wiąże PR #8 AI, PR #81 źródła i końcową dokumentację PR #82.
+Poniższe wcześniejsze sekcje AI 05 zachowują historyczny zakres prób;
+ich informacje o otwartych blokadach zostały zastąpione końcowym odbiorem.
+
 **AI 05 — lokalny przepływ finalnego v12 jest odebrany także na świeżym snapshocie.**
 [Raport i pomiary](evidence/05-v12-real-serving.md) oraz
 [wersjonowany zapis dowodów](evidence/05-v12-real-serving.json) obejmują cały
