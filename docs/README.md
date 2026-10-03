@@ -1,5 +1,8 @@
 # Dokumentacja RetailOps AI
 
+[Pełny odbiór sprzedaży i zwrotów DQ — AI07](reference/full-raw-dq-consumer.md)
+sprawdza cały parent, brakujące fakty i historyczną dostępność.
+
 [Zwroty według doby i dostępności — AI07](reference/return-inputs.md) zachowują
 ogon po historii sprzedaży, odczyt as-of i niekompletne obserwacje bez fałszywych zer.
 [Integracja z gotowym fundamentem AI05](evidence/ai/07/07.4-ai05-integration/README.md)
