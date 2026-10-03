@@ -1,5 +1,24 @@
 # Aktualny status
 
+**AI 08 — partycje cech v2 zachowują całą próbkę 102 dni.**
+[Kontrakt](reference/stockout-partitions.md) i
+[odbiór](evidence/08-06-stockout-partitions.md) obejmują 1632 identyczne
+punkty i identyczne modele development po rzeczywistym odczycie Parquet.
+Zapis ma 1 546 444 B zamiast 10 249 881 B; indeks ogranicza skany obcych
+serii i zachowuje granicę wiedzy oraz wszystkie stare wersje lineage.
+Natywny build/rebuild/verify i zainstalowany wheel odtworzyły identyczne
+ID/bajty. Wszystkie 567 odtworzonych wejściowych plików pozostały
+niezmienione. Regresja przyrostu ma 83/83 testów, w tym 30 nowych.
+Pełny `make ci-local` przeszedł: 1883/1883 testów bez ostrzeżeń,
+wszystkie targety, pakiet, Compose config i oba skany sekretów.
+Końcowe receipt mają ponowną kontrolę dokumentacji i sekretów;
+nowy commit wymaga własnego CI w draft PR #14.
+Wcześniejsza karta `ab22763` ma zielone Required CI PR i push.
+Pozostają kumulacyjne indeksy i okna historii, ograniczony odczyt wejścia,
+pozostałe rodzice i trening z partycji oraz odbiór większego profilu.
+Final test nie jest oceniony, progi niezatwierdzone i model niepromowany;
+cały AI 08 nie jest ready. Poniższe przyrosty zachowują historyczny zakres.
+
 **AI 08 — karta i wyjaśnienia development mają odbiór natywny oraz wheel.**
 [Kontrakt karty](reference/stockout-model-card.md) i
 [pomiary](evidence/08-05-stockout-card.md) obejmują trzy tabele LR,

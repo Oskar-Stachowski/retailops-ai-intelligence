@@ -1,7 +1,10 @@
 # Większy profil stockout — ograniczenia i projekt wykonania
 
-To projekt kolejnego przyrostu, **nie wykonany odbiór większego profilu**.
-Nie wygenerowano nowych danych i nie podniesiono istniejących limitów.
+To projekt większego profilu, **nie wykonany odbiór większego profilu**.
+[Partycje cech v2](stockout-partitions.md) realizują pierwszy przyrost:
+osobny manifest, bounded Parquet i indeks serii/czasu wiedzy. Odbiór
+ponawia małą próbkę 102 dni; nie uruchomiono większej generacji i nie
+podniesiono istniejących limitów wejścia ani limitów ścieżek v1.
 Obowiązują wymiary z
 [planu źródła](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/etapy/08-stockout-risk.md)
 i [kontraktu profili](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/kontrakty/profile-i-bramki.md)
@@ -27,7 +30,7 @@ generatora. Lifecycle i eligibility zmniejszają rzeczywiste liczby.
 Transakcje/ledger mają inne mnożniki; nie oszacowano ich z liczby origin.
 Rozkłady, liczba kategorii i długość historii też mogą zmienić bytes/point.
 
-Obecne ograniczenia blokują prostą większą generację:
+Ograniczenia ścieżek v1 nadal blokują prostą większą generację:
 
 - `stockout.dataset.INPUT_LIMITS`: 500 000 wierszy i 64 MiB dla wejścia
   kwalifikowanego przez ścieżkę etykiet/cech; to limit konsumenta stockout,
@@ -44,7 +47,15 @@ Sześć fitów modeli/kalibratorów z metrykami zajęło 0,466 s na smoke.
 Pełne CLI około 99 s głównie odtwarza rodziców; nie jest prognozą czasu
 większego datasetu. Najpierw trzeba zmienić przygotowanie danych.
 
-## Projekt następnego przyrostu
+## Projekt wykonania i zakres pozostający
+
+Nowy zapis cech ma limit 16 MiB na część, 64 MiB na cały Parquet i
+4 MiB na manifest. Zachowuje limit 10 000 origin oraz dotychczasowe
+wejście. Indeks ogranicza skany obcych serii; nie zastępuje jeszcze
+kumulacyjnego ledgeru i ruchomych okien. Pełny reader wykonuje dwa
+ograniczone replay. Pozostałe rodzice oraz trening nadal korzystają z v1.
+[Odbiór przyrostu](../evidence/08-06-stockout-partitions.md) nie zalicza
+budżetu większego pipeline ani nie zmienia poniższych warunków.
 
 1. Zachować obecny czytnik i artefakty jako wersję 1.0. Dodać odrębny
    manifest partycji z nowym schema/policy/implementation ID. Manifest

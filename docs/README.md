@@ -72,6 +72,9 @@ współczynniki LR, znaczenie grup wejść na tune i faktyczny kontekst PIT.
 [Odbiór karty](evidence/08-05-stockout-card.md) zachowuje granice development;
 [projekt większego profilu](reference/stockout-profile-resources.md) określa
 partycjonowanie i pomiary potrzebne przed dalszą generacją.
+[Partycje cech v2](reference/stockout-partitions.md) dodają ograniczony
+zapis Parquet i indeks faktów znanych w origin; [odbiór 102 dni](evidence/08-06-stockout-partitions.md)
+zachowuje każde pole 1632 punktów oraz wyniki modeli development.
 [Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
 validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
