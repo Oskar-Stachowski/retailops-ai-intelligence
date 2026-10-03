@@ -5,13 +5,15 @@ import json
 import os
 import stat
 import sys
+from importlib import import_module
 from pathlib import Path
+from typing import cast
 
 from sqlalchemy import create_engine
 
 from retailops_ai.config import load_settings
 from retailops_ai.intelligence_events.kafka import ConfluentEventProducer
-from retailops_ai.intelligence_events.outbox import deliver_one
+from retailops_ai.intelligence_events.outbox import EventProducer, deliver_one
 
 
 def main() -> int:
@@ -42,13 +44,10 @@ def main() -> int:
         config = json.loads(raw)
         if not isinstance(config, dict) or not config.get("bootstrap.servers"):
             raise ValueError("intelligence_broker_config_invalid")
-        from confluent_kafka import Producer
-
-        producer = ConfluentEventProducer(
-            Producer(
-                {**config, "enable.idempotence": True, "acks": "all", "delivery.timeout.ms": 10000}
-            )
+        native = import_module("confluent_kafka").Producer(
+            {**config, "enable.idempotence": True, "acks": "all", "delivery.timeout.ms": 10000}
         )
+        producer = ConfluentEventProducer(cast(EventProducer, native))
         engine = create_engine(
             settings.database_url.get_secret_value(),
             connect_args={"connect_timeout": 3},

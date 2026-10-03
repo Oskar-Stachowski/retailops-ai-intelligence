@@ -1,12 +1,12 @@
 UV ?= $(if $(wildcard .tools/bin/uv),.tools/bin/uv,uv)
 GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
-UV_RUN = $(UV) run --locked --extra snapshot --extra forecast --extra streaming
+UV_RUN = $(UV) run --locked --extra snapshot --extra forecast
 
 .PHONY: bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke mlflow-store-smoke forecast-acceptance-check forecast-remediation-check
 
 bootstrap:
-	$(UV) sync --locked --extra snapshot --extra forecast --extra streaming
+	$(UV) sync --locked --extra snapshot --extra forecast
 
 lint:
 	$(UV_RUN) ruff check .
@@ -89,6 +89,7 @@ contracts:
 	$(UV_RUN) python scripts/update_intelligence_event_contracts.py
 
 contracts-check:
+	$(UV_RUN) python scripts/check_intelligence_delivery.py
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
 	$(UV_RUN) python scripts/update_access_contracts.py --check
 	$(UV_RUN) python scripts/update_knowledge_contracts.py --check
@@ -174,8 +175,16 @@ evaluations-smoke:
 
 .PHONY: integration-replay-test integration-failure-test
 integration-replay-test:
+	$(UV_RUN) python scripts/check_intelligence_delivery.py
 	$(UV_RUN) python scripts/update_intelligence_event_contracts.py --check
-	$(UV_RUN) python -m pytest tests/test_intelligence_events.py
+	$(UV_RUN) python -m pytest tests/test_intelligence_events.py tests/test_intelligence_delivery.py
 
 integration-failure-test:
 	REQUIRE_AI10_OUTBOX_TESTS=1 $(UV_RUN) python -m pytest tests/test_intelligence_outbox.py
+
+.PHONY: intelligence-delivery-bootstrap intelligence-outbox
+intelligence-delivery-bootstrap:
+	$(UV) sync --locked --project tools/intelligence-delivery
+
+intelligence-outbox:
+	$(UV) run --locked --project tools/intelligence-delivery python scripts/intelligence_outbox.py $(ARGS)

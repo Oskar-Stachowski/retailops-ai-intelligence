@@ -57,7 +57,7 @@ exactly-once. Jeden przebieg workera jest ograniczony do `1..1400` eventów.
 2. W repo AI utwórz własne środowisko:
 
    ```sh
-   uv sync --locked --extra snapshot --extra forecast --extra streaming
+   uv sync --locked --extra snapshot --extra forecast
    python scripts/update_intelligence_event_contracts.py --check
    retailops-ai migrate --env-file /private/path/ai.env
    ```
@@ -83,10 +83,12 @@ exactly-once. Jeden przebieg workera jest ograniczony do `1..1400` eventów.
    ```
 
    Nie używaj mechanics/development namespace jako dowodu jakości ML.
-6. Dostarcz bounded batch:
+6. Przygotuj osobne środowisko klienta brokera i dostarcz bounded batch:
 
    ```sh
-   python scripts/intelligence_outbox.py \
+   uv sync --locked --project tools/intelligence-delivery
+   uv run --locked --project tools/intelligence-delivery \
+     python scripts/intelligence_outbox.py \
      --env-file /private/path/ai.env \
      --broker-config /private/path/broker.json --max-events 100
    ```
@@ -98,6 +100,14 @@ exactly-once. Jeden przebieg workera jest ograniczony do `1..1400` eventów.
    SELECT environment, count(*) AS pending
    FROM ai.intelligence_outbox WHERE delivered_at IS NULL GROUP BY environment;
    ```
+
+   Główny `uv.lock` pozostaje identyczny z zamrożonym środowiskiem ML
+   (SHA-256 `33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587`).
+   Klient `confluent-kafka==2.15.1` ma oddzielny lockfile i venv w
+   `tools/intelligence-delivery`. Wszystkie współdzielone biblioteki zachowują
+   wersje rdzenia; `scripts/check_intelligence_delivery.py` odrzuca drift.
+   Dopisanie klienta do głównego locka zmieniłoby tożsamość wcześniejszych
+   profili i eksportów modeli. Nie wyłączaj walidacji ich pinów.
 7. Uruchom dedykowany consumer RetailOps według jego runbooka. Nie dopisuj
    v2 do subskrypcji legacy ani no-op handlers.
 8. Skonfiguruj prywatną policy odczytu RetailOps i wykonaj uwierzytelniony

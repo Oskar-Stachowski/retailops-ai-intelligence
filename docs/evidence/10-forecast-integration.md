@@ -26,13 +26,14 @@ functional/lineage, zamiast tworzyć ponownie wynik ML po stronie odbiorcy.
 | Kontrola | Wynik i granica dowodu |
 |---|---|
 | Pełna regresja AI przez `make ci-local` | 1738 passed, 2 failed, 1 skipped; 30 min. Oba błędy dotyczyły starego lock SHA w syntetycznym fixture workera. |
-| Regresja publikacji po poprawce fixture | 24/24 passed; zawiera oba poprzednio błędne przypadki i nowy test odrzucenia niezgodnych zależności. Produkcyjnej walidacji pinów nie osłabiono. |
+| Regresja publikacji po pierwszej poprawce fixture | 24/24 passed; zawiera oba poprzednio błędne przypadki i nowy test odrzucenia niezgodnych zależności. |
 | Własny rzeczywisty PostgreSQL dla outbox | 1/1 passed z `REQUIRE_AI10_OUTBOX_TESTS=1`: rollback output/outbox, stabilne IDs, brak receipt, przerwanie po delivery i ponowienie. |
 | Pozostałe bramki AI | `make ci-local -o test` passed: lint/format, mypy 326 modułów, docs/CI guard, wszystkie offline checkery, wygenerowane kontrakty, wheel/sdist, Compose config i gitleaks. `-o test` pomija wyłącznie powtórzenie wykonanej pełnej regresji. |
 | RetailOps, regresja API bez markerów DB/broker | 697 passed; 5 przypadków zależnych od sandbox/obrazu Dockera ponowiono z wynikiem 5/5 passed. 68 przypadków oznaczonych integration były poza tym przebiegiem. |
 | RetailOps, rzeczywisty broker/DB/API AI 10 | 11/11 passed: duplicate, rollback, SIGKILL przed ACK, DB/quarantine outage, poison raw, kolizje identity, scope API i paginacja 102 rekordów. |
 | RetailOps, końcowa regresja po uściśleniu typów DB | 56/56 passed; helpery DB, legacy consumer/runner/quarantine i kontrakt AI 10. |
 | RetailOps, kontrole statyczne | Compose config/local-boundary, pełny backend lint/format, mypy 11 modułów, Bandit high/high passed. |
+| Końcowa kontrola izolacji zależności | 37/37 passed: publikacja, eventy i negatywne testy driftu locków. Campaign pin v12 identyczny w obu rzeczywistych venv; Kafka obecna wyłącznie w delivery. Lint/format, mypy 327 modułów, kontrakty, docs guard i build pakietu passed. |
 
 JUnit pozostaje poza Git: AI `reports/ai10-*.xml`, RetailOps
 `ci-cd/reports/ai10/*.xml`. Dane fixtures są jawnie syntetyczne. Test outbox
@@ -40,8 +41,15 @@ używa małych doubles wcześniejszych zależności lifecycle, lecz wykonuje
 rzeczywistą nową migrację i transakcję istniejącego publishera. Test brokera
 wykonuje migracje RetailOps i rzeczywiste zapisy/ACK/read API.
 
-Pełnego 30-minutowego zestawu AI nie powtarzano po zmianie samych fixtures;
-ponowiono cały powiązany moduł. Zdalny Required CI musi potwierdzić dokładne
+Po dalszym przeglądzie odrzucono zmianę głównego lockfile: wpływałaby również
+na piny rzeczywistych modeli v12. Klient Kafka otrzymał osobny projekt/lock/venv
+z pełnymi constraints wersji rdzenia. Główny lock i historyczny fixture
+przywrócono bez zmian; walidacja produkcyjna pozostała aktywna. Nowy guard
+sprawdza SHA rdzenia i brak driftu współdzielonych bibliotek, a testy negatywne
+wykazują odrzucenie zmiany rdzenia i wersji numerycznej w delivery.
+
+Pełnego 30-minutowego zestawu AI nie powtarzano po tych zmianach;
+ponowiono powiązane moduły i kontrole zależności. Zdalny Required CI musi potwierdzić dokładne
 commity PR. Job persistence uruchamia nowe `integration-replay-test` i
 `integration-failure-test`, z wymaganym rzeczywistym testem outbox; przed
 bounded drill pobiera przypięty obraz. RetailOps API CI już wymaga testów

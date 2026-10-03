@@ -1,6 +1,5 @@
 """Content, authorization and worker wiring; qualifications here are explicit test stubs."""
 
-import hashlib
 import json
 from datetime import UTC, datetime
 from pathlib import Path
@@ -19,7 +18,7 @@ from retailops_ai.forecast_jobs.contracts import (
     BatchScope,
     QueuePolicy,
 )
-from retailops_ai.forecast_jobs.inputs import InputContent, PreparedInputs, prepared, scoped_inputs
+from retailops_ai.forecast_jobs.inputs import PreparedInputs, scoped_inputs
 from retailops_ai.forecast_jobs.publication import Publication, publication
 from retailops_ai.forecast_jobs.publication_acceptance import (
     competing_completion,
@@ -29,7 +28,6 @@ from retailops_ai.forecast_jobs.publication_acceptance import (
     stub_release,
 )
 from retailops_ai.forecast_jobs.queue import Claim, LeaseLost
-from retailops_ai.source_snapshot.protocol import resource_bytes
 
 
 @pytest.mark.parametrize("busy", [False, True])
@@ -70,20 +68,11 @@ def test_duplicate_admission_accepts_only_bounded_lock_contention(claim, unexpec
 
 @pytest.fixture(scope="module")
 def inputs():
-    profile = expanded_fixture(
+    return expanded_fixture(
         PreparedInputs.model_validate_json(
             Path("contracts/forecast_jobs/v1/fixture/inputs.json").read_bytes()
         )
     )
-    # This synthetic wiring fixture is qualified against this checkout's lock.
-    # Preserve the immutable historical fixture and rebuild both content identities.
-    raw = profile.model_dump(mode="json", exclude={"profile_id"})
-    manifest = raw["feature_manifest"]
-    manifest["descriptor"]["code"]["dependency_lock_sha256"] = hashlib.sha256(
-        resource_bytes("dependencies.lock")
-    ).hexdigest()
-    manifest["feature_set_id"] = "features-sha256-" + canonical_sha256(manifest["descriptor"])
-    return prepared(InputContent.model_validate_json(json.dumps(raw)))
 
 
 @pytest.fixture
