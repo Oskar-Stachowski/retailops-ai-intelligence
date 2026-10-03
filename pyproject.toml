@@ -30,6 +30,9 @@ retailops-ai = "retailops_ai.cli:main"
 retailops-ai-snapshot = "retailops_ai.source_snapshot.cli:main"
 retailops-ai-curated = "retailops_ai.curated.cli:main"
 retailops-ai-forecast = "retailops_ai.forecasting.cli:main"
+retailops-ai-anomaly-inputs = "retailops_ai.anomalies.cli:main"
+retailops-ai-raw-dq = "retailops_ai.raw_dq.cli:main"
+retailops-ai-return-inputs = "retailops_ai.return_inputs.cli:main"
 
 [project.optional-dependencies]
 snapshot = ["pyarrow==25.0.1", "jsonschema==4.26.0"]
@@ -99,7 +102,12 @@ packages = ["src/retailops_ai"]
 "contracts/forecast/v2" = "retailops_ai/forecasting/v2"
 "contracts/forecast/v3" = "retailops_ai/forecasting/v3"
 "contracts/curated/v1_1" = "retailops_ai/curated/v1_1"
+"contracts/curated/v1_2" = "retailops_ai/curated/v1_2"
+"contracts/anomaly/v1" = "retailops_ai/anomalies/contracts"
+"contracts/raw_dq/v1" = "retailops_ai/raw_dq/contracts"
+"contracts/return_inputs/v1" = "retailops_ai/return_inputs/contracts"
 "contracts/source_snapshot/v1_1" = "retailops_ai/source_snapshot/v1_1"
+"contracts/source_snapshot/v1_2" = "retailops_ai/source_snapshot/v1_2"
 
 [tool.uv]
 required-version = "==0.12.19"

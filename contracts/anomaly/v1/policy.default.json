@@ -1,0 +1,14 @@
+{
+  "closed_policy": "retain_without_residual_exclude_from_fit",
+  "dq_policy": "canonical_source_quality_only_raw_completeness_not_qualified",
+  "expected_policy": "same_series_day_minus_7_known_before_window",
+  "history_days": 28,
+  "metric": "observed_sales_units",
+  "minimum_history_days": 14,
+  "minimum_residuals": 7,
+  "promotion_policy": "known_context_no_automatic_alert",
+  "scale_policy": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+  "scoring_delay_hours": 24,
+  "seasonal_lag_days": 7,
+  "version": "anomaly-demand-inputs-1.0.0"
+}

@@ -1,0 +1,58 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "as_of_time": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "As Of Time",
+      "type": "string"
+    },
+    "end_date": {
+      "format": "date",
+      "title": "End Date",
+      "type": "string"
+    },
+    "metric": {
+      "const": "known_refunded_units_by_return_day",
+      "default": "known_refunded_units_by_return_day",
+      "title": "Metric",
+      "type": "string"
+    },
+    "missing_policy": {
+      "const": "unknown_without_event_day_coverage",
+      "default": "unknown_without_event_day_coverage",
+      "title": "Missing Policy",
+      "type": "string"
+    },
+    "rejected_policy": {
+      "const": "count_claim_exclude_from_refunded_units_and_money",
+      "default": "count_claim_exclude_from_refunded_units_and_money",
+      "title": "Rejected Policy",
+      "type": "string"
+    },
+    "scope": {
+      "const": "purchases_in_parent_source_only",
+      "default": "purchases_in_parent_source_only",
+      "title": "Scope",
+      "type": "string"
+    },
+    "start_date": {
+      "format": "date",
+      "title": "Start Date",
+      "type": "string"
+    },
+    "version": {
+      "const": "return-event-day-view-1.0.0",
+      "default": "return-event-day-view-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "start_date",
+    "end_date",
+    "as_of_time"
+  ],
+  "title": "Policy",
+  "type": "object"
+}

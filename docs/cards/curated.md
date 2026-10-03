@@ -1,5 +1,10 @@
 # Karta danych — curated 1.0.0
 
+Wersja 1.2 rozszerza tę granicę o 43 tabele operacyjne source 2.8/snapshot 1.2,
+z causal inventory projection i parent qualification ID. Truth pozostaje poza
+curated, a anomaly model pozostaje not_ready. Osobne
+[anomaly demand inputs](anomaly-inputs.md) mają własny manifest i politykę PIT.
+
 Właściciel transformacji: RetailOps AI Intelligence. Rola/classification:
 curated, 25 tabel zatwierdzonych facts/plans source 2.6.0. Nie zawiera truth,
 raw events, outputs generatora, features ani labels. Parent source/snapshot

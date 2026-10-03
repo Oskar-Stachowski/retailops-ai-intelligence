@@ -114,7 +114,7 @@ def verify_semantics(root: Any, document: dict[str, Any], scratch: Any, limits: 
     from retailops_ai.curated.contract import source_contract
     from retailops_ai.source_snapshot.files import SnapshotError
 
-    specs = source_contract("1.1.0")["fact_tables"]
+    specs = source_contract(document["schema_version"])["fact_tables"]
     index = Index(scratch / "curated-semantics.sqlite", specs)
     config = Config(currencies=tuple(document["descriptor"]["config"]["currencies"]))
     try:

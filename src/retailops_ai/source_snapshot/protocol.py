@@ -256,7 +256,7 @@ def check_lineage(manifest: dict[str, Any], contract: dict[str, Any], allow_trut
 def inspect_snapshot(root: Path, allow_truth: bool, limits: Limits) -> Snapshot:
     contract = contract_document()
     manifest = read_json(root, "snapshot_manifest.json")
-    if manifest.get("schema_version") == "1.1.0":
+    if manifest.get("schema_version") in {"1.1.0", "1.2.0"}:
         from retailops_ai.source_snapshot.inventory_protocol import (
             inspect_snapshot as inspect_inventory,
         )
@@ -298,7 +298,7 @@ def inspect_snapshot(root: Path, allow_truth: bool, limits: Limits) -> Snapshot:
 
 def verify_metadata(root: Path, snapshot: Snapshot, required: tuple[str, ...]) -> None:
     manifest = snapshot.manifest
-    if manifest["schema_version"] == "1.1.0":
+    if manifest["schema_version"] in {"1.1.0", "1.2.0"}:
         from retailops_ai.source_snapshot.inventory_protocol import (
             verify_metadata as verify_inventory,
         )
