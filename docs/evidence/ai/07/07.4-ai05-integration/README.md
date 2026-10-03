@@ -18,6 +18,13 @@ includes all AI07 contracts and AI05's forecast/snapshot dependencies. Required 
 retains the forecast runtime gate and all persistence/recovery gates alongside
 the anomaly, raw DQ and return acceptance gates.
 
+The combined suite has 1,849 tests, versus AI05's 1,730 and the earlier AI07
+stack's 1,303. The accepted AI05 full pytest alone took 2,261.81 seconds in CI;
+AI07 also adds six fresh artifact processes. The checks job budget is therefore
+65 minutes. Every test and gate remains required; each AI07 acceptance process
+retains its 300-second / 1,024-MiB bound. This adjusts the total job budget,
+not model execution limits or qualification thresholds.
+
 73 targeted tests passed in 53.25 seconds, including six new schema-boundary
 regressions. Ruff/format checked 573 files; Mypy checked 338 sources. Documentation,
 all HTTP/runtime contracts and scoped/working-tree secret scans passed.

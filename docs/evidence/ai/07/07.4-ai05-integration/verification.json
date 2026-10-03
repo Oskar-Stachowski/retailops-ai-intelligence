@@ -33,6 +33,15 @@
   "preceding_ai07_head": "90d54633dbb46956d21e71ad1c227f056a83af61",
   "runtime_commit": "146e2d1bb9223ec3b5745b9cb433674d33c63073",
   "scope": "AI07 input compatibility with accepted AI05 main; anomaly detector lifecycle remains open",
+  "combined_ci_budget": {
+    "checks_job_minutes": 65,
+    "collected_tests": 1849,
+    "accepted_ai05_pytest_seconds": 2261.81,
+    "ai07_fresh_artifact_processes": 6,
+    "seconds_per_ai07_process": 300,
+    "peak_rss_mib_per_ai07_process": 1024,
+    "gates_removed": 0
+  },
   "static_checks": {
     "documentation": "passed",
     "http_and_runtime_contracts": "passed",
