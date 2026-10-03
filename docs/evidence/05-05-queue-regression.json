@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-09-30T11:17:35.437620+00:00",
+  "checks": [
+    "private_content_addressed_test_profile_registration_is_idempotent",
+    "real_http_202_idempotency_conflict_and_scope_authorization",
+    "separate_supervisor_child_publishes_complete_fourteen_row_receipt_atomically",
+    "alias_change_does_not_change_admitted_numeric_model_or_data",
+    "incomplete_grain_is_rejected_without_a_persisted_output",
+    "concurrent_workers_only_one_lease",
+    "heartbeat_extends_lease_and_cancellation_fences_completion",
+    "sigkill_after_partial_computation_recovers_same_run_and_pins_with_new_fenced_attempt",
+    "retry_budget_exhaustion_is_terminal_and_preserves_all_attempts",
+    "global_and_per_principal_backpressure_and_key_namespaces",
+    "attempt_and_overall_deadlines_prevent_unbounded_work",
+    "sigkill_database_restart_retains_runs_attempts_outputs_and_pins",
+    "database_blocks_history_and_profile_mutation"
+  ],
+  "counts": {
+    "attempts": 12,
+    "outputs": 2,
+    "runs": 9
+  },
+  "forecast_quality_approved": false,
+  "profile_id": "batch-profile-sha256-6df467e83f7c621045339466136896793737a1fa2fdf414867acad1a5384c1a7",
+  "project": "retailops_ai_queue_d93e0265d9",
+  "purpose": "lifecycle_mechanics_only",
+  "release_id": "model-release-sha256-ecac7e923d6ebad8323a258ba39ca8e7d4415be08b8e4ec76b6ffdcadfab5b62",
+  "state_sha256": "3e528e1a4dc535947a42596096c411433200274e85b42fcdc65a1b0350e9d4a4",
+  "status": "passed"
+}

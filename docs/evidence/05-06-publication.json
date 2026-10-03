@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-09-30T12:40:42.822477+00:00",
+  "checks": [
+    "registered_inputs_without_approved_release_create_no_run",
+    "sql_deferred_constraint_rolls_back_success_and_history_for_incomplete_partitions",
+    "concurrent_admission_is_idempotent_and_release_remains_pinned_after_head_change",
+    "sql_deferred_constraint_refuses_orphan_manifest",
+    "complete_manifest_two_partitions_run_history_and_pointer_commit_together",
+    "second_partition_failure_rolls_back_all_output_and_retains_previous_pointer",
+    "bounded_retry_keeps_pins_and_stale_token_cannot_publish",
+    "concurrent_completion_commits_exactly_one_output",
+    "late_older_request_cannot_displace_newer_successful_pointer",
+    "lease_expiry_after_first_insert_rolls_back_all_publication_state",
+    "installed_numeric_child_refuses_missing_real_registry_evidence_and_publishes_nothing",
+    "database_blocks_published_manifest_and_partition_mutation",
+    "sigkill_database_restart_preserves_complete_forecast_partitions_manifests_pins_history_and_heads"
+  ],
+  "counts": {
+    "forecast_batch_attempts": 8,
+    "forecast_batch_runs": 7,
+    "forecast_output_heads": 1,
+    "forecast_output_manifests": 5,
+    "forecast_output_partitions": 10,
+    "forecast_prepared_inputs": 1,
+    "model_decisions": 2,
+    "model_heads": 1,
+    "model_releases": 2,
+    "model_steps": 2,
+    "model_versions": 2
+  },
+  "fixture_output_manifests": 5,
+  "forecast_quality_approved": false,
+  "heads_sha256": "906505a732510918d48b4abeb104c9f07ad7870499d2e4c67823d207ecfbb68d",
+  "image_digest": "sha256:8b55af68441753ec188de17286f8ef938b00755ca5a0036f6f6177bd71315f6c",
+  "input_origin": "controlled_contract_fixture",
+  "project": "retailops_ai_outputs_6445e1dc5b",
+  "published_forecast_outputs": 0,
+  "purpose": "publication_transaction_fixture_only",
+  "state_sha256": "23bb5372fb6eb30ae483171f638b3b5cc6fa8886997faf2f37968fc90adf88b2",
+  "status": "passed"
+}

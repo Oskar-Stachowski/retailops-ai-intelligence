@@ -29,15 +29,63 @@ wspólny evaluator i ograniczony trening; wybór pozostaje diagnostyczny.
 kontroluje dojrzałość etykiet i wspólne klucze oraz raportuje pooled MAE/WAPE.
 [Metryki i niepewność 04.7](forecast-quality.md) dodają przekroje, bias,
 kalibrację przedziałów i jawne bramki jakości bez promocji modelu.
-[Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
-validation-only i ponowną ocenę na późniejszych development holdoutach.
+[Plikowy run 04.8](forecast-run.md) utrwala komplet dowodów do AI 05.
+[Rzeczywisty lokalny przepływ finalnego v12](evidence/05-v12-real-serving.md)
+jest odebrany: pełny import, trzy udane trwałe zadania / 42 wiersze, API,
+restart i rollback. Świeży mały snapshot daje 14/14 `current` po restarcie.
+Formalna publikacja AI 05 wymaga jeszcze zdalnego Required CI i integracji
+osobnych PR-ów AI oraz producenta źródła.
+[Adapter v12](mlflow-v12-evidence.md), [loader offline](forecast-v12-runtime.md),
+[kwalifikacja inference](forecast-v12-release.md) i [lifecycle v12](mlflow-v12-lifecycle.md)
+opisują przygotowanie obsługi nowego eksportu oraz osobne bramki dopuszczenia.
+[Kolejka i worker v12](forecast-v12-worker.md) dodają przypięte zadania,
+dzielenie batchu i pełny receipt obliczeń przed publikacją.
+[Publikacja i odczyt v12](forecast-v12-publication.md) zachowują medianę,
+średnią, przedział i baseline oraz ograniczają dane do scope użytkownika.
+[API zadań v12](forecast-v12-jobs-api.md) przyjmuje trwałe zlecenia,
+pokazuje stan i historię prób oraz rozróżnia obliczenie i publikację prognoz.
+[Katalog modeli i oryginalne oceny v12](forecast-v12-metadata.md) udostępniają
+wersje i raporty z kontrolą całego zakresu kampanii oraz odczytem po restarcie.
+[Backup i odtworzenie v12](forecast-v12-backup.md) zachowują obie bazy
+PostgreSQL, pliki MLflow, zadania oraz niedokończone decyzje rejestracji.
 [Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
 rozszerza typed import o source 2.7, native ledger i private qualification.
-[Odbiór](evidence/06-inventory-handoff.md) obejmuje oba standardowe profile
-dwukrotnie. Curated 1.1 i domyślne przełączenie pozostają kolejnym zakresem.
+[Odbiór](evidence/06-inventory-complete.md) obejmuje curated 1.1 i oba profile.
+[Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
+validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
 zweryfikowane poświadczenia, scope i bezpieczne uruchomienie.
 [Lokalny stos DB/API/MLflow](local-stack.md) opisuje persistence i migracje.
+[Magazyn MLflow AI 05.1](mlflow-store.md) opisuje backup, restore i retencję.
+[Import evidence AI 05.2](mlflow-evidence.md) opisuje historyczny run bez
+rejestracji modelu i [odbiór](evidence/05-02-import.md).
+[Review i odrzucenie AI 05.3a](mlflow-registry.md) dokumentują lokalny
+rejestr bez wersji oraz [audyt decyzji](evidence/05-03-review.md).
+[Registry i recovery AI 05.3b](mlflow-lifecycle.md) opisują wersje, aliasy,
+niezależny audyt i [odbiór mechaniki](evidence/05-03-lifecycle.md).
+[Wspólny backup AI/MLflow 05.3c](lifecycle-backup.md) opisuje blokadę zapisów,
+wznowienie i [odtworzenie do nowego projektu](evidence/05-03-store.md).
+[Kolejka i worker AI 05.4a](forecast-worker.md) opisują trwałe runy, lease,
+retry i [odbiór awarii](evidence/05-04-queue.md) na izolowanych fixture.
+[Wejście i loader AI 05.5a](forecast-runtime.md) opisują zgodność nowego
+pakietu z zamrożonym modelem i [odbiór adapterów](evidence/05-05-runtime.md),
+bez publikacji prognoz ani zatwierdzenia jakości AI 04.
+[Trwałe wejścia i supervisor AI 05.5b](forecast-input-store.md) opisują
+prywatną rejestrację, limity procesu i [odbiór PostgreSQL](evidence/05-05-input-store.md).
+[Atomowa publikacja AI 05.6](forecast-publication.md) opisuje przyjęcie profili,
+ograniczony batch i transakcję manifestu, partycji oraz pointera.
+[Bieżący odbiór](evidence/05-06-publication.md) podaje kontrolę i braki.
+[Odczyt prognoz AI 05.7a](forecast-read.md) opisuje scope, stabilną paginację,
+kontrolę kompletności i zachowawczą freshness. [Odbiór](evidence/05-07-read.md)
+wiąże realne HTTP/PostgreSQL z jawnymi ograniczeniami jakości.
+[Katalog modeli i wersji AI 05.7b](model-catalog.md) opisuje metadane ograniczone
+do publikacji w scope użytkownika, bez globalnych ocen i deklaracji wdrożenia.
+[Odbiór katalogu](evidence/05-07-catalog.md) podaje testy i pozostałe bramki.
+[Historyczne oceny AI 05.7c](evaluations.md) udostępniają MAE/WAPE wyłącznie
+w zakresie całego raportu. [Odbiór](evidence/05-07-evaluations.md) wiąże
+odtworzone metryki z archiwum i rzeczywistym HTTP/PostgreSQL.
+[Watermark i świeżość AI 05.7d](forecast-freshness.md) opisują `current/stale/unknown`,
+deklarację kompletności, cutoff i zgodność starszych outputów.
 [Dowody persistence](evidence/01-persistence.md) pokazują rzeczywiste próby awarii.
 [Instrukcja HTTP](http-service.md) opisuje lokalny serwis i granice dostępu.
 [Weryfikacja HTTP](evidence/01-http.md) i [fundamentu](evidence/01-foundation.md)
@@ -106,3 +154,4 @@ wnioski i wykonane zadania z aktywnej listy. Evidence opisuje pomiar i jego
 ograniczenia; nie jest listą zakończonych zadań ani deklaracją wdrożenia.
 
 - [Pełna bramka cross-repo AI 03.6](evidence/03-06-cross-repo.md) — wspólny odbiór RetailOps i AI, publikacja oraz kolejne etapy.
+- [Lokalny odbiór zaakceptowanego v12 i import APFS](forecast-v12-development.md).

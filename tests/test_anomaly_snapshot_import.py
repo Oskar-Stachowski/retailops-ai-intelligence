@@ -13,6 +13,7 @@ import pytest
 from retailops_ai.curated.builder import build_curated
 from retailops_ai.source_snapshot.files import SnapshotError, canonical_json
 from retailops_ai.source_snapshot.importer import import_snapshot, verify_import, verify_snapshot
+from retailops_ai.source_snapshot.inventory_protocol import resource_bytes
 
 ARCHIVE = Path(__file__).resolve().parents[1] / "data/fixtures/anomaly-v1_2.zip"
 
@@ -135,3 +136,26 @@ def test_import_does_not_claim_curated_or_model_readiness(fixture, tmp_path):
     assert curated.manifest["schema_version"] == "1.2.0"
     assert curated.manifest["readiness"]["anomaly"] == "not_ready"
     assert curated.manifest["readiness"]["forecast_model"] == "not_ready"
+
+
+@pytest.mark.parametrize("table", ["source", "snapshot"])
+def test_anomaly_snapshot_cannot_adopt_forecast_schema_under_its_existing_version(
+    fixture, tmp_path, table
+):
+    from test_inventory_snapshot_import import reseal
+
+    root = Path(shutil.copytree(fixture / "demand/public", tmp_path / "input"))
+    document = json.loads((root / "snapshot_manifest.json").read_text())
+    path = (
+        root
+        / "schemas"
+        / (
+            "anomaly_source_dataset.v2_8.schema.json"
+            if table == "source"
+            else "anomaly_snapshot.v1_2.schema.json"
+        )
+    )
+    path.write_bytes(resource_bytes(f"forecast_{table}_manifest.schema.json"))
+    reseal(root, document)
+    with pytest.raises(SnapshotError, match="unreviewed_inventory_contract"):
+        verify_snapshot(root, required_use_cases=("anomaly_source",))

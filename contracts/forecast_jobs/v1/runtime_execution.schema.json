@@ -1,0 +1,1619 @@
+{
+  "$defs": {
+    "BatchScope": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "product_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Product Ids",
+          "type": "array"
+        },
+        "selling_location_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Selling Location Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "product_ids",
+        "selling_location_ids",
+        "channel"
+      ],
+      "title": "BatchScope",
+      "type": "object"
+    },
+    "Binding": {
+      "additionalProperties": false,
+      "properties": {
+        "mlflow_run_id": {
+          "pattern": "^[0-9a-f]{32}$",
+          "title": "Mlflow Run Id",
+          "type": "string"
+        },
+        "model_name": {
+          "enum": [
+            "retailops-demand-forecast",
+            "retailops-demand-forecast-mechanics"
+          ],
+          "title": "Model Name",
+          "type": "string"
+        },
+        "model_version": {
+          "pattern": "^[1-9][0-9]{0,9}$",
+          "title": "Model Version",
+          "type": "string"
+        },
+        "qualification": {
+          "$ref": "#/$defs/Qualification"
+        },
+        "qualification_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Qualification Sha256",
+          "type": "string"
+        },
+        "source_uri": {
+          "title": "Source Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "model_name",
+        "model_version",
+        "mlflow_run_id",
+        "source_uri",
+        "qualification_sha256",
+        "qualification"
+      ],
+      "title": "Binding",
+      "type": "object"
+    },
+    "CodePin": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "pyarrow_version": {
+          "title": "Pyarrow Version",
+          "type": "string"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-manifests-1.0.0",
+          "default": "forecast-manifests-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code_files",
+        "code_sha256",
+        "dependency_lock_sha256",
+        "python_version",
+        "pyarrow_version"
+      ],
+      "title": "CodePin",
+      "type": "object"
+    },
+    "ExecutionLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_seconds": {
+          "default": 60,
+          "maximum": 60,
+          "minimum": 1,
+          "title": "Cpu Seconds",
+          "type": "integer"
+        },
+        "rss_bytes": {
+          "default": 1073741824,
+          "maximum": 1073741824,
+          "minimum": 134217728,
+          "title": "Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "default": 120.0,
+          "maximum": 120,
+          "minimum": 0.1,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "title": "ExecutionLimits",
+      "type": "object"
+    },
+    "FeatureDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "calendar_id": {
+          "pattern": "^forecast-calendar-sha256-[0-9a-f]{64}$",
+          "title": "Calendar Id",
+          "type": "string"
+        },
+        "canonicalization": {
+          "const": "retailops-canonical-json-v1",
+          "default": "retailops-canonical-json-v1",
+          "title": "Canonicalization",
+          "type": "string"
+        },
+        "code": {
+          "$ref": "#/$defs/CodePin"
+        },
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "feature_types": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Feature Types",
+          "type": "object"
+        },
+        "history_content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "History Content Sha256",
+          "type": "string"
+        },
+        "input_code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Code Sha256",
+          "type": "string"
+        },
+        "inputs_id": {
+          "pattern": "^forecast-inputs-sha256-[0-9a-f]{64}$",
+          "title": "Inputs Id",
+          "type": "string"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "requested_policy": {
+          "$ref": "#/$defs/FeaturePolicy"
+        },
+        "resolved_policy": {
+          "$ref": "#/$defs/FeaturePolicy"
+        },
+        "role": {
+          "const": "features",
+          "default": "features",
+          "title": "Role",
+          "type": "string"
+        },
+        "row_count": {
+          "minimum": 1,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_parameters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Source Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "parent",
+        "calendar_id",
+        "inputs_id",
+        "source_parameters",
+        "requested_policy",
+        "resolved_policy",
+        "feature_types",
+        "code",
+        "input_code_sha256",
+        "content_sha256",
+        "history_content_sha256",
+        "row_count"
+      ],
+      "title": "FeatureDescriptor",
+      "type": "object"
+    },
+    "FeatureManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "descriptor": {
+          "$ref": "#/$defs/FeatureDescriptor"
+        },
+        "feature_set_id": {
+          "pattern": "^features-sha256-[0-9a-f]{64}$",
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "forecast_model_status": {
+          "const": "not_ready",
+          "default": "not_ready",
+          "title": "Forecast Model Status",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feature_set_id",
+        "descriptor",
+        "generated_at"
+      ],
+      "title": "FeatureManifest",
+      "type": "object"
+    },
+    "FeaturePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "closed_target": {
+          "const": "retain_in_coverage_exclude_from_scoring",
+          "default": "retain_in_coverage_exclude_from_scoring",
+          "title": "Closed Target",
+          "type": "string"
+        },
+        "cold_start": {
+          "const": "insufficient_data_no_prediction",
+          "default": "insufficient_data_no_prediction",
+          "title": "Cold Start",
+          "type": "string"
+        },
+        "columns": {
+          "default": [
+            "origin_lag_1_units",
+            "origin_lag_7_units",
+            "origin_lag_14_units",
+            "origin_lag_28_units",
+            "rolling_mean_7",
+            "rolling_std_7",
+            "rolling_count_7",
+            "rolling_mean_14",
+            "rolling_std_14",
+            "rolling_count_14",
+            "rolling_mean_28",
+            "rolling_std_28",
+            "rolling_count_28",
+            "target_weekday",
+            "target_week_of_year",
+            "target_month",
+            "target_quarter",
+            "target_is_weekend",
+            "target_is_public_holiday",
+            "target_is_easter",
+            "target_is_christmas",
+            "target_is_black_friday",
+            "target_is_cyber_monday",
+            "target_location_open",
+            "target_is_category_season",
+            "category_id",
+            "brand",
+            "country_code",
+            "calendar_jurisdiction",
+            "channel",
+            "planned_regular_price_minor_units",
+            "currency",
+            "planned_promotion_offered",
+            "planned_promotion_type",
+            "planned_promotion_discount_basis_points",
+            "planned_promotion_minimum_quantity"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "inventory": {
+          "const": "excluded",
+          "default": "excluded",
+          "title": "Inventory",
+          "type": "string"
+        },
+        "maximum_observation_age_days": {
+          "default": 3,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Maximum Observation Age Days",
+          "type": "integer"
+        },
+        "minimum_active_history_days": {
+          "default": 28,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Minimum Active History Days",
+          "type": "integer"
+        },
+        "minimum_known_history_days": {
+          "default": 7,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Minimum Known History Days",
+          "type": "integer"
+        },
+        "missing_features": {
+          "const": "retain_nullable_values_and_fit_train_only",
+          "default": "retain_nullable_values_and_fit_train_only",
+          "title": "Missing Features",
+          "type": "string"
+        },
+        "preprocessing": {
+          "$ref": "#/$defs/PreprocessingRecipe",
+          "default": {
+            "boolean_missing": "train_mode_tie_false_with_indicator",
+            "categorical": "train_vocabulary_one_hot_with_missing_and_unknown",
+            "entirely_missing": "constant_zero_with_indicator",
+            "fit_scope": "eligible_train_rows_of_one_fold_only",
+            "numeric_missing": "train_median_with_indicator",
+            "output_numbers": "float64_model_inputs_raw_money_remains_exact",
+            "scaling": "none",
+            "version": "forecast-train-only-1.0.0"
+          }
+        },
+        "stale_history": {
+          "const": "block_run_no_partial_success",
+          "default": "block_run_no_partial_success",
+          "title": "Stale History",
+          "type": "string"
+        },
+        "truth": {
+          "const": "excluded",
+          "default": "excluded",
+          "title": "Truth",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-features-1.0.0",
+          "default": "forecast-features-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "FeaturePolicy",
+      "type": "object"
+    },
+    "Gate": {
+      "additionalProperties": false,
+      "properties": {
+        "report": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "failed",
+            "not_ready",
+            "not_evaluable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "report"
+      ],
+      "title": "Gate",
+      "type": "object"
+    },
+    "HistoryContext": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "forecast_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Forecast Origin",
+          "type": "string"
+        },
+        "points": {
+          "items": {
+            "$ref": "#/$defs/PanelPoint"
+          },
+          "maxItems": 28,
+          "title": "Points",
+          "type": "array"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "forecast_origin",
+        "points"
+      ],
+      "title": "HistoryContext",
+      "type": "object"
+    },
+    "InputRow": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "cutoff_policy": {
+          "const": "end_of_day_second_v1",
+          "title": "Cutoff Policy",
+          "type": "string"
+        },
+        "forecast_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Forecast Origin",
+          "type": "string"
+        },
+        "history_active_days": {
+          "maximum": 28,
+          "minimum": 0,
+          "title": "History Active Days",
+          "type": "integer"
+        },
+        "history_closed_days": {
+          "maximum": 28,
+          "minimum": 0,
+          "title": "History Closed Days",
+          "type": "integer"
+        },
+        "history_context_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "History Context Sha256",
+          "type": "string"
+        },
+        "history_known_days": {
+          "maximum": 28,
+          "minimum": 0,
+          "title": "History Known Days",
+          "type": "integer"
+        },
+        "history_missing_days": {
+          "maximum": 28,
+          "minimum": 0,
+          "title": "History Missing Days",
+          "type": "integer"
+        },
+        "horizon_days": {
+          "maximum": 14,
+          "minimum": 1,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "insufficient_history": {
+          "title": "Insufficient History",
+          "type": "boolean"
+        },
+        "is_active_assortment": {
+          "const": true,
+          "default": true,
+          "title": "Is Active Assortment",
+          "type": "boolean"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "target_calendar_eligible": {
+          "title": "Target Calendar Eligible",
+          "type": "boolean"
+        },
+        "target_date": {
+          "format": "date",
+          "title": "Target Date",
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "$ref": "#/$defs/InputValue"
+          },
+          "title": "Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "forecast_origin",
+        "business_timezone",
+        "cutoff_policy",
+        "target_date",
+        "horizon_days",
+        "history_context_sha256",
+        "history_active_days",
+        "history_known_days",
+        "history_missing_days",
+        "history_closed_days",
+        "insufficient_history",
+        "target_calendar_eligible",
+        "values"
+      ],
+      "title": "InputRow",
+      "type": "object"
+    },
+    "InputValue": {
+      "additionalProperties": false,
+      "properties": {
+        "effective_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective Date"
+        },
+        "kind": {
+          "enum": [
+            "observed",
+            "calendar",
+            "categorical",
+            "known_plan"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "pattern": "^(origin_lag_1_units|origin_lag_7_units|origin_lag_14_units|origin_lag_28_units|rolling_mean_7|rolling_std_7|rolling_count_7|rolling_mean_14|rolling_std_14|rolling_count_14|rolling_mean_28|rolling_std_28|rolling_count_28|target_weekday|target_week_of_year|target_month|target_quarter|target_is_weekend|target_is_public_holiday|target_is_easter|target_is_christmas|target_is_black_friday|target_is_cyber_monday|target_location_open|target_is_category_season|category_id|brand|country_code|calendar_jurisdiction|channel|planned_regular_price_minor_units|currency|planned_promotion_offered|planned_promotion_type|planned_promotion_discount_basis_points|planned_promotion_minimum_quantity)$",
+          "title": "Name",
+          "type": "string"
+        },
+        "observed_through_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed Through Date"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        },
+        "references": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Reference"
+          },
+          "title": "References",
+          "type": "array"
+        },
+        "source_available_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Available At"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "missing",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "value",
+        "status",
+        "source_available_at",
+        "reason"
+      ],
+      "title": "InputValue",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "PanelPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "business_date": {
+          "format": "date",
+          "title": "Business Date",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "forecast_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Forecast Origin",
+          "type": "string"
+        },
+        "is_active_assortment": {
+          "const": true,
+          "default": true,
+          "title": "Is Active Assortment",
+          "type": "boolean"
+        },
+        "location_open": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Location Open"
+        },
+        "observed_units": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed Units"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "references": {
+          "items": {
+            "$ref": "#/$defs/Reference"
+          },
+          "title": "References",
+          "type": "array"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "source_available_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Available At"
+        },
+        "source_data_complete": {
+          "title": "Source Data Complete",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "observed_positive",
+            "observed_zero",
+            "closed",
+            "missing"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "forecast_origin",
+        "business_date",
+        "status",
+        "observed_units",
+        "source_data_complete",
+        "location_open",
+        "source_available_at",
+        "references"
+      ],
+      "title": "PanelPoint",
+      "type": "object"
+    },
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "forecast_source_status": {
+          "const": "passed",
+          "title": "Forecast Source Status",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "curated_descriptor_sha256",
+        "business_timezone",
+        "forecast_source_status"
+      ],
+      "title": "Parent",
+      "type": "object"
+    },
+    "PreparedInputs": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "else": {
+            "properties": {
+              "source_freshness": {
+                "type": "null"
+              }
+            }
+          },
+          "if": {
+            "properties": {
+              "schema_version": {
+                "const": "1.1"
+              }
+            },
+            "required": [
+              "schema_version"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_freshness": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "source_freshness"
+            ]
+          }
+        }
+      ],
+      "properties": {
+        "as_of_time": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of Time",
+          "type": "string"
+        },
+        "feature_manifest": {
+          "$ref": "#/$defs/FeatureManifest"
+        },
+        "histories": {
+          "items": {
+            "$ref": "#/$defs/HistoryContext"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Histories",
+          "type": "array"
+        },
+        "horizon_days": {
+          "enum": [
+            7,
+            14
+          ],
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "kind": {
+          "const": "forecast_inference_inputs",
+          "default": "forecast_inference_inputs",
+          "title": "Kind",
+          "type": "string"
+        },
+        "profile_id": {
+          "pattern": "^batch-profile-sha256-[0-9a-f]{64}$",
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "rows": {
+          "items": {
+            "$ref": "#/$defs/InputRow"
+          },
+          "maxItems": 1400,
+          "minItems": 1,
+          "title": "Rows",
+          "type": "array"
+        },
+        "schema_version": {
+          "default": "1.0",
+          "enum": [
+            "1.0",
+            "1.1"
+          ],
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/BatchScope"
+        },
+        "source_freshness": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceFreshness"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "feature_manifest",
+        "as_of_time",
+        "scope",
+        "horizon_days",
+        "rows",
+        "histories",
+        "profile_id"
+      ],
+      "title": "PreparedInputs",
+      "type": "object"
+    },
+    "PreprocessingRecipe": {
+      "additionalProperties": false,
+      "properties": {
+        "boolean_missing": {
+          "const": "train_mode_tie_false_with_indicator",
+          "default": "train_mode_tie_false_with_indicator",
+          "title": "Boolean Missing",
+          "type": "string"
+        },
+        "categorical": {
+          "const": "train_vocabulary_one_hot_with_missing_and_unknown",
+          "default": "train_vocabulary_one_hot_with_missing_and_unknown",
+          "title": "Categorical",
+          "type": "string"
+        },
+        "entirely_missing": {
+          "const": "constant_zero_with_indicator",
+          "default": "constant_zero_with_indicator",
+          "title": "Entirely Missing",
+          "type": "string"
+        },
+        "fit_scope": {
+          "const": "eligible_train_rows_of_one_fold_only",
+          "default": "eligible_train_rows_of_one_fold_only",
+          "title": "Fit Scope",
+          "type": "string"
+        },
+        "numeric_missing": {
+          "const": "train_median_with_indicator",
+          "default": "train_median_with_indicator",
+          "title": "Numeric Missing",
+          "type": "string"
+        },
+        "output_numbers": {
+          "const": "float64_model_inputs_raw_money_remains_exact",
+          "default": "float64_model_inputs_raw_money_remains_exact",
+          "title": "Output Numbers",
+          "type": "string"
+        },
+        "scaling": {
+          "const": "none",
+          "default": "none",
+          "title": "Scaling",
+          "type": "string"
+        },
+        "version": {
+          "const": "forecast-train-only-1.0.0",
+          "default": "forecast-train-only-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "PreprocessingRecipe",
+      "type": "object"
+    },
+    "Qualification": {
+      "additionalProperties": false,
+      "properties": {
+        "ai_code_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Ai Code Commit",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "config_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "data_seed": {
+          "minimum": 0,
+          "title": "Data Seed",
+          "type": "integer"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "evaluation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Evaluation Id",
+          "type": "string"
+        },
+        "evidence_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "expected_output_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Expected Output Sha256",
+          "type": "string"
+        },
+        "feature_schema_version": {
+          "const": "forecast-features-v1",
+          "title": "Feature Schema Version",
+          "type": "string"
+        },
+        "feature_set_id": {
+          "pattern": "^features-sha256-[0-9a-f]{64}$",
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "flavor": {
+          "enum": [
+            "forecast-json-v1",
+            "baseline-json-v1",
+            "mechanics-json-v1"
+          ],
+          "title": "Flavor",
+          "type": "string"
+        },
+        "gates": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Gate"
+          },
+          "maxProperties": 10,
+          "minProperties": 10,
+          "propertyNames": {
+            "enum": [
+              "features",
+              "freshness_drift_compatibility",
+              "model_card",
+              "pit",
+              "protocol",
+              "resources",
+              "security_license",
+              "segments",
+              "signature",
+              "source"
+            ]
+          },
+          "title": "Gates",
+          "type": "object"
+        },
+        "input_example": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "label_dataset_id": {
+          "pattern": "^labels-sha256-[0-9a-f]{64}$",
+          "title": "Label Dataset Id",
+          "type": "string"
+        },
+        "model": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "model_family": {
+          "enum": [
+            "baseline",
+            "random_forest",
+            "hist_gradient_boosting",
+            "mechanics"
+          ],
+          "title": "Model Family",
+          "type": "string"
+        },
+        "model_seed": {
+          "minimum": 0,
+          "title": "Model Seed",
+          "type": "integer"
+        },
+        "original_completed_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Original Completed At",
+          "type": "string"
+        },
+        "original_run_kind": {
+          "enum": [
+            "historical_evidence",
+            "training",
+            "mechanics_fixture"
+          ],
+          "title": "Original Run Kind",
+          "type": "string"
+        },
+        "original_started_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Original Started At",
+          "type": "string"
+        },
+        "purpose": {
+          "enum": [
+            "qualified_forecast",
+            "lifecycle_mechanics_only"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "reference_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Reference Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "signature": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "source_code_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Source Code Commit",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "split_id": {
+          "pattern": "^split-sha256-[0-9a-f]{64}$",
+          "title": "Split Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "purpose",
+        "evidence_id",
+        "evaluation_id",
+        "reference_id",
+        "original_run_kind",
+        "original_started_at",
+        "original_completed_at",
+        "source_dataset_id",
+        "curated_dataset_id",
+        "label_dataset_id",
+        "split_id",
+        "feature_set_id",
+        "feature_schema_version",
+        "config_sha256",
+        "config",
+        "source_code_commit",
+        "ai_code_commit",
+        "dependency_lock_sha256",
+        "model_seed",
+        "data_seed",
+        "model_family",
+        "flavor",
+        "model",
+        "signature",
+        "input_example",
+        "expected_output_sha256",
+        "gates"
+      ],
+      "title": "Qualification",
+      "type": "object"
+    },
+    "Receipt": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 268435456,
+          "minimum": 1,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sha256",
+        "size_bytes"
+      ],
+      "title": "Receipt",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "available_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Available At",
+          "type": "string"
+        },
+        "record_id": {
+          "title": "Record Id",
+          "type": "string"
+        },
+        "record_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Record Sha256",
+          "type": "string"
+        },
+        "table": {
+          "title": "Table",
+          "type": "string"
+        }
+      },
+      "required": [
+        "table",
+        "record_id",
+        "record_sha256",
+        "available_at"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "Release": {
+      "additionalProperties": false,
+      "properties": {
+        "binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "decision_id": {
+          "pattern": "^decision-[a-z0-9-]{8,64}$",
+          "title": "Decision Id",
+          "type": "string"
+        },
+        "image_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Image Digest",
+          "type": "string"
+        },
+        "previous_release_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Previous Release Id"
+        },
+        "previous_version": {
+          "anyOf": [
+            {
+              "pattern": "^[1-9][0-9]{0,9}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Previous Version"
+        },
+        "release_id": {
+          "title": "Release Id",
+          "type": "string"
+        },
+        "restored_from_release_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Restored From Release Id"
+        }
+      },
+      "required": [
+        "release_id",
+        "decision_id",
+        "binding",
+        "image_digest",
+        "previous_release_id",
+        "previous_version"
+      ],
+      "title": "Release",
+      "type": "object"
+    },
+    "RuntimePin": {
+      "additionalProperties": false,
+      "properties": {
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "image_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Image Digest",
+          "type": "string"
+        }
+      },
+      "required": [
+        "image_digest",
+        "dependency_lock_sha256"
+      ],
+      "title": "RuntimePin",
+      "type": "object"
+    },
+    "SourceFreshness": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of_time": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of Time",
+          "type": "string"
+        },
+        "curated_descriptor": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Curated Descriptor",
+          "type": "object"
+        },
+        "observations": {
+          "items": {
+            "$ref": "#/$defs/SourceObservation"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Observations",
+          "type": "array"
+        },
+        "policy_id": {
+          "const": "forecast-source-watermark-v1",
+          "default": "forecast-source-watermark-v1",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "stream": {
+          "const": "daily_demand_observations",
+          "default": "daily_demand_observations",
+          "title": "Stream",
+          "type": "string"
+        },
+        "watermark": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceWatermark"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "as_of_time",
+        "curated_descriptor",
+        "watermark",
+        "observations"
+      ],
+      "title": "SourceFreshness",
+      "type": "object"
+    },
+    "SourceObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "latest_complete_observation_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Latest Complete Observation Date"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "latest_complete_observation_date"
+      ],
+      "title": "SourceObservation",
+      "type": "object"
+    },
+    "SourceWatermark": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of_time": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of Time",
+          "type": "string"
+        },
+        "complete_through": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Complete Through"
+        },
+        "completeness_status": {
+          "enum": [
+            "complete",
+            "not_ready"
+          ],
+          "title": "Completeness Status",
+          "type": "string"
+        },
+        "meaning": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Meaning",
+          "type": "string"
+        },
+        "policy_version": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Policy Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "as_of_time",
+        "complete_through",
+        "completeness_status",
+        "meaning",
+        "policy_version"
+      ],
+      "title": "SourceWatermark",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "compose": {
+      "title": "Compose",
+      "type": "boolean"
+    },
+    "environment": {
+      "enum": [
+        "local",
+        "test"
+      ],
+      "title": "Environment",
+      "type": "string"
+    },
+    "inputs": {
+      "$ref": "#/$defs/PreparedInputs"
+    },
+    "limits": {
+      "$ref": "#/$defs/ExecutionLimits",
+      "default": {
+        "cpu_seconds": 60,
+        "rss_bytes": 1073741824,
+        "wall_seconds": 120.0
+      }
+    },
+    "purpose": {
+      "default": "runtime_preflight_only",
+      "enum": [
+        "runtime_preflight_only",
+        "qualified_forecast_computation"
+      ],
+      "title": "Purpose",
+      "type": "string"
+    },
+    "release": {
+      "$ref": "#/$defs/Release"
+    },
+    "runtime_pin": {
+      "$ref": "#/$defs/RuntimePin"
+    }
+  },
+  "required": [
+    "environment",
+    "compose",
+    "inputs",
+    "release",
+    "runtime_pin"
+  ],
+  "title": "RuntimeExecution",
+  "type": "object"
+}

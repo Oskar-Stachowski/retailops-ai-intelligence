@@ -1,0 +1,28 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "cpu_seconds": {
+      "default": 60,
+      "maximum": 60,
+      "minimum": 1,
+      "title": "Cpu Seconds",
+      "type": "integer"
+    },
+    "rss_bytes": {
+      "default": 1073741824,
+      "maximum": 1073741824,
+      "minimum": 134217728,
+      "title": "Rss Bytes",
+      "type": "integer"
+    },
+    "wall_seconds": {
+      "default": 120.0,
+      "maximum": 120,
+      "minimum": 0.1,
+      "title": "Wall Seconds",
+      "type": "number"
+    }
+  },
+  "title": "ExecutionLimits",
+  "type": "object"
+}

@@ -57,6 +57,17 @@ jobs:
           python-version: "3.11.15"
           enable-cache: true
       - run: make bootstrap compose-smoke
+      - run: make mlflow-store-smoke
+      - run: make model-lifecycle-smoke
+      - run: make lifecycle-store-smoke
+      - run: make forecast-queue-smoke
+      - run: make forecast-input-store-smoke
+      - run: make forecast-publication-smoke
+      - run: make forecast-read-smoke
+      - run: make model-catalog-smoke
+      - run: make evaluations-smoke
+      - name: Accept v12 registry, jobs, publication, metadata, backup and recovery
+        run: make v12-backup-smoke
   required-result:
     if: always()
     needs: [checks, secrets, persistence]

@@ -828,7 +828,9 @@
           "enum": [
             "viewer",
             "operator",
-            "admin"
+            "admin",
+            "promoter",
+            "pipeline"
           ],
           "title": "Role",
           "type": "string"

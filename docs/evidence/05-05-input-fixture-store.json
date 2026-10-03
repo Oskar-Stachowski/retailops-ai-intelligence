@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-09-30T11:20:06.146246+00:00",
+  "checks": [
+    "concurrent_replay_preserves_single_record_bytes_hash_and_database_timestamp",
+    "local_and_test_registration_namespaces_are_independent",
+    "profile_and_actual_jsonb_byte_budgets_refuse_without_partial_registration",
+    "database_blocks_input_and_registration_receipt_update_and_delete",
+    "isolated_linux_executor_imports_under_kernel_limits_and_refuses_invalid_input",
+    "registered_input_worker_refuses_missing_approved_release_without_run_or_output",
+    "sigkill_database_restart_preserves_full_inputs_receipts_and_hashes"
+  ],
+  "forecast_quality_approved": false,
+  "forecast_runs": 0,
+  "histories": 1,
+  "image_digest": "sha256:ced30c73e4ca25ca35e9c1c4c835908c0ce1405702bae97ac9e5c36da9583c68",
+  "input_origin": "controlled_contract_fixture",
+  "model_releases": 0,
+  "profile_id": "batch-profile-sha256-c0540b7b840cca63408a97a9b2b035ed3f2f6dc733ef2b501a4403e27daadf47",
+  "profile_sha256": "3ef4d62cdda2372684f5776611560c5274f9bd3d201c4235cc9c358d447d35b1",
+  "profiles": 3,
+  "project": "retailops_ai_inputs_7be9e22a89",
+  "published_forecast_outputs": 0,
+  "purpose": "verified_inputs_only",
+  "qualified_release_loaded": false,
+  "rows": 14,
+  "state_sha256": "05032d75ea41d2b534ba2fbdd01fb8b2072fac1e6330bcf248a0ee1a3d96e156",
+  "status": "passed",
+  "storage_bytes": 220753
+}

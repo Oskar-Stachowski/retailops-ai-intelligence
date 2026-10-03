@@ -1,0 +1,65 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "cold_load_seconds": {
+      "minimum": 0,
+      "title": "Cold Load Seconds",
+      "type": "number"
+    },
+    "compute_seconds": {
+      "minimum": 0,
+      "title": "Compute Seconds",
+      "type": "number"
+    },
+    "peak_rss_bytes": {
+      "minimum": 1,
+      "title": "Peak Rss Bytes",
+      "type": "integer"
+    },
+    "profile_id": {
+      "pattern": "^batch-profile-sha256-[0-9a-f]{64}$",
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "purpose": {
+      "default": "runtime_preflight_only",
+      "enum": [
+        "runtime_preflight_only",
+        "qualified_forecast_computation"
+      ],
+      "title": "Purpose",
+      "type": "string"
+    },
+    "quantities": {
+      "items": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "maxItems": 1400,
+      "minItems": 1,
+      "title": "Quantities",
+      "type": "array"
+    },
+    "quantities_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Quantities Sha256",
+      "type": "string"
+    },
+    "release_id": {
+      "pattern": "^model-release-sha256-[0-9a-f]{64}$",
+      "title": "Release Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "profile_id",
+    "release_id",
+    "quantities",
+    "quantities_sha256",
+    "cold_load_seconds",
+    "compute_seconds",
+    "peak_rss_bytes"
+  ],
+  "title": "RuntimeResult",
+  "type": "object"
+}

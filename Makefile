@@ -3,7 +3,7 @@ GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
 UV_RUN = $(UV) run --locked --extra snapshot --extra forecast
 
-.PHONY: return-inputs-check raw-dq-check anomaly-inputs-check forecast-acceptance-check bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke
+.PHONY: return-inputs-check raw-dq-check anomaly-inputs-check forecast-acceptance-check bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke mlflow-store-smoke
 
 bootstrap:
 	$(UV) sync --locked --extra snapshot --extra forecast
@@ -72,7 +72,7 @@ forecast-acceptance-check:
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check contracts-check package compose-config
+check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check contracts-check package compose-config
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner
@@ -89,12 +89,24 @@ contracts:
 	$(UV_RUN) python scripts/update_access_contracts.py
 	$(UV_RUN) python scripts/update_knowledge_contracts.py
 	$(UV_RUN) python scripts/update_forecast_contracts.py
+	$(UV_RUN) python scripts/update_model_lifecycle_contracts.py
+	$(UV_RUN) python scripts/update_forecast_job_contracts.py
+	$(UV_RUN) python scripts/update_v12_runtime_contracts.py
+	$(UV_RUN) python scripts/update_v12_inference_contracts.py
+	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py
+	$(UV_RUN) python scripts/update_v12_batch_contracts.py
 
 contracts-check:
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
 	$(UV_RUN) python scripts/update_access_contracts.py --check
 	$(UV_RUN) python scripts/update_knowledge_contracts.py --check
 	$(UV_RUN) python scripts/update_forecast_contracts.py --check
+	$(UV_RUN) python scripts/update_model_lifecycle_contracts.py --check
+	$(UV_RUN) python scripts/update_forecast_job_contracts.py --check
+	$(UV_RUN) python scripts/update_v12_runtime_contracts.py --check
+	$(UV_RUN) python scripts/update_v12_inference_contracts.py --check
+	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py --check
+	$(UV_RUN) python scripts/update_v12_batch_contracts.py --check
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up
@@ -107,3 +119,62 @@ compose-config:
 
 compose-smoke:
 	$(UV_RUN) python scripts/verify_local_stack.py
+
+mlflow-store-smoke:
+	$(UV_RUN) python scripts/check_mlflow_store.py
+
+.PHONY: v12-lifecycle-smoke
+v12-lifecycle-smoke:
+	$(UV_RUN) python scripts/check_v12_lifecycle.py
+
+.PHONY: v12-queue-smoke
+v12-queue-smoke:
+	$(UV_RUN) python scripts/check_v12_queue.py
+
+.PHONY: v12-publication-smoke
+v12-publication-smoke:
+	$(UV_RUN) python scripts/check_v12_publication.py
+
+.PHONY: v12-metadata-smoke
+v12-metadata-smoke:
+	$(UV_RUN) python scripts/check_v12_metadata.py
+
+.PHONY: v12-backup-smoke
+v12-backup-smoke:
+	$(UV_RUN) python scripts/check_v12_backup.py
+
+.PHONY: model-lifecycle-smoke
+model-lifecycle-smoke:
+	$(UV_RUN) python scripts/check_model_lifecycle.py
+
+.PHONY: lifecycle-store-smoke
+lifecycle-store-smoke:
+	$(UV_RUN) python scripts/check_lifecycle_store.py
+
+.PHONY: forecast-queue-smoke
+forecast-queue-smoke:
+	$(UV_RUN) python scripts/check_forecast_queue.py
+
+.PHONY: forecast-runtime-check
+forecast-runtime-check:
+	$(UV_RUN) python scripts/check_forecast_runtime.py
+
+.PHONY: forecast-input-store-smoke
+forecast-input-store-smoke:
+	$(UV_RUN) python scripts/check_forecast_input_store.py
+
+.PHONY: forecast-publication-smoke
+forecast-publication-smoke:
+	$(UV_RUN) python scripts/check_forecast_publication.py
+
+.PHONY: forecast-read-smoke
+forecast-read-smoke:
+	$(UV_RUN) python scripts/check_forecast_read.py
+
+.PHONY: model-catalog-smoke
+model-catalog-smoke:
+	$(UV_RUN) python scripts/check_model_catalog.py
+
+.PHONY: evaluations-smoke
+evaluations-smoke:
+	$(UV_RUN) python scripts/check_evaluations.py

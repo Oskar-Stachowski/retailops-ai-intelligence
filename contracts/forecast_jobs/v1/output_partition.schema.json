@@ -1,0 +1,96 @@
+{
+  "$defs": {
+    "MechanicsPrediction": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "cutoff_policy": {
+          "const": "end_of_day_second_v1",
+          "title": "Cutoff Policy",
+          "type": "string"
+        },
+        "forecast_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Forecast Origin",
+          "type": "string"
+        },
+        "horizon_days": {
+          "maximum": 14,
+          "minimum": 1,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "predicted_units": {
+          "minimum": 0,
+          "title": "Predicted Units",
+          "type": "number"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "target_date": {
+          "format": "date",
+          "title": "Target Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "forecast_origin",
+        "business_timezone",
+        "cutoff_policy",
+        "target_date",
+        "horizon_days",
+        "predicted_units"
+      ],
+      "title": "MechanicsPrediction",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "ordinal": {
+      "maximum": 5,
+      "minimum": 0,
+      "title": "Ordinal",
+      "type": "integer"
+    },
+    "predictions": {
+      "items": {
+        "$ref": "#/$defs/MechanicsPrediction"
+      },
+      "maxItems": 256,
+      "minItems": 1,
+      "title": "Predictions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "ordinal",
+    "predictions"
+  ],
+  "title": "Partition",
+  "type": "object"
+}

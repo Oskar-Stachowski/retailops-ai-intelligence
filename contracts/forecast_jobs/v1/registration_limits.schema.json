@@ -1,0 +1,21 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "max_profiles": {
+      "default": 256,
+      "maximum": 256,
+      "minimum": 1,
+      "title": "Max Profiles",
+      "type": "integer"
+    },
+    "max_storage_bytes": {
+      "default": 268435456,
+      "maximum": 268435456,
+      "minimum": 1024,
+      "title": "Max Storage Bytes",
+      "type": "integer"
+    }
+  },
+  "title": "RegistrationLimits",
+  "type": "object"
+}

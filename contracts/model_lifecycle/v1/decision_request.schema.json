@@ -1,0 +1,93 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "enum": [
+        "register",
+        "reject",
+        "promote",
+        "rollback"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "decision_id": {
+      "pattern": "^decision-[a-z0-9-]{8,64}$",
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "evidence_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "image_digest": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Image Digest"
+    },
+    "mlflow_run_id": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{32}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Mlflow Run Id"
+    },
+    "model_name": {
+      "default": "retailops-demand-forecast",
+      "enum": [
+        "retailops-demand-forecast",
+        "retailops-demand-forecast-mechanics"
+      ],
+      "title": "Model Name",
+      "type": "string"
+    },
+    "model_version": {
+      "anyOf": [
+        {
+          "pattern": "^[1-9][0-9]{0,9}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Version"
+    },
+    "qualification_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Qualification Sha256",
+      "type": "string"
+    },
+    "reason": {
+      "maxLength": 500,
+      "minLength": 12,
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "decision_id",
+    "action",
+    "evidence_id",
+    "qualification_sha256",
+    "reason"
+  ],
+  "title": "Request",
+  "type": "object"
+}

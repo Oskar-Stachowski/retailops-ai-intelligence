@@ -43,6 +43,51 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
     ):
         errors.append("persistence must execute real Compose acceptance")
     if not any(
+        step.get("run") == "make mlflow-store-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute MLflow backup/restore acceptance")
+    if not any(
+        step.get("run") == "make model-lifecycle-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute model lifecycle recovery acceptance")
+    if not any(
+        step.get("run") == "make lifecycle-store-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute combined lifecycle backup/restore acceptance")
+    if not any(
+        step.get("run") == "make forecast-queue-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute forecast queue acceptance")
+    if not any(
+        step.get("run") == "make forecast-input-store-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute forecast input store acceptance")
+    if not any(
+        step.get("run") == "make forecast-publication-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute forecast publication acceptance")
+    if not any(
+        step.get("run") == "make forecast-read-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute forecast read acceptance")
+    if not any(
+        step.get("run") == "make model-catalog-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute model catalog acceptance")
+    if not any(
+        step.get("run") == "make evaluations-smoke"
+        for step in jobs.get("persistence", {}).get("steps", [])
+    ):
+        errors.append("persistence must execute evaluation acceptance")
+    if not any(
         step.get("run") == "make bootstrap check"
         for step in jobs.get("checks", {}).get("steps", [])
     ):

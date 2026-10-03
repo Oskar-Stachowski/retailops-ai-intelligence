@@ -1,0 +1,65 @@
+{
+  "active_ai04_campaign_read": false,
+  "active_ai04_worktree_modified": false,
+  "actual_mlflow_server_written": false,
+  "base_commit": "a708f48a7e588c92316abc78f9426d0ea00b9b72",
+  "checks": {
+    "actual_loopback_http": "passed",
+    "actual_pinned_ai04_wheel": "rejected_synthetic_transport_fixture",
+    "documentation_links": "passed",
+    "git_diff_check": "passed",
+    "installed_verifier_process_boundary": "passed_with_explicit_test_double",
+    "mypy_touched_modules": "passed",
+    "pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 51
+    },
+    "ruff_check": "passed",
+    "ruff_format": "passed",
+    "v12_large_checkpoint_receipt_boundary": "passed_without_large_file_allocation",
+    "v12_native_signature_shape": "passed_mapping_fixture_against_producer_contract"
+  },
+  "docker_builds": 0,
+  "files": {
+    "reports/ai05-v12-adapter-tests.xml": {
+      "sha256": "2aadc7c04c584d64d492d7f0290afc5837b9bc6d29d93063c7dc2d9b63a8d094",
+      "size_bytes": 6851
+    },
+    "scripts/mlflow_v12_evidence.py": {
+      "sha256": "8630d24f8e4836b497d72e0f437ab3d17dda53b586c0174fb7e88871a0611921",
+      "size_bytes": 1718
+    },
+    "src/retailops_ai/model_lifecycle/v12_evidence.py": {
+      "sha256": "dd912d53843c05d88b0dfe7ff7978cecbc2ccc7252d9abf76a8b95450195563b",
+      "size_bytes": 10051
+    },
+    "src/retailops_ai/model_lifecycle/v12_mlflow.py": {
+      "sha256": "276626c5f984178290c8289ae3b527e1001ab4c91875cf553139531feee12975",
+      "size_bytes": 13886
+    },
+    "tests/test_v12_evidence.py": {
+      "sha256": "2020b4f3e44d73b8350739d8b726f9e0fcd71dfc3f04bc93a5a075a09072db67",
+      "size_bytes": 18757
+    },
+    "tests/test_v12_mlflow_transport.py": {
+      "sha256": "63d2f7e1d8ecda3d15d008beda18a20025ee4db4425ddddea3e725b9f1fb3471",
+      "size_bytes": 3023
+    }
+  },
+  "new_quality_qualification": false,
+  "new_source_generation": false,
+  "real_final_export_imported": false,
+  "recorded_at": "2026-10-01T07:39:23.946137+00:00",
+  "remaining": [
+    "Import completed real v12 export using its pinned AI04 wheel.",
+    "Accept tracking import and idempotent repeat on the existing MLflow server.",
+    "Separately implement and accept v12 loader/runtime/batch/read API and promotion."
+  ],
+  "resource_policy": "stream_original_artifacts_without_duplicate_local_campaign_archive",
+  "scope": "v12_export_verification_and_mlflow_tracking_adapter",
+  "serving_eligible": false,
+  "status": "local_fixture_and_transport_checks_passed",
+  "version": "ai05-v12-export-adapter-evidence-1.0.0"
+}

@@ -1,0 +1,19 @@
+{
+  "audit_run_id": "5f14ca8c81854add8adfd9a0071963e3",
+  "backup_artifact_files": 13,
+  "backup_id": "mlflow-backup-sha256-ec3e4c38ba851e6cd8ba99ad04bafeb531c297985e197bed8ee76cf5dcc40d9b",
+  "decision_id": "decision-ai05-quality-20260929",
+  "gate_counts": {
+    "failed": 79,
+    "not_ready": 8,
+    "passed": 145
+  },
+  "mlflow_run_id": "6a4ba9bb9e714a4cb84362c20895218a",
+  "model_name": "retailops-demand-forecast",
+  "model_version": null,
+  "original_run_id": "run-77a5e7dbff215895baac1709ded1f73f",
+  "quality_status": "not_ready",
+  "repeat_status": "already_rejected",
+  "review_id": "model-review-sha256-7217aacd4c97544803c8a01dbb7a32171525f32004da839f46291caf747b751d",
+  "status": "passed"
+}

@@ -294,8 +294,36 @@ def verify_projection(root: Path, snapshot: Snapshot, scratch: Path, limits: Lim
             )
         verify_ledger(facts, snapshot.manifest["source"]["descriptor"]["context"])
         verify_operations(facts)
+        verify_forecast_watermarks(facts, snapshot.manifest["source"]["descriptor"])
     finally:
         facts.db.close()
+
+
+def verify_forecast_watermarks(facts: Facts, descriptor: dict[str, Any]) -> None:
+    declared = descriptor.get("forecast_watermarks")
+    if declared is None:
+        return
+    cutoff = descriptor["context"]["evaluated_at"]
+    end = descriptor["resolved_parameters"]["end_date"]
+    count, complete = 0, True
+    for row in facts.rows("daily_demand_observations"):
+        count += 1
+        complete = complete and (
+            row["source_data_complete"] is True
+            and instant(row["available_at"]) <= instant(cutoff)
+            and row["business_date"] <= end
+        )
+    complete = bool(count) and complete
+    expected = {
+        "daily_demand_observations": {
+            "as_of_time": cutoff,
+            "complete_through": end if complete else None,
+            "completeness_status": "complete" if complete else "not_ready",
+            "meaning": "synthetic_sales_day_close_without_return_guarantee",
+            "policy_version": "daily-demand-1.0.0",
+        }
+    }
+    require(declared == expected, "forecast_watermark_observed_completeness_mismatch")
 
 
 def issue(
