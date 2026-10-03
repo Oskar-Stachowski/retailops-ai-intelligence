@@ -53,6 +53,11 @@ rozszerza typed import o source 2.7, native ledger i private qualification.
 nowy brak, istniejący brak i niepełne okna obserwacji.
 [Lokalny odbiór etykiet](evidence/08-01-stockout-labels.md) obejmuje prywatny
 handoff AI 06, niezależne odtworzenie ledgeru i zainstalowany wheel.
+[Cechy PIT i podział w czasie](reference/stockout-features.md) obejmują
+znany zapas, obserwowaną sprzedaż, znane plany dostaw i wykluczanie
+okien przekraczających granice train/tune/calibration/test.
+[Odbiór 102 dni](evidence/08-02-stockout-features.md) wiąże 1632 origin
+z pełnym odtworzeniem cech i licznikami wyłączeń.
 [Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
 validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują

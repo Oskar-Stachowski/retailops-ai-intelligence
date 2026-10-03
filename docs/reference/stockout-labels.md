@@ -41,7 +41,7 @@ używać późniejszych zdarzeń wyłącznie jako **etykiety**, nigdy jako cechy
 `label_available_at` uwzględnia koniec okna, opóźnienie truth, dostępność
 zdarzeń i dowodów kwalifikacji. `LabelPoint.eligible_at(training_cutoff)`
 dopuszcza tylko dojrzałą etykietę dostępną przed dopasowaniem modelu.
-Ten helper nie zastępuje jeszcze temporalnego splitu lub purgingu.
+Ten helper nie zastępuje [temporalnego splitu i purgingu](stockout-features.md).
 Wszystkie zegary są UTC. Adapter zachowuje dobowe origin AI 06
 `23:59:59.999999`; nie zamienia ich na origin prognoz AI 04.
 
@@ -97,7 +97,8 @@ Nie stanowi deklaracji wydajności pełnego profilu treningowego.
 
 ## Pozostały zakres AI 08
 
-Do wykonania są features dostępne w czasie, historyczne prognozy bez leakage,
-temporalne train/tune/calibration/test, baseline LR i kandydat HGB,
+Kolejny przyrost dodaje [cechy dostępne w czasie i temporalne
+train/tune/calibration/test](stockout-features.md). Do wykonania pozostają
+historyczne prognozy bez leakage, baseline LR i kandydat HGB,
 kalibracja, progi według pojemności obsługi, metryki jakości oraz integracja
 registry/batch/read API. Artefakt etykiet jawnie zachowuje `model_ready=false`.

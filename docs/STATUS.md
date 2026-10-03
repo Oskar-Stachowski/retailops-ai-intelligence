@@ -1,13 +1,19 @@
 # Aktualny status
 
-**AI 08 — rozpoczęty; pierwszy zakres etykiet ma odbiór lokalny.**
-[Kontrakt](reference/stockout-labels.md) i
-[dowody](evidence/08-01-stockout-labels.md) obejmują 60 okien małego handoff
-AI 06, 73 testy regresji i identyczny wynik z zainstalowanego wheel.
-Pełny zestaw lokalnych bramek przeszedł, w tym 1766/1766 testów;
-zdalny Required CI pozostaje do odebrania.
-Cały AI 08 nie jest ready: pozostają cechy, temporalny split, trening,
-kalibracja, ocena jakości i registry/batch/read API.
+**AI 08 — cechy PIT i podział w czasie mają pełny odbiór lokalny.**
+[Kontrakt cech](reference/stockout-features.md) i
+[dowody 102 dni](evidence/08-02-stockout-features.md) obejmują 1632 origin:
+1104 kwalifikujące się cechy, 432 istniejące braki i 96 braków danych.
+Podział dopuszcza 340/135/130/131 punktów train/tune/calibration/test;
+279 okien wykluczono przy granicach okresów. Regresja ma 144/144 testów;
+zainstalowany wheel odtworzył identyczne wyniki. Pełny `make ci-local` przeszedł,
+w tym 1800/1800 testów, pakiet i skany sekretów.
+Pierwszy zakres [etykiet](evidence/08-01-stockout-labels.md) ma zielone
+Required CI PR i push na `172496b`. Nowszy przyrost w roboczym
+[PR #14](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/14)
+wymaga własnego CI; main nie zawiera jeszcze tego zakresu.
+Cały AI 08 nie jest ready: pozostają historyczny forecast upstream,
+trening LR/HGB, kalibracja, ocena jakości i registry/batch/read API.
 
 **AI 05 — ready po scaleniu PR-ów i zielonym Required CI obu mainów.**
 [Końcowy raport publikacji](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/evidence/ai/05/final/README.md)
