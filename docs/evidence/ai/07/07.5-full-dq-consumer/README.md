@@ -8,7 +8,7 @@ or labels. Evaluation compares its operational output with the frozen producer
 from [draft PR #83](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/83)
 only after independent replay.
 
-All 104 targeted tests passed in 406.22 seconds.
+All 104 targeted tests passed in 415.28 seconds.
 Final review also required canonical JSON byte comparison: Python considers
 `False == 0`, but a boolean transport partition cannot borrow the record ID of
 integer partition 0. Both offline consumers reject it; two explicit regressions

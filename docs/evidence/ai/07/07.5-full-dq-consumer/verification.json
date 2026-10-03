@@ -512,8 +512,9 @@
       "reason": "Two expected error-code assertions per profile corrected; runtime rejected every invalid input.",
       "seconds": 361.84
     },
+    "junit_suite_seconds": 406.222,
     "passed": 104,
-    "seconds": 406.222
+    "seconds": 415.28
   },
   "wheel": {
     "bytes": 934717,
