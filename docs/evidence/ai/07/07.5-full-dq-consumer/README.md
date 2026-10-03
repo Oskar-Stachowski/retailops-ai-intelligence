@@ -1,46 +1,43 @@
 # AI07.5 — independent full operational DQ intake
 
+Runtime `b85ddcd2a8edc611c65154e4249b2cb0d69769d3` is pinned by the [structured receipt](verification.json).
 The [consumer](../../../../reference/full-raw-dq-consumer.md) reconstructs every
-canonical sale and native return claim from public snapshot 1.2 and curated
-parents. It imports no producer modules and accepts no private fault plan or
-labels. Its replay is independently reconciled with the frozen producer output
-from [draft PR #83](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/83).
+canonical sale and native return claim from public snapshot 1.2 and its verified
+curated parent. It imports no producer modules and accepts no private fault plan
+or labels. Evaluation compares its operational output with the frozen producer
+from [draft PR #83](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/83)
+only after independent replay.
 
-This slice closes independent intake of the complete finite source parent,
-including late-tail returns and rejected claims. Per-grain missing business IDs,
-quarantine, deduplication, explicit stream progress and immutable as-of revisions
-are retained. A clean full capture would establish complete parent fact coverage;
-it would still leave business event-day completeness and model readiness
-`not_qualified`. No absent grain is converted into a zero observation.
+All 104 targeted tests passed in 406.22 seconds.
+Final review also required canonical JSON byte comparison: Python considers
+`False == 0`, but a boolean transport partition cannot borrow the record ID of
+integer partition 0. Both offline consumers reject it; two explicit regressions
+cover v1 and v2. Valid captures retain their operational behavior. Earlier
+measurements are historical and do not qualify a changed runtime.
+
+Fresh editable processes completed in 218.56 s / 235.025 s.
+Fresh installed-wheel processes completed in 287.119 s / 255.992 s.
+All four processes reproduced both profiles, their source/snapshot/curated/replay
+identities and immutable DQ publication bytes. Each met 300 s / 1024 MiB;
+producer namespaces and private fault plans were unavailable. Installed CLI
+build/verify passed. Receipts, facts, revisions, aggregates, missing IDs and
+quarantine match the frozen producer digest.
 
 The [fixture lineage](../../../../../data/fixtures/full-raw-dq-v2.lineage.json)
-pins both source/snapshot/capture parents. Runtime `1dcf4faf8cee3c628acab7bf61455122129219df` is pinned by the [structured receipt](verification.json).
-The 102 targeted tests passed in 346.71 seconds.
-Full regression and final-head Required CI results are recorded in the draft PR
-after completion; ongoing checks are not treated as successful evidence.
+pins both source/snapshot/capture parents. Full regression and final-head Required
+CI results are recorded in the draft PR after completion. The checks budget is
+85 minutes, allowing the existing combined AI05/AI07 gates, 104 added cases and
+two additional processes with their unchanged 300-second bound. No persistence
+gate, model execution limit or qualification threshold is removed.
 
-AI07 remains open: reviewed business event-day coverage and DQ qualification
-before scoring, seasonal-residual baseline, Isolation Forest, frozen observation
-and episode evaluation, and anomaly-specific MLflow/batch/read-only serving
-remain required. Broker durability and ACK/crash guarantees belong to AI10.
-AI05 processes, databases, releases and worktree are not modified by this slice.
+This slice verifies the complete finite source parent, including late-tail returns
+and rejected claims. Per-grain missing business IDs, quarantine, deduplication,
+explicit stream progress and immutable as-of revisions remain explicit.
+Complete parent coverage still leaves business event-day completeness and model
+readiness `not_qualified`. No absent grain becomes a zero observation.
 
-The combined checks budget grows from 65 to 85 minutes: the new 102 cases
-took 361.84 seconds in the initial local run, and two additional isolated
-processes each retain a 300-second bound. This allows the existing combined
-AI05/AI07 gates plus the new work; no test, persistence gate, model limit or
-qualification threshold is removed.
-
-Fresh editable processes completed in 227.069 s / 204.49 s.
-Fresh installed-wheel processes completed in 228.037 s / 190.171 s.
-All four processes reproduced both profiles with identical source/snapshot/curated/
-replay identities and published bytes. Each met 300 s / 1024 MiB; producer code
-and private fault plans were unavailable. Installed CLI build/verify passed.
-Operational receipts, facts, revisions, aggregates, missing IDs and quarantine
-match the frozen producer digest, consulted only after replay.
-
-Final review found that Python equality could treat `partition=false` as integer
-`0` while borrowing the integer record ID. Both offline consumers now compare
-canonical JSON bytes before verifying the seal; two regressions require rejection.
-Valid v1/v2 captures retain their operational behavior. Current runtime and
-wheel acceptance must be rebuilt; earlier measurements remain historical.
+AI07 remains open: reviewed event-day coverage and DQ qualification before
+scoring, seasonal-residual baseline, Isolation Forest, frozen observation/episode
+evaluation and anomaly-specific MLflow/batch/read-only serving remain required.
+Broker durability and ACK/crash guarantees belong to AI10. The AI05 worktree,
+processes, databases and releases are not modified by this slice.
