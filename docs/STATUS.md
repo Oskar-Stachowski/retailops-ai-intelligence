@@ -1,5 +1,24 @@
 # Aktualny status
 
+**AI 08 — karta i wyjaśnienia development mają odbiór natywny oraz wheel.**
+[Kontrakt karty](reference/stockout-model-card.md) i
+[pomiary](evidence/08-05-stockout-card.md) obejmują trzy tabele LR,
+20 grup permutation importance wybranego HGB i 135 zestawów lokalnych
+faktów PIT. Karta odtworzyła identyczne ID/bajty z odłączonego pakietu;
+ponownie zahashowane zmiany karty i modelu zostały odrzucone. Wszystkie
+278 wejściowych plików oraz identity przygotowania/treningu pozostały
+niezmienione. Regresja przyrostu ma 49/49 testów, w tym 18 nowych.
+Pełna regresja ma 1853/1853 testów. Wszystkie targety `check` i oba skany
+sekretów są zaliczone; fałszywy alarm na polskim zdaniu usunięto korektą
+dokumentacji i ponownym `make docs-check secrets`, bez zmiany skanera.
+Nowy commit wymaga własnego CI w draft PR #14.
+[Projekt większego profilu](reference/stockout-profile-resources.md) określa
+partycje, indeksy PIT i pomiary; większa generacja nie została uruchomiona.
+Pełny profil, niezależna ocena kalibracji, threshold policy i
+lifecycle/batch/read API pozostają otwarte. Final test nie jest oceniony,
+model niepromowany; cały AI 08 nie jest ready. Poniższe przyrosty AI 08
+zachowują historyczny zakres pomiarów.
+
 **AI 08 — LR/HGB mają pierwsze wyniki development na próbce 102 dni.**
 [Kontrakt](reference/stockout-training.md) i
 [odbiór](evidence/08-04-stockout-models.md) obejmują sześć porównywalnych
@@ -9,11 +28,12 @@ dopasowaniu jest diagnostyką in-sample; final test nie jest oceniany.
 Natywny build/rebuild/replay oraz zainstalowany wheel odtworzyły identyczne
 modele; test ponownie zahashowanej zmiany wag został odrzucony. Regresja
 ma 47/47 testów. Pełny `make ci-local` przeszedł: 1835/1835 testów,
-wszystkie targety, pakiet i skany sekretów. Przyrost wymaga własnego
-zdalnego CI w draft PR #14. Pięć z ośmiu kategorii tune
+wszystkie targety, pakiet i skany sekretów. Commit `4a7a76f` ma zielone
+Required CI PR i push w draft PR #14. Pięć z ośmiu kategorii tune
 ma ranking `not_evaluable` z powodu jednej klasy, bez wyjątku jakości.
-Model card/importance, pełny profil i niezależna ocena, threshold policy
-oraz lifecycle/batch/read API pozostają otwarte; cały AI 08 nie jest ready.
+Późniejsza karta ma osobny odbiór opisany powyżej. Pełny profil i niezależna
+ocena, threshold policy oraz lifecycle/batch/read API pozostają otwarte;
+cały AI 08 nie jest ready.
 
 **AI 08 — historyczna prognoza bazowa ma odbiór natywnej próbki 102 dni.**
 [Kontrakt](reference/stockout-upstream.md) i
@@ -25,8 +45,8 @@ Regresja ma 102/102 testów; zainstalowany wheel odtworzył identyczne wyniki
 z publicznych danych, bez etykiet i truth. Pełny `make ci-local` przeszedł:
 1816/1816 testów, wszystkie targety, pakiet i skany sekretów. Commit
 `aa6b953` ma zielone Required CI PR i push; draft PR #14 pozostaje otwarty.
-Nie ma jeszcze wyników porównania modeli, kalibracji lub final test;
-cały AI 08 nie jest ready.
+Późniejsze wyniki porównania modeli i diagnostyki kalibracji mają odbiór 08.4;
+final test pozostaje nieoceniony i cały AI 08 nie jest ready.
 
 **AI 08 — wcześniejsze cechy PIT i podział w czasie mają pełny odbiór lokalny.**
 [Kontrakt cech](reference/stockout-features.md) i
@@ -40,8 +60,9 @@ Pierwszy zakres [etykiet](evidence/08-01-stockout-labels.md) ma zielone
 Required CI PR i push na `172496b`. Nowszy przyrost w roboczym
 [PR #14](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/14)
 wymaga własnego CI; main nie zawiera jeszcze tego zakresu.
-Do wykonania pozostają trening LR/HGB, kalibracja, ocena jakości
-i registry/batch/read API. Historyczne raporty przyrostów zachowują swój zakres.
+Trening LR/HGB i dopasowanie sigmoid opisuje późniejszy odbiór 08.4.
+Niezależna ocena jakości i registry/batch/read API pozostają otwarte.
+Historyczne raporty przyrostów zachowują swój zakres.
 
 **AI 05 — ready po scaleniu PR-ów i zielonym Required CI obu mainów.**
 [Końcowy raport publikacji](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/evidence/ai/05/final/README.md)

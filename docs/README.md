@@ -67,6 +67,11 @@ train, wybór na tune i dopasowanie sigmoid na calibration, z wejściami
 z forecastem i bez niego oraz kontrolą cenzorowania sprzedaży.
 [Odbiór modeli](evidence/08-04-stockout-models.md) ujawnia ograniczenia
 małej próby, metryki rankingowe i ilustracyjne capacity, bez final test.
+[Karta modelu i diagnostyka cech](reference/stockout-model-card.md) dodaje
+współczynniki LR, znaczenie grup wejść na tune i faktyczny kontekst PIT.
+[Odbiór karty](evidence/08-05-stockout-card.md) zachowuje granice development;
+[projekt większego profilu](reference/stockout-profile-resources.md) określa
+partycjonowanie i pomiary potrzebne przed dalszą generacją.
 [Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
 validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują

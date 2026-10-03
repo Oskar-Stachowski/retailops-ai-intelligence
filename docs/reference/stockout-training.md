@@ -130,6 +130,7 @@ python -m retailops_ai.stockout_training.cli build \
 `verify` używa tych samych parametrów. Jawna zgoda dotyczy weryfikacji
 prywatnego źródła etykiet; nie daje dostępu do oceny final test.
 [Odbiór development](../evidence/08-04-stockout-models.md) zapisuje wykonane
-pomiary i ograniczenia. Model card/importance, pełny profil, niezależna
-ocena kalibracji, threshold policy oraz registry/batch/API wymagają
-późniejszych odbiorów. Cały AI 08 pozostaje otwarty.
+pomiary i ograniczenia. [Karta i diagnostyka](stockout-model-card.md) mają
+osobną tożsamość i odbiór. Pełny profil, niezależna ocena kalibracji,
+threshold policy oraz registry/batch/API wymagają późniejszych odbiorów.
+Cały AI 08 pozostaje otwarty.
