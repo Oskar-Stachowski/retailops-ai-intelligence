@@ -14,9 +14,10 @@ it would still leave business event-day completeness and model readiness
 `not_qualified`. No absent grain is converted into a zero observation.
 
 The [fixture lineage](../../../../../data/fixtures/full-raw-dq-v2.lineage.json)
-pins both source/snapshot/capture parents. Structured measurements, runtime pins,
-targeted negatives, full regression and final-head Required CI are recorded after
-verification; ongoing checks are not treated as successful evidence.
+pins both source/snapshot/capture parents. Runtime `1dcf4faf8cee3c628acab7bf61455122129219df` is pinned by the [structured receipt](verification.json).
+The 102 targeted tests passed in 346.71 seconds.
+Full regression and final-head Required CI results are recorded in the draft PR
+after completion; ongoing checks are not treated as successful evidence.
 
 AI07 remains open: reviewed business event-day coverage and DQ qualification
 before scoring, seasonal-residual baseline, Isolation Forest, frozen observation
@@ -29,3 +30,11 @@ took 361.84 seconds in the initial local run, and two additional isolated
 processes each retain a 300-second bound. This allows the existing combined
 AI05/AI07 gates plus the new work; no test, persistence gate, model limit or
 qualification threshold is removed.
+
+Fresh editable processes completed in 227.069 s / 204.49 s.
+Fresh installed-wheel processes completed in 228.037 s / 190.171 s.
+All four processes reproduced both profiles with identical source/snapshot/curated/
+replay identities and published bytes. Each met 300 s / 1024 MiB; producer code
+and private fault plans were unavailable. Installed CLI build/verify passed.
+Operational receipts, facts, revisions, aggregates, missing IDs and quarantine
+match the frozen producer digest, consulted only after replay.

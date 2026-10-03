@@ -1,0 +1,366 @@
+{
+  "ai05_modified": false,
+  "checks": {
+    "actionlint": "passed",
+    "documentation_links": "passed",
+    "mypy": "passed_345_sources",
+    "ruff": "passed_585_files",
+    "staged_secrets": "passed",
+    "working_tree_and_history_secrets": "passed"
+  },
+  "cli": {
+    "command": "installed retailops-ai-full-raw-dq build + verify",
+    "full_dq_replay_id": "full-dq-replay-sha256-66e8c12383ad9c0f34e7ff10427df65863b191f33178150f68db09af469a915e",
+    "status": "passed"
+  },
+  "editable": {
+    "fixture_sha256": "e899afaeb045a30d62b47fe2f8c9dfb6449ae2fc8f6959750c08e254c7c99775",
+    "limits": {
+      "peak_rss_mib": 1024,
+      "seconds_per_process": 300
+    },
+    "runs": [
+      {
+        "cases": [
+          {
+            "case": "demand",
+            "curated_dataset_id": "curated-sha256-113658ee399e38eb6740d61b04387f1e0e7bc9cd70119ed048efbc2ce035c5be",
+            "full_dq_replay_id": "full-dq-replay-sha256-66e8c12383ad9c0f34e7ff10427df65863b191f33178150f68db09af469a915e",
+            "publication_bytes": 5008714,
+            "replay_sha256": "b8e3ffb3b73e8883cda1c1b81f1efb903c765cf9ff883675a70f6403ca574534",
+            "report": {
+              "accepted": 1627,
+              "accepted_return_claims": 229,
+              "accepted_sales": 1398,
+              "aggregate_revisions": 1627,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-08-31T23:59:59.999999+00:00",
+              "duplicate_business": 2,
+              "duplicate_event": 2,
+              "input_records": 1690,
+              "late": 2,
+              "max_accepted_event_time": "2026-08-31T09:01:04+00:00",
+              "missing_grain_policy": "unknown_not_zero",
+              "missing_parent_facts": 6,
+              "out_of_order": 2,
+              "policy_version": "ai-full-parent-replay-2.0.0",
+              "progress_declarations": 53,
+              "quarantined": 6,
+              "raw_events": 1637,
+              "scope": "all_parent_sales_and_return_claims",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_parent_stream_progress_not_business_event_day_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-96431ac77d2ee7287cf2d072ebd5bb013990b9df09bbd3ba7d68753176c9800d",
+            "source_dataset_id": "source-sha256-3c13e783d52b74bb0955122fd70403eb8f10624acfa11e8b54d587b487cff2fd"
+          },
+          {
+            "case": "physical",
+            "curated_dataset_id": "curated-sha256-b0c78581b1ebae0630d2a647b391f85e87d42e6ec3b69f2dbe7621a49ec5d8d3",
+            "full_dq_replay_id": "full-dq-replay-sha256-2453261e0d37b53d021eb18f4c2d1c248935b67c25be7092245618df7bc94998",
+            "publication_bytes": 5019562,
+            "replay_sha256": "4dbf57d84feed1e0db43c68831b37812d5f2694cddd50e64553f70b248f0f550",
+            "report": {
+              "accepted": 1630,
+              "accepted_return_claims": 243,
+              "accepted_sales": 1387,
+              "aggregate_revisions": 1630,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-08-31T23:59:59.999999+00:00",
+              "duplicate_business": 2,
+              "duplicate_event": 2,
+              "input_records": 1693,
+              "late": 2,
+              "max_accepted_event_time": "2026-08-31T09:01:04+00:00",
+              "missing_grain_policy": "unknown_not_zero",
+              "missing_parent_facts": 6,
+              "out_of_order": 2,
+              "policy_version": "ai-full-parent-replay-2.0.0",
+              "progress_declarations": 53,
+              "quarantined": 6,
+              "raw_events": 1640,
+              "scope": "all_parent_sales_and_return_claims",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_parent_stream_progress_not_business_event_day_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-960377356fb35203d2e455775638840e0486aee0dd29b29e04ca7144525620dd",
+            "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09"
+          }
+        ],
+        "elapsed_seconds": 227.069,
+        "peak_rss_mib": 122.109,
+        "private_fault_plan_available": false,
+        "producer_available": false,
+        "status": "passed"
+      },
+      {
+        "cases": [
+          {
+            "case": "demand",
+            "curated_dataset_id": "curated-sha256-113658ee399e38eb6740d61b04387f1e0e7bc9cd70119ed048efbc2ce035c5be",
+            "full_dq_replay_id": "full-dq-replay-sha256-66e8c12383ad9c0f34e7ff10427df65863b191f33178150f68db09af469a915e",
+            "publication_bytes": 5008714,
+            "replay_sha256": "b8e3ffb3b73e8883cda1c1b81f1efb903c765cf9ff883675a70f6403ca574534",
+            "report": {
+              "accepted": 1627,
+              "accepted_return_claims": 229,
+              "accepted_sales": 1398,
+              "aggregate_revisions": 1627,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-08-31T23:59:59.999999+00:00",
+              "duplicate_business": 2,
+              "duplicate_event": 2,
+              "input_records": 1690,
+              "late": 2,
+              "max_accepted_event_time": "2026-08-31T09:01:04+00:00",
+              "missing_grain_policy": "unknown_not_zero",
+              "missing_parent_facts": 6,
+              "out_of_order": 2,
+              "policy_version": "ai-full-parent-replay-2.0.0",
+              "progress_declarations": 53,
+              "quarantined": 6,
+              "raw_events": 1637,
+              "scope": "all_parent_sales_and_return_claims",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_parent_stream_progress_not_business_event_day_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-96431ac77d2ee7287cf2d072ebd5bb013990b9df09bbd3ba7d68753176c9800d",
+            "source_dataset_id": "source-sha256-3c13e783d52b74bb0955122fd70403eb8f10624acfa11e8b54d587b487cff2fd"
+          },
+          {
+            "case": "physical",
+            "curated_dataset_id": "curated-sha256-b0c78581b1ebae0630d2a647b391f85e87d42e6ec3b69f2dbe7621a49ec5d8d3",
+            "full_dq_replay_id": "full-dq-replay-sha256-2453261e0d37b53d021eb18f4c2d1c248935b67c25be7092245618df7bc94998",
+            "publication_bytes": 5019562,
+            "replay_sha256": "4dbf57d84feed1e0db43c68831b37812d5f2694cddd50e64553f70b248f0f550",
+            "report": {
+              "accepted": 1630,
+              "accepted_return_claims": 243,
+              "accepted_sales": 1387,
+              "aggregate_revisions": 1630,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-08-31T23:59:59.999999+00:00",
+              "duplicate_business": 2,
+              "duplicate_event": 2,
+              "input_records": 1693,
+              "late": 2,
+              "max_accepted_event_time": "2026-08-31T09:01:04+00:00",
+              "missing_grain_policy": "unknown_not_zero",
+              "missing_parent_facts": 6,
+              "out_of_order": 2,
+              "policy_version": "ai-full-parent-replay-2.0.0",
+              "progress_declarations": 53,
+              "quarantined": 6,
+              "raw_events": 1640,
+              "scope": "all_parent_sales_and_return_claims",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_parent_stream_progress_not_business_event_day_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-960377356fb35203d2e455775638840e0486aee0dd29b29e04ca7144525620dd",
+            "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09"
+          }
+        ],
+        "elapsed_seconds": 204.49,
+        "peak_rss_mib": 134.578,
+        "private_fault_plan_available": false,
+        "producer_available": false,
+        "status": "passed"
+      }
+    ],
+    "status": "passed"
+  },
+  "full_regression_and_final_head_ci": "recorded_in_pull_request_after_completion",
+  "installed_wheel": {
+    "fixture_sha256": "e899afaeb045a30d62b47fe2f8c9dfb6449ae2fc8f6959750c08e254c7c99775",
+    "limits": {
+      "peak_rss_mib": 1024,
+      "seconds_per_process": 300
+    },
+    "runs": [
+      {
+        "cases": [
+          {
+            "case": "demand",
+            "curated_dataset_id": "curated-sha256-113658ee399e38eb6740d61b04387f1e0e7bc9cd70119ed048efbc2ce035c5be",
+            "full_dq_replay_id": "full-dq-replay-sha256-66e8c12383ad9c0f34e7ff10427df65863b191f33178150f68db09af469a915e",
+            "publication_bytes": 5008714,
+            "replay_sha256": "b8e3ffb3b73e8883cda1c1b81f1efb903c765cf9ff883675a70f6403ca574534",
+            "report": {
+              "accepted": 1627,
+              "accepted_return_claims": 229,
+              "accepted_sales": 1398,
+              "aggregate_revisions": 1627,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-08-31T23:59:59.999999+00:00",
+              "duplicate_business": 2,
+              "duplicate_event": 2,
+              "input_records": 1690,
+              "late": 2,
+              "max_accepted_event_time": "2026-08-31T09:01:04+00:00",
+              "missing_grain_policy": "unknown_not_zero",
+              "missing_parent_facts": 6,
+              "out_of_order": 2,
+              "policy_version": "ai-full-parent-replay-2.0.0",
+              "progress_declarations": 53,
+              "quarantined": 6,
+              "raw_events": 1637,
+              "scope": "all_parent_sales_and_return_claims",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_parent_stream_progress_not_business_event_day_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-96431ac77d2ee7287cf2d072ebd5bb013990b9df09bbd3ba7d68753176c9800d",
+            "source_dataset_id": "source-sha256-3c13e783d52b74bb0955122fd70403eb8f10624acfa11e8b54d587b487cff2fd"
+          },
+          {
+            "case": "physical",
+            "curated_dataset_id": "curated-sha256-b0c78581b1ebae0630d2a647b391f85e87d42e6ec3b69f2dbe7621a49ec5d8d3",
+            "full_dq_replay_id": "full-dq-replay-sha256-2453261e0d37b53d021eb18f4c2d1c248935b67c25be7092245618df7bc94998",
+            "publication_bytes": 5019562,
+            "replay_sha256": "4dbf57d84feed1e0db43c68831b37812d5f2694cddd50e64553f70b248f0f550",
+            "report": {
+              "accepted": 1630,
+              "accepted_return_claims": 243,
+              "accepted_sales": 1387,
+              "aggregate_revisions": 1630,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-08-31T23:59:59.999999+00:00",
+              "duplicate_business": 2,
+              "duplicate_event": 2,
+              "input_records": 1693,
+              "late": 2,
+              "max_accepted_event_time": "2026-08-31T09:01:04+00:00",
+              "missing_grain_policy": "unknown_not_zero",
+              "missing_parent_facts": 6,
+              "out_of_order": 2,
+              "policy_version": "ai-full-parent-replay-2.0.0",
+              "progress_declarations": 53,
+              "quarantined": 6,
+              "raw_events": 1640,
+              "scope": "all_parent_sales_and_return_claims",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_parent_stream_progress_not_business_event_day_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-960377356fb35203d2e455775638840e0486aee0dd29b29e04ca7144525620dd",
+            "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09"
+          }
+        ],
+        "elapsed_seconds": 228.037,
+        "peak_rss_mib": 132.188,
+        "private_fault_plan_available": false,
+        "producer_available": false,
+        "status": "passed"
+      },
+      {
+        "cases": [
+          {
+            "case": "demand",
+            "curated_dataset_id": "curated-sha256-113658ee399e38eb6740d61b04387f1e0e7bc9cd70119ed048efbc2ce035c5be",
+            "full_dq_replay_id": "full-dq-replay-sha256-66e8c12383ad9c0f34e7ff10427df65863b191f33178150f68db09af469a915e",
+            "publication_bytes": 5008714,
+            "replay_sha256": "b8e3ffb3b73e8883cda1c1b81f1efb903c765cf9ff883675a70f6403ca574534",
+            "report": {
+              "accepted": 1627,
+              "accepted_return_claims": 229,
+              "accepted_sales": 1398,
+              "aggregate_revisions": 1627,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-08-31T23:59:59.999999+00:00",
+              "duplicate_business": 2,
+              "duplicate_event": 2,
+              "input_records": 1690,
+              "late": 2,
+              "max_accepted_event_time": "2026-08-31T09:01:04+00:00",
+              "missing_grain_policy": "unknown_not_zero",
+              "missing_parent_facts": 6,
+              "out_of_order": 2,
+              "policy_version": "ai-full-parent-replay-2.0.0",
+              "progress_declarations": 53,
+              "quarantined": 6,
+              "raw_events": 1637,
+              "scope": "all_parent_sales_and_return_claims",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_parent_stream_progress_not_business_event_day_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-96431ac77d2ee7287cf2d072ebd5bb013990b9df09bbd3ba7d68753176c9800d",
+            "source_dataset_id": "source-sha256-3c13e783d52b74bb0955122fd70403eb8f10624acfa11e8b54d587b487cff2fd"
+          },
+          {
+            "case": "physical",
+            "curated_dataset_id": "curated-sha256-b0c78581b1ebae0630d2a647b391f85e87d42e6ec3b69f2dbe7621a49ec5d8d3",
+            "full_dq_replay_id": "full-dq-replay-sha256-2453261e0d37b53d021eb18f4c2d1c248935b67c25be7092245618df7bc94998",
+            "publication_bytes": 5019562,
+            "replay_sha256": "4dbf57d84feed1e0db43c68831b37812d5f2694cddd50e64553f70b248f0f550",
+            "report": {
+              "accepted": 1630,
+              "accepted_return_claims": 243,
+              "accepted_sales": 1387,
+              "aggregate_revisions": 1630,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-08-31T23:59:59.999999+00:00",
+              "duplicate_business": 2,
+              "duplicate_event": 2,
+              "input_records": 1693,
+              "late": 2,
+              "max_accepted_event_time": "2026-08-31T09:01:04+00:00",
+              "missing_grain_policy": "unknown_not_zero",
+              "missing_parent_facts": 6,
+              "out_of_order": 2,
+              "policy_version": "ai-full-parent-replay-2.0.0",
+              "progress_declarations": 53,
+              "quarantined": 6,
+              "raw_events": 1640,
+              "scope": "all_parent_sales_and_return_claims",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_parent_stream_progress_not_business_event_day_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-960377356fb35203d2e455775638840e0486aee0dd29b29e04ca7144525620dd",
+            "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09"
+          }
+        ],
+        "elapsed_seconds": 190.171,
+        "peak_rss_mib": 134.797,
+        "private_fault_plan_available": false,
+        "producer_available": false,
+        "status": "passed"
+      }
+    ],
+    "status": "passed"
+  },
+  "parent_ai_commit": "75592255f637801986ffad0a66a5a9c6bbe3d94f",
+  "producer_commit": "1fc2787d21a49911fcf663cfd67b4407f3a85986",
+  "producer_runtime_commit": "ae1178ccfc7f3019645a364acb4ca210f8a05c95",
+  "qualification": {
+    "business_event_day_completeness": "not_qualified",
+    "evaluation_truth_in_runtime": false,
+    "model_readiness": "not_qualified",
+    "parent_fact_coverage": "verified",
+    "transport_durability_proven": false
+  },
+  "runtime_commit": "1dcf4faf8cee3c628acab7bf61455122129219df",
+  "scope": "independent_finite_parent_operational_replay",
+  "status": "passed",
+  "targeted_tests": {
+    "first_run": {
+      "failed": 4,
+      "passed": 98,
+      "reason": "Two expected error-code assertions per profile corrected; runtime rejected every invalid input.",
+      "seconds": 361.84
+    },
+    "passed": 102,
+    "seconds": 346.712
+  },
+  "wheel": {
+    "bytes": 934698,
+    "locked_requirements_sha256": "61c51f45a343db48f582d1b308bcafaeea10854f75603f4ec7280a865320a925",
+    "repository_on_import_path": false,
+    "sha256": "49fe6c39661123f57d54484edb57c3a2937089b7304a866ad51f0e31700d8636"
+  }
+}
