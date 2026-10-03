@@ -35,15 +35,23 @@ def feature_implementation() -> dict[str, Any]:
 
 def load_features_input(root: Path) -> tuple[dict[str, Any], dict[str, list[dict[str, Any]]]]:
     """Verify the full producer/consumer contract and each selected table after reading it."""
-    import tempfile
 
     document = verify_curated(root, limits=INPUT_LIMITS)
     if document["schema_version"] != "1.1.0" or not document["readiness"]["inventory_ready"]:
         raise SnapshotError("stockout_features_require_ready_inventory_curated_11")
+    return document, read_sealed_tables(root, document, FEATURE_TABLES)
+
+
+def read_sealed_tables(
+    root: Path, document: dict[str, Any], names: tuple[str, ...]
+) -> dict[str, list[dict[str, Any]]]:
+    """Read the caller's explicit fact allowlist against an already verified manifest."""
+    import tempfile
+
     specs = {t["table"]: t for t in document["tables"]}
     records = {}
     with tempfile.TemporaryDirectory(prefix="stockout-features-seal-") as temporary:
-        for name in FEATURE_TABLES:
+        for name in names:
             spec = specs[name]
             loaded = list(iter_rows(root, spec["files"], INPUT_LIMITS.batch_rows))
             digest = Digest(
@@ -57,7 +65,7 @@ def load_features_input(root: Path) -> tuple[dict[str, Any], dict[str, list[dict
             finally:
                 digest.close()
             records[name] = loaded
-    return document, records
+    return records
 
 
 def build_features(

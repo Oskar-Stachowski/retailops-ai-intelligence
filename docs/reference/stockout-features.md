@@ -2,9 +2,10 @@
 
 Ten przyrost dodaje cechy dla `product_id × stock_location_id × as_of`
 oraz członkostwo train/tune/calibration/test. Korzysta z publicznych faktów
-curated 1.1 i osobnych [etykiet](stockout-labels.md). Historyczny forecast
-upstream, dopasowanie LR/HGB, kalibracja i ocena modelu pozostają kolejnymi
-krokami. Wyniki jawnie mają `upstream_forecast_ready=false`, `model_ready=false`.
+curated 1.1 i osobnych [etykiet](stockout-labels.md). Kolejny przyrost dodaje
+osobną [historyczną prognozę upstream](stockout-upstream.md). Dopasowanie
+LR/HGB, kalibracja i ocena modelu pozostają kolejnymi krokami.
+Bazowy artefakt jawnie ma `upstream_forecast_ready=false`, `model_ready=false`.
 
 ## Wiedza w origin
 

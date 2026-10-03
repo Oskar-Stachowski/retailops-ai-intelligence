@@ -6,21 +6,33 @@ from pathlib import Path
 
 from pydantic import ValidationError
 
-from retailops_ai.source_snapshot.files import SnapshotError, read_json
+from retailops_ai.source_snapshot.files import SnapshotError, decode_json, read_bytes, read_json
 from retailops_ai.stockout.artifacts import write_artifact
 from retailops_ai.stockout.dataset import MAX_LABEL_BYTES, verify_labels
 from retailops_ai.stockout.feature_dataset import MAX_FEATURE_BYTES, build_features, verify_features
 from retailops_ai.stockout.split import SplitPolicy, build_split
+from retailops_ai.stockout.upstream_dataset import build_comparison, build_upstream, verify_upstream
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "action", choices=("features-build", "features-verify", "split-build", "split-verify")
+        "action",
+        choices=(
+            "features-build",
+            "features-verify",
+            "split-build",
+            "split-verify",
+            "upstream-build",
+            "upstream-verify",
+            "comparison-build",
+            "comparison-verify",
+        ),
     )
     parser.add_argument("--curated", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--features", type=Path)
+    parser.add_argument("--upstream", type=Path)
     parser.add_argument("--labels", type=Path)
     parser.add_argument("--source", type=Path)
     parser.add_argument("--policy", type=Path)
@@ -33,6 +45,33 @@ def main() -> int:
         elif args.action == "features-verify":
             document = verify_features(args.output, args.curated)
             status = "verified"
+        elif args.action.startswith(("upstream-", "comparison-")):
+            if args.features is None:
+                raise ValueError("upstream_requires_fully_pinned_features")
+            features = verify_features(args.features, args.curated)
+            if args.action == "upstream-build":
+                document = build_upstream(args.curated, features)
+                status = write_artifact(document, args.output, max_bytes=MAX_FEATURE_BYTES)
+            elif args.action == "upstream-verify":
+                document = verify_upstream(args.output, args.curated, features)
+                status = "verified"
+            else:
+                if args.upstream is None:
+                    raise ValueError("comparison_requires_fully_pinned_upstream")
+                upstream = verify_upstream(args.upstream, args.curated, features)
+                document = build_comparison(features, upstream)
+                if args.action == "comparison-build":
+                    status = write_artifact(document, args.output, max_bytes=MAX_FEATURE_BYTES)
+                else:
+                    if (
+                        decode_json(
+                            read_bytes(args.output.parent, args.output.name, MAX_FEATURE_BYTES),
+                            limit=MAX_FEATURE_BYTES,
+                        )
+                        != document
+                    ):
+                        raise ValueError("stockout_comparison_full_replay_mismatch")
+                    status = "verified"
         else:
             if not all((args.features, args.labels, args.source, args.policy)):
                 raise ValueError("split_requires_fully_pinned_features_labels_source_policy")
@@ -53,7 +92,19 @@ def main() -> int:
                 dict(
                     status=status,
                     report=document["report"],
-                    id=document.get("feature_dataset_id", document.get("split_id")),
+                    id=next(
+                        (
+                            document[k]
+                            for k in (
+                                "feature_dataset_id",
+                                "split_id",
+                                "upstream_id",
+                                "comparison_id",
+                            )
+                            if k in document
+                        ),
+                        None,
+                    ),
                 )
             )
         )

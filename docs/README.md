@@ -58,6 +58,10 @@ znany zapas, obserwowaną sprzedaż, znane plany dostaw i wykluczanie
 okien przekraczających granice train/tune/calibration/test.
 [Odbiór 102 dni](evidence/08-02-stockout-features.md) wiąże 1632 origin
 z pełnym odtworzeniem cech i licznikami wyłączeń.
+[Historyczny forecast upstream](reference/stockout-upstream.md) dodaje
+prognozę stałego baseline na granicy wiedzy każdego dnia oraz identyczne
+wejścia wariantów z tą cechą i bez niej; [odbiór](evidence/08-03-stockout-upstream.md)
+obejmuje pokrycie prognozą wszystkich dopuszczonych okien splitu.
 [Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
 validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują

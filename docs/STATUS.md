@@ -1,6 +1,19 @@
 # Aktualny status
 
-**AI 08 — cechy PIT i podział w czasie mają pełny odbiór lokalny.**
+**AI 08 — historyczna prognoza bazowa ma odbiór natywnej próbki 102 dni.**
+[Kontrakt](reference/stockout-upstream.md) i
+[dowody](evidence/08-03-stockout-upstream.md) obejmują rekonstrukcję prognozy
+z wiedzy każdego dnia oraz identyczne wejścia wariantów z prognozą i bez niej.
+Prognoza jest dostępna dla 1015/1104 bazowych punktów `eligible` i wszystkich
+736 punktów dopuszczonych przez split (340/135/130/131).
+Regresja ma 102/102 testów; zainstalowany wheel odtworzył identyczne wyniki
+z publicznych danych, bez etykiet i truth. Pełny `make ci-local` przeszedł:
+1816/1816 testów, wszystkie targety, pakiet i skany sekretów. Przyrost trafia
+do draft PR #14 i wymaga własnego zdalnego CI.
+Nie ma jeszcze wyników porównania modeli, kalibracji lub final test;
+cały AI 08 nie jest ready.
+
+**AI 08 — wcześniejsze cechy PIT i podział w czasie mają pełny odbiór lokalny.**
 [Kontrakt cech](reference/stockout-features.md) i
 [dowody 102 dni](evidence/08-02-stockout-features.md) obejmują 1632 origin:
 1104 kwalifikujące się cechy, 432 istniejące braki i 96 braków danych.
@@ -12,8 +25,8 @@ Pierwszy zakres [etykiet](evidence/08-01-stockout-labels.md) ma zielone
 Required CI PR i push na `172496b`. Nowszy przyrost w roboczym
 [PR #14](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/14)
 wymaga własnego CI; main nie zawiera jeszcze tego zakresu.
-Cały AI 08 nie jest ready: pozostają historyczny forecast upstream,
-trening LR/HGB, kalibracja, ocena jakości i registry/batch/read API.
+Do wykonania pozostają trening LR/HGB, kalibracja, ocena jakości
+i registry/batch/read API. Historyczne raporty przyrostów zachowują swój zakres.
 
 **AI 05 — ready po scaleniu PR-ów i zielonym Required CI obu mainów.**
 [Końcowy raport publikacji](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/evidence/ai/05/final/README.md)

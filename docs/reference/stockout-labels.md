@@ -98,7 +98,8 @@ Nie stanowi deklaracji wydajności pełnego profilu treningowego.
 ## Pozostały zakres AI 08
 
 Kolejny przyrost dodaje [cechy dostępne w czasie i temporalne
-train/tune/calibration/test](stockout-features.md). Do wykonania pozostają
-historyczne prognozy bez leakage, baseline LR i kandydat HGB,
+train/tune/calibration/test](stockout-features.md).
+Odrębny przyrost dodaje [historyczną prognozę bez leakage](stockout-upstream.md).
+Do wykonania pozostają baseline LR i kandydat HGB,
 kalibracja, progi według pojemności obsługi, metryki jakości oraz integracja
 registry/batch/read API. Artefakt etykiet jawnie zachowuje `model_ready=false`.
