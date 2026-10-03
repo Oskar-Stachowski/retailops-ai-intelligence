@@ -171,6 +171,30 @@ def verify_replay(root: Path, curated_dir: Path, import_dir: Path) -> Manifest:
     return manifest
 
 
+def check_staged_payload(
+    root: Path, manifest: Manifest, raw: bytes, binding_raw: bytes, replay_raw: bytes
+) -> None:
+    """Check staged bytes against the independently reconstructed build material.
+
+    The builder owns this stage and the expected bytes. Public verification
+    independently reconstructs the parent and replay in verify_replay.
+    """
+    root = checked_directory(root)
+    inventory(root, FILES | {"dq_manifest.json", "manifest.sha256", "replay.json"})
+    document = canonical_json(manifest.model_dump(mode="json")) + b"\n"
+    for name, expected, limit in (
+        ("raw/events.jsonl", raw, MAX_BYTES),
+        ("source_binding.json", binding_raw, 65536),
+        ("replay.json", replay_raw, MAX_BYTES),
+        ("dq_manifest.json", document, 1024**2),
+        ("manifest.sha256", (hashlib.sha256(document).hexdigest() + "\n").encode(), 128),
+    ):
+        if read_bytes(root, name, limit) != expected:
+            raise SnapshotError("full_dq_staged_payload_changed")
+    if runtime() != manifest.descriptor.runtime:
+        raise SnapshotError("full_dq_runtime_changed_during_build")
+
+
 def build_replay(
     capture_dir: Path, curated_dir: Path, import_dir: Path, generated_root: Path
 ) -> dict[str, Any]:
@@ -193,9 +217,15 @@ def build_replay(
         raise SnapshotError("full_dq_requires_separate_data_generated_root")
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
     checked_directory(root)
+    target.mkdir(exist_ok=True, mode=0o700)
+    checked_directory(target)
     descriptor, raw, binding_raw, replay_raw = material(capture_dir, curated_dir, import_dir)
     manifest = Manifest(full_dq_replay_id=replay_id(descriptor), descriptor=descriptor)
     destination = target / manifest.full_dq_replay_id
+    if destination.exists():
+        if verify_replay(destination, curated_dir, import_dir) != manifest:
+            raise SnapshotError("immutable_full_dq_replay_conflict")
+        return build_result("reused", destination, manifest, replay_raw)
     with tempfile.TemporaryDirectory(prefix=".dq-build-", dir=root) as tmp:
         stage = Path(tmp) / "payload"
         stage.mkdir(mode=0o700)
@@ -211,10 +241,8 @@ def build_replay(
         write_private(
             stage / "manifest.sha256", (hashlib.sha256(document).hexdigest() + "\n").encode()
         )
-        verify_replay(stage, curated_dir, import_dir)
+        check_staged_payload(stage, manifest, raw, binding_raw, replay_raw)
         fsync_tree(stage)
-        target.mkdir(exist_ok=True, mode=0o700)
-        checked_directory(target)
         try:
             publish_noreplace(stage, destination)
             status = "created"
@@ -222,11 +250,17 @@ def build_replay(
             if verify_replay(destination, curated_dir, import_dir) != manifest:
                 raise SnapshotError("immutable_full_dq_replay_conflict") from None
             status = "reused"
+    return build_result(status, destination, manifest, replay_raw)
+
+
+def build_result(
+    status: str, destination: Path, manifest: Manifest, replay_raw: bytes
+) -> dict[str, Any]:
     return {
         "status": status,
         "directory": str(destination),
         "full_dq_replay_id": manifest.full_dq_replay_id,
-        "parent_curated_dataset_id": descriptor.parent.curated_dataset_id,
+        "parent_curated_dataset_id": manifest.descriptor.parent.curated_dataset_id,
         "report": json.loads(replay_raw)["report"],
         "model_readiness": "not_qualified",
     }

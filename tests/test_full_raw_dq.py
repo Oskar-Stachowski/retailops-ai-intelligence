@@ -419,6 +419,25 @@ def test_build_reuse_and_source_are_immutable(prepared):
     assert hashes(prepared["root"]) == before
 
 
+def test_staged_corruption_is_rejected_before_publication(prepared, tmp_path, monkeypatch):
+    from retailops_ai.full_raw_dq import store
+
+    original = store.write_private
+
+    def corrupt(path, raw):
+        if path.name == "replay.json":
+            value = json.loads(raw)
+            value["final_aggregates"][0]["units"] += 999
+            raw = canonical_json(value) + b"\n"
+        original(path, raw)
+
+    monkeypatch.setattr(store, "write_private", corrupt)
+    generated = tmp_path / "data/generated"
+    with pytest.raises(SnapshotError, match="staged_payload_changed"):
+        build_replay(prepared["capture"], prepared["curated"], prepared["import"], generated)
+    assert list((generated / "full-dq-replay").iterdir()) == []
+
+
 def test_file_cannot_hide_positions_using_repeated_receipts(prepared):
     record = delivery(prepared["parent"].events[0])
     with pytest.raises(SnapshotError, match="duplicate_capture_record"):

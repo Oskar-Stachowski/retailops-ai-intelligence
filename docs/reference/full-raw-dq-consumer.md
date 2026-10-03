@@ -63,9 +63,12 @@ must precede qualified demand/return features and anomaly scoring.
 Limits are 4,096 canonical parent events, 8,192 delivery offsets, 16,384 total
 records, 64 KiB per body and 32 MiB per capture/replay. Native parent loading is
 bounded by 100,000 rows and 128 MiB. Metadata, schemas, dependencies, Python and
-all used runtime modules bind the immutable artifact ID. Publication uses
-staging, semantic replay verification, fsync and no-replace rename; retry verifies
-and reuses identical bytes. A checksum alone does not qualify a modified replay.
+all used runtime modules bind the immutable artifact ID. The builder independently
+reconstructs the parent and replay, then checks the exact staged file inventory
+and bytes against that in-memory result before fsync and no-replace rename.
+An existing destination is independently verified before reuse, including one
+created by a concurrent publisher. Public `verify` always reconstructs the full
+parent and semantic replay. A checksum alone does not qualify a modified replay.
 
 The [public fixture](../../data/fixtures/full-raw-dq-v2.md) contains both 30-day
 ai-smoke parents and operational captures, with no private fault plan or labels.
