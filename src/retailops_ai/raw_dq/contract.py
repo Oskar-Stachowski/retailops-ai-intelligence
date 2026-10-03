@@ -68,7 +68,9 @@ def parse_capture(payload: dict[str, Any]) -> Delivery | Progress:
     record = ADAPTER.validate_json(canonical_json(payload))
     normalized = record.model_dump(mode="json")
     unsigned = {k: v for k, v in normalized.items() if k != "record_id"}
-    if normalized != payload or record.record_id != "raw-record-sha256-" + json_sha256(unsigned):
+    if canonical_json(normalized) != canonical_json(
+        payload
+    ) or record.record_id != "raw-record-sha256-" + json_sha256(unsigned):
         raise SnapshotError("dq_capture_identity_mismatch")
     received = stamp(record.received_at)
     if isinstance(record, Delivery):

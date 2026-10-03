@@ -48,3 +48,6 @@ api-client-credentials.json
 !data/fixtures/raw-dq-v1.zip
 !data/fixtures/raw-dq-v1.md
 !data/fixtures/raw-dq-v1.lineage.json
+!data/fixtures/full-raw-dq-v2.zip
+!data/fixtures/full-raw-dq-v2.md
+!data/fixtures/full-raw-dq-v2.lineage.json

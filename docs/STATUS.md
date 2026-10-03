@@ -300,3 +300,12 @@ Nie ma jeszcze generowania odpowiedzi, ewaluacji groundedness ani wykonywania
 narzędzi agenta — to AI 12. Pipeline danych, modele, integracja zdarzeń oraz
 wdrożenie AWS/EKS mają dalsze bramki. Limit AWS na proces nie zastępuje wspólnego
 budżetu wielu replik ani produkcyjnego IAM. Nie deklarujemy wdrożenia w chmurze.
+
+## AI07 — pełny strumień operacyjny DQ
+
+[Odbiór konsumenta v2](evidence/ai/07/07.5-full-dq-consumer/README.md) rozwija
+wcześniejszy replay wybranych sprzedaży do wszystkich sprzedaży i natywnych
+zgłoszeń zwrotów, z ogonem po historii sprzedaży. Brakujące fakty pozostają
+jawne; odrzucone zwroty nie zwiększają refundowanych sztuk. Pokrycie konkretnego
+źródła nie kwalifikuje kompletności dnia. AI07 wymaga jeszcze polityki dni,
+kwalifikacji DQ, baseline/Isolation Forest, oceny i własnego lifecycle.

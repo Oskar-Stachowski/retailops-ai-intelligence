@@ -32,6 +32,7 @@ retailops-ai-curated = "retailops_ai.curated.cli:main"
 retailops-ai-forecast = "retailops_ai.forecasting.cli:main"
 retailops-ai-anomaly-inputs = "retailops_ai.anomalies.cli:main"
 retailops-ai-raw-dq = "retailops_ai.raw_dq.cli:main"
+retailops-ai-full-raw-dq = "retailops_ai.full_raw_dq.cli:main"
 retailops-ai-return-inputs = "retailops_ai.return_inputs.cli:main"
 
 [project.optional-dependencies]
@@ -105,6 +106,7 @@ packages = ["src/retailops_ai"]
 "contracts/curated/v1_2" = "retailops_ai/curated/v1_2"
 "contracts/anomaly/v1" = "retailops_ai/anomalies/contracts"
 "contracts/raw_dq/v1" = "retailops_ai/raw_dq/contracts"
+"contracts/raw_dq/v2" = "retailops_ai/full_raw_dq/contracts"
 "contracts/return_inputs/v1" = "retailops_ai/return_inputs/contracts"
 "contracts/source_snapshot/v1_1" = "retailops_ai/source_snapshot/v1_1"
 "contracts/source_snapshot/v1_2" = "retailops_ai/source_snapshot/v1_2"
