@@ -51,3 +51,6 @@ api-client-credentials.json
 !data/fixtures/full-raw-dq-v2.zip
 !data/fixtures/full-raw-dq-v2.md
 !data/fixtures/full-raw-dq-v2.lineage.json
+!data/fixtures/day-coverage-v1.zip
+!data/fixtures/day-coverage-v1.md
+!data/fixtures/day-coverage-v1.lineage.json

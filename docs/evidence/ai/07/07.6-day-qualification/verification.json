@@ -1,0 +1,253 @@
+{
+  "ai05_modified": false,
+  "ai07_ready": false,
+  "component": "ai-business-day-qualification-1.0.0",
+  "consumer_base_sha": "502c3bcd42a7f92b080c5bdb5067e9e3fd3e71e3",
+  "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "editable": {
+    "limits": {
+      "peak_rss_mib": 1024,
+      "seconds_per_process": 300
+    },
+    "runs": [
+      {
+        "cases": [
+          {
+            "artifact_files": {
+              "manifest.sha256": "319109bd98dfa75f254223e461e43e7d5951f17988d855e4a24cfec44b07baab",
+              "qualification_manifest.json": "b0b74478e2423cf34d94e9fc4d75892bdcd88a5de2ea4525248dccffcb4202c3",
+              "qualified_days.jsonl": "9cb72ed41007335e4be5bf0f43b790b3f73abf565e4e5f6e121315f785b931ad"
+            },
+            "case": "demand",
+            "coverage_id": "day-coverage-sha256-2a1102d5068df76ee276eadea3e9afdf772703b915c16f4e00373ba2af0d5aef",
+            "day_qualification_id": "day-qualification-sha256-09276cbae82ab5fc7255f806a94919c2b6ed6270d9ba65d5ee63862d9c0cfcd3",
+            "full_dq_replay_id": "full-dq-replay-sha256-bc0d358897153253399acd14dc0c620ee54f6ce7cb775558fc1ff2384e53f541",
+            "row_count": 1713,
+            "rows_sha256": "9cb72ed41007335e4be5bf0f43b790b3f73abf565e4e5f6e121315f785b931ad",
+            "source_dataset_id": "source-sha256-3c13e783d52b74bb0955122fd70403eb8f10624acfa11e8b54d587b487cff2fd",
+            "status_counts": {
+              "closure_unavailable": 22,
+              "dq_missing_facts": 304,
+              "location_closed": 60,
+              "qualified": 1327
+            }
+          },
+          {
+            "artifact_files": {
+              "manifest.sha256": "841cedc947dbe52b193cd9f9850f00c6c4c6d93b0ddcb23a9e842e7620f96be4",
+              "qualification_manifest.json": "6300e6d3f49ee75394b7d3fb68fed6941a43b02868192a391aa6016256aefef4",
+              "qualified_days.jsonl": "0e03315c9801d7f68345d527357d6738bd13213817fc8b3bcc9b54d2dac9ad3c"
+            },
+            "case": "physical",
+            "coverage_id": "day-coverage-sha256-cd82a5392012a8ec57a7b73301f6c579034f95f40b29f484834d5888e17444d5",
+            "day_qualification_id": "day-qualification-sha256-c0233abe436a9d854e512b460504ec7e8f49ce3a859890699ecb3ae2afef8c4e",
+            "full_dq_replay_id": "full-dq-replay-sha256-2a186f20f92d226054eb06ffb275d7928e2528f12968287404822e6582c22f9c",
+            "row_count": 1717,
+            "rows_sha256": "0e03315c9801d7f68345d527357d6738bd13213817fc8b3bcc9b54d2dac9ad3c",
+            "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09",
+            "status_counts": {
+              "closure_unavailable": 22,
+              "dq_missing_facts": 319,
+              "location_closed": 60,
+              "qualified": 1316
+            }
+          }
+        ],
+        "elapsed_seconds": 139.897,
+        "evaluation_truth_available": false,
+        "peak_rss_mib": 178.219,
+        "producer_imports_available": false
+      },
+      {
+        "cases": [
+          {
+            "artifact_files": {
+              "manifest.sha256": "319109bd98dfa75f254223e461e43e7d5951f17988d855e4a24cfec44b07baab",
+              "qualification_manifest.json": "b0b74478e2423cf34d94e9fc4d75892bdcd88a5de2ea4525248dccffcb4202c3",
+              "qualified_days.jsonl": "9cb72ed41007335e4be5bf0f43b790b3f73abf565e4e5f6e121315f785b931ad"
+            },
+            "case": "demand",
+            "coverage_id": "day-coverage-sha256-2a1102d5068df76ee276eadea3e9afdf772703b915c16f4e00373ba2af0d5aef",
+            "day_qualification_id": "day-qualification-sha256-09276cbae82ab5fc7255f806a94919c2b6ed6270d9ba65d5ee63862d9c0cfcd3",
+            "full_dq_replay_id": "full-dq-replay-sha256-bc0d358897153253399acd14dc0c620ee54f6ce7cb775558fc1ff2384e53f541",
+            "row_count": 1713,
+            "rows_sha256": "9cb72ed41007335e4be5bf0f43b790b3f73abf565e4e5f6e121315f785b931ad",
+            "source_dataset_id": "source-sha256-3c13e783d52b74bb0955122fd70403eb8f10624acfa11e8b54d587b487cff2fd",
+            "status_counts": {
+              "closure_unavailable": 22,
+              "dq_missing_facts": 304,
+              "location_closed": 60,
+              "qualified": 1327
+            }
+          },
+          {
+            "artifact_files": {
+              "manifest.sha256": "841cedc947dbe52b193cd9f9850f00c6c4c6d93b0ddcb23a9e842e7620f96be4",
+              "qualification_manifest.json": "6300e6d3f49ee75394b7d3fb68fed6941a43b02868192a391aa6016256aefef4",
+              "qualified_days.jsonl": "0e03315c9801d7f68345d527357d6738bd13213817fc8b3bcc9b54d2dac9ad3c"
+            },
+            "case": "physical",
+            "coverage_id": "day-coverage-sha256-cd82a5392012a8ec57a7b73301f6c579034f95f40b29f484834d5888e17444d5",
+            "day_qualification_id": "day-qualification-sha256-c0233abe436a9d854e512b460504ec7e8f49ce3a859890699ecb3ae2afef8c4e",
+            "full_dq_replay_id": "full-dq-replay-sha256-2a186f20f92d226054eb06ffb275d7928e2528f12968287404822e6582c22f9c",
+            "row_count": 1717,
+            "rows_sha256": "0e03315c9801d7f68345d527357d6738bd13213817fc8b3bcc9b54d2dac9ad3c",
+            "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09",
+            "status_counts": {
+              "closure_unavailable": 22,
+              "dq_missing_facts": 319,
+              "location_closed": 60,
+              "qualified": 1316
+            }
+          }
+        ],
+        "elapsed_seconds": 134.148,
+        "evaluation_truth_available": false,
+        "peak_rss_mib": 176.094,
+        "producer_imports_available": false
+      }
+    ],
+    "status": "passed"
+  },
+  "final_head_ci": "recorded_in_draft_pr_after_completion",
+  "fixture_sha256": "1c0611fef0cee0f8e9a7bf5474d01c118a72d6889de75026e26c7277ccfc1040",
+  "full_local_preflight": {
+    "command": "make ci-local UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv GITLEAKS=/opt/homebrew/bin/gitleaks",
+    "log_sha256": "9274cd51c8575eac73aec66760708e86c0a018e0c2cf54a1622b2823af939802",
+    "status": "passed",
+    "tests_passed": 2003
+  },
+  "installed_cli": {
+    "artifact_files": {
+      "manifest.sha256": "319109bd98dfa75f254223e461e43e7d5951f17988d855e4a24cfec44b07baab",
+      "qualification_manifest.json": "b0b74478e2423cf34d94e9fc4d75892bdcd88a5de2ea4525248dccffcb4202c3",
+      "qualified_days.jsonl": "9cb72ed41007335e4be5bf0f43b790b3f73abf565e4e5f6e121315f785b931ad"
+    },
+    "day_qualification_id": "day-qualification-sha256-09276cbae82ab5fc7255f806a94919c2b6ed6270d9ba65d5ee63862d9c0cfcd3",
+    "parent_bytes_unchanged": true,
+    "receipt_sha256": "759cbcd0ba3892d8cb17a7e638a151fa944f4d76347a49a4b121c8181558b5c2",
+    "status": "passed"
+  },
+  "installed_wheel": {
+    "limits": {
+      "peak_rss_mib": 1024,
+      "seconds_per_process": 300
+    },
+    "locked_dependencies": true,
+    "runs": [
+      {
+        "cases": [
+          {
+            "artifact_files": {
+              "manifest.sha256": "319109bd98dfa75f254223e461e43e7d5951f17988d855e4a24cfec44b07baab",
+              "qualification_manifest.json": "b0b74478e2423cf34d94e9fc4d75892bdcd88a5de2ea4525248dccffcb4202c3",
+              "qualified_days.jsonl": "9cb72ed41007335e4be5bf0f43b790b3f73abf565e4e5f6e121315f785b931ad"
+            },
+            "case": "demand",
+            "coverage_id": "day-coverage-sha256-2a1102d5068df76ee276eadea3e9afdf772703b915c16f4e00373ba2af0d5aef",
+            "day_qualification_id": "day-qualification-sha256-09276cbae82ab5fc7255f806a94919c2b6ed6270d9ba65d5ee63862d9c0cfcd3",
+            "full_dq_replay_id": "full-dq-replay-sha256-bc0d358897153253399acd14dc0c620ee54f6ce7cb775558fc1ff2384e53f541",
+            "row_count": 1713,
+            "rows_sha256": "9cb72ed41007335e4be5bf0f43b790b3f73abf565e4e5f6e121315f785b931ad",
+            "source_dataset_id": "source-sha256-3c13e783d52b74bb0955122fd70403eb8f10624acfa11e8b54d587b487cff2fd",
+            "status_counts": {
+              "closure_unavailable": 22,
+              "dq_missing_facts": 304,
+              "location_closed": 60,
+              "qualified": 1327
+            }
+          },
+          {
+            "artifact_files": {
+              "manifest.sha256": "841cedc947dbe52b193cd9f9850f00c6c4c6d93b0ddcb23a9e842e7620f96be4",
+              "qualification_manifest.json": "6300e6d3f49ee75394b7d3fb68fed6941a43b02868192a391aa6016256aefef4",
+              "qualified_days.jsonl": "0e03315c9801d7f68345d527357d6738bd13213817fc8b3bcc9b54d2dac9ad3c"
+            },
+            "case": "physical",
+            "coverage_id": "day-coverage-sha256-cd82a5392012a8ec57a7b73301f6c579034f95f40b29f484834d5888e17444d5",
+            "day_qualification_id": "day-qualification-sha256-c0233abe436a9d854e512b460504ec7e8f49ce3a859890699ecb3ae2afef8c4e",
+            "full_dq_replay_id": "full-dq-replay-sha256-2a186f20f92d226054eb06ffb275d7928e2528f12968287404822e6582c22f9c",
+            "row_count": 1717,
+            "rows_sha256": "0e03315c9801d7f68345d527357d6738bd13213817fc8b3bcc9b54d2dac9ad3c",
+            "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09",
+            "status_counts": {
+              "closure_unavailable": 22,
+              "dq_missing_facts": 319,
+              "location_closed": 60,
+              "qualified": 1316
+            }
+          }
+        ],
+        "elapsed_seconds": 131.57,
+        "evaluation_truth_available": false,
+        "peak_rss_mib": 172.25,
+        "producer_imports_available": false
+      },
+      {
+        "cases": [
+          {
+            "artifact_files": {
+              "manifest.sha256": "319109bd98dfa75f254223e461e43e7d5951f17988d855e4a24cfec44b07baab",
+              "qualification_manifest.json": "b0b74478e2423cf34d94e9fc4d75892bdcd88a5de2ea4525248dccffcb4202c3",
+              "qualified_days.jsonl": "9cb72ed41007335e4be5bf0f43b790b3f73abf565e4e5f6e121315f785b931ad"
+            },
+            "case": "demand",
+            "coverage_id": "day-coverage-sha256-2a1102d5068df76ee276eadea3e9afdf772703b915c16f4e00373ba2af0d5aef",
+            "day_qualification_id": "day-qualification-sha256-09276cbae82ab5fc7255f806a94919c2b6ed6270d9ba65d5ee63862d9c0cfcd3",
+            "full_dq_replay_id": "full-dq-replay-sha256-bc0d358897153253399acd14dc0c620ee54f6ce7cb775558fc1ff2384e53f541",
+            "row_count": 1713,
+            "rows_sha256": "9cb72ed41007335e4be5bf0f43b790b3f73abf565e4e5f6e121315f785b931ad",
+            "source_dataset_id": "source-sha256-3c13e783d52b74bb0955122fd70403eb8f10624acfa11e8b54d587b487cff2fd",
+            "status_counts": {
+              "closure_unavailable": 22,
+              "dq_missing_facts": 304,
+              "location_closed": 60,
+              "qualified": 1327
+            }
+          },
+          {
+            "artifact_files": {
+              "manifest.sha256": "841cedc947dbe52b193cd9f9850f00c6c4c6d93b0ddcb23a9e842e7620f96be4",
+              "qualification_manifest.json": "6300e6d3f49ee75394b7d3fb68fed6941a43b02868192a391aa6016256aefef4",
+              "qualified_days.jsonl": "0e03315c9801d7f68345d527357d6738bd13213817fc8b3bcc9b54d2dac9ad3c"
+            },
+            "case": "physical",
+            "coverage_id": "day-coverage-sha256-cd82a5392012a8ec57a7b73301f6c579034f95f40b29f484834d5888e17444d5",
+            "day_qualification_id": "day-qualification-sha256-c0233abe436a9d854e512b460504ec7e8f49ce3a859890699ecb3ae2afef8c4e",
+            "full_dq_replay_id": "full-dq-replay-sha256-2a186f20f92d226054eb06ffb275d7928e2528f12968287404822e6582c22f9c",
+            "row_count": 1717,
+            "rows_sha256": "0e03315c9801d7f68345d527357d6738bd13213817fc8b3bcc9b54d2dac9ad3c",
+            "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09",
+            "status_counts": {
+              "closure_unavailable": 22,
+              "dq_missing_facts": 319,
+              "location_closed": 60,
+              "qualified": 1316
+            }
+          }
+        ],
+        "elapsed_seconds": 165.131,
+        "evaluation_truth_available": false,
+        "peak_rss_mib": 171.453,
+        "producer_imports_available": false
+      }
+    ],
+    "status": "passed",
+    "wheel_bytes": 953650,
+    "wheel_sha256": "17bc33b895fd83870efa47f15e4daa636d5c750c1dd05eb8e52a95d370280853"
+  },
+  "model_readiness": "not_qualified",
+  "producer_commit": "dee564ef98dd7c0324dd2c88d418dc544e7ecdd6",
+  "producer_pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/85",
+  "python_version": "3.11.15",
+  "return_scope": "purchases_in_parent_source_only",
+  "runtime_sha256": "3a9109c2e252363c9d058a973885ef16af569ba74e1b0cefb7428acab9f00c3b",
+  "schema_version": "1.0.0",
+  "shared_docker_daemon_started": false,
+  "targeted_tests": {
+    "junit_sha256": "a8a56052e560fecb52f5886082170c23b846ddd08f4d7aa85f5a026e233700a5",
+    "passed": 48,
+    "seconds": 290.56
+  },
+  "uv_version": "0.12.19"
+}
