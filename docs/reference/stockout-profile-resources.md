@@ -15,8 +15,14 @@ nadal wymagają osobnego przyrostu.
 [Partycje etykiet 2.0](stockout-label-partitions.md) przenoszą prywatne
 fakty do jednorazowej bazy i ograniczają replay do jednej fizycznej serii.
 Mają batch Parquet i pełny iterator, ale kwalifikacja nadal jest JSON
-4 MiB, a upstream, comparison, split i trening pozostają v1. Także ten
+4 MiB, a comparison, split i trening pozostają v1. Także ten
 przyrost nie zalicza budżetu większego pipeline.
+[Upstream 2.0](stockout-upstream-storage.md) dodaje pełny replay cech 2.2,
+jednorazowy, ograniczony panel prognozy do ostatniego origin i chronologiczne
+części Parquet. Każdy wcześniejszy origin zachowuje własną granicę wiedzy.
+Panel nadal obejmuje wszystkie serie w limicie 20 000 wierszy / 16 MiB;
+większy profil może być odrzucony. Comparison, split i trening przyjmują
+wciąż v1. Ten przyrost również nie odbiera budżetu większego pipeline.
 Obowiązują wymiary z
 [planu źródła](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/etapy/08-stockout-risk.md)
 i [kontraktu profili](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/kontrakty/profile-i-bramki.md)
@@ -76,8 +82,11 @@ osobno na granicy wiedzy każdego origin. W 2.1/2.2 główna baza ma limit
 128 MiB, cache stron 8 MiB, a wybrana seria najwyżej 20 000 wierszy /
 16 MiB kanonicznych payload. To granice składników, nie odbiór całego
 scratch/RSS. Pełny reader v2.0 wykonuje dwa ograniczone replay;
-2.1/2.2 mają build/verify bez czytnika treningowego. Etykiety 2.0 mają osobny iterator labels-only; upstream, comparison,
-split i trening nadal korzystają z v1. [Odbiór partycji](../evidence/08-06-stockout-partitions.md)
+2.1/2.2 mają build/verify bez czytnika treningowego. Etykiety 2.0 mają osobny
+iterator labels-only. Upstream 2.0 ma własny reader i panel do ostatniego
+origin; comparison, split i trening nadal korzystają z v1.
+[Odbiór upstream](../evidence/08-10-stockout-upstream-storage.md),
+[partycji](../evidence/08-06-stockout-partitions.md)
 i [magazynu](../evidence/08-07-stockout-disk-facts.md), a także
 [indeksu historii](../evidence/08-08-stockout-history-index.md) oraz
 [partycji etykiet](../evidence/08-09-stockout-label-partitions.md) nie zaliczają

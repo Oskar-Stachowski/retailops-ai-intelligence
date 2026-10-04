@@ -65,6 +65,10 @@ z pełnym odtworzeniem cech i licznikami wyłączeń.
 prognozę stałego baseline na granicy wiedzy każdego dnia oraz identyczne
 wejścia wariantów z tą cechą i bez niej; [odbiór](evidence/08-03-stockout-upstream.md)
 obejmuje pokrycie prognozą wszystkich dopuszczonych okien splitu.
+[Ograniczone przygotowanie upstream 2.0](reference/stockout-upstream-storage.md)
+wiąże cechy 2.2, jednorazowy panel faktów i chronologiczne części Parquet.
+[Odbiór tej samej próbki](evidence/08-10-stockout-upstream-storage.md)
+porównuje wszystkie prognozy, comparison i sześć modeli development.
 [Porównanie LR/HGB na development](reference/stockout-training.md) oddziela
 train, wybór na tune i dopasowanie sigmoid na calibration, z wejściami
 z forecastem i bez niego oraz kontrolą cenzorowania sprzedaży.

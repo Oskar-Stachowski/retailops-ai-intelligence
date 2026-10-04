@@ -1,5 +1,34 @@
 # Aktualny status
 
+**AI 08 — ograniczony upstream 2.0 zachowuje pełną próbkę.**
+[Kontrakt](reference/stockout-upstream-storage.md) i
+[odbiór](evidence/08-10-stockout-upstream-storage.md) dodają osobny pakiet,
+pełny replay cech 2.2, jednorazowy panel faktów i chronologiczny Parquet.
+Wszystkie pola 1632 prognoz, comparison i sześć modeli są identyczne z v1.
+Bundle ma 1 103 923 B zamiast JSON 2 127 982 B, o 48,1% mniej.
+Odłączony wheel odtworzył identyczny manifest, pliki i pełny iterator;
+48 modułów konsumenta pochodziło z zainstalowanego pakietu.
+Wszystkie 573 pliki wejść/rodziców pozostały bez zmian.
+Testy ukierunkowane mają 80/80 zaliczeń, w tym 27 nowych, bez ostrzeżeń.
+Trzy pary pełnego przygotowania, razem z replay rodzica cech, dały medianę
+76,13 → 55,74 s i RSS 204,83 → 137,92 MiB. Pomiar łączy także korzyść
+cech 2.2 i trwał przy równoległym CI; nie kwalifikuje większego profilu.
+Lokalna walidacja ma 2010/2010 przypadków w dwóch częściach, bez ostrzeżeń,
+wszystkie targety Makefile, pakiet, Compose config i czyste skany sekretów.
+Pierwszy pełny przebieg ujawnił rzeczywisty timeout testu scope kolejki v12;
+kontrolowany zegar i dwa osobne testy expiry/heartbeat dotyczą tylko testów.
+Limit produkcyjny 120 s i predictor pozostają zachowane. Cały zmieniony
+moduł oraz pozostały runtime ponownie przeszły; receipt jawnie zapisuje
+nieudaną pierwszą próbę. Końcowe dowody mają ponowne kontrole dokumentacji.
+Poprzedni `d083e0a` ma zielone Required CI PR i push.
+Panel nadal ma globalny limit 20 000 wierszy / 16 MiB; cały RSS/scratch
+większego pipeline nie jest odebrany. Comparison, split i trening pozostają
+v1, a reader upstream nie wybiera ról development. Pozostają ich połączenie,
+globalna walidacja z selekcją upstream po seriach, większy profil,
+niezależna ocena, progi i lifecycle/batch/read API.
+Stare pakiety/ID, AI 05 i v12 pozostają zachowane. Final test nie jest
+oceniony; cały AI 08 pozostaje not ready. Poniższe przyrosty zachowują zakres.
+
 **AI 08 — prywatne partycje etykiet 2.0 zachowują pełną próbkę.**
 [Kontrakt](reference/stockout-label-partitions.md) i
 [odbiór](evidence/08-09-stockout-label-partitions.md) dodają jednorazową bazę,
