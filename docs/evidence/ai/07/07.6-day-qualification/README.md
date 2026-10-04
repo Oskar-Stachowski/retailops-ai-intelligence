@@ -28,7 +28,11 @@ native ingestion, not global or carry-in return coverage.
 
 Full `make ci-local` passed with 2003 tests, all prior acceptance and contract gates,
 package/Compose configuration and both secret scans. Final-head Required CI and
-its persistence acceptance are recorded in the draft PR after completion. No
+its persistence acceptance are recorded in the draft PR after completion. The
+previous full-DQ Required CI checks job took 5050.916 s (84 min 11 s), with 1955
+tests. Adding 48 tests and the two-process day gate increases the checks-job
+budget from 85 to 105 minutes. Every prior gate and each 300 s / 1024 MiB process
+limit remain unchanged. This workflow-only adjustment preserves the tested runtime. No
 shared Docker daemon, service, AI05 worktree or other session was changed.
 
 The public [coverage fixture](../../../../../data/fixtures/day-coverage-v1.md) binds

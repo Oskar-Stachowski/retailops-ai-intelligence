@@ -1,6 +1,19 @@
 {
   "ai05_modified": false,
   "ai07_ready": false,
+  "ci_checks_budget": {
+    "current_minutes": 105,
+    "current_tests": 2003,
+    "gates_removed": false,
+    "new_fresh_process_gate": true,
+    "per_process_peak_rss_mib": 1024,
+    "per_process_seconds": 300,
+    "previous_minutes": 85,
+    "prior_checks_seconds": 5050.916,
+    "prior_run_id": 37153874400,
+    "prior_tests": 1955,
+    "runtime_changed": false
+  },
   "component": "ai-business-day-qualification-1.0.0",
   "consumer_base_sha": "502c3bcd42a7f92b080c5bdb5067e9e3fd3e71e3",
   "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
