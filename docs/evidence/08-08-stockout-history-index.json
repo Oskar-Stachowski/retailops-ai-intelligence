@@ -1,0 +1,463 @@
+{
+  "schema_version": "1.0.0",
+  "scope": "AI08 origin-local prefix ledger and daily demand buckets, temporal smoke only",
+  "base_commit": "858abcf686ccf85d483643331c5f67a141e34f05",
+  "recorded_at_utc": "2026-10-04T08:05:31.199679+00:00",
+  "native": {
+    "points": 1632,
+    "points_sha256": "4a55767d14681273301dbe910262cac93b8a685d0aaeba45f4de91a167ce8b40",
+    "feature_bundle_id": "feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af",
+    "v21_feature_bundle_id": "feature-partitions-sha256-8016a41f7ea0eeb7592294651f1b2557a63bc7746d12e066cb8c672e1dd5dc38",
+    "feature_dataset_id": "features-sha256-6e366900938378d07d1814d7bb46789265049a7b8742be65d2c5123d83141949",
+    "development_id": "development-sha256-18e71a00d92d1f5b22af4df603e01d8084155e61aa4e30102402db0d25a6f462",
+    "selected_on_tune": "hist_gradient_boosting:without_upstream",
+    "all_points_equal": true,
+    "all_parquet_files_equal": true,
+    "development_artifact_equal": true,
+    "input_before": {
+      "files": 573,
+      "bytes": 63417718,
+      "sha256": "8a7575f4ce9acebde85bd07ccb65c271a24654bfb59cae01a3008c58585ee6b9"
+    },
+    "input_after": {
+      "files": 573,
+      "bytes": 63417718,
+      "sha256": "8a7575f4ce9acebde85bd07ccb65c271a24654bfb59cae01a3008c58585ee6b9"
+    },
+    "inputs_unchanged": true,
+    "output_bytes": 1553889,
+    "output_files": 49,
+    "partitions": 16,
+    "all_files_private_0600": true,
+    "final_test_evaluated": false,
+    "model_ready": false,
+    "full_profile_ready": false,
+    "profile": "ai-temporal-smoke",
+    "statuses": {
+      "already_stockout": 432,
+      "eligible": 1104,
+      "insufficient_data": 96
+    }
+  },
+  "profiling_counts": {
+    "prior_inventory_day_calls": 45696,
+    "points": 1632,
+    "points_sha256": "4a55767d14681273301dbe910262cac93b8a685d0aaeba45f4de91a167ce8b40",
+    "history_index_builds": 1632,
+    "inventory_day_queries": 45696,
+    "observed_day_queries": 45696
+  },
+  "fresh_process_measurements": {
+    "disk_build": {
+      "operation_seconds": 21.339786250006,
+      "operation_cpu_seconds": 20.573871,
+      "process_cpu_seconds": 20.82874,
+      "status": "published",
+      "id": "feature-partitions-sha256-8016a41f7ea0eeb7592294651f1b2557a63bc7746d12e066cb8c672e1dd5dc38",
+      "store_stats": [
+        {
+          "stored_rows": 13942,
+          "payload_bytes": 15923617,
+          "maximum_selected_rows": 2489,
+          "maximum_selected_bytes": 2782285,
+          "database_bytes": 25575424
+        }
+      ],
+      "wall_seconds_with_startup": 21.813789041996642,
+      "sampled_peak_child_tree_rss_bytes": 138117120,
+      "log_sha256": "162c2f07beef2d958062f3e280810c37a64b553969faa64934062d21cada776b"
+    },
+    "history_build": {
+      "operation_seconds": 18.41625366700464,
+      "operation_cpu_seconds": 17.714482,
+      "process_cpu_seconds": 17.969458,
+      "status": "published",
+      "id": "feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af",
+      "store_stats": [
+        {
+          "stored_rows": 13942,
+          "payload_bytes": 15923617,
+          "maximum_selected_rows": 2489,
+          "maximum_selected_bytes": 2782285,
+          "database_bytes": 25575424
+        }
+      ],
+      "wall_seconds_with_startup": 18.775386415996763,
+      "sampled_peak_child_tree_rss_bytes": 140247040,
+      "log_sha256": "4d52829a35eaf9580ec91958a2e4d017dcd56cd2809d1f14ba0fd13db46bb5a6"
+    },
+    "history_rebuild": {
+      "operation_seconds": 17.406609750003554,
+      "operation_cpu_seconds": 17.087488999999998,
+      "process_cpu_seconds": 17.330634,
+      "status": "reused",
+      "id": "feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af",
+      "store_stats": [
+        {
+          "stored_rows": 13942,
+          "payload_bytes": 15923617,
+          "maximum_selected_rows": 2489,
+          "maximum_selected_bytes": 2782285,
+          "database_bytes": 25575424
+        }
+      ],
+      "wall_seconds_with_startup": 17.761994625005173,
+      "sampled_peak_child_tree_rss_bytes": 138575872,
+      "log_sha256": "60a748de7f27fb41627868ab5eace712316ac1918c94d1f2eb226ccda15e1812"
+    },
+    "history_verify": {
+      "operation_seconds": 17.901163791000727,
+      "operation_cpu_seconds": 17.486309,
+      "process_cpu_seconds": 17.748691,
+      "status": "verified",
+      "id": "feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af",
+      "store_stats": [
+        {
+          "stored_rows": 13942,
+          "payload_bytes": 15923617,
+          "maximum_selected_rows": 2489,
+          "maximum_selected_bytes": 2782285,
+          "database_bytes": 25575424
+        }
+      ],
+      "wall_seconds_with_startup": 18.275253416999476,
+      "sampled_peak_child_tree_rss_bytes": 139018240,
+      "log_sha256": "d9ec0ee795b888308a339fe80371013799cc9958dbfa6341c9bdf59ff2b1c214"
+    },
+    "disk_verify": {
+      "operation_seconds": 27.5340667499986,
+      "operation_cpu_seconds": 22.854062,
+      "process_cpu_seconds": 23.093515,
+      "status": "verified",
+      "id": "feature-partitions-sha256-8016a41f7ea0eeb7592294651f1b2557a63bc7746d12e066cb8c672e1dd5dc38",
+      "store_stats": [
+        {
+          "stored_rows": 13942,
+          "payload_bytes": 15923617,
+          "maximum_selected_rows": 2489,
+          "maximum_selected_bytes": 2782285,
+          "database_bytes": 25575424
+        }
+      ],
+      "wall_seconds_with_startup": 27.895218584002578,
+      "sampled_peak_child_tree_rss_bytes": 139853824,
+      "log_sha256": "eb31e141337979899d7cd927643ed7f3295452a46abf5ebf52bdccbaafb6c20e"
+    }
+  },
+  "additional_paired_measurements": {
+    "history_build_pair2": {
+      "operation_seconds": 17.507980041998962,
+      "operation_cpu_seconds": 17.037776,
+      "process_cpu_seconds": 17.288249999999998,
+      "status": "published",
+      "id": "feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af",
+      "store_stats": [
+        {
+          "stored_rows": 13942,
+          "payload_bytes": 15923617,
+          "maximum_selected_rows": 2489,
+          "maximum_selected_bytes": 2782285,
+          "database_bytes": 25575424
+        }
+      ],
+      "wall_seconds_with_startup": 17.970277791995613,
+      "sampled_peak_child_tree_rss_bytes": 138395648,
+      "log_sha256": "3683d122c59fbde94a1add690a5a76e520ed7ec9a8eb8e470a20a462482a67ad"
+    },
+    "disk_build_pair2": {
+      "operation_seconds": 20.062606833002064,
+      "operation_cpu_seconds": 19.700985,
+      "process_cpu_seconds": 19.945044,
+      "status": "published",
+      "id": "feature-partitions-sha256-8016a41f7ea0eeb7592294651f1b2557a63bc7746d12e066cb8c672e1dd5dc38",
+      "store_stats": [
+        {
+          "stored_rows": 13942,
+          "payload_bytes": 15923617,
+          "maximum_selected_rows": 2489,
+          "maximum_selected_bytes": 2782285,
+          "database_bytes": 25575424
+        }
+      ],
+      "wall_seconds_with_startup": 20.4413132089976,
+      "sampled_peak_child_tree_rss_bytes": 138280960,
+      "log_sha256": "79e9c08f24f79e45ab59a46ee02dc5426f174b8fe1b22ebecb34326c7d8c0384"
+    },
+    "disk_build_pair3": {
+      "operation_seconds": 21.316728166995745,
+      "operation_cpu_seconds": 20.7731,
+      "process_cpu_seconds": 21.02888,
+      "status": "published",
+      "id": "feature-partitions-sha256-8016a41f7ea0eeb7592294651f1b2557a63bc7746d12e066cb8c672e1dd5dc38",
+      "store_stats": [
+        {
+          "stored_rows": 13942,
+          "payload_bytes": 15923617,
+          "maximum_selected_rows": 2489,
+          "maximum_selected_bytes": 2782285,
+          "database_bytes": 25575424
+        }
+      ],
+      "wall_seconds_with_startup": 21.696131083997898,
+      "sampled_peak_child_tree_rss_bytes": 138149888,
+      "log_sha256": "8ceeb1f17cde4b6e3d9e86f4b4c3cb5cf4299ea9b854bbd76f21dd0d8f79c7fa"
+    },
+    "history_build_pair3": {
+      "operation_seconds": 18.530435832995863,
+      "operation_cpu_seconds": 18.037047,
+      "process_cpu_seconds": 18.30865,
+      "status": "published",
+      "id": "feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af",
+      "store_stats": [
+        {
+          "stored_rows": 13942,
+          "payload_bytes": 15923617,
+          "maximum_selected_rows": 2489,
+          "maximum_selected_bytes": 2782285,
+          "database_bytes": 25575424
+        }
+      ],
+      "wall_seconds_with_startup": 18.95910429200012,
+      "sampled_peak_child_tree_rss_bytes": 129875968,
+      "log_sha256": "846e45650d42bec8bb0c564a8d0ac45ca1ca02895a68564c561f2a5ca579168c"
+    }
+  },
+  "measurement_summary": {
+    "builds_per_version": 3,
+    "execution_order": [
+      "disk",
+      "history",
+      "history",
+      "disk",
+      "disk",
+      "history"
+    ],
+    "old": {
+      "operation_seconds": 21.316728166995745,
+      "operation_cpu_seconds": 20.573871,
+      "sampled_peak_child_tree_rss_bytes": 138149888
+    },
+    "new": {
+      "operation_seconds": 18.41625366700464,
+      "operation_cpu_seconds": 17.714482,
+      "sampled_peak_child_tree_rss_bytes": 138395648
+    },
+    "wall_reduction_fraction": 0.1360656512232422,
+    "cpu_reduction_fraction": 0.13898157522228072,
+    "rss_delta_bytes": 245760
+  },
+  "history_index": {
+    "implementation": {
+      "history_code_sha256": "b1b30ae4f03aeaba6e0feaf7bb724da3a330760904bbeae280e0624476a9f0f3"
+    },
+    "scope": "origin_local_cumulative_ledger_and_daily_demand",
+    "version": "stockout-indexed-history-1.0.0"
+  },
+  "storage_policy": {
+    "batch_rows": 256,
+    "cache_kib": 8192,
+    "max_db_bytes": 134217728,
+    "max_selected_bytes": 16777216,
+    "max_selected_rows": 20000,
+    "version": "stockout-disk-facts-1.0.0"
+  },
+  "storage_implementation": {
+    "sqlite_version": "3.53.0",
+    "storage_code_sha256": "75d31547573fff5ab6a6a1a5cacd1d37b73d52c84046d29c29cafd11d7bcbbed"
+  },
+  "input_seal_sha256": "fd18298374ed94e517a26f534344a83919fd79338a3d552a80e1396146f74dce",
+  "feature_policy": {
+    "censored_sales_policy": "separate_all_sales_and_verified_in_stock_days",
+    "history_days": 28,
+    "max_snapshot_age_seconds": 86400,
+    "minimum_known_days": 7,
+    "preprocessing": "none_fit_only_in_training_later",
+    "sales_measure": "observed_sales_units_not_latent_demand",
+    "stock_measure": "available_qty_unreserved",
+    "version": "stockout-pit-features-1.0.0"
+  },
+  "partition_policy": {
+    "batch_origins": 256,
+    "max_partition_bytes": 16777216,
+    "version": "stockout-partitions-2.0.0"
+  },
+  "limits": {
+    "bundle_bytes": 67108864,
+    "input_bytes": 67108864,
+    "input_rows": 500000,
+    "manifest_bytes": 4194304,
+    "partition_bytes": 16777216,
+    "points": 10000
+  },
+  "installed_wheel": {
+    "status": "passed",
+    "feature_bundle_id": "feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af",
+    "metrics": {
+      "build": {
+        "seconds": 21.769676541996887,
+        "status": "published"
+      },
+      "rebuild": {
+        "seconds": 21.95477479199326,
+        "status": "reused"
+      },
+      "verify": {
+        "seconds": 21.779030792000412,
+        "status": "verified"
+      }
+    },
+    "all_files_byte_identical": true,
+    "all_files_private_0600": true,
+    "consumer_modules_from_installed_package": true,
+    "consumer_module_count": 33,
+    "producer_importable": false,
+    "input_before": {
+      "inputs": {
+        "files": 567,
+        "bytes": 47618381,
+        "sha256": "befa58608dd1785f6d124063be5f5dc58f6815a7afea07aff871b162c9c63d93"
+      },
+      "parents": {
+        "features.json": "1b32b9892a96e15b7cfe985808848d830e909a7bb826a73705abc95d018230ac",
+        "labels.json": "3b721f3feae53597c7b32c382802d6b4d8098bcb1dc326a8d5ee468dc81627de",
+        "split.json": "9f0635e1b8efbed92a8a9acdfd7f0676f02635d331977b7c97b9e696621be170",
+        "upstream.json": "9a0cfe036e004aa5f4d3a2e9b58001070e0d62dee5b59557e93e39913a24c1f1",
+        "comparison.json": "4423b50bbb5231806a2e12a0cf7e573d4455eb7340e6c5fdfac72c09424b478d",
+        "development.json": "3c18ceca09ccb47660e808d9a41bf8bee32e397603b0838f472189580a12fcce"
+      }
+    },
+    "input_after": {
+      "inputs": {
+        "files": 567,
+        "bytes": 47618381,
+        "sha256": "befa58608dd1785f6d124063be5f5dc58f6815a7afea07aff871b162c9c63d93"
+      },
+      "parents": {
+        "features.json": "1b32b9892a96e15b7cfe985808848d830e909a7bb826a73705abc95d018230ac",
+        "labels.json": "3b721f3feae53597c7b32c382802d6b4d8098bcb1dc326a8d5ee468dc81627de",
+        "split.json": "9f0635e1b8efbed92a8a9acdfd7f0676f02635d331977b7c97b9e696621be170",
+        "upstream.json": "9a0cfe036e004aa5f4d3a2e9b58001070e0d62dee5b59557e93e39913a24c1f1",
+        "comparison.json": "4423b50bbb5231806a2e12a0cf7e573d4455eb7340e6c5fdfac72c09424b478d",
+        "development.json": "3c18ceca09ccb47660e808d9a41bf8bee32e397603b0838f472189580a12fcce"
+      }
+    },
+    "inputs_unchanged": true,
+    "wheel_sha256": "170533608620ea3a8ef3a6e4f8418c9a0f4e8b7c246919155d70aaaf860c4239"
+  },
+  "parent_development_cli": {
+    "status": "verified",
+    "development_id": "development-sha256-18e71a00d92d1f5b22af4df603e01d8084155e61aa4e30102402db0d25a6f462"
+  },
+  "checks": {
+    "focused": {
+      "passed": 150,
+      "failed": 0,
+      "new_cases": 37,
+      "seconds": 121.95,
+      "warnings": 0
+    },
+    "full_ci_local": {
+      "status": "passed",
+      "exit_code": 0,
+      "log_sha256": "f48015f6015f97715135023078f5e4b231612b6515fdeefd96f29cd674f3ffa3",
+      "check_targets": [
+        "lint",
+        "type-check",
+        "test",
+        "docs-check",
+        "forecast-runtime-check",
+        "handoff-check",
+        "snapshot-import-check",
+        "curated-check",
+        "forecast-calendar-check",
+        "forecast-features-check",
+        "forecast-manifests-check",
+        "forecast-baselines-check",
+        "forecast-models-check",
+        "forecast-backtest-check",
+        "forecast-quality-check",
+        "forecast-run-check",
+        "contracts-check",
+        "package",
+        "compose-config",
+        "forecast-remediation-check",
+        "forecast-acceptance-check"
+      ],
+      "package": "passed",
+      "compose_config": "passed",
+      "secrets_history": "passed",
+      "secrets_directory": "passed"
+    },
+    "remote_required_ci": "pending_new_commit",
+    "full_regression": {
+      "passed": 1950,
+      "failed": 0,
+      "warnings": 0,
+      "seconds": 1798.03
+    },
+    "ruff": {
+      "status": "passed",
+      "files": 599
+    },
+    "mypy": {
+      "status": "passed",
+      "modules": 358
+    },
+    "documentation_after_receipt": "rechecked_before_commit"
+  },
+  "previous_commit_required_ci": [
+    {
+      "run_id": 37184775977,
+      "event": "pull_request",
+      "head_sha": "858abcf686ccf85d483643331c5f67a141e34f05",
+      "conclusion": "success"
+    },
+    {
+      "run_id": 37184773597,
+      "event": "push",
+      "head_sha": "858abcf686ccf85d483643331c5f67a141e34f05",
+      "conclusion": "success"
+    }
+  ],
+  "measurement_scope": {
+    "each_operation_new_process": true,
+    "sampler": "simultaneous child-tree RSS every 50 ms, external sampler excluded",
+    "concurrent_local_full_ci": false,
+    "build_pairs": 3,
+    "order": [
+      "disk",
+      "history",
+      "history",
+      "disk",
+      "disk",
+      "history"
+    ],
+    "other_sessions_uncontrolled": true,
+    "includes": "curated verification/sealing, disk/index build, partition preparation or replay",
+    "excludes": "generation/import, labels/upstream/split/training, native legacy parity proof",
+    "whole_larger_pipeline_budget_evaluated": false,
+    "profile_counts_only_concurrent_ci": true
+  },
+  "boundaries": {
+    "old_v1_v2_code_modified": false,
+    "old_v21_code_modified": false,
+    "old_native_ids_preserved": true,
+    "all_model_artifacts_identical": true,
+    "incremental_history_cache_between_origins": false,
+    "training_reader_integrated": false,
+    "larger_generation_executed": false,
+    "full_profile_ready": false,
+    "final_test_evaluated": false,
+    "threshold_policy_ready": false,
+    "model_ready": false,
+    "ai08_ready": false,
+    "ai05_runtime_changed": false
+  },
+  "remaining": [
+    "partitioned labels/upstream/split/training with bounded consumers",
+    "optional incremental reuse between origins, with causal invalidation and full lineage",
+    "frozen real profile and resource preflight",
+    "independent evaluation and approved thresholds",
+    "registry/batch/read API"
+  ]
+}

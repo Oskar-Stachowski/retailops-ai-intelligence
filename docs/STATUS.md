@@ -1,5 +1,26 @@
 # Aktualny status
 
+**AI 08 — indeks historii 2.2 zachowuje pełną próbkę 102 dni.**
+[Kontrakt](reference/stockout-history-index.md) i
+[odbiór](evidence/08-08-stockout-history-index.md) obejmują sumy prefiksowe
+ledgeru i dzienne grupowanie znanego popytu, bez zmiany pakietów v1/v2.0/v2.1.
+Wszystkie 1632 punkty, Parquet i sześć wariantów modeli są identyczne;
+native i wheel odtworzyły te same pliki, a 573 wejścia/rodzice zachowały hash.
+Trzy pary świeżych buildów dały medianę 21,32 → 18,42 s, CPU 20,57 → 17,71 s;
+mediana próbkowanego peak RSS wyniosła 131,75 → 131,98 MiB.
+Sorty ledgeru spadły z 45 696 do 1632. Indeks powstaje na granicy wiedzy
+każdego origin; późna korekta nie nadpisuje dawnych danych.
+Przyrost ma 150/150 testów ukierunkowanych, w tym 37 nowych,
+bez ostrzeżeń. Pełny `make ci-local` przeszedł:
+1950/1950 testów bez ostrzeżeń, wszystkie targety, pakiet, Compose
+config i oba skany sekretów. Końcowe receipt mają ponowne kontrole
+dokumentacji i sekretów; nowy commit wymaga własnego CI w draft PR #14.
+Poprzedni commit `858abcf` ma zielone Required CI PR i push.
+Etykiety, upstream, split i trening nadal przyjmują v1. Pozostają ich
+partycjonowanie, rzeczywisty większy profil i odbiór całego pipeline,
+niezależna ocena, progi i lifecycle/batch/read API. Final test nie jest
+oceniony, cały AI 08 pozostaje not ready. Poniższe przyrosty zachowują zakres.
+
 **AI 08 — ograniczony odczyt faktów z dysku zachowuje wyniki małej próbki.**
 [Kontrakt 2.1](reference/stockout-disk-facts.md) i
 [odbiór](evidence/08-07-stockout-disk-facts.md) obejmują prywatny magazyn

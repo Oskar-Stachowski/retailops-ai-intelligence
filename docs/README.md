@@ -79,6 +79,10 @@ zachowuje każde pole 1632 punktów oraz wyniki modeli development.
 jednorazowy, ograniczony magazyn SQLite i cache jednej fizycznej serii.
 [Odbiór](evidence/08-07-stockout-disk-facts.md) zachowuje wszystkie punkty,
 Parquet i modele, z osobnym pomiarem czasu i pamięci w świeżych procesach.
+[Indeks historii 2.2](reference/stockout-history-index.md) dodaje sumy
+prefiksowe ledgeru i dzienne grupowanie popytu znanego w origin.
+[Odbiór](evidence/08-08-stockout-history-index.md) porównuje tę samą próbkę
+z wcześniejszą projekcją oraz zachowuje granice całego AI 08.
 [Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
 validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
