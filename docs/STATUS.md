@@ -1,5 +1,26 @@
 # Aktualny status
 
+**AI 08 — kompletny pipeline przeszedł odbiór większego pilota.**
+[Pomiar](reference/stockout-resource-probe.md) i
+[odbiór](evidence/08-14-stockout-resource-probe.md) obejmują producenta,
+eksport/import, curated, rzeczywiste partycje, development i sześć modeli.
+Jawny `ai-load` 14 × 2 × 102 ma **2856 punktów**, wobec 1632 smoke.
+Train/tune/calibration: **598/227/218**, razem 1043 wobec 605.
+Całość trwa 719,81 s, peak własnego drzewa RSS 622,23 MiB, allocated scratch
+259,23 MiB; 50 GiB rezerwy jest zachowane. Przyjęte wejścia i modele są
+zachowane oddzielnie do niezależnej oceny. Wariant 4480 odrzucono przed
+startem przez estymację RAM. Pełne `ai-dev`/`ai-training` są nieodebrane.
+Regeneracja smoke zachowuje sześć modeli/wyników, używając nowych prawdziwych
+label/temporal IDs wynikających z nowych timestampów manifestu. Stare
+573 wejścia/v1 rodzice i 302 pliki partycji są zachowane.
+29 nowych kontroli jest zaliczonych; Ruff/mypy/docs oraz pełny rzeczywisty
+smoke i pilot mają odbiór. Rodzic 4faaf4b ma zielone Required CI;
+nowy commit wymaga swojego CI. Tune wybiera provisional LR without_upstream,
+a kategorii not_evaluable jest 1/8 zamiast 5/8. To nie jest niezależny odbiór
+jakości/kalibracji. Nowa karta, ta ocena, progi/capacity i lifecycle/batch/read
+pozostają otwarte. Final test i promocja nie są wykonane;
+**cały AI 08 pozostaje not ready**. AI 05/v12 i starsze pakiety są zachowane.
+
 **AI 08 — upstream 2.1 jest podłączony do treningu bez nadmiarowego replay.**
 [Kontrakt](reference/stockout-temporal-series.md) i
 [odbiór](evidence/08-13-stockout-temporal-series.md) dodają osobny temporal 2.1.

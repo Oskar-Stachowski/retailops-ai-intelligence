@@ -1,5 +1,14 @@
 # Większy profil stockout — ograniczenia i projekt wykonania
 
+Aktualny [pomiar całego pipeline](stockout-resource-probe.md) i
+[odbiór AI08.14](../evidence/08-14-stockout-resource-probe.md) kwalifikują
+osobny pośredni `ai-load` 14 × 2 × 102, 2856 origin, 719,81 s,
+622,23 MiB całego drzewa RSS i 259,23 MiB allocated scratch. Pilot ma jawnie
+zamrożony budżet 2 GiB/1 GiB/1800 s i zachowuje 50 GiB wolnego miejsca.
+Wariant 4480 odrzucono przed startem. Pełne `ai-dev`/`ai-training` i niezależna
+jakość pozostają nieodebrane. Poniżej zachowano poprzedni projekt i jego
+nieodebraną propozycję 5 GiB/600 s; nie stanowią wyniku tego pilota.
+
 To projekt większego profilu, **nie wykonany odbiór większego profilu**.
 [Partycje cech v2](stockout-partitions.md) realizują pierwszy przyrost:
 osobny manifest, bounded Parquet i indeks serii/czasu wiedzy. Odbiór
