@@ -30,6 +30,13 @@ jobs:
           python-version: "3.11.15"
           enable-cache: true
       - run: make bootstrap check
+      - name: Preserve bounded observation replay evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai10-observation-replay
+          path: artifacts/ai10-observation-replay.json
+          if-no-files-found: error
+          retention-days: 14
   secrets:
     runs-on: ubuntu-24.04
     timeout-minutes: 10

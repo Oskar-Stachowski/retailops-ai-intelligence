@@ -64,7 +64,7 @@ forecast-acceptance-check:
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check contracts-check package compose-config forecast-remediation-check forecast-acceptance-check
+check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check contracts-check package compose-config forecast-remediation-check forecast-acceptance-check observation-replay-check
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner
@@ -90,6 +90,7 @@ contracts:
 	$(UV_RUN) python scripts/update_intelligence_event_contracts.py
 
 contracts-check:
+	$(UV_RUN) python scripts/update_observation_replay_contract.py --check
 	$(UV_RUN) python scripts/check_source_bundle_contract.py
 	$(UV_RUN) python scripts/update_source_rest_contract.py --check
 	$(UV_RUN) python scripts/check_intelligence_delivery.py
@@ -180,7 +181,7 @@ evaluations-smoke:
 integration-replay-test:
 	$(UV_RUN) python scripts/check_intelligence_delivery.py
 	$(UV_RUN) python scripts/update_intelligence_event_contracts.py --check
-	$(UV_RUN) python -m pytest tests/test_intelligence_events.py tests/test_intelligence_delivery.py
+	$(UV_RUN) python -m pytest tests/test_intelligence_events.py tests/test_intelligence_delivery.py tests/test_observation_replay.py
 
 integration-failure-test:
 	REQUIRE_AI10_OUTBOX_TESTS=1 $(UV_RUN) python -m pytest tests/test_intelligence_outbox.py
@@ -189,6 +190,10 @@ integration-failure-test:
 .PHONY: source-bundle-check
 source-bundle-check:
 	$(UV_RUN) python scripts/check_source_bundle_contract.py
+
+.PHONY: observation-replay-check
+observation-replay-check:
+	$(UV_RUN) python scripts/check_observation_replay.py --report artifacts/ai10-observation-replay.json
 
 source-rest-check:
 	$(UV_RUN) python scripts/update_source_rest_contract.py --check
