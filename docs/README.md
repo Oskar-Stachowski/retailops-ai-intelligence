@@ -22,6 +22,9 @@ wyników z jednym trwałym budżetem, zachowuje awarie i obserwowaną historię.
 pięć chronologicznych ról i pełne klucze, z jawną blokadą odczytu wyników oceny.
 [Dziennik dostępu do wyników](outcome-access-journal.md) zachowuje historię
 odczytów i rezerwuje dostęp przed czytnikiem, również po awarii procesu.
+[Czytnik etykiet pięciu ról](forecast-outcome-reader.md) sprawdza pełne klucze,
+wersje, dojrzałość i eligibility w audytowanym kontekście; źródło i niezależna
+kampania nadal wymagają osobnego odbioru.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
 registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
 sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)

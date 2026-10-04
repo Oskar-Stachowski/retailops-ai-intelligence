@@ -1,5 +1,22 @@
 # Aktualny status
 
+**AI 09 — fizyczny czytnik etykiet pięciu ról development.**
+[Przyrost 09.8](forecast-outcome-reader.md) sprawdza pełne klucze,
+wersję znaną na cutoff, dojrzałość i eligibility po trwałej rezerwacji audytu.
+Braki pozostają censored, zamknięte dni poza scoringiem, a błędy i SIGKILL
+nie zwracają budżetu. Prywatna baza jest zamykana po odczycie.
+[Odbiór](evidence/09-08-forecast-outcome-reader.md) obejmuje 181 testów,
+w tym 60 nowych, oraz identyczne wyniki native i zainstalowanego wheel.
+Kontrolny przykład osiągnął peak RSS 132.02 MiB i około 2.38 MiB scratch.
+Wspólny dziennik zachowuje historię, cztery zamrożone plany przygotowania
+oraz wszystkie 64 odczyty danych projektu; nowych odczytów i fitów projektu: 0.
+Pełne lokalne CI przeszło: 2020 testów głównych, 3 rzeczywiste testy TensorFlow
+i pozostałe bramki. Poprzedni commit 09.7 ma zielone Required CI166;
+nowy commit wymaga własnego zdalnego CI.
+Źródło dowodów nie jest jeszcze odtworzone z full curated/source parent.
+Pozostają audytowany eksport, pełny audyt ekspozycji i integracja z treningiem.
+Niezależna ocena i final test pozostają zamknięte; cały AI 09 jest not_ready.
+
 **AI 09 — trwały dziennik dostępu do wyników.**
 [Przyrost 09.7](outcome-access-journal.md) zachowuje historię 11 uruchomień,
 zapisuje rezerwację przed odczytem i nie zwraca budżetu po błędzie lub SIGKILL.
@@ -13,7 +30,8 @@ w tym 46 nowych. Pełne lokalne CI przeszło: 1960 testów głównych oraz
 Nowy commit wymaga własnego zdalnego Required CI.
 Właściwy dziennik ma zero nowych odczytów etykiet projektu i zero fitów.
 Audyt jest częściowy; niezależna ocena pozostaje zablokowana, AI 09 not_ready.
-Fizyczny label reader i integracja pięciu ról z treningiem nadal są otwarte.
+Czytnik development dodaje przyrost 09.8; full source replay i integracja
+pięciu ról z treningiem nadal są otwarte.
 
 **AI 09 — przygotowanie niezależnego podziału prognoz.**
 [Przyrost 09.6](independent-forecast-partitions.md) przypina pięć ról:

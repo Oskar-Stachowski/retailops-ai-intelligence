@@ -1,0 +1,169 @@
+{
+  "$defs": {
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    },
+    "OutcomePopulation": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "data_seed": {
+          "exclusiveMaximum": 4294967296,
+          "minimum": 0,
+          "title": "Data Seed",
+          "type": "integer"
+        },
+        "feature_set_id": {
+          "pattern": "^features-sha256-[0-9a-f]{64}$",
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "label_knowledge_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Label Knowledge Cutoff",
+          "type": "string"
+        },
+        "membership_keys_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Membership Keys Sha256",
+          "type": "string"
+        },
+        "origins": {
+          "$ref": "#/$defs/DateWindow"
+        },
+        "outcome_artifact_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Outcome Artifact Sha256",
+          "type": "string"
+        },
+        "partition_id": {
+          "pattern": "^ai09-partitions-sha256-[0-9a-f]{64}$",
+          "title": "Partition Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "train",
+            "early_stopping",
+            "tune",
+            "calibration",
+            "development_evaluation"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "use_case": {
+          "const": "forecast",
+          "default": "forecast",
+          "title": "Use Case",
+          "type": "string"
+        }
+      },
+      "required": [
+        "data_seed",
+        "source_dataset_id",
+        "snapshot_id",
+        "curated_dataset_id",
+        "feature_set_id",
+        "partition_id",
+        "role",
+        "origins",
+        "label_knowledge_cutoff",
+        "membership_keys_sha256",
+        "outcome_artifact_sha256"
+      ],
+      "title": "OutcomePopulation",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:outcome_evidence_manifest:6.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "format": {
+      "const": "canonical_key_sorted_outcomes_jsonl",
+      "default": "canonical_key_sorted_outcomes_jsonl",
+      "title": "Format",
+      "type": "string"
+    },
+    "population": {
+      "$ref": "#/$defs/OutcomePopulation"
+    },
+    "provenance": {
+      "const": "declared_curated_versions_full_source_parent_not_replayed",
+      "default": "declared_curated_versions_full_source_parent_not_replayed",
+      "title": "Provenance",
+      "type": "string"
+    },
+    "row_count": {
+      "maximum": 100000,
+      "minimum": 1,
+      "title": "Row Count",
+      "type": "integer"
+    },
+    "size_bytes": {
+      "maximum": 67108864,
+      "minimum": 1,
+      "title": "Size Bytes",
+      "type": "integer"
+    },
+    "source_qualification": {
+      "const": "not_established",
+      "default": "not_established",
+      "title": "Source Qualification",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-scoped-forecast-evidence-1.0.0",
+      "default": "ai09-scoped-forecast-evidence-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "population",
+    "row_count",
+    "size_bytes"
+  ],
+  "title": "OutcomeEvidenceManifest",
+  "type": "object"
+}

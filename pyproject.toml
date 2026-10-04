@@ -104,6 +104,7 @@ packages = ["src/retailops_ai"]
 "contracts/evaluation/v3" = "retailops_ai/evaluation_campaign/v3"
 "contracts/evaluation/v4" = "retailops_ai/evaluation_campaign/v4"
 "contracts/evaluation/v5" = "retailops_ai/evaluation_campaign/v5"
+"contracts/evaluation/v6" = "retailops_ai/evaluation_campaign/v6"
 "environments/tensorflow/uv.lock" = "retailops_ai/tensorflow_challenger/dependencies.lock"
 "contracts/evaluation/v2" = "retailops_ai/tensorflow_challenger"
 
