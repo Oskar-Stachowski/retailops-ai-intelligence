@@ -1,0 +1,229 @@
+{
+  "ai08_reuse_audit": {
+    "foreign_session_mutated": false,
+    "observed_head": "df61862",
+    "temporal_join_already_implemented": true
+  },
+  "all_own_acceptance_processes_finished": true,
+  "all_own_ci_processes_finished": true,
+  "artifact_bytes": 341126,
+  "commands": [
+    {
+      "exit_code": 0,
+      "installed_wheel": false,
+      "name": "native-template",
+      "peak_process_tree_rss_mib": 67.140625,
+      "sampled_peak_scratch_bytes": 0,
+      "sampled_process_tree_cpu_seconds": 0.35687128,
+      "sampling_seconds": 0.05,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6ed5a89373b32815282d54196bfe66f92301831bc0218cc053d1df8979edd47b",
+      "wall_seconds": 0.5931389999896055
+    },
+    {
+      "exit_code": 0,
+      "installed_wheel": false,
+      "name": "native-prepare",
+      "peak_process_tree_rss_mib": 121.140625,
+      "sampled_peak_scratch_bytes": 996704,
+      "sampled_process_tree_cpu_seconds": 7.144423024,
+      "sampling_seconds": 0.05,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5f7f88e5b6eb3b085aea4ece96f0d1211cf157d66a9ba97538739e6bafedf1a6",
+      "wall_seconds": 7.512634958009585
+    },
+    {
+      "exit_code": 0,
+      "installed_wheel": false,
+      "name": "native-verify",
+      "peak_process_tree_rss_mib": 121.5,
+      "sampled_peak_scratch_bytes": 623240,
+      "sampled_process_tree_cpu_seconds": 3.615073448,
+      "sampling_seconds": 0.05,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5f7f88e5b6eb3b085aea4ece96f0d1211cf157d66a9ba97538739e6bafedf1a6",
+      "wall_seconds": 3.7938562909985194
+    },
+    {
+      "exit_code": 3,
+      "installed_wheel": false,
+      "name": "native-preflight",
+      "peak_process_tree_rss_mib": 121.171875,
+      "sampled_peak_scratch_bytes": 947456,
+      "sampled_process_tree_cpu_seconds": 3.74583948,
+      "sampling_seconds": 0.05,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5f7f88e5b6eb3b085aea4ece96f0d1211cf157d66a9ba97538739e6bafedf1a6",
+      "wall_seconds": 3.867173541992088
+    },
+    {
+      "exit_code": 0,
+      "installed_wheel": true,
+      "name": "wheel-verify-native",
+      "peak_process_tree_rss_mib": 123.15625,
+      "sampled_peak_scratch_bytes": 660176,
+      "sampled_process_tree_cpu_seconds": 3.714893816,
+      "sampling_seconds": 0.05,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5f7f88e5b6eb3b085aea4ece96f0d1211cf157d66a9ba97538739e6bafedf1a6",
+      "wall_seconds": 3.967420167013188
+    },
+    {
+      "exit_code": 0,
+      "installed_wheel": true,
+      "name": "wheel-prepare",
+      "peak_process_tree_rss_mib": 125.984375,
+      "sampled_peak_scratch_bytes": 869480,
+      "sampled_process_tree_cpu_seconds": 7.10459352,
+      "sampling_seconds": 0.05,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5f7f88e5b6eb3b085aea4ece96f0d1211cf157d66a9ba97538739e6bafedf1a6",
+      "wall_seconds": 7.3009748330077855
+    },
+    {
+      "exit_code": 0,
+      "installed_wheel": true,
+      "name": "wheel-role-and-schema-proof",
+      "peak_process_tree_rss_mib": 120.515625,
+      "sampled_peak_scratch_bytes": 931040,
+      "sampled_process_tree_cpu_seconds": 7.511266976,
+      "sampling_seconds": 0.05,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "389a7b85e7010eff82ef21ed5c1aab9f3e2f104a5f99fa1b8a890059ac40902d",
+      "wall_seconds": 7.81181466698763
+    },
+    {
+      "exit_code": 2,
+      "installed_wheel": true,
+      "name": "wheel-corruption-rejection",
+      "peak_process_tree_rss_mib": 120.359375,
+      "sampled_peak_scratch_bytes": 512560,
+      "sampled_process_tree_cpu_seconds": 2.282938632,
+      "sampling_seconds": 0.05,
+      "stderr_sha256": "fa40075a89615023b53d21483901646907b120eaed4330dc0145b81703328d30",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wall_seconds": 2.3763007079978706
+    },
+    {
+      "exit_code": 2,
+      "installed_wheel": false,
+      "name": "existing-sixty-day-window-rejection",
+      "peak_process_tree_rss_mib": 65.09375,
+      "sampled_peak_scratch_bytes": 0,
+      "sampled_process_tree_cpu_seconds": 0.284636408,
+      "sampling_seconds": 0.05,
+      "stderr_sha256": "fa40075a89615023b53d21483901646907b120eaed4330dc0145b81703328d30",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wall_seconds": 0.41308245800610166
+    }
+  ],
+  "evaluation_status": "not_ready",
+  "feature_root": "/private/tmp/ai09-independent-partitions-acceptance/features/features-sha256-98eba2ff4649f50f4d05833af627454aaffc266778720437eeb9090f06ab0d9b",
+  "feature_set_id": "features-sha256-98eba2ff4649f50f4d05833af627454aaffc266778720437eeb9090f06ab0d9b",
+  "final_metadata_checks": {
+    "log_path": "/private/tmp/ai09-partitions-final-metadata-checks.log",
+    "log_sha256": "2426b6a3eeeb19944bae1098d510345487fba2447e71a16561ebb1108a4c6bab",
+    "status": "passed",
+    "targets": [
+      "docs-check",
+      "contracts-check",
+      "package",
+      "compose-config",
+      "secrets"
+    ]
+  },
+  "focused_tests": {
+    "combined_regression": 154,
+    "partition_tests": 52,
+    "status": "passed",
+    "wall_seconds": 43.03
+  },
+  "full_ci": {
+    "all_check_and_secret_targets_passed": true,
+    "changed_source_files": [],
+    "command": [
+      "nice",
+      "-n",
+      "15",
+      "make",
+      "ci-local",
+      "UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv",
+      "GITLEAKS=/opt/homebrew/bin/gitleaks"
+    ],
+    "core_tests_passed": 1914,
+    "core_tests_wall_seconds": 2235.93,
+    "exit_code": 0,
+    "log_path": "/private/tmp/ai09-partitions-ci-local.log",
+    "log_sha256": "b6f6f8a2f500d30f05002fd362e2b8db912487403fcded0765ea54724166ad58",
+    "required_real_tf_cpu_tests_passed": 3,
+    "required_real_tf_cpu_wall_seconds": 76.1,
+    "skipped_tests": 0,
+    "source_freeze_files": 790,
+    "status": "passed",
+    "wall_seconds": 2534.880870819092
+  },
+  "historical_outcome_access_inventory": {
+    "attempts": 11,
+    "existing_development_holdout_freshness": "opened_during_parent_verification_not_untouched",
+    "new_labels_read": false,
+    "path": "/private/tmp/ai09-historical-outcome-access-inventory.json",
+    "protocols": 10,
+    "scope": "retrospective_declaration_not_pre_read_journal",
+    "sha256": "2708341589f46341ee22abc6f0ae65b305e97a83ecb0ab19b85bb9c56e4de2e1",
+    "source_datasets": 1,
+    "splits": 1
+  },
+  "increment": "AI09.6",
+  "independent_evaluation_status": "not_ready",
+  "native_root": "/private/tmp/ai09-independent-partitions-acceptance/native/ai09-partitions-sha256-0ae2917f089b26b9754f1fc394273ba6f43a4a0f24646af31ed052818e5fa031",
+  "native_wheel_manifest_byte_identical": true,
+  "new_project_data_fits": 0,
+  "partition_id": "ai09-partitions-sha256-0ae2917f089b26b9754f1fc394273ba6f43a4a0f24646af31ed052818e5fa031",
+  "portfolio_final_test_accessed": false,
+  "previous_required_ci": {
+    "conclusion": "success",
+    "head_sha": "4d2f773038646993a25b826dd227df900a5f25c3",
+    "run_id": 37209049471,
+    "run_number": 152,
+    "status": "completed",
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37209049471"
+  },
+  "project_label_files_opened": false,
+  "promotion_allowed": false,
+  "required_ci": {
+    "status": "requires_new_commit_check"
+  },
+  "resource_budget": {
+    "wall_seconds": 300,
+    "whole_process_tree_rss_mib": 1024
+  },
+  "role_counts": {
+    "calibration": 14,
+    "development_evaluation": 5,
+    "early_stopping": 14,
+    "purged": 804,
+    "train": 14,
+    "tune": 14
+  },
+  "scope": "controlled_65_origin_physical_feature_fixture_not_source_or_model_quality_qualification",
+  "source_features_unchanged": true,
+  "source_pin_sha256": "68ec2b864a234b852bad6f264d775acf1fd68f9062a7e3382958dec81615197c",
+  "source_python_files_identical_in_wheel": 271,
+  "stage_status": "in_progress",
+  "static_checks": {
+    "contract_snapshots": "passed",
+    "formatted_files": 579,
+    "mypy": "passed",
+    "mypy_source_files": 346,
+    "ruff": "passed"
+  },
+  "wheel_proof": {
+    "calibration_keys": 14,
+    "framework_imported": false,
+    "installed_module": "/private/tmp/ai09-partitions-installed/retailops_ai/evaluation_campaign/partitions.py",
+    "partition_id": "ai09-partitions-sha256-0ae2917f089b26b9754f1fc394273ba6f43a4a0f24646af31ed052818e5fa031",
+    "validated_schemas": 3
+  },
+  "wheel_root": "/private/tmp/ai09-independent-partitions-acceptance/wheel/ai09-partitions-sha256-0ae2917f089b26b9754f1fc394273ba6f43a4a0f24646af31ed052818e5fa031",
+  "wheel_sha256": "44581d066905f2759258a624a8d3574fb45e0756861c264a2d756be13601ede6"
+}

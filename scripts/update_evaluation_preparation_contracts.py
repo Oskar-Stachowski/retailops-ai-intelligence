@@ -5,6 +5,11 @@ import json
 from pathlib import Path
 
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
+from retailops_ai.evaluation_campaign.partition_contract import (
+    ForecastPartitionManifest,
+    ForecastPartitionPolicy,
+    PartitionMembership,
+)
 from retailops_ai.evaluation_campaign.preparation import default_plan
 from retailops_ai.evaluation_campaign.trial_contract import AttemptSnapshot, TrialLedger, TrialPlan
 
@@ -50,6 +55,23 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Development trial contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, partition_model in (
+        ("forecast_partition_policy", ForecastPartitionPolicy),
+        ("forecast_partition_manifest", ForecastPartitionManifest),
+        ("forecast_partition_membership", PartitionMembership),
+    ):
+        schema = partition_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:4.0.0"
+        path = ROOT / "contracts/evaluation/v4" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Independent forecast partition contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

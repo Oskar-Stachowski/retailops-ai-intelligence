@@ -1,5 +1,19 @@
 # Aktualny status
 
+**AI 09 — przygotowanie niezależnego podziału prognoz.**
+[Przyrost 09.6](independent-forecast-partitions.md) przypina pięć ról:
+train, early stopping, tune, calibration i development evaluation,
+z przerwami na dojrzenie etykiet i pełnym zbiorem kluczy. Przygotowanie
+nie przyjmuje plików etykiet i nie wykonuje fitów ani oceny jakości.
+Dotychczasowy 60-dniowy zbiór jest odrzucany, zamiast skracania podziału.
+Kontrolny fixture ma 865 zachowanych kluczy; native i wheel dają ten sam
+manifest, a najwyższy zmierzony peak RSS wynosi 125.98 MiB.
+[Odbiór](evidence/09-06-independent-forecast-partitions.md) podaje testy,
+CI i ograniczenia. Świeżość holdoutu, odczyt etykiet, nowy protokół
+treningu i niezależne wyniki pozostają otwarte; AI 09 nadal not_ready.
+Pełne lokalne CI zaliczyło 1914 testów głównych i 3 rzeczywiste testy
+TensorFlow, pakiet i pozostałe bramki. Nowy commit wymaga własnego Required CI.
+
 **AI 09 — wspólny rejestr prób development.**
 [Przyrost 09.5](development-trial-registry.md) rezerwuje budżet przed fitami,
 zachowuje awarie i nierozliczone próby pomiędzy restartami i katalogami wyników.

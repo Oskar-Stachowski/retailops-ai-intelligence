@@ -1,0 +1,97 @@
+{
+  "$id": "urn:retailops:evaluation:forecast_partition_membership:4.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "business_timezone": {
+      "const": "UTC",
+      "title": "Business Timezone",
+      "type": "string"
+    },
+    "channel": {
+      "enum": [
+        "store",
+        "online"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "cutoff_policy": {
+      "const": "end_of_day_second_v1",
+      "title": "Cutoff Policy",
+      "type": "string"
+    },
+    "feature_row_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Feature Row Sha256",
+      "type": "string"
+    },
+    "forecast_origin": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Forecast Origin",
+      "type": "string"
+    },
+    "horizon_days": {
+      "maximum": 14,
+      "minimum": 1,
+      "title": "Horizon Days",
+      "type": "integer"
+    },
+    "label_knowledge_cutoff": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Label Knowledge Cutoff"
+    },
+    "product_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "role": {
+      "enum": [
+        "train",
+        "early_stopping",
+        "tune",
+        "calibration",
+        "development_evaluation",
+        "purged"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "selling_location_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Selling Location Id",
+      "type": "string"
+    },
+    "target_date": {
+      "format": "date",
+      "title": "Target Date",
+      "type": "string"
+    }
+  },
+  "required": [
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "forecast_origin",
+    "business_timezone",
+    "cutoff_policy",
+    "target_date",
+    "horizon_days",
+    "role",
+    "label_knowledge_cutoff",
+    "feature_row_sha256"
+  ],
+  "title": "PartitionMembership",
+  "type": "object"
+}

@@ -18,6 +18,8 @@ populację baseline/RF/HGB/TF, zapis prób, segmenty i replay bez treningu.
 strumieniowy digest i osobny CPU reload z pomiarem całego własnego drzewa.
 [Rejestr prób development](development-trial-registry.md) wiąże wiele katalogów
 wyników z jednym trwałym budżetem, zachowuje awarie i obserwowaną historię.
+[Niezależny podział prognoz](independent-forecast-partitions.md) przygotowuje
+pięć chronologicznych ról i pełne klucze, z jawną blokadą odczytu wyników oceny.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
 registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
 sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)
