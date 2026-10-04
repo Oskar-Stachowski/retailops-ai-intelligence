@@ -27,6 +27,12 @@ comparison/membership Parquet i rzeczywiste wejścia treningu z cech 2.2,
 upstream 2.0 i etykiet 2.0. Zachowuje v1, limit 10 000 kluczy i 16 MiB
 kanonicznego development; cały wybrany development nadal mieści się
 w pamięci. Większy profil pozostaje nieodebrany.
+[Selekcja upstream 2.1](stockout-upstream-series.md) dodaje globalną
+walidację znanych wersji/trasy w SQL i wybiera payload jednej fizycznej
+serii. Usuwa wymaganie globalnego panelu Python; limity wejścia i bazy
+pozostają, a temporalny adapter 2.0 nadal przyjmuje upstream 2.0.
+Podłączenie nowych rodziców, spójny replay i budżet większego pipeline
+pozostają otwarte.
 Obowiązują wymiary z
 [planu źródła](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/etapy/08-stockout-risk.md)
 i [kontraktu profili](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/kontrakty/profile-i-bramki.md)

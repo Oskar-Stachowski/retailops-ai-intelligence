@@ -1,5 +1,29 @@
 # Aktualny status
 
+**AI 08 — upstream ma selekcję jednej fizycznej serii i globalną walidację.**
+[Kontrakt 2.1](reference/stockout-upstream-series.md) i
+[odbiór](evidence/08-12-stockout-upstream-series.md) zachowują wszystkie
+1632 prognozy, comparison i sześć modeli obecnej próbki. Selekcja ma
+najwyżej 198 zamiast 3625 rekordów
+oraz 247,260 zamiast 4,166,485 B.
+Ograniczony decoded cache ma 1024 rekordy / 1 MiB, schema wczytywane raz.
+Globalne znane wersje i efektywne trasy są sprawdzane przed fizycznym filtrem.
+Native i odłączony wheel zachowują identyczne bajty, 573 wejścia/rodzice
+pozostały bez zmian. Regresja ukierunkowana ma 118/118 przypadków,
+w tym 48 nowych. Pełny `make ci-local` przeszedł: 2085/2085 testów,
+0 ostrzeżeń, wszystkie targety, pakiet, Compose config i skany sekretów.
+Trzy pary buildów mają medianę 127.23 → 149.12 s,
+peak RSS 127.17 → 125.83 MiB;
+nie wykazano przyspieszenia lub istotnego zmniejszenia całego RSS na smoke.
+To usunięcie globalnego panelu Python, bez odbioru większego profilu.
+Rodzic `df61862` ma zielone Required CI PR i push; nowy commit wymaga własnego CI.
+Temporalny trening 2.0 pozostaje odebrany z upstream 2.0. Podłączenie
+upstream 2.1 i spójny przebieg bez nadmiarowego replay, pozostałe limity,
+większy profil/RSS/scratch, niezależna ocena, progi, karta i lifecycle/batch/read
+API pozostają otwarte. Stare pakiety/ID, AI 05 i v12 pozostają zachowane;
+final test nie jest oceniony, cały AI 08 pozostaje not ready.
+Poniższe przyrosty zachowują historyczny zakres odbioru.
+
 **AI 08 — temporalne połączenie partycji jest podłączone do treningu.**
 [Kontrakt](reference/stockout-temporal-storage.md) i
 [odbiór](evidence/08-11-stockout-temporal-storage.md) dodają osobny pakiet
