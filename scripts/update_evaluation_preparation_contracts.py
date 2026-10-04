@@ -5,6 +5,12 @@ import json
 from pathlib import Path
 
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
+from retailops_ai.evaluation_campaign.outcome_contract import (
+    OutcomeAccessBinding,
+    OutcomeAccessPlan,
+    OutcomeJournal,
+    OutcomeJournalPolicy,
+)
 from retailops_ai.evaluation_campaign.partition_contract import (
     ForecastPartitionManifest,
     ForecastPartitionPolicy,
@@ -72,6 +78,24 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Independent forecast partition contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, outcome_model in (
+        ("outcome_access_binding", OutcomeAccessBinding),
+        ("outcome_access_plan", OutcomeAccessPlan),
+        ("outcome_journal_policy", OutcomeJournalPolicy),
+        ("outcome_journal", OutcomeJournal),
+    ):
+        schema = outcome_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:5.0.0"
+        path = ROOT / "contracts/evaluation/v5" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Outcome access contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

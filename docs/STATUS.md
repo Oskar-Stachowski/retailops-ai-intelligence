@@ -1,5 +1,20 @@
 # Aktualny status
 
+**AI 09 — trwały dziennik dostępu do wyników.**
+[Przyrost 09.7](outcome-access-journal.md) zachowuje historię 11 uruchomień,
+zapisuje rezerwację przed odczytem i nie zwraca budżetu po błędzie lub SIGKILL.
+Nowe plany przypinają pełny runtime oraz źródło, seed, rolę, populację,
+kandydata, kalibrator i thresholdy. Zmiana czytnika wymaga nowego planu
+bez resetowania historii. Native i wheel zachowały oryginalne metadane;
+kontrolna próba blokuje odczyt po wyczerpaniu limitu, peak RSS 78.78 MiB.
+[Odbiór](evidence/09-07-outcome-access-journal.md) obejmuje 123 testy regresji,
+w tym 46 nowych. Pełne lokalne CI przeszło: 1960 testów głównych oraz
+3 rzeczywiste testy TensorFlow, pakiet i pozostałe bramki.
+Nowy commit wymaga własnego zdalnego Required CI.
+Właściwy dziennik ma zero nowych odczytów etykiet projektu i zero fitów.
+Audyt jest częściowy; niezależna ocena pozostaje zablokowana, AI 09 not_ready.
+Fizyczny label reader i integracja pięciu ról z treningiem nadal są otwarte.
+
 **AI 09 — przygotowanie niezależnego podziału prognoz.**
 [Przyrost 09.6](independent-forecast-partitions.md) przypina pięć ról:
 train, early stopping, tune, calibration i development evaluation,
