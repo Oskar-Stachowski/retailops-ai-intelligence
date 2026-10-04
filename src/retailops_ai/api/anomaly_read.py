@@ -13,7 +13,14 @@ from starlette.responses import JSONResponse
 
 from retailops_ai.anomaly_detectors.protocol import EventType
 from retailops_ai.anomaly_portfolio.result_store import Reader, ReadError
-from retailops_ai.anomaly_portfolio.serving_contract import AnomalyID, BatchID, Item, Page, Query
+from retailops_ai.anomaly_portfolio.serving_contract import (
+    AnomalyID,
+    AnomalyType,
+    BatchID,
+    Item,
+    Page,
+    Query,
+)
 from retailops_ai.api.errors import problem_response
 from retailops_ai.api.models import Problem
 from retailops_ai.data_contracts.common import Sha256, Symbol
@@ -51,6 +58,7 @@ def add_anomaly_read_routes(
         batch_id: Annotated[BatchID | None, Param()] = None,
         status: Annotated[Literal["scored", "insufficient_data"] | None, Param()] = None,
         severity: Annotated[Literal["none", "medium", "high"] | None, Param()] = None,
+        anomaly_type: Annotated[AnomalyType | None, Param()] = None,
         limit: Annotated[int, Param(ge=1, le=200)] = 50,
         offset: Annotated[int, Param(ge=0, le=10000)] = 0,
         view_sha256: Annotated[Sha256 | None, Param()] = None,
@@ -79,6 +87,7 @@ def add_anomaly_read_routes(
                 batch_id=batch_id,
                 status=status,
                 severity=severity,
+                anomaly_type=anomaly_type,
                 limit=limit,
                 offset=offset,
                 view_sha256=view_sha256,

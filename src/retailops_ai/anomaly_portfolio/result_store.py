@@ -42,7 +42,10 @@ def authorized(actor: Principal, query: Query, capability: str = "anomaly:read")
 
 
 def logical(items: list[Item]) -> list[dict[str, Any]]:
-    return [i.model_dump(mode="json", exclude={"generated_at", "freshness_status"}) for i in items]
+    return [
+        i.model_dump(mode="json", exclude={"generated_at", "detected_at", "freshness_status"})
+        for i in items
+    ]
 
 
 class PostgresResults:
@@ -258,6 +261,9 @@ class PostgresResults:
         if query.severity is not None:
             clauses.append("r.record->>'severity'=:severity")
             params["severity"] = query.severity
+        if query.anomaly_type is not None:
+            clauses.append("r.record->>'anomaly_type'=:anomaly_type")
+            params["anomaly_type"] = query.anomaly_type
         where = " AND ".join(clauses)
         with self.engine.connect() as conn:
             if query.batch_id is None and query.anomaly_id is None:

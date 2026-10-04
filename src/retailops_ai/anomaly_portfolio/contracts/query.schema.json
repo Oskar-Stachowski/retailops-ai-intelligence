@@ -15,6 +15,26 @@
       "default": null,
       "title": "Anomaly Id"
     },
+    "anomaly_type": {
+      "anyOf": [
+        {
+          "enum": [
+            "sales_spike",
+            "sales_drop",
+            "residual_outlier",
+            "return_spike",
+            "stockout_censored_demand",
+            "data_quality_suspicion"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Anomaly Type"
+    },
     "batch_id": {
       "anyOf": [
         {

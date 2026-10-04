@@ -36,6 +36,7 @@ def batch(
     ):
         raise ValueError("anomaly_batch_model_or_clock_binding")
     points = list(frame.points())
+    indexed_points = {(*series_key(p), p.business_date): p for p in points}
     decisions = score(model, points, scopes, window, qualification.model_family, "batch", as_of)
     desc = frame.manifest.descriptor
     metadata = {
@@ -58,6 +59,7 @@ def batch(
     episodes: dict[tuple[str, ...], tuple[datetime, str, str]] = {}
     results = []
     for decision in decisions:
+        point = indexed_points.get((*series_key(decision), decision.business_date))
         key = series_key(decision)
         episode_id = None
         if decision.alert:
@@ -115,6 +117,21 @@ def batch(
                         "anomaly_id": "anomaly-sha256-"
                         + json_sha256({"batch_id": batch_id, "decision": data}),
                         "batch_id": batch_id,
+                        "inference_run_id": batch_id,
+                        "observed_window": {
+                            "start": decision.business_date.isoformat(),
+                            "end": decision.business_date.isoformat(),
+                        },
+                        "detected_at": generated_at.isoformat(),
+                        "inventory_context": {
+                            "stock_location_id": point.context.stock_location_id if point else None,
+                            "on_hand": decision.on_hand,
+                            "status": point.context.stock_status if point else "unavailable",
+                        },
+                        "promotion_context": {
+                            "offered": decision.promotion_offered,
+                            "planned_price": point.context.planned_price if point else None,
+                        },
                         "signal_episode_id": episode_id,
                         "detector_version": release.binding.model_version,
                         "release_id": release.release_id,

@@ -5,7 +5,7 @@ from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
-from retailops_ai.anomaly_detectors.protocol import EventType
+from retailops_ai.anomaly_detectors.protocol import EventType, Window
 from retailops_ai.anomaly_evaluation.contract import Decision
 from retailops_ai.data_contracts.common import (
     Contract,
@@ -22,6 +22,14 @@ AnomalyID = Annotated[str, Field(pattern=r"^anomaly-sha256-[0-9a-f]{64}$")]
 FeatureID = Annotated[str, Field(pattern=r"^qualified-anomaly-inputs-sha256-[0-9a-f]{64}$")]
 ReleaseID = Annotated[str, Field(pattern=r"^anomaly-release-sha256-[0-9a-f]{64}$")]
 EpisodeID = Annotated[str, Field(pattern=r"^signal-episode-sha256-[0-9a-f]{64}$")]
+AnomalyType = Literal[
+    "sales_spike",
+    "sales_drop",
+    "residual_outlier",
+    "return_spike",
+    "stockout_censored_demand",
+    "data_quality_suspicion",
+]
 ErrorCode = Literal[
     "anomaly-scope-denied",
     "anomaly-pipeline-denied",
@@ -33,10 +41,26 @@ ErrorCode = Literal[
 ]
 
 
+class InventoryContext(Contract):
+    stock_location_id: Symbol | None
+    on_hand: Annotated[int, Field(ge=0)] | None
+    status: Literal["unavailable", "potential_stockout", "no_stockout_signal"]
+
+
+class PromotionContext(Contract):
+    offered: bool | None
+    planned_price: str | None
+
+
 class Item(Decision):
     anomaly_id: AnomalyID
     batch_id: BatchID
     signal_episode_id: EpisodeID | None
+    observed_window: Window
+    detected_at: UtcTime
+    inference_run_id: BatchID
+    inventory_context: InventoryContext
+    promotion_context: PromotionContext
     detector_name: Literal["retailops-sales-anomaly"] = "retailops-sales-anomaly"
     detector_version: Version
     release_id: ReleaseID
@@ -51,17 +75,7 @@ class Item(Decision):
     as_of: UtcTime
     quality_status: Literal["passed_at_publication"] = "passed_at_publication"
     freshness_status: Literal["current", "stale", "unknown"]
-    anomaly_type: (
-        Literal[
-            "sales_spike",
-            "sales_drop",
-            "residual_outlier",
-            "return_spike",
-            "stockout_censored_demand",
-            "data_quality_suspicion",
-        ]
-        | None
-    )
+    anomaly_type: AnomalyType | None
     alert_status: Literal["open", "no_alert", "insufficient_data"]
     score_definition: Literal[
         "absolute_causal_standardized_residual", "portable_isolation_forest_path_length"
@@ -73,6 +87,23 @@ class Item(Decision):
             self.signal_episode_id is not None
         ):
             raise ValueError("anomaly_result_cutoff_or_episode")
+        if (
+            self.observed_window.start != self.business_date
+            or self.observed_window.end != self.business_date
+            or self.detected_at != self.generated_at
+            or self.inference_run_id != self.batch_id
+            or self.inventory_context.on_hand != self.on_hand
+            or self.promotion_context.offered != self.promotion_offered
+            or self.inventory_context.status
+            != (
+                "unavailable"
+                if self.on_hand is None
+                else "potential_stockout"
+                if self.on_hand == 0
+                else "no_stockout_signal"
+            )
+        ):
+            raise ValueError("anomaly_result_context_binding")
         expected = (
             "insufficient_data"
             if self.status == "insufficient_data"
@@ -96,6 +127,7 @@ class Query(Contract):
     anomaly_id: AnomalyID | None = None
     status: Literal["scored", "insufficient_data"] | None = None
     severity: Literal["none", "medium", "high"] | None = None
+    anomaly_type: AnomalyType | None = None
     limit: Annotated[int, Field(ge=1, le=200)] = 50
     offset: Annotated[int, Field(ge=0, le=10000)] = 0
     view_sha256: Sha256 | None = None

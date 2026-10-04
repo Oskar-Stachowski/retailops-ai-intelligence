@@ -1,4 +1,105 @@
 {
+  "$defs": {
+    "InventoryContext": {
+      "additionalProperties": false,
+      "properties": {
+        "on_hand": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "On Hand"
+        },
+        "status": {
+          "enum": [
+            "unavailable",
+            "potential_stockout",
+            "no_stockout_signal"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "stock_location_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Stock Location Id"
+        }
+      },
+      "required": [
+        "stock_location_id",
+        "on_hand",
+        "status"
+      ],
+      "title": "InventoryContext",
+      "type": "object"
+    },
+    "PromotionContext": {
+      "additionalProperties": false,
+      "properties": {
+        "offered": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Offered"
+        },
+        "planned_price": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Planned Price"
+        }
+      },
+      "required": [
+        "offered",
+        "planned_price"
+      ],
+      "title": "PromotionContext",
+      "type": "object"
+    },
+    "Window": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "Window",
+      "type": "object"
+    }
+  },
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
@@ -85,6 +186,12 @@
       "title": "Currency",
       "type": "string"
     },
+    "detected_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Detected At",
+      "type": "string"
+    },
     "detector_id": {
       "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",
       "title": "Detector Id",
@@ -156,6 +263,11 @@
       "title": "Generated At",
       "type": "string"
     },
+    "inference_run_id": {
+      "pattern": "^anomaly-batch-sha256-[0-9a-f]{64}$",
+      "title": "Inference Run Id",
+      "type": "string"
+    },
     "input_status": {
       "enum": [
         "ready_input",
@@ -165,6 +277,9 @@
       ],
       "title": "Input Status",
       "type": "string"
+    },
+    "inventory_context": {
+      "$ref": "#/$defs/InventoryContext"
     },
     "observed_units": {
       "anyOf": [
@@ -177,6 +292,9 @@
         }
       ],
       "title": "Observed Units"
+    },
+    "observed_window": {
+      "$ref": "#/$defs/Window"
     },
     "on_hand": {
       "anyOf": [
@@ -194,6 +312,9 @@
       "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
       "title": "Product Id",
       "type": "string"
+    },
+    "promotion_context": {
+      "$ref": "#/$defs/PromotionContext"
     },
     "promotion_offered": {
       "anyOf": [
@@ -365,6 +486,11 @@
     "anomaly_id",
     "batch_id",
     "signal_episode_id",
+    "observed_window",
+    "detected_at",
+    "inference_run_id",
+    "inventory_context",
+    "promotion_context",
     "detector_version",
     "release_id",
     "source_dataset_id",

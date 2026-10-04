@@ -1,0 +1,508 @@
+{
+  "$defs": {
+    "AnomalyEvaluationDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "counts": {
+          "maxProperties": 32,
+          "patternProperties": {
+            "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+              "maximum": 100000,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "title": "Counts",
+          "type": "object"
+        },
+        "detected_episodes_per_type": {
+          "maxProperties": 5,
+          "patternProperties": {
+            "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+              "maximum": 100000,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "title": "Detected Episodes Per Type",
+          "type": "object"
+        },
+        "detector_id": {
+          "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",
+          "title": "Detector Id",
+          "type": "string"
+        },
+        "episodes_per_type": {
+          "maxProperties": 5,
+          "patternProperties": {
+            "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+              "maximum": 100000,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "title": "Episodes Per Type",
+          "type": "object"
+        },
+        "evaluation_id": {
+          "pattern": "^anomaly-quality-sha256-[0-9a-f]{64}$",
+          "title": "Evaluation Id",
+          "type": "string"
+        },
+        "family": {
+          "enum": [
+            "seasonal_residual",
+            "isolation_forest"
+          ],
+          "title": "Family",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "metric_verification": {
+          "const": "recomputed_from_saved_decisions_and_offline_truth",
+          "default": "recomputed_from_saved_decisions_and_offline_truth",
+          "title": "Metric Verification",
+          "type": "string"
+        },
+        "metrics": {
+          "$ref": "#/$defs/AnomalyMetrics"
+        },
+        "mlflow_run_id": {
+          "pattern": "^[0-9a-f]{32}$",
+          "title": "Mlflow Run Id",
+          "type": "string"
+        },
+        "model_artifact": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "model_name": {
+          "const": "retailops-sales-anomaly",
+          "default": "retailops-sales-anomaly",
+          "title": "Model Name",
+          "type": "string"
+        },
+        "per_segment": {
+          "maxProperties": 4,
+          "patternProperties": {
+            "^(sale_completed|return_completed)[/:](PLN|EUR)$": {
+              "patternProperties": {
+                "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+                  "maximum": 100000,
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "title": "Per Segment",
+          "type": "object"
+        },
+        "positive_observations_per_type": {
+          "maxProperties": 5,
+          "patternProperties": {
+            "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+              "maximum": 100000,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "title": "Positive Observations Per Type",
+          "type": "object"
+        },
+        "qualification_scope": {
+          "const": "synthetic_ai_07_portfolio_v1",
+          "default": "synthetic_ai_07_portfolio_v1",
+          "title": "Qualification Scope",
+          "type": "string"
+        },
+        "quality_policy": {
+          "$ref": "#/$defs/QualityPolicy"
+        },
+        "quality_status": {
+          "const": "passed",
+          "default": "passed",
+          "title": "Quality Status",
+          "type": "string"
+        },
+        "registered_model_version": {
+          "pattern": "^[1-9][0-9]{0,9}$",
+          "title": "Registered Model Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/AnomalyEvaluationScope"
+        },
+        "source_dataset_ids": {
+          "items": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "maxItems": 6,
+          "minItems": 6,
+          "title": "Source Dataset Ids",
+          "type": "array"
+        },
+        "version": {
+          "const": "anomaly-evaluation-read-1.0.0",
+          "default": "anomaly-evaluation-read-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evaluation_id",
+        "registered_model_version",
+        "mlflow_run_id",
+        "detector_id",
+        "family",
+        "scope",
+        "source_dataset_ids",
+        "generated_at",
+        "model_artifact",
+        "quality_policy",
+        "metrics",
+        "counts",
+        "episodes_per_type",
+        "detected_episodes_per_type",
+        "positive_observations_per_type",
+        "per_segment"
+      ],
+      "title": "AnomalyEvaluationDescriptor",
+      "type": "object"
+    },
+    "AnomalyEvaluationScope": {
+      "additionalProperties": false,
+      "properties": {
+        "channels": {
+          "items": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Channels",
+          "type": "array"
+        },
+        "product_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Product Ids",
+          "type": "array"
+        },
+        "selling_location_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Selling Location Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "product_ids",
+        "selling_location_ids",
+        "channels"
+      ],
+      "title": "AnomalyEvaluationScope",
+      "type": "object"
+    },
+    "AnomalyMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "episode_recall": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Episode Recall"
+        },
+        "evaluable_coverage": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluable Coverage"
+        },
+        "false_alerts_per_1000": {
+          "anyOf": [
+            {
+              "maximum": 1000,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "False Alerts Per 1000"
+        },
+        "high_severity_precision": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "High Severity Precision"
+        },
+        "precision": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Precision"
+        },
+        "recall": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Recall"
+        }
+      },
+      "required": [
+        "precision",
+        "recall",
+        "false_alerts_per_1000",
+        "high_severity_precision",
+        "episode_recall",
+        "evaluable_coverage"
+      ],
+      "title": "AnomalyMetrics",
+      "type": "object"
+    },
+    "QualityPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "maximum_false_alerts_per_1000": {
+          "maximum": 1000,
+          "minimum": 0,
+          "title": "Maximum False Alerts Per 1000",
+          "type": "number"
+        },
+        "minimum_clean_per_case": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Minimum Clean Per Case",
+          "type": "integer"
+        },
+        "minimum_episode_recall": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum Episode Recall",
+          "type": "number"
+        },
+        "minimum_episodes_per_type": {
+          "default": 3,
+          "maximum": 100,
+          "minimum": 3,
+          "title": "Minimum Episodes Per Type",
+          "type": "integer"
+        },
+        "minimum_evaluable_coverage": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum Evaluable Coverage",
+          "type": "number"
+        },
+        "minimum_high_severity_precision": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum High Severity Precision",
+          "type": "number"
+        },
+        "minimum_positive_observations_per_type": {
+          "default": 3,
+          "maximum": 10000,
+          "minimum": 3,
+          "title": "Minimum Positive Observations Per Type",
+          "type": "integer"
+        },
+        "minimum_precision": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum Precision",
+          "type": "number"
+        },
+        "minimum_recall": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum Recall",
+          "type": "number"
+        },
+        "null_required_metric": {
+          "const": "blocks_qualification",
+          "default": "blocks_qualification",
+          "title": "Null Required Metric",
+          "type": "string"
+        },
+        "qualification_scope": {
+          "const": "synthetic_ai_07_portfolio_v1",
+          "default": "synthetic_ai_07_portfolio_v1",
+          "title": "Qualification Scope",
+          "type": "string"
+        },
+        "required_types": {
+          "default": [
+            "one_day_spike",
+            "multi_day_spike",
+            "sustained_drop",
+            "return_spike",
+            "inventory_censored_episode"
+          ],
+          "items": {
+            "enum": [
+              "one_day_spike",
+              "multi_day_spike",
+              "sustained_drop",
+              "return_spike",
+              "inventory_censored_episode"
+            ],
+            "type": "string"
+          },
+          "title": "Required Types",
+          "type": "array"
+        },
+        "segment_policy": {
+          "const": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+          "default": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+          "title": "Segment Policy",
+          "type": "string"
+        },
+        "source_scenarios": {
+          "default": [
+            "demand",
+            "physical"
+          ],
+          "items": {
+            "enum": [
+              "demand",
+              "physical"
+            ],
+            "type": "string"
+          },
+          "title": "Source Scenarios",
+          "type": "array"
+        },
+        "source_seeds": {
+          "default": [
+            42,
+            137,
+            2026
+          ],
+          "items": {
+            "enum": [
+              42,
+              137,
+              2026
+            ],
+            "type": "integer"
+          },
+          "title": "Source Seeds",
+          "type": "array"
+        },
+        "version": {
+          "const": "anomaly-portfolio-quality-1.0.0",
+          "default": "anomaly-portfolio-quality-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "minimum_precision",
+        "minimum_recall",
+        "maximum_false_alerts_per_1000",
+        "minimum_high_severity_precision",
+        "minimum_episode_recall",
+        "minimum_evaluable_coverage",
+        "minimum_clean_per_case"
+      ],
+      "title": "QualityPolicy",
+      "type": "object"
+    },
+    "Receipt": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 268435456,
+          "minimum": 1,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sha256",
+        "size_bytes"
+      ],
+      "title": "Receipt",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "descriptor": {
+      "$ref": "#/$defs/AnomalyEvaluationDescriptor"
+    },
+    "evidence_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "evidence_sha256",
+    "descriptor"
+  ],
+  "title": "AnomalyEvaluationEvidence",
+  "type": "object"
+}
