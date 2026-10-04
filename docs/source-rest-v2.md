@@ -67,6 +67,8 @@ insert/update. Wykrycie części zmian nie dowodzi spójności całego eksportu.
 Metadata oddziela `fetched_at` od `business_as_of`. Świeży timestamp bez
 watermarku daje `unknown`, stary `stale`, pusta strona `missing`; nie nadajemy
 `current` na podstawie sukcesu HTTP. To stan strony, nie kwalifikacja ML.
+Każdy wynik zawiera `source_resource`, `semantics` i rzeczywisty próg
+`max_business_age_seconds`; legacy forecast/risk są jawnie oznaczone.
 
 Sales nadal nie ma sklepu, order ID, availability/record version. Warehouse
 nie jest zmapowany do selling location. `require_full_sales_grain()` daje

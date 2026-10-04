@@ -12,8 +12,8 @@ Pin oznacza właściciela kontraktu; runtime jest sprawdzany przez jego digest.
 
 | Kontrola lokalna | Wynik i zakres |
 |---|---|
-| Klient przez rzeczywisty localhost HTTP | 32/32 passed: 0/1/100/125 rows, last page, optional response fields, trace/correlation, retry 429/503, hard deadline, breaker/recovery, redirect bez tokenu, foreign scopes, malformed/oversized/non-finite body, błędna paginacja, drift i budżety. |
-| Prywatny operator CLI i worker | Część 32 testów: pliki 0600, brak overwrite, brak tokenu w output/argv/env i brak odziedziczonego provider secret. |
+| Klient przez rzeczywisty localhost HTTP | 33/33 passed: 0/1/100/125 rows, last page, optional response fields, trace/correlation, retry 429/503, hard deadline, breaker/recovery, redirect bez tokenu, foreign scopes, malformed/oversized/non-finite/deeply nested body, błędna paginacja, drift i budżety. |
+| Prywatny operator CLI i worker | Część 33 testów: pliki 0600, brak overwrite, brak tokenu w output/argv/env i brak odziedziczonego provider secret. |
 | Gateway RetailOps | 39/39 passed: wszystkie zasoby, auth/scope przed DB, unknown/authority-changing query, limity i okresy, private policy, DB outage, schema drift i unsupported snapshot. |
 | Powiązana regresja legacy | Razem z gateway 45 passed, 2 integration DB skipped lokalnie z powodu wyłączonego Dockera. CI musi wykonać obowiązkowe rzeczywiste DB testy. |
 | Typy i jakość AI | Ruff lint/format passed; mypy 333 modułów; wszystkie kontrakty i docs guard passed; wheel/sdist zbudowane. |

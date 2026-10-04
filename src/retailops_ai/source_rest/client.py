@@ -107,6 +107,9 @@ class ReadMetadata:
     contract_source_commit: str
     contract_sha256: str
     correlation_id: str
+    source_resource: str
+    semantics: str
+    max_business_age_seconds: int
     read_mode: Literal["bounded_live"] = "bounded_live"
     snapshot_supported: Literal[False] = False
 
@@ -214,7 +217,7 @@ class SourceClient:
                     try:
                         body = base64.b64decode(response["body"], validate=True)
                         json.loads(body, parse_constant=reject_constant)
-                    except (KeyError, ValueError, TypeError) as exc:
+                    except (KeyError, ValueError, TypeError, RecursionError) as exc:
                         raise SourceReadError("invalid_response") from exc
                     if len(body) > 1048576:
                         raise SourceReadError("invalid_response")
@@ -328,13 +331,23 @@ class SourceClient:
         return SourceRead(
             value,
             ReadMetadata(
-                now,
-                as_of,
-                freshness,
-                "source-read-freshness-1",
-                PIN["commit"],
-                PIN["sha256"],
-                correlation,
+                fetched_at=now,
+                business_as_of=as_of,
+                freshness_status=freshness,
+                freshness_policy="source-read-freshness-1",
+                contract_source_commit=PIN["commit"],
+                contract_sha256=PIN["sha256"],
+                correlation_id=correlation,
+                source_resource=path,
+                semantics={
+                    "products": "product_metadata",
+                    "sales": "product_channel_sales_without_full_ml_grain",
+                    "inventory-snapshots": "warehouse_inventory_without_location_mapping",
+                    "forecasts": "legacy_product_period_forecast",
+                    "inventory-risks": "legacy_product_heuristic_risk",
+                    "capabilities": "source_capabilities",
+                }[path],
+                max_business_age_seconds=self.config.max_business_age_seconds,
             ),
         )
 

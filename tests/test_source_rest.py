@@ -137,6 +137,9 @@ def test_real_http_typed_pages_and_business_freshness(count: int) -> None:
     assert result.metadata.fetched_at == NOW
     assert result.metadata.freshness_status == ("missing" if not rows else "stale")
     assert result.metadata.snapshot_supported is False
+    assert result.metadata.source_resource == "sales"
+    assert result.metadata.semantics == "product_channel_sales_without_full_ml_grain"
+    assert result.metadata.max_business_age_seconds == 86400
     assert received[0]["query"]["sold_from"] == ["2026-09-01T00:00:00Z"]
     assert received[0]["headers"]["authorization"] == "Bearer " + TOKEN
     if rows:
@@ -219,6 +222,7 @@ def test_authorization_errors_are_not_retried_or_echoed(status: int, code: str) 
         ({"body": page([sale(0), sale(0)])}, "invalid_response"),
         ({"body": page([], total=2)}, "invalid_response"),
         ({"raw": b"x" * 1048577}, "invalid_response"),
+        ({"raw": b'{"extra":' + b"[" * 2000 + b"0" + b"]" * 2000 + b"}"}, "invalid_response"),
     ],
 )
 def test_invalid_or_foreign_response_cannot_become_source_data(
