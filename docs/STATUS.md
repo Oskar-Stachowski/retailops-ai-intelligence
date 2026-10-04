@@ -1,5 +1,25 @@
 # Aktualny status
 
+**AI 08 — ograniczony odczyt faktów z dysku zachowuje wyniki małej próbki.**
+[Kontrakt 2.1](reference/stockout-disk-facts.md) i
+[odbiór](evidence/08-07-stockout-disk-facts.md) obejmują prywatny magazyn
+SQLite oraz cache jednej fizycznej serii, bez zmiany kodu v1/v2.0.
+Wszystkie 1632 punkty, pliki Parquet i sześć wariantów modeli development
+są identyczne z wcześniejszą ścieżką. Native i zainstalowany wheel
+odtworzyły te same pliki; 573 wejścia i rodzice pozostały bez zmian.
+W osobnych świeżych procesach build miał 131,5 zamiast 175,0 MiB peak RSS
+i trwał 15,44 zamiast 18,75 s. Pomiary obejmują replay curated i cechy,
+bez kwalifikacji budżetu większego pipeline. Przyrost ma 113/113 testów
+ukierunkowanych, w tym 30 nowych. Pełny `make ci-local` przeszedł:
+1913/1913 testów bez ostrzeżeń, wszystkie targety, pakiet, Compose
+config i oba skany sekretów. Końcowe receipt mają ponowne kontrole
+dokumentacji i sekretów; nowy commit wymaga własnego CI w draft PR #14.
+Poprzedni commit `ebe1f45` ma zielone Required CI PR i push.
+Pozostają kumulacyjny ledger i ruchome okna, partycjonowanie pozostałych
+rodziców/treningu, rzeczywisty większy profil oraz niezależna ocena,
+progi i lifecycle/batch/read API. Final test nie jest oceniony;
+cały AI 08 pozostaje not ready. Poniższe przyrosty zachowują swój zakres.
+
 **AI 08 — partycje cech v2 zachowują całą próbkę 102 dni.**
 [Kontrakt](reference/stockout-partitions.md) i
 [odbiór](evidence/08-06-stockout-partitions.md) obejmują 1632 identyczne

@@ -5,6 +5,9 @@ To projekt większego profilu, **nie wykonany odbiór większego profilu**.
 osobny manifest, bounded Parquet i indeks serii/czasu wiedzy. Odbiór
 ponawia małą próbkę 102 dni; nie uruchomiono większej generacji i nie
 podniesiono istniejących limitów wejścia ani limitów ścieżek v1.
+[Odczyt z dysku 2.1](stockout-disk-facts.md) dodaje jednorazowy magazyn
+SQLite z ograniczoną selekcją i cache jednej serii. Także ten przyrost
+ma odbiór małej próbki, bez kwalifikacji większego profilu.
 Obowiązują wymiary z
 [planu źródła](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/etapy/08-stockout-risk.md)
 i [kontraktu profili](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/kontrakty/profile-i-bramki.md)
@@ -39,7 +42,9 @@ Ograniczenia ścieżek v1 nadal blokują prostą większą generację:
   etykiety i split używają limitu JSON metadata 4 MiB.
 - Cechy: 10 000 punktów i 16 MiB. Upstream/comparison i modele mają również
   ograniczony JSON 16 MiB; trening przyjmuje do 10 000 wierszy.
-- Pełne tabele faktów są ładowane do list. `feature_point` przegląda
+- Ścieżki v1/v2.0 ładują pełne tabele faktów do list. Ścieżka 2.1
+  strumieniuje je do prywatnej bazy i ogranicza dane jednej serii;
+  pozostałe rodzice i trening nadal wymagają migracji. `feature_point` przegląda
   tabele dla każdego origin, a każda z 28 dat ponownie wybiera wersje
   popytu/routingu i przegląda ledger. Koszt nie musi rosnąć liniowo.
 
@@ -52,10 +57,14 @@ większego datasetu. Najpierw trzeba zmienić przygotowanie danych.
 Nowy zapis cech ma limit 16 MiB na część, 64 MiB na cały Parquet i
 4 MiB na manifest. Zachowuje limit 10 000 origin oraz dotychczasowe
 wejście. Indeks ogranicza skany obcych serii; nie zastępuje jeszcze
-kumulacyjnego ledgeru i ruchomych okien. Pełny reader wykonuje dwa
-ograniczone replay. Pozostałe rodzice oraz trening nadal korzystają z v1.
-[Odbiór przyrostu](../evidence/08-06-stockout-partitions.md) nie zalicza
-budżetu większego pipeline ani nie zmienia poniższych warunków.
+kumulacyjnego ledgeru i ruchomych okien. W 2.1 główna baza ma limit
+128 MiB, cache stron 8 MiB, a wybrana seria najwyżej 20 000 wierszy /
+16 MiB kanonicznych payload. To granice składników, nie odbiór całego
+scratch/RSS. Pełny reader v2.0 wykonuje dwa ograniczone replay;
+2.1 ma build/verify bez czytnika treningowego. Pozostałe rodzice oraz
+trening nadal korzystają z v1. [Odbiór partycji](../evidence/08-06-stockout-partitions.md)
+i [magazynu](../evidence/08-07-stockout-disk-facts.md) nie zaliczają
+budżetu większego pipeline ani nie zmieniają poniższych warunków.
 
 1. Zachować obecny czytnik i artefakty jako wersję 1.0. Dodać odrębny
    manifest partycji z nowym schema/policy/implementation ID. Manifest

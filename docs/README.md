@@ -75,6 +75,10 @@ partycjonowanie i pomiary potrzebne przed dalszą generacją.
 [Partycje cech v2](reference/stockout-partitions.md) dodają ograniczony
 zapis Parquet i indeks faktów znanych w origin; [odbiór 102 dni](evidence/08-06-stockout-partitions.md)
 zachowuje każde pole 1632 punktów oraz wyniki modeli development.
+[Odczyt faktów z dysku 2.1](reference/stockout-disk-facts.md) dodaje
+jednorazowy, ograniczony magazyn SQLite i cache jednej fizycznej serii.
+[Odbiór](evidence/08-07-stockout-disk-facts.md) zachowuje wszystkie punkty,
+Parquet i modele, z osobnym pomiarem czasu i pamięci w świeżych procesach.
 [Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
 validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują
