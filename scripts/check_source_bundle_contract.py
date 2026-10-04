@@ -22,6 +22,11 @@ def main() -> int:
     for relative, expected in pin["files"].items():
         if hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() != expected:
             raise ValueError("source_bundle_owner_copy_changed: " + relative)
+    from retailops_ai.data_contracts.identity import canonical_sha256
+    from retailops_ai.forecasting.functional_v12_campaign import campaign_code
+
+    if canonical_sha256(campaign_code()) != pin["frozen_v12_campaign_pin_sha256"]:
+        raise ValueError("frozen_v12_campaign_code_changed")
     print("Source bundle wire, native importer/assets and isolated lock pins passed.")
     return 0
 

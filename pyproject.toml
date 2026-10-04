@@ -122,6 +122,9 @@ ignore = ["E501"]
 python_version = "3.11"
 strict = true
 files = ["src", "scripts"]
+# These byte-identical owner copies run under source_snapshot in a separate
+# process. The type-check target below checks that exact runtime namespace.
+exclude = ["src/retailops_ai/source_snapshot_native/"]
 plugins = ["pydantic.mypy"]
 
 [tool.pytest.ini_options]

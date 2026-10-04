@@ -47,9 +47,6 @@ def download_import(
     *,
     required_use_cases: tuple[str, ...] = ("forecast_source",),
 ) -> dict[str, Any]:
-    from retailops_ai.source_snapshot.importer import import_snapshot
-    from retailops_ai.source_snapshot.protocol import Limits, inspect_snapshot, verify_metadata
-
     # No generated output is touched until the entire byte inventory is downloaded.
     with tempfile.TemporaryDirectory(prefix="retailops-ai10-download-") as directory:
         private = Path(directory).resolve()
@@ -75,24 +72,31 @@ def download_import(
         if result.returncode != 0 or result.stdout.strip() != '{"status":"downloaded"}':
             raise BundleDownloadError("bundle_download_rejected")
         manifest = BundleManifest.model_validate_json((private / "bundle.json").read_bytes())
-        limits = Limits(max_bytes=config.max_bytes, max_files=config.max_files)
-        snapshot = inspect_snapshot(private / "snapshot", False, limits)
-        if (
-            snapshot.snapshot_id != manifest.snapshot_id
-            or snapshot.source_id != manifest.source_dataset_id
-            or snapshot.manifest["schema_version"] != manifest.source_snapshot_version
-        ):
-            raise BundleDownloadError("source_bundle_identity_mismatch")
-        # Reject missing/unsupported qualification before creating the publication root.
-        verify_metadata(private / "snapshot", snapshot, required_use_cases)
-        result_import = import_snapshot(
-            private / "snapshot",
-            generated_root,
-            required_use_cases=required_use_cases,
-            limits=limits,
-        )
+        native_request = {
+            "download_directory": str(private),
+            "generated_root": str(generated_root.absolute()),
+            "required_use_cases": required_use_cases,
+            "max_bytes": config.max_bytes,
+            "max_files": config.max_files,
+        }
+        try:
+            imported = subprocess.run(  # noqa: S603 - fixed private native worker; legacy model process untouched
+                [sys.executable, "-I", str(Path(__file__).with_name("native_worker.py"))],
+                input=json.dumps(native_request),
+                capture_output=True,
+                text=True,
+                timeout=600,
+                check=False,
+            )
+        except subprocess.TimeoutExpired as exc:
+            raise BundleDownloadError("bundle_native_import_deadline_exceeded") from exc
+        if imported.returncode:
+            raise BundleDownloadError("bundle_native_import_rejected")
+        result_import = json.loads(imported.stdout)
+        if result_import.get("status") not in {"published", "reused"}:
+            raise BundleDownloadError("bundle_native_import_rejected")
         return {
-            **result_import.summary(),
+            **result_import,
             "bundle_id": manifest.bundle_id,
             "source_snapshot_version": manifest.source_snapshot_version,
             "network_integrity": "passed",

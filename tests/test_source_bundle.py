@@ -119,6 +119,12 @@ def config(url: str, document: dict[str, Any], **kwargs: Any) -> BundleClientCon
 
 
 def test_real_download_verifies_full_fixture_and_reuses_immutable_import(tmp_path: Path) -> None:
+    import retailops_ai.source_snapshot as legacy
+    from retailops_ai.data_contracts.identity import canonical_sha256
+    from retailops_ai.forecasting.functional_v12_campaign import campaign_code
+
+    frozen = campaign_code()
+    legacy_paths = list(legacy.__path__)
     document = envelope()
     BundleManifest.model_validate_json(json.dumps(document))
     with server(document) as (url, requests):
@@ -130,6 +136,12 @@ def test_real_download_verifies_full_fixture_and_reuses_immutable_import(tmp_pat
     assert first["tables"] == 25 and first["rows"] == 31171
     assert first["replay_handoff"] is False
     assert len(requests) == 2 * (len(document["files"]) + 1)
+    assert list(legacy.__path__) == legacy_paths
+    assert campaign_code() == frozen
+    assert (
+        canonical_sha256(frozen)
+        == "8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011"
+    )
 
 
 @pytest.mark.parametrize("mode", ["corrupt", "redirect"])

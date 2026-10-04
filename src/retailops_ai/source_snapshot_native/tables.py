@@ -164,12 +164,12 @@ def verify_tables(root: Path, snapshot: Snapshot, scratch: Path, limits: Limits)
         dates.execute("CREATE TABLE orders (id TEXT PRIMARY KEY, day TEXT NOT NULL)")
         ordered = sorted(snapshot.manifest["tables"], key=lambda t: t["table"] != "orders")
         metadata = None
-        if snapshot.manifest["schema_version"] == "1.1.0":
+        if snapshot.manifest["schema_version"] in {"1.1.0", "1.2.0"}:
             from retailops_ai.source_snapshot.inventory_protocol import (
                 contract_document as inventory_contract,
             )
 
-            metadata = inventory_contract()["arrow_metadata"]
+            metadata = inventory_contract(snapshot.manifest["schema_version"])["arrow_metadata"]
         for table in ordered:
             verify_table(root, table, scratch, dates, limits, metadata)
     finally:

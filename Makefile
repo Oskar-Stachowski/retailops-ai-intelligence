@@ -14,6 +14,7 @@ lint:
 
 type-check:
 	$(UV_RUN) mypy
+	$(UV_RUN) python scripts/check_native_snapshot_types.py
 
 test:
 	$(UV_RUN) python -m pytest

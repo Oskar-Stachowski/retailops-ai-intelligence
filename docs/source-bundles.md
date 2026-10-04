@@ -5,6 +5,11 @@ Snapshot 1.0/1.1/1.2. Importer obsługujący natywny 1.2 pochodzi z zatwierdzone
 commitu `1a1916630fa3ed6601a27fec5b5feaf480fc9b1b`; kod producenta jest przypięty
 do `dee564ef98dd7c0324dd2c88d418dc544e7ecdd6`. Dokładne wersje i sumy kopii
 kontraktów zapisuje `src/retailops_ai/source_bundle/upstream.json`.
+Cały zatwierdzony importer ma osobną kopię `source_snapshot_native` i działa
+wyłącznie w świeżym procesie transferu. Oryginalne moduły `source_snapshot`
+pozostają identyczne z bazą v12; pełny pin kampanii jest nadal
+`8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011`.
+Kontrola typów sprawdza osobno dokładny namespace wykonania natywnej kopii.
 
 ## Instrukcja
 
@@ -57,6 +62,7 @@ Pobieranie odbywa się w osobnym procesie z domyślnym limitem całkowitym 180 s
 (maksymalnie 300 s), także dla powolnego body. Brak redirectów i proxy z env,
 credential tylko na stdin procesu, maksymalnie dwie próby błędów przejściowych,
 64 MiB na plik, 2 GiB razem i 10 000 plików. Nie publikuje częściowego importu.
+Sam typowany import ma oddzielny limit procesu 600 s.
 Zła tożsamość, checksum, schema, ścieżka, evaluation truth lub wymagane
 zastosowanie kończą operację odmową. Błędy CLI nie wypisują credential.
 
