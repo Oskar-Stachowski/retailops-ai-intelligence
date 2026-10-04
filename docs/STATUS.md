@@ -1,5 +1,17 @@
 # Aktualny status
 
+**AI 09 — wspólny rejestr prób development.**
+[Przyrost 09.5](development-trial-registry.md) rezerwuje budżet przed fitami,
+zachowuje awarie i nierozliczone próby pomiędzy restartami i katalogami wyników.
+Historia obejmuje 11 istniejących uruchomień: 5 zakończonych i 6 przerwanych,
+bez ponownego treningu na danych projektu. Obserwacja starych wyników nie
+udaje rezerwacji wykonanej przed ich uruchomieniem. Końcowy protokół i audyt
+dostępu do finalnego testu pozostają otwarte; AI 09 nadal not_ready.
+[Receipt](evidence/09-05-development-trial-registry.md) podaje faktyczny
+stan testów, pakietu i CI, także błąd wcześniejszego CI na Linuxie.
+Pełne lokalne CI zaliczyło 1862 testy główne i 3 rzeczywiste testy TensorFlow,
+pakiet oraz pozostałe bramki. Nowy commit wymaga własnego zdalnego Required CI.
+
 **AI 09 — mniejsza pamięć wspólnego benchmarku development.**
 [Przyrost 09.4](evidence/09-04-development-memory.md) poprzedza odczyt kodu i
 dowodów AI 08: jego SQLite/cache/partycje stockout nie są dublowane.

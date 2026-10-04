@@ -23,7 +23,9 @@ Format splitu nie zawiera final testu portfolio.
 
 `protocol.json` powstaje przed fitami. `trials.jsonl` zapisuje ich rozpoczęcie,
 zakończenie, model IDs i awarie, z flush/fsync. Jest to rejestr jednej próby;
-globalny rejestr kampanii pozostaje otwarty. RF/HGB zapisują typed portable JSON,
+starsze uruchomienia nie miały globalnego limitu. Odrębny
+[runner 09.5](development-trial-registry.md) dodaje wspólny development ledger.
+RF/HGB zapisują typed portable JSON,
 TensorFlow supported MLflow Keras bundle. Każda próba wymaga nowego prywatnego
 katalogu; nieudana zostaje zachowana i retry nie nadpisuje jej danych.
 
@@ -104,8 +106,13 @@ kod z przypiętego w nich commitu; nowy kod ma własny comparison ID.
 
 ## Pozostały zakres
 
+[Przyrost 09.5](development-trial-registry.md) dodaje odrębny zarejestrowany
+runner, wspólny development ledger i limit pomiędzy katalogami wyników.
+Starsze próby są obserwowaną historią. Samodzielne polecenie benchmarku
+powyżej pozostaje diagnostyką bez tego globalnego budżetu.
+
 Ten benchmark nie kwalifikuje `ai-dev` ani `ai-training`. Osobne calibration
-i evaluation partitions, większy bounded reader/batch training, globalny audyt
-prób i dostępu do final testu, scenariusze/seedy, niepewność oraz końcowe
+i evaluation partitions, większy bounded reader/batch training, końcowy audyt
+dostępu do final testu, scenariusze/seedy, niepewność oraz końcowe
 polityki AI 07/08 i trzy karty modeli nadal są wymagane. Każdy wynik procesu
 zachowuje `deployment_status=not_ready` i `promotion_allowed=false`.

@@ -6,6 +6,8 @@ import os
 import shutil
 import subprocess
 import sys
+from contextlib import contextmanager
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -164,26 +166,74 @@ def test_comparison_real_tree_heads_tensorflow_reload_and_no_refits(
     from retailops_ai.evaluation_campaign import development as benchmark
     from retailops_ai.evaluation_campaign.development_contract import DevelopmentComparisonPolicy
     from retailops_ai.evaluation_campaign.development_metrics import comparison_metrics
+    from retailops_ai.evaluation_campaign.trial_contract import TrialPlan
+    from retailops_ai.evaluation_campaign.trial_registry import (
+        audit_code,
+        initialize,
+        inspect,
+        summary,
+    )
+    from retailops_ai.evaluation_campaign.trial_runner import (
+        run_registered_comparison,
+        snapshot_attempt,
+    )
 
     fold, train, validation = development
     policy = DevelopmentComparisonPolicy(tensorflow=ChallengerPolicy(epochs=3))
     protocol = protocol_for(fold, policy)
     root = tmp_path / "comparison"
-    root.mkdir()
-    trees = benchmark._trees(root, train, protocol, replay=False)
-    fit_challenger(
-        train,
-        validation,
-        fold=fold,
-        feature_set_id=FEATURE_ID,
-        split_id=SPLIT_ID,
-        output=root / "tensorflow",
-        policy=policy.tensorflow,
+
+    # Controlled parents exercise the complete real fit/registry path, not source qualification.
+    @contextmanager
+    def parents(*args):
+        yield (
+            SimpleNamespace(feature_set_id=FEATURE_ID),
+            SimpleNamespace(split_id=SPLIT_ID),
+            fold,
+            train,
+            validation,
+        )
+
+    monkeypatch.setattr(benchmark, "development_parents", parents)
+    monkeypatch.setattr(benchmark, "_protocol", lambda *args: protocol)
+    registry = tmp_path / "registry"
+    initialize(
+        registry,
+        TrialPlan(
+            registry_path=str(registry),
+            protocols=(protocol,),
+            maximum_new_attempts=1,
+            audit_code_sha256=audit_code(),
+        ),
     )
+    manifest = run_registered_comparison(
+        registry=registry,
+        protocol_sha256=canonical_sha256(protocol.model_dump(mode="json")),
+        features=tmp_path / "features",
+        split=tmp_path / "split",
+        curated=tmp_path / "curated",
+        output=root,
+    )
+    assert manifest["registry_attempt_id"] == inspect(registry).events[-1].attempt_id
+    assert inspect(registry).events[-1].snapshot == snapshot_attempt(root)
+    assert summary(inspect(registry))["completed_new_attempts"] == 1
+    trees = benchmark._trees(root, train, protocol, replay=True)
     inference = {}
     predictions = benchmark._predictions(root, validation, trees, inference_resources=inference)
     legacy = LoadedChallenger(root / "tensorflow").predict(validation)
-    assert [p.value for p in predictions["tensorflow"]] == [p.value for p in legacy]
+    require_same_forecast_keys(predictions["tensorflow"], legacy)
+    checked, _ = verify_artifact(root / "tensorflow")
+    # A parent already using oneDNN may differ from the isolated CPU worker on Linux.
+    # Use the existing artifact's fixed numeric reload tolerance for this comparison.
+    np.testing.assert_allclose(
+        [[p.value.mean, p.value.median] for p in predictions["tensorflow"]],
+        [[p.value.mean, p.value.median] for p in legacy],
+        rtol=checked["worker"]["reload_rtol"],
+        atol=checked["worker"]["reload_atol"],
+    )
+    assert [p.value.interval for p in predictions["tensorflow"]] == [
+        p.value.interval for p in legacy
+    ]
     assert inference["worker"]["validation_windows"] == len(validation)
     assert inference["worker"]["cold_load_seconds_including_framework_import"] > 0
     assert inference["resources"]["peak_rss_bytes"] < policy.tensorflow.rss_bytes

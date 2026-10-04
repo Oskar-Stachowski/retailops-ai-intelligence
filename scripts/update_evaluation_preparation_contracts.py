@@ -6,6 +6,7 @@ from pathlib import Path
 
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
 from retailops_ai.evaluation_campaign.preparation import default_plan
+from retailops_ai.evaluation_campaign.trial_contract import AttemptSnapshot, TrialLedger, TrialPlan
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -36,6 +37,23 @@ def main() -> int:
     if stale:
         print("Evaluation preparation contracts differ: " + ", ".join(stale))
         return 1
+    for name, trial_model in (
+        ("attempt_snapshot", AttemptSnapshot),
+        ("trial_plan", TrialPlan),
+        ("trial_ledger", TrialLedger),
+    ):
+        schema = trial_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:3.0.0"
+        path = ROOT / "contracts/evaluation/v3" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Development trial contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
     print("Evaluation preparation contract snapshots checked.")
     return 0
 

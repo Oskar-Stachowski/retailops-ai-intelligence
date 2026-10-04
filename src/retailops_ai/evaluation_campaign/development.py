@@ -363,6 +363,7 @@ def run_development_comparison(
     fold_name: str,
     output: Path,
     policy: DevelopmentComparisonPolicy = DEFAULT_COMPARISON_POLICY,
+    expected_protocol_sha256: str | None = None,
 ) -> dict[str, Any]:
     output = output.absolute()
     if any(output.is_relative_to(p.resolve()) for p in (features, split, curated)):
@@ -371,6 +372,11 @@ def run_development_comparison(
     with development_parents(features, split, fold_name, policy.tensorflow.max_windows) as parents:
         feature, split_manifest, fold, train, validation = parents
         protocol = _protocol(curated, feature, split_manifest, fold, train, validation, policy)
+        if (
+            expected_protocol_sha256 is not None
+            and canonical_sha256(protocol.model_dump(mode="json")) != expected_protocol_sha256
+        ):
+            raise SnapshotError("development_comparison_preregistered_protocol_mismatch")
         _tree_state(
             train, protocol
         )  # Refuse the matrix budget before allocating or creating an attempt.

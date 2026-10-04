@@ -86,3 +86,12 @@ To nie kwalifikuje większego profilu ani niezależnej jakości.
 Nowy model ID i code binding znajdują się w receipt; stary model oraz jego
 kod pozostają historycznym artefaktem. Architektura, seedy i konfiguracje
 pozostały identyczne. Runtime i promocja nie zostały zmienione.
+
+## Wspólny audyt development — 09.5
+
+[Rejestr prób](../development-trial-registry.md) utrwala budżet nowych
+uruchomień przed fitami i zachowuje również awarie oraz nierozliczone rezerwacje.
+Jedenaście istniejących prób 09.3/09.4 jest retrospektywną historią z checksums,
+bez ponownego treningu ani zmiany metryk tej karty. Odbiór kompletnego runnera
+na małych fixture nie jest nową kwalifikacją jakości lub większego profilu.
+Finalny audyt dostępu do testu portfolio pozostaje otwarty.
