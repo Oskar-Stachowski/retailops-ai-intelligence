@@ -8,7 +8,7 @@ from uuid import NAMESPACE_DNS, uuid5
 
 from retailops_ai.curated.builder import build_curated, iter_rows, verify_curated
 from retailops_ai.curated.contract import Digest, columns_for, encoded
-from retailops_ai.full_raw_dq.contract import Binding
+from retailops_ai.full_raw_dq.contract import Binding, PortfolioBinding
 from retailops_ai.raw_dq.contract import SOURCE, TOPIC
 from retailops_ai.raw_dq.source import scalar
 from retailops_ai.source_snapshot.files import SnapshotError, json_sha256
@@ -147,6 +147,10 @@ def parent_facts(curated_dir: Path, import_dir: Path, binding: Binding) -> tuple
     source = snapshot.manifest["source"]["descriptor"]
     if (
         snapshot.manifest["schema_version"] != "1.2.0"
+        or (
+            isinstance(binding, PortfolioBinding)
+            and source["resolved_parameters"]["profile"] != "ai-07-portfolio-v1"
+        )
         or document["schema_version"] != "1.2.0"
         or snapshot.source_id != binding.source_dataset_id
         or binding.source_dataset_id != "source-sha256-" + binding.source_descriptor_sha256

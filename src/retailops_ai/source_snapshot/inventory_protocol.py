@@ -178,7 +178,15 @@ def check_lineage(manifest: dict[str, Any], contract: dict[str, Any], allow_trut
         spec, identity = specs[table["table"]], parent["tables"][table["table"]]
         if (
             any(table[k] != spec[k] for k in ("schema", "grain", "data_class"))
-            or table["partition_source_field"] is not None
+            or (
+                table["partition_source_field"] is not None
+                and (
+                    source["schema_version"] != "2.8.0"
+                    or parent["resolved_parameters"]["profile"] != "ai-07-portfolio-v1"
+                    or table["partition_source_field"] != "business_date"
+                    or "business_date" not in [c["name"] for c in spec["schema"]]
+                )
+            )
             or identity["columns"] != [c["name"] for c in spec["schema"]]
             or any(table[k] != identity[k] for k in ("row_count", "grain", "data_class"))
         ):

@@ -123,7 +123,7 @@ class Membership(Scope):
 
 
 def requested(protocol: Protocol, points: list[Point]) -> list[tuple[Membership, Point | None]]:
-    protocol = Protocol.model_validate_json(protocol.model_dump_json())
+    protocol = type(protocol).model_validate_json(protocol.model_dump_json())
     indexed = {point_key(point): point for point in points}
     if len(indexed) != len(points):
         raise SnapshotError("anomaly_duplicate_input_key")

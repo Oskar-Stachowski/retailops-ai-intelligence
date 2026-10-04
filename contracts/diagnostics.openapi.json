@@ -129,6 +129,18 @@
                 "type": "string"
               },
               {
+                "enum": [
+                  "anomaly-scope-denied",
+                  "anomaly-pipeline-denied",
+                  "anomaly-idempotency-conflict",
+                  "anomaly-read-budget",
+                  "anomaly-view-changed",
+                  "anomaly-not-found",
+                  "anomaly-output-unavailable"
+                ],
+                "type": "string"
+              },
+              {
                 "type": "null"
               }
             ],

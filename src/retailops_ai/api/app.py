@@ -21,6 +21,8 @@ from retailops_ai.adapters.index_jobs import IndexAdministration, PostgresIndexA
 from retailops_ai.adapters.knowledge_search import KnowledgeBackend, PostgresKnowledge
 from retailops_ai.adapters.telemetry import HttpMetrics, new_tracer
 from retailops_ai.adapters.vector_store import index_engine
+from retailops_ai.anomaly_portfolio.result_store import PostgresResults
+from retailops_ai.anomaly_portfolio.result_store import Reader as AnomalyReader
 from retailops_ai.api.access import access_router
 from retailops_ai.api.errors import problem_response
 from retailops_ai.api.middleware import HttpObservation, single_header
@@ -78,6 +80,7 @@ def create_app(
     v12_forecast_administration: V12JobAdministration | None = None,
     v12_model_catalog: V12ModelCatalog | None = None,
     v12_evaluation_reader: V12EvaluationReader | None = None,
+    anomaly_reader: AnomalyReader | None = None,
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
@@ -98,6 +101,7 @@ def create_app(
         or evaluation_reader is None
         or v12_model_catalog is None
         or v12_evaluation_reader is None
+        or anomaly_reader is None
     ) and settings.database_url is not None:
         knowledge_engine = index_engine(settings)
     if knowledge_backend is None and knowledge_engine is not None:
@@ -139,6 +143,8 @@ def create_app(
         )
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
+    if anomaly_reader is None and knowledge_engine is not None:
+        anomaly_reader = PostgresResults(knowledge_engine)
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
     metrics = HttpMetrics()
     started = False
@@ -269,6 +275,7 @@ def create_app(
             v12_forecast_administration,
             v12_model_catalog,
             v12_evaluation_reader,
+            anomaly_reader,
         )
     )
     return app

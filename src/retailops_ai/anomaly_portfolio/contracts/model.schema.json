@@ -1,0 +1,644 @@
+{
+  "$defs": {
+    "Descriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "feature_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Feature Manifest Sha256",
+          "type": "string"
+        },
+        "feature_rows_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Feature Rows Sha256",
+          "type": "string"
+        },
+        "groups": {
+          "items": {
+            "$ref": "#/$defs/Group"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Groups",
+          "type": "array"
+        },
+        "policy": {
+          "$ref": "#/$defs/FitPolicy"
+        },
+        "qualified_anomaly_input_id": {
+          "pattern": "^qualified-anomaly-inputs-sha256-[0-9a-f]{64}$",
+          "title": "Qualified Anomaly Input Id",
+          "type": "string"
+        },
+        "selection_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Selection Cutoff",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "train": {
+          "$ref": "#/$defs/Window"
+        },
+        "training_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Training Cutoff",
+          "type": "string"
+        },
+        "training_membership_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Training Membership Sha256",
+          "type": "string"
+        },
+        "truth_access": {
+          "const": "excluded_no_oracle_training",
+          "default": "excluded_no_oracle_training",
+          "title": "Truth Access",
+          "type": "string"
+        },
+        "validation": {
+          "$ref": "#/$defs/Window"
+        },
+        "validation_membership_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Validation Membership Sha256",
+          "type": "string"
+        },
+        "version": {
+          "const": "anomaly-portfolio-model-1.0.0",
+          "default": "anomaly-portfolio-model-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "qualified_anomaly_input_id",
+        "feature_manifest_sha256",
+        "feature_rows_sha256",
+        "train",
+        "validation",
+        "training_cutoff",
+        "selection_cutoff",
+        "policy",
+        "groups",
+        "training_membership_sha256",
+        "validation_membership_sha256",
+        "code_sha256",
+        "dependency_lock_sha256"
+      ],
+      "title": "Descriptor",
+      "type": "object"
+    },
+    "Fill": {
+      "additionalProperties": false,
+      "properties": {
+        "known_count": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Known Count",
+          "type": "integer"
+        },
+        "name": {
+          "enum": [
+            "observed_units",
+            "expected_units",
+            "residual_units",
+            "robust_scale_units",
+            "standardized_residual",
+            "planned_price",
+            "promotion_offered",
+            "on_hand"
+          ],
+          "title": "Name",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "train_median",
+            "entirely_missing_constant_zero"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "value",
+        "known_count",
+        "reason"
+      ],
+      "title": "Fill",
+      "type": "object"
+    },
+    "FitPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "contamination": {
+          "anyOf": [
+            {
+              "const": "auto",
+              "type": "string"
+            },
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 0.5,
+              "type": "number"
+            }
+          ],
+          "default": "auto",
+          "title": "Contamination"
+        },
+        "features": {
+          "default": [
+            "observed_units",
+            "expected_units",
+            "residual_units",
+            "robust_scale_units",
+            "standardized_residual",
+            "planned_price",
+            "promotion_offered",
+            "on_hand"
+          ],
+          "items": {
+            "enum": [
+              "observed_units",
+              "expected_units",
+              "residual_units",
+              "robust_scale_units",
+              "standardized_residual",
+              "planned_price",
+              "promotion_offered",
+              "on_hand"
+            ],
+            "type": "string"
+          },
+          "title": "Features",
+          "type": "array"
+        },
+        "fit_cpu_seconds": {
+          "const": 60,
+          "default": 60,
+          "title": "Fit Cpu Seconds",
+          "type": "integer"
+        },
+        "fit_rss_bytes": {
+          "const": 536870912,
+          "default": 536870912,
+          "title": "Fit Rss Bytes",
+          "type": "integer"
+        },
+        "fit_wall_seconds": {
+          "const": 60,
+          "default": 60,
+          "title": "Fit Wall Seconds",
+          "type": "integer"
+        },
+        "max_features": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Max Features",
+          "type": "number"
+        },
+        "max_matrix_bytes": {
+          "const": 4194304,
+          "default": 4194304,
+          "title": "Max Matrix Bytes",
+          "type": "integer"
+        },
+        "max_samples": {
+          "default": 64,
+          "maximum": 256,
+          "minimum": 16,
+          "title": "Max Samples",
+          "type": "integer"
+        },
+        "max_train_rows": {
+          "const": 10000,
+          "default": 10000,
+          "title": "Max Train Rows",
+          "type": "integer"
+        },
+        "minimum_train_rows": {
+          "default": 16,
+          "maximum": 10000,
+          "minimum": 16,
+          "title": "Minimum Train Rows",
+          "type": "integer"
+        },
+        "minimum_validation_rows": {
+          "default": 16,
+          "maximum": 10000,
+          "minimum": 16,
+          "title": "Minimum Validation Rows",
+          "type": "integer"
+        },
+        "model_seed": {
+          "default": 137,
+          "maximum": 4294967295,
+          "minimum": 0,
+          "title": "Model Seed",
+          "type": "integer"
+        },
+        "n_estimators": {
+          "default": 32,
+          "maximum": 128,
+          "minimum": 8,
+          "title": "N Estimators",
+          "type": "integer"
+        },
+        "score_arithmetic": {
+          "const": "decimal50_half_even_12_places",
+          "default": "decimal50_half_even_12_places",
+          "title": "Score Arithmetic",
+          "type": "string"
+        },
+        "selection": {
+          "const": "unlabelled_validation_alert_capacity",
+          "default": "unlabelled_validation_alert_capacity",
+          "title": "Selection",
+          "type": "string"
+        },
+        "validation_alert_fraction": {
+          "default": 0.05,
+          "exclusiveMinimum": 0,
+          "maximum": 0.2,
+          "title": "Validation Alert Fraction",
+          "type": "number"
+        },
+        "validation_high_fraction": {
+          "default": 0.01,
+          "exclusiveMinimum": 0,
+          "maximum": 0.2,
+          "title": "Validation High Fraction",
+          "type": "number"
+        },
+        "version": {
+          "const": "anomaly-detector-fit-1.0.0",
+          "default": "anomaly-detector-fit-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "FitPolicy",
+      "type": "object"
+    },
+    "Forest": {
+      "additionalProperties": false,
+      "properties": {
+        "feature_count": {
+          "maximum": 16,
+          "minimum": 2,
+          "title": "Feature Count",
+          "type": "integer"
+        },
+        "input_dtype": {
+          "const": "float32",
+          "default": "float32",
+          "title": "Input Dtype",
+          "type": "string"
+        },
+        "max_samples": {
+          "maximum": 256,
+          "minimum": 16,
+          "title": "Max Samples",
+          "type": "integer"
+        },
+        "native_offset": {
+          "maximum": 0,
+          "minimum": -1,
+          "title": "Native Offset",
+          "type": "number"
+        },
+        "sklearn_version": {
+          "const": "1.9.1",
+          "default": "1.9.1",
+          "title": "Sklearn Version",
+          "type": "string"
+        },
+        "trees": {
+          "items": {
+            "$ref": "#/$defs/Tree"
+          },
+          "maxItems": 128,
+          "minItems": 8,
+          "title": "Trees",
+          "type": "array"
+        }
+      },
+      "required": [
+        "feature_count",
+        "max_samples",
+        "native_offset",
+        "trees"
+      ],
+      "title": "Forest",
+      "type": "object"
+    },
+    "Group": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_threshold": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Threshold"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currency": {
+          "enum": [
+            "PLN",
+            "EUR"
+          ],
+          "title": "Currency",
+          "type": "string"
+        },
+        "event_type": {
+          "enum": [
+            "sale_completed",
+            "return_completed"
+          ],
+          "title": "Event Type",
+          "type": "string"
+        },
+        "forest_threshold": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Threshold"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pipeline": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Pipeline"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "training_rows": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Training Rows",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "event_type",
+        "currency",
+        "training_rows",
+        "pipeline",
+        "baseline_threshold",
+        "forest_threshold"
+      ],
+      "title": "Group",
+      "type": "object"
+    },
+    "Node": {
+      "additionalProperties": false,
+      "properties": {
+        "feature": {
+          "anyOf": [
+            {
+              "maximum": 15,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Feature"
+        },
+        "left": {
+          "anyOf": [
+            {
+              "maximum": 510,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Left"
+        },
+        "right": {
+          "anyOf": [
+            {
+              "maximum": 510,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Right"
+        },
+        "sample_count": {
+          "maximum": 256,
+          "minimum": 1,
+          "title": "Sample Count",
+          "type": "integer"
+        },
+        "threshold": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Threshold"
+        }
+      },
+      "required": [
+        "sample_count",
+        "feature",
+        "threshold",
+        "left",
+        "right"
+      ],
+      "title": "Node",
+      "type": "object"
+    },
+    "Pipeline": {
+      "additionalProperties": false,
+      "properties": {
+        "fills": {
+          "items": {
+            "$ref": "#/$defs/Fill"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Fills",
+          "type": "array"
+        },
+        "forest": {
+          "$ref": "#/$defs/Forest"
+        },
+        "training_rows": {
+          "maximum": 10000,
+          "minimum": 16,
+          "title": "Training Rows",
+          "type": "integer"
+        },
+        "training_rows_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Training Rows Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "training_rows",
+        "training_rows_sha256",
+        "fills",
+        "forest"
+      ],
+      "title": "Pipeline",
+      "type": "object"
+    },
+    "Threshold": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_alerts": {
+          "maximum": 2000,
+          "minimum": 0,
+          "title": "Allowed Alerts",
+          "type": "integer"
+        },
+        "allowed_high_alerts": {
+          "maximum": 2000,
+          "minimum": 0,
+          "title": "Allowed High Alerts",
+          "type": "integer"
+        },
+        "comparison": {
+          "const": "strictly_greater_ties_do_not_alert",
+          "default": "strictly_greater_ties_do_not_alert",
+          "title": "Comparison",
+          "type": "string"
+        },
+        "high_threshold": {
+          "minimum": 0,
+          "title": "High Threshold",
+          "type": "number"
+        },
+        "threshold": {
+          "minimum": 0,
+          "title": "Threshold",
+          "type": "number"
+        },
+        "validation_rows": {
+          "maximum": 10000,
+          "minimum": 16,
+          "title": "Validation Rows",
+          "type": "integer"
+        },
+        "validation_scores_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Validation Scores Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "validation_rows",
+        "validation_scores_sha256",
+        "allowed_alerts",
+        "allowed_high_alerts",
+        "threshold",
+        "high_threshold"
+      ],
+      "title": "Threshold",
+      "type": "object"
+    },
+    "Tree": {
+      "additionalProperties": false,
+      "properties": {
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/Node"
+          },
+          "maxItems": 511,
+          "minItems": 1,
+          "title": "Nodes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "nodes"
+      ],
+      "title": "Tree",
+      "type": "object"
+    },
+    "Window": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "Window",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "descriptor": {
+      "$ref": "#/$defs/Descriptor"
+    },
+    "detector_id": {
+      "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",
+      "title": "Detector Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "detector_id",
+    "descriptor"
+  ],
+  "title": "Model",
+  "type": "object"
+}

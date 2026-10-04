@@ -71,11 +71,13 @@
           "items": {
             "enum": [
               "store",
-              "online"
+              "online",
+              "marketplace",
+              "wholesale"
             ],
             "type": "string"
           },
-          "maxItems": 2,
+          "maxItems": 4,
           "minItems": 1,
           "title": "Channels",
           "type": "array"
@@ -122,7 +124,9 @@
           "knowledge:read",
           "knowledge:index",
           "model:decide",
-          "forecast:run"
+          "forecast:run",
+          "anomaly:read",
+          "anomaly:run"
         ],
         "type": "string"
       },

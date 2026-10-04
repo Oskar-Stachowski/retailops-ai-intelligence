@@ -536,7 +536,7 @@ def test_versioned_access_snapshots_and_openapi_security_are_reviewed():
     app = create_app(Settings(APP_ENV="test", ARTIFACT_ROOT="./artifacts"))
     snapshot = json.loads((CONTRACTS / "access.openapi.json").read_text())
     assert contract_openapi(app.openapi(), access=True) == snapshot
-    assert len(snapshot["paths"]) == 25
+    assert len(snapshot["paths"]) == 27
     assert "/api/v1/forecast-runs/v12" in snapshot["paths"]
     assert "/api/v1/forecast-runs/v12/{run_id}" in snapshot["paths"]
     assert "/api/v1/forecast-runs/v12/{run_id}/attempts" in snapshot["paths"]

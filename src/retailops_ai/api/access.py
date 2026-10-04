@@ -9,6 +9,8 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from retailops_ai.adapters.index_jobs import IndexAdministration
 from retailops_ai.adapters.knowledge_search import KnowledgeBackend
+from retailops_ai.anomaly_portfolio.result_store import Reader as AnomalyReader
+from retailops_ai.api.anomaly_read import add_anomaly_read_routes
 from retailops_ai.api.evaluations import add_evaluation_routes
 from retailops_ai.api.forecast_jobs import add_forecast_routes
 from retailops_ai.api.forecast_read import add_forecast_read_routes
@@ -78,6 +80,7 @@ def access_router(
     v12_forecast_administration: V12JobAdministration | None = None,
     v12_model_catalog: V12ModelCatalog | None = None,
     v12_evaluation_reader: V12EvaluationReader | None = None,
+    anomaly_reader: AnomalyReader | None = None,
 ) -> APIRouter:
     bearer = HTTPBearer(auto_error=False, scheme_name="apiBearer")
 
@@ -109,7 +112,8 @@ def access_router(
                 selling_location_ids=sorted(principal.selling_location_ids),
                 channels=sorted(principal.channels),
             )
-            if {"forecast:read", "forecast:run"} & principal.capabilities
+            if {"forecast:read", "forecast:run", "anomaly:read", "anomaly:run"}
+            & principal.capabilities
             else None
         )
         return IdentityResponse(
@@ -182,4 +186,5 @@ def access_router(
     add_v12_metadata_routes(router, verified, v12_model_catalog, v12_evaluation_reader)
     add_model_catalog_routes(router, verified, model_catalog)
     add_evaluation_routes(router, verified, evaluation_reader)
+    add_anomaly_read_routes(router, verified, anomaly_reader)
     return router

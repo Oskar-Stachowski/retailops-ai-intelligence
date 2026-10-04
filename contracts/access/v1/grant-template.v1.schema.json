@@ -11,11 +11,13 @@
               "knowledge:read",
               "knowledge:index",
               "model:decide",
-              "forecast:run"
+              "forecast:run",
+              "anomaly:read",
+              "anomaly:run"
             ],
             "type": "string"
           },
-          "maxItems": 6,
+          "maxItems": 8,
           "minItems": 1,
           "title": "Capabilities",
           "type": "array"
@@ -143,11 +145,13 @@
           "items": {
             "enum": [
               "store",
-              "online"
+              "online",
+              "marketplace",
+              "wholesale"
             ],
             "type": "string"
           },
-          "maxItems": 2,
+          "maxItems": 4,
           "minItems": 1,
           "title": "Channels",
           "type": "array"

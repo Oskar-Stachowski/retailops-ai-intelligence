@@ -8,7 +8,7 @@ from importlib.resources import files
 from pathlib import Path
 from typing import Annotated, Any, Literal
 
-from pydantic import Field
+from pydantic import Field, model_validator
 
 from retailops_ai.anomalies.store import Parent
 from retailops_ai.data_contracts.common import Contract, Sha256
@@ -16,7 +16,9 @@ from retailops_ai.full_raw_dq.contract import (
     MAX_BYTES,
     MAX_RECORDS,
     Binding,
+    PortfolioBinding,
     contract_bytes,
+    parse_binding,
 )
 from retailops_ai.full_raw_dq.replay import Replay
 from retailops_ai.full_raw_dq.source import ParentFacts, parent_facts
@@ -46,9 +48,9 @@ class Runtime(Contract):
 
 
 class Descriptor(Contract):
-    schema_version: Literal["2.0.0"] = "2.0.0"
+    schema_version: Literal["2.0.0", "2.1.0"] = "2.0.0"
     parent: Parent
-    source_binding: Binding
+    source_binding: Binding | PortfolioBinding
     raw_sha256: Sha256
     binding_sha256: Sha256
     runtime: Runtime
@@ -59,6 +61,13 @@ class Descriptor(Contract):
     curated_completeness: Literal["not_qualified"] = "not_qualified"
     model_readiness: Literal["not_qualified"] = "not_qualified"
     transport_durability_proven: Literal[False] = False
+
+    @model_validator(mode="after")
+    def capacity_version(self) -> "Descriptor":
+        expected = "2.1.0" if isinstance(self.source_binding, PortfolioBinding) else "2.0.0"
+        if self.schema_version != expected:
+            raise ValueError("full_dq_capacity_binding_version")
+        return self
 
 
 class Manifest(Contract):
@@ -83,6 +92,9 @@ def runtime() -> Runtime:
                     "producer_binding.schema.json",
                     "binding.schema.json",
                     "manifest.schema.json",
+                    "producer_binding_v21.schema.json",
+                    "binding_v21.schema.json",
+                    "manifest_v21.schema.json",
                 )
             },
             **{
@@ -127,7 +139,7 @@ def material(
     root: Path, curated_dir: Path, import_dir: Path
 ) -> tuple[Descriptor, bytes, bytes, bytes]:
     binding_raw = read_bytes(root, "source_binding.json", 65536)
-    binding = Binding.model_validate_json(canonical_json(decode_json(binding_raw)))
+    binding = parse_binding(canonical_json(decode_json(binding_raw)))
     if binding_raw != canonical_json(binding.model_dump(mode="json")) + b"\n":
         raise SnapshotError("full_dq_noncanonical_source_binding")
     parent, facts = parent_facts(curated_dir, import_dir, binding)
@@ -138,6 +150,7 @@ def material(
         raise SnapshotError("full_dq_replay_output_limit")
     return (
         Descriptor(
+            schema_version="2.1.0" if isinstance(binding, PortfolioBinding) else "2.0.0",
             parent=Parent.model_validate(parent),
             source_binding=binding,
             raw_sha256=hashlib.sha256(raw).hexdigest(),

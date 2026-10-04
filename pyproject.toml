@@ -37,6 +37,7 @@ retailops-ai-return-inputs = "retailops_ai.return_inputs.cli:main"
 retailops-ai-day-qualification = "retailops_ai.day_qualification.cli:main"
 retailops-ai-qualified-anomaly-inputs = "retailops_ai.qualified_anomalies.cli:main"
 retailops-ai-anomaly-detectors = "retailops_ai.anomaly_detectors.cli:main"
+retailops-ai-anomaly-evaluation = "retailops_ai.anomaly_evaluation.cli:main"
 
 [project.optional-dependencies]
 snapshot = ["pyarrow==25.0.1", "jsonschema==4.26.0"]

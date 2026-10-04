@@ -1893,7 +1893,7 @@
             "type": "array"
           },
           "pagination": {
-            "$ref": "#/components/schemas/Pagination"
+            "$ref": "#/components/schemas/retailops_ai__forecast_jobs__read_contracts__Pagination"
           },
           "schema_version": {
             "const": "1.1",
@@ -1985,7 +1985,9 @@
                 "knowledge:read",
                 "knowledge:index",
                 "model:decide",
-                "forecast:run"
+                "forecast:run",
+                "anomaly:read",
+                "anomaly:run"
               ],
               "type": "string"
             },
@@ -2105,6 +2107,388 @@
           "commit_sha"
         ],
         "title": "IndexSource",
+        "type": "object"
+      },
+      "Item": {
+        "additionalProperties": false,
+        "properties": {
+          "alert": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert"
+          },
+          "alert_status": {
+            "enum": [
+              "open",
+              "no_alert",
+              "insufficient_data"
+            ],
+            "title": "Alert Status",
+            "type": "string"
+          },
+          "anomaly_id": {
+            "pattern": "^anomaly-sha256-[0-9a-f]{64}$",
+            "title": "Anomaly Id",
+            "type": "string"
+          },
+          "anomaly_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "sales_spike",
+                  "sales_drop",
+                  "residual_outlier",
+                  "return_spike",
+                  "stockout_censored_demand",
+                  "data_quality_suspicion"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Anomaly Type"
+          },
+          "as_of": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "As Of",
+            "type": "string"
+          },
+          "batch_id": {
+            "pattern": "^anomaly-batch-sha256-[0-9a-f]{64}$",
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "business_date": {
+            "format": "date",
+            "title": "Business Date",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "curated_dataset_id": {
+            "pattern": "^curated-sha256-[0-9a-f]{64}$",
+            "title": "Curated Dataset Id",
+            "type": "string"
+          },
+          "currency": {
+            "enum": [
+              "PLN",
+              "EUR"
+            ],
+            "title": "Currency",
+            "type": "string"
+          },
+          "detector_id": {
+            "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",
+            "title": "Detector Id",
+            "type": "string"
+          },
+          "detector_name": {
+            "const": "retailops-sales-anomaly",
+            "default": "retailops-sales-anomaly",
+            "title": "Detector Name",
+            "type": "string"
+          },
+          "detector_version": {
+            "pattern": "^[1-9][0-9]{0,9}$",
+            "title": "Detector Version",
+            "type": "string"
+          },
+          "event_type": {
+            "enum": [
+              "sale_completed",
+              "return_completed"
+            ],
+            "title": "Event Type",
+            "type": "string"
+          },
+          "expected_units": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Units"
+          },
+          "explanation_codes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Explanation Codes",
+            "type": "array"
+          },
+          "family": {
+            "enum": [
+              "seasonal_residual",
+              "isolation_forest"
+            ],
+            "title": "Family",
+            "type": "string"
+          },
+          "freshness_status": {
+            "enum": [
+              "current",
+              "stale",
+              "unknown"
+            ],
+            "title": "Freshness Status",
+            "type": "string"
+          },
+          "full_dq_replay_id": {
+            "pattern": "^full-dq-replay-sha256-[0-9a-f]{64}$",
+            "title": "Full Dq Replay Id",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "input_status": {
+            "enum": [
+              "ready_input",
+              "insufficient_history",
+              "day_unqualified",
+              "no_declaration"
+            ],
+            "title": "Input Status",
+            "type": "string"
+          },
+          "observed_units": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed Units"
+          },
+          "on_hand": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "On Hand"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "promotion_offered": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Promotion Offered"
+          },
+          "qualified_anomaly_input_id": {
+            "pattern": "^qualified-anomaly-inputs-sha256-[0-9a-f]{64}$",
+            "title": "Qualified Anomaly Input Id",
+            "type": "string"
+          },
+          "quality_status": {
+            "const": "passed_at_publication",
+            "default": "passed_at_publication",
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "release_id": {
+            "pattern": "^anomaly-release-sha256-[0-9a-f]{64}$",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "residual_units": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Residual Units"
+          },
+          "role": {
+            "enum": [
+              "validation",
+              "final_test",
+              "batch"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "score_definition": {
+            "enum": [
+              "absolute_causal_standardized_residual",
+              "portable_isolation_forest_path_length"
+            ],
+            "title": "Score Definition",
+            "type": "string"
+          },
+          "scoring_origin": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Scoring Origin",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Selling Location Id",
+            "type": "string"
+          },
+          "severity": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "medium",
+                  "high"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Severity"
+          },
+          "signal_episode_id": {
+            "anyOf": [
+              {
+                "pattern": "^signal-episode-sha256-[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signal Episode Id"
+          },
+          "source_dataset_id": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "title": "Source Dataset Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "scored",
+              "insufficient_data"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "threshold": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Threshold"
+          },
+          "threshold_version": {
+            "const": "validation-alert-capacity-1.0.0",
+            "default": "validation-alert-capacity-1.0.0",
+            "title": "Threshold Version",
+            "type": "string"
+          },
+          "version": {
+            "const": "anomaly-portfolio-decision-1.0.0",
+            "default": "anomaly-portfolio-decision-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_type",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "currency",
+          "business_date",
+          "scoring_origin",
+          "detector_id",
+          "family",
+          "role",
+          "status",
+          "score",
+          "threshold",
+          "alert",
+          "severity",
+          "explanation_codes",
+          "observed_units",
+          "expected_units",
+          "residual_units",
+          "promotion_offered",
+          "on_hand",
+          "input_status",
+          "anomaly_id",
+          "batch_id",
+          "signal_episode_id",
+          "detector_version",
+          "release_id",
+          "source_dataset_id",
+          "curated_dataset_id",
+          "qualified_anomaly_input_id",
+          "full_dq_replay_id",
+          "generated_at",
+          "as_of",
+          "freshness_status",
+          "anomaly_type",
+          "alert_status",
+          "score_definition"
+        ],
+        "title": "Item",
         "type": "object"
       },
       "KnowledgeHit": {
@@ -2791,48 +3175,76 @@
         "title": "ModelPage",
         "type": "object"
       },
-      "Pagination": {
+      "Page": {
         "additionalProperties": false,
         "properties": {
-          "limit": {
-            "maximum": 200.0,
-            "minimum": 1.0,
-            "title": "Limit",
-            "type": "integer"
-          },
-          "next_offset": {
-            "anyOf": [
-              {
-                "maximum": 2800.0,
-                "minimum": 0.0,
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
+          "data_status": {
+            "enum": [
+              "available",
+              "no_data"
             ],
-            "title": "Next Offset"
+            "title": "Data Status",
+            "type": "string"
           },
-          "offset": {
-            "maximum": 2800.0,
-            "minimum": 0.0,
-            "title": "Offset",
-            "type": "integer"
+          "episode_policy": {
+            "const": "consecutive_calendar_alerts_same_scope_direction_release_no_unknown_gap",
+            "default": "consecutive_calendar_alerts_same_scope_direction_release_no_unknown_gap",
+            "title": "Episode Policy",
+            "type": "string"
           },
-          "total": {
-            "maximum": 2800.0,
-            "minimum": 0.0,
-            "title": "Total",
-            "type": "integer"
+          "freshness_policy": {
+            "const": "scoring_origin_older_than_7_days_is_stale_unknown_remains_unknown",
+            "default": "scoring_origin_older_than_7_days_is_stale_unknown_remains_unknown",
+            "title": "Freshness Policy",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            },
+            "maxItems": 200,
+            "title": "Items",
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/retailops_ai__anomaly_portfolio__serving_contract__Pagination"
+          },
+          "selection": {
+            "enum": [
+              "latest_complete_batch",
+              "pinned_batch",
+              "anomaly_id"
+            ],
+            "title": "Selection",
+            "type": "string"
+          },
+          "version": {
+            "const": "anomaly-read-page-1.0.0",
+            "default": "anomaly-read-page-1.0.0",
+            "title": "Version",
+            "type": "string"
+          },
+          "view_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "View Sha256",
+            "type": "string"
           }
         },
         "required": [
-          "limit",
-          "offset",
-          "total",
-          "next_offset"
+          "items",
+          "pagination",
+          "generated_at",
+          "view_sha256",
+          "selection",
+          "data_status"
         ],
-        "title": "Pagination",
+        "title": "Page",
         "type": "object"
       },
       "PolicyMetadata": {
@@ -2945,6 +3357,18 @@
                   "evaluation-view-changed",
                   "evaluation-read-budget",
                   "evaluation-evidence-invalid"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "anomaly-scope-denied",
+                  "anomaly-pipeline-denied",
+                  "anomaly-idempotency-conflict",
+                  "anomaly-read-budget",
+                  "anomaly-view-changed",
+                  "anomaly-not-found",
+                  "anomaly-output-unavailable"
                 ],
                 "type": "string"
               },
@@ -3393,11 +3817,13 @@
             "items": {
               "enum": [
                 "store",
-                "online"
+                "online",
+                "marketplace",
+                "wholesale"
               ],
               "type": "string"
             },
-            "maxItems": 2,
+            "maxItems": 4,
             "minItems": 1,
             "title": "Channels",
             "type": "array"
@@ -5043,7 +5469,7 @@
             "type": "array"
           },
           "pagination": {
-            "$ref": "#/components/schemas/Pagination"
+            "$ref": "#/components/schemas/retailops_ai__forecast_jobs__read_contracts__Pagination"
           },
           "selection": {
             "enum": [
@@ -5217,7 +5643,7 @@
             "type": "array"
           },
           "pagination": {
-            "$ref": "#/components/schemas/Pagination"
+            "$ref": "#/components/schemas/retailops_ai__forecast_jobs__read_contracts__Pagination"
           },
           "run_id": {
             "pattern": "^run-[0-9a-f]{32}$",
@@ -5836,6 +6262,80 @@
         ],
         "title": "VersionPage",
         "type": "object"
+      },
+      "retailops_ai__anomaly_portfolio__serving_contract__Pagination": {
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "maximum": 200.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "limit",
+          "offset",
+          "total"
+        ],
+        "title": "Pagination",
+        "type": "object"
+      },
+      "retailops_ai__forecast_jobs__read_contracts__Pagination": {
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "maximum": 200.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "next_offset": {
+            "anyOf": [
+              {
+                "maximum": 2800.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Offset"
+          },
+          "offset": {
+            "maximum": 2800.0,
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "maximum": 2800.0,
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "limit",
+          "offset",
+          "total",
+          "next_offset"
+        ],
+        "title": "Pagination",
+        "type": "object"
       }
     },
     "securitySchemes": {
@@ -6085,6 +6585,495 @@
           }
         ],
         "summary": "Policy Metadata"
+      }
+    },
+    "/api/v1/anomalies": {
+      "get": {
+        "operationId": "anomalies_api_v1_anomalies_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "selling_location_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selling Location Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "store",
+                    "online",
+                    "marketplace",
+                    "wholesale"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          },
+          {
+            "in": "query",
+            "name": "event_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "sale_completed",
+                    "return_completed"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Event Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "business_from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Business From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "business_to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Business To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^anomaly-batch-sha256-[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Batch Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "scored",
+                    "insufficient_data"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "severity",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "none",
+                    "medium",
+                    "high"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Severity"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 10000,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "view_sha256",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "View Sha256"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Anomalies"
+      }
+    },
+    "/api/v1/anomalies/{anomaly_id}": {
+      "get": {
+        "operationId": "anomaly_api_v1_anomalies__anomaly_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "anomaly_id",
+            "required": true,
+            "schema": {
+              "pattern": "^anomaly-sha256-[0-9a-f]{64}$",
+              "title": "Anomaly Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Anomaly"
       }
     },
     "/api/v1/evaluations": {

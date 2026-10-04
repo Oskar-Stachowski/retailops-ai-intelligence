@@ -1,0 +1,488 @@
+{
+  "$defs": {
+    "Binding": {
+      "additionalProperties": false,
+      "properties": {
+        "business_event_day_completeness": {
+          "const": "not_qualified",
+          "title": "Business Event Day Completeness",
+          "type": "string"
+        },
+        "contract_version": {
+          "const": "raw-dq-binding-2.0.0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "missing_grain_policy": {
+          "const": "unknown_not_zero",
+          "title": "Missing Grain Policy",
+          "type": "string"
+        },
+        "projection": {
+          "const": "legacy_operational_sales_and_returns_allowlist_v1",
+          "title": "Projection",
+          "type": "string"
+        },
+        "projection_tables": {
+          "additionalProperties": {
+            "$ref": "#/$defs/TableIdentity"
+          },
+          "maxProperties": 6,
+          "minProperties": 6,
+          "propertyNames": {
+            "enum": [
+              "sales",
+              "orders",
+              "sale_price_references",
+              "products",
+              "inventory_sales",
+              "return_events"
+            ]
+          },
+          "title": "Projection Tables",
+          "type": "object"
+        },
+        "return_scope": {
+          "const": "purchases_in_parent_source_only",
+          "title": "Return Scope",
+          "type": "string"
+        },
+        "return_status_source": {
+          "const": "verified_native_parent_not_refund_amount_inference",
+          "title": "Return Status Source",
+          "type": "string"
+        },
+        "scope": {
+          "const": "all_parent_sales_and_return_claims",
+          "title": "Scope",
+          "type": "string"
+        },
+        "selection_policy": {
+          "const": "all_canonical_sales_and_native_return_claims_v1",
+          "title": "Selection Policy",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "source_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Descriptor Sha256",
+          "type": "string"
+        },
+        "source_event_count": {
+          "maximum": 4096,
+          "minimum": 12,
+          "title": "Source Event Count",
+          "type": "integer"
+        },
+        "source_events_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Events Sha256",
+          "type": "string"
+        },
+        "source_facts_ready": {
+          "const": true,
+          "title": "Source Facts Ready",
+          "type": "boolean"
+        },
+        "source_return_count": {
+          "maximum": 4096,
+          "minimum": 0,
+          "title": "Source Return Count",
+          "type": "integer"
+        },
+        "source_sales_count": {
+          "maximum": 4096,
+          "minimum": 0,
+          "title": "Source Sales Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "contract_version",
+        "source_dataset_id",
+        "source_descriptor_sha256",
+        "source_events_sha256",
+        "source_event_count",
+        "source_sales_count",
+        "source_return_count",
+        "source_facts_ready",
+        "selection_policy",
+        "projection",
+        "scope",
+        "projection_tables",
+        "return_scope",
+        "return_status_source",
+        "business_event_day_completeness",
+        "missing_grain_policy"
+      ],
+      "title": "Binding",
+      "type": "object"
+    },
+    "Descriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "binding_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Binding Sha256",
+          "type": "string"
+        },
+        "curated_completeness": {
+          "const": "not_qualified",
+          "default": "not_qualified",
+          "title": "Curated Completeness",
+          "type": "string"
+        },
+        "evaluation_truth": {
+          "const": "excluded",
+          "default": "excluded",
+          "title": "Evaluation Truth",
+          "type": "string"
+        },
+        "input_records": {
+          "maximum": 16384,
+          "minimum": 1,
+          "title": "Input Records",
+          "type": "integer"
+        },
+        "model_readiness": {
+          "const": "not_qualified",
+          "default": "not_qualified",
+          "title": "Model Readiness",
+          "type": "string"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "raw_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Raw Sha256",
+          "type": "string"
+        },
+        "replay_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Replay Sha256",
+          "type": "string"
+        },
+        "runtime": {
+          "$ref": "#/$defs/Runtime"
+        },
+        "schema_version": {
+          "default": "2.0.0",
+          "enum": [
+            "2.0.0",
+            "2.1.0"
+          ],
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "const": "all_parent_sales_and_return_claims",
+          "default": "all_parent_sales_and_return_claims",
+          "title": "Scope",
+          "type": "string"
+        },
+        "source_binding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Binding"
+            },
+            {
+              "$ref": "#/$defs/PortfolioBinding"
+            }
+          ],
+          "title": "Source Binding"
+        },
+        "transport_durability_proven": {
+          "const": false,
+          "default": false,
+          "title": "Transport Durability Proven",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "parent",
+        "source_binding",
+        "raw_sha256",
+        "binding_sha256",
+        "runtime",
+        "replay_sha256",
+        "input_records"
+      ],
+      "title": "Descriptor",
+      "type": "object"
+    },
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "qualification_id": {
+          "title": "Qualification Id",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "curated_dataset_id",
+        "curated_descriptor_sha256",
+        "source_dataset_id",
+        "snapshot_id",
+        "qualification_id"
+      ],
+      "title": "Parent",
+      "type": "object"
+    },
+    "PortfolioBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "business_event_day_completeness": {
+          "const": "not_qualified",
+          "title": "Business Event Day Completeness",
+          "type": "string"
+        },
+        "contract_version": {
+          "const": "raw-dq-binding-2.1.0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "missing_grain_policy": {
+          "const": "unknown_not_zero",
+          "title": "Missing Grain Policy",
+          "type": "string"
+        },
+        "projection": {
+          "const": "legacy_operational_sales_and_returns_allowlist_v1",
+          "title": "Projection",
+          "type": "string"
+        },
+        "projection_tables": {
+          "additionalProperties": {
+            "$ref": "#/$defs/TableIdentity"
+          },
+          "maxProperties": 6,
+          "minProperties": 6,
+          "propertyNames": {
+            "enum": [
+              "sales",
+              "orders",
+              "sale_price_references",
+              "products",
+              "inventory_sales",
+              "return_events"
+            ]
+          },
+          "title": "Projection Tables",
+          "type": "object"
+        },
+        "return_scope": {
+          "const": "purchases_in_parent_source_only",
+          "title": "Return Scope",
+          "type": "string"
+        },
+        "return_status_source": {
+          "const": "verified_native_parent_not_refund_amount_inference",
+          "title": "Return Status Source",
+          "type": "string"
+        },
+        "scope": {
+          "const": "all_parent_sales_and_return_claims",
+          "title": "Scope",
+          "type": "string"
+        },
+        "selection_policy": {
+          "const": "all_canonical_sales_and_native_return_claims_v1",
+          "title": "Selection Policy",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "source_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Descriptor Sha256",
+          "type": "string"
+        },
+        "source_event_count": {
+          "maximum": 8192,
+          "minimum": 12,
+          "title": "Source Event Count",
+          "type": "integer"
+        },
+        "source_events_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Events Sha256",
+          "type": "string"
+        },
+        "source_facts_ready": {
+          "const": true,
+          "title": "Source Facts Ready",
+          "type": "boolean"
+        },
+        "source_return_count": {
+          "maximum": 8192,
+          "minimum": 0,
+          "title": "Source Return Count",
+          "type": "integer"
+        },
+        "source_sales_count": {
+          "maximum": 8192,
+          "minimum": 0,
+          "title": "Source Sales Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "contract_version",
+        "source_dataset_id",
+        "source_descriptor_sha256",
+        "source_events_sha256",
+        "source_event_count",
+        "source_sales_count",
+        "source_return_count",
+        "source_facts_ready",
+        "selection_policy",
+        "projection",
+        "scope",
+        "projection_tables",
+        "return_scope",
+        "return_status_source",
+        "business_event_day_completeness",
+        "missing_grain_policy"
+      ],
+      "title": "PortfolioBinding",
+      "type": "object"
+    },
+    "Runtime": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "contract_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Contract Files",
+          "type": "object"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "version": {
+          "const": "ai-full-parent-replay-2.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "code_files",
+        "contract_files",
+        "dependency_lock_sha256",
+        "python_version"
+      ],
+      "title": "Runtime",
+      "type": "object"
+    },
+    "TableIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "columns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "data_class": {
+          "enum": [
+            "source_observation",
+            "source_plan"
+          ],
+          "title": "Data Class",
+          "type": "string"
+        },
+        "grain": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Grain",
+          "type": "array"
+        },
+        "row_count": {
+          "maximum": 100000,
+          "minimum": 0,
+          "title": "Row Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "row_count",
+        "columns",
+        "grain",
+        "data_class",
+        "content_sha256"
+      ],
+      "title": "TableIdentity",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "descriptor": {
+      "$ref": "#/$defs/Descriptor"
+    },
+    "full_dq_replay_id": {
+      "pattern": "^full-dq-replay-sha256-[0-9a-f]{64}$",
+      "title": "Full Dq Replay Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "full_dq_replay_id",
+    "descriptor"
+  ],
+  "title": "Manifest",
+  "type": "object"
+}

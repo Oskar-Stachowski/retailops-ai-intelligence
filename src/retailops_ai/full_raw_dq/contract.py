@@ -1,5 +1,6 @@
-"""Strict v2 transport and binding; no fault plan or evaluation labels."""
+"""Strict v2 transport and explicitly bounded v2.1 portfolio binding."""
 
+import json
 from importlib.resources import files
 from pathlib import Path
 from typing import Annotated, Any, Literal
@@ -81,6 +82,21 @@ class Binding(Contract):
     return_status_source: Literal["verified_native_parent_not_refund_amount_inference"]
     business_event_day_completeness: Literal["not_qualified"]
     missing_grain_policy: Literal["unknown_not_zero"]
+
+
+class PortfolioBinding(Binding):
+    contract_version: Literal["raw-dq-binding-2.1.0"]  # type: ignore[assignment]
+    source_event_count: Annotated[int, Field(ge=12, le=8192)]
+    source_sales_count: Annotated[int, Field(ge=0, le=8192)]
+    source_return_count: Annotated[int, Field(ge=0, le=8192)]
+
+
+def parse_binding(raw: bytes) -> Binding:
+    payload = json.loads(raw)
+    model = (
+        PortfolioBinding if payload.get("contract_version") == "raw-dq-binding-2.1.0" else Binding
+    )
+    return model.model_validate_json(raw)
 
 
 def parse_capture(payload: dict[str, Any]) -> Delivery | Progress:
