@@ -31,6 +31,7 @@ from retailops_ai.tensorflow_challenger.contract import (
 from retailops_ai.tensorflow_challenger.dataset import (
     Window,
     fit_normalization,
+    population_sha256,
     targets,
     transform_window,
 )
@@ -270,12 +271,8 @@ def fit_challenger(
         "environment_lock_sha256": hashlib.sha256(environment_lock()).hexdigest(),
         "policy_sha256": canonical_sha256(policy.model_dump(mode="json")),
         "code_sha256": canonical_sha256(implementation()),
-        "train_population_sha256": canonical_sha256(
-            [s.row.model_dump(mode="json") for w in train for s in w.samples]
-        ),
-        "validation_population_sha256": canonical_sha256(
-            [s.row.model_dump(mode="json") for w in validation for s in w.samples]
-        ),
+        "train_population_sha256": population_sha256(train),
+        "validation_population_sha256": population_sha256(validation),
     }
     attempt: dict[str, Any] = {
         "status": "running",

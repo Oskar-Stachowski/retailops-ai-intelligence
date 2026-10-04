@@ -40,6 +40,19 @@ class Window:
     samples: tuple[Sample, ...]
 
 
+def population_sha256(population: Iterable[Window]) -> str:
+    """Hash the existing canonical JSON array in row order without retaining all row dumps."""
+    digest = hashlib.sha256(b"[")
+    separator = b""
+    for window in population:
+        for sample in window.samples:
+            digest.update(separator)
+            digest.update(canonical_bytes(sample.row.model_dump(mode="json")))
+            separator = b","
+    digest.update(b"]")
+    return digest.hexdigest()
+
+
 def windows(
     records: Iterable[tuple[InputRow, Membership, LabelPoint, HistoryContext]],
     *,

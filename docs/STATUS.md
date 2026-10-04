@@ -1,5 +1,19 @@
 # Aktualny status
 
+**AI 09 — mniejsza pamięć wspólnego benchmarku development.**
+[Przyrost 09.4](evidence/09-04-development-memory.md) poprzedza odczyt kodu i
+dowodów AI 08: jego SQLite/cache/partycje stockout nie są dublowane.
+Forecasting współdzieli identyczne frozen lineage w obrębie pełnego origin,
+hashuje populację strumieniowo i wykonuje TF reload w osobnym procesie CPU.
+Końcowa mała próba ma 939.02 zamiast 1300.36 MiB peak RSS, pod własnym
+limitem 1 GiB, z identycznymi 20 160 predykcjami i wszystkimi metrykami.
+Zachowano także nieudane próby i granice pomiaru. Odtworzenie bez refitów
+przeszło natywnie (579.42 MiB) i z odłączonego wheel (577.00 MiB).
+Signed zero ma osobną kontrolę bajtów. Pełne lokalne CI przeszło:
+1839 testów głównych i 3 rzeczywiste testy TensorFlow, pakiet oraz pozostałe
+bramki. Nowy commit wymaga własnego Required CI na PR.
+Większy profil i niezależna ocena pozostają otwarte, AI 09 nadal not_ready.
+
 **AI 09 — wspólny benchmark development na danych po AI 06.**
 [Przyrost 09.3](forecast-development-comparison.md) i
 [odbiór](evidence/09-03-forecast-development-comparison.md) obejmują baseline/RF/HGB/TF

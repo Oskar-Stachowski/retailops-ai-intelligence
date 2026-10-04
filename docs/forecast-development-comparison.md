@@ -63,6 +63,45 @@ większe dane są odrzucane. Cały zapis ma limit 128 MiB.
 Receipt zasobów modeli nie jest automatycznie pomiarem peak RSS całego pipeline.
 Osobny sampler dla rzeczywistej próby obejmuje drzewo procesu i ma własny budżet.
 
+## Pamięć porównania — przyrost 09.4
+
+Przed zmianą sprawdzono kod i odbiór AI 08 z `d083e0a`: stockout ma już
+strumieniowy odczyt curated, prywatny SQLite, cache fizycznej serii, indeks
+historii i partycje etykiet. Jego upstream reader był dalej rozwijany w osobnej
+sesji. Forecasting używa innego grain: produkt × selling location × kanał ×
+origin × horizon. Porównanie korzysta z istniejącego zweryfikowanego indeksu
+forecasting i odczytu Parquet; nie dodaje kopii czytnika stockout.
+
+Nowy adapter współdzieli równe, frozen `Reference` i `InputValue` pomiędzy
+horyzontami jednego pełnego origin oraz dekoduje jego historię raz. Kluczem
+jest cała zawartość typed obiektu, także czas dostępności i checksum rekordu;
+kolizja hash nie omija porównania wszystkich pól. Reprezentacja float
+zachowuje dodatkowo signed zero przy typie przypiętym przez kontrakt cechy.
+Cache jest czyszczony przy
+zmianie produktu, lokalizacji, kanału lub origin. Pełne pola, lineage, maturity,
+chronologia, parent verification i populacja pozostają sprawdzane.
+
+Hash pełnej populacji TF jest liczony wiersz po wierszu, z zachowaniem bajtów
+dotychczasowej canonical JSON array i jej kolejności. Trening i odczyt nie
+budują już listy wszystkich zserializowanych cech na potrzeby tego hasha.
+Zmiana kodu przygotowania ma nowy code binding; stare modele wymagają
+przypiętego w swoim manifeście kodu, bez obchodzenia kontroli zgodności.
+
+TensorFlow reload i predykcja działają w nowym procesie CPU, który kończy się
+przed wczytaniem dużego portable forest i pozostałą oceną. Proces porównania
+przygotowuje macierz float32 na dysku
+z tym samym train-only normalizerem i wiąże pełną populację validation z modelem.
+Worker ponownie sprawdza bundle, lock, kod, podpis i model ID; zwraca sprawdzone
+wyniki w batchach tej samej wielkości. Supervisor mierzy własne drzewo co 50 ms,
+stosuje dotychczasowe limity TensorFlow i sprząta tylko własny proces/scratch.
+Receipt obejmuje także cold load z importem frameworka, nie tylko ciepły loader.
+
+Odczyt nadal materializuje do 3000 okien na rolę. To ograniczenie pamięci małej
+próbki, nie odbiór większego readera ani `ai-dev`/`ai-training`.
+[Dowód 09.4](evidence/09-04-development-memory.md) zapisuje pomiary, nieudane
+próby oraz zgodność predykcji i metryk. Historyczne artefakty 09.3 odtwarza
+kod z przypiętego w nich commitu; nowy kod ma własny comparison ID.
+
 ## Pozostały zakres
 
 Ten benchmark nie kwalifikuje `ai-dev` ani `ai-training`. Osobne calibration

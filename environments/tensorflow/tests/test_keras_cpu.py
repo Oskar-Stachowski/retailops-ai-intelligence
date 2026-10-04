@@ -180,7 +180,13 @@ def test_comparison_real_tree_heads_tensorflow_reload_and_no_refits(
         output=root / "tensorflow",
         policy=policy.tensorflow,
     )
-    predictions = benchmark._predictions(root, validation, trees)
+    inference = {}
+    predictions = benchmark._predictions(root, validation, trees, inference_resources=inference)
+    legacy = LoadedChallenger(root / "tensorflow").predict(validation)
+    assert [p.value for p in predictions["tensorflow"]] == [p.value for p in legacy]
+    assert inference["worker"]["validation_windows"] == len(validation)
+    assert inference["worker"]["cold_load_seconds_including_framework_import"] > 0
+    assert inference["resources"]["peak_rss_bytes"] < policy.tensorflow.rss_bytes
     report = comparison_metrics(validation, predictions, train)
     assert report["prediction_rows_per_model"] == 14
     assert report["models"]["rf_mean"]["global"]["candidate"]["median"]["mae"] is None

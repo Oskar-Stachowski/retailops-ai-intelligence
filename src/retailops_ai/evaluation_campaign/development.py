@@ -22,10 +22,12 @@ from retailops_ai.evaluation_campaign.development_contract import (
     DevelopmentPrediction,
     DevelopmentProtocol,
 )
+from retailops_ai.evaluation_campaign.development_inference import tensorflow_predictions
 from retailops_ai.evaluation_campaign.development_metrics import (
     baseline_predictions,
     comparison_metrics,
 )
+from retailops_ai.evaluation_campaign.development_storage import development_parents
 from retailops_ai.forecasting.contract import Parent
 from retailops_ai.forecasting.functional_contract import FunctionalPipeline
 from retailops_ai.forecasting.functional_models import fit_worker, functional_code
@@ -55,9 +57,7 @@ from retailops_ai.source_snapshot.files import (
 from retailops_ai.source_snapshot.publish import fsync_tree
 from retailops_ai.tensorflow_challenger.contract import ChallengerManifest
 from retailops_ai.tensorflow_challenger.dataset import Sample, Window, fit_normalization
-from retailops_ai.tensorflow_challenger.parents import development_parents
 from retailops_ai.tensorflow_challenger.pipeline import (
-    LoadedChallenger,
     environment_lock,
     fit_challenger,
     implementation,
@@ -76,6 +76,8 @@ def comparison_code() -> str:
             "development.py",
             "development_contract.py",
             "development_metrics.py",
+            "development_storage.py",
+            "development_inference.py",
             "comparison.py",
         )
     }
@@ -271,8 +273,17 @@ def _trees(
 
 
 def _predictions(
-    root: Path, validation: tuple[Window, ...], trees: dict[str, FunctionalPipeline]
+    root: Path,
+    validation: tuple[Window, ...],
+    trees: dict[str, FunctionalPipeline],
+    *,
+    inference_resources: dict[str, Any] | None = None,
+    tensorflow_rows: tuple[DevelopmentPrediction, ...] | None = None,
 ) -> dict[str, tuple[DevelopmentPrediction, ...]]:
+    if tensorflow_rows is None:
+        tensorflow_rows, measured = tensorflow_predictions(root / "tensorflow", validation)
+        if inference_resources is not None:
+            inference_resources.update(measured)
     output = baseline_predictions(validation)
     state = trees["rf_mean"].preprocessing
     predictors = {name: TreePredictor(p.estimator) for name, p in trees.items()}
@@ -315,11 +326,7 @@ def _predictions(
                 )
             )
     output.update({name: tuple(rows) for name, rows in tree_rows.items()})
-    loaded = LoadedChallenger(root / "tensorflow")
-    output["tensorflow"] = tuple(
-        DevelopmentPrediction(**p.model_dump(include=set(DevelopmentPrediction.model_fields)))
-        for p in loaded.predict(validation)
-    )
+    output["tensorflow"] = tensorflow_rows
     return output
 
 
@@ -395,9 +402,11 @@ def run_development_comparison(
                 policy=policy.tensorflow,
             )
             _event(output, "completed", model="tensorflow", model_id=tf["model_id"])
-            trees = _trees(output, train, protocol, replay=True)
             started = time.monotonic()
-            predictions = _predictions(output, validation, trees)
+            # Complete the framework process before reloading the large portable forest.
+            tf_rows, inference = tensorflow_predictions(output / "tensorflow", validation)
+            trees = _trees(output, train, protocol, replay=True)
+            predictions = _predictions(output, validation, trees, tensorflow_rows=tf_rows)
             inference_seconds = time.monotonic() - started
             report = comparison_metrics(validation, predictions, train)
             report["model_ids"] = {head: p.model_id for head, p in trees.items()} | {
@@ -417,6 +426,7 @@ def run_development_comparison(
                     "validation_rows": report["prediction_rows_per_model"],
                     "all_models_reload_and_prediction_seconds": inference_seconds,
                     "tensorflow": {
+                        "inference": inference,
                         "worker": tf["worker"],
                         "resources": tf["resources"],
                         "artifact_bytes": tf["artifact_bytes"],
@@ -484,7 +494,6 @@ def verify_development_comparison(
         )
         if expected != protocol:
             raise SnapshotError("development_comparison_parent_code_or_environment_mismatch")
-        trees = _trees(output, train, protocol, replay=True)
         tf, state = verify_artifact(output / "tensorflow")
         checked = ChallengerManifest.model_validate_json(canonical_bytes(tf))
         if (
@@ -497,7 +506,11 @@ def verify_development_comparison(
             ).content_sha256()
         ):
             raise SnapshotError("development_comparison_tensorflow_parent_mismatch")
-        predictions = _predictions(output, validation, trees)
+        # Inventory is already sealed. Validate/reload every tree after the TF worker exits,
+        # before any metric or replay result can be accepted.
+        tf_rows, _ = tensorflow_predictions(output / "tensorflow", validation)
+        trees = _trees(output, train, protocol, replay=True)
+        predictions = _predictions(output, validation, trees, tensorflow_rows=tf_rows)
         if read_bytes(
             output, "predictions.jsonl", protocol.policy.max_output_bytes
         ) != _prediction_bytes(predictions):

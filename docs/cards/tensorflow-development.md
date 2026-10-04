@@ -75,3 +75,14 @@ prognozy i metryki bez fitów. Budżety poszczególnych workerów są zaliczone,
 ale cały benchmark miał około 1,27 GiB peak RSS. Dwie wcześniejsze próby
 przerwane przy 1 GiB pozostały w evidence; większa skala nadal wymaga pracy.
 Model nie ma zgody na promocję ani końcowej kwalifikacji portfolio.
+
+## Odtworzenie przy mniejszej pamięci — 09.4
+
+[Odbiór pamięci](../evidence/09-04-development-memory.md) zachowuje identyczne
+wejścia treningu, raw outputs, wszystkie prognozy i metryki 09.3.
+Współdzielenie immutable lineage, strumieniowy population digest i osobny
+proces CPU reload dały 939.02 MiB całego drzewa w małej próbie z limitem 1 GiB.
+To nie kwalifikuje większego profilu ani niezależnej jakości.
+Nowy model ID i code binding znajdują się w receipt; stary model oraz jego
+kod pozostają historycznym artefaktem. Architektura, seedy i konfiguracje
+pozostały identyczne. Runtime i promocja nie zostały zmienione.
