@@ -89,6 +89,7 @@ contracts:
 	$(UV_RUN) python scripts/update_intelligence_event_contracts.py
 
 contracts-check:
+	$(UV_RUN) python scripts/check_source_bundle_contract.py
 	$(UV_RUN) python scripts/update_source_rest_contract.py --check
 	$(UV_RUN) python scripts/check_intelligence_delivery.py
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
@@ -184,6 +185,10 @@ integration-failure-test:
 	REQUIRE_AI10_OUTBOX_TESTS=1 $(UV_RUN) python -m pytest tests/test_intelligence_outbox.py
 
 .PHONY: source-rest-check source-rest-read
+.PHONY: source-bundle-check
+source-bundle-check:
+	$(UV_RUN) python scripts/check_source_bundle_contract.py
+
 source-rest-check:
 	$(UV_RUN) python scripts/update_source_rest_contract.py --check
 	$(UV_RUN) python -m pytest tests/test_source_rest.py

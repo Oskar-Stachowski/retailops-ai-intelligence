@@ -1,0 +1,8 @@
+[project]
+name = "retailops-source-bundle-verification"
+version = "0.1.0"
+requires-python = ">=3.11,<3.12"
+dependencies = ["pydantic==2.13.5", "pyarrow==25.0.1", "jsonschema==4.26.0"]
+
+[tool.uv]
+required-version = "==0.12.19"

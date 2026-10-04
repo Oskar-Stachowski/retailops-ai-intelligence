@@ -314,3 +314,13 @@ Nie ma jeszcze generowania odpowiedzi, ewaluacji groundedness ani wykonywania
 narzędzi agenta — to AI 12. Pipeline danych, modele, integracja zdarzeń oraz
 wdrożenie AWS/EKS mają dalsze bramki. Limit AWS na proces nie zastępuje wspólnego
 budżetu wielu replik ani produkcyjnego IAM. Nie deklarujemy wdrożenia w chmurze.
+# AI10 — kolejny przyrost: immutable source bundles
+
+**2026-10-04.** [Instrukcja pobrania i importu](source-bundles.md) opisuje
+przesłanie istniejącego, kompletnego eksportu przez chronione API Source i
+rzeczywisty typowany importer AI, także dla natywnego Snapshot 1.2 / Source 2.8.
+Zachowano oryginalne identyfikatory, osobny grant na cały eksport oraz atomowy
+import/reuse. Główny lock i kod modeli nie zmieniają się. Przypięte kopie
+importera pochodzą z zatwierdzonego ownera, a profil transferu ma osobny lock.
+Cały AI10 nadal jest `in_progress`; live SQL snapshot, snapshot/offset/replay,
+kwalifikacja trzech modeli i pełny UI E2E wymagają własnego odbioru.
