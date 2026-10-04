@@ -15,8 +15,8 @@
       "type": "integer"
     },
     "minimum_episode_recall": {
+      "exclusiveMinimum": 0,
       "maximum": 1,
-      "minimum": 0,
       "title": "Minimum Episode Recall",
       "type": "number"
     },
@@ -34,8 +34,8 @@
       "type": "number"
     },
     "minimum_high_severity_precision": {
+      "exclusiveMinimum": 0,
       "maximum": 1,
-      "minimum": 0,
       "title": "Minimum High Severity Precision",
       "type": "number"
     },
@@ -47,14 +47,14 @@
       "type": "integer"
     },
     "minimum_precision": {
+      "exclusiveMinimum": 0,
       "maximum": 1,
-      "minimum": 0,
       "title": "Minimum Precision",
       "type": "number"
     },
     "minimum_recall": {
+      "exclusiveMinimum": 0,
       "maximum": 1,
-      "minimum": 0,
       "title": "Minimum Recall",
       "type": "number"
     },

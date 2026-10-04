@@ -21,11 +21,11 @@ TYPES: tuple[BusinessType, ...] = (
 
 class QualityPolicy(Contract):
     version: Literal["anomaly-portfolio-quality-1.0.0"] = "anomaly-portfolio-quality-1.0.0"
-    minimum_precision: Annotated[float, Field(ge=0, le=1)]
-    minimum_recall: Annotated[float, Field(ge=0, le=1)]
+    minimum_precision: Annotated[float, Field(gt=0, le=1)]
+    minimum_recall: Annotated[float, Field(gt=0, le=1)]
     maximum_false_alerts_per_1000: Annotated[float, Field(ge=0, le=1000)]
-    minimum_high_severity_precision: Annotated[float, Field(ge=0, le=1)]
-    minimum_episode_recall: Annotated[float, Field(ge=0, le=1)]
+    minimum_high_severity_precision: Annotated[float, Field(gt=0, le=1)]
+    minimum_episode_recall: Annotated[float, Field(gt=0, le=1)]
     minimum_evaluable_coverage: Annotated[float, Field(gt=0, le=1)]
     minimum_clean_per_case: Annotated[int, Field(ge=1, le=10000)]
     minimum_episodes_per_type: Annotated[int, Field(ge=3, le=100)] = 3
@@ -52,6 +52,52 @@ class QualityPolicy(Contract):
 
 def metric(value: dict[str, Any]) -> Metric:
     return Metric.model_validate_json(json.dumps(value))
+
+
+COUNTS = ("true_positive", "false_positive", "false_negative", "true_negative")
+
+
+def reconcile_observation(obs: dict[str, Any]) -> None:
+    if (
+        any(type(obs[k]) is not int or obs[k] < 0 for k in (*COUNTS, "n_requested", "n_evaluable"))
+        or obs["n_evaluable"] != sum(obs[k] for k in COUNTS)
+        or obs["n_evaluable"] > obs["n_requested"]
+        or obs["positive_observations"] != obs["true_positive"] + obs["false_negative"]
+        or obs["clean_observations"] != obs["false_positive"] + obs["true_negative"]
+        or obs["predicted_positive"] != obs["true_positive"] + obs["false_positive"]
+    ):
+        raise ValueError("anomaly_quality_observation_reconciliation")
+    for name in (
+        "precision",
+        "recall",
+        "false_alerts_per_1000",
+        "high_severity_precision",
+        "average_precision",
+    ):
+        checked = metric(obs[name])
+        if checked.n_total != obs["n_requested"] or checked.n_evaluable != obs["n_evaluable"]:
+            raise ValueError("anomaly_quality_metric_coverage")
+    for name, numerator, denominator, multiplier in (
+        ("precision", obs["true_positive"], obs["predicted_positive"], 1),
+        ("recall", obs["true_positive"], obs["positive_observations"], 1),
+        ("false_alerts_per_1000", obs["false_positive"], obs["clean_observations"], 1000),
+    ):
+        checked = metric(obs[name])
+        if (
+            checked.value != (multiplier * numerator / denominator if denominator else None)
+            or checked.numerator != numerator
+            or checked.denominator != denominator
+        ):
+            raise ValueError("anomaly_quality_metric_counts")
+    high = metric(obs["high_severity_precision"])
+    if (
+        high.numerator is None
+        or high.denominator is None
+        or high.numerator > obs["true_positive"]
+        or high.denominator > obs["predicted_positive"]
+        or high.value != (high.numerator / high.denominator if high.denominator else None)
+    ):
+        raise ValueError("anomaly_quality_high_severity_counts")
 
 
 def combine(cases: list[dict[str, Any]]) -> dict[str, Any]:
@@ -82,39 +128,72 @@ def combine(cases: list[dict[str, Any]]) -> dict[str, Any]:
         obs = desc["observation"]
         coverage = desc["coverage"]
         episode = desc["episode"]
-        counts = ("true_positive", "false_positive", "false_negative", "true_negative")
+        counts = COUNTS
+        reconcile_observation(obs)
         if (
-            any(type(obs[k]) is not int or obs[k] < 0 for k in counts)
-            or obs["n_evaluable"] != sum(obs[k] for k in counts)
-            or obs["positive_observations"] != obs["true_positive"] + obs["false_negative"]
-            or obs["clean_observations"] != obs["false_positive"] + obs["true_negative"]
+            any(
+                type(coverage[k]) is not int or coverage[k] < 0
+                for k in (
+                    "requested",
+                    "evaluable",
+                    "unknown_truth",
+                    "immature_truth",
+                    "insufficient_data",
+                    "input_insufficient_data_total",
+                )
+            )
+            or coverage["requested"] != obs["n_requested"]
+            or coverage["evaluable"] != obs["n_evaluable"]
+            or sum(
+                coverage[k]
+                for k in ("evaluable", "unknown_truth", "immature_truth", "insufficient_data")
+            )
+            != coverage["requested"]
+            or not coverage["insufficient_data"]
+            <= coverage["input_insufficient_data_total"]
+            <= coverage["requested"]
         ):
-            raise ValueError("anomaly_quality_observation_reconciliation")
-        for name in (
-            "precision",
-            "recall",
-            "false_alerts_per_1000",
-            "high_severity_precision",
-            "average_precision",
+            raise ValueError("anomaly_quality_coverage_reconciliation")
+        segment_values = list(desc["per_segment"].values())
+        for part in segment_values:
+            reconcile_observation(part)
+        if any(
+            sum(part[k] for part in segment_values) != obs[k]
+            for k in (*COUNTS, "n_requested", "n_evaluable")
         ):
-            metric(obs[name])
-        for name, numerator, denominator, multiplier in (
-            ("precision", obs["true_positive"], obs["true_positive"] + obs["false_positive"], 1),
-            ("recall", obs["true_positive"], obs["positive_observations"], 1),
-            ("false_alerts_per_1000", obs["false_positive"], obs["clean_observations"], 1000),
-        ):
-            checked = metric(obs[name])
-            if (
-                checked.value != (multiplier * numerator / denominator if denominator else None)
-                or checked.numerator != numerator
-                or checked.denominator != denominator
-            ):
-                raise ValueError("anomaly_quality_metric_counts")
+            raise ValueError("anomaly_quality_segment_reconciliation")
+        for part in desc["per_type"].values():
+            reconcile_observation(part)
         details = episode["details"]
         if episode["n_evaluable"] != len(details) or episode["n_detected"] != sum(
             d["detected"] for d in details
         ):
             raise ValueError("anomaly_quality_episode_reconciliation")
+        if (
+            len({d["episode_id"] for d in details}) != len(details)
+            or any(
+                type(d["detected"]) is not bool
+                or type(d["alert_count"]) is not int
+                or d["alert_count"] < 0
+                or d["detected"] != (d["alert_count"] > 0)
+                or d["repeat_alert_count"] != max(0, d["alert_count"] - 1)
+                for d in details
+            )
+            or episode["repeat_alert_count"] != sum(d["repeat_alert_count"] for d in details)
+        ):
+            raise ValueError("anomaly_quality_episode_details")
+        recall = metric(episode["recall"])
+        if (
+            recall.numerator != episode["n_detected"]
+            or recall.denominator != len(details)
+            or recall.value != (episode["n_detected"] / len(details) if details else None)
+        ):
+            raise ValueError("anomaly_quality_episode_recall")
+        for kind, part in episode["per_type"].items():
+            typed = [d for d in details if d["business_type"] == kind]
+            r = metric(part)
+            if r.denominator != len(typed) or r.numerator != sum(d["detected"] for d in typed):
+                raise ValueError("anomaly_quality_episode_type_counts")
         for k in counts:
             counters[k] += obs[k]
         counters.update(
@@ -142,6 +221,7 @@ def combine(cases: list[dict[str, Any]]) -> dict[str, Any]:
             for k in counts:
                 part[k] += values[k]
             part["evaluable"] += values["n_evaluable"]
+            part["requested"] += values["n_requested"]
     if len(families) != 1 or len(models) != 1:
         raise ValueError("anomaly_quality_one_saved_model_required")
 
@@ -225,6 +305,21 @@ def assess(cases: list[dict[str, Any]], policy: QualityPolicy) -> dict[str, Any]
             count,
             policy.minimum_positive_observations_per_type,
             count >= policy.minimum_positive_observations_per_type,
+        )
+    for segment, counts in summary["per_segment"].items():
+        clean = counts["false_positive"] + counts["true_negative"]
+        value = 1000 * counts["false_positive"] / clean if clean else None
+        check(
+            "segment_false_alerts/" + segment,
+            value,
+            policy.maximum_false_alerts_per_1000,
+            value is not None and value <= policy.maximum_false_alerts_per_1000,
+        )
+        check(
+            "segment_clean_sample/" + segment,
+            clean,
+            policy.minimum_clean_per_case,
+            clean >= policy.minimum_clean_per_case,
         )
     for case in cases:
         desc = case["report"]["descriptor"]

@@ -9,6 +9,7 @@ from typing import Any
 
 from retailops_ai.anomaly_detectors.protocol import Scope, Window
 from retailops_ai.anomaly_evaluation.contract import Decision
+from retailops_ai.anomaly_evaluation.verification import verify_quality
 from retailops_ai.anomaly_portfolio.lifecycle_contract import MODEL, Binding, Qualification
 from retailops_ai.anomaly_portfolio.model import Model, score
 from retailops_ai.model_lifecycle.mlflow import MLflowRegistry
@@ -27,6 +28,16 @@ class AnomalyRegistry:
         return self.transport.api(path, payload)
 
     def artifact(self, uri: str, name: str, *, limit: int = 4 * 1024**2) -> bytes:
+        if re.fullmatch(r"evaluation_inputs_(42|137|2026)_(demand|physical)\.json", name):
+            if not re.fullmatch(r"mlflow-artifacts:/[A-Za-z0-9_./-]+", uri):
+                raise ValueError("anomaly_registry_artifact_uri")
+            parts = uri.removeprefix("mlflow-artifacts:/").lstrip("/").split("/")
+            if any(part in {"", ".", ".."} for part in parts):
+                raise ValueError("anomaly_registry_artifact_uri")
+            return self.transport.request(
+                "/api/2.0/mlflow-artifacts/artifacts/" + "/".join(parts) + "/" + name,
+                limit=limit,
+            )
         return self.transport.artifact(uri, name, limit=limit)
 
     def version(self, model: str, version: str) -> dict[str, Any]:
@@ -113,6 +124,16 @@ class AnomalyRegistry:
         ):
             raise ValueError("anomaly_registry_compatibility_expired_or_unbound")
         self.smoke(qualification, artifacts)
+        saved_model = Model.model_validate_json(artifacts["model.json"])
+        quality = verify_quality(
+            decode_json(artifacts["gate_segments.json"]),
+            decode_json(artifacts["config.json"]),
+            lambda name: self.artifact(uri, name, limit=8 * 1024**2),
+            saved_model.detector_id,
+            qualification.model_family,
+        )
+        if quality["quality_id"] != qualification.evaluation_id:
+            raise ValueError("anomaly_registry_quality_identity")
         return uri, qualification
 
     @staticmethod

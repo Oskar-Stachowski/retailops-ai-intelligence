@@ -60,6 +60,20 @@ def protocol(frame: VerifiedFeatures) -> PortfolioProtocol:
 
 
 def fit(args: argparse.Namespace) -> int:
+    receipt = decode_json(
+        read_bytes(args.prepared_receipt.parent, args.prepared_receipt.name, 1024**2)
+    )
+    public = decode_json(
+        read_bytes(Path(receipt["parents"][3]) / "snapshot", "snapshot_manifest.json", 8 * 1024**2)
+    )
+    parameters = public["source"]["descriptor"]["resolved_parameters"]
+    if (
+        parameters["profile"] != "ai-07-portfolio-v1"
+        or parameters["seed"] != 42
+        or tuple(parameters[k] for k in ("days", "products", "stores", "warehouses"))
+        != (128, 8, 3, 2)
+    ):
+        raise ValueError("anomaly_portfolio_development_profile_only")
     frame = prepared(args.prepared_receipt)
     split = protocol(frame)
     immutable_json(args.output / "protocol.json", split.model_dump(mode="json"))
