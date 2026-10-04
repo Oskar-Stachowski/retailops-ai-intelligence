@@ -15,14 +15,18 @@ nadal wymagają osobnego przyrostu.
 [Partycje etykiet 2.0](stockout-label-partitions.md) przenoszą prywatne
 fakty do jednorazowej bazy i ograniczają replay do jednej fizycznej serii.
 Mają batch Parquet i pełny iterator, ale kwalifikacja nadal jest JSON
-4 MiB, a comparison, split i trening pozostają v1. Także ten
-przyrost nie zalicza budżetu większego pipeline.
+4 MiB. Ten przyrost nie zalicza budżetu większego pipeline.
 [Upstream 2.0](stockout-upstream-storage.md) dodaje pełny replay cech 2.2,
 jednorazowy, ograniczony panel prognozy do ostatniego origin i chronologiczne
 części Parquet. Każdy wcześniejszy origin zachowuje własną granicę wiedzy.
 Panel nadal obejmuje wszystkie serie w limicie 20 000 wierszy / 16 MiB;
-większy profil może być odrzucony. Comparison, split i trening przyjmują
-wciąż v1. Ten przyrost również nie odbiera budżetu większego pipeline.
+większy profil może być odrzucony. Ten przyrost również nie odbiera budżetu
+większego pipeline.
+[Temporalne połączenie 2.0](stockout-temporal-storage.md) dodaje osobny
+comparison/membership Parquet i rzeczywiste wejścia treningu z cech 2.2,
+upstream 2.0 i etykiet 2.0. Zachowuje v1, limit 10 000 kluczy i 16 MiB
+kanonicznego development; cały wybrany development nadal mieści się
+w pamięci. Większy profil pozostaje nieodebrany.
 Obowiązują wymiary z
 [planu źródła](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/etapy/08-stockout-risk.md)
 i [kontraktu profili](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/kontrakty/profile-i-bramki.md)
@@ -62,7 +66,8 @@ Ograniczenia ścieżek v1 nadal blokują prostą większą generację:
 - Ścieżki cech v1/v2.0 ładują pełne tabele faktów do list. Ścieżka 2.1
   strumieniuje je do prywatnej bazy i ogranicza dane jednej serii;
   etykiety 2.0 używają podobnego magazynu prywatnego rodzica, ale
-  upstream/comparison/split i trening nadal wymagają migracji. Projekcja v1
+  nowe upstream i temporalny join mają osobne ograniczone magazyny;
+  starsze ścieżki pozostają dostępne. Projekcja v1
   przegląda tabele dla każdego origin i każdej z 28 dat. W 2.2 ledger
   ma jeden sort/prefiks na origin, a popyt dzienne grupowanie. Pełne
   lineage i stan wiedzy nadal są odtwarzane przy każdym origin;
@@ -82,9 +87,14 @@ osobno na granicy wiedzy każdego origin. W 2.1/2.2 główna baza ma limit
 128 MiB, cache stron 8 MiB, a wybrana seria najwyżej 20 000 wierszy /
 16 MiB kanonicznych payload. To granice składników, nie odbiór całego
 scratch/RSS. Pełny reader v2.0 wykonuje dwa ograniczone replay;
-2.1/2.2 mają build/verify bez czytnika treningowego. Etykiety 2.0 mają osobny
-iterator labels-only. Upstream 2.0 ma własny reader i panel do ostatniego
-origin; comparison, split i trening nadal korzystają z v1.
+2.1/2.2 mają build/verify. Temporalny adapter 2.0 odtwarza cechy 2.2 do
+jednorazowego indeksu, czyta labels/upstream po ich pełnym replay i łączy
+klucze partiami. Etykiety 2.0 mają osobny iterator labels-only, upstream
+2.0 własny reader i globalny panel do ostatniego origin. Adapter wybiera
+jedynie dojrzały development do istniejącego treningu; v1 pozostaje
+zachowane. Główna baza join ma limit 128 MiB, payload 64 MiB, porcja
+jednego rodzaju punktów 16 MiB. Wszystkie te limity są granicami
+składników, bez odbioru całego RSS/scratch lub większego profilu.
 [Odbiór upstream](../evidence/08-10-stockout-upstream-storage.md),
 [partycji](../evidence/08-06-stockout-partitions.md)
 i [magazynu](../evidence/08-07-stockout-disk-facts.md), a także
@@ -122,6 +132,10 @@ Przed uruchomieniem nowego większego **pilota**, zapisać w wersjonowanej
 konfiguracji: maksymalnie 5 GiB nowego scratch, 1 GiB peak RSS całego drzewa
 procesów i 10 minut na przygotowanie. Wymagać co najmniej 35 GiB wolnego
 miejsca przed startem, co zachowuje 30 GiB rezerwy przy pełnym zużyciu scratch.
+Aktualna potrzeba użytkownika to 50 GiB wolnego miejsca. Dla tej sesji
+ma pierwszeństwo: przy budżecie 5 GiB start wymaga co najmniej 55 GiB,
+aby po wykorzystaniu całego scratch pozostało 50 GiB. Ta rezerwa nie
+kwalifikuje większego profilu ani nie zatwierdza jego generacji.
 Limity dotyczą pilota, nie stanowią deklaracji wykonalności `ai-dev` ani
 `ai-training`. Jeśli oszacowane wejście przekracza budżet, nie zaczynać runu.
 Monitorować i przerwać własny izolowany proces przy przekroczeniu;

@@ -1,5 +1,34 @@
 # Aktualny status
 
+**AI 08 — temporalne połączenie partycji jest podłączone do treningu.**
+[Kontrakt](reference/stockout-temporal-storage.md) i
+[odbiór](evidence/08-11-stockout-temporal-storage.md) dodają osobny pakiet
+comparison/membership i assembler development. Wszystkie pola 1632
+comparison i 1632 membership są identyczne z v1. Rzeczywiste wejścia
+train/tune/calibration mają 340/135/130 punktów; końcowy test pozostaje
+131 membership bez wektora celów i metryk. Sześć modeli zachowuje
+pipelines, model IDs, wyniki i report; nowy development ID wiąże bundle
+rodziców. Zapis ma 178 960 B zamiast 1 890 509 B,
+o 90,5% mniej. Zainstalowany wheel odtworzył identyczne pliki,
+manifest, development i modele; 573 wejścia/rodzice pozostały bez zmian.
+Regresja ukierunkowana ma 153/153 zaliczeń, w tym 27 nowych. Ostrzeżenie
+joblib dotyczy blokowanego odczytu fizycznych rdzeni CPU w sandboxie.
+Walidacja lokalna ma 2037/2037 unikalnych przypadków: 1903 poza modułami
+wymagającymi uprawnień i całe 134 przypadki tych niezmienionych modułów
+powtórzone z dostępem do localhost/statystyk procesów. Pierwszy
+`make ci-local` miał exit 2 przez bind i sysctl blokowane w sandboxie;
+receipt jawnie zachowuje 28 failures / 2 errors i nie opisuje go jako exit 0.
+Wszystkie targety, pakiet, Compose config i skany sekretów są zaliczone.
+Końcowe dowody mają ponowne kontrole dokumentacji i sekretów. Poprzedni `077add2` ma zielone
+Required CI PR i push; nowy commit wymaga własnego CI w draft PR #14.
+Limity pozostają: 10 000 kluczy, kanoniczny development 16 MiB,
+qualification JSON 4 MiB i globalny upstream 20 000 wierszy / 16 MiB.
+Cały RSS/scratch i większy profil nie są odebrane. Pozostają selekcja
+upstream po seriach, preflight i jawny większy profil, niezależna ocena,
+progi, karta z nowych rodziców i lifecycle/batch/read API. Stare pakiety/ID,
+AI 05 i v12 pozostają zachowane; cały AI 08 pozostaje not ready.
+Poniższe przyrosty zachowują historyczny zakres odbioru.
+
 **AI 08 — ograniczony upstream 2.0 zachowuje pełną próbkę.**
 [Kontrakt](reference/stockout-upstream-storage.md) i
 [odbiór](evidence/08-10-stockout-upstream-storage.md) dodają osobny pakiet,

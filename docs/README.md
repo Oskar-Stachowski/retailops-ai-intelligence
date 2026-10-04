@@ -69,6 +69,10 @@ obejmuje pokrycie prognozą wszystkich dopuszczonych okien splitu.
 wiąże cechy 2.2, jednorazowy panel faktów i chronologiczne części Parquet.
 [Odbiór tej samej próbki](evidence/08-10-stockout-upstream-storage.md)
 porównuje wszystkie prognozy, comparison i sześć modeli development.
+[Temporalne połączenie partycji](reference/stockout-temporal-storage.md)
+łączy comparison i membership w ograniczonych porcjach oraz przekazuje
+wyłącznie dojrzały development do treningu. [Odbiór](evidence/08-11-stockout-temporal-storage.md)
+porównuje rzeczywisty Parquet, wybrane wejścia i sześć modeli z v1.
 [Porównanie LR/HGB na development](reference/stockout-training.md) oddziela
 train, wybór na tune i dopasowanie sigmoid na calibration, z wejściami
 z forecastem i bez niego oraz kontrolą cenzorowania sprzedaży.
