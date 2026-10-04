@@ -33,6 +33,8 @@ CONSUMER_COMMIT = "4faaf4b6c1997fda3a609645595165643bf302a9"
 FREE_BYTES = 50 * 1024**3
 SCRATCH_BYTES = 512 * 1024**2
 RSS_BYTES = 1024**3
+PILOT_V16_RSS_BYTES = 1280 * 1024**2
+REMOTE_FREE_BYTES = 6 * 1024**3
 WALL_SECONDS = 600
 SAMPLE_SECONDS = 0.2
 EXPECTED_DEVELOPMENT = (
@@ -167,7 +169,33 @@ def pilot_preflight(profile: dict[str, Any], baseline: dict[str, Any], free: int
         profile["budgets"],
         profile["unchanged_consumer_limits"],
     )
-    if b["minimum_free_bytes"] < FREE_BYTES or b["tree_rss_bytes"] > RSS_BYTES:
+    # Old profiles retain their original 1GiB bound. A prospective1.6 profile
+    # explicitly versions the resource-only increase after a measured exporter
+    # exceeded that bound; quality requirements and protected roles do not change.
+    remote = profile.get("schema_version") == "stockout-resource-pilot-1.7.0"
+    if remote and (
+        profile.get("execution_scope") != "isolated_github_hosted_runner"
+        or sys.platform != "linux"
+        or os.environ.get("GITHUB_ACTIONS") != "true"
+        or os.environ.get("RUNNER_OS") != "Linux"
+        or os.environ.get("GITHUB_REPOSITORY") != "Oskar-Stachowski/retailops-ai-intelligence"
+    ):
+        raise ValueError("pilot_remote_profile_requires_isolated_github_runner")
+    required_free = REMOTE_FREE_BYTES if remote else FREE_BYTES
+    rss_cap = (
+        PILOT_V16_RSS_BYTES
+        if profile.get("schema_version")
+        in {"stockout-resource-pilot-1.6.0", "stockout-resource-pilot-1.7.0"}
+        else RSS_BYTES
+    )
+    if (
+        b["minimum_free_bytes"] < required_free
+        or b["tree_rss_bytes"] > rss_cap
+        or any(
+            type(b[k]) is not int or b[k] <= 0
+            for k in ("minimum_free_bytes", "tree_rss_bytes", "scratch_bytes", "wall_seconds")
+        )
+    ):
         raise ValueError("pilot_user_reserve_or_memory_limit_changed")
     estimates = dict(
         tree_rss_bytes=m["sampled_tree_peak_rss_bytes"] * scale,
@@ -189,7 +217,7 @@ def pilot_preflight(profile: dict[str, Any], baseline: dict[str, Any], free: int
         }
     )
     checks.update(
-        free_disk=free >= FREE_BYTES + b["scratch_bytes"],
+        free_disk=free >= b["minimum_free_bytes"] + b["scratch_bytes"],
         physical_origins=physical <= caps["physical_origins"],
     )
     return dict(
@@ -731,7 +759,11 @@ def run_probe(
             retained_root = str(root)
     usage_after = resource.getrusage(resource.RUSAGE_CHILDREN)
     receipt = dict(
-        schema_version="stockout-whole-resource-probe-1.0.0",
+        schema_version="stockout-whole-resource-probe-1.1.0"
+        if profile
+        and profile.get("schema_version")
+        in {"stockout-resource-pilot-1.6.0", "stockout-resource-pilot-1.7.0"}
+        else "stockout-whole-resource-probe-1.0.0",
         recorded_at_utc=datetime.now(UTC).isoformat(),
         status="passed" if failure is None else "failed",
         failure=failure,

@@ -325,6 +325,69 @@ def test_bad_config_or_relaxed_limits_are_refused_before_generation(baseline, ch
         probe.pilot_preflight(candidate, baseline, 53 * 1024**3)
 
 
+def test_v16_resource_revision_requires_its_explicit_version_and_keeps_reserve(baseline):
+    candidate = profile()
+    candidate["schema_version"] = "stockout-resource-pilot-1.6.0"
+    candidate["budgets"]["tree_rss_bytes"] = 1280 * 1024**2
+    result = probe.pilot_preflight(candidate, baseline, 60 * 1024**3)
+    assert result["checks"]["tree_rss_bytes"]
+    assert not result["quality_qualified"]
+    candidate["schema_version"] = "stockout-resource-pilot-1.5.0"
+    with pytest.raises(ValueError):
+        probe.pilot_preflight(candidate, baseline, 60 * 1024**3)
+    candidate["schema_version"] = "stockout-resource-pilot-1.6.0"
+    candidate["budgets"]["minimum_free_bytes"] = 49 * 1024**3
+    with pytest.raises(ValueError):
+        probe.pilot_preflight(candidate, baseline, 60 * 1024**3)
+
+
+@pytest.mark.parametrize("memory", [1280 * 1024**2 + 1, 2 * 1024**3, True, 0])
+def test_v16_still_refuses_unbounded_or_malformed_memory(baseline, memory):
+    candidate = profile()
+    candidate["schema_version"] = "stockout-resource-pilot-1.6.0"
+    candidate["budgets"]["tree_rss_bytes"] = memory
+    with pytest.raises(ValueError):
+        probe.pilot_preflight(candidate, baseline, 60 * 1024**3)
+
+
+def test_remote_disk_budget_cannot_be_used_on_local_computer(baseline, monkeypatch):
+    candidate = profile()
+    candidate.update(
+        schema_version="stockout-resource-pilot-1.7.0",
+        execution_scope="isolated_github_hosted_runner",
+    )
+    candidate["budgets"].update(minimum_free_bytes=6 * 1024**3, tree_rss_bytes=1280 * 1024**2)
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    with pytest.raises(ValueError, match="isolated_github"):
+        probe.pilot_preflight(candidate, baseline, 14 * 1024**3)
+
+
+def test_remote_runner_budget_preserves_declared_reserve_and_never_accepts_quality(
+    baseline, monkeypatch
+):
+    candidate = profile()
+    candidate.update(
+        schema_version="stockout-resource-pilot-1.7.0",
+        execution_scope="isolated_github_hosted_runner",
+    )
+    candidate["budgets"].update(minimum_free_bytes=6 * 1024**3, tree_rss_bytes=1280 * 1024**2)
+    monkeypatch.setattr(probe.sys, "platform", "linux")
+    for key, value in dict(
+        GITHUB_ACTIONS="true",
+        RUNNER_OS="Linux",
+        GITHUB_REPOSITORY="Oskar-Stachowski/retailops-ai-intelligence",
+    ).items():
+        monkeypatch.setenv(key, value)
+    r = probe.pilot_preflight(candidate, baseline, 14 * 1024**3)
+    assert r["ready_to_attempt"] and not r["quality_qualified"]
+    r = probe.pilot_preflight(
+        candidate,
+        baseline,
+        candidate["budgets"]["minimum_free_bytes"] + candidate["budgets"]["scratch_bytes"] - 1,
+    )
+    assert not r["ready_to_attempt"] and not r["checks"]["free_disk"]
+
+
 @pytest.fixture
 def isolated(monkeypatch, tmp_path):
     spawned, stopped = [], []

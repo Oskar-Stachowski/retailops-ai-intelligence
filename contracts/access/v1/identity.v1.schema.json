@@ -122,7 +122,9 @@
           "knowledge:read",
           "knowledge:index",
           "model:decide",
-          "forecast:run"
+          "forecast:run",
+          "stockout:read",
+          "stockout:run"
         ],
         "type": "string"
       },

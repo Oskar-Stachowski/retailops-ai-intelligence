@@ -1,5 +1,18 @@
 # Aktualny status
 
+**AI 08 — późniejsza kalibracja i przenośny runtime mają osobny protokół development.**
+[Kontrakt](reference/stockout-selection-runtime.md) i
+[odbiór przyrostu](evidence/08-16-stockout-selection-runtime.md) dodają
+pełny stan kalibratora, propozycję progów/capacity, publiczny replay wejść
+i odrębne uprawnienia stockout. TRAIN fituje model, TUNE kalibrator,
+CALIBRATION wybiera wariant; wyniki wyboru nie są niezależną oceną jakości.
+Stare pakiety oraz ich niezaliczone bramki pozostają zachowane.
+Trzy matching kohorty 30 × 2 × 102 na seedach 42/137/2026 mają przygotowany
+osobny workflow GitHuba. Nowy rzeczywisty native/wheel i CI wymagają receipt.
+Rezerwa lokalnego dysku pozostaje 50 GiB. Final test, zatwierdzone progi,
+lifecycle/MLflow, trwały batch/read API i końcowy odbiór są jeszcze otwarte.
+**Cały AI 08 pozostaje not ready.** Poniżej zachowano historyczny zakres.
+
 **AI 08 — niezależna ocena i karta partycji działają; jakość pozostaje `not_ready`.**
 [Receptura](reference/stockout-independent-qualification.md) i
 [odbiór](evidence/08-15-stockout-independent-development.md) mają native/wheel
