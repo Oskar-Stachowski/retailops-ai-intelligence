@@ -1,5 +1,12 @@
 # Aktualny status
 
+**2026-10-04 — AI 10, przyrost REST źródła.**
+[Runbook](source-rest-v2.md) opisuje klienta wygenerowanego z rzeczywistego
+OpenAPI chronionych `/integration/v2` odczytów, hard deadline, retry/breaker
+i sprawdzenie scope/paginacji. To bounded live reads; immutable snapshot,
+pełny ML grain i snapshot/log handoff nadal nie są obsługiwane.
+AI 10 pozostaje `in_progress`; końcowy CI/cross-repo odbiór mają własne dowody.
+
 **2026-10-03 — AI 10 rozpoczęty, pierwszy przyrost forecast v2.**
 [Instrukcja](intelligence-integration-v2.md) i [dowód](evidence/10-forecast-integration.md)
 obejmują atomowy outbox, schemat wyników ML oraz osobny projektor/read API

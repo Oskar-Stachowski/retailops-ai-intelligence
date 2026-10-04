@@ -10,6 +10,8 @@ zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
 opisują wersje, lineage i walidację offline.
 [Integracja wyników AI 10](intelligence-integration-v2.md) opisuje pierwszy przyrost
 forecast v2, atomowy outbox i trwały odczyt po stronie RetailOps.
+[Typowany REST źródła](source-rest-v2.md) opisuje drugi przyrost: chronione
+bounded live reads, pin rzeczywistego OpenAPI, deadline/retry i jawny brak snapshotu.
 Etap pozostaje w toku; [dowód przyrostu](evidence/10-forecast-integration.md)
 rozdziela wykonane kontrole od pełnego odbioru AI 10.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
