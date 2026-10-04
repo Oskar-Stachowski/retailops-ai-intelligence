@@ -135,7 +135,9 @@ def worker(source: Path, workspace: Path) -> dict[str, Any]:
         1024**2 if sys.platform == "darwin" else 1024
     )
     if elapsed > 300 or rss > 1024:
-        raise ValueError("return_acceptance_resource_limit")
+        raise ValueError(
+            f"return_acceptance_resource_limit: seconds={elapsed:.3f}, rss_mib={rss:.3f}"
+        )
     return {
         "status": "passed",
         "producer_available": False,

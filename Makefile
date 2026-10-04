@@ -42,6 +42,10 @@ raw-dq-check:
 full-raw-dq-check:
 	$(UV_RUN) python scripts/check_full_raw_dq.py
 
+.PHONY: qualified-anomaly-inputs-check
+qualified-anomaly-inputs-check:
+	$(UV_RUN) python scripts/check_qualified_anomaly_inputs.py
+
 day-qualification-check:
 	$(UV_RUN) python scripts/check_day_qualification.py
 
@@ -78,7 +82,7 @@ forecast-acceptance-check:
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check full-raw-dq-check day-qualification-check return-inputs-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check contracts-check package compose-config
+check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check return-inputs-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check contracts-check package compose-config
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner

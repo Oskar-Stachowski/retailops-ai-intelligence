@@ -1,5 +1,8 @@
 # Dokumentacja RetailOps AI
 
+[Cechy anomalii z kwalifikowanych dni — AI07](reference/qualified-anomaly-inputs.md)
+rozdzielają wiedzę treningową i ocenę sprzedaży oraz zwrotów.
+
 [Pełny odbiór sprzedaży i zwrotów DQ — AI07](reference/full-raw-dq-consumer.md)
 sprawdza cały parent, brakujące fakty i historyczną dostępność.
 

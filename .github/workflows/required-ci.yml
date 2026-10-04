@@ -19,8 +19,9 @@ concurrency:
 jobs:
   checks:
     runs-on: ubuntu-24.04
-    # The previous full-DQ head used 84 minutes before the new day gate/tests.
-    timeout-minutes: 105
+    # The day gate head used 98 minutes; qualified residual tests and two fresh
+    # processes add verified parent reconstruction. Keep every acceptance gate.
+    timeout-minutes: 125
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

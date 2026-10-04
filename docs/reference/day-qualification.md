@@ -68,7 +68,8 @@ profiles twice in fresh isolated processes, with limits of 300 seconds / 1024 Mi
 per process. It is included in `make check`, `make ci-local` and required CI. The
 versioned public declarations are described in the [fixture](../../data/fixtures/day-coverage-v1.md).
 
-AI07 remains open: connecting qualified observations to residual features,
+The [qualified residual inputs](qualified-anomaly-inputs.md) query this gate
+separately for fitting history and scoring outcomes. AI07 remains open:
 baseline / Isolation Forest comparison, scenario evaluation and the final detector
 lifecycle is still required. These artifacts explicitly leave model readiness
 `not_qualified`; existing forecast and anomaly input contracts retain their meaning.

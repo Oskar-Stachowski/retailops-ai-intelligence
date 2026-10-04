@@ -307,5 +307,8 @@ budżetu wielu replik ani produkcyjnego IAM. Nie deklarujemy wdrożenia w chmurz
 wcześniejszy replay wybranych sprzedaży do wszystkich sprzedaży i natywnych
 zgłoszeń zwrotów, z ogonem po historii sprzedaży. Brakujące fakty pozostają
 jawne; odrzucone zwroty nie zwiększają refundowanych sztuk. Pokrycie konkretnego
-źródła nie kwalifikuje kompletności dnia. AI07 wymaga jeszcze polityki dni,
-kwalifikacji DQ, baseline/Isolation Forest, oceny i własnego lifecycle.
+źródła nie kwalifikuje kompletności dnia. [Kwalifikacja dni](reference/day-qualification.md)
+weryfikuje jawne zamknięcie źródła i dostępne wtedy zaakceptowane fakty DQ.
+[Cechy anomalii](reference/qualified-anomaly-inputs.md) korzystają z tej bramki
+osobno dla historii przed ocenianym dniem i wyniku po jego zamknięciu. AI07
+wymaga jeszcze baseline/Isolation Forest, oceny i własnego lifecycle.
