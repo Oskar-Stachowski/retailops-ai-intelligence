@@ -1,5 +1,8 @@
 # Dokumentacja RetailOps AI
 
+[Detektory anomalii — AI07](reference/anomaly-detectors.md) mają jawny podział
+czasowy, progi z walidacji i odtwarzalny zapis baseline/Isolation Forest.
+
 [Cechy anomalii z kwalifikowanych dni — AI07](reference/qualified-anomaly-inputs.md)
 rozdzielają wiedzę treningową i ocenę sprzedaży oraz zwrotów.
 

@@ -310,5 +310,8 @@ jawne; odrzucone zwroty nie zwiększają refundowanych sztuk. Pokrycie konkretne
 źródła nie kwalifikuje kompletności dnia. [Kwalifikacja dni](reference/day-qualification.md)
 weryfikuje jawne zamknięcie źródła i dostępne wtedy zaakceptowane fakty DQ.
 [Cechy anomalii](reference/qualified-anomaly-inputs.md) korzystają z tej bramki
-osobno dla historii przed ocenianym dniem i wyniku po jego zamknięciu. AI07
-wymaga jeszcze baseline/Isolation Forest, oceny i własnego lifecycle.
+osobno dla historii przed ocenianym dniem i wyniku po jego zamknięciu.
+[Detektory](reference/anomaly-detectors.md) dodają podział czasowy z cutoffami,
+baseline/Isolation Forest i progi wyznaczane z walidacji. Artefakty odtwarzają
+trening i wynik; nie kwalifikują jeszcze jakości modelu. AI07 wymaga oceny
+obserwacji i epizodów na większych danych, porównania modeli oraz własnego lifecycle.

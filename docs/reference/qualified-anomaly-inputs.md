@@ -97,6 +97,7 @@ bytes. Each process retains the 300-second / 1,024-MiB budget. There are no
 producer namespaces or private evaluation truth in these processes.
 
 The public 30-day, single-seed transport fixtures demonstrate input mechanics,
-not detector quality. AI07 still needs validation-selected seasonal baseline
-thresholds, Isolation Forest preprocessing/comparison, frozen observation/episode
+not detector quality. [Development detectors](anomaly-detectors.md) now implement
+validation-capacity thresholds, train-only preprocessing and portable Isolation
+Forest mechanics. AI07 still needs model comparison, frozen observation/episode
 evaluation across scenarios/seeds and its detector lifecycle/publication gate.
