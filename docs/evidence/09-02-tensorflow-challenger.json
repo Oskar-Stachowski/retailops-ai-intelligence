@@ -1485,15 +1485,18 @@
     "Qualified post-06/07/08 source/features/evaluations",
     "Reviewed final protocol and global trial/final-test access journal",
     "Three seeds and scenarios, critical segments and aggregation weights",
-    "Three use-case model cards and lifecycle review",
-    "Exact-SHA Linux CPU Required CI"
+    "Three use-case model cards and lifecycle review"
   ],
   "portfolio_final_test_accessed": false,
   "preparation_commit": "bbbe2207776c11846d2c6fef7b198ddcdc119ae3",
   "required_pr_ci": {
+    "linux_cpu_fit_reload": "passed_as_part_of_required_check",
     "preparation_sha_status": "success",
     "run_id": 37186025684,
-    "tensorflow_sha_status": "not_published",
+    "tensorflow_run_id": 37190248558,
+    "tensorflow_run_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37190248558",
+    "tensorflow_sha": "9ddd1f504a535a8b0fd8d2dd01986a7d376397bd",
+    "tensorflow_sha_status": "success",
     "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37186025684"
   },
   "schema_version": "ai09-tensorflow-local-evidence-1.0.0",

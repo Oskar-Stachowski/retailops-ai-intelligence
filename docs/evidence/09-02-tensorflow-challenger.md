@@ -5,6 +5,10 @@ zachowuje model identity, pełne checksums bundle, pomiary oraz mierzalne poraż
 [Runbook](../tensorflow-challenger.md) podaje architekturę, granice i polecenia.
 Poprzedni PR receipt 09.1 zachowuje historyczny zakres; jego Required CI zakończyło
 się sukcesem dla dokładnego `bbbe2207776c11846d2c6fef7b198ddcdc119ae3`.
+Późniejszy dokładny `9ddd1f504a535a8b0fd8d2dd01986a7d376397bd` także ma
+[zaliczone Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37190248558),
+w tym rzeczywisty TensorFlow fit/reload na Linux CPU. Nowe przyrosty zachowują
+wymóg własnego CI.
 
 ## Wykonano
 

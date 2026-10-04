@@ -4,6 +4,11 @@ import argparse
 import json
 from pathlib import Path
 
+from retailops_ai.evaluation_campaign.development_contract import (
+    DevelopmentComparisonManifest,
+    DevelopmentComparisonPolicy,
+    DevelopmentProtocol,
+)
 from retailops_ai.tensorflow_challenger.contract import (
     ChallengerManifest,
     ChallengerPolicy,
@@ -18,12 +23,20 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    values = {"challenger.default.json": ChallengerPolicy().model_dump(mode="json")}
+    values = {
+        "challenger.default.json": ChallengerPolicy().model_dump(mode="json"),
+        "development_comparison.default.json": DevelopmentComparisonPolicy().model_dump(
+            mode="json"
+        ),
+    }
     for name, model in (
         ("challenger_policy", ChallengerPolicy),
         ("normalization", Normalization),
         ("challenger_prediction", ChallengerPrediction),
         ("challenger_manifest", ChallengerManifest),
+        ("development_comparison_policy", DevelopmentComparisonPolicy),
+        ("development_protocol", DevelopmentProtocol),
+        ("development_comparison_manifest", DevelopmentComparisonManifest),
     ):
         schema = model.model_json_schema()
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"

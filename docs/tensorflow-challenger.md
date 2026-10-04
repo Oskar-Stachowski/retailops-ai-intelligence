@@ -98,13 +98,15 @@ wykonuje również rzeczywisty trening i świeży reload Linux CPU.
 ## Pozostały odbiór
 
 Pełna kampania wymaga nowych kwalifikowanych source/curated/features po 06,
-odbiorów AI 07/08, większego czytnika/batch treningu, fair RF/HGB/baseline comparison,
+odbiorów AI 07/08, większego czytnika/batch treningu, niezależnego fair comparison,
 osobnej development calibration, globalnego audytu prób i final-test access,
 zamrożonych segmentów/wag/gates, trzech data seeds 42/137/2026 oraz trzech
 model cards i decyzji lifecycle. Wyjątki jakościowe AI 04 v12 nie są dziedziczone.
 [Evidence 09.2](evidence/09-02-tensorflow-challenger.md) podaje wykonane wyniki.
 [Karta modelu development](cards/tensorflow-development.md) zachowuje również
 gorszy wynik względem history28 i ograniczenia kontrolnej próby.
+[Przyrost 09.3](forecast-development-comparison.md) dodaje rzeczywiste wspólne
+porównanie baseline/RF/HGB/TF na development, z osobnymi artefaktami i replay.
 
 Źródła sposobu serializacji i instalacji:
 [TensorFlow installation](https://www.tensorflow.org/install/pip),

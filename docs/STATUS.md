@@ -1,5 +1,18 @@
 # Aktualny status
 
+**AI 09 — wspólny benchmark development na danych po AI 06.**
+[Przyrost 09.3](forecast-development-comparison.md) i
+[odbiór](evidence/09-03-forecast-development-comparison.md) obejmują baseline/RF/HGB/TF
+na wszystkich 3360 kluczach validation, w tym 3040 eligible. Konfiguracje są
+zapisane przed fitami; reload odtwarza identyczne prognozy i metryki bez treningu.
+TF obniża MAE mediany względem history28 o 2,51%, poniżej wymaganego 5%.
+Przedziały kandydatów pozostają niegotowe, a segmenty zachowują porażki i braki.
+Validation użyta do early stopping jest diagnostyką, nie niezależną akceptacją.
+Dwie próby przerwane przy 1 GiB całego procesu zachowano; completed benchmark
+mieści się w osobnym budżecie 1,5 GiB. Pełne CI i wheel mają wynik w receipt.
+Większa skala, kalibracja, globalny audyt, końcowe wyniki AI 07/08 i finalna
+kampania nadal są wymagane. AI 09 pozostaje in_progress / not_ready.
+
 **AI 09 — przygotowanie oceny i pierwszy rzeczywisty Keras CPU.**
 [Plan i polecenia](evaluation-preparation.md) oraz
 [dowód przyrostu 09.1](evidence/09-01-evaluation-preparation.md) przypinają

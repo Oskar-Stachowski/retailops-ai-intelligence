@@ -12,6 +12,8 @@ opisują wersje, lineage i walidację offline.
 seedy i granice przyszłej kampanii, z jawnym preflight `not_ready`.
 [Challenger TensorFlow](tensorflow-challenger.md) dodaje rzeczywisty trening CPU,
 train-only preprocessing, wspólny evaluator i checksummed MLflow artifact.
+[Porównanie development](forecast-development-comparison.md) dodaje wspólną
+populację baseline/RF/HGB/TF, zapis prób, segmenty i replay bez treningu.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
 registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
 sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)

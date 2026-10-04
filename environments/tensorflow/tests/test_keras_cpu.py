@@ -9,6 +9,7 @@ import sys
 
 import numpy as np
 import pytest
+from test_development_comparison import protocol_for
 from test_forecast_features import tables as tables
 from test_forecast_manifests import artifacts as artifacts
 from test_forecast_manifests import timeline as timeline
@@ -155,3 +156,46 @@ def test_development_cli_uses_the_verified_disk_parents_and_retains_diagnostic(
     assert report["prediction_rows"] == 14
     assert report["global"]["status"] == "not_ready"
     assert report["promotion_allowed"] is False and report["final_test_accessed"] is False
+
+
+def test_comparison_real_tree_heads_tensorflow_reload_and_no_refits(
+    development, tmp_path, monkeypatch
+):
+    from retailops_ai.evaluation_campaign import development as benchmark
+    from retailops_ai.evaluation_campaign.development_contract import DevelopmentComparisonPolicy
+    from retailops_ai.evaluation_campaign.development_metrics import comparison_metrics
+
+    fold, train, validation = development
+    policy = DevelopmentComparisonPolicy(tensorflow=ChallengerPolicy(epochs=3))
+    protocol = protocol_for(fold, policy)
+    root = tmp_path / "comparison"
+    root.mkdir()
+    trees = benchmark._trees(root, train, protocol, replay=False)
+    fit_challenger(
+        train,
+        validation,
+        fold=fold,
+        feature_set_id=FEATURE_ID,
+        split_id=SPLIT_ID,
+        output=root / "tensorflow",
+        policy=policy.tensorflow,
+    )
+    predictions = benchmark._predictions(root, validation, trees)
+    report = comparison_metrics(validation, predictions, train)
+    assert report["prediction_rows_per_model"] == 14
+    assert report["models"]["rf_mean"]["global"]["candidate"]["median"]["mae"] is None
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("replay must not refit")
+
+    monkeypatch.setattr(benchmark, "fit_worker", forbidden)
+    reloaded = benchmark._trees(root, train, protocol, replay=True)
+    assert benchmark._prediction_bytes(
+        benchmark._predictions(root, validation, reloaded)
+    ) == benchmark._prediction_bytes(predictions)
+    receipt_path = root / "trees/rf_mean.resources.json"
+    receipt = json.loads(receipt_path.read_text())
+    receipt["cpu_seconds"] = policy.trees.model.fit_cpu_seconds + 1
+    receipt_path.write_text(json.dumps(receipt))
+    with pytest.raises(SnapshotError, match="tree_resource_budget"):
+        benchmark._trees(root, train, protocol, replay=True)

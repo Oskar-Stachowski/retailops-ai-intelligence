@@ -6,6 +6,11 @@ import json
 from pathlib import Path
 
 from retailops_ai.data_contracts.identity import canonical_bytes
+from retailops_ai.evaluation_campaign.development import (
+    run_development_comparison,
+    verify_development_comparison,
+)
+from retailops_ai.evaluation_campaign.development_contract import DevelopmentComparisonPolicy
 from retailops_ai.source_snapshot.files import SnapshotError
 from retailops_ai.tensorflow_challenger.contract import ChallengerPolicy
 from retailops_ai.tensorflow_challenger.evaluation import compare_development
@@ -28,8 +33,47 @@ def main() -> int:
     train.add_argument("--policy", type=Path)
     verify = commands.add_parser("verify")
     verify.add_argument("--artifact", type=Path, required=True)
+    for name in ("compare-development", "verify-comparison"):
+        comparison = commands.add_parser(name)
+        comparison.add_argument("--features", type=Path, required=True)
+        comparison.add_argument("--split", type=Path, required=True)
+        comparison.add_argument("--curated", type=Path, required=True)
+        comparison.add_argument("--output", type=Path, required=True)
+        if name == "compare-development":
+            comparison.add_argument("--fold", required=True)
+            comparison.add_argument("--policy", type=Path)
     args = parser.parse_args()
     try:
+        if args.command in {"compare-development", "verify-comparison"}:
+            inputs = {
+                "features": args.features,
+                "split": args.split,
+                "curated": args.curated,
+                "output": args.output,
+            }
+            if args.command == "compare-development":
+                comparison_policy = (
+                    DevelopmentComparisonPolicy.model_validate_json(args.policy.read_bytes())
+                    if args.policy
+                    else DevelopmentComparisonPolicy()
+                )
+                manifest = run_development_comparison(
+                    **inputs, fold_name=args.fold, policy=comparison_policy
+                )
+            else:
+                manifest = verify_development_comparison(**inputs)
+            print(
+                json.dumps(
+                    {
+                        "status": manifest["status"],
+                        "comparison_id": manifest["comparison_id"],
+                        "deployment_status": "not_ready",
+                        "final_test_accessed": False,
+                        "promotion_allowed": False,
+                    }
+                )
+            )
+            return 0
         if args.command == "verify":
             manifest, _ = verify_artifact(args.artifact)
         else:

@@ -53,3 +53,25 @@ brak finalnych wyników AI 07/08, brak niezależnej końcowej ewaluacji trzech
 seedów/scenariuszy i review lifecycle. Brak gotowości nie jest passed gate.
 Szczegółowe hashes, lineage kontrolnej fixture, koszt i negatywne wyniki
 pozostają w [wersjonowanym receipt](../evidence/09-02-tensorflow-challenger.json).
+
+## Odrębny model 09.3 — dane po AI 06
+
+[Benchmark development](../evidence/09-03-forecast-development-comparison.md)
+ma odrębny model ID, source/curated/features/split i wspólną populację wszystkich
+baseline/RF/HGB/TF. Dotyczy 102-dniowego `ai-temporal-smoke`, seed 42,
+240 train windows / 2710 eligible labels oraz 240 validation windows /
+3040 eligible spośród 3360 kluczy. Wcześniejsze wyniki kontrolnej fixture
+pozostają zachowane i nie są porównywane jako poprawa na tych samych danych.
+
+Model `model-sha256-b23f2854960c49b9b3a9eb676e71ae1eb2cbeeb7df252db67f19fd98f057fa43`
+ma input width 1484 i ten sam direct14 mean/median output. Early stopping
+przywrócił epoch 17 po 21 epokach, bez zmiany frozen configuration.
+MAE mediany 3,893832 wobec history28 3,994079 poprawia się o 2,51%,
+poniżej wymaganego 5%. MSE średniej 44,689410 wobec 45,036080 jest niższe;
+globalny bias −3,80% nie usuwa porażki median gate, segmentów ani braku interval.
+
+Jest to diagnostyka na early-stopping validation. Natywny replay odtwarza
+prognozy i metryki bez fitów. Budżety poszczególnych workerów są zaliczone,
+ale cały benchmark miał około 1,27 GiB peak RSS. Dwie wcześniejsze próby
+przerwane przy 1 GiB pozostały w evidence; większa skala nadal wymaga pracy.
+Model nie ma zgody na promocję ani końcowej kwalifikacji portfolio.
