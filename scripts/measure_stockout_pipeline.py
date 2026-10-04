@@ -120,9 +120,23 @@ def resource_gates(receipt: dict[str, Any]) -> bool:
 
 def pilot_preflight(profile: dict[str, Any], baseline: dict[str, Any], free: int) -> dict[str, Any]:
     """20% estimate headroom permits only an attempt; live limits remain mandatory."""
+    consumer = baseline.get("consumer") or {}
+    parity = consumer.get("parity") or {}
+    measured_pilot = (
+        baseline.get("whole_pilot_budget_passed") is True
+        and baseline.get("larger_profile_qualified") is True
+        and baseline.get("producer_commit") == PRODUCER_COMMIT
+        and baseline.get("consumer_commit") == CONSUMER_COMMIT
+        and baseline.get("final_test_outcomes_evaluated") is False
+        and baseline.get("model_promoted") is False
+        and consumer.get("final_test_outcomes_evaluated") is False
+        and baseline.get("phases") is not None
+        and [(p.get("phase"), p.get("exit_code")) for p in baseline["phases"]]
+        == [("producer", 0), ("consumer", 0)]
+    )
     if (
         baseline.get("status") != "passed"
-        or not baseline["consumer"]["parity"].get("semantic_equal")
+        or not (parity.get("semantic_equal") is True or measured_pilot)
         or not resource_gates(baseline)
     ):
         raise ValueError("pilot_requires_qualified_smoke_resource_baseline")
@@ -184,6 +198,7 @@ def pilot_preflight(profile: dict[str, Any], baseline: dict[str, Any], free: int
         checks=checks,
         scale_from_measured_smoke=ratio,
         estimate_headroom_fraction=0.2,
+        measured_baseline="qualified_intermediate_pilot" if measured_pilot else "qualified_smoke",
         scope="heuristic estimates, not guaranteed upper bounds; databases, selected arrays and all input caps still enforced by actual pipeline",
         larger_profile_qualified=False,
         quality_qualified=False,

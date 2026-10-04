@@ -51,6 +51,9 @@ rozszerza typed import o source 2.7, native ledger i private qualification.
 [Odbiór](evidence/06-inventory-complete.md) obejmuje curated 1.1 i oba profile.
 [Etykiety nowych braków AI 08](reference/stockout-labels.md) rozdzielają
 nowy brak, istniejący brak i niepełne okna obserwacji.
+[Niezależna ocena i karta partycji](reference/stockout-independent-qualification.md)
+oraz [odbiór](evidence/08-15-stockout-independent-development.md) rozdzielają
+dopasowanie sigmoidu od późniejszej oceny; zapisują także niezaliczone bramki.
 [Lokalny odbiór etykiet](evidence/08-01-stockout-labels.md) obejmuje prywatny
 handoff AI 06, niezależne odtworzenie ledgeru i zainstalowany wheel.
 [Prywatne partycje etykiet 2.0](reference/stockout-label-partitions.md)

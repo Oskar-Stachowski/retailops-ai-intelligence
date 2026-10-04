@@ -254,6 +254,48 @@ def test_preflight_preserves_50gib_plus_declared_scratch(baseline):
     assert not result["checks"]["free_disk"]
 
 
+def qualified_pilot(baseline):
+    baseline.update(
+        whole_pilot_budget_passed=True,
+        larger_profile_qualified=True,
+        producer_commit=probe.PRODUCER_COMMIT,
+        consumer_commit=probe.CONSUMER_COMMIT,
+        final_test_outcomes_evaluated=False,
+        model_promoted=False,
+        phases=[dict(phase="producer", exit_code=0), dict(phase="consumer", exit_code=0)],
+    )
+    baseline["consumer"].update(parity=None, final_test_outcomes_evaluated=False)
+    return baseline
+
+
+def test_actual_qualified_pilot_can_supply_new_resource_estimate(baseline):
+    result = probe.pilot_preflight(profile(), qualified_pilot(baseline), 53 * 1024**3)
+    assert result["ready_to_attempt"]
+    assert result["measured_baseline"] == "qualified_intermediate_pilot"
+    assert not result["quality_qualified"]
+
+
+@pytest.mark.parametrize(
+    "change", ["phase", "pin", "test", "promotion", "resource", "qualification"]
+)
+def test_incomplete_or_changed_pilot_cannot_authorize_generation(baseline, change):
+    qualified_pilot(baseline)
+    if change == "phase":
+        baseline["phases"][1]["exit_code"] = 1
+    elif change == "pin":
+        baseline["producer_commit"] = "0" * 40
+    elif change == "test":
+        baseline["consumer"]["final_test_outcomes_evaluated"] = True
+    elif change == "promotion":
+        baseline["model_promoted"] = True
+    elif change == "resource":
+        baseline["measurement"]["sampled_tree_peak_rss_bytes"] = 1024**3 + 1
+    else:
+        baseline["larger_profile_qualified"] = False
+    with pytest.raises(ValueError, match="qualified_smoke"):
+        probe.pilot_preflight(profile(), baseline, 53 * 1024**3)
+
+
 @pytest.mark.parametrize("change", ["failed", "semantics", "over_budget"])
 def test_unqualified_smoke_cannot_authorize_larger_generation(baseline, change):
     if change == "failed":

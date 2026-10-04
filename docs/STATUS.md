@@ -1,5 +1,24 @@
 # Aktualny status
 
+**AI 08 — niezależna ocena i karta partycji działają; jakość pozostaje `not_ready`.**
+[Receptura](reference/stockout-independent-qualification.md) i
+[odbiór](evidence/08-15-stockout-independent-development.md) mają native/wheel
+z identycznymi bajtami oraz pełnym replay rzeczywistych rodziców.
+Nowy pilot 19 × 2 × 102 daje **3876 origin / 1473 development**, wobec
+2856 / 1043. Cały pipeline trwa 1243,65 s, peak RSS 492,09 MiB,
+allocated scratch 325,79 MiB i zachowuje rezerwę 50 GiB.
+Model fituje 370 wcześniejszych punktów, sigmoid 232 późniejsze;
+321 tune wybiera rodzinę, 313 kolejnych punktów ocenia ją niezależnie.
+Wszystkie 8 kategorii mają obie klasy na tune. Wybrany LR without_upstream
+ma niezależny AP 0,991449, ale sigmoid pogarsza Brier 0,035440→0,050294.
+Dwie kategorie przekraczają proponowany ECE 0,15; constrained segment
+ma tylko 3 negatywne wobec wymaganego minimum 5. Wyniki nie są uznane
+za zaliczenie jakości. 100 focused/dependency testów przeszło bez ostrzeżeń.
+Większa próba, robustness, zatwierdzone progi/capacity, finalna kampania,
+lifecycle i batch/read API pozostają otwarte. Test końcowy nie jest oceniony,
+model nie jest promowany; **cały AI 08 pozostaje not ready**.
+Poniżej zachowano historyczny zakres wcześniejszych przyrostów.
+
 **AI 08 — kompletny pipeline przeszedł odbiór większego pilota.**
 [Pomiar](reference/stockout-resource-probe.md) i
 [odbiór](evidence/08-14-stockout-resource-probe.md) obejmują producenta,
