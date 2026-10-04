@@ -31,8 +31,9 @@ w pamięci. Większy profil pozostaje nieodebrany.
 walidację znanych wersji/trasy w SQL i wybiera payload jednej fizycznej
 serii. Usuwa wymaganie globalnego panelu Python; limity wejścia i bazy
 pozostają, a temporalny adapter 2.0 nadal przyjmuje upstream 2.0.
-Podłączenie nowych rodziców, spójny replay i budżet większego pipeline
-pozostają otwarte.
+[Temporal2.1](stockout-temporal-series.md) podłącza upstream2.1 do rzeczywistego
+treningu i odtwarza każdego rodzica raz w prywatnym kontekście. Zachowuje
+wcześniejsze pakiety i limity. Budżet większego pipeline pozostaje otwarty.
 Obowiązują wymiary z
 [planu źródła](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/etapy/08-stockout-risk.md)
 i [kontraktu profili](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/kontrakty/profile-i-bramki.md)

@@ -1,5 +1,27 @@
 # Aktualny status
 
+**AI 08 — upstream 2.1 jest podłączony do treningu bez nadmiarowego replay.**
+[Kontrakt](reference/stockout-temporal-series.md) i
+[odbiór](evidence/08-13-stockout-temporal-series.md) dodają osobny temporal 2.1.
+1632 comparison/membership oraz sześć modeli zachowują wyniki; rzeczywiste
+train/tune/calibration mają 340/135/130 punktów i nowe parent IDs.
+Cechy/upstream/etykiety są odtwarzane raz w prywatnym kontekście; cała
+weryfikacja kończy się przed zwróceniem development. Test to 131 membership,
+bez wektora celów/metryk. Native i odłączony wheel/CLI zachowują bajty/ID;
+79 modułów pochodzi z instalacji, producent jest nieimportowalny.
+573 oryginalne wejścia/v1 rodzice i 287 plików starych partycji są zachowane.
+Trzy pary assemblera mają medianę 329.81→177.06 s
+(-46.3%), RSS 226.00→226.33 MiB;
+RSS/scratch są podobne. To pomiar smoke/assemblera przy równoległym CI,
+bez odbioru większego profilu lub całego pipeline.
+Pełny `make ci-local` przeszedł: **2133/2133 testów**, 0 ostrzeżeń, 2849.97 s testów; 21 targetów, pakiet, Compose config i oba skany sekretów.
+48 nowych przypadków obejmuje także kontrolę limitu 4096 output files przed
+publikacją. Rodzic 92b8d5f ma zielone Required CI PR i push;
+nowy commit wymaga własnego CI. Większy profil/preflight, niezależna ocena,
+karta z nowych rodziców, progi i lifecycle/batch/read pozostają otwarte.
+Stare pakiety/ID, AI 05 i v12 są zachowane; cały AI 08 pozostaje not ready.
+Poniższe przyrosty zachowują historyczny zakres odbioru.
+
 **AI 08 — upstream ma selekcję jednej fizycznej serii i globalną walidację.**
 [Kontrakt 2.1](reference/stockout-upstream-series.md) i
 [odbiór](evidence/08-12-stockout-upstream-series.md) zachowują wszystkie
