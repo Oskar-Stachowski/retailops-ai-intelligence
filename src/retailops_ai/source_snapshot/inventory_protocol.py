@@ -182,7 +182,8 @@ def check_lineage(manifest: dict[str, Any], contract: dict[str, Any], allow_trut
                 table["partition_source_field"] is not None
                 and (
                     source["schema_version"] != "2.8.0"
-                    or parent["resolved_parameters"]["profile"] != "ai-07-portfolio-v1"
+                    or parent["resolved_parameters"]["profile"]
+                    not in {"ai-07-portfolio-v1", "ai-07-portfolio-v2"}
                     or table["partition_source_field"] != "business_date"
                     or "business_date" not in [c["name"] for c in spec["schema"]]
                 )

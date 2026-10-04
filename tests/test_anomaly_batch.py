@@ -1,15 +1,20 @@
 """Actual saved-model batch output preserves pins, context and replay identities."""
 
 import hashlib
+import json
 from datetime import UTC, date, datetime, timedelta
 from types import SimpleNamespace
 
+import pytest
 from test_anomaly_detectors import point, scope
 from test_anomaly_portfolio_model import saved_model  # noqa: F401, F811 - pytest fixture
 
 from retailops_ai.anomaly_detectors.protocol import Window
+from retailops_ai.anomaly_evaluation.contract import Decision
+from retailops_ai.anomaly_evaluation.verification import verify_scores
 from retailops_ai.anomaly_portfolio.batch import batch
 from retailops_ai.anomaly_portfolio.lifecycle_contract import Binding, Qualification, release_for
+from retailops_ai.anomaly_portfolio.model import row, score
 from retailops_ai.anomaly_portfolio.result_store import logical
 from retailops_ai.model_lifecycle.contracts import GATES, Gate, Receipt
 from retailops_ai.source_snapshot.files import canonical_json
@@ -99,3 +104,24 @@ def test_batch_context_and_publication_retry_keep_content_identity(tmp_path, sav
     assert items[0].inventory_context.on_hand == p.context.on_hand
     assert items[0].promotion_context.planned_price == p.context.planned_price
     assert items[0].status == "scored" and items[0].role == "batch"
+
+
+def test_promotion_replays_saved_model_scores_and_rejects_resealed_predictions(saved_model):  # noqa: F811
+    day = date(2026, 8, 12)
+    p = point(day, 90)
+    window = Window(start=day, end=day)
+    inputs = [row(p).model_dump(mode="json")]
+    for family in ("seasonal_residual", "isolation_forest"):
+        decisions = score(
+            saved_model, [p], (scope(),), window, family, "batch", datetime(2026, 8, 16, tzinfo=UTC)
+        )
+        verify_scores(saved_model, decisions, inputs)
+        changed = decisions[0].model_dump(mode="json")
+        changed["score"] += 0.0001
+        changed["alert"] = changed["score"] > changed["threshold"]
+        changed["severity"] = "medium" if changed["alert"] else "none"
+        altered = Decision.model_validate_json(json.dumps(changed))
+        with pytest.raises(ValueError, match="prediction_mismatch"):
+            verify_scores(saved_model, [altered], inputs)
+        with pytest.raises(ValueError, match="abstention"):
+            verify_scores(saved_model, decisions, [None])

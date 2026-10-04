@@ -234,8 +234,11 @@
           "type": "string"
         },
         "qualification_scope": {
-          "const": "synthetic_ai_07_portfolio_v1",
           "default": "synthetic_ai_07_portfolio_v1",
+          "enum": [
+            "synthetic_ai_07_portfolio_v1",
+            "synthetic_ai_07_portfolio_v2"
+          ],
           "title": "Qualification Scope",
           "type": "string"
         },
@@ -463,8 +466,11 @@
       "type": "object"
     },
     "qualification_scope": {
-      "const": "synthetic_ai_07_portfolio_v1",
       "default": "synthetic_ai_07_portfolio_v1",
+      "enum": [
+        "synthetic_ai_07_portfolio_v1",
+        "synthetic_ai_07_portfolio_v2"
+      ],
       "title": "Qualification Scope",
       "type": "string"
     },

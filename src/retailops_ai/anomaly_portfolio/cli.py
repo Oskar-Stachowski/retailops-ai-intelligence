@@ -20,6 +20,7 @@ RECIPES: tuple[tuple[str, tuple[Feature, ...]], ...] = (
     ("residual", ("residual_units", "robust_scale_units", "standardized_residual")),
     ("context", ("standardized_residual", "promotion_offered", "on_hand")),
 )
+PROFILES = {"ai-07-portfolio-v1": (128, 8, 3, 2), "ai-07-portfolio-v2": (128, 8, 2, 2)}
 
 
 def prepared(path: Path) -> VerifiedFeatures:
@@ -68,10 +69,10 @@ def fit(args: argparse.Namespace) -> int:
     )
     parameters = public["source"]["descriptor"]["resolved_parameters"]
     if (
-        parameters["profile"] != "ai-07-portfolio-v1"
+        parameters["profile"] not in PROFILES
         or parameters["seed"] != 42
         or tuple(parameters[k] for k in ("days", "products", "stores", "warehouses"))
-        != (128, 8, 3, 2)
+        != PROFILES.get(parameters["profile"])
     ):
         raise ValueError("anomaly_portfolio_development_profile_only")
     frame = prepared(args.prepared_receipt)

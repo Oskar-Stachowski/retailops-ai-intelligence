@@ -49,7 +49,9 @@ class Qualification(Contract):
     expected_output_sha256: Sha256
     gates: dict[str, Gate] = Field(json_schema_extra=GATE_SCHEMA)
     truth_access: Literal["excluded_from_model_and_batch"] = "excluded_from_model_and_batch"
-    qualification_scope: Literal["synthetic_ai_07_portfolio_v1"] = "synthetic_ai_07_portfolio_v1"
+    qualification_scope: Literal["synthetic_ai_07_portfolio_v1", "synthetic_ai_07_portfolio_v2"] = (
+        "synthetic_ai_07_portfolio_v1"
+    )
 
     @model_validator(mode="after")
     def inventory(self) -> Self:

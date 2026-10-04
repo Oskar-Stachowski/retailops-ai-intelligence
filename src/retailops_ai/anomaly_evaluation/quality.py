@@ -37,7 +37,9 @@ class QualityPolicy(Contract):
         "event_type_currency_validity_and_clean_sample_report_quality_per_type"
     ] = "event_type_currency_validity_and_clean_sample_report_quality_per_type"
     null_required_metric: Literal["blocks_qualification"] = "blocks_qualification"
-    qualification_scope: Literal["synthetic_ai_07_portfolio_v1"] = "synthetic_ai_07_portfolio_v1"
+    qualification_scope: Literal["synthetic_ai_07_portfolio_v1", "synthetic_ai_07_portfolio_v2"] = (
+        "synthetic_ai_07_portfolio_v1"
+    )
 
     @model_validator(mode="after")
     def frozen_inventory(self) -> Self:

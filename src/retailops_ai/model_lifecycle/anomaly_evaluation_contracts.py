@@ -54,7 +54,9 @@ class AnomalyEvaluationDescriptor(Contract):
     scope: AnomalyEvaluationScope
     source_dataset_ids: tuple[SourceID, ...] = Field(min_length=6, max_length=6)
     quality_status: Literal["passed"] = "passed"
-    qualification_scope: Literal["synthetic_ai_07_portfolio_v1"] = "synthetic_ai_07_portfolio_v1"
+    qualification_scope: Literal["synthetic_ai_07_portfolio_v1", "synthetic_ai_07_portfolio_v2"] = (
+        "synthetic_ai_07_portfolio_v1"
+    )
     metric_verification: Literal["recomputed_from_saved_decisions_and_offline_truth"] = (
         "recomputed_from_saved_decisions_and_offline_truth"
     )
@@ -91,7 +93,9 @@ class AnomalyEvaluationSummary(Contract):
     scope: AnomalyEvaluationScope
     source_dataset_ids: tuple[SourceID, ...] = Field(min_length=6, max_length=6)
     quality_status: Literal["passed"] = "passed"
-    qualification_scope: Literal["synthetic_ai_07_portfolio_v1"] = "synthetic_ai_07_portfolio_v1"
+    qualification_scope: Literal["synthetic_ai_07_portfolio_v1", "synthetic_ai_07_portfolio_v2"] = (
+        "synthetic_ai_07_portfolio_v1"
+    )
     metric_verification: Literal["recomputed_from_saved_decisions_and_offline_truth"] = (
         "recomputed_from_saved_decisions_and_offline_truth"
     )

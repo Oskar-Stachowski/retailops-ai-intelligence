@@ -125,14 +125,26 @@ class AnomalyRegistry:
             raise ValueError("anomaly_registry_compatibility_expired_or_unbound")
         self.smoke(qualification, artifacts)
         saved_model = Model.model_validate_json(artifacts["model.json"])
+        config = decode_json(artifacts["config.json"])
+        frozen = config["selection"]["descriptor"]
+        if (
+            frozen["original_started_at"] != qualification.original_started_at.isoformat()
+            or frozen["original_completed_at"] != qualification.original_completed_at.isoformat()
+        ):
+            raise ValueError("anomaly_registry_original_fit_time_binding")
         quality = verify_quality(
             decode_json(artifacts["gate_segments.json"]),
-            decode_json(artifacts["config.json"]),
+            config,
             lambda name: self.artifact(uri, name, limit=8 * 1024**2),
             saved_model.detector_id,
             qualification.model_family,
+            saved_model,
         )
-        if quality["quality_id"] != qualification.evaluation_id:
+        if (
+            quality["quality_id"] != qualification.evaluation_id
+            or quality["descriptor"]["policy"]["qualification_scope"]
+            != qualification.qualification_scope
+        ):
             raise ValueError("anomaly_registry_quality_identity")
         return uri, qualification
 

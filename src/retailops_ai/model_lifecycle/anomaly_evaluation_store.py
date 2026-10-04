@@ -134,8 +134,11 @@ class PostgresAnomalyEvaluations:
             or any(g.status != "passed" for g in q.gates.values())
         ):
             raise ValueError("anomaly_evaluation_artifact_binding")
-        quality = verify_quality(gate, config, artifact, model.detector_id, q.model_family)
-        if q.evaluation_id != quality["quality_id"]:
+        quality = verify_quality(gate, config, artifact, model.detector_id, q.model_family, model)
+        if (
+            q.evaluation_id != quality["quality_id"]
+            or q.qualification_scope != quality["descriptor"]["policy"]["qualification_scope"]
+        ):
             raise ValueError("anomaly_evaluation_qualification_binding")
         summary = quality["descriptor"]["summary"]
         scopes = config["selection"]["descriptor"]["protocol"]["scopes"]
@@ -147,6 +150,7 @@ class PostgresAnomalyEvaluations:
                     "mlflow_run_id": binding.mlflow_run_id,
                     "detector_id": model.detector_id,
                     "family": q.model_family,
+                    "qualification_scope": q.qualification_scope,
                     "scope": AnomalyEvaluationScope(
                         product_ids=tuple(sorted({s["product_id"] for s in scopes})),
                         selling_location_ids=tuple(
