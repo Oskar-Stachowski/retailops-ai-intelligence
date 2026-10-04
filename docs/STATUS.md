@@ -1,5 +1,28 @@
 # Aktualny status
 
+**AI 09 — pełne curated jest odtwarzane z audytowanego snapshotu.**
+[Przyrost 09.9](forecast-source-replay.md) rezerwuje wszystkie pięć ról przed
+parent I/O, sprawdza typed snapshot 1.0 i odtwarza pełną transformację curated.
+Podmiana ilości, availability, lineage lub tabeli spoza targetów jest odrzucana
+także po ponownym zapieczętowaniu wszystkich checksum. Truth i unlisted files
+nie są otwierane. [Odbiór](evidence/09-09-forecast-source-replay.md) ma
+226 testów, w tym 45 nowych, i identyczny logiczny replay native/wheel:
+25 tabel / 31 171 wierszy, peak RSS 108.36 MiB, logical scratch 35.17 MiB.
+Wspólny dziennik projektu jest bez zmian: cztery plany, zero nowych odczytów
+i wszystkie 64 dostępne odczyty. Kontrolny smoke journal zachowuje 15 zakończonych
+rezerwacji, w tym powtórzony pomiar wheel; nie resetowano budżetu.
+Wszystkie lokalne bramki są zaliczone: 2065 testów głównych, 3 rzeczywiste
+testy TensorFlow i pozostałe kontrole. Skan sekretów przeszedł po wyjątku
+ograniczonym do zweryfikowanego hasha oraz jednego pliku; pierwotny run jest
+zachowany w receipt. Kod i dane kontraktów nie zmieniły się po regresji.
+Poprzedni commit 09.8 ma zielone Required CI170; nowy commit wymaga własnego
+CI. Receipt nie kwalifikuje jeszcze fizycznych kluczy ani
+`outcomes.jsonl`, nie jest cache do kolejnych odczytów i nie dowodzi prawdy
+producenta. Pozostają audytowany eksport wersji i integracja treningu;
+większe profile, source 1.1 oraz niezależna kampania są osobnymi odbiorami.
+AI 07–08 są odczytane wyłącznie w celu sprawdzenia stanu, w tym pilota AI 08.14;
+cały AI 09 pozostaje not_ready.
+
 **AI 09 — fizyczny czytnik etykiet pięciu ról development.**
 [Przyrost 09.8](forecast-outcome-reader.md) sprawdza pełne klucze,
 wersję znaną na cutoff, dojrzałość i eligibility po trwałej rezerwacji audytu.
@@ -11,9 +34,8 @@ Kontrolny przykład osiągnął peak RSS 132.02 MiB i około 2.38 MiB scratch.
 Wspólny dziennik zachowuje historię, cztery zamrożone plany przygotowania
 oraz wszystkie 64 odczyty danych projektu; nowych odczytów i fitów projektu: 0.
 Pełne lokalne CI przeszło: 2020 testów głównych, 3 rzeczywiste testy TensorFlow
-i pozostałe bramki. Poprzedni commit 09.7 ma zielone Required CI166;
-nowy commit wymaga własnego zdalnego CI.
-Źródło dowodów nie jest jeszcze odtworzone z full curated/source parent.
+i pozostałe bramki. Commit 09.8 ma zielone Required CI170.
+Dowody etykiet nie są jeszcze porównane z odtworzonym full curated/source parent.
 Pozostają audytowany eksport, pełny audyt ekspozycji i integracja z treningiem.
 Niezależna ocena i final test pozostają zamknięte; cały AI 09 jest not_ready.
 

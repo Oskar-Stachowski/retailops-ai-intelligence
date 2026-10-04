@@ -23,6 +23,10 @@ odtwarzane. Potrzebny jest jeszcze audytowany eksporter, który porówna dowody
 z rzeczywistym, przypiętym źródłem. Nie wolno przedstawiać tego czytnika jako
 samodzielnego odbioru źródła, wyników modelu lub gotowej kampanii.
 
+[AI 09.9](forecast-source-replay.md) dodaje osobne, audytowane odtworzenie
+pełnego snapshot/curated. Nie porównuje jeszcze powyższego `outcomes.jsonl`
+z tym rodzicem; jego receipt nie zmienia kwalifikacji dowodów etykiet.
+
 Czytnik odtwarza cały publiczny feature/history parent. Historyczne obserwacje
 mogą ujawniać wyniki innych ról; wersje po cutoff obecne w dowodzie także są
 fizycznie odczytane, choć nie są wybrane do etykiety. Protokół zapisuje oba

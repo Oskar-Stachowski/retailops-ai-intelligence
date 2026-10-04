@@ -23,6 +23,10 @@ from retailops_ai.evaluation_campaign.partition_contract import (
     PartitionMembership,
 )
 from retailops_ai.evaluation_campaign.preparation import default_plan
+from retailops_ai.evaluation_campaign.source_replay_contract import (
+    ForecastSourceReplayProtocol,
+    ForecastSourceReplayReceipt,
+)
 from retailops_ai.evaluation_campaign.trial_contract import AttemptSnapshot, TrialLedger, TrialPlan
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -120,6 +124,22 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Forecast outcome reader contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, replay_model in (
+        ("forecast_source_replay_protocol", ForecastSourceReplayProtocol),
+        ("forecast_source_replay_receipt", ForecastSourceReplayReceipt),
+    ):
+        schema = replay_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:7.0.0"
+        path = ROOT / "contracts/evaluation/v7" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Forecast source replay contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

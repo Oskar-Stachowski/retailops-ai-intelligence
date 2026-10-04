@@ -1,0 +1,308 @@
+{
+  "acceptance": {
+    "all_own_acceptance_processes_finished": true,
+    "commands": [
+      {
+        "exit_code": 0,
+        "installed_wheel": false,
+        "minimum_free_disk_gib": 53.104087829589844,
+        "name": "native-complete-replay",
+        "peak_process_tree_rss_mib": 108.359375,
+        "sampled_cpu_seconds": 9.903964160000001,
+        "sampled_peak_scratch_bytes": 36755133,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "3d95f859644438aa52a157fa75db82c161b8492152dbbf46d828737b75e6201e",
+        "wall_seconds": 10.140397540992126
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": true,
+        "minimum_free_disk_gib": 52.97023010253906,
+        "name": "wheel-final-complete-replay-and-schemas",
+        "peak_process_tree_rss_mib": 105.5625,
+        "sampled_cpu_seconds": 10.886960128,
+        "sampled_peak_scratch_bytes": 36873750,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "236982110b74e2fcb7581f2ba40506021418ec78423b5ac2d95e464a4dcf22e0",
+        "wall_seconds": 11.160544833997847
+      },
+      {
+        "exit_code": 2,
+        "installed_wheel": true,
+        "minimum_free_disk_gib": 53.02466583251953,
+        "name": "wheel-budget-exhausted-before-parent-io",
+        "peak_process_tree_rss_mib": 74.625,
+        "sampled_cpu_seconds": 0.347116408,
+        "sampled_peak_scratch_bytes": 0,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "ffbdd93998b3ef082e73b803f50cda2895a9a19c6167106552d69f8e05c21d3f",
+        "wall_seconds": 0.4519577089959057
+      }
+    ],
+    "controlled_journal": {
+      "audit_scope": "cooperating_development_readers_partial_historical_inventory",
+      "completed_reads": 15,
+      "evaluation_status": "not_ready",
+      "failed_reads": 0,
+      "final_test_access_authorized": false,
+      "freshness_of_unlisted_data": "unknown_not_automatically_unseen",
+      "head_sha256": "63632155e7d2ee1a4cacea6e5911094d9a6ceef4c4f061035c0b8fdaa3219707",
+      "historical_attempts": 11,
+      "historical_protocols": 10,
+      "independent_evaluation_access_authorized": false,
+      "policy_sha256": "399789e04f24ef976d479cf31db36450af4bcb5512c6c8d152ffd115f37b2b49",
+      "promotion_allowed": false,
+      "registered_plans": 1,
+      "remaining_read_budget": 0,
+      "reserved_reads": 15,
+      "unresolved_reads": 0
+    },
+    "installed_receipt": {
+      "access_ids": [
+        "outcome-access-ca07de3a98de42d59b12336e71a7d9c3",
+        "outcome-access-63ec79adb8bd4f49b9c642103844b15d",
+        "outcome-access-a65159efadfd4ad7b06662bde6aded13",
+        "outcome-access-19de4e22fefb4d5999de0f0d3e3916e0",
+        "outcome-access-f7cc992e2ce54a539cb2f73aba036b52"
+      ],
+      "access_plan_sha256": "4e2717d8782ab1a124e4a2775f170338b21f08b33319340112f6da2ff0d3d826",
+      "cache_authority": "diagnostic_receipt_never_authorizes_a_later_read_without_replay",
+      "curated_inventory_sha256": "97660c8e36a5c0c40360d63a60c1ce96273f15f78179ff77f2f892ca3c0aa8dc",
+      "curated_rows": 31171,
+      "curated_tables": 25,
+      "evaluation_status": "not_ready",
+      "exposure_scope": "all_snapshot_facts_and_all_curated_rows_including_late_purged_and_outside_role_dates",
+      "external_source_truth": "not_established_by_consumer_replay",
+      "feature_and_partition_rows_verified": false,
+      "final_test_access_authorized": false,
+      "freshness": "not_established_partial_access_audit",
+      "independent_evaluation_access_authorized": false,
+      "logical_curated_sha256": "dbe10e5ab6ee7446bef7ac1e4cefc33b7a6e7c29ae6d0f81032f7159ac6434a9",
+      "parent": {
+        "business_timezone": "UTC",
+        "curated_dataset_id": "curated-sha256-15cf8a1a987a0d9c4f15f555732e6887241e7185d074b4ffe442af6395ab5202",
+        "curated_descriptor_sha256": "15cf8a1a987a0d9c4f15f555732e6887241e7185d074b4ffe442af6395ab5202",
+        "forecast_source_status": "passed",
+        "snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+        "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00"
+      },
+      "project_data_fits": 0,
+      "promotion_allowed": false,
+      "protocol_sha256": "27bed71cea24668f3e072c388128d6b4dd03037a0b94a5573ff7c072025af269",
+      "runtime_code_sha256": "5de09e9b7f618eed34aa601b9dd7d01df9f9c99a28d347aca001259e9a34cf5d",
+      "scoped_outcome_evidence_verified": false,
+      "snapshot_inventory_sha256": "12d2be6d525c17e3f8ab09563c17bd9bcf36b0d72ba7f1f3017c88ba452ce835",
+      "source_qualification": "typed_snapshot_and_complete_curated_transform_replay_passed",
+      "source_rows": 31171,
+      "source_tables": 25,
+      "version": "ai09-forecast-source-replay-receipt-1.0.0"
+    },
+    "native_receipt": {
+      "access_ids": [
+        "outcome-access-b7f35128bf844aeb94e3468ead0b734c",
+        "outcome-access-213d5357eb554992a6f949798df99f01",
+        "outcome-access-962cdeb8d8714c43bc49d2ca9377bdb7",
+        "outcome-access-57b3f59be011479e901c2c5afc4ed3f2",
+        "outcome-access-11d8a3fe15e44e018460c1429c1aad18"
+      ],
+      "access_plan_sha256": "4e2717d8782ab1a124e4a2775f170338b21f08b33319340112f6da2ff0d3d826",
+      "cache_authority": "diagnostic_receipt_never_authorizes_a_later_read_without_replay",
+      "curated_inventory_sha256": "97660c8e36a5c0c40360d63a60c1ce96273f15f78179ff77f2f892ca3c0aa8dc",
+      "curated_rows": 31171,
+      "curated_tables": 25,
+      "evaluation_status": "not_ready",
+      "exposure_scope": "all_snapshot_facts_and_all_curated_rows_including_late_purged_and_outside_role_dates",
+      "external_source_truth": "not_established_by_consumer_replay",
+      "feature_and_partition_rows_verified": false,
+      "final_test_access_authorized": false,
+      "freshness": "not_established_partial_access_audit",
+      "independent_evaluation_access_authorized": false,
+      "logical_curated_sha256": "dbe10e5ab6ee7446bef7ac1e4cefc33b7a6e7c29ae6d0f81032f7159ac6434a9",
+      "parent": {
+        "business_timezone": "UTC",
+        "curated_dataset_id": "curated-sha256-15cf8a1a987a0d9c4f15f555732e6887241e7185d074b4ffe442af6395ab5202",
+        "curated_descriptor_sha256": "15cf8a1a987a0d9c4f15f555732e6887241e7185d074b4ffe442af6395ab5202",
+        "forecast_source_status": "passed",
+        "snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+        "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00"
+      },
+      "project_data_fits": 0,
+      "promotion_allowed": false,
+      "protocol_sha256": "27bed71cea24668f3e072c388128d6b4dd03037a0b94a5573ff7c072025af269",
+      "runtime_code_sha256": "5de09e9b7f618eed34aa601b9dd7d01df9f9c99a28d347aca001259e9a34cf5d",
+      "scoped_outcome_evidence_verified": false,
+      "snapshot_inventory_sha256": "12d2be6d525c17e3f8ab09563c17bd9bcf36b0d72ba7f1f3017c88ba452ce835",
+      "source_qualification": "typed_snapshot_and_complete_curated_transform_replay_passed",
+      "source_rows": 31171,
+      "source_tables": 25,
+      "version": "ai09-forecast-source-replay-receipt-1.0.0"
+    },
+    "native_wheel_comparison": "all_receipt_fields_identical_except_unique_access_ids",
+    "new_project_data_fits": 0,
+    "new_project_target_labels_read": false,
+    "peak_process_tree_rss_mib": 108.359375,
+    "portfolio_final_test_accessed": false,
+    "promotion_allowed": false,
+    "protocol_sha256": "27bed71cea24668f3e072c388128d6b4dd03037a0b94a5573ff7c072025af269",
+    "runtime_code_sha256": "5de09e9b7f618eed34aa601b9dd7d01df9f9c99a28d347aca001259e9a34cf5d",
+    "sampled_peak_scratch_bytes": 36873750,
+    "scope": "previously_public_real_smoke_snapshot_1_0_complete_curated_replay_not_new_project_data_or_scoped_label_qualification",
+    "shared_project_journal": {
+      "audit_scope": "cooperating_development_readers_partial_historical_inventory",
+      "completed_reads": 0,
+      "evaluation_status": "not_ready",
+      "failed_reads": 0,
+      "final_test_access_authorized": false,
+      "freshness_of_unlisted_data": "unknown_not_automatically_unseen",
+      "head_sha256": "ab729375d97d6f35cef09662dabb9a8590c6535b5bb07c4075884f2a6fa2f357",
+      "historical_attempts": 11,
+      "historical_protocols": 10,
+      "independent_evaluation_access_authorized": false,
+      "policy_sha256": "ec26d85b4e270ecf2fb6e6dbfde49ee5578f70fdd163aff4980dba0a74ec13e7",
+      "promotion_allowed": false,
+      "registered_plans": 4,
+      "remaining_read_budget": 64,
+      "reserved_reads": 0,
+      "unresolved_reads": 0
+    },
+    "shared_project_journal_sha256": "6fc55628ccaffe6b8aa418c7fc59ac6899ce658a74ba96255aee3f241d083242",
+    "shared_project_journal_unchanged": true,
+    "source_python_files_identical": 280,
+    "status": "passed",
+    "superseded_monitor_attempt": {
+      "budget_raised": false,
+      "consumer_operation": "completed_successfully",
+      "error": "FileNotFoundError_during_private_scratch_cleanup_sampling",
+      "helper": "/private/tmp/ai09_source_replay_acceptance.py",
+      "previous_completed_reservations_retained": 10,
+      "replacement_same_journal_additional_reservations": 5,
+      "resource_measurement": "incomplete_not_used"
+    },
+    "unchanged_historical_metadata_files": 14,
+    "wheel_proof": {
+      "framework_imported": false,
+      "imported_installed_modules": 45,
+      "schema_instances": 2
+    },
+    "wheel_sha256": "c4b9249fa9142f56a14ca56795888db7c205bbbf8db6b8486642592fdae5fe9b",
+    "wheel_size_bytes": 1047844
+  },
+  "ai08_resource_reuse_audit": {
+    "different_grain_and_pipeline_not_a_comparable_memory_baseline": true,
+    "foreign_sessions_mutated": false,
+    "pilot_not_repeated": true,
+    "pilot_origin_rows": 2856,
+    "pilot_whole_tree_rss_mib": 622.23,
+    "read_only": true,
+    "temporal_parent_replay_head": "4faaf4b6c1997fda3a609645595165643bf302a9",
+    "whole_pipeline_pilot_head": "12db74b0a98e51b0d9c0c9112f15824958b82d4b"
+  },
+  "evaluation_status": "not_ready",
+  "focused_tests": {
+    "new_tests": 45,
+    "passed": 226,
+    "seconds": 202.82
+  },
+  "full_ci_local": {
+    "all_own_check_and_acceptance_processes_finished": true,
+    "core_tests": {
+      "passed": 2065,
+      "seconds": 2093.6,
+      "skipped": 0
+    },
+    "false_positive_resolution": {
+      "all_other_rule_detection_preserved_by_default_rule_inheritance": true,
+      "canonical_plan_sha256_verified_against_plan_document": true,
+      "exception": "generic-api-key_rule_specific_AND_exact_file_path_and_exact_sha256",
+      "false_positive_matches": 2,
+      "field": "access_plan_sha256",
+      "file": "docs/evidence/09-09-forecast-source-replay.json",
+      "negative_controls": {
+        "all_values_synthetic_or_verified_noncredential_digests": true,
+        "baseline_detected_both_controls": true,
+        "exception_form": "rule_specific_allowlist_AND_path_and_exact_sha256",
+        "expected_detector_exit_code": 1,
+        "findings": 2,
+        "known_hash_allowed_in_exact_evidence_file": true,
+        "other_value_under_api_key_in_same_file_still_detected": true,
+        "same_hash_in_other_file_still_detected": true,
+        "status": "passed"
+      }
+    },
+    "full_check_repeated_after_metadata_only_fix": false,
+    "lint_format_types_contracts_data_package_compose_config_and_protected_acceptance": "passed",
+    "make_check_completed_in_original_run": true,
+    "new_project_target_labels_read": false,
+    "original_ci_local_attempt": {
+      "changed_source_files": [],
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "make",
+        "ci-local",
+        "UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv",
+        "GITLEAKS=/opt/homebrew/bin/gitleaks"
+      ],
+      "exit_code": 2,
+      "log_path": "/private/tmp/ai09-source-replay-ci-local.log",
+      "log_sha256": "3de55da03804f336098180345acf52077dc144d051d154522fcc4d47e874fc18",
+      "source_freeze_files": 812,
+      "status": "failed",
+      "wall_seconds": 2402.363320827484
+    },
+    "portfolio_final_test_accessed": false,
+    "project_data_fits": 0,
+    "promotion_allowed": false,
+    "required_real_tensorflow_cpu_tests": {
+      "passed": 3,
+      "seconds": 85.57,
+      "skipped": 0
+    },
+    "secrets_final_rerun": {
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "make",
+        "secrets",
+        "GITLEAKS=/opt/homebrew/bin/gitleaks"
+      ],
+      "directory": "passed",
+      "exit_code": 0,
+      "git": "passed",
+      "log_path": "/private/tmp/ai09-source-replay-secrets-final-rerun.log",
+      "log_sha256": "4301ea6c3d58477dcc187fd973fe22d2ef67f55f30afca99de3e36c96235741f"
+    },
+    "source_freeze": {
+      "application_test_schema_package_and_dependency_bytes_unchanged_after_full_check": true,
+      "baseline_files": 812,
+      "change_scope": "precise_metadata_hash_exception_after_secret_detector_failure",
+      "only_changed_nondocumentation_file_after_full_check": ".gitleaks.toml"
+    },
+    "status": "passed_required_components_after_rule_scoped_metadata_false_positive_resolution"
+  },
+  "milestone": "AI 09.9",
+  "new_project_data_fits": 0,
+  "new_project_target_labels_read": false,
+  "portfolio_final_test_accessed": false,
+  "prior_remote_ci": {
+    "commit_sha": "541dd7f4939c32303b4ebd577f70fd2dfbd7a758",
+    "conclusion": "success",
+    "current_new_code_validated_by_this_run": false,
+    "run_id": 37227245663,
+    "run_number": 170,
+    "status": "completed"
+  },
+  "promotion_allowed": false,
+  "scope": "complete_consumer_source_replay_not_scoped_label_or_model_quality_qualification",
+  "source_schema_1_0_version_quality_boundary": {
+    "daily_demand_observations_has_explicit_completeness_and_quality": true,
+    "daily_demand_versions_has_explicit_completeness_and_quality": false,
+    "export_must_not_default_missing_version_flags_to_true_or_valid": true
+  },
+  "stage_status": "in_progress"
+}

@@ -16,3 +16,13 @@ condition = "AND"
 paths = ['(^|/)docs/evidence/05-03-store[.]json$']
 regexTarget = "secret"
 regexes = ['^38f0cbbcae1f207489c2a1ba889b0dd54af911626fdef3e442c7e37a6470aab0$']
+
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+description = "Exact canonical SHA-256 of the AI09.9 verification access plan in source-replay evidence; not a credential"
+condition = "AND"
+paths = ['(^|/)docs/evidence/09-09-forecast-source-replay[.]json$']
+regexTarget = "secret"
+regexes = ['^4e2717d8782ab1a124e4a2775f170338b21f08b33319340112f6da2ff0d3d826$']
