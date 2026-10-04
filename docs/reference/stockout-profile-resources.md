@@ -12,6 +12,11 @@ ma odbiór małej próbki, bez kwalifikacji większego profilu.
 raz na origin i ogranicza obliczenie każdego dnia do jego ruchów oraz
 wersji popytu. Incremental reuse między origin i pozostałe rodzice
 nadal wymagają osobnego przyrostu.
+[Partycje etykiet 2.0](stockout-label-partitions.md) przenoszą prywatne
+fakty do jednorazowej bazy i ograniczają replay do jednej fizycznej serii.
+Mają batch Parquet i pełny iterator, ale kwalifikacja nadal jest JSON
+4 MiB, a upstream, comparison, split i trening pozostają v1. Także ten
+przyrost nie zalicza budżetu większego pipeline.
 Obowiązują wymiary z
 [planu źródła](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/etapy/08-stockout-risk.md)
 i [kontraktu profili](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/08639e9188badb352ed64686a088fe237badad41/docs/plans/ai/kontrakty/profile-i-bramki.md)
@@ -43,12 +48,15 @@ Ograniczenia ścieżek v1 nadal blokują prostą większą generację:
   kwalifikowanego przez ścieżkę etykiet/cech; to limit konsumenta stockout,
   nie ogólne stwierdzenie o maksymalnej wielkości wszystkich snapshotów.
 - Label policy: 10 000 okien oraz 100 000 wierszy ledgeru;
-  etykiety i split używają limitu JSON metadata 4 MiB.
+  etykiety v1 i split używają limitu JSON metadata 4 MiB. Nowe etykiety
+  2.0 mają części Parquet, nadal te same limity wejścia/okien i bounded
+  qualification JSON 4 MiB.
 - Cechy: 10 000 punktów i 16 MiB. Upstream/comparison i modele mają również
   ograniczony JSON 16 MiB; trening przyjmuje do 10 000 wierszy.
-- Ścieżki v1/v2.0 ładują pełne tabele faktów do list. Ścieżka 2.1
+- Ścieżki cech v1/v2.0 ładują pełne tabele faktów do list. Ścieżka 2.1
   strumieniuje je do prywatnej bazy i ogranicza dane jednej serii;
-  pozostałe rodzice i trening nadal wymagają migracji. Projekcja v1
+  etykiety 2.0 używają podobnego magazynu prywatnego rodzica, ale
+  upstream/comparison/split i trening nadal wymagają migracji. Projekcja v1
   przegląda tabele dla każdego origin i każdej z 28 dat. W 2.2 ledger
   ma jeden sort/prefiks na origin, a popyt dzienne grupowanie. Pełne
   lineage i stan wiedzy nadal są odtwarzane przy każdym origin;
@@ -68,10 +76,11 @@ osobno na granicy wiedzy każdego origin. W 2.1/2.2 główna baza ma limit
 128 MiB, cache stron 8 MiB, a wybrana seria najwyżej 20 000 wierszy /
 16 MiB kanonicznych payload. To granice składników, nie odbiór całego
 scratch/RSS. Pełny reader v2.0 wykonuje dwa ograniczone replay;
-2.1/2.2 mają build/verify bez czytnika treningowego. Pozostałe rodzice oraz
-trening nadal korzystają z v1. [Odbiór partycji](../evidence/08-06-stockout-partitions.md)
+2.1/2.2 mają build/verify bez czytnika treningowego. Etykiety 2.0 mają osobny iterator labels-only; upstream, comparison,
+split i trening nadal korzystają z v1. [Odbiór partycji](../evidence/08-06-stockout-partitions.md)
 i [magazynu](../evidence/08-07-stockout-disk-facts.md), a także
-[indeksu historii](../evidence/08-08-stockout-history-index.md) nie zaliczają
+[indeksu historii](../evidence/08-08-stockout-history-index.md) oraz
+[partycji etykiet](../evidence/08-09-stockout-label-partitions.md) nie zaliczają
 budżetu większego pipeline ani nie zmieniają poniższych warunków.
 
 1. Zachować obecny czytnik i artefakty jako wersję 1.0. Dodać odrębny

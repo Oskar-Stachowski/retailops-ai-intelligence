@@ -53,6 +53,9 @@ rozszerza typed import o source 2.7, native ledger i private qualification.
 nowy brak, istniejący brak i niepełne okna obserwacji.
 [Lokalny odbiór etykiet](evidence/08-01-stockout-labels.md) obejmuje prywatny
 handoff AI 06, niezależne odtworzenie ledgeru i zainstalowany wheel.
+[Prywatne partycje etykiet 2.0](reference/stockout-label-partitions.md)
+i [odbiór](evidence/08-09-stockout-label-partitions.md) dodają magazyn jednej
+fizycznej serii, mały Parquet i iterator po pełnym replay.
 [Cechy PIT i podział w czasie](reference/stockout-features.md) obejmują
 znany zapas, obserwowaną sprzedaż, znane plany dostaw i wykluczanie
 okien przekraczających granice train/tune/calibration/test.

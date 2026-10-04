@@ -1,5 +1,27 @@
 # Aktualny status
 
+**AI 08 — prywatne partycje etykiet 2.0 zachowują pełną próbkę.**
+[Kontrakt](reference/stockout-label-partitions.md) i
+[odbiór](evidence/08-09-stockout-label-partitions.md) dodają jednorazową bazę,
+ledger jednej fizycznej serii oraz batch Parquet. Wszystkie pola 1632
+etykiet i sześć wariantów modeli są identyczne z v1; nowe części mają
+110 484 B zamiast JSON 666 623 B. Pełny iterator sprawdza całość przed
+pierwszym punktem i ponawia kontrole przed konsumpcją części.
+Testy ukierunkowane mają 98/98 zaliczeń, w tym 31 nowych, bez ostrzeżeń.
+Końcowe trzy pary buildów po normalizacji UTC mają medianę RSS
+112.73 → 102.48 MiB (-9.1%), wall
+12.84 → 12.66 s. To mała próbka, bez odbioru całego RSS/scratch.
+Odłączony wheel odtwarza identyczne pliki i iterator; 573 wejścia/rodzice
+pozostają bez zmian. Pełny `make ci-local` przeszedł: 1981/1981 testów bez ostrzeżeń,
+wszystkie targety, pakiet, Compose config i oba skany sekretów. Końcowe
+dowody mają ponowne kontrole dokumentacji i sekretów; nowy commit wymaga
+własnego Required CI w draft PR #14.
+Stare pakiety/ID, AI 05 i v12 pozostają zachowane. Upstream, comparison,
+split i trening nadal korzystają z v1. Pozostają ich czytniki i temporalne
+połączenie, większy profil i odbiór całego pipeline, niezależna ocena,
+progi i lifecycle/batch/read API. Cały AI 08 pozostaje not ready.
+Poniższe przyrosty zachowują swój zakres.
+
 **AI 08 — indeks historii 2.2 zachowuje pełną próbkę 102 dni.**
 [Kontrakt](reference/stockout-history-index.md) i
 [odbiór](evidence/08-08-stockout-history-index.md) obejmują sumy prefiksowe
