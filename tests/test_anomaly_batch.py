@@ -15,6 +15,7 @@ from retailops_ai.anomaly_evaluation.verification import verify_scores
 from retailops_ai.anomaly_portfolio.batch import batch
 from retailops_ai.anomaly_portfolio.lifecycle_contract import Binding, Qualification, release_for
 from retailops_ai.anomaly_portfolio.model import row, score
+from retailops_ai.anomaly_portfolio.registry import AnomalyRegistry
 from retailops_ai.anomaly_portfolio.result_store import logical
 from retailops_ai.model_lifecycle.contracts import GATES, Gate, Receipt
 from retailops_ai.source_snapshot.files import canonical_json
@@ -125,3 +126,20 @@ def test_promotion_replays_saved_model_scores_and_rejects_resealed_predictions(s
             verify_scores(saved_model, [altered], inputs)
         with pytest.raises(ValueError, match="abstention"):
             verify_scores(saved_model, decisions, [None])
+
+
+def test_registry_uses_compose_service_port_or_explicit_owned_loopback_port():
+    local = AnomalyRegistry(port=65440, environment="test")
+    assert (local.transport.host, local.transport.port) == ("127.0.0.1", 65440)
+    compose = AnomalyRegistry(compose=True, environment="test")
+    assert (compose.transport.host, compose.transport.port) == ("mlflow", 5000)
+    for kwargs in (
+        {"compose": True, "port": 65440},
+        {"port": True},
+        {"port": 0},
+        {"environment": "production"},
+    ):
+        with pytest.raises(ValueError):
+            AnomalyRegistry(**kwargs)
+    with pytest.raises(ValueError, match="namespace"):
+        local.version("retailops-demand-forecast", "1")

@@ -18,11 +18,16 @@ from retailops_ai.source_snapshot.files import canonical_json, decode_json, json
 
 
 class AnomalyRegistry:
-    def __init__(self, *, port: int = 5010) -> None:
-        self.transport = MLflowRegistry()
-        if type(port) is not int or not 1 <= port <= 65535:
+    def __init__(
+        self, *, port: int | None = None, compose: bool = False, environment: str = "local"
+    ) -> None:
+        if environment not in {"local", "test"}:
+            raise ValueError("anomaly_registry_environment")
+        self.transport = MLflowRegistry(compose=compose, environment=environment)
+        if port is not None and (compose or type(port) is not int or not 1 <= port <= 65535):
             raise ValueError("anomaly_registry_loopback_port")
-        self.transport.port = port
+        if port is not None:
+            self.transport.port = port
 
     def api(self, path: str, payload: dict[str, Any] | None = None) -> dict[str, Any]:
         return self.transport.api(path, payload)
