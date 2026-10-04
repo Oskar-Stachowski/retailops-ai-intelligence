@@ -58,7 +58,7 @@ def run_drill(snapshot: Path, workspace: Path) -> dict[str, Any]:
     baseline = [record for record in records if record.envelope.fact.version == 1]
     prefix = baseline[: len(baseline) // 2]
     captured = genesis.apply_batch(prefix, stream=stream).capture()
-    restored = ObservationHistory.restore(canonical(captured), stream=stream)
+    restored = ObservationHistory.restore(canonical(captured), stream=stream, partitions=3)
     replayed = restored.apply_batch(records, stream=stream)
     if canonical(full.capture()) != canonical(replayed.capture()):
         raise ReplayError("drill_snapshot_overlap_differs_from_full_replay")

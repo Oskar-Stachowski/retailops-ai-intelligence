@@ -61,7 +61,9 @@ warstwa trwałości musi zachować także raw/key/headers i transport metadata.
    daje jego bajty. Ograniczenia to 10 000 wersji, 20 000 receipts i 16 MiB
    dokumentu. Dalsze przetwarzanie wymaga nowego rozwiązania capture/compaction;
    nie wolno usuwać receipts dla odciążenia tego ograniczonego protokołu.
-7. Wznów przez `ObservationHistory.restore(raw, stream=stream)`. Walidator
+7. Wznów przez `ObservationHistory.restore(raw, stream=stream, partitions=N)`.
+   `N` musi pochodzić z zaufanej topologii, a nie z pobranego capture; usunięcie
+   pustej partycji też wymaga odmowy i resync. Walidator
    sprawdza hash, kompletny wektor, ciągłość offsetów, związanie każdego receipt
    z faktem/envelope, unikalność grain/wersji i kompletną historię. Doklejony
    fakt lub ponownie zahashowany dokument z luką jest odrzucony. JSON z podwójnymi

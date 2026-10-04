@@ -212,7 +212,8 @@ class ObservationHistory:
         )
 
     @classmethod
-    def restore(cls, raw: bytes, *, stream: Stream) -> ObservationHistory:
+    def restore(cls, raw: bytes, *, stream: Stream, partitions: int) -> ObservationHistory:
+        candidate = cls(stream, partitions=partitions)
         if len(raw) > MAX_CAPTURE_BYTES:
             raise ReplayError("observation_capture_size_limit")
         try:
@@ -227,7 +228,8 @@ class ObservationHistory:
             raise ReplayError("observation_capture_rejected") from None
         if capture.stream != stream:
             raise ReplayError("observation_stream_identity_changed")
-        candidate = cls(stream, partitions=len(capture.boundaries))
+        if len(capture.boundaries) != partitions:
+            raise ReplayError("observation_partition_vector_changed")
         facts = {digest(row): row for row in capture.rows}
         for receipt in capture.receipts:
             candidate.process(

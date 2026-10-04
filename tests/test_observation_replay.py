@@ -102,7 +102,7 @@ def test_empty_partitions_are_explicit_and_roundtrip_is_byte_identical():
     history = state(record(row()), partitions=3)
     capture = history.capture()
     assert [b.next_offset for b in capture.boundaries] == [1, 0, 0]
-    restored = ObservationHistory.restore(canonical(capture), stream=STREAM)
+    restored = ObservationHistory.restore(canonical(capture), stream=STREAM, partitions=3)
     assert canonical(restored.capture()) == canonical(capture)
     assert state(partitions=3).capture().rows == ()
 
@@ -177,7 +177,7 @@ def test_stream_replacement_requires_resync(field):
     with pytest.raises(ReplayError, match="stream_identity_changed"):
         history.process(record(row(2), 1), stream=replacement)
     with pytest.raises(ReplayError, match="stream_identity_changed"):
-        ObservationHistory.restore(canonical(history.capture()), stream=replacement)
+        ObservationHistory.restore(canonical(history.capture()), stream=replacement, partitions=2)
 
 
 def test_foreign_authority_inside_envelope_is_rejected():
@@ -279,7 +279,7 @@ def test_resealed_poisoned_capture_is_not_authoritative(mutation):
     if mutation != "hash":
         raw = reseal(document)
     with pytest.raises(ReplayError, match="capture_rejected"):
-        ObservationHistory.restore(raw, stream=STREAM)
+        ObservationHistory.restore(raw, stream=STREAM, partitions=2)
 
 
 def test_json_duplicates_and_byte_limits_are_rejected(monkeypatch):
@@ -288,10 +288,10 @@ def test_json_duplicates_and_byte_limits_are_rejected(monkeypatch):
     raw = canonical(state().capture())
     duplicate = raw.replace(b'"table":', b'"table":"daily_demand_versions","table":', 1)
     with pytest.raises(ReplayError, match="capture_rejected"):
-        ObservationHistory.restore(duplicate, stream=STREAM)
+        ObservationHistory.restore(duplicate, stream=STREAM, partitions=2)
     monkeypatch.setattr(module, "MAX_CAPTURE_BYTES", len(raw) - 1)
     with pytest.raises(ReplayError, match="capture_size_limit"):
-        ObservationHistory.restore(raw, stream=STREAM)
+        ObservationHistory.restore(raw, stream=STREAM, partitions=2)
 
 
 @pytest.mark.parametrize("limit", ["MAX_FACTS", "MAX_RECEIPTS"])
@@ -355,3 +355,22 @@ def test_capture_byte_limit_includes_the_identity_field(monkeypatch):
     monkeypatch.setattr(wire, "MAX_CAPTURE_BYTES", len(raw) - 1)
     with pytest.raises(ValidationError, match="capture_size_limit"):
         history.capture()
+
+
+def test_removed_empty_partition_requires_resync_even_with_a_valid_new_digest():
+    history = state(record(row()))
+    document = history.capture().model_dump(mode="json")
+    document["boundaries"].pop()
+    raw = reseal(document)
+    # It is internally coherent, but it disagrees with the trusted topology.
+    Capture.model_validate_json(raw)
+    with pytest.raises(ReplayError, match="partition_vector_changed"):
+        ObservationHistory.restore(raw, stream=STREAM, partitions=2)
+
+
+@pytest.mark.parametrize("partitions", [True, 0, 33])
+def test_restore_requires_valid_trusted_partition_count(partitions):
+    with pytest.raises(ReplayError, match="invalid_partition_count"):
+        ObservationHistory.restore(
+            canonical(state().capture()), stream=STREAM, partitions=partitions
+        )
