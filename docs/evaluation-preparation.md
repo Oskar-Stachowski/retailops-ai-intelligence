@@ -1,6 +1,7 @@
 # AI 09 — przygotowanie wspólnej oceny
 
-Status całego AI 09: **in_progress**. Przyrost 09.1 przygotowuje plan;
+Status całego AI 09: **in_progress**. [Przyrost 09.2](tensorflow-challenger.md)
+dodaje rzeczywisty kompaktowy Keras CPU i osobne środowisko. Przyrost 09.1 przygotowuje plan;
 nie uruchamia treningu TensorFlow ani końcowej oceny modeli. AI 07 i AI 08
 wciąż przygotowują kwalifikację swoich danych i wyników.
 

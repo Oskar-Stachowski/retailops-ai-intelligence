@@ -11,7 +11,11 @@ MAX_COMPARISON_KEYS = 100_000
 
 
 def forecast_key_bytes(key: ForecastKey) -> bytes:
-    return canonical_bytes(key.model_dump(mode="json"))
+    # A typed prediction/feature subclass carries payload fields outside its logical key.
+    logical = ForecastKey.model_validate(
+        {name: getattr(key, name) for name in ForecastKey.model_fields}
+    )
+    return canonical_bytes(logical.model_dump(mode="json"))
 
 
 def _keys(values: Iterable[ForecastKey]) -> set[bytes]:

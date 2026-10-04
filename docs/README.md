@@ -10,6 +10,8 @@ zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
 opisują wersje, lineage i walidację offline.
 [Przygotowanie oceny AI 09](evaluation-preparation.md) przypina wymagania,
 seedy i granice przyszłej kampanii, z jawnym preflight `not_ready`.
+[Challenger TensorFlow](tensorflow-challenger.md) dodaje rzeczywisty trening CPU,
+train-only preprocessing, wspólny evaluator i checksummed MLflow artifact.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
 registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
 sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)

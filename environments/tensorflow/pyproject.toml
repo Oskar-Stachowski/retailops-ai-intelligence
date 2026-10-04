@@ -1,0 +1,25 @@
+[project]
+name = "retailops-ai09-tensorflow-cpu"
+version = "0.1.0"
+requires-python = ">=3.11.15,<3.12"
+dependencies = [
+    "retailops-ai-intelligence[snapshot,forecast]",
+    "tensorflow==2.20.0; sys_platform == 'darwin'",
+    "tensorflow-cpu==2.20.0; sys_platform == 'linux'",
+    "keras==3.11.3",
+    "mlflow-skinny==3.4.0",
+    "numpy==2.2.6",
+    "pandas==2.2.3",
+    "scipy==1.15.3",
+    "pytest==9.1.1",
+]
+
+[tool.uv]
+required-version = "==0.12.19"
+environments = [
+    "sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+
+[tool.uv.sources]
+retailops-ai-intelligence = { path = "../..", editable = true }

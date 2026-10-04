@@ -63,7 +63,7 @@ forecast-acceptance-check:
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check contracts-check package compose-config forecast-remediation-check forecast-acceptance-check
+check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check contracts-check package compose-config forecast-remediation-check forecast-acceptance-check tensorflow-check
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner
@@ -75,6 +75,7 @@ serve:
 	$(UV_RUN) retailops-ai serve --env-file "$(ENV_FILE)"
 
 contracts:
+	$(UV_RUN) python scripts/update_tensorflow_challenger_contracts.py
 	$(UV_RUN) python scripts/update_evaluation_preparation_contracts.py
 	$(UV_RUN) python scripts/update_http_contracts.py
 	$(UV_RUN) python scripts/update_intelligence_contracts.py
@@ -89,6 +90,7 @@ contracts:
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py
 
 contracts-check:
+	$(UV_RUN) python scripts/update_tensorflow_challenger_contracts.py --check
 	$(UV_RUN) python scripts/update_evaluation_preparation_contracts.py --check
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
 	$(UV_RUN) python scripts/update_access_contracts.py --check
@@ -171,3 +173,7 @@ model-catalog-smoke:
 .PHONY: evaluations-smoke
 evaluations-smoke:
 	$(UV_RUN) python scripts/check_evaluations.py
+
+.PHONY: tensorflow-check
+tensorflow-check:
+	PYTHONPATH=tests OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 TF_CPP_MIN_LOG_LEVEL=2 $(UV) run --project environments/tensorflow --locked python -m pytest environments/tensorflow/tests -q

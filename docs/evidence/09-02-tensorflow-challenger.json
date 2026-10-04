@@ -1,0 +1,1514 @@
+{
+  "actual_tensorflow_training": true,
+  "artifact": {
+    "artifact_bytes": 301944,
+    "deployment_status": "not_ready",
+    "descriptor": {
+      "binding": {
+        "code_sha256": "943848ade26055180ccdaf30e3e7a187d092df86c0b2787e5b1b3a758e88a203",
+        "environment_lock_sha256": "b9298cc21e673263498bcb846ded3f550934de89247ddcdddcef672e37010e26",
+        "feature_set_id": "features-sha256-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "policy_sha256": "ade3f82f7896fbb08557e3aab1ef0fef5749f905483adc552d97ede7083a0edf",
+        "preprocessing_sha256": "ef413c69dac132aa58fb689936483fafdb5f0324bd10007962c70602fb5ec4e5",
+        "split_id": "split-sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "train_population_sha256": "1b0b4e62c08653e35fd707a8d5774eb4610c2c002121cb698e40b7cf6a381f38",
+        "validation_population_sha256": "2428dcafbff54e4163e132c4353239cd263152d1b7b36e074338ad989f3f084f"
+      },
+      "files": {
+        "MLmodel": {
+          "sha256": "97bcbd041a7205547ddb04da4e8b87763b42e74861d1849105666d18e28e8370",
+          "size_bytes": 1444
+        },
+        "binding.json": {
+          "sha256": "90dc9e4de7f37e2a63c1f20bc1c68ae3835543f29e017b4f495a695d1940d473",
+          "size_bytes": 730
+        },
+        "conda.yaml": {
+          "sha256": "4c66f1e58afa657e2f346fdec300d92313787cf0456ec53040f013d821c6660c",
+          "size_bytes": 204
+        },
+        "data/keras_module.txt": {
+          "sha256": "f6cc6ef8774556490a0c3c8ae01b67cf73b51e29fe00c9e2702bb0de1da538ab",
+          "size_bytes": 5
+        },
+        "data/model.keras": {
+          "sha256": "f04e02fa58a7939a2cbe7ddb12a578a36505bdf204c62dcae1bc235a45e9eb0d",
+          "size_bytes": 179615
+        },
+        "dependencies.lock": {
+          "sha256": "b9298cc21e673263498bcb846ded3f550934de89247ddcdddcef672e37010e26",
+          "size_bytes": 107682
+        },
+        "policy.json": {
+          "sha256": "ade3f82f7896fbb08557e3aab1ef0fef5749f905483adc552d97ede7083a0edf",
+          "size_bytes": 704
+        },
+        "preprocessing.json": {
+          "sha256": "bd971799d017f5b98feaf12abcbe68b8885837243401da9bff6c7422b7e2ac87",
+          "size_bytes": 11351
+        },
+        "python_env.yaml": {
+          "sha256": "18573bad89b5a4ee4065e1a1827d60d7ce1a3aba68ceb3ad5568986d84f679f9",
+          "size_bytes": 115
+        },
+        "requirements.txt": {
+          "sha256": "89aa8625cd160861885a1f758d632fd228ab6b0344e70d3b47f04a1fed396480",
+          "size_bytes": 94
+        }
+      },
+      "input_width": 1190,
+      "output_order": [
+        "mean",
+        "median"
+      ],
+      "policy": {
+        "architecture": "history28_target_covariates_dense_direct14_mean_median",
+        "artifact_bytes": 33554432,
+        "batch_size": 32,
+        "cpu_seconds": 1200.0,
+        "cpu_threads": 1,
+        "data_seed": 42,
+        "early_stopping": "development_validation_only_restore_best_epoch",
+        "epochs": 3,
+        "final_test_accessed": false,
+        "hidden_units": [
+          32,
+          16
+        ],
+        "initialization_seed": 42,
+        "interval_policy": "absent_pending_separate_development_calibration",
+        "learning_rate": 0.001,
+        "max_matrix_bytes": 67108864,
+        "max_windows": 3000,
+        "objective": "masked_train_scaled_mean_mse_plus_median_mae",
+        "patience": 4,
+        "promotion_allowed": false,
+        "rss_bytes": 1073741824,
+        "scope": "development_only_no_final_test_or_release",
+        "trials": 1,
+        "version": "ai09-keras-development-1.0.0",
+        "wall_seconds": 1200.0
+      }
+    },
+    "final_test_accessed": false,
+    "interval_status": "not_ready",
+    "model_id": "model-sha256-121b34e7fe307ab82a4dba70ef7d8ee815df67215896258f95244bdff41406df",
+    "preparation_seconds": 0.024479750005411915,
+    "promotion_allowed": false,
+    "resources": {
+      "cpu_seconds": 5.4955733239999995,
+      "cpu_threads": 1,
+      "monitor_interval_seconds": 0.05,
+      "peak_tree_rss_bytes": 605274112,
+      "wall_seconds": 7.654518541996367
+    },
+    "schema_version": "ai09-tensorflow-artifact-1.0.0",
+    "status": "trained_and_reloaded_development_only",
+    "worker": {
+      "batch_inference_seconds": 0.0013441249975585379,
+      "best_epoch": 1,
+      "cold_load_seconds": 0.013633415997901466,
+      "determinism_enabled": true,
+      "determinism_scope": "fixed_versions_platform_and_initialization_seed_not_cross_platform_bitwise",
+      "epochs_run": 3,
+      "final_test_accessed": false,
+      "history": [
+        {
+          "epoch": 1,
+          "validation_loss": 3.4230329990386963
+        },
+        {
+          "epoch": 2,
+          "validation_loss": 3.465604543685913
+        },
+        {
+          "epoch": 3,
+          "validation_loss": 3.507091522216797
+        }
+      ],
+      "input_shape": [
+        null,
+        1190
+      ],
+      "interval_status": "not_ready",
+      "keras_version": "3.11.3",
+      "machine": "arm64",
+      "mlflow_run_id": "7a26eb8550c64aa1a4bc000262dc1099",
+      "mlflow_version": "3.4.0",
+      "output_order": [
+        "mean",
+        "median"
+      ],
+      "output_shape": [
+        null,
+        14,
+        2
+      ],
+      "peak_self_rss_bytes": 603602944,
+      "promotion_allowed": false,
+      "python_version": "3.11.15",
+      "reload_atol": 1e-06,
+      "reload_rtol": 1e-06,
+      "self_cpu_seconds": 5.041205,
+      "status": "passed",
+      "system": "Darwin",
+      "tensorflow_version": "2.20.0",
+      "training_seconds": 0.07142800000292482,
+      "visible_gpu_count": 0,
+      "worker_seconds": 6.824535916995956
+    }
+  },
+  "core_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "dependency_installation": {
+    "installed_packages": 103,
+    "linux_cpu_lock_dry_run": "passed_resolution_only_no_linux_execution",
+    "prepare_seconds": 245.0,
+    "prepared_packages": 53,
+    "scope": "initial_macOS_environment_fetch_prepare_not_training"
+  },
+  "development_diagnostic": {
+    "final_test_accessed": false,
+    "forecast_population_sha256": "9da693eb856413c50af17dcba4d2a0fb57ad82dbf6ebdb0b001ff7dbe3c0e397",
+    "global": {
+      "baseline": {
+        "actual_sum": 889,
+        "interval": {
+          "complete": true,
+          "coverage": 0.0,
+          "mean_score": 214.00000000000003,
+          "mean_width": 24.0,
+          "width_to_mean_actual": 0.3779527559055118
+        },
+        "mean": {
+          "bias_units": -21.5,
+          "complete": true,
+          "mae": 21.5,
+          "mse": 478.5,
+          "normalized_bias": -0.33858267716535434,
+          "wape": 0.33858267716535434,
+          "zero_actual_excess_units": 0.0
+        },
+        "median": {
+          "bias_units": -21.5,
+          "complete": true,
+          "mae": 21.5,
+          "mse": 478.5,
+          "normalized_bias": -0.33858267716535434,
+          "wape": 0.33858267716535434,
+          "zero_actual_excess_units": 0.0
+        },
+        "rows": 14
+      },
+      "candidate": {
+        "actual_sum": 889,
+        "interval": {
+          "complete": false,
+          "coverage": null,
+          "mean_score": null,
+          "mean_width": null,
+          "width_to_mean_actual": null
+        },
+        "mean": {
+          "bias_units": 5.396144332630294,
+          "complete": true,
+          "mae": 51.283466873424395,
+          "mse": 3519.9326902965854,
+          "normalized_bias": 0.08497865090756368,
+          "wape": 0.8076136515499904,
+          "zero_actual_excess_units": 0.0
+        },
+        "median": {
+          "bias_units": 44.95230623653957,
+          "complete": true,
+          "mae": 88.4902149949755,
+          "mse": 16594.406712174536,
+          "normalized_bias": 0.707910334433694,
+          "wape": 1.39354669283426,
+          "zero_actual_excess_units": 0.0
+        },
+        "rows": 14
+      },
+      "diagnostics": {
+        "mean_mae_above_legacy_regression_limit": true,
+        "median_bias_above_legacy_mean_limit": true
+      },
+      "dimension": "global",
+      "eligibility_coverage": 1.0,
+      "eligible_rows": 14,
+      "failed_reasons": [
+        "global_median_mae_improvement_below_minimum",
+        "mean_mse_regression"
+      ],
+      "has_measurable_failures": true,
+      "legacy_width_ratio_exceeded": null,
+      "not_ready_reasons": [
+        "insufficient_sample",
+        "interval_predictions_incomplete_or_empty"
+      ],
+      "perfect_median_baseline_tied": false,
+      "protocol_version": "forecast-quality-2.0.0",
+      "relative_median_mae_change": 3.1158239532546745,
+      "scope": "segment_component_not_campaign_qualification",
+      "status": "not_ready",
+      "total_rows": 14
+    },
+    "horizons": {
+      "1": {
+        "baseline": {
+          "actual_sum": 57,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 84.00000000000001,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.42105263157894735
+          },
+          "mean": {
+            "bias_units": -15.0,
+            "complete": true,
+            "mae": 15.0,
+            "mse": 225.0,
+            "normalized_bias": -0.2631578947368421,
+            "wape": 0.2631578947368421,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -15.0,
+            "complete": true,
+            "mae": 15.0,
+            "mse": 225.0,
+            "normalized_bias": -0.2631578947368421,
+            "wape": 0.2631578947368421,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 57,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": -56.62878379225731,
+            "complete": true,
+            "mae": 56.62878379225731,
+            "mse": 3206.819153790224,
+            "normalized_bias": -0.9934874349518826,
+            "wape": 0.9934874349518826,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -45.3551139831543,
+            "complete": true,
+            "mae": 45.3551139831543,
+            "mse": 2057.0863644249184,
+            "normalized_bias": -0.7957037540904263,
+            "wape": 0.7957037540904263,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression",
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 2.0236742655436197,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "10": {
+        "baseline": {
+          "actual_sum": 66,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 264.00000000000006,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.36363636363636365
+          },
+          "mean": {
+            "bias_units": -24.0,
+            "complete": true,
+            "mae": 24.0,
+            "mse": 576.0,
+            "normalized_bias": -0.36363636363636365,
+            "wape": 0.36363636363636365,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -24.0,
+            "complete": true,
+            "mae": 24.0,
+            "mse": 576.0,
+            "normalized_bias": -0.36363636363636365,
+            "wape": 0.36363636363636365,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 66,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": -47.534013748168945,
+            "complete": true,
+            "mae": 47.534013748168945,
+            "mse": 2259.4824630111143,
+            "normalized_bias": -0.7202123295177113,
+            "wape": 0.7202123295177113,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -22.638431549072266,
+            "complete": true,
+            "mae": 22.638431549072266,
+            "mse": 512.4985830020305,
+            "normalized_bias": -0.34300653862230707,
+            "wape": 0.34300653862230707,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": -0.0567320187886556,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "11": {
+        "baseline": {
+          "actual_sum": 67,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 284.00000000000006,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.3582089552238806
+          },
+          "mean": {
+            "bias_units": -25.0,
+            "complete": true,
+            "mae": 25.0,
+            "mse": 625.0,
+            "normalized_bias": -0.373134328358209,
+            "wape": 0.373134328358209,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -25.0,
+            "complete": true,
+            "mae": 25.0,
+            "mse": 625.0,
+            "normalized_bias": -0.373134328358209,
+            "wape": 0.373134328358209,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 67,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": 39.90923309326172,
+            "complete": true,
+            "mae": 39.90923309326172,
+            "mse": 1592.7468860922963,
+            "normalized_bias": 0.5956601954218167,
+            "wape": 0.5956601954218167,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": 13.133979797363281,
+            "complete": true,
+            "mae": 13.133979797363281,
+            "mse": 172.50142531754682,
+            "normalized_bias": 0.19602954921437732,
+            "wape": 0.19602954921437732,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": -0.47464080810546877,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "12": {
+        "baseline": {
+          "actual_sum": 68,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 304.00000000000006,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.35294117647058826
+          },
+          "mean": {
+            "bias_units": -26.0,
+            "complete": true,
+            "mae": 26.0,
+            "mse": 676.0,
+            "normalized_bias": -0.38235294117647056,
+            "wape": 0.38235294117647056,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -26.0,
+            "complete": true,
+            "mae": 26.0,
+            "mse": 676.0,
+            "normalized_bias": -0.38235294117647056,
+            "wape": 0.38235294117647056,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 68,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": 66.17535400390625,
+            "complete": true,
+            "mae": 66.17535400390625,
+            "mse": 4379.177477542311,
+            "normalized_bias": 0.9731669706456801,
+            "wape": 0.9731669706456801,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": 25.746978759765625,
+            "complete": true,
+            "mae": 25.746978759765625,
+            "mse": 662.9069152558222,
+            "normalized_bias": 0.3786320405847886,
+            "wape": 0.3786320405847886,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": -0.009731586162860576,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "13": {
+        "baseline": {
+          "actual_sum": 69,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 324.00000000000006,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.34782608695652173
+          },
+          "mean": {
+            "bias_units": -27.0,
+            "complete": true,
+            "mae": 27.0,
+            "mse": 729.0,
+            "normalized_bias": -0.391304347826087,
+            "wape": 0.391304347826087,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -27.0,
+            "complete": true,
+            "mae": 27.0,
+            "mse": 729.0,
+            "normalized_bias": -0.391304347826087,
+            "wape": 0.391304347826087,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 69,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": 8.186393737792969,
+            "complete": true,
+            "mae": 8.186393737792969,
+            "mse": 67.01704243017593,
+            "normalized_bias": 0.11864338750424593,
+            "wape": 0.11864338750424593,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": 109.64788818359375,
+            "complete": true,
+            "mae": 109.64788818359375,
+            "mse": 12022.659383121878,
+            "normalized_bias": 1.5890998287477356,
+            "wape": 1.5890998287477356,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": false,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 3.0610328956886574,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "14": {
+        "baseline": {
+          "actual_sum": 70,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 344.00000000000006,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.34285714285714286
+          },
+          "mean": {
+            "bias_units": -28.0,
+            "complete": true,
+            "mae": 28.0,
+            "mse": 784.0,
+            "normalized_bias": -0.4,
+            "wape": 0.4,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -28.0,
+            "complete": true,
+            "mae": 28.0,
+            "mse": 784.0,
+            "normalized_bias": -0.4,
+            "wape": 0.4,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 70,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": -44.19793128967285,
+            "complete": true,
+            "mae": 44.19793128967285,
+            "mse": 1953.4571302866425,
+            "normalized_bias": -0.6313990184238979,
+            "wape": 0.6313990184238979,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": 107.57545471191406,
+            "complete": true,
+            "mae": 107.57545471191406,
+            "mse": 11572.478456475073,
+            "normalized_bias": 1.536792210170201,
+            "wape": 1.536792210170201,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression",
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 2.841980525425502,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "2": {
+        "baseline": {
+          "actual_sum": 58,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 104.00000000000001,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.41379310344827586
+          },
+          "mean": {
+            "bias_units": -16.0,
+            "complete": true,
+            "mae": 16.0,
+            "mse": 256.0,
+            "normalized_bias": -0.27586206896551724,
+            "wape": 0.27586206896551724,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -16.0,
+            "complete": true,
+            "mae": 16.0,
+            "mse": 256.0,
+            "normalized_bias": -0.27586206896551724,
+            "wape": 0.27586206896551724,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 58,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": -54.057459115982056,
+            "complete": true,
+            "mae": 54.057459115982056,
+            "mse": 2922.2088860760714,
+            "normalized_bias": -0.9320251571721044,
+            "wape": 0.9320251571721044,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": 356.13409423828125,
+            "complete": true,
+            "mae": 356.13409423828125,
+            "mse": 126831.49307892099,
+            "normalized_bias": 6.140243004108298,
+            "wape": 6.140243004108298,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression",
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 21.258380889892578,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "3": {
+        "baseline": {
+          "actual_sum": 59,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 124.00000000000001,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.4067796610169492
+          },
+          "mean": {
+            "bias_units": -17.0,
+            "complete": true,
+            "mae": 17.0,
+            "mse": 289.0,
+            "normalized_bias": -0.288135593220339,
+            "wape": 0.288135593220339,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -17.0,
+            "complete": true,
+            "mae": 17.0,
+            "mse": 289.0,
+            "normalized_bias": -0.288135593220339,
+            "wape": 0.288135593220339,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 59,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": 117.72662353515625,
+            "complete": true,
+            "mae": 117.72662353515625,
+            "mse": 13859.557888988405,
+            "normalized_bias": 1.9953665005958687,
+            "wape": 1.9953665005958687,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": 74.90591430664062,
+            "complete": true,
+            "mae": 74.90591430664062,
+            "mse": 5610.895998113789,
+            "normalized_bias": 1.269591767909163,
+            "wape": 1.269591767909163,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression",
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 3.4062302533318016,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "4": {
+        "baseline": {
+          "actual_sum": 60,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 144.00000000000003,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.4
+          },
+          "mean": {
+            "bias_units": -18.0,
+            "complete": true,
+            "mae": 18.0,
+            "mse": 324.0,
+            "normalized_bias": -0.3,
+            "wape": 0.3,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -18.0,
+            "complete": true,
+            "mae": 18.0,
+            "mse": 324.0,
+            "normalized_bias": -0.3,
+            "wape": 0.3,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 60,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": -33.227195739746094,
+            "complete": true,
+            "mae": 33.227195739746094,
+            "mse": 1104.046536727401,
+            "normalized_bias": -0.5537865956624349,
+            "wape": 0.5537865956624349,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -41.85585403442383,
+            "complete": true,
+            "mae": 41.85585403442383,
+            "mse": 1751.9125169509934,
+            "normalized_bias": -0.6975975672403971,
+            "wape": 0.6975975672403971,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression",
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 1.3253252241346571,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "5": {
+        "baseline": {
+          "actual_sum": 61,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 164.00000000000003,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.39344262295081966
+          },
+          "mean": {
+            "bias_units": -19.0,
+            "complete": true,
+            "mae": 19.0,
+            "mse": 361.0,
+            "normalized_bias": -0.3114754098360656,
+            "wape": 0.3114754098360656,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -19.0,
+            "complete": true,
+            "mae": 19.0,
+            "mse": 361.0,
+            "normalized_bias": -0.3114754098360656,
+            "wape": 0.3114754098360656,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 61,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": -34.343862533569336,
+            "complete": true,
+            "mae": 34.343862533569336,
+            "mse": 1179.5008937247076,
+            "normalized_bias": -0.5630141398945793,
+            "wape": 0.5630141398945793,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -59.721312046051025,
+            "complete": true,
+            "mae": 59.721312046051025,
+            "mse": 3566.635112501799,
+            "normalized_bias": -0.9790379023942791,
+            "wape": 0.9790379023942791,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression",
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 2.1432269497921594,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "6": {
+        "baseline": {
+          "actual_sum": 62,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 184.00000000000003,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.3870967741935484
+          },
+          "mean": {
+            "bias_units": -20.0,
+            "complete": true,
+            "mae": 20.0,
+            "mse": 400.0,
+            "normalized_bias": -0.3225806451612903,
+            "wape": 0.3225806451612903,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -20.0,
+            "complete": true,
+            "mae": 20.0,
+            "mse": 400.0,
+            "normalized_bias": -0.3225806451612903,
+            "wape": 0.3225806451612903,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 62,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": 1.5637741088867188,
+            "complete": true,
+            "mae": 1.5637741088867188,
+            "mse": 2.4453894636244513,
+            "normalized_bias": 0.02522216304655998,
+            "wape": 0.02522216304655998,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": 246.95333862304688,
+            "complete": true,
+            "mae": 246.95333862304688,
+            "mse": 60985.951457069255,
+            "normalized_bias": 3.983118364887853,
+            "wape": 3.983118364887853,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": false,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 11.347666931152343,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "7": {
+        "baseline": {
+          "actual_sum": 63,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 204.00000000000003,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.38095238095238093
+          },
+          "mean": {
+            "bias_units": -21.0,
+            "complete": true,
+            "mae": 21.0,
+            "mse": 441.0,
+            "normalized_bias": -0.3333333333333333,
+            "wape": 0.3333333333333333,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -21.0,
+            "complete": true,
+            "mae": 21.0,
+            "mse": 441.0,
+            "normalized_bias": -0.3333333333333333,
+            "wape": 0.3333333333333333,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 63,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": 61.442893981933594,
+            "complete": true,
+            "mae": 61.442893981933594,
+            "mse": 3775.2292208751314,
+            "normalized_bias": 0.9752840314592633,
+            "wape": 0.9752840314592633,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -44.823081970214844,
+            "complete": true,
+            "mae": 44.823081970214844,
+            "mse": 2009.108677308599,
+            "normalized_bias": -0.7114774915907118,
+            "wape": 0.7114774915907118,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression",
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 1.1344324747721355,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "8": {
+        "baseline": {
+          "actual_sum": 64,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 224.00000000000003,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.375
+          },
+          "mean": {
+            "bias_units": -22.0,
+            "complete": true,
+            "mae": 22.0,
+            "mse": 484.0,
+            "normalized_bias": -0.34375,
+            "wape": 0.34375,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -22.0,
+            "complete": true,
+            "mae": 22.0,
+            "mse": 484.0,
+            "normalized_bias": -0.34375,
+            "wape": 0.34375,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 64,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": 101.75300598144531,
+            "complete": true,
+            "mae": 101.75300598144531,
+            "mse": 10353.674226260046,
+            "normalized_bias": 1.589890718460083,
+            "wape": 1.589890718460083,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -29.660709381103516,
+            "complete": true,
+            "mae": 29.660709381103516,
+            "mse": 879.7576809902821,
+            "normalized_bias": -0.46344858407974243,
+            "wape": 0.46344858407974243,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression",
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 0.34821406277743255,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      },
+      "9": {
+        "baseline": {
+          "actual_sum": 65,
+          "interval": {
+            "complete": true,
+            "coverage": 0.0,
+            "mean_score": 244.00000000000003,
+            "mean_width": 24.0,
+            "width_to_mean_actual": 0.36923076923076925
+          },
+          "mean": {
+            "bias_units": -23.0,
+            "complete": true,
+            "mae": 23.0,
+            "mse": 529.0,
+            "normalized_bias": -0.35384615384615387,
+            "wape": 0.35384615384615387,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -23.0,
+            "complete": true,
+            "mae": 23.0,
+            "mse": 529.0,
+            "normalized_bias": -0.35384615384615387,
+            "wape": 0.35384615384615387,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "candidate": {
+          "actual_sum": 65,
+          "interval": {
+            "complete": false,
+            "coverage": null,
+            "mean_score": null,
+            "mean_width": null,
+            "width_to_mean_actual": null
+          },
+          "mean": {
+            "bias_units": -51.22201156616211,
+            "complete": true,
+            "mae": 51.22201156616211,
+            "mse": 2623.694468884045,
+            "normalized_bias": -0.7880309471717247,
+            "wape": 0.7880309471717247,
+            "zero_actual_excess_units": 0.0
+          },
+          "median": {
+            "bias_units": -60.71085834503174,
+            "complete": true,
+            "mae": 60.71085834503174,
+            "mse": 3685.80832099051,
+            "normalized_bias": -0.9340132053081805,
+            "wape": 0.9340132053081805,
+            "zero_actual_excess_units": 0.0
+          },
+          "rows": 1
+        },
+        "diagnostics": {
+          "mean_mae_above_legacy_regression_limit": true,
+          "median_bias_above_legacy_mean_limit": true
+        },
+        "dimension": "horizon",
+        "eligibility_coverage": 1.0,
+        "eligible_rows": 1,
+        "failed_reasons": [
+          "critical_segment_median_mae_regression",
+          "mean_mse_regression",
+          "absolute_normalized_mean_bias_exceeded"
+        ],
+        "has_measurable_failures": true,
+        "legacy_width_ratio_exceeded": null,
+        "not_ready_reasons": [
+          "insufficient_sample",
+          "interval_predictions_incomplete_or_empty"
+        ],
+        "perfect_median_baseline_tied": false,
+        "protocol_version": "forecast-quality-2.0.0",
+        "relative_median_mae_change": 1.6396025367405103,
+        "scope": "segment_component_not_campaign_qualification",
+        "status": "not_ready",
+        "total_rows": 1
+      }
+    },
+    "model_id": "model-sha256-99e34f0e8a55a1b1e6348b8a376f1f2d900d2b06db7e76dde8588a370aedcc4c",
+    "prediction_rows": 14,
+    "promotion_allowed": false,
+    "reference": "fixed_history28_not_a_new_baseline_selection",
+    "scope": "development_diagnostic_on_early_stopping_validation_not_independent_quality_acceptance"
+  },
+  "evidence_field_mapping": {
+    "reason": "same population digest, unambiguous non-credential metadata name",
+    "receipt_field": "forecast_population_sha256",
+    "runtime_comparison_field": "forecast_keys_sha256"
+  },
+  "full_ci_local": {
+    "attempt_exit_code": 2,
+    "code_or_test_failures": false,
+    "command": "make ci-local",
+    "core_tests_passed": 1799,
+    "failure": "generic-api-key false positive on development forecast population SHA256 in evidence JSON",
+    "first_log": "/private/tmp/ai09-tensorflow-ci-local.log",
+    "passed_gates_repeated": false,
+    "pytest_seconds": 1718.25,
+    "recovery_command": "make docs-check secrets",
+    "recovery_exit_code": 0,
+    "recovery_log": "/private/tmp/ai09-tensorflow-final-docs-secrets.log",
+    "secret_policy_changed": false,
+    "status": "all_required_local_gates_passed_after_metadata_false_positive_correction",
+    "tensorflow_integration_tests_passed": 2,
+    "tensorflow_seconds": 43.28
+  },
+  "installed_wheel_reload": {
+    "atol": 1e-06,
+    "input_width": 1190,
+    "model_id": "model-sha256-121b34e7fe307ab82a4dba70ef7d8ee815df67215896258f95244bdff41406df",
+    "module_path": "/private/tmp/ai09-tensorflow-installed/retailops_ai/__init__.py",
+    "rtol": 1e-06,
+    "scope": "installed_wheel_fresh_cpu_reload_controlled_fixture",
+    "seconds": 6.3970715000032214,
+    "shape": [
+      1,
+      14,
+      2
+    ],
+    "status": "passed",
+    "wheel_sha256": "ff3e8dfd85bc9c7ef5d1a7e252ff0dadd2cf4b06ed2507819da80e5cc8ff5f0f"
+  },
+  "local_fixture": {
+    "data_seed": 42,
+    "eligible_validation_keys": 14,
+    "epochs": 3,
+    "init_seed": 42,
+    "note": "execution/regression fixture; not ai-smoke, ai-temporal-smoke or ai-training acceptance",
+    "profile": "controlled-temporal-fixture",
+    "train_windows": 1,
+    "validation_windows": 1
+  },
+  "model_promoted": false,
+  "pending": [
+    "Separate interval calibration and quality gates",
+    "Larger bounded/chunked full-profile training",
+    "Qualified post-06/07/08 source/features/evaluations",
+    "Reviewed final protocol and global trial/final-test access journal",
+    "Three seeds and scenarios, critical segments and aggregation weights",
+    "Three use-case model cards and lifecycle review",
+    "Exact-SHA Linux CPU Required CI"
+  ],
+  "portfolio_final_test_accessed": false,
+  "preparation_commit": "bbbe2207776c11846d2c6fef7b198ddcdc119ae3",
+  "required_pr_ci": {
+    "preparation_sha_status": "success",
+    "run_id": 37186025684,
+    "tensorflow_sha_status": "not_published",
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37186025684"
+  },
+  "schema_version": "ai09-tensorflow-local-evidence-1.0.0",
+  "scope": "first_compact_cpu_challenger_on_controlled_contract_fixtures_not_portfolio_quality_acceptance",
+  "status": "local_acceptance_passed",
+  "targeted_checks": {
+    "fresh_process_reload": true,
+    "negative_corruption_and_resealed_signature": true,
+    "negative_resource_limits": true,
+    "passed": 71,
+    "real_cpu_fit_and_reload": true,
+    "repeated_training_numerically_equal": true,
+    "seconds": 37.03,
+    "verified_disk_parent_cli": true
+  },
+  "tensorflow_lock_sha256": "b9298cc21e673263498bcb846ded3f550934de89247ddcdddcef672e37010e26",
+  "upstream_07_08_final_bound": false
+}
