@@ -95,6 +95,10 @@ Porównuje trzy odczyty as-of z zamrożonym `CuratedReader`. Raport zawiera źr�
 IDs, dokładny wektor, hashe capture i sumy przed/po korekcie. To fixture
 30-dniowe, bez kwalifikacji ML. CI publikuje raport jako `ai10-observation-replay`.
 
+CI sprawdza kontrakt workflow przed długą regresją. Test bypass wskazuje krok
+`make bootstrap check` po jego komendzie, niezależnie od późniejszych kroków
+publikowania artefaktów. Wszystkie dotychczasowe bramki pozostają wymagane.
+
 Testy negatywne sprawdzają kolizje, lukę partycji, niekompletną historię,
 regresję dostępności, zmianę strumienia, obce authority, przyszłą dostępność,
 missing/closed, granice rozmiaru oraz zmodyfikowany i ponownie zahashowany capture.

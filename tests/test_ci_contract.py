@@ -92,7 +92,12 @@ def test_ci_guard_rejects_weakened_gates(mutation):
 def test_ci_rejects_bypassed_checks_or_malformed_result_expression(mutation):
     data = workflow()
     if mutation == "checks-bypass":
-        data["jobs"]["checks"]["steps"][-1]["run"] = "make bootstrap test"
+        gate = next(
+            step
+            for step in data["jobs"]["checks"]["steps"]
+            if step.get("run") == "make bootstrap check"
+        )
+        gate["run"] = "make bootstrap test"
     else:
         data["jobs"]["required-result"]["steps"][0]["env"]["PERSISTENCE_RESULT"] = (
             "invalid-expression"
