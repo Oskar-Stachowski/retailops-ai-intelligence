@@ -1,5 +1,13 @@
 # Aktualny status
 
+**AI 09 — rozpoczęto przygotowanie wspólnej oceny.**
+[Plan i polecenia](evaluation-preparation.md) oraz
+[dowód przyrostu 09.1](evidence/09-01-evaluation-preparation.md) przypinają
+wymagania, trzy seedy danych i granice przyszłych eksperymentów TensorFlow.
+Nowy zakres ma lokalny odbiór kontraktu i pakietu; pełna regresja oraz PR/CI
+są raportowane w wersjonowanym receipt. Końcowy protokół, trening TensorFlow
+i ocena trzech zastosowań pozostają otwarte. Preflight zwraca `not_ready`.
+
 **AI 05 — lokalny przepływ finalnego v12 jest odebrany także na świeżym snapshocie.**
 [Raport i pomiary](evidence/05-v12-real-serving.md) oraz
 [wersjonowany zapis dowodów](evidence/05-v12-real-serving.json) obejmują cały

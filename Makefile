@@ -75,6 +75,7 @@ serve:
 	$(UV_RUN) retailops-ai serve --env-file "$(ENV_FILE)"
 
 contracts:
+	$(UV_RUN) python scripts/update_evaluation_preparation_contracts.py
 	$(UV_RUN) python scripts/update_http_contracts.py
 	$(UV_RUN) python scripts/update_intelligence_contracts.py
 	$(UV_RUN) python scripts/update_access_contracts.py
@@ -88,6 +89,7 @@ contracts:
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py
 
 contracts-check:
+	$(UV_RUN) python scripts/update_evaluation_preparation_contracts.py --check
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
 	$(UV_RUN) python scripts/update_access_contracts.py --check
 	$(UV_RUN) python scripts/update_knowledge_contracts.py --check
