@@ -191,9 +191,11 @@ def run(
             )
             if alert and point is not None:
                 reasons.append(
-                    "above_expected_range"
-                    if (point.residual_units or 0) >= 0
-                    else "below_expected_range"
+                    "positive_residual"
+                    if (point.residual_units or 0) > 0
+                    else "negative_residual"
+                    if (point.residual_units or 0) < 0
+                    else "zero_residual"
                 )
                 if point.context.on_hand == 0:
                     reasons.append("inventory_constraint_present")

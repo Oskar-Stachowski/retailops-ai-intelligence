@@ -53,7 +53,9 @@ inputs from an unfitted forest. Development-test predictions abstain with null
 score, threshold, alert and severity when prerequisites fail.
 
 Scored predictions retain observed/expected/residual values and explanation
-codes. Promotion and inventory constraint are context, not causal explanations.
+codes. Residual direction is `positive_residual`, `negative_residual` or
+`zero_residual`; an IF alert can occur with observed units equal to expectation.
+Promotion and inventory constraint are context, not causal explanations.
 The seasonal score and IF score are separate families; their numeric scales
 cannot be compared as probabilities.
 
@@ -109,8 +111,8 @@ The optional build `--policy-file` supplies an explicit nondefault recipe.
 Verify reads the frozen protocol/policy from the artifact. Packaged JSON schemas
 are checked by `make contracts-check`.
 
-The required native gate runs two fresh isolated processes, each rebuilding both
-public profiles through snapshot, curated, DQ, qualified features, detectors and
+The required native gate runs four fresh isolated processes, two per complete
+public profile, through snapshot, curated, DQ, qualified features, detectors and
 independent verification. All six artifact files must match between processes;
 all parent bytes remain unchanged. Each process is limited to 300 seconds and
 1,024 MiB. A further fresh process scores the saved models with NumPy/SciPy/

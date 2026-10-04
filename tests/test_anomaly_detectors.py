@@ -338,6 +338,26 @@ def test_validation_outcomes_change_calibration_but_never_training():
     assert first[0].detector_id != second[0].detector_id
 
 
+def test_forest_alert_can_have_zero_residual_without_claiming_a_range_breach():
+    config = protocol()
+    data = [
+        p if config.role(p.business_date) == "train" else point(p.business_date, 15)
+        for p in points(config)
+    ]
+    data = [point(p.business_date, 10) if p.business_date == config.test.start else p for p in data]
+    result = run(feature_parent(), data, config, FitPolicy(), runtime())
+    predictions = [Prediction.model_validate_json(line) for line in result[3].splitlines()]
+    predicted = next(
+        p
+        for p in predictions
+        if p.business_date == config.test.start and p.family == "isolation_forest"
+    )
+    assert predicted.alert is True and predicted.residual_units == 0
+    assert "zero_residual" in predicted.explanation_codes
+    assert not {"positive_residual", "negative_residual"} & set(predicted.explanation_codes)
+    assert "expected_range" not in " ".join(predicted.explanation_codes)
+
+
 @pytest.mark.parametrize("limit", ["rss", "cpu"])
 def test_fit_kills_worker_when_resource_limit_is_exceeded(monkeypatch, limit):
     import retailops_ai.anomaly_detectors.fit as fitter

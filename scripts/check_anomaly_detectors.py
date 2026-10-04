@@ -185,11 +185,12 @@ def reader(root: Path, feature_dir: Path) -> dict[str, Any]:
     }
 
 
-def worker(fixtures: Path, workspace: Path) -> dict[str, Any]:
-    from retailops_ai.anomaly_detectors.store import build, verify
+def worker(fixtures: Path, workspace: Path, selected_case: str) -> dict[str, Any]:
+    from retailops_ai.anomaly_detectors.store import build, runtime, verify
     from retailops_ai.curated.builder import build_curated
     from retailops_ai.full_raw_dq.store import build_replay
     from retailops_ai.qualified_anomalies.store import build as build_features
+    from retailops_ai.source_snapshot.files import json_sha256
     from retailops_ai.source_snapshot.importer import import_snapshot
 
     if (
@@ -198,25 +199,43 @@ def worker(fixtures: Path, workspace: Path) -> dict[str, Any]:
     ):
         raise ValueError("producer_namespace_available_in_detector_process")
     started = time.monotonic()
+    stages = []
+
+    def mark(case: str, stage: str) -> None:
+        usage = resource.getrusage(resource.RUSAGE_SELF)
+        measurement = {
+            "case": case,
+            "stage": stage,
+            "elapsed_seconds": round(time.monotonic() - started, 3),
+            "cpu_seconds": round(usage.ru_utime + usage.ru_stime, 3),
+        }
+        stages.append(measurement)
+        print(json.dumps(measurement, sort_keys=True), file=sys.stderr, flush=True)
+
     extract(fixtures, "full-raw-dq-v2", workspace / "inputs/full")
     extract(fixtures, "day-coverage-v1", workspace / "inputs/coverage")
     before = hashes(workspace / "inputs")
     cases = []
     resources = []
-    for case in ("demand", "physical"):
+    if selected_case not in {"demand", "physical"}:
+        raise ValueError("native_detector_unknown_public_profile")
+    for case in (selected_case,):
         parent_root = workspace / case / "parents/data/generated"
         source = import_snapshot(
             workspace / "inputs/full" / case / "public",
             parent_root,
             required_use_cases=("anomaly_source",),
         )
+        mark(case, "snapshot")
         curated = build_curated(source.directory, parent_root)
+        mark(case, "curated")
         replay = build_replay(
             workspace / "inputs/full" / case / "capture",
             curated.directory,
             source.directory,
             parent_root,
         )
+        mark(case, "full_dq")
         parents = (
             Path(replay["directory"]),
             workspace / "inputs/coverage" / case,
@@ -224,15 +243,18 @@ def worker(fixtures: Path, workspace: Path) -> dict[str, Any]:
             source.directory,
         )
         features = build_features(*parents, parent_root)
+        mark(case, "qualified_features")
         feature_dir = Path(features["directory"])
         protocol = development_protocol(feature_dir)
         before_parents = hashes(parent_root)
         result = build(
             feature_dir, *parents, workspace / case / "consumer/data/generated", protocol
         )
+        mark(case, "detector_build")
         directory = Path(result["directory"])
         artifact_before = hashes(directory)
         manifest = verify(directory, feature_dir, *parents)
+        mark(case, "independent_verification")
         portable = subprocess.run(  # noqa: S603 - fixed interpreter/script
             [
                 sys.executable,
@@ -251,6 +273,7 @@ def worker(fixtures: Path, workspace: Path) -> dict[str, Any]:
         if portable.returncode:
             raise RuntimeError("portable reader failed: " + portable.stderr[-8192:])
         portable_report = json.loads(portable.stdout)
+        mark(case, "portable_reader")
         if (
             result["run_artifact_id"] != manifest.run_artifact_id
             or artifact_before != hashes(directory)
@@ -266,6 +289,7 @@ def worker(fixtures: Path, workspace: Path) -> dict[str, Any]:
         cases.append(
             {
                 "case": case,
+                "detector_runtime_sha256": json_sha256(runtime().model_dump(mode="json")),
                 "qualified_anomaly_input_id": features["qualified_anomaly_input_id"],
                 "run_artifact_id": result["run_artifact_id"],
                 "detector_id": result["detector_id"],
@@ -294,12 +318,14 @@ def worker(fixtures: Path, workspace: Path) -> dict[str, Any]:
         "model_quality": "not_evaluated",
         "cases": cases,
         "fit_resources": resources,
+        "stage_timings": stages,
     }
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--worker", type=Path)
+    parser.add_argument("--case", choices=("demand", "physical"))
     parser.add_argument("--reader", type=Path)
     parser.add_argument("--feature-dir", type=Path)
     parser.add_argument("--fixture-dir", type=Path, default=ROOT / "data/fixtures")
@@ -312,29 +338,53 @@ def main() -> int:
             raise ValueError("portable_reader_requires_feature_parent")
         report = reader(args.reader.resolve(), args.feature_dir.resolve())
     elif args.worker:
-        report = worker(args.fixture_dir.resolve(), args.worker.resolve())
+        if args.case is None:
+            raise ValueError("native_detector_worker_requires_one_public_profile")
+        report = worker(args.fixture_dir.resolve(), args.worker.resolve(), args.case)
     else:
         runs = []
         for _ in range(2):
-            with tempfile.TemporaryDirectory(prefix="ai07-anomaly-detectors-") as tmp:
-                result = subprocess.run(  # noqa: S603 - fixed interpreter/script
-                    [
-                        sys.executable,
-                        "-I",
-                        str(Path(__file__).resolve()),
-                        "--worker",
-                        tmp,
-                        "--fixture-dir",
-                        str(args.fixture_dir.resolve()),
-                    ],
-                    capture_output=True,
-                    text=True,
-                    check=False,
-                    timeout=360,
-                )  # noqa: S603 - fixed interpreter/script
-                if result.returncode:
-                    raise RuntimeError("native detector worker failed: " + result.stderr[-8192:])
-                runs.append(json.loads(result.stdout))
+            processes = []
+            for case in ("demand", "physical"):
+                with tempfile.TemporaryDirectory(prefix="ai07-anomaly-detectors-") as tmp:
+                    try:
+                        result = subprocess.run(  # noqa: S603 - fixed interpreter/script
+                            [
+                                sys.executable,
+                                "-I",
+                                str(Path(__file__).resolve()),
+                                "--worker",
+                                tmp,
+                                "--case",
+                                case,
+                                "--fixture-dir",
+                                str(args.fixture_dir.resolve()),
+                            ],
+                            capture_output=True,
+                            text=True,
+                            check=False,
+                            timeout=360,
+                        )  # noqa: S603 - fixed interpreter/script
+                    except subprocess.TimeoutExpired as exc:
+                        stderr = (
+                            exc.stderr.decode(errors="replace")
+                            if isinstance(exc.stderr, bytes)
+                            else exc.stderr or ""
+                        )
+                        raise RuntimeError(
+                            "native detector process timed out: " + stderr[-8192:]
+                        ) from exc
+                    if result.returncode:
+                        raise RuntimeError(
+                            "native detector worker failed: " + result.stderr[-8192:]
+                        )
+                    processes.append(json.loads(result.stdout))
+            runs.append(
+                {
+                    "processes": processes,
+                    "cases": [case for process in processes for case in process["cases"]],
+                }
+            )
         if runs[0]["cases"] != runs[1]["cases"]:
             raise ValueError("native_anomaly_detectors_not_reproducible")
         report = {
