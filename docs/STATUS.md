@@ -1,12 +1,14 @@
 # Aktualny status
 
-**AI 08 — zatwierdzono kampanię v2 i kolejkę 50%; rusza końcowa ocena.**
-[Odbiór 08.24](evidence/08-24-approved-campaign.md) zapisuje rzeczywisty publiczny
-replay development: 202/218 wychwyconych zdarzeń, 33 FP, 16 FN, koszt 113 wobec
-201 dla 40% i 605 dla 20%. Model, kalibrator i sześć źródeł pozostają te same.
-Użytkownik zatwierdził jawne ostrzeżenia kalibracji wyłącznie małych kategorii.
-Sześć runnerów wykonuje native/wheel, następnie pełny publiczny replay qualification.
-Końcowa jakość, review/integracja oraz końcowe CI jeszcze oczekują.
+**AI 08 — końcowa jakość i prawdziwa kwalifikacja są zaliczone; trwa odbiór integracji.**
+[Sześć źródeł / 9296 punktów](evidence/08-25-final-campaign-results.md) ma
+90 zaliczonych kontroli, 3 zaakceptowane ostrzeżenia małych kategorii i 0 blokad.
+Model LR/upstream i sigmoid C10 pozostają zamrożone, a top50% wybrano na development.
+[Pełna kwalifikacja i karta](evidence/08-26-qualified-model.md) mają 40 smoke rows
+po kompletnym publicznym replay. Rzeczywiste obrazy i 204 focused tests przeszły.
+Końcowy review/MLflow/lifecycle/batch/API, pełne CI oraz merge/main nadal oczekują.
+**AI 08 pozostaje not ready.** Niżej zachowano historię wcześniejszych zakresów.
+
 **AI 08 pozostaje not ready.** Niżej jest historia wcześniejszych zakresów.
 
 **AI 08 — worker/HTTP/priority i pełny backup są zaliczone; final receipts/karta są przygotowane.**

@@ -20,10 +20,12 @@ from retailops_ai.stockout_lifecycle.contract import (
     capsule_names,
 )
 from retailops_ai.stockout_lifecycle.release import (
+    ServingSmoke,
     predict_smoke,
     receipt,
     signature,
     verify_approved_capsule,
+    verify_smoke,
 )
 
 
@@ -169,3 +171,33 @@ def test_capsule_rejects_unsafe_inventory_or_identity(capsule, mutation):
         identity = "stockout-approval-sha256-" + "f" * 64
     with pytest.raises(ValueError):
         verify_approved_capsule(root, approval_id=identity)
+
+
+def test_portable_smoke_accepts_machine_roundoff_but_rejects_changed_prediction(capsule):
+    from math import nextafter
+
+    root, _ = capsule
+    smoke = ServingSmoke.model_validate_json(canonical_bytes(read_json(root, "smoke.json")))
+    index = next(
+        i
+        for i, item in enumerate(smoke.items)
+        if item.probability is not None and item.probability < 0.99
+    )
+    point = smoke.items[index]
+    tiny = point.model_copy(update={"probability": nextafter(point.probability, 1.0)})
+    items = list(smoke.items)
+    items[index] = tiny
+    result = verify_smoke(smoke, smoke.model_copy(update={"items": tuple(items)}))
+    assert 0 < result["maximum_absolute_probability_difference"] < 1e-12
+    items[index] = point.model_copy(update={"probability": point.probability + 1e-6})
+    with pytest.raises(ValueError, match="smoke_probability_changed"):
+        verify_smoke(smoke, smoke.model_copy(update={"items": tuple(items)}))
+
+
+def test_portable_smoke_never_tolerates_identity_or_band_changes(capsule):
+    root, _ = capsule
+    smoke = ServingSmoke.model_validate_json(canonical_bytes(read_json(root, "smoke.json")))
+    items = list(smoke.items)
+    items[0] = items[0].model_copy(update={"model_version": "999"})
+    with pytest.raises(ValueError, match="smoke_non_probability_changed"):
+        verify_smoke(smoke, smoke.model_copy(update={"items": tuple(items)}))

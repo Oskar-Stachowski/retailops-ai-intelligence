@@ -51,10 +51,12 @@ from retailops_ai.stockout_lifecycle.publish import publish_approval
 from retailops_ai.stockout_lifecycle.qualification import approve_stockout
 from retailops_ai.stockout_lifecycle.registry import MLflowStockoutRegistry
 from retailops_ai.stockout_lifecycle.release import (
+    ServingSmoke,
     predict_smoke,
     receipt,
     signature,
     verify_approved_capsule,
+    verify_smoke,
 )
 from retailops_ai.stockout_public_inputs import implementation as public_input_code
 from retailops_ai.stockout_runtime.inputs import PreparedStockoutInputs
@@ -117,7 +119,9 @@ def review(
     reproduced = predict_smoke(
         inputs, q.recipe, q.policy, generated_at=datetime.fromisoformat(smoke["generated_at"])
     )
-    require(smoke == reproduced.model_dump(mode="json"), "final_acceptance_smoke_changed")
+    smoke_comparison = verify_smoke(
+        ServingSmoke.model_validate_json(canonical_bytes(smoke)), reproduced
+    )
     comparison = read_json(ROOT / "docs/evidence", "08-24-capacity-comparison.json")
     checks: dict[str, dict[str, bool]] = {
         "source": {
@@ -207,6 +211,7 @@ def review(
             tests=proof,
             limitations=card["limitations"],
             warnings=card["warnings"],
+            smoke_comparison=smoke_comparison,
         )
         path = work / "reports" / (name + ".json")
         private_json(path, report)

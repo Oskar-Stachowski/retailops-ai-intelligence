@@ -1,5 +1,19 @@
 # AI 08 — later calibration, operator proposal and portable runtime
 
+The current accepted policy is [campaign v2](stockout-final-campaign-v2.md):
+25/50/90% bands and top50%, chosen on development FP1/FN5 evidence. The
+original top20% proposal below is retained as development history. All six
+final worlds passed [independent quality](../evidence/08-25-final-campaign-results.md).
+
+Public 2.0 and series-selected 2.1 bundles use `stockout_public_inputs`. This
+adapter replays every public feature/upstream partition and checks the source
+seals before/after. It keeps the frozen scoring/evaluator packages unchanged.
+Input preparation is available through `python -m retailops_ai.stockout_public_cli`
+with `inputs-build` or `inputs-verify` and the same explicit public roots/scope/as-of.
+The original `stockout_runtime.inputs`/CLI remain the historical 2.0 adapter.
+No private labels enter either public preparation path.
+
+
 This increment preserves the accepted 1.0 qualification and all earlier parent
 identities. The separate 2.0 selection protocol fits the base on original TRAIN
 (known at 5 June), a regularized conditional sigmoid on original TUNE (known at

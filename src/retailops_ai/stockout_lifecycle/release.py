@@ -116,6 +116,35 @@ def predict_smoke(
     )
 
 
+def verify_smoke(reference: ServingSmoke, replayed: ServingSmoke) -> dict[str, Any]:
+    """Exact structure/decisions; probability roundoff uses the portable 1e-12 floor."""
+    reference = ServingSmoke.model_validate_json(reference.model_dump_json())
+    replayed = ServingSmoke.model_validate_json(replayed.model_dump_json())
+    if reference.model_dump(exclude={"items"}) != replayed.model_dump(exclude={"items"}) or len(
+        reference.items
+    ) != len(replayed.items):
+        raise ValueError("stockout_capsule_smoke_non_probability_changed")
+    maximum = 0.0
+    for original, current in zip(reference.items, replayed.items, strict=True):
+        if original.model_dump(exclude={"probability"}) != current.model_dump(
+            exclude={"probability"}
+        ):
+            raise ValueError("stockout_capsule_smoke_non_probability_changed")
+        if original.probability is None or current.probability is None:
+            if original.probability != current.probability:
+                raise ValueError("stockout_capsule_smoke_probability_changed")
+        else:
+            difference = abs(original.probability - current.probability)
+            if difference > 1e-12:
+                raise ValueError("stockout_capsule_smoke_probability_changed")
+            maximum = max(maximum, difference)
+    return dict(
+        maximum_absolute_probability_difference=maximum,
+        absolute_tolerance=1e-12,
+        non_probability_fields_exact=True,
+    )
+
+
 def _private(root: Path, names: set[str]) -> dict[str, bytes]:
     inventory(root, names)
     if root.stat().st_uid != os.geteuid() or root.stat().st_mode & 0o077:
@@ -167,10 +196,10 @@ def verify_approved_capsule(
         or len(inputs.points) != q.smoke_rows
         or len(smoke.items) != q.smoke_rows
         or smoke.generated_at > q.created_at
-        or smoke != predict_smoke(inputs, recipe, policy, generated_at=smoke.generated_at)
         or read_json(root, "signature.json") != signature(recipe, policy)
     ):
         raise ValueError("stockout_capsule_smoke_signature_or_input_replay")
+    verify_smoke(smoke, predict_smoke(inputs, recipe, policy, generated_at=smoke.generated_at))
     for name, reference in (
         ("model_card.json", q.model_card),
         ("inputs.json", q.public_inputs),
