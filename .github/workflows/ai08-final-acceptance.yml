@@ -34,32 +34,14 @@ jobs:
           python-version: "3.11.15"
           enable-cache: false
       - run: uv sync --locked --extra snapshot --extra forecast
-      - name: Recover exact six successful final evaluations and collected quality
+      - name: Reuse exact genuine qualification after checking original six final jobs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           uv run --locked --extra snapshot --extra forecast python scripts/check_stockout_final_permission.py
-          uv run --locked --extra snapshot --extra forecast python scripts/recover_stockout_final_receipts.py \
+          uv run --locked --extra snapshot --extra forecast python scripts/reuse_stockout_final_qualification.py \
             --request docs/reference/stockout-final-acceptance-request-v1.json \
-            --freeze docs/reference/stockout-final-campaign-v2.json --output final-artifacts
-      - name: Qualify existing passed campaign with the public format adapter
-        run: |
-          uv run --locked --extra snapshot --extra forecast python scripts/qualify_stockout_final.py \
-            --freeze docs/reference/stockout-final-campaign-v2.json \
-            --permission docs/reference/stockout-final-permission-v2.json \
-            --recipe docs/reference/stockout-final-selected-recipe.json \
-            --policy docs/reference/stockout-final-selected-policy-v2.json \
-            --final-execution-commit 048f7b311b82dbf831718565289a54166cbe7d36 \
-            --final-run-id 37273978383 --receipts final-artifacts --output final-qualified
-          python - <<'PY2'
-          import hashlib,json
-          from pathlib import Path
-          r=json.loads(Path('docs/reference/stockout-final-acceptance-request-v1.json').read_bytes())
-          roots=list(Path('final-qualified').rglob('qualification.json'))
-          assert len(roots)==1
-          for name in ('final_quality','execution_evidence'):
-              assert hashlib.sha256((roots[0].parent/(name+'.json')).read_bytes()).hexdigest()==r[name+'_sha256']
-          PY2
+            --freeze docs/reference/stockout-final-campaign-v2.json --output final-qualified
       - name: Retain genuine qualification independently of later service checks
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

@@ -50,7 +50,7 @@ def check_request(
         raise ValueError("final_receipt_recovery_exact_seven_artifacts_required")
 
 
-def extract(archive: Path, destination: Path) -> None:
+def extract(archive: Path, destination: Path, allowed_names: set[str] | None = None) -> None:
     """Bounded regular receipt files only; source.zip stays opaque until sealed replay."""
     with zipfile.ZipFile(archive) as bundle:
         entries = bundle.infolist()
@@ -67,16 +67,19 @@ def extract(archive: Path, destination: Path) -> None:
             mode = entry.external_attr >> 16
             if stat.S_ISLNK(mode) or (stat.S_IFMT(mode) not in {0, stat.S_IFREG}):
                 raise ValueError("final_receipt_recovery_regular_files_only")
-            if relative.name not in {
-                "native.json",
-                "wheel.json",
-                "resource.json",
-                "source.zip",
-                "native-access.jsonl",
-                "wheel-access.jsonl",
-                "final_quality.json",
-                "execution_evidence.json",
-            }:
+            if relative.name not in (
+                allowed_names
+                or {
+                    "native.json",
+                    "wheel.json",
+                    "resource.json",
+                    "source.zip",
+                    "native-access.jsonl",
+                    "wheel-access.jsonl",
+                    "final_quality.json",
+                    "execution_evidence.json",
+                }
+            ):
                 raise ValueError("final_receipt_recovery_unknown_receipt_file")
             target = destination / relative
             target.parent.mkdir(mode=0o700, parents=True, exist_ok=True)

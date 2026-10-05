@@ -30,3 +30,10 @@ condition = "AND"
 paths = ['(^|/)docs/evidence/08-24-capacity-comparison[.]json$']
 regexTarget = "secret"
 regexes = ['^cd3a1191c28c78fbb3f1b20ff38a296b27e06c426be23732eea06daf8f7e1907$']
+
+[[allowlists]]
+description = "Exact canonical SHA-256 of the AI09 verification access plan in source-replay evidence in fetched Git history; not a credential"
+condition = "AND"
+paths = ['(^|/)docs/evidence/09-09-forecast-source-replay[.]json$']
+regexTarget = "secret"
+regexes = ['^4e2717d8782ab1a124e4a2775f170338b21f08b33319340112f6da2ff0d3d826$']
