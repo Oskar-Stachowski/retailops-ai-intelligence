@@ -12,11 +12,11 @@ from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.domain.access import Principal
 from retailops_ai.forecast_jobs.queue import clock
 from retailops_ai.stockout_jobs.errors import StockoutError as StockoutError
+from retailops_ai.stockout_public_inputs import prepare_inputs
 from retailops_ai.stockout_runtime.inputs import (
     MAX_INPUT_BYTES,
     PhysicalScope,
     PreparedStockoutInputs,
-    prepare_inputs,
 )
 
 

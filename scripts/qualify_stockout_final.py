@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import re
 import shutil
 import sys
 import tempfile
@@ -24,12 +25,17 @@ from retailops_ai.stockout_runtime.contracts import ScoringPolicy, ScoringRecipe
 from retailops_ai.stockout_runtime.scope import PhysicalScope
 
 
-def receipt_roots(root: Path, freeze: CampaignFreeze) -> dict[tuple[str, int], Path]:
+def receipt_roots(
+    root: Path, freeze: CampaignFreeze, execution_commit: str | None = None
+) -> dict[tuple[str, int], Path]:
     """Require exactly this run's six retained world artifact directories."""
+    commit = execution_commit or os.environ["GITHUB_SHA"]
+    if re.fullmatch(r"[0-9a-f]{40}", commit) is None:
+        raise ValueError("stockout_final_qualification_invalid_execution_commit")
     result: dict[tuple[str, int], Path] = {}
     for source in freeze.sources:
         name = f"{source.world}-{source.seed}"
-        artifact = root / f"ai08-final-{os.environ['GITHUB_SHA']}-{name}"
+        artifact = root / f"ai08-final-{commit}-{name}"
         candidates = [p for p in (artifact, artifact / name) if (p / "native.json").is_file()]
         if len(candidates) != 1:
             raise ValueError("stockout_final_qualification_receipt_directory_ambiguous")
@@ -66,7 +72,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("freeze", "permission", "recipe", "policy", "receipts", "output"):
         parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument("--final-execution-commit", default=os.environ.get("GITHUB_SHA"))
+    parser.add_argument("--final-run-id", type=int, default=os.environ.get("GITHUB_RUN_ID"))
     args = parser.parse_args()
+    if args.final_run_id is None or args.final_run_id <= 0:
+        raise ValueError("stockout_final_qualification_invalid_execution_run")
     if (
         sys.platform != "linux"
         or os.environ.get("GITHUB_ACTIONS") != "true"
@@ -79,13 +89,13 @@ def main() -> int:
     permission = CampaignPermission.model_validate_json(args.permission.read_bytes())
     source = next(s for s in freeze.sources if (s.world, s.seed) == ("matching", 42))
     guard(freeze, permission, source)
-    roots = receipt_roots(args.receipts, freeze)
+    roots = receipt_roots(args.receipts, freeze, args.final_execution_commit)
     result = collect(roots, freeze=freeze, permission=permission)
     if result["final_quality"]["content"]["status"] != "passed":
         raise ValueError("stockout_final_quality_not_ready_no_qualification")
     if any(
-        w["resource"]["execution_commit"] != os.environ["GITHUB_SHA"]
-        or w["resource"]["workflow_run_id"] != int(os.environ["GITHUB_RUN_ID"])
+        w["resource"]["execution_commit"] != args.final_execution_commit
+        or w["resource"]["workflow_run_id"] != args.final_run_id
         for w in result["execution_evidence"]["content"]["worlds"]
     ):
         raise ValueError("stockout_final_qualification_wrong_execution")

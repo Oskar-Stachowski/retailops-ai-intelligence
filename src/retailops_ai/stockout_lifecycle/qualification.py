@@ -34,8 +34,9 @@ from retailops_ai.stockout_lifecycle.release import (
     signature,
     verify_approved_capsule,
 )
+from retailops_ai.stockout_public_inputs import prepare_inputs
 from retailops_ai.stockout_runtime.contracts import ScoringPolicy, ScoringRecipe
-from retailops_ai.stockout_runtime.inputs import PhysicalScope, prepare_inputs
+from retailops_ai.stockout_runtime.inputs import PhysicalScope
 
 
 def _publish(

@@ -1,0 +1,116 @@
+name: AI08 qualified model isolated acceptance
+
+on:
+  push:
+    branches: ["ai/08-stockout-labels"]
+    paths: ["docs/reference/stockout-final-acceptance-request-v1.json"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ai08-qualified-acceptance-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  accept:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      UV_NO_CACHE: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - run: uv sync --locked --extra snapshot --extra forecast
+      - name: Recover exact six successful final evaluations and collected quality
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          uv run --locked --extra snapshot --extra forecast python scripts/check_stockout_final_permission.py
+          uv run --locked --extra snapshot --extra forecast python scripts/recover_stockout_final_receipts.py \
+            --request docs/reference/stockout-final-acceptance-request-v1.json \
+            --freeze docs/reference/stockout-final-campaign-v2.json --output final-artifacts
+      - name: Qualify existing passed campaign with the public format adapter
+        run: |
+          uv run --locked --extra snapshot --extra forecast python scripts/qualify_stockout_final.py \
+            --freeze docs/reference/stockout-final-campaign-v2.json \
+            --permission docs/reference/stockout-final-permission-v2.json \
+            --recipe docs/reference/stockout-final-selected-recipe.json \
+            --policy docs/reference/stockout-final-selected-policy-v2.json \
+            --final-execution-commit 048f7b311b82dbf831718565289a54166cbe7d36 \
+            --final-run-id 37273978383 --receipts final-artifacts --output final-qualified
+          python - <<'PY2'
+          import hashlib,json
+          from pathlib import Path
+          r=json.loads(Path('docs/reference/stockout-final-acceptance-request-v1.json').read_bytes())
+          for name in ('final_quality','execution_evidence'):
+              assert hashlib.sha256((Path('final-qualified')/(name+'.json')).read_bytes()).hexdigest()==r[name+'_sha256']
+          PY2
+      - name: Retain genuine qualification independently of later service checks
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai08-final-qualified-${{ github.sha }}
+          path: final-qualified/
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: false
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_VERSION: "8.30.1"
+          GITLEAKS_ENABLE_COMMENTS: "false"
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+      - name: Retain preceding successful secret scan and run model boundary tests
+        run: |
+          mkdir -m 700 acceptance-proofs
+          python -c 'import json,os;from pathlib import Path;Path("acceptance-proofs/secrets.json").write_text(json.dumps(dict(passed=True,workflow_run_id=os.environ["GITHUB_RUN_ID"],commit=os.environ["GITHUB_SHA"],scanner="gitleaks-8.30.1",scope="complete_git_history")))'
+          uv run --locked --extra snapshot --extra forecast python -m pytest -q \
+            tests/test_stockout_final_campaign.py tests/test_stockout_final_scenarios.py \
+            tests/test_stockout_campaign_archive.py tests/test_stockout_final_source_preparation.py \
+            tests/test_stockout_final_download.py tests/test_stockout_release.py \
+            tests/test_stockout_registry.py tests/test_stockout_lifecycle.py \
+            tests/test_stockout_batch.py tests/test_stockout_api.py tests/test_stockout_api_startup.py \
+            tests/test_stockout_worker.py tests/test_stockout_priority.py \
+            tests/test_stockout_final_evidence.py tests/test_stockout_final_card.py \
+            tests/test_stockout_balanced_quality.py tests/test_stockout_capacity_comparison.py \
+            tests/test_stockout_final_qualification_cli.py tests/test_stockout_public_inputs.py \
+            tests/test_stockout_final_acceptance_runner.py tests/test_stockout_final_receipt_recovery.py \
+            --junitxml=acceptance-proofs/tests.xml
+      - name: Build the actual locked inference image and owned MLflow image
+        run: |
+          docker build -f Dockerfile.api -t "retailops-ai08-acceptance:$GITHUB_SHA" .
+          docker build -f Dockerfile.mlflow -t "retailops-ai08-mlflow:$GITHUB_SHA" .
+          docker pull pgvector/pgvector:0.8.6-pg16-trixie@sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b
+      - name: Review, import and exercise the qualified frozen model on disposable services
+        run: |
+          QUALIFICATION=$(find final-qualified -type f -name qualification.json -print)
+          test -n "$QUALIFICATION"
+          uv run --locked --extra snapshot --extra forecast python scripts/check_stockout_final_acceptance.py \
+            --qualification "$(dirname "$QUALIFICATION")" \
+            --image "retailops-ai08-acceptance:$GITHUB_SHA" \
+            --mlflow-image "retailops-ai08-mlflow:$GITHUB_SHA" \
+            --tests acceptance-proofs/tests.xml --secret-scan acceptance-proofs/secrets.json \
+            --output accepted-model
+      - name: Retain complete acceptance and actual API examples
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai08-qualified-acceptance-${{ github.sha }}
+          path: |
+            accepted-model/
+            acceptance-proofs/
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: false
