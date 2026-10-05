@@ -88,6 +88,14 @@ package:
 
 check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check anomaly-detectors-check return-inputs-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check contracts-check package compose-config
 
+# CI uses isolated runners for these complete groups; local make check stays complete.
+.PHONY: ci-checks ci-source-inputs ci-qualified-inputs ci-detectors ci-forecast
+ci-checks: lint type-check docs-check forecast-runtime-check contracts-check package compose-config
+ci-source-inputs: handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check
+ci-qualified-inputs: full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check
+ci-detectors: anomaly-detectors-check
+ci-forecast: forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check
+
 secrets:
 	$(GITLEAKS) git . --redact --no-banner
 	$(GITLEAKS) dir . --redact --no-banner

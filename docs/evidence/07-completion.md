@@ -1,7 +1,7 @@
-# AI 07 — końcowy odbiór lokalny
+# AI 07 — końcowy odbiór
 
-Stan na 2026-10-05: **`pending_required_ci`**. Pełny zakres lokalny jest odebrany;
-zamknięcie etapu wymaga Required CI końcowych commitów obu repozytoriów.
+Stan na 2026-10-05: **`ready`** w zakresie `synthetic_ai_07_portfolio_v4`.
+Pełny odbiór lokalny i Required CI implementacji obu repozytoriów są zaliczone.
 Publikacja została zatwierdzona i wykonana w PR-ach
 [consumer #24](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/24)
 oraz [producer #97](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/97).
@@ -10,7 +10,17 @@ nieaktualną oczekiwaną rewizję migracji w `/ready` oraz brak importu `data`
 przy bezpośrednim uruchomieniu skryptu producenta. Poprawka wymaga aktualnej
 rewizji `0022_anomaly_evaluations`, uruchamia przygotowanie jako moduł i
 dodatkowo sprawdza gotowość rzeczywistego serwera API w OCI bez portów hosta.
-Zamknięcie wymaga zielonego Required CI końcowego HEAD.
+[Dowody Required CI](07-ready/required-ci.json) wiążą poprawioną implementację
+`eb15ac94398761ff2b2c10c4fe1a1073634d3b1e` i publikację producenta
+`8747074adceea2fe6bbeccdf9068dcee6dd81d02` z faktycznie zaliczonymi runami.
+Końcowy commit odbioru przechodzi pełny Required CI z równoległymi grupami;
+jego runy i dokładny HEAD są zapisane w PR #24.
+[Poprzedni przebieg PR](07-ready/required-ci-timeout.json) zaliczył wszystkie
+testy i bramki `make check`, ale limit 125 minut przerwał pakowanie cache
+w kroku końcowym. [Podział CI](07-ready/parallel-ci.json) uruchamia cztery
+kompletne grupy pytest i cztery grupy odbioru na osobnych runnerach. Wszystkie
+2151 obecnych testów są przypisane dokładnie raz. Wszystkie kontrole, progi
+jakości i limity pojedynczych procesów pozostają bez zmian.
 
 ## Zamrożona jakość
 
@@ -44,12 +54,16 @@ Powtarzane syntetyczne eksperymenty są skorelowane; kwalifikacja dotyczy tylko
 
 ## Rzeczywisty lifecycle, batch i odczyt
 
-[Raport OCI](07-ready/oci-acceptance.json) dotyczy konsumenta
-`5be04b19ee2890ea80a413dd92b7229eea7dff52` i zamrożonego źródła
+[Świeży raport OCI po poprawkach CI](07-ready/ci-fix-oci-acceptance.json) dotyczy
+konsumenta `eb15ac94398761ff2b2c10c4fe1a1073634d3b1e` i zamrożonego źródła
 `48439ebd9515dc1c7adc633609bbe33d1657c3df`. Rzeczywisty obraz aplikacji ma digest
-`sha256:e8a2822a707db40fbe82eea77d6d3ed33c7c7b2fda9c317d4c2ba79bddb22ade`.
-Test zbudował obrazy, uruchomił własne PostgreSQL 16/MLflow i wszystkie migracje.
-Nie używał atrap registry, persistence ani HTTP.
+`sha256:f5b5162fa1d49d411aed11bc15cc8ecb4f65c9350275e6b428eddebb3fd96efc`.
+Test odtworzył źródło i wszystkich publicznych rodziców z czystego przypiętego
+checkoutu, zbudował obrazy, uruchomił własne PostgreSQL 16/MLflow, wszystkie
+migracje i rzeczywistą usługę API; `/ready` zwróciło HTTP 200 wewnątrz kontenera.
+Nie używał atrap registry, persistence ani HTTP i nie publikował portów hosta.
+[Pierwotny raport OCI](07-ready/oci-acceptance.json) dla wcześniejszego commitu
+`5be04b1` pozostaje niezmienionym dowodem historycznym.
 
 Siedemnaście kontroli obejmuje prywatne uwierzytelnione CLI, rejestrację,
 promocję primary i reference, awarie po utworzeniu wersji i zapisie aliasu,
@@ -84,7 +98,10 @@ Gitleaks sprawdził osobno wszystkie 46 rozpakowanych plików JSON: zero finding
 CI odtwarza oryginalne źródło kwalifikacji z przypiętego commitu `48439eb`;
 generuje świeże native source, snapshot, day coverage, DQ i niezależne cechy.
 Nie zmienia modeli ani progów. Końcowy branch producenta `ai/07-qualification-source`
-dodaje wyłącznie odświeżenie sprawdzonych hashy kompatybilności fast path.
+zawiera sprawdzone hashe kompatybilności fast path, zachowanie oryginalnych
+opisów biznesowych w testach zmienionej proweniencji, czas na pełne
+972 regresje danych oraz jawne oczekiwanie przeglądarki na dane po rollbacku.
+Oryginalne bramki jakości i zasobów oraz zamrożone źródło naukowe są zachowane.
 Wszystkie 58 tabel, CSV, raporty, context i ledger mają zachowaną zgodność
 ordinary/indexed/cached; 16 testów przechodzi wraz z negatywnym testem pin drift.
 Jego dokładny commit publikacji znajduje się w manifeście kapsuł.
@@ -101,11 +118,18 @@ publikuje portów usług. Pełne wejście musi istnieć; bind mounts nie tworzą
 brakujących katalogów. [Runbook](../reference/anomaly-portfolio-qualification.md)
 opisuje wersjonowane cechy, ocenę i granice kwalifikacji.
 
-## Pozostała bramka
+## Odbiór publikacji
 
-Required CI końcowego brancha AI musi zaliczyć `checks`, `secrets`, `persistence`,
-obowiązkowy `anomaly-oci` i `required-result`; producent wymaga własnego pełnego
-Required CI. Starsze zielone PR-y ani lokalny odbiór nie zastępują tych runów.
-Po rzeczywistym sukcesie można zamknąć AI 07 jako `ready` w tym zakresie.
+Required CI implementacji konsumenta po pushu zaliczyło `checks`, `secrets`,
+`persistence`, obowiązkowy `anomaly-oci` i `required-result`. Poprzedni przebieg
+PR zatrzymał limit całego zadania podczas pakowania cache po zaliczeniu bramek.
+Producent zaliczył wszystkie 27 kontroli pełnego Required CI, w tym 972 testy
+danych i wszystkie mierzone smoke flows, replay AI 07, rzeczywisty Docker oraz
+Kubernetes z recovery i rollbackiem. [Wersjonowany wynik](07-ready/required-ci.json)
+zachowuje dokładne commity, ID runów i wyniki każdej kontroli. Ta aktualizacja
+odbioru zmienia dokumentację, dowody i układ CI. `required-result` wymaga sukcesu
+`checks`, wszystkich grup `tests` i `acceptance`, `secrets`, `persistence` oraz
+`anomaly-oci`. Pełne Required CI sprawdza też jej końcowy commit publikacji,
+wskazany w PR #24.
 Trwałość brokera, ACK/DLQ, projekcje i UI RetailOps należą do AI 10.
 Wdrożenie produkcyjne nie jest dopuszczone przez ten odbiór.

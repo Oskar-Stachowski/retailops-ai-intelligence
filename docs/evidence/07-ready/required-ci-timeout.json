@@ -1,0 +1,25 @@
+{
+  "status": "monolithic_ci_replaced_pending_final_publication_required_ci",
+  "consumer_commit": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+  "run_id": 37272207226,
+  "job_id": 111641663693,
+  "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37272207226/job/111641663693",
+  "passed_tests": 2140,
+  "strict_mypy_files": 413,
+  "last_make_check_gate": "compose_step_passed: config --quiet at 2026-10-05T08:30:08.8377565Z",
+  "failure_phase": "setup-uv post-job cache tar/zstd packaging",
+  "error": "The operation was canceled at 2026-10-05T08:30:10.0174886Z",
+  "whole_job_timeout_minutes_before": 125,
+  "all_tests_and_resource_gates": "unchanged",
+  "same_implementation_successful_push_run": 37272203883,
+  "new_publication_full_push_and_pr_required_ci": "required before final closure confirmation",
+  "remediation": "Replace the sequential 125-minute checks job with four complete native pytest shards and four complete isolated acceptance groups, plus the existing mandatory persistence, OCI and secrets gates.",
+  "new_job_timeout_minutes": {
+    "checks": 25,
+    "tests_per_shard": 45,
+    "acceptance_per_group": 45,
+    "persistence": 35,
+    "anomaly_oci": 90,
+    "secrets": 10
+  }
+}

@@ -19,9 +19,7 @@ concurrency:
 jobs:
   checks:
     runs-on: ubuntu-24.04
-    # The day gate head used 98 minutes; qualified residual tests and two fresh
-    # processes add verified parent reconstruction. Keep every acceptance gate.
-    timeout-minutes: 125
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -31,7 +29,50 @@ jobs:
           version: "0.12.19"
           python-version: "3.11.15"
           enable-cache: true
-      - run: make bootstrap check
+      - run: make bootstrap ci-checks
+  tests:
+    name: tests (${{ matrix.shard }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - run: make bootstrap
+      - name: Run a complete, balanced native pytest shard
+        env:
+          CI_TEST_SHARD: ${{ matrix.shard }}
+        run: uv run --frozen python -m scripts.run_ci_tests --shard "$CI_TEST_SHARD" --shards 4
+  acceptance:
+    name: acceptance (${{ matrix.target }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ci-source-inputs, ci-qualified-inputs, ci-detectors, ci-forecast]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - name: Run every unchanged acceptance gate in this isolated group
+        env:
+          CI_ACCEPTANCE_TARGET: ${{ matrix.target }}
+        run: make bootstrap "$CI_ACCEPTANCE_TARGET"
   secrets:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -97,18 +138,22 @@ jobs:
         run: uv run --frozen python scripts/check_anomaly_oci.py --producer .local/ai07-ci-source
   required-result:
     if: always()
-    needs: [checks, secrets, persistence, anomaly-oci]
+    needs: [checks, tests, acceptance, secrets, persistence, anomaly-oci]
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     steps:
       - name: Require every gate
         env:
           CHECKS_RESULT: ${{ needs.checks.result }}
+          TESTS_RESULT: ${{ needs.tests.result }}
+          ACCEPTANCE_RESULT: ${{ needs.acceptance.result }}
           PERSISTENCE_RESULT: ${{ needs.persistence.result }}
           SECRETS_RESULT: ${{ needs.secrets.result }}
           ANOMALY_OCI_RESULT: ${{ needs.anomaly-oci.result }}
         run: |
           test "$CHECKS_RESULT" = "success"
+          test "$TESTS_RESULT" = "success"
+          test "$ACCEPTANCE_RESULT" = "success"
           test "$SECRETS_RESULT" = "success"
           test "$PERSISTENCE_RESULT" = "success"
           test "$ANOMALY_OCI_RESULT" = "success"

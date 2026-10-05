@@ -1,10 +1,16 @@
 # AI 07 portfolio qualification
 
-The frozen v4 experiment passes all 56 original quality/sample checks for both
-saved model families, and the complete local OCI/PostgreSQL 16/MLflow acceptance
-passes. AI 07 awaits Required CI on the final source and consumer revisions;
-its stage status is `pending_required_ci`. See the
-[completion receipt](../evidence/07-completion.md).
+AI 07 is `ready` within `synthetic_ai_07_portfolio_v4`. Both frozen model
+families pass all 56 original quality/sample checks, the complete fresh native
+OCI/PostgreSQL 16/MLflow acceptance passes, and Required CI passes for the
+consumer implementation and source publication revisions. See the
+[completion receipt](../evidence/07-completion.md) and
+[exact implementation CI results](../evidence/07-ready/required-ci.json).
+The closure commit also receives the complete Required CI, partitioned across
+four native pytest shards and four isolated acceptance groups. Every current
+test and original gate remains mandatory; dependency locks and saved models
+are unchanged. The exact final publication run links are recorded in consumer
+PR #24; see the [partition receipt](../evidence/07-ready/parallel-ci.json).
 
 The opened v2 final test failed the original
 frozen recall, episode recall and evaluable coverage gates. Neither frozen

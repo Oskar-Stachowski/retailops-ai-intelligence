@@ -24,7 +24,7 @@
     "size_bytes": 492162
   },
   "source_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
-  "stage_status": "pending_required_ci",
+  "stage_status": "ready",
   "version": "anomaly-qualified-capsules-1.0.0",
   "local_oci": {
     "status": "passed",
@@ -42,9 +42,30 @@
       "cleanup.log": "edb9e4d34f6cfb542fdecf3d577b36ec8aab2d98ee33c986e7bff08f27b613cb"
     }
   },
-  "source_publication_commit": "b55d0ef384030e0bd5fcc71aa6b09652fab6f96e",
+  "source_publication_commit": "8747074adceea2fe6bbeccdf9068dcee6dd81d02",
   "archive_uncompressed_bytes": {
     "primary": 10686040,
     "reference": 10728596
+  },
+  "implementation_required_ci": {
+    "path": "required-ci.json",
+    "status": "passed",
+    "consumer_commit": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+    "source_commit": "8747074adceea2fe6bbeccdf9068dcee6dd81d02"
+  },
+  "ci_remediated_local_oci": {
+    "status": "passed",
+    "consumer_commit": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+    "producer_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+    "path": "ci-fix-oci-acceptance.json",
+    "evidence_sha256": "e8e9d292e9b3f6140816f700bac4c766b0f8cdcaef522b4c9830c930e966b12c",
+    "oci_image_digest": "sha256:f5b5162fa1d49d411aed11bc15cc8ecb4f65c9350275e6b428eddebb3fd96efc",
+    "fresh_native_source_and_complete_public_parents": "passed",
+    "api_ready_http_status": 200,
+    "checks": 17,
+    "published_results": 1232,
+    "restart": "passed",
+    "owned_project_cleanup": "completed",
+    "owned_vm": "stopped"
   }
 }

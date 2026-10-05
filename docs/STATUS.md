@@ -1,13 +1,18 @@
 # Aktualny status
 
-**AI 07 — pełny odbiór lokalny zakończony; `pending_required_ci`.**
+**AI 07 — `ready`, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
-Pełny OCI/PostgreSQL 16/MLflow sprawdził lifecycle, recovery, promocję,
-odrzucenie, rollback, atomową publikację 1232 wyników, scoped HTTP i SIGKILL/restart.
-[Końcowy odbiór](evidence/07-completion.md) oraz
-[manifest artefaktów](evidence/07-ready/capsules.json) wiążą zakres i dowody.
-Zamknięcie jako `ready` wymaga Required CI końcowych commitów obu repozytoriów.
-Publikacja do publicznych repozytoriów czeka na jawną zgodę właściciela.
+Świeży OCI/PostgreSQL 16/MLflow sprawdził komplet native publicznych rodziców,
+gotowość API po migracjach, lifecycle, recovery, promocję, odrzucenie, rollback,
+atomową publikację 1232 wyników, scoped HTTP i SIGKILL/restart.
+[Końcowy odbiór](evidence/07-completion.md),
+[manifest artefaktów](evidence/07-ready/capsules.json) oraz
+[Required CI implementacji obu repozytoriów](evidence/07-ready/required-ci.json)
+wiążą zakres, konkretne commity i zaliczone kontrole.
+Publikacja została zatwierdzona i wykonana w
+[AI PR #24](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/24)
+oraz [source PR #97](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/97).
+PR #24 zawiera także wynik pełnego Required CI końcowego commitu odbioru.
 
 **AI 05 — lokalny przepływ finalnego v12 jest odebrany także na świeżym snapshocie.**
 [Raport i pomiary](evidence/05-v12-real-serving.md) oraz
