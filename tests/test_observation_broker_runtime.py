@@ -428,10 +428,14 @@ def runtime(tmp_path_factory):
         delivered = []
         messages = [
             (0, canonical(record(row()).envelope)),
-            (0, canonical(record(row(2, 4)).envelope)),
-            (1, canonical(record(row()).envelope)),
+            (0, canonical(record(row(2, 4), 1, 0).envelope)),
+            (1, canonical(record(row(), 0, 1).envelope)),
             (2, b"raw-poison"),
         ]
+        reference = ObservationHistory(STREAM, partitions=3).apply_batch(
+            [record(row()), record(row(2, 4), 1, 0), record(row(), 0, 1)], stream=STREAM
+        )
+        assert len(reference.rows) == 2
         for p, value in messages:
             producer.produce(
                 TOPIC,
@@ -555,6 +559,14 @@ def test_actual_sql_capture_and_overlapping_broker_replay(runtime):
 @pytest.mark.parametrize("phase", ["before_commit", "after_commit_before_ack"])
 def test_actual_sigkill_at_sql_and_broker_ack_boundaries(runtime, phase):
     group = runtime.group()
+    initial, _ = build_client(runtime.config, group)
+    try:
+        receipt = initial.commit(
+            offsets=[runtime.native.TopicPartition(TOPIC, 0, 0)], asynchronous=False
+        )
+        assert len(receipt) == 1 and receipt[0].offset == 0 and receipt[0].error is None
+    finally:
+        initial.close()
     child = subprocess.Popen(
         [sys.executable, str(ROOT / "tests/observation_broker_child.py")],
         stdin=subprocess.PIPE,
@@ -585,7 +597,11 @@ def test_actual_sigkill_at_sql_and_broker_ack_boundaries(runtime, phase):
         assert child.wait(timeout=10) == -signal.SIGKILL
         expected = (0, 0) if phase == "before_commit" else (1, 1)
         assert runtime.counts(group) == expected
-        assert runtime.positions(group) == [runtime.native.OFFSET_INVALID] * 3
+        assert runtime.positions(group) == [
+            0,
+            runtime.native.OFFSET_INVALID,
+            runtime.native.OFFSET_INVALID,
+        ]
         runner = runtime.lane(group)
         try:
             message = fetch(runner)
