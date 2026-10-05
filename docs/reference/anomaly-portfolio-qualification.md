@@ -23,6 +23,15 @@ windows remain reserved until selection and complete public lineage are frozen.
 Repeated synthetic experiments are correlated. Any later success qualifies
 only the declared v4 scope, not opened v2/v3 cohorts or production.
 
+The [v4 saved validation comparison](../evidence/07-v4-validation-summary.json)
+selects the seasonal-residual baseline with sale/return capacities 0.10/0.005
+and high capacities 0.05/0.0025, and the genuine IF reference with capacities
+0.075/0.005 and high capacities 0.025/0.001. Both achieved validation precision
+1.0 and episode recall 1.0, with observation recall 0.925 and 0.775 respectively.
+These are validation results, not final qualification. Validation has one
+development seed and one physical episode per type; all original six-case
+inventory and three-episode-per-type gates remain mandatory in the final test.
+
 ## Explicit scoring recipe
 
 The original model and numeric rows remain supported without changing their
