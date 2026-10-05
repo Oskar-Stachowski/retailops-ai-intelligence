@@ -1,5 +1,8 @@
 # Dokumentacja RetailOps AI
 
+[Stockout: trwała kolejka i API](reference/stockout-jobs.md) oraz
+[odbiór przyrostu 08.19](evidence/08-19-stockout-jobs.md).
+
 Zacznij od [statusu](STATUS.md), [decyzji](architecture/decisions.md) i
 [poleceń lokalnych](development.md). [Contributing](contributing.md) opisuje
 zmiany i PR-y, [security](security.md) — granice dostępu i zgłoszenia.

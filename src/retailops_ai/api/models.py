@@ -11,6 +11,7 @@ from retailops_ai.forecast_jobs.read_contracts import ReadErrorCode
 from retailops_ai.knowledge.jobs import IndexErrorCode
 from retailops_ai.model_lifecycle.evaluation_contracts import EvaluationErrorCode
 from retailops_ai.model_lifecycle.read_contracts import CatalogErrorCode
+from retailops_ai.stockout_jobs.contracts import StockoutErrorCode
 
 
 class Contract(BaseModel):
@@ -55,5 +56,6 @@ class Problem(Contract):
         | ReadErrorCode
         | CatalogErrorCode
         | EvaluationErrorCode
+        | StockoutErrorCode
         | None
     ) = None

@@ -5,7 +5,7 @@ from importlib.resources import files
 from pathlib import Path
 from typing import Annotated, Any, Literal, Self
 
-from pydantic import Field, TypeAdapter, model_validator
+from pydantic import Field, TypeAdapter, field_validator, model_validator
 
 from retailops_ai.data_contracts.common import Contract, Symbol, UtcTime
 from retailops_ai.source_snapshot.files import SnapshotError, canonical_json, read_json
@@ -32,6 +32,12 @@ MAX_INPUT_BYTES = 16 * 1024**2
 class PhysicalScope(Contract):
     product_ids: tuple[Symbol, ...] = Field(min_length=1, max_length=20)
     stock_location_ids: tuple[Symbol, ...] = Field(min_length=1, max_length=5)
+
+    @field_validator("product_ids", "stock_location_ids", mode="before")
+    @classmethod
+    def wire_arrays(cls, value: object) -> object:
+        # FastAPI decodes JSON before validation; retain strict member types.
+        return tuple(value) if isinstance(value, list) else value
 
     @model_validator(mode="after")
     def unique(self) -> Self:

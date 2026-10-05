@@ -108,6 +108,37 @@
       ],
       "title": "ResourceScope",
       "type": "object"
+    },
+    "StockoutResourceScope": {
+      "additionalProperties": false,
+      "properties": {
+        "product_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 200,
+          "minItems": 1,
+          "title": "Product Ids",
+          "type": "array"
+        },
+        "stock_location_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Stock Location Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "product_ids",
+        "stock_location_ids"
+      ],
+      "title": "StockoutResourceScope",
+      "type": "object"
     }
   },
   "$id": "urn:retailops:access:identity:1.0",
@@ -176,6 +207,17 @@
           "type": "null"
         }
       ]
+    },
+    "stockout_scope": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StockoutResourceScope"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     }
   },
   "required": [

@@ -1,5 +1,13 @@
 # Aktualny status
 
+**AI 08 — trwała kolejka i API są przetestowane; SQL 0021 czeka na CI.**
+[Kontrakt](reference/stockout-jobs.md) i [odbiór](evidence/08-19-stockout-jobs.md)
+opisują przypięte wersje, lease, retry, atomową publikację i fizyczny scope.
+199 testów przechodzi. Poprzedni SQL 0020 i pełny backup/restore są zaliczone.
+Trzy pierwotne kohorty są ukończone; późniejsze źródła 42/137 są przygotowane,
+2026 jest w toku. Końcowa jakość, progi/capacity, MLflow, worker i końcowy
+odbiór są otwarte. **AI 08 pozostaje not ready.** Niżej są wcześniejsze zakresy.
+
 **AI 08 — podstawa lifecycle jest przetestowana; rzeczywisty SQL/registry oczekuje.**
 [Kontrakt](reference/stockout-lifecycle.md) i [odbiór](evidence/08-18-stockout-lifecycle-foundation.md)
 wiążą osobne stockout approval/binding/release ze wspólnym protokołem AI 05.

@@ -274,6 +274,10 @@ def main(mlflow_image: str) -> int:
         if stockout_report["status"] != "passed":
             raise ValueError("stockout_backup_database_recovery_incomplete")
         report["stockout_database_mechanics"] = stockout_report
+        jobs_report = json.loads((work / "state.json.stockout-jobs.json").read_bytes())
+        if jobs_report["status"] != "passed":
+            raise ValueError("stockout_jobs_backup_recovery_incomplete")
+        report["stockout_jobs_database_mechanics"] = jobs_report
         report.update(
             status="passed",
             purpose="isolated_v12_backup_mechanics_only",

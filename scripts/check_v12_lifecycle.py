@@ -97,6 +97,7 @@ def tests(
                     "-q",
                     "tests/check_v12_lifecycle.py",
                     "tests/check_stockout_lifecycle.py",
+                    "tests/check_stockout_jobs.py",
                     *(["tests/check_v12_queue.py"] if include_queue else []),
                     *(["tests/check_v12_publication.py"] if include_outputs else []),
                     *(["tests/check_v12_metadata.py"] if include_metadata else []),
@@ -262,6 +263,10 @@ def main(
             if stockout_report["status"] != "passed":
                 raise ValueError("stockout_postgres_acceptance_incomplete")
             report["stockout_database_mechanics"] = stockout_report
+            jobs_report = json.loads(Path(str(state) + ".stockout-jobs.json").read_bytes())
+            if jobs_report["status"] != "passed":
+                raise ValueError("stockout_jobs_postgres_acceptance_incomplete")
+            report["stockout_jobs_database_mechanics"] = jobs_report
         report.update(
             images=pinned, docker_builds=0, image_pulls=0, persistent_source_stack_changed=False
         )
