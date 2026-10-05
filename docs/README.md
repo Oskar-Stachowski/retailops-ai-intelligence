@@ -1,3 +1,6 @@
+[Zatwierdzona kampania AI08 v2](reference/stockout-final-campaign-v2.md) i
+[rzeczywiste porównanie kolejek](evidence/08-24-approved-campaign.md).
+
 [Poprawka startu API i pełnej kontroli typów AI 08](evidence/08-20-stockout-api-startup.md)
 wyjaśnia niezaliczone CI 08.19 oraz aktualny komplet sześciu źródeł.
 

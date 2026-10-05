@@ -87,7 +87,7 @@ jobs:
   collect:
     needs: evaluate
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 30
     env:
       UV_NO_CACHE: "1"
     steps:
@@ -123,6 +123,22 @@ jobs:
         with:
           name: ai08-final-collected-${{ github.sha }}
           path: final-collected/*.json
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: false
+      - name: Qualify the passed campaign with complete public inference parent replay
+        run: |
+          uv run --locked --extra snapshot --extra forecast python scripts/qualify_stockout_final.py \
+            --freeze docs/reference/stockout-final-campaign-v2.json \
+            --permission docs/reference/stockout-final-permission-v2.json \
+            --recipe docs/reference/stockout-final-selected-recipe.json \
+            --policy docs/reference/stockout-final-selected-policy-v2.json \
+            --receipts final-artifacts --output final-qualified
+      - name: Retain genuine serving qualification and complete model card
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai08-final-qualified-${{ github.sha }}
+          path: final-qualified/
           if-no-files-found: error
           retention-days: 30
           overwrite: false
