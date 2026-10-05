@@ -21,6 +21,8 @@ def main() -> int:
             known.update(
                 re.findall(r"[\"\'](stockout[_-][a-z0-9_-]{1,100})[\"\']", path.read_text())
             )
+    migration = ROOT / "src/retailops_ai/migrations/versions/0021_stockout_jobs.py"
+    known.update(re.findall(r"'([a-z][a-z0-9_]{1,100})'", migration.read_text()))
     errors = set()
     for line in text.splitlines():
         if line.startswith("E "):
@@ -36,6 +38,7 @@ def main() -> int:
         ),
         exception_types=sorted(
             set(re.findall(r"^E\s+([a-zA-Z0-9_.]*(?:Error|Exception|Lost)):", text, re.M))
+            | set(re.findall(r"\bpsycopg\.errors\.([a-zA-Z0-9_]+)\b", text))
         ),
         known_source_error_codes=sorted(errors),
     )
