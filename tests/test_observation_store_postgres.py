@@ -291,7 +291,10 @@ def test_raw_quarantine_commits_with_checkpoint_and_blocks_capture(engine, value
             {"observation_id": identifier("other"), "id": identifier("other-row")},
             "natural_grain_collision",
         ),
-        ({"version": 2, "available_at": TIME - timedelta(seconds=1)}, "availability_regression"),
+        (
+            {"version": 2, "available_at": TIME - timedelta(seconds=1)},
+            "history_availability_regression",
+        ),
     ],
 )
 def test_semantic_poison_has_no_business_effect_and_durable_quarantine(engine, change, reason):
