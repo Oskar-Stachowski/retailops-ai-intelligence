@@ -9,8 +9,10 @@ from uuid import uuid4
 
 import pytest
 from check_stockout_lifecycle import owned_control
+from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import IntegrityError
+from test_access import bearer, policy_file
 from test_stockout_batch import backend as backend
 from test_stockout_batch import conditional as conditional
 from test_stockout_batch import context as context
@@ -19,6 +21,8 @@ from test_stockout_batch import records as records
 from test_stockout_batch import source as source
 
 from retailops_ai.adapters.database import EXPECTED_REVISION
+from retailops_ai.api.app import create_app
+from retailops_ai.config import Settings
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.domain.access import Principal, StockoutAccess
 from retailops_ai.forecast_jobs.contracts import QueuePolicy
@@ -28,9 +32,11 @@ from retailops_ai.stockout_jobs.contracts import StockoutRequest
 from retailops_ai.stockout_jobs.input_store import StockoutError
 from retailops_ai.stockout_jobs.queue import PostgresStockoutQueue
 from retailops_ai.stockout_jobs.read_contracts import StockoutQuery
-from retailops_ai.stockout_jobs.reader import PostgresStockoutReader
+from retailops_ai.stockout_jobs.reader import PostgresStockoutAdministration, PostgresStockoutReader
+from retailops_ai.stockout_jobs.worker import preload, registry_guard, run_attempt
 from retailops_ai.stockout_lifecycle.contract import TEST_MODEL
 from retailops_ai.stockout_lifecycle.journal import PostgresStockoutJournal
+from retailops_ai.stockout_lifecycle.registry import MLflowStockoutRegistry
 
 
 def pipeline(inputs, *, foreign=False):
@@ -48,7 +54,7 @@ def pipeline(inputs, *, foreign=False):
     )
 
 
-def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(request):
+def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(request, tmp_path):
     control = owned_control()
     engine = create_engine(
         control["database_url"], hide_parameters=True, connect_args={"connect_timeout": 3}
@@ -84,6 +90,16 @@ def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(reques
             assert len(page.items) == len(output.items)
             assert page.items[0].release_id == state["release_id"]
             assert page.items[0].quality_status == "mechanics_only"
+            assert page.items[0].priority is not None
+            assert (
+                reader.list(
+                    StockoutQuery(inference_run_id=state["run_id"], view="attention_queue"),
+                    principal,
+                )
+                .items[0]
+                .priority.selected_at_origin
+                is True
+            )
             assert len(queue.attempts(state["run_id"], principal)) == 1
             state["checks"].append(
                 "real_restart_or_full_backup_restore_preserves_inputs_run_history_output_and_scoped_read"
@@ -122,6 +138,17 @@ def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(reques
         with pytest.raises(StockoutError, match="stockout-scope-denied"):
             queue.submit(body, pipeline(inputs, foreign=True), "outside")
         assert reader.list(StockoutQuery(), principal).data_status == "no_data"
+        registry = MLflowStockoutRegistry(environment="test", port=control["mlflow_port"])
+        assert (
+            preload(
+                engine,
+                registry,
+                queue,
+                release_id=release.release_id,
+                image_digest=release.image_digest,
+            )
+            == release
+        )
         claim = queue.claim(release_id=release.release_id)
         assert claim is not None and claim.run.run_id == run.run_id
         assert queue.claim(release_id=release.release_id) is None
@@ -149,7 +176,16 @@ def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(reques
                     ),
                     dict(record=json.dumps(raw), run=run.run_id),
                 )
-        queue.complete(claim, output)
+        assert (
+            run_attempt(
+                queue,
+                claim,
+                image_digest=release.image_digest,
+                guard=lambda full: registry_guard(engine, registry, release, full=full),
+            )
+            == "succeeded"
+        )
+        output = queue.output(run.run_id, principal)
         done = queue.get(run.run_id, principal)
         assert done.status == "succeeded" and queue.output(run.run_id, principal) == output
         assert len(queue.attempts(run.run_id, principal)) == 1
@@ -159,6 +195,18 @@ def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(reques
         assert len(page.items) == len(inputs.points)
         assert page.items[0].freshness_status == "stale"
         assert page.items[0].quality_status == "mechanics_only"
+        assert (
+            page.items[0].priority is not None and page.items[0].priority.selected_at_origin is True
+        )
+        assert (
+            reader.list(
+                StockoutQuery(inference_run_id=run.run_id, view="attention_queue"), principal
+            )
+            .items[0]
+            .risk_id
+            == page.items[0].risk_id
+        )
+        assert reader.list(StockoutQuery(view="current_stockouts"), principal).items == ()
         assert reader.get(page.items[0].risk_id, principal).risk_id == page.items[0].risk_id
         foreign_page = reader.list(StockoutQuery(), pipeline(inputs, foreign=True))
         assert foreign_page.items == ()
@@ -166,6 +214,78 @@ def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(reques
             reader.get(page.items[0].risk_id, pipeline(inputs, foreign=True))
         with pytest.raises(StockoutError, match="stockout-view-changed"):
             reader.list(StockoutQuery(offset=1, view_sha256="f" * 64), principal)
+
+        def grants(value):
+            for grant in value["grants"]:
+                if grant["principal_id"] not in {"local-viewer", "local-operator"}:
+                    continue
+                foreign = grant["principal_id"] == "local-operator"
+                grant.update(
+                    roles=["viewer"] if foreign else ["pipeline"],
+                    capabilities=["stockout:read"]
+                    if foreign
+                    else ["stockout:read", "stockout:run"],
+                    scope=None,
+                    stockout_scope=dict(
+                        product_ids=["outside"] if foreign else list(inputs.scope.product_ids),
+                        stock_location_ids=list(inputs.scope.stock_location_ids),
+                    ),
+                )
+
+        policy, tokens = policy_file(tmp_path, grants)
+        app = create_app(
+            Settings(
+                APP_ENV="test",
+                ARTIFACT_ROOT=tmp_path / "artifacts",
+                DATABASE_URL=control["database_url"],
+                API_AUTH_FILE=policy,
+            ),
+            stockout_administration=PostgresStockoutAdministration(queue),
+            stockout_reader=reader,
+        )
+        with TestClient(app, base_url="http://127.0.0.1") as client:
+            assert client.get("/api/v1/stockout-risks").status_code == 401
+            headers = bearer(tokens["local-viewer"])
+            response = client.get(
+                "/api/v1/stockout-risks",
+                params=dict(inference_run_id=run.run_id, view="attention_queue"),
+                headers=headers,
+            )
+            assert response.status_code == 200
+            assert response.json()["items"][0]["priority"]["selected_at_origin"] is True
+            assert (
+                client.get(
+                    "/api/v1/stockout-risks/" + page.items[0].risk_id,
+                    headers=bearer(tokens["local-operator"]),
+                ).status_code
+                == 404
+            )
+            assert (
+                client.get(
+                    "/api/v1/stockout-risks", params=dict(view="attention_queue"), headers=headers
+                ).status_code
+                == 422
+            )
+            request_headers = {**headers, "Idempotency-Key": "owned-stockout-http-acceptance"}
+            accepted = client.post(
+                "/api/v1/stockout-runs", json=body.model_dump(mode="json"), headers=request_headers
+            )
+            assert accepted.status_code == 202
+            accepted_id = accepted.json()["run_id"]
+            assert accepted.headers["Location"] == "/api/v1/stockout-runs/" + accepted_id
+            assert (
+                client.post(
+                    "/api/v1/stockout-runs",
+                    json=body.model_dump(mode="json"),
+                    headers=request_headers,
+                ).json()["run_id"]
+                == accepted_id
+            )
+            queue.cancel(accepted_id)
+            assert (
+                client.get("/api/v1/stockout-runs/" + accepted_id, headers=headers).json()["status"]
+                == "cancelled"
+            )
         for statement in (
             "UPDATE ai.stockout_prepared_inputs SET inputs=inputs",
             "UPDATE ai.stockout_batch_attempts SET record=record",
@@ -216,9 +336,12 @@ def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(reques
                         "append_only_inputs_attempts_and_outputs",
                         "retry_then_cancel_records_closed_attempts",
                         "production_rejects_mechanics_namespace",
+                        "real_worker_cold_child_and_MLflow_guards_before_complete_publication",
+                        "real_SQL_priority_view_keeps_complete_profile_budget_and_separates_current_stockouts",
+                        "real_HTTP_committed_202_idempotency_auth_scope_and_priority_projection",
                     ],
                     real_postgres=True,
-                    real_mlflow_stockout_registry=False,
+                    real_mlflow_stockout_registry=True,
                     independent_quality_accepted=False,
                     final_test_outcomes_evaluated=False,
                     production_model_promoted=False,

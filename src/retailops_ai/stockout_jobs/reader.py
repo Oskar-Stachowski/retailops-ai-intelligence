@@ -24,9 +24,11 @@ from retailops_ai.stockout_jobs.ports import (
 from retailops_ai.stockout_jobs.ports import (
     StockoutReader as StockoutReader,
 )
+from retailops_ai.stockout_jobs.priority import priorities
 from retailops_ai.stockout_jobs.queue import PostgresStockoutQueue
 from retailops_ai.stockout_jobs.read_contracts import (
     StockoutAttempts,
+    StockoutPriority,
     StockoutQuery,
     StockoutRisk,
     StockoutRiskPage,
@@ -77,7 +79,13 @@ def read_scope(query: StockoutQuery, principal: Principal) -> tuple[set[str], se
     return products, stocks
 
 
-def fresh(item: RiskItem, now: datetime, *, pending: bool = False) -> StockoutRisk:
+def fresh(
+    item: RiskItem,
+    now: datetime,
+    *,
+    pending: bool = False,
+    priority: StockoutPriority | None = None,
+) -> StockoutRisk:
     if now < item.generated_at:
         raise ValueError("stockout_read_future_output")
     age = (now - item.as_of).total_seconds()
@@ -101,6 +109,7 @@ def fresh(item: RiskItem, now: datetime, *, pending: bool = False) -> StockoutRi
                 "read_at": now.isoformat(),
                 "origin_age_seconds": age,
                 "output_age_seconds": (now - item.generated_at).total_seconds(),
+                "priority": priority.model_dump(mode="json") if priority is not None else None,
             }
         )
     )
@@ -177,6 +186,7 @@ ORDER BY (record->>'requested_at')::timestamptz LIMIT 101
             pending_runs = [StockoutRun.model_validate_json(json.dumps(r)) for r in pending]
             selected: dict[tuple[str, str], RiskItem] = {}
             exact: list[RiskItem] = []
+            priority_rows: dict[str, StockoutPriority] = {}
             for row in rows:
                 run = StockoutRun.model_validate_json(json.dumps(row["record"]))
                 raw = json.dumps(row["output"]).encode()
@@ -197,6 +207,7 @@ ORDER BY (record->>'requested_at')::timestamptz LIMIT 101
                 )
                 if output.output_id != run.output_id:
                     raise ValueError("stockout_read_output_pointer")
+                priority_rows.update(priorities(output, profile, principal))
                 for item in output.items:
                     if (
                         item.product_id not in products
@@ -220,6 +231,16 @@ ORDER BY (record->>'requested_at')::timestamptz LIMIT 101
                 exact if query.as_of or query.inference_run_id or risk_id else selected.values(),
                 key=lambda r: (r.product_id, r.stock_location_id, r.as_of, r.risk_id),
             )
+            # A state view filters the chosen latest state, rather than finding
+            # an older matching status hidden behind a newer complete output.
+            if query.view == "attention_queue":
+                items = [i for i in items if priority_rows[i.risk_id].selected_at_origin is True]
+            elif query.view == "current_stockouts":
+                items = [i for i in items if i.status == "already_stockout"]
+            if query.view == "attention_queue":
+                items.sort(
+                    key=lambda r: (-float(r.probability or 0), r.product_id, r.stock_location_id)
+                )
             stale = {
                 i.risk_id: any(
                     i.product_id in r.input_ref.request.scope.product_ids
@@ -238,13 +259,17 @@ ORDER BY (record->>'requested_at')::timestamptz LIMIT 101
                     query=query.model_dump(mode="json", exclude={"offset", "limit", "view_sha256"}),
                     items=[i.model_dump(mode="json") for i in items],
                     newer_unpublished=stale,
+                    priorities={
+                        i.risk_id: priority_rows[i.risk_id].model_dump(mode="json") for i in items
+                    },
                 )
             )
             if query.view_sha256 is not None and query.view_sha256 != view:
                 raise StockoutError(409, "stockout-view-changed")
             end = query.offset + query.limit
             projected = tuple(
-                fresh(i, now, pending=stale[i.risk_id]) for i in items[query.offset : end]
+                fresh(i, now, pending=stale[i.risk_id], priority=priority_rows[i.risk_id])
+                for i in items[query.offset : end]
             )
             page = StockoutRiskPage(
                 items=projected,

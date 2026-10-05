@@ -1,5 +1,14 @@
 # Aktualny status
 
+**AI 08 — real MLflow/SQL/backup są zaliczone; worker i priorytety czekają na pełny odbiór.**
+[Przyrost 08.22](evidence/08-22-stockout-worker-and-priority.md) dodaje izolowane
+obliczenia, fencing, widok priority przed projekcją scope i osobny current stockout.
+132 focused tests przechodzą. Rzeczywiste odbiory 37255271458 i 37255965904 zaliczyły
+SQL/backup oraz stockout MLflow; większy checker worker/HTTP/priority wymaga nowego CI.
+Kampania 9296 punktów jest zamrożona i czeka na zgodę właściciela. Niezależna jakość,
+kwalifikacja/karta, osobna promocja i końcowy CI pozostają otwarte.
+**AI 08 pozostaje not ready.** Niżej zachowano historyczne zakresy.
+
 **AI 08 — kampania 9296 punktów jest zamrożona; końcowa ocena czeka na zgodę.**
 [Odbiór przyrostu](evidence/08-21-stockout-final-campaign-and-registry.md) zapisuje
 sześć przygotowanych źródeł, evaluator z kontrolą zgody oraz byte verifier
