@@ -133,7 +133,11 @@ def capsule_names(*, final: bool) -> set[str]:
         "inputs.json",
         "signature.json",
     } | {f"reports/{gate}.json" for gate in REVIEW_GATES}
-    return names | {"final_quality.json", "campaign_freeze.json"} if final else names
+    return (
+        names | {"final_quality.json", "campaign_freeze.json", "campaign_permission.json"}
+        if final
+        else names
+    )
 
 
 class StockoutRegistrySource(Contract):

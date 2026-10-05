@@ -1,5 +1,14 @@
 # Aktualny status
 
+**AI 08 — kampania 9296 punktów jest zamrożona; końcowa ocena czeka na zgodę.**
+[Odbiór przyrostu](evidence/08-21-stockout-final-campaign-and-registry.md) zapisuje
+sześć przygotowanych źródeł, evaluator z kontrolą zgody oraz byte verifier
+i importer stockout MLflow. 118 focused tests przechodzi; rzeczywisty odbiór
+nowego MLflow/SQL/backup jest jeszcze wymagany. Startup i pełne checks poprzedniego
+CI są zielone, ale SQL 0021 wymagał poprawki kolejności operatorów JSON.
+Worker, priorytety operacyjne, niezależna jakość, osobna promocja i końcowy odbiór
+są otwarte. **AI 08 pozostaje not ready.** Niżej jest historia wcześniejszych zakresów.
+
 **AI 08 — komplet sześciu źródeł jest przygotowany; poprawka CI czeka na odbiór.**
 Trzy matching i trzy późniejsze kohorty 42/137/2026 zakończyły przygotowanie.
 Końcowe etykiety nie były oceniane. Nowe CI wykryło błąd typu w generatorze
