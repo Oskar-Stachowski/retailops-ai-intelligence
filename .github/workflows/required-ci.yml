@@ -70,9 +70,34 @@ jobs:
       - run: make evaluations-smoke
       - name: Accept v12 registry, jobs, publication, metadata, backup and recovery
         run: make v12-backup-smoke
+  anomaly-oci:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: 9c000bcc00ea8ec03a45d49ee2ecf49d13de1cf7
+          path: .local/ai07-ci-source
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - run: make bootstrap
+      - name: Prepare the pinned native producer toolchain
+        run: |
+          uv venv --python 3.11.15 .local/ai07-ci-source/services/api/.venv
+          uv pip install --python .local/ai07-ci-source/services/api/.venv/bin/python -r .local/ai07-ci-source/services/api/requirements-dev.txt -r .local/ai07-ci-source/data/requirements-parquet.txt
+      - name: Accept qualified anomaly models, native parents, OCI, PostgreSQL 16 and recovery
+        run: uv run --frozen python scripts/check_anomaly_oci.py --producer .local/ai07-ci-source
   required-result:
     if: always()
-    needs: [checks, secrets, persistence]
+    needs: [checks, secrets, persistence, anomaly-oci]
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     steps:
@@ -81,7 +106,9 @@ jobs:
           CHECKS_RESULT: ${{ needs.checks.result }}
           PERSISTENCE_RESULT: ${{ needs.persistence.result }}
           SECRETS_RESULT: ${{ needs.secrets.result }}
+          ANOMALY_OCI_RESULT: ${{ needs.anomaly-oci.result }}
         run: |
           test "$CHECKS_RESULT" = "success"
           test "$SECRETS_RESULT" = "success"
           test "$PERSISTENCE_RESULT" = "success"
+          test "$ANOMALY_OCI_RESULT" = "success"

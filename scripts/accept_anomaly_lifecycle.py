@@ -402,6 +402,35 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             == "replayed",
             "anomaly_publication_idempotence",
         )
+        batch_body = {
+            "request_id": "ai07-native-publish",
+            "release_id": active.release_id,
+            "scopes": [s.model_dump(mode="json") for s in split.scopes],
+            "window": window.model_dump(mode="json"),
+            "as_of": as_of.isoformat(),
+        }
+        batch_args = [
+            "--policy-file",
+            str(policy),
+            "--credentials-file",
+            str(private["ai07-pipeline"]),
+            "--prepared-receipt",
+            str(args.prepared_receipt),
+            "--model",
+            str(args.primary / "model.json"),
+        ]
+        require(
+            cli("retailops_ai.anomaly_portfolio.batch_cli", batch_args, batch_body)["status"]
+            == "replayed",
+            "anomaly_authenticated_installed_batch_cli_replays_complete_pinned_batch",
+        )
+        cli(
+            "retailops_ai.anomaly_portfolio.batch_cli",
+            [*batch_args[:2], "--credentials-file", str(private["ai07-reader"]), *batch_args[4:]],
+            batch_body,
+            expected=2,
+        )
+        checks.append("authenticated_installed_batch_cli_and_viewer_write_refusal")
         later, later_items = batch(
             active,
             args.primary / "model.json",

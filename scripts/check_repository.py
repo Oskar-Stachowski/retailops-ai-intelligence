@@ -38,6 +38,12 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
         errors.append("workflow permissions must be contents:read")
     jobs = workflow.get("jobs", {})
     if not any(
+        step.get("run")
+        == "uv run --frozen python scripts/check_anomaly_oci.py --producer .local/ai07-ci-source"
+        for step in jobs.get("anomaly-oci", {}).get("steps", [])
+    ):
+        errors.append("anomaly-oci must execute qualified native OCI and Pg16 acceptance")
+    if not any(
         step.get("run") == "make bootstrap compose-smoke"
         for step in jobs.get("persistence", {}).get("steps", [])
     ):

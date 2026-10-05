@@ -449,8 +449,17 @@ def test_file_cannot_hide_positions_using_repeated_receipts(prepared):
 
 
 def test_reviewed_contracts_and_all_frozen_capture_records(prepared):
-    for name, model in [("binding.schema.json", Binding), ("manifest.schema.json", Manifest)]:
-        assert json.loads(contract_bytes(name)) == model.model_json_schema()
+    assert json.loads(contract_bytes("binding.schema.json")) == Binding.model_json_schema()
+    # The current reader supports the additive v2.1 portfolio capacity.
+    # Preserve the frozen v2.0 wire contract and prove its real legacy output
+    # still validates, instead of rewriting that older contract to the union.
+    current = json.loads(contract_bytes("manifest_v21.schema.json"))
+    current.pop("$schema")
+    assert current == Manifest.model_json_schema()
+    saved = json.loads((Path(prepared["result"]["directory"]) / "dq_manifest.json").read_bytes())
+    assert saved["descriptor"]["schema_version"] == "2.0.0"
+    for name in ("manifest.schema.json", "manifest_v21.schema.json"):
+        Draft202012Validator(json.loads(contract_bytes(name))).validate(saved)
     validator = Draft202012Validator(json.loads(contract_bytes("producer_capture.schema.json")))
     for line in prepared["raw"].splitlines():
         record = json.loads(line)
