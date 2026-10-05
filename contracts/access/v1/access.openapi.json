@@ -4236,6 +4236,96 @@
         "title": "StockoutJobRun",
         "type": "object"
       },
+      "StockoutPriority": {
+        "additionalProperties": false,
+        "properties": {
+          "capacity_slots": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capacity Slots"
+          },
+          "eligible_in_universe": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eligible In Universe"
+          },
+          "other_scope_context": {
+            "enum": [
+              "visible_authorized",
+              "withheld"
+            ],
+            "title": "Other Scope Context",
+            "type": "string"
+          },
+          "rank_at_origin": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rank At Origin"
+          },
+          "selected_at_origin": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected At Origin"
+          },
+          "universe": {
+            "const": "complete_registered_profile_at_origin",
+            "default": "complete_registered_profile_at_origin",
+            "title": "Universe",
+            "type": "string"
+          },
+          "universe_id": {
+            "pattern": "^stockout-inputs-sha256-[0-9a-f]{64}$",
+            "title": "Universe Id",
+            "type": "string"
+          },
+          "version": {
+            "const": "stockout-origin-priority-1.0.0",
+            "default": "stockout-origin-priority-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "universe_id",
+          "selected_at_origin",
+          "rank_at_origin",
+          "eligible_in_universe",
+          "capacity_slots",
+          "other_scope_context"
+        ],
+        "title": "StockoutPriority",
+        "type": "object"
+      },
       "StockoutRequest": {
         "additionalProperties": false,
         "properties": {
@@ -4406,6 +4496,16 @@
             "minimum": 0.0,
             "title": "Output Age Seconds",
             "type": "number"
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StockoutPriority"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "probability": {
             "anyOf": [
