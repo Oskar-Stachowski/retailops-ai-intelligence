@@ -186,6 +186,10 @@ integration-replay-test:
 integration-failure-test:
 	REQUIRE_AI10_OUTBOX_TESTS=1 $(UV_RUN) python -m pytest tests/test_intelligence_outbox.py
 
+.PHONY: observation-persistence-test
+observation-persistence-test:
+	REQUIRE_AI10_OBSERVATION_TESTS=1 AI10_OBSERVATION_REPORT=artifacts/ai10-durable-observation-replay.json $(UV_RUN) python -m pytest tests/test_observation_store_postgres.py --junitxml=artifacts/ai10-durable-observation-replay-tests.xml
+
 .PHONY: source-rest-check source-rest-read
 .PHONY: source-bundle-check
 source-bundle-check:

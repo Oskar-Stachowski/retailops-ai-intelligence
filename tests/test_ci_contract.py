@@ -21,6 +21,23 @@ def test_workflow_is_covered_by_required_result():
     assert module.workflow_errors(workflow()) == []
 
 
+@pytest.mark.parametrize("mutation", ["removed", "bypassed", "not-required"])
+def test_observation_persistence_gate_cannot_be_skipped(mutation):
+    data = workflow()
+    if mutation == "removed":
+        data["jobs"].pop("observation-replay")
+    elif mutation == "bypassed":
+        gate = next(
+            step
+            for step in data["jobs"]["observation-replay"]["steps"]
+            if step.get("run") == "make bootstrap observation-persistence-test"
+        )
+        gate["run"] = "make bootstrap"
+    else:
+        data["jobs"]["required-result"]["needs"].remove("observation-replay")
+    assert module.workflow_errors(data)
+
+
 def test_required_ci_cannot_drop_mlflow_restore_smoke():
     data = workflow()
     data["jobs"]["persistence"]["steps"] = [

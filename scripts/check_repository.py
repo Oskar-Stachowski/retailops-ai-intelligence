@@ -93,6 +93,11 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
     ):
         errors.append("checks must run every make check gate")
     required = jobs.get("required-result", {})
+    if not any(
+        step.get("run") == "make bootstrap observation-persistence-test"
+        for step in jobs.get("observation-replay", {}).get("steps", [])
+    ):
+        errors.append("observation-replay must execute real PostgreSQL acceptance")
     if set(required.get("needs", [])) != set(jobs) - {"required-result"}:
         errors.append("required-result must depend on every check")
     if required.get("if") != "always()":
