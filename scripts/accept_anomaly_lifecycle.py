@@ -5,9 +5,11 @@ import json
 import re
 import subprocess
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from threading import Barrier, Lock
 from typing import Any
 
 from anomaly_acceptance_http import HTTPClient
@@ -304,13 +306,32 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         else:
             raise ValueError("anomaly_pending_decision_was_not_blocking")
 
+        start_recovery = Barrier(2)
+        recovery_counts_lock = Lock()
+        recovery_counts = {"busy": 0}
+
         def recover() -> dict[str, Any]:
-            return Lifecycle(registry, PostgresJournal(engine), environment="test").execute(
-                second, promoter
-            )
+            start_recovery.wait(timeout=10)
+            deadline = time.monotonic() + 60
+            while True:
+                try:
+                    return Lifecycle(registry, PostgresJournal(engine), environment="test").execute(
+                        second, promoter
+                    )
+                except ValueError as exc:
+                    # The accepted shared lock deliberately rejects concurrent
+                    # entry. Retry only that transient result, never another error.
+                    if str(exc) != "model_lifecycle_busy":
+                        raise
+                    with recovery_counts_lock:
+                        recovery_counts["busy"] += 1
+                    if time.monotonic() >= deadline:
+                        raise ValueError("anomaly_recovery_contention_timeout") from exc
+                    time.sleep(0.05)
 
         with ThreadPoolExecutor(max_workers=2) as pool:
             recovered = list(pool.map(lambda _: recover(), range(2)))
+        require(recovery_counts["busy"] > 0, "anomaly_native_lock_contention_not_exercised")
         require(
             len({r["model_version"] for r in recovered}) == 1,
             "anomaly_recovery_created_duplicate_version",
