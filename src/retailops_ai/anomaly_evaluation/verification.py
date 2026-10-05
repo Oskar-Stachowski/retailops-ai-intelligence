@@ -135,8 +135,10 @@ def verify_quality(
         != frozen["model_sha256"]
         or model.descriptor.train.model_dump(mode="json") != frozen["protocol"]["train"]
         or model.descriptor.validation.model_dump(mode="json") != frozen["protocol"]["validation"]
-        or model.descriptor.training_cutoff.isoformat() != frozen["protocol"]["training_cutoff"]
-        or model.descriptor.selection_cutoff.isoformat() != frozen["protocol"]["selection_cutoff"]
+        or model.descriptor.training_cutoff
+        != datetime.fromisoformat(frozen["protocol"]["training_cutoff"])
+        or model.descriptor.selection_cutoff
+        != datetime.fromisoformat(frozen["protocol"]["selection_cutoff"])
     ):
         raise ValueError("anomaly_quality_model_protocol_binding")
     policy = QualityPolicy.model_validate_json(json.dumps(frozen["quality_policy"]))

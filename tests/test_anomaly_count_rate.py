@@ -139,3 +139,80 @@ def test_saved_json_count_arrays_replay_and_strict_numbers_remain_required(saved
         ):
             with pytest.raises(ValidationError):
                 verify_scores(model, decisions, [{**saved, name: invalid}])
+
+
+def test_quality_protocol_accepts_equivalent_utc_json_and_rejects_changed_instant(saved_model):  # noqa: F811 - injected genuine forest fixture
+    import hashlib
+    from copy import deepcopy
+    from datetime import datetime
+
+    from test_anomaly_detectors import scope
+
+    from retailops_ai.anomaly_evaluation.quality import QualityPolicy
+    from retailops_ai.anomaly_evaluation.verification import verify_quality
+    from retailops_ai.source_snapshot.files import canonical_json
+
+    descriptor = saved_model.descriptor.model_dump(mode="json")
+    frozen = {
+        "detector_id": saved_model.detector_id,
+        "family": "isolation_forest",
+        "final_test_at_freeze": "not_scored",
+        "model_sha256": hashlib.sha256(
+            canonical_json(saved_model.model_dump(mode="json")) + b"\n"
+        ).hexdigest(),
+        "protocol": {
+            **{
+                k: descriptor[k]
+                for k in ("train", "validation", "training_cutoff", "selection_cutoff")
+            },
+            "scopes": [scope().model_dump(mode="json")],
+        },
+        "quality_policy": QualityPolicy(
+            minimum_precision=0.8,
+            minimum_recall=0.65,
+            maximum_false_alerts_per_1000=10,
+            minimum_high_severity_precision=0.9,
+            minimum_episode_recall=0.75,
+            minimum_evaluable_coverage=0.55,
+            minimum_clean_per_case=300,
+        ).model_dump(mode="json"),
+        "evaluation_policy": {},
+        "data_inventory": [
+            {
+                "seed": seed,
+                "scenario": scenario,
+                "source_dataset_id": saved_model.descriptor.source_dataset_id,
+            }
+            for seed in (42, 137, 2026)
+            for scenario in ("demand", "physical")
+        ],
+    }
+
+    def check(value):
+        selection = {
+            "selection_id": "anomaly-selection-sha256-" + json_sha256(value),
+            "descriptor": value,
+        }
+        verify_quality(
+            {"evaluation_inputs": {}},
+            {"selection": selection},
+            lambda _: b"",
+            saved_model.detector_id,
+            "isolation_forest",
+            saved_model,
+        )
+
+    assert frozen["protocol"]["training_cutoff"].endswith("Z")
+    # The UTC representation binds successfully, then the missing independent
+    # evidence is still rejected. No artifact or gate is accepted by this test.
+    with pytest.raises(ValueError, match="anomaly_quality_artifact_inventory"):
+        check(frozen)
+    offset = deepcopy(frozen)
+    offset["protocol"]["training_cutoff"] = saved_model.descriptor.training_cutoff.isoformat()
+    with pytest.raises(ValueError, match="anomaly_quality_artifact_inventory"):
+        check(offset)
+    changed = deepcopy(frozen)
+    cutoff = datetime.fromisoformat(changed["protocol"]["training_cutoff"]) + timedelta(seconds=1)
+    changed["protocol"]["training_cutoff"] = cutoff.isoformat()
+    with pytest.raises(ValueError, match="anomaly_quality_model_protocol_binding"):
+        check(changed)
