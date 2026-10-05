@@ -226,31 +226,36 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
             "model_sha256": frozen["model_sha256"],
         }
         artifacts["gate_" + name + ".json"] = canonical_json(report) + b"\n"
-    qualification = Qualification.model_validate(
-        {
-            "evidence_id": evidence_id,
-            "evaluation_id": quality["quality_id"],
-            "reference_id": reference,
-            "source_dataset_id": model.descriptor.source_dataset_id,
-            "qualified_anomaly_input_id": model.descriptor.qualified_anomaly_input_id,
-            "original_started_at": frozen["original_started_at"],
-            "original_completed_at": frozen["original_completed_at"],
-            "source_code_commit": source_commit,
-            "ai_code_commit": args.ai_commit,
-            "dependency_lock_sha256": model.descriptor.dependency_lock_sha256,
-            "model_family": frozen["family"],
-            "model_seed": policy.model_seed,
-            "model": receipt(artifacts["model.json"]),
-            "config": receipt(artifacts["config.json"]),
-            "signature": receipt(artifacts["signature.json"]),
-            "input_example": receipt(artifacts["input_example.json"]),
-            "expected_output_sha256": output_sha,
-            "qualification_scope": frozen["quality_policy"]["qualification_scope"],
-            "gates": {
-                name: {"status": "passed", "report": receipt(artifacts["gate_" + name + ".json"])}
-                for name in GATES
-            },
-        }
+    qualification = Qualification.model_validate_json(
+        json.dumps(
+            {
+                "evidence_id": evidence_id,
+                "evaluation_id": quality["quality_id"],
+                "reference_id": reference,
+                "source_dataset_id": model.descriptor.source_dataset_id,
+                "qualified_anomaly_input_id": model.descriptor.qualified_anomaly_input_id,
+                "original_started_at": frozen["original_started_at"],
+                "original_completed_at": frozen["original_completed_at"],
+                "source_code_commit": source_commit,
+                "ai_code_commit": args.ai_commit,
+                "dependency_lock_sha256": model.descriptor.dependency_lock_sha256,
+                "model_family": frozen["family"],
+                "model_seed": policy.model_seed,
+                "model": receipt(artifacts["model.json"]),
+                "config": receipt(artifacts["config.json"]),
+                "signature": receipt(artifacts["signature.json"]),
+                "input_example": receipt(artifacts["input_example.json"]),
+                "expected_output_sha256": output_sha,
+                "qualification_scope": frozen["quality_policy"]["qualification_scope"],
+                "gates": {
+                    name: {
+                        "status": "passed",
+                        "report": receipt(artifacts["gate_" + name + ".json"]),
+                    }
+                    for name in GATES
+                },
+            }
+        )
     )
     AnomalyRegistry.smoke(qualification, artifacts)
     for name, expected in final["evaluation_inputs"].items():

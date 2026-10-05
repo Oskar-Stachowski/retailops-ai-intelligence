@@ -1,5 +1,6 @@
 """Qualification rejects empty, incomplete and resealed inconsistent reports."""
 
+import json
 from copy import deepcopy
 from datetime import UTC, date, datetime, timedelta
 
@@ -134,6 +135,33 @@ def test_no_alerts_does_not_qualify_or_claim_perfect_precision():
     assert report["status"] == "not_ready"
     assert report["summary"]["metrics"]["precision"] is None
     assert report["summary"]["metrics"]["episode_recall"] == 0
+
+
+def test_good_global_recall_cannot_hide_a_wholly_missed_business_type():
+    inputs = {}
+    data = cases(inputs=inputs)
+    for case in data:
+        value = inputs[f"evaluation_inputs_{case['seed']}_{case['scenario']}.json"]
+        decisions = [Decision.model_validate_json(json.dumps(d)) for d in value["decisions"]]
+        if case["scenario"] == "physical":
+            decisions = [
+                d.model_copy(update={"score": 0.0, "alert": False, "severity": "none"})
+                if d.event_type == "return_completed" and d.business_date.day == 2
+                else d
+                for d in decisions
+            ]
+        case["report"] = evaluate(
+            decisions,
+            Truth.model_validate_json(json.dumps(value["truth"])),
+            WINDOW,
+            AS_OF,
+            source_dataset_id=case["source_dataset_id"],
+        )
+    report = assess(data, POLICY)["descriptor"]
+    assert report["summary"]["metrics"]["episode_recall"] == 0.8
+    assert report["status"] == "not_ready"
+    check = next(c for c in report["checks"] if c["check_id"] == "episode_recall/return_spike")
+    assert check["status"] == "failed" and check["value"] == 0
 
 
 @pytest.mark.parametrize(

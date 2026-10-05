@@ -4201,6 +4201,13 @@
             "title": "Minimum Episode Recall",
             "type": "number"
           },
+          "minimum_episode_recall_per_type": {
+            "default": 0.5,
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Minimum Episode Recall Per Type",
+            "type": "number"
+          },
           "minimum_episodes_per_type": {
             "default": 3,
             "maximum": 100.0,

@@ -26,6 +26,7 @@ class QualityPolicy(Contract):
     maximum_false_alerts_per_1000: Annotated[float, Field(ge=0, le=1000)]
     minimum_high_severity_precision: Annotated[float, Field(gt=0, le=1)]
     minimum_episode_recall: Annotated[float, Field(gt=0, le=1)]
+    minimum_episode_recall_per_type: Annotated[float, Field(gt=0, le=1)] = 0.5
     minimum_evaluable_coverage: Annotated[float, Field(gt=0, le=1)]
     minimum_clean_per_case: Annotated[int, Field(ge=1, le=10000)]
     minimum_episodes_per_type: Annotated[int, Field(ge=3, le=100)] = 3
@@ -300,6 +301,14 @@ def assess(cases: list[dict[str, Any]], policy: QualityPolicy) -> dict[str, Any]
             count,
             policy.minimum_episodes_per_type,
             count >= policy.minimum_episodes_per_type,
+        )
+        detected = summary["detected_episodes_per_type"].get(kind, 0)
+        recall = detected / count if count else None
+        check(
+            "episode_recall/" + kind,
+            recall,
+            policy.minimum_episode_recall_per_type,
+            recall is not None and recall >= policy.minimum_episode_recall_per_type,
         )
         count = summary["positive_observations_per_type"].get(kind, 0)
         check(

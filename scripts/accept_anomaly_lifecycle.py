@@ -10,7 +10,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
-from fastapi.testclient import TestClient
+from anomaly_acceptance_http import HTTPClient
 from log_anomaly_capsule import log
 from sqlalchemy import create_engine, text
 
@@ -479,7 +479,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         all_rows = results.read(Query(limit=100), reader)
         require(all_rows.pagination.total == len(items), "anomaly_native_read_census")
         app_settings = settings.model_copy(update={"api_auth_file": policy})
-        with TestClient(create_app(app_settings), base_url="http://127.0.0.1") as client:
+        with HTTPClient(create_app(app_settings)) as client:
             full = {"Authorization": "Bearer " + tokens["ai07-reader"]}
             partial = {"Authorization": "Bearer " + tokens["ai07-partial-reader"]}
             require(
