@@ -9,6 +9,7 @@ from retailops_ai.anomaly_portfolio.lifecycle_contract import MODEL, Binding, Re
 from retailops_ai.anomaly_portfolio.result_store import ReadError, authorized
 from retailops_ai.anomaly_portfolio.serving_contract import Query
 from retailops_ai.domain.access import Principal
+from retailops_ai.model_lifecycle.anomaly_evaluation_contracts import version_evaluation_id
 from retailops_ai.model_lifecycle.read_contracts import (
     ApprovedModelRelease,
     CatalogFreshness,
@@ -142,7 +143,9 @@ class PostgresAnomalyCatalog:
                     qualification_sha256=binding.qualification_sha256,
                     config_sha256=qualification.config.sha256,
                     feature_schema_version=qualification.feature_schema_version,
-                    evaluation_id=qualification.evaluation_id,
+                    evaluation_id=version_evaluation_id(
+                        qualification.evaluation_id, binding.model_version, binding.mlflow_run_id
+                    ),
                     visible_last_published_at=record["published"],
                     freshness=CatalogFreshness(evaluated_at=now),
                 )

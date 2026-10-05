@@ -7,7 +7,7 @@ from functools import lru_cache
 from statistics import median
 
 from retailops_ai.anomaly_detectors.contract import Fill, FitPolicy, Forest, Pipeline
-from retailops_ai.qualified_anomalies.contract import ModelRow
+from retailops_ai.anomaly_detectors.rows import MultiscaleRow, NumericalRow, validate_row
 from retailops_ai.source_snapshot.files import SnapshotError
 
 QUANTUM = Decimal("0.000000000001")
@@ -25,7 +25,7 @@ def number(value: int | float | bool) -> float:
     return result
 
 
-def fit_fills(rows: list[ModelRow], policy: FitPolicy) -> tuple[Fill, ...]:
+def fit_fills(rows: list[NumericalRow], policy: FitPolicy) -> tuple[Fill, ...]:
     fills = []
     for name in policy.features:
         known = [number(value) for row in rows if (value := getattr(row, name)) is not None]
@@ -40,8 +40,8 @@ def fit_fills(rows: list[ModelRow], policy: FitPolicy) -> tuple[Fill, ...]:
     return tuple(fills)
 
 
-def transform(row: ModelRow, fills: tuple[Fill, ...]) -> tuple[float, ...]:
-    row = ModelRow.model_validate(row.model_dump(mode="python"))
+def transform(row: NumericalRow, fills: tuple[Fill, ...]) -> tuple[float, ...]:
+    row = validate_row(row.model_dump(mode="python"))
     values = tuple(
         fill.value if (value := getattr(row, fill.name)) is None else number(value)
         for fill in fills
@@ -104,9 +104,15 @@ def score_matrix(forest: Forest, rows: list[tuple[float, ...]]) -> tuple[float, 
     return tuple(output)
 
 
-def forest_scores(pipeline: Pipeline, rows: list[ModelRow]) -> tuple[float, ...]:
+def forest_scores(pipeline: Pipeline, rows: list[NumericalRow]) -> tuple[float, ...]:
     return score_matrix(pipeline.forest, [transform(row, pipeline.fills) for row in rows])
 
 
-def baseline_score(row: ModelRow) -> float:
-    return rounded(abs(row.standardized_residual))
+def baseline_score(row: NumericalRow) -> float:
+    values = [abs(row.standardized_residual)]
+    if isinstance(row, MultiscaleRow):
+        values += [
+            abs(v) for v in (row.short_count_residual, row.long_count_residual) if v is not None
+        ]
+        values.append(row.inventory_shortfall)
+    return rounded(max(values))

@@ -37,7 +37,10 @@
           "standardized_residual",
           "planned_price",
           "promotion_offered",
-          "on_hand"
+          "on_hand",
+          "short_count_residual",
+          "long_count_residual",
+          "inventory_shortfall"
         ],
         "type": "string"
       },
@@ -143,8 +146,11 @@
       "type": "number"
     },
     "version": {
-      "const": "anomaly-detector-fit-1.0.0",
       "default": "anomaly-detector-fit-1.0.0",
+      "enum": [
+        "anomaly-detector-fit-1.0.0",
+        "anomaly-detector-fit-2.0.0"
+      ],
       "title": "Version",
       "type": "string"
     }

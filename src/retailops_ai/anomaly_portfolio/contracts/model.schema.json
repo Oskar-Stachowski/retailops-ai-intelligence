@@ -123,7 +123,10 @@
             "standardized_residual",
             "planned_price",
             "promotion_offered",
-            "on_hand"
+            "on_hand",
+            "short_count_residual",
+            "long_count_residual",
+            "inventory_shortfall"
           ],
           "title": "Name",
           "type": "string"
@@ -188,7 +191,10 @@
               "standardized_residual",
               "planned_price",
               "promotion_offered",
-              "on_hand"
+              "on_hand",
+              "short_count_residual",
+              "long_count_residual",
+              "inventory_shortfall"
             ],
             "type": "string"
           },
@@ -294,8 +300,11 @@
           "type": "number"
         },
         "version": {
-          "const": "anomaly-detector-fit-1.0.0",
           "default": "anomaly-detector-fit-1.0.0",
+          "enum": [
+            "anomaly-detector-fit-1.0.0",
+            "anomaly-detector-fit-2.0.0"
+          ],
           "title": "Version",
           "type": "string"
         }
@@ -307,7 +316,7 @@
       "additionalProperties": false,
       "properties": {
         "feature_count": {
-          "maximum": 16,
+          "maximum": 22,
           "minimum": 2,
           "title": "Feature Count",
           "type": "integer"
@@ -422,13 +431,130 @@
       "title": "Group",
       "type": "object"
     },
+    "MultiscaleDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "feature_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Feature Manifest Sha256",
+          "type": "string"
+        },
+        "feature_rows_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Feature Rows Sha256",
+          "type": "string"
+        },
+        "groups": {
+          "items": {
+            "$ref": "#/$defs/Group"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Groups",
+          "type": "array"
+        },
+        "history_clock": {
+          "const": "prior_ready_scoring_origins_at_or_before_current_origin",
+          "default": "prior_ready_scoring_origins_at_or_before_current_origin",
+          "title": "History Clock",
+          "type": "string"
+        },
+        "policy": {
+          "$ref": "#/$defs/FitPolicy"
+        },
+        "qualified_anomaly_input_id": {
+          "pattern": "^qualified-anomaly-inputs-sha256-[0-9a-f]{64}$",
+          "title": "Qualified Anomaly Input Id",
+          "type": "string"
+        },
+        "residual_recipe": {
+          "const": "causal-count-residuals-1.0.0",
+          "default": "causal-count-residuals-1.0.0",
+          "title": "Residual Recipe",
+          "type": "string"
+        },
+        "selection_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Selection Cutoff",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "train": {
+          "$ref": "#/$defs/Window"
+        },
+        "training_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Training Cutoff",
+          "type": "string"
+        },
+        "training_membership_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Training Membership Sha256",
+          "type": "string"
+        },
+        "truth_access": {
+          "const": "excluded_no_oracle_training",
+          "default": "excluded_no_oracle_training",
+          "title": "Truth Access",
+          "type": "string"
+        },
+        "validation": {
+          "$ref": "#/$defs/Window"
+        },
+        "validation_membership_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Validation Membership Sha256",
+          "type": "string"
+        },
+        "version": {
+          "const": "anomaly-portfolio-model-2.0.0",
+          "default": "anomaly-portfolio-model-2.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "qualified_anomaly_input_id",
+        "feature_manifest_sha256",
+        "feature_rows_sha256",
+        "train",
+        "validation",
+        "training_cutoff",
+        "selection_cutoff",
+        "policy",
+        "groups",
+        "training_membership_sha256",
+        "validation_membership_sha256",
+        "code_sha256",
+        "dependency_lock_sha256"
+      ],
+      "title": "MultiscaleDescriptor",
+      "type": "object"
+    },
     "Node": {
       "additionalProperties": false,
       "properties": {
         "feature": {
           "anyOf": [
             {
-              "maximum": 15,
+              "maximum": 21,
               "minimum": 0,
               "type": "integer"
             },
@@ -499,7 +625,7 @@
           "items": {
             "$ref": "#/$defs/Fill"
           },
-          "maxItems": 8,
+          "maxItems": 11,
           "minItems": 1,
           "title": "Fills",
           "type": "array"
@@ -627,7 +753,22 @@
   "additionalProperties": false,
   "properties": {
     "descriptor": {
-      "$ref": "#/$defs/Descriptor"
+      "discriminator": {
+        "mapping": {
+          "anomaly-portfolio-model-1.0.0": "#/$defs/Descriptor",
+          "anomaly-portfolio-model-2.0.0": "#/$defs/MultiscaleDescriptor"
+        },
+        "propertyName": "version"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/MultiscaleDescriptor"
+        },
+        {
+          "$ref": "#/$defs/Descriptor"
+        }
+      ],
+      "title": "Descriptor"
     },
     "detector_id": {
       "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",

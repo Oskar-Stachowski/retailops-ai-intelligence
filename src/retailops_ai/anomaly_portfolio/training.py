@@ -8,20 +8,39 @@ from retailops_ai.anomaly_detectors.codec import baseline_score, forest_scores
 from retailops_ai.anomaly_detectors.contract import FitPolicy, Group
 from retailops_ai.anomaly_detectors.engine import capacity_threshold
 from retailops_ai.anomaly_detectors.fit import fit_pipeline
-from retailops_ai.anomaly_detectors.protocol import requested
+from retailops_ai.anomaly_detectors.protocol import requested, series_key
+from retailops_ai.anomaly_detectors.rows import NumericalRow
 from retailops_ai.anomaly_portfolio.inputs import VerifiedFeatures
-from retailops_ai.anomaly_portfolio.model import Descriptor, Model, row
+from retailops_ai.anomaly_portfolio.model import (
+    Descriptor,
+    Model,
+    MultiscaleDescriptor,
+    multiscale_row,
+    row,
+)
 from retailops_ai.anomaly_portfolio.protocol import PortfolioProtocol
+from retailops_ai.qualified_anomalies.contract import Point
 from retailops_ai.source_snapshot.files import json_sha256
 from retailops_ai.source_snapshot.protocol import resource_bytes
 
 
 def train(
-    features: VerifiedFeatures, protocol: PortfolioProtocol, policy: FitPolicy
+    features: VerifiedFeatures,
+    protocol: PortfolioProtocol,
+    policy: FitPolicy,
+    *,
+    multiscale: bool = False,
 ) -> tuple[Model, list[dict[str, Any]]]:
     manifest = features.manifest
     points = list(features.points())
     pairs = requested(protocol, points)
+    indexed: dict[tuple[object, ...], Point] = {
+        (*series_key(p), p.business_date): p for p in points
+    }
+
+    def numerical(point: Point) -> NumericalRow | None:
+        return multiscale_row(point, indexed) if multiscale else row(point)
+
     groups = []
     resources = []
     for event, currency in sorted({(s.event_type, s.currency) for s in protocol.scopes}):
@@ -29,12 +48,18 @@ def train(
         training = [
             r
             for m, p in selected
-            if m.role == "train" and m.eligible and p is not None and (r := row(p)) is not None
+            if m.role == "train"
+            and m.eligible
+            and p is not None
+            and (r := numerical(p)) is not None
         ]
         validation = [
             r
             for m, p in selected
-            if m.role == "validation" and m.eligible and p is not None and (r := row(p)) is not None
+            if m.role == "validation"
+            and m.eligible
+            and p is not None
+            and (r := numerical(p)) is not None
         ]
         pipeline = None
         if len(training) >= policy.minimum_train_rows:
@@ -52,7 +77,7 @@ def train(
                 forest_threshold=capacity_threshold(forest, policy),
             )
         )
-    descriptor = Descriptor(
+    descriptor = (MultiscaleDescriptor if multiscale else Descriptor)(
         source_dataset_id=manifest.descriptor.coverage.descriptor.source_dataset_id,
         qualified_anomaly_input_id=manifest.qualified_anomaly_input_id,
         feature_manifest_sha256=features.manifest_sha256,

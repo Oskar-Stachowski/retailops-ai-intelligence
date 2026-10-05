@@ -8,10 +8,11 @@ from typing import TYPE_CHECKING, Any
 
 from retailops_ai.anomaly_detectors.codec import baseline_score, forest_scores
 from retailops_ai.anomaly_detectors.protocol import Scope, Window, scoring_origin, series_key
+from retailops_ai.anomaly_detectors.rows import MultiscaleRow, validate_row
 from retailops_ai.anomaly_evaluation.contract import Decision, EvaluationPolicy, Truth
 from retailops_ai.anomaly_evaluation.evaluator import evaluate
 from retailops_ai.anomaly_evaluation.quality import QualityPolicy, assess
-from retailops_ai.qualified_anomalies.contract import ModelRow, Policy
+from retailops_ai.qualified_anomalies.contract import Policy
 from retailops_ai.source_snapshot.files import canonical_json, decode_json, json_sha256
 
 if TYPE_CHECKING:
@@ -22,7 +23,15 @@ def verify_scores(model: "Model", decisions: list[Decision], inputs: list[Any]) 
     """Replay the actual saved baseline/forest over the saved public model rows."""
     if len(inputs) != len(decisions):
         raise ValueError("anomaly_quality_scoring_input_census")
-    rows = [ModelRow.model_validate_json(json.dumps(r)) if r is not None else None for r in inputs]
+    from retailops_ai.anomaly_portfolio.model import MultiscaleDescriptor
+
+    rows = [validate_row(r) if r is not None else None for r in inputs]
+    if any(
+        r is not None
+        and isinstance(r, MultiscaleRow) != (isinstance(model.descriptor, MultiscaleDescriptor))
+        for r in rows
+    ):
+        raise ValueError("anomaly_quality_model_row_recipe_binding")
     values: dict[int, tuple[float, Any]] = {}
     for group in model.descriptor.groups:
         selected = [

@@ -20,7 +20,11 @@ RECIPES: tuple[tuple[str, tuple[Feature, ...]], ...] = (
     ("residual", ("residual_units", "robust_scale_units", "standardized_residual")),
     ("context", ("standardized_residual", "promotion_offered", "on_hand")),
 )
-PROFILES = {"ai-07-portfolio-v1": (128, 8, 3, 2), "ai-07-portfolio-v2": (128, 8, 2, 2)}
+PROFILES = {
+    "ai-07-portfolio-v1": (128, 8, 3, 2),
+    "ai-07-portfolio-v2": (128, 8, 2, 2),
+    "ai-07-portfolio-v3": (128, 12, 2, 2),
+}
 
 
 def prepared(path: Path) -> VerifiedFeatures:
@@ -79,15 +83,47 @@ def fit(args: argparse.Namespace) -> int:
     split = protocol(frame)
     immutable_json(args.output / "protocol.json", split.model_dump(mode="json"))
     models = []
-    for feature_name, features in RECIPES:
+    recipes = (
+        (
+            (
+                "multiscale",
+                (
+                    "standardized_residual",
+                    "short_count_residual",
+                    "long_count_residual",
+                    "inventory_shortfall",
+                ),
+            ),
+            ("full", FitPolicy().features),
+            (
+                "multiscale_context",
+                (
+                    "standardized_residual",
+                    "promotion_offered",
+                    "on_hand",
+                    "short_count_residual",
+                    "long_count_residual",
+                    "inventory_shortfall",
+                ),
+            ),
+        )
+        if args.multiscale
+        else RECIPES
+    )
+    if args.multiscale and parameters["profile"] != "ai-07-portfolio-v3":
+        raise ValueError("anomaly_multiscale_requires_new_confirmatory_profile")
+    for feature_name, features in recipes:
         for fraction in (0.025, 0.05, 0.10):
             policy = FitPolicy(
+                version="anomaly-detector-fit-2.0.0"
+                if args.multiscale
+                else "anomaly-detector-fit-1.0.0",
                 features=features,
                 validation_alert_fraction=fraction,
                 validation_high_fraction=min(0.01, fraction),
             )
             started = datetime.now(UTC)
-            model, resources = train(frame, split, policy)
+            model, resources = train(frame, split, policy, multiscale=args.multiscale)
             raw = canonical_json(model.model_dump(mode="json")) + b"\n"
             directory = args.output / "models" / model.detector_id
             immutable(directory / "model.json", raw, maximum=8 * 1024**2)
@@ -171,6 +207,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--prepared-receipt", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--multiscale", action="store_true")
     return fit(parser.parse_args())
 
 

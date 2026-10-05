@@ -3,13 +3,21 @@
 import hashlib
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Literal, Self
+from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
 from retailops_ai.anomaly_detectors.codec import baseline_score, forest_scores
 from retailops_ai.anomaly_detectors.contract import DetectorID, Family, FitPolicy, Group
 from retailops_ai.anomaly_detectors.protocol import Scope, Window, scoring_origin, series_key
+from retailops_ai.anomaly_detectors.rows import (
+    EXTRA_FEATURES,
+    CountLag,
+    MultiscaleRow,
+    NumericalRow,
+    count_residual,
+    stock_shortfall,
+)
 from retailops_ai.anomaly_evaluation.contract import Decision
 from retailops_ai.data_contracts.common import Contract, Sha256, SourceID, UtcTime
 from retailops_ai.qualified_anomalies.contract import ModelRow, Point, Policy
@@ -51,12 +59,24 @@ class Descriptor(Contract):
                 or len(group.pipeline.forest.trees) != self.policy.n_estimators
             ):
                 raise ValueError("anomaly_portfolio_pipeline_policy_binding")
+        if self.version == "anomaly-portfolio-model-1.0.0" and any(
+            name in EXTRA_FEATURES for name in self.policy.features
+        ):
+            raise ValueError("anomaly_portfolio_new_features_require_declared_recipe")
         return self
+
+
+class MultiscaleDescriptor(Descriptor):
+    version: Literal["anomaly-portfolio-model-2.0.0"] = "anomaly-portfolio-model-2.0.0"  # type: ignore[assignment]
+    residual_recipe: Literal["causal-count-residuals-1.0.0"] = "causal-count-residuals-1.0.0"
+    history_clock: Literal["prior_ready_scoring_origins_at_or_before_current_origin"] = (
+        "prior_ready_scoring_origins_at_or_before_current_origin"
+    )
 
 
 class Model(Contract):
     detector_id: DetectorID
-    descriptor: Descriptor
+    descriptor: Annotated[MultiscaleDescriptor | Descriptor, Field(discriminator="version")]
 
     @model_validator(mode="after")
     def identity(self) -> Self:
@@ -97,6 +117,43 @@ def row(point: Point) -> ModelRow | None:
     )
 
 
+def multiscale_row(point: Point, indexed: dict[tuple[object, ...], Point]) -> MultiscaleRow | None:
+    current = row(point)
+    if current is None:
+        return None
+    recent = []
+    for lag in range(1, 7):
+        previous = indexed.get((*series_key(point), point.business_date - timedelta(days=lag)))
+        if previous is not None and previous.scoring_origin <= point.scoring_origin:
+            known = row(previous)
+            if known is not None:
+                recent.append(
+                    CountLag(
+                        lag_days=lag,
+                        observed_units=known.observed_units,
+                        expected_units=known.expected_units,
+                    )
+                )
+    support = tuple(recent)
+    return MultiscaleRow(
+        **current.model_dump(),
+        recent_counts=support,
+        short_count_residual=count_residual(current, support, 3),
+        long_count_residual=count_residual(current, support, 7),
+        inventory_shortfall=stock_shortfall(current),
+    )
+
+
+def scoring_row(
+    model: Model, point: Point, indexed: dict[tuple[object, ...], Point]
+) -> NumericalRow | None:
+    return (
+        multiscale_row(point, indexed)
+        if isinstance(model.descriptor, MultiscaleDescriptor)
+        else row(point)
+    )
+
+
 def score(
     model: Model,
     points: list[Point],
@@ -112,9 +169,9 @@ def score(
     safe = [
         Point.model_validate_json(p.model_dump_json())
         for p in points
-        if window.start <= p.business_date <= window.end
+        if window.start - timedelta(days=6) <= p.business_date <= window.end
     ]
-    indexed = {(*series_key(p), p.business_date): p for p in safe}
+    indexed: dict[tuple[object, ...], Point] = {(*series_key(p), p.business_date): p for p in safe}
     if len(indexed) != len(safe):
         raise ValueError("anomaly_portfolio_duplicate_feature")
     if (
@@ -161,7 +218,7 @@ def score(
             if family == "seasonal_residual"
             else group.forest_threshold
         )
-        model_row = row(point) if point is not None else None
+        model_row = scoring_row(model, point, indexed) if point is not None else None
         ready = (
             model_row is not None
             and threshold is not None
@@ -206,6 +263,11 @@ def score(
                 reasons.append("inventory_constraint_present")
             if point.context.promotion_offered:
                 reasons.append("planned_promotion_context")
+            if isinstance(_model_row, MultiscaleRow):
+                if _model_row.short_count_residual is not None:
+                    reasons.append("known_short_window_residual_context")
+                if _model_row.long_count_residual is not None:
+                    reasons.append("known_long_window_residual_context")
         decisions.append(
             Decision(
                 **scope.model_dump(),

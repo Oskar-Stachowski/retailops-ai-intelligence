@@ -20,6 +20,7 @@ from retailops_ai.model_lifecycle.anomaly_evaluation_contracts import (
     AnomalyEvaluationEvidence,
     AnomalyEvaluationScope,
     AnomalyEvaluationSummary,
+    version_evaluation_id,
 )
 from retailops_ai.model_lifecycle.evaluation_contracts import (
     EvaluationDetail,
@@ -145,7 +146,10 @@ class PostgresAnomalyEvaluations:
         descriptor = AnomalyEvaluationDescriptor.model_validate_json(
             json.dumps(
                 {
-                    "evaluation_id": quality["quality_id"],
+                    "evaluation_id": version_evaluation_id(
+                        quality["quality_id"], binding.model_version, binding.mlflow_run_id
+                    ),
+                    "quality_id": quality["quality_id"],
                     "registered_model_version": binding.model_version,
                     "mlflow_run_id": binding.mlflow_run_id,
                     "detector_id": model.detector_id,
@@ -239,7 +243,7 @@ class PostgresAnomalyEvaluations:
                 conn.execute(
                     text(
                         "SELECT evaluation_id,evidence_sha256,evidence,registered_at FROM ai.anomaly_evaluations "
-                    "WHERE (CAST(:id AS text) IS NULL OR evaluation_id=:id) "
+                        "WHERE (CAST(:id AS text) IS NULL OR evaluation_id=:id) "
                         "AND evidence->'descriptor'->'scope'->'product_ids' <@ CAST(:products AS jsonb) "
                         "AND evidence->'descriptor'->'scope'->'selling_location_ids' <@ CAST(:locations AS jsonb) "
                         "AND evidence->'descriptor'->'scope'->'channels' <@ CAST(:channels AS jsonb) "

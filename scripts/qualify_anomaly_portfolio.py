@@ -15,8 +15,9 @@ from retailops_ai.anomaly_evaluation.quality import QualityPolicy, assess
 from retailops_ai.anomaly_evaluation.verification import verify_scores
 from retailops_ai.anomaly_portfolio.artifacts import immutable_json
 from retailops_ai.anomaly_portfolio.cli import prepared, protocol
-from retailops_ai.anomaly_portfolio.model import load, row, score
+from retailops_ai.anomaly_portfolio.model import load, score, scoring_row
 from retailops_ai.anomaly_portfolio.protocol import PortfolioProtocol
+from retailops_ai.qualified_anomalies.contract import Point
 from retailops_ai.source_snapshot.files import decode_json, json_sha256, read_bytes
 
 
@@ -45,6 +46,7 @@ def case_public(entry: dict[str, Any]) -> dict[str, Any]:
     if parameters["seed"] != entry["seed"] or parameters["profile"] not in {
         "ai-07-portfolio-v1",
         "ai-07-portfolio-v2",
+        "ai-07-portfolio-v3",
     }:
         raise ValueError("anomaly_qualification_profile_binding")
     capture, capture_digest = document(Path(bundle["capture"]) / "dq_manifest.json")
@@ -154,11 +156,13 @@ def final_case(task: tuple[dict[str, Any], dict[str, Any], str, str]) -> dict[st
     decisions = score(
         model, points, split.scopes, split.test, frozen["family"], "final_test", as_of
     )
-    indexed = {(*series_key(p), p.business_date): p for p in points}
+    indexed: dict[tuple[object, ...], Point] = {
+        (*series_key(p), p.business_date): p for p in points
+    }
     model_rows = [
         r.model_dump(mode="json")
         if (p := indexed.get((*series_key(d), d.business_date))) is not None
-        and (r := row(p)) is not None
+        and (r := scoring_row(model, p, indexed)) is not None
         else None
         for d in decisions
     ]

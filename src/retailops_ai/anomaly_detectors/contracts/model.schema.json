@@ -18,7 +18,10 @@
             "standardized_residual",
             "planned_price",
             "promotion_offered",
-            "on_hand"
+            "on_hand",
+            "short_count_residual",
+            "long_count_residual",
+            "inventory_shortfall"
           ],
           "title": "Name",
           "type": "string"
@@ -83,7 +86,10 @@
               "standardized_residual",
               "planned_price",
               "promotion_offered",
-              "on_hand"
+              "on_hand",
+              "short_count_residual",
+              "long_count_residual",
+              "inventory_shortfall"
             ],
             "type": "string"
           },
@@ -189,8 +195,11 @@
           "type": "number"
         },
         "version": {
-          "const": "anomaly-detector-fit-1.0.0",
           "default": "anomaly-detector-fit-1.0.0",
+          "enum": [
+            "anomaly-detector-fit-1.0.0",
+            "anomaly-detector-fit-2.0.0"
+          ],
           "title": "Version",
           "type": "string"
         }
@@ -202,7 +211,7 @@
       "additionalProperties": false,
       "properties": {
         "feature_count": {
-          "maximum": 16,
+          "maximum": 22,
           "minimum": 2,
           "title": "Feature Count",
           "type": "integer"
@@ -396,7 +405,7 @@
         "feature": {
           "anyOf": [
             {
-              "maximum": 15,
+              "maximum": 21,
               "minimum": 0,
               "type": "integer"
             },
@@ -467,7 +476,7 @@
           "items": {
             "$ref": "#/$defs/Fill"
           },
-          "maxItems": 8,
+          "maxItems": 11,
           "minItems": 1,
           "title": "Fills",
           "type": "array"

@@ -16,6 +16,7 @@ from retailops_ai.config import Settings
 from retailops_ai.model_lifecycle.anomaly_evaluation_contracts import (
     AnomalyEvaluationDescriptor,
     AnomalyEvaluationEvidence,
+    version_evaluation_id,
 )
 from retailops_ai.model_lifecycle.anomaly_evaluation_store import checked, page, projection, visible
 from retailops_ai.model_lifecycle.evaluation_contracts import EvaluationQuery
@@ -31,7 +32,8 @@ def evidence():
     q = assess(cases(), POLICY)
     summary = q["descriptor"]["summary"]
     descriptor = AnomalyEvaluationDescriptor(
-        evaluation_id=q["quality_id"],
+        evaluation_id=version_evaluation_id(q["quality_id"], "1", "1" * 32),
+        quality_id=q["quality_id"],
         registered_model_version="1",
         mlflow_run_id="1" * 32,
         detector_id=summary["detector_id"],
@@ -132,7 +134,26 @@ def test_common_union_view_cannot_reuse_another_scope_or_modified_report(evidenc
             page(values, query, who)
     changed = deepcopy(evidence.model_dump(mode="json"))
     changed["descriptor"]["registered_model_version"] = "2"
+    changed["descriptor"]["evaluation_id"] = version_evaluation_id(
+        changed["descriptor"]["quality_id"], "2", changed["descriptor"]["mlflow_run_id"]
+    )
     changed["evidence_sha256"] = json_sha256(changed["descriptor"])
     other = projection(AnomalyEvaluationEvidence.model_validate_json(json.dumps(changed)), NOW)
     with pytest.raises(EvaluationError, match="view-changed"):
         page((other,), EvaluationQuery(view_sha256=first.view_sha256), who)
+
+
+def test_repeated_registration_keeps_shared_quality_and_separate_version_identity(evidence):
+    first = evidence.descriptor
+    raw = evidence.model_dump(mode="json")
+    raw["descriptor"]["registered_model_version"] = "2"
+    raw["evidence_sha256"] = json_sha256(raw["descriptor"])
+    with pytest.raises(ValueError, match="version_identity"):
+        AnomalyEvaluationEvidence.model_validate_json(json.dumps(raw))
+    raw["descriptor"]["evaluation_id"] = version_evaluation_id(
+        first.quality_id, "2", first.mlflow_run_id
+    )
+    raw["evidence_sha256"] = json_sha256(raw["descriptor"])
+    second = AnomalyEvaluationEvidence.model_validate_json(json.dumps(raw))
+    assert second.descriptor.quality_id == first.quality_id
+    assert second.descriptor.evaluation_id != first.evaluation_id

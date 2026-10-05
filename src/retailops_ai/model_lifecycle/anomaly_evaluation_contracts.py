@@ -17,6 +17,19 @@ Rate = Annotated[float, Field(ge=0, le=1)]
 Segment = Annotated[str, Field(pattern=r"^(sale_completed|return_completed)[/:](PLN|EUR)$")]
 
 
+def version_evaluation_id(quality_id: str, version: str, run_id: str) -> str:
+    """A quality report may support distinct immutable registry versions."""
+    return "anomaly-quality-sha256-" + json_sha256(
+        {
+            "version": "anomaly-quality-version-projection-1.0.0",
+            "quality_id": quality_id,
+            "model_name": "retailops-sales-anomaly",
+            "registered_model_version": version,
+            "mlflow_run_id": run_id,
+        }
+    )
+
+
 class AnomalyEvaluationScope(Contract):
     product_ids: tuple[Symbol, ...] = Field(min_length=1, max_length=100)
     selling_location_ids: tuple[Symbol, ...] = Field(min_length=1, max_length=100)
@@ -44,8 +57,9 @@ class AnomalyMetrics(Contract):
 
 
 class AnomalyEvaluationDescriptor(Contract):
-    version: Literal["anomaly-evaluation-read-1.0.0"] = "anomaly-evaluation-read-1.0.0"
+    version: Literal["anomaly-evaluation-read-2.0.0"] = "anomaly-evaluation-read-2.0.0"
     evaluation_id: QualityID
+    quality_id: QualityID
     model_name: Literal["retailops-sales-anomaly"] = "retailops-sales-anomaly"
     registered_model_version: Version
     mlflow_run_id: RunID
@@ -54,9 +68,11 @@ class AnomalyEvaluationDescriptor(Contract):
     scope: AnomalyEvaluationScope
     source_dataset_ids: tuple[SourceID, ...] = Field(min_length=6, max_length=6)
     quality_status: Literal["passed"] = "passed"
-    qualification_scope: Literal["synthetic_ai_07_portfolio_v1", "synthetic_ai_07_portfolio_v2"] = (
-        "synthetic_ai_07_portfolio_v1"
-    )
+    qualification_scope: Literal[
+        "synthetic_ai_07_portfolio_v1",
+        "synthetic_ai_07_portfolio_v2",
+        "synthetic_ai_07_portfolio_v3",
+    ] = "synthetic_ai_07_portfolio_v1"
     metric_verification: Literal["recomputed_from_saved_decisions_and_offline_truth"] = (
         "recomputed_from_saved_decisions_and_offline_truth"
     )
@@ -79,11 +95,18 @@ class AnomalyEvaluationEvidence(Contract):
     def identity(self) -> Self:
         if self.evidence_sha256 != json_sha256(self.descriptor.model_dump(mode="json")):
             raise ValueError("anomaly_evaluation_evidence_identity")
+        if self.descriptor.evaluation_id != version_evaluation_id(
+            self.descriptor.quality_id,
+            self.descriptor.registered_model_version,
+            self.descriptor.mlflow_run_id,
+        ):
+            raise ValueError("anomaly_evaluation_version_identity")
         return self
 
 
 class AnomalyEvaluationSummary(Contract):
     evaluation_id: QualityID
+    quality_id: QualityID
     evidence_sha256: Sha256
     model_name: Literal["retailops-sales-anomaly"] = "retailops-sales-anomaly"
     registered_model_version: Version
@@ -93,9 +116,11 @@ class AnomalyEvaluationSummary(Contract):
     scope: AnomalyEvaluationScope
     source_dataset_ids: tuple[SourceID, ...] = Field(min_length=6, max_length=6)
     quality_status: Literal["passed"] = "passed"
-    qualification_scope: Literal["synthetic_ai_07_portfolio_v1", "synthetic_ai_07_portfolio_v2"] = (
-        "synthetic_ai_07_portfolio_v1"
-    )
+    qualification_scope: Literal[
+        "synthetic_ai_07_portfolio_v1",
+        "synthetic_ai_07_portfolio_v2",
+        "synthetic_ai_07_portfolio_v3",
+    ] = "synthetic_ai_07_portfolio_v1"
     metric_verification: Literal["recomputed_from_saved_decisions_and_offline_truth"] = (
         "recomputed_from_saved_decisions_and_offline_truth"
     )

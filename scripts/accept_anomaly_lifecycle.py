@@ -512,7 +512,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 client.get("/api/v1/models/" + MODEL, headers=full).status_code == 200,
                 "anomaly_common_models_native",
             )
-            evaluation = qualifications[0]["evaluation_id"]
+            evaluation = enrolled["evaluation_id"]
             require(
                 client.get("/api/v1/evaluations/" + evaluation, headers=full).status_code == 200,
                 "anomaly_common_evaluations_native",
@@ -581,8 +581,14 @@ def main() -> int:
     args = parser.parse_args()
     try:
         print(json.dumps(run(args), sort_keys=True), flush=True)
-    except Exception:
-        print('{"error":"anomaly_native_acceptance_failed"}', file=sys.stderr)
+    except Exception as error:
+        diagnostic = {
+            "error": "anomaly_native_acceptance_failed",
+            "exception_type": type(error).__name__,
+        }
+        if isinstance(error, ValueError) and re.fullmatch(r"[a-z0-9_]{1,120}", str(error)):
+            diagnostic["check"] = str(error)
+        print(json.dumps(diagnostic), file=sys.stderr)
         return 2
     return 0
 

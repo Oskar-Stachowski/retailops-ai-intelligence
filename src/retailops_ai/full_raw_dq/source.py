@@ -150,7 +150,7 @@ def parent_facts(curated_dir: Path, import_dir: Path, binding: Binding) -> tuple
         or (
             isinstance(binding, PortfolioBinding)
             and source["resolved_parameters"]["profile"]
-            not in {"ai-07-portfolio-v1", "ai-07-portfolio-v2"}
+            not in {"ai-07-portfolio-v1", "ai-07-portfolio-v2", "ai-07-portfolio-v3"}
         )
         or document["schema_version"] != "1.2.0"
         or snapshot.source_id != binding.source_dataset_id

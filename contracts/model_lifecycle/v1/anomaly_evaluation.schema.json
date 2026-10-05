@@ -189,6 +189,13 @@
           "title": "Minimum Episode Recall",
           "type": "number"
         },
+        "minimum_episode_recall_per_type": {
+          "default": 0.5,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum Episode Recall Per Type",
+          "type": "number"
+        },
         "minimum_episodes_per_type": {
           "default": 3,
           "maximum": 100,
@@ -237,7 +244,8 @@
           "default": "synthetic_ai_07_portfolio_v1",
           "enum": [
             "synthetic_ai_07_portfolio_v1",
-            "synthetic_ai_07_portfolio_v2"
+            "synthetic_ai_07_portfolio_v2",
+            "synthetic_ai_07_portfolio_v3"
           ],
           "title": "Qualification Scope",
           "type": "string"
@@ -469,9 +477,15 @@
       "default": "synthetic_ai_07_portfolio_v1",
       "enum": [
         "synthetic_ai_07_portfolio_v1",
-        "synthetic_ai_07_portfolio_v2"
+        "synthetic_ai_07_portfolio_v2",
+        "synthetic_ai_07_portfolio_v3"
       ],
       "title": "Qualification Scope",
+      "type": "string"
+    },
+    "quality_id": {
+      "pattern": "^anomaly-quality-sha256-[0-9a-f]{64}$",
+      "title": "Quality Id",
       "type": "string"
     },
     "quality_policy": {
@@ -504,6 +518,7 @@
   },
   "required": [
     "evaluation_id",
+    "quality_id",
     "evidence_sha256",
     "registered_model_version",
     "mlflow_run_id",

@@ -9,7 +9,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
-from retailops_ai.anomaly_detectors.protocol import Scope, Window
+from retailops_ai.anomaly_detectors.protocol import Scope, Window, series_key
 from retailops_ai.anomaly_evaluation.contract import Decision
 from retailops_ai.anomaly_evaluation.verification import verify_quality
 from retailops_ai.anomaly_portfolio.artifacts import immutable, immutable_json
@@ -98,16 +98,23 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
     inventory = document(args.inventory)["cases"]
     first = next(e for e in inventory if (e["seed"], e["scenario"]) == (42, "demand"))
     frame = prepared(Path(first["prepared_receipt"]))
+    points = list(frame.points())
     point = next(
         p
-        for p in frame.points()
+        for p in points
         if model.descriptor.validation.start <= p.business_date <= model.descriptor.validation.end
         and row(p) is not None
     )
     scope = Scope.model_validate({k: getattr(point, k) for k in Scope.model_fields})
     window = Window(start=point.business_date, end=point.business_date)
+    smoke_points = [
+        p
+        for p in points
+        if series_key(p) == series_key(point)
+        and point.business_date - timedelta(days=6) <= p.business_date <= point.business_date
+    ]
     example = {
-        "points": [point.model_dump(mode="json")],
+        "points": [p.model_dump(mode="json") for p in smoke_points],
         "scopes": [scope.model_dump(mode="json")],
         "window": window.model_dump(mode="json"),
         "as_of": model.descriptor.selection_cutoff.isoformat(),
@@ -117,7 +124,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
             d.model_dump(mode="json")
             for d in score(
                 model,
-                [point],
+                smoke_points,
                 (scope,),
                 window,
                 frozen["family"],

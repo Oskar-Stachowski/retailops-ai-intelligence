@@ -19,7 +19,7 @@ from retailops_ai.anomaly_detectors.contract import (
     Pipeline,
     Resources,
 )
-from retailops_ai.qualified_anomalies.contract import ModelRow
+from retailops_ai.anomaly_detectors.rows import NumericalRow, validate_row
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
     canonical_json,
@@ -29,12 +29,12 @@ from retailops_ai.source_snapshot.files import (
 
 
 def fit_pipeline(
-    rows: list[ModelRow], probes: list[ModelRow], policy: FitPolicy
+    rows: list[NumericalRow], probes: list[NumericalRow], policy: FitPolicy
 ) -> tuple[Pipeline, Resources]:
     policy = FitPolicy.model_validate_json(policy.model_dump_json())
     if not policy.minimum_train_rows <= len(rows) <= policy.max_train_rows:
         raise SnapshotError("anomaly_training_row_budget")
-    safe = [ModelRow.model_validate(row.model_dump(mode="python")) for row in rows]
+    safe = [validate_row(row.model_dump(mode="python")) for row in rows]
     fills = fit_fills(safe, policy)
     x = np.asarray([transform(row, fills) for row in safe], dtype=np.float64)
     values = np.asarray([transform(row, fills) for row in probes[:64]], dtype=np.float64).reshape(

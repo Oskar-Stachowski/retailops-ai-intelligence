@@ -6,6 +6,7 @@ from typing import Annotated, Literal, Self
 from pydantic import Field, model_validator
 
 from retailops_ai.anomaly_detectors.protocol import Currency, EventType, Membership, Protocol
+from retailops_ai.anomaly_detectors.rows import ALL_FEATURES
 from retailops_ai.data_contracts.common import Contract, Sha256
 from retailops_ai.qualified_anomalies.contract import MODEL_FEATURES
 
@@ -20,6 +21,9 @@ Feature = Literal[
     "planned_price",
     "promotion_offered",
     "on_hand",
+    "short_count_residual",
+    "long_count_residual",
+    "inventory_shortfall",
 ]
 Family = Literal["seasonal_residual", "isolation_forest"]
 Finite = Annotated[float, Field(allow_inf_nan=False)]
@@ -27,7 +31,9 @@ DetectorID = Annotated[str, Field(pattern=r"^anomaly-detector-sha256-[0-9a-f]{64
 
 
 class FitPolicy(Contract):
-    version: Literal["anomaly-detector-fit-1.0.0"] = "anomaly-detector-fit-1.0.0"
+    version: Literal["anomaly-detector-fit-1.0.0", "anomaly-detector-fit-2.0.0"] = (
+        "anomaly-detector-fit-1.0.0"
+    )
     features: tuple[Feature, ...] = MODEL_FEATURES
     n_estimators: Annotated[int, Field(ge=8, le=128)] = 32
     max_samples: Annotated[int, Field(ge=16, le=256)] = 64
@@ -51,9 +57,13 @@ class FitPolicy(Contract):
     @model_validator(mode="after")
     def allowlist(self) -> Self:
         if (
-            self.features != tuple(f for f in MODEL_FEATURES if f in self.features)
+            self.features != tuple(f for f in ALL_FEATURES if f in self.features)
             or not self.features
             or self.validation_high_fraction > self.validation_alert_fraction
+            or (
+                self.version == "anomaly-detector-fit-1.0.0"
+                and any(f not in MODEL_FEATURES for f in self.features)
+            )
         ):
             raise ValueError("anomaly_fit_feature_allowlist_or_capacity")
         return self
@@ -76,7 +86,7 @@ class Fill(Contract):
 
 class Node(Contract):
     sample_count: Annotated[int, Field(ge=1, le=256)]
-    feature: Annotated[int, Field(ge=0, le=15)] | None
+    feature: Annotated[int, Field(ge=0, le=21)] | None
     threshold: Finite | None
     left: Annotated[int, Field(ge=0, le=510)] | None
     right: Annotated[int, Field(ge=0, le=510)] | None
@@ -122,7 +132,7 @@ class Tree(Contract):
 class Forest(Contract):
     sklearn_version: Literal["1.9.1"] = "1.9.1"
     input_dtype: Literal["float32"] = "float32"
-    feature_count: Annotated[int, Field(ge=2, le=16)]
+    feature_count: Annotated[int, Field(ge=2, le=22)]
     max_samples: Annotated[int, Field(ge=16, le=256)]
     native_offset: Annotated[float, Field(ge=-1, le=0)]
     trees: tuple[Tree, ...] = Field(min_length=8, max_length=128)
@@ -152,14 +162,14 @@ class Forest(Contract):
 class Pipeline(Contract):
     training_rows: Annotated[int, Field(ge=16, le=10000)]
     training_rows_sha256: Sha256
-    fills: tuple[Fill, ...] = Field(min_length=1, max_length=8)
+    fills: tuple[Fill, ...] = Field(min_length=1, max_length=11)
     forest: Forest
 
     @model_validator(mode="after")
     def fitted(self) -> Self:
         names = tuple(f.name for f in self.fills)
         if (
-            names != tuple(f for f in MODEL_FEATURES if f in names)
+            names != tuple(f for f in ALL_FEATURES if f in names)
             or len(names) * 2 != self.forest.feature_count
             or self.forest.max_samples > self.training_rows
             or any(f.known_count > self.training_rows for f in self.fills)
