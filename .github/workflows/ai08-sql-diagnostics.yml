@@ -1,0 +1,24 @@
+name: AI08 SQL diagnostic
+on:
+  push:
+    branches: [diagnostic/ai08-stockout-sql]
+permissions:
+  contents: read
+jobs:
+  isolated-sql:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - name: Exercise owned lifecycle and stockout queue PostgreSQL
+        run: make bootstrap v12-lifecycle-smoke
+      - name: Emit bounded safe failure diagnostics
+        if: always()
+        run: python scripts/stockout_sql_diagnostics.py
