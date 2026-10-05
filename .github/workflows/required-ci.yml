@@ -80,7 +80,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: 9c000bcc00ea8ec03a45d49ee2ecf49d13de1cf7
+          ref: 48439ebd9515dc1c7adc633609bbe33d1657c3df
           path: .local/ai07-ci-source
           persist-credentials: false
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9

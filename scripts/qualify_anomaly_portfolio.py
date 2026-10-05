@@ -48,6 +48,7 @@ def case_public(entry: dict[str, Any]) -> dict[str, Any]:
         "ai-07-portfolio-v1",
         "ai-07-portfolio-v2",
         "ai-07-portfolio-v3",
+        "ai-07-portfolio-v4",
     }:
         raise ValueError("anomaly_qualification_profile_binding")
     capture, capture_digest = document(Path(bundle["capture"]) / "dq_manifest.json")

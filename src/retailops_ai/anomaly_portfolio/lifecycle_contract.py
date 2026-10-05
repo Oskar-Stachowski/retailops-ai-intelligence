@@ -53,6 +53,7 @@ class Qualification(Contract):
         "synthetic_ai_07_portfolio_v1",
         "synthetic_ai_07_portfolio_v2",
         "synthetic_ai_07_portfolio_v3",
+        "synthetic_ai_07_portfolio_v4",
     ] = "synthetic_ai_07_portfolio_v1"
 
     @model_validator(mode="after")

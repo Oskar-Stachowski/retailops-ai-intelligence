@@ -42,6 +42,7 @@ def main() -> int:
             "ai-07-portfolio-v1",
             "ai-07-portfolio-v2",
             "ai-07-portfolio-v3",
+            "ai-07-portfolio-v4",
         }:
             raise ValueError("anomaly_validation_development_profile_only")
         bundle = decode_json(read_bytes(bundle_path.parent, bundle_path.name, 1024**2))

@@ -18,7 +18,7 @@ import local_stack
 from refresh_anomaly_compatibility import refresh
 
 ROOT = Path(__file__).resolve().parents[1]
-PRODUCER_COMMIT = "9c000bcc00ea8ec03a45d49ee2ecf49d13de1cf7"
+PRODUCER_COMMIT = "48439ebd9515dc1c7adc633609bbe33d1657c3df"
 
 
 def require(condition: bool, message: str) -> None:
@@ -128,7 +128,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                     "-m",
                     "data.anomalies.run_source",
                     "--profile",
-                    "ai-07-portfolio-v3",
+                    "ai-07-portfolio-v4",
                     "--seed",
                     "42",
                     "--portfolio",

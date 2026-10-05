@@ -23,7 +23,22 @@ PROFILES = {
     "ai-07-portfolio-v1": (128, 8, 3, 2),
     "ai-07-portfolio-v2": (128, 8, 2, 2),
     "ai-07-portfolio-v3": (128, 12, 2, 2),
+    "ai-07-portfolio-v4": (128, 12, 2, 2),
 }
+
+
+# Declared v4 grid: sale alert, return alert, sale high, return high.
+CALIBRATIONS = (
+    (0.075, 0.005, 0.005, 0.001),
+    (0.075, 0.005, 0.05, 0.0025),
+    (0.10, 0.005, 0.005, 0.001),
+    (0.075, 0.01, 0.05, 0.005),
+    (0.10, 0.01, 0.05, 0.005),
+    (0.10, 0.0025, 0.005, 0.001),
+    (0.10, 0.005, 0.05, 0.0025),
+    (0.075, 0.01, 0.025, 0.005),
+    (0.075, 0.005, 0.025, 0.001),
+)
 
 
 def prepared(path: Path) -> VerifiedFeatures:
@@ -108,35 +123,47 @@ def fit(args: argparse.Namespace) -> int:
                 ),
             ),
         )
-        if args.multiscale or args.count_rate
+        if args.multiscale or args.count_rate or args.calibrated
         else RECIPES
     )
     if (args.multiscale or args.count_rate) and parameters["profile"] != "ai-07-portfolio-v3":
         raise ValueError("anomaly_multiscale_requires_new_confirmatory_profile")
+    if args.calibrated:
+        if parameters["profile"] != "ai-07-portfolio-v4":
+            raise ValueError("anomaly_calibration_requires_reserved_v4_profile")
+        recipes = recipes[:1]
     for feature_name, features in recipes:
         configurations = (
-            ((0.075, 0.01), (0.10, 0.01), (0.10, 0.025))
+            CALIBRATIONS
+            if args.calibrated
+            else (
+                (0.075, 0.01, 0.005, 0.001),
+                (0.10, 0.01, 0.005, 0.001),
+                (0.10, 0.025, 0.005, 0.001),
+            )
             if args.count_rate
-            else ((0.025, None), (0.05, None), (0.10, None))
+            else ((0.025, None, 0.01, 0.01), (0.05, None, 0.01, 0.01), (0.10, None, 0.01, 0.01))
         )
-        for fraction, return_fraction in configurations:
+        for fraction, return_fraction, high_fraction, return_high_fraction in configurations:
             policy = FitPolicy(
                 version="anomaly-detector-fit-2.0.0"
-                if args.multiscale or args.count_rate
+                if args.multiscale or args.count_rate or args.calibrated
                 else "anomaly-detector-fit-1.0.0",
                 features=features,
                 validation_alert_fraction=fraction,
-                validation_high_fraction=0.005 if args.count_rate else min(0.01, fraction),
+                validation_high_fraction=high_fraction,
             )
             capacities = (
                 (
                     EventCapacity(
-                        event_type="sale_completed", alert_fraction=fraction, high_fraction=0.005
+                        event_type="sale_completed",
+                        alert_fraction=fraction,
+                        high_fraction=high_fraction,
                     ),
                     EventCapacity(
                         event_type="return_completed",
                         alert_fraction=return_fraction,
-                        high_fraction=0.001,
+                        high_fraction=return_high_fraction,
                     ),
                 )
                 if return_fraction is not None
@@ -237,6 +264,7 @@ def main() -> int:
     recipe = parser.add_mutually_exclusive_group()
     recipe.add_argument("--multiscale", action="store_true")
     recipe.add_argument("--count-rate", action="store_true")
+    recipe.add_argument("--calibrated", action="store_true")
     return fit(parser.parse_args())
 
 
