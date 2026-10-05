@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LOG = ROOT / "reports/ai05-v12-lifecycle-acceptance.log"
+LOG = ROOT / "reports/ai05-v12-metadata-acceptance.log"
 OUTPUT = ROOT / "reports/ai08-stockout-sql-diagnostics.json"
 
 

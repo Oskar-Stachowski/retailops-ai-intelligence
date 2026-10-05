@@ -18,7 +18,7 @@ jobs:
           python-version: "3.11.15"
           enable-cache: true
       - name: Exercise owned lifecycle and stockout queue PostgreSQL
-        run: make bootstrap compose-smoke v12-lifecycle-smoke
+        run: make bootstrap compose-smoke v12-backup-smoke
       - name: Emit bounded safe failure diagnostics
         if: always()
         run: python scripts/stockout_sql_diagnostics.py
