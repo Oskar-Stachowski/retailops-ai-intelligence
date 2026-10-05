@@ -8,6 +8,7 @@ import shutil
 import sys
 import tempfile
 import time
+import traceback
 import uuid
 import xml.etree.ElementTree as xml
 from datetime import UTC, datetime, timedelta
@@ -55,6 +56,7 @@ from retailops_ai.stockout_lifecycle.release import (
     signature,
     verify_approved_capsule,
 )
+from retailops_ai.stockout_public_inputs import implementation as public_input_code
 from retailops_ai.stockout_runtime.inputs import PreparedStockoutInputs
 from retailops_ai.stockout_selection.contract import ConditionalRiskPipeline
 
@@ -323,11 +325,12 @@ def main() -> int:
             "python",
             image,
             "-c",
-            "import json;from retailops_ai.stockout_campaign.implementation import code_digest,lock_digest;print(json.dumps(dict(code=code_digest(),lock=lock_digest())))",
+            "import json;from retailops_ai.stockout_campaign.implementation import code_digest,lock_digest;from retailops_ai.stockout_public_inputs import implementation;print(json.dumps(dict(code=code_digest(),lock=lock_digest(),public_inputs=implementation())))",
         )
     )
     require(
-        image_pins == dict(code=code_digest(), lock=lock_digest()),
+        image_pins
+        == dict(code=code_digest(), lock=lock_digest(), public_inputs=public_input_code()),
         "final_acceptance_installed_image_code_or_lock",
     )
     # This file is produced by the preceding fixed pytest command on the same runner.
@@ -608,6 +611,10 @@ if __name__ == "__main__":
                     reason=str(error)
                     if isinstance(error, ValueError) and str(error).startswith("final_acceptance_")
                     else "internal_failure",
+                    locations=[
+                        dict(file=Path(frame.filename).name, line=frame.lineno, function=frame.name)
+                        for frame in traceback.extract_tb(error.__traceback__)
+                    ],
                 )
             )
         )

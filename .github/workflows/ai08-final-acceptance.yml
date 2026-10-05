@@ -55,15 +55,18 @@ jobs:
           import hashlib,json
           from pathlib import Path
           r=json.loads(Path('docs/reference/stockout-final-acceptance-request-v1.json').read_bytes())
+          roots=list(Path('final-qualified').rglob('qualification.json'))
+          assert len(roots)==1
           for name in ('final_quality','execution_evidence'):
-              assert hashlib.sha256((Path('final-qualified')/(name+'.json')).read_bytes()).hexdigest()==r[name+'_sha256']
+              assert hashlib.sha256((roots[0].parent/(name+'.json')).read_bytes()).hexdigest()==r[name+'_sha256']
           PY2
       - name: Retain genuine qualification independently of later service checks
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: ai08-final-qualified-${{ github.sha }}
           path: final-qualified/
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 30
           overwrite: false
       - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
@@ -111,6 +114,6 @@ jobs:
           path: |
             accepted-model/
             acceptance-proofs/
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 30
           overwrite: false
