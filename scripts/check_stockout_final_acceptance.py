@@ -194,6 +194,7 @@ def review(
         },
     }
     require(set(checks) == REVIEW_GATES, "final_acceptance_review_inventory")
+    work.mkdir(mode=0o700, exist_ok=True)
     gates = {}
     for name, equations in checks.items():
         require(all(equations.values()), "final_acceptance_gate_failed_" + name)
