@@ -35,8 +35,12 @@ python -m retailops_ai.stockout_jobs.worker --once --env-file <private-file> --r
 
 Nowy checker integracyjny obejmuje rzeczywisty cold worker, guard MLflow i SQL,
 HTTP 202 po commit, idempotency, 401/404, widok priority oraz restart/restore.
-Ten rozszerzony checker wymaga własnego rzeczywistego receipt CI; nie przypisujemy
-mu zaliczenia wcześniejszego, mniejszego testu.
+Rozszerzony checker zaliczył rzeczywisty run
+[37257129973](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37257129973),
+job 111596520206, na HEAD 5abdef497a4589034815df15a7e247d6eedccd2e.
+Odbiór trwał 02:53:01–03:03:34 UTC i obejmował pełny backup/restore oraz usunięcie
+własnych zasobów runnera. To ten sam kod domenowy co commit 5b4463f; dodatkowy
+workflow diagnostyczny nie jest częścią PR. Źródło/model pozostawały mechanics-only.
 
 Weryfikacja lokalna: 132 focused tests passed w 11,54 s, w tym 9 nowych testów
 cold worker/failure/lease i 5 global capacity/scope/current-state. Do pomiaru

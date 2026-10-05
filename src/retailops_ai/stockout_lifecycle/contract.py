@@ -134,7 +134,14 @@ def capsule_names(*, final: bool) -> set[str]:
         "signature.json",
     } | {f"reports/{gate}.json" for gate in REVIEW_GATES}
     return (
-        names | {"final_quality.json", "campaign_freeze.json", "campaign_permission.json"}
+        names
+        | {
+            "final_quality.json",
+            "campaign_freeze.json",
+            "campaign_permission.json",
+            "selection.json",
+            "execution_evidence.json",
+        }
         if final
         else names
     )

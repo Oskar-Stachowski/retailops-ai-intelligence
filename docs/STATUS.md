@@ -1,5 +1,14 @@
 # Aktualny status
 
+**AI 08 — worker/HTTP/priority i pełny backup są zaliczone; final receipts/karta są przygotowane.**
+[Przyrost 08.23](evidence/08-23-stockout-final-receipts-and-card.md) dodaje collector
+sześciu światów, ponowną kontrolę bramek, kartę, qualifier i jawny review/import/lifecycle.
+HEAD 549df93 ma zielony Required CI z 2478 testami. Nowy worker ma rzeczywisty odbiór
+37257129973. Końcowe 9296 membership czeka na owner permission; nie oceniono outcomes.
+Nowy zakres nadal wymaga własnego pełnego CI oraz rzeczywistych receipts final
+orchestration/qualification. Niezależna jakość, osobna promocja, review/merge/main
+są otwarte. **AI 08 pozostaje not ready.** Niżej jest historia wcześniejszych zakresów.
+
 **AI 08 — real MLflow/SQL/backup są zaliczone; worker i priorytety czekają na pełny odbiór.**
 [Przyrost 08.22](evidence/08-22-stockout-worker-and-priority.md) dodaje izolowane
 obliczenia, fencing, widok priority przed projekcją scope i osobny current stockout.

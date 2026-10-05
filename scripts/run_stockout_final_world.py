@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import re
 import shutil
 import signal
 import subprocess
@@ -19,6 +20,7 @@ from retailops_ai.stockout_campaign.assembly import guard
 from retailops_ai.stockout_campaign.contract import CampaignFreeze, CampaignPermission
 from retailops_ai.stockout_campaign.evaluation import bound_recipes
 from retailops_ai.stockout_campaign.implementation import code_digest, lock_digest
+from retailops_ai.stockout_lifecycle.release import receipt
 from retailops_ai.stockout_runtime.contracts import ScoringPolicy, ScoringRecipe
 
 LIMITS = dict(
@@ -63,6 +65,11 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         or os.environ.get("GITHUB_REPOSITORY") != "Oskar-Stachowski/retailops-ai-intelligence"
     ):
         raise ValueError("stockout_final_requires_owned_github_runner")
+    commit = os.environ.get("GITHUB_SHA", "")
+    run_id = int(os.environ.get("GITHUB_RUN_ID", "0"))
+    attempt = int(os.environ.get("GITHUB_RUN_ATTEMPT", "0"))
+    if not re.fullmatch(r"[0-9a-f]{40}", commit) or min(run_id, attempt) < 1:
+        raise ValueError("stockout_final_execution_receipt_identity_required")
     freeze = CampaignFreeze.model_validate_json(args.freeze.read_bytes())
     permission = CampaignPermission.model_validate_json(args.permission.read_bytes())
     source = next(s for s in freeze.sources if (s.world, s.seed) == (args.world, args.seed))
@@ -114,6 +121,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     minimum = shutil.disk_usage(args.output).free
     phases = []
     failure = None
+    equal = False
     try:
         for phase, python in (("native", Path(sys.executable)), ("wheel", args.wheel_python)):
             command = [str(python), "-P", "-m", "retailops_ai.stockout_campaign.runner"]
@@ -189,6 +197,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         )
         if native != wheel:
             raise ValueError("stockout_final_native_wheel_report_mismatch")
+        equal = True
         return dict(
             schema_version="stockout-final-world-resource-1.0.0",
             status="passed",
@@ -214,7 +223,23 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
             world=args.world,
             seed=args.seed,
             budgets=LIMITS,
+            execution_code_sha256=code_digest(),
+            dependency_lock_sha256=lock_digest(),
+            execution_commit=commit,
+            workflow_run_id=run_id,
+            workflow_run_attempt=attempt,
             phases=phases,
+            native_wheel_equal=equal,
+            receipts={
+                name: receipt((args.output / name).read_bytes()).model_dump(mode="json")
+                for name in (
+                    "native.json",
+                    "wheel.json",
+                    "native-access.jsonl",
+                    "wheel-access.jsonl",
+                )
+                if (args.output / name).is_file()
+            },
             recorded_at=datetime.now(UTC).isoformat(),
             failure=failure,
             measurement=dict(

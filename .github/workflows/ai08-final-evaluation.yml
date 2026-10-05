@@ -83,3 +83,46 @@ jobs:
           compression-level: 0
           retention-days: 30
           overwrite: false
+
+  collect:
+    needs: evaluate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      UV_NO_CACHE: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - name: Verify campaign permission and remote reserve
+        run: |
+          uv sync --locked --extra snapshot --extra forecast
+          uv run --locked --extra snapshot --extra forecast python scripts/check_stockout_final_permission.py
+          python -c 'import shutil; assert shutil.disk_usage(".").free >= 6 * 1024**3 + 512 * 1024**2, "stockout_final_collection_remote_reserve"'
+      - name: Download receipts only from this exact authorized execution
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --pattern "ai08-final-${GITHUB_SHA}-*" --dir final-artifacts
+      - name: Preserve six separate quality reports and verify cold receipts
+        run: |
+          uv run --locked --extra snapshot --extra forecast python scripts/collect_stockout_final.py \
+            --freeze docs/reference/stockout-final-campaign-v1.json \
+            --permission docs/reference/stockout-final-permission-v1.json \
+            --receipts final-artifacts --output final-collected \
+            --artifact-prefix "ai08-final-${GITHUB_SHA}-" --workflow-run-id "$GITHUB_RUN_ID"
+      - name: Retain aggregate quality and execution receipts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai08-final-collected-${{ github.sha }}
+          path: final-collected/*.json
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: false

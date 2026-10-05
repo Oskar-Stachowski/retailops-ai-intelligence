@@ -200,10 +200,15 @@ def verify_approved_capsule(
     ):
         raise ValueError("stockout_capsule_model_card_binding")
     if final:
+        from retailops_ai.stockout_lifecycle.card import final_card
+        from retailops_ai.stockout_lifecycle.evidence import verify_world_gates
+
         freeze = CampaignFreeze.model_validate_json(raw["campaign_freeze.json"])
         permission = CampaignPermission.model_validate_json(raw["campaign_permission.json"])
         quality = read_json(root, "final_quality.json")
         bound_recipes(freeze, recipe, policy)
+        for world in quality["content"]["worlds"]:
+            verify_world_gates(world, freeze)
         expected = aggregate(quality["content"]["worlds"], freeze=freeze, permission=permission)
         if (
             quality != expected
@@ -213,6 +218,17 @@ def verify_approved_capsule(
             or card.get("final_quality_id") != quality["quality_id"]
         ):
             raise ValueError("stockout_capsule_independent_final_quality_required")
+        if card != final_card(
+            selection=read_json(root, "selection.json"),
+            freeze=freeze,
+            permission=permission,
+            recipe=recipe,
+            policy=policy,
+            quality=quality,
+            execution=read_json(root, "execution_evidence.json"),
+            inputs=inputs,
+        ):
+            raise ValueError("stockout_capsule_final_card_or_execution_changed")
     # No mutating alias or DB head operation is performed by a byte verifier.
     if raw != _private(root, capsule_names(final=final)):
         raise ValueError("stockout_capsule_changed_during_verification")
