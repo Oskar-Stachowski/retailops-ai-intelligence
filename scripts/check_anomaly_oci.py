@@ -31,7 +31,13 @@ def command(args: list[str], *, cwd: Path = ROOT, log: Path | None = None) -> st
         args, cwd=cwd, capture_output=True, text=True, check=False, timeout=3000
     )
     if log is not None:
-        log.write_text(result.stdout + result.stderr)
+        log.write_text(
+            result.stdout
+            + result.stderr
+            + "\n"
+            + json.dumps({"child_exit_code": result.returncode})
+            + "\n"
+        )
     require(result.returncode == 0, "anomaly_oci_child_command_failed")
     return result.stdout.strip()
 
