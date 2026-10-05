@@ -1,3 +1,8 @@
+[Pełny odbiór modelu AI 08](evidence/08-27-final-serving-acceptance.md),
+[końcowa jakość sześciu źródeł](evidence/08-25-final-campaign-results.md) oraz
+[prawdziwa kwalifikacja/karta](evidence/08-26-qualified-model.md) są zaliczone.
+Aktualny warunek formalnego ready znajduje się w [STATUS](STATUS.md).
+
 [Zatwierdzona kampania AI08 v2](reference/stockout-final-campaign-v2.md) i
 [rzeczywiste porównanie kolejek](evidence/08-24-approved-campaign.md).
 

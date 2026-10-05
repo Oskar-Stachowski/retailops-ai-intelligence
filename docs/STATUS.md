@@ -1,12 +1,18 @@
 # Aktualny status
 
-**AI 08 — końcowa jakość i prawdziwa kwalifikacja są zaliczone; trwa odbiór integracji.**
-[Sześć źródeł / 9296 punktów](evidence/08-25-final-campaign-results.md) ma
-90 zaliczonych kontroli, 3 zaakceptowane ostrzeżenia małych kategorii i 0 blokad.
-Model LR/upstream i sigmoid C10 pozostają zamrożone, a top50% wybrano na development.
-[Pełna kwalifikacja i karta](evidence/08-26-qualified-model.md) mają 40 smoke rows
-po kompletnym publicznym replay. Rzeczywiste obrazy i 204 focused tests przeszły.
-Końcowy review/MLflow/lifecycle/batch/API, pełne CI oraz merge/main nadal oczekują.
+**AI 08 — wszystkie odbiory danych, jakości i działającego modelu zaliczone.**
+[Końcowy odbiór](evidence/08-27-final-serving-acceptance.md) potwierdza prawdziwe
+MLflow/SQL, register/promote/rollback/reject, cold worker, batch i scoped API:
+40 wyników, 15 pozycji attention_queue, 206 focused tests, 12 bramek review.
+[Sześć światów / 9296 punktów](evidence/08-25-final-campaign-results.md) ma
+90 kontroli passed, 3 zaakceptowane ostrzeżenia małych kategorii i 0 blokad.
+[Pełna kwalifikacja i karta](evidence/08-26-qualified-model.md) są zachowane.
+Warunek formalnego **AI 08 READY na main**: zielony Required CI dokładnego
+HEAD PR14, normalne scalenie PR14 i zielony Required CI jego merge commitu.
+Do spełnienia tego warunku formalnego cały etap pozostaje not ready;
+po jego spełnieniu poniższe starsze wpisy są wyłącznie historią zakresów.
+Wdrożenia produkcyjnego nie wykonano.
+
 **AI 08 pozostaje not ready.** Niżej zachowano historię wcześniejszych zakresów.
 
 **AI 08 pozostaje not ready.** Niżej jest historia wcześniejszych zakresów.

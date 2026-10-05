@@ -1,5 +1,13 @@
 # Stockout — wspólny mechanizm wersjonowania AI 05
 
+Aktualny [pełny rzeczywisty odbiór](../evidence/08-27-final-serving-acceptance.md)
+zaliczył kwalifikowany model, 12 bramek review, pełny verifier/importer MLflow,
+register/promote/rollback/reject oraz durable cold worker i scoped batch/API.
+Poniższy opis otwartych prac i fixture dotyczy historycznego przyrostu 08.18.
+Właściwy model jest rozdzielony od fixture mechanics; odbiór był izolowany i
+nie uruchomił produkcyjnego wdrożenia.
+
+
 `StockoutLifecycle` używa tego samego odzyskiwalnego protokołu co adapter v12.
 Kod wspólny to `model_lifecycle/reviewed_engine.py`; typed request, approval,
 binding oraz release pozostają osobnymi kontraktami każdego modelu. Regresja
