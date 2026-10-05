@@ -47,6 +47,12 @@ zachowano tę próbę i zastąpiono ją wcześniej potwierdzoną niecredential
 próbką. Receipt zawiera oba przebiegi. Konfiguracja sesji AI 08 pozostaje
 bez zmian. Po regresji nie zmieniono żadnego bajtu kodu aplikacji.
 
+Podczas końcowej publikacji AI 08 dodało commit `048f7b3` z metadata porównania
+capacity. Następny wspólny skan wykrył w nim jeszcze jeden publiczny
+`content.development_keys_sha256`. Dopasowanie dokładnej wartości i ścieżki
+w tej samej regule ma osobne kontrole negatywne. Kolejny commit AI 09 zmienia
+wyłącznie konfigurację skanera i dowody; nie zmienia sprawdzonego runtime.
+
 Wspólny dziennik projektu pozostał byte-identical: cztery plany, zero nowych
 rezerwacji i wszystkie 64 dostępne odczyty. Testy komponentu korzystają wyłącznie
 ze znanego publicznego smoke i kontrolowanych danych syntetycznych.

@@ -99,6 +99,18 @@
     "application_bytes_changed_after_focused_regression": false,
     "foreign_worktree_config_changed": false,
     "git_commits_scanned": 268,
+    "later_foreign_capacity_metadata_resolution": {
+      "after_exact_exception_findings": 2,
+      "baseline_findings": 3,
+      "different_key_same_file_detected": true,
+      "foreign_branch_metadata_or_config_modified": false,
+      "metadata_field": "content.development_keys_sha256",
+      "postcommit_scan_failed_because_foreign_history_advanced_after_prior_success": true,
+      "same_hash_other_file_detected": true,
+      "source_commit": "048f7b311b82dbf831718565289a54166cbe7d36",
+      "status": "passed",
+      "whole_file_not_excluded": true
+    },
     "negative_controls": {
       "after_rule_specific_exception_findings": 3,
       "all_controls_synthetic_or_public_noncredential_hashes": true,
@@ -126,6 +138,8 @@
     "original_attempt_log_sha256": "915e2e36a501c93014e1caf17724cc2d2fa00ef53cb2360433c7d48a7cff9fb7",
     "passed_log": "/private/tmp/ai09-source-versions-secrets-after-control.log",
     "passed_log_sha256": "49e7b07ad9809ffda741da93defd3455a7095c923ac4d9c6eb6db4d442e8821b",
+    "postcommit_failed_scan_log": "/private/tmp/ai09-source-versions-postcommit-git-secrets.log",
+    "postcommit_failed_scan_not_due_to_ai09_application_changes": true,
     "status": "passed_git_and_directory_after_exact_rule_specific_shared_history_metadata_exception"
   },
   "shared_project_journal": {
