@@ -1,0 +1,29 @@
+{
+  "actual_fit_commit": "fcd09f68187b8d21e9dff756a24688b790221023",
+  "artifact_secret_scan": {
+    "checked_at": "2026-10-05T04:23:46.019712+00:00",
+    "findings": 0,
+    "report_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "status": "passed",
+    "tool": "gitleaks",
+    "uncompressed_json_files": 46
+  },
+  "data_class": "generated_synthetic_offline_qualification_no_real_business_data",
+  "primary": {
+    "detector_id": "anomaly-detector-sha256-dc2a1a12aca7eb306e26d185b286cb71271f6bd64bd4dfc0da97f20f413a11b2",
+    "family": "seasonal_residual",
+    "qualification_scope": "synthetic_ai_07_portfolio_v4",
+    "sha256": "453556c69bf92c8873552e64f1b178769aec5dc0528379431bfa566c03ad38d4",
+    "size_bytes": 480348
+  },
+  "reference": {
+    "detector_id": "anomaly-detector-sha256-817e886307b3437dd63cc9244f83febe656539b2b840acebe7d9e9902202eeaa",
+    "family": "isolation_forest",
+    "qualification_scope": "synthetic_ai_07_portfolio_v4",
+    "sha256": "51bdd48b2ba7a1e58ae038a69d100c582187aa57a131cc218c79c63cda0cd98a",
+    "size_bytes": 492162
+  },
+  "source_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+  "stage_status": "pending_oci_and_required_ci",
+  "version": "anomaly-qualified-capsules-1.0.0"
+}
