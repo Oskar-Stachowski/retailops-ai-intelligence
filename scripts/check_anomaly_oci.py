@@ -206,6 +206,19 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             Path(prepared["feature_dir"]),
             *(Path(parent) for parent in prepared["parents"]),
         ]
+        bindings = [
+            {
+                "type": "bind",
+                "source": str(path),
+                "target": str(path),
+                "read_only": path != output,
+                "bind": {"create_host_path": False},
+            }
+            for path in [*mounts, output]
+        ]
+        override.write_text(
+            override.read_text() + "  api-migrate:\n    volumes: " + json.dumps(bindings) + "\n"
+        )
         invocation = [
             *base,
             "run",
@@ -216,11 +229,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "-e",
             "APP_ENV=test",
         ]
-        for path in mounts:
-            invocation += ["--mount", f"type=bind,src={path},dst={path},readonly"]
         invocation += [
-            "--volume",
-            str(output) + ":" + str(output),
             "api-migrate",
             "python",
             str(ROOT / "scripts/accept_anomaly_lifecycle.py"),
