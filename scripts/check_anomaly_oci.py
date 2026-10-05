@@ -198,8 +198,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             work / "primary",
             work / "reference",
             prepared_receipt,
-            ROOT / "data/generated",
-            Path(prepared["parents"][1]),
+            Path(prepared["feature_dir"]),
+            *(Path(parent) for parent in prepared["parents"]),
         ]
         invocation = [
             *base,
