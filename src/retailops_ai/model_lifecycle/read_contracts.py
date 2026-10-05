@@ -5,7 +5,6 @@ from typing import Annotated, Literal
 from pydantic import Field
 
 from retailops_ai.data_contracts.common import Channel, Contract, Sha256, Symbol, UtcTime
-from retailops_ai.forecast_jobs.contracts import ReleaseID
 from retailops_ai.model_lifecycle.contracts import Receipt, RunID, Version
 
 CatalogErrorCode = Literal[
@@ -39,30 +38,44 @@ class CatalogFreshness(Contract):
 
 
 class ApprovedModelRelease(Contract):
-    release_id: ReleaseID
+    release_id: Annotated[
+        str, Field(pattern=r"^(model-release|anomaly-release)-sha256-[0-9a-f]{64}$")
+    ]
     model_version: Version
     image_digest: Annotated[str, Field(pattern=r"^sha256:[0-9a-f]{64}$")]
 
 
 class CatalogVersion(Contract):
-    model_name: Literal["retailops-demand-forecast"] = "retailops-demand-forecast"
+    model_name: Literal["retailops-demand-forecast", "retailops-sales-anomaly"] = (
+        "retailops-demand-forecast"
+    )
     model_version: Version
     status: Literal["approved_release_recorded", "previously_published"]
-    model_family: Literal["baseline", "random_forest", "hist_gradient_boosting"]
-    flavor: Literal["forecast-json-v1", "baseline-json-v1"]
+    model_family: Literal[
+        "baseline",
+        "random_forest",
+        "hist_gradient_boosting",
+        "seasonal_residual",
+        "isolation_forest",
+    ]
+    flavor: Literal["forecast-json-v1", "baseline-json-v1", "anomaly-json-v1"]
     mlflow_run_id: RunID
     model_artifact: Receipt
     model_card_report: Receipt
     qualification_sha256: Sha256
     config_sha256: Sha256
-    feature_schema_version: Literal["forecast-features-v1"] = "forecast-features-v1"
+    feature_schema_version: Literal["forecast-features-v1", "qualified-anomaly-inputs-1.0.0"] = (
+        "forecast-features-v1"
+    )
     evaluation_id: Symbol
     visible_last_published_at: UtcTime
     freshness: CatalogFreshness
 
 
 class CatalogModel(Contract):
-    model_name: Literal["retailops-demand-forecast"] = "retailops-demand-forecast"
+    model_name: Literal["retailops-demand-forecast", "retailops-sales-anomaly"] = (
+        "retailops-demand-forecast"
+    )
     visible_version_count: Annotated[int, Field(ge=1, le=1000)]
     approved_release: ApprovedModelRelease | None
     registry_aliases: None = None

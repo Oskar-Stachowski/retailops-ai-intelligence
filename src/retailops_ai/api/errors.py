@@ -6,6 +6,7 @@ from uuid import UUID
 from starlette.responses import JSONResponse
 
 from retailops_ai.adapters.telemetry import CORRELATION_ID
+from retailops_ai.anomaly_portfolio.serving_contract import ErrorCode as AnomalyErrorCode
 from retailops_ai.api.models import Problem, Ready
 from retailops_ai.forecast_jobs.contracts import BatchErrorCode
 from retailops_ai.forecast_jobs.read_contracts import ReadErrorCode
@@ -40,6 +41,7 @@ def problem_response(
     | ReadErrorCode
     | CatalogErrorCode
     | EvaluationErrorCode
+    | AnomalyErrorCode
     | StockoutErrorCode
     | None = None,
 ) -> JSONResponse:

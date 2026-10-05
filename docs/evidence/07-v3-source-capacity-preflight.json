@@ -1,0 +1,17 @@
+{
+  "status": "failed_profile_allowlist_preflight",
+  "profile": "ai-07-portfolio-v3",
+  "source_commit": "de36656",
+  "source_seed": 42,
+  "scenario": "demand",
+  "source_dataset_id": "source-sha256-5e006e03cdb4d103861f0ebc403a268deeb7b1450d59d4a92a77f030fb7769f5",
+  "base_rate_multiplier": "0.50",
+  "error": "Full canonical stream exceeds bounded scope.",
+  "original_event_budget": 8192,
+  "final_test": "not_opened",
+  "next_action": "Apply the unchanged portfolio bounds and partition/clock contracts to the new explicitly declared profile; keep density 0.50 and full census.",
+  "actual_fallback_event_budget": 4096,
+  "declared_portfolio_event_budget": 8192,
+  "canonical_events": 6639,
+  "root_cause": "New portfolio profile omitted from existing 8192-event and 2.1-clock allowlists; it incorrectly used the default 4096-event profile."
+}

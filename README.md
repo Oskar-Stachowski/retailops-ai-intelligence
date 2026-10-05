@@ -1,5 +1,11 @@
 # RetailOps AI Intelligence
 
+**AI 07: kompletny odbiór kwalifikacji `synthetic_ai_07_portfolio_v4`.**
+[Końcowy odbiór](docs/evidence/07-completion.md) i
+[integracja z main](docs/evidence/07-main-integration.md) obejmują oba modele,
+lifecycle, batch/API i OCI. Pełne `ready` na main potwierdzają scalenia PR #24/#97
+oraz zielony Required CI dokładnych HEAD i merge commitów obu repozytoriów.
+
 **AI 08 jest READY.** [Końcowy raport](docs/evidence/08-28-final-ready.md) obejmuje
 kwalifikowany model, rzeczywisty lifecycle/batch/API oraz zielone CI obu main.
 

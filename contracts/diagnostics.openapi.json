@@ -130,6 +130,18 @@
               },
               {
                 "enum": [
+                  "anomaly-scope-denied",
+                  "anomaly-pipeline-denied",
+                  "anomaly-idempotency-conflict",
+                  "anomaly-read-budget",
+                  "anomaly-view-changed",
+                  "anomaly-not-found",
+                  "anomaly-output-unavailable"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
                   "stockout-run-not-found",
                   "stockout-run-denied",
                   "stockout-risk-not-found",

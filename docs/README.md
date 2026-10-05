@@ -11,6 +11,23 @@ wyjaśnia niezaliczone CI 08.19 oraz aktualny komplet sześciu źródeł.
 
 # Dokumentacja RetailOps AI
 
+[Końcowy odbiór AI 07](evidence/07-completion.md) obejmuje rzeczywistą kwalifikację
+baseline/Isolation Forest oraz lifecycle, atomowy batch, scoped HTTP i restart OCI.
+Pełne zamknięcie obejmuje integrację z `main` obu repozytoriów i zielony Required CI.
+
+[Detektory anomalii — AI07](reference/anomaly-detectors.md) mają jawny podział
+czasowy, progi z walidacji i odtwarzalny zapis baseline/Isolation Forest.
+
+[Cechy anomalii z kwalifikowanych dni — AI07](reference/qualified-anomaly-inputs.md)
+rozdzielają wiedzę treningową i ocenę sprzedaży oraz zwrotów.
+
+[Pełny odbiór sprzedaży i zwrotów DQ — AI07](reference/full-raw-dq-consumer.md)
+sprawdza cały parent, brakujące fakty i historyczną dostępność.
+
+[Zwroty według doby i dostępności — AI07](reference/return-inputs.md) zachowują
+ogon po historii sprzedaży, odczyt as-of i niekompletne obserwacje bez fałszywych zer.
+[Integracja z gotowym fundamentem AI05](evidence/ai/07/07.4-ai05-integration/README.md)
+zachowuje wersje snapshotów, deklaracje kompletności i oddzielne bramki modeli.
 [Stockout: trwała kolejka i API](reference/stockout-jobs.md) oraz
 [odbiór przyrostu 08.19](evidence/08-19-stockout-jobs.md).
 

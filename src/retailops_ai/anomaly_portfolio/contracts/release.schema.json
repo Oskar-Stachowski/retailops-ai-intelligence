@@ -1,0 +1,332 @@
+{
+  "$defs": {
+    "Binding": {
+      "additionalProperties": false,
+      "properties": {
+        "mlflow_run_id": {
+          "pattern": "^[0-9a-f]{32}$",
+          "title": "Mlflow Run Id",
+          "type": "string"
+        },
+        "model_name": {
+          "const": "retailops-sales-anomaly",
+          "default": "retailops-sales-anomaly",
+          "title": "Model Name",
+          "type": "string"
+        },
+        "model_version": {
+          "pattern": "^[1-9][0-9]{0,9}$",
+          "title": "Model Version",
+          "type": "string"
+        },
+        "qualification": {
+          "$ref": "#/$defs/Qualification"
+        },
+        "qualification_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Qualification Sha256",
+          "type": "string"
+        },
+        "source_uri": {
+          "title": "Source Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "model_version",
+        "mlflow_run_id",
+        "source_uri",
+        "qualification_sha256",
+        "qualification"
+      ],
+      "title": "Binding",
+      "type": "object"
+    },
+    "Gate": {
+      "additionalProperties": false,
+      "properties": {
+        "report": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "failed",
+            "not_ready",
+            "not_evaluable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "report"
+      ],
+      "title": "Gate",
+      "type": "object"
+    },
+    "Qualification": {
+      "additionalProperties": false,
+      "properties": {
+        "ai_code_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Ai Code Commit",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "data_seed": {
+          "const": 42,
+          "default": 42,
+          "title": "Data Seed",
+          "type": "integer"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "evaluation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Evaluation Id",
+          "type": "string"
+        },
+        "evidence_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "expected_output_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Expected Output Sha256",
+          "type": "string"
+        },
+        "feature_schema_version": {
+          "const": "qualified-anomaly-inputs-1.0.0",
+          "default": "qualified-anomaly-inputs-1.0.0",
+          "title": "Feature Schema Version",
+          "type": "string"
+        },
+        "gates": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Gate"
+          },
+          "maxProperties": 10,
+          "minProperties": 10,
+          "propertyNames": {
+            "enum": [
+              "features",
+              "freshness_drift_compatibility",
+              "model_card",
+              "pit",
+              "protocol",
+              "resources",
+              "security_license",
+              "segments",
+              "signature",
+              "source"
+            ]
+          },
+          "title": "Gates",
+          "type": "object"
+        },
+        "input_example": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "model": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "model_family": {
+          "enum": [
+            "seasonal_residual",
+            "isolation_forest"
+          ],
+          "title": "Model Family",
+          "type": "string"
+        },
+        "model_seed": {
+          "minimum": 0,
+          "title": "Model Seed",
+          "type": "integer"
+        },
+        "original_completed_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Original Completed At",
+          "type": "string"
+        },
+        "original_started_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Original Started At",
+          "type": "string"
+        },
+        "purpose": {
+          "const": "qualified_bounded_anomaly_portfolio",
+          "default": "qualified_bounded_anomaly_portfolio",
+          "title": "Purpose",
+          "type": "string"
+        },
+        "qualification_scope": {
+          "default": "synthetic_ai_07_portfolio_v1",
+          "enum": [
+            "synthetic_ai_07_portfolio_v1",
+            "synthetic_ai_07_portfolio_v2",
+            "synthetic_ai_07_portfolio_v3",
+            "synthetic_ai_07_portfolio_v4"
+          ],
+          "title": "Qualification Scope",
+          "type": "string"
+        },
+        "qualified_anomaly_input_id": {
+          "pattern": "^qualified-anomaly-inputs-sha256-[0-9a-f]{64}$",
+          "title": "Qualified Anomaly Input Id",
+          "type": "string"
+        },
+        "reference_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Reference Id",
+          "type": "string"
+        },
+        "signature": {
+          "$ref": "#/$defs/Receipt"
+        },
+        "source_code_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Source Code Commit",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "truth_access": {
+          "const": "excluded_from_model_and_batch",
+          "default": "excluded_from_model_and_batch",
+          "title": "Truth Access",
+          "type": "string"
+        },
+        "version": {
+          "const": "anomaly-qualification-1.0.0",
+          "default": "anomaly-qualification-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "evaluation_id",
+        "reference_id",
+        "source_dataset_id",
+        "qualified_anomaly_input_id",
+        "original_started_at",
+        "original_completed_at",
+        "source_code_commit",
+        "ai_code_commit",
+        "dependency_lock_sha256",
+        "model_family",
+        "model_seed",
+        "model",
+        "config",
+        "signature",
+        "input_example",
+        "expected_output_sha256",
+        "gates"
+      ],
+      "title": "Qualification",
+      "type": "object"
+    },
+    "Receipt": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 268435456,
+          "minimum": 1,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sha256",
+        "size_bytes"
+      ],
+      "title": "Receipt",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "binding": {
+      "$ref": "#/$defs/Binding"
+    },
+    "decision_id": {
+      "pattern": "^decision-[a-z0-9-]{8,64}$",
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "image_digest": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Image Digest",
+      "type": "string"
+    },
+    "previous_release_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Previous Release Id"
+    },
+    "previous_version": {
+      "anyOf": [
+        {
+          "pattern": "^[1-9][0-9]{0,9}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Previous Version"
+    },
+    "release_id": {
+      "pattern": "^anomaly-release-sha256-[0-9a-f]{64}$",
+      "title": "Release Id",
+      "type": "string"
+    },
+    "restored_from_release_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Restored From Release Id"
+    }
+  },
+  "required": [
+    "release_id",
+    "decision_id",
+    "binding",
+    "image_digest",
+    "previous_release_id",
+    "previous_version"
+  ],
+  "title": "Release",
+  "type": "object"
+}

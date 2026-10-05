@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Exact numerical allowlist; lineage, labels and query audit stay outside it.",
+  "properties": {
+    "expected_units": {
+      "minimum": 0,
+      "title": "Expected Units",
+      "type": "integer"
+    },
+    "observed_units": {
+      "minimum": 0,
+      "title": "Observed Units",
+      "type": "integer"
+    },
+    "on_hand": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "On Hand"
+    },
+    "planned_price": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Planned Price"
+    },
+    "promotion_offered": {
+      "title": "Promotion Offered",
+      "type": "boolean"
+    },
+    "residual_units": {
+      "title": "Residual Units",
+      "type": "integer"
+    },
+    "robust_scale_units": {
+      "minimum": 1,
+      "title": "Robust Scale Units",
+      "type": "number"
+    },
+    "standardized_residual": {
+      "title": "Standardized Residual",
+      "type": "number"
+    }
+  },
+  "required": [
+    "observed_units",
+    "expected_units",
+    "residual_units",
+    "robust_scale_units",
+    "standardized_residual",
+    "planned_price",
+    "promotion_offered",
+    "on_hand"
+  ],
+  "title": "ModelRow",
+  "type": "object"
+}

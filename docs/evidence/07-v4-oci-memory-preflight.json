@@ -1,0 +1,17 @@
+{
+  "version": "ai07-oci-memory-preflight-1.0.0",
+  "checked_at": "2026-10-05T04:47:37.227350+00:00",
+  "consumer_commit": "695d76d",
+  "failure": "owned_vm_global_oom_exit_137",
+  "evidence": "actual_docker_oom_and_die_events_and_guest_kernel_oom_kill",
+  "owned_vm_memory_before_gib": 3,
+  "owned_vm_memory_after_gib": 4,
+  "model_fit_limits_changed": false,
+  "owned_project_cleanup": "completed",
+  "quality_status": "both_frozen_versions_passed_unchanged",
+  "logs": {
+    "acceptance.log": "ad948f669af03fd04db211269e8e86e58e1955ca952096ea654ede93be190301",
+    "build.log": "b8f3d61aa6018557619918ad0cba738a05f96728c7c21ebf840a103c5f959fc4",
+    "cleanup.log": "b5668840ba80264f827b6b76de6468da629c1e36d0a6b25de7fac6a0d029f8e9"
+  }
+}

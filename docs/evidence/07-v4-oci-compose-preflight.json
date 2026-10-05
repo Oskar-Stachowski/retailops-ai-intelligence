@@ -1,0 +1,14 @@
+{
+  "version": "ai07-oci-compose-preflight-1.0.0",
+  "checked_at": "2026-10-05T04:42:46.193498+00:00",
+  "consumer_commit": "11d33de",
+  "failure": "compose_run_rejects_mount_flag",
+  "correction": "compose_override_long_bind_syntax_with_create_host_path_false",
+  "owned_project_cleanup": "completed",
+  "quality_status": "both_frozen_versions_passed_unchanged",
+  "logs": {
+    "acceptance.log": "b0292d8d236ad94b968a611326f4d86936fc97de9c83d1a8b9f4fb44769069dc",
+    "build.log": "6127206f642005984247d30213f760b37a60dd80f0eaa5a4d277551fd57e809f",
+    "cleanup.log": "2fe80f4eb565dd0ca84f9b64af64a987620521bfdecae1f5b4b36eb0fa48f911"
+  }
+}

@@ -1,0 +1,601 @@
+{
+  "$defs": {
+    "Coverage": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage_id": {
+          "pattern": "^day-coverage-sha256-[0-9a-f]{64}$",
+          "title": "Coverage Id",
+          "type": "string"
+        },
+        "descriptor": {
+          "$ref": "#/$defs/CoverageDescriptor"
+        }
+      },
+      "required": [
+        "coverage_id",
+        "descriptor"
+      ],
+      "title": "Coverage",
+      "type": "object"
+    },
+    "CoverageDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "cohort_maturity_is_day_closure": {
+          "const": false,
+          "title": "Cohort Maturity Is Day Closure",
+          "type": "boolean"
+        },
+        "contract_version": {
+          "const": "business-day-coverage-1.0.0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "dependency_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Sha256",
+          "type": "string"
+        },
+        "missing_grain_policy": {
+          "const": "unknown_not_zero",
+          "title": "Missing Grain Policy",
+          "type": "string"
+        },
+        "owner": {
+          "const": "retailops-cloud-native-platform",
+          "title": "Owner",
+          "type": "string"
+        },
+        "policy_version": {
+          "const": "synthetic-parent-event-day-close-1.0.0",
+          "title": "Policy Version",
+          "type": "string"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "return_closure_basis": {
+          "const": "verified_complete_synthetic_export_and_bounded_native_ingestion",
+          "title": "Return Closure Basis",
+          "type": "string"
+        },
+        "return_scope": {
+          "const": "purchases_in_parent_source_only",
+          "title": "Return Scope",
+          "type": "string"
+        },
+        "row_count": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "rows_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Rows Sha256",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "source_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Descriptor Sha256",
+          "type": "string"
+        },
+        "source_tables": {
+          "additionalProperties": {
+            "$ref": "#/$defs/TableIdentity"
+          },
+          "maxProperties": 5,
+          "minProperties": 5,
+          "title": "Source Tables",
+          "type": "object"
+        },
+        "transport_durability_proven": {
+          "const": false,
+          "title": "Transport Durability Proven",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "contract_version",
+        "policy_version",
+        "owner",
+        "source_dataset_id",
+        "source_descriptor_sha256",
+        "source_tables",
+        "return_scope",
+        "return_closure_basis",
+        "missing_grain_policy",
+        "cohort_maturity_is_day_closure",
+        "transport_durability_proven",
+        "code_sha256",
+        "dependency_sha256",
+        "python_version",
+        "rows_sha256",
+        "row_count"
+      ],
+      "title": "CoverageDescriptor",
+      "type": "object"
+    },
+    "Descriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage": {
+          "$ref": "#/$defs/Coverage"
+        },
+        "detector_readiness": {
+          "const": "not_qualified",
+          "default": "not_qualified",
+          "title": "Detector Readiness",
+          "type": "string"
+        },
+        "evaluation_truth": {
+          "const": "excluded",
+          "default": "excluded",
+          "title": "Evaluation Truth",
+          "type": "string"
+        },
+        "full_dq_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Full Dq Descriptor Sha256",
+          "type": "string"
+        },
+        "full_dq_replay_id": {
+          "pattern": "^full-dq-replay-sha256-[0-9a-f]{64}$",
+          "title": "Full Dq Replay Id",
+          "type": "string"
+        },
+        "model_feature_allowlist": {
+          "default": [
+            "observed_units",
+            "expected_units",
+            "residual_units",
+            "robust_scale_units",
+            "standardized_residual",
+            "planned_price",
+            "promotion_offered",
+            "on_hand"
+          ],
+          "maxItems": 8,
+          "minItems": 8,
+          "prefixItems": [
+            {
+              "const": "observed_units",
+              "type": "string"
+            },
+            {
+              "const": "expected_units",
+              "type": "string"
+            },
+            {
+              "const": "residual_units",
+              "type": "string"
+            },
+            {
+              "const": "robust_scale_units",
+              "type": "string"
+            },
+            {
+              "const": "standardized_residual",
+              "type": "string"
+            },
+            {
+              "const": "planned_price",
+              "type": "string"
+            },
+            {
+              "const": "promotion_offered",
+              "type": "string"
+            },
+            {
+              "const": "on_hand",
+              "type": "string"
+            }
+          ],
+          "title": "Model Feature Allowlist",
+          "type": "array"
+        },
+        "policy": {
+          "$ref": "#/$defs/Policy"
+        },
+        "return_scope": {
+          "const": "purchases_in_parent_source_only",
+          "default": "purchases_in_parent_source_only",
+          "title": "Return Scope",
+          "type": "string"
+        },
+        "row_count": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "rows_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Rows Sha256",
+          "type": "string"
+        },
+        "runtime": {
+          "$ref": "#/$defs/retailops_ai__qualified_anomalies__store__Runtime"
+        },
+        "status_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "title": "Status Counts",
+          "type": "object"
+        },
+        "version": {
+          "const": "qualified-anomaly-inputs-1.0.0",
+          "default": "qualified-anomaly-inputs-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "full_dq_replay_id",
+        "full_dq_descriptor_sha256",
+        "coverage",
+        "policy",
+        "runtime",
+        "row_count",
+        "rows_sha256",
+        "status_counts"
+      ],
+      "title": "Descriptor",
+      "type": "object"
+    },
+    "Implementation": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "contract_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Contract Files",
+          "type": "object"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "input_byte_limit": {
+          "const": 134217728,
+          "title": "Input Byte Limit",
+          "type": "integer"
+        },
+        "input_row_limit": {
+          "const": 100000,
+          "title": "Input Row Limit",
+          "type": "integer"
+        },
+        "output_byte_limit": {
+          "const": 268435456,
+          "title": "Output Byte Limit",
+          "type": "integer"
+        },
+        "output_row_limit": {
+          "const": 100000,
+          "title": "Output Row Limit",
+          "type": "integer"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "version": {
+          "const": "anomaly-demand-inputs-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "code_files",
+        "code_sha256",
+        "contract_files",
+        "dependency_lock_sha256",
+        "python_version",
+        "input_row_limit",
+        "input_byte_limit",
+        "output_row_limit",
+        "output_byte_limit"
+      ],
+      "title": "Implementation",
+      "type": "object"
+    },
+    "Policy": {
+      "additionalProperties": false,
+      "properties": {
+        "fit_clock": {
+          "const": "utc_window_start_minus_one_microsecond",
+          "default": "utc_window_start_minus_one_microsecond",
+          "title": "Fit Clock",
+          "type": "string"
+        },
+        "history_days": {
+          "const": 28,
+          "default": 28,
+          "title": "History Days",
+          "type": "integer"
+        },
+        "minimum_history_days": {
+          "const": 14,
+          "default": 14,
+          "title": "Minimum History Days",
+          "type": "integer"
+        },
+        "minimum_residuals": {
+          "const": 7,
+          "default": 7,
+          "title": "Minimum Residuals",
+          "type": "integer"
+        },
+        "quantity_basis": {
+          "const": "dq_accepted_receipts_at_query_cutoff",
+          "default": "dq_accepted_receipts_at_query_cutoff",
+          "title": "Quantity Basis",
+          "type": "string"
+        },
+        "returns_delay_hours": {
+          "default": 72,
+          "maximum": 168,
+          "minimum": 0,
+          "title": "Returns Delay Hours",
+          "type": "integer"
+        },
+        "sales_delay_hours": {
+          "default": 24,
+          "maximum": 168,
+          "minimum": 0,
+          "title": "Sales Delay Hours",
+          "type": "integer"
+        },
+        "scale_policy": {
+          "const": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+          "default": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+          "title": "Scale Policy",
+          "type": "string"
+        },
+        "scoring_clock": {
+          "const": "exclusive_utc_day_end_plus_delay_inclusive",
+          "default": "exclusive_utc_day_end_plus_delay_inclusive",
+          "title": "Scoring Clock",
+          "type": "string"
+        },
+        "seasonal_lag_days": {
+          "const": 7,
+          "default": 7,
+          "title": "Seasonal Lag Days",
+          "type": "integer"
+        },
+        "stock_policy": {
+          "const": "scoring_context_only_no_automatic_censoring_correction",
+          "default": "scoring_context_only_no_automatic_censoring_correction",
+          "title": "Stock Policy",
+          "type": "string"
+        },
+        "version": {
+          "const": "qualified-anomaly-inputs-1.0.0",
+          "default": "qualified-anomaly-inputs-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "Policy",
+      "type": "object"
+    },
+    "TableIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "columns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "data_class": {
+          "enum": [
+            "source_observation",
+            "source_plan"
+          ],
+          "title": "Data Class",
+          "type": "string"
+        },
+        "grain": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Grain",
+          "type": "array"
+        },
+        "row_count": {
+          "maximum": 100000,
+          "minimum": 0,
+          "title": "Row Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "row_count",
+        "columns",
+        "grain",
+        "data_class",
+        "content_sha256"
+      ],
+      "title": "TableIdentity",
+      "type": "object"
+    },
+    "retailops_ai__day_qualification__store__Runtime": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "contract_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Contract Files",
+          "type": "object"
+        },
+        "full_dq": {
+          "$ref": "#/$defs/retailops_ai__full_raw_dq__store__Runtime"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "full_dq",
+        "code_files",
+        "contract_files",
+        "python_version"
+      ],
+      "title": "Runtime",
+      "type": "object"
+    },
+    "retailops_ai__full_raw_dq__store__Runtime": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "contract_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Contract Files",
+          "type": "object"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "version": {
+          "const": "ai-full-parent-replay-2.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "code_files",
+        "contract_files",
+        "dependency_lock_sha256",
+        "python_version"
+      ],
+      "title": "Runtime",
+      "type": "object"
+    },
+    "retailops_ai__qualified_anomalies__store__Runtime": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "context": {
+          "$ref": "#/$defs/Implementation"
+        },
+        "contract_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Contract Files",
+          "type": "object"
+        },
+        "day_qualification": {
+          "$ref": "#/$defs/retailops_ai__day_qualification__store__Runtime"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "day_qualification",
+        "context",
+        "code_files",
+        "contract_files",
+        "python_version"
+      ],
+      "title": "Runtime",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "descriptor": {
+      "$ref": "#/$defs/Descriptor"
+    },
+    "qualified_anomaly_input_id": {
+      "pattern": "^qualified-anomaly-inputs-sha256-[0-9a-f]{64}$",
+      "title": "Qualified Anomaly Input Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "qualified_anomaly_input_id",
+    "descriptor"
+  ],
+  "title": "Manifest",
+  "type": "object"
+}

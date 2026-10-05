@@ -1,0 +1,104 @@
+{
+  "$defs": {
+    "RunDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "detector_id": {
+          "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",
+          "title": "Detector Id",
+          "type": "string"
+        },
+        "membership_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Membership Sha256",
+          "type": "string"
+        },
+        "model_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Manifest Sha256",
+          "type": "string"
+        },
+        "model_quality": {
+          "const": "not_evaluated",
+          "default": "not_evaluated",
+          "title": "Model Quality",
+          "type": "string"
+        },
+        "operational_serving": {
+          "const": "not_qualified",
+          "default": "not_qualified",
+          "title": "Operational Serving",
+          "type": "string"
+        },
+        "prediction_status_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "title": "Prediction Status Counts",
+          "type": "object"
+        },
+        "requested_rows": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Requested Rows",
+          "type": "integer"
+        },
+        "role_status_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "title": "Role Status Counts",
+          "type": "object"
+        },
+        "test_scores_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Test Scores Sha256",
+          "type": "string"
+        },
+        "validation_scores_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Validation Scores Sha256",
+          "type": "string"
+        },
+        "version": {
+          "const": "anomaly-detector-run-1.0.0",
+          "default": "anomaly-detector-run-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "detector_id",
+        "model_manifest_sha256",
+        "membership_sha256",
+        "validation_scores_sha256",
+        "test_scores_sha256",
+        "requested_rows",
+        "role_status_counts",
+        "prediction_status_counts"
+      ],
+      "title": "RunDescriptor",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "descriptor": {
+      "$ref": "#/$defs/RunDescriptor"
+    },
+    "run_artifact_id": {
+      "pattern": "^anomaly-detector-run-sha256-[0-9a-f]{64}$",
+      "title": "Run Artifact Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_artifact_id",
+    "descriptor"
+  ],
+  "title": "RunManifest",
+  "type": "object"
+}

@@ -1,0 +1,59 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "projection": {
+      "const": "legacy_sale_completed_operational_allowlist_v1",
+      "title": "Projection",
+      "type": "string"
+    },
+    "selection_policy": {
+      "const": "chronological_equally_spaced_inclusive_endpoints_v1",
+      "title": "Selection Policy",
+      "type": "string"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_descriptor_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Descriptor Sha256",
+      "type": "string"
+    },
+    "source_event_count": {
+      "maximum": 512,
+      "minimum": 12,
+      "title": "Source Event Count",
+      "type": "integer"
+    },
+    "source_events_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Events Sha256",
+      "type": "string"
+    },
+    "source_facts_ready": {
+      "const": true,
+      "title": "Source Facts Ready",
+      "type": "boolean"
+    },
+    "source_sales_count": {
+      "maximum": 100000,
+      "minimum": 12,
+      "title": "Source Sales Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "source_dataset_id",
+    "source_descriptor_sha256",
+    "source_events_sha256",
+    "source_event_count",
+    "source_sales_count",
+    "source_facts_ready",
+    "selection_policy",
+    "projection"
+  ],
+  "title": "Binding",
+  "type": "object"
+}

@@ -1,0 +1,1925 @@
+{
+  "actual_fit_commit": "fcd09f68187b8d21e9dff756a24688b790221023",
+  "limits": [
+    "correlated_repeated_synthetic_experiments",
+    "historical_inputs_stale_for_current_serving",
+    "offline_transport_only_no_production_durability_attestation"
+  ],
+  "models": [
+    {
+      "checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 6,
+          "value": 6
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 0.9642857142857143
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.9
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.9622323791195574
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 0.9696969696969697
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.5785984848484849
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 0.8888888888888888
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 27
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 45
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 30
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 2108
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.9521717911176184
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 2049
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 757
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9259259259259259
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9259259259259259
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 2.642007926023778
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9593339115952806
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 654
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8181818181818182
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.6923076923076923
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 3.058103975535168
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9590771219730497
+        },
+        {
+          "check_id": "clean_sample/137/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 729
+        },
+        {
+          "check_id": "metric_validity/137/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/137/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9629629629629629
+        },
+        {
+          "check_id": "metric_validity/137/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/137/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9735435038212811
+        },
+        {
+          "check_id": "clean_sample/137/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 626
+        },
+        {
+          "check_id": "metric_validity/137/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/137/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9230769230769231
+        },
+        {
+          "check_id": "metric_validity/137/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/137/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9706959706959706
+        },
+        {
+          "check_id": "clean_sample/2026/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 747
+        },
+        {
+          "check_id": "metric_validity/2026/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/2026/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9629629629629629
+        },
+        {
+          "check_id": "metric_validity/2026/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/2026/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9960739794711692
+        },
+        {
+          "check_id": "clean_sample/2026/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 644
+        },
+        {
+          "check_id": "metric_validity/2026/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/2026/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.7692307692307693
+        },
+        {
+          "check_id": "metric_validity/2026/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/2026/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8523221848656286
+        }
+      ],
+      "counts": {
+        "detected_episodes": 32,
+        "episodes": 33,
+        "evaluable": 4277,
+        "false_negative": 12,
+        "false_positive": 4,
+        "high_alerts": 69,
+        "high_true": 69,
+        "immature_truth": 0,
+        "input_insufficient_data_total": 1072,
+        "insufficient_data": 883,
+        "repeat_alerts": 76,
+        "requested": 7392,
+        "true_negative": 4153,
+        "true_positive": 108,
+        "unknown_truth": 2232
+      },
+      "detector_id": "anomaly-detector-sha256-dc2a1a12aca7eb306e26d185b286cb71271f6bd64bd4dfc0da97f20f413a11b2",
+      "evaluated_at": "2026-10-05T04:13:01.324280+00:00",
+      "evaluation_inputs": {
+        "evaluation_inputs_137_demand.json": {
+          "sha256": "5e279bdbf0754f6a6dc93ca3f9605b987651a4c2b6468a0148c799ecc01528b6",
+          "size_bytes": 1659506
+        },
+        "evaluation_inputs_137_physical.json": {
+          "sha256": "81b284e47fa0c8395fcfed6d5d08bfe461be9eb23ac4a069e96bf3e9ef2bd0f9",
+          "size_bytes": 1649566
+        },
+        "evaluation_inputs_2026_demand.json": {
+          "sha256": "1473f05156d83b3aa288fb6222c6815ec66ec07e804a1c8eaca99f4694eeab6e",
+          "size_bytes": 1672096
+        },
+        "evaluation_inputs_2026_physical.json": {
+          "sha256": "adb1d707dc4449ec8e3ed64791f1eb066f8f6e30a00533386e0af82bbe5e714e",
+          "size_bytes": 1659366
+        },
+        "evaluation_inputs_42_demand.json": {
+          "sha256": "7a77e2a645cfa12e67db9db5b67dfaf1797ca99a4f13a126431c4460acf7844c",
+          "size_bytes": 1678692
+        },
+        "evaluation_inputs_42_physical.json": {
+          "sha256": "ca462227e05ee4d98bcd4456956ae16c974e4fca8ae90f45b0a41920326540f8",
+          "size_bytes": 1667043
+        }
+      },
+      "family": "seasonal_residual",
+      "final_report_sha256": "7b57d60601c122f5cba36e3401430430aba953b8b0929f6eb41a3e476646b22a",
+      "kind": "primary",
+      "metrics": {
+        "episode_recall": 0.9696969696969697,
+        "evaluable_coverage": 0.5785984848484849,
+        "false_alerts_per_1000": 0.9622323791195574,
+        "high_severity_precision": 1.0,
+        "precision": 0.9642857142857143,
+        "recall": 0.9
+      },
+      "quality_id": "anomaly-quality-sha256-2ea20bddeaa1064dc52bb2294d0066b175511fb8b086aeac9db2a9d1f0e9a6b7",
+      "selection": {
+        "descriptor": {
+          "data_inventory": [
+            {
+              "feature_manifest_sha256": "5419596d8e60151b6910c3981eac222b0ac1d3d658e4b271781ce938221deb72",
+              "feature_rows_sha256": "a172630ddd92dcd4f647acb709860d5127f4b0bab47bf72ccea6130a799c8ab1",
+              "prepared_receipt_sha256": "719ae54b8b624ebd9e132f4cbc7c232ddb7a86c85a280bf046ada451bc92d20e",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-78b20d01b3ba74e3afa947b29bc79c345748f3a89484389d29a910fd32ca4cc5",
+              "raw_fixture_id": "raw-dq-sha256-2bbf6e798e5380e4f48655204951ee4ea0bf671af2972bf33210665f80babbb4",
+              "raw_fixture_manifest_sha256": "8ae0125c92e1f1a060f23201f42bc06c9711ea75d833a8b01779ba33cb3a11ce",
+              "scenario": "demand",
+              "seed": 42,
+              "source_bundle_sha256": "98b91c3ecd677533441721716d63fc39407244e0302d263fc29c875c1972dc66",
+              "source_dataset_id": "source-sha256-043276380483acdf72d06f253d682e4bf4aabce0721b653a30e5a5bb7da157c9",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "a7c0aabec43c1a05134223049b0a36089815ee903d4e5e93642557ded683c294",
+              "source_snapshot_sha256": "2e63464b2f0e9f5c030010a3b3d8ec81e55210e068cc3814816f81ac6943d61e"
+            },
+            {
+              "feature_manifest_sha256": "bf21df097eb26a81f7b08ee1fa3a5336999c2498d493f6502b2bb956775c81be",
+              "feature_rows_sha256": "fb64b5d12d416194ee4909405c69b1e4e1ac34e7656cd3a6d67757f4f586c53b",
+              "prepared_receipt_sha256": "2924bbd72678c33d0f9cfd4f58da46ff921cd31b1f26645ccade85a9e07d2782",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-ecd8155568fedd80854cdf3430c2ac22f84817080208fc602d853edc65284e91",
+              "raw_fixture_id": "raw-dq-sha256-9d25d72ec2d70c83716a47c1187c59b792521f9dc388f0d01bb872614a3b4f6c",
+              "raw_fixture_manifest_sha256": "2ba84f2ce8086ad8bb9f3a41d62e4ac08a0d465f571e9c8d1dd39ccc0c230dc7",
+              "scenario": "physical",
+              "seed": 42,
+              "source_bundle_sha256": "e721caf9a4faec8b4f15791c76ae5344b3207af21e044196099f8945d43493c1",
+              "source_dataset_id": "source-sha256-e37adeef7f31a8689a9b897555944d5bed9efede04cbce220b597913d5b2c6fa",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "e889f474d86b9d9e14f2294c67e9a919fa212b62773130492e2070068f164730",
+              "source_snapshot_sha256": "a547a5ee3de05ffa3619731e837f552b30a95f2736f1d0d334443bedcefc41ee"
+            },
+            {
+              "feature_manifest_sha256": "80ab76682bb0730ded8b55ff4e7ef5244db0241baa60fca0ecd3523c7a386ddd",
+              "feature_rows_sha256": "b7853073883e2414d5cc14a97daf3cbe441f0794d2c26ea1b7ad94987469c3b5",
+              "prepared_receipt_sha256": "ef3022646c1b02a42d8a6be6aa415c80980ff80e7cd82acbf7fcdc92fe542bb1",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-854774e815a2e0c3e6229d1af2d9ea5989ca57befb6455d1310c1ae35150a5ce",
+              "raw_fixture_id": "raw-dq-sha256-44c0e8d862560cb10fa1f3f647d7abc676ef5bce4a93222ce752ff169c86946f",
+              "raw_fixture_manifest_sha256": "18700dfad38dbcbcf047a80cab12a42a583c866b968b9d02cc6476237170c8c5",
+              "scenario": "demand",
+              "seed": 137,
+              "source_bundle_sha256": "31cf1d9c808fc989cb8c3e2b9e7ab7e5e73e180baad737e325ca1cc3c76a4c8e",
+              "source_dataset_id": "source-sha256-dd95690fa1efa610359cfb1da563f3c6b556256620ac6f2102818431f6ecf70c",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "391968a4847419d68e579d86bb13368407090c2a3cc776e4f8c07c3a47ffbcd4",
+              "source_snapshot_sha256": "fb92b71ef940f5d722313ff3abfaa4d781c15fe8b544ba52ffcdb43237ca6fc3"
+            },
+            {
+              "feature_manifest_sha256": "efc21a78ac709b2c0e7910daabf7db39d5e2daaca3fb3c4e99501038e60bba7d",
+              "feature_rows_sha256": "3606087136b4ee8152569fab6337fa928fc38f630905cbc5b4bd47f5f53c42bd",
+              "prepared_receipt_sha256": "67f4606039ba2d4879736832f2c6263a0b97f3b0692d930f94b4a5cbd6c568ce",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-bd16cae4e2acd6f5727745b3893bf82998db03ea1a601e6346f4a60ea3bbc79d",
+              "raw_fixture_id": "raw-dq-sha256-e3083c47bbebf3081d785a3128622483515d46467a3574bb1d208d457c6e7b64",
+              "raw_fixture_manifest_sha256": "e7c49ac2827238cc8337b6dab9a9d8014879e2747535dd2e16a87f818b09f1f4",
+              "scenario": "physical",
+              "seed": 137,
+              "source_bundle_sha256": "a1e991cc2dcd51fdccdb0155c2c813032205c7379aaff2fd28142d5dcd30f57f",
+              "source_dataset_id": "source-sha256-c6f6447eab9fde8c28296ac5720aef4844b3b0c447759bd5b89b39d9c4dbcb15",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "e83e01e941432dc0cc816cab67358e1f9e2cf18d4ddaff751f3e63920969578e",
+              "source_snapshot_sha256": "efc4f240c5871406866359bf026338003eaebc7fbeb4765b0c88f3bdfc363859"
+            },
+            {
+              "feature_manifest_sha256": "080ace86dd073bc6a60baf44b3f79bc6b41616776b91c1f7d2ec47f6fca61feb",
+              "feature_rows_sha256": "04821bfee9950e946d50b12dfec0d1fb59edb5354d7b554269e85194fe942b2f",
+              "prepared_receipt_sha256": "cd836aa8ca26a5082c8d9819027ae0ed0884a785e929bcf396ca3f11ad93266c",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-0c6b9ae220862e678e03c3cf80001f7356dbcc3344a2cc8576720689ca85145e",
+              "raw_fixture_id": "raw-dq-sha256-9a2c518144600cf79994f973906f9b3e72fba6c5e3b414d62a694e83c3b73d3e",
+              "raw_fixture_manifest_sha256": "a57104b24acd77940b8e1aa58dc9ceaeb10bbb2e7ded74590b56a53d0db00d62",
+              "scenario": "demand",
+              "seed": 2026,
+              "source_bundle_sha256": "c11a04956118d58759e10213cbcc622f8cff85d33aa7e8ab545f50560ee23231",
+              "source_dataset_id": "source-sha256-efe54fec76948221f2103a3b07cc716b0a1be6e3015223dd9d5eaf5873ad1e07",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "bc130f1b504776aec2641516b5b91bb0beeeb0287ec6b8b9550b671ced31f96f",
+              "source_snapshot_sha256": "e9cadafe718f27a22805ee93c64e0e4afa9453ced9c563cae0758347c049824f"
+            },
+            {
+              "feature_manifest_sha256": "d6a87d8b3efc26ecdd2dcdeb7142f38d539e4cd1a8ac42286425400b0214ef25",
+              "feature_rows_sha256": "9792fd0c293466f54ada5bc5ea322e50052a0096ed5a2594dcfba0aebe47c37e",
+              "prepared_receipt_sha256": "204538cd91650e9494d8b4b12918b2797b23ff90139ba1bbca81dd21d5d36634",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-6cd7f7427152ccb72a5f83dac7b4da3cc21ee903d7dc3d116e995d4c063362f1",
+              "raw_fixture_id": "raw-dq-sha256-5db5bc090eddd0cddec0fb37712a10a2225f8bffcb3663e684e0d5c74c3d1041",
+              "raw_fixture_manifest_sha256": "11820ff3ae9faca6c2cc0d9eaf89cf4df3077e81c7811fe14dd629444759f6ba",
+              "scenario": "physical",
+              "seed": 2026,
+              "source_bundle_sha256": "6ee5f06e7cdeb310b999ff76ce453a503eaaaba81688d2b9610f37ba2d2acf00",
+              "source_dataset_id": "source-sha256-8db3438ede893db787dcb8d1cb5e05f67a11eb064f326c3b1febd89b5116f1d4",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "2abc9fdcba981a4d2228cc3d8b4bc3574f854a235788e3896711c7f0933edbb9",
+              "source_snapshot_sha256": "f73372ccd3800e66be99ce852ec27c7e56c0dba3d8d02753ddbb7978168e5e27"
+            }
+          ],
+          "detector_id": "anomaly-detector-sha256-dc2a1a12aca7eb306e26d185b286cb71271f6bd64bd4dfc0da97f20f413a11b2",
+          "evaluation_policy": {
+            "average_precision": "score_ties_grouped_stepwise_average_precision",
+            "early_lead_days": 0,
+            "episode_coverage": "all_mature_episodes_in_complete_requested_census",
+            "false_alert_denominator": "scored_mature_truth_clean_observations",
+            "late_tolerance_days": 1,
+            "overlap": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+            "repeat_alerts": "report_without_increasing_episode_recall",
+            "unknown_truth": "excluded_and_counted",
+            "version": "anomaly-evaluation-1.0.0",
+            "zero_prediction_precision": "not_evaluable"
+          },
+          "family": "seasonal_residual",
+          "final_as_of": "2025-05-12T00:00:00+00:00",
+          "final_test_at_freeze": "not_scored",
+          "fit_record_sha256": "228ed11735c7efff02086a2457b671219f31963abb023e35dff33987cae7551e",
+          "frozen_at": "2026-10-05T03:59:57.331618+00:00",
+          "model_sha256": "febb4393e3d93d6f47bd59d464c245a09315ba6ad18d96e1c186207d1d27af56",
+          "original_completed_at": "2026-10-05T03:29:53.283853+00:00",
+          "original_started_at": "2026-10-05T03:29:32.354410+00:00",
+          "protocol": {
+            "feature_policy": {
+              "fit_clock": "utc_window_start_minus_one_microsecond",
+              "history_days": 28,
+              "minimum_history_days": 14,
+              "minimum_residuals": 7,
+              "quantity_basis": "dq_accepted_receipts_at_query_cutoff",
+              "returns_delay_hours": 72,
+              "sales_delay_hours": 24,
+              "scale_policy": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+              "scoring_clock": "exclusive_utc_day_end_plus_delay_inclusive",
+              "seasonal_lag_days": 7,
+              "stock_policy": "scoring_context_only_no_automatic_censoring_correction",
+              "version": "qualified-anomaly-inputs-1.0.0"
+            },
+            "final_portfolio_test": "reserved_until_selection_frozen",
+            "gap_policy": "requested_and_counted_never_fitted",
+            "membership_clock": "business_window_and_available_scoring_outcome",
+            "missing_policy": "requested_unknown_not_clean_negative",
+            "purpose": "bounded_portfolio_qualification",
+            "scopes": [
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "163da9b8-d3e0-5f9e-9dd3-954c345c7684",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "22d48f3a-5014-5123-a1e5-345e1ddd84a3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "22d48f3a-5014-5123-a1e5-345e1ddd84a3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "7b6c271c-85eb-5849-9da9-76e7ab8e881f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "7b6c271c-85eb-5849-9da9-76e7ab8e881f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "ca2f4809-df5a-51b1-b5eb-635bec356f40",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "163da9b8-d3e0-5f9e-9dd3-954c345c7684",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "22d48f3a-5014-5123-a1e5-345e1ddd84a3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "22d48f3a-5014-5123-a1e5-345e1ddd84a3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "7b6c271c-85eb-5849-9da9-76e7ab8e881f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "7b6c271c-85eb-5849-9da9-76e7ab8e881f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "ca2f4809-df5a-51b1-b5eb-635bec356f40",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              }
+            ],
+            "selection_cutoff": "2025-04-10T00:00:00Z",
+            "test": {
+              "end": "2025-05-08",
+              "start": "2025-04-11"
+            },
+            "train": {
+              "end": "2025-03-01",
+              "start": "2025-01-29"
+            },
+            "training_cutoff": "2025-03-05T00:00:00Z",
+            "training_labels": "unavailable_no_oracle_filter",
+            "validation": {
+              "end": "2025-04-06",
+              "start": "2025-03-06"
+            },
+            "version": "anomaly-portfolio-protocol-1.0.0"
+          },
+          "quality_policy": {
+            "maximum_false_alerts_per_1000": 10.0,
+            "minimum_clean_per_case": 300,
+            "minimum_episode_recall": 0.75,
+            "minimum_episode_recall_per_type": 0.5,
+            "minimum_episodes_per_type": 3,
+            "minimum_evaluable_coverage": 0.55,
+            "minimum_high_severity_precision": 0.9,
+            "minimum_positive_observations_per_type": 3,
+            "minimum_precision": 0.8,
+            "minimum_recall": 0.65,
+            "null_required_metric": "blocks_qualification",
+            "qualification_scope": "synthetic_ai_07_portfolio_v4",
+            "required_types": [
+              "one_day_spike",
+              "multi_day_spike",
+              "sustained_drop",
+              "return_spike",
+              "inventory_censored_episode"
+            ],
+            "segment_policy": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+            "source_scenarios": [
+              "demand",
+              "physical"
+            ],
+            "source_seeds": [
+              42,
+              137,
+              2026
+            ],
+            "version": "anomaly-portfolio-quality-1.0.0"
+          },
+          "selection_reason": "Seed-42 validation only: original numeric gates, per-type recall, per-segment false alerts and per-case metric validity pass. Primary ranks by minimum relative numerical gate margin, then precision/recall; reference prefers a qualified distinct detector of the other family. No final labels enter selection; repeated synthetic experiments and shared training data remain reported limitations.",
+          "truth_access_during_selection": "validation_only_no_final_truth",
+          "validation_comparison_sha256": "3f216cee31e0b2d219a233a319598d0e6f0dd0be38bdb115f71f5a2a9ee28947",
+          "version": "anomaly-selection-1.0.0"
+        },
+        "selection_id": "anomaly-selection-sha256-1178ee9de929c236c55a11ce241818b96c684bfd6709d7ed31d7019709b95a71"
+      }
+    },
+    {
+      "checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 6,
+          "value": 6
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 0.9560439560439561
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.725
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.9622323791195574
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.5785984848484849
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 27
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 45
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 30
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 2108
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.9521717911176184
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 2049
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 757
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9615384615384616
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9259259259259259
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.321003963011889
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9292143527679925
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 654
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.3076923076923077
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.529051987767584
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8774917781708952
+        },
+        {
+          "check_id": "clean_sample/137/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 729
+        },
+        {
+          "check_id": "metric_validity/137/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/137/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9259259259259259
+        },
+        {
+          "check_id": "metric_validity/137/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/137/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.7946935620999639
+        },
+        {
+          "check_id": "clean_sample/137/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 626
+        },
+        {
+          "check_id": "metric_validity/137/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/137/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.46153846153846156
+        },
+        {
+          "check_id": "metric_validity/137/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/137/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8578543251620174
+        },
+        {
+          "check_id": "clean_sample/2026/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 747
+        },
+        {
+          "check_id": "metric_validity/2026/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9583333333333334
+        },
+        {
+          "check_id": "metric_validity/2026/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/2026/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.3386880856760375
+        },
+        {
+          "check_id": "metric_validity/2026/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9283074875231738
+        },
+        {
+          "check_id": "clean_sample/2026/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 644
+        },
+        {
+          "check_id": "metric_validity/2026/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8
+        },
+        {
+          "check_id": "metric_validity/2026/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.3076923076923077
+        },
+        {
+          "check_id": "metric_validity/2026/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.5527950310559007
+        },
+        {
+          "check_id": "metric_validity/2026/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.7140682731631406
+        }
+      ],
+      "counts": {
+        "detected_episodes": 33,
+        "episodes": 33,
+        "evaluable": 4277,
+        "false_negative": 33,
+        "false_positive": 4,
+        "high_alerts": 33,
+        "high_true": 33,
+        "immature_truth": 0,
+        "input_insufficient_data_total": 1072,
+        "insufficient_data": 883,
+        "repeat_alerts": 54,
+        "requested": 7392,
+        "true_negative": 4153,
+        "true_positive": 87,
+        "unknown_truth": 2232
+      },
+      "detector_id": "anomaly-detector-sha256-817e886307b3437dd63cc9244f83febe656539b2b840acebe7d9e9902202eeaa",
+      "evaluated_at": "2026-10-05T04:13:01.328642+00:00",
+      "evaluation_inputs": {
+        "evaluation_inputs_137_demand.json": {
+          "sha256": "1bb497a30ef53c95aaaabb8f62b06a3c643a65de5408e7a6e6abe768cc3e4c3f",
+          "size_bytes": 1664539
+        },
+        "evaluation_inputs_137_physical.json": {
+          "sha256": "144b48b15590b30b74aa00b70e76514624c33f272a44d83f45734fd1b75063fa",
+          "size_bytes": 1656499
+        },
+        "evaluation_inputs_2026_demand.json": {
+          "sha256": "7c5a2f271faa0a191a40debc34569a92739a3079543548e429c8cc14ea61c7d4",
+          "size_bytes": 1678597
+        },
+        "evaluation_inputs_2026_physical.json": {
+          "sha256": "cacf9a98212be48ad606c89cc2b6210e484ae566a5c3c8ad10abb6926f10ca37",
+          "size_bytes": 1668144
+        },
+        "evaluation_inputs_42_demand.json": {
+          "sha256": "63551520f519f0f257a34f748536278cd1bfbd9c3f05ca46c18041bb9cf0c33d",
+          "size_bytes": 1684729
+        },
+        "evaluation_inputs_42_physical.json": {
+          "sha256": "449484b6defce10406d383c2fa60c75af63d05114fa542a9e64e0834380197b7",
+          "size_bytes": 1675173
+        }
+      },
+      "family": "isolation_forest",
+      "final_report_sha256": "e3fecf990472970a1513d5af60c5928fab812e1994cb53c0280187be43006d7a",
+      "kind": "reference",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.5785984848484849,
+        "false_alerts_per_1000": 0.9622323791195574,
+        "high_severity_precision": 1.0,
+        "precision": 0.9560439560439561,
+        "recall": 0.725
+      },
+      "quality_id": "anomaly-quality-sha256-d31ea1666f61038cfb526234a8d9861684c2ff5b7dadf68b59f2dea340fc1a57",
+      "selection": {
+        "descriptor": {
+          "data_inventory": [
+            {
+              "feature_manifest_sha256": "5419596d8e60151b6910c3981eac222b0ac1d3d658e4b271781ce938221deb72",
+              "feature_rows_sha256": "a172630ddd92dcd4f647acb709860d5127f4b0bab47bf72ccea6130a799c8ab1",
+              "prepared_receipt_sha256": "719ae54b8b624ebd9e132f4cbc7c232ddb7a86c85a280bf046ada451bc92d20e",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-78b20d01b3ba74e3afa947b29bc79c345748f3a89484389d29a910fd32ca4cc5",
+              "raw_fixture_id": "raw-dq-sha256-2bbf6e798e5380e4f48655204951ee4ea0bf671af2972bf33210665f80babbb4",
+              "raw_fixture_manifest_sha256": "8ae0125c92e1f1a060f23201f42bc06c9711ea75d833a8b01779ba33cb3a11ce",
+              "scenario": "demand",
+              "seed": 42,
+              "source_bundle_sha256": "98b91c3ecd677533441721716d63fc39407244e0302d263fc29c875c1972dc66",
+              "source_dataset_id": "source-sha256-043276380483acdf72d06f253d682e4bf4aabce0721b653a30e5a5bb7da157c9",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "a7c0aabec43c1a05134223049b0a36089815ee903d4e5e93642557ded683c294",
+              "source_snapshot_sha256": "2e63464b2f0e9f5c030010a3b3d8ec81e55210e068cc3814816f81ac6943d61e"
+            },
+            {
+              "feature_manifest_sha256": "bf21df097eb26a81f7b08ee1fa3a5336999c2498d493f6502b2bb956775c81be",
+              "feature_rows_sha256": "fb64b5d12d416194ee4909405c69b1e4e1ac34e7656cd3a6d67757f4f586c53b",
+              "prepared_receipt_sha256": "2924bbd72678c33d0f9cfd4f58da46ff921cd31b1f26645ccade85a9e07d2782",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-ecd8155568fedd80854cdf3430c2ac22f84817080208fc602d853edc65284e91",
+              "raw_fixture_id": "raw-dq-sha256-9d25d72ec2d70c83716a47c1187c59b792521f9dc388f0d01bb872614a3b4f6c",
+              "raw_fixture_manifest_sha256": "2ba84f2ce8086ad8bb9f3a41d62e4ac08a0d465f571e9c8d1dd39ccc0c230dc7",
+              "scenario": "physical",
+              "seed": 42,
+              "source_bundle_sha256": "e721caf9a4faec8b4f15791c76ae5344b3207af21e044196099f8945d43493c1",
+              "source_dataset_id": "source-sha256-e37adeef7f31a8689a9b897555944d5bed9efede04cbce220b597913d5b2c6fa",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "e889f474d86b9d9e14f2294c67e9a919fa212b62773130492e2070068f164730",
+              "source_snapshot_sha256": "a547a5ee3de05ffa3619731e837f552b30a95f2736f1d0d334443bedcefc41ee"
+            },
+            {
+              "feature_manifest_sha256": "80ab76682bb0730ded8b55ff4e7ef5244db0241baa60fca0ecd3523c7a386ddd",
+              "feature_rows_sha256": "b7853073883e2414d5cc14a97daf3cbe441f0794d2c26ea1b7ad94987469c3b5",
+              "prepared_receipt_sha256": "ef3022646c1b02a42d8a6be6aa415c80980ff80e7cd82acbf7fcdc92fe542bb1",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-854774e815a2e0c3e6229d1af2d9ea5989ca57befb6455d1310c1ae35150a5ce",
+              "raw_fixture_id": "raw-dq-sha256-44c0e8d862560cb10fa1f3f647d7abc676ef5bce4a93222ce752ff169c86946f",
+              "raw_fixture_manifest_sha256": "18700dfad38dbcbcf047a80cab12a42a583c866b968b9d02cc6476237170c8c5",
+              "scenario": "demand",
+              "seed": 137,
+              "source_bundle_sha256": "31cf1d9c808fc989cb8c3e2b9e7ab7e5e73e180baad737e325ca1cc3c76a4c8e",
+              "source_dataset_id": "source-sha256-dd95690fa1efa610359cfb1da563f3c6b556256620ac6f2102818431f6ecf70c",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "391968a4847419d68e579d86bb13368407090c2a3cc776e4f8c07c3a47ffbcd4",
+              "source_snapshot_sha256": "fb92b71ef940f5d722313ff3abfaa4d781c15fe8b544ba52ffcdb43237ca6fc3"
+            },
+            {
+              "feature_manifest_sha256": "efc21a78ac709b2c0e7910daabf7db39d5e2daaca3fb3c4e99501038e60bba7d",
+              "feature_rows_sha256": "3606087136b4ee8152569fab6337fa928fc38f630905cbc5b4bd47f5f53c42bd",
+              "prepared_receipt_sha256": "67f4606039ba2d4879736832f2c6263a0b97f3b0692d930f94b4a5cbd6c568ce",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-bd16cae4e2acd6f5727745b3893bf82998db03ea1a601e6346f4a60ea3bbc79d",
+              "raw_fixture_id": "raw-dq-sha256-e3083c47bbebf3081d785a3128622483515d46467a3574bb1d208d457c6e7b64",
+              "raw_fixture_manifest_sha256": "e7c49ac2827238cc8337b6dab9a9d8014879e2747535dd2e16a87f818b09f1f4",
+              "scenario": "physical",
+              "seed": 137,
+              "source_bundle_sha256": "a1e991cc2dcd51fdccdb0155c2c813032205c7379aaff2fd28142d5dcd30f57f",
+              "source_dataset_id": "source-sha256-c6f6447eab9fde8c28296ac5720aef4844b3b0c447759bd5b89b39d9c4dbcb15",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "e83e01e941432dc0cc816cab67358e1f9e2cf18d4ddaff751f3e63920969578e",
+              "source_snapshot_sha256": "efc4f240c5871406866359bf026338003eaebc7fbeb4765b0c88f3bdfc363859"
+            },
+            {
+              "feature_manifest_sha256": "080ace86dd073bc6a60baf44b3f79bc6b41616776b91c1f7d2ec47f6fca61feb",
+              "feature_rows_sha256": "04821bfee9950e946d50b12dfec0d1fb59edb5354d7b554269e85194fe942b2f",
+              "prepared_receipt_sha256": "cd836aa8ca26a5082c8d9819027ae0ed0884a785e929bcf396ca3f11ad93266c",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-0c6b9ae220862e678e03c3cf80001f7356dbcc3344a2cc8576720689ca85145e",
+              "raw_fixture_id": "raw-dq-sha256-9a2c518144600cf79994f973906f9b3e72fba6c5e3b414d62a694e83c3b73d3e",
+              "raw_fixture_manifest_sha256": "a57104b24acd77940b8e1aa58dc9ceaeb10bbb2e7ded74590b56a53d0db00d62",
+              "scenario": "demand",
+              "seed": 2026,
+              "source_bundle_sha256": "c11a04956118d58759e10213cbcc622f8cff85d33aa7e8ab545f50560ee23231",
+              "source_dataset_id": "source-sha256-efe54fec76948221f2103a3b07cc716b0a1be6e3015223dd9d5eaf5873ad1e07",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "bc130f1b504776aec2641516b5b91bb0beeeb0287ec6b8b9550b671ced31f96f",
+              "source_snapshot_sha256": "e9cadafe718f27a22805ee93c64e0e4afa9453ced9c563cae0758347c049824f"
+            },
+            {
+              "feature_manifest_sha256": "d6a87d8b3efc26ecdd2dcdeb7142f38d539e4cd1a8ac42286425400b0214ef25",
+              "feature_rows_sha256": "9792fd0c293466f54ada5bc5ea322e50052a0096ed5a2594dcfba0aebe47c37e",
+              "prepared_receipt_sha256": "204538cd91650e9494d8b4b12918b2797b23ff90139ba1bbca81dd21d5d36634",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-6cd7f7427152ccb72a5f83dac7b4da3cc21ee903d7dc3d116e995d4c063362f1",
+              "raw_fixture_id": "raw-dq-sha256-5db5bc090eddd0cddec0fb37712a10a2225f8bffcb3663e684e0d5c74c3d1041",
+              "raw_fixture_manifest_sha256": "11820ff3ae9faca6c2cc0d9eaf89cf4df3077e81c7811fe14dd629444759f6ba",
+              "scenario": "physical",
+              "seed": 2026,
+              "source_bundle_sha256": "6ee5f06e7cdeb310b999ff76ce453a503eaaaba81688d2b9610f37ba2d2acf00",
+              "source_dataset_id": "source-sha256-8db3438ede893db787dcb8d1cb5e05f67a11eb064f326c3b1febd89b5116f1d4",
+              "source_profile": "ai-07-portfolio-v4",
+              "source_scenario_sha256": "2abc9fdcba981a4d2228cc3d8b4bc3574f854a235788e3896711c7f0933edbb9",
+              "source_snapshot_sha256": "f73372ccd3800e66be99ce852ec27c7e56c0dba3d8d02753ddbb7978168e5e27"
+            }
+          ],
+          "detector_id": "anomaly-detector-sha256-817e886307b3437dd63cc9244f83febe656539b2b840acebe7d9e9902202eeaa",
+          "evaluation_policy": {
+            "average_precision": "score_ties_grouped_stepwise_average_precision",
+            "early_lead_days": 0,
+            "episode_coverage": "all_mature_episodes_in_complete_requested_census",
+            "false_alert_denominator": "scored_mature_truth_clean_observations",
+            "late_tolerance_days": 1,
+            "overlap": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+            "repeat_alerts": "report_without_increasing_episode_recall",
+            "unknown_truth": "excluded_and_counted",
+            "version": "anomaly-evaluation-1.0.0",
+            "zero_prediction_precision": "not_evaluable"
+          },
+          "family": "isolation_forest",
+          "final_as_of": "2025-05-12T00:00:00+00:00",
+          "final_test_at_freeze": "not_scored",
+          "fit_record_sha256": "92ea591bd5381b2b412b3610b4a1c2b8eeac2eacd201cc2bd001cf26362d8394",
+          "frozen_at": "2026-10-05T04:01:38.658173+00:00",
+          "model_sha256": "34b53975b815e24e34d117553fa1e7d148b7077d913ece13eaa41a0cc008888c",
+          "original_completed_at": "2026-10-05T03:30:33.778411+00:00",
+          "original_started_at": "2026-10-05T03:30:12.999984+00:00",
+          "protocol": {
+            "feature_policy": {
+              "fit_clock": "utc_window_start_minus_one_microsecond",
+              "history_days": 28,
+              "minimum_history_days": 14,
+              "minimum_residuals": 7,
+              "quantity_basis": "dq_accepted_receipts_at_query_cutoff",
+              "returns_delay_hours": 72,
+              "sales_delay_hours": 24,
+              "scale_policy": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+              "scoring_clock": "exclusive_utc_day_end_plus_delay_inclusive",
+              "seasonal_lag_days": 7,
+              "stock_policy": "scoring_context_only_no_automatic_censoring_correction",
+              "version": "qualified-anomaly-inputs-1.0.0"
+            },
+            "final_portfolio_test": "reserved_until_selection_frozen",
+            "gap_policy": "requested_and_counted_never_fitted",
+            "membership_clock": "business_window_and_available_scoring_outcome",
+            "missing_policy": "requested_unknown_not_clean_negative",
+            "purpose": "bounded_portfolio_qualification",
+            "scopes": [
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "163da9b8-d3e0-5f9e-9dd3-954c345c7684",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "22d48f3a-5014-5123-a1e5-345e1ddd84a3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "22d48f3a-5014-5123-a1e5-345e1ddd84a3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "7b6c271c-85eb-5849-9da9-76e7ab8e881f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "7b6c271c-85eb-5849-9da9-76e7ab8e881f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "ca2f4809-df5a-51b1-b5eb-635bec356f40",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "163da9b8-d3e0-5f9e-9dd3-954c345c7684",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "22d48f3a-5014-5123-a1e5-345e1ddd84a3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "22d48f3a-5014-5123-a1e5-345e1ddd84a3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "7b6c271c-85eb-5849-9da9-76e7ab8e881f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "7b6c271c-85eb-5849-9da9-76e7ab8e881f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "ca2f4809-df5a-51b1-b5eb-635bec356f40",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              }
+            ],
+            "selection_cutoff": "2025-04-10T00:00:00Z",
+            "test": {
+              "end": "2025-05-08",
+              "start": "2025-04-11"
+            },
+            "train": {
+              "end": "2025-03-01",
+              "start": "2025-01-29"
+            },
+            "training_cutoff": "2025-03-05T00:00:00Z",
+            "training_labels": "unavailable_no_oracle_filter",
+            "validation": {
+              "end": "2025-04-06",
+              "start": "2025-03-06"
+            },
+            "version": "anomaly-portfolio-protocol-1.0.0"
+          },
+          "quality_policy": {
+            "maximum_false_alerts_per_1000": 10.0,
+            "minimum_clean_per_case": 300,
+            "minimum_episode_recall": 0.75,
+            "minimum_episode_recall_per_type": 0.5,
+            "minimum_episodes_per_type": 3,
+            "minimum_evaluable_coverage": 0.55,
+            "minimum_high_severity_precision": 0.9,
+            "minimum_positive_observations_per_type": 3,
+            "minimum_precision": 0.8,
+            "minimum_recall": 0.65,
+            "null_required_metric": "blocks_qualification",
+            "qualification_scope": "synthetic_ai_07_portfolio_v4",
+            "required_types": [
+              "one_day_spike",
+              "multi_day_spike",
+              "sustained_drop",
+              "return_spike",
+              "inventory_censored_episode"
+            ],
+            "segment_policy": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+            "source_scenarios": [
+              "demand",
+              "physical"
+            ],
+            "source_seeds": [
+              42,
+              137,
+              2026
+            ],
+            "version": "anomaly-portfolio-quality-1.0.0"
+          },
+          "selection_reason": "Seed-42 validation only: original numeric gates, per-type recall, per-segment false alerts and per-case metric validity pass. Primary ranks by minimum relative numerical gate margin, then precision/recall; reference prefers a qualified distinct detector of the other family. No final labels enter selection; repeated synthetic experiments and shared training data remain reported limitations.",
+          "truth_access_during_selection": "validation_only_no_final_truth",
+          "validation_comparison_sha256": "3f216cee31e0b2d219a233a319598d0e6f0dd0be38bdb115f71f5a2a9ee28947",
+          "version": "anomaly-selection-1.0.0"
+        },
+        "selection_id": "anomaly-selection-sha256-a442bae9a890f224ab500ca2ff19216ef3fafb86b8f93fa46a3dcda9852ccaf2"
+      }
+    }
+  ],
+  "previous_failed_experiments": "v2_and_v3_preserved_unchanged_not_promotable",
+  "quality_status": "passed_for_both_frozen_versions",
+  "recorded_at": "2026-10-05T04:18:10.256078+00:00",
+  "scope": "synthetic_ai_07_portfolio_v4",
+  "source_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+  "stage_status": "pending_oci_and_required_ci",
+  "version": "ai07-final-qualification-1.0.0"
+}

@@ -26,7 +26,7 @@ class KnowledgeResourceScope(Contract):
 class ResourceScope(Contract):
     product_ids: list[Symbol] = Field(min_length=1, max_length=200)
     selling_location_ids: list[Symbol] = Field(min_length=1, max_length=100)
-    channels: list[Channel] = Field(min_length=1, max_length=2)
+    channels: list[Channel] = Field(min_length=1, max_length=4)
 
     @model_validator(mode="after")
     def no_duplicates(self) -> Self:
@@ -76,9 +76,12 @@ class AccessGrant(Contract):
             raise ValueError("forecast_run_capability_requires_pipeline_role")
         if "stockout:run" in self.capabilities and "pipeline" not in self.roles:
             raise ValueError("stockout_run_capability_requires_pipeline_role")
-        if bool({"forecast:read", "forecast:run"} & set(self.capabilities)) != (
-            self.scope is not None
-        ):
+        if "anomaly:run" in self.capabilities and "pipeline" not in self.roles:
+            raise ValueError("anomaly_run_capability_requires_pipeline_role")
+        if bool(
+            {"forecast:read", "forecast:run", "anomaly:read", "anomaly:run"}
+            & set(self.capabilities)
+        ) != (self.scope is not None):
             raise ValueError("forecast_capability_requires_explicit_scope")
         if ("knowledge:read" in self.capabilities) != (self.knowledge_scope is not None):
             raise ValueError("knowledge_capability_requires_explicit_scope")

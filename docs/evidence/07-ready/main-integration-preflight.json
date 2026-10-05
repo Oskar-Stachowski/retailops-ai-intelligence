@@ -1,0 +1,33 @@
+{
+  "version": "ai07-main-integration-preflight-1.0.0",
+  "checked_at": "2026-10-05T09:57:39.020282+00:00",
+  "main_bases": {
+    "consumer": "2565a216fa7807a756387dcbaa408d6ccc07840d",
+    "producer": "684f18f999ce6bddc5aa83bf6d7fa7aaef9fc832"
+  },
+  "consumer_api_and_scope": {
+    "passed": 109,
+    "seconds": 17.04,
+    "log_sha256": "83a064e7b10c99a854c44bd381fd2432d1e4620fb9ec2746bcb164cafd0866c5"
+  },
+  "consumer_readiness_and_ci": {
+    "passed": 54,
+    "seconds": 1.61
+  },
+  "producer_day_inventory_planning_and_stress": {
+    "passed": 72,
+    "seconds": 202.46,
+    "log_sha256": "2ac79766a3eef1b7d567ba6d428284636b197c1158c1339a93447bbe5aa0ede7"
+  },
+  "producer_ordinary_indexed_cached_parity_and_source": {
+    "passed": 38,
+    "seconds": 21.38,
+    "log_sha256": "acd78751b355110dd3c0c3f33b72cf4bef7976b5a82a4870d3f5140e21633e80"
+  },
+  "consumer_mypy_source_files": 562,
+  "anomaly_algorithm_and_capsules_changed": false,
+  "uv_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "main_required_ci": "pending; actual integrated HEAD/merge SHA and runs are recorded in PR24/PR97",
+  "models_refit": false,
+  "quality_thresholds_changed": false
+}

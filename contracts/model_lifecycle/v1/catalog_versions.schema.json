@@ -86,15 +86,19 @@
           "type": "string"
         },
         "feature_schema_version": {
-          "const": "forecast-features-v1",
           "default": "forecast-features-v1",
+          "enum": [
+            "forecast-features-v1",
+            "qualified-anomaly-inputs-1.0.0"
+          ],
           "title": "Feature Schema Version",
           "type": "string"
         },
         "flavor": {
           "enum": [
             "forecast-json-v1",
-            "baseline-json-v1"
+            "baseline-json-v1",
+            "anomaly-json-v1"
           ],
           "title": "Flavor",
           "type": "string"
@@ -117,14 +121,19 @@
           "enum": [
             "baseline",
             "random_forest",
-            "hist_gradient_boosting"
+            "hist_gradient_boosting",
+            "seasonal_residual",
+            "isolation_forest"
           ],
           "title": "Model Family",
           "type": "string"
         },
         "model_name": {
-          "const": "retailops-demand-forecast",
           "default": "retailops-demand-forecast",
+          "enum": [
+            "retailops-demand-forecast",
+            "retailops-sales-anomaly"
+          ],
           "title": "Model Name",
           "type": "string"
         },

@@ -18,6 +18,7 @@ from retailops_ai.source_snapshot.canonical import RowDigest
 from retailops_ai.source_snapshot.files import SnapshotError, canonical_json, json_sha256
 from retailops_ai.source_snapshot.importer import import_snapshot, verify_import, verify_snapshot
 from retailops_ai.source_snapshot.inventory_projection import native_row
+from retailops_ai.source_snapshot.inventory_protocol import resource_bytes
 from retailops_ai.source_snapshot.protocol import LOGICAL_FIELDS, Limits
 
 ARCHIVE = Path(__file__).resolve().parents[1] / "data/fixtures/inventory-v1_1.zip"
@@ -128,6 +129,36 @@ def test_complete_import_verify_repeat_and_source_isolation(fixture, tmp_path):
     assert all(
         p.stat().st_mode & 0o777 == 0o600 for p in result.directory.rglob("*") if p.is_file()
     )
+
+
+@pytest.mark.parametrize(
+    "source_variant,snapshot_variant",
+    [(False, False), (True, True), (False, True), (True, False)],
+)
+def test_reviewed_inventory_schema_pairs_remain_atomic_after_anomaly_integration(
+    fixture, tmp_path, source_variant, snapshot_variant
+):
+    root = Path(shutil.copytree(fixture / "facts", tmp_path / "input"))
+    document = json.loads((root / "snapshot_manifest.json").read_text())
+    for source_name, name, extended in (
+        (
+            "inventory_source_dataset.v2_7.schema.json",
+            "source_manifest.schema.json",
+            source_variant,
+        ),
+        ("inventory_snapshot.v1_1.schema.json", "snapshot_manifest.schema.json", snapshot_variant),
+    ):
+        (root / "schemas" / source_name).write_bytes(
+            resource_bytes(("forecast_" if extended else "") + name)
+        )
+    reseal(root, document)
+    if source_variant == snapshot_variant:
+        result = verify_snapshot(root)
+        assert result.manifest["schema_version"] == "1.1.0"
+        assert result.manifest["source"]["descriptor"].get("forecast_watermarks") is None
+    else:
+        with pytest.raises(SnapshotError, match="unreviewed_inventory_contract"):
+            verify_snapshot(root)
 
 
 def test_truth_and_qualification_require_explicit_opt_in(fixture, tmp_path):
