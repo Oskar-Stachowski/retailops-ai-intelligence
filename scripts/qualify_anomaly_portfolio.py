@@ -15,6 +15,7 @@ from retailops_ai.anomaly_evaluation.quality import QualityPolicy, assess
 from retailops_ai.anomaly_evaluation.verification import verify_scores
 from retailops_ai.anomaly_portfolio.artifacts import immutable_json
 from retailops_ai.anomaly_portfolio.cli import prepared, protocol
+from retailops_ai.anomaly_portfolio.inputs import VerifiedFeatures
 from retailops_ai.anomaly_portfolio.model import load, score, scoring_row
 from retailops_ai.anomaly_portfolio.protocol import PortfolioProtocol
 from retailops_ai.qualified_anomalies.contract import Point
@@ -130,7 +131,10 @@ def freeze(args: argparse.Namespace) -> int:
     return 0
 
 
-def final_case(task: tuple[dict[str, Any], dict[str, Any], str, str]) -> dict[str, Any]:
+def final_case(
+    task: tuple[dict[str, Any], dict[str, Any], str, str],
+    shared_features: VerifiedFeatures | None = None,
+) -> dict[str, Any]:
     # The private adapter is intentionally reachable only in this offline final evaluator.
     from retailops_ai.anomaly_evaluation.source_truth import source_truth
 
@@ -146,7 +150,15 @@ def final_case(task: tuple[dict[str, Any], dict[str, Any], str, str]) -> dict[st
     )
     if actual != expected:
         raise ValueError("anomaly_final_frozen_input_changed")
-    frame = prepared(Path(entry["prepared_receipt"]))
+    frame = shared_features or prepared(Path(entry["prepared_receipt"]))
+    if (
+        frame.manifest_sha256 != expected["feature_manifest_sha256"]
+        or frame.manifest.qualified_anomaly_input_id != expected["qualified_anomaly_input_id"]
+        or frame.manifest.descriptor.rows_sha256 != expected["feature_rows_sha256"]
+        or frame.manifest.descriptor.coverage.descriptor.source_dataset_id
+        != expected["source_dataset_id"]
+    ):
+        raise ValueError("anomaly_final_shared_verified_features_changed")
     split = PortfolioProtocol.model_validate_json(json.dumps(frozen["protocol"]))
     if protocol(frame) != split:
         raise ValueError("anomaly_final_scopes_or_protocol_changed")
@@ -196,6 +208,16 @@ def final_case(task: tuple[dict[str, Any], dict[str, Any], str, str]) -> dict[st
         "final_completed_at": datetime.now(UTC).isoformat(),
     }
     path = Path(output) / name
+    if path.exists():
+        previous, _ = document(path)
+        started = datetime.fromisoformat(previous["final_started_at"])
+        completed = datetime.fromisoformat(previous["final_completed_at"])
+        if not datetime.fromisoformat(frozen["frozen_at"]) < started <= completed <= now:
+            raise ValueError("anomaly_final_original_times_invalid")
+        # Recompute every numerical/truth binding, preserving original times.
+        # immutable_json then rejects any changed input or saved prediction.
+        value["final_started_at"] = previous["final_started_at"]
+        value["final_completed_at"] = previous["final_completed_at"]
     immutable_json(path, value)
     raw = read_bytes(path.parent, path.name, 8 * 1024**2)
     case = {
@@ -212,6 +234,23 @@ def final_case(task: tuple[dict[str, Any], dict[str, Any], str, str]) -> dict[st
     }
 
 
+def publish_final(selection: dict[str, Any], results: list[dict[str, Any]], output: Path) -> int:
+    quality = assess(
+        [r["case"] for r in results],
+        QualityPolicy.model_validate_json(json.dumps(selection["descriptor"]["quality_policy"])),
+    )
+    result = {
+        "quality": quality,
+        "selection": selection,
+        "evaluation_inputs": {r["name"]: r["receipt"] for r in results},
+        "evaluated_at": datetime.now(UTC).isoformat(),
+        "status": quality["descriptor"]["status"],
+    }
+    immutable_json(output / "final_quality.json", result)
+    print(json.dumps({"quality_id": quality["quality_id"], "status": result["status"]}), flush=True)
+    return 0 if result["status"] == "passed" else 1
+
+
 def final(args: argparse.Namespace) -> int:
     selection, _ = document(args.selection)
     frozen = selection["descriptor"]
@@ -225,20 +264,62 @@ def final(args: argparse.Namespace) -> int:
     tasks = [(e, frozen, str(args.model), str(args.output)) for e in entries]
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         results = list(pool.map(final_case, tasks))
-    quality = assess(
-        [r["case"] for r in results],
-        QualityPolicy.model_validate_json(json.dumps(frozen["quality_policy"])),
-    )
-    output = {
-        "quality": quality,
-        "selection": selection,
-        "evaluation_inputs": {r["name"]: r["receipt"] for r in results},
-        "evaluated_at": datetime.now(UTC).isoformat(),
-        "status": quality["descriptor"]["status"],
-    }
-    immutable_json(args.output / "final_quality.json", output)
-    print(json.dumps({"quality_id": quality["quality_id"], "status": output["status"]}), flush=True)
-    return 0 if output["status"] == "passed" else 1
+    return publish_final(selection, results, args.output)
+
+
+def shared_final_cases(
+    task: tuple[dict[str, Any], list[tuple[dict[str, Any], str, str]]],
+) -> list[dict[str, Any]]:
+    entry, versions = task
+    if len(versions) != 2:
+        raise ValueError("anomaly_shared_final_two_frozen_versions_required")
+    frame = prepared(Path(entry["prepared_receipt"]))
+    return [final_case((entry, frozen, model, output), frame) for frozen, model, output in versions]
+
+
+def many_final(args: argparse.Namespace) -> int:
+    if (
+        len(args.selection) != 2
+        or len(args.model) != 2
+        or len(args.output) != 2
+        or len({p.resolve() for p in args.output}) != 2
+    ):
+        raise ValueError("anomaly_shared_final_two_distinct_outputs_required")
+    selections = [document(p)[0] for p in args.selection]
+    frozen = [s["descriptor"] for s in selections]
+    for selection, desc in zip(selections, frozen, strict=True):
+        if (
+            selection["selection_id"] != "anomaly-selection-sha256-" + json_sha256(desc)
+            or desc["final_test_at_freeze"] != "not_scored"
+        ):
+            raise ValueError("anomaly_final_selection_identity")
+    if any(
+        frozen[0][name] != frozen[1][name]
+        for name in (
+            "data_inventory",
+            "protocol",
+            "final_as_of",
+            "quality_policy",
+            "evaluation_policy",
+        )
+    ):
+        raise ValueError("anomaly_shared_final_requires_same_frozen_inputs_and_gates")
+    inventory, _ = document(args.inventory)
+    entries = inventory["cases"]
+    wanted = {(e["seed"], e["scenario"]) for e in frozen[0]["data_inventory"]}
+    if len(entries) != 6 or {(e["seed"], e["scenario"]) for e in entries} != wanted:
+        raise ValueError("anomaly_final_inventory_changed")
+    versions = [
+        (desc, str(model), str(output))
+        for desc, model, output in zip(frozen, args.model, args.output, strict=True)
+    ]
+    with ProcessPoolExecutor(max_workers=args.workers) as pool:
+        combined = list(pool.map(shared_final_cases, [(entry, versions) for entry in entries]))
+    statuses = [
+        publish_final(selection, [r[i] for r in combined], output)
+        for i, (selection, output) in enumerate(zip(selections, args.output, strict=True))
+    ]
+    return max(statuses)
 
 
 def main() -> int:
@@ -258,8 +339,13 @@ def main() -> int:
     two.add_argument("--model", type=Path, required=True)
     two.add_argument("--output", type=Path, required=True)
     two.add_argument("--workers", type=int, choices=(1, 2, 3), default=2)
+    many = modes.add_parser("many-final")
+    many.add_argument("--inventory", type=Path, required=True)
+    for name in ("selection", "model", "output"):
+        many.add_argument("--" + name, type=Path, action="append", required=True)
+    many.add_argument("--workers", type=int, choices=(1, 2), default=1)
     args = parser.parse_args()
-    return (freeze if args.mode == "freeze" else final)(args)
+    return {"freeze": freeze, "final": final, "many-final": many_final}[args.mode](args)
 
 
 if __name__ == "__main__":
