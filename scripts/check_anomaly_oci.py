@@ -171,7 +171,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 log=work / "public-input-preparation.log",
             )
         else:
-            prepared_receipt = args.prepared_receipt.resolve()
+            # Keep the receipt within the task workspace exposed to the OCI
+            # daemon, including when that daemon runs in an isolated VM.
+            receipt = args.prepared_receipt.resolve()
+            require(receipt.is_file(), "anomaly_oci_prepared_receipt_regular_file")
+            prepared_receipt = work / "prepared.json"
+            shutil.copyfile(receipt, prepared_receipt)
         prepared = json.loads(prepared_receipt.read_bytes())
         require(
             prepared["status"] == "passed" and prepared["truth_access"] == "excluded",
@@ -212,7 +217,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "APP_ENV=test",
         ]
         for path in mounts:
-            invocation += ["--volume", str(path) + ":" + str(path) + ":ro"]
+            invocation += ["--mount", f"type=bind,src={path},dst={path},readonly"]
         invocation += [
             "--volume",
             str(output) + ":" + str(output),

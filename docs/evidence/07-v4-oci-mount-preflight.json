@@ -1,0 +1,20 @@
+{
+  "version": "ai07-oci-mount-preflight-1.0.0",
+  "checked_at": "2026-10-05T04:40:57.796268+00:00",
+  "consumer_commit": "0a6ad998c006ec9654db56a8a59f8e937036e531",
+  "failure": "regular_artifact_required",
+  "cause": "prepared_receipt_outside_task_vm_mounts_became_a_directory_under_docker_volume_semantics",
+  "correction": "copy_external_receipt_into_owned_worktree_and_require_existing_readonly_bind_mounts",
+  "passed_stages": [
+    "saved_models_and_compatibility",
+    "complete_native_public_parents",
+    "actual_built_oci_pinned_pg16_mlflow_all_migrations"
+  ],
+  "owned_project_cleanup": "completed",
+  "quality_status": "both_frozen_versions_passed_unchanged",
+  "logs": {
+    "acceptance.log": "174217ed25067b945c24fb258082ab8d644ced3ccfa7fd4b51d6c311ea55b8a5",
+    "build.log": "5f374ef49311513bc8fa8ff64b997057b2eda856a70464a2bb19b80bab463fa9",
+    "cleanup.log": "966f39ca2885d775e5f7ab6224c06938152a7dcad082db49dce50924be22d527"
+  }
+}
