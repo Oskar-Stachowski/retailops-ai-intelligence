@@ -1,5 +1,8 @@
 # RetailOps AI Intelligence
 
+**AI 08 jest READY.** [Końcowy raport](docs/evidence/08-28-final-ready.md) obejmuje
+kwalifikowany model, rzeczywisty lifecycle/batch/API oraz zielone CI obu main.
+
 **Status: AI 04 — finalna v12, `ready` z zaakceptowanymi odstępstwami jakościowymi.**
 [Decyzja i zakres odbioru](docs/evidence/04-v12-acceptance.md) obowiązują po
 chronionym merge i Required CI. Etapy 01 i 11 są odebrane lokalnie.

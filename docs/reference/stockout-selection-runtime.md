@@ -1,5 +1,7 @@
 # AI 08 — later calibration, operator proposal and portable runtime
 
+**AI 08 jest READY:** [końcowe zamknięcie](../evidence/08-28-final-ready.md).
+
 The current accepted policy is [campaign v2](stockout-final-campaign-v2.md):
 25/50/90% bands and top50%, chosen on development FP1/FN5 evidence. The
 original top20% proposal below is retained as development history. All six

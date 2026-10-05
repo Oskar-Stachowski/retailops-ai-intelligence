@@ -1,5 +1,7 @@
 # Stockout — wspólny mechanizm wersjonowania AI 05
 
+**AI 08 jest READY:** [końcowe zamknięcie](../evidence/08-28-final-ready.md).
+
 Aktualny [pełny rzeczywisty odbiór](../evidence/08-27-final-serving-acceptance.md)
 zaliczył kwalifikowany model, 12 bramek review, pełny verifier/importer MLflow,
 register/promote/rollback/reject oraz durable cold worker i scoped batch/API.
