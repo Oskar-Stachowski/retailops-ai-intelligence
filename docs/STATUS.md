@@ -1,5 +1,14 @@
 # Aktualny status
 
+**AI 08 — zatwierdzono kampanię v2 i kolejkę 50%; rusza końcowa ocena.**
+[Odbiór 08.24](evidence/08-24-approved-campaign.md) zapisuje rzeczywisty publiczny
+replay development: 202/218 wychwyconych zdarzeń, 33 FP, 16 FN, koszt 113 wobec
+201 dla 40% i 605 dla 20%. Model, kalibrator i sześć źródeł pozostają te same.
+Użytkownik zatwierdził jawne ostrzeżenia kalibracji wyłącznie małych kategorii.
+Sześć runnerów wykonuje native/wheel, następnie pełny publiczny replay qualification.
+Końcowa jakość, review/integracja oraz końcowe CI jeszcze oczekują.
+**AI 08 pozostaje not ready.** Niżej jest historia wcześniejszych zakresów.
+
 **AI 08 — worker/HTTP/priority i pełny backup są zaliczone; final receipts/karta są przygotowane.**
 [Przyrost 08.23](evidence/08-23-stockout-final-receipts-and-card.md) dodaje collector
 sześciu światów, ponowną kontrolę bramek, kartę, qualifier i jawny review/import/lifecycle.
