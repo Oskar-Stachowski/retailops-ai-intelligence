@@ -83,7 +83,7 @@ Namespace mechanics wymaga jawnego wstrzyknięcia backendu w testach;
 samo `APP_ENV=test` go nie włącza.
 Migracja publikacji to `0017_v12_outputs`; `0018_v12_evaluations`
 opisuje [katalog i oceny v12](forecast-v12-metadata.md), a aktualny head
-`0019_v12_development` [lokalne dopuszczenie](forecast-v12-development.md).
+`0020_stockout_lifecycle` [wspólny mechanizm stockout/v12](reference/stockout-lifecycle.md).
 Dotychczasowego długotrwałego stosu nie migrowano.
 Dotychczasowe 17 ścieżek OpenAPI i ich 60 definicji schema pozostały identyczne.
 Job `persistence` Required CI uruchamia teraz `make v12-backup-smoke`,

@@ -1,4 +1,18 @@
+[Pełny odbiór modelu AI 08](evidence/08-27-final-serving-acceptance.md),
+[końcowa jakość sześciu źródeł](evidence/08-25-final-campaign-results.md) oraz
+[prawdziwa kwalifikacja/karta](evidence/08-26-qualified-model.md) są zaliczone.
+Aktualny warunek formalnego ready znajduje się w [STATUS](STATUS.md).
+
+[Zatwierdzona kampania AI08 v2](reference/stockout-final-campaign-v2.md) i
+[rzeczywiste porównanie kolejek](evidence/08-24-approved-campaign.md).
+
+[Poprawka startu API i pełnej kontroli typów AI 08](evidence/08-20-stockout-api-startup.md)
+wyjaśnia niezaliczone CI 08.19 oraz aktualny komplet sześciu źródeł.
+
 # Dokumentacja RetailOps AI
+
+[Stockout: trwała kolejka i API](reference/stockout-jobs.md) oraz
+[odbiór przyrostu 08.19](evidence/08-19-stockout-jobs.md).
 
 Zacznij od [statusu](STATUS.md), [decyzji](architecture/decisions.md) i
 [poleceń lokalnych](development.md). [Contributing](contributing.md) opisuje
@@ -30,8 +44,9 @@ kalibrację przedziałów i jawne bramki jakości bez promocji modelu.
 [Rzeczywisty lokalny przepływ finalnego v12](evidence/05-v12-real-serving.md)
 jest odebrany: pełny import, trzy udane trwałe zadania / 42 wiersze, API,
 restart i rollback. Świeży mały snapshot daje 14/14 `current` po restarcie.
-Formalna publikacja AI 05 wymaga jeszcze zdalnego Required CI i integracji
-osobnych PR-ów AI oraz producenta źródła.
+AI 05 ma scalone PR-y i zielone Required CI obu mainów;
+[końcowy odbiór publikacji](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/evidence/ai/05/final/README.md)
+zastępuje wcześniejsze informacje o oczekiwaniu na CI.
 [Adapter v12](mlflow-v12-evidence.md), [loader offline](forecast-v12-runtime.md),
 [kwalifikacja inference](forecast-v12-release.md) i [lifecycle v12](mlflow-v12-lifecycle.md)
 opisują przygotowanie obsługi nowego eksportu oraz osobne bramki dopuszczenia.
@@ -48,6 +63,60 @@ PostgreSQL, pliki MLflow, zadania oraz niedokończone decyzje rejestracji.
 [Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
 rozszerza typed import o source 2.7, native ledger i private qualification.
 [Odbiór](evidence/06-inventory-complete.md) obejmuje curated 1.1 i oba profile.
+[Wspólny lifecycle stockout/v12](reference/stockout-lifecycle.md) i
+[odbiór podstawy](evidence/08-18-stockout-lifecycle-foundation.md) wiążą
+zatwierdzenia oraz wersje; rzeczywista integracja registry i SQL jest oczekująca.
+[Późniejsze źródła i chronione checkpointy](reference/stockout-future-sources.md)
+oraz [odbiór 08.17](evidence/08-17-stockout-remote-checkpoints.md) przygotowują
+trzy nowe światy bez ponownego uczenia i oceny końcowej.
+[Etykiety nowych braków AI 08](reference/stockout-labels.md) rozdzielają
+nowy brak, istniejący brak i niepełne okna obserwacji.
+[Niezależna ocena i karta partycji](reference/stockout-independent-qualification.md)
+oraz [odbiór](evidence/08-15-stockout-independent-development.md) rozdzielają
+dopasowanie sigmoidu od późniejszej oceny; zapisują także niezaliczone bramki.
+[Lokalny odbiór etykiet](evidence/08-01-stockout-labels.md) obejmuje prywatny
+handoff AI 06, niezależne odtworzenie ledgeru i zainstalowany wheel.
+[Prywatne partycje etykiet 2.0](reference/stockout-label-partitions.md)
+i [odbiór](evidence/08-09-stockout-label-partitions.md) dodają magazyn jednej
+fizycznej serii, mały Parquet i iterator po pełnym replay.
+[Cechy PIT i podział w czasie](reference/stockout-features.md) obejmują
+znany zapas, obserwowaną sprzedaż, znane plany dostaw i wykluczanie
+okien przekraczających granice train/tune/calibration/test.
+[Odbiór 102 dni](evidence/08-02-stockout-features.md) wiąże 1632 origin
+z pełnym odtworzeniem cech i licznikami wyłączeń.
+[Historyczny forecast upstream](reference/stockout-upstream.md) dodaje
+prognozę stałego baseline na granicy wiedzy każdego dnia oraz identyczne
+wejścia wariantów z tą cechą i bez niej; [odbiór](evidence/08-03-stockout-upstream.md)
+obejmuje pokrycie prognozą wszystkich dopuszczonych okien splitu.
+[Ograniczone przygotowanie upstream 2.0](reference/stockout-upstream-storage.md)
+wiąże cechy 2.2, jednorazowy panel faktów i chronologiczne części Parquet.
+[Odbiór tej samej próbki](evidence/08-10-stockout-upstream-storage.md)
+porównuje wszystkie prognozy, comparison i sześć modeli development.
+[Temporalne połączenie partycji](reference/stockout-temporal-storage.md)
+łączy comparison i membership w ograniczonych porcjach oraz przekazuje
+wyłącznie dojrzały development do treningu. [Odbiór](evidence/08-11-stockout-temporal-storage.md)
+porównuje rzeczywisty Parquet, wybrane wejścia i sześć modeli z v1.
+[Porównanie LR/HGB na development](reference/stockout-training.md) oddziela
+train, wybór na tune i dopasowanie sigmoid na calibration, z wejściami
+z forecastem i bez niego oraz kontrolą cenzorowania sprzedaży.
+[Odbiór modeli](evidence/08-04-stockout-models.md) ujawnia ograniczenia
+małej próby, metryki rankingowe i ilustracyjne capacity, bez final test.
+[Karta modelu i diagnostyka cech](reference/stockout-model-card.md) dodaje
+współczynniki LR, znaczenie grup wejść na tune i faktyczny kontekst PIT.
+[Odbiór karty](evidence/08-05-stockout-card.md) zachowuje granice development;
+[projekt większego profilu](reference/stockout-profile-resources.md) określa
+partycjonowanie i pomiary potrzebne przed dalszą generacją.
+[Partycje cech v2](reference/stockout-partitions.md) dodają ograniczony
+zapis Parquet i indeks faktów znanych w origin; [odbiór 102 dni](evidence/08-06-stockout-partitions.md)
+zachowuje każde pole 1632 punktów oraz wyniki modeli development.
+[Odczyt faktów z dysku 2.1](reference/stockout-disk-facts.md) dodaje
+jednorazowy, ograniczony magazyn SQLite i cache jednej fizycznej serii.
+[Odbiór](evidence/08-07-stockout-disk-facts.md) zachowuje wszystkie punkty,
+Parquet i modele, z osobnym pomiarem czasu i pamięci w świeżych procesach.
+[Indeks historii 2.2](reference/stockout-history-index.md) dodaje sumy
+prefiksowe ledgeru i dzienne grupowanie popytu znanego w origin.
+[Odbiór](evidence/08-08-stockout-history-index.md) porównuje tę samą próbkę
+z wcześniejszą projekcją oraz zachowuje granice całego AI 08.
 [Korekta jakości](forecast-remediation.md) dodaje wersjonowaną recepturę
 validation-only i ponowną ocenę na późniejszych development holdoutach.
 [Uprawnienia API](access-control.md) i [odbiór](evidence/01-access.md) opisują

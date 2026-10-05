@@ -1,0 +1,37 @@
+{
+  "schema_version": "stockout-selection-runtime-evidence-1.0.0",
+  "status": "foundation_accepted_real_parent_and_independent_quality_pending",
+  "parent_commit": "8010adf113b8f0ca76f07c58321cfa40b1ba65c0",
+  "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+  "preparation_consumer_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+  "selection_protocol": "stockout-later-calibration-selection-2.0.0",
+  "development_seed": 42,
+  "calibrator_C_grid": [0.01, 0.1, 1.0, 10.0],
+  "matching_preparation_seeds": [42, 137, 2026],
+  "focused_tests": {
+    "passed": 235,
+    "failures": 0,
+    "warnings": 0,
+    "wall_seconds": 55.41,
+    "new_cases": 141,
+    "existing_cases": 94
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format_files": 527,
+    "mypy_source_files": 408,
+    "access_snapshots": "passed",
+    "documentation_links": "passed"
+  },
+  "source_acceptance_2_0": "pending_actual_remote_native_wheel_replay",
+  "remote_preparation": "workflow_prepared_receipts_pending",
+  "full_ci_current_implementation": "pending",
+  "independent_quality_accepted": false,
+  "final_test_outcomes_evaluated": false,
+  "thresholds_approved": false,
+  "model_promoted": false,
+  "lifecycle_batch_api_accepted": false,
+  "ai08_ready": false,
+  "local_disk_reserve_bytes": 53687091200,
+  "remote_ephemeral_disk_reserve_bytes": 6442450944
+}

@@ -1,0 +1,17 @@
+{
+  "version": "stockout-independent-development-1.0.0",
+  "base_fit_known_at": "2026-05-20T00:00:00Z",
+  "calibration_start_at": "2026-05-20T00:00:00Z",
+  "calibration_fit_known_at": "2026-06-05T00:00:00Z",
+  "calibration_source_role": "train",
+  "validation_role": "calibration",
+  "calibration_protocol": "later_out_of_sample_predictions_with_exact_label_purge",
+  "model_selection": "raw_tune_AP_then_Brier_then_LR_without_upstream",
+  "minimum_segment_rows": 20,
+  "minimum_segment_per_class": 5,
+  "expected_category_count": 8,
+  "expected_stock_location_count": 2,
+  "maximum_expected_calibration_error": 0.15,
+  "quality_policy_status": "proposal_before_final_test",
+  "final_test": "unopened_separate_approved_campaign_required"
+}

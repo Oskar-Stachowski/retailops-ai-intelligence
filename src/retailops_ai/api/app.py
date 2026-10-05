@@ -45,6 +45,8 @@ from retailops_ai.model_lifecycle.v12_evaluation_store import (
 from retailops_ai.pipelines.readiness import Readiness
 from retailops_ai.pipelines.retrieval import load_retrieval_config
 from retailops_ai.security.local import load_authority
+from retailops_ai.stockout_jobs.lazy import LazyStockoutAdministration, LazyStockoutReader
+from retailops_ai.stockout_jobs.ports import StockoutAdministration, StockoutReader
 
 
 class DiagnosticAPI(FastAPI):
@@ -78,6 +80,8 @@ def create_app(
     v12_forecast_administration: V12JobAdministration | None = None,
     v12_model_catalog: V12ModelCatalog | None = None,
     v12_evaluation_reader: V12EvaluationReader | None = None,
+    stockout_administration: StockoutAdministration | None = None,
+    stockout_reader: StockoutReader | None = None,
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
@@ -98,6 +102,8 @@ def create_app(
         or evaluation_reader is None
         or v12_model_catalog is None
         or v12_evaluation_reader is None
+        or stockout_administration is None
+        or stockout_reader is None
     ) and settings.database_url is not None:
         knowledge_engine = index_engine(settings)
     if knowledge_backend is None and knowledge_engine is not None:
@@ -137,6 +143,10 @@ def create_app(
         v12_evaluation_reader = PostgresV12Evaluations(
             knowledge_engine, settings.app_env, development=settings.v12_development_mode
         )
+    if stockout_administration is None and knowledge_engine is not None:
+        stockout_administration = LazyStockoutAdministration(knowledge_engine, settings.app_env)
+    if stockout_reader is None and knowledge_engine is not None:
+        stockout_reader = LazyStockoutReader(knowledge_engine, settings.app_env)
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
@@ -269,6 +279,8 @@ def create_app(
             v12_forecast_administration,
             v12_model_catalog,
             v12_evaluation_reader,
+            stockout_administration,
+            stockout_reader,
         )
     )
     return app

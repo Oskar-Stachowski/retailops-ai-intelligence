@@ -1,0 +1,74 @@
+{
+  "schema_version": "stockout-resource-pilot-1.8.0",
+  "execution_scope": "isolated_github_hosted_runner",
+  "producer_commit": "61eb215193106cc3f41e6b79e0470585cc9e791b",
+  "consumer_baseline_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+  "generation": {
+    "profile": "ai-stockout-stress-v1",
+    "days": 102,
+    "products": 30,
+    "stores": 3,
+    "warehouses": 2,
+    "seed": 42,
+    "start_date": "2026-06-09",
+    "end_date": "2026-09-18",
+    "max_daily_rows": 9180,
+    "forecast_plan_days": 0
+  },
+  "split_policy": {
+    "version": "stockout-temporal-split-1.0.0",
+    "start_at": "2026-06-09T00:00:00Z",
+    "train_until": "2026-06-24T00:00:00Z",
+    "tune_until": "2026-07-01T00:00:00Z",
+    "calibration_until": "2026-07-13T00:00:00Z",
+    "test_until": "2026-09-19T00:00:00Z",
+    "evaluated_at": "2026-09-19T00:00:00Z",
+    "purge": "outcome_end_and_availability_strictly_before_next_role",
+    "final_test": "membership_only_no_outcome_metrics_no_training_access"
+  },
+  "budgets": {
+    "scratch_bytes": 671088640,
+    "tree_rss_bytes": 1342177280,
+    "wall_seconds": 2700,
+    "minimum_free_bytes": 6442450944
+  },
+  "unchanged_consumer_limits": {
+    "input_rows": 500000,
+    "input_bytes": 67108864,
+    "qualification_bytes": 4194304,
+    "ledger_rows": 100000,
+    "physical_origins": 10000,
+    "main_database_bytes": 134217728,
+    "development_bytes": 16777216
+  },
+  "physical_origin_upper_bound": 6120,
+  "local_disk_policy": {
+    "minimum_free_bytes": 53687091200
+  },
+  "measured_resource_baseline": {
+    "receipt": "stockout-resource-baseline-30.json",
+    "sha256": "080fd9c2ec764a35e85e5a17ed0fd3447e0e0d318d960b8bff6546b564850239"
+  },
+  "model_training_permitted": false,
+  "final_test_outcomes_evaluated": false,
+  "independent_quality_accepted": false,
+  "ai08_ready": false,
+  "scope": "Prospective later synthetic source world; fixed source stress profile; frozen model remains unchanged",
+  "inventory_configuration": "pinned default_inventory_config; no inventory overrides",
+  "resource_revision_reason": "Prospective640MiB scratch vs prior576MiB:20percent baseline headroom plus4percent event growth heuristic before new-world generation.1280MiB RSS and2700s unchanged. All consumer and quality caps unchanged.",
+  "planned_stress": {
+    "recipe": "stockout-prospective-demand-shock-1.0.0",
+    "membership": "sha256(product_id) modulo3 remainder0",
+    "start_date": "2026-07-28",
+    "end_date": "2026-08-03",
+    "factor": 2,
+    "private_not_runtime_feature": true
+  },
+  "protected_boundaries": {
+    "no_final_scores": true,
+    "no_model_fits": true,
+    "no_threshold_approval": true,
+    "no_promotion": true,
+    "source_worlds_reported_separately": true
+  }
+}
