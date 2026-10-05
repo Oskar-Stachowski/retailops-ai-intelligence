@@ -38,6 +38,35 @@ def test_observation_persistence_gate_cannot_be_skipped(mutation):
     assert module.workflow_errors(data)
 
 
+@pytest.mark.parametrize("mutation", ["removed", "bypassed", "not-required"])
+def test_actual_observation_broker_gate_cannot_be_skipped(mutation):
+    data = workflow()
+    if mutation == "removed":
+        data["jobs"].pop("observation-broker")
+    elif mutation == "bypassed":
+        gate = next(
+            step
+            for step in data["jobs"]["observation-broker"]["steps"]
+            if step.get("run") == "make intelligence-delivery-bootstrap observation-broker-test"
+        )
+        gate["run"] = "make intelligence-delivery-bootstrap"
+    else:
+        data["jobs"]["required-result"]["needs"].remove("observation-broker")
+    assert module.workflow_errors(data)
+
+
+@pytest.mark.parametrize(
+    "required",
+    [
+        "REQUIRE_AI10_OBSERVATION_BROKER_TESTS=1",
+        "AI10_OBSERVATION_BROKER_REPORT=artifacts/ai10-observation-broker.json",
+    ],
+)
+def test_actual_broker_make_target_cannot_drop_execution_or_report(required):
+    makefile = (ROOT / "Makefile").read_text().replace(required, "")
+    assert module.workflow_errors(workflow(), makefile)
+
+
 def test_required_ci_cannot_drop_mlflow_restore_smoke():
     data = workflow()
     data["jobs"]["persistence"]["steps"] = [

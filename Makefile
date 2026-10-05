@@ -17,7 +17,7 @@ type-check:
 	$(UV_RUN) python scripts/check_native_snapshot_types.py
 
 test:
-	$(UV_RUN) python -m pytest
+	$(UV_RUN) python -m pytest --durations=30
 
 docs-check:
 	$(UV_RUN) python scripts/check_repository.py
@@ -189,6 +189,13 @@ integration-failure-test:
 .PHONY: observation-persistence-test
 observation-persistence-test:
 	REQUIRE_AI10_OBSERVATION_TESTS=1 AI10_OBSERVATION_REPORT=artifacts/ai10-durable-observation-replay.json $(UV_RUN) python -m pytest tests/test_observation_store_postgres.py --junitxml=artifacts/ai10-durable-observation-replay-tests.xml
+
+.PHONY: observation-broker-test observation-consumer
+observation-broker-test:
+	REQUIRE_AI10_OBSERVATION_BROKER_TESTS=1 AI10_OBSERVATION_BROKER_REPORT=artifacts/ai10-observation-broker.json $(UV) run --locked --project tools/intelligence-delivery python -m pytest tests/test_observation_broker_runtime.py --junitxml=artifacts/ai10-observation-broker-tests.xml
+
+observation-consumer:
+	$(UV) run --locked --project tools/intelligence-delivery python scripts/observation_consumer.py $(ARGS)
 
 .PHONY: source-rest-check source-rest-read
 .PHONY: source-bundle-check

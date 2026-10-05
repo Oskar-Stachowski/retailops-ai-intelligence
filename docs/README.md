@@ -161,3 +161,4 @@ ograniczenia; nie jest listą zakończonych zadań ani deklaracją wdrożenia.
 - [Pełna bramka cross-repo AI 03.6](evidence/03-06-cross-repo.md) — wspólny odbiór RetailOps i AI, publikacja oraz kolejne etapy.
 - [Lokalny odbiór zaakceptowanego v12 i import APFS](forecast-v12-development.md).
 - [AI10: odbiorca replay historii obserwacji](source-observation-replay.md).
+- [AI10: authenticated observation broker input](observation-broker.md).

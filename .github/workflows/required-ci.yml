@@ -109,9 +109,37 @@ jobs:
             artifacts/ai10-durable-observation-replay-tests.xml
           if-no-files-found: error
           retention-days: 14
+  observation-broker:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - name: Pull immutable observation runtime images
+        run: |
+          docker pull postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+          docker pull redpandadata/redpanda:v25.3.6@sha256:ac152ec27adccf9482af2649d293f398eb03c860d7469fc49f86e30d870ea408
+      - name: Accept actual authenticated observation transport
+        run: make intelligence-delivery-bootstrap observation-broker-test
+      - name: Preserve broker ACK and failure evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai10-observation-broker
+          path: |
+            artifacts/ai10-observation-broker.json
+            artifacts/ai10-observation-broker-tests.xml
+          if-no-files-found: error
+          retention-days: 14
   required-result:
     if: always()
-    needs: [checks, secrets, persistence, observation-replay]
+    needs: [checks, secrets, persistence, observation-replay, observation-broker]
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     steps:
@@ -121,8 +149,10 @@ jobs:
           PERSISTENCE_RESULT: ${{ needs.persistence.result }}
           SECRETS_RESULT: ${{ needs.secrets.result }}
           OBSERVATION_REPLAY_RESULT: ${{ needs.observation-replay.result }}
+          OBSERVATION_BROKER_RESULT: ${{ needs.observation-broker.result }}
         run: |
           test "$CHECKS_RESULT" = "success"
           test "$SECRETS_RESULT" = "success"
           test "$PERSISTENCE_RESULT" = "success"
           test "$OBSERVATION_REPLAY_RESULT" = "success"
+          test "$OBSERVATION_BROKER_RESULT" = "success"

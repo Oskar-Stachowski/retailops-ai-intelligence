@@ -12,7 +12,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
+def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None) -> list[str]:
     errors = []
     events: dict[str, Any] = workflow.get("on") or workflow.get(True) or {}
     if not all(event in events for event in ("push", "pull_request", "workflow_dispatch")):
@@ -100,6 +100,23 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
         errors.append("observation-replay must execute real PostgreSQL acceptance")
     if set(required.get("needs", [])) != set(jobs) - {"required-result"}:
         errors.append("required-result must depend on every check")
+    if not any(
+        step.get("run") == "make intelligence-delivery-bootstrap observation-broker-test"
+        for step in jobs.get("observation-broker", {}).get("steps", [])
+    ):
+        errors.append("observation-broker must execute actual authenticated transport acceptance")
+    makefile = (ROOT / "Makefile").read_text() if makefile is None else makefile
+    broker_target = re.search(r"^observation-broker-test:\n\t([^\n]+)", makefile, re.MULTILINE)
+    if broker_target is None or not all(
+        required in broker_target.group(1)
+        for required in (
+            "REQUIRE_AI10_OBSERVATION_BROKER_TESTS=1",
+            "AI10_OBSERVATION_BROKER_REPORT=artifacts/ai10-observation-broker.json",
+            "tests/test_observation_broker_runtime.py",
+            "--junitxml=artifacts/ai10-observation-broker-tests.xml",
+        )
+    ):
+        errors.append("observation-broker target must require runtime execution and evidence")
     if required.get("if") != "always()":
         errors.append("required-result must run even after a failure")
     result_steps = required.get("steps", [])

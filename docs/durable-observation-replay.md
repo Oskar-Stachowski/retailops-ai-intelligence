@@ -3,7 +3,8 @@
 This extends the [in-memory receiver](source-observation-replay.md) with a real
 PostgreSQL projection. It does **not** turn live Source REST into an immutable
 snapshot, create a Source emitter/topic, or qualify AI07/AI08. The full 43-table
-Source capture and actual broker adapter remain separate acceptance work.
+Source capture remains separate acceptance work. The
+[authenticated broker adapter](observation-broker.md) builds on this SQL core.
 
 ## Processing and recovery
 
