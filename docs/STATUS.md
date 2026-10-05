@@ -17,22 +17,25 @@ Required CI dokładnych commitów integracji i obu merge commitów. Wyniki są
 wiązane z SHA w tych PR-ach; wcześniejszy odbiór na gałęziach nie zastępuje
 odbioru integracji. [Zakres połączenia z main](evidence/07-main-integration.md)
 opisuje wspólne migracje i zachowanie AI 05/08.
-**AI 08 — wszystkie odbiory danych, jakości i działającego modelu zaliczone.**
-[Końcowy odbiór](evidence/08-27-final-serving-acceptance.md) potwierdza prawdziwe
-MLflow/SQL, register/promote/rollback/reject, cold worker, batch i scoped API:
-40 wyników, 15 pozycji attention_queue, 206 focused tests, 12 bramek review.
-[Sześć światów / 9296 punktów](evidence/08-25-final-campaign-results.md) ma
-90 kontroli passed, 3 zaakceptowane ostrzeżenia małych kategorii i 0 blokad.
-[Pełna kwalifikacja i karta](evidence/08-26-qualified-model.md) są zachowane.
-Warunek formalnego **AI 08 READY na main**: zielony Required CI dokładnego
-HEAD PR14, normalne scalenie PR14 i zielony Required CI jego merge commitu.
-Do spełnienia tego warunku formalnego cały etap pozostaje not ready;
-po jego spełnieniu poniższe starsze wpisy są wyłącznie historią zakresów.
-Wdrożenia produkcyjnego nie wykonano.
 
-**AI 08 pozostaje not ready.** Niżej zachowano historię wcześniejszych zakresów.
+**2026-10-05: cały etap AI 08 jest READY.**
+[Końcowe zamknięcie](evidence/08-28-final-ready.md) i
+[receipt obu repo](evidence/08-28-final-ready.json) potwierdzają zaliczone dane,
+jakość, kartę, rzeczywisty MLflow/lifecycle/batch/API, chroniony merge PR #14
+oraz zielone Required CI jego HEAD i merge commitu na main.
+9296 punktów ma 90 kontroli passed, 3 zaakceptowane ostrzeżenia i 0 blokad;
+2543 testy pełnego CI, 206 focused tests, 12 review gates, 40 wyników i 15 attention.
+Wymagane prace do zamknięcia AI 08: **0**. Wdrożenia produkcyjnego nie wykonano.
 
-**AI 08 pozostaje not ready.** Niżej jest historia wcześniejszych zakresów.
+## Punkt wznowienia
+
+Korzystaj z końcowego raportu i kwalifikowanej karty. AI 07 ma osobny odbiór;
+AI 09/10 zachowują własne zależności. Wcześniejsze not ready nie otwierają ponownie AI 08.
+
+## Historia wcześniejszych zakresów
+
+Poniższe wpisy zachowują dawne wyniki, błędy i stan przyrostów w chwili odbioru.
+Bieżący status AI 08 określa wyłącznie wpis READY i końcowy receipt powyżej.
 
 **AI 08 — worker/HTTP/priority i pełny backup są zaliczone; final receipts/karta są przygotowane.**
 [Przyrost 08.23](evidence/08-23-stockout-final-receipts-and-card.md) dodaje collector

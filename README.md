@@ -6,6 +6,9 @@
 lifecycle, batch/API i OCI. Pełne `ready` na main potwierdzają scalenia PR #24/#97
 oraz zielony Required CI dokładnych HEAD i merge commitów obu repozytoriów.
 
+**AI 08 jest READY.** [Końcowy raport](docs/evidence/08-28-final-ready.md) obejmuje
+kwalifikowany model, rzeczywisty lifecycle/batch/API oraz zielone CI obu main.
+
 **Status: AI 04 — finalna v12, `ready` z zaakceptowanymi odstępstwami jakościowymi.**
 [Decyzja i zakres odbioru](docs/evidence/04-v12-acceptance.md) obowiązują po
 chronionym merge i Required CI. Etapy 01 i 11 są odebrane lokalnie.
@@ -27,5 +30,6 @@ atomową aktywację i rollback. Aktualny odbiór i granice opisuje
 - [Zasady zmian](docs/contributing.md) i [bezpieczeństwo](docs/security.md)
 - [Licencja MIT](LICENSE)
 
-Źródło planu: [RetailOps](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/tree/cbf28b2/docs/plans/ai).
+Aktualne statusy i zależności: [plan RetailOps](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/tree/main/docs/plans/ai).
+Plan bazowy audytu: [RetailOps na cbf28b2](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/tree/cbf28b2/docs/plans/ai).
 Generator, frontend i baza operacyjna należą do RetailOps. To repo ma własny lifecycle.
