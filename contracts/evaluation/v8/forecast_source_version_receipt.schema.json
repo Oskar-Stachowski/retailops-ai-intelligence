@@ -1,0 +1,333 @@
+{
+  "$defs": {
+    "ForecastSourceReplayReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "access_ids": {
+          "items": {
+            "pattern": "^outcome-access-[0-9a-f]{32}$",
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 5,
+          "title": "Access Ids",
+          "type": "array"
+        },
+        "access_plan_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Access Plan Sha256",
+          "type": "string"
+        },
+        "cache_authority": {
+          "const": "diagnostic_receipt_never_authorizes_a_later_read_without_replay",
+          "default": "diagnostic_receipt_never_authorizes_a_later_read_without_replay",
+          "title": "Cache Authority",
+          "type": "string"
+        },
+        "curated_inventory_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Inventory Sha256",
+          "type": "string"
+        },
+        "curated_rows": {
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Curated Rows",
+          "type": "integer"
+        },
+        "curated_tables": {
+          "minimum": 1,
+          "title": "Curated Tables",
+          "type": "integer"
+        },
+        "evaluation_status": {
+          "const": "not_ready",
+          "default": "not_ready",
+          "title": "Evaluation Status",
+          "type": "string"
+        },
+        "exposure_scope": {
+          "const": "all_snapshot_facts_and_all_curated_rows_including_late_purged_and_outside_role_dates",
+          "default": "all_snapshot_facts_and_all_curated_rows_including_late_purged_and_outside_role_dates",
+          "title": "Exposure Scope",
+          "type": "string"
+        },
+        "external_source_truth": {
+          "const": "not_established_by_consumer_replay",
+          "default": "not_established_by_consumer_replay",
+          "title": "External Source Truth",
+          "type": "string"
+        },
+        "feature_and_partition_rows_verified": {
+          "const": false,
+          "default": false,
+          "title": "Feature And Partition Rows Verified",
+          "type": "boolean"
+        },
+        "final_test_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Access Authorized",
+          "type": "boolean"
+        },
+        "freshness": {
+          "const": "not_established_partial_access_audit",
+          "default": "not_established_partial_access_audit",
+          "title": "Freshness",
+          "type": "string"
+        },
+        "independent_evaluation_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Independent Evaluation Access Authorized",
+          "type": "boolean"
+        },
+        "logical_curated_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Logical Curated Sha256",
+          "type": "string"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "project_data_fits": {
+          "default": 0,
+          "maximum": 0,
+          "minimum": 0,
+          "title": "Project Data Fits",
+          "type": "integer"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "protocol_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Protocol Sha256",
+          "type": "string"
+        },
+        "runtime_code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Code Sha256",
+          "type": "string"
+        },
+        "scoped_outcome_evidence_verified": {
+          "const": false,
+          "default": false,
+          "title": "Scoped Outcome Evidence Verified",
+          "type": "boolean"
+        },
+        "snapshot_inventory_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Snapshot Inventory Sha256",
+          "type": "string"
+        },
+        "source_qualification": {
+          "const": "typed_snapshot_and_complete_curated_transform_replay_passed",
+          "default": "typed_snapshot_and_complete_curated_transform_replay_passed",
+          "title": "Source Qualification",
+          "type": "string"
+        },
+        "source_rows": {
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Source Rows",
+          "type": "integer"
+        },
+        "source_tables": {
+          "minimum": 1,
+          "title": "Source Tables",
+          "type": "integer"
+        },
+        "version": {
+          "const": "ai09-forecast-source-replay-receipt-1.0.0",
+          "default": "ai09-forecast-source-replay-receipt-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol_sha256",
+        "access_plan_sha256",
+        "access_ids",
+        "parent",
+        "runtime_code_sha256",
+        "snapshot_inventory_sha256",
+        "curated_inventory_sha256",
+        "logical_curated_sha256",
+        "source_tables",
+        "source_rows",
+        "curated_tables",
+        "curated_rows"
+      ],
+      "title": "ForecastSourceReplayReceipt",
+      "type": "object"
+    },
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "forecast_source_status": {
+          "const": "passed",
+          "title": "Forecast Source Status",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "curated_descriptor_sha256",
+        "business_timezone",
+        "forecast_source_status"
+      ],
+      "title": "Parent",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:forecast_source_version_receipt:8.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "evaluation_status": {
+      "const": "not_ready",
+      "default": "not_ready",
+      "title": "Evaluation Status",
+      "type": "string"
+    },
+    "feature_and_partition_rows_verified": {
+      "const": false,
+      "default": false,
+      "title": "Feature And Partition Rows Verified",
+      "type": "boolean"
+    },
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "historical_versions_without_quality_proof": {
+      "maximum": 100000,
+      "minimum": 0,
+      "title": "Historical Versions Without Quality Proof",
+      "type": "integer"
+    },
+    "independent_evaluation_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Independent Evaluation Access Authorized",
+      "type": "boolean"
+    },
+    "latest_observation_quality_proofs": {
+      "maximum": 100000,
+      "minimum": 1,
+      "title": "Latest Observation Quality Proofs",
+      "type": "integer"
+    },
+    "maximum_index_bytes": {
+      "const": 134217728,
+      "default": 134217728,
+      "title": "Maximum Index Bytes",
+      "type": "integer"
+    },
+    "maximum_versions_per_observation": {
+      "const": 8,
+      "default": 8,
+      "title": "Maximum Versions Per Observation",
+      "type": "integer"
+    },
+    "observation_rows": {
+      "maximum": 100000,
+      "minimum": 1,
+      "title": "Observation Rows",
+      "type": "integer"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "quality_policy": {
+      "const": "latest_exact_observation_flags_at_max_curated_availability_prior_quality_unknown",
+      "default": "latest_exact_observation_flags_at_max_curated_availability_prior_quality_unknown",
+      "title": "Quality Policy",
+      "type": "string"
+    },
+    "scoped_outcome_evidence_verified": {
+      "const": false,
+      "default": false,
+      "title": "Scoped Outcome Evidence Verified",
+      "type": "boolean"
+    },
+    "source_replay": {
+      "$ref": "#/$defs/ForecastSourceReplayReceipt"
+    },
+    "sqlite_cache_kib": {
+      "const": 4096,
+      "default": 4096,
+      "title": "Sqlite Cache Kib",
+      "type": "integer"
+    },
+    "version": {
+      "const": "ai09-forecast-source-versions-receipt-1.0.0",
+      "default": "ai09-forecast-source-versions-receipt-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "version_inventory_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Version Inventory Sha256",
+      "type": "string"
+    },
+    "version_inventory_verified": {
+      "const": true,
+      "default": true,
+      "title": "Version Inventory Verified",
+      "type": "boolean"
+    },
+    "version_rows": {
+      "maximum": 100000,
+      "minimum": 1,
+      "title": "Version Rows",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "source_replay",
+    "observation_rows",
+    "version_rows",
+    "latest_observation_quality_proofs",
+    "historical_versions_without_quality_proof",
+    "version_inventory_sha256"
+  ],
+  "title": "ForecastSourceVersionReceipt",
+  "type": "object"
+}

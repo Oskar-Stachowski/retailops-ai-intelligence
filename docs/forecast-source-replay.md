@@ -122,3 +122,8 @@ sam poprawny checksum i kompletność końcowej obserwacji nie dowodzą, że
 wcześniejsza wersja była kompletna na cutoff. Gdy takiego dowodu brak,
 pełny klucz pozostaje w coverage z censored label. Replay 09.9 celowo nie
 wydaje w tej sprawie decyzji eligibility i nie zmienia deklaracji czytnika.
+
+[Czytnik wersji 09.10](forecast-source-versions.md) dodaje jawny dowód jakości
+ostatniej wersji i jego własne availability w ramach tego samego prywatnego
+replay. Starsze wersje pozostają z niepotwierdzoną jakością. Pełne powiązanie
+z fizycznymi kluczami ról i eksport scoped evidence nadal wymaga odbioru.

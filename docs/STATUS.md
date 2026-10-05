@@ -1,5 +1,21 @@
 # Aktualny status
 
+**AI 09 — wersje obserwacji mają osobny moment potwierdzenia jakości.**
+[Przyrost 09.10](forecast-source-versions.md) łączy pełny inwentarz wersji
+z odtworzonym source parent w jednej prywatnej sesji. Kompletność ostatniej
+obserwacji nie jest przenoszona na wcześniejsze wersje ani wcześniejszy cutoff.
+Nieznana jakość pozostaje censored. Indeks jest sprawdzany przed pierwszym
+wierszem i przy wyjściu; receipt powstaje po zakończeniu wszystkich zapisów audytu.
+[Dowody](evidence/09-10-forecast-source-versions.md) rozróżniają testy komponentu,
+kontrolę pakietu i odbiór zasobów: 278 testów (52 nowe), Mypy 358 plików,
+wszystkie kontrakty oraz 283 zgodne pliki kodu w wheel. Próba zasobowa native/wheel pozostaje
+zablokowana przez wolne miejsce poniżej rezerwy 50 GiB. Pełny eksport do
+fizycznych kluczy ról i integracja treningu są otwarte; AI 09 jest not_ready.
+Poprzedni commit 09.9 ma zielone Required CI178. Nowy commit wymaga własnego CI.
+Wspólny dziennik projektu ma nadal zero nowych odczytów i fitów.
+Sesje AI 07–08 odczytano wyłącznie do sprawdzenia stanu i istniejącego replay;
+nie zmieniano ich danych ani procesów.
+
 **AI 09 — pełne curated jest odtwarzane z audytowanego snapshotu.**
 [Przyrost 09.9](forecast-source-replay.md) rezerwuje wszystkie pięć ról przed
 parent I/O, sprawdza typed snapshot 1.0 i odtwarza pełną transformację curated.
@@ -15,8 +31,7 @@ Wszystkie lokalne bramki są zaliczone: 2065 testów głównych, 3 rzeczywiste
 testy TensorFlow i pozostałe kontrole. Skan sekretów przeszedł po wyjątku
 ograniczonym do zweryfikowanego hasha oraz jednego pliku; pierwotny run jest
 zachowany w receipt. Kod i dane kontraktów nie zmieniły się po regresji.
-Poprzedni commit 09.8 ma zielone Required CI170; nowy commit wymaga własnego
-CI. Receipt nie kwalifikuje jeszcze fizycznych kluczy ani
+Commit 09.9 ma zielone Required CI178. Receipt nie kwalifikuje jeszcze fizycznych kluczy ani
 `outcomes.jsonl`, nie jest cache do kolejnych odczytów i nie dowodzi prawdy
 producenta. Pozostają audytowany eksport wersji i integracja treningu;
 większe profile, source 1.1 oraz niezależna kampania są osobnymi odbiorami.

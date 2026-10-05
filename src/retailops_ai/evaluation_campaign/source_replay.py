@@ -3,7 +3,8 @@
 import hashlib
 import os
 import tempfile
-from contextlib import ExitStack
+from collections.abc import Callable, Iterator
+from contextlib import ExitStack, contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -133,20 +134,16 @@ def logical_document(document: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def verify_forecast_source_parent(
+@contextmanager
+def _open_replayed_source_parent(
     snapshot: Path,
     curated: Path,
     protocol: ForecastSourceReplayProtocol,
     *,
     journal: Path,
     plan_sha256: str,
-) -> ForecastSourceReplayReceipt:
-    """Return only after full replay, immutable-input checks and all journal finishes.
-
-    The source's own hard gates and typed facts are verified, but this is no
-    independent audit of the producer's raw truth or of physical role membership.
-    No later reader may trust this receipt instead of reserving and replaying.
-    """
+) -> Iterator[tuple[Path, dict[str, Any], ForecastSourceReplayReceipt, Callable[[], None]]]:
+    """Internal private source lifetime; the receipt is provisional until exit."""
     protocol = ForecastSourceReplayProtocol.model_validate_json(
         canonical_bytes(protocol.model_dump(mode="json"))
     )
@@ -223,13 +220,6 @@ def verify_forecast_source_parent(
             replayed = derive(private / "snapshot", source, payload, scratch, config, limits)
             if logical_document(actual) != logical_document(replayed):
                 raise SnapshotError("forecast_source_replay_complete_logical_mismatch")
-            if (_seal_parent(snapshot, names[0]), _seal_parent(curated, names[1])) != seals or (
-                _seal_parent(private / "snapshot", names[0]),
-                _seal_parent(private / "curated", names[1]),
-            ) != seals:
-                raise SnapshotError("forecast_source_replay_parent_changed_during_replay")
-            if runtime_pin() != plan.runtime:
-                raise SnapshotError("forecast_source_replay_execution_runtime_changed")
             receipt = ForecastSourceReplayReceipt(
                 protocol_sha256=protocol_sha,
                 access_plan_sha256=plan_sha256,
@@ -244,4 +234,36 @@ def verify_forecast_source_parent(
                 curated_tables=len(actual["tables"]),
                 curated_rows=sum(t["row_count"] for t in actual["tables"]),
             )
+
+            def check_parents() -> None:
+                if (_seal_parent(snapshot, names[0]), _seal_parent(curated, names[1])) != seals or (
+                    _seal_parent(private / "snapshot", names[0]),
+                    _seal_parent(private / "curated", names[1]),
+                ) != seals:
+                    raise SnapshotError("forecast_source_replay_parent_changed_during_replay")
+                if runtime_pin() != plan.runtime:
+                    raise SnapshotError("forecast_source_replay_execution_runtime_changed")
+
+            check_parents()
+            yield private / "curated", actual, receipt, check_parents
+            check_parents()
+
+
+def verify_forecast_source_parent(
+    snapshot: Path,
+    curated: Path,
+    protocol: ForecastSourceReplayProtocol,
+    *,
+    journal: Path,
+    plan_sha256: str,
+) -> ForecastSourceReplayReceipt:
+    """Return after full replay, immutable-input checks and all journal finishes.
+
+    Consumer consistency does not establish producer truth or physical role keys.
+    A receipt never authorizes a later read without fresh reservation and replay.
+    """
+    with _open_replayed_source_parent(
+        snapshot, curated, protocol, journal=journal, plan_sha256=plan_sha256
+    ) as (_, _, receipt, _):
+        pass
     return receipt

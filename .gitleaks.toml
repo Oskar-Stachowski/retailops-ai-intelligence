@@ -26,3 +26,10 @@ condition = "AND"
 paths = ['(^|/)docs/evidence/09-09-forecast-source-replay[.]json$']
 regexTarget = "secret"
 regexes = ['^4e2717d8782ab1a124e4a2775f170338b21f08b33319340112f6da2ff0d3d826$']
+
+[[rules.allowlists]]
+description = "Exact public stockout training/calibration membership hashes in shared Git history; not credentials"
+condition = "AND"
+paths = ['(^|/)docs/reference/stockout-final-selected-recipe[.]json$']
+regexTarget = "secret"
+regexes = ['^a18aa9669f671cc877f1681a25c13feb91917c465b4375c6fe9d309e7e0c1b11$', '^d9a458211ef331c15b570039435ea0f76b7f61b076aefd3d1bf40852983b6acd$']

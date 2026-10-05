@@ -28,6 +28,8 @@ kampania nadal wymagają osobnego odbioru.
 [Pełne odtworzenie źródła forecast](forecast-source-replay.md) porównuje
 całe curated z typed snapshotem po pięciu rezerwacjach dostępu. Odbiór
 scoped etykiet i integracja z treningiem pozostają kolejnymi krokami.
+[Wersje obserwacji](forecast-source-versions.md) zachowują osobny czas dowodu
+kompletności i nie przenoszą jakości ostatniej obserwacji wstecz.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
 registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
 sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)
