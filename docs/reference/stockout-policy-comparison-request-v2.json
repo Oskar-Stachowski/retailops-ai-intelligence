@@ -1,0 +1,10 @@
+{
+  "version": "stockout-capacity-comparison-request-2.0.0",
+  "owner_authorized": true,
+  "approved_by": "oskar-stachowski",
+  "recorded_at": "2026-10-05T06:35:00Z",
+  "authorization_evidence": "User: zgadzam się z twoją rekomendacją. doprowadź AI 08 do ready. Accepted recommendation: retain the frozen model and all six sources; compare top 40% and top 50% using development FP1/FN5 cost, with top 20% as reference, before final outcome evaluation.",
+  "selection_id": "stockout-selection-sha256-01832134958dc4ee8ad9ad91fab707412b28938b3e5607da2dea15a002b5828e",
+  "capacities": [0.2, 0.4, 0.5],
+  "final_test_outcomes_evaluated": false
+}

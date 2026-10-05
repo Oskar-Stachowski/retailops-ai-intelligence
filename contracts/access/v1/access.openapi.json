@@ -1884,6 +1884,60 @@
         "title": "EvidenceReference",
         "type": "object"
       },
+      "FactualFactor": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "known_available_stock",
+              "inventory_snapshot_age",
+              "supply_from_observed_sales",
+              "supply_from_verified_in_stock_sales",
+              "known_delivery_plan_within_horizon",
+              "known_overdue_order_quantity",
+              "history_had_inventory_constraints",
+              "history_inventory_coverage_missing",
+              "current_stockout",
+              "input_not_evaluable",
+              "stale_inventory"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "field": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Field",
+            "type": "string"
+          },
+          "interpretation": {
+            "const": "verified_PIT_fact_not_causal_attribution",
+            "default": "verified_PIT_fact_not_causal_attribution",
+            "title": "Interpretation",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "code",
+          "field",
+          "value"
+        ],
+        "title": "FactualFactor",
+        "type": "object"
+      },
       "ForecastCheckRequest": {
         "additionalProperties": false,
         "properties": {
@@ -2446,7 +2500,9 @@
                 "model:decide",
                 "forecast:run",
                 "anomaly:read",
-                "anomaly:run"
+                "anomaly:run",
+                "stockout:read",
+                "stockout:run"
               ],
               "type": "string"
             },
@@ -2492,6 +2548,16 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/ResourceScope"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stockout_scope": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StockoutResourceScope"
               },
               {
                 "type": "null"
@@ -3776,6 +3842,37 @@
         "title": "Page",
         "type": "object"
       },
+      "PhysicalScope": {
+        "additionalProperties": false,
+        "properties": {
+          "product_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Product Ids",
+            "type": "array"
+          },
+          "stock_location_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Stock Location Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "product_ids",
+          "stock_location_ids"
+        ],
+        "title": "PhysicalScope",
+        "type": "object"
+      },
       "PolicyMetadata": {
         "additionalProperties": false,
         "properties": {
@@ -3898,6 +3995,29 @@
                   "anomaly-view-changed",
                   "anomaly-not-found",
                   "anomaly-output-unavailable"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "stockout-run-not-found",
+                  "stockout-run-denied",
+                  "stockout-risk-not-found",
+                  "stockout-scope-denied",
+                  "stockout-input-not-prepared",
+                  "stockout-input-origin-mismatch",
+                  "stockout-input-coverage-mismatch",
+                  "stockout-input-runtime-incompatible",
+                  "stockout-input-from-future",
+                  "stockout-model-not-approved",
+                  "stockout-model-decision-incomplete",
+                  "stockout-queue-full",
+                  "stockout-idempotency-conflict",
+                  "stockout-invalid-idempotency-key",
+                  "stockout-run-not-active",
+                  "stockout-database-not-ready",
+                  "stockout-view-changed",
+                  "stockout-read-budget"
                 ],
                 "type": "string"
               },
@@ -4886,6 +5006,111 @@
         "title": "RunOutput",
         "type": "object"
       },
+      "RuntimeLineage": {
+        "additionalProperties": false,
+        "properties": {
+          "curated_dataset_id": {
+            "pattern": "^curated-sha256-[0-9a-f]{64}$",
+            "title": "Curated Dataset Id",
+            "type": "string"
+          },
+          "feature_set_id": {
+            "pattern": "^feature-partitions-sha256-[0-9a-f]{64}$",
+            "title": "Feature Set Id",
+            "type": "string"
+          },
+          "source_completeness_status": {
+            "enum": [
+              "complete",
+              "not_ready",
+              "unavailable"
+            ],
+            "title": "Source Completeness Status",
+            "type": "string"
+          },
+          "source_dataset_id": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "title": "Source Dataset Id",
+            "type": "string"
+          },
+          "source_watermark": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Watermark"
+          },
+          "upstream_bundle_id": {
+            "pattern": "^upstream-partitions-sha256-[0-9a-f]{64}$",
+            "title": "Upstream Bundle Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_dataset_id",
+          "curated_dataset_id",
+          "feature_set_id",
+          "upstream_bundle_id",
+          "source_watermark",
+          "source_completeness_status"
+        ],
+        "title": "RuntimeLineage",
+        "type": "object"
+      },
+      "RuntimeReleasePin": {
+        "additionalProperties": false,
+        "properties": {
+          "image_digest": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "title": "Image Digest",
+            "type": "string"
+          },
+          "model_name": {
+            "enum": [
+              "retailops-stockout-risk",
+              "retailops-stockout-risk-test-mechanics"
+            ],
+            "title": "Model Name",
+            "type": "string"
+          },
+          "model_version": {
+            "pattern": "^[1-9][0-9]{0,8}$",
+            "title": "Model Version",
+            "type": "string"
+          },
+          "policy_content_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Policy Content Sha256",
+            "type": "string"
+          },
+          "recipe_content_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Recipe Content Sha256",
+            "type": "string"
+          },
+          "release_id": {
+            "pattern": "^stockout-release-sha256-[0-9a-f]{64}$",
+            "title": "Release Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "model_name",
+          "model_version",
+          "release_id",
+          "image_digest",
+          "recipe_content_sha256",
+          "policy_content_sha256"
+        ],
+        "title": "RuntimeReleasePin",
+        "type": "object"
+      },
       "SourceLocation": {
         "additionalProperties": false,
         "properties": {
@@ -4926,6 +5151,720 @@
           "source_ref"
         ],
         "title": "SourceLocation",
+        "type": "object"
+      },
+      "StockoutAttempts": {
+        "additionalProperties": false,
+        "properties": {
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/StockoutJobRun"
+            },
+            "maxItems": 5,
+            "title": "Items",
+            "type": "array"
+          },
+          "run_id": {
+            "pattern": "^run-[0-9a-f]{32}$",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "version": {
+            "const": "stockout-job-attempts-1.0.0",
+            "default": "stockout-job-attempts-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "items",
+          "generated_at"
+        ],
+        "title": "StockoutAttempts",
+        "type": "object"
+      },
+      "StockoutInputRef": {
+        "additionalProperties": false,
+        "properties": {
+          "lineage": {
+            "$ref": "#/components/schemas/RuntimeLineage"
+          },
+          "request": {
+            "$ref": "#/components/schemas/StockoutRequest"
+          },
+          "request_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Request Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "request",
+          "request_sha256",
+          "lineage"
+        ],
+        "title": "StockoutInputRef",
+        "type": "object"
+      },
+      "StockoutJobModel": {
+        "additionalProperties": false,
+        "properties": {
+          "approval_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Approval Sha256",
+            "type": "string"
+          },
+          "approval_valid_until": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Approval Valid Until",
+            "type": "string"
+          },
+          "calibrator_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Calibrator Sha256",
+            "type": "string"
+          },
+          "model_id": {
+            "pattern": "^risk-model-sha256-[0-9a-f]{64}$",
+            "title": "Model Id",
+            "type": "string"
+          },
+          "policy_id": {
+            "pattern": "^stockout-scoring-policy-sha256-[0-9a-f]{64}$",
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "release": {
+            "$ref": "#/components/schemas/RuntimeReleasePin"
+          }
+        },
+        "required": [
+          "release",
+          "model_id",
+          "calibrator_sha256",
+          "policy_id",
+          "approval_sha256",
+          "approval_valid_until"
+        ],
+        "title": "StockoutJobModel",
+        "type": "object"
+      },
+      "StockoutJobRun": {
+        "additionalProperties": false,
+        "properties": {
+          "attempt": {
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Attempt",
+            "type": "integer"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunError"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "input_ref": {
+            "$ref": "#/components/schemas/StockoutInputRef"
+          },
+          "output_id": {
+            "anyOf": [
+              {
+                "pattern": "^stockout-output-sha256-[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output Id"
+          },
+          "publication_status": {
+            "enum": [
+              "not_published",
+              "published"
+            ],
+            "title": "Publication Status",
+            "type": "string"
+          },
+          "requested_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Requested At",
+            "type": "string"
+          },
+          "requested_by": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Requested By",
+            "type": "string"
+          },
+          "resolved_model": {
+            "$ref": "#/components/schemas/StockoutJobModel"
+          },
+          "run_id": {
+            "pattern": "^run-[0-9a-f]{32}$",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "run_type": {
+            "const": "stockout_batch",
+            "default": "stockout_batch",
+            "title": "Run Type",
+            "type": "string"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "version": {
+            "const": "stockout-job-run-1.0.0",
+            "default": "stockout-job-run-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "status",
+          "attempt",
+          "requested_at",
+          "requested_by",
+          "started_at",
+          "completed_at",
+          "input_ref",
+          "resolved_model",
+          "output_id",
+          "publication_status",
+          "error"
+        ],
+        "title": "StockoutJobRun",
+        "type": "object"
+      },
+      "StockoutPriority": {
+        "additionalProperties": false,
+        "properties": {
+          "capacity_slots": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capacity Slots"
+          },
+          "eligible_in_universe": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eligible In Universe"
+          },
+          "other_scope_context": {
+            "enum": [
+              "visible_authorized",
+              "withheld"
+            ],
+            "title": "Other Scope Context",
+            "type": "string"
+          },
+          "rank_at_origin": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rank At Origin"
+          },
+          "selected_at_origin": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected At Origin"
+          },
+          "universe": {
+            "const": "complete_registered_profile_at_origin",
+            "default": "complete_registered_profile_at_origin",
+            "title": "Universe",
+            "type": "string"
+          },
+          "universe_id": {
+            "pattern": "^stockout-inputs-sha256-[0-9a-f]{64}$",
+            "title": "Universe Id",
+            "type": "string"
+          },
+          "version": {
+            "const": "stockout-origin-priority-1.0.0",
+            "default": "stockout-origin-priority-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "universe_id",
+          "selected_at_origin",
+          "rank_at_origin",
+          "eligible_in_universe",
+          "capacity_slots",
+          "other_scope_context"
+        ],
+        "title": "StockoutPriority",
+        "type": "object"
+      },
+      "StockoutRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "As Of",
+            "type": "string"
+          },
+          "horizon_days": {
+            "const": 7,
+            "default": 7,
+            "title": "Horizon Days",
+            "type": "integer"
+          },
+          "model_alias": {
+            "const": "champion",
+            "default": "champion",
+            "title": "Model Alias",
+            "type": "string"
+          },
+          "profile_id": {
+            "pattern": "^stockout-inputs-sha256-[0-9a-f]{64}$",
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/PhysicalScope"
+          },
+          "version": {
+            "const": "stockout-batch-request-1.0.0",
+            "default": "stockout-batch-request-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profile_id",
+          "as_of",
+          "scope"
+        ],
+        "title": "StockoutRequest",
+        "type": "object"
+      },
+      "StockoutResourceScope": {
+        "additionalProperties": false,
+        "properties": {
+          "product_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Product Ids",
+            "type": "array"
+          },
+          "stock_location_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Stock Location Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "product_ids",
+          "stock_location_ids"
+        ],
+        "title": "StockoutResourceScope",
+        "type": "object"
+      },
+      "StockoutRisk": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "As Of",
+            "type": "string"
+          },
+          "calibrator_version": {
+            "pattern": "^stockout-calibrator-sha256-[0-9a-f]{64}$",
+            "title": "Calibrator Version",
+            "type": "string"
+          },
+          "feature_lineage_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Feature Lineage Sha256",
+            "type": "string"
+          },
+          "freshness_reason": {
+            "enum": [
+              "source_watermark_unavailable",
+              "origin_age_exceeded",
+              "within_policy",
+              "newer_run_unpublished"
+            ],
+            "title": "Freshness Reason",
+            "type": "string"
+          },
+          "freshness_status": {
+            "enum": [
+              "current",
+              "stale",
+              "unknown"
+            ],
+            "title": "Freshness Status",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "horizon_days": {
+            "const": 7,
+            "default": 7,
+            "title": "Horizon Days",
+            "type": "integer"
+          },
+          "inference_run_id": {
+            "pattern": "^run-[0-9a-f]{32}$",
+            "title": "Inference Run Id",
+            "type": "string"
+          },
+          "inventory_freshness_status": {
+            "enum": [
+              "current",
+              "stale",
+              "unknown"
+            ],
+            "title": "Inventory Freshness Status",
+            "type": "string"
+          },
+          "lineage": {
+            "$ref": "#/components/schemas/RuntimeLineage"
+          },
+          "max_origin_age_seconds": {
+            "const": 86400,
+            "default": 86400,
+            "title": "Max Origin Age Seconds",
+            "type": "integer"
+          },
+          "model_name": {
+            "enum": [
+              "retailops-stockout-risk",
+              "retailops-stockout-risk-test-mechanics"
+            ],
+            "title": "Model Name",
+            "type": "string"
+          },
+          "model_version": {
+            "pattern": "^[1-9][0-9]{0,8}$",
+            "title": "Model Version",
+            "type": "string"
+          },
+          "origin_age_seconds": {
+            "minimum": 0.0,
+            "title": "Origin Age Seconds",
+            "type": "number"
+          },
+          "output_age_seconds": {
+            "minimum": 0.0,
+            "title": "Output Age Seconds",
+            "type": "number"
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StockoutPriority"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "probability": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Probability"
+          },
+          "product_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "quality_status": {
+            "enum": [
+              "passed_at_publication",
+              "mechanics_only"
+            ],
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "read_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Read At",
+            "type": "string"
+          },
+          "release_id": {
+            "pattern": "^stockout-release-sha256-[0-9a-f]{64}$",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "risk_band": {
+            "anyOf": [
+              {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high",
+                  "critical"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Risk Band"
+          },
+          "risk_id": {
+            "pattern": "^risk-sha256-[0-9a-f]{64}$",
+            "title": "Risk Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "scored",
+              "already_stockout",
+              "insufficient_data",
+              "stale_input"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "status_reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "already_stockout",
+                  "inventory_unknown",
+                  "stale_inventory_snapshot",
+                  "inactive_or_unknown_product",
+                  "inactive_or_unknown_assortment_routing",
+                  "insufficient_sales_history"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Reason"
+          },
+          "stock_location_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "threshold_version": {
+            "pattern": "^stockout-scoring-policy-sha256-[0-9a-f]{64}$",
+            "title": "Threshold Version",
+            "type": "string"
+          },
+          "top_factors": {
+            "items": {
+              "$ref": "#/components/schemas/FactualFactor"
+            },
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Top Factors",
+            "type": "array"
+          },
+          "upstream_lineage_sha256": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Upstream Lineage Sha256"
+          }
+        },
+        "required": [
+          "risk_id",
+          "product_id",
+          "stock_location_id",
+          "as_of",
+          "status",
+          "status_reason",
+          "probability",
+          "risk_band",
+          "threshold_version",
+          "calibrator_version",
+          "model_name",
+          "model_version",
+          "release_id",
+          "top_factors",
+          "inventory_freshness_status",
+          "freshness_status",
+          "lineage",
+          "upstream_lineage_sha256",
+          "feature_lineage_sha256",
+          "inference_run_id",
+          "generated_at",
+          "quality_status",
+          "read_at",
+          "origin_age_seconds",
+          "output_age_seconds",
+          "freshness_reason"
+        ],
+        "title": "StockoutRisk",
+        "type": "object"
+      },
+      "StockoutRiskPage": {
+        "additionalProperties": false,
+        "properties": {
+          "data_status": {
+            "enum": [
+              "available",
+              "no_data"
+            ],
+            "title": "Data Status",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/StockoutRisk"
+            },
+            "maxItems": 100,
+            "title": "Items",
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/retailops_ai__forecast_jobs__read_contracts__Pagination"
+          },
+          "selection": {
+            "enum": [
+              "latest_per_product_stock",
+              "origin",
+              "inference_run"
+            ],
+            "title": "Selection",
+            "type": "string"
+          },
+          "version": {
+            "const": "stockout-risk-page-1.0.0",
+            "default": "stockout-risk-page-1.0.0",
+            "title": "Version",
+            "type": "string"
+          },
+          "view_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "View Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items",
+          "pagination",
+          "generated_at",
+          "data_status",
+          "selection",
+          "view_sha256"
+        ],
+        "title": "StockoutRiskPage",
         "type": "object"
       },
       "V12ApprovedRelease": {
@@ -12366,6 +13305,718 @@
           }
         ],
         "summary": "Versions"
+      }
+    },
+    "/api/v1/stockout-risks": {
+      "get": {
+        "operationId": "list_risks_api_v1_stockout_risks_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockoutRiskPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "List Risks"
+      }
+    },
+    "/api/v1/stockout-risks/{risk_id}": {
+      "get": {
+        "operationId": "get_risk_api_v1_stockout_risks__risk_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "risk_id",
+            "required": true,
+            "schema": {
+              "pattern": "^risk-sha256-[0-9a-f]{64}$",
+              "title": "Risk Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockoutRisk"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Get Risk"
+      }
+    },
+    "/api/v1/stockout-runs": {
+      "post": {
+        "operationId": "submit_api_v1_stockout_runs_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "title": "Idempotency-Key",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockoutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockoutJobRun"
+                }
+              }
+            },
+            "description": "Successful Response",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Submit"
+      }
+    },
+    "/api/v1/stockout-runs/{run_id}": {
+      "get": {
+        "operationId": "get_run_api_v1_stockout_runs__run_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "pattern": "^run-[0-9a-f]{32}$",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockoutJobRun"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Get Run"
+      }
+    },
+    "/api/v1/stockout-runs/{run_id}/attempts": {
+      "get": {
+        "operationId": "attempts_api_v1_stockout_runs__run_id__attempts_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "pattern": "^run-[0-9a-f]{32}$",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockoutAttempts"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Attempts"
       }
     }
   }

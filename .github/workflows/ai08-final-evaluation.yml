@@ -1,0 +1,144 @@
+name: AI08 authorized final evaluation
+
+# A workflow edit never opens final outcomes. A separately authorized permission
+# record must be introduced on the owned AI08 branch to trigger evaluation.
+on:
+  push:
+    branches: ["ai/08-stockout-labels"]
+    paths: ["docs/reference/stockout-final-permission-v2.json"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ai08-authorized-final-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        world: [matching, future_stress]
+        seed: [42, 137, 2026]
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONNOUSERSITE: "1"
+      UV_NO_CACHE: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - name: Install pinned native dependencies and verify permission
+        run: |
+          uv sync --locked --extra snapshot --extra forecast
+          uv run --locked --extra snapshot --extra forecast python scripts/check_stockout_final_permission.py
+      - name: Build an independent installed wheel environment
+        run: |
+          uv build --wheel --out-dir wheelhouse
+          uv export --locked --extra snapshot --extra forecast --no-dev --no-emit-project --format requirements-txt --output-file wheel-requirements.txt
+          uv venv wheel-env --python 3.11.15
+          uv pip sync --python wheel-env/bin/python wheel-requirements.txt
+          uv pip install --python wheel-env/bin/python --no-deps wheelhouse/*.whl
+      - name: Evaluate only the authorized frozen world and repeat from wheel
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FINAL_WORLD: ${{ matrix.world }}
+          FINAL_SEED: ${{ matrix.seed }}
+        run: |
+          mkdir -m 700 final-results
+          uv run --locked --extra snapshot --extra forecast python scripts/run_stockout_final_world.py \
+            --freeze docs/reference/stockout-final-campaign-v2.json \
+            --permission docs/reference/stockout-final-permission-v2.json \
+            --recipe docs/reference/stockout-final-selected-recipe.json \
+            --policy docs/reference/stockout-final-selected-policy-v2.json \
+            --wheel-python "$PWD/wheel-env/bin/python" \
+            --world "$FINAL_WORLD" --seed "$FINAL_SEED" \
+            --output "final-results/$FINAL_WORLD-$FINAL_SEED"
+      - name: Retain complete receipts and the exact replay source archive
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai08-final-${{ github.sha }}-${{ matrix.world }}-${{ matrix.seed }}
+          path: |
+            final-results/*/native.json
+            final-results/*/wheel.json
+            final-results/*/*-access.jsonl
+            final-results/*/resource.json
+            final-results/*/source.zip
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 30
+          overwrite: false
+
+  collect:
+    needs: evaluate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      UV_NO_CACHE: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - name: Verify campaign permission and remote reserve
+        run: |
+          uv sync --locked --extra snapshot --extra forecast
+          uv run --locked --extra snapshot --extra forecast python scripts/check_stockout_final_permission.py
+          python -c 'import shutil; assert shutil.disk_usage(".").free >= 6 * 1024**3 + 512 * 1024**2, "stockout_final_collection_remote_reserve"'
+      - name: Download receipts only from this exact authorized execution
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --pattern "ai08-final-${GITHUB_SHA}-*" --dir final-artifacts
+      - name: Preserve six separate quality reports and verify cold receipts
+        run: |
+          uv run --locked --extra snapshot --extra forecast python scripts/collect_stockout_final.py \
+            --freeze docs/reference/stockout-final-campaign-v2.json \
+            --permission docs/reference/stockout-final-permission-v2.json \
+            --receipts final-artifacts --output final-collected \
+            --artifact-prefix "ai08-final-${GITHUB_SHA}-" --workflow-run-id "$GITHUB_RUN_ID"
+      - name: Retain aggregate quality and execution receipts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai08-final-collected-${{ github.sha }}
+          path: final-collected/*.json
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: false
+      - name: Qualify the passed campaign with complete public inference parent replay
+        run: |
+          uv run --locked --extra snapshot --extra forecast python scripts/qualify_stockout_final.py \
+            --freeze docs/reference/stockout-final-campaign-v2.json \
+            --permission docs/reference/stockout-final-permission-v2.json \
+            --recipe docs/reference/stockout-final-selected-recipe.json \
+            --policy docs/reference/stockout-final-selected-policy-v2.json \
+            --receipts final-artifacts --output final-qualified
+      - name: Retain genuine serving qualification and complete model card
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai08-final-qualified-${{ github.sha }}
+          path: final-qualified/
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: false

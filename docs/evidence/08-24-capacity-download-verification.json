@@ -1,0 +1,30 @@
+{
+  "run": 37273265180,
+  "artifact_id": 11328664912,
+  "artifact_name": "ai08-capacity-b319b7dd4665c7287b072203aca8d515e2cc9fc9",
+  "zip_bytes": 320717,
+  "zip_sha256": "ab845c71fd53ca975eb2111e153629989498ef562b4460330b24cb52a05458e8",
+  "files": [
+    {
+      "name": "comparison.json",
+      "bytes": 22327,
+      "sha256": "fdfb89b9a32f2248fd9acfa974e13220645a019b7bdb97bc5c430e16efd7ba58"
+    },
+    {
+      "name": "execution.json",
+      "bytes": 1013,
+      "sha256": "0b40890e997e05c14f080b6fc04eddeb23acd144456b0e6bba798db6f99ddefa"
+    },
+    {
+      "name": "scoring-policy.json",
+      "bytes": 1219,
+      "sha256": "d8a82e50f57be69849c32b2cfa5dfe5211f2e1f4dfee5748746b1c0aa08707d2"
+    },
+    {
+      "name": "selection.json",
+      "bytes": 3014555,
+      "sha256": "f210b23bb62ef1b1391f7a97b4122c140d8af548316e970c376b22f33d209871"
+    }
+  ],
+  "private_parents_restored": false
+}

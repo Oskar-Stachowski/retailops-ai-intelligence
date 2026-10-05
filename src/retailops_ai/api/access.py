@@ -18,6 +18,7 @@ from retailops_ai.api.index_jobs import add_index_routes
 from retailops_ai.api.middleware import single_header
 from retailops_ai.api.model_catalog import add_model_catalog_routes
 from retailops_ai.api.models import Problem
+from retailops_ai.api.stockout import add_stockout_routes
 from retailops_ai.api.v12_forecast_jobs import add_v12_forecast_routes
 from retailops_ai.api.v12_metadata import add_v12_metadata_routes
 from retailops_ai.data_contracts.common import Contract, Symbol, Versioned
@@ -34,7 +35,12 @@ from retailops_ai.model_lifecycle.v12_catalog import V12ModelCatalog
 from retailops_ai.model_lifecycle.v12_evaluation_store import V12EvaluationReader
 from retailops_ai.pipelines.retrieval import KnowledgeDenied, resolve_scope
 from retailops_ai.security.local import LocalAccess
-from retailops_ai.security.models import KnowledgeResourceScope, ResourceScope
+from retailops_ai.security.models import (
+    KnowledgeResourceScope,
+    ResourceScope,
+    StockoutResourceScope,
+)
+from retailops_ai.stockout_jobs.ports import StockoutAdministration, StockoutReader
 
 
 class IdentityResponse(Contract):
@@ -44,6 +50,7 @@ class IdentityResponse(Contract):
     capabilities: list[Capability]
     scope: ResourceScope | None
     knowledge_scope: KnowledgeResourceScope | None = None
+    stockout_scope: StockoutResourceScope | None = None
 
 
 class ForecastCheckRequest(Versioned):
@@ -81,6 +88,8 @@ def access_router(
     v12_model_catalog: V12ModelCatalog | None = None,
     v12_evaluation_reader: V12EvaluationReader | None = None,
     anomaly_reader: AnomalyReader | None = None,
+    stockout_administration: StockoutAdministration | None = None,
+    stockout_reader: StockoutReader | None = None,
 ) -> APIRouter:
     bearer = HTTPBearer(auto_error=False, scheme_name="apiBearer")
 
@@ -121,6 +130,12 @@ def access_router(
             roles=sorted(principal.roles),
             capabilities=sorted(principal.capabilities),
             scope=scope,
+            stockout_scope=StockoutResourceScope(
+                product_ids=sorted(principal.stockout.product_ids),
+                stock_location_ids=sorted(principal.stockout.stock_location_ids),
+            )
+            if principal.stockout
+            else None,
             knowledge_scope=KnowledgeResourceScope.model_validate(
                 {
                     "environment": principal.knowledge.environment,
@@ -177,6 +192,7 @@ def access_router(
             raise HTTPException(503) from None
 
     add_index_routes(router, verified, index_administration)
+    add_stockout_routes(router, verified, stockout_administration, stockout_reader)
     add_v12_forecast_routes(router, verified, v12_forecast_administration)
     add_forecast_routes(router, verified, forecast_administration)
     add_forecast_read_routes(router, verified, forecast_reader)

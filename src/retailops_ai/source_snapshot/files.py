@@ -107,8 +107,8 @@ def nonfinite(value: str) -> NoReturn:
     raise SnapshotError("nonfinite_json_number")
 
 
-def decode_json(raw: bytes) -> dict[str, Any]:
-    if len(raw) > MAX_METADATA_BYTES:
+def decode_json(raw: bytes, *, limit: int = MAX_METADATA_BYTES) -> dict[str, Any]:
+    if len(raw) > limit:
         raise SnapshotError("metadata_size_limit")
     try:
         result = json.loads(raw, object_pairs_hook=unique_keys, parse_constant=nonfinite)

@@ -4,6 +4,7 @@ import sys
 from dataclasses import replace
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 from test_v12_inference import IMAGE, inference_result
@@ -228,7 +229,16 @@ def test_split_full_rectangles_and_complete_worker_receipt(batch, monkeypatch):
     assert len(set(p.key for part in output.parts for p in part.predictions)) == 560
 
 
-def test_maximum_scope_uses_ten_bounded_parts(batch, inputs):
+@pytest.fixture
+def worker_clock(monkeypatch):
+    clock = SimpleNamespace(now=1000.0)
+    # Replace only the worker's clock reference; predictor resource limits keep
+    # their real clock. Scope geometry is not a host-speed qualification.
+    monkeypatch.setattr(v12_worker, "time", SimpleNamespace(monotonic=lambda: clock.now))
+    return clock
+
+
+def test_maximum_scope_uses_ten_bounded_parts(batch, inputs, worker_clock):
     claim, model = batch
     profile = expanded(inputs, locations=5)
     parts = chunks(profile, profile.scope, 14, claim.release)
@@ -242,6 +252,47 @@ def test_maximum_scope_uses_ten_bounded_parts(batch, inputs):
         queue.failed
     )
     assert sum(len(part.predictions) for part in queue.completed[0].parts) == 1400
+
+
+def test_attempt_budget_expiring_during_prediction_never_completes(
+    batch, worker_clock, monkeypatch
+):
+    claim, model = batch
+    queue = MemoryQueue()
+    calls = []
+
+    def expired(self, inputs, **kwargs):
+        calls.append(inputs)
+        worker_clock.now += queue.budget
+        kwargs["tick"]()
+        pytest.fail("prediction continued after worker budget expired")
+
+    monkeypatch.setattr(type(model), "predict", expired)
+    assert v12_worker.run_attempt(queue, claim, model, guard=lambda full: None) == "lease_lost"
+    assert len(calls) == 1
+    assert not queue.completed and not queue.failed
+
+
+def test_elapsed_heartbeat_interval_renews_fence_between_parts(batch, worker_clock, monkeypatch):
+    claim, model = batch
+    queue = MemoryQueue()
+    original = type(model).predict
+    guards = []
+
+    def elapsed(self, inputs, **kwargs):
+        worker_clock.now += claim.run.policy.heartbeat_seconds
+        kwargs["tick"]()
+        return original(self, inputs, **kwargs)
+
+    monkeypatch.setattr(type(model), "predict", elapsed)
+    assert (
+        v12_worker.run_attempt(queue, claim, model, guard=lambda full: guards.append(full))
+        == "succeeded"
+    )
+    assert len(queue.completed) == 1 and not queue.failed
+    assert queue.heartbeats >= 2 + 2 * len(queue.completed[0].parts)
+    assert guards.count(False) >= 1 + len(queue.completed[0].parts)
+    assert guards.count(True) == 1
 
 
 def test_single_series_over_byte_budget_is_refused(batch, monkeypatch):

@@ -1,0 +1,25 @@
+{
+  "version": "stockout-later-calibration-selection-2.0.0",
+  "development_seed": 42,
+  "base_source_role": "train",
+  "calibrator_source_role": "tune",
+  "selection_source_role": "calibration",
+  "base_configuration": "stockout-development-models-1.0.0",
+  "calibrator_C_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "selection": "failed_segments_then_Brier_then_AP_then_model_name_then_C",
+  "requirements": {
+    "minimum_segment_rows": 20,
+    "minimum_segment_per_class": 5,
+    "expected_category_count": 8,
+    "expected_stock_location_count": 2,
+    "maximum_expected_calibration_error": 0.15,
+    "quality_policy_status": "proposal_before_final_test"
+  },
+  "selection_metrics": "development_selection_not_independent_quality",
+  "final_test": "unopened_separate_approved_campaign_required"
+}

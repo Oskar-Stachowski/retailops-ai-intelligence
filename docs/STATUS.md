@@ -1,6 +1,6 @@
 # Aktualny status
 
-**AI 07 — `ready`, zakres `synthetic_ai_07_portfolio_v4`.**
+**AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
 Świeży OCI/PostgreSQL 16/MLflow sprawdził komplet native publicznych rodziców,
 gotowość API po migracjach, lifecycle, recovery, promocję, odrzucenie, rollback,
@@ -12,7 +12,398 @@ wiążą zakres, konkretne commity i zaliczone kontrole.
 Publikacja została zatwierdzona i wykonana w
 [AI PR #24](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/24)
 oraz [source PR #97](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/97).
-PR #24 zawiera także wynik pełnego Required CI końcowego commitu odbioru.
+Pełne **AI 07 `ready` na `main`** wymaga scalenia PR #24 i #97 oraz zielonego
+Required CI dokładnych commitów integracji i obu merge commitów. Wyniki są
+wiązane z SHA w tych PR-ach; wcześniejszy odbiór na gałęziach nie zastępuje
+odbioru integracji. [Zakres połączenia z main](evidence/07-main-integration.md)
+opisuje wspólne migracje i zachowanie AI 05/08.
+**AI 08 — wszystkie odbiory danych, jakości i działającego modelu zaliczone.**
+[Końcowy odbiór](evidence/08-27-final-serving-acceptance.md) potwierdza prawdziwe
+MLflow/SQL, register/promote/rollback/reject, cold worker, batch i scoped API:
+40 wyników, 15 pozycji attention_queue, 206 focused tests, 12 bramek review.
+[Sześć światów / 9296 punktów](evidence/08-25-final-campaign-results.md) ma
+90 kontroli passed, 3 zaakceptowane ostrzeżenia małych kategorii i 0 blokad.
+[Pełna kwalifikacja i karta](evidence/08-26-qualified-model.md) są zachowane.
+Warunek formalnego **AI 08 READY na main**: zielony Required CI dokładnego
+HEAD PR14, normalne scalenie PR14 i zielony Required CI jego merge commitu.
+Do spełnienia tego warunku formalnego cały etap pozostaje not ready;
+po jego spełnieniu poniższe starsze wpisy są wyłącznie historią zakresów.
+Wdrożenia produkcyjnego nie wykonano.
+
+**AI 08 pozostaje not ready.** Niżej zachowano historię wcześniejszych zakresów.
+
+**AI 08 pozostaje not ready.** Niżej jest historia wcześniejszych zakresów.
+
+**AI 08 — worker/HTTP/priority i pełny backup są zaliczone; final receipts/karta są przygotowane.**
+[Przyrost 08.23](evidence/08-23-stockout-final-receipts-and-card.md) dodaje collector
+sześciu światów, ponowną kontrolę bramek, kartę, qualifier i jawny review/import/lifecycle.
+HEAD 549df93 ma zielony Required CI z 2478 testami. Nowy worker ma rzeczywisty odbiór
+37257129973. Końcowe 9296 membership czeka na owner permission; nie oceniono outcomes.
+Nowy zakres nadal wymaga własnego pełnego CI oraz rzeczywistych receipts final
+orchestration/qualification. Niezależna jakość, osobna promocja, review/merge/main
+są otwarte. **AI 08 pozostaje not ready.** Niżej jest historia wcześniejszych zakresów.
+
+**AI 08 — real MLflow/SQL/backup są zaliczone; worker i priorytety czekają na pełny odbiór.**
+[Przyrost 08.22](evidence/08-22-stockout-worker-and-priority.md) dodaje izolowane
+obliczenia, fencing, widok priority przed projekcją scope i osobny current stockout.
+132 focused tests przechodzą. Rzeczywiste odbiory 37255271458 i 37255965904 zaliczyły
+SQL/backup oraz stockout MLflow; większy checker worker/HTTP/priority wymaga nowego CI.
+Kampania 9296 punktów jest zamrożona i czeka na zgodę właściciela. Niezależna jakość,
+kwalifikacja/karta, osobna promocja i końcowy CI pozostają otwarte.
+**AI 08 pozostaje not ready.** Niżej zachowano historyczne zakresy.
+
+**AI 08 — kampania 9296 punktów jest zamrożona; końcowa ocena czeka na zgodę.**
+[Odbiór przyrostu](evidence/08-21-stockout-final-campaign-and-registry.md) zapisuje
+sześć przygotowanych źródeł, evaluator z kontrolą zgody oraz byte verifier
+i importer stockout MLflow. 118 focused tests przechodzi; rzeczywisty odbiór
+nowego MLflow/SQL/backup jest jeszcze wymagany. Startup i pełne checks poprzedniego
+CI są zielone, ale SQL 0021 wymagał poprawki kolejności operatorów JSON.
+Worker, priorytety operacyjne, niezależna jakość, osobna promocja i końcowy odbiór
+są otwarte. **AI 08 pozostaje not ready.** Niżej jest historia wcześniejszych zakresów.
+
+**AI 08 — komplet sześciu źródeł jest przygotowany; poprawka CI czeka na odbiór.**
+Trzy matching i trzy późniejsze kohorty 42/137/2026 zakończyły przygotowanie.
+Końcowe etykiety nie były oceniane. Nowe CI wykryło błąd typu w generatorze
+schematów i nieudany start loopback API; [poprawka](evidence/08-20-stockout-api-startup.md)
+oddziela publiczne kontrakty od treningu/wykonania i sprawdza pełny zakres Mypy.
+SQL 0021 wymaga jeszcze rzeczywistego odbioru. Poprzedni SQL 0020, pełny backup
+oraz 2383 testy mają zielone CI. Zatwierdzenie polityki i kampanii, niezależna
+jakość, MLflow, worker i końcowy odbiór są otwarte. **AI 08 pozostaje not ready.**
+Niżej zachowano historyczny zakres wcześniejszych przyrostów.
+
+**AI 08 — trwała kolejka i API są przetestowane; SQL 0021 czeka na CI.**
+[Kontrakt](reference/stockout-jobs.md) i [odbiór](evidence/08-19-stockout-jobs.md)
+opisują przypięte wersje, lease, retry, atomową publikację i fizyczny scope.
+199 testów przechodzi. Poprzedni SQL 0020 i pełny backup/restore są zaliczone.
+Trzy pierwotne kohorty są ukończone; późniejsze źródła 42/137 są przygotowane,
+2026 jest w toku. Końcowa jakość, progi/capacity, MLflow, worker i końcowy
+odbiór są otwarte. **AI 08 pozostaje not ready.** Niżej są wcześniejsze zakresy.
+
+**AI 08 — podstawa lifecycle jest przetestowana; rzeczywisty SQL/registry oczekuje.**
+[Kontrakt](reference/stockout-lifecycle.md) i [odbiór](evidence/08-18-stockout-lifecycle-foundation.md)
+wiążą osobne stockout approval/binding/release ze wspólnym protokołem AI 05.
+23 nowe i 114 istniejących testów regresji przechodzi. Nowa migracja wymaga
+własnego rzeczywistego odbioru CI; lokalnej bazy źródła nie zmieniono.
+CI producenta późniejszych źródeł jest zielone; dwie kohorty 1.8 liczą się.
+Finalna jakość, zatwierdzona polityka, MLflow, durable batch/read i ready są otwarte.
+**Cały AI 08 pozostaje not ready.**
+
+**AI 08 — rzeczywisty nowy checkpoint ma zgodność native/wheel i zielone CI.**
+[Odbiór 08.17](evidence/08-17-stockout-remote-checkpoints.md) potwierdza
+wybrany model i wszystkie segmenty na danych wyboru. Matching seedy 42/137
+są przygotowane; 2026 jest jeszcze w toku. [Późniejsze źródła](reference/stockout-future-sources.md)
+mają osobne prospektywne profile/workflow, bez fitów lub otwarcia TEST.
+Zgoda na politykę, rzeczywiste późniejsze źródła, niezależna jakość, lifecycle,
+batch/read API i finalny odbiór pozostają otwarte. **Cały AI 08 pozostaje not ready.**
+
+**AI 08 — późniejsza kalibracja i przenośny runtime mają osobny protokół development.**
+[Kontrakt](reference/stockout-selection-runtime.md) i
+[odbiór przyrostu](evidence/08-16-stockout-selection-runtime.md) dodają
+pełny stan kalibratora, propozycję progów/capacity, publiczny replay wejść
+i odrębne uprawnienia stockout. TRAIN fituje model, TUNE kalibrator,
+CALIBRATION wybiera wariant; wyniki wyboru nie są niezależną oceną jakości.
+Stare pakiety oraz ich niezaliczone bramki pozostają zachowane.
+Trzy matching kohorty 30 × 2 × 102 na seedach 42/137/2026 mają przygotowany
+osobny workflow GitHuba. Nowy rzeczywisty native/wheel i CI wymagają receipt.
+Rezerwa lokalnego dysku pozostaje 50 GiB. Final test, zatwierdzone progi,
+lifecycle/MLflow, trwały batch/read API i końcowy odbiór są jeszcze otwarte.
+**Cały AI 08 pozostaje not ready.** Poniżej zachowano historyczny zakres.
+
+**AI 08 — niezależna ocena i karta partycji działają; jakość pozostaje `not_ready`.**
+[Receptura](reference/stockout-independent-qualification.md) i
+[odbiór](evidence/08-15-stockout-independent-development.md) mają native/wheel
+z identycznymi bajtami oraz pełnym replay rzeczywistych rodziców.
+Nowy pilot 19 × 2 × 102 daje **3876 origin / 1473 development**, wobec
+2856 / 1043. Cały pipeline trwa 1243,65 s, peak RSS 492,09 MiB,
+allocated scratch 325,79 MiB i zachowuje rezerwę 50 GiB.
+Model fituje 370 wcześniejszych punktów, sigmoid 232 późniejsze;
+321 tune wybiera rodzinę, 313 kolejnych punktów ocenia ją niezależnie.
+Wszystkie 8 kategorii mają obie klasy na tune. Wybrany LR without_upstream
+ma niezależny AP 0,991449, ale sigmoid pogarsza Brier 0,035440→0,050294.
+Dwie kategorie przekraczają proponowany ECE 0,15; constrained segment
+ma tylko 3 negatywne wobec wymaganego minimum 5. Wyniki nie są uznane
+za zaliczenie jakości. 100 focused/dependency testów przeszło bez ostrzeżeń.
+Większa próba, robustness, zatwierdzone progi/capacity, finalna kampania,
+lifecycle i batch/read API pozostają otwarte. Test końcowy nie jest oceniony,
+model nie jest promowany; **cały AI 08 pozostaje not ready**.
+Poniżej zachowano historyczny zakres wcześniejszych przyrostów.
+
+**AI 08 — kompletny pipeline przeszedł odbiór większego pilota.**
+[Pomiar](reference/stockout-resource-probe.md) i
+[odbiór](evidence/08-14-stockout-resource-probe.md) obejmują producenta,
+eksport/import, curated, rzeczywiste partycje, development i sześć modeli.
+Jawny `ai-load` 14 × 2 × 102 ma **2856 punktów**, wobec 1632 smoke.
+Train/tune/calibration: **598/227/218**, razem 1043 wobec 605.
+Całość trwa 719,81 s, peak własnego drzewa RSS 622,23 MiB, allocated scratch
+259,23 MiB; 50 GiB rezerwy jest zachowane. Przyjęte wejścia i modele są
+zachowane oddzielnie do niezależnej oceny. Wariant 4480 odrzucono przed
+startem przez estymację RAM. Pełne `ai-dev`/`ai-training` są nieodebrane.
+Regeneracja smoke zachowuje sześć modeli/wyników, używając nowych prawdziwych
+label/temporal IDs wynikających z nowych timestampów manifestu. Stare
+573 wejścia/v1 rodzice i 302 pliki partycji są zachowane.
+29 nowych kontroli jest zaliczonych; Ruff/mypy/docs oraz pełny rzeczywisty
+smoke i pilot mają odbiór. Rodzic 4faaf4b ma zielone Required CI;
+nowy commit wymaga swojego CI. Tune wybiera provisional LR without_upstream,
+a kategorii not_evaluable jest 1/8 zamiast 5/8. To nie jest niezależny odbiór
+jakości/kalibracji. Nowa karta, ta ocena, progi/capacity i lifecycle/batch/read
+pozostają otwarte. Final test i promocja nie są wykonane;
+**cały AI 08 pozostaje not ready**. AI 05/v12 i starsze pakiety są zachowane.
+
+**AI 08 — upstream 2.1 jest podłączony do treningu bez nadmiarowego replay.**
+[Kontrakt](reference/stockout-temporal-series.md) i
+[odbiór](evidence/08-13-stockout-temporal-series.md) dodają osobny temporal 2.1.
+1632 comparison/membership oraz sześć modeli zachowują wyniki; rzeczywiste
+train/tune/calibration mają 340/135/130 punktów i nowe parent IDs.
+Cechy/upstream/etykiety są odtwarzane raz w prywatnym kontekście; cała
+weryfikacja kończy się przed zwróceniem development. Test to 131 membership,
+bez wektora celów/metryk. Native i odłączony wheel/CLI zachowują bajty/ID;
+79 modułów pochodzi z instalacji, producent jest nieimportowalny.
+573 oryginalne wejścia/v1 rodzice i 287 plików starych partycji są zachowane.
+Trzy pary assemblera mają medianę 329.81→177.06 s
+(-46.3%), RSS 226.00→226.33 MiB;
+RSS/scratch są podobne. To pomiar smoke/assemblera przy równoległym CI,
+bez odbioru większego profilu lub całego pipeline.
+Pełny `make ci-local` przeszedł: **2133/2133 testów**, 0 ostrzeżeń, 2849.97 s testów; 21 targetów, pakiet, Compose config i oba skany sekretów.
+48 nowych przypadków obejmuje także kontrolę limitu 4096 output files przed
+publikacją. Rodzic 92b8d5f ma zielone Required CI PR i push;
+nowy commit wymaga własnego CI. Większy profil/preflight, niezależna ocena,
+karta z nowych rodziców, progi i lifecycle/batch/read pozostają otwarte.
+Stare pakiety/ID, AI 05 i v12 są zachowane; cały AI 08 pozostaje not ready.
+Poniższe przyrosty zachowują historyczny zakres odbioru.
+
+**AI 08 — upstream ma selekcję jednej fizycznej serii i globalną walidację.**
+[Kontrakt 2.1](reference/stockout-upstream-series.md) i
+[odbiór](evidence/08-12-stockout-upstream-series.md) zachowują wszystkie
+1632 prognozy, comparison i sześć modeli obecnej próbki. Selekcja ma
+najwyżej 198 zamiast 3625 rekordów
+oraz 247,260 zamiast 4,166,485 B.
+Ograniczony decoded cache ma 1024 rekordy / 1 MiB, schema wczytywane raz.
+Globalne znane wersje i efektywne trasy są sprawdzane przed fizycznym filtrem.
+Native i odłączony wheel zachowują identyczne bajty, 573 wejścia/rodzice
+pozostały bez zmian. Regresja ukierunkowana ma 118/118 przypadków,
+w tym 48 nowych. Pełny `make ci-local` przeszedł: 2085/2085 testów,
+0 ostrzeżeń, wszystkie targety, pakiet, Compose config i skany sekretów.
+Trzy pary buildów mają medianę 127.23 → 149.12 s,
+peak RSS 127.17 → 125.83 MiB;
+nie wykazano przyspieszenia lub istotnego zmniejszenia całego RSS na smoke.
+To usunięcie globalnego panelu Python, bez odbioru większego profilu.
+Rodzic `df61862` ma zielone Required CI PR i push; nowy commit wymaga własnego CI.
+Temporalny trening 2.0 pozostaje odebrany z upstream 2.0. Podłączenie
+upstream 2.1 i spójny przebieg bez nadmiarowego replay, pozostałe limity,
+większy profil/RSS/scratch, niezależna ocena, progi, karta i lifecycle/batch/read
+API pozostają otwarte. Stare pakiety/ID, AI 05 i v12 pozostają zachowane;
+final test nie jest oceniony, cały AI 08 pozostaje not ready.
+Poniższe przyrosty zachowują historyczny zakres odbioru.
+
+**AI 08 — temporalne połączenie partycji jest podłączone do treningu.**
+[Kontrakt](reference/stockout-temporal-storage.md) i
+[odbiór](evidence/08-11-stockout-temporal-storage.md) dodają osobny pakiet
+comparison/membership i assembler development. Wszystkie pola 1632
+comparison i 1632 membership są identyczne z v1. Rzeczywiste wejścia
+train/tune/calibration mają 340/135/130 punktów; końcowy test pozostaje
+131 membership bez wektora celów i metryk. Sześć modeli zachowuje
+pipelines, model IDs, wyniki i report; nowy development ID wiąże bundle
+rodziców. Zapis ma 178 960 B zamiast 1 890 509 B,
+o 90,5% mniej. Zainstalowany wheel odtworzył identyczne pliki,
+manifest, development i modele; 573 wejścia/rodzice pozostały bez zmian.
+Regresja ukierunkowana ma 153/153 zaliczeń, w tym 27 nowych. Ostrzeżenie
+joblib dotyczy blokowanego odczytu fizycznych rdzeni CPU w sandboxie.
+Walidacja lokalna ma 2037/2037 unikalnych przypadków: 1903 poza modułami
+wymagającymi uprawnień i całe 134 przypadki tych niezmienionych modułów
+powtórzone z dostępem do localhost/statystyk procesów. Pierwszy
+`make ci-local` miał exit 2 przez bind i sysctl blokowane w sandboxie;
+receipt jawnie zachowuje 28 failures / 2 errors i nie opisuje go jako exit 0.
+Wszystkie targety, pakiet, Compose config i skany sekretów są zaliczone.
+Końcowe dowody mają ponowne kontrole dokumentacji i sekretów. Poprzedni `077add2` ma zielone
+Required CI PR i push; nowy commit wymaga własnego CI w draft PR #14.
+Limity pozostają: 10 000 kluczy, kanoniczny development 16 MiB,
+qualification JSON 4 MiB i globalny upstream 20 000 wierszy / 16 MiB.
+Cały RSS/scratch i większy profil nie są odebrane. Pozostają selekcja
+upstream po seriach, preflight i jawny większy profil, niezależna ocena,
+progi, karta z nowych rodziców i lifecycle/batch/read API. Stare pakiety/ID,
+AI 05 i v12 pozostają zachowane; cały AI 08 pozostaje not ready.
+Poniższe przyrosty zachowują historyczny zakres odbioru.
+
+**AI 08 — ograniczony upstream 2.0 zachowuje pełną próbkę.**
+[Kontrakt](reference/stockout-upstream-storage.md) i
+[odbiór](evidence/08-10-stockout-upstream-storage.md) dodają osobny pakiet,
+pełny replay cech 2.2, jednorazowy panel faktów i chronologiczny Parquet.
+Wszystkie pola 1632 prognoz, comparison i sześć modeli są identyczne z v1.
+Bundle ma 1 103 923 B zamiast JSON 2 127 982 B, o 48,1% mniej.
+Odłączony wheel odtworzył identyczny manifest, pliki i pełny iterator;
+48 modułów konsumenta pochodziło z zainstalowanego pakietu.
+Wszystkie 573 pliki wejść/rodziców pozostały bez zmian.
+Testy ukierunkowane mają 80/80 zaliczeń, w tym 27 nowych, bez ostrzeżeń.
+Trzy pary pełnego przygotowania, razem z replay rodzica cech, dały medianę
+76,13 → 55,74 s i RSS 204,83 → 137,92 MiB. Pomiar łączy także korzyść
+cech 2.2 i trwał przy równoległym CI; nie kwalifikuje większego profilu.
+Lokalna walidacja ma 2010/2010 przypadków w dwóch częściach, bez ostrzeżeń,
+wszystkie targety Makefile, pakiet, Compose config i czyste skany sekretów.
+Pierwszy pełny przebieg ujawnił rzeczywisty timeout testu scope kolejki v12;
+kontrolowany zegar i dwa osobne testy expiry/heartbeat dotyczą tylko testów.
+Limit produkcyjny 120 s i predictor pozostają zachowane. Cały zmieniony
+moduł oraz pozostały runtime ponownie przeszły; receipt jawnie zapisuje
+nieudaną pierwszą próbę. Końcowe dowody mają ponowne kontrole dokumentacji.
+Poprzedni `d083e0a` ma zielone Required CI PR i push.
+Panel nadal ma globalny limit 20 000 wierszy / 16 MiB; cały RSS/scratch
+większego pipeline nie jest odebrany. Comparison, split i trening pozostają
+v1, a reader upstream nie wybiera ról development. Pozostają ich połączenie,
+globalna walidacja z selekcją upstream po seriach, większy profil,
+niezależna ocena, progi i lifecycle/batch/read API.
+Stare pakiety/ID, AI 05 i v12 pozostają zachowane. Final test nie jest
+oceniony; cały AI 08 pozostaje not ready. Poniższe przyrosty zachowują zakres.
+
+**AI 08 — prywatne partycje etykiet 2.0 zachowują pełną próbkę.**
+[Kontrakt](reference/stockout-label-partitions.md) i
+[odbiór](evidence/08-09-stockout-label-partitions.md) dodają jednorazową bazę,
+ledger jednej fizycznej serii oraz batch Parquet. Wszystkie pola 1632
+etykiet i sześć wariantów modeli są identyczne z v1; nowe części mają
+110 484 B zamiast JSON 666 623 B. Pełny iterator sprawdza całość przed
+pierwszym punktem i ponawia kontrole przed konsumpcją części.
+Testy ukierunkowane mają 98/98 zaliczeń, w tym 31 nowych, bez ostrzeżeń.
+Końcowe trzy pary buildów po normalizacji UTC mają medianę RSS
+112.73 → 102.48 MiB (-9.1%), wall
+12.84 → 12.66 s. To mała próbka, bez odbioru całego RSS/scratch.
+Odłączony wheel odtwarza identyczne pliki i iterator; 573 wejścia/rodzice
+pozostają bez zmian. Pełny `make ci-local` przeszedł: 1981/1981 testów bez ostrzeżeń,
+wszystkie targety, pakiet, Compose config i oba skany sekretów. Końcowe
+dowody mają ponowne kontrole dokumentacji i sekretów; nowy commit wymaga
+własnego Required CI w draft PR #14.
+Stare pakiety/ID, AI 05 i v12 pozostają zachowane. Upstream, comparison,
+split i trening nadal korzystają z v1. Pozostają ich czytniki i temporalne
+połączenie, większy profil i odbiór całego pipeline, niezależna ocena,
+progi i lifecycle/batch/read API. Cały AI 08 pozostaje not ready.
+Poniższe przyrosty zachowują swój zakres.
+
+**AI 08 — indeks historii 2.2 zachowuje pełną próbkę 102 dni.**
+[Kontrakt](reference/stockout-history-index.md) i
+[odbiór](evidence/08-08-stockout-history-index.md) obejmują sumy prefiksowe
+ledgeru i dzienne grupowanie znanego popytu, bez zmiany pakietów v1/v2.0/v2.1.
+Wszystkie 1632 punkty, Parquet i sześć wariantów modeli są identyczne;
+native i wheel odtworzyły te same pliki, a 573 wejścia/rodzice zachowały hash.
+Trzy pary świeżych buildów dały medianę 21,32 → 18,42 s, CPU 20,57 → 17,71 s;
+mediana próbkowanego peak RSS wyniosła 131,75 → 131,98 MiB.
+Sorty ledgeru spadły z 45 696 do 1632. Indeks powstaje na granicy wiedzy
+każdego origin; późna korekta nie nadpisuje dawnych danych.
+Przyrost ma 150/150 testów ukierunkowanych, w tym 37 nowych,
+bez ostrzeżeń. Pełny `make ci-local` przeszedł:
+1950/1950 testów bez ostrzeżeń, wszystkie targety, pakiet, Compose
+config i oba skany sekretów. Końcowe receipt mają ponowne kontrole
+dokumentacji i sekretów; nowy commit wymaga własnego CI w draft PR #14.
+Poprzedni commit `858abcf` ma zielone Required CI PR i push.
+Etykiety, upstream, split i trening nadal przyjmują v1. Pozostają ich
+partycjonowanie, rzeczywisty większy profil i odbiór całego pipeline,
+niezależna ocena, progi i lifecycle/batch/read API. Final test nie jest
+oceniony, cały AI 08 pozostaje not ready. Poniższe przyrosty zachowują zakres.
+
+**AI 08 — ograniczony odczyt faktów z dysku zachowuje wyniki małej próbki.**
+[Kontrakt 2.1](reference/stockout-disk-facts.md) i
+[odbiór](evidence/08-07-stockout-disk-facts.md) obejmują prywatny magazyn
+SQLite oraz cache jednej fizycznej serii, bez zmiany kodu v1/v2.0.
+Wszystkie 1632 punkty, pliki Parquet i sześć wariantów modeli development
+są identyczne z wcześniejszą ścieżką. Native i zainstalowany wheel
+odtworzyły te same pliki; 573 wejścia i rodzice pozostały bez zmian.
+W osobnych świeżych procesach build miał 131,5 zamiast 175,0 MiB peak RSS
+i trwał 15,44 zamiast 18,75 s. Pomiary obejmują replay curated i cechy,
+bez kwalifikacji budżetu większego pipeline. Przyrost ma 113/113 testów
+ukierunkowanych, w tym 30 nowych. Pełny `make ci-local` przeszedł:
+1913/1913 testów bez ostrzeżeń, wszystkie targety, pakiet, Compose
+config i oba skany sekretów. Końcowe receipt mają ponowne kontrole
+dokumentacji i sekretów; nowy commit wymaga własnego CI w draft PR #14.
+Poprzedni commit `ebe1f45` ma zielone Required CI PR i push.
+Pozostają kumulacyjny ledger i ruchome okna, partycjonowanie pozostałych
+rodziców/treningu, rzeczywisty większy profil oraz niezależna ocena,
+progi i lifecycle/batch/read API. Final test nie jest oceniony;
+cały AI 08 pozostaje not ready. Poniższe przyrosty zachowują swój zakres.
+
+**AI 08 — partycje cech v2 zachowują całą próbkę 102 dni.**
+[Kontrakt](reference/stockout-partitions.md) i
+[odbiór](evidence/08-06-stockout-partitions.md) obejmują 1632 identyczne
+punkty i identyczne modele development po rzeczywistym odczycie Parquet.
+Zapis ma 1 546 444 B zamiast 10 249 881 B; indeks ogranicza skany obcych
+serii i zachowuje granicę wiedzy oraz wszystkie stare wersje lineage.
+Natywny build/rebuild/verify i zainstalowany wheel odtworzyły identyczne
+ID/bajty. Wszystkie 567 odtworzonych wejściowych plików pozostały
+niezmienione. Regresja przyrostu ma 83/83 testów, w tym 30 nowych.
+Pełny `make ci-local` przeszedł: 1883/1883 testów bez ostrzeżeń,
+wszystkie targety, pakiet, Compose config i oba skany sekretów.
+Końcowe receipt mają ponowną kontrolę dokumentacji i sekretów;
+nowy commit wymaga własnego CI w draft PR #14.
+Wcześniejsza karta `ab22763` ma zielone Required CI PR i push.
+Pozostają kumulacyjne indeksy i okna historii, ograniczony odczyt wejścia,
+pozostałe rodzice i trening z partycji oraz odbiór większego profilu.
+Final test nie jest oceniony, progi niezatwierdzone i model niepromowany;
+cały AI 08 nie jest ready. Poniższe przyrosty zachowują historyczny zakres.
+
+**AI 08 — karta i wyjaśnienia development mają odbiór natywny oraz wheel.**
+[Kontrakt karty](reference/stockout-model-card.md) i
+[pomiary](evidence/08-05-stockout-card.md) obejmują trzy tabele LR,
+20 grup permutation importance wybranego HGB i 135 zestawów lokalnych
+faktów PIT. Karta odtworzyła identyczne ID/bajty z odłączonego pakietu;
+ponownie zahashowane zmiany karty i modelu zostały odrzucone. Wszystkie
+278 wejściowych plików oraz identity przygotowania/treningu pozostały
+niezmienione. Regresja przyrostu ma 49/49 testów, w tym 18 nowych.
+Pełna regresja ma 1853/1853 testów. Wszystkie targety `check` i oba skany
+sekretów są zaliczone; fałszywy alarm na polskim zdaniu usunięto korektą
+dokumentacji i ponownym `make docs-check secrets`, bez zmiany skanera.
+Nowy commit wymaga własnego CI w draft PR #14.
+[Projekt większego profilu](reference/stockout-profile-resources.md) określa
+partycje, indeksy PIT i pomiary; większa generacja nie została uruchomiona.
+Pełny profil, niezależna ocena kalibracji, threshold policy i
+lifecycle/batch/read API pozostają otwarte. Final test nie jest oceniony,
+model niepromowany; cały AI 08 nie jest ready. Poniższe przyrosty AI 08
+zachowują historyczny zakres pomiarów.
+
+**AI 08 — LR/HGB mają pierwsze wyniki development na próbce 102 dni.**
+[Kontrakt](reference/stockout-training.md) i
+[odbiór](evidence/08-04-stockout-models.md) obejmują sześć porównywalnych
+wariantów, 340 punktów train, 135 tune oraz osobny sigmoid na 130 punktach
+calibration. Wybór provisional opiera się tylko na tune. Kalibracja po
+dopasowaniu jest diagnostyką in-sample; final test nie jest oceniany.
+Natywny build/rebuild/replay oraz zainstalowany wheel odtworzyły identyczne
+modele; test ponownie zahashowanej zmiany wag został odrzucony. Regresja
+ma 47/47 testów. Pełny `make ci-local` przeszedł: 1835/1835 testów,
+wszystkie targety, pakiet i skany sekretów. Commit `4a7a76f` ma zielone
+Required CI PR i push w draft PR #14. Pięć z ośmiu kategorii tune
+ma ranking `not_evaluable` z powodu jednej klasy, bez wyjątku jakości.
+Późniejsza karta ma osobny odbiór opisany powyżej. Pełny profil i niezależna
+ocena, threshold policy oraz lifecycle/batch/read API pozostają otwarte;
+cały AI 08 nie jest ready.
+
+**AI 08 — historyczna prognoza bazowa ma odbiór natywnej próbki 102 dni.**
+[Kontrakt](reference/stockout-upstream.md) i
+[dowody](evidence/08-03-stockout-upstream.md) obejmują rekonstrukcję prognozy
+z wiedzy każdego dnia oraz identyczne wejścia wariantów z prognozą i bez niej.
+Prognoza jest dostępna dla 1015/1104 bazowych punktów `eligible` i wszystkich
+736 punktów dopuszczonych przez split (340/135/130/131).
+Regresja ma 102/102 testów; zainstalowany wheel odtworzył identyczne wyniki
+z publicznych danych, bez etykiet i truth. Pełny `make ci-local` przeszedł:
+1816/1816 testów, wszystkie targety, pakiet i skany sekretów. Commit
+`aa6b953` ma zielone Required CI PR i push; draft PR #14 pozostaje otwarty.
+Późniejsze wyniki porównania modeli i diagnostyki kalibracji mają odbiór 08.4;
+final test pozostaje nieoceniony i cały AI 08 nie jest ready.
+
+**AI 08 — wcześniejsze cechy PIT i podział w czasie mają pełny odbiór lokalny.**
+[Kontrakt cech](reference/stockout-features.md) i
+[dowody 102 dni](evidence/08-02-stockout-features.md) obejmują 1632 origin:
+1104 kwalifikujące się cechy, 432 istniejące braki i 96 braków danych.
+Podział dopuszcza 340/135/130/131 punktów train/tune/calibration/test;
+279 okien wykluczono przy granicach okresów. Regresja ma 144/144 testów;
+zainstalowany wheel odtworzył identyczne wyniki. Pełny `make ci-local` przeszedł,
+w tym 1800/1800 testów, pakiet i skany sekretów.
+Pierwszy zakres [etykiet](evidence/08-01-stockout-labels.md) ma zielone
+Required CI PR i push na `172496b`. Nowszy przyrost w roboczym
+[PR #14](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/14)
+wymaga własnego CI; main nie zawiera jeszcze tego zakresu.
+Trening LR/HGB i dopasowanie sigmoid opisuje późniejszy odbiór 08.4.
+Niezależna ocena jakości i registry/batch/read API pozostają otwarte.
+Historyczne raporty przyrostów zachowują swój zakres.
+
+**AI 05 — ready po scaleniu PR-ów i zielonym Required CI obu mainów.**
+[Końcowy raport publikacji](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/evidence/ai/05/final/README.md)
+wiąże PR #8 AI, PR #81 źródła i końcową dokumentację PR #82.
+Poniższe wcześniejsze sekcje AI 05 zachowują historyczny zakres prób;
+ich informacje o otwartych blokadach zostały zastąpione końcowym odbiorem.
 
 **AI 05 — lokalny przepływ finalnego v12 jest odebrany także na świeżym snapshocie.**
 [Raport i pomiary](evidence/05-v12-real-serving.md) oraz

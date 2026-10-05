@@ -1,0 +1,53 @@
+name: AI08 approved development capacity comparison
+
+on:
+  push:
+    branches: ["ai/08-stockout-labels"]
+    paths: ["docs/reference/stockout-policy-comparison-request-v2.json"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ai08-capacity-development-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      UV_NO_CACHE: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - run: uv sync --locked --extra snapshot --extra forecast
+      - name: Compare only the frozen development role and retain the selected policy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          uv run --locked --extra snapshot --extra forecast python scripts/compare_stockout_capacity.py \
+            --freeze docs/reference/stockout-final-campaign-v1.json \
+            --recipe docs/reference/stockout-final-selected-recipe.json \
+            --policy docs/reference/stockout-final-selected-policy.json \
+            --request docs/reference/stockout-policy-comparison-request-v2.json \
+            --output development-capacity
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai08-capacity-${{ github.sha }}
+          path: development-capacity/*.json
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: false

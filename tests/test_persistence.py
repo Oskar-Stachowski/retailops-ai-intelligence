@@ -62,6 +62,8 @@ def test_actual_unreachable_database_is_required_and_health_is_independent():
     [
         (EXPECTED_REVISION, 1, True),
         ("0019_v12_development", 1, False),
+        ("0022_anomaly_evaluations", 1, False),
+        ("0021_stockout_jobs", 1, False),
         ("old_schema", 1, False),
         (EXPECTED_REVISION, None, False),
     ],

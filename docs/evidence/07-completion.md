@@ -1,6 +1,10 @@
 # AI 07 — końcowy odbiór
 
-Stan na 2026-10-05: **`ready`** w zakresie `synthetic_ai_07_portfolio_v4`.
+Stan na 2026-10-05: **odbiór kwalifikacji zaliczony** w zakresie
+`synthetic_ai_07_portfolio_v4`. Pełne zamknięcie `ready` na `main` ma jawny
+warunek: oba PR-y #24/#97 scalone, Required CI ich aktualnych HEAD i obu
+merge commitów zaliczony. Dokładne SHA i runy są publikowane w tych PR-ach.
+[Integracja z main](07-main-integration.md) zachowuje istniejący AI 05/08.
 Pełny odbiór lokalny i Required CI implementacji obu repozytoriów są zaliczone.
 Publikacja została zatwierdzona i wykonana w PR-ach
 [consumer #24](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/24)
@@ -18,8 +22,9 @@ jego runy i dokładny HEAD są zapisane w PR #24.
 [Poprzedni przebieg PR](07-ready/required-ci-timeout.json) zaliczył wszystkie
 testy i bramki `make check`, ale limit 125 minut przerwał pakowanie cache
 w kroku końcowym. [Podział CI](07-ready/parallel-ci.json) uruchamia cztery
-kompletne grupy pytest i cztery grupy odbioru na osobnych runnerach. Wszystkie
-2151 obecnych testów są przypisane dokładnie raz. Wszystkie kontrole, progi
+kompletne grupy pytest i cztery grupy odbioru na osobnych runnerach. W poprzednim odbiorze wszystkie
+2151 testów były przypisane dokładnie raz. Po integracji kolekcja obejmuje
+również wszystkie testy AI 08 z aktualnego `main`. Wszystkie kontrole, progi
 jakości i limity pojedynczych procesów pozostają bez zmian.
 
 ## Zamrożona jakość

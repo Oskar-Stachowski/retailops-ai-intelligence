@@ -1,0 +1,1011 @@
+{
+  "recorded_at_utc": "2026-10-04T19:22:04.765370+00:00",
+  "scope": "AI08.14 whole smoke and explicit intermediate ai-load resource pilot; no independent quality, final test or promotion",
+  "baseline_consumer_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+  "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+  "script_sha256": "edb64426dede5ffa21ceaa439510ae629b3f58a96e978ffb3c393605388d69a8",
+  "smoke": {
+    "schema_version": "stockout-whole-resource-probe-1.0.0",
+    "recorded_at_utc": "2026-10-04T19:03:01.333747+00:00",
+    "status": "passed",
+    "failure": null,
+    "scope": "one fresh complete ai-temporal-smoke pipeline; producer, exports, import, curated, actual partition parents, assembly and six fits; sampled whole process tree",
+    "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+    "consumer_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+    "budgets": {
+      "scratch_bytes": 536870912,
+      "tree_rss_bytes": 1073741824,
+      "wall_seconds": 600,
+      "minimum_free_bytes": 53687091200
+    },
+    "measurement": {
+      "wall_seconds": 500.7390610000002,
+      "parent_cpu_seconds": 50.129593,
+      "child_cpu_seconds": 485.247467,
+      "sampled_tree_peak_rss_bytes": 421724160,
+      "sampled_peak_scratch_logical_bytes": 167995170,
+      "sampled_peak_scratch_allocated_bytes": 173834240,
+      "sampled_peak_files": 1892,
+      "sample_seconds": 0.2,
+      "samples": 2200,
+      "final_scratch": {
+        "logical_bytes": 97892478,
+        "allocated_bytes": 102129664,
+        "files": 1835
+      },
+      "free_before_bytes": 57046523904,
+      "minimum_free_bytes": 56773431296,
+      "free_after_cleanup_bytes": 56975261696
+    },
+    "producer": {
+      "paths": {
+        "source": "/private/tmp/ai08-whole-probe-ejtqpcbb/producer-code/data/generated/resource-probe/source/source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+        "qualification": "/private/tmp/ai08-whole-probe-ejtqpcbb/producer-code/data/generated/resource-probe/qualification/inventory-labels-sha256-2e1e107aea8b0ffc3cd64b70052b16a94e8129a5626606e33620bda7becc3bed",
+        "facts_export": "/private/tmp/ai08-whole-probe-ejtqpcbb/producer-code/data/generated/resource-probe/facts/source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+        "private_export": "/private/tmp/ai08-whole-probe-ejtqpcbb/producer-code/data/generated/resource-probe/private/source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d"
+      },
+      "stages": [
+        {
+          "stage": "producer_checkout",
+          "wall_seconds": 0.56756566700642,
+          "cpu_seconds": 0.0027840000000000018
+        },
+        {
+          "stage": "source",
+          "wall_seconds": 53.96776354200847,
+          "cpu_seconds": 53.113022
+        },
+        {
+          "stage": "qualification",
+          "wall_seconds": 20.609931957995286,
+          "cpu_seconds": 20.166716
+        },
+        {
+          "stage": "facts_export",
+          "wall_seconds": 15.947101084006135,
+          "cpu_seconds": 15.714019000000008
+        },
+        {
+          "stage": "private_export",
+          "wall_seconds": 21.25098425000033,
+          "cpu_seconds": 20.769239
+        }
+      ],
+      "effective_config": {
+        "profile": "ai-temporal-smoke",
+        "days": 102,
+        "products": 8,
+        "stores": 3,
+        "warehouses": 2,
+        "seed": 42,
+        "start_date": "2026-04-21",
+        "end_date": "2026-07-31",
+        "max_daily_rows": 2448,
+        "business_timezone": "UTC",
+        "output_format": "csv",
+        "warmup_days": 28,
+        "origin_days": 60,
+        "label_tail_days": 14
+      },
+      "source_dataset_id": "source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+      "qualification_id": "inventory-labels-sha256-2e1e107aea8b0ffc3cd64b70052b16a94e8129a5626606e33620bda7becc3bed"
+    },
+    "consumer": {
+      "stages": [
+        {
+          "stage": "facts_import",
+          "wall_seconds": 8.874137915991014,
+          "cpu_seconds": 8.697093
+        },
+        {
+          "stage": "curated",
+          "wall_seconds": 41.93495070900826,
+          "cpu_seconds": 40.952866
+        },
+        {
+          "stage": "private_import",
+          "wall_seconds": 12.576006417002645,
+          "cpu_seconds": 12.195212999999995
+        },
+        {
+          "stage": "features",
+          "wall_seconds": 17.276858917000936,
+          "cpu_seconds": 16.842534
+        },
+        {
+          "stage": "labels",
+          "wall_seconds": 14.398271375001059,
+          "cpu_seconds": 13.809302000000002
+        },
+        {
+          "stage": "upstream",
+          "wall_seconds": 80.00573874999827,
+          "cpu_seconds": 77.205689
+        },
+        {
+          "stage": "temporal",
+          "wall_seconds": 102.97373245899507,
+          "cpu_seconds": 100.41435199999998
+        },
+        {
+          "stage": "assemble_development",
+          "wall_seconds": 106.95950599999924,
+          "cpu_seconds": 102.59081600000002
+        },
+        {
+          "stage": "fit_six_models",
+          "wall_seconds": 0.6725515840080334,
+          "cpu_seconds": 0.4725159999999846
+        }
+      ],
+      "input_stats": {
+        "facts": {
+          "snapshot_id": "snapshot-sha256-e706605e8cdac85ce859fb536a5136e15639cb555fcab8952154ac9437c6e810",
+          "rows": 56533,
+          "bytes": 3235673,
+          "ledger_rows": 7070
+        },
+        "private": {
+          "snapshot_id": "snapshot-sha256-917172bb7af0211b10c7e97ee690e7f48485beed98c04af501058918062ad1bb",
+          "rows": 88906,
+          "bytes": 5318059,
+          "ledger_rows": 7070
+        },
+        "qualification_bytes": 927742
+      },
+      "parity": {
+        "semantic_equal": true,
+        "checks": {
+          "models_equal": true,
+          "results_equal": true,
+          "report_equal": true,
+          "descriptor_except_parents_equal": true,
+          "unchanged_parent_ids_equal": true,
+          "label_semantics_equal": true,
+          "label_content_seal_equal": true,
+          "label_report_equal": true,
+          "temporal_semantics_equal": true,
+          "temporal_indexed_content_seal_equal": true,
+          "temporal_report_equal": true,
+          "temporal_parent_pin": true,
+          "actual_new_parents_bound": true,
+          "reference_parents_bound": true,
+          "identities_valid": true
+        },
+        "development_id_equal": false,
+        "actual_parent_ids": {
+          "feature_bundle_id": "feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af",
+          "upstream_bundle_id": "upstream-partitions-sha256-00706e367ea7f92dd81865e36fb426b8b7b44587cbe029f4fe5c4c0021c51ef5",
+          "label_bundle_id": "label-partitions-sha256-2617d1c711867c27af7adba32190e110d64826bee2a1e795dd5b311fddbb87ff",
+          "temporal_bundle_id": "temporal-partitions-sha256-ad259b619d1f92081ca0bc0ac9d0d97eabc33866a01d5920a7d19a6c79224e28",
+          "source_dataset_id": "source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+          "curated_dataset_id": "curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00"
+        },
+        "new_private_manifest_sha256": "258de681ec8452e9e5248e26248f2ff2b81bb6f7ae6023ca70e7da88f95dca4e",
+        "reference_private_manifest_sha256": "75465e7439b2c40f628d870b8ae8dc503d7b9e4ea92740dd15a5ea0f3c0c01b3",
+        "scope": "fully verified regenerated inputs; new raw manifest and parent seals preserved; no source checksum/timestamp/parent ID rewritten"
+      },
+      "paths": {
+        "source": "/private/tmp/ai08-whole-probe-ejtqpcbb/producer-code/data/generated/resource-probe/source/source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+        "qualification": "/private/tmp/ai08-whole-probe-ejtqpcbb/producer-code/data/generated/resource-probe/qualification/inventory-labels-sha256-2e1e107aea8b0ffc3cd64b70052b16a94e8129a5626606e33620bda7becc3bed",
+        "facts_export": "/private/tmp/ai08-whole-probe-ejtqpcbb/producer-code/data/generated/resource-probe/facts/source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+        "private_export": "/private/tmp/ai08-whole-probe-ejtqpcbb/producer-code/data/generated/resource-probe/private/source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+        "facts_import": "/private/tmp/ai08-whole-probe-ejtqpcbb/facts_import/data/generated/snapshots/source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+        "curated": "/private/tmp/ai08-whole-probe-ejtqpcbb/curated/data/generated/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "private_import": "/private/tmp/ai08-whole-probe-ejtqpcbb/private_import/data/generated/snapshots/source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d"
+      },
+      "ids": {
+        "feature_bundle_id": "feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af",
+        "label_bundle_id": "label-partitions-sha256-2617d1c711867c27af7adba32190e110d64826bee2a1e795dd5b311fddbb87ff",
+        "upstream_bundle_id": "upstream-partitions-sha256-00706e367ea7f92dd81865e36fb426b8b7b44587cbe029f4fe5c4c0021c51ef5",
+        "temporal_bundle_id": "temporal-partitions-sha256-ad259b619d1f92081ca0bc0ac9d0d97eabc33866a01d5920a7d19a6c79224e28",
+        "development_id": "development-sha256-8efb7a47438077445b086e9ae7982e29c15c97d007bd7230644e48f81c4be2a5"
+      },
+      "groups": {
+        "source": {
+          "logical_bytes": 21794932,
+          "allocated_bytes": 21958656,
+          "files": 64
+        },
+        "qualification": {
+          "logical_bytes": 944243,
+          "allocated_bytes": 950272,
+          "files": 3
+        },
+        "facts_export": {
+          "logical_bytes": 3401873,
+          "allocated_bytes": 3649536,
+          "files": 98
+        },
+        "private_export": {
+          "logical_bytes": 5517512,
+          "allocated_bytes": 5836800,
+          "files": 127
+        },
+        "facts_import": {
+          "logical_bytes": 3417129,
+          "allocated_bytes": 3670016,
+          "files": 100
+        },
+        "private_import": {
+          "logical_bytes": 5537312,
+          "allocated_bytes": 5861376,
+          "files": 129
+        },
+        "curated": {
+          "logical_bytes": 7005380,
+          "allocated_bytes": 7098368,
+          "files": 46
+        },
+        "features": {
+          "logical_bytes": 1553889,
+          "allocated_bytes": 1646592,
+          "files": 49
+        },
+        "upstream": {
+          "logical_bytes": 1104817,
+          "allocated_bytes": 1290240,
+          "files": 103
+        },
+        "labels": {
+          "logical_bytes": 110484,
+          "allocated_bytes": 143360,
+          "files": 17
+        },
+        "temporal": {
+          "logical_bytes": 183189,
+          "allocated_bytes": 225280,
+          "files": 15
+        }
+      },
+      "selected_on_tune": "hist_gradient_boosting:without_upstream",
+      "development_rows_by_role": {
+        "train": 340,
+        "tune": 135,
+        "calibration": 130
+      },
+      "development_payload_bytes": 531428,
+      "physical_origins": {
+        "comparison": 1632,
+        "membership": 1632
+      },
+      "final_test_membership": 131,
+      "development_report": {
+        "coverage": {
+          "train": {
+            "eligible": 340,
+            "forecast_available": 340
+          },
+          "tune": {
+            "eligible": 135,
+            "forecast_available": 135
+          },
+          "calibration": {
+            "eligible": 130,
+            "forecast_available": 130
+          },
+          "final_test": {
+            "eligible_membership_only": 131,
+            "outcomes_evaluated": false
+          },
+          "raw_global_upstream_forecast_ready": false
+        },
+        "models_compared": 6,
+        "common_development_keys_identical": true,
+        "model_specific_drops": 0,
+        "upstream_campaign_development_coverage_complete": true,
+        "raw_global_upstream_forecast_ready": false,
+        "selected_on_tune": "hist_gradient_boosting:without_upstream",
+        "selection_provisional": true,
+        "calibration_generalization": "not_evaluated_fit_diagnostics_only",
+        "sigmoid_fitted_models": 6,
+        "sigmoid_monotone_models": 6,
+        "final_test_outcomes_evaluated": false,
+        "thresholds_fitted": false,
+        "threshold_policy_ready": false,
+        "production_promoted": false,
+        "full_training_profile_measured": false,
+        "model_ready": false,
+        "caution": "synthetic_temporal_smoke_overlapping_7d_windows_not_independent_episodes"
+      },
+      "final_test_outcomes_evaluated": false,
+      "model_promoted": false,
+      "producer_roots_unimportable": [
+        "data",
+        "ml",
+        "retailops"
+      ]
+    },
+    "phases": [
+      {
+        "phase": "producer",
+        "exit_code": 0,
+        "log_sha256": "fc3532e7bfa7e5bdecb694809af5dfbc7d4bdad647555b79ba15147f2340de47",
+        "log_tail": "{\"event\": \"started\", \"stage\": \"producer_checkout\"}\nhint: Using 'master' as the name for the initial branch. This default branch name\nhint: is subject to change. To configure the initial branch name to use in all\nhint: of your new repositories, which will suppress this warning, call:\nhint:\nhint: \tgit config --global init.defaultBranch <name>\nhint:\nhint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\nhint: 'development'. The just-created branch can be renamed via this command:\nhint:\nhint: \tgit branch -m <name>\n{\"stage\": \"producer_checkout\", \"wall_seconds\": 0.56756566700642, \"cpu_seconds\": 0.0027840000000000018}\n{\"event\": \"started\", \"stage\": \"source\"}\n{\"stage\": \"source\", \"wall_seconds\": 53.96776354200847, \"cpu_seconds\": 53.113022}\n{\"event\": \"started\", \"stage\": \"qualification\"}\n{\"stage\": \"qualification\", \"wall_seconds\": 20.609931957995286, \"cpu_seconds\": 20.166716}\n{\"event\": \"started\", \"stage\": \"facts_export\"}\n{\"stage\": \"facts_export\", \"wall_seconds\": 15.947101084006135, \"cpu_seconds\": 15.714019000000008}\n{\"event\": \"started\", \"stage\": \"private_export\"}\n{\"stage\": \"private_export\", \"wall_seconds\": 21.25098425000033, \"cpu_seconds\": 20.769239}\n"
+      },
+      {
+        "phase": "consumer",
+        "exit_code": 0,
+        "log_sha256": "71cf76d25edf0ba88cb79dfd50cefd8d52be321ef901707023797993c63a22d8",
+        "log_tail": "{\"event\": \"started\", \"stage\": \"facts_import\"}\n{\"stage\": \"facts_import\", \"wall_seconds\": 8.874137915991014, \"cpu_seconds\": 8.697093}\n{\"event\": \"started\", \"stage\": \"curated\"}\n{\"stage\": \"curated\", \"wall_seconds\": 41.93495070900826, \"cpu_seconds\": 40.952866}\n{\"curated_dataset_id\": \"curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00\"}\n{\"event\": \"started\", \"stage\": \"private_import\"}\n{\"stage\": \"private_import\", \"wall_seconds\": 12.576006417002645, \"cpu_seconds\": 12.195212999999995}\n{\"event\": \"started\", \"stage\": \"features\"}\n{\"stage\": \"features\", \"wall_seconds\": 17.276858917000936, \"cpu_seconds\": 16.842534}\n{\"event\": \"started\", \"stage\": \"labels\"}\n{\"stage\": \"labels\", \"wall_seconds\": 14.398271375001059, \"cpu_seconds\": 13.809302000000002}\n{\"event\": \"started\", \"stage\": \"upstream\"}\n{\"stage\": \"upstream\", \"wall_seconds\": 80.00573874999827, \"cpu_seconds\": 77.205689}\n{\"event\": \"started\", \"stage\": \"temporal\"}\n{\"stage\": \"temporal\", \"wall_seconds\": 102.97373245899507, \"cpu_seconds\": 100.41435199999998}\n{\"event\": \"started\", \"stage\": \"assemble_development\"}\n{\"stage\": \"assemble_development\", \"wall_seconds\": 106.95950599999924, \"cpu_seconds\": 102.59081600000002}\n{\"event\": \"started\", \"stage\": \"fit_six_models\"}\n{\"stage\": \"fit_six_models\", \"wall_seconds\": 0.6725515840080334, \"cpu_seconds\": 0.4725159999999846}\n{\"parity\": {\"semantic_equal\": true, \"checks\": {\"models_equal\": true, \"results_equal\": true, \"report_equal\": true, \"descriptor_except_parents_equal\": true, \"unchanged_parent_ids_equal\": true, \"label_semantics_equal\": true, \"label_content_seal_equal\": true, \"label_report_equal\": true, \"temporal_semantics_equal\": true, \"temporal_indexed_content_seal_equal\": true, \"temporal_report_equal\": true, \"temporal_parent_pin\": true, \"actual_new_parents_bound\": true, \"reference_parents_bound\": true, \"identities_valid\": true}, \"development_id_equal\": false, \"actual_parent_ids\": {\"feature_bundle_id\": \"feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af\", \"upstream_bundle_id\": \"upstream-partitions-sha256-00706e367ea7f92dd81865e36fb426b8b7b44587cbe029f4fe5c4c0021c51ef5\", \"label_bundle_id\": \"label-partitions-sha256-2617d1c711867c27af7adba32190e110d64826bee2a1e795dd5b311fddbb87ff\", \"temporal_bundle_id\": \"temporal-partitions-sha256-ad259b619d1f92081ca0bc0ac9d0d97eabc33866a01d5920a7d19a6c79224e28\", \"source_dataset_id\": \"source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d\", \"curated_dataset_id\": \"curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00\"}, \"new_private_manifest_sha256\": \"258de681ec8452e9e5248e26248f2ff2b81bb6f7ae6023ca70e7da88f95dca4e\", \"reference_private_manifest_sha256\": \"75465e7439b2c40f628d870b8ae8dc503d7b9e4ea92740dd15a5ea0f3c0c01b3\", \"scope\": \"fully verified regenerated inputs; new raw manifest and parent seals preserved; no source checksum/timestamp/parent ID rewritten\"}}\n"
+      }
+    ],
+    "profile": null,
+    "preflight": null,
+    "retained_root": null,
+    "temporary_outputs_removed": true,
+    "whole_smoke_budget_passed": true,
+    "whole_pilot_budget_passed": false,
+    "larger_profile_generation_attempted": false,
+    "larger_profile_generated": false,
+    "larger_profile_qualified": false,
+    "full_ai_dev_or_ai_training_qualified": false,
+    "independent_quality_accepted": false,
+    "final_test_outcomes_evaluated": false,
+    "model_promoted": false,
+    "ai08_ready": false
+  },
+  "pilot": {
+    "schema_version": "stockout-whole-resource-probe-1.0.0",
+    "recorded_at_utc": "2026-10-04T19:16:33.044978+00:00",
+    "status": "passed",
+    "failure": null,
+    "scope": "one fresh complete intermediate ai-load pilot pipeline; producer, exports, import, curated, actual partition parents, assembly and six fits; sampled whole process tree",
+    "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+    "consumer_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+    "budgets": {
+      "scratch_bytes": 2147483648,
+      "tree_rss_bytes": 1073741824,
+      "wall_seconds": 1800,
+      "minimum_free_bytes": 53687091200
+    },
+    "measurement": {
+      "wall_seconds": 719.8149044580059,
+      "parent_cpu_seconds": 61.330739,
+      "child_cpu_seconds": 697.0998510000001,
+      "sampled_tree_peak_rss_bytes": 652460032,
+      "sampled_peak_scratch_logical_bytes": 255016189,
+      "sampled_peak_scratch_allocated_bytes": 271826944,
+      "sampled_peak_files": 1979,
+      "sample_seconds": 0.2,
+      "samples": 3216,
+      "final_scratch": {
+        "logical_bytes": 128951148,
+        "allocated_bytes": 133214208,
+        "files": 1922
+      },
+      "free_before_bytes": 56952401920,
+      "minimum_free_bytes": 56902402048,
+      "free_after_cleanup_bytes": 57322377216
+    },
+    "producer": {
+      "paths": {
+        "source": "/private/tmp/ai08-whole-probe-9itgnuc6/producer-code/data/generated/resource-probe/source/source-sha256-1176610c2df5c350dbf37008390cbae59644f868d687b2853a87bb7370689394",
+        "qualification": "/private/tmp/ai08-whole-probe-9itgnuc6/producer-code/data/generated/resource-probe/qualification/inventory-labels-sha256-475b10923d1ef8536cc46b9ad9726d3aaea2193e4561dc16252d888300b7f7d0",
+        "facts_export": "/private/tmp/ai08-whole-probe-9itgnuc6/producer-code/data/generated/resource-probe/facts/source-sha256-1176610c2df5c350dbf37008390cbae59644f868d687b2853a87bb7370689394",
+        "private_export": "/private/tmp/ai08-whole-probe-9itgnuc6/producer-code/data/generated/resource-probe/private/source-sha256-1176610c2df5c350dbf37008390cbae59644f868d687b2853a87bb7370689394"
+      },
+      "stages": [
+        {
+          "stage": "producer_checkout",
+          "wall_seconds": 0.67388779099565,
+          "cpu_seconds": 0.002031999999999999
+        },
+        {
+          "stage": "source",
+          "wall_seconds": 100.37917587500124,
+          "cpu_seconds": 98.92033599999999
+        },
+        {
+          "stage": "qualification",
+          "wall_seconds": 40.29152520898788,
+          "cpu_seconds": 35.929716
+        },
+        {
+          "stage": "facts_export",
+          "wall_seconds": 23.784738083006232,
+          "cpu_seconds": 23.37856100000002
+        },
+        {
+          "stage": "private_export",
+          "wall_seconds": 29.297321499994723,
+          "cpu_seconds": 28.979321
+        }
+      ],
+      "effective_config": {
+        "profile": "ai-load",
+        "days": 102,
+        "products": 14,
+        "stores": 3,
+        "warehouses": 2,
+        "seed": 42,
+        "start_date": "2026-04-21",
+        "end_date": "2026-07-31",
+        "max_daily_rows": 4284,
+        "business_timezone": "UTC",
+        "output_format": "csv",
+        "warmup_days": 0,
+        "origin_days": 0,
+        "label_tail_days": 0
+      },
+      "source_dataset_id": "source-sha256-1176610c2df5c350dbf37008390cbae59644f868d687b2853a87bb7370689394",
+      "qualification_id": "inventory-labels-sha256-475b10923d1ef8536cc46b9ad9726d3aaea2193e4561dc16252d888300b7f7d0"
+    },
+    "consumer": {
+      "stages": [
+        {
+          "stage": "facts_import",
+          "wall_seconds": 11.495510708991787,
+          "cpu_seconds": 11.363072
+        },
+        {
+          "stage": "curated",
+          "wall_seconds": 54.87563541599957,
+          "cpu_seconds": 54.391214
+        },
+        {
+          "stage": "private_import",
+          "wall_seconds": 18.824717957992107,
+          "cpu_seconds": 17.424178999999995
+        },
+        {
+          "stage": "features",
+          "wall_seconds": 31.486378083005548,
+          "cpu_seconds": 29.342321
+        },
+        {
+          "stage": "labels",
+          "wall_seconds": 22.545099374998244,
+          "cpu_seconds": 21.900423000000004
+        },
+        {
+          "stage": "upstream",
+          "wall_seconds": 106.67518600000767,
+          "cpu_seconds": 103.106405
+        },
+        {
+          "stage": "temporal",
+          "wall_seconds": 139.3001834579918,
+          "cpu_seconds": 135.720602
+        },
+        {
+          "stage": "assemble_development",
+          "wall_seconds": 136.70956037500582,
+          "cpu_seconds": 133.63168000000002
+        },
+        {
+          "stage": "fit_six_models",
+          "wall_seconds": 0.7780058329954045,
+          "cpu_seconds": 0.6070770000000039
+        }
+      ],
+      "input_stats": {
+        "facts": {
+          "snapshot_id": "snapshot-sha256-f83e674598cec61847ddb0a6bb71de804759be83f9000e6cfa86f02e3188ac9a",
+          "rows": 92763,
+          "bytes": 5200511,
+          "ledger_rows": 11649
+        },
+        "private": {
+          "snapshot_id": "snapshot-sha256-d957d7c3b67cffb0192dfe40d39b52bb0a1cc79167b620e0a5c4beda259785c9",
+          "rows": 148911,
+          "bytes": 8792250,
+          "ledger_rows": 11649
+        },
+        "qualification_bytes": 1605404
+      },
+      "parity": null,
+      "paths": {
+        "source": "/private/tmp/ai08-whole-probe-9itgnuc6/producer-code/data/generated/resource-probe/source/source-sha256-1176610c2df5c350dbf37008390cbae59644f868d687b2853a87bb7370689394",
+        "qualification": "/private/tmp/ai08-whole-probe-9itgnuc6/producer-code/data/generated/resource-probe/qualification/inventory-labels-sha256-475b10923d1ef8536cc46b9ad9726d3aaea2193e4561dc16252d888300b7f7d0",
+        "facts_export": "/private/tmp/ai08-whole-probe-9itgnuc6/producer-code/data/generated/resource-probe/facts/source-sha256-1176610c2df5c350dbf37008390cbae59644f868d687b2853a87bb7370689394",
+        "private_export": "/private/tmp/ai08-whole-probe-9itgnuc6/producer-code/data/generated/resource-probe/private/source-sha256-1176610c2df5c350dbf37008390cbae59644f868d687b2853a87bb7370689394",
+        "facts_import": "/private/tmp/ai08-whole-probe-9itgnuc6/facts_import/data/generated/snapshots/source-sha256-1176610c2df5c350dbf37008390cbae59644f868d687b2853a87bb7370689394",
+        "curated": "/private/tmp/ai08-whole-probe-9itgnuc6/curated/data/generated/curated/curated-sha256-fdcdd34aa2d1dff6b25547c3acc98baf6df4fdfbbca0862a1ad35c8715bea056",
+        "private_import": "/private/tmp/ai08-whole-probe-9itgnuc6/private_import/data/generated/snapshots/source-sha256-1176610c2df5c350dbf37008390cbae59644f868d687b2853a87bb7370689394"
+      },
+      "ids": {
+        "feature_bundle_id": "feature-partitions-sha256-bef7e008440e3674b5f494ceb665694b885c649cf2431fdfba1c55f9b2924c3b",
+        "label_bundle_id": "label-partitions-sha256-ac5c662e957857de8204afdf8aa19c68f7c094d686623b3afbca04e3c03b754f",
+        "upstream_bundle_id": "upstream-partitions-sha256-a2ca232b75aa7a8331dd9a61a2f9be92654eb51ec87dbb6a2efab971ed8e9389",
+        "temporal_bundle_id": "temporal-partitions-sha256-97faa74be15e5eb8cb8047e1623b17e2dda3c1fb977c9463df4c33946fdd1e4b",
+        "development_id": "development-sha256-34de3273997a91d7b18a8c691adb7377ee50646d30608e0b3c0a44a5eb2b45db"
+      },
+      "groups": {
+        "source": {
+          "logical_bytes": 36401883,
+          "allocated_bytes": 36552704,
+          "files": 64
+        },
+        "qualification": {
+          "logical_bytes": 1621934,
+          "allocated_bytes": 1626112,
+          "files": 3
+        },
+        "facts_export": {
+          "logical_bytes": 5367597,
+          "allocated_bytes": 5623808,
+          "files": 103
+        },
+        "private_export": {
+          "logical_bytes": 8993144,
+          "allocated_bytes": 9334784,
+          "files": 135
+        },
+        "facts_import": {
+          "logical_bytes": 5383569,
+          "allocated_bytes": 5644288,
+          "files": 105
+        },
+        "private_import": {
+          "logical_bytes": 9014158,
+          "allocated_bytes": 9363456,
+          "files": 137
+        },
+        "curated": {
+          "logical_bytes": 11230708,
+          "allocated_bytes": 11337728,
+          "files": 51
+        },
+        "features": {
+          "logical_bytes": 2699492,
+          "allocated_bytes": 2859008,
+          "files": 85
+        },
+        "upstream": {
+          "logical_bytes": 1269667,
+          "allocated_bytes": 1318912,
+          "files": 103
+        },
+        "labels": {
+          "logical_bytes": 186272,
+          "allocated_bytes": 245760,
+          "files": 29
+        },
+        "temporal": {
+          "logical_bytes": 301075,
+          "allocated_bytes": 352256,
+          "files": 25
+        }
+      },
+      "selected_on_tune": "logistic_regression:without_upstream",
+      "development_rows_by_role": {
+        "train": 598,
+        "tune": 227,
+        "calibration": 218
+      },
+      "development_payload_bytes": 913583,
+      "physical_origins": {
+        "comparison": 2856,
+        "membership": 2856
+      },
+      "final_test_membership": 226,
+      "development_report": {
+        "coverage": {
+          "train": {
+            "eligible": 598,
+            "forecast_available": 598
+          },
+          "tune": {
+            "eligible": 227,
+            "forecast_available": 227
+          },
+          "calibration": {
+            "eligible": 218,
+            "forecast_available": 218
+          },
+          "final_test": {
+            "eligible_membership_only": 226,
+            "outcomes_evaluated": false
+          },
+          "raw_global_upstream_forecast_ready": false
+        },
+        "models_compared": 6,
+        "common_development_keys_identical": true,
+        "model_specific_drops": 0,
+        "upstream_campaign_development_coverage_complete": true,
+        "raw_global_upstream_forecast_ready": false,
+        "selected_on_tune": "logistic_regression:without_upstream",
+        "selection_provisional": true,
+        "calibration_generalization": "not_evaluated_fit_diagnostics_only",
+        "sigmoid_fitted_models": 6,
+        "sigmoid_monotone_models": 6,
+        "final_test_outcomes_evaluated": false,
+        "thresholds_fitted": false,
+        "threshold_policy_ready": false,
+        "production_promoted": false,
+        "full_training_profile_measured": false,
+        "model_ready": false,
+        "caution": "synthetic_temporal_smoke_overlapping_7d_windows_not_independent_episodes"
+      },
+      "final_test_outcomes_evaluated": false,
+      "model_promoted": false,
+      "producer_roots_unimportable": [
+        "data",
+        "ml",
+        "retailops"
+      ]
+    },
+    "phases": [
+      {
+        "phase": "producer",
+        "exit_code": 0,
+        "log_sha256": "4183e76ebec744ee805c9729235473c20557bd7c152b1eed0a486cffe248ced9",
+        "log_tail": "{\"event\": \"started\", \"stage\": \"producer_checkout\"}\nhint: Using 'master' as the name for the initial branch. This default branch name\nhint: is subject to change. To configure the initial branch name to use in all\nhint: of your new repositories, which will suppress this warning, call:\nhint:\nhint: \tgit config --global init.defaultBranch <name>\nhint:\nhint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\nhint: 'development'. The just-created branch can be renamed via this command:\nhint:\nhint: \tgit branch -m <name>\n{\"stage\": \"producer_checkout\", \"wall_seconds\": 0.67388779099565, \"cpu_seconds\": 0.002031999999999999}\n{\"event\": \"started\", \"stage\": \"source\"}\n{\"stage\": \"source\", \"wall_seconds\": 100.37917587500124, \"cpu_seconds\": 98.92033599999999}\n{\"event\": \"started\", \"stage\": \"qualification\"}\n{\"stage\": \"qualification\", \"wall_seconds\": 40.29152520898788, \"cpu_seconds\": 35.929716}\n{\"event\": \"started\", \"stage\": \"facts_export\"}\n{\"stage\": \"facts_export\", \"wall_seconds\": 23.784738083006232, \"cpu_seconds\": 23.37856100000002}\n{\"event\": \"started\", \"stage\": \"private_export\"}\n{\"stage\": \"private_export\", \"wall_seconds\": 29.297321499994723, \"cpu_seconds\": 28.979321}\n"
+      },
+      {
+        "phase": "consumer",
+        "exit_code": 0,
+        "log_sha256": "c9d5fb71e63a8e308698348f1c1b8db6fc39c758995c9fbff41b192b0e7556b3",
+        "log_tail": "{\"event\": \"started\", \"stage\": \"facts_import\"}\n{\"stage\": \"facts_import\", \"wall_seconds\": 11.495510708991787, \"cpu_seconds\": 11.363072}\n{\"event\": \"started\", \"stage\": \"curated\"}\n{\"stage\": \"curated\", \"wall_seconds\": 54.87563541599957, \"cpu_seconds\": 54.391214}\n{\"curated_dataset_id\": \"curated-sha256-fdcdd34aa2d1dff6b25547c3acc98baf6df4fdfbbca0862a1ad35c8715bea056\"}\n{\"event\": \"started\", \"stage\": \"private_import\"}\n{\"stage\": \"private_import\", \"wall_seconds\": 18.824717957992107, \"cpu_seconds\": 17.424178999999995}\n{\"event\": \"started\", \"stage\": \"features\"}\n{\"stage\": \"features\", \"wall_seconds\": 31.486378083005548, \"cpu_seconds\": 29.342321}\n{\"event\": \"started\", \"stage\": \"labels\"}\n{\"stage\": \"labels\", \"wall_seconds\": 22.545099374998244, \"cpu_seconds\": 21.900423000000004}\n{\"event\": \"started\", \"stage\": \"upstream\"}\n{\"stage\": \"upstream\", \"wall_seconds\": 106.67518600000767, \"cpu_seconds\": 103.106405}\n{\"event\": \"started\", \"stage\": \"temporal\"}\n{\"stage\": \"temporal\", \"wall_seconds\": 139.3001834579918, \"cpu_seconds\": 135.720602}\n{\"event\": \"started\", \"stage\": \"assemble_development\"}\n{\"stage\": \"assemble_development\", \"wall_seconds\": 136.70956037500582, \"cpu_seconds\": 133.63168000000002}\n{\"event\": \"started\", \"stage\": \"fit_six_models\"}\n{\"stage\": \"fit_six_models\", \"wall_seconds\": 0.7780058329954045, \"cpu_seconds\": 0.6070770000000039}\n{\"parity\": null}\n"
+      }
+    ],
+    "profile": {
+      "schema_version": "stockout-resource-pilot-1.1.0",
+      "scope": "bounded intermediate development/resource pilot; not full ai-dev or ai-training",
+      "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+      "consumer_baseline_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+      "generation": {
+        "profile": "ai-load",
+        "days": 102,
+        "products": 14,
+        "stores": 3,
+        "warehouses": 2,
+        "seed": 42,
+        "start_date": "2026-04-21",
+        "end_date": "2026-07-31",
+        "max_daily_rows": 4284,
+        "forecast_plan_days": 0
+      },
+      "physical_origin_upper_bound": 2856,
+      "inventory_configuration": "pinned default_inventory_config; no supplier/scenario/stock overrides",
+      "producer_timeline_metadata": {
+        "warmup_days": 0,
+        "origin_days": 0,
+        "label_tail_days": 0
+      },
+      "split_policy": {
+        "version": "stockout-temporal-split-1.0.0",
+        "start_at": "2026-04-21T00:00:00Z",
+        "train_until": "2026-06-05T00:00:00Z",
+        "tune_until": "2026-06-24T00:00:00Z",
+        "calibration_until": "2026-07-13T00:00:00Z",
+        "test_until": "2026-08-01T00:00:00Z",
+        "evaluated_at": "2026-08-01T00:00:00Z",
+        "purge": "outcome_end_and_availability_strictly_before_next_role",
+        "final_test": "membership_only_no_outcome_metrics_no_training_access"
+      },
+      "budgets": {
+        "scratch_bytes": 2147483648,
+        "tree_rss_bytes": 1073741824,
+        "wall_seconds": 1800,
+        "minimum_free_bytes": 53687091200
+      },
+      "budget_revision": {
+        "previous_proposal_scratch_bytes": 5368709120,
+        "previous_proposal_wall_seconds": 600,
+        "reason": "Before larger generation, the complete smoke measured about 433 MiB whole-tree RSS. The 4480-origin proposal exceeds 1 GiB under 20% estimate headroom. This explicit 2856-origin ai-load pilot keeps the existing 1 GiB RSS and 50 GiB free reserve; retains the 2 GiB scratch / 30-minute complete pipeline limit. Passing preflight permits only an attempt, not resource or model acceptance."
+      },
+      "unchanged_consumer_limits": {
+        "input_rows": 500000,
+        "input_bytes": 67108864,
+        "qualification_bytes": 4194304,
+        "ledger_rows": 100000,
+        "physical_origins": 10000,
+        "main_database_bytes": 134217728,
+        "development_bytes": 16777216
+      },
+      "future_quality_scope": {
+        "robustness_seeds": [
+          42,
+          137,
+          2026
+        ],
+        "required_scenarios": [
+          "normal",
+          "promotion",
+          "demand_shock",
+          "inventory_constraint"
+        ],
+        "metrics": [
+          "average_precision",
+          "prevalence",
+          "brier",
+          "reliability",
+          "recall_at_capacity",
+          "precision_at_capacity"
+        ],
+        "segments": [
+          "category",
+          "stock_location",
+          "inventory_constrained"
+        ],
+        "resource_pass_is_not_quality_pass": true,
+        "calibration_fit_diagnostics_are_not_independent_quality": true,
+        "business_thresholds_and_capacity_require_approval": true,
+        "final_test_requires_separate_approved_campaign": true,
+        "promotion_requires_approval": true
+      },
+      "supersedes_unexecuted_profile": "stockout-resource-pilot-1.0.0; 4480 origins; rejected before generation by RSS estimate",
+      "retain_accepted_outputs_for_independent_quality": true
+    },
+    "preflight": {
+      "ready_to_attempt": true,
+      "estimates": {
+        "tree_rss_bytes": 885620736.0,
+        "wall_seconds": 1051.5520281000006,
+        "scratch_bytes": 365051904.0,
+        "input_rows": 186702.6,
+        "input_bytes": 11167923.9,
+        "ledger_rows": 14847.0,
+        "qualification_bytes": 1948258.2000000002
+      },
+      "checks": {
+        "tree_rss_bytes": true,
+        "wall_seconds": true,
+        "scratch_bytes": true,
+        "input_rows": true,
+        "input_bytes": true,
+        "ledger_rows": true,
+        "qualification_bytes": true,
+        "free_disk": true,
+        "physical_origins": true
+      },
+      "scale_from_measured_smoke": 1.75,
+      "estimate_headroom_fraction": 0.2,
+      "scope": "heuristic estimates, not guaranteed upper bounds; databases, selected arrays and all input caps still enforced by actual pipeline",
+      "larger_profile_qualified": false,
+      "quality_qualified": false
+    },
+    "retained_root": "/private/tmp/ai08-whole-probe-9itgnuc6",
+    "temporary_outputs_removed": false,
+    "whole_smoke_budget_passed": false,
+    "whole_pilot_budget_passed": true,
+    "larger_profile_generation_attempted": true,
+    "larger_profile_generated": true,
+    "larger_profile_qualified": true,
+    "full_ai_dev_or_ai_training_qualified": false,
+    "independent_quality_accepted": false,
+    "final_test_outcomes_evaluated": false,
+    "model_promoted": false,
+    "ai08_ready": false
+  },
+  "preflight": {
+    "baseline_sha256": "87adff3cd789920dab3db9e1f585ada40d433dfafa12cf374a13b79245b55f82",
+    "free_before_bytes": 56984244224,
+    "profiles": {
+      "stockout-resource-pilot-1.json": {
+        "ready_to_attempt": false,
+        "estimates": {
+          "tree_rss_bytes": 1389208997.6470587,
+          "wall_seconds": 1649.4933774117653,
+          "scratch_bytes": 572630437.6470588,
+          "input_rows": 292866.82352941175,
+          "input_bytes": 17518312.0,
+          "ledger_rows": 23289.41176470588,
+          "qualification_bytes": 3056091.2941176468
+        },
+        "checks": {
+          "tree_rss_bytes": false,
+          "wall_seconds": true,
+          "scratch_bytes": true,
+          "input_rows": true,
+          "input_bytes": true,
+          "ledger_rows": true,
+          "qualification_bytes": true,
+          "free_disk": true,
+          "physical_origins": true
+        },
+        "scale_from_measured_smoke": 2.7450980392156863,
+        "estimate_headroom_fraction": 0.2,
+        "scope": "heuristic estimates, not guaranteed upper bounds; databases, selected arrays and all input caps still enforced by actual pipeline",
+        "larger_profile_qualified": false,
+        "quality_qualified": false
+      },
+      "stockout-resource-pilot-1.1.json": {
+        "ready_to_attempt": true,
+        "estimates": {
+          "tree_rss_bytes": 885620736.0,
+          "wall_seconds": 1051.5520281000006,
+          "scratch_bytes": 365051904.0,
+          "input_rows": 186702.6,
+          "input_bytes": 11167923.9,
+          "ledger_rows": 14847.0,
+          "qualification_bytes": 1948258.2000000002
+        },
+        "checks": {
+          "tree_rss_bytes": true,
+          "wall_seconds": true,
+          "scratch_bytes": true,
+          "input_rows": true,
+          "input_bytes": true,
+          "ledger_rows": true,
+          "qualification_bytes": true,
+          "free_disk": true,
+          "physical_origins": true
+        },
+        "scale_from_measured_smoke": 1.75,
+        "estimate_headroom_fraction": 0.2,
+        "scope": "heuristic estimates, not guaranteed upper bounds; databases, selected arrays and all input caps still enforced by actual pipeline",
+        "larger_profile_qualified": false,
+        "quality_qualified": false
+      }
+    }
+  },
+  "source_inputs_unchanged": {
+    "files": 573,
+    "bytes": 63417718,
+    "sha256": "8a7575f4ce9acebde85bd07ccb65c271a24654bfb59cae01a3008c58585ee6b9"
+  },
+  "prior_partition_parents_verified": [
+    {
+      "directory": "history-measured",
+      "id": "feature-partitions-sha256-4f16903728474a85b4eada9efe990bc0c87c6154829369fd9b047652c90981af",
+      "files": 49,
+      "bytes": 1553889,
+      "checksums_verified": true
+    },
+    {
+      "directory": "label-partitions-native-clock",
+      "id": "label-partitions-sha256-4ce9a1e6ba5f00cde6035e6416c43296a83eb0bd376056012df157259838e5e9",
+      "files": 17,
+      "bytes": 110484,
+      "checksums_verified": true
+    },
+    {
+      "directory": "upstream-series-native-sealed",
+      "id": "upstream-partitions-sha256-00706e367ea7f92dd81865e36fb426b8b7b44587cbe029f4fe5c4c0021c51ef5",
+      "files": 103,
+      "bytes": 1104817,
+      "checksums_verified": true
+    },
+    {
+      "directory": "temporal-series-native-accepted",
+      "id": "temporal-partitions-sha256-0aaeb1f6f6d888cca13dc8fa6572975bd95f0045e970f8b388aff4cff71957ad",
+      "files": 15,
+      "bytes": 183189,
+      "checksums_verified": true
+    },
+    {
+      "directory": "upstream-partitions-native-once",
+      "id": "upstream-partitions-sha256-0c7455b21a7496ffc1dc8659dad9c559fea2a5e2c840f44527c476c5fa613a42",
+      "files": 103,
+      "bytes": 1103923,
+      "checksums_verified": true
+    },
+    {
+      "directory": "temporal-native",
+      "id": "temporal-partitions-sha256-f638ac6f1ae44f11015dcae8eb919a402881746e7b6c237f9201a24eaeda9977",
+      "files": 15,
+      "bytes": 178960,
+      "checksums_verified": true
+    }
+  ],
+  "proof_files_sha256": {
+    "ai08-whole-smoke-resource-stable.json": "87adff3cd789920dab3db9e1f585ada40d433dfafa12cf374a13b79245b55f82",
+    "ai08-resource-pilot-accepted.json": "025fe584b6cc5ddcf29f810a07564ac2158046c38033297ad52dc93faf83fe1d"
+  },
+  "largest_parquet_partition_bytes": {
+    "features": 47186,
+    "labels": 6731,
+    "upstream": 12450,
+    "temporal": 20948
+  },
+  "measured_pipeline_physical_origins_per_second": {
+    "smoke": 3.259182530599504,
+    "pilot": 3.9676866682143275
+  },
+  "tune_category_evaluability": {
+    "before": {
+      "passed": 3,
+      "not_evaluable": 5
+    },
+    "pilot": {
+      "passed": 7,
+      "not_evaluable": 1
+    }
+  },
+  "selected_model": "logistic_regression:without_upstream",
+  "selection_provisional": true,
+  "calibration_generalization": "not_evaluated_fit_diagnostics_only",
+  "development_roles_only": true,
+  "final_test_membership": 226,
+  "final_test_outcomes_scored": false,
+  "retained_input_bytes": 1261676,
+  "validation": {
+    "focused_tests_passed": 29,
+    "focused_warnings": 0,
+    "ruff_files": 641,
+    "mypy_modules": 382,
+    "source_packages_and_contracts_and_lock_unchanged": true,
+    "full_old_regression": "2133 passed on parent4faaf4b; remote Required CI success",
+    "full_current_regression": "not rerun locally for scripts/docs-only change; new commit requires own CI",
+    "final_documentation_and_secrets": "passed",
+    "final_checks": {
+      "focused": {
+        "status": "passed",
+        "log_sha256": "3d950c05165dab05b1d6b13f8a60c5fb0ef22ebf253f1018db8081f852e15cd9"
+      },
+      "ruff": {
+        "status": "passed",
+        "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+      },
+      "format": {
+        "status": "passed",
+        "log_sha256": "d1774e0a8fd1fc6ae0ae15a105b90bb0ea723d545fdc8a6df432f4b0af99121d"
+      },
+      "mypy": {
+        "status": "passed",
+        "log_sha256": "85aae95ad2238a458faec0d2cd6b6f0b4723fa48da0699c8875ac356d3d29f5c"
+      },
+      "docs": {
+        "status": "passed",
+        "log_sha256": "c4e9939a7472bcd431b9e7f747f6547ef4c51c0f00be8c48ef6db0a033d1a2e8"
+      },
+      "secrets-dir": {
+        "status": "passed",
+        "log_sha256": "616e3be94cc750442636c4bf44db562c12455a8989c211ad9d00c6e559771a2d"
+      },
+      "secrets-git": {
+        "status": "passed",
+        "log_sha256": "9404811441c22bb777352f92bae9361ba7f33f7d1b9fec15d7db539c3d7c5645"
+      }
+    },
+    "old_inputs_and_all_partition_parents_reverified_after_pilot": true
+  },
+  "parent_remote_ci": {
+    "sha": "4faaf4b6c1997fda3a609645595165643bf302a9",
+    "pr_run": 37221609490,
+    "push_run": 37221607064,
+    "status": "success"
+  },
+  "superseded_attempts": [
+    {
+      "log": "ai08-whole-smoke-resource-probe.log",
+      "sha256": "c95cdd9669c8870c8f9aef52f0bee248620222089518eb97e7c6bcd6ab793587",
+      "status": "superseded_not_accepted",
+      "reason": "sandbox denied psutil sysctl; own group stopped"
+    },
+    {
+      "log": "ai08-whole-smoke-resource-probe-accepted.log",
+      "sha256": "9280c0f71fc788c8d13eac36a193395fb5e279badcb0522b4474d830bdea81d1",
+      "status": "superseded_not_accepted",
+      "reason": "export target must be inside producer data/generated; isolated clone added"
+    },
+    {
+      "log": "ai08-whole-smoke-resource-accepted.log",
+      "sha256": "6a22c74bfb3b399c410091d34feaf4d1bc298130983a5b3b54fa61a7251edbe1",
+      "status": "superseded_not_accepted",
+      "reason": "import cache saw producer path before clone existed; cache invalidated"
+    },
+    {
+      "log": "ai08-whole-smoke-resource-final.log",
+      "sha256": "ee96128ab5d16f2dbe019071583ce57ae7b2d88dd9b622194a986646f6ddd051",
+      "status": "superseded_not_accepted",
+      "reason": "strict old development ID comparison rejected regenerated manifest timestamps"
+    },
+    {
+      "log": "ai08-whole-smoke-resource-parity.log",
+      "sha256": "1dbc42ad351ef016901161a251783dc4c5146cecb499ffd40e4a8c9caab70f72",
+      "status": "superseded_not_accepted",
+      "reason": "all six models/results/reports equal; only correct regenerated parent IDs changed; superseded by full accepted smoke"
+    },
+    {
+      "log": "ai08-whole-smoke-resource-sealed.log",
+      "sha256": "a64400fe1dfa54bc4f56dabf4ddde405abefbf8058fb56883da65bd15331cd79",
+      "status": "superseded_not_accepted",
+      "reason": "transient removed directory caused monitor race; os.walk fix and regression added"
+    }
+  ],
+  "boundaries": {
+    "intermediate_profile_resources_qualified": true,
+    "full_ai_dev_qualified": false,
+    "full_ai_training_qualified": false,
+    "independent_quality_qualified": false,
+    "thresholds_approved": false,
+    "registry_modified": false,
+    "model_promoted": false,
+    "ai05_v12_modified": false,
+    "ai08_ready": false
+  }
+}

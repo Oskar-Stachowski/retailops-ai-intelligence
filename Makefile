@@ -120,6 +120,7 @@ contracts:
 	$(UV_RUN) python scripts/update_v12_inference_contracts.py
 	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py
+	$(UV_RUN) python scripts/update_stockout_job_contracts.py
 
 contracts-check:
 	$(UV_RUN) python scripts/update_anomaly_portfolio_contracts.py --check
@@ -135,6 +136,7 @@ contracts-check:
 	$(UV_RUN) python scripts/update_v12_inference_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py --check
+	$(UV_RUN) python scripts/update_stockout_job_contracts.py --check
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up

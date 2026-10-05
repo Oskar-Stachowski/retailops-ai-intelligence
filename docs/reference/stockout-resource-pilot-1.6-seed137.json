@@ -1,0 +1,103 @@
+{
+  "schema_version": "stockout-resource-pilot-1.6.0",
+  "scope": "Prospective30x102 robustness seed137; matches accepted seed42 physical generation; no final-test targets or quality access",
+  "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+  "consumer_baseline_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+  "generation": {
+    "profile": "ai-load",
+    "days": 102,
+    "products": 30,
+    "stores": 3,
+    "warehouses": 2,
+    "seed": 137,
+    "start_date": "2026-04-21",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 9180,
+    "forecast_plan_days": 0
+  },
+  "physical_origin_upper_bound": 6120,
+  "inventory_configuration": "pinned default_inventory_config; no supplier/scenario/stock overrides",
+  "producer_timeline_metadata": {
+    "warmup_days": 0,
+    "origin_days": 0,
+    "label_tail_days": 0
+  },
+  "split_policy": {
+    "version": "stockout-temporal-split-1.0.0",
+    "start_at": "2026-04-21T00:00:00Z",
+    "train_until": "2026-06-05T00:00:00Z",
+    "tune_until": "2026-06-24T00:00:00Z",
+    "calibration_until": "2026-07-13T00:00:00Z",
+    "test_until": "2026-08-01T00:00:00Z",
+    "evaluated_at": "2026-08-01T00:00:00Z",
+    "purge": "outcome_end_and_availability_strictly_before_next_role",
+    "final_test": "membership_only_no_outcome_metrics_no_training_access"
+  },
+  "budgets": {
+    "scratch_bytes": 603979776,
+    "tree_rss_bytes": 1342177280,
+    "wall_seconds": 2700,
+    "minimum_free_bytes": 53687091200
+  },
+  "budget_revision": {
+    "reason": "Matching30x102 source, rather than pooling distinct warm19 and cold30 cohorts. Measured cold30 peak852.08MiB RSS and465.35MiB allocated scratch;20percent estimate fits new1280MiB RAM and576MiB scratch caps. Seed137 warm19 producer export reached1035.39MiB and correctly stopped under old1024MiB cap. This prospective resource-only revision precedes new generation and does not change quality thresholds, input caps,2700s wall or50GiB disk reserve.",
+    "failed_warm137_receipt_sha256": "c7f2f6153be15ae9fc4e1967e14dedbdd0b3b05b4019557253bdc81608223b46"
+  },
+  "unchanged_consumer_limits": {
+    "input_rows": 500000,
+    "input_bytes": 67108864,
+    "qualification_bytes": 4194304,
+    "ledger_rows": 100000,
+    "physical_origins": 10000,
+    "main_database_bytes": 134217728,
+    "development_bytes": 16777216
+  },
+  "future_quality_scope": {
+    "robustness_seeds": [
+      42,
+      137,
+      2026
+    ],
+    "required_scenarios": [
+      "normal",
+      "promotion",
+      "demand_shock",
+      "inventory_constraint"
+    ],
+    "metrics": [
+      "average_precision",
+      "prevalence",
+      "brier",
+      "reliability",
+      "recall_at_capacity",
+      "precision_at_capacity"
+    ],
+    "segments": [
+      "category",
+      "stock_location",
+      "inventory_constrained"
+    ],
+    "resource_pass_is_not_quality_pass": true,
+    "calibration_fit_diagnostics_are_not_independent_quality": true,
+    "business_thresholds_and_capacity_require_approval": true,
+    "final_test_requires_separate_approved_campaign": true,
+    "promotion_requires_approval": true
+  },
+  "supersedes_unexecuted_profile": "New matching-cohort resource proposal; previous failed warm137 attempts and accepted seed42 profiles remain immutable.",
+  "retain_accepted_outputs_for_independent_quality": true,
+  "measured_resource_baseline": {
+    "receipt": "ai08-qualification-30-resource.json",
+    "sha256": "080fd9c2ec764a35e85e5a17ed0fd3447e0e0d318d960b8bff6546b564850239",
+    "physical_origins": 6120
+  },
+  "robustness_campaign": {
+    "seeds": [
+      42,
+      137,
+      2026
+    ],
+    "development_model": "fit/select only on seed42;137/2026 resource fits are execution mechanics, never model selection or quality claims",
+    "final_holdouts": "remain unopened until separate approved campaign",
+    "scenario_reports": "actual definitions/support/overlap must be frozen before final outcomes; no unsupported scenario labels"
+  }
+}
