@@ -1,5 +1,13 @@
 # Aktualny status
 
+**AI 08 — rzeczywisty nowy checkpoint ma zgodność native/wheel i zielone CI.**
+[Odbiór 08.17](evidence/08-17-stockout-remote-checkpoints.md) potwierdza
+wybrany model i wszystkie segmenty na danych wyboru. Matching seedy 42/137
+są przygotowane; 2026 jest jeszcze w toku. [Późniejsze źródła](reference/stockout-future-sources.md)
+mają osobne prospektywne profile/workflow, bez fitów lub otwarcia TEST.
+Zgoda na politykę, rzeczywiste późniejsze źródła, niezależna jakość, lifecycle,
+batch/read API i finalny odbiór pozostają otwarte. **Cały AI 08 pozostaje not ready.**
+
 **AI 08 — późniejsza kalibracja i przenośny runtime mają osobny protokół development.**
 [Kontrakt](reference/stockout-selection-runtime.md) i
 [odbiór przyrostu](evidence/08-16-stockout-selection-runtime.md) dodają
