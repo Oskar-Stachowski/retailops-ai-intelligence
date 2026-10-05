@@ -6,6 +6,7 @@ from datetime import date, timedelta
 import pytest
 from pydantic import ValidationError
 from test_anomaly_detectors import numeric_rows, point
+from test_anomaly_portfolio_model import saved_model  # noqa: F401 - shared genuine forest fixture
 
 from retailops_ai.anomaly_detectors.codec import baseline_score
 from retailops_ai.anomaly_detectors.protocol import series_key
@@ -16,7 +17,15 @@ from retailops_ai.anomaly_detectors.rows import (
     rate_stock_shortfall,
     validate_row,
 )
-from retailops_ai.anomaly_portfolio.model import EventCapacity, count_rate_row
+from retailops_ai.anomaly_evaluation.verification import verify_scores
+from retailops_ai.anomaly_portfolio.model import (
+    CountRateDescriptor,
+    EventCapacity,
+    Model,
+    count_rate_row,
+    score,
+)
+from retailops_ai.source_snapshot.files import json_sha256
 
 
 def test_known_prior_rate_prevents_zero_week_accumulation_in_sparse_counts():
@@ -84,3 +93,49 @@ def test_rate_row_rejects_resealed_false_arithmetic_and_label_fields():
             CountRateRow.model_validate_json(json.dumps(raw))
     with pytest.raises(ValidationError):
         EventCapacity(event_type="return_completed", alert_fraction=0.01, high_fraction=0.02)
+
+
+def test_saved_json_count_arrays_replay_and_strict_numbers_remain_required(saved_model):  # noqa: F811 - injected shared fixture
+    from datetime import UTC, datetime
+
+    from test_anomaly_detectors import scope
+
+    from retailops_ai.anomaly_detectors.protocol import Window
+
+    fields = saved_model.descriptor.model_dump()
+    fields.pop("version")
+    descriptor = CountRateDescriptor(
+        **fields,
+        event_capacities=tuple(
+            EventCapacity(event_type=e, alert_fraction=0.05, high_fraction=0.01)
+            for e in ("sale_completed", "return_completed")
+        ),
+    )
+    model = Model(
+        detector_id="anomaly-detector-sha256-" + json_sha256(descriptor.model_dump(mode="json")),
+        descriptor=descriptor,
+    )
+    day = date(2026, 8, 12)
+    p = point(day, 90)
+    row = count_rate_row(p, {})
+    assert row is not None
+    saved = json.loads(row.model_dump_json())
+    assert saved["recent_counts"] == []
+    for family in ("seasonal_residual", "isolation_forest"):
+        decisions = score(
+            model,
+            [p],
+            (scope(),),
+            Window(start=day, end=day),
+            family,
+            "batch",
+            datetime(2026, 8, 16, tzinfo=UTC),
+        )
+        verify_scores(model, decisions, [saved])
+        for name, invalid in (
+            ("prior_known_units", "100"),
+            ("prior_known_observations", True),
+            ("oracle_label", True),
+        ):
+            with pytest.raises(ValidationError):
+                verify_scores(model, decisions, [{**saved, name: invalid}])

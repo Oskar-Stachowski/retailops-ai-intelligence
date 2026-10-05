@@ -8,11 +8,11 @@ from typing import TYPE_CHECKING, Any
 
 from retailops_ai.anomaly_detectors.codec import baseline_score, forest_scores
 from retailops_ai.anomaly_detectors.protocol import Scope, Window, scoring_origin, series_key
-from retailops_ai.anomaly_detectors.rows import CountRateRow, MultiscaleRow, validate_row
+from retailops_ai.anomaly_detectors.rows import CountRateRow, MultiscaleRow
 from retailops_ai.anomaly_evaluation.contract import Decision, EvaluationPolicy, Truth
 from retailops_ai.anomaly_evaluation.evaluator import evaluate
 from retailops_ai.anomaly_evaluation.quality import QualityPolicy, assess
-from retailops_ai.qualified_anomalies.contract import Policy
+from retailops_ai.qualified_anomalies.contract import ModelRow, Policy
 from retailops_ai.source_snapshot.files import canonical_json, decode_json, json_sha256
 
 if TYPE_CHECKING:
@@ -25,7 +25,20 @@ def verify_scores(model: "Model", decisions: list[Decision], inputs: list[Any]) 
         raise ValueError("anomaly_quality_scoring_input_census")
     from retailops_ai.anomaly_portfolio.model import CountRateDescriptor, MultiscaleDescriptor
 
-    rows = [validate_row(r) if r is not None else None for r in inputs]
+    # Saved JSON arrays represent tuple fields. Keep strict JSON numeric and
+    # extra-field validation rather than treating decoded JSON as Python rows.
+    rows = [
+        (
+            CountRateRow
+            if r.get("residual_recipe") == "causal-count-residuals-2.0.0"
+            else MultiscaleRow
+            if r.get("residual_recipe") == "causal-count-residuals-1.0.0"
+            else ModelRow
+        ).model_validate_json(canonical_json(r))
+        if r is not None
+        else None
+        for r in inputs
+    ]
     if any(
         r is not None
         and (
