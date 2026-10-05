@@ -2,7 +2,15 @@
 
 Stan na 2026-10-05: **`pending_required_ci`**. Pełny zakres lokalny jest odebrany;
 zamknięcie etapu wymaga Required CI końcowych commitów obu repozytoriów.
-Publikacja do publicznych repozytoriów czeka na zgodę właściciela.
+Publikacja została zatwierdzona i wykonana w PR-ach
+[consumer #24](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/24)
+oraz [producer #97](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/97).
+[Pierwszy run konsumenta i reprodukcja](07-ci-remediation.json) ujawniły
+nieaktualną oczekiwaną rewizję migracji w `/ready` oraz brak importu `data`
+przy bezpośrednim uruchomieniu skryptu producenta. Poprawka wymaga aktualnej
+rewizji `0022_anomaly_evaluations`, uruchamia przygotowanie jako moduł i
+dodatkowo sprawdza gotowość rzeczywistego serwera API w OCI bez portów hosta.
+Zamknięcie wymaga zielonego Required CI końcowego HEAD.
 
 ## Zamrożona jakość
 

@@ -38,6 +38,25 @@ def command(args: list[str], *, cwd: Path = ROOT, log: Path | None = None) -> st
             + json.dumps({"child_exit_code": result.returncode})
             + "\n"
         )
+        if result.returncode and log.name in {
+            "source.log",
+            "source-preparation.log",
+            "public-input-preparation.log",
+        }:
+            # These pre-container jobs contain only approved generated
+            # synthetic facts. Keep their bounded failure detail visible in CI;
+            # service logs/configuration can contain credentials and stay private.
+            print(
+                json.dumps(
+                    {
+                        "failed_native_stage": log.stem,
+                        "child_exit_code": result.returncode,
+                        "detail": (result.stdout + result.stderr)[-6000:],
+                    }
+                ),
+                file=sys.stderr,
+                flush=True,
+            )
     require(result.returncode == 0, "anomaly_oci_child_command_failed")
     return result.stdout.strip()
 
@@ -151,7 +170,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             command(
                 [
                     str(native_python),
-                    "scripts/data/prepare_ai07_portfolio.py",
+                    "-m",
+                    "scripts.data.prepare_ai07_portfolio",
                     "--source",
                     str(source),
                     "--output-root",
@@ -199,7 +219,25 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         command([*base, "up", "-d", "--wait", "db"], log=work / "database.log")
         command([*base, "run", "--rm", "-T", "api-migrate"], log=work / "migrations.log")
         command([*base, "run", "--rm", "-T", "mlflow-migrate"], log=work / "mlflow-migration.log")
-        command([*base, "up", "-d", "--wait", "mlflow"], log=work / "mlflow.log")
+        command([*base, "up", "-d", "--wait", "api", "mlflow"], log=work / "services.log")
+        ready = json.loads(
+            command(
+                [
+                    *base,
+                    "exec",
+                    "-T",
+                    "api",
+                    "python",
+                    "-c",
+                    "import json,urllib.request; "
+                    "response=urllib.request.urlopen('http://127.0.0.1:8081/ready',timeout=2); "
+                    "print(json.dumps({'status':response.status}))",
+                ],
+                log=work / "api-readiness.log",
+            )
+        )
+        require(ready["status"] == 200, "anomaly_oci_migrated_api_readiness")
+        mark("migrated_api_service_ready_without_host_ports")
         mark("actual_built_oci_pinned_pg16_mlflow_and_all_migrations")
         output = work / "acceptance"
         output.mkdir(mode=0o700)
