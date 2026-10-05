@@ -1,5 +1,22 @@
 # Aktualny status
 
+**AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
+Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
+Świeży OCI/PostgreSQL 16/MLflow sprawdził komplet native publicznych rodziców,
+gotowość API po migracjach, lifecycle, recovery, promocję, odrzucenie, rollback,
+atomową publikację 1232 wyników, scoped HTTP i SIGKILL/restart.
+[Końcowy odbiór](evidence/07-completion.md),
+[manifest artefaktów](evidence/07-ready/capsules.json) oraz
+[Required CI implementacji obu repozytoriów](evidence/07-ready/required-ci.json)
+wiążą zakres, konkretne commity i zaliczone kontrole.
+Publikacja została zatwierdzona i wykonana w
+[AI PR #24](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/24)
+oraz [source PR #97](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/97).
+Pełne **AI 07 `ready` na `main`** wymaga scalenia PR #24 i #97 oraz zielonego
+Required CI dokładnych commitów integracji i obu merge commitów. Wyniki są
+wiązane z SHA w tych PR-ach; wcześniejszy odbiór na gałęziach nie zastępuje
+odbioru integracji. [Zakres połączenia z main](evidence/07-main-integration.md)
+opisuje wspólne migracje i zachowanie AI 05/08.
 **AI 08 — wszystkie odbiory danych, jakości i działającego modelu zaliczone.**
 [Końcowy odbiór](evidence/08-27-final-serving-acceptance.md) potwierdza prawdziwe
 MLflow/SQL, register/promote/rollback/reject, cold worker, batch i scoped API:
@@ -688,3 +705,18 @@ Nie ma jeszcze generowania odpowiedzi, ewaluacji groundedness ani wykonywania
 narzędzi agenta — to AI 12. Pipeline danych, modele, integracja zdarzeń oraz
 wdrożenie AWS/EKS mają dalsze bramki. Limit AWS na proces nie zastępuje wspólnego
 budżetu wielu replik ani produkcyjnego IAM. Nie deklarujemy wdrożenia w chmurze.
+
+## AI07 — pełny strumień operacyjny DQ
+
+[Odbiór konsumenta v2](evidence/ai/07/07.5-full-dq-consumer/README.md) rozwija
+wcześniejszy replay wybranych sprzedaży do wszystkich sprzedaży i natywnych
+zgłoszeń zwrotów, z ogonem po historii sprzedaży. Brakujące fakty pozostają
+jawne; odrzucone zwroty nie zwiększają refundowanych sztuk. Pokrycie konkretnego
+źródła nie kwalifikuje kompletności dnia. [Kwalifikacja dni](reference/day-qualification.md)
+weryfikuje jawne zamknięcie źródła i dostępne wtedy zaakceptowane fakty DQ.
+[Cechy anomalii](reference/qualified-anomaly-inputs.md) korzystają z tej bramki
+osobno dla historii przed ocenianym dniem i wyniku po jego zamknięciu.
+[Detektory](reference/anomaly-detectors.md) dodają podział czasowy z cutoffami,
+baseline/Isolation Forest i progi wyznaczane z walidacji. Artefakty odtwarzają
+trening i wynik; nie kwalifikują jeszcze jakości modelu. AI07 wymaga oceny
+obserwacji i epizodów na większych danych, porównania modeli oraz własnego lifecycle.

@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "checked_at": "2026-10-05T04:54:03.654158+00:00",
+  "consumer_commit": "5be04b19ee2890ea80a413dd92b7229eea7dff52",
+  "producer_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+  "oci_image_digest": "sha256:e8a2822a707db40fbe82eea77d6d3ed33c7c7b2fda9c317d4c2ba79bddb22ade",
+  "image_pin_kind": "actual_local_oci_image_configuration_sha256",
+  "source_dataset_id": "source-sha256-043276380483acdf72d06f253d682e4bf4aabce0721b653a30e5a5bb7da157c9",
+  "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-78b20d01b3ba74e3afa947b29bc79c345748f3a89484389d29a910fd32ca4cc5",
+  "qualification_scope": "synthetic_ai_07_portfolio_v4",
+  "acceptance": {
+    "aliases": {
+      "candidate": "3",
+      "champion": "1",
+      "rollback": "2"
+    },
+    "batch_id": "anomaly-batch-sha256-ae216834b2af973c641b41b320fda34c896079e3d1ea3978e8d7049b7e4a2c69",
+    "checks": [
+      "authenticated_private_register_and_idempotent_projection",
+      "pipeline_cannot_make_model_decisions",
+      "qualified_primary_promoted_with_actual_image_pin",
+      "real_version_creation_crash_reconciled_without_duplicate",
+      "concurrent_recovery_serialized_in_postgresql",
+      "real_alias_write_crash_reconciled",
+      "explicit_rejection_blocks_promotion",
+      "rollback_restores_exact_saved_model_and_image",
+      "authenticated_installed_batch_cli_and_viewer_write_refusal",
+      "external_alias_drift_blocks_decisions",
+      "actual_saved_model_scores_native_verified_public_features",
+      "complete_census_atomic_postgresql_publication",
+      "idempotency_and_logical_reuse_keep_original_detection_times",
+      "native_insert_failure_leaves_no_partial_batch_or_request",
+      "scoped_read_api_counts_403_404_and_read_only_routes",
+      "common_model_and_evaluation_metadata_on_native_persistence",
+      "historical_stale_and_unknown_inputs_reported_honestly"
+    ],
+    "database_counts": {
+      "anomaly_batches": 1,
+      "anomaly_evaluations": 3,
+      "anomaly_requests": 2,
+      "anomaly_results": 1232
+    },
+    "image_digest": "sha256:e8a2822a707db40fbe82eea77d6d3ed33c7c7b2fda9c317d4c2ba79bddb22ade",
+    "model_sha256": "febb4393e3d93d6f47bd59d464c245a09315ba6ad18d96e1c186207d1d27af56",
+    "qualification_scope": "synthetic_ai_07_portfolio_v4",
+    "rejected_version": "3",
+    "release_id": "anomaly-release-sha256-8dd30935d42f10a12f80719a68e4b4c7b9f59f331eb374ab337043876251a2b4",
+    "status": "passed",
+    "transport_durability": "offline_only",
+    "versions": [
+      "1",
+      "2",
+      "3"
+    ]
+  },
+  "restart": {
+    "checks": [
+      "native_restart_preserves_saved_models_aliases_releases_evaluations_complete_batches"
+    ],
+    "release_id": "anomaly-release-sha256-8dd30935d42f10a12f80719a68e4b4c7b9f59f331eb374ab337043876251a2b4",
+    "status": "passed"
+  },
+  "stages": [
+    "saved_models_frozen_evaluation_and_current_compatibility",
+    "native_complete_public_source_snapshot_dq_coverage_features",
+    "actual_built_oci_pinned_pg16_mlflow_and_all_migrations",
+    "real_qualified_versions_lifecycle_recovery_atomic_batch_scoped_http",
+    "sigkill_restart_preserves_exact_complete_state"
+  ],
+  "transport_durability": "offline_only",
+  "deployment_attestation": "not_attested"
+}

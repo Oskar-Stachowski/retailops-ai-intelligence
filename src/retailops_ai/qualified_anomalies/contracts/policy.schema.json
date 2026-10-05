@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "fit_clock": {
+      "const": "utc_window_start_minus_one_microsecond",
+      "default": "utc_window_start_minus_one_microsecond",
+      "title": "Fit Clock",
+      "type": "string"
+    },
+    "history_days": {
+      "const": 28,
+      "default": 28,
+      "title": "History Days",
+      "type": "integer"
+    },
+    "minimum_history_days": {
+      "const": 14,
+      "default": 14,
+      "title": "Minimum History Days",
+      "type": "integer"
+    },
+    "minimum_residuals": {
+      "const": 7,
+      "default": 7,
+      "title": "Minimum Residuals",
+      "type": "integer"
+    },
+    "quantity_basis": {
+      "const": "dq_accepted_receipts_at_query_cutoff",
+      "default": "dq_accepted_receipts_at_query_cutoff",
+      "title": "Quantity Basis",
+      "type": "string"
+    },
+    "returns_delay_hours": {
+      "default": 72,
+      "maximum": 168,
+      "minimum": 0,
+      "title": "Returns Delay Hours",
+      "type": "integer"
+    },
+    "sales_delay_hours": {
+      "default": 24,
+      "maximum": 168,
+      "minimum": 0,
+      "title": "Sales Delay Hours",
+      "type": "integer"
+    },
+    "scale_policy": {
+      "const": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+      "default": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+      "title": "Scale Policy",
+      "type": "string"
+    },
+    "scoring_clock": {
+      "const": "exclusive_utc_day_end_plus_delay_inclusive",
+      "default": "exclusive_utc_day_end_plus_delay_inclusive",
+      "title": "Scoring Clock",
+      "type": "string"
+    },
+    "seasonal_lag_days": {
+      "const": 7,
+      "default": 7,
+      "title": "Seasonal Lag Days",
+      "type": "integer"
+    },
+    "stock_policy": {
+      "const": "scoring_context_only_no_automatic_censoring_correction",
+      "default": "scoring_context_only_no_automatic_censoring_correction",
+      "title": "Stock Policy",
+      "type": "string"
+    },
+    "version": {
+      "const": "qualified-anomaly-inputs-1.0.0",
+      "default": "qualified-anomaly-inputs-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "title": "Policy",
+  "type": "object"
+}

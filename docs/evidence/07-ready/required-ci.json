@@ -1,0 +1,322 @@
+{
+  "version": "ai07-implementation-required-ci-1.0.0",
+  "stage_status": "ready",
+  "qualification_scope": "synthetic_ai_07_portfolio_v4",
+  "checked_at": "2026-10-05T08:30:52.881980+00:00",
+  "consumer_implementation_commit": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+  "source_publication_commit": "8747074adceea2fe6bbeccdf9068dcee6dd81d02",
+  "frozen_qualification_source_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+  "runs": [
+    {
+      "repo": "retailops-ai-intelligence",
+      "run_id": 37272203883,
+      "head_sha": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37272203883",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 111641646767,
+          "name": "persistence",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111641646838,
+          "name": "anomaly-oci",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111641646938,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111641646947,
+          "name": "secrets",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111669391082,
+          "name": "required-result",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        }
+      ]
+    },
+    {
+      "repo": "retailops-cloud-native-platform",
+      "run_id": 37277609322,
+      "head_sha": "8747074adceea2fe6bbeccdf9068dcee6dd81d02",
+      "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37277609322",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 111658139375,
+          "name": "Detect changed areas",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658139736,
+          "name": "Required CI contract tests",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658194623,
+          "name": "Repository diff hygiene",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195600,
+          "name": "api-gate / API integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195676,
+          "name": "iac-security-gate / Checkov IaC security report",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195772,
+          "name": "iac-security-gate / TFLint IaC quality gate",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195824,
+          "name": "security-gate / Filesystem vulnerability scan",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195832,
+          "name": "security-gate / Backend image vulnerability scan",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195849,
+          "name": "data-gate / Synthetic data quality gate",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195860,
+          "name": "data-gate / AI 06 full cross-repo gate",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195862,
+          "name": "security-gate / Frontend dependency audit",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195870,
+          "name": "data-gate / AI 07 full sales and returns offline replay",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195874,
+          "name": "security-gate / Python dependency audit",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658195876,
+          "name": "security-gate / Secret scanning with Gitleaks",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658196021,
+          "name": "data-gate / AI 03 full cross-repo gate",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658196044,
+          "name": "docker-gate / Validate Docker Compose config",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658196089,
+          "name": "security-gate / Frontend image vulnerability scan",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658196201,
+          "name": "kubernetes-gate / Kustomize, schema and policy gates",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658196239,
+          "name": "terraform-validation-gate / Terraform fmt, init and validate",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658196298,
+          "name": "frontend-gate / Frontend tests and lint",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658349612,
+          "name": "frontend-gate / Build frontend application",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658398026,
+          "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658452614,
+          "name": "docker-gate / Build full stack and run smoke tests",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658464814,
+          "name": "frontend-gate / Build frontend Docker image",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111658474309,
+          "name": "security-gate / Security evidence summary",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111661842898,
+          "name": "api-gate / API Docker image build",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        },
+        {
+          "id": 111670491730,
+          "name": "required-result",
+          "status": "completed",
+          "conclusion": "success",
+          "active_steps": []
+        }
+      ]
+    }
+  ],
+  "superseded_pr_timeout": {
+    "repo": "retailops-ai-intelligence",
+    "run_id": 37272207226,
+    "head_sha": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37272207226",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "jobs": [
+      {
+        "id": 111641663401,
+        "name": "secrets",
+        "status": "completed",
+        "conclusion": "success",
+        "active_steps": []
+      },
+      {
+        "id": 111641663693,
+        "name": "checks",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "active_steps": []
+      },
+      {
+        "id": 111641663718,
+        "name": "anomaly-oci",
+        "status": "completed",
+        "conclusion": "success",
+        "active_steps": []
+      },
+      {
+        "id": 111641663812,
+        "name": "persistence",
+        "status": "completed",
+        "conclusion": "success",
+        "active_steps": []
+      },
+      {
+        "id": 111678535796,
+        "name": "required-result",
+        "status": "completed",
+        "conclusion": "failure",
+        "active_steps": []
+      }
+    ]
+  },
+  "receipt_scope": "Successful complete push Required CI of consumer implementation eb15ac9 and complete producer Required CI before this closure commit. The former PR passed all 2140 tests and every make check gate but reached the 125-minute timeout during setup-uv post-job cache packaging. This publication partitions the same full collection and every original acceptance gate across isolated runners. Complete new push and PR Required CI must succeed before final closure confirmation; their exact final run links are recorded in consumer PR #24.",
+  "local_oci_evidence": {
+    "path": "ci-fix-oci-acceptance.json",
+    "sha256": "e8e9d292e9b3f6140816f700bac4c766b0f8cdcaef522b4c9830c930e966b12c"
+  },
+  "quality": {
+    "primary_original_gates": "56/56",
+    "reference_original_gates": "56/56",
+    "waivers": [],
+    "saved_models_and_final_evidence": "unchanged"
+  },
+  "regressions": {
+    "consumer_tests_passed": 2140,
+    "producer_data_tests_passed": 972,
+    "strict_mypy_source_files": 413,
+    "resource_gates": "unchanged"
+  },
+  "deployment_attestation": "not_attested",
+  "transport_durability": "offline_only"
+}

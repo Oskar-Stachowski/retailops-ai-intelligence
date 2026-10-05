@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "alert": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Alert"
+    },
+    "business_date": {
+      "format": "date",
+      "title": "Business Date",
+      "type": "string"
+    },
+    "channel": {
+      "enum": [
+        "store",
+        "online",
+        "marketplace",
+        "wholesale"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "currency": {
+      "enum": [
+        "PLN",
+        "EUR"
+      ],
+      "title": "Currency",
+      "type": "string"
+    },
+    "detector_id": {
+      "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",
+      "title": "Detector Id",
+      "type": "string"
+    },
+    "detector_readiness": {
+      "const": "not_qualified",
+      "default": "not_qualified",
+      "title": "Detector Readiness",
+      "type": "string"
+    },
+    "eligible": {
+      "title": "Eligible",
+      "type": "boolean"
+    },
+    "event_type": {
+      "enum": [
+        "sale_completed",
+        "return_completed"
+      ],
+      "title": "Event Type",
+      "type": "string"
+    },
+    "expected_units": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Expected Units"
+    },
+    "explanation_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Explanation Codes",
+      "type": "array"
+    },
+    "family": {
+      "enum": [
+        "seasonal_residual",
+        "isolation_forest"
+      ],
+      "title": "Family",
+      "type": "string"
+    },
+    "input_status": {
+      "enum": [
+        "ready_input",
+        "insufficient_history",
+        "day_unqualified",
+        "no_declaration"
+      ],
+      "title": "Input Status",
+      "type": "string"
+    },
+    "observed_units": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Observed Units"
+    },
+    "product_id": {
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reason Codes",
+      "type": "array"
+    },
+    "residual_units": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Residual Units"
+    },
+    "role": {
+      "enum": [
+        "train",
+        "validation",
+        "test",
+        "gap"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "score": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Score"
+    },
+    "scoring_origin": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Scoring Origin",
+      "type": "string"
+    },
+    "selling_location_id": {
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "title": "Selling Location Id",
+      "type": "string"
+    },
+    "severity": {
+      "anyOf": [
+        {
+          "enum": [
+            "none",
+            "medium",
+            "high"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Severity"
+    },
+    "status": {
+      "enum": [
+        "scored",
+        "insufficient_data"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "threshold": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Threshold"
+    }
+  },
+  "required": [
+    "event_type",
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "currency",
+    "business_date",
+    "scoring_origin",
+    "role",
+    "input_status",
+    "eligible",
+    "reason_codes",
+    "detector_id",
+    "family",
+    "status",
+    "score",
+    "threshold",
+    "alert",
+    "severity",
+    "explanation_codes",
+    "observed_units",
+    "expected_units",
+    "residual_units"
+  ],
+  "title": "Prediction",
+  "type": "object"
+}

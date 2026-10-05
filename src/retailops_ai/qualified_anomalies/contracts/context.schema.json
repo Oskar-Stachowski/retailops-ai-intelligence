@@ -1,0 +1,130 @@
+{
+  "$defs": {
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "available_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Available At",
+          "type": "string"
+        },
+        "business_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Business Date"
+        },
+        "record_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Record Sha256",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "known_plan",
+            "stock_mapping",
+            "inventory_context"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "table": {
+          "enum": [
+            "daily_demand_versions",
+            "price_plans",
+            "promotion_plans",
+            "inventory_daily_snapshots"
+          ],
+          "title": "Table",
+          "type": "string"
+        }
+      },
+      "required": [
+        "table",
+        "record_sha256",
+        "available_at",
+        "business_date",
+        "role"
+      ],
+      "title": "Reference",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "on_hand": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "On Hand"
+    },
+    "planned_price": {
+      "anyOf": [
+        {
+          "pattern": "^(?:0|[1-9][0-9]*)\\.[0-9]{2}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Planned Price"
+    },
+    "promotion_offered": {
+      "title": "Promotion Offered",
+      "type": "boolean"
+    },
+    "references": {
+      "items": {
+        "$ref": "#/$defs/Reference"
+      },
+      "maxItems": 4,
+      "title": "References",
+      "type": "array"
+    },
+    "stock_location_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Stock Location Id"
+    },
+    "stock_status": {
+      "enum": [
+        "unavailable",
+        "potential_stockout",
+        "no_stockout_signal"
+      ],
+      "title": "Stock Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "planned_price",
+    "promotion_offered",
+    "stock_location_id",
+    "on_hand",
+    "stock_status",
+    "references"
+  ],
+  "title": "Context",
+  "type": "object"
+}

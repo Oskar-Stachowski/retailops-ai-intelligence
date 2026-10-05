@@ -11,10 +11,12 @@ Capability = Literal[
     "knowledge:index",
     "model:decide",
     "forecast:run",
+    "anomaly:read",
+    "anomaly:run",
     "stockout:read",
     "stockout:run",
 ]
-Channel = Literal["store", "online"]
+Channel = Literal["store", "online", "marketplace", "wholesale"]
 
 
 @dataclass(frozen=True)

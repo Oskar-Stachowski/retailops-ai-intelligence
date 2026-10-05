@@ -1,0 +1,2292 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "inventory-source-tables-1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "inventory_products",
+    "inventory_stock_locations",
+    "inventory_scope",
+    "inventory_ledger",
+    "inventory_selling_locations",
+    "inventory_fulfillment_routes",
+    "inventory_route_versions",
+    "suppliers",
+    "product_suppliers",
+    "replenishment_orders",
+    "delivery_plan_versions",
+    "replenishment_receipts",
+    "inventory_sales",
+    "inventory_returns",
+    "return_events",
+    "return_inventory_decisions",
+    "inventory_history_coverage",
+    "inventory_reorder_rules",
+    "inventory_daily_snapshots",
+    "inventory_demand_arrivals",
+    "inventory_demand_outcomes",
+    "inventory_supplier_samples",
+    "inventory_scheduled_receipt_tail",
+    "inventory_physical_daily_balances",
+    "stockout_episodes",
+    "inventory_lost_sales_impacts",
+    "inventory_window_diagnostics"
+  ],
+  "properties": {
+    "inventory_products": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "unit_of_measure": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "title": "Unit Of Measure",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "unit_of_measure"
+        ],
+        "title": "Product",
+        "type": "object"
+      }
+    },
+    "inventory_stock_locations": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "location_code": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Location Code",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "location_code"
+        ],
+        "title": "StockLocation",
+        "type": "object"
+      }
+    },
+    "inventory_scope": {
+      "type": "array",
+      "x-data-class": "source_plan",
+      "x-grain": [
+        "product_id",
+        "stock_location_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "product_id",
+          "stock_location_id"
+        ],
+        "title": "InventoryPosition",
+        "type": "object"
+      }
+    },
+    "inventory_ledger": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "inventory_event_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "inventory_event_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Inventory Event Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "movement_type": {
+            "enum": [
+              "opening_stock",
+              "replenishment_received",
+              "sale",
+              "return_to_stock",
+              "write_off",
+              "transfer_in",
+              "transfer_out",
+              "inventory_adjustment"
+            ],
+            "title": "Movement Type",
+            "type": "string"
+          },
+          "quantity_delta": {
+            "title": "Quantity Delta",
+            "type": "integer"
+          },
+          "unit_of_measure": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "title": "Unit Of Measure",
+            "type": "string"
+          },
+          "occurred_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "ingested_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ingested At",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          },
+          "sequence": {
+            "minimum": 0,
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "source_process": {
+            "enum": [
+              "opening",
+              "replenishment",
+              "sale",
+              "return",
+              "write_off",
+              "transfer",
+              "adjustment"
+            ],
+            "title": "Source Process",
+            "type": "string"
+          },
+          "source_reference": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Source Reference",
+            "type": "string"
+          },
+          "transfer_id": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transfer Id"
+          },
+          "supplier_id": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supplier Id"
+          },
+          "order_id": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order Id"
+          }
+        },
+        "required": [
+          "inventory_event_id",
+          "product_id",
+          "stock_location_id",
+          "movement_type",
+          "quantity_delta",
+          "unit_of_measure",
+          "occurred_at",
+          "ingested_at",
+          "available_at",
+          "sequence",
+          "source_process",
+          "source_reference",
+          "transfer_id",
+          "supplier_id",
+          "order_id"
+        ],
+        "title": "MovementRecord",
+        "type": "object"
+      }
+    },
+    "inventory_selling_locations": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "location_code": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Location Code",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "location_code"
+        ],
+        "title": "SellingLocation",
+        "type": "object"
+      }
+    },
+    "inventory_fulfillment_routes": {
+      "type": "array",
+      "x-data-class": "source_plan",
+      "x-grain": [
+        "id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "version": {
+            "exclusiveMinimum": 0,
+            "title": "Version",
+            "type": "integer"
+          },
+          "selling_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Selling Location Id",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "effective_from": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Effective From",
+            "type": "string"
+          },
+          "effective_to": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Effective To",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "selling_location_id",
+          "channel",
+          "stock_location_id",
+          "effective_from",
+          "effective_to",
+          "available_at"
+        ],
+        "title": "FulfillmentRoute",
+        "type": "object"
+      }
+    },
+    "inventory_route_versions": {
+      "type": "array",
+      "x-data-class": "source_plan",
+      "x-grain": [
+        "route_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "route_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Route Id",
+            "type": "string"
+          },
+          "source_version": {
+            "exclusiveMinimum": 0,
+            "title": "Source Version",
+            "type": "integer"
+          },
+          "inventory_revision": {
+            "exclusiveMinimum": 0,
+            "title": "Inventory Revision",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "route_id",
+          "source_version",
+          "inventory_revision"
+        ],
+        "title": "RouteVersion",
+        "type": "object"
+      }
+    },
+    "suppliers": {
+      "type": "array",
+      "x-data-class": "source_plan",
+      "x-grain": [
+        "supplier_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "supplier_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Supplier Id",
+            "type": "string"
+          },
+          "supplier_code": {
+            "pattern": "^[A-Z0-9][A-Z0-9_-]*$",
+            "title": "Supplier Code",
+            "type": "string"
+          },
+          "country_code": {
+            "enum": [
+              "PL",
+              "DE"
+            ],
+            "title": "Country Code",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "minimum_order_quantity": {
+            "exclusiveMinimum": 0,
+            "title": "Minimum Order Quantity",
+            "type": "integer"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "supplier_id",
+          "supplier_code",
+          "country_code",
+          "status",
+          "minimum_order_quantity",
+          "available_at"
+        ],
+        "title": "Supplier",
+        "type": "object"
+      }
+    },
+    "product_suppliers": {
+      "type": "array",
+      "x-data-class": "source_plan",
+      "x-grain": [
+        "product_supplier_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "product_supplier_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Supplier Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "supplier_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Supplier Id",
+            "type": "string"
+          },
+          "unit_of_measure": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "title": "Unit Of Measure",
+            "type": "string"
+          },
+          "unit_cost": {
+            "pattern": "^(?:0|[1-9][0-9]*)\\.[0-9]{2}$",
+            "title": "Unit Cost",
+            "type": "string"
+          },
+          "currency": {
+            "enum": [
+              "PLN",
+              "EUR"
+            ],
+            "title": "Currency",
+            "type": "string"
+          },
+          "priority": {
+            "exclusiveMinimum": 0,
+            "title": "Priority",
+            "type": "integer"
+          },
+          "effective_from": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Effective From",
+            "type": "string"
+          },
+          "effective_to": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Effective To",
+            "type": "string"
+          },
+          "quoted_lead_time_days": {
+            "minimum": 0,
+            "title": "Quoted Lead Time Days",
+            "type": "integer"
+          },
+          "lead_time_basis": {
+            "const": "supplier_quote",
+            "title": "Lead Time Basis",
+            "type": "string"
+          },
+          "quote_reference": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Quote Reference",
+            "type": "string"
+          },
+          "known_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Known At",
+            "type": "string"
+          },
+          "ingested_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ingested At",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "product_supplier_id",
+          "product_id",
+          "supplier_id",
+          "unit_of_measure",
+          "unit_cost",
+          "currency",
+          "priority",
+          "effective_from",
+          "effective_to",
+          "quoted_lead_time_days",
+          "lead_time_basis",
+          "quote_reference",
+          "known_at",
+          "ingested_at",
+          "available_at"
+        ],
+        "title": "ProductSupplier",
+        "type": "object"
+      }
+    },
+    "replenishment_orders": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "replenishment_order_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "replenishment_order_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Replenishment Order Id",
+            "type": "string"
+          },
+          "product_supplier_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Supplier Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "supplier_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Supplier Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "ordered_quantity": {
+            "exclusiveMinimum": 0,
+            "title": "Ordered Quantity",
+            "type": "integer"
+          },
+          "unit_of_measure": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "title": "Unit Of Measure",
+            "type": "string"
+          },
+          "ordered_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ordered At",
+            "type": "string"
+          },
+          "expected_delivery_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Expected Delivery At",
+            "type": "string"
+          },
+          "ingested_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ingested At",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          },
+          "status": {
+            "const": "ordered",
+            "title": "Status",
+            "type": "string"
+          },
+          "source_reference": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Source Reference",
+            "type": "string"
+          }
+        },
+        "required": [
+          "replenishment_order_id",
+          "product_supplier_id",
+          "product_id",
+          "supplier_id",
+          "stock_location_id",
+          "ordered_quantity",
+          "unit_of_measure",
+          "ordered_at",
+          "expected_delivery_at",
+          "ingested_at",
+          "available_at",
+          "status",
+          "source_reference"
+        ],
+        "title": "ReplenishmentOrder",
+        "type": "object"
+      }
+    },
+    "delivery_plan_versions": {
+      "type": "array",
+      "x-data-class": "source_plan",
+      "x-grain": [
+        "plan_version_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "plan_version_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Plan Version Id",
+            "type": "string"
+          },
+          "replenishment_order_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Replenishment Order Id",
+            "type": "string"
+          },
+          "version": {
+            "exclusiveMinimum": 0,
+            "title": "Version",
+            "type": "integer"
+          },
+          "expected_delivery_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Expected Delivery At",
+            "type": "string"
+          },
+          "known_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Known At",
+            "type": "string"
+          },
+          "ingested_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ingested At",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          },
+          "source_reference": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Source Reference",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan_version_id",
+          "replenishment_order_id",
+          "version",
+          "expected_delivery_at",
+          "known_at",
+          "ingested_at",
+          "available_at",
+          "source_reference"
+        ],
+        "title": "DeliveryPlanVersion",
+        "type": "object"
+      }
+    },
+    "replenishment_receipts": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "receipt_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "receipt_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Receipt Id",
+            "type": "string"
+          },
+          "replenishment_order_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Replenishment Order Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "supplier_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Supplier Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "received_quantity": {
+            "exclusiveMinimum": 0,
+            "title": "Received Quantity",
+            "type": "integer"
+          },
+          "unit_of_measure": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "title": "Unit Of Measure",
+            "type": "string"
+          },
+          "received_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Received At",
+            "type": "string"
+          },
+          "ingested_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ingested At",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          },
+          "sequence": {
+            "minimum": 0,
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "source_reference": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Source Reference",
+            "type": "string"
+          }
+        },
+        "required": [
+          "receipt_id",
+          "replenishment_order_id",
+          "product_id",
+          "supplier_id",
+          "stock_location_id",
+          "received_quantity",
+          "unit_of_measure",
+          "received_at",
+          "ingested_at",
+          "available_at",
+          "sequence",
+          "source_reference"
+        ],
+        "title": "ReplenishmentReceipt",
+        "type": "object"
+      }
+    },
+    "inventory_sales": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "sale_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "sale_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Sale Id",
+            "type": "string"
+          },
+          "order_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Order Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Selling Location Id",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "fulfillment_route_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Fulfillment Route Id",
+            "type": "string"
+          },
+          "quantity": {
+            "exclusiveMinimum": 0,
+            "title": "Quantity",
+            "type": "integer"
+          },
+          "unit_of_measure": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "title": "Unit Of Measure",
+            "type": "string"
+          },
+          "unit_price": {
+            "pattern": "^(?:0|[1-9][0-9]*)\\.[0-9]{2}$",
+            "title": "Unit Price",
+            "type": "string"
+          },
+          "currency": {
+            "enum": [
+              "PLN",
+              "EUR"
+            ],
+            "title": "Currency",
+            "type": "string"
+          },
+          "gross_revenue": {
+            "pattern": "^(?:0|[1-9][0-9]*)\\.[0-9]{2}$",
+            "title": "Gross Revenue",
+            "type": "string"
+          },
+          "ordered_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ordered At",
+            "type": "string"
+          },
+          "sold_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Sold At",
+            "type": "string"
+          },
+          "ingested_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ingested At",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          },
+          "sequence": {
+            "minimum": 0,
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "source_reference": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Source Reference",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sale_id",
+          "order_id",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "stock_location_id",
+          "fulfillment_route_id",
+          "quantity",
+          "unit_of_measure",
+          "unit_price",
+          "currency",
+          "gross_revenue",
+          "ordered_at",
+          "sold_at",
+          "ingested_at",
+          "available_at",
+          "sequence",
+          "source_reference"
+        ],
+        "title": "ExecutedSale",
+        "type": "object"
+      }
+    },
+    "inventory_returns": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "return_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "return_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Return Id",
+            "type": "string"
+          },
+          "sale_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Sale Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "unit_of_measure": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "title": "Unit Of Measure",
+            "type": "string"
+          },
+          "quantity": {
+            "exclusiveMinimum": 0,
+            "title": "Quantity",
+            "type": "integer"
+          },
+          "quality_status": {
+            "enum": [
+              "accepted",
+              "rejected"
+            ],
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "refund_amount": {
+            "pattern": "^(?:0|[1-9][0-9]*)\\.[0-9]{2}$",
+            "title": "Refund Amount",
+            "type": "string"
+          },
+          "currency": {
+            "enum": [
+              "PLN",
+              "EUR"
+            ],
+            "title": "Currency",
+            "type": "string"
+          },
+          "returned_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Returned At",
+            "type": "string"
+          },
+          "ingested_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ingested At",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          },
+          "sequence": {
+            "minimum": 0,
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "source_reference": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Source Reference",
+            "type": "string"
+          }
+        },
+        "required": [
+          "return_id",
+          "sale_id",
+          "product_id",
+          "stock_location_id",
+          "unit_of_measure",
+          "quantity",
+          "quality_status",
+          "refund_amount",
+          "currency",
+          "returned_at",
+          "ingested_at",
+          "available_at",
+          "sequence",
+          "source_reference"
+        ],
+        "title": "ProcessedReturn",
+        "type": "object"
+      }
+    },
+    "return_events": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "sale_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Sale Id",
+            "type": "string"
+          },
+          "order_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Order Id",
+            "type": "string"
+          },
+          "order_item_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Order Item Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Selling Location Id",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "policy_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "quantity": {
+            "exclusiveMinimum": 0,
+            "title": "Quantity",
+            "type": "integer"
+          },
+          "refund_amount": {
+            "pattern": "^(?:0|[1-9][0-9]*)\\.[0-9]{2}$",
+            "title": "Refund Amount",
+            "type": "string"
+          },
+          "currency": {
+            "enum": [
+              "PLN",
+              "EUR"
+            ],
+            "title": "Currency",
+            "type": "string"
+          },
+          "reason": {
+            "enum": [
+              "wrong_size",
+              "damaged",
+              "changed_mind",
+              "not_as_described",
+              "defective"
+            ],
+            "title": "Reason",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "refunded",
+              "rejected"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "returned_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Returned At",
+            "type": "string"
+          },
+          "ingested_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ingested At",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          },
+          "returns_policy_version": {
+            "const": "retail-returns-1.0.0",
+            "title": "Returns Policy Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "sale_id",
+          "order_id",
+          "order_item_id",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "policy_id",
+          "quantity",
+          "refund_amount",
+          "currency",
+          "reason",
+          "status",
+          "returned_at",
+          "ingested_at",
+          "available_at",
+          "returns_policy_version"
+        ],
+        "title": "FinancialReturn",
+        "type": "object"
+      }
+    },
+    "return_inventory_decisions": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "return_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "return_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Return Id",
+            "type": "string"
+          },
+          "sale_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Sale Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "quantity": {
+            "exclusiveMinimum": 0,
+            "title": "Quantity",
+            "type": "integer"
+          },
+          "quality_status": {
+            "enum": [
+              "accepted",
+              "rejected"
+            ],
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "inventory_disposition": {
+            "enum": [
+              "not_refunded",
+              "outside_inventory_window",
+              "restocked",
+              "quality_rejected"
+            ],
+            "title": "Inventory Disposition",
+            "type": "string"
+          },
+          "returned_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Returned At",
+            "type": "string"
+          },
+          "financial_available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Financial Available At",
+            "type": "string"
+          },
+          "inventory_available_at": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inventory Available At"
+          }
+        },
+        "required": [
+          "return_id",
+          "sale_id",
+          "product_id",
+          "stock_location_id",
+          "quantity",
+          "quality_status",
+          "inventory_disposition",
+          "returned_at",
+          "financial_available_at",
+          "inventory_available_at"
+        ],
+        "title": "ReturnInventoryDecision",
+        "type": "object"
+      }
+    },
+    "inventory_history_coverage": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "coverage_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "coverage_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Coverage Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "covered_from_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Covered From At",
+            "type": "string"
+          },
+          "covered_through_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Covered Through At",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          },
+          "source_reference": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Source Reference",
+            "type": "string"
+          }
+        },
+        "required": [
+          "coverage_id",
+          "product_id",
+          "stock_location_id",
+          "covered_from_at",
+          "covered_through_at",
+          "available_at",
+          "source_reference"
+        ],
+        "title": "HistoryCoverage",
+        "type": "object"
+      }
+    },
+    "inventory_reorder_rules": {
+      "type": "array",
+      "x-data-class": "source_plan",
+      "x-grain": [
+        "product_id",
+        "stock_location_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "reorder_point": {
+            "minimum": 0,
+            "title": "Reorder Point",
+            "type": "integer"
+          },
+          "safety_stock": {
+            "minimum": 0,
+            "title": "Safety Stock",
+            "type": "integer"
+          },
+          "review_cadence_days": {
+            "exclusiveMinimum": 0,
+            "title": "Review Cadence Days",
+            "type": "integer"
+          },
+          "history_window_days": {
+            "exclusiveMinimum": 0,
+            "title": "History Window Days",
+            "type": "integer"
+          },
+          "minimum_order_quantity": {
+            "exclusiveMinimum": 0,
+            "title": "Minimum Order Quantity",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "product_id",
+          "stock_location_id",
+          "reorder_point",
+          "safety_stock",
+          "review_cadence_days",
+          "history_window_days",
+          "minimum_order_quantity"
+        ],
+        "title": "ReorderRule",
+        "type": "object"
+      }
+    },
+    "inventory_daily_snapshots": {
+      "type": "array",
+      "x-data-class": "source_observation",
+      "x-grain": [
+        "product_id",
+        "stock_location_id",
+        "business_date"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "snapshot_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Snapshot Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "business_date": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Business Date",
+            "type": "string"
+          },
+          "period_from_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Period From At",
+            "type": "string"
+          },
+          "period_to_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Period To At",
+            "type": "string"
+          },
+          "is_full_business_day": {
+            "title": "Is Full Business Day",
+            "type": "boolean"
+          },
+          "snapshot_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Snapshot At",
+            "type": "string"
+          },
+          "as_of_time": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "As Of Time",
+            "type": "string"
+          },
+          "unit_of_measure": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "title": "Unit Of Measure",
+            "type": "string"
+          },
+          "on_hand": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "On Hand"
+          },
+          "reserved_qty": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reserved Qty"
+          },
+          "available_qty": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Available Qty"
+          },
+          "status": {
+            "enum": [
+              "known",
+              "not_available"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "source_available_at": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Available At"
+          },
+          "last_inventory_event_id": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Inventory Event Id"
+          },
+          "movement_count": {
+            "minimum": 0,
+            "title": "Movement Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "snapshot_id",
+          "product_id",
+          "stock_location_id",
+          "business_date",
+          "period_from_at",
+          "period_to_at",
+          "is_full_business_day",
+          "snapshot_at",
+          "as_of_time",
+          "unit_of_measure",
+          "on_hand",
+          "reserved_qty",
+          "available_qty",
+          "status",
+          "source_available_at",
+          "last_inventory_event_id",
+          "movement_count"
+        ],
+        "title": "InventorySnapshot",
+        "type": "object"
+      }
+    },
+    "inventory_demand_arrivals": {
+      "type": "array",
+      "x-data-class": "simulation_truth",
+      "x-grain": [
+        "demand_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "demand_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Demand Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Selling Location Id",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "latent_quantity": {
+            "minimum": 0,
+            "title": "Latent Quantity",
+            "type": "integer"
+          },
+          "unit_price": {
+            "pattern": "^(?:0|[1-9][0-9]*)\\.[0-9]{2}$",
+            "title": "Unit Price",
+            "type": "string"
+          },
+          "currency": {
+            "enum": [
+              "PLN",
+              "EUR"
+            ],
+            "title": "Currency",
+            "type": "string"
+          },
+          "occurred_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "sequence": {
+            "minimum": 0,
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "source_reference": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Source Reference",
+            "type": "string"
+          }
+        },
+        "required": [
+          "demand_id",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "latent_quantity",
+          "unit_price",
+          "currency",
+          "occurred_at",
+          "sequence",
+          "source_reference"
+        ],
+        "title": "DemandArrival",
+        "type": "object"
+      }
+    },
+    "inventory_demand_outcomes": {
+      "type": "array",
+      "x-data-class": "simulation_truth",
+      "x-grain": [
+        "demand_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "demand_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Demand Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Selling Location Id",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "occurred_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "sequence": {
+            "minimum": 0,
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "latent_quantity": {
+            "minimum": 0,
+            "title": "Latent Quantity",
+            "type": "integer"
+          },
+          "observed_quantity": {
+            "minimum": 0,
+            "title": "Observed Quantity",
+            "type": "integer"
+          },
+          "lost_sales_quantity": {
+            "minimum": 0,
+            "title": "Lost Sales Quantity",
+            "type": "integer"
+          },
+          "stock_before": {
+            "minimum": 0,
+            "title": "Stock Before",
+            "type": "integer"
+          },
+          "stock_after": {
+            "minimum": 0,
+            "title": "Stock After",
+            "type": "integer"
+          },
+          "reason": {
+            "enum": [
+              "no_demand",
+              "inventory_constraint",
+              "fulfilled"
+            ],
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "demand_id",
+          "product_id",
+          "stock_location_id",
+          "selling_location_id",
+          "channel",
+          "occurred_at",
+          "sequence",
+          "latent_quantity",
+          "observed_quantity",
+          "lost_sales_quantity",
+          "stock_before",
+          "stock_after",
+          "reason"
+        ],
+        "title": "DemandOutcome",
+        "type": "object"
+      }
+    },
+    "inventory_supplier_samples": {
+      "type": "array",
+      "x-data-class": "simulation_truth",
+      "x-grain": [
+        "order_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "order_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Order Id",
+            "type": "string"
+          },
+          "simulation_id": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Simulation Id",
+            "type": "string"
+          },
+          "disrupted": {
+            "title": "Disrupted",
+            "type": "boolean"
+          },
+          "lead_days": {
+            "exclusiveMinimum": 0,
+            "title": "Lead Days",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "order_id",
+          "simulation_id",
+          "disrupted",
+          "lead_days"
+        ],
+        "title": "SupplierSample",
+        "type": "object"
+      }
+    },
+    "inventory_scheduled_receipt_tail": {
+      "type": "array",
+      "x-data-class": "simulation_truth",
+      "x-grain": [
+        "receipt_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "receipt_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Receipt Id",
+            "type": "string"
+          },
+          "replenishment_order_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Replenishment Order Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "supplier_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Supplier Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "received_quantity": {
+            "exclusiveMinimum": 0,
+            "title": "Received Quantity",
+            "type": "integer"
+          },
+          "unit_of_measure": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "title": "Unit Of Measure",
+            "type": "string"
+          },
+          "received_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Received At",
+            "type": "string"
+          },
+          "ingested_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Ingested At",
+            "type": "string"
+          },
+          "available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Available At",
+            "type": "string"
+          },
+          "sequence": {
+            "minimum": 0,
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "source_reference": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Source Reference",
+            "type": "string"
+          }
+        },
+        "required": [
+          "receipt_id",
+          "replenishment_order_id",
+          "product_id",
+          "supplier_id",
+          "stock_location_id",
+          "received_quantity",
+          "unit_of_measure",
+          "received_at",
+          "ingested_at",
+          "available_at",
+          "sequence",
+          "source_reference"
+        ],
+        "title": "ReplenishmentReceipt",
+        "type": "object"
+      }
+    },
+    "inventory_physical_daily_balances": {
+      "type": "array",
+      "x-data-class": "simulation_truth",
+      "x-grain": [
+        "product_id",
+        "stock_location_id",
+        "business_date"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "business_date": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Business Date",
+            "type": "string"
+          },
+          "snapshot_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Snapshot At",
+            "type": "string"
+          },
+          "balance_before_period": {
+            "minimum": 0,
+            "title": "Balance Before Period",
+            "type": "integer"
+          },
+          "opening_quantity": {
+            "minimum": 0,
+            "title": "Opening Quantity",
+            "type": "integer"
+          },
+          "movement_delta": {
+            "title": "Movement Delta",
+            "type": "integer"
+          },
+          "closing_quantity": {
+            "minimum": 0,
+            "title": "Closing Quantity",
+            "type": "integer"
+          },
+          "reserved_qty": {
+            "minimum": 0,
+            "title": "Reserved Qty",
+            "type": "integer"
+          },
+          "available_qty": {
+            "minimum": 0,
+            "title": "Available Qty",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "product_id",
+          "stock_location_id",
+          "business_date",
+          "snapshot_at",
+          "balance_before_period",
+          "opening_quantity",
+          "movement_delta",
+          "closing_quantity",
+          "reserved_qty",
+          "available_qty"
+        ],
+        "title": "PhysicalDailyBalance",
+        "type": "object"
+      }
+    },
+    "stockout_episodes": {
+      "type": "array",
+      "x-data-class": "simulation_truth",
+      "x-grain": [
+        "episode_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "episode_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Episode Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "unit_of_measure": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "title": "Unit Of Measure",
+            "type": "string"
+          },
+          "start_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Start At",
+            "type": "string"
+          },
+          "start_sequence": {
+            "minimum": 0,
+            "title": "Start Sequence",
+            "type": "integer"
+          },
+          "start_event_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Start Event Id",
+            "type": "string"
+          },
+          "start_available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Start Available At",
+            "type": "string"
+          },
+          "onset_kind": {
+            "enum": [
+              "opening_zero",
+              "depleted_by_movement"
+            ],
+            "title": "Onset Kind",
+            "type": "string"
+          },
+          "end_at": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End At"
+          },
+          "end_sequence": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Sequence"
+          },
+          "end_event_id": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Event Id"
+          },
+          "end_available_at": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Available At"
+          },
+          "observed_through_exclusive_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Observed Through Exclusive At",
+            "type": "string"
+          },
+          "duration_microseconds": {
+            "minimum": 0,
+            "title": "Duration Microseconds",
+            "type": "integer"
+          },
+          "left_censored": {
+            "title": "Left Censored",
+            "type": "boolean"
+          },
+          "right_censored": {
+            "title": "Right Censored",
+            "type": "boolean"
+          },
+          "diagnostic_available_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Diagnostic Available At",
+            "type": "string"
+          },
+          "lost_sales_quantity": {
+            "minimum": 0,
+            "title": "Lost Sales Quantity",
+            "type": "integer"
+          },
+          "affected_demand_count": {
+            "minimum": 0,
+            "title": "Affected Demand Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "episode_id",
+          "product_id",
+          "stock_location_id",
+          "unit_of_measure",
+          "start_at",
+          "start_sequence",
+          "start_event_id",
+          "start_available_at",
+          "onset_kind",
+          "end_at",
+          "end_sequence",
+          "end_event_id",
+          "end_available_at",
+          "observed_through_exclusive_at",
+          "duration_microseconds",
+          "left_censored",
+          "right_censored",
+          "diagnostic_available_at",
+          "lost_sales_quantity",
+          "affected_demand_count"
+        ],
+        "title": "StockoutEpisode",
+        "type": "object"
+      }
+    },
+    "inventory_lost_sales_impacts": {
+      "type": "array",
+      "x-data-class": "simulation_truth",
+      "x-grain": [
+        "demand_id"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "episode_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Episode Id",
+            "type": "string"
+          },
+          "demand_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Demand Id",
+            "type": "string"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Selling Location Id",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "occurred_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "sequence": {
+            "minimum": 0,
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "lost_sales_quantity": {
+            "exclusiveMinimum": 0,
+            "title": "Lost Sales Quantity",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "episode_id",
+          "demand_id",
+          "product_id",
+          "stock_location_id",
+          "selling_location_id",
+          "channel",
+          "occurred_at",
+          "sequence",
+          "lost_sales_quantity"
+        ],
+        "title": "LostSalesImpact",
+        "type": "object"
+      }
+    },
+    "inventory_window_diagnostics": {
+      "type": "array",
+      "x-data-class": "simulation_truth",
+      "x-grain": [
+        "product_id",
+        "stock_location_id",
+        "origin"
+      ],
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "origin": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Origin",
+            "type": "string"
+          },
+          "window_end_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Window End At",
+            "type": "string"
+          },
+          "evaluated_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+            "title": "Evaluated At",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "evaluable",
+              "already_stockout",
+              "not_evaluable"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "inventory_unknown",
+                  "origin_state_unavailable",
+                  "incomplete_window",
+                  "outcomes_not_available"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "incident_stockout": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Incident Stockout"
+          },
+          "label_available_at": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label Available At"
+          }
+        },
+        "required": [
+          "product_id",
+          "stock_location_id",
+          "origin",
+          "window_end_at",
+          "evaluated_at",
+          "status",
+          "reason",
+          "incident_stockout",
+          "label_available_at"
+        ],
+        "title": "WindowDiagnostic",
+        "type": "object"
+      }
+    }
+  }
+}

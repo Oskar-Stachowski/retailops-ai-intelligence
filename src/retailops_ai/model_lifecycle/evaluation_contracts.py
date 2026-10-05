@@ -22,10 +22,12 @@ from retailops_ai.data_contracts.common import (
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.forecasting.evaluation_contract import MetricResult
 from retailops_ai.forecasting.quality_contract import QualityStatus
+from retailops_ai.model_lifecycle.anomaly_evaluation_contracts import AnomalyEvaluationSummary
 from retailops_ai.model_lifecycle.contracts import Receipt
 from retailops_ai.model_lifecycle.read_contracts import CatalogPagination, CatalogScope
 
-EvaluationID = Annotated[str, Field(pattern=r"^forecast-quality-sha256-[0-9a-f]{64}$")]
+EvaluationID = Annotated[str, Field(pattern=r"^(forecast|anomaly)-quality-sha256-[0-9a-f]{64}$")]
+ForecastEvaluationID = Annotated[str, Field(pattern=r"^forecast-quality-sha256-[0-9a-f]{64}$")]
 EvaluationErrorCode = Literal[
     "evaluation-read-denied",
     "evaluation-scope-invalid",
@@ -89,7 +91,7 @@ class EvaluationMetric(Contract):
 class EvaluationDescriptor(Contract):
     schema_version: Literal["1.0"] = "1.0"
     purpose: Literal["historical_development_evidence", "synthetic_acceptance_only"]
-    evaluation_id: EvaluationID
+    evaluation_id: ForecastEvaluationID
     original_export_run_id: RunID
     model_name: Literal["retailops-demand-forecast"] = "retailops-demand-forecast"
     registered_model_version: None = None
@@ -170,7 +172,7 @@ class EvaluationFreshness(Contract):
 
 
 class EvaluationSummary(Contract):
-    evaluation_id: EvaluationID
+    evaluation_id: ForecastEvaluationID
     evidence_sha256: Sha256
     original_export_run_id: RunID
     model_name: Literal["retailops-demand-forecast"] = "retailops-demand-forecast"
@@ -209,7 +211,7 @@ class EvaluationDetail(EvaluationSummary):
 
 class EvaluationPage(Contract):
     schema_version: Literal["1.0"] = "1.0"
-    items: tuple[EvaluationSummary, ...] = Field(max_length=200)
+    items: tuple[EvaluationSummary | AnomalyEvaluationSummary, ...] = Field(max_length=200)
     pagination: CatalogPagination
     generated_at: UtcTime
     data_status: Literal["available", "no_data"]

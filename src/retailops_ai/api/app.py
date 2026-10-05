@@ -21,6 +21,8 @@ from retailops_ai.adapters.index_jobs import IndexAdministration, PostgresIndexA
 from retailops_ai.adapters.knowledge_search import KnowledgeBackend, PostgresKnowledge
 from retailops_ai.adapters.telemetry import HttpMetrics, new_tracer
 from retailops_ai.adapters.vector_store import index_engine
+from retailops_ai.anomaly_portfolio.result_store import PostgresResults
+from retailops_ai.anomaly_portfolio.result_store import Reader as AnomalyReader
 from retailops_ai.api.access import access_router
 from retailops_ai.api.errors import problem_response
 from retailops_ai.api.middleware import HttpObservation, single_header
@@ -35,6 +37,11 @@ from retailops_ai.forecast_jobs.v12_administration import (
 )
 from retailops_ai.forecast_jobs.v12_queue import PostgresV12Queue
 from retailops_ai.forecast_jobs.v12_reader import PostgresV12ForecastReader, V12ForecastReader
+from retailops_ai.model_lifecycle.anomaly_catalog import CombinedCatalog, PostgresAnomalyCatalog
+from retailops_ai.model_lifecycle.anomaly_evaluation_store import (
+    CombinedEvaluations,
+    PostgresAnomalyEvaluations,
+)
 from retailops_ai.model_lifecycle.evaluation_store import EvaluationReader, PostgresEvaluations
 from retailops_ai.model_lifecycle.reader import ModelCatalog, PostgresModelCatalog
 from retailops_ai.model_lifecycle.v12_catalog import PostgresV12Catalog, V12ModelCatalog
@@ -75,11 +82,14 @@ def create_app(
     forecast_administration: BatchAdministration | None = None,
     forecast_reader: ForecastReader | None = None,
     model_catalog: ModelCatalog | None = None,
+    anomaly_catalog: ModelCatalog | None = None,
     evaluation_reader: EvaluationReader | None = None,
+    anomaly_evaluation_reader: EvaluationReader | None = None,
     v12_forecast_reader: V12ForecastReader | None = None,
     v12_forecast_administration: V12JobAdministration | None = None,
     v12_model_catalog: V12ModelCatalog | None = None,
     v12_evaluation_reader: V12EvaluationReader | None = None,
+    anomaly_reader: AnomalyReader | None = None,
     stockout_administration: StockoutAdministration | None = None,
     stockout_reader: StockoutReader | None = None,
 ) -> FastAPI:
@@ -99,9 +109,12 @@ def create_app(
         or v12_forecast_reader is None
         or v12_forecast_administration is None
         or model_catalog is None
+        or anomaly_catalog is None
         or evaluation_reader is None
+        or anomaly_evaluation_reader is None
         or v12_model_catalog is None
         or v12_evaluation_reader is None
+        or anomaly_reader is None
         or stockout_administration is None
         or stockout_reader is None
     ) and settings.database_url is not None:
@@ -133,8 +146,16 @@ def create_app(
         )
     if model_catalog is None and knowledge_engine is not None:
         model_catalog = PostgresModelCatalog(knowledge_engine, settings.app_env)
+    if anomaly_catalog is None and knowledge_engine is not None:
+        anomaly_catalog = PostgresAnomalyCatalog(knowledge_engine)
+    if anomaly_catalog is not None:
+        model_catalog = CombinedCatalog(model_catalog, anomaly_catalog)
     if evaluation_reader is None and knowledge_engine is not None:
         evaluation_reader = PostgresEvaluations(knowledge_engine, settings.app_env)
+    if anomaly_evaluation_reader is None and knowledge_engine is not None:
+        anomaly_evaluation_reader = PostgresAnomalyEvaluations(knowledge_engine)
+    if anomaly_evaluation_reader is not None:
+        evaluation_reader = CombinedEvaluations(evaluation_reader, anomaly_evaluation_reader)
     if v12_model_catalog is None and knowledge_engine is not None:
         v12_model_catalog = PostgresV12Catalog(
             knowledge_engine, settings.app_env, development=settings.v12_development_mode
@@ -149,6 +170,8 @@ def create_app(
         stockout_reader = LazyStockoutReader(knowledge_engine, settings.app_env)
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
+    if anomaly_reader is None and knowledge_engine is not None:
+        anomaly_reader = PostgresResults(knowledge_engine)
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
     metrics = HttpMetrics()
     started = False
@@ -279,6 +302,7 @@ def create_app(
             v12_forecast_administration,
             v12_model_catalog,
             v12_evaluation_reader,
+            anomaly_reader,
             stockout_administration,
             stockout_reader,
         )

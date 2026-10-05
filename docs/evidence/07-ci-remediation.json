@@ -1,0 +1,24 @@
+{
+  "status": "fixes_applied_pending_actual_head_required_ci",
+  "failed_consumer_commit": "20f897bbbc93d1bf8dedf83d75ee5108f3b5d969",
+  "failed_required_ci": {
+    "run_id": 37270459648,
+    "persistence_job": 111636152601,
+    "anomaly_oci_job": 111636152290
+  },
+  "persistence": {
+    "cause": "API readiness expected migration 0019_v12_development while migrations installed 0022_anomaly_evaluations",
+    "fix": "Align expected revision with actual migration head and add migration graph regression test",
+    "local_targeted_tests": 41,
+    "mypy_source_files": 413
+  },
+  "anomaly_oci": {
+    "cause": "Direct script execution omitted producer root from Python module search path: ModuleNotFoundError: data",
+    "local_reproduction": "confirmed_with_frozen_producer_48439eb_and_fresh_native_source",
+    "failed_source_preparation_log_sha256": "33007a0e4aefcedce2515c5d90715c3e4a17e071038246b4eb7afed583d259c3",
+    "fix": "Execute scripts.data.prepare_ai07_portfolio with python -m from producer root",
+    "additional_acceptance": "Start real API service after migrations and require HTTP 200 from /ready inside its container; no host service ports"
+  },
+  "frozen_models_and_quality_gates": "unchanged",
+  "producer_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df"
+}

@@ -1,0 +1,2507 @@
+{
+  "experiment": "ai07_v2",
+  "status": "not_ready",
+  "original_fit_commit": "8142c20a407d8d23848a70cbffad6d36a8585c67",
+  "source_fit_commit": "4c1c0da895f49db7ec3511ed3fd07068e4086d12",
+  "interpretation": "Original frozen gates and failed final evidence are retained; any subsequent profile is a separate synthetic qualification scope.",
+  "reports": {
+    "primary": {
+      "quality_id": "anomaly-quality-sha256-3baa7f4f555513aa97351b49eaa54c0867580c46c9b98122328ee4ddae8e1b38",
+      "status": "not_ready",
+      "file_sha256": "300d2c820c22d9392fd33f96713a0e0f84f49700aea1d61c0edee74a0f3c0b08",
+      "selection": {
+        "descriptor": {
+          "data_inventory": [
+            {
+              "feature_manifest_sha256": "75db1fcc076b21d5ced14cb7663070d315717b8ff078f677f4516eaee8d9b055",
+              "feature_rows_sha256": "b2309d18b675ac232a9fe138ac2cfd345252d5fa8e894e800653825999fd06ee",
+              "prepared_receipt_sha256": "dfbcdf541d3a9d6f5017c8818b1399a99127ccab39aefc9a3a97fd19e5bb9181",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-2dd27218b2d771b5aa58bae1709f706d6d88952474d243ccd27a9e99b86dbfe4",
+              "raw_fixture_id": "raw-dq-sha256-6df2e5e4d11703ba227f92d3cf1dabb90ce12fa401267b4eee845450c5d07563",
+              "raw_fixture_manifest_sha256": "d915e058676665ca5bcaea5b081af36cc5c97cdcd1dcf3a7481024de5a44903f",
+              "scenario": "demand",
+              "seed": 42,
+              "source_bundle_sha256": "395cac2bf420bf2ae3eb4dcea4c4b5aeceeb9eddcad83842a8a32abd316bdd9e",
+              "source_dataset_id": "source-sha256-37cced2d9a7fe84339bfe9d3d399084b42acfa44905f3da178709c61761b36bb",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "0967a08bcd8b0c92285caa96b737170f75c0085efe00400051c156f0160a07a6",
+              "source_snapshot_sha256": "f0e7b92b785f817e0d97e47f28dba865dfea19a6795bd5cf1a37b07ea7e0e7d6"
+            },
+            {
+              "feature_manifest_sha256": "2327f9c08ab4b932cfb5b2ae4c42d7ee5e384667bacb5aaccc0ba56e0a8b0594",
+              "feature_rows_sha256": "e6604ef6623609523fa382edc281a70be0f9325a844eb60dda307af431b1ab20",
+              "prepared_receipt_sha256": "2b21aa6dc8332238b1cb364cc0253513b2d44de5a6b8455aa5db0eb47d862027",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-9d0c7ceb30bf1ba34de5fcf4d493bcbd14a3177749c6496d237fb4fe4be2c05d",
+              "raw_fixture_id": "raw-dq-sha256-f63579eeeae8d1186f0b6a39cc826c0853caab235bdf095a5fd40f4801e84bf9",
+              "raw_fixture_manifest_sha256": "ecd257fdfccc72653807dd036c8c1b95f6e4ce6261b4832c793f5e802f0294e3",
+              "scenario": "physical",
+              "seed": 42,
+              "source_bundle_sha256": "e3deacbba9e8c28aa3cc46976741a08ab125178d70c3091bc51800c4f6f63d46",
+              "source_dataset_id": "source-sha256-9eec9add84ccdc4d5af7ef03124f8c5f20efb0e9629cd4c6d62b4124927cd392",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "cfedb5726ac266d407358ca83c9bc00f6ad9c197f62f284f6de90a5c19c4bb4d",
+              "source_snapshot_sha256": "f8490818b7b67fbed70b24b902be8b0787050f9b697869c5d18bd7f9816ca907"
+            },
+            {
+              "feature_manifest_sha256": "4fbaac735063ef26a6010d26f1f1cecf9fc44489a3682ee465553feaf8595b3f",
+              "feature_rows_sha256": "24b1ce7cbe07c12411de675dcff26b81b3f8027ee741d8c851bd4bec8d16d8f7",
+              "prepared_receipt_sha256": "6b066b5d8aa8eff3a97d6dc773305e4e3318b73b097710499f5aeff889f643ab",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-f26dd5c7ed00cfe6ea404de6927f79b1c7f210e107f934d100d813d4ec114b2d",
+              "raw_fixture_id": "raw-dq-sha256-91cb046caaf40a9643961b66601778e2c3c85c4d3ba1b24d4c177edc5030f518",
+              "raw_fixture_manifest_sha256": "aa05000234219c408ea2e10b06ace5e23b44000ec094e9bfb8e22fc5223a12cf",
+              "scenario": "demand",
+              "seed": 137,
+              "source_bundle_sha256": "0865766bc336e5b56f3213a9ac8f67de7fb17cf02b9bcaf4f308614855cca49b",
+              "source_dataset_id": "source-sha256-513c9932eb86dae93939407f7c8f7aa8cb077889428a4b826587da1abddf069d",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "1590ee9a68db5b0111334da305780e8ad300b75768fdbf9869a0f7c566fb7ce3",
+              "source_snapshot_sha256": "97ef7b2570f29166bd9d73ec921d2310fa53c3deb3ed3628b033f1d16f68ccc8"
+            },
+            {
+              "feature_manifest_sha256": "6187f8718b0db76b1ec76193dda34e929dc1e01f8702b63b750f150d6e747d32",
+              "feature_rows_sha256": "ec630d28b17fda2b59895dff3767068c78d9038e0a396fef9673fd694b103314",
+              "prepared_receipt_sha256": "785344d8aa511bc3e0422188486977b405f0fef00d509c2735a44261eb0ab794",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-6095d573c4eef82f8dd1dbf7ff50bf1e06bd9b3e87cbcb0c18c63bd678dae094",
+              "raw_fixture_id": "raw-dq-sha256-cec0d3bb5855cf99b2e3c732954d080defd037c3b8cc4d91c2b5b31136b5c739",
+              "raw_fixture_manifest_sha256": "5411a26e67a1fbb537e0cacdd98fb29b7b8ef2ede765567a2d6aeaac9fb98c58",
+              "scenario": "physical",
+              "seed": 137,
+              "source_bundle_sha256": "1cc63d96898203450a0175a63b1d021b296d013ab7a73e61747b4573ff35375e",
+              "source_dataset_id": "source-sha256-1954f57979691e5a8dc817194715eff56381f13bc4d561bbf8c2aeeed2a40d6b",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "0a190c6114e955ae1067c4544726c87262e0aeaf7eb8530ddb51ba20ea622f22",
+              "source_snapshot_sha256": "a38051ad2947148503bb487323b7cf4da42b066e5347aa37aeb281eaf2e6e277"
+            },
+            {
+              "feature_manifest_sha256": "2209c56a886347246fb79d1e4df1b9b075ec51f69659df38e6f61e580276ebc1",
+              "feature_rows_sha256": "daf853cd37f20712b38334677814ae9fba51d6af7b2be678cba7cc1bebec7c0e",
+              "prepared_receipt_sha256": "8da7699b58a8409d74771d9c9eead47e5dd505ca6e16ae9aae829885bfe9eff7",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-879a954ef2fbec30e0d7dea34efbc67b2619e867f7c4a1b71e263dc0b7080f23",
+              "raw_fixture_id": "raw-dq-sha256-8e0cc14013e60270524c652c04eddc6c237199069849ec5ccfc53dbf61ea41c4",
+              "raw_fixture_manifest_sha256": "9ca31c067e7249536e091b8854640a1faf23525d42d91acf643c2624f41d8b90",
+              "scenario": "demand",
+              "seed": 2026,
+              "source_bundle_sha256": "9ea5ed80bb06f1f3f350b9ba60cdef1b774997ffc935a73e515cdc6ef99fce78",
+              "source_dataset_id": "source-sha256-d0ecfde9adfc49558c7c0f8f2b9aa649bf298c7b8065097b459d3f357797aab9",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "51845f59aecc207e0c15e6e195a7e0487884c458d7a22f7eb489db091b0a55ae",
+              "source_snapshot_sha256": "ee2c76a781c0c09db3ef432fce765c4d4024c0b1d2f09b9fb14019589c10e23e"
+            },
+            {
+              "feature_manifest_sha256": "52a89ef90ec9e24d006ed2a3a4aff124f05220ae069df34985af8a73cc29e35e",
+              "feature_rows_sha256": "46004c848705b830b919a7c37953fe433f8f1fbce7651993059eafaaebb30b23",
+              "prepared_receipt_sha256": "6757abd8d16eba8c80da9fc3cd13a9dbfb789d68522be420eddabbe4c88f103e",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-9678d34e6cc72c28824013e691e7a96552c360e534ee09939b67972232f8a53a",
+              "raw_fixture_id": "raw-dq-sha256-d828a5705049b054ebaabc05b8daf41e75ee746fd536c6d1ff404d37c65b808e",
+              "raw_fixture_manifest_sha256": "64e3ba7400bae9605cedb667b67219dd0645340f06d920513d9d05ac3210442e",
+              "scenario": "physical",
+              "seed": 2026,
+              "source_bundle_sha256": "83adac95fd22e591362f69b372d9a5ed79de07861d3300282ef831b334d3e2ac",
+              "source_dataset_id": "source-sha256-923a606bfc934d95d0f8600d538f9e1ab438498fe94ffe7bceeab14e3d07c2f7",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "bdc2f12df8f0b3bfcf9172c750658872a2cc360373d2418f5d15ec62f4c1de2c",
+              "source_snapshot_sha256": "e9f3171de86b653b0bb0fb949b2b8991ccfed8a5fe6fe436b1f57bbddb2ffa82"
+            }
+          ],
+          "detector_id": "anomaly-detector-sha256-7a3c4040c5b8b3bcdb1434ff3591c9b3c81524e8a9b44a63b2691b702e0ffea1",
+          "evaluation_policy": {
+            "average_precision": "score_ties_grouped_stepwise_average_precision",
+            "early_lead_days": 0,
+            "episode_coverage": "all_mature_episodes_in_complete_requested_census",
+            "false_alert_denominator": "scored_mature_truth_clean_observations",
+            "late_tolerance_days": 1,
+            "overlap": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+            "repeat_alerts": "report_without_increasing_episode_recall",
+            "unknown_truth": "excluded_and_counted",
+            "version": "anomaly-evaluation-1.0.0",
+            "zero_prediction_precision": "not_evaluable"
+          },
+          "family": "isolation_forest",
+          "final_as_of": "2026-08-04T00:00:00+00:00",
+          "final_test_at_freeze": "not_scored",
+          "fit_record_sha256": "c470fb69770dcea144777925b1521640be2b281b5881f75a04deb0d09e3a2e52",
+          "frozen_at": "2026-10-05T00:05:22.339339+00:00",
+          "model_sha256": "b57446563b24b124056a0122c070dba373a7186148b057cc5945c9eec203cc37",
+          "original_completed_at": "2026-10-04T23:52:58.478122+00:00",
+          "original_started_at": "2026-10-04T23:52:48.623756+00:00",
+          "protocol": {
+            "feature_policy": {
+              "fit_clock": "utc_window_start_minus_one_microsecond",
+              "history_days": 28,
+              "minimum_history_days": 14,
+              "minimum_residuals": 7,
+              "quantity_basis": "dq_accepted_receipts_at_query_cutoff",
+              "returns_delay_hours": 72,
+              "sales_delay_hours": 24,
+              "scale_policy": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+              "scoring_clock": "exclusive_utc_day_end_plus_delay_inclusive",
+              "seasonal_lag_days": 7,
+              "stock_policy": "scoring_context_only_no_automatic_censoring_correction",
+              "version": "qualified-anomaly-inputs-1.0.0"
+            },
+            "final_portfolio_test": "reserved_until_selection_frozen",
+            "gap_policy": "requested_and_counted_never_fitted",
+            "membership_clock": "business_window_and_available_scoring_outcome",
+            "missing_policy": "requested_unknown_not_clean_negative",
+            "purpose": "bounded_portfolio_qualification",
+            "scopes": [
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              }
+            ],
+            "selection_cutoff": "2026-07-03T00:00:00Z",
+            "test": {
+              "end": "2026-07-31",
+              "start": "2026-07-04"
+            },
+            "train": {
+              "end": "2026-05-24",
+              "start": "2026-04-23"
+            },
+            "training_cutoff": "2026-05-28T00:00:00Z",
+            "training_labels": "unavailable_no_oracle_filter",
+            "validation": {
+              "end": "2026-06-29",
+              "start": "2026-05-29"
+            },
+            "version": "anomaly-portfolio-protocol-1.0.0"
+          },
+          "quality_policy": {
+            "maximum_false_alerts_per_1000": 10.0,
+            "minimum_clean_per_case": 300,
+            "minimum_episode_recall": 0.75,
+            "minimum_episode_recall_per_type": 0.5,
+            "minimum_episodes_per_type": 3,
+            "minimum_evaluable_coverage": 0.55,
+            "minimum_high_severity_precision": 0.9,
+            "minimum_positive_observations_per_type": 3,
+            "minimum_precision": 0.8,
+            "minimum_recall": 0.65,
+            "null_required_metric": "blocks_qualification",
+            "qualification_scope": "synthetic_ai_07_portfolio_v2",
+            "required_types": [
+              "one_day_spike",
+              "multi_day_spike",
+              "sustained_drop",
+              "return_spike",
+              "inventory_censored_episode"
+            ],
+            "segment_policy": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+            "source_scenarios": [
+              "demand",
+              "physical"
+            ],
+            "source_seeds": [
+              42,
+              137,
+              2026
+            ],
+            "version": "anomaly-portfolio-quality-1.0.0"
+          },
+          "selection_reason": "Primary: residual features and validation capacity 0.10 give the best recall, detect all five types and all 11 validation episodes, with 0.897 precision and 3.325 false alerts per 1000. All cutoffs and numeric gates are frozen before any final score.",
+          "truth_access_during_selection": "validation_only_no_final_truth",
+          "validation_comparison_sha256": "840d5223dc184b7779a1e9ab61fb3a6f14db35fe2ed474288261cfb5b924660f",
+          "version": "anomaly-selection-1.0.0"
+        },
+        "selection_id": "anomaly-selection-sha256-8c8274fb8db74b94612edd848d8cdd0511c966b6ffdc82cf1ed71fa2060d14f0"
+      },
+      "checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 6,
+          "value": 6
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 0.8363636363636363
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.65,
+          "value": 0.38333333333333336
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 3.608660785886127
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.75,
+          "value": 0.696969696969697
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.55,
+          "value": 0.48623511904761907
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 0.8888888888888888
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 0.8888888888888888
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 27
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 0.6666666666666666
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 45
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.5,
+          "value": 0.3333333333333333
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 30
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.5,
+          "value": 0.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 7.705479452054795
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1168
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1326
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 467
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9565217391304348
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8148148148148148
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 2.1413276231263385
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9878515150210124
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 359
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.07692307692307693
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.6589437911317294
+        },
+        {
+          "check_id": "clean_sample/137/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 471
+        },
+        {
+          "check_id": "metric_validity/137/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.7692307692307693
+        },
+        {
+          "check_id": "metric_validity/137/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.37037037037037035
+        },
+        {
+          "check_id": "metric_validity/137/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 6.369426751592357
+        },
+        {
+          "check_id": "metric_validity/137/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8359117688261003
+        },
+        {
+          "check_id": "clean_sample/137/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 363
+        },
+        {
+          "check_id": "metric_validity/137/physical/precision",
+          "severity": "hard",
+          "status": "not_evaluable",
+          "threshold": "evaluable",
+          "value": null
+        },
+        {
+          "check_id": "metric_validity/137/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/137/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/137/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.2930874783557485
+        },
+        {
+          "check_id": "clean_sample/2026/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 471
+        },
+        {
+          "check_id": "metric_validity/2026/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.7222222222222222
+        },
+        {
+          "check_id": "metric_validity/2026/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.48148148148148145
+        },
+        {
+          "check_id": "metric_validity/2026/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 10.615711252653927
+        },
+        {
+          "check_id": "metric_validity/2026/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8750286747464472
+        },
+        {
+          "check_id": "clean_sample/2026/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 363
+        },
+        {
+          "check_id": "metric_validity/2026/physical/precision",
+          "severity": "hard",
+          "status": "not_evaluable",
+          "threshold": "evaluable",
+          "value": null
+        },
+        {
+          "check_id": "metric_validity/2026/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/2026/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/2026/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.5004773595199128
+        }
+      ],
+      "policy": {
+        "maximum_false_alerts_per_1000": 10.0,
+        "minimum_clean_per_case": 300,
+        "minimum_episode_recall": 0.75,
+        "minimum_episode_recall_per_type": 0.5,
+        "minimum_episodes_per_type": 3,
+        "minimum_evaluable_coverage": 0.55,
+        "minimum_high_severity_precision": 0.9,
+        "minimum_positive_observations_per_type": 3,
+        "minimum_precision": 0.8,
+        "minimum_recall": 0.65,
+        "null_required_metric": "blocks_qualification",
+        "qualification_scope": "synthetic_ai_07_portfolio_v2",
+        "required_types": [
+          "one_day_spike",
+          "multi_day_spike",
+          "sustained_drop",
+          "return_spike",
+          "inventory_censored_episode"
+        ],
+        "segment_policy": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+        "source_scenarios": [
+          "demand",
+          "physical"
+        ],
+        "source_seeds": [
+          42,
+          137,
+          2026
+        ],
+        "version": "anomaly-portfolio-quality-1.0.0"
+      },
+      "summary": {
+        "counts": {
+          "detected_episodes": 23,
+          "episodes": 33,
+          "evaluable": 2614,
+          "false_negative": 74,
+          "false_positive": 9,
+          "high_alerts": 3,
+          "high_true": 3,
+          "immature_truth": 0,
+          "input_insufficient_data_total": 614,
+          "insufficient_data": 530,
+          "repeat_alerts": 23,
+          "requested": 5376,
+          "true_negative": 2485,
+          "true_positive": 46,
+          "unknown_truth": 2232
+        },
+        "delay_and_repeat_details": [
+          {
+            "alert_count": 2,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "0c38597e-c7f4-5eed-b480-b1591b929926",
+            "first_alert_date": "2026-07-21",
+            "repeat_alert_count": 1
+          },
+          {
+            "alert_count": 3,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "1351e8fc-5d90-5676-8d15-23c453a0caff",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "1e85c7dc-412f-55e8-b44c-fa51a1b47eee",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 2,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "241df4f9-10af-5b1b-b552-d39398b15e6e",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 1
+          },
+          {
+            "alert_count": 5,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "4cffe376-ddb2-52a7-9566-338157555f23",
+            "first_alert_date": "2026-07-21",
+            "repeat_alert_count": 4
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "63a45bb6-de9b-5e49-9e31-f5a6d0b4d132",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 2,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 86400.0,
+            "delay_from_start_days": 3.0,
+            "detected": true,
+            "episode_id": "8084a0b2-7023-5755-b85f-ad8cbc1b14bb",
+            "first_alert_date": "2026-07-12",
+            "repeat_alert_count": 1
+          },
+          {
+            "alert_count": 5,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "90a2245b-f868-53f4-b021-1109a254f199",
+            "first_alert_date": "2026-07-21",
+            "repeat_alert_count": 4
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "ed95e46f-1bc4-562b-aaa3-20335b6992d0",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "inventory_censored_episode",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "2593ff65-b38a-5a80-92ee-8dce13027eee",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "return_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 4.0,
+            "detected": true,
+            "episode_id": "f300872f-af1b-585f-b813-e80bd70e2dc2",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "15e7a252-be57-5c11-aab7-2b32b2a88737",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "1f5d0445-607d-5f59-be96-296fd02f2b7a",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "56432d8a-5211-5084-bdf8-6549bb380e36",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 3,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "5a0090bf-d65e-5c91-bb4b-69936fe5ba4b",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 2,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": 259200.0,
+            "delay_from_start_days": 5.0,
+            "detected": true,
+            "episode_id": "770cbc56-8dd8-5f6c-98ef-79255f0966c3",
+            "first_alert_date": "2026-07-24",
+            "repeat_alert_count": 1
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "986033d3-4a8e-51c9-88e7-dbf0c0b0550e",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "a9ea0035-b3c3-5684-be3b-6e0333425a21",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 86400.0,
+            "delay_from_start_days": 3.0,
+            "detected": true,
+            "episode_id": "ac099165-9f9d-5b81-a391-ea91397368a8",
+            "first_alert_date": "2026-07-12",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 2,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 86400.0,
+            "delay_from_start_days": 3.0,
+            "detected": true,
+            "episode_id": "bee743b2-6bd9-5a92-a4b9-d3933d23456a",
+            "first_alert_date": "2026-07-12",
+            "repeat_alert_count": 1
+          },
+          {
+            "alert_count": 0,
+            "business_type": "return_spike",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "8e459e3a-e51f-5176-bccd-6e256860bbfd",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "inventory_censored_episode",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "f9d20561-e35b-5208-bd60-f535e4544232",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "08c0764e-cf38-5796-b036-ab1274e0fed7",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "3c98c63d-c9c7-572a-9845-d47b60629137",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "40ad9225-8e2f-5d02-8d12-02a7973e6c70",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 3,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "4423b0ea-6537-5381-b575-2f90d1937e0e",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "9a2a3962-b1fd-5117-b71b-91e1c0b30432",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 3,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "9a757d73-5503-5f8c-9af3-f3489fe97680",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 1,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": 345600.0,
+            "delay_from_start_days": 6.0,
+            "detected": true,
+            "episode_id": "ba0aab8f-e1eb-5cdf-b21d-94f483df280e",
+            "first_alert_date": "2026-07-25",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "c7a356ba-7af8-5655-8502-f9776033edca",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 3,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "edbbf1a2-e40e-5c3d-a7eb-170a29a6b90b",
+            "first_alert_date": "2026-07-21",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 0,
+            "business_type": "return_spike",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "3e0f3b47-854f-537d-b899-3d2d67f935f2",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "inventory_censored_episode",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "b9ed8676-722a-5305-bff1-398a06df0533",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          }
+        ],
+        "detected_episodes_per_type": {
+          "inventory_censored_episode": 0,
+          "multi_day_spike": 8,
+          "one_day_spike": 8,
+          "return_spike": 1,
+          "sustained_drop": 6
+        },
+        "detector_id": "anomaly-detector-sha256-7a3c4040c5b8b3bcdb1434ff3591c9b3c81524e8a9b44a63b2691b702e0ffea1",
+        "episodes_per_type": {
+          "inventory_censored_episode": 3,
+          "multi_day_spike": 9,
+          "one_day_spike": 9,
+          "return_spike": 3,
+          "sustained_drop": 9
+        },
+        "family": "isolation_forest",
+        "metrics": {
+          "episode_recall": 0.696969696969697,
+          "evaluable_coverage": 0.48623511904761907,
+          "false_alerts_per_1000": 3.608660785886127,
+          "high_severity_precision": 1.0,
+          "precision": 0.8363636363636363,
+          "recall": 0.38333333333333336
+        },
+        "per_segment": {
+          "return_completed/PLN": {
+            "evaluable": 1198,
+            "false_negative": 29,
+            "false_positive": 9,
+            "requested": 2688,
+            "true_negative": 1159,
+            "true_positive": 1
+          },
+          "sale_completed/PLN": {
+            "evaluable": 1416,
+            "false_negative": 45,
+            "false_positive": 0,
+            "requested": 2688,
+            "true_negative": 1326,
+            "true_positive": 45
+          }
+        },
+        "positive_observations_per_type": {
+          "inventory_censored_episode": 9,
+          "multi_day_spike": 27,
+          "one_day_spike": 9,
+          "return_spike": 30,
+          "sustained_drop": 45
+        },
+        "version": "anomaly-portfolio-summary-1.0.0"
+      }
+    },
+    "reference": {
+      "quality_id": "anomaly-quality-sha256-f82697018bd2963283d54d596c08eca458e942b3f58ef98f5a154b11e7a29da6",
+      "status": "not_ready",
+      "file_sha256": "4b55817b62e04eae81fe2b8b7771b325c67e43c95ac987c8bb293744c3439f41",
+      "selection": {
+        "descriptor": {
+          "data_inventory": [
+            {
+              "feature_manifest_sha256": "75db1fcc076b21d5ced14cb7663070d315717b8ff078f677f4516eaee8d9b055",
+              "feature_rows_sha256": "b2309d18b675ac232a9fe138ac2cfd345252d5fa8e894e800653825999fd06ee",
+              "prepared_receipt_sha256": "dfbcdf541d3a9d6f5017c8818b1399a99127ccab39aefc9a3a97fd19e5bb9181",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-2dd27218b2d771b5aa58bae1709f706d6d88952474d243ccd27a9e99b86dbfe4",
+              "raw_fixture_id": "raw-dq-sha256-6df2e5e4d11703ba227f92d3cf1dabb90ce12fa401267b4eee845450c5d07563",
+              "raw_fixture_manifest_sha256": "d915e058676665ca5bcaea5b081af36cc5c97cdcd1dcf3a7481024de5a44903f",
+              "scenario": "demand",
+              "seed": 42,
+              "source_bundle_sha256": "395cac2bf420bf2ae3eb4dcea4c4b5aeceeb9eddcad83842a8a32abd316bdd9e",
+              "source_dataset_id": "source-sha256-37cced2d9a7fe84339bfe9d3d399084b42acfa44905f3da178709c61761b36bb",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "0967a08bcd8b0c92285caa96b737170f75c0085efe00400051c156f0160a07a6",
+              "source_snapshot_sha256": "f0e7b92b785f817e0d97e47f28dba865dfea19a6795bd5cf1a37b07ea7e0e7d6"
+            },
+            {
+              "feature_manifest_sha256": "2327f9c08ab4b932cfb5b2ae4c42d7ee5e384667bacb5aaccc0ba56e0a8b0594",
+              "feature_rows_sha256": "e6604ef6623609523fa382edc281a70be0f9325a844eb60dda307af431b1ab20",
+              "prepared_receipt_sha256": "2b21aa6dc8332238b1cb364cc0253513b2d44de5a6b8455aa5db0eb47d862027",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-9d0c7ceb30bf1ba34de5fcf4d493bcbd14a3177749c6496d237fb4fe4be2c05d",
+              "raw_fixture_id": "raw-dq-sha256-f63579eeeae8d1186f0b6a39cc826c0853caab235bdf095a5fd40f4801e84bf9",
+              "raw_fixture_manifest_sha256": "ecd257fdfccc72653807dd036c8c1b95f6e4ce6261b4832c793f5e802f0294e3",
+              "scenario": "physical",
+              "seed": 42,
+              "source_bundle_sha256": "e3deacbba9e8c28aa3cc46976741a08ab125178d70c3091bc51800c4f6f63d46",
+              "source_dataset_id": "source-sha256-9eec9add84ccdc4d5af7ef03124f8c5f20efb0e9629cd4c6d62b4124927cd392",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "cfedb5726ac266d407358ca83c9bc00f6ad9c197f62f284f6de90a5c19c4bb4d",
+              "source_snapshot_sha256": "f8490818b7b67fbed70b24b902be8b0787050f9b697869c5d18bd7f9816ca907"
+            },
+            {
+              "feature_manifest_sha256": "4fbaac735063ef26a6010d26f1f1cecf9fc44489a3682ee465553feaf8595b3f",
+              "feature_rows_sha256": "24b1ce7cbe07c12411de675dcff26b81b3f8027ee741d8c851bd4bec8d16d8f7",
+              "prepared_receipt_sha256": "6b066b5d8aa8eff3a97d6dc773305e4e3318b73b097710499f5aeff889f643ab",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-f26dd5c7ed00cfe6ea404de6927f79b1c7f210e107f934d100d813d4ec114b2d",
+              "raw_fixture_id": "raw-dq-sha256-91cb046caaf40a9643961b66601778e2c3c85c4d3ba1b24d4c177edc5030f518",
+              "raw_fixture_manifest_sha256": "aa05000234219c408ea2e10b06ace5e23b44000ec094e9bfb8e22fc5223a12cf",
+              "scenario": "demand",
+              "seed": 137,
+              "source_bundle_sha256": "0865766bc336e5b56f3213a9ac8f67de7fb17cf02b9bcaf4f308614855cca49b",
+              "source_dataset_id": "source-sha256-513c9932eb86dae93939407f7c8f7aa8cb077889428a4b826587da1abddf069d",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "1590ee9a68db5b0111334da305780e8ad300b75768fdbf9869a0f7c566fb7ce3",
+              "source_snapshot_sha256": "97ef7b2570f29166bd9d73ec921d2310fa53c3deb3ed3628b033f1d16f68ccc8"
+            },
+            {
+              "feature_manifest_sha256": "6187f8718b0db76b1ec76193dda34e929dc1e01f8702b63b750f150d6e747d32",
+              "feature_rows_sha256": "ec630d28b17fda2b59895dff3767068c78d9038e0a396fef9673fd694b103314",
+              "prepared_receipt_sha256": "785344d8aa511bc3e0422188486977b405f0fef00d509c2735a44261eb0ab794",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-6095d573c4eef82f8dd1dbf7ff50bf1e06bd9b3e87cbcb0c18c63bd678dae094",
+              "raw_fixture_id": "raw-dq-sha256-cec0d3bb5855cf99b2e3c732954d080defd037c3b8cc4d91c2b5b31136b5c739",
+              "raw_fixture_manifest_sha256": "5411a26e67a1fbb537e0cacdd98fb29b7b8ef2ede765567a2d6aeaac9fb98c58",
+              "scenario": "physical",
+              "seed": 137,
+              "source_bundle_sha256": "1cc63d96898203450a0175a63b1d021b296d013ab7a73e61747b4573ff35375e",
+              "source_dataset_id": "source-sha256-1954f57979691e5a8dc817194715eff56381f13bc4d561bbf8c2aeeed2a40d6b",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "0a190c6114e955ae1067c4544726c87262e0aeaf7eb8530ddb51ba20ea622f22",
+              "source_snapshot_sha256": "a38051ad2947148503bb487323b7cf4da42b066e5347aa37aeb281eaf2e6e277"
+            },
+            {
+              "feature_manifest_sha256": "2209c56a886347246fb79d1e4df1b9b075ec51f69659df38e6f61e580276ebc1",
+              "feature_rows_sha256": "daf853cd37f20712b38334677814ae9fba51d6af7b2be678cba7cc1bebec7c0e",
+              "prepared_receipt_sha256": "8da7699b58a8409d74771d9c9eead47e5dd505ca6e16ae9aae829885bfe9eff7",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-879a954ef2fbec30e0d7dea34efbc67b2619e867f7c4a1b71e263dc0b7080f23",
+              "raw_fixture_id": "raw-dq-sha256-8e0cc14013e60270524c652c04eddc6c237199069849ec5ccfc53dbf61ea41c4",
+              "raw_fixture_manifest_sha256": "9ca31c067e7249536e091b8854640a1faf23525d42d91acf643c2624f41d8b90",
+              "scenario": "demand",
+              "seed": 2026,
+              "source_bundle_sha256": "9ea5ed80bb06f1f3f350b9ba60cdef1b774997ffc935a73e515cdc6ef99fce78",
+              "source_dataset_id": "source-sha256-d0ecfde9adfc49558c7c0f8f2b9aa649bf298c7b8065097b459d3f357797aab9",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "51845f59aecc207e0c15e6e195a7e0487884c458d7a22f7eb489db091b0a55ae",
+              "source_snapshot_sha256": "ee2c76a781c0c09db3ef432fce765c4d4024c0b1d2f09b9fb14019589c10e23e"
+            },
+            {
+              "feature_manifest_sha256": "52a89ef90ec9e24d006ed2a3a4aff124f05220ae069df34985af8a73cc29e35e",
+              "feature_rows_sha256": "46004c848705b830b919a7c37953fe433f8f1fbce7651993059eafaaebb30b23",
+              "prepared_receipt_sha256": "6757abd8d16eba8c80da9fc3cd13a9dbfb789d68522be420eddabbe4c88f103e",
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-9678d34e6cc72c28824013e691e7a96552c360e534ee09939b67972232f8a53a",
+              "raw_fixture_id": "raw-dq-sha256-d828a5705049b054ebaabc05b8daf41e75ee746fd536c6d1ff404d37c65b808e",
+              "raw_fixture_manifest_sha256": "64e3ba7400bae9605cedb667b67219dd0645340f06d920513d9d05ac3210442e",
+              "scenario": "physical",
+              "seed": 2026,
+              "source_bundle_sha256": "83adac95fd22e591362f69b372d9a5ed79de07861d3300282ef831b334d3e2ac",
+              "source_dataset_id": "source-sha256-923a606bfc934d95d0f8600d538f9e1ab438498fe94ffe7bceeab14e3d07c2f7",
+              "source_profile": "ai-07-portfolio-v2",
+              "source_scenario_sha256": "bdc2f12df8f0b3bfcf9172c750658872a2cc360373d2418f5d15ec62f4c1de2c",
+              "source_snapshot_sha256": "e9f3171de86b653b0bb0fb949b2b8991ccfed8a5fe6fe436b1f57bbddb2ffa82"
+            }
+          ],
+          "detector_id": "anomaly-detector-sha256-1a67abd9282f7b96fca02c3ce315a20afa61579a6ada6ef16dca025fcdfb3592",
+          "evaluation_policy": {
+            "average_precision": "score_ties_grouped_stepwise_average_precision",
+            "early_lead_days": 0,
+            "episode_coverage": "all_mature_episodes_in_complete_requested_census",
+            "false_alert_denominator": "scored_mature_truth_clean_observations",
+            "late_tolerance_days": 1,
+            "overlap": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+            "repeat_alerts": "report_without_increasing_episode_recall",
+            "unknown_truth": "excluded_and_counted",
+            "version": "anomaly-evaluation-1.0.0",
+            "zero_prediction_precision": "not_evaluable"
+          },
+          "family": "isolation_forest",
+          "final_as_of": "2026-08-04T00:00:00+00:00",
+          "final_test_at_freeze": "not_scored",
+          "fit_record_sha256": "3701983a4721dc33955412fed92231ddcf1c1147cf71c355b2286997e92e5a5b",
+          "frozen_at": "2026-10-05T00:05:22.169744+00:00",
+          "model_sha256": "4cb630de9bae46a822c552a775a361341709802ae4d2047237d961d2c48297cc",
+          "original_completed_at": "2026-10-04T23:52:28.908803+00:00",
+          "original_started_at": "2026-10-04T23:52:18.915276+00:00",
+          "protocol": {
+            "feature_policy": {
+              "fit_clock": "utc_window_start_minus_one_microsecond",
+              "history_days": 28,
+              "minimum_history_days": 14,
+              "minimum_residuals": 7,
+              "quantity_basis": "dq_accepted_receipts_at_query_cutoff",
+              "returns_delay_hours": 72,
+              "sales_delay_hours": 24,
+              "scale_policy": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+              "scoring_clock": "exclusive_utc_day_end_plus_delay_inclusive",
+              "seasonal_lag_days": 7,
+              "stock_policy": "scoring_context_only_no_automatic_censoring_correction",
+              "version": "qualified-anomaly-inputs-1.0.0"
+            },
+            "final_portfolio_test": "reserved_until_selection_frozen",
+            "gap_policy": "requested_and_counted_never_fitted",
+            "membership_clock": "business_window_and_available_scoring_outcome",
+            "missing_policy": "requested_unknown_not_clean_negative",
+            "purpose": "bounded_portfolio_qualification",
+            "scopes": [
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "return_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "33984f28-9177-56c9-8021-e9489ff6a02e",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "38d5dc41-891b-50f6-a02f-fda88ad8ccde",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "576f0781-3104-5d50-92f3-befe834a6fa6",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "62b81abd-84c4-5de4-b8f1-2d5b6b547bc3",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "6ef80540-16c7-551c-95b8-9ae7373e7908",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "b17680da-3917-5612-9246-0a9b60e6efe9",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "de0b3ef5-2bd5-55d5-8b53-6dc8eda6d60f",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "online",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              },
+              {
+                "channel": "store",
+                "currency": "PLN",
+                "event_type": "sale_completed",
+                "product_id": "e3e08a14-471a-5347-94f6-b2369070c3a7",
+                "selling_location_id": "dccdb512-8eb9-5025-a0f8-e41d3d2e3f34"
+              }
+            ],
+            "selection_cutoff": "2026-07-03T00:00:00Z",
+            "test": {
+              "end": "2026-07-31",
+              "start": "2026-07-04"
+            },
+            "train": {
+              "end": "2026-05-24",
+              "start": "2026-04-23"
+            },
+            "training_cutoff": "2026-05-28T00:00:00Z",
+            "training_labels": "unavailable_no_oracle_filter",
+            "validation": {
+              "end": "2026-06-29",
+              "start": "2026-05-29"
+            },
+            "version": "anomaly-portfolio-protocol-1.0.0"
+          },
+          "quality_policy": {
+            "maximum_false_alerts_per_1000": 10.0,
+            "minimum_clean_per_case": 300,
+            "minimum_episode_recall": 0.75,
+            "minimum_episode_recall_per_type": 0.5,
+            "minimum_episodes_per_type": 3,
+            "minimum_evaluable_coverage": 0.55,
+            "minimum_high_severity_precision": 0.9,
+            "minimum_positive_observations_per_type": 3,
+            "minimum_precision": 0.8,
+            "minimum_recall": 0.65,
+            "null_required_metric": "blocks_qualification",
+            "qualification_scope": "synthetic_ai_07_portfolio_v2",
+            "required_types": [
+              "one_day_spike",
+              "multi_day_spike",
+              "sustained_drop",
+              "return_spike",
+              "inventory_censored_episode"
+            ],
+            "segment_policy": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+            "source_scenarios": [
+              "demand",
+              "physical"
+            ],
+            "source_seeds": [
+              42,
+              137,
+              2026
+            ],
+            "version": "anomaly-portfolio-quality-1.0.0"
+          },
+          "selection_reason": "Reference: full public feature Isolation Forest at validation capacity 0.10 has 0.889 precision, 0.800 recall and 10 of 11 validation episodes, including all five types. It is fixed as the independently trained rollback reference before the final test; it must pass the same numerical gates.",
+          "truth_access_during_selection": "validation_only_no_final_truth",
+          "validation_comparison_sha256": "840d5223dc184b7779a1e9ab61fb3a6f14db35fe2ed474288261cfb5b924660f",
+          "version": "anomaly-selection-1.0.0"
+        },
+        "selection_id": "anomaly-selection-sha256-5edadc935656979be664acae19f8911beb69e7d0a88b4978d9e9929f1a67ba97"
+      },
+      "checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 6,
+          "value": 6
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 0.8636363636363636
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.65,
+          "value": 0.31666666666666665
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 2.405773857257418
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.75,
+          "value": 0.6666666666666666
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.55,
+          "value": 0.48623511904761907
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 27
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.5,
+          "value": 0.2222222222222222
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 45
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 0.6666666666666666
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 30
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.5,
+          "value": 0.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 5.136986301369863
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1168
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1326
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 467
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.5555555555555556
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9464330523720247
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 359
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.23076923076923078
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.7669586238134626
+        },
+        {
+          "check_id": "clean_sample/137/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 471
+        },
+        {
+          "check_id": "metric_validity/137/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8181818181818182
+        },
+        {
+          "check_id": "metric_validity/137/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.3333333333333333
+        },
+        {
+          "check_id": "metric_validity/137/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 4.246284501061571
+        },
+        {
+          "check_id": "metric_validity/137/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.6742695981051234
+        },
+        {
+          "check_id": "clean_sample/137/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 363
+        },
+        {
+          "check_id": "metric_validity/137/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/137/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.07692307692307693
+        },
+        {
+          "check_id": "metric_validity/137/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/137/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.38818210098745753
+        },
+        {
+          "check_id": "clean_sample/2026/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 471
+        },
+        {
+          "check_id": "metric_validity/2026/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.7142857142857143
+        },
+        {
+          "check_id": "metric_validity/2026/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.37037037037037035
+        },
+        {
+          "check_id": "metric_validity/2026/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 8.492569002123142
+        },
+        {
+          "check_id": "metric_validity/2026/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.6327814940506168
+        },
+        {
+          "check_id": "clean_sample/2026/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 363
+        },
+        {
+          "check_id": "metric_validity/2026/physical/precision",
+          "severity": "hard",
+          "status": "not_evaluable",
+          "threshold": "evaluable",
+          "value": null
+        },
+        {
+          "check_id": "metric_validity/2026/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/2026/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/2026/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.6551043237807943
+        }
+      ],
+      "policy": {
+        "maximum_false_alerts_per_1000": 10.0,
+        "minimum_clean_per_case": 300,
+        "minimum_episode_recall": 0.75,
+        "minimum_episode_recall_per_type": 0.5,
+        "minimum_episodes_per_type": 3,
+        "minimum_evaluable_coverage": 0.55,
+        "minimum_high_severity_precision": 0.9,
+        "minimum_positive_observations_per_type": 3,
+        "minimum_precision": 0.8,
+        "minimum_recall": 0.65,
+        "null_required_metric": "blocks_qualification",
+        "qualification_scope": "synthetic_ai_07_portfolio_v2",
+        "required_types": [
+          "one_day_spike",
+          "multi_day_spike",
+          "sustained_drop",
+          "return_spike",
+          "inventory_censored_episode"
+        ],
+        "segment_policy": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+        "source_scenarios": [
+          "demand",
+          "physical"
+        ],
+        "source_seeds": [
+          42,
+          137,
+          2026
+        ],
+        "version": "anomaly-portfolio-quality-1.0.0"
+      },
+      "summary": {
+        "counts": {
+          "detected_episodes": 22,
+          "episodes": 33,
+          "evaluable": 2614,
+          "false_negative": 82,
+          "false_positive": 6,
+          "high_alerts": 10,
+          "high_true": 10,
+          "immature_truth": 0,
+          "input_insufficient_data_total": 614,
+          "insufficient_data": 530,
+          "repeat_alerts": 16,
+          "requested": 5376,
+          "true_negative": 2488,
+          "true_positive": 38,
+          "unknown_truth": 2232
+        },
+        "delay_and_repeat_details": [
+          {
+            "alert_count": 0,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "0c38597e-c7f4-5eed-b480-b1591b929926",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 3,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "1351e8fc-5d90-5676-8d15-23c453a0caff",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "1e85c7dc-412f-55e8-b44c-fa51a1b47eee",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 3,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "241df4f9-10af-5b1b-b552-d39398b15e6e",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 2,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": 259200.0,
+            "delay_from_start_days": 5.0,
+            "detected": true,
+            "episode_id": "4cffe376-ddb2-52a7-9566-338157555f23",
+            "first_alert_date": "2026-07-24",
+            "repeat_alert_count": 1
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "63a45bb6-de9b-5e49-9e31-f5a6d0b4d132",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 3,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "8084a0b2-7023-5755-b85f-ad8cbc1b14bb",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 1,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": 345600.0,
+            "delay_from_start_days": 6.0,
+            "detected": true,
+            "episode_id": "90a2245b-f868-53f4-b021-1109a254f199",
+            "first_alert_date": "2026-07-25",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "ed95e46f-1bc4-562b-aaa3-20335b6992d0",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "inventory_censored_episode",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "2593ff65-b38a-5a80-92ee-8dce13027eee",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 3,
+            "business_type": "return_spike",
+            "delay_from_evidence_seconds": 604800.0,
+            "delay_from_start_days": 11.0,
+            "detected": true,
+            "episode_id": "f300872f-af1b-585f-b813-e80bd70e2dc2",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "15e7a252-be57-5c11-aab7-2b32b2a88737",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "1f5d0445-607d-5f59-be96-296fd02f2b7a",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "56432d8a-5211-5084-bdf8-6549bb380e36",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 3,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "5a0090bf-d65e-5c91-bb4b-69936fe5ba4b",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 0,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "770cbc56-8dd8-5f6c-98ef-79255f0966c3",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "986033d3-4a8e-51c9-88e7-dbf0c0b0550e",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "a9ea0035-b3c3-5684-be3b-6e0333425a21",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 86400.0,
+            "delay_from_start_days": 3.0,
+            "detected": true,
+            "episode_id": "ac099165-9f9d-5b81-a391-ea91397368a8",
+            "first_alert_date": "2026-07-12",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 2,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 86400.0,
+            "delay_from_start_days": 3.0,
+            "detected": true,
+            "episode_id": "bee743b2-6bd9-5a92-a4b9-d3933d23456a",
+            "first_alert_date": "2026-07-12",
+            "repeat_alert_count": 1
+          },
+          {
+            "alert_count": 1,
+            "business_type": "return_spike",
+            "delay_from_evidence_seconds": 691200.0,
+            "delay_from_start_days": 12.0,
+            "detected": true,
+            "episode_id": "8e459e3a-e51f-5176-bccd-6e256860bbfd",
+            "first_alert_date": "2026-07-12",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "inventory_censored_episode",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "f9d20561-e35b-5208-bd60-f535e4544232",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "08c0764e-cf38-5796-b036-ab1274e0fed7",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "3c98c63d-c9c7-572a-9845-d47b60629137",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 2,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 86400.0,
+            "delay_from_start_days": 3.0,
+            "detected": true,
+            "episode_id": "40ad9225-8e2f-5d02-8d12-02a7973e6c70",
+            "first_alert_date": "2026-07-12",
+            "repeat_alert_count": 1
+          },
+          {
+            "alert_count": 3,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "4423b0ea-6537-5381-b575-2f90d1937e0e",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 2
+          },
+          {
+            "alert_count": 1,
+            "business_type": "one_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "9a2a3962-b1fd-5117-b71b-91e1c0b30432",
+            "first_alert_date": "2026-07-04",
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 2,
+            "business_type": "multi_day_spike",
+            "delay_from_evidence_seconds": 0.0,
+            "delay_from_start_days": 2.0,
+            "detected": true,
+            "episode_id": "9a757d73-5503-5f8c-9af3-f3489fe97680",
+            "first_alert_date": "2026-07-11",
+            "repeat_alert_count": 1
+          },
+          {
+            "alert_count": 0,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "ba0aab8f-e1eb-5cdf-b21d-94f483df280e",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "c7a356ba-7af8-5655-8502-f9776033edca",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "sustained_drop",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "edbbf1a2-e40e-5c3d-a7eb-170a29a6b90b",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "return_spike",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "3e0f3b47-854f-537d-b899-3d2d67f935f2",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          },
+          {
+            "alert_count": 0,
+            "business_type": "inventory_censored_episode",
+            "delay_from_evidence_seconds": null,
+            "delay_from_start_days": null,
+            "detected": false,
+            "episode_id": "b9ed8676-722a-5305-bff1-398a06df0533",
+            "first_alert_date": null,
+            "repeat_alert_count": 0
+          }
+        ],
+        "detected_episodes_per_type": {
+          "inventory_censored_episode": 0,
+          "multi_day_spike": 9,
+          "one_day_spike": 9,
+          "return_spike": 2,
+          "sustained_drop": 2
+        },
+        "detector_id": "anomaly-detector-sha256-1a67abd9282f7b96fca02c3ce315a20afa61579a6ada6ef16dca025fcdfb3592",
+        "episodes_per_type": {
+          "inventory_censored_episode": 3,
+          "multi_day_spike": 9,
+          "one_day_spike": 9,
+          "return_spike": 3,
+          "sustained_drop": 9
+        },
+        "family": "isolation_forest",
+        "metrics": {
+          "episode_recall": 0.6666666666666666,
+          "evaluable_coverage": 0.48623511904761907,
+          "false_alerts_per_1000": 2.405773857257418,
+          "high_severity_precision": 1.0,
+          "precision": 0.8636363636363636,
+          "recall": 0.31666666666666665
+        },
+        "per_segment": {
+          "return_completed/PLN": {
+            "evaluable": 1198,
+            "false_negative": 26,
+            "false_positive": 6,
+            "requested": 2688,
+            "true_negative": 1162,
+            "true_positive": 4
+          },
+          "sale_completed/PLN": {
+            "evaluable": 1416,
+            "false_negative": 56,
+            "false_positive": 0,
+            "requested": 2688,
+            "true_negative": 1326,
+            "true_positive": 34
+          }
+        },
+        "positive_observations_per_type": {
+          "inventory_censored_episode": 9,
+          "multi_day_spike": 27,
+          "one_day_spike": 9,
+          "return_spike": 30,
+          "sustained_drop": 45
+        },
+        "version": "anomaly-portfolio-summary-1.0.0"
+      }
+    }
+  }
+}
