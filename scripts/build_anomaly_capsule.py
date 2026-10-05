@@ -163,6 +163,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
     evidence_id = "anomaly-evidence-" + json_sha256(
         {"model": frozen["model_sha256"], "selection": final["selection"]["selection_id"]}
     )
+    parameters = public["descriptor"]["resolved_parameters"]
     card = {
         "model_family": frozen["family"],
         "detector_id": model.detector_id,
@@ -172,12 +173,15 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
         "features": policy.features,
         "original_fit": fit,
         "limits": [
-            "Synthetic portfolio: 128 days, 8 products, one selling location, store and online.",
-            "V2 uses supply-adequate inventory and a declared whole-process demand density of 0.75.",
+            f"Synthetic scope {parameters['profile']}: {parameters['days']} days, "
+            f"{parameters['products']} products, {parameters['stores']} selling pairs "
+            f"and {parameters['warehouses']} stock locations.",
+            f"Historical calendar {parameters['start_date']} through {parameters['end_date']}.",
+            "Repeated synthetic experiments are correlated; previous failed cohorts are retained.",
             "At least three final episodes per type; estimates have small-sample uncertainty.",
             "Scores describe observations and do not establish causes or intent.",
             "Daily evidence has a causal 24h sale / 72h return origin; no realtime detection claim.",
-            "Historical July inputs are stale at the October evaluation date.",
+            "Historical inputs remain stale when served beyond their scoring-origin freshness limit.",
             "Offline replay only; broker ACK/DLQ durability and business projections belong to AI10.",
         ],
     }

@@ -6,16 +6,22 @@ Isolation Forest model may be promoted. The exact failed thresholds, selections
 and final-report hashes are retained in
 [evidence](../evidence/07-v2-final-not-ready.json).
 
-The next experiment uses the separately declared native `ai-07-portfolio-v3`
-cohort: 128 days from 2026-01-01 to 2026-05-08, 12 products, store and online at
-one selling location, two stock locations, supply policy from v2 and a uniform
-0.50 native demand multiplier. These settings apply before stochastic sampling
-and anomaly composition. They increase the independent clean cohort while
-retaining unknown spillover labels for intervened products. Required seeds
-42, 137 and 2026, all five intervention types, original 8192-event bound and
-complete observation census remain required. An initial profile-allowlist
-preflight failed before training; its evidence is retained separately. No v2
-final window is reused as a fresh holdout.
+The v3 count-rate baseline versions also failed final precision (0.7671/0.7698
+against 0.80) and return false alerts (13.89 per 1000 against 10). Their saved
+models, original selections and full failed quality results remain in
+[v3 evidence](../evidence/07-v3-final-not-ready.json). Neither is promotable.
+
+The next experiment is separately [declared](../evidence/07-v4-experiment-declaration.json)
+on `ai-07-portfolio-v4`, 2025-01-01 through 2025-05-08. It retains v3's
+128 days, 12 products, store/online geography, two stock locations, uniform
+0.50 demand factor, supply policy, complete 8192-event budget, seeds, five
+intervention types and magnitudes, conservative unknown spillover mask and all
+original numeric quality/sample gates. Nine explicit event-capacity and severity
+configurations use the existing count-rate multiscale recipe; both real saved
+model families are compared using seed-42 validation only. All six new final
+windows remain reserved until selection and complete public lineage are frozen.
+Repeated synthetic experiments are correlated. Any later success qualifies
+only the declared v4 scope, not opened v2/v3 cohorts or production.
 
 ## Explicit scoring recipe
 
@@ -59,8 +65,8 @@ scores, including observations whose offline truth is unknown. Validation
 labels compare the saved configurations; they cannot filter fitting rows.
 
 The saved nine-fit comparison is retained in the
-[validation summary](../evidence/07-v3-validation-summary.json). The selected
-primary and reference are seasonal-residual baseline capacity versions with
+[validation summary](../evidence/07-v3-validation-summary.json). The v3-selected
+primary and reference were seasonal-residual baseline capacity versions with
 0.10 and 0.075 sale fractions respectively, both using a 0.01 return fraction.
 They achieved validation precision 0.9714/0.9677, recall 0.85/0.75 and episode
 recall 1.0. They share their feature recipe and trained native forest parameters;
