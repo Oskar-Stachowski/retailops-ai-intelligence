@@ -30,5 +30,6 @@ atomową aktywację i rollback. Aktualny odbiór i granice opisuje
 - [Zasady zmian](docs/contributing.md) i [bezpieczeństwo](docs/security.md)
 - [Licencja MIT](LICENSE)
 
-Źródło planu: [RetailOps](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/tree/cbf28b2/docs/plans/ai).
+Aktualne statusy i zależności: [plan RetailOps](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/tree/main/docs/plans/ai).
+Plan bazowy audytu: [RetailOps na cbf28b2](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/tree/cbf28b2/docs/plans/ai).
 Generator, frontend i baza operacyjna należą do RetailOps. To repo ma własny lifecycle.
