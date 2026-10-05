@@ -24,6 +24,27 @@
     "size_bytes": 492162
   },
   "source_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
-  "stage_status": "pending_oci_and_required_ci",
-  "version": "anomaly-qualified-capsules-1.0.0"
+  "stage_status": "pending_required_ci",
+  "version": "anomaly-qualified-capsules-1.0.0",
+  "local_oci": {
+    "status": "passed",
+    "consumer_commit": "5be04b19ee2890ea80a413dd92b7229eea7dff52",
+    "producer_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+    "evidence_sha256": "19880986b61738ab6e1043980f367e61261db3b0470750f7c9fa287f6b882bea",
+    "oci_image_digest": "sha256:e8a2822a707db40fbe82eea77d6d3ed33c7c7b2fda9c317d4c2ba79bddb22ade",
+    "checks": 17,
+    "restart": "passed",
+    "published_results": 1232,
+    "owned_project_cleanup": "completed",
+    "log_sha256": {
+      "acceptance.log": "490f548fecd9f710cc0bbd3c853031f4e289dfdccb4328bb79110145c7f68e92",
+      "restart-inspection.log": "6c45e1c72f93cf25a82214e4b29169260b7781ae664b34b424022bd94692aeb8",
+      "cleanup.log": "edb9e4d34f6cfb542fdecf3d577b36ec8aab2d98ee33c986e7bff08f27b613cb"
+    }
+  },
+  "source_publication_commit": "b55d0ef384030e0bd5fcc71aa6b09652fab6f96e",
+  "archive_uncompressed_bytes": {
+    "primary": 10686040,
+    "reference": 10728596
+  }
 }

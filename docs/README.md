@@ -1,5 +1,9 @@
 # Dokumentacja RetailOps AI
 
+[Końcowy odbiór AI 07](evidence/07-completion.md) obejmuje rzeczywistą kwalifikację
+baseline/Isolation Forest oraz lifecycle, atomowy batch, scoped HTTP i restart OCI.
+Zamknięcie etapu czeka na Required CI końcowych commitów.
+
 [Detektory anomalii — AI07](reference/anomaly-detectors.md) mają jawny podział
 czasowy, progi z walidacji i odtwarzalny zapis baseline/Isolation Forest.
 

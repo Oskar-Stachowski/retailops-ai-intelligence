@@ -1,5 +1,14 @@
 # Aktualny status
 
+**AI 07 — pełny odbiór lokalny zakończony; `pending_required_ci`.**
+Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
+Pełny OCI/PostgreSQL 16/MLflow sprawdził lifecycle, recovery, promocję,
+odrzucenie, rollback, atomową publikację 1232 wyników, scoped HTTP i SIGKILL/restart.
+[Końcowy odbiór](evidence/07-completion.md) oraz
+[manifest artefaktów](evidence/07-ready/capsules.json) wiążą zakres i dowody.
+Zamknięcie jako `ready` wymaga Required CI końcowych commitów obu repozytoriów.
+Publikacja do publicznych repozytoriów czeka na jawną zgodę właściciela.
+
 **AI 05 — lokalny przepływ finalnego v12 jest odebrany także na świeżym snapshocie.**
 [Raport i pomiary](evidence/05-v12-real-serving.md) oraz
 [wersjonowany zapis dowodów](evidence/05-v12-real-serving.json) obejmują cały
