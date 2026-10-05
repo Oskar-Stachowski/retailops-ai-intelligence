@@ -6,13 +6,13 @@ from typing import Any
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.stockout_campaign.assembly import FinalData, guard
 from retailops_ai.stockout_campaign.contract import CampaignFreeze, CampaignPermission, SourceRef
+from retailops_ai.stockout_campaign.gates import quality_gates
 from retailops_ai.stockout_campaign.implementation import code_digest, lock_digest
 from retailops_ai.stockout_campaign.scenarios import REQUIRED, memberships
 from retailops_ai.stockout_policy.assessment import assess, capacity_selection, confusion
 from retailops_ai.stockout_policy.contract import PolicyRow
 from retailops_ai.stockout_runtime.contracts import ScoringPolicy, ScoringRecipe
 from retailops_ai.stockout_selection.contract import ConditionalRiskPipeline, SelectionModelPin
-from retailops_ai.stockout_selection.gates import quality_gates
 from retailops_ai.stockout_selection.pipeline import predict_conditional
 from retailops_ai.stockout_training.contract import DEFAULT_POLICY
 from retailops_ai.stockout_training.evaluation import metrics

@@ -143,6 +143,9 @@ def final_card(
             for r in quality["content"]["worlds"]
         ],
         blockers=quality["content"]["blockers"],
+        warnings=quality["content"]["warnings"],
+        quality_requirements=freeze.quality_requirements.model_dump(mode="json"),
+        small_category_warnings_approved=permission.small_category_warnings_approved,
         smoke_inputs_id=inputs.inputs_id,
         smoke_lineage=inputs.lineage.model_dump(mode="json"),
         model_refits=0,

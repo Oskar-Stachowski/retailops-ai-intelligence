@@ -1,18 +1,22 @@
 """Prepare a reviewable six-world freeze from unopened, checksummed public receipts."""
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from retailops_ai.data_contracts.common import UtcTime
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.source_snapshot.files import file_hash, read_json
 from retailops_ai.stockout.split import SplitPolicy
 from retailops_ai.stockout_campaign.archive import parents
-from retailops_ai.stockout_campaign.contract import CampaignFreeze, SourceRef
+from retailops_ai.stockout_campaign.contract import (
+    BalancedQualityRequirements,
+    CampaignFreeze,
+    SourceRef,
+)
 from retailops_ai.stockout_campaign.evaluation import bound_recipes
 from retailops_ai.stockout_campaign.implementation import code_digest, lock_digest
 from retailops_ai.stockout_runtime.contracts import ScoringPolicy, ScoringRecipe
-from retailops_ai.stockout_selection.contract import ConditionalRiskPipeline
+from retailops_ai.stockout_selection.contract import ConditionalRiskPipeline, QualityRequirements
 
 
 def source_ref(public: Path, profile: Path, *, world: str, artifact: dict[str, Any]) -> SourceRef:
@@ -86,6 +90,9 @@ def prepare_freeze(
     recipe: ScoringRecipe,
     policy: ScoringPolicy,
     prepared_at: UtcTime,
+    version: Literal["stockout-final-campaign-1.0.0", "stockout-final-campaign-2.0.0"] = (
+        "stockout-final-campaign-1.0.0"
+    ),
 ) -> CampaignFreeze:
     if not isinstance(recipe.pipeline, ConditionalRiskPipeline):
         raise ValueError("stockout_final_conditional_pipeline_required")
@@ -111,6 +118,10 @@ def prepare_freeze(
     ):
         raise ValueError("stockout_final_selection_capsule_changed")
     raw = dict(
+        version=version,
+        quality_requirements=BalancedQualityRequirements()
+        if version == "stockout-final-campaign-2.0.0"
+        else QualityRequirements(),
         prepared_at=prepared_at.isoformat(),
         sources=[s.model_dump(mode="json") for s in sources],
         selection_id=selected["selection_id"],

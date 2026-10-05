@@ -19,7 +19,11 @@ def package(tmp_path, *, mutation=None):
     )
     refs, entries = {}, []
     for role in sorted(subject.ROLES):
-        name = roots.get(role, role) + "/manifest.json"
+        name = roots.get(role, role) + (
+            "/snapshot/snapshot_manifest.json"
+            if role in {"facts_import", "private_import"}
+            else "/manifest.json"
+        )
         raw = b'{"fixture":"mechanics_only"}\n'
         member = tarfile.TarInfo(name)
         member.mode, member.size = 0o600, len(raw)
@@ -62,6 +66,8 @@ def test_atomic_exact_restore_then_unchanged_reuse_and_changed_existing_refused(
     roots = subject.restore(path, checkpoint, target)
     assert set(roots) == subject.ROLES
     assert roots["private_import"] == target / "private_import/source"
+    assert subject.partition_inputs(roots).private == roots["private_import"] / "snapshot"
+    assert (subject.partition_inputs(roots).private / "snapshot_manifest.json").is_file()
     assert subject.restore(path, checkpoint, target) == roots
     (roots["features"] / "manifest.json").write_bytes(b"{}")
     with pytest.raises(ValueError, match="file_changed"):

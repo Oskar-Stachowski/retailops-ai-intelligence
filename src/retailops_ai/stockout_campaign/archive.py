@@ -10,6 +10,19 @@ from typing import Any
 
 from retailops_ai.source_snapshot.files import checked_directory, file_hash, relative_path
 from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
+from retailops_ai.stockout_temporal_storage.store import PartitionInputs
+
+
+def partition_inputs(roots: dict[str, Path]) -> PartitionInputs:
+    """The import package owns a nested snapshot; label replay reads that snapshot."""
+    return PartitionInputs(
+        roots["curated"],
+        roots["private_import"] / "snapshot",
+        roots["features"],
+        roots["upstream"],
+        roots["labels"],
+    )
+
 
 ROLES = {"facts_import", "private_import", "curated", "features", "labels", "upstream", "temporal"}
 MAX_BYTES = 512 * 1024**2

@@ -12,14 +12,13 @@ from pathlib import Path
 
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.source_snapshot.files import read_json
-from retailops_ai.stockout_campaign.archive import restore
+from retailops_ai.stockout_campaign.archive import partition_inputs, restore
 from retailops_ai.stockout_campaign.contract import CampaignFreeze
 from retailops_ai.stockout_campaign.download import REPOSITORY, download
 from retailops_ai.stockout_campaign.runner import unpack
 from retailops_ai.stockout_policy.comparison import compare_capacities
 from retailops_ai.stockout_runtime.contracts import ScoringPolicy, ScoringRecipe
 from retailops_ai.stockout_temporal_series.bundle import assemble_partitioned_development
-from retailops_ai.stockout_temporal_storage.store import PartitionInputs
 
 
 def main() -> int:
@@ -64,13 +63,7 @@ def main() -> int:
         roots = restore(tar, checkpoint, root / "restored")
         data = assemble_partitioned_development(
             roots["temporal"],
-            PartitionInputs(
-                roots["curated"],
-                roots["private_import"],
-                roots["features"],
-                roots["upstream"],
-                roots["labels"],
-            ),
+            partition_inputs(roots),
             allow_evaluation_truth=True,
         )
         result = compare_capacities(

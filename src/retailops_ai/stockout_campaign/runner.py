@@ -14,13 +14,12 @@ from typing import Any
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.source_snapshot.files import decode_json, file_hash, relative_path
 from retailops_ai.source_snapshot.publish import publish_noreplace
-from retailops_ai.stockout_campaign.archive import restore
+from retailops_ai.stockout_campaign.archive import partition_inputs, restore
 from retailops_ai.stockout_campaign.assembly import assemble_final, guard
 from retailops_ai.stockout_campaign.contract import CampaignFreeze, CampaignPermission, SourceRef
 from retailops_ai.stockout_campaign.download import download
 from retailops_ai.stockout_campaign.evaluation import bound_recipes, evaluate_final
 from retailops_ai.stockout_runtime.contracts import ScoringPolicy, ScoringRecipe
-from retailops_ai.stockout_temporal_storage.store import PartitionInputs
 
 MAX_PUBLIC = 4 * 1024**2
 
@@ -150,13 +149,7 @@ def run_world(
             root = Path(temporary)
             tar, checkpoint = unpack(archive, source, root)
             roots = restore(tar, checkpoint, root / "restored")
-            inputs = PartitionInputs(
-                roots["curated"],
-                roots["private_import"],
-                roots["features"],
-                roots["upstream"],
-                roots["labels"],
-            )
+            inputs = partition_inputs(roots)
             data = assemble_final(
                 roots["temporal"], inputs, freeze=freeze, permission=permission, source=source
             )

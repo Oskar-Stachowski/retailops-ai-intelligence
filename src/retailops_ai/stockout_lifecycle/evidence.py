@@ -15,11 +15,11 @@ from retailops_ai.stockout_campaign.contract import (
     SourceRef,
     require_permission,
 )
+from retailops_ai.stockout_campaign.gates import quality_gates
 from retailops_ai.stockout_campaign.report import aggregate
 from retailops_ai.stockout_campaign.scenarios import REQUIRED
 from retailops_ai.stockout_lifecycle.release import receipt
 from retailops_ai.stockout_qualification.fit import calibration_error
-from retailops_ai.stockout_selection.gates import quality_gates
 
 LIMITS = dict(
     tree_rss_bytes=1280 * 1024**2,

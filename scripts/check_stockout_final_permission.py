@@ -13,10 +13,10 @@ REFERENCE = ROOT / "docs/reference"
 
 def main() -> int:
     freeze = CampaignFreeze.model_validate_json(
-        (REFERENCE / "stockout-final-campaign-v1.json").read_bytes()
+        (REFERENCE / "stockout-final-campaign-v2.json").read_bytes()
     )
     permission = CampaignPermission.model_validate_json(
-        (REFERENCE / "stockout-final-permission-v1.json").read_bytes()
+        (REFERENCE / "stockout-final-permission-v2.json").read_bytes()
     )
     for source in freeze.sources:
         guard(freeze, permission, source)
@@ -26,7 +26,7 @@ def main() -> int:
             (REFERENCE / "stockout-final-selected-recipe.json").read_bytes()
         ),
         ScoringPolicy.model_validate_json(
-            (REFERENCE / "stockout-final-selected-policy.json").read_bytes()
+            (REFERENCE / "stockout-final-selected-policy-v2.json").read_bytes()
         ),
     )
     print("Exact stockout campaign and policy owner permission verified; no outcomes opened.")

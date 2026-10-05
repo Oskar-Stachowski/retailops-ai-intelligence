@@ -8,6 +8,7 @@ from retailops_ai.stockout_campaign.contract import (
     CampaignPermission,
     require_permission,
 )
+from retailops_ai.stockout_campaign.gates import quality_gates
 from retailops_ai.stockout_campaign.implementation import code_digest, lock_digest
 
 
@@ -32,6 +33,7 @@ def aggregate(
     ):
         raise ValueError("stockout_final_execution_code_changed")
     blockers = []
+    warnings = []
     for source in freeze.sources:
         report = next(r for r in reports if (r["world"], r["seed"]) == (source.world, source.seed))
         if (
@@ -79,10 +81,25 @@ def aggregate(
             or set(report["scenario_gates"]) != scenarios
         ):
             raise ValueError("stockout_final_required_gate_missing")
+        expected = quality_gates(
+            report["metrics"],
+            expected_categories=set(freeze.expected_categories),
+            expected_locations=set(freeze.expected_stock_locations),
+            policy=freeze.quality_requirements,
+        )
+        # A warning must be the exact equation frozen before outcomes were opened.
+        for name, gate in report["segment_gates"]["segments"].items():
+            if gate["status"] == "warning":
+                if (
+                    gate != expected["segments"][name]
+                    or expected["segments"][name]["status"] != "warning"
+                ):
+                    raise ValueError("stockout_final_warning_not_prospectively_authorized")
+                warnings.append(dict(world=source.world, seed=source.seed, segment=name, **gate))
         failures = [
             name
             for name, gate in report["segment_gates"]["segments"].items()
-            if gate["status"] != "passed"
+            if gate["status"] not in {"passed", "warning"}
         ]
         failures.extend(
             "scenario:" + name
@@ -110,6 +127,8 @@ def aggregate(
         permission_sha256=permission_sha,
         worlds=sorted(reports, key=lambda r: (r["world"], r["seed"])),
         blockers=blockers,
+        warnings=warnings,
+        quality_requirements=freeze.quality_requirements.model_dump(mode="json"),
         status="passed" if not blockers else "not_ready",
         independent_quality_accepted=not blockers,
         final_test_outcomes_evaluated=True,

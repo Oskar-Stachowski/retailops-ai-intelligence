@@ -20,6 +20,17 @@ CampaignID = Annotated[str, Field(pattern=r"^stockout-final-campaign-sha256-[0-9
 GitSHA = Annotated[str, Field(pattern=r"^[0-9a-f]{40}$")]
 
 
+class BalancedQualityRequirements(QualityRequirements):
+    """Prospectively accepted calibration warning, solely for small categories."""
+
+    version: Literal["stockout-balanced-quality-2.0.0"] = "stockout-balanced-quality-2.0.0"
+    small_category_rows_lt: Literal[100] = 100
+    small_category_warning_maximum_ece: Annotated[float, Field(ge=0.2, le=0.2)] = 0.2
+    warning_scope: Literal["category_only_AP_Brier_and_support_must_pass"] = (
+        "category_only_AP_Brier_and_support_must_pass"
+    )
+
+
 class SourceRef(Contract):
     world: Literal["matching", "future_stress"]
     seed: Literal[42, 137, 2026]
@@ -77,7 +88,9 @@ class ScenarioPolicy(Contract):
 
 
 class CampaignFreeze(Contract):
-    version: Literal["stockout-final-campaign-1.0.0"] = "stockout-final-campaign-1.0.0"
+    version: Literal["stockout-final-campaign-1.0.0", "stockout-final-campaign-2.0.0"] = (
+        "stockout-final-campaign-1.0.0"
+    )
     campaign_id: CampaignID
     prepared_at: UtcTime
     sources: tuple[SourceRef, ...] = Field(min_length=6, max_length=6)
@@ -94,7 +107,9 @@ class CampaignFreeze(Contract):
     model_refits_permitted: Literal[0] = 0
     recalibration_permitted: Literal[False] = False
     thresholds_change_permitted: Literal[False] = False
-    quality_requirements: QualityRequirements = Field(default_factory=QualityRequirements)
+    quality_requirements: QualityRequirements | BalancedQualityRequirements = Field(
+        default_factory=QualityRequirements
+    )
     scenarios: ScenarioPolicy = Field(default_factory=ScenarioPolicy)
     worlds: Literal["separate_reports_never_pool_repeated_physical_keys"] = (
         "separate_reports_never_pool_repeated_physical_keys"
@@ -115,7 +130,12 @@ class CampaignFreeze(Contract):
             or len({s.artifact_id for s in self.sources}) != 6
             or self.expected_categories != tuple(sorted(set(self.expected_categories)))
             or self.expected_stock_locations != tuple(sorted(set(self.expected_stock_locations)))
-            or self.quality_requirements != QualityRequirements()
+            or self.quality_requirements
+            != (
+                BalancedQualityRequirements()
+                if self.version == "stockout-final-campaign-2.0.0"
+                else QualityRequirements()
+            )
             or self.campaign_id
             != "stockout-final-campaign-sha256-"
             + canonical_sha256(self.model_dump(mode="json", exclude={"campaign_id"}))
@@ -125,7 +145,9 @@ class CampaignFreeze(Contract):
 
 
 class CampaignPermission(Contract):
-    version: Literal["stockout-final-permission-1.0.0"] = "stockout-final-permission-1.0.0"
+    version: Literal["stockout-final-permission-1.0.0", "stockout-final-permission-2.0.0"] = (
+        "stockout-final-permission-1.0.0"
+    )
     campaign_id: CampaignID
     approved_by: Symbol
     approved_at: UtcTime
@@ -134,6 +156,7 @@ class CampaignPermission(Contract):
     thresholds_and_capacity_approved: Literal[True]
     model_refits_permitted: Literal[0] = 0
     promotion_authorized: Literal[False] = False
+    small_category_warnings_approved: bool = False
 
 
 def require_permission(freeze: CampaignFreeze, permission: CampaignPermission | None) -> None:
@@ -141,5 +164,12 @@ def require_permission(freeze: CampaignFreeze, permission: CampaignPermission | 
     if permission is None:
         raise ValueError("stockout_final_owner_permission_required")
     permission = CampaignPermission.model_validate_json(permission.model_dump_json())
-    if permission.campaign_id != freeze.campaign_id or permission.approved_at < freeze.prepared_at:
+    balanced = freeze.version == "stockout-final-campaign-2.0.0"
+    if (
+        permission.campaign_id != freeze.campaign_id
+        or permission.approved_at < freeze.prepared_at
+        or permission.version
+        != ("stockout-final-permission-2.0.0" if balanced else "stockout-final-permission-1.0.0")
+        or permission.small_category_warnings_approved != balanced
+    ):
         raise ValueError("stockout_final_permission_campaign_or_time_mismatch")
