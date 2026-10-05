@@ -1,4 +1,4 @@
-"""Real stockout PostgreSQL guards in the owned AI05 runner; registry is a double."""
+"""Owned real PostgreSQL/MLflow stockout lifecycle and backup; synthetic mechanics only."""
 
 import json
 import os
@@ -11,17 +11,41 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.exc import IntegrityError
 from test_model_lifecycle import actor
 from test_stockout_conditional_runtime import conditional as conditional
-from test_stockout_lifecycle import Registry
 from test_stockout_lifecycle import request as decision
-from test_stockout_lifecycle import source as source
-from test_stockout_runtime import context as context
-from test_stockout_runtime import records as records
+from test_stockout_release import backend as backend
+from test_stockout_release import capsule as capsule
+from test_stockout_release import context as context
+from test_stockout_release import job as job
+from test_stockout_release import records as records
+from test_stockout_release import source as source
 
 from retailops_ai.adapters.database import EXPECTED_REVISION
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.stockout_lifecycle.contract import MODEL, TEST_MODEL
 from retailops_ai.stockout_lifecycle.engine import StockoutLifecycle
 from retailops_ai.stockout_lifecycle.journal import PostgresStockoutJournal
+from retailops_ai.stockout_lifecycle.publish import publish_approval
+from retailops_ai.stockout_lifecycle.registry import MLflowStockoutRegistry
+
+
+class LostResponseRegistry(MLflowStockoutRegistry):
+    """Faults occur after real MLflow writes; retries must discover the retained version."""
+
+    fail_create_after = False
+    fail_alias = None
+
+    def create(self, source, decision):
+        result = super().create(source, decision)
+        if self.fail_create_after:
+            self.fail_create_after = False
+            raise TimeoutError("explicit_stockout_lost_real_registration_response")
+        return result
+
+    def set_alias(self, model, alias, version):
+        super().set_alias(model, alias, version)
+        if self.fail_alias == alias:
+            self.fail_alias = None
+            raise TimeoutError("explicit_stockout_lost_real_alias_response")
 
 
 def owned_control():
@@ -56,6 +80,7 @@ def test_real_stockout_postgres_recovery_atomicity_guards_and_restart(request):
                 == EXPECTED_REVISION
             )
         journal = PostgresStockoutJournal(engine)
+        registry = LostResponseRegistry(environment="test", port=control["mlflow_port"])
         if os.environ.get("AI05_V12_RESTART_INSPECT") == "1":
             state = json.loads(state_file.read_bytes())
             with journal.locked(TEST_MODEL):
@@ -64,14 +89,42 @@ def test_real_stockout_postgres_recovery_atomicity_guards_and_restart(request):
                 assert active.binding.model_version == state["model_version"]
                 assert active.runtime_pin().model_name == TEST_MODEL
                 assert not journal.pending(TEST_MODEL)
+            registry.validate(active.binding, current=False)
+            aliases = registry.aliases(TEST_MODEL)
+            assert aliases.get("champion") == active.binding.model_version
+            assert aliases.get("rollback") == active.previous_version
             state["checks"].append(
                 "real_postgres_restart_preserves_complete_stockout_binding_and_head"
             )
             state["status"] = "passed"
             state_file.write_bytes(canonical_bytes(state) + b"\n")
             return
-        source = request.getfixturevalue("source")
-        registry = Registry(source)
+        root, approval = request.getfixturevalue("capsule")
+        imported = publish_approval(
+            root,
+            registry,
+            approval_id=approval.release_id,
+            model=TEST_MODEL,
+            actor=actor(),
+            work=state_file.parent / "stockout-approval-work",
+        )
+        assert not imported["registered"] and not imported["promoted"]
+        assert (
+            publish_approval(
+                root,
+                registry,
+                approval_id=approval.release_id,
+                model=TEST_MODEL,
+                actor=actor(),
+                work=state_file.parent / "stockout-approval-work",
+            )["status"]
+            == "already_imported"
+        )
+        source = registry.source(imported["mlflow_run_id"], imported["approval_sha256"], TEST_MODEL)
+        registry.original = source
+        checks.append(
+            "real_mlflow_capsule_byte_smoke_verification_and_idempotent_import_before_registration"
+        )
         lifecycle = StockoutLifecycle(registry, journal, environment="test")
         with journal.locked(TEST_MODEL):
             with pytest.raises(ValueError, match="busy"):
@@ -259,7 +312,7 @@ def test_real_stockout_postgres_recovery_atomicity_guards_and_restart(request):
                     release_id=active.release_id,
                     migration_revision=EXPECTED_REVISION,
                     real_postgres=True,
-                    real_mlflow_stockout_registry=False,
+                    real_mlflow_stockout_registry=True,
                     independent_quality_accepted=False,
                     final_test_outcomes_evaluated=False,
                     production_model_promoted=False,

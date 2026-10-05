@@ -83,10 +83,10 @@ BEGIN
  SELECT inputs INTO p FROM ai.stockout_prepared_inputs WHERE environment=NEW.environment AND inputs_id=NEW.profile_id;
  IF NOT ((NEW.record->'release'=r AND NEW.record->'input_ref'->'request'->'as_of'=p->'as_of'
   AND NEW.record->'input_ref'->'lineage'=p->'lineage'
-  AND NEW.record->'input_ref'->'request'->'scope'->'product_ids' @> p->'scope'->'product_ids'
-  AND NEW.record->'input_ref'->'request'->'scope'->'product_ids' <@ p->'scope'->'product_ids'
-  AND NEW.record->'input_ref'->'request'->'scope'->'stock_location_ids' @> p->'scope'->'stock_location_ids'
-  AND NEW.record->'input_ref'->'request'->'scope'->'stock_location_ids' <@ p->'scope'->'stock_location_ids'
+  AND (NEW.record->'input_ref'->'request'->'scope'->'product_ids') @> (p->'scope'->'product_ids')
+  AND (NEW.record->'input_ref'->'request'->'scope'->'product_ids') <@ (p->'scope'->'product_ids')
+  AND (NEW.record->'input_ref'->'request'->'scope'->'stock_location_ids') @> (p->'scope'->'stock_location_ids')
+  AND (NEW.record->'input_ref'->'request'->'scope'->'stock_location_ids') <@ (p->'scope'->'stock_location_ids')
   AND (NEW.environment='test' OR r->'binding'->>'model_name'='retailops-stockout-risk')) IS TRUE) THEN
   RAISE EXCEPTION 'stockout_batch_release_profile_mismatch' USING ERRCODE='23514';
  END IF;
@@ -135,8 +135,8 @@ BEGIN
   RAISE EXCEPTION 'stockout_output_requires_running_complete_binding' USING ERRCODE='23514';
  END IF;
  FOR i IN SELECT value FROM jsonb_array_elements(NEW.output->'items') LOOP
-  IF NOT ((i->'product_id' <@ r->'input_ref'->'request'->'scope'->'product_ids'
-   AND i->'stock_location_id' <@ r->'input_ref'->'request'->'scope'->'stock_location_ids'
+  IF NOT (((i->'product_id') <@ (r->'input_ref'->'request'->'scope'->'product_ids')
+   AND (i->'stock_location_id') <@ (r->'input_ref'->'request'->'scope'->'stock_location_ids')
    AND i->'as_of'=r->'input_ref'->'request'->'as_of'
    AND i->>'inference_run_id'=NEW.run_id AND i->'lineage'=r->'input_ref'->'lineage'
    AND i->'generated_at'=NEW.output->'generated_at'
