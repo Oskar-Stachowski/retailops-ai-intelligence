@@ -12,7 +12,7 @@ from retailops_ai.forecast_jobs.read_contracts import ReadErrorCode
 from retailops_ai.knowledge.jobs import IndexErrorCode
 from retailops_ai.model_lifecycle.evaluation_contracts import EvaluationErrorCode
 from retailops_ai.model_lifecycle.read_contracts import CatalogErrorCode
-from retailops_ai.stockout_jobs.contracts import StockoutErrorCode
+from retailops_ai.stockout_jobs.public_contracts import StockoutErrorCode
 
 DETAILS = {
     400: "The request cannot be accepted.",

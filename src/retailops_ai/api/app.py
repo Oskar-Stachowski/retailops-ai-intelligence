@@ -45,13 +45,8 @@ from retailops_ai.model_lifecycle.v12_evaluation_store import (
 from retailops_ai.pipelines.readiness import Readiness
 from retailops_ai.pipelines.retrieval import load_retrieval_config
 from retailops_ai.security.local import load_authority
-from retailops_ai.stockout_jobs.queue import PostgresStockoutQueue
-from retailops_ai.stockout_jobs.reader import (
-    PostgresStockoutAdministration,
-    PostgresStockoutReader,
-    StockoutAdministration,
-    StockoutReader,
-)
+from retailops_ai.stockout_jobs.lazy import LazyStockoutAdministration, LazyStockoutReader
+from retailops_ai.stockout_jobs.ports import StockoutAdministration, StockoutReader
 
 
 class DiagnosticAPI(FastAPI):
@@ -149,11 +144,9 @@ def create_app(
             knowledge_engine, settings.app_env, development=settings.v12_development_mode
         )
     if stockout_administration is None and knowledge_engine is not None:
-        stockout_administration = PostgresStockoutAdministration(
-            PostgresStockoutQueue(knowledge_engine, settings.app_env)
-        )
+        stockout_administration = LazyStockoutAdministration(knowledge_engine, settings.app_env)
     if stockout_reader is None and knowledge_engine is not None:
-        stockout_reader = PostgresStockoutReader(knowledge_engine, settings.app_env)
+        stockout_reader = LazyStockoutReader(knowledge_engine, settings.app_env)
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)

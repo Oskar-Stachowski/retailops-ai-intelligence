@@ -5,7 +5,7 @@ from importlib.resources import files
 from pathlib import Path
 from typing import Annotated, Any, Literal, Self
 
-from pydantic import Field, TypeAdapter, field_validator, model_validator
+from pydantic import Field, TypeAdapter, model_validator
 
 from retailops_ai.data_contracts.common import Contract, Symbol, UtcTime
 from retailops_ai.source_snapshot.files import SnapshotError, canonical_json, read_json
@@ -14,7 +14,8 @@ from retailops_ai.stockout.upstream_contract import UpstreamPoint
 from retailops_ai.stockout.upstream_dataset import digest
 from retailops_ai.stockout_history.bundle import HistoryPreparation
 from retailops_ai.stockout_preparation.bundle import PartitionPolicy, _check_partition
-from retailops_ai.stockout_runtime.contracts import RuntimeLineage
+from retailops_ai.stockout_runtime.public_contracts import RuntimeLineage
+from retailops_ai.stockout_runtime.scope import PhysicalScope as PhysicalScope
 from retailops_ai.stockout_storage.store import DiskFacts, StoragePolicy
 from retailops_ai.stockout_temporal_storage.store import capture
 from retailops_ai.stockout_upstream_storage.bundle import (
@@ -27,26 +28,6 @@ from retailops_ai.stockout_upstream_storage.bundle import (
 from retailops_ai.stockout_upstream_storage.store import UpstreamFacts
 
 MAX_INPUT_BYTES = 16 * 1024**2
-
-
-class PhysicalScope(Contract):
-    product_ids: tuple[Symbol, ...] = Field(min_length=1, max_length=20)
-    stock_location_ids: tuple[Symbol, ...] = Field(min_length=1, max_length=5)
-
-    @field_validator("product_ids", "stock_location_ids", mode="before")
-    @classmethod
-    def wire_arrays(cls, value: object) -> object:
-        # FastAPI decodes JSON before validation; retain strict member types.
-        return tuple(value) if isinstance(value, list) else value
-
-    @model_validator(mode="after")
-    def unique(self) -> Self:
-        if any(
-            len(values) != len(set(values))
-            for values in (self.product_ids, self.stock_location_ids)
-        ):
-            raise ValueError("stockout_inference_duplicate_scope")
-        return self
 
 
 class InputPoint(Contract):

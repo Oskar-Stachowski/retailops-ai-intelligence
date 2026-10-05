@@ -3,7 +3,7 @@
 import json
 from collections.abc import Sequence
 from datetime import datetime
-from typing import Literal, Protocol
+from typing import Literal
 
 from sqlalchemy import Engine, text
 
@@ -18,6 +18,12 @@ from retailops_ai.stockout_jobs.contracts import (
     public_run,
 )
 from retailops_ai.stockout_jobs.input_store import StockoutError, checked, load_inputs
+from retailops_ai.stockout_jobs.ports import (
+    StockoutAdministration as StockoutAdministration,
+)
+from retailops_ai.stockout_jobs.ports import (
+    StockoutReader as StockoutReader,
+)
 from retailops_ai.stockout_jobs.queue import PostgresStockoutQueue
 from retailops_ai.stockout_jobs.read_contracts import (
     StockoutAttempts,
@@ -30,19 +36,6 @@ from retailops_ai.stockout_runtime.contracts import RiskItem
 
 MAX_READ_BYTES = 4 * 1024**2
 MAX_CANDIDATES = 32
-
-
-class StockoutAdministration(Protocol):
-    def submit(
-        self, request: StockoutRequest, principal: Principal, key: str
-    ) -> StockoutJobRun: ...
-    def get(self, run_id: str, principal: Principal) -> StockoutJobRun: ...
-    def attempts(self, run_id: str, principal: Principal) -> StockoutAttempts: ...
-
-
-class StockoutReader(Protocol):
-    def list(self, query: StockoutQuery, principal: Principal) -> StockoutRiskPage: ...
-    def get(self, risk_id: str, principal: Principal) -> StockoutRisk: ...
 
 
 class PostgresStockoutAdministration:

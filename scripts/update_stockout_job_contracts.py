@@ -3,6 +3,7 @@
 import argparse
 from pathlib import Path
 
+from retailops_ai.data_contracts.common import Contract
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.stockout_jobs.batch import StockoutOutput
 from retailops_ai.stockout_jobs.contracts import StockoutJobRun, StockoutRequest, StockoutRun
@@ -14,7 +15,7 @@ from retailops_ai.stockout_jobs.read_contracts import (
 from retailops_ai.stockout_runtime.inputs import PreparedStockoutInputs
 
 ROOT = Path(__file__).resolve().parents[1] / "contracts/stockout_jobs/v1"
-MODELS = dict(
+MODELS: dict[str, type[Contract]] = dict(
     request=StockoutRequest,
     run=StockoutRun,
     output=StockoutOutput,

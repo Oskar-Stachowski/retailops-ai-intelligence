@@ -1,3 +1,6 @@
+[Poprawka startu API i pełnej kontroli typów AI 08](evidence/08-20-stockout-api-startup.md)
+wyjaśnia niezaliczone CI 08.19 oraz aktualny komplet sześciu źródeł.
+
 # Dokumentacja RetailOps AI
 
 [Stockout: trwała kolejka i API](reference/stockout-jobs.md) oraz

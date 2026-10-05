@@ -6,8 +6,8 @@ from pydantic import Field, model_validator
 
 from retailops_ai.data_contracts.common import Contract, RunID, Sha256, Symbol, UtcTime
 from retailops_ai.forecast_jobs.read_contracts import Pagination
-from retailops_ai.stockout_jobs.contracts import StockoutJobRun
-from retailops_ai.stockout_runtime.contracts import RiskItem
+from retailops_ai.stockout_jobs.public_contracts import StockoutJobRun
+from retailops_ai.stockout_runtime.public_contracts import RiskItem
 
 RiskID = Annotated[str, Field(pattern=r"^risk-sha256-[0-9a-f]{64}$")]
 

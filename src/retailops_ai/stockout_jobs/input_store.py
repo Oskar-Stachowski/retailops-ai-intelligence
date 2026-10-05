@@ -11,19 +11,13 @@ from retailops_ai.adapters.database import EXPECTED_REVISION
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.domain.access import Principal
 from retailops_ai.forecast_jobs.queue import clock
-from retailops_ai.stockout_jobs.contracts import StockoutErrorCode
+from retailops_ai.stockout_jobs.errors import StockoutError as StockoutError
 from retailops_ai.stockout_runtime.inputs import (
     MAX_INPUT_BYTES,
     PhysicalScope,
     PreparedStockoutInputs,
     prepare_inputs,
 )
-
-
-class StockoutError(ValueError):
-    def __init__(self, status: int, code: StockoutErrorCode) -> None:
-        super().__init__(code)
-        self.status, self.code = status, code
 
 
 def checked(connection: Connection) -> datetime:

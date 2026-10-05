@@ -1,5 +1,15 @@
 # Aktualny status
 
+**AI 08 — komplet sześciu źródeł jest przygotowany; poprawka CI czeka na odbiór.**
+Trzy matching i trzy późniejsze kohorty 42/137/2026 zakończyły przygotowanie.
+Końcowe etykiety nie były oceniane. Nowe CI wykryło błąd typu w generatorze
+schematów i nieudany start loopback API; [poprawka](evidence/08-20-stockout-api-startup.md)
+oddziela publiczne kontrakty od treningu/wykonania i sprawdza pełny zakres Mypy.
+SQL 0021 wymaga jeszcze rzeczywistego odbioru. Poprzedni SQL 0020, pełny backup
+oraz 2383 testy mają zielone CI. Zatwierdzenie polityki i kampanii, niezależna
+jakość, MLflow, worker i końcowy odbiór są otwarte. **AI 08 pozostaje not ready.**
+Niżej zachowano historyczny zakres wcześniejszych przyrostów.
+
 **AI 08 — trwała kolejka i API są przetestowane; SQL 0021 czeka na CI.**
 [Kontrakt](reference/stockout-jobs.md) i [odbiór](evidence/08-19-stockout-jobs.md)
 opisują przypięte wersje, lease, retry, atomową publikację i fizyczny scope.

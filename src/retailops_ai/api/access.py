@@ -38,7 +38,7 @@ from retailops_ai.security.models import (
     ResourceScope,
     StockoutResourceScope,
 )
-from retailops_ai.stockout_jobs.reader import StockoutAdministration, StockoutReader
+from retailops_ai.stockout_jobs.ports import StockoutAdministration, StockoutReader
 
 
 class IdentityResponse(Contract):
