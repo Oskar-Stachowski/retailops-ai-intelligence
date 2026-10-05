@@ -72,6 +72,7 @@ class AnomalyEvaluationDescriptor(Contract):
         "synthetic_ai_07_portfolio_v1",
         "synthetic_ai_07_portfolio_v2",
         "synthetic_ai_07_portfolio_v3",
+        "synthetic_ai_07_portfolio_v4",
     ] = "synthetic_ai_07_portfolio_v1"
     metric_verification: Literal["recomputed_from_saved_decisions_and_offline_truth"] = (
         "recomputed_from_saved_decisions_and_offline_truth"
@@ -120,6 +121,7 @@ class AnomalyEvaluationSummary(Contract):
         "synthetic_ai_07_portfolio_v1",
         "synthetic_ai_07_portfolio_v2",
         "synthetic_ai_07_portfolio_v3",
+        "synthetic_ai_07_portfolio_v4",
     ] = "synthetic_ai_07_portfolio_v1"
     metric_verification: Literal["recomputed_from_saved_decisions_and_offline_truth"] = (
         "recomputed_from_saved_decisions_and_offline_truth"
