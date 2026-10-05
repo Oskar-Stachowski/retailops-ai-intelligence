@@ -8,7 +8,7 @@ ich wejścia i historię, kompletne wyniki, publikacje oraz oryginalne oceny.
 Używamy istniejącego [kontrolera wspólnego backupu](lifecycle-backup.md).
 Nie ma osobnego eksportu kilku tabel v12: kontroler sprawdza wszystkie
 tabele i sekwencje schematów `ai` i MLflow `public`, również puste.
-Zachowuje ich liczby wierszy, SHA-256, rewizję `0019_v12_development`
+Zachowuje ich liczby wierszy, SHA-256, rewizję bieżącego schematu (wymagany head `0020_stockout_lifecycle`)
 oraz checksum całego archiwum plików, także niepowiązanych z aktywnym modelem.
 Zestawienie liczby wierszy jest wykonywane jednym zapytaniem na bazę;
 limit wierszy i poprawność nazw są sprawdzane przed kopiowaniem treści.
@@ -107,3 +107,7 @@ Odbiór dotyczy mechaniki przechowywania i odzyskiwania. Rzeczywisty końcowy
 eksport AI 04, jego źródło inference, kwalifikacja i przegląd operatora,
 pełny batch/serving z pomiarami, zdalny Required CI i jawna migracja
 trwałego środowiska pozostają osobnymi krokami.
+
+Nowa akceptacja obejmuje także tabele stockout lifecycle i techniczny head po
+odtworzeniu oraz restarcie. Jest oczekująca; historyczne receipts rewizji 0019
+zachowują swój pierwotny zakres. [Kontrakt stockout](reference/stockout-lifecycle.md).

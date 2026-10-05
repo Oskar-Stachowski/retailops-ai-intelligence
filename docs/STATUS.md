@@ -1,5 +1,14 @@
 # Aktualny status
 
+**AI 08 — podstawa lifecycle jest przetestowana; rzeczywisty SQL/registry oczekuje.**
+[Kontrakt](reference/stockout-lifecycle.md) i [odbiór](evidence/08-18-stockout-lifecycle-foundation.md)
+wiążą osobne stockout approval/binding/release ze wspólnym protokołem AI 05.
+23 nowe i 114 istniejących testów regresji przechodzi. Nowa migracja wymaga
+własnego rzeczywistego odbioru CI; lokalnej bazy źródła nie zmieniono.
+CI producenta późniejszych źródeł jest zielone; dwie kohorty 1.8 liczą się.
+Finalna jakość, zatwierdzona polityka, MLflow, durable batch/read i ready są otwarte.
+**Cały AI 08 pozostaje not ready.**
+
 **AI 08 — rzeczywisty nowy checkpoint ma zgodność native/wheel i zielone CI.**
 [Odbiór 08.17](evidence/08-17-stockout-remote-checkpoints.md) potwierdza
 wybrany model i wszystkie segmenty na danych wyboru. Matching seedy 42/137

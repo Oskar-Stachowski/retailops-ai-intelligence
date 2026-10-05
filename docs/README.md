@@ -49,6 +49,9 @@ PostgreSQL, pliki MLflow, zadania oraz niedokończone decyzje rejestracji.
 [Inventory snapshot 1.1 — AI 06.6b.2c.1](reference/inventory-snapshot-11.md)
 rozszerza typed import o source 2.7, native ledger i private qualification.
 [Odbiór](evidence/06-inventory-complete.md) obejmuje curated 1.1 i oba profile.
+[Wspólny lifecycle stockout/v12](reference/stockout-lifecycle.md) i
+[odbiór podstawy](evidence/08-18-stockout-lifecycle-foundation.md) wiążą
+zatwierdzenia oraz wersje; rzeczywista integracja registry i SQL jest oczekująca.
 [Późniejsze źródła i chronione checkpointy](reference/stockout-future-sources.md)
 oraz [odbiór 08.17](evidence/08-17-stockout-remote-checkpoints.md) przygotowują
 trzy nowe światy bez ponownego uczenia i oceny końcowej.
