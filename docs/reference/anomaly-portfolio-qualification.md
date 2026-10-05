@@ -58,6 +58,17 @@ capacities. Thresholds still use all eligible unlabelled demand validation
 scores, including observations whose offline truth is unknown. Validation
 labels compare the saved configurations; they cannot filter fitting rows.
 
+The saved nine-fit comparison is retained in the
+[validation summary](../evidence/07-v3-validation-summary.json). The selected
+primary and reference are seasonal-residual baseline capacity versions with
+0.10 and 0.075 sale fractions respectively, both using a 0.01 return fraction.
+They achieved validation precision 0.9714/0.9677, recall 0.85/0.75 and episode
+recall 1.0. They share their feature recipe and trained native forest parameters;
+the distinct baseline thresholds are the versioned behavior. This is not a claim
+of independent training data. The multiscale IF passed several metrics but its
+required high-severity precision was null, so it is not selected for promotion.
+All original numerical and sample gates still apply to the frozen final test.
+
 Selection freezes the complete six-case public lineage, temporal cutoffs,
 model/config/fit hashes, validation comparison, numerical quality/sample gates
 and actual time before opening final scoring and labels. Saved predictions are
