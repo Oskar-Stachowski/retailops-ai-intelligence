@@ -10,9 +10,8 @@ from retailops_ai.anomaly_detectors.contract import Feature, FitPolicy
 from retailops_ai.anomaly_detectors.protocol import Scope, Window, series_key
 from retailops_ai.anomaly_portfolio.artifacts import immutable, immutable_json
 from retailops_ai.anomaly_portfolio.inputs import VerifiedFeatures, verified_features
-from retailops_ai.anomaly_portfolio.model import load, score
+from retailops_ai.anomaly_portfolio.model import EventCapacity, load, score
 from retailops_ai.anomaly_portfolio.protocol import PortfolioProtocol
-from retailops_ai.anomaly_portfolio.training import train
 from retailops_ai.source_snapshot.files import canonical_json, decode_json, read_bytes
 
 RECIPES: tuple[tuple[str, tuple[Feature, ...]], ...] = (
@@ -65,6 +64,8 @@ def protocol(frame: VerifiedFeatures) -> PortfolioProtocol:
 
 
 def fit(args: argparse.Namespace) -> int:
+    from retailops_ai.anomaly_portfolio.training import train
+
     receipt = decode_json(
         read_bytes(args.prepared_receipt.parent, args.prepared_receipt.name, 1024**2)
     )
@@ -107,23 +108,48 @@ def fit(args: argparse.Namespace) -> int:
                 ),
             ),
         )
-        if args.multiscale
+        if args.multiscale or args.count_rate
         else RECIPES
     )
-    if args.multiscale and parameters["profile"] != "ai-07-portfolio-v3":
+    if (args.multiscale or args.count_rate) and parameters["profile"] != "ai-07-portfolio-v3":
         raise ValueError("anomaly_multiscale_requires_new_confirmatory_profile")
     for feature_name, features in recipes:
-        for fraction in (0.025, 0.05, 0.10):
+        configurations = (
+            ((0.075, 0.01), (0.10, 0.01), (0.10, 0.025))
+            if args.count_rate
+            else ((0.025, None), (0.05, None), (0.10, None))
+        )
+        for fraction, return_fraction in configurations:
             policy = FitPolicy(
                 version="anomaly-detector-fit-2.0.0"
-                if args.multiscale
+                if args.multiscale or args.count_rate
                 else "anomaly-detector-fit-1.0.0",
                 features=features,
                 validation_alert_fraction=fraction,
-                validation_high_fraction=min(0.01, fraction),
+                validation_high_fraction=0.005 if args.count_rate else min(0.01, fraction),
+            )
+            capacities = (
+                (
+                    EventCapacity(
+                        event_type="sale_completed", alert_fraction=fraction, high_fraction=0.005
+                    ),
+                    EventCapacity(
+                        event_type="return_completed",
+                        alert_fraction=return_fraction,
+                        high_fraction=0.001,
+                    ),
+                )
+                if return_fraction is not None
+                else None
             )
             started = datetime.now(UTC)
-            model, resources = train(frame, split, policy, multiscale=args.multiscale)
+            model, resources = train(
+                frame,
+                split,
+                policy,
+                multiscale=args.multiscale,
+                event_capacities=capacities,
+            )
             raw = canonical_json(model.model_dump(mode="json")) + b"\n"
             directory = args.output / "models" / model.detector_id
             immutable(directory / "model.json", raw, maximum=8 * 1024**2)
@@ -185,6 +211,7 @@ def fit(args: argparse.Namespace) -> int:
                         "stage": "fitted",
                         "recipe": feature_name,
                         "fraction": fraction,
+                        "return_fraction": return_fraction,
                         "detector_id": model.detector_id,
                     }
                 ),
@@ -207,7 +234,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--prepared-receipt", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--multiscale", action="store_true")
+    recipe = parser.add_mutually_exclusive_group()
+    recipe.add_argument("--multiscale", action="store_true")
+    recipe.add_argument("--count-rate", action="store_true")
     return fit(parser.parse_args())
 
 

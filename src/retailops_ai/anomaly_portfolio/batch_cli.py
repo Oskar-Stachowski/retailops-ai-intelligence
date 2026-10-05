@@ -15,7 +15,6 @@ from retailops_ai.anomaly_portfolio.batch import batch
 from retailops_ai.anomaly_portfolio.cli import prepared
 from retailops_ai.anomaly_portfolio.journal import PostgresJournal
 from retailops_ai.anomaly_portfolio.lifecycle_contract import MODEL
-from retailops_ai.anomaly_portfolio.registry import AnomalyRegistry
 from retailops_ai.anomaly_portfolio.result_store import PostgresResults, authorized
 from retailops_ai.anomaly_portfolio.serving_contract import Query, ReleaseID
 from retailops_ai.config import load_settings
@@ -37,7 +36,6 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--policy-file", type=Path, required=True)
     parser.add_argument("--credentials-file", type=Path, required=True)
-    parser.add_argument("--registry-port", type=int)
     parser.add_argument("--prepared-receipt", type=Path, required=True)
     parser.add_argument("--model", type=Path, required=True)
     args = parser.parse_args()
@@ -72,12 +70,9 @@ def main() -> int:
         journal = PostgresJournal(engine)
         with journal.locked(MODEL):
             release = journal.release(request.release_id)
-        registry = AnomalyRegistry(
-            port=args.registry_port,
-            compose=settings.network_mode == "compose",
-            environment=settings.app_env,
-        )
-        registry.validate(release.binding)
+        # The enrolled, approved immutable release is the authority. Model
+        # bytes are independently checked against its pin in batch(). Runtime
+        # neither follows live aliases nor reopens private evaluation truth.
         frame = prepared(args.prepared_receipt)
         manifest, items = batch(
             release,

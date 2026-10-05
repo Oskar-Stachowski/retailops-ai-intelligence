@@ -11,7 +11,7 @@ from retailops_ai.anomaly_detectors.contract import (
     RunManifest,
 )
 from retailops_ai.anomaly_detectors.protocol import Protocol
-from retailops_ai.anomaly_detectors.rows import MultiscaleRow
+from retailops_ai.anomaly_detectors.rows import CountRateRow, MultiscaleRow
 
 ROOT = Path(__file__).resolve().parents[1] / "src/retailops_ai/anomaly_detectors/contracts"
 
@@ -27,6 +27,7 @@ def main() -> int:
         ("run", RunManifest),
         ("prediction", Prediction),
         ("multiscale_row", MultiscaleRow),
+        ("count_rate_row", CountRateRow),
     ):
         payload = (
             json.dumps(

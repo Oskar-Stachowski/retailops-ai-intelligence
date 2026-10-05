@@ -13,9 +13,12 @@ from retailops_ai.anomaly_detectors.protocol import Scope, Window, scoring_origi
 from retailops_ai.anomaly_detectors.rows import (
     EXTRA_FEATURES,
     CountLag,
+    CountRateRow,
     MultiscaleRow,
     NumericalRow,
     count_residual,
+    rate_count_residual,
+    rate_stock_shortfall,
     stock_shortfall,
 )
 from retailops_ai.anomaly_evaluation.contract import Decision
@@ -74,9 +77,41 @@ class MultiscaleDescriptor(Descriptor):
     )
 
 
+class EventCapacity(Contract):
+    event_type: Literal["sale_completed", "return_completed"]
+    alert_fraction: Annotated[float, Field(gt=0, le=0.2)]
+    high_fraction: Annotated[float, Field(gt=0, le=0.2)]
+
+    @model_validator(mode="after")
+    def ordered(self) -> Self:
+        if self.high_fraction > self.alert_fraction:
+            raise ValueError("anomaly_event_high_capacity_exceeds_alert_capacity")
+        return self
+
+
+class CountRateDescriptor(MultiscaleDescriptor):
+    version: Literal["anomaly-portfolio-model-3.0.0"] = "anomaly-portfolio-model-3.0.0"  # type: ignore[assignment]
+    residual_recipe: Literal["causal-count-residuals-2.0.0"] = "causal-count-residuals-2.0.0"  # type: ignore[assignment]
+    rate_clock: Literal["mean_qualified_prior_28_days_at_current_fit_cutoff"] = (
+        "mean_qualified_prior_28_days_at_current_fit_cutoff"
+    )
+    event_capacities: tuple[EventCapacity, ...] = Field(min_length=2, max_length=2)
+
+    @model_validator(mode="after")
+    def capacities(self) -> Self:
+        if tuple(c.event_type for c in self.event_capacities) != (
+            "sale_completed",
+            "return_completed",
+        ):
+            raise ValueError("anomaly_event_capacity_inventory")
+        return self
+
+
 class Model(Contract):
     detector_id: DetectorID
-    descriptor: Annotated[MultiscaleDescriptor | Descriptor, Field(discriminator="version")]
+    descriptor: Annotated[
+        CountRateDescriptor | MultiscaleDescriptor | Descriptor, Field(discriminator="version")
+    ]
 
     @model_validator(mode="after")
     def identity(self) -> Self:
@@ -147,10 +182,34 @@ def multiscale_row(point: Point, indexed: dict[tuple[object, ...], Point]) -> Mu
 def scoring_row(
     model: Model, point: Point, indexed: dict[tuple[object, ...], Point]
 ) -> NumericalRow | None:
+    if isinstance(model.descriptor, CountRateDescriptor):
+        return count_rate_row(point, indexed)
     return (
         multiscale_row(point, indexed)
         if isinstance(model.descriptor, MultiscaleDescriptor)
         else row(point)
+    )
+
+
+def count_rate_row(point: Point, indexed: dict[tuple[object, ...], Point]) -> CountRateRow | None:
+    current = multiscale_row(point, indexed)
+    if current is None:
+        return None
+    known = [p.observed_units for p in point.history if p.status == "qualified"]
+    # Point validates all 28 dates, series and history knowledge at fit_cutoff.
+    if len(known) < 14 or any(v is None for v in known):
+        raise ValueError("anomaly_count_rate_requires_qualified_prior_history")
+    total = sum(v for v in known if v is not None)
+    rate = total / len(known)
+    return CountRateRow(
+        **row(point).model_dump(),  # type: ignore[union-attr]
+        event_type=point.event_type,
+        prior_known_units=total,
+        prior_known_observations=len(known),
+        recent_counts=current.recent_counts,
+        short_count_residual=rate_count_residual(current, current.recent_counts, 3, rate),
+        long_count_residual=rate_count_residual(current, current.recent_counts, 7, rate),
+        inventory_shortfall=rate_stock_shortfall(current, rate, point.event_type),
     )
 
 
@@ -263,7 +322,7 @@ def score(
                 reasons.append("inventory_constraint_present")
             if point.context.promotion_offered:
                 reasons.append("planned_promotion_context")
-            if isinstance(_model_row, MultiscaleRow):
+            if isinstance(_model_row, (MultiscaleRow, CountRateRow)):
                 if _model_row.short_count_residual is not None:
                     reasons.append("known_short_window_residual_context")
                 if _model_row.long_count_residual is not None:

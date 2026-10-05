@@ -7,7 +7,12 @@ from functools import lru_cache
 from statistics import median
 
 from retailops_ai.anomaly_detectors.contract import Fill, FitPolicy, Forest, Pipeline
-from retailops_ai.anomaly_detectors.rows import MultiscaleRow, NumericalRow, validate_row
+from retailops_ai.anomaly_detectors.rows import (
+    CountRateRow,
+    MultiscaleRow,
+    NumericalRow,
+    validate_row,
+)
 from retailops_ai.source_snapshot.files import SnapshotError
 
 QUANTUM = Decimal("0.000000000001")
@@ -110,7 +115,7 @@ def forest_scores(pipeline: Pipeline, rows: list[NumericalRow]) -> tuple[float, 
 
 def baseline_score(row: NumericalRow) -> float:
     values = [abs(row.standardized_residual)]
-    if isinstance(row, MultiscaleRow):
+    if isinstance(row, (MultiscaleRow, CountRateRow)):
         values += [
             abs(v) for v in (row.short_count_residual, row.long_count_residual) if v is not None
         ]

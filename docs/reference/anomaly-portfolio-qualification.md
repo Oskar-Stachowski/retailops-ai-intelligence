@@ -44,6 +44,20 @@ This contextual rule is never substituted for Isolation Forest. IF uses its
 actual saved native fitted forest and declared features. Both families are
 compared on seed-42 validation; final data cannot select features or thresholds.
 
+The initial nine v3 fits did not satisfy the original validation gates. Their
+artifacts and comparison remain unchanged. The subsequent development
+[amendment](../evidence/07-v3-development-amendment.json) declares
+`anomaly-portfolio-model-3.0.0` and `causal-count-residuals-2.0.0` before final
+scoring. Multiday expected counts now use the mean of qualified observations
+in the current point's prior 28-day history, all known at its fit cutoff,
+multiplied by the number of known window outcomes. Current/future outcomes,
+labels and unknown days cannot enter this mean. Daily seasonal residuals remain
+unchanged. The stock rule applies only to sales and uses that prior rate.
+The model explicitly records distinct sale/return alert and high-severity
+capacities. Thresholds still use all eligible unlabelled demand validation
+scores, including observations whose offline truth is unknown. Validation
+labels compare the saved configurations; they cannot filter fitting rows.
+
 Selection freezes the complete six-case public lineage, temporal cutoffs,
 model/config/fit hashes, validation comparison, numerical quality/sample gates
 and actual time before opening final scoring and labels. Saved predictions are

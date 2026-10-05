@@ -1,0 +1,86 @@
+"""Sparse count calibration uses earlier known history and explicit event policies."""
+
+import json
+from datetime import date, timedelta
+
+import pytest
+from pydantic import ValidationError
+from test_anomaly_detectors import numeric_rows, point
+
+from retailops_ai.anomaly_detectors.codec import baseline_score
+from retailops_ai.anomaly_detectors.protocol import series_key
+from retailops_ai.anomaly_detectors.rows import (
+    CountLag,
+    CountRateRow,
+    rate_count_residual,
+    rate_stock_shortfall,
+    validate_row,
+)
+from retailops_ai.anomaly_portfolio.model import EventCapacity, count_rate_row
+
+
+def test_known_prior_rate_prevents_zero_week_accumulation_in_sparse_counts():
+    current = numeric_rows(1)[0].model_copy(
+        update={
+            "observed_units": 1,
+            "expected_units": 0,
+            "residual_units": 1,
+            "standardized_residual": 1.0,
+        }
+    )
+    support = tuple(CountLag(lag_days=i, observed_units=1, expected_units=0) for i in range(1, 7))
+    result = CountRateRow(
+        **current.model_dump(),
+        event_type="return_completed",
+        prior_known_units=28,
+        prior_known_observations=28,
+        recent_counts=support,
+        short_count_residual=rate_count_residual(current, support, 3, 1.0),
+        long_count_residual=rate_count_residual(current, support, 7, 1.0),
+        inventory_shortfall=0,
+    )
+    assert result.short_count_residual == result.long_count_residual == 0
+    assert baseline_score(result) == 1
+    assert validate_row(result.model_dump()) == result
+    assert rate_count_residual(current, (), 3, 1) is None
+
+
+def test_history_rate_uses_fit_cutoff_and_never_current_or_future_outcome():
+    day = date(2026, 8, 12)
+    current = point(day, 18, "return_completed")
+    future = point(day + timedelta(days=1), 100000, "return_completed")
+    before = count_rate_row(current, {})
+    after = count_rate_row(current, {(*series_key(future), future.business_date): future})
+    assert before is not None and before == after
+    assert before.prior_known_units == sum(
+        p.observed_units for p in current.history if p.status == "qualified"
+    )
+    changed = point(day, 1000, "return_completed")
+    extreme = count_rate_row(changed, {})
+    assert extreme is not None and extreme.prior_known_units == before.prior_known_units
+    assert extreme.prior_known_observations == before.prior_known_observations
+
+
+def test_stock_constraint_applies_to_sales_and_requires_known_positive_rate():
+    row = numeric_rows(1)[0].model_copy(update={"on_hand": 0, "observed_units": 0})
+    assert rate_stock_shortfall(row, 3, "sale_completed") == 8
+    assert rate_stock_shortfall(row, 3, "return_completed") == 0
+    assert rate_stock_shortfall(row, 0, "sale_completed") == 0
+    assert rate_stock_shortfall(row.model_copy(update={"on_hand": None}), 3, "sale_completed") == 0
+
+
+def test_rate_row_rejects_resealed_false_arithmetic_and_label_fields():
+    value = count_rate_row(point(date(2026, 8, 12), 18), {})
+    assert value is not None
+    for name, replacement in (
+        ("inventory_shortfall", 8),
+        ("label", True),
+        ("prior_known_observations", 0),
+        ("short_count_residual", 12),
+    ):
+        raw = value.model_dump(mode="json")
+        raw[name] = replacement
+        with pytest.raises(ValidationError):
+            CountRateRow.model_validate_json(json.dumps(raw))
+    with pytest.raises(ValidationError):
+        EventCapacity(event_type="return_completed", alert_fraction=0.01, high_fraction=0.02)

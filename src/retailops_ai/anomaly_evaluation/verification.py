@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any
 
 from retailops_ai.anomaly_detectors.codec import baseline_score, forest_scores
 from retailops_ai.anomaly_detectors.protocol import Scope, Window, scoring_origin, series_key
-from retailops_ai.anomaly_detectors.rows import MultiscaleRow, validate_row
+from retailops_ai.anomaly_detectors.rows import CountRateRow, MultiscaleRow, validate_row
 from retailops_ai.anomaly_evaluation.contract import Decision, EvaluationPolicy, Truth
 from retailops_ai.anomaly_evaluation.evaluator import evaluate
 from retailops_ai.anomaly_evaluation.quality import QualityPolicy, assess
@@ -23,12 +23,16 @@ def verify_scores(model: "Model", decisions: list[Decision], inputs: list[Any]) 
     """Replay the actual saved baseline/forest over the saved public model rows."""
     if len(inputs) != len(decisions):
         raise ValueError("anomaly_quality_scoring_input_census")
-    from retailops_ai.anomaly_portfolio.model import MultiscaleDescriptor
+    from retailops_ai.anomaly_portfolio.model import CountRateDescriptor, MultiscaleDescriptor
 
     rows = [validate_row(r) if r is not None else None for r in inputs]
     if any(
         r is not None
-        and isinstance(r, MultiscaleRow) != (isinstance(model.descriptor, MultiscaleDescriptor))
+        and (
+            isinstance(r, CountRateRow) != isinstance(model.descriptor, CountRateDescriptor)
+            or isinstance(r, (MultiscaleRow, CountRateRow))
+            != isinstance(model.descriptor, MultiscaleDescriptor)
+        )
         for r in rows
     ):
         raise ValueError("anomaly_quality_model_row_recipe_binding")
@@ -60,6 +64,7 @@ def verify_scores(model: "Model", decisions: list[Decision], inputs: list[Any]) 
             r is not None
             and (
                 d.input_status != "ready_input"
+                or (isinstance(r, CountRateRow) and r.event_type != d.event_type)
                 or (
                     d.observed_units,
                     d.expected_units,
