@@ -1,0 +1,294 @@
+{
+  "completed_at": "2026-10-07T15:58:39Z",
+  "created_at": "2026-10-07T15:25:37Z",
+  "event": "push",
+  "head_sha": "467f9903fdeb1dbc146994f6133536b066819bb4",
+  "jobs": [
+    {
+      "completed_at": "2026-10-07T15:26:34Z",
+      "conclusion": "success",
+      "id": 112869240562,
+      "name": "Required CI contract tests",
+      "started_at": "2026-10-07T15:26:23Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:31:53Z",
+      "conclusion": "success",
+      "id": 112869241071,
+      "name": "Detect changed areas",
+      "started_at": "2026-10-07T15:31:46Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:34:08Z",
+      "conclusion": "success",
+      "id": 112872136376,
+      "name": "Repository diff hygiene",
+      "started_at": "2026-10-07T15:34:02Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:39:04Z",
+      "conclusion": "success",
+      "id": 112872138144,
+      "name": "iac-security-gate / Checkov IaC security report",
+      "started_at": "2026-10-07T15:38:25Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:38:56Z",
+      "conclusion": "success",
+      "id": 112872138303,
+      "name": "iac-security-gate / TFLint IaC quality gate",
+      "started_at": "2026-10-07T15:38:44Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:39:11Z",
+      "conclusion": "success",
+      "id": 112872138410,
+      "name": "docker-gate / Validate Docker Compose config",
+      "started_at": "2026-10-07T15:38:59Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:36:28Z",
+      "conclusion": "success",
+      "id": 112872138523,
+      "name": "frontend-gate / Personal forecast and suggestion UI with actual PostgreSQL and API",
+      "started_at": "2026-10-07T15:34:37Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:43:37Z",
+      "conclusion": "success",
+      "id": 112872138531,
+      "name": "data-gate / AI 06 full cross-repo gate",
+      "started_at": "2026-10-07T15:34:11Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:52:43Z",
+      "conclusion": "success",
+      "id": 112872138568,
+      "name": "data-gate / AI 07 full sales and returns offline replay",
+      "started_at": "2026-10-07T15:33:32Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:44:31Z",
+      "conclusion": "success",
+      "id": 112872138590,
+      "name": "docker-gate / Authenticated immutable native source bundle import",
+      "started_at": "2026-10-07T15:38:59Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:39:52Z",
+      "conclusion": "success",
+      "id": 112872138622,
+      "name": "frontend-gate / Frontend tests and lint",
+      "started_at": "2026-10-07T15:39:34Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:58:01Z",
+      "conclusion": "success",
+      "id": 112872138625,
+      "name": "data-gate / Synthetic data quality gate",
+      "started_at": "2026-10-07T15:35:11Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:38:21Z",
+      "conclusion": "success",
+      "id": 112872138626,
+      "name": "data-gate / AI 03 full cross-repo gate",
+      "started_at": "2026-10-07T15:32:36Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:41:26Z",
+      "conclusion": "success",
+      "id": 112872138693,
+      "name": "docker-gate / Authenticated cross-repo intelligence runtime",
+      "started_at": "2026-10-07T15:39:53Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:39:31Z",
+      "conclusion": "success",
+      "id": 112872138724,
+      "name": "security-gate / Backend image vulnerability scan",
+      "started_at": "2026-10-07T15:38:32Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:32:33Z",
+      "conclusion": "success",
+      "id": 112872138753,
+      "name": "terraform-validation-gate / Terraform fmt, init and validate",
+      "started_at": "2026-10-07T15:32:01Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:39:19Z",
+      "conclusion": "success",
+      "id": 112872138768,
+      "name": "security-gate / Secret scanning with Gitleaks",
+      "started_at": "2026-10-07T15:39:07Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:40:06Z",
+      "conclusion": "success",
+      "id": 112872138795,
+      "name": "security-gate / Python dependency audit",
+      "started_at": "2026-10-07T15:39:28Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:57:54Z",
+      "conclusion": "success",
+      "id": 112872138828,
+      "name": "api-gate / API integration tests",
+      "started_at": "2026-10-07T15:36:48Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:40:32Z",
+      "conclusion": "success",
+      "id": 112872138877,
+      "name": "security-gate / Frontend image vulnerability scan",
+      "started_at": "2026-10-07T15:40:05Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:40:25Z",
+      "conclusion": "success",
+      "id": 112872138913,
+      "name": "security-gate / Filesystem vulnerability scan",
+      "started_at": "2026-10-07T15:40:12Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:40:48Z",
+      "conclusion": "success",
+      "id": 112872138952,
+      "name": "security-gate / Frontend dependency audit",
+      "started_at": "2026-10-07T15:40:29Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:40:02Z",
+      "conclusion": "success",
+      "id": 112872138977,
+      "name": "kubernetes-gate / Kustomize, schema and policy gates",
+      "started_at": "2026-10-07T15:39:14Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:48:00Z",
+      "conclusion": "success",
+      "id": 112875558183,
+      "name": "docker-gate / Build full stack and run smoke tests",
+      "started_at": "2026-10-07T15:39:54Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:40:45Z",
+      "conclusion": "success",
+      "id": 112875868258,
+      "name": "frontend-gate / Build frontend application",
+      "started_at": "2026-10-07T15:40:35Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:48:27Z",
+      "conclusion": "success",
+      "id": 112875944586,
+      "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+      "started_at": "2026-10-07T15:40:09Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:41:13Z",
+      "conclusion": "success",
+      "id": 112876329801,
+      "name": "frontend-gate / Build frontend Docker image",
+      "started_at": "2026-10-07T15:40:51Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:41:01Z",
+      "conclusion": "success",
+      "id": 112876361943,
+      "name": "security-gate / Security evidence summary",
+      "started_at": "2026-10-07T15:40:54Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:58:34Z",
+      "conclusion": "success",
+      "id": 112884522376,
+      "name": "api-gate / API Docker image build",
+      "started_at": "2026-10-07T15:57:57Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T15:58:39Z",
+      "conclusion": "success",
+      "id": 112884823337,
+      "name": "required-result",
+      "started_at": "2026-10-07T15:58:37Z",
+      "status": "completed"
+    }
+  ],
+  "repo": "Oskar-Stachowski/retailops-cloud-native-platform",
+  "run_attempt": 1,
+  "scope": "all mandatory code component jobs executed successfully",
+  "status": "passed",
+  "total_jobs": 30,
+  "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37643817859",
+  "version": "ai10-exact-head-required-ci-1.1",
+  "workflow_git_blob_ids": [
+    {
+      "git_blob_id": "46ee0d6c8a46697e9bbecdc391f8f45197ec9fe5",
+      "path": ".github/workflows/api-ci.yml"
+    },
+    {
+      "git_blob_id": "4fb1712bd06a90fa08dc4a986f714fbd095dd00a",
+      "path": ".github/workflows/data-ci.yml"
+    },
+    {
+      "git_blob_id": "38613fc461389b1a905456e6fade09090985f4ee",
+      "path": ".github/workflows/docker-ci.yml"
+    },
+    {
+      "git_blob_id": "7ed6522f5091265383f74748946b3fde0be0890b",
+      "path": ".github/workflows/frontend-ci.yml"
+    },
+    {
+      "git_blob_id": "9a720a14aca799c0aac6de4362e73cebee530036",
+      "path": ".github/workflows/iac-security.yml"
+    },
+    {
+      "git_blob_id": "ae225a8ca65854e7fa2f45a5bd5f27212f12ffb6",
+      "path": ".github/workflows/kubernetes-ci.yml"
+    },
+    {
+      "git_blob_id": "b7c1f9a37dd4ded712d9cfbe994ab0136479ef1c",
+      "path": ".github/workflows/required-ci.yml"
+    },
+    {
+      "git_blob_id": "6d32747d40448e936989acad769930dc71c61c42",
+      "path": ".github/workflows/security-ci.yml"
+    },
+    {
+      "git_blob_id": "f683d957df3296cb06a9ce83e931f22ff97842f8",
+      "path": ".github/workflows/terraform-validation.yml"
+    }
+  ],
+  "workflow_run_id": 37643817859
+}

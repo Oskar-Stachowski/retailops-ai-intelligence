@@ -20,6 +20,7 @@ from typing import Any, Literal
 
 from check_stockout_final_acceptance import private_json, require
 from check_v12_lifecycle import IMAGES, ROOT, docker, port, wait_ready
+from deliver_ai10_v12_native import failure_summary
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, event, text
 
@@ -89,11 +90,118 @@ def preflight_application_database() -> None:
     print('{"stage":"actual_application_database_configuration","status":"passed"}')
 
 
+def source_consumer_python(root: Path) -> Path:
+    # Resolving the interpreter symlink would invoke the base Python outside this
+    # venv. Resolve only the checkout directory and preserve the venv entry point.
+    return root.resolve() / "services/api/.venv/bin/python"
+
+
+def preflight_source_python(root: Path) -> None:
+    python = source_consumer_python(root)
+    completed = subprocess.run(  # noqa: S603 - fixed isolated Source dependency probe
+        [
+            str(python),
+            "-c",
+            "import sys; from pathlib import Path; import pytest; "
+            "assert Path(sys.prefix).resolve() == Path(sys.argv[1]).resolve()",
+            str(root.resolve() / "services/api/.venv"),
+        ],
+        cwd=root,
+        capture_output=True,
+        timeout=30,
+        check=False,
+    )
+    require(completed.returncode == 0, "ai10_v12_source_python_environment")
+    print('{"stage":"actual_source_venv_and_pytest","status":"passed"}', flush=True)
+
+
 def fail_outbox_insert(conn: Any, cursor: Any, statement: str, *rest: Any) -> None:
     # Match the actual multiline SQL emitted by enqueue_forecasts, with an exact
     # target table boundary. The hook fires after insertion, inside its transaction.
     if re.match(r"\s*INSERT\s+INTO\s+ai\.intelligence_outbox\s*\(", statement, re.IGNORECASE):
         raise RuntimeError("ai10_v12_controlled_outbox_insert_failure")
+
+
+def source_failure_details(junit: Path, log: Path) -> dict[str, Any]:
+    """Retain fixed test identities and locations, never child output or controls."""
+    details: dict[str, Any] = {"junit_status": "missing", "failed_tests": []}
+    test = "test_original_v12_sql_outbox_complete_api_and_browser"
+    if log.is_file() and log.stat().st_size <= 2 * 1024 * 1024:
+        raw = log.read_text(errors="replace")
+        if re.search(r"No module named ['\"]?pytest\b", raw):
+            details["startup_failure_category"] = "pytest_missing_from_child_interpreter"
+        if re.search(
+            rf"(?:FAILED|ERROR)\s+(?:services/api/)?tests/"
+            rf"test_native_forecast_output_durability\.py::{test}\b",
+            raw,
+        ):
+            details["failed_tests"] = ["tests/test_native_forecast_output_durability.py::" + test]
+        categories = re.findall(r'"category"\s*:\s*"([a-z0-9_]{1,160})"', raw)
+        details["delivery_failure_categories"] = sorted(
+            {
+                category
+                for category in categories
+                if failure_summary(ValueError(category))["category"] == category
+            }
+        )
+    if not junit.is_file():
+        return details
+    if junit.stat().st_size > 2 * 1024 * 1024:
+        details["junit_status"] = "byte_limit"
+        return details
+    try:
+        root = xml.fromstring(junit.read_bytes())  # noqa: S314 - bounded own child pytest report
+        suites = list(root.iter("testsuite"))
+        counts = {
+            key: sum(int(suite.get(key, "0")) for suite in suites)
+            for key in ("tests", "failures", "errors", "skipped")
+        }
+        require(
+            bool(suites) and all(0 <= value <= 100 for value in counts.values()),
+            "ai10_v12_source_junit_counts",
+        )
+    except (xml.ParseError, ValueError):
+        details["junit_status"] = "invalid"
+        return details
+    details.update(junit_status="available", test_counts=counts)
+    failures: list[dict[str, Any]] = []
+    for case in root.iter("testcase"):
+        for failure in case:
+            if failure.tag not in {"error", "failure"}:
+                continue
+            entry: dict[str, Any] = {"kind": failure.tag}
+            if case.get("name") == test:
+                entry["test"] = test
+                details["failed_tests"] = [
+                    "tests/test_native_forecast_output_durability.py::" + test
+                ]
+            error_type = failure.get("type", "").rsplit(".", 1)[-1]
+            if error_type in {
+                "AssertionError",
+                "CalledProcessError",
+                "Failed",
+                "ImportError",
+                "KeyError",
+                "ModuleNotFoundError",
+                "OSError",
+                "OperationalError",
+                "RuntimeError",
+                "TimeoutExpired",
+                "TypeError",
+                "ValidationError",
+                "ValueError",
+            }:
+                entry["exception_type"] = error_type
+            locations = re.findall(
+                r"(?:services/api/)?(tests/test_[a-z0-9_]+\.py):([0-9]{1,6})\b",
+                failure.text or "",
+            )
+            entry["test_locations"] = [
+                {"path": path, "line": int(line)} for path, line in sorted(set(locations))[:20]
+            ]
+            failures.append(entry)
+    details["failures"] = failures[:20]
+    return details
 
 
 def access(work: Path, inputs: PreparedInputs) -> tuple[Path, dict[str, str], Principal, Principal]:
@@ -353,6 +461,7 @@ def main() -> int:
             == pins["source_commit"],
             "ai10_v12_exact_source_consumer_commit",
         )
+        preflight_source_python(args.consumer_root)
         original = args.original.resolve()
         run = original / "archive" / pins["run_id"]
         python = original / "support/frozen-runtime/.venv/bin/python"
@@ -791,7 +900,7 @@ def main() -> int:
         with (work / "source-consumer.log").open("wb") as log:
             completed = subprocess.run(  # noqa: S603 - fixed test in verified pinned Source checkout
                 [
-                    str((args.consumer_root / "services/api/.venv/bin/python").resolve()),
+                    str(source_consumer_python(args.consumer_root)),
                     "-m",
                     "pytest",
                     "-q",
@@ -807,10 +916,11 @@ def main() -> int:
                 check=False,
             )
         if completed.returncode:
-            report["source_failure_tests"] = re.findall(
-                r"FAILED (services/api/tests/[a-zA-Z0-9_/.]+::[a-zA-Z0-9_]+)",
-                (work / "source-consumer.log").read_text(),
+            report["source_child_returncode"] = completed.returncode
+            report["source_failure_details"] = source_failure_details(
+                work / "source-native-tests.xml", work / "source-consumer.log"
             )
+            report["source_failure_tests"] = report["source_failure_details"]["failed_tests"]
         require(completed.returncode == 0, "ai10_v12_original_source_consumer_failed")
         shutil.copyfile(work / "source-native-tests.xml", args.output / "source-native-tests.xml")
         (args.output / "source-native-tests.xml").chmod(0o600)

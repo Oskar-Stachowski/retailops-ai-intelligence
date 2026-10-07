@@ -1,17 +1,37 @@
 # Aktualny status
 
-**2026-10-07 — AI 10: końcowa integracja w toku.**
-Łączymy wszystkie odebrane przyrosty z zatwierdzonym AI 07/08 na main.
-Migracja `0024_ai10_integration` zachowuje obie wcześniejsze historie.
-Nowy head `0025_model_intelligence_outbox` dodaje atomowe zdarzenia native
-anomaly i stockout. [Instrukcja integracji modeli](intelligence-models-v2.md).
-Rzeczywisty Source capture → ten sam TLS/SCRAM broker → AI SQL/ACK/overlap
-jest odebrany. Qualified stockout/anomaly mają pełny Source API i built UI.
-Stockout i anomaly mają odebrane oryginalne AI SQL publishery. Pełny v12
-na 102-dniowych wejściach wymaga ponownego odbioru po poprawce konfiguracji bazy.
-[Bieżąca instrukcja i checklist](ai10-acceptance.md) wiążą dowody wykonania.
-Protected merge i Required CI obu main pozostają wymagane przed `ready`.
-Wcześniejsze wpisy opisują historię.
+**2026-10-07 — AI 10: READY, pełny odbiór integracji.**
+[Końcowy raport](evidence/ai10-bounded-acceptance.json) oraz
+[mapa wszystkich siedmiu wymagań](evidence/ai10-final-ready-review.json) wiążą
+snapshot/REST/stream, Source SQL/capture → ten sam TLS/SCRAM broker → AI SQL/ACK
+z korektą 4 → 7 oraz oryginalne publishery SQL dla 40 stockout, 1232 anomaly
+i 56 forecast. Wszystkie native payloady, lineage, projekcje i duplikaty
+sprawdzono przez rzeczywiste Source SQL, authenticated TCP API i istniejący built UI.
+[Pełny V12](evidence/ai10-native-v12-22de575-accepted.json), run `37665627162`,
+zaliczył 273 boundary tests i rzeczywisty test Source bez failures/errors/skips:
+56 oryginalnych ACK, dwie strony UI, development warning oraz live revocation.
+Wszystkie sześć etapów oryginalnego odbioru i atomowy rollback passed.
+Własne kontenery/volumes, sześć małych handoff objects i unikalny secret usunięto;
+oryginalne S3, modele i inne sesje zachowano.
+
+[AI main `b0e2de`](evidence/ai10-ai-b0-main-ci.json) ma 17/17 success,
+[pełny Source baseline](evidence/ai10-source-code-main-ci.json) 30/30,
+a [wcześniejszy scoped Source main](evidence/ai10-source-b723489-main-ci.json)
+21 success i 4 celowe skipped. [Zgodność runtime](evidence/ai10-native-runtime-main-compatibility.json)
+wiąże dokładne obiekty odebranych commitów z integracją.
+[Integracja nowszego AI09 main `5ed0544`](evidence/ai10-ai09-5ed-main-integration.json)
+zachowuje wszystkie 21 odebranych komponentów AI10. Powyższe receipts są
+historycznymi baseline’ami; nowy zintegrowany head i wynikowy main wymagają własnego CI.
+Końcowe rekordy publikuje [AI #38](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/38)
+i [Source #104](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/104)
+przez normalne protected merges i Required CI dokładnych headów oraz main.
+Dowód ostatniej publikacji stanowią aktualne checks i merge commity w GitHub;
+nie dopisujemy do tego rekordu niewykonanego przyszłego CI.
+V12 zachowuje oryginalne quality `not_ready` i wyłącznie zaakceptowany development
+namespace. Sugestie są jawnym fixture AI10; rzeczywisty producent należy do AI12.
+[Overlay istniejących projektów](ai10-acceptance.md#overlay-istniejących-projektów)
+zachowuje prywatne bazy, jeden broker Source i jego external network.
+AI09 pozostaje osobnym otwartym etapem. Wcześniejsze wpisy opisują historię.
 
 **2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**
 Runner generacji z PR #35 jest scalony jako `16a02ae` po pełnym Required CI

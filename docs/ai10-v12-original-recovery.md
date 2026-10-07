@@ -1,6 +1,7 @@
 # AI10 — odtworzenie oryginalnego v12 bez naruszenia local disk reserve
 
-Status: **in_progress**. Oryginalny finalny model pozostaje właścicielsko
+Status: **oryginalny runtime odebrany** — [pełny receipt](evidence/ai10-native-v12-22de575-accepted.json),
+run `37665627162`: 273 testy granic i Source E2E, 56 original SQL ACK/API/UI. Oryginalny finalny model pozostaje właścicielsko
 zaakceptowanym development deliverable z quality/model `not_ready`. Odtworzenie
 archiwum nie nadaje produkcyjnej jakości ani uprawnień do deploymentu.
 
