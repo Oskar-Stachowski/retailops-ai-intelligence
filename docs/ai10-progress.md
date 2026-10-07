@@ -14,6 +14,21 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
 
 ### Odebrane komponenty bieżącej integracji
 
+**Publisher z oryginalnej bazy — nowy przyrost, runtime pending:** Source
+`b73468a` dodaje wiązanie pełnego census z oryginalnymi AI SQL ACK i SHA
+rzeczywistych konsumowanych bytes. Natywne acceptory stockout/anomaly
+zachowują własną bazę do końca broker/SQL/API/built UI odbioru Source.
+Caller przypina dokładny Source i wymaga zamkniętego runtime publishera;
+prywatne control/child logs nie trafiają do artefaktów. Lokalnie 16 testów
+AI, 35 testów Source, setup-plan rzeczywistego odbioru i mypy 606+10 passed.
+Fixture nie kwalifikują modeli. Pełny nowy workflow musi jeszcze wykonać
+publisher na oryginalnych frozen wynikach.
+
+V12 run `37604263732` zakończył model boundary tests oraz przygotowanie
+102-dniowego wejścia i pobiera pełne oryginalne archiwum. Required CI AI
+`c8df654` wykrył błąd ponownego uruchomienia bazy w istniejącym compose smoke;
+następny pełny CI ma ponownie sprawdzić tę samą bramkę bez zmiany jej limitów.
+
 **Bieżący przyrost z 7 października:** pełny native anomaly workflow
 `37594406280`, job `112705553204`, zakończył się **success**. Wszystkie 1232
 oryginalne wyniki, 2464 broker receipts, 1232 duplicates, pełny TCP API i 25

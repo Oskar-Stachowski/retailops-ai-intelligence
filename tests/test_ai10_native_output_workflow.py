@@ -59,16 +59,21 @@ def test_ai10_requalification_uses_original_successful_jobs_without_repeating_ev
     )
     assert consumer["ref"] == pin["commit"]
     assert consumer["persist-credentials"] is False
-    receiver = next(
-        step
-        for step in steps
-        if "test_native_intelligence_output_durability.py" in step.get("run", "")
+    native_index = next(
+        i
+        for i, step in enumerate(steps)
+        if "scripts/check_stockout_final_acceptance.py" in step.get("run", "")
     )
-    assert receiver["env"]["REQUIRE_BROKER_TESTS"] == "1"
-    assert receiver["env"]["REQUIRE_AI10_NATIVE_MODEL_READ"] == "1"
-    assert receiver["env"]["REQUIRE_AI10_NATIVE_BROWSER"] == "1"
-    assert receiver["env"]["AI10_NATIVE_PRODUCER_COMMIT"] == "${{ github.sha }}"
-    assert receiver["env"]["AI10_NATIVE_STOCKOUT_OUTPUT"].endswith("/accepted-model")
+    browser_index = next(
+        i for i, step in enumerate(steps) if "npm run build" in step.get("run", "")
+    )
+    assert browser_index < native_index
+    assert "--source-consumer-root .local/ai10-native-output-consumer" in steps[native_index]["run"]
+    assert "uv sync --locked --project tools/intelligence-delivery" in commands
+    # Source is called while the original acceptor's SQL database is still alive.
+    assert not any(
+        "test_native_intelligence_output_durability.py" in step.get("run", "") for step in steps
+    )
 
 
 def test_original_anomaly_acceptance_must_finish_before_independent_browser_reads():
@@ -82,20 +87,12 @@ def test_original_anomaly_acceptance_must_finish_before_independent_browser_read
     native = next(
         index for index, step in enumerate(steps) if "--native-output" in step.get("run", "")
     )
-    receiver_index = next(
-        index
-        for index, step in enumerate(steps)
-        if "test_native_intelligence_output_durability.py" in step.get("run", "")
+    browser_index = next(
+        index for index, step in enumerate(steps) if "npm run build" in step.get("run", "")
     )
-    assert native < receiver_index
-    receiver = steps[receiver_index]
-    assert receiver["env"]["AI10_NATIVE_MODEL_KIND"] == "anomaly_detected"
-    for name in (
-        "REQUIRE_BROKER_TESTS",
-        "REQUIRE_AI10_NATIVE_MODEL_READ",
-        "REQUIRE_AI10_NATIVE_BROWSER",
-    ):
-        assert receiver["env"][name] == "1"
+    assert browser_index < native
+    assert "--source-consumer-root .local/ai10-native-output-consumer" in steps[native]["run"]
+    assert "uv sync --locked --project tools/intelligence-delivery" in commands
     pin = json.loads((ROOT / "docs/reference/ai10-native-output-consumer.json").read_text())
     consumer = next(
         step["with"]
@@ -105,3 +102,17 @@ def test_original_anomaly_acceptance_must_finish_before_independent_browser_read
     assert consumer["ref"] == pin["commit"]
     assert consumer["persist-credentials"] is False
     assert all(not step.get("continue-on-error") for step in steps)
+
+
+def test_original_database_caller_requires_actual_publisher_and_built_source_reader():
+    caller = (ROOT / "scripts/run_ai10_model_consumer.py").read_text()
+    for required in (
+        '"REQUIRE_BROKER_TESTS": "1"',
+        '"REQUIRE_AI10_NATIVE_MODEL_READ": "1"',
+        '"REQUIRE_AI10_NATIVE_BROWSER": "1"',
+        '"AI10_MODEL_ORIGINAL_DATABASE_CONTROL"',
+        '"scripts/deliver_ai10_model_native.py"',
+        '"original_AI_database_publisher_attested"',
+        'report["browser"]["status"] == "passed"',
+    ):
+        assert required in caller

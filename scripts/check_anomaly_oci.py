@@ -16,6 +16,8 @@ from typing import Any
 
 import local_stack
 from refresh_anomaly_compatibility import refresh
+from run_ai10_model_consumer import run_source_model_read
+from sqlalchemy import create_engine
 
 from retailops_ai.source_snapshot.files import read_bytes
 
@@ -142,6 +144,16 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     override.write_text(
         "services:\n  api:\n    ports: !reset []\n  mlflow:\n    ports: !reset []\n"
     )
+    if args.source_consumer_root is not None:
+        require(
+            os.environ.get("GITHUB_ACTIONS") == "true"
+            and os.environ.get("RUNNER_ENVIRONMENT") == "github-hosted"
+            and args.native_output is not None,
+            "anomaly_original_delivery_owned_runner_required",
+        )
+        # Only this fresh disposable project's DB gets an ephemeral loopback port.
+        # The normal OCI acceptance and original Source producer keep their boundaries.
+        override.write_text(override.read_text() + '  db:\n    ports: ["127.0.0.1::5432"]\n')
     base = [
         docker,
         "compose",
@@ -356,13 +368,46 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             )
             report["workflow_run_id"] = int(os.environ["GITHUB_RUN_ID"])
             export_native_output(output, report, args.native_output)
+            if args.source_consumer_root is not None:
+                binding = command([*base, "port", "db", "5432"])
+                require(
+                    bool(re.fullmatch(r"127\.0\.0\.1:[0-9]{1,5}", binding)),
+                    "anomaly_original_database_loopback_required",
+                )
+                values = dict(line.split("=", 1) for line in environment.read_text().splitlines())
+                url = (
+                    f"postgresql+psycopg://ai_app:{values['AI_DB_PASSWORD']}@{binding}/retailops_ai"
+                )
+                engine = create_engine(
+                    url, hide_parameters=True, connect_args={"connect_timeout": 3}
+                )
+                try:
+                    source_report = run_source_model_read(
+                        engine=engine,
+                        database_url=url,
+                        output=args.native_output,
+                        consumer=args.source_consumer_root,
+                        work=work,
+                        kind="anomaly_detected",
+                    )
+                finally:
+                    engine.dispose()
+                report.update(
+                    transport_durability="original_AI_SQL_publisher_to_Source_SQL_API_and_built_UI",
+                    original_AI_database_publisher_attested=True,
+                    source_API_UI_attested=True,
+                    source_commit=source_report["source_commit"],
+                )
+                (args.native_output / "acceptance.json").write_text(
+                    json.dumps(report, indent=2) + "\n"
+                )
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + "\n")
         return {
             "status": "passed",
             "report": str(args.report),
             "oci_image_digest": image,
-            "transport_durability": "offline_only",
+            "transport_durability": report["transport_durability"],
         }
     finally:
         if owned:
@@ -374,6 +419,7 @@ def main() -> int:
     parser.add_argument("--producer", type=Path, required=True)
     parser.add_argument("--prepared-receipt", type=Path)
     parser.add_argument("--native-output", type=Path)
+    parser.add_argument("--source-consumer-root", type=Path)
     parser.add_argument("--report", type=Path, default=ROOT / "reports/ai07-oci-acceptance.json")
     args = parser.parse_args()
     try:
