@@ -563,3 +563,56 @@ def test_logical_comparison_keeps_every_nonphysical_field(physical_parents):
     assert source_replay.logical_document(changed) == source_replay.logical_document(document)
     changed["time_semantics"]["as_of"] = "wrong"
     assert source_replay.logical_document(changed) != source_replay.logical_document(document)
+
+
+@pytest.mark.parametrize("current_wire", [False, True])
+@pytest.mark.parametrize("mismatch", ["bytes", "runtime"])
+def test_common_core_rejects_undeclared_limits_or_runtime_before_parent_io(
+    replay_fixture, monkeypatch, current_wire, mismatch
+):
+    from dataclasses import replace
+
+    from retailops_ai.evaluation_campaign.physical_contract import PhysicalSourceSpec
+
+    snapshot, curated, old, _ = replay_fixture
+    specification = (
+        PhysicalSourceSpec(
+            schema_version=old.schema_version,
+            parent=old.parent,
+            source_parameters=old.source_parameters,
+            snapshot_manifest_sha256=old.snapshot_manifest_sha256,
+            curated_manifest_sha256=old.curated_manifest_sha256,
+        )
+        if current_wire
+        else old
+    )
+    limits = source_replay.physical_limits(specification)
+    runtime = partitions.runtime_pin()
+    if mismatch == "bytes":
+        limits = replace(limits, max_bytes=limits.max_bytes + 1)
+    else:
+        runtime = runtime.model_copy(update={"python_version": "0.0.0"})
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("parent I/O happened before declaration guard")
+
+    monkeypatch.setattr(source_replay, "checked_directory", forbidden)
+    monkeypatch.setattr(source_replay, "_inspect_parents", forbidden)
+    with pytest.raises(Exception, match="undeclared_limits|execution_runtime_changed"):
+        with source_replay._open_verified_source_parent(
+            snapshot, curated, specification, limits=limits, runtime=runtime
+        ):
+            pytest.fail("mismatched context entered")
+
+
+def test_borrowed_curated_metadata_cannot_change_the_verified_parent_inventory(replay_fixture):
+    snapshot, curated, protocol, root = replay_fixture
+    plan = register(root, protocol)
+    with pytest.raises(SnapshotError, match="mutable_metadata_changed"):
+        with source_replay._open_replayed_source_parent(
+            snapshot, curated, protocol, journal=root, plan_sha256=plan
+        ) as (_, manifest, _, _):
+            manifest["tables"].pop()
+    audit = state(root)
+    assert audit["reserved_reads"] == audit["failed_reads"] == 5
+    assert audit["completed_reads"] == 0

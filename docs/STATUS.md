@@ -1,6 +1,12 @@
 # Aktualny status
 
-**2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08.**
+**2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**
+[PR #29](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/29)
+ma komplet 14 zielonych jobów dla `4a0a6b5` i został scalony jako `5216e31`.
+[CI dokładnego merge/main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37592860960)
+jest zielone, z kompletem 14 wymaganych jobów. Nowy [eksporter fizyczny](physical-forecast-export.md)
+odtwarza cechy i etykiety wszystkich pięciu ról z jednego prywatnego replayu.
+Jego kontrolny profil `ai-load` nie kwalifikuje pełnego `ai-training` ani kampanii.
 [Przyrost 09.12](evidence/09-12-prospective-campaign-journal.md) zachowuje historię
 11 dawnych prób bez odtwarzania utraconych budżetów i dodaje trwały dziennik
 prospektywnej kampanii. 52 testy odłączonego wheela przeszły, w tym SIGKILL,
@@ -8,7 +14,8 @@ fsync, konkurujące klienty oraz blokada końcowych danych przed freeze. To odbi
 mechanizmu i kontrolowanych metadanych; rzeczywista kampania jeszcze nie ruszyła.
 [Integracja 09.11](evidence/09-11-main-integration.md) ma 420 zaliczonych testów,
 114 kontroli po zmianie SciPy i 3 rzeczywiste testy TensorFlow/MLflow/reload.
-Pełny Required CI oraz scalenie tego przyrostu wymagają osobnego potwierdzenia.
+Required CI integracji i 09.12 jest zielony na dokładnym headzie PR #29;
+odbiór dokładnego merge/main `5216e31` także ma komplet 14 zielonych jobów.
 AI 07 i AI 08 są gotowe na `origin/main`. Gałąź AI 09 integruje ich kontrakty,
 kontrole i pakowanie; nie otwiera ponownie odbiorów wcześniejszych etapów.
 [Ostatni odbiór AI 09.10](evidence/09-10-forecast-source-versions.md) zachowuje
@@ -28,6 +35,21 @@ konserwatywnego rozliczenia brakującej historii przed nowymi eksperymentami.
 09.12 przygotowuje takie rozliczenie z przypiętych receiptów i wymaga jawnego
 powiązania go w nowym prospektywnym protokole; nie kwalifikuje świeżości danych.
 Nowe CI zachowuje wszystkie kontrole AI 07–08 oraz osobny wymagany job TensorFlow.
+
+Szacunek zamknięcia na 2026-10-07: **24–40 godzin aktywnej pracy**, około
+**3–5 dni roboczych**; przy problemach pełnego profilu rezerwa **5–7 dni**.
+To szacunek implementacji i odbiorów, a nie zmierzony czas pełnej kampanii.
+Największa niewiadoma to zasoby i czas canonical `ai-training`; kontrolne
+14560 kluczy nie pozwala potwierdzić kosztu całego portfolio. Zakres czasu:
+
+| Pozostała praca | Szacunek |
+| --- | --- |
+| Audytowany runner, eksport finalnej roli i pomiary pełnych profili | 6–10 h |
+| Uczciwe strojenie/kalibracja i zamrożenie modeli/polityk | 4–7 h |
+| Końcowa kampania trzech seedów dla trzech zastosowań | 6–10 h |
+| Robustness, segmenty, niepewność i koszty | 3–5 h |
+| MLflow/lifecycle oraz trzy karty i raporty | 3–5 h |
+| Publikacja i odbiór dokładnego main z pełnym CI | 2–3 h |
 
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.

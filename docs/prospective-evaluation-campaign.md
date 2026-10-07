@@ -100,7 +100,8 @@ oceny i lifecycle.
 W tym przyroście nie inicjalizowano nowego dziennika projektu i nie wygenerowano
 nowych danych projektu. Testy używają jawnych, kontrolowanych metadanych.
 Przed uruchomieniem kampanii trzeba przygotować kompletne receptury i polityki,
-podłączyć audyt do rzeczywistego eksportera pięciu ról i runnerów, odtworzyć features
-z tych samych kwalifikowanych rodziców oraz zmierzyć pełny profil i budżety.
+podłączyć audyt do [fizycznego eksportera](physical-forecast-export.md) i runnerów.
+Eksporter odtwarza features i etykiety z tych samych prywatnych rodziców; jego
+odrębny odbiór diagnostyczny nie zastępuje pomiaru pełnego profilu i budżetów.
 Następnie wymagane są fair training/kalibracja, zamrożona ocena końcowa,
 segmenty, niepewność, koszty, trzy raporty/karty, MLflow/lifecycle i odbiór main.

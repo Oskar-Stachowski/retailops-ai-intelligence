@@ -1,0 +1,207 @@
+{
+  "recorded_at": "2026-10-07",
+  "scope": "AI09 physical development exporter diagnostic, not full-profile or final campaign acceptance",
+  "stage_status": "in_progress_not_ready",
+  "publication": {
+    "integration_and_journal_pr": 29,
+    "integration_head": "4a0a6b529647a2559bd16a384ce1dbce21033b2b",
+    "pr_required_ci_run": 37588436833,
+    "pr_required_ci_status": "completed_success_all14_jobs",
+    "merge_commit": "5216e317ca8266b7dc3bc3daf13ea0de10fea07f",
+    "main_required_ci_run": 37592860960,
+    "main_required_ci_status": "completed_success_all14_jobs",
+    "pr18": "automatically_closed_as_merged",
+    "cancelled_push_required_result_failure_preserved": true,
+    "protection_bypassed": false
+  },
+  "producer_commit": "1de462729012a1bad458a8da4ad317ec22dbc5b8",
+  "diagnostic_generation_recipe": {
+    "generation": {
+      "days": 173,
+      "end_date": "2026-07-31",
+      "max_daily_rows": 1384,
+      "products": 4,
+      "profile": "ai-load",
+      "seed": 42,
+      "stores": 2,
+      "warehouses": 2
+    },
+    "producer_commit": "1de4627",
+    "requirement_files_sha256": {
+      "data/requirements-parquet.txt": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+      "services/api/requirements-dev.txt": "e8f7e6f546631ecdfea7c2b5783d68a1e1df45047e0f3c8e638bb58f0bbeed63",
+      "services/api/requirements.txt": "cb92c29105f31f95b5406ed0992ab2dce30b37a8c22f2a8c7c037065b4e21110"
+    },
+    "scope": "controlled_physical_export_diagnostic_not_project_or_final",
+    "snapshot": {
+      "chunk_rows": 256,
+      "include_truth": false,
+      "partition_by_day": false,
+      "required_use_cases": [
+        "forecast_source",
+        "inventory_source"
+      ]
+    }
+  },
+  "source_dataset_id": "source-sha256-afd7607c8ac272a2e9be596162cd47a6333da132250f7d417da0799b75925e6f",
+  "source_schema_version": "1.1.0",
+  "source_rows": 29285,
+  "dataset_id": "ai09-physical-forecast-sha256-52240d60c7be52834c256964bdc70c78ae527d2fcb1c314546c169d9f2ca8adb",
+  "manifest_sha256": "6ca0485ed82e9d821250eb73d598ed1d6f5601e561220fa4c7cbb97f9a2c41eb",
+  "runtime_code_sha256": "7335d0a05109d8fac23f7ec746635ca2a0b6d013612a87a87e459f94c174172a",
+  "runtime_python_modules": 497,
+  "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "python_version": "3.11.15",
+  "native": {
+    "wall_seconds": 302.4284977919888,
+    "process_peak_rss_mib": 169.765625
+  },
+  "installed_wheel": {
+    "wall_seconds": 241.26573879198986,
+    "process_peak_rss_mib": 168.484375,
+    "outside_checkout": true,
+    "manifest_byte_parity": true,
+    "package_code_parity": true
+  },
+  "population_rows": 14560,
+  "populations": {
+    "calibration": {
+      "row_count": 1120,
+      "size_bytes": 1743584,
+      "sha256": "5bac683233ba20c9eadda355e5b07c5ebcf49fc25099c48fb862276dd40c422a",
+      "eligible_rows": 960,
+      "censored_rows": 0,
+      "zero_label_rows": 414,
+      "eligibility_reasons": {
+        "closed_target": 160
+      },
+      "population_sha256": "1e9e356e9041ecba3f79c307dfc2494ebf2205d8d36a09bcb23a2466057d0355"
+    },
+    "development_evaluation": {
+      "row_count": 1120,
+      "size_bytes": 1768342,
+      "sha256": "6be2f1aef98a2ebdc1373b3377eb087077a6e36eef583eeb307eff01d0ef193c",
+      "eligible_rows": 960,
+      "censored_rows": 0,
+      "zero_label_rows": 405,
+      "eligibility_reasons": {
+        "closed_target": 160
+      },
+      "population_sha256": "b4d70187ea6ca9812b8ce465052e169551c7b92879e115acfc4b10eaa03075e6"
+    },
+    "early_stopping": {
+      "row_count": 1120,
+      "size_bytes": 1750866,
+      "sha256": "5f936aa7950bbdef7643363ecf426ace246ee65fd2c351b723cbca74127a9861",
+      "eligible_rows": 884,
+      "censored_rows": 0,
+      "zero_label_rows": 434,
+      "eligibility_reasons": {
+        "closed_target": 236
+      },
+      "population_sha256": "f982002a5e88bd30ec88d4595c4ba34016bbca6f116ec2f9973b6169df86a518"
+    },
+    "purged": {
+      "row_count": 6720,
+      "size_bytes": 3006240,
+      "sha256": "15252db163a92f1bb5c642a50bc1a22a18e881b6794d98888827d75edc91b81c",
+      "eligible_rows": 0,
+      "censored_rows": 0,
+      "zero_label_rows": 0,
+      "eligibility_reasons": {},
+      "population_sha256": "bdec01dbe50f326b7bd472894ea218da4613289e755301de5e0992c659c74dc7"
+    },
+    "train": {
+      "row_count": 3360,
+      "size_bytes": 5195414,
+      "sha256": "692d6a817964fd0ece4abfcf3a51d733b04719db4f375bd9975917933c111ce0",
+      "eligible_rows": 2568,
+      "censored_rows": 0,
+      "zero_label_rows": 1307,
+      "eligibility_reasons": {
+        "closed_target": 648,
+        "insufficient_history": 168
+      },
+      "population_sha256": "cd6bd85b9ec9cb95bb593301b3a0c0c6c6880cc49da0e75f8fe4c4725f91ee9e"
+    },
+    "tune": {
+      "row_count": 1120,
+      "size_bytes": 1728166,
+      "sha256": "6c27681f03198506e39c0fd8bcc818e1daa972020a4ba6942fa6827e9178b190",
+      "eligible_rows": 904,
+      "censored_rows": 0,
+      "zero_label_rows": 453,
+      "eligibility_reasons": {
+        "closed_target": 216
+      },
+      "population_sha256": "b7c664babe59ff2783eccb2332e5042642bd4e7fce37bb2252650eeb2eb5d1c7"
+    }
+  },
+  "verification": {
+    "full_regression": "119 passed in372.37s",
+    "installed_wheel_scope": "22 passed41.92s plus5 artifact controls passed3.54s",
+    "resealed_artifact_negative_controls": "5 native passed3.52s and5 installed-wheel passed3.54s",
+    "static": "full make ci-checks passed: lint/format, mypy607 source files, docs/runtime/contracts, wheel/sdist, Compose config",
+    "new_project_fits": 0,
+    "new_project_journal_initialized": false,
+    "final_test_opened": false,
+    "gitleaks": {
+      "version": "8.30.1",
+      "earlier_directory_result": "passed",
+      "earlier_scanned_megabytes": 25.76,
+      "earlier_wall_seconds": 4.02,
+      "final_result": "passed_after_receipt_field_correction",
+      "scope": "complete working directory and complete reachable publication history; unrelated shared worktree refs reported separately",
+      "directory_scanned_megabytes": 25.88,
+      "published_history_commits": 251,
+      "published_history_scanned_megabytes": 21.52,
+      "isolated_single_branch_clone_result": "passed",
+      "scanner_configuration_changed": false
+    }
+  },
+  "retained_failures": [
+    {
+      "scope": "controlled_diagnostic_export",
+      "reason": "producer requires own repository data/generated destination",
+      "generation_repeated": false
+    },
+    {
+      "scope": "controlled_diagnostic_export_resume",
+      "reason": "producer module path missing before source I/O"
+    },
+    {
+      "scope": "controlled_diagnostic_import",
+      "reason": "importer requires root ending data/generated"
+    },
+    {
+      "scope": "initial_test_construction",
+      "reason": "JSON dictionaries passed to strict Python model_validate; corrected to model_validate_json; original failed logs retained"
+    },
+    {
+      "scope": "local_prepublication_scan",
+      "reason": "generic-api-key matched six diagnostic population SHA-256 values and one descriptive receipt string; renamed receipt fields without changing hashes or scanner rules",
+      "publication_before_correction": false,
+      "failed_logs_retained": true,
+      "unrelated_shared_ref_findings_excluded_from_publication_history": true
+    }
+  ],
+  "qualification": {
+    "campaign_audit": false,
+    "holdout_freshness": false,
+    "full_profile": false,
+    "resource_process_tree_measured": false,
+    "source_1_2_end_to_end_export": false,
+    "quality": false,
+    "promotion": false,
+    "stage_ready": false
+  },
+  "remaining": [
+    "prospective audit integration with actual exporter and runners",
+    "measured canonical ai-dev and ai-training, preserve full population",
+    "fair training and calibration with frozen policies",
+    "separate final role and audited3-seed campaign",
+    "three-use-case metrics segments uncertainty costs cards and reports",
+    "MLflow and lifecycle decisions",
+    "publish exact final code and documentation to main with complete CI"
+  ]
+}
