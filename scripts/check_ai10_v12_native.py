@@ -90,6 +90,31 @@ def preflight_application_database() -> None:
     print('{"stage":"actual_application_database_configuration","status":"passed"}')
 
 
+def source_consumer_python(root: Path) -> Path:
+    # Resolving the interpreter symlink would invoke the base Python outside this
+    # venv. Resolve only the checkout directory and preserve the venv entry point.
+    return root.resolve() / "services/api/.venv/bin/python"
+
+
+def preflight_source_python(root: Path) -> None:
+    python = source_consumer_python(root)
+    completed = subprocess.run(  # noqa: S603 - fixed isolated Source dependency probe
+        [
+            str(python),
+            "-c",
+            "import sys; from pathlib import Path; import pytest; "
+            "assert Path(sys.prefix).resolve() == Path(sys.argv[1]).resolve()",
+            str(root.resolve() / "services/api/.venv"),
+        ],
+        cwd=root,
+        capture_output=True,
+        timeout=30,
+        check=False,
+    )
+    require(completed.returncode == 0, "ai10_v12_source_python_environment")
+    print('{"stage":"actual_source_venv_and_pytest","status":"passed"}', flush=True)
+
+
 def fail_outbox_insert(conn: Any, cursor: Any, statement: str, *rest: Any) -> None:
     # Match the actual multiline SQL emitted by enqueue_forecasts, with an exact
     # target table boundary. The hook fires after insertion, inside its transaction.
@@ -103,6 +128,8 @@ def source_failure_details(junit: Path, log: Path) -> dict[str, Any]:
     test = "test_original_v12_sql_outbox_complete_api_and_browser"
     if log.is_file() and log.stat().st_size <= 2 * 1024 * 1024:
         raw = log.read_text(errors="replace")
+        if re.search(r"No module named ['\"]?pytest\b", raw):
+            details["startup_failure_category"] = "pytest_missing_from_child_interpreter"
         if re.search(
             rf"(?:FAILED|ERROR)\s+(?:services/api/)?tests/"
             rf"test_native_forecast_output_durability\.py::{test}\b",
@@ -434,6 +461,7 @@ def main() -> int:
             == pins["source_commit"],
             "ai10_v12_exact_source_consumer_commit",
         )
+        preflight_source_python(args.consumer_root)
         original = args.original.resolve()
         run = original / "archive" / pins["run_id"]
         python = original / "support/frozen-runtime/.venv/bin/python"
@@ -872,7 +900,7 @@ def main() -> int:
         with (work / "source-consumer.log").open("wb") as log:
             completed = subprocess.run(  # noqa: S603 - fixed test in verified pinned Source checkout
                 [
-                    str((args.consumer_root / "services/api/.venv/bin/python").resolve()),
+                    str(source_consumer_python(args.consumer_root)),
                     "-m",
                     "pytest",
                     "-q",
@@ -888,6 +916,7 @@ def main() -> int:
                 check=False,
             )
         if completed.returncode:
+            report["source_child_returncode"] = completed.returncode
             report["source_failure_details"] = source_failure_details(
                 work / "source-native-tests.xml", work / "source-consumer.log"
             )

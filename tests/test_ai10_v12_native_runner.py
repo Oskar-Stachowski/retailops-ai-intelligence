@@ -2,6 +2,8 @@
 
 import importlib.util
 import json
+import subprocess
+import venv
 from pathlib import Path
 
 import pytest
@@ -67,6 +69,43 @@ def test_preflight_accepts_actual_application_contract_without_database_or_docke
 
     monkeypatch.setattr(module, "docker", forbidden)
     module.preflight_application_database()
+
+
+@pytest.mark.parametrize("resolve_interpreter", [False, True])
+def test_source_probe_uses_actual_venv_even_when_python_is_a_symlink(
+    tmp_path, monkeypatch, resolve_interpreter
+):
+    module = runner(monkeypatch)
+    root = tmp_path / "source"
+    environment = root / "services/api/.venv"
+    venv.EnvBuilder(with_pip=False, symlinks=True).create(environment)
+    python = module.source_consumer_python(root)
+    assert python.is_symlink()
+    # The real installed pytest is available to both processes. The guard must
+    # still reject the base interpreter because its prefix is outside Source.
+    monkeypatch.setenv("PYTHONPATH", str(Path(pytest.__file__).parent.parent))
+    probe = subprocess.run(
+        [str(python), "-c", "import sys; print(sys.prefix)"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert Path(probe.stdout.strip()).resolve() == environment.resolve()
+    if resolve_interpreter:
+        monkeypatch.setattr(module, "source_consumer_python", lambda root: python.resolve())
+        with pytest.raises(ValueError, match="ai10_v12_source_python_environment"):
+            module.preflight_source_python(root)
+    else:
+        module.preflight_source_python(root)
+
+
+def test_missing_pytest_is_bounded_startup_evidence_without_private_stderr(tmp_path, monkeypatch):
+    module = runner(monkeypatch)
+    log = tmp_path / "private.log"
+    log.write_text("/private/python: No module named pytest\nBearer PRIVATE-CREDENTIAL\n")
+    report = module.source_failure_details(tmp_path / "absent.xml", log)
+    assert report["startup_failure_category"] == "pytest_missing_from_child_interpreter"
+    assert "PRIVATE-CREDENTIAL" not in json.dumps(report)
 
 
 @pytest.mark.parametrize(

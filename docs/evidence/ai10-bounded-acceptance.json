@@ -14,6 +14,11 @@
     "receipt_status": "passed",
     "sha256": "d9c97c6ba952720b6b26747ca2359726fdd97284f4946b82943e242356614aa4"
   },
+  "AI_latest_main_CI": {
+    "path": "docs/evidence/ai10-ai16a-main-ci.json",
+    "receipt_status": "passed",
+    "sha256": "bd5c9926048b4de675fc10e28eaa6b679deeb377d666f7d5da4eb762b32bc4cf"
+  },
   "AI_latest_main_integration": {
     "path": "docs/evidence/ai10-ai09-main-integration.json",
     "receipt_status": "passed_component",
@@ -43,6 +48,11 @@
     "path": "docs/evidence/ai10-source-b723489-main-ci.json",
     "receipt_status": "passed",
     "sha256": "b5f145448b000261b40ed1d65f414d4cdd8b3c35aef6f613d0b2b019153742d6"
+  },
+  "Source_python_launcher_fix": {
+    "path": "docs/evidence/ai10-source-python-launcher-fix.json",
+    "receipt_status": "passed_component",
+    "sha256": "9cf728e2f1fc090a1d11f6d7558b4e0609790787fa9b46ad9c784b386e9645f9"
   },
   "accepted_main_compatibility": {
     "path": "docs/evidence/ai10-accepted-main-campaign-repin.json",
@@ -184,6 +194,11 @@
         "receipt_status": "failed",
         "sha256": "938c221c4c8673f22361610ee253819991d884de0bd403135763716957584925"
       },
+      "earlier_source_consumer_failed_attempt": {
+        "path": "docs/evidence/ai10-v12-native-source-consumer-failure.json",
+        "receipt_status": "failed",
+        "sha256": "fe3fd4125e1a69108c8a6041a00fc1342729eeb346e71c19db7d6328c9f2f3f0"
+      },
       "expected_output_rows": 56,
       "expected_series": 4,
       "full_native_receipt": null,
@@ -199,9 +214,9 @@
       "original_quality_status": "not_ready",
       "owner_acceptance_sha256": "11cd0e1fdd10629543bcb66aaedb3bd9b7b7fc5b31473575b998d951c93f00d2",
       "partial_failed_attempt": {
-        "path": "docs/evidence/ai10-v12-native-source-consumer-failure.json",
+        "path": "docs/evidence/ai10-v12-native-source-startup-failure.json",
         "receipt_status": "failed",
-        "sha256": "fe3fd4125e1a69108c8a6041a00fc1342729eeb346e71c19db7d6328c9f2f3f0"
+        "sha256": "7cf6cc0094473404c9155a626eb19ac2c571ea905fe3cd1ea6dcc2201fb10e99"
       },
       "reconstructed_SQL_diagnostic_only": {
         "path": "docs/evidence/ai10-v12-reconstructed-source-diagnostic.json",

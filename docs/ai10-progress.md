@@ -63,6 +63,16 @@ Oryginalne quality `not_ready`, development namespace i decyzja właściciela
 pozostają niezmienione. [Raport zbiorczy](evidence/ai10-bounded-acceptance.json)
 wiąże pełną historię, aktualne dowody oraz jawnie otwarte wymagania.
 
+**Piąta pełna próba V12:** run `37653954039` na `adf8d1c` ponownie zaliczył
+270 boundary tests i wszystkie pięć oryginalnych etapów AI, w tym
+56 prognoz oraz atomowy rollback. [Source startup failed](evidence/ai10-v12-native-source-startup-failure.json)
+nie wytworzył JUnit. Kontroler rozwiązywał symlink `.venv/bin/python` do
+bazowego interpretera. Oddzielny test rzeczywistych procesów potwierdza utratę
+venv i brak pytest/fastapi; dokładny stderr tej próby nie został zachowany.
+Poprawka zachowuje entry point venv i dodaje kontrolę prefix/pytest przed
+długą kwalifikacją. Oryginalne modele, science gates i Source consumer pozostają
+bez zmian. Własne sześć handoff objects i secret tej próby usunięto.
+
 Niższe checkpointy pozostają historią zakresów i wcześniejszych prób.
 
 **Nowszy main AI09 — zgodność current campaign pin:** dołączono `e1f864c`
