@@ -898,3 +898,12 @@ fake golden 50/50 i 36/36 critical, wheel/checkout 534 pliki Python.
 Nowe kandydaty `.native-v12.v1` zachowują historyczne manifesty i etykiety.
 Kwalifikacja rzeczywistego runtime i końcowego zdalnego CI pozostaje otwarta;
 status nadal **in_progress**.
+
+[Required CI poprzedniego checkpointu AI12](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37615009993)
+na `3dd53c2` zakończył wszystkie 14 jobów **success**, również anomaly OCI,
+PostgreSQL/MLflow i rzeczywisty TensorFlow. Po checkpointcie adaptera `fd9e892`
+przyjęto przejrzane optymalizacje wspólnego CI `02554284` jako `8280382`,
+z zachowaniem `agent-evaluate`, frozen training lock i bramek bezpieczeństwa.
+191/191 testów integracji i pełne `ci-checks` passed; plan obejmuje wszystkie
+3992 testy dokładnie raz. [Odbiór integracji](evidence/12-ci-integration.md)
+rozróżnia wynik poprzedniego head od wymaganego nowego zdalnego CI.
