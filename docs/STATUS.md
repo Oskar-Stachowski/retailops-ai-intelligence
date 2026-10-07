@@ -13,6 +13,57 @@ i v12 na 102-dniowych wejściach są nadal w odbiorze.
 Protected merge i Required CI obu main pozostają wymagane przed `ready`.
 Wcześniejsze wpisy opisują historię.
 
+**2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**
+[PR #29](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/29)
+ma komplet 14 zielonych jobów dla `4a0a6b5` i został scalony jako `5216e31`.
+[CI dokładnego merge/main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37592860960)
+jest zielone, z kompletem 14 wymaganych jobów. Nowy [eksporter fizyczny](physical-forecast-export.md)
+odtwarza cechy i etykiety wszystkich pięciu ról z jednego prywatnego replayu.
+Jego kontrolny profil `ai-load` nie kwalifikuje pełnego `ai-training` ani kampanii.
+[Przyrost 09.12](evidence/09-12-prospective-campaign-journal.md) zachowuje historię
+11 dawnych prób bez odtwarzania utraconych budżetów i dodaje trwały dziennik
+prospektywnej kampanii. 52 testy odłączonego wheela przeszły, w tym SIGKILL,
+fsync, konkurujące klienty oraz blokada końcowych danych przed freeze. To odbiór
+mechanizmu i kontrolowanych metadanych; rzeczywista kampania jeszcze nie ruszyła.
+[Integracja 09.11](evidence/09-11-main-integration.md) ma 420 zaliczonych testów,
+114 kontroli po zmianie SciPy i 3 rzeczywiste testy TensorFlow/MLflow/reload.
+Required CI integracji i 09.12 jest zielony na dokładnym headzie PR #29;
+odbiór dokładnego merge/main `5216e31` także ma komplet 14 zielonych jobów.
+AI 07 i AI 08 są gotowe na `origin/main`. Gałąź AI 09 integruje ich kontrakty,
+kontrole i pakowanie; nie otwiera ponownie odbiorów wcześniejszych etapów.
+[Ostatni odbiór AI 09.10](evidence/09-10-forecast-source-versions.md) zachowuje
+historyczny stan zasobów i CI. Jego commit `7f10f8e` ma już zielone
+[Required CI214](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37274516620),
+a kontrola miejsca 2026-10-07 wykazała około 82 GiB wolnego, ponad rezerwę 50 GiB.
+Te fakty usuwają wcześniejsze przeszkody, lecz nie zastępują odbioru większego
+profilu ani końcowej kampanii.
+
+Do zamknięcia pozostają: pełny audytowany eksport rzeczywistych pięciu ról,
+integracja fitów i kalibracji, ocena RF/HGB/baseline/TensorFlow na trzech seedach,
+robustness/niepewność/koszty, wspólne raporty trzech zastosowań, decyzje lifecycle
+oraz pełny odbiór dokładnego commita na `main`. Dawne prywatne katalogi AI 09
+w `/private/tmp` nie istnieją. Kod i opublikowane dowody są w Git; ciągłość
+budżetów oraz ekspozycji wymaga odtworzenia dzienników lub jawnego,
+konserwatywnego rozliczenia brakującej historii przed nowymi eksperymentami.
+09.12 przygotowuje takie rozliczenie z przypiętych receiptów i wymaga jawnego
+powiązania go w nowym prospektywnym protokole; nie kwalifikuje świeżości danych.
+Nowe CI zachowuje wszystkie kontrole AI 07–08 oraz osobny wymagany job TensorFlow.
+
+Szacunek zamknięcia na 2026-10-07: **24–40 godzin aktywnej pracy**, około
+**3–5 dni roboczych**; przy problemach pełnego profilu rezerwa **5–7 dni**.
+To szacunek implementacji i odbiorów, a nie zmierzony czas pełnej kampanii.
+Największa niewiadoma to zasoby i czas canonical `ai-training`; kontrolne
+14560 kluczy nie pozwala potwierdzić kosztu całego portfolio. Zakres czasu:
+
+| Pozostała praca | Szacunek |
+| --- | --- |
+| Audytowany runner, eksport finalnej roli i pomiary pełnych profili | 6–10 h |
+| Uczciwe strojenie/kalibracja i zamrożenie modeli/polityk | 4–7 h |
+| Końcowa kampania trzech seedów dla trzech zastosowań | 6–10 h |
+| Robustness, segmenty, niepewność i koszty | 3–5 h |
+| MLflow/lifecycle oraz trzy karty i raporty | 3–5 h |
+| Publikacja i odbiór dokładnego main z pełnym CI | 2–3 h |
+
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
 Świeży OCI/PostgreSQL 16/MLflow sprawdził komplet native publicznych rodziców,
@@ -303,9 +354,9 @@ Trzy pary świeżych buildów dały medianę 21,32 → 18,42 s, CPU 20,57 → 17
 mediana próbkowanego peak RSS wyniosła 131,75 → 131,98 MiB.
 Sorty ledgeru spadły z 45 696 do 1632. Indeks powstaje na granicy wiedzy
 każdego origin; późna korekta nie nadpisuje dawnych danych.
-Przyrost ma 150/150 testów ukierunkowanych, w tym 37 nowych,
+Przyrost ma 150/152 testy ukierunkowanych, w tym 37 nowych,
 bez ostrzeżeń. Pełny `make ci-local` przeszedł:
-1950/1950 testów bez ostrzeżeń, wszystkie targety, pakiet, Compose
+1950/1952 testy bez ostrzeżeń, wszystkie targety, pakiet, Compose
 config i oba skany sekretów. Końcowe receipt mają ponowne kontrole
 dokumentacji i sekretów; nowy commit wymaga własnego CI w draft PR #14.
 Poprzedni commit `858abcf` ma zielone Required CI PR i push.

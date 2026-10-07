@@ -1,0 +1,155 @@
+{
+  "$defs": {
+    "CentralInterval": {
+      "additionalProperties": false,
+      "properties": {
+        "lower": {
+          "minimum": 0,
+          "title": "Lower",
+          "type": "number"
+        },
+        "upper": {
+          "minimum": 0,
+          "title": "Upper",
+          "type": "number"
+        }
+      },
+      "required": [
+        "lower",
+        "upper"
+      ],
+      "title": "CentralInterval",
+      "type": "object"
+    },
+    "FunctionalForecast": {
+      "additionalProperties": false,
+      "properties": {
+        "interval": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CentralInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mean": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mean"
+        },
+        "median": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Median"
+        }
+      },
+      "required": [
+        "median",
+        "mean",
+        "interval"
+      ],
+      "title": "FunctionalForecast",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:ai09:challenger_prediction:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "business_timezone": {
+      "const": "UTC",
+      "title": "Business Timezone",
+      "type": "string"
+    },
+    "channel": {
+      "enum": [
+        "store",
+        "online"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "cutoff_policy": {
+      "const": "end_of_day_second_v1",
+      "title": "Cutoff Policy",
+      "type": "string"
+    },
+    "deployment_status": {
+      "const": "not_ready",
+      "default": "not_ready",
+      "title": "Deployment Status",
+      "type": "string"
+    },
+    "forecast_origin": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Forecast Origin",
+      "type": "string"
+    },
+    "horizon_days": {
+      "maximum": 14,
+      "minimum": 1,
+      "title": "Horizon Days",
+      "type": "integer"
+    },
+    "interval_reason": {
+      "const": "development_calibration_not_implemented",
+      "default": "development_calibration_not_implemented",
+      "title": "Interval Reason",
+      "type": "string"
+    },
+    "interval_status": {
+      "const": "not_ready",
+      "default": "not_ready",
+      "title": "Interval Status",
+      "type": "string"
+    },
+    "product_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "selling_location_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Selling Location Id",
+      "type": "string"
+    },
+    "target_date": {
+      "format": "date",
+      "title": "Target Date",
+      "type": "string"
+    },
+    "value": {
+      "$ref": "#/$defs/FunctionalForecast"
+    }
+  },
+  "required": [
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "forecast_origin",
+    "business_timezone",
+    "cutoff_policy",
+    "target_date",
+    "horizon_days",
+    "value"
+  ],
+  "title": "ChallengerPrediction",
+  "type": "object"
+}

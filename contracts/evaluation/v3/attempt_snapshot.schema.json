@@ -1,0 +1,112 @@
+{
+  "$defs": {
+    "ComparisonFile": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "size_bytes",
+        "sha256"
+      ],
+      "title": "ComparisonFile",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:attempt_snapshot:3.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cost_files": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Cost Files",
+      "type": "array"
+    },
+    "cost_scope": {
+      "const": "checksummed_original_receipts_missing_cost_is_unknown",
+      "default": "checksummed_original_receipts_missing_cost_is_unknown",
+      "title": "Cost Scope",
+      "type": "string"
+    },
+    "files": {
+      "additionalProperties": {
+        "$ref": "#/$defs/ComparisonFile"
+      },
+      "title": "Files",
+      "type": "object"
+    },
+    "final_test_accessed": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Accessed",
+      "type": "boolean"
+    },
+    "model_completions": {
+      "maximum": 4,
+      "minimum": 0,
+      "title": "Model Completions",
+      "type": "integer"
+    },
+    "model_starts": {
+      "maximum": 4,
+      "minimum": 0,
+      "title": "Model Starts",
+      "type": "integer"
+    },
+    "output": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "title": "Output",
+      "type": "string"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "protocol_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Protocol Sha256",
+      "type": "string"
+    },
+    "qualification": {
+      "const": "inventory_only_no_model_replay_or_quality_acceptance",
+      "default": "inventory_only_no_model_replay_or_quality_acceptance",
+      "title": "Qualification",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "completed_development_diagnostic",
+        "failed",
+        "interrupted",
+        "unresolved"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "output",
+    "protocol_sha256",
+    "status",
+    "files",
+    "model_starts",
+    "model_completions",
+    "cost_files"
+  ],
+  "title": "AttemptSnapshot",
+  "type": "object"
+}

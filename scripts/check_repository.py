@@ -25,7 +25,8 @@ def make_ci_errors(makefile: str) -> list[str]:
         name: targets.split()
         for name, targets in re.findall(r"^([a-z][a-z-]+): ([^\n]+)$", makefile, re.MULTILINE)
     }
-    targets = ["test"]
+    # TensorFlow uses its own locked environment and isolated required job.
+    targets = ["test", "tensorflow-check"]
     for name, expected in CI_GROUPS.items():
         if rules.get(name) != expected.split():
             errors.append(f"{name} must preserve every original acceptance gate")
@@ -60,6 +61,11 @@ def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append("workflow permissions must be contents:read")
     jobs = workflow.get("jobs", {})
+    tensorflow = jobs.get("tensorflow", {})
+    if tensorflow.get("if") or not any(
+        step.get("run") == "make bootstrap tensorflow-check" for step in tensorflow.get("steps", [])
+    ):
+        errors.append("tensorflow must execute locked CPU training and artifact reload acceptance")
     if not any(
         step.get("run")
         == "uv run --frozen python scripts/check_anomaly_oci.py --producer .local/ai07-ci-source"

@@ -67,6 +67,21 @@ def test_actual_broker_make_target_cannot_drop_execution_or_report(required):
     assert module.workflow_errors(workflow(), makefile)
 
 
+@pytest.mark.parametrize("mutation", ["missing-job", "bypassed-training", "skipped-job"])
+def test_required_ci_preserves_real_tensorflow_acceptance(mutation):
+    data = workflow()
+    if mutation == "missing-job":
+        data["jobs"].pop("tensorflow")
+    elif mutation == "bypassed-training":
+        data["jobs"]["tensorflow"]["steps"][-1]["run"] = "make bootstrap test"
+    else:
+        data["jobs"]["tensorflow"]["if"] = "false"
+    assert (
+        "tensorflow must execute locked CPU training and artifact reload acceptance"
+        in module.workflow_errors(data)
+    )
+
+
 def test_required_ci_cannot_drop_mlflow_restore_smoke():
     data = workflow()
     data["jobs"]["persistence"]["steps"] = [

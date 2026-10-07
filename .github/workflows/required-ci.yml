@@ -152,6 +152,20 @@ jobs:
           uv pip install --python .local/ai07-ci-source/services/api/.venv/bin/python -r .local/ai07-ci-source/services/api/requirements-dev.txt -r .local/ai07-ci-source/data/requirements-parquet.txt
       - name: Accept qualified anomaly models, native parents, OCI, PostgreSQL 16 and recovery
         run: uv run --frozen python scripts/check_anomaly_oci.py --producer .local/ai07-ci-source
+  tensorflow:
+    name: TensorFlow CPU training, artifact and reload
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - run: make bootstrap tensorflow-check
   observation-replay:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -208,12 +222,13 @@ jobs:
           retention-days: 14
   required-result:
     if: always()
-    needs: [checks, tests, acceptance, secrets, persistence, anomaly-oci, observation-replay, observation-broker]
+    needs: [checks, tests, acceptance, secrets, persistence, anomaly-oci, tensorflow, observation-replay, observation-broker]
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     steps:
       - name: Require every gate
         env:
+          TENSORFLOW_RESULT: ${{ needs.tensorflow.result }}
           CHECKS_RESULT: ${{ needs.checks.result }}
           TESTS_RESULT: ${{ needs.tests.result }}
           ACCEPTANCE_RESULT: ${{ needs.acceptance.result }}
@@ -223,6 +238,7 @@ jobs:
           OBSERVATION_REPLAY_RESULT: ${{ needs.observation-replay.result }}
           OBSERVATION_BROKER_RESULT: ${{ needs.observation-broker.result }}
         run: |
+          test "$TENSORFLOW_RESULT" = "success"
           test "$CHECKS_RESULT" = "success"
           test "$TESTS_RESULT" = "success"
           test "$ACCEPTANCE_RESULT" = "success"

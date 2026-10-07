@@ -1,0 +1,113 @@
+{
+  "aggregate_policy": "must_be_reviewed_and_bound_before_final_test",
+  "data_seeds": [
+    42,
+    137,
+    2026
+  ],
+  "final_profile": "ai-training",
+  "final_test_access_authorized": false,
+  "inherited_ai04_exceptions": false,
+  "missing_metrics": "not_evaluable_never_ideal_by_default",
+  "model_promotion_authorized": false,
+  "prediction_population": "same_complete_evaluated_keys_for_every_model",
+  "preprocessing_fit_scope": "eligible_train_of_current_fold_only",
+  "quality_policy": "pin_use_case_rules_and_actual_thresholds_before_final_test",
+  "requires_upstream_acceptance": true,
+  "scenarios": [
+    "normal",
+    "promotion",
+    "demand_shock",
+    "inventory_constraint"
+  ],
+  "scope": "planning_only_no_dataset_or_split_binding",
+  "seed_reporting": "every_seed_and_scenario_before_any_aggregate",
+  "specifications": [
+    {
+      "commit_sha": "f4ae14fe6588b91506383a709b5a0185208a4ea6",
+      "relative_path": "contracts/forecast/v2/quality.default.json",
+      "repository": "retailops-ai-intelligence",
+      "sha256": "6d12b07ac4783a6228385d58d221272abb70805d28a4892b9d91113dd8e1bec3",
+      "size_bytes": 1387
+    },
+    {
+      "commit_sha": "599735a5fd13328e05f6100a07f644f4676e1ced",
+      "relative_path": "docs/plans/ai/etapy/07-anomalie-dq.md",
+      "repository": "retailops-cloud-native-platform",
+      "sha256": "a4a88ba9d449888b5db8a678c7d35e387b89111f2cce227e38cb199ae5585446",
+      "size_bytes": 9515
+    },
+    {
+      "commit_sha": "599735a5fd13328e05f6100a07f644f4676e1ced",
+      "relative_path": "docs/plans/ai/etapy/08-stockout-risk.md",
+      "repository": "retailops-cloud-native-platform",
+      "sha256": "ca3a8a779566260353006ddc2f4659622e7380abee754d08635b4b4572aaa9cb",
+      "size_bytes": 8928
+    },
+    {
+      "commit_sha": "599735a5fd13328e05f6100a07f644f4676e1ced",
+      "relative_path": "docs/plans/ai/etapy/09-tensorflow-robustness.md",
+      "repository": "retailops-cloud-native-platform",
+      "sha256": "e0638fa04f7b356c632ffab38d3eaef934a33ea7fca2044ca986b9ffa3201b4b",
+      "size_bytes": 7529
+    },
+    {
+      "commit_sha": "599735a5fd13328e05f6100a07f644f4676e1ced",
+      "relative_path": "docs/plans/ai/kontrakty/dane-i-czas.md",
+      "repository": "retailops-cloud-native-platform",
+      "sha256": "b29276737e4baeb4897647fe96a77b9ac42add685e0953398049aca316072a76",
+      "size_bytes": 13444
+    },
+    {
+      "commit_sha": "599735a5fd13328e05f6100a07f644f4676e1ced",
+      "relative_path": "docs/plans/ai/kontrakty/ml-api-lifecycle.md",
+      "repository": "retailops-cloud-native-platform",
+      "sha256": "f94985346a93db84e14f98104921a694dc9cdf168ee7af065efcf050ad702d24",
+      "size_bytes": 22301
+    },
+    {
+      "commit_sha": "599735a5fd13328e05f6100a07f644f4676e1ced",
+      "relative_path": "docs/plans/ai/kontrakty/profile-i-bramki.md",
+      "repository": "retailops-cloud-native-platform",
+      "sha256": "b9721cf04e34930ae20af4eb4e60af9b7094b8c2bfa61b7f3cdc9ab1f3bdf18e",
+      "size_bytes": 11122
+    }
+  ],
+  "tensorflow_architecture": "compact_dense_direct_multi_horizon",
+  "tensorflow_budget": {
+    "cpu_threads": 1,
+    "early_stopping": "development_validation_only",
+    "maximum_epochs": 25,
+    "maximum_process_tree_rss_mib": 1024,
+    "maximum_trial_wall_seconds": 1200,
+    "maximum_trials": 2,
+    "measured_budget_passed": false,
+    "scope": "initial_development_recipe_proposal"
+  },
+  "tensorflow_horizons": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "training_initialization_seeds": [
+    42
+  ],
+  "uncertainty_resampling": "time_block_or_series_cluster_not_independent_rows",
+  "use_cases": [
+    "forecast",
+    "anomaly",
+    "stockout"
+  ],
+  "version": "ai09-evaluation-preparation-1.0.0"
+}

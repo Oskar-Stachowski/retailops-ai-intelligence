@@ -1,0 +1,1470 @@
+{
+  "ai08_read_only_audit": {
+    "ai08_files_mutated_by_ai09": false,
+    "already_implemented": [
+      "stockout_storage/store.py: streamed curated facts and one physical series cache",
+      "stockout_history/index.py: origin-specific ledger prefix and daily demand buckets",
+      "stockout_label_partitions/store.py: streamed private label facts and ledger selection"
+    ],
+    "commit": "d083e0ab64a4e3c52b8468541b4ec016973d3b16",
+    "committed_evidence": [
+      "docs/evidence/08-07-stockout-disk-facts.md",
+      "docs/evidence/08-08-stockout-history-index.md",
+      "docs/evidence/08-09-stockout-label-partitions.md"
+    ],
+    "label_build_median_peak_rss_mib_before_after": [
+      112.73,
+      102.48
+    ],
+    "observed_in_progress": "uncommitted stockout_upstream_storage reader, not treated as accepted evidence",
+    "reuse": "existing forecast index_parents, typed Parquet I/O and windows validators; no duplicate stockout reader or dependency",
+    "worktree": "/private/tmp/retailops-ai08-partitions"
+  },
+  "artifact": {
+    "bytes": 16066657,
+    "files": 75,
+    "manifest_sha256": "f624d5ce702cb6e8c80a2921ccdbbae41358375b17d2492cc2dde4942907239a",
+    "retained_path": "/private/tmp/ai09-forecast-development-comparison-11",
+    "tensorflow_model_id": "model-sha256-c57e9592aa598c73c34feec2b426a58142ea0e6b39b9ff16a028efe8f2700c57"
+  },
+  "boundaries": {
+    "ai07_ai08_final_acceptance_bound": false,
+    "ai_dev_or_ai_training_qualified": false,
+    "all_three_use_cases_qualified": false,
+    "final_test_accessed": false,
+    "independent_quality_acceptance": false,
+    "interval_calibrated": false,
+    "promotion_allowed": false,
+    "whole_one_gib_sample_probe_passed": true
+  },
+  "checks": {
+    "cancelled_partial_ci": {
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "make",
+        "ci-local",
+        "UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv",
+        "GITLEAKS=/opt/homebrew/bin/gitleaks"
+      ],
+      "counts_as_passed": false,
+      "exit_code": -15,
+      "log_path": "/private/tmp/ai09-memory-ci-local-pre-wire-keys.log",
+      "log_sha256": "24841ff1874659eb9a1b432f9e3eca7172b7db7759cb2f8d58c86f58bc4f769c",
+      "reason": "Final review found valid signed zero values can compare equal despite different wire bytes; stopped only own CI tree before final publication",
+      "status": "cancelled_for_source_correction",
+      "wall_seconds": 1436.944263935089
+    },
+    "ci_wheel_matches_replayed_wheel": {
+      "all_wheel_file_payloads_identical": true,
+      "full_ci_built_wheel_sha256": "44af9bc1f50fdc0ab132cec7d51e6b8bd446c4c083e76fbb978206c2b16e638d",
+      "replayed_wheel_sha256": "44af9bc1f50fdc0ab132cec7d51e6b8bd446c4c083e76fbb978206c2b16e638d",
+      "status": "passed"
+    },
+    "full_ci_local": {
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "make",
+        "ci-local",
+        "UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv",
+        "GITLEAKS=/opt/homebrew/bin/gitleaks"
+      ],
+      "compose_configuration_only": true,
+      "core_tests_passed": 1839,
+      "core_tests_seconds": 1721.65,
+      "exit_code": 0,
+      "log_path": "/private/tmp/ai09-memory-ci-local.log",
+      "log_sha256": "d55cd761b0bf4a4f868f98f99c653c4f0b8242d7bb174010b88710c175b98ca4",
+      "real_tensorflow_cpu_tests_passed": 3,
+      "real_tensorflow_cpu_tests_seconds": 61.27,
+      "real_tensorflow_tests_skipped": false,
+      "status": "passed",
+      "wall_seconds": 2012.8153910636902
+    },
+    "installed_wheel_replay": {
+      "all_modules_from_installed_package": true,
+      "comparison_id": "ai09-development-sha256-1019d82d9c961d23bfb9bcc93b0ec9c55948ade110475628bb6acdcce8b2a2cc",
+      "final_test_accessed": false,
+      "module_count": 54,
+      "package_path": "/private/tmp/ai09-memory-installed-11/retailops_ai/__init__.py",
+      "prediction_and_metric_replay": "identical_without_refits",
+      "promotion_allowed": false,
+      "seconds": 95.8631586670017,
+      "status": "passed",
+      "tensorflow_not_imported_in_comparator": true,
+      "wheel_sha256": "44af9bc1f50fdc0ab132cec7d51e6b8bd446c4c083e76fbb978206c2b16e638d"
+    },
+    "native_replay": {
+      "prediction_and_metric_replay": "identical_without_refits",
+      "receipt_sha256": "346aa6097ab866192aa258e211760333b653592121ccb6fb30866e74738b2862",
+      "scope": "current_final11_code_under_one_gib_whole_tree_cap",
+      "status": "passed"
+    },
+    "previous_09_3_required_ci": {
+      "conclusion": "cancelled",
+      "counts_as_passed": false,
+      "exact_sha": "7d3603404a2e330a1f44f192500fb1b5cdd8f5ec",
+      "run_id": 37194024255,
+      "status": "completed",
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37194024255"
+    },
+    "signed_zero_regression": {
+      "current_cases_in_focused_suite": true,
+      "fixed_cases": 2,
+      "previous_version_failed": 2,
+      "regression_log_sha256": "c25580b9fb8211fa7cf4119fedb47fe739f73253b39d4f16330e26701b32320e"
+    },
+    "source_and_artifact_binding": {
+      "comparison_code_sha256": "3e8a4595c2af4885643cd82e551ebfd741e96b6cb5bd3d40ff942a893136b925",
+      "status": "passed",
+      "tensorflow_code_sha256": "d4d7cfc9b57b9657fa5e26cad6d3a5169e12c2915ee6b046016e609775aa8162",
+      "wheel_python_modules_matching_current_source": 264,
+      "wheel_sha256": "44af9bc1f50fdc0ab132cec7d51e6b8bd446c4c083e76fbb978206c2b16e638d"
+    },
+    "targeted": {
+      "log_sha256": "4ff6f990abd88359f68bc573ec426c2aa3d9fba0dc0547e932207227a28e149f",
+      "passed": 58,
+      "seconds": 11.31
+    }
+  },
+  "ci_execution_allowance": {
+    "cancellation_at": "2026-10-04T10:46:49Z",
+    "checks_job_id": 111412021562,
+    "checks_job_started_at": "2026-10-04T10:01:38Z",
+    "checks_timeout_minutes_before_after": [
+      45,
+      60
+    ],
+    "decoded_log_source": {
+      "bytes": 49153,
+      "cancellation": [
+        "2026-10-04T10:46:49.8521380Z ##[error]The operation was canceled."
+      ],
+      "core_test_result": [
+        "2026-10-04T10:40:33.0280121Z ====================== 1815 passed in 2308.43s (0:38:28) ======================="
+      ],
+      "final_suite": [
+        "2026-10-04T10:46:01.5464119Z PYTHONPATH=tests OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 TF_CPP_MIN_LOG_LEVEL=2 uv run --project environments/tensorflow --locked python -m pytest environments/tensorflow/tests -q"
+      ],
+      "job_start": "﻿2026-10-04T10:01:38.0618980Z Current runner version: '2.337.0'",
+      "sha256": "cc87058cb803bedd204eaed69263ac1e1b2b73c03748aff692e3ca6b4784be07"
+    },
+    "final_tensorflow_suite_started_at": "2026-10-04T10:46:01Z",
+    "inference": "checks job reached its 45-minute execution limit during final TensorFlow CPU tests; previous run is not a passed check",
+    "new_commit_requires_own_required_ci": true,
+    "previous_commit": "7d3603404a2e330a1f44f192500fb1b5cdd8f5ec",
+    "previous_conclusion": "cancelled",
+    "previous_run_id": 37194024255,
+    "quality_gates_and_model_resource_caps_unchanged": true
+  },
+  "comparison_id": "ai09-development-sha256-1019d82d9c961d23bfb9bcc93b0ec9c55948ade110475628bb6acdcce8b2a2cc",
+  "data": {
+    "copy_identical": true,
+    "curated": "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+    "development_split_verification_reads_existing_development_labels": true,
+    "feature_id": "features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+    "feature_rows": 20076,
+    "features": "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+    "fold": "development-v1",
+    "original_curated_unchanged": true,
+    "portfolio_final_test_accessed": false,
+    "prepare_seconds": 275.10668570800044,
+    "source_dataset_id": "source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+    "source_parameters": {
+      "business_timezone": "UTC",
+      "days": 102,
+      "end_date": "2026-07-31",
+      "label_tail_days": 14,
+      "max_daily_rows": 2448,
+      "origin_days": 60,
+      "output_format": "csv",
+      "products": 8,
+      "profile": "ai-temporal-smoke",
+      "seed": 42,
+      "start_date": "2026-04-21",
+      "stores": 3,
+      "warehouses": 2,
+      "warmup_days": 28
+    },
+    "source_schema_version": "2.7.0",
+    "split": "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+    "split_counts": {
+      "closed_target": 1060,
+      "development-v1:development_holdout:eligible": 2968,
+      "development-v1:development_holdout:total": 3276,
+      "development-v1:purged:eligible": 0,
+      "development-v1:purged:total": 10080,
+      "development-v1:train:eligible": 2710,
+      "development-v1:train:total": 3360,
+      "development-v1:validation:eligible": 3040,
+      "development-v1:validation:total": 3360,
+      "insufficient_history": 252,
+      "purged_origin": 10080
+    },
+    "split_id": "split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6"
+  },
+  "equivalence": {
+    "all_global_and_segment_metrics_identical": true,
+    "all_six_training_input_matrices_identical": true,
+    "configuration_and_seeds_unchanged": true,
+    "eligible_keys_per_model": 3040,
+    "engineering_repeats_are_not_hyperparameter_selection": true,
+    "keys_per_model": 3360,
+    "models": 6,
+    "prediction_rows": 20160,
+    "predictions_identical_bytes_to_09_3": true,
+    "predictions_sha256": "aa5b51f7e8c52b7899ab9b6f3bbf871cff047239c4ac4593c5ba4fc799af1ea6",
+    "raw_validation_outputs_including_excluded_keys_identical": true,
+    "train_only_normalizer_unchanged": true,
+    "training_and_raw_output_array_bytes": {
+      "mask_train": {
+        "array_bytes_sha256": "98847358daa373fc85f96e8ecfd304d772a968b15a1ee311f821ac53c4d21f64",
+        "dtype": "float32",
+        "identical_array_bytes": true,
+        "shape": [
+          240,
+          14
+        ]
+      },
+      "mask_validation": {
+        "array_bytes_sha256": "cd3d694bde09910249e07d6915fe039a674520138b89e6e7aa38630ed084b624",
+        "dtype": "float32",
+        "identical_array_bytes": true,
+        "shape": [
+          240,
+          14
+        ]
+      },
+      "validation_prediction": {
+        "array_bytes_sha256": "f5303e1ffd14b327907dc1ba975661a3a2abcc74bb9c809ff7593f40ab33e73f",
+        "dtype": "float32",
+        "identical_array_bytes": true,
+        "shape": [
+          240,
+          14,
+          2
+        ]
+      },
+      "x_train": {
+        "array_bytes_sha256": "41c407779e99c1f96a5405725d49c4225d98517cdf0c11e5e8d2ff3ca09c30fb",
+        "dtype": "float32",
+        "identical_array_bytes": true,
+        "shape": [
+          240,
+          1484
+        ]
+      },
+      "x_validation": {
+        "array_bytes_sha256": "25b4bc4fadcd069d62436d996d0750da1958b013b2756b022236fe97c2f767bb",
+        "dtype": "float32",
+        "identical_array_bytes": true,
+        "shape": [
+          240,
+          1484
+        ]
+      },
+      "y_train": {
+        "array_bytes_sha256": "77398e1aca81ccd1560b97063d42e8f278a9aa407dd67b46bd5bd038386f3525",
+        "dtype": "float32",
+        "identical_array_bytes": true,
+        "shape": [
+          240,
+          14
+        ]
+      },
+      "y_validation": {
+        "array_bytes_sha256": "1db16aff3ec078921432a712fa26898dec0b2af876084b5e28d6412a023e45cb",
+        "dtype": "float32",
+        "identical_array_bytes": true,
+        "shape": [
+          240,
+          14
+        ]
+      }
+    }
+  },
+  "evidence_version": "ai09-development-memory-1.0.0",
+  "implementation": {
+    "src/retailops_ai/evaluation_campaign/development.py": "bb449eed0f8733559a86bb79e419457c8d5f353675ac0bc978080216b141769f",
+    "src/retailops_ai/evaluation_campaign/development_inference.py": "7cc03196fa6bf01819d08379a702ddf30f229df6756d92f308673e34152a3ffa",
+    "src/retailops_ai/evaluation_campaign/development_storage.py": "40a63fd83afbd7654940d0880567f253e5ee42d77dc880a99b2d9ed34bff9baf",
+    "src/retailops_ai/tensorflow_challenger/dataset.py": "262c8bedf0f1193e7bd6f12263e462c4f113472d5a75b864ae23fa57c2bc482d",
+    "src/retailops_ai/tensorflow_challenger/pipeline.py": "4306206888089046ffba2108bf3cdeca691c9a59194b039d2eeb1d97ad8abbd0"
+  },
+  "locks": {
+    "core_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "tensorflow_sha256": "b9298cc21e673263498bcb846ded3f550934de89247ddcdddcef672e37010e26"
+  },
+  "protocol": {
+    "core_environment": {
+      "code_files": {
+        "forecasting/baselines.py": "fb339916e02683932b254e73d05d0a43ce7aec4eca7c818441e6a99f7f4a2560",
+        "forecasting/evaluation.py": "3eed80ae124780d447d698aae748d818f10df9054a5b00b56abc53e678aad1b8",
+        "forecasting/evaluation_contract.py": "d154ad2c5fc01756b7905933dcab1827541250034101cfcf92acea948e9ee26a",
+        "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+        "forecasting/manifest_contract.py": "6cc088e4ec6cd1e15399745affef8feaf7978325a346431d9679f20f526add2b",
+        "forecasting/manifest_io.py": "0a290464dbb1957d9e0ea96c53246e9d55046852d7d2f046ae594051d99c3346",
+        "forecasting/manifests.py": "8ea6b52b5c4ac9b4cda1c17146e22c4b3ee550100e9dc39cac0a0b367d58feeb",
+        "forecasting/model_contract.py": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+        "forecasting/model_trees.py": "b38ae31b8ab1c37c17f695fac103d0872adb5afa2c5e18b244187e839cf65d23",
+        "forecasting/model_worker.py": "5662e8de5fb3d65c05a82e717144ab1064b3e447b00a1e96531488831085c859",
+        "forecasting/models.py": "16814cc2022f87a15e32ebfe4d2b474ac486ec84d58fad9838afe986556a57be",
+        "forecasting/preprocessing.py": "c0520d819d30d952e3169dccc47d651b9128d08f2d51b88892f5571a0c4b3aff",
+        "forecasting/splits.py": "7564af16532313a4b94950c10d9ea8b16d31d82affd9161b708bef5601a04ba1"
+      },
+      "code_sha256": "111d89c3ae93fcbe6b395bde113aae1c0b859582b999e77cdba0d706ba3f11a3",
+      "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+      "machine": "arm64",
+      "system": "Darwin",
+      "version": "forecast-models-1.0.0",
+      "versions": {
+        "joblib": "1.6.0",
+        "numpy": "2.2.6",
+        "psutil": "7.2.2",
+        "pyarrow": "25.0.1",
+        "python": "3.11.15",
+        "scikit-learn": "1.9.1",
+        "scipy": "1.15.3",
+        "threadpoolctl": "3.7.0"
+      }
+    },
+    "feature_descriptor_sha256": "39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+    "feature_set_id": "features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+    "final_test_accessed": false,
+    "fold": {
+      "development_holdout": {
+        "end": "2026-07-17",
+        "start": "2026-07-08"
+      },
+      "evaluation_cutoff": "2026-08-01T23:59:59Z",
+      "name": "development-v1",
+      "purge_days": 15,
+      "selection_cutoff": "2026-07-07T23:59:59Z",
+      "train": {
+        "end": "2026-05-28",
+        "start": "2026-05-19"
+      },
+      "training_cutoff": "2026-06-12T23:59:59Z",
+      "validation": {
+        "end": "2026-06-22",
+        "start": "2026-06-13"
+      }
+    },
+    "implementation_sha256": "3e8a4595c2af4885643cd82e551ebfd741e96b6cb5bd3d40ff942a893136b925",
+    "parent": {
+      "business_timezone": "UTC",
+      "curated_dataset_id": "curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+      "curated_descriptor_sha256": "6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+      "forecast_source_status": "passed",
+      "snapshot_id": "snapshot-sha256-e706605e8cdac85ce859fb536a5136e15639cb555fcab8952154ac9437c6e810",
+      "source_dataset_id": "source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d"
+    },
+    "policy": {
+      "evaluation_scope": "early_stopping_validation_diagnostic_not_independent_acceptance",
+      "final_test_accessed": false,
+      "interval_scope": "raw_empirical_baselines_only_no_calibrated_candidate",
+      "max_output_bytes": 134217728,
+      "promotion_allowed": false,
+      "reference": "fixed_history28_declared_before_fitting",
+      "rf_functional": "conditional_mean_only_no_median_substitution",
+      "selection": "none_one_frozen_configuration_per_family",
+      "tensorflow": {
+        "architecture": "history28_target_covariates_dense_direct14_mean_median",
+        "artifact_bytes": 33554432,
+        "batch_size": 32,
+        "cpu_seconds": 1200.0,
+        "cpu_threads": 1,
+        "data_seed": 42,
+        "early_stopping": "development_validation_only_restore_best_epoch",
+        "epochs": 25,
+        "final_test_accessed": false,
+        "hidden_units": [
+          32,
+          16
+        ],
+        "initialization_seed": 42,
+        "interval_policy": "absent_pending_separate_development_calibration",
+        "learning_rate": 0.001,
+        "max_matrix_bytes": 67108864,
+        "max_windows": 3000,
+        "objective": "masked_train_scaled_mean_mse_plus_median_mae",
+        "patience": 4,
+        "promotion_allowed": false,
+        "rss_bytes": 1073741824,
+        "scope": "development_only_no_final_test_or_release",
+        "trials": 1,
+        "version": "ai09-keras-development-1.0.0",
+        "wall_seconds": 1200.0
+      },
+      "tree_heads": [
+        "rf_mean",
+        "hgb_mean",
+        "hgb_median"
+      ],
+      "trees": {
+        "baseline_candidates": [
+          "history7",
+          "history28",
+          "weekday28"
+        ],
+        "baseline_statistics": "empirical_median_mean_and_inverted_cdf_05_95_of_as_of_history",
+        "heads": [
+          "rf_mean",
+          "hgb_mean",
+          "hgb_median",
+          "hgb_lower",
+          "hgb_upper"
+        ],
+        "interval_calibration": "first_half_endpoint_residual_quantiles_05_95",
+        "interval_fallback": [
+          "volume_category",
+          "volume",
+          "global"
+        ],
+        "interval_gate": "second_block_score_no_regression_and_coverage_or_baseline",
+        "max_index_bytes": 2147483648,
+        "max_prediction_bytes": 2147483648,
+        "maximum_correction_ratio": 2.0,
+        "mean_gate": "both_blocks_bias_guard_and_mse_no_regression_or_exact_baseline",
+        "median_gate": "both_blocks_mae_guard_second_block_global_5pct_or_exact_baseline",
+        "minimum_correction_ratio": 0.5,
+        "minimum_group_rows": 30,
+        "model": {
+          "baseline": {
+            "candidates": [
+              "last_observed",
+              "moving_average",
+              "seasonal_naive7"
+            ],
+            "closed_history": "confirmed_closed_zero_is_observed",
+            "common_keys": "all_split_memberships_no_model_specific_drops",
+            "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+            "missing_history": "skip_unknown_never_impute_zero",
+            "moving_average_calendar_days": 7,
+            "moving_average_minimum_known_days": 1,
+            "origin_mode": "fixed_origin_no_recursive_actuals",
+            "portfolio_final_test": "not_included_not_opened",
+            "required_prediction_coverage": 1.0,
+            "schema_version": "1.0.0",
+            "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+            "selection_metric": "mae",
+            "selection_role": "validation_only_per_fold",
+            "tie_break": "candidate_order"
+          },
+          "cpu_threads": 1,
+          "fit_cpu_seconds": 90.0,
+          "fit_rss_bytes": 1073741824,
+          "fit_wall_seconds": 120.0,
+          "grid": "one_frozen_configuration_per_family",
+          "hgb": {
+            "categorical_features": null,
+            "early_stopping": false,
+            "l2_regularization": 0.0,
+            "learning_rate": 0.1,
+            "loss": "squared_error",
+            "max_bins": 255,
+            "max_iter": 100,
+            "max_leaf_nodes": 31,
+            "min_samples_leaf": 20,
+            "validation_fraction": null
+          },
+          "legacy_retailops_serving": "unchanged_rejection_not_overridden",
+          "max_matrix_bytes": 67108864,
+          "max_train_rows": 50000,
+          "minimum_relative_improvement": 0.05,
+          "monitor_interval_seconds": 0.05,
+          "portfolio_final_test": "not_included_not_opened",
+          "postprocessing": "clip_negative_to_zero_no_rounding",
+          "primary_metric": "validation_mae",
+          "random_state": 42,
+          "rf": {
+            "bootstrap": true,
+            "criterion": "squared_error",
+            "max_depth": 12,
+            "max_features": 1.0,
+            "min_samples_leaf": 2,
+            "min_samples_split": 2,
+            "n_estimators": 64,
+            "n_jobs": 1
+          },
+          "schema_version": "1.0.0",
+          "selection_use": "diagnostic_only_pending_04_6_to_04_8",
+          "strategy": "direct_global_with_horizon_feature",
+          "target_type": "observed_sales_units",
+          "tie_break": "baseline_then_rf_then_hgb"
+        },
+        "point_correction": "first_half_median_residual_or_mean_ratio_candidates_identity_retained",
+        "portfolio_final_test": "not_included_not_opened",
+        "quality": {
+          "baseline_selection": "validation_only_separately_by_mae_mse_and_interval_score",
+          "compatibility": "v1_reports_immutable_single_output_never_relabelled_as_two_targets",
+          "evaluation_use": "freeze_before_unseen_development_holdout_no_reselection",
+          "interval_objective": "central_interval_score_no_regression_against_baseline",
+          "legacy_width_ratio_threshold": 2.0,
+          "maximum_absolute_normalized_mean_bias": 0.1,
+          "maximum_segment_mae_regression": 0.1,
+          "mean_mse_guard": "no_regression_against_mean_baseline",
+          "mean_objective": "mse_with_bias_guard",
+          "median_objective": "mae",
+          "minimum_calibration_rows": 50,
+          "minimum_eligibility_coverage": 0.8,
+          "minimum_empirical_coverage": 0.8,
+          "minimum_global_rows": 100,
+          "minimum_prediction_coverage": 1.0,
+          "minimum_relative_mae_improvement": 0.05,
+          "minimum_segment_rows": 30,
+          "nominal_coverage": 0.9,
+          "perfect_baseline": "zero_error_tie_passes_positive_error_fails",
+          "point_contract": "separate_conditional_median_and_mean",
+          "portfolio_final_test": "not_included_not_opened",
+          "required_volume_bins": [
+            "zero",
+            "low",
+            "medium",
+            "high"
+          ],
+          "version": "forecast-quality-2.0.0",
+          "volume_basis": "origin_known_rolling_28_mean_not_target_outcome",
+          "width_to_actual_ratio": "diagnostic_only_no_denominator_floor",
+          "zero_actuals": "absolute_errors_and_false_positive_units_no_ratio_gate"
+        },
+        "reused_model_policy_scope": "estimator_hyperparameters_resources_only_selection_is_functional_recipe",
+        "selection_groups": "origin_known_volume_category",
+        "tie_break": "baseline_candidate_order_then_identity_then_head_order",
+        "validation_partition": "first_half_calibration_second_half_selection",
+        "version": "forecast-functional-recipe-1.0.0"
+      },
+      "version": "ai09-forecast-development-comparison-1.0.0"
+    },
+    "promotion_allowed": false,
+    "schema_version": "ai09-forecast-development-protocol-1.0.0",
+    "source_parameters": {
+      "business_timezone": "UTC",
+      "days": 102,
+      "end_date": "2026-07-31",
+      "label_tail_days": 14,
+      "max_daily_rows": 2448,
+      "origin_days": 60,
+      "output_format": "csv",
+      "products": 8,
+      "profile": "ai-temporal-smoke",
+      "seed": 42,
+      "start_date": "2026-04-21",
+      "stores": 3,
+      "warehouses": 2,
+      "warmup_days": 28
+    },
+    "source_schema_version": "2.7.0",
+    "split_descriptor_sha256": "ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+    "split_id": "split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+    "tensorflow_lock_sha256": "b9298cc21e673263498bcb846ded3f550934de89247ddcdddcef672e37010e26",
+    "train_population_sha256": "ac1a15dfe0742e8d1ccb3bff0461536c53b7358bb7a4debe920bfb1ede49dd78",
+    "validation_population_sha256": "c28076124c866dcb7fa8f268e63529f1bab6bd1e2e1d2c85ca7afa085224f790"
+  },
+  "resources": {
+    "archived_installed_wheel_replay_9": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "/private/tmp/ai09_memory_package_probe_9.py"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "final_test_accessed": false,
+      "log_sha256": "060a58ae933267f551490fe23f77eb3fc577949bffbe13c5813c6d79238e023f",
+      "observed_tree_cpu_seconds": 300.50997427199997,
+      "output": "/private/tmp/ai09-forecast-development-comparison-9",
+      "process_cpu_seconds_by_pid": {
+        "36796": 283.99606374399997,
+        "37506": 16.513910528
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "36796": 647102464,
+        "37506": 600162304
+      },
+      "sampled_peak_tree_rss_bytes": 934838272,
+      "scope": "post_inventory_development_replay_without_refits",
+      "wall_seconds": 307.95585541600303
+    },
+    "archived_native_replay_9": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "verify-comparison",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison-9"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "final_test_accessed": false,
+      "log_sha256": "6b96d9030f2ecec18109140d73120181119c0f00ee8c905c0853b40c50cf6099",
+      "observed_tree_cpu_seconds": 300.017158187,
+      "output": "/private/tmp/ai09-forecast-development-comparison-9",
+      "process_cpu_seconds_by_pid": {
+        "35486": 283.87739852799996,
+        "36200": 16.136312576,
+        "36227": 0.003447083
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "35486": 629325824,
+        "36200": 597688320,
+        "36227": 32768
+      },
+      "sampled_peak_tree_rss_bytes": 900087808,
+      "scope": "post_inventory_development_replay_without_refits",
+      "wall_seconds": 307.4496570420015
+    },
+    "failed_intermediate_8": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "compare-development",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--fold",
+        "development-v1",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison-8"
+      ],
+      "error": "whole_comparison_budget_exceeded",
+      "exit_code": -9,
+      "final_test_accessed": false,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed_tree_cpu_seconds": 386.38023911000005,
+      "output": "/private/tmp/ai09-forecast-development-comparison-8",
+      "process_cpu_seconds_by_pid": {
+        "29417": 325.421708288,
+        "32385": 8.534968575999999,
+        "32661": 6.520917568,
+        "32679": 7.059668736,
+        "32796": 25.269065471999998,
+        "32855": 0.010855707999999999,
+        "32877": 0.020424375,
+        "32880": 0.022098291,
+        "32912": 13.520532096
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "29417": 607977472,
+        "32385": 349863936,
+        "32661": 244989952,
+        "32679": 242270208,
+        "32796": 622411776,
+        "32855": 1179648,
+        "32877": 6717440,
+        "32880": 7651328,
+        "32912": 595378176
+      },
+      "sampled_peak_tree_rss_bytes": 1077051392,
+      "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+      "wall_seconds": 401.8578091669988
+    },
+    "failed_intermediate_probes": [
+      {
+        "budget": {
+          "cpu_seconds": 1200,
+          "monitor_interval_seconds": 0.05,
+          "nice": 15,
+          "peak_tree_rss_bytes": 1073741824,
+          "threads": 1,
+          "wall_seconds": 1200
+        },
+        "command": [
+          "nice",
+          "-n",
+          "15",
+          "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+          "-m",
+          "retailops_ai.tensorflow_challenger.cli",
+          "compare-development",
+          "--features",
+          "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+          "--split",
+          "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+          "--curated",
+          "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+          "--fold",
+          "development-v1",
+          "--output",
+          "/private/tmp/ai09-forecast-development-comparison-4"
+        ],
+        "error": "whole_comparison_budget_exceeded",
+        "exit_code": -9,
+        "final_test_accessed": false,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observed_tree_cpu_seconds": 110.934685902,
+        "output": "/private/tmp/ai09-forecast-development-comparison-4",
+        "process_cpu_seconds_by_pid": {
+          "8438": 97.03429401599999,
+          "9111": 2.371006272,
+          "9122": 2.086427232,
+          "9165": 2.125950096,
+          "9196": 7.302524288000001,
+          "9229": 0.004255332,
+          "9232": 0.007340791,
+          "9459": 0.0028878750000000003
+        },
+        "promotion_allowed": false,
+        "sampled_peak_rss_by_pid": {
+          "8438": 1077805056,
+          "9111": 346128384,
+          "9122": 223232000,
+          "9165": 239304704,
+          "9196": 605159424,
+          "9229": 131072,
+          "9232": 7618560,
+          "9459": 704512
+        },
+        "sampled_peak_tree_rss_bytes": 1077805056,
+        "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+        "wall_seconds": 115.29873966699961
+      },
+      {
+        "budget": {
+          "cpu_seconds": 1200,
+          "monitor_interval_seconds": 0.05,
+          "nice": 15,
+          "peak_tree_rss_bytes": 1073741824,
+          "threads": 1,
+          "wall_seconds": 1200
+        },
+        "command": [
+          "nice",
+          "-n",
+          "15",
+          "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+          "-m",
+          "retailops_ai.tensorflow_challenger.cli",
+          "compare-development",
+          "--features",
+          "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+          "--split",
+          "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+          "--curated",
+          "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+          "--fold",
+          "development-v1",
+          "--output",
+          "/private/tmp/ai09-forecast-development-comparison-6"
+        ],
+        "error": "whole_comparison_budget_exceeded",
+        "exit_code": -9,
+        "final_test_accessed": false,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observed_tree_cpu_seconds": 108.060397376,
+        "output": "/private/tmp/ai09-forecast-development-comparison-6",
+        "process_cpu_seconds_by_pid": {
+          "18891": 97.897696,
+          "19296": 2.5293543040000004,
+          "19308": 1.937506608,
+          "19314": 2.072680688,
+          "19364": 3.6231597759999996
+        },
+        "promotion_allowed": false,
+        "sampled_peak_rss_by_pid": {
+          "18891": 716128256,
+          "19296": 326385664,
+          "19308": 238747648,
+          "19314": 240484352,
+          "19364": 477380608
+        },
+        "sampled_peak_tree_rss_bytes": 1078231040,
+        "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+        "wall_seconds": 110.74373400000331
+      },
+      {
+        "budget": {
+          "cpu_seconds": 1200,
+          "monitor_interval_seconds": 0.05,
+          "nice": 15,
+          "peak_tree_rss_bytes": 1073741824,
+          "threads": 1,
+          "wall_seconds": 1200
+        },
+        "command": [
+          "nice",
+          "-n",
+          "15",
+          "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+          "-m",
+          "retailops_ai.tensorflow_challenger.cli",
+          "compare-development",
+          "--features",
+          "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+          "--split",
+          "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+          "--curated",
+          "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+          "--fold",
+          "development-v1",
+          "--output",
+          "/private/tmp/ai09-forecast-development-comparison-10"
+        ],
+        "error": "whole_comparison_budget_exceeded",
+        "exit_code": -9,
+        "final_test_accessed": false,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observed_tree_cpu_seconds": 92.86517920000001,
+        "output": "/private/tmp/ai09-forecast-development-comparison-10",
+        "process_cpu_seconds_by_pid": {
+          "51707": 83.205929728,
+          "52057": 2.291412432,
+          "52073": 1.784980352,
+          "52074": 1.886177008,
+          "52159": 3.69667968
+        },
+        "promotion_allowed": false,
+        "sampled_peak_rss_by_pid": {
+          "51707": 667942912,
+          "52057": 350076928,
+          "52073": 244039680,
+          "52074": 239140864,
+          "52159": 513228800
+        },
+        "sampled_peak_tree_rss_bytes": 1074692096,
+        "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+        "wall_seconds": 96.7220873749975
+      }
+    ],
+    "failed_native_replay_7": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "verify-comparison",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison-7"
+      ],
+      "error": "whole_comparison_budget_exceeded",
+      "exit_code": -9,
+      "final_test_accessed": false,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed_tree_cpu_seconds": 300.40836096000004,
+      "output": "/private/tmp/ai09-forecast-development-comparison-7",
+      "process_cpu_seconds_by_pid": {
+        "22126": 285.019551744,
+        "23259": 15.388809216
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "22126": 559202304,
+        "23259": 605421568
+      },
+      "sampled_peak_tree_rss_bytes": 1075036160,
+      "scope": "post_inventory_development_replay_without_refits",
+      "wall_seconds": 323.5142714169997
+    },
+    "final_completed_11": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "compare-development",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--fold",
+        "development-v1",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison-11"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "final_test_accessed": false,
+      "log_sha256": "1260d1ca993917fe0d322c6d413dd0741f598e87852c0546b8b5327f975ca383",
+      "observed_tree_cpu_seconds": 114.543889923,
+      "output": "/private/tmp/ai09-forecast-development-comparison-11",
+      "process_cpu_seconds_by_pid": {
+        "53693": 96.331340544,
+        "54300": 2.4572688320000005,
+        "54313": 1.885170352,
+        "54323": 1.979889792,
+        "54369": 7.1534640000000005,
+        "54422": 0.007576083,
+        "54428": 4.72918032
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "53693": 603144192,
+        "54300": 325107712,
+        "54313": 246595584,
+        "54323": 249020416,
+        "54369": 602783744,
+        "54422": 7618560,
+        "54428": 583860224
+      },
+      "sampled_peak_tree_rss_bytes": 984629248,
+      "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+      "wall_seconds": 121.4889486250031
+    },
+    "historical_09_3": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1610612736,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "compare-development",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--fold",
+        "development-v1",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison-3"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "final_test_accessed": false,
+      "log_sha256": "8582fc56c4ef20c02eef62d7d0cc89118ed978c26e6833135de78948d6d90ccc",
+      "observed_tree_cpu_seconds": 108.76532373799999,
+      "output": "/private/tmp/ai09-forecast-development-comparison-3",
+      "process_cpu_seconds_by_pid": {
+        "83479": 96.61886438399999,
+        "84009": 2.188823504,
+        "84227": 1.6697537919999998,
+        "84238": 1.801436176,
+        "84269": 6.479351424000001,
+        "84295": 0.005537958,
+        "84324": 0.0015565000000000002
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "83479": 1363525632,
+        "84009": 332005376,
+        "84227": 244858880,
+        "84238": 239468544,
+        "84269": 611303424,
+        "84295": 7667712,
+        "84324": 147456
+      },
+      "sampled_peak_tree_rss_bytes": 1363525632,
+      "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+      "wall_seconds": 113.24330787500367
+    },
+    "historical_failed_probes": [
+      "/private/tmp/ai09-forecast-development-run.json",
+      "/private/tmp/ai09-forecast-development-run-2.json"
+    ],
+    "installed_wheel_replay": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "/private/tmp/ai09_memory_package_probe_11.py"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "final_test_accessed": false,
+      "log_sha256": "86d428dd2b5606e413fd8e12d26e0bfdba8ac0487113567c601550c4cd493b18",
+      "observed_tree_cpu_seconds": 92.796234048,
+      "output": "/private/tmp/ai09-forecast-development-comparison-11",
+      "process_cpu_seconds_by_pid": {
+        "61473": 87.496482304,
+        "61773": 5.299751744
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "61473": 605028352,
+        "61773": 559398912
+      },
+      "sampled_peak_tree_rss_bytes": 605028352,
+      "scope": "post_inventory_development_replay_without_refits",
+      "wall_seconds": 96.54451762499957
+    },
+    "intermediate_completed_5": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "compare-development",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--fold",
+        "development-v1",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison-5"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "final_test_accessed": false,
+      "log_sha256": "2e3c899e4aec724665cc5628fa6775bf63d38437b70a3d422ff3a7acf646439e",
+      "observed_tree_cpu_seconds": 137.04068359000001,
+      "output": "/private/tmp/ai09-forecast-development-comparison-5",
+      "process_cpu_seconds_by_pid": {
+        "17273": 115.13239398399999,
+        "17817": 2.779239232,
+        "17842": 2.13460168,
+        "17849": 2.301291136,
+        "17889": 8.941579904,
+        "17954": 0.008256874,
+        "17957": 0.011234124,
+        "18170": 5.732086656
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "17273": 719405056,
+        "17817": 336887808,
+        "17842": 247529472,
+        "17849": 251854848,
+        "17889": 599064576,
+        "17954": 6520832,
+        "17957": 7667712,
+        "18170": 598622208
+      },
+      "sampled_peak_tree_rss_bytes": 1016463360,
+      "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+      "wall_seconds": 141.50149412500468
+    },
+    "intermediate_completed_7": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "compare-development",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--fold",
+        "development-v1",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison-7"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "final_test_accessed": false,
+      "log_sha256": "324943c50c3f6c9a6990343967f77727f3c8c22c066e85a31fcf414e329ec93d",
+      "observed_tree_cpu_seconds": 346.7666597560001,
+      "output": "/private/tmp/ai09-forecast-development-comparison-7",
+      "process_cpu_seconds_by_pid": {
+        "20124": 285.510992896,
+        "21512": 8.218863616,
+        "21543": 6.233317696,
+        "21564": 6.99108832,
+        "21699": 25.338563328,
+        "21757": 0.011606166000000001,
+        "21786": 0.006320125,
+        "21789": 0.024039833,
+        "21819": 14.431867776
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "20124": 672972800,
+        "21512": 349749248,
+        "21543": 244940800,
+        "21564": 249446400,
+        "21699": 619495424,
+        "21757": 1097728,
+        "21786": 180224,
+        "21789": 7667712,
+        "21819": 570195968
+      },
+      "sampled_peak_tree_rss_bytes": 913588224,
+      "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+      "wall_seconds": 360.4475524580048
+    },
+    "intermediate_completed_9": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "compare-development",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--fold",
+        "development-v1",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison-9"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "final_test_accessed": false,
+      "log_sha256": "6b96d9030f2ecec18109140d73120181119c0f00ee8c905c0853b40c50cf6099",
+      "observed_tree_cpu_seconds": 397.291387402,
+      "output": "/private/tmp/ai09-forecast-development-comparison-9",
+      "process_cpu_seconds_by_pid": {
+        "33822": 336.533256192,
+        "34642": 8.648632832,
+        "34675": 6.598733952,
+        "34703": 5.7752072320000005,
+        "34843": 24.657941248,
+        "34928": 0.015405749,
+        "34930": 0.016697748999999998,
+        "34946": 15.045512448,
+        "35044": 0
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "33822": 622493696,
+        "34642": 326860800,
+        "34675": 244989952,
+        "34703": 249085952,
+        "34843": 600342528,
+        "34928": 5898240,
+        "34930": 7618560,
+        "34946": 593379328,
+        "35044": 16384
+      },
+      "sampled_peak_tree_rss_bytes": 912146432,
+      "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+      "wall_seconds": 424.0349022500013
+    },
+    "measurement_limits": "own concurrent descendant RSS every 50ms, sampler excluded; nice15/threads1; system cache and other computer activity uncontrolled; small profile only",
+    "models": {
+      "all_models_reload_and_prediction_seconds": 11.39029324999865,
+      "scope": "sequential_model_workers_not_a_full_pipeline_peak_rss_receipt",
+      "tensorflow": {
+        "artifact_bytes": 342601,
+        "inference": {
+          "resources": {
+            "cpu_seconds": 4.733486879999999,
+            "peak_rss_bytes": 584024064,
+            "status": "passed",
+            "threads": 1,
+            "wall_seconds": 5.37241612499929
+          },
+          "worker": {
+            "batch_prediction_seconds": 0.014224416998331435,
+            "cold_load_seconds_including_framework_import": 4.610691250003583,
+            "cpu_seconds": 4.366786,
+            "final_test_accessed": false,
+            "model_id": "model-sha256-c57e9592aa598c73c34feec2b426a58142ea0e6b39b9ff16a028efe8f2700c57",
+            "output_sha256": "d2c1f51d917a371d66af210e3dd3e58600e0bbcadbbf7d2ff9dcc2dcfc050923",
+            "peak_rss_bytes": 582500352,
+            "threads": 1,
+            "validation_windows": 240,
+            "visible_gpu_count": 0
+          }
+        },
+        "resources": {
+          "cpu_seconds": 7.178283007000001,
+          "cpu_threads": 1,
+          "monitor_interval_seconds": 0.05,
+          "peak_tree_rss_bytes": 602783744,
+          "wall_seconds": 8.920748292002827
+        },
+        "worker": {
+          "batch_inference_seconds": 0.011257124999247026,
+          "best_epoch": 17,
+          "cold_load_seconds": 0.014331916994706262,
+          "determinism_enabled": true,
+          "determinism_scope": "fixed_versions_platform_and_initialization_seed_not_cross_platform_bitwise",
+          "epochs_run": 21,
+          "final_test_accessed": false,
+          "history": [
+            {
+              "epoch": 1,
+              "validation_loss": 2.8457323401382095
+            },
+            {
+              "epoch": 2,
+              "validation_loss": 2.661924668126985
+            },
+            {
+              "epoch": 3,
+              "validation_loss": 2.5205471902301437
+            },
+            {
+              "epoch": 4,
+              "validation_loss": 2.407048139525087
+            },
+            {
+              "epoch": 5,
+              "validation_loss": 2.327010976327093
+            },
+            {
+              "epoch": 6,
+              "validation_loss": 2.2511692619245305
+            },
+            {
+              "epoch": 7,
+              "validation_loss": 2.168181268086559
+            },
+            {
+              "epoch": 8,
+              "validation_loss": 2.1193908981586755
+            },
+            {
+              "epoch": 9,
+              "validation_loss": 2.0388216549628657
+            },
+            {
+              "epoch": 10,
+              "validation_loss": 1.9974453217889134
+            },
+            {
+              "epoch": 11,
+              "validation_loss": 1.9356956986612395
+            },
+            {
+              "epoch": 12,
+              "validation_loss": 1.9114791025848765
+            },
+            {
+              "epoch": 13,
+              "validation_loss": 1.8647869683017857
+            },
+            {
+              "epoch": 14,
+              "validation_loss": 1.8678019894973228
+            },
+            {
+              "epoch": 15,
+              "validation_loss": 1.8484129178680873
+            },
+            {
+              "epoch": 16,
+              "validation_loss": 1.8571266204903
+            },
+            {
+              "epoch": 17,
+              "validation_loss": 1.824905210615773
+            },
+            {
+              "epoch": 18,
+              "validation_loss": 1.8509837485849858
+            },
+            {
+              "epoch": 19,
+              "validation_loss": 1.8324911626546005
+            },
+            {
+              "epoch": 20,
+              "validation_loss": 1.8570970482339983
+            },
+            {
+              "epoch": 21,
+              "validation_loss": 1.8526280283927918
+            }
+          ],
+          "input_shape": [
+            null,
+            1484
+          ],
+          "interval_status": "not_ready",
+          "keras_version": "3.11.3",
+          "machine": "arm64",
+          "mlflow_run_id": "06cae1603a634b7ab7e1d62073b1e43b",
+          "mlflow_version": "3.4.0",
+          "output_order": [
+            "mean",
+            "median"
+          ],
+          "output_shape": [
+            null,
+            14,
+            2
+          ],
+          "peak_self_rss_bytes": 602783744,
+          "promotion_allowed": false,
+          "python_version": "3.11.15",
+          "reload_atol": 1e-06,
+          "reload_rtol": 1e-06,
+          "self_cpu_seconds": 6.6929099999999995,
+          "status": "passed",
+          "system": "Darwin",
+          "tensorflow_version": "2.20.0",
+          "training_seconds": 1.8061647499998799,
+          "visible_gpu_count": 0,
+          "worker_seconds": 8.15032174999942
+        }
+      },
+      "validation_rows": 3360
+    },
+    "native_replay": {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "verify-comparison",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison-11"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "final_test_accessed": false,
+      "log_sha256": "1260d1ca993917fe0d322c6d413dd0741f598e87852c0546b8b5327f975ca383",
+      "observed_tree_cpu_seconds": 94.17334050500001,
+      "output": "/private/tmp/ai09-forecast-development-comparison-11",
+      "process_cpu_seconds_by_pid": {
+        "54773": 88.100890624,
+        "60356": 6.070865216,
+        "60593": 0.0007006240000000001,
+        "60635": 0.000884041
+      },
+      "promotion_allowed": false,
+      "sampled_peak_rss_by_pid": {
+        "54773": 599752704,
+        "60356": 581042176,
+        "60593": 1753088,
+        "60635": 1966080
+      },
+      "sampled_peak_tree_rss_bytes": 607567872,
+      "scope": "post_inventory_development_replay_without_refits",
+      "wall_seconds": 101.21385841700248
+    }
+  },
+  "scope": "post_inventory_temporal_smoke_development_diagnostic"
+}

@@ -1,5 +1,10 @@
 # RetailOps AI Intelligence
 
+**AI 09: in_progress / not_ready — integracja po gotowych AI 07–08.**
+[Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
+TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja
+i końcowy odbiór trzech zastosowań pozostają otwarte.
+
 **AI 07: kompletny odbiór kwalifikacji `synthetic_ai_07_portfolio_v4`.**
 [Końcowy odbiór](docs/evidence/07-completion.md) i
 [integracja z main](docs/evidence/07-main-integration.md) obejmują oba modele,

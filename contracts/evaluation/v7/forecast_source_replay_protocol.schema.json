@@ -1,0 +1,327 @@
+{
+  "$defs": {
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    },
+    "ForecastSourceReplayPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "accounting": {
+          "const": "reserve_all_five_development_roles_before_any_parent_io",
+          "default": "reserve_all_five_development_roles_before_any_parent_io",
+          "title": "Accounting",
+          "type": "string"
+        },
+        "batch_rows": {
+          "const": 256,
+          "default": 256,
+          "title": "Batch Rows",
+          "type": "integer"
+        },
+        "exposure_scope": {
+          "const": "all_snapshot_facts_and_all_curated_rows_including_late_purged_and_outside_role_dates",
+          "default": "all_snapshot_facts_and_all_curated_rows_including_late_purged_and_outside_role_dates",
+          "title": "Exposure Scope",
+          "type": "string"
+        },
+        "max_parent_bytes": {
+          "const": 268435456,
+          "default": 268435456,
+          "title": "Max Parent Bytes",
+          "type": "integer"
+        },
+        "max_parent_files": {
+          "const": 4096,
+          "default": 4096,
+          "title": "Max Parent Files",
+          "type": "integer"
+        },
+        "max_rows_per_parent": {
+          "default": 100000,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Max Rows Per Parent",
+          "type": "integer"
+        },
+        "membership_qualification": {
+          "const": "declared_metadata_only_no_feature_or_partition_row_replay",
+          "default": "declared_metadata_only_no_feature_or_partition_row_replay",
+          "title": "Membership Qualification",
+          "type": "string"
+        },
+        "outcome_artifact_identity": {
+          "const": "full_curated_manifest_not_scoped_outcome_file",
+          "default": "full_curated_manifest_not_scoped_outcome_file",
+          "title": "Outcome Artifact Identity",
+          "type": "string"
+        },
+        "replay": {
+          "const": "current_pinned_transform_exact_complete_logical_document",
+          "default": "current_pinned_transform_exact_complete_logical_document",
+          "title": "Replay",
+          "type": "string"
+        },
+        "resource_qualification": {
+          "const": "bounded_inputs_and_batches_larger_profiles_unqualified",
+          "default": "bounded_inputs_and_batches_larger_profiles_unqualified",
+          "title": "Resource Qualification",
+          "type": "string"
+        }
+      },
+      "title": "ForecastSourceReplayPolicy",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "OutcomePopulation": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "data_seed": {
+          "exclusiveMaximum": 4294967296,
+          "minimum": 0,
+          "title": "Data Seed",
+          "type": "integer"
+        },
+        "feature_set_id": {
+          "pattern": "^features-sha256-[0-9a-f]{64}$",
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "label_knowledge_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Label Knowledge Cutoff",
+          "type": "string"
+        },
+        "membership_keys_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Membership Keys Sha256",
+          "type": "string"
+        },
+        "origins": {
+          "$ref": "#/$defs/DateWindow"
+        },
+        "outcome_artifact_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Outcome Artifact Sha256",
+          "type": "string"
+        },
+        "partition_id": {
+          "pattern": "^ai09-partitions-sha256-[0-9a-f]{64}$",
+          "title": "Partition Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "train",
+            "early_stopping",
+            "tune",
+            "calibration",
+            "development_evaluation"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "use_case": {
+          "const": "forecast",
+          "default": "forecast",
+          "title": "Use Case",
+          "type": "string"
+        }
+      },
+      "required": [
+        "data_seed",
+        "source_dataset_id",
+        "snapshot_id",
+        "curated_dataset_id",
+        "feature_set_id",
+        "partition_id",
+        "role",
+        "origins",
+        "label_knowledge_cutoff",
+        "membership_keys_sha256",
+        "outcome_artifact_sha256"
+      ],
+      "title": "OutcomePopulation",
+      "type": "object"
+    },
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "forecast_source_status": {
+          "const": "passed",
+          "title": "Forecast Source Status",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "curated_descriptor_sha256",
+        "business_timezone",
+        "forecast_source_status"
+      ],
+      "title": "Parent",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:forecast_source_replay_protocol:7.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "curated_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Curated Manifest Sha256",
+      "type": "string"
+    },
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "independent_evaluation_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Independent Evaluation Access Authorized",
+      "type": "boolean"
+    },
+    "parent": {
+      "$ref": "#/$defs/Parent"
+    },
+    "policy": {
+      "$ref": "#/$defs/ForecastSourceReplayPolicy",
+      "default": {
+        "accounting": "reserve_all_five_development_roles_before_any_parent_io",
+        "batch_rows": 256,
+        "exposure_scope": "all_snapshot_facts_and_all_curated_rows_including_late_purged_and_outside_role_dates",
+        "max_parent_bytes": 268435456,
+        "max_parent_files": 4096,
+        "max_rows_per_parent": 100000,
+        "membership_qualification": "declared_metadata_only_no_feature_or_partition_row_replay",
+        "outcome_artifact_identity": "full_curated_manifest_not_scoped_outcome_file",
+        "replay": "current_pinned_transform_exact_complete_logical_document",
+        "resource_qualification": "bounded_inputs_and_batches_larger_profiles_unqualified"
+      }
+    },
+    "populations": {
+      "items": {
+        "$ref": "#/$defs/OutcomePopulation"
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "title": "Populations",
+      "type": "array"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "replay_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Replay Recipe Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Snapshot Manifest Sha256",
+      "type": "string"
+    },
+    "source_parameters": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Source Parameters",
+      "type": "object"
+    },
+    "training_initialization_seed": {
+      "exclusiveMaximum": 4294967296,
+      "minimum": 0,
+      "title": "Training Initialization Seed",
+      "type": "integer"
+    },
+    "version": {
+      "const": "ai09-forecast-source-replay-1.0.0",
+      "default": "ai09-forecast-source-replay-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "parent",
+    "source_parameters",
+    "snapshot_manifest_sha256",
+    "curated_manifest_sha256",
+    "populations",
+    "training_initialization_seed",
+    "replay_recipe_sha256"
+  ],
+  "title": "ForecastSourceReplayProtocol",
+  "type": "object"
+}

@@ -7,6 +7,8 @@ COPY src ./src
 COPY contracts/source_snapshot ./contracts/source_snapshot
 COPY contracts/curated ./contracts/curated
 COPY contracts/forecast ./contracts/forecast
+COPY contracts/evaluation ./contracts/evaluation
+COPY environments/tensorflow/uv.lock ./environments/tensorflow/uv.lock
 COPY contracts/anomaly ./contracts/anomaly
 COPY contracts/raw_dq ./contracts/raw_dq
 COPY contracts/return_inputs ./contracts/return_inputs

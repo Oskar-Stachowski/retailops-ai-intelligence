@@ -1,0 +1,418 @@
+{
+  "version": "ai09-development-trial-registry-evidence-1.0.0",
+  "stage_status": "in_progress",
+  "evaluation_status": "not_ready",
+  "scope": "shared_development_trial_budget_and_retrospective_inventory_no_final_test",
+  "branch": "ai/09-evaluation-protocol",
+  "parent_commit": "0b8b1aef4c77a85bc6a0078839310490b7334e59",
+  "other_sessions_mutated": false,
+  "ai08_read_only_audit": {
+    "commit": "077add2c2419c0bf5827be8a7f77a897507485c2",
+    "uncommitted_scope": "stockout_temporal_storage",
+    "decision": "no_duplicate_memory_reader_in_this_increment"
+  },
+  "inventory": {
+    "scope": "retrospective_read_only_inventory_no_new_fit_no_quality_acceptance",
+    "registry": "/private/tmp/ai09-development-trial-registry-final",
+    "protocol": "/private/tmp/ai09-trials-protocol-final.json",
+    "summary": {
+      "charged_fit_slots": 0,
+      "completed_new_attempts": 0,
+      "evaluation_status": "not_ready",
+      "failed_new_attempts": 0,
+      "final_test_access_authorized": false,
+      "finished_attempt_wall_seconds": 0,
+      "full_pipeline_cpu_seconds": null,
+      "full_pipeline_peak_rss_bytes": null,
+      "head_sha256": "6d637ce6519d6e624eb2037c1626fe213bd34e0bace66598e38b91a35f739f72",
+      "historical_attempts": 11,
+      "historical_model_completions": 40,
+      "historical_model_starts": 44,
+      "historical_status_counts": {
+        "completed_development_diagnostic": 5,
+        "failed": 0,
+        "interrupted": 6,
+        "unresolved": 0
+      },
+      "maximum_fit_slots": 4,
+      "plan_sha256": "6d637ce6519d6e624eb2037c1626fe213bd34e0bace66598e38b91a35f739f72",
+      "promotion_allowed": false,
+      "reserved_new_attempts": 0,
+      "unresolved_cost": "unknown_not_zero",
+      "unresolved_new_attempts": 0
+    },
+    "verify_history": {
+      "charged_fit_slots": 0,
+      "completed_new_attempts": 0,
+      "evaluation_status": "not_ready",
+      "failed_new_attempts": 0,
+      "final_test_access_authorized": false,
+      "finished_attempt_wall_seconds": 0,
+      "full_pipeline_cpu_seconds": null,
+      "full_pipeline_peak_rss_bytes": null,
+      "head_sha256": "6d637ce6519d6e624eb2037c1626fe213bd34e0bace66598e38b91a35f739f72",
+      "historical_attempts": 11,
+      "historical_inventory_verified": true,
+      "historical_model_completions": 40,
+      "historical_model_starts": 44,
+      "historical_status_counts": {
+        "completed_development_diagnostic": 5,
+        "failed": 0,
+        "interrupted": 6,
+        "unresolved": 0
+      },
+      "maximum_fit_slots": 4,
+      "plan_sha256": "6d637ce6519d6e624eb2037c1626fe213bd34e0bace66598e38b91a35f739f72",
+      "promotion_allowed": false,
+      "reserved_new_attempts": 0,
+      "unresolved_cost": "unknown_not_zero",
+      "unresolved_new_attempts": 0
+    },
+    "ledger_sha256": "506701a552bb7b8f85fc4958d6cc17591a040bfb21c844b4b94e0c2213725629",
+    "ledger_bytes": 110700,
+    "export": "/private/tmp/ai09-trials-ledger-export-final.json",
+    "export_sha256": "08039ec5e99bb6f9f016e7983200a7fce380ebf91f778d8e95a2d833f926234d",
+    "history": [
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison",
+        "status": "interrupted",
+        "protocol_sha256": "1e5430ae50a3746e99ac4f5fca6484c67fc0ae4cf7418480e799577b511887bc",
+        "files": 22,
+        "artifact_bytes": 7424967,
+        "model_starts": 4,
+        "model_completions": 3,
+        "cost_files": [
+          "external_interruption.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      },
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison-2",
+        "status": "interrupted",
+        "protocol_sha256": "c76d4c484b8694ebb7f9957aaa9245b72955114d49792f02375cf80bd5fb32c7",
+        "files": 22,
+        "artifact_bytes": 7424983,
+        "model_starts": 4,
+        "model_completions": 3,
+        "cost_files": [
+          "external_interruption.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      },
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison-3",
+        "status": "completed_development_diagnostic",
+        "protocol_sha256": "c76d4c484b8694ebb7f9957aaa9245b72955114d49792f02375cf80bd5fb32c7",
+        "files": 76,
+        "artifact_bytes": 16087476,
+        "model_starts": 4,
+        "model_completions": 4,
+        "cost_files": [
+          "resources.json",
+          "tensorflow/manifest.json",
+          "tensorflow/worker_receipt.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      },
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison-4",
+        "status": "interrupted",
+        "protocol_sha256": "df025ca5ac489b108b22ac4cdee530cfff82fc667240e7aba6e4aa4a70a2077e",
+        "files": 73,
+        "artifact_bytes": 8148012,
+        "model_starts": 4,
+        "model_completions": 4,
+        "cost_files": [
+          "external_interruption.json",
+          "tensorflow/manifest.json",
+          "tensorflow/worker_receipt.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      },
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison-5",
+        "status": "completed_development_diagnostic",
+        "protocol_sha256": "8c9aab525615a174e10f1fc40a20f42e5ec63dc9ca6c3a7d606203060bed104b",
+        "files": 76,
+        "artifact_bytes": 16088058,
+        "model_starts": 4,
+        "model_completions": 4,
+        "cost_files": [
+          "resources.json",
+          "tensorflow/manifest.json",
+          "tensorflow/worker_receipt.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      },
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison-6",
+        "status": "interrupted",
+        "protocol_sha256": "731dd3b409f5a3352dccc2639c7150c2db0d25375b14ae5fba37f5c8f6ec51cf",
+        "files": 22,
+        "artifact_bytes": 7426132,
+        "model_starts": 4,
+        "model_completions": 3,
+        "cost_files": [
+          "external_interruption.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      },
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison-7",
+        "status": "completed_development_diagnostic",
+        "protocol_sha256": "4706696d8b44659cbd314dc611cf0d4966335f7d880fe89a10da5ff97065107c",
+        "files": 76,
+        "artifact_bytes": 16088110,
+        "model_starts": 4,
+        "model_completions": 4,
+        "cost_files": [
+          "resources.json",
+          "tensorflow/manifest.json",
+          "tensorflow/worker_receipt.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      },
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison-8",
+        "status": "interrupted",
+        "protocol_sha256": "cadf5d85eba38beee66e80dab6ed2a84cc75a3291667d2fe42c07a49adf557ea",
+        "files": 73,
+        "artifact_bytes": 8148101,
+        "model_starts": 4,
+        "model_completions": 4,
+        "cost_files": [
+          "external_interruption.json",
+          "tensorflow/manifest.json",
+          "tensorflow/worker_receipt.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      },
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison-9",
+        "status": "completed_development_diagnostic",
+        "protocol_sha256": "5c50c1d0286b784c926b99e7ce5f434a1535c9e7ce88ab8007e3bd6b4ca7eaf7",
+        "files": 76,
+        "artifact_bytes": 16088067,
+        "model_starts": 4,
+        "model_completions": 4,
+        "cost_files": [
+          "resources.json",
+          "tensorflow/manifest.json",
+          "tensorflow/worker_receipt.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      },
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison-10",
+        "status": "interrupted",
+        "protocol_sha256": "8045fc70d5985cb09d7332402ffa1bad069584116f2cbc13895349554bcc78b9",
+        "files": 22,
+        "artifact_bytes": 7426381,
+        "model_starts": 4,
+        "model_completions": 3,
+        "cost_files": [
+          "external_interruption.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      },
+      {
+        "output": "/private/tmp/ai09-forecast-development-comparison-11",
+        "status": "completed_development_diagnostic",
+        "protocol_sha256": "651df2b2bf63db3c49f4db454f126c9e4bb0cf36270bf54ac127a108bea7074c",
+        "files": 76,
+        "artifact_bytes": 16088088,
+        "model_starts": 4,
+        "model_completions": 4,
+        "cost_files": [
+          "resources.json",
+          "tensorflow/manifest.json",
+          "tensorflow/worker_receipt.json",
+          "trees/hgb_mean.resources.json",
+          "trees/hgb_median.resources.json",
+          "trees/rf_mean.resources.json"
+        ]
+      }
+    ],
+    "historical_files_unchanged": true,
+    "new_fit_count": 0,
+    "final_test_accessed": false,
+    "promotion_allowed": false,
+    "wall_seconds": 70.96247541699995,
+    "measurement_scope": "orchestration_wall_only_not_process_tree_rss_or_cpu"
+  },
+  "historical_inventory_unchanged_across_precheck_final_freeze_and_installed_wheel": true,
+  "retained_precheck_freeze": {
+    "registry": "/private/tmp/ai09-development-trial-registry",
+    "reason": "comparison_code_changed_by_required_formatting_before_final_source_freeze",
+    "new_fit_count": 0,
+    "status": "historical_not_the_current_runnable_plan"
+  },
+  "installed_wheel": {
+    "status": "passed",
+    "scope": "installed_wheel_inventory_schema_and_current_code_bindings_no_fit_no_model_replay",
+    "installed": "/private/tmp/ai09-trials-installed",
+    "outside_cwd": "/private/tmp/ai09-trials-wheel-outside",
+    "wheel": "/private/tmp/ai09-trials-wheel/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "wheel_sha256": "7adb97f563f4909d4a27f8fe9f7f14087a6e02330f153714d4124c309be92889",
+    "python_source_files_identical": 268,
+    "loaded_retailops_modules": 55,
+    "all_module_paths_installed": true,
+    "tensorflow_framework_imported": false,
+    "schema_count": 3,
+    "historical_inventory_verified": true,
+    "summary": {
+      "plan_sha256": "6d637ce6519d6e624eb2037c1626fe213bd34e0bace66598e38b91a35f739f72",
+      "head_sha256": "6d637ce6519d6e624eb2037c1626fe213bd34e0bace66598e38b91a35f739f72",
+      "historical_attempts": 11,
+      "historical_model_starts": 44,
+      "historical_model_completions": 40,
+      "historical_status_counts": {
+        "completed_development_diagnostic": 5,
+        "failed": 0,
+        "interrupted": 6,
+        "unresolved": 0
+      },
+      "reserved_new_attempts": 0,
+      "charged_fit_slots": 0,
+      "maximum_fit_slots": 4,
+      "completed_new_attempts": 0,
+      "failed_new_attempts": 0,
+      "unresolved_new_attempts": 0,
+      "finished_attempt_wall_seconds": 0,
+      "full_pipeline_peak_rss_bytes": null,
+      "full_pipeline_cpu_seconds": null,
+      "unresolved_cost": "unknown_not_zero",
+      "evaluation_status": "not_ready",
+      "final_test_access_authorized": false,
+      "promotion_allowed": false
+    },
+    "new_fit_count": 0,
+    "final_test_accessed": false,
+    "promotion_allowed": false
+  },
+  "isolated_corruption_probe": {
+    "status": "passed",
+    "scope": "isolated_copy_corruption_rejected_without_model_reload_or_fit",
+    "clone": "/private/tmp/ai09-trials-corruption-copy",
+    "registry": "/private/tmp/ai09-trials-corruption-registry",
+    "initial_inventory_verified": true,
+    "corrupt_verify_exit_code": 2,
+    "corrupt_verify_error": "trial_snapshot_completed_inventory_mismatch",
+    "ledger_unchanged": true,
+    "original_prediction_sha256_unchanged": "aa5b51f7e8c52b7899ab9b6f3bbf871cff047239c4ac4593c5ba4fc799af1ea6",
+    "new_fit_count": 0,
+    "final_test_accessed": false,
+    "promotion_allowed": false
+  },
+  "validation": {
+    "focused": {
+      "status": "passed",
+      "tests": 81,
+      "registry_tests": 23,
+      "seconds": 16.399,
+      "log": {
+        "path": "/private/tmp/ai09-trials-focused-final.log",
+        "bytes": 180,
+        "sha256": "7f398dc123408a89955f0657b817f35a3ae3cb4867e55c978944ba7c48ee9448"
+      },
+      "junit": {
+        "path": "/private/tmp/ai09-trials-focused-final.xml",
+        "bytes": 11854,
+        "sha256": "875d5981a213edd0938a8e06f513a1595b260969456dd1ab734773885de86898"
+      }
+    },
+    "full_ci_local": {
+      "status": "passed",
+      "exit_code": 0,
+      "wall_seconds": 1603.4029822349548,
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "make",
+        "ci-local",
+        "UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv",
+        "GITLEAKS=/opt/homebrew/bin/gitleaks"
+      ],
+      "log_path": "/private/tmp/ai09-trials-ci-local.log",
+      "log_sha256": "5ccff54eca648feb88c5827fd11a2ab9740dcfdfc578dc0f43dded73ab40585a",
+      "core_tests": 1862,
+      "core_seconds": 1366.26,
+      "real_tensorflow_cpu_tests": 3,
+      "real_tensorflow_cpu_seconds": 54.37,
+      "real_tensorflow_skips": 0,
+      "ruff_files": 575,
+      "mypy_files": 343,
+      "compose_scope": "configuration_only_no_services_started",
+      "full_ci_wheel_identical_to_installed_candidate": true
+    },
+    "final_docs_and_secrets": {
+      "status": "passed",
+      "scope": "docs_package_and_secrets_after_full_ci_receipt_update_followed_by_final_metadata_rescan",
+      "log_path": "/private/tmp/ai09-trials-final-docs-package-secrets.log",
+      "log_sha256": "71b5980d8677717e7921f7c598176ea2334e680e0beb6a7f3052a99ac3c91947"
+    }
+  },
+  "source_freeze": {
+    "path": "/private/tmp/ai09-trials-source-freeze.json",
+    "bytes": 93503,
+    "sha256": "6a66e0defada74d2909a55dd7f270438c077e54c5511df9a15d54d5476c2aea0"
+  },
+  "previous_remote_ci": {
+    "run_id": 37204205284,
+    "run_number": 146,
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37204205284",
+    "head_sha": "0b8b1aef4c77a85bc6a0078839310490b7334e59",
+    "conclusion": "failure",
+    "jobs": {
+      "checks": "failure",
+      "persistence": "success",
+      "secrets": "success"
+    },
+    "root_tests_passed": 1839,
+    "real_tf_tests": {
+      "passed": 2,
+      "failed": 1
+    },
+    "failed_test": "test_comparison_real_tree_heads_tensorflow_reload_and_no_refits",
+    "logs": {
+      "path": "/private/tmp/ai09-ci146-checks.log",
+      "bytes": 65743,
+      "sha256": "0b987cce2c82909063e55bdb88163dab1b7afb2147aecfdce55098877a67e7a2"
+    },
+    "fix": "Use existing artifact reload rtol=1e-6/atol=1e-6 for legacy-parent versus isolated CPU worker; retain exact isolated-worker replay and full key/interval checks",
+    "linux_fix_validation": "pending_required_ci_on_new_commit"
+  },
+  "known_limits": [
+    "Registry covers declared runner and supplied historical directories, not every command on the host",
+    "Historical attempts were inventoried after execution and are not claimed as pre-fit global reservations",
+    "Fit slots are charged conservatively, including failed and unresolved reservations",
+    "Missing full pipeline CPU/RSS and unresolved costs remain unknown",
+    "Private hashes are not protection against deliberate full history rewriting by the filesystem owner",
+    "Forecast reader remains limited to 3000 windows per role and TF matrix to 64MiB",
+    "Final test access audit, independent calibration/evaluation, larger profiles, scenarios/seeds, three accepted use-case cards and lifecycle remain open"
+  ],
+  "new_project_data_fits": 0,
+  "final_test_accessed": false,
+  "promotion_allowed": false
+}
