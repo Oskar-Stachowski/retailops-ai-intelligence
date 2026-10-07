@@ -26,6 +26,7 @@ def test_invalid_shard_count_cannot_silently_drop_tests(count):
         module.assign_files({"a.py", "b.py"}, {}, count)
 
 
-def test_invalid_file_weight_is_rejected():
+@pytest.mark.parametrize("weight", [-1, 0, float("nan"), float("inf")])
+def test_invalid_file_weight_is_rejected(weight):
     with pytest.raises(ValueError):
-        module.assign_files({"a.py"}, {"a.py": -1}, 1)
+        module.assign_files({"a.py"}, {"a.py": weight}, 1)

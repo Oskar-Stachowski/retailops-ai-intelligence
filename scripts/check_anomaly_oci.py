@@ -8,8 +8,10 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 import uuid
 import zipfile
+from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -27,9 +29,51 @@ def require(condition: bool, message: str) -> None:
 
 
 def command(args: list[str], *, cwd: Path = ROOT, log: Path | None = None) -> str:
-    result = subprocess.run(  # noqa: S603 - fixed executables, explicit task-owned paths
-        args, cwd=cwd, capture_output=True, text=True, check=False, timeout=3000
-    )
+    started = time.monotonic()
+    status = "failed"
+    try:
+        result = subprocess.run(  # noqa: S603 - fixed executables, explicit task-owned paths
+            args, cwd=cwd, capture_output=True, text=True, check=False, timeout=3000
+        )
+        status = "passed" if result.returncode == 0 else "failed"
+    finally:
+        if log is not None:
+            # Only bounded phase labels and numbers leave the private workspace.
+            timing = {
+                "phase": log.stem,
+                "elapsed_seconds": round(time.monotonic() - started, 3),
+                "status": status,
+            }
+            destination = ROOT / "reports/ci-anomaly-timings.jsonl"
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            with destination.open("a") as stream:
+                stream.write(json.dumps(timing) + "\n")
+            print(json.dumps({"anomaly_phase": timing}), flush=True)
+    if log is not None and log.name == "public-input-preparation.log":
+        previous = 0.0
+        for line in result.stdout.splitlines():
+            try:
+                item = json.loads(line)
+            except ValueError:
+                continue
+            if item.get("stage") not in {
+                "import",
+                "curated",
+                "full_dq",
+                "qualified_features",
+                "independent_verification",
+            }:
+                continue
+            elapsed = float(item["elapsed_seconds"])
+            detail = {
+                "phase": "consumer_" + item["stage"],
+                "elapsed_seconds": round(elapsed - previous, 3),
+                "status": "passed",
+            }
+            previous = elapsed
+            with (ROOT / "reports/ci-anomaly-timings.jsonl").open("a") as stream:
+                stream.write(json.dumps(detail) + "\n")
+            print(json.dumps({"anomaly_phase": detail}), flush=True)
     if log is not None:
         log.write_text(
             result.stdout
@@ -104,6 +148,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     )
     work = ROOT / ".local" / ("ai07-oci-" + uuid.uuid4().hex[:10])
     work.mkdir(parents=True, mode=0o700)
+    timings = ROOT / "reports/ci-anomaly-timings.jsonl"
+    timings.parent.mkdir(parents=True, exist_ok=True)
+    timings.write_text("")
     project = "retailops_ai_anomaly_" + uuid.uuid4().hex[:10]
     environment = local_stack.environment_file(create=True)
     override = work / "compose-override.yaml"
@@ -125,6 +172,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     require(command([*base, "ps", "-a", "-q"]) == "", "anomaly_oci_fresh_owned_project")
     owned = False
     stages: list[str] = []
+    builder = ThreadPoolExecutor(max_workers=1)
 
     def mark(stage: str) -> None:
         stages.append(stage)
@@ -142,6 +190,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             refresh(original, current)
             capsules[kind] = current
         mark("saved_models_frozen_evaluation_and_current_compatibility")
+        # Image construction is independent of public data preparation. It never
+        # starts services; its result is required before migrations or acceptance.
+        owned = True
+        build = builder.submit(command, [*base, "build", "api", "mlflow"], log=work / "build.log")
         if args.prepared_receipt is None:
             native_python = producer / "services/api/.venv/bin/python"
             require(native_python.is_file(), "anomaly_oci_producer_toolchain_required")
@@ -209,8 +261,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "anomaly_oci_native_public_parents",
         )
         mark("native_complete_public_source_snapshot_dq_coverage_features")
-        owned = True
-        command([*base, "build", "api", "mlflow"], log=work / "build.log")
+        build.result()
         image = command([docker, "image", "inspect", project + "-api:local", "--format", "{{.Id}}"])
         require(
             bool(re.fullmatch(r"sha256:[0-9a-f]{64}", image)),
@@ -326,6 +377,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "transport_durability": "offline_only",
         }
     finally:
+        # No Docker build may outlive its owned cleanup, even if preparation fails.
+        builder.shutdown(wait=True)
         if owned:
             command([*base, "down", "--volumes", "--remove-orphans"], log=work / "cleanup.log")
 
