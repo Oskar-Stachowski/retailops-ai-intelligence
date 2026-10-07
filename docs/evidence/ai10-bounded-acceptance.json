@@ -4,6 +4,11 @@
     "receipt_status": "passed",
     "sha256": "ec099dfab3045cde1c2811fbc5be423d4d62c40c6a4fe98520cdf4c9ba6b6e8f"
   },
+  "accepted_main_compatibility": {
+    "path": "docs/evidence/ai10-accepted-main-campaign-repin.json",
+    "receipt_status": "passed",
+    "sha256": "1a70d105084886668809e03307b7d1f32ae4ad5fb71cf7c1980f549f45b1664f"
+  },
   "evidence_boundary": "Composition of separately executed bounded integration lanes on exact receipt commits; preserves each qualified model lineage, not a new common scientific qualification campaign.",
   "fault_and_access_components": [
     {
@@ -84,15 +89,31 @@
   "integration_runtime_status": "in_progress",
   "native_models": {
     "anomaly": {
+      "ACK_next_offsets": {
+        "0": 1064,
+        "1": 1400
+      },
       "accepted_file_handoff_UI_pages": 25,
       "accepted_file_handoff_rows": 1232,
+      "built_UI_pages": 25,
+      "built_UI_rows": 1232,
       "earlier_scope_receipt": {
         "path": "docs/evidence/ai10-native-anomaly-accepted.json",
         "receipt_status": "passed",
         "sha256": "0a7080d7a161cf79a5b06b69dc79e85abf47244d1d617444a3b992840293dc7e"
       },
-      "original_SQL_receipt": null,
-      "status": "pending_original_SQL_publisher"
+      "model_refits": 0,
+      "native_outputs": 1232,
+      "native_payloads_unchanged": true,
+      "original_AI_SQL_publisher": true,
+      "original_SQL_receipt": {
+        "path": "docs/evidence/ai10-native-anomaly-original-sql-accepted.json",
+        "receipt_status": "passed",
+        "sha256": "d6daefee6462f57c7d8c75901a9abe69a36ce927ebff56729e77dcdcc28933dd"
+      },
+      "source_duplicates": 1232,
+      "source_projected": 1232,
+      "status": "passed"
     },
     "forecast_v12": {
       "development_namespace": "retailops-demand-forecast-v12-development",
@@ -147,7 +168,6 @@
   },
   "recorded_date": "2026-10-07",
   "remaining": [
-    "anomaly_original_AI_SQL_publisher_receipt",
     "full_original_v12_registry_SQL_publisher_API_UI_receipt",
     "final_documentation_and_exact_head_required_CI",
     "both_protected_main_merges_and_required_main_CI"

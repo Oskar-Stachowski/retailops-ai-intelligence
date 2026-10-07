@@ -11,9 +11,17 @@ on:
       - "scripts/accept_anomaly_lifecycle.py"
       - "scripts/deliver_ai10_model_native.py"
       - "scripts/run_ai10_model_consumer.py"
+      - "scripts/select_ai10_native_lanes.py"
       - "docs/reference/ai10-native-output-consumer.json"
       - ".gitleaks.toml"
   workflow_dispatch:
+    inputs:
+      lane:
+        description: "Original native model acceptance to execute"
+        type: choice
+        options: [all, stockout, anomaly]
+        required: true
+        default: all
 
 permissions:
   contents: read
@@ -24,7 +32,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  select:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      stockout: ${{ steps.lanes.outputs.stockout }}
+      anomaly: ${{ steps.lanes.outputs.anomaly }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - id: lanes
+        env:
+          AI10_BEFORE: ${{ github.event.before }}
+          AI10_NATIVE_LANE: ${{ inputs.lane }}
+        run: python3 scripts/select_ai10_native_lanes.py
   accept:
+    needs: select
+    if: needs.select.outputs.stockout == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
@@ -154,6 +180,8 @@ jobs:
           retention-days: 30
           overwrite: false
   anomaly:
+    needs: select
+    if: needs.select.outputs.anomaly == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     env:

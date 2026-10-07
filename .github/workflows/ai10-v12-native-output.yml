@@ -50,6 +50,9 @@ jobs:
           uv sync --locked --extra snapshot --extra forecast
           uv sync --locked --project tools/intelligence-delivery
           mkdir -m 700 acceptance-proofs
+      - name: Preflight actual application database contract before archive or Source preparation
+        run: |
+          uv run --frozen python -c 'import sys;sys.path.insert(0,"scripts");from check_ai10_v12_native import preflight_application_database;preflight_application_database()'
       - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

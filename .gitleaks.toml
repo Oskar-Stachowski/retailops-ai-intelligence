@@ -89,3 +89,10 @@ condition = "AND"
 paths = ["(^|/)docs/ai10\\-ui\\-ci\\-receipt\\.json$"]
 regexTarget = "secret"
 regexes = ["^3c44eb87d3619f06d49d01c06e2fc6b0715b13653eb43637e0e3fae6c6b5d710$", "^5fbd87da2dc5dec9256e2f53f0c85eda3a4ab1c83de9e7e12819e4d6acaf81a3$", "^929ba31c8a55edde4a3e35d89845a43cb6a0ec9b8ab63d688e6917a10abf80e6$", "^sha\\-44f7404010b55eba3d9bacd888d2dc7bb9797180$", "^sha\\-626c7eb54588fcd72c432dade3db2ca439f5f33f$", "^sha\\-cb0c79848247612bf71fb9ccf63a8ff3847b5ca1$"]
+
+[[allowlists]]
+description = "Exact SHA-256 of public successful gitleaks execution receipt in v12 failed-run evidence; not a credential"
+condition = "AND"
+paths = ['(^|/)docs/evidence/ai10-v12-native-database-failure[.]json$']
+regexTarget = "secret"
+regexes = ['^e9594b0766f992b500d06d77131c4d94463d2705e155b6e26b8f03713b66b7f2$']

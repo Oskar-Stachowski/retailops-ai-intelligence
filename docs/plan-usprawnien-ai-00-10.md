@@ -816,3 +816,42 @@ CI-A pozostaje **0–1 h netto całego AI00–10** dla tej samej unikniętej pó
 nieudanej rundy. Nie dodawać do siebie wcześniejszych aktualizacji CI-A ani
 pokrywających się P05/P07/P08/P12. Sharding CI-B i pełny capture pozostają
 osobnymi krokami; green fixture producenta nie zamyka całego AI10.
+
+
+## Usprawnienia końcowego odbioru AI10 — 2026-10-07
+
+Impact dotyczy czasu od teraz do AI00–10. Nie sumować z wcześniejszymi
+prognozami ani ze wspólnymi zmianami CI #34. Implementacja lokalna przeszła
+kontrole; odbiór zdalny i chroniona publikacja pozostają wymagane.
+
+1. **Wczesny preflight rzeczywistej aplikacji v12.** Po locked install wywołać
+   `preflight_application_database`, przed archive/Source. Sprawdza actual
+   Settings/application z własnym `ai_app/retailops_ai`; potem wykonać wszystkie
+   niezmienione native gates. **Impact projektu: 0 min dla poprawnej konfiguracji;
+   warunkowo 40–65 min przy uniknięciu jednej podobnej późnej awarii.** Poprzedni
+   runtime zatrzymał się dopiero po pełnym MLflow import i preload. Jest to
+   ograniczenie ryzyka, nie zmierzona oszczędność poprawnego przebiegu.
+2. **Uruchomić pełny native v12 bez osobnego prerequisite archive-only.**
+   Przygotować świeży własny GET-only handoff, exact SHA mapy i closed inference
+   date. Native sam odzyskuje i weryfikuje wszystkie 669 plików. Archive-only
+   wykonać tylko jako potrzebną diagnostykę. **Impact projektu: 20–23 min, gdy
+   inaczej oba odbiory byłyby wykonane szeregowo; aktualnie 0 min**, ponieważ
+   już używamy direct native. Nie ma persistent/public cache archiwum; pełny
+   verifier i cold/recovery pozostają wykonywane.
+3. **Wybrać dotkniętą ścieżkę stockout/anomaly.** Manual: lane `all`, `stockout`
+   albo `anomaly`. Automat korzysta z exact git diff; tylko znane pliki acceptora
+   mogą pominąć drugi model. Brak zakresu, common, unknown albo zmiana workflow
+   uruchamia oba. Zachować wszystkie gates wybranej ścieżki i pełny Required CI.
+   **Impact projektu: 0–5 min na przyszłą rundę**, zależnie od runner contention.
+   Parallel native modele zwykle dają 0 min na critical path. Uniknięta ponowna
+   kwalifikacja stockout oszczędza orientacyjnie 5–7 min runnera; nie oznacza
+   automatycznie takiego skrócenia całego projektu.
+4. **Zachować exact receipts odbiorów.** Wiązać każdą próbę z HEAD/Source/ZIP SHA
+   i nie zastępować finalnego pass wcześniejszym partial pass. Anomaly ma 1232
+   original SQL ACK i 25 stron UI, stockout 40 ACK i pełny UI. V12 failed receipt
+   zachowuje wykonane wcześniejsze gates. **Impact bezpośredni: 0 min**;
+   uniknięcie zbędnych powtórzeń mieści się we wcześniejszym P07.
+
+Reuse wyników semantycznego verifiera wewnątrz procesu nie wdrożono i nie
+przypisano mu impactu. Original recovery już pobiera niezależne pliki równolegle;
+nie zaliczamy tej istniejącej właściwości jako nowego przyspieszenia.

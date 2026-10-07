@@ -31,19 +31,43 @@ Native wymaga również jawnej zamkniętej daty UTC inference. Nie ma automatycz
 downloadu po push ani fallbacku do usuniętych handoff secrets. Oba workflowy
 przeszły actionlint; trwający native run zachowuje definicję z własnego commitu.
 
-**Anomaly — oryginalny publisher jeszcze nieodebrany:** run `37608775665`,
-job `112750655905`, zaliczył pełne przygotowanie publicznego Source/DQ/features,
-oryginalny frozen model, lifecycle, atomowy batch 1232 wyników oraz SIGKILL
-i odtworzenie pełnego stanu. CLI zakończyło się kodem 2 podczas odczytu
-mapowania portu własnej bazy, przed callbackiem publishera. Zachowany export
-`passed` opisuje wyłącznie wcześniejsze native phases; [receipt całej próby](evidence/ai10-native-anomaly-original-sql-failure.json)
-ma jawny status failed i nie poświadcza publishera ani Source API/UI.
-Nowy runtime sprawdza rzeczywistą własność kontenera i pojedynczy loopback port
-przez inspect, przed kosztowną generacją Source i ponownie po SIGKILL.
-Jednorazowy overlay do odbioru dodaje własną sieć bridge do tej bazy; standardowy
-Compose pozostaje prywatny. Po późnym błędzie własny export otrzymuje failed,
-a cudzy ukończony export jest zachowany. Wszystkie 32 exporter/publisher/workflow
-guards passed. Pełny nowy odbiór anomalii jest nadal wymagany.
+**Anomaly — oryginalny publisher SQL odebrany:** run `37615427814`, job
+`112772493567`, AI `eaad6c4` i Source `cbbf711`, zakończył się success.
+Pełny frozen model, registry, atomowy batch, SIGKILL/recovery i 1232 rzeczywiste
+AI SQL ACK przeszły Source broker/SQL/TCP API i 25 stron built UI. Source ma
+1232 projekcje i 1232 duplicates, ACK vector `[1064,1400]`.
+[Pełny receipt](evidence/ai10-native-anomaly-original-sql-accepted.json) wiąże
+SHA ZIP, raporty oraz niezależną weryfikację wszystkich payloadów i ACK.
+Wcześniejsza [nieudana próba](evidence/ai10-native-anomaly-original-sql-failure.json)
+pozostaje zachowana jako failed bez poświadczenia oryginalnego publishera.
+
+**V12 — druga próba zatrzymana na rzeczywistej konfiguracji API:** run
+`37612565927` na `8665f43` zaliczył 254 boundary tests, wszystkie 669 plików,
+kwalifikację i dwa frozen cold predictions, dziesięć review gates, pełny
+664-file import MLflow HTTP oraz development registration/promotion/preload.
+Actual intake zatrzymał `isolated_ai_database_required`: controller używał
+`v12_test`, a rzeczywista aplikacja wymaga `ai_app` i `retailops_ai`.
+[Receipt failed](evidence/ai10-v12-native-database-failure.json) zachowuje zakres
+bez twierdzenia o finalnym SQL/publisher/Source API/UI. Własne sześć handoff
+objects i unikalny secret usunięto; oryginalne S3 zachowano.
+Poprawka używa kanonicznych nazw w nadal osobnym kontenerze UUID, z prywatnym
+hasłem i loopback portem. Wczesny preflight wywołuje rzeczywistą aplikację przed
+archiwum. Sześć runner guards, 22 łączne testy runner/selection/workflow,
+lint/format 1109 plików, mypy 655+10 i docs/contracts passed. Pełny nowy odbiór
+v12 pozostaje wymagany; original quality nadal `not_ready`.
+
+**Aktualny Required CI:** AI `fe62436`, run `37619676065`, ma 16/16 success;
+Source `4b03664`, run `37617019955`, ma 30/30 success.
+[Receipt Source](evidence/ai10-source-final-head-ci.json) wiąże exact head.
+Nowe zmiany runtime/CI wymagają odbioru aktualnego headu.
+
+**Usprawnienia odbioru:** manual lane stockout/anomaly/all; automat wybiera
+jedną ścieżkę tylko dla rozpoznanych plików acceptora, przy common/unknown oba.
+Native v12 sam odzyskuje oryginalne archiwum; osobny archive-only nie jest
+prerequisite. Nie wdrożono cache semantycznego verifiera ani skip cold/recovery.
+[Kroki i impact](plan-usprawnien-ai-00-10.md) podają ograniczenia szacunków.
+Wspólne usprawnienia CI PR #34 pozostają w zdalnym odbiorze; integracja zachowa
+wszystkie bramki AI10.
 
 **Integracja z nowszym main AI09:** merge zachowuje `3329a81`, wszystkie
 kontrakty i kod AI09 oraz wymagany osobny job TensorFlow. Żadna bramka AI10
@@ -74,7 +98,7 @@ zweryfikowano względem SHA `e9637201743809a5ecf2c4c98fab2899cab9efd7c4a0bd8a97b
 [receipt](evidence/ai10-native-stockout-original-sql-accepted.json) zachowuje
 oryginalne raporty. Niezależny lokalny Source parser ponownie zweryfikował
 wszystkie 40 native outputów i oryginalnych ACK bindings. Zero refitów i brak
-production deployment pozostają zachowane. Publisher anomaly i v12 jeszcze pending.
+production deployment pozostają zachowane. Publisher anomaly jest odebrany; pełny v12 pozostaje pending.
 
 **Publisher z oryginalnej bazy — nowy przyrost, runtime pending:** Source
 `b73468a` dodaje wiązanie pełnego census z oryginalnymi AI SQL ACK i SHA

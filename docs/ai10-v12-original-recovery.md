@@ -19,15 +19,19 @@ archiwum nie nadaje produkcyjnej jakości ani uprawnień do deploymentu.
    task-owned repo secret `AI10_V12_READ_HANDOFF_<uuid>`. Nie przenosić kluczy
    konta AWS do runnera. Nie zapisywać signed URLs w Git, receipts lub logach.
    Własność prefixu/secretu oraz deadline zachować w prywatnym state file.
-4. Uruchomić [AI10 original v12 archive](../.github/workflows/ai10-v12-original-archive.yml)
-   ręcznie przez `workflow_dispatch` na dokładnym commicie, przekazując nazwę secretu i SHA-256
-   prywatnej mapy. Downloader pozwala wyłącznie na HTTPS do przypiętego bucketu,
+4. Dla pełnego odbioru uruchomić bezpośrednio
+   [AI10 original v12 native output](../.github/workflows/ai10-v12-native-output.yml)
+   przez `workflow_dispatch` na dokładnym commicie, przekazując świeżą nazwę secretu,
+   SHA-256 prywatnej mapy i zamkniętą datę UTC inference. Ten workflow sam wykonuje
+   recovery oraz pełne kwalifikacje/verifier, registry, SQL/publisher i Source API/UI.
+   [AI10 original v12 archive](../.github/workflows/ai10-v12-original-archive.yml)
+   służy odrębnemu odbiorowi samego archiwum; nie jest wymaganym poprzednikiem
+   pełnego native workflow. Uruchomienie obu oznacza dwa osobne pobrania i
+   weryfikacje na różnych runnerach. Downloader pozwala wyłącznie na HTTPS do przypiętego bucketu,
    dokładne object keys oraz pełny census. Redirect, brak/extra file, zmienione
    bytes, niezgodny hash i niewystarczający disk reserve przerywają odbiór.
    Workflow nie uruchamia downloadu po push i nie ma domyślnego starego secretu.
-   Pełny odbiór [AI10 original v12 native output](../.github/workflows/ai10-v12-native-output.yml)
-   również wymaga ręcznego uruchomienia, świeżego handoff i jawnej zamkniętej
-   daty UTC inference. Jego trwające wykonanie zachowuje definicję z własnego
+   Trwające wykonanie zachowuje definicję z własnego
    przypiętego commitu.
 5. Domyślny local reserve pozostaje **50 GiB**. Niższy **6 GiB** dopuszcza
    wyłącznie disposable GitHub-hosted Linux runner. Preflight wymaga wolnego

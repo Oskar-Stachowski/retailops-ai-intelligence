@@ -11,6 +11,7 @@ import secrets
 import shutil
 import subprocess
 import sys
+import tempfile
 import uuid
 import xml.etree.ElementTree as xml
 from datetime import UTC, datetime, timedelta
@@ -62,6 +63,30 @@ from retailops_ai.model_lifecycle.v12_scratch_tracking import ScratchTracking
 from retailops_ai.security.local import LocalAccess, load_private_policy, token_fingerprint
 from retailops_ai.security.models import AccessPolicy
 from retailops_ai.source_snapshot.files import file_hash, read_bytes, read_json
+
+
+def original_database_url(password: str, port_number: int) -> str:
+    return f"postgresql+psycopg://ai_app:{password}@127.0.0.1:{port_number}/retailops_ai"
+
+
+def application_settings(work: Path, url: str, policy: Path | None) -> Settings:
+    settings = Settings(
+        APP_ENV="test",
+        ARTIFACT_ROOT=work / "artifacts",
+        DATABASE_URL=url,
+        API_AUTH_FILE=policy,
+        V12_DEVELOPMENT_MODE=True,
+    )
+    # Exercise the real application constructor, including its independent index
+    # database boundary. Construction does not connect or start a service.
+    create_app(settings)
+    return settings
+
+
+def preflight_application_database() -> None:
+    with tempfile.TemporaryDirectory(prefix="ai10-v12-config-") as temporary:
+        application_settings(Path(temporary), original_database_url(secrets.token_hex(24), 1), None)
+    print('{"stage":"actual_application_database_configuration","status":"passed"}')
 
 
 def access(work: Path, inputs: PreparedInputs) -> tuple[Path, dict[str, str], Principal, Principal]:
@@ -431,11 +456,11 @@ def main() -> int:
             "-p",
             "127.0.0.1::5432",
             "-e",
-            "POSTGRES_USER=v12_test",
+            "POSTGRES_USER=ai_app",
             "-e",
             "POSTGRES_PASSWORD=" + password,
             "-e",
-            "POSTGRES_DB=v12_test",
+            "POSTGRES_DB=retailops_ai",
             IMAGES["db"],
         )
         owned.append(names["db"])
@@ -470,15 +495,13 @@ def main() -> int:
         )  # noqa: S104,S108 - owned isolated container only
         owned.append(names["mlflow"])
         mlflow_port = port(names["mlflow"], "5000/tcp")
-        url = f"postgresql+psycopg://v12_test:{password}@127.0.0.1:{port(names['db'], '5432/tcp')}/v12_test"
+        url = original_database_url(password, port(names["db"], "5432/tcp"))
         wait_ready(url, mlflow_port)
         engine = create_engine(url, hide_parameters=True, connect_args={"connect_timeout": 3})
         with engine.begin() as connection:
             connection.execute(text("CREATE SCHEMA ai"))
             connection.execute(text("CREATE EXTENSION vector"))
-        settings = Settings(
-            APP_ENV="test", ARTIFACT_ROOT=work / "artifacts", DATABASE_URL=url, API_AUTH_FILE=policy
-        )
+        settings = application_settings(work, url, policy)
         migrate(settings)
         with engine.begin() as connection:
             connection.execute(

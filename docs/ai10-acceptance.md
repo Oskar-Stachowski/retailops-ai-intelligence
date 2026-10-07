@@ -21,7 +21,7 @@ wszystkich receipts, sumy przed/po korekcie, offsety i jawne pending gates.
 | Snapshot REST/SQL 43 tabel | Brak ogólnej historii i wspólnego wektora dla wszystkich tabel | Jawnie unsupported; bounded live reads nie reklamują snapshotu |
 | Stream obserwacji | Source SQL outbox i capture pełnego TLS/SCRAM prefixu; osobny AI SQL, checkpoint, ACK, overlap i późna korekta | **Passed**: [oryginalny receipt](evidence/ai10-source-sql-handoff-accepted.json), 9 testów, sumy 4 → 7, ACK `[0,0,3]` → `[0,0,4]` |
 | Qualified stockout | Frozen model, registry/cold worker, oryginalny publisher AI SQL i 40 ACK, Source SQL/API i built UI | **Passed**: [oryginalny SQL receipt](evidence/ai10-native-stockout-original-sql-accepted.json), 40 wyników/40 duplikatów, ACK `[34,46]` |
-| Qualified anomaly | Oryginalny model AI07, OCI/registry/SIGKILL recovery, 1232 wyników, Source SQL/API i 25 stron built UI | **Passed** dla file handoff: [receipt](evidence/ai10-native-anomaly-accepted.json); oryginalny SQL publisher wymaga nowego pełnego odbioru |
+| Qualified anomaly | Oryginalny model AI07, OCI/registry/SIGKILL recovery, oryginalny publisher SQL i 1232 ACK, Source SQL/API i 25 stron built UI | **Passed**: [oryginalny SQL receipt](evidence/ai10-native-anomaly-original-sql-accepted.json), 1232 wyników/1232 duplikatów, ACK `[1064,1400]` |
 | Oryginalny forecast v12 | 664 oryginalne pliki i frozen wheel, nowy Source 102 dni/43 tabele, 56 wyników/4 szeregi/horyzont 14, MLflow/SQL/publisher/Source API/UI | Archiwum [passed](evidence/ai10-original-v12-recovered.json); pełny native runtime pending |
 | Awarie i trwałość | Brak ACK przed SQL commit, SIGKILL po commit, fencing, gaps, raw quarantine, niedostępne SQL/broker/DLQ i recovery | Odebrane obowiązkowe komponenty; [SQL](ai10-durable-observation-replay-ci-receipt.json), [TLS broker](ai10-observation-broker-ci-receipt.json), [checkpoints](ai10-checkpoint-ci-receipt.json) |
 | Sugestie | Jawny poprawny fixture, human approval, auth, trwałe read API i istniejący UI | Odebrany zakres AI10; rzeczywisty producent należy do AI12: [receipt](ai10-suggestion-ui-ci-receipt.json) |
@@ -112,6 +112,9 @@ ani streamu wszystkich 43 tabel. HTTP/broker credentials pozostają poza Git.
    kwalifikacje i frozen modele; nie ponawiaj ocen końcowych ani refitów. Source,
    jego oddzielny SQL/broker, built UI i Chromium muszą być przygotowane przed
    wykonaniem acceptora. Baza AI pozostaje aktywna do końca odbioru Source.
+   Ręcznie wybierz `lane=all`, `stockout` albo `anomaly`; odbiór obu modeli wymaga
+   dwóch zaliczonych ścieżek. Zmiany wyłącznie znanego acceptora wybierają właściwy
+   model, a wspólne/nieznane zmiany albo brak poprawnego zakresu Git wybierają oba.
 7. Istniejący publisher musi dostarczyć pełny census z oryginalnego AI SQL,
    uzyskać ACK, następnie utrwalić partition/offset. Source porównuje original
    native IDs/payloads, SHA wartości na tych ACK coordinates oraz pełny SQL
@@ -168,7 +171,7 @@ dedykowane workflowy opisane wyżej. Zaliczenie samej komendy nie zamyka AI10.
 - [x] Rzeczywisty Source SQL/capture → ten sam TLS broker → AI SQL/ACK/overlap.
 - [x] Qualified stockout/anomaly przez rzeczywiste Source API i built UI.
 - [x] Stockout przez oryginalny AI SQL publisher przed cleanupem.
-- [ ] Anomaly przez oryginalny AI SQL publisher przed cleanupem.
+- [x] Anomaly przez oryginalny AI SQL publisher przed cleanupem.
 - [ ] Oryginalny v12 przez pełny registry/SQL/publisher/Source API/UI na 102 dniach.
 - [ ] Końcowy raport bounded odbioru, aktualne statusy i registry.
 - [ ] Required CI obu dokładnych HEAD oraz obu main po protected merge.
