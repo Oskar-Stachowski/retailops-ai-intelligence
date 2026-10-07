@@ -187,5 +187,28 @@
     "new_project_fits": 0,
     "final_test_opened": false,
     "stage_ready": false
+  },
+  "corrected_manifest_head_full_ci": {
+    "run": 37694343795,
+    "head": "0796d27e437271dc9c09b78fb087454fb6494a35",
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs_read_and_total": 17,
+    "success": 15,
+    "failed": [
+      "persistence",
+      "required-result"
+    ],
+    "failed_job": 113042573697,
+    "manifest_regressions_passed": true,
+    "test_shards_all_passed": true,
+    "native_cpu": {
+      "job": 113042573734,
+      "passed": 8,
+      "seconds": 112.19
+    },
+    "original_failure_retained": true,
+    "backup_control_root_cause_unconfirmed": true,
+    "updated_child_control_full_ci_required": true
   }
 }

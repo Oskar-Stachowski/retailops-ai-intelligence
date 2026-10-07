@@ -69,6 +69,9 @@ wymaga osobnego pełnego odbioru przed protected merge.
 
 CI `37694343795` na `0796d27e` ujawniło dodatkową porażkę testu przerwanego
 backupu w jobie `113042573697`: `backup_interruption_not_observed`.
+Cały run zakończył się failure z 15/17 success: persistence i required-result
+nie przeszły. Wszystkie shardy testów, w tym regresje limitu manifestu,
+przeszły; native CPU `113042573734` zaliczył 8 testów w 112.19 s.
 Dotychczasowy komunikat nie pokazywał kodu wyjścia dziecka ani przyczyny
 wewnętrznej. Nowa kontrola zachowuje rzeczywisty SIGKILL, maintenance,
 fence obu baz i odrzucenie połączeń aplikacyjnych przed jawnym resume.
