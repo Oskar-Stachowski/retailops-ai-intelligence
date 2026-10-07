@@ -1,0 +1,89 @@
+{
+  "recorded_at": "2026-10-07T10:59:43.627399+00:00",
+  "scope": "canonical development resource diagnostic implementation; controlled process tests and tiny native API wiring only",
+  "producer_commit": "1de462729012a1bad458a8da4ad317ec22dbc5b8",
+  "canonical_plan": "../reference/ai09-development-capacity.json",
+  "supervisor_tests": {
+    "passed": 14,
+    "wall_seconds": 0.88,
+    "includes": [
+      "actual successful worker cost",
+      "nonzero failed worker retained cost",
+      "own process-group termination and descendant wait",
+      "actual descendant allocation exceeds tree RSS cap",
+      "scratch overflow and symlink failure",
+      "local full-profile refusal",
+      "smaller or final scope refusal",
+      "private no-replace receipt",
+      "system worker RSS rejects an unsampled or invalid peak; mocked control flow without generation"
+    ]
+  },
+  "controlled_native": {
+    "generation": {
+      "business_timezone": "UTC",
+      "days": 45,
+      "end_date": "2026-07-31",
+      "forecast_plan_days": 14,
+      "forecast_plan_version": "known-forecast-plans-1.0.0",
+      "label_tail_days": 0,
+      "max_daily_rows": 90,
+      "origin_days": 0,
+      "output_format": "csv",
+      "products": 2,
+      "profile": "ai-load",
+      "seed": 42,
+      "start_date": "2026-06-17",
+      "stores": 1,
+      "warehouses": 1,
+      "warmup_days": 0
+    },
+    "source_dataset_id": "source-sha256-84fe82b643bc07b941e6403c83c8a38646e4cbfcd99cbfa1766e66bca94bcca0",
+    "source_schema_version": "2.7.0",
+    "snapshot_schema_version": "1.1.0",
+    "source_rows": 2800,
+    "source_tables": 58,
+    "operational_snapshot_rows": 2124,
+    "curated_dataset_id": "curated-sha256-ce64b0c5c8350c0df7e61bdd84e4da435705ffd41d6161b7d7497fc2a989e423",
+    "accepted_rows": 2124,
+    "rejected_rows": 0,
+    "forecast_source_readiness": "passed",
+    "completed_phases": [
+      "generation",
+      "qualification",
+      "export",
+      "import",
+      "curation"
+    ],
+    "resource_qualified": false,
+    "canonical_profile_qualified": false
+  },
+  "retained_failures": [
+    {
+      "scope": "initial supervisor tests",
+      "result": "1 failed11 passed1.08s",
+      "reason": "descendant signal delivery/reaping not yet waited; corrected supervisor waits known owned descendants"
+    },
+    {
+      "scope": "initial tiny native import metadata assertion",
+      "reason": "incorrect planned-forecast1.2 expectation; actual pinned producer declares2.7 source and1.1 snapshot, explicit frozen expectation corrected",
+      "parents_reused_without_regeneration": true
+    }
+  ],
+  "checks": {
+    "mypy_source_files": 610,
+    "mypy": "passed",
+    "ruff": "passed",
+    "docs": "passed",
+    "full_remote_probe": "not_started_at_recording"
+  },
+  "qualification": {
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "final_generation_attempted": false,
+    "final_test_opened": false,
+    "canonical_ai_dev_qualified": false,
+    "canonical_ai_training_qualified": false,
+    "quality_qualified": false,
+    "stage_ready": false
+  }
+}

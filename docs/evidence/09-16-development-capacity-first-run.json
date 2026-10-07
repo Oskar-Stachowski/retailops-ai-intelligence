@@ -1,0 +1,96 @@
+{
+  "recorded_at": "2026-10-07T11:12:30.723633+00:00",
+  "scope": "failed actual canonical ai-dev resource diagnostic, not a project campaign attempt",
+  "workflow_run": 37611605538,
+  "workflow_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37611605538",
+  "control_commit": "cef4f0816afe6fb3ce8504ed02f955973db1f85a",
+  "producer_commit": "1de462729012a1bad458a8da4ad317ec22dbc5b8",
+  "artifact_id": 11477403990,
+  "artifact_sha256": "b04e4f3042799edd773a1872c773f00560df5896b418e4cb0a8b99f326c54b57",
+  "resource_receipt_sha256": "43f442ede470bf1bbafc2164809d1d76c1651f34eef1b4931b247bdd109e5187",
+  "generation": {
+    "days": 365,
+    "end_date": "2026-07-31",
+    "forecast_plan_days": 14,
+    "max_daily_rows": 182500,
+    "products": 100,
+    "profile": "ai-dev",
+    "seed": 42,
+    "start_date": "2025-08-01",
+    "stores": 5,
+    "warehouses": 3
+  },
+  "preflight": {
+    "available_memory": 15532302336,
+    "disk_free": 90841833472
+  },
+  "actual_receipt": {
+    "budgets": {
+      "minimum_available_memory_bytes": 1073741824,
+      "minimum_free_disk_bytes": 6442450944,
+      "sample_seconds": 0.2,
+      "scratch_bytes": 8589934592,
+      "tree_rss_bytes": 4294967296,
+      "wall_seconds": 3600
+    },
+    "canonical_ai_training_qualified": false,
+    "completed_phases": 0,
+    "control_commit": "cef4f0816afe6fb3ce8504ed02f955973db1f85a",
+    "failed_outputs_retained": true,
+    "final_generation_attempted": false,
+    "final_test_opened": false,
+    "new_project_fits": 0,
+    "phases": [
+      {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": -9,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 11469152256,
+        "minimum_free_disk_bytes": 90835492864,
+        "phase": "generation",
+        "reason": "tree_rss_limit",
+        "sample_seconds": 0.2,
+        "sampled_peak_scratch_allocated_bytes": 8192,
+        "sampled_peak_scratch_logical_bytes": 5711,
+        "sampled_tree_peak_rss_bytes": 4295168000,
+        "sampled_worker_cpu_seconds": 127.42,
+        "samples": 627,
+        "status": "failed",
+        "wall_seconds": 127.76325374999999
+      }
+    ],
+    "plan_sha256": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9",
+    "producer_commit": "1de462729012a1bad458a8da4ad317ec22dbc5b8",
+    "project_journal_initialized": false,
+    "quality_qualified": false,
+    "reason": "tree_rss_limit",
+    "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+    "stage_ready": false,
+    "status": "failed",
+    "wall_seconds": 127.87471243200002
+  },
+  "interpretation": {
+    "measured_requirement": "process tree exceeded4GiB during generation; total completed-profile requirement remains unknown",
+    "full_generation_completed": false,
+    "later_phases_started": false,
+    "larger_budget_qualified": false,
+    "legacy_limits_changed": false,
+    "automatic_retry_performed": false,
+    "next_step": "declare and measure a separate prospective resource revision from available runner capacity, or implement bounded producer generation; retain this failure; do not reduce or relabel the canonical profile"
+  },
+  "estimate": {
+    "previous_active_hours": [
+      24,
+      40
+    ],
+    "current_working_days": [
+      5,
+      7
+    ],
+    "optimistic_working_days": [
+      3,
+      5
+    ],
+    "uncertainty": "completed ai-dev and ai-training peak/cost remain unmeasured"
+  }
+}
