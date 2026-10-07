@@ -66,5 +66,42 @@ def test_ai10_requalification_uses_original_successful_jobs_without_repeating_ev
     )
     assert receiver["env"]["REQUIRE_BROKER_TESTS"] == "1"
     assert receiver["env"]["REQUIRE_AI10_NATIVE_MODEL_READ"] == "1"
+    assert receiver["env"]["REQUIRE_AI10_NATIVE_BROWSER"] == "1"
     assert receiver["env"]["AI10_NATIVE_PRODUCER_COMMIT"] == "${{ github.sha }}"
     assert receiver["env"]["AI10_NATIVE_STOCKOUT_OUTPUT"].endswith("/accepted-model")
+
+
+def test_original_anomaly_acceptance_must_finish_before_independent_browser_reads():
+    workflow = yaml.safe_load((ROOT / ".github/workflows/ai10-qualified-output.yml").read_text())
+    steps = workflow["jobs"]["anomaly"]["steps"]
+    commands = "\n".join(step.get("run", "") for step in steps)
+    assert "scripts/check_anomaly_oci.py" in commands
+    assert "--native-output accepted-anomaly" in commands
+    assert "--with-deps chromium" in commands
+    assert "npm run build" in commands
+    native = next(
+        index for index, step in enumerate(steps) if "--native-output" in step.get("run", "")
+    )
+    receiver_index = next(
+        index
+        for index, step in enumerate(steps)
+        if "test_native_intelligence_output_durability.py" in step.get("run", "")
+    )
+    assert native < receiver_index
+    receiver = steps[receiver_index]
+    assert receiver["env"]["AI10_NATIVE_MODEL_KIND"] == "anomaly_detected"
+    for name in (
+        "REQUIRE_BROKER_TESTS",
+        "REQUIRE_AI10_NATIVE_MODEL_READ",
+        "REQUIRE_AI10_NATIVE_BROWSER",
+    ):
+        assert receiver["env"][name] == "1"
+    pin = json.loads((ROOT / "docs/reference/ai10-native-output-consumer.json").read_text())
+    consumer = next(
+        step["with"]
+        for step in steps
+        if step.get("with", {}).get("path") == ".local/ai10-native-output-consumer"
+    )
+    assert consumer["ref"] == pin["commit"]
+    assert consumer["persist-credentials"] is False
+    assert all(not step.get("continue-on-error") for step in steps)

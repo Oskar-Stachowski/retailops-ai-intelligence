@@ -49,6 +49,15 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
   fixtures, a jej pytest setup plan passed. Cały native workflow wymaga
   jeszcze ponownego zaliczenia.
 
+- Następna próba workflow na `91ea5b0` zatrzymała się po poprawnej nowej
+  kwalifikacji na gitleaks: historyczne receipts zawierały 17 false positives
+  hashów/tagów oraz jednego zdania Compose/Kubernetes. Zbadano je prywatnie;
+  wyjątki są ograniczone dokładnym path AND literalną wartością. Lokalny
+  skan całej historii i working tree ma **0 findings**. Source `bbf570d`
+  dodaje pełny oryginalny anomaly odbiór i mandatory built-browser test dla
+  obu modeli. Nowy workflow wymaga osobnych wyników execution, nie deklaruje
+  jeszcze zaliczenia tych nowych odbiorów.
+
 ### Co dokładnie pozostaje do ready AI 10
 
 1. **Zaliczyć nowy qualified stockout workflow.** Oryginalna jednodniowa

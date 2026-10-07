@@ -128,7 +128,7 @@ są immutable, związane SHA-256; samo ich istnienie nie poświadcza jakości ML
 ani wysłania wiadomości do brokera.
 
 Jednodniowa kwalifikacja wykonawcza AI 08 z 5 października wygasła
-6 października. Osobny workflow `AI10 qualified stockout output` odtwarza
+6 października. Osobny workflow `AI10 qualified native output` odtwarza
 siedem dokładnie przypiętych oryginalnych artefaktów i sprawdza sześć
 zakończonych ocen. Istniejący `qualify_stockout_final.py` rekonstruuje publiczne
 wejścia z pełnych rodziców i wykonuje zamrożony model, tworząc nową jednodniową
@@ -148,5 +148,20 @@ runnerze. Konsument wymaga oryginalnego commitu/run ID, pełnego census i
 oryginalnych 40 payloadów; wysyła każdy event dwukrotnie przez rzeczywisty
 broker i sprawdza SQL checkpoints, deduplikację oraz wszystkie literalne ID
 przez authenticated TCP API. To odbiór przekazania plikowego committed outbox;
-nie jest jeszcze dowodem wysyłki z oryginalnej bazy AI ani widoku UI tych
-rzeczywistych wyników. Wynik wykonania tego nowego workflow nadal jest wymagany.
+nie jest jeszcze dowodem wysyłki z oryginalnej bazy AI. Nowy mandatory browser
+odczytuje te same oryginalne wyniki w zbudowanym istniejącym panelu RetailOps,
+porównuje cały census i wszystkie strony, literalny native ID, grain, status,
+lineage, brak credentials w storage i live policy revocation. Wynik wykonania
+rozszerzonego workflow nadal jest wymagany.
+
+Osobny job anomaly wykonuje niezmieniony pełny qualified OCI acceptance na
+oryginalnym zaakceptowanym Source producerze, z MLflow/PostgreSQL, scoped HTTP
+i kontrolowanym SIGKILL/restart. Dopiero po powodzeniu eksportuje publiczny
+pełny batch, census oraz dokładne bajty frozen primary modelu (SHA-256
+`febb4393e3d93d6f47bd59d464c245a09315ba6ad18d96e1c186207d1d27af56`).
+Operator credentials i access policies pozostają w prywatnym runtime i nie są
+kopiowane do artefaktu. Ten sam przypięty odbiorca Source porównuje oryginalne
+wyniki przez broker, SQL, literalne ID TCP API oraz wszystkie strony UI.
+Consumer używa ograniczonych partii po 100 receipts, z kolejnymi claims;
+nie pomija dużego native census ani nie podnosi dowolnie timeoutu jednego
+przebiegu. Qualification scope AI07 pozostaje `synthetic_ai_07_portfolio_v4`.

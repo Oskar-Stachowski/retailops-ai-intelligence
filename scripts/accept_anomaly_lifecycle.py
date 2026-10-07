@@ -1,6 +1,7 @@
 """Accept actual qualified models, native MLflow/PostgreSQL, pinned batch and scoped read APIs."""
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -683,6 +684,20 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             args.output / "native-outbox",
             environment=settings.app_env,
         )
+        native_output = json.dumps(
+            {
+                "batch_id": manifest["batch_id"],
+                "items": [item.model_dump(mode="json") for item in items],
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode()
+        native_path = args.output / "native-batch-output.json"
+        native_path.write_bytes(native_output)
+        native_path.chmod(0o600)
+        frozen_path = args.output / "native-frozen-model.json"
+        frozen_path.write_bytes(read_bytes(args.primary, "model.json", 8 * 1024**2))
+        frozen_path.chmod(0o600)
         output = {
             "status": "passed",
             "checks": checks,
@@ -694,6 +709,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "batch_id": manifest["batch_id"],
             "native_outbox_census_id": census.name,
             "native_outbox_rows": len(items),
+            "native_batch_output_sha256": hashlib.sha256(native_output).hexdigest(),
             "model_sha256": active.binding.qualification.model.sha256,
             "image_digest": args.image_digest,
             "qualification_scope": active.binding.qualification.qualification_scope,

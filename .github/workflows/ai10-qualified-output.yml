@@ -1,4 +1,4 @@
-name: AI10 qualified stockout output
+name: AI10 qualified native output
 
 on:
   push:
@@ -7,7 +7,10 @@ on:
       - ".github/workflows/ai10-qualified-output.yml"
       - "src/retailops_ai/intelligence_events/acceptance_export.py"
       - "scripts/check_stockout_final_acceptance.py"
+      - "scripts/check_anomaly_oci.py"
+      - "scripts/accept_anomaly_lifecycle.py"
       - "docs/reference/ai10-native-output-consumer.json"
+      - ".gitleaks.toml"
   workflow_dispatch:
 
 permissions:
@@ -111,7 +114,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: dc82e2be1e28e250c1af4b6b3f15bb67612d4d1b
+          ref: bbf570d1eba9fbf71c1cee8c53a17abe557cb035
           path: .local/ai10-native-output-consumer
           persist-credentials: false
       - name: Verify immutable independent output consumer bytes
@@ -125,11 +128,21 @@ jobs:
             -r .local/ai10-native-output-consumer/data/requirements-parquet.txt
           docker pull postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
           docker pull redpandadata/redpanda:v25.3.6@sha256:ac152ec27adccf9482af2649d293f398eb03c860d7469fc49f86e30d870ea408
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "22"
+      - name: Build the actual RetailOps frontend and install Chromium
+        working-directory: .local/ai10-native-output-consumer/frontend
+        run: |
+          npm ci
+          npm run build
+          node node_modules/@playwright/test/cli.js install --with-deps chromium
       - name: Require original qualified output through broker SQL and authenticated TCP API
         working-directory: .local/ai10-native-output-consumer
         env:
           REQUIRE_BROKER_TESTS: "1"
           REQUIRE_AI10_NATIVE_MODEL_READ: "1"
+          REQUIRE_AI10_NATIVE_BROWSER: "1"
           AI10_NATIVE_STOCKOUT_OUTPUT: ${{ github.workspace }}/accepted-model
           AI10_NATIVE_PRODUCER_COMMIT: ${{ github.sha }}
           AI10_NATIVE_READ_REPORT: ${{ github.workspace }}/accepted-model/source-native-read.json
@@ -145,6 +158,91 @@ jobs:
           path: |
             accepted-model/
             acceptance-proofs/
+          if-no-files-found: warn
+          retention-days: 30
+          overwrite: false
+  anomaly:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      UV_NO_CACHE: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: 48439ebd9515dc1c7adc633609bbe33d1657c3df
+          path: .local/ai07-ci-source
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - run: uv sync --locked --extra snapshot --extra forecast
+      - name: Prepare the original accepted native Source producer
+        run: |
+          uv venv --python 3.11.15 .local/ai07-ci-source/services/api/.venv
+          uv pip install --python .local/ai07-ci-source/services/api/.venv/bin/python \
+            -r .local/ai07-ci-source/services/api/requirements-dev.txt \
+            -r .local/ai07-ci-source/data/requirements-parquet.txt
+      - name: Accept frozen anomaly OCI registry native batch and complete SIGKILL recovery
+        run: |
+          uv run --frozen python scripts/check_anomaly_oci.py \
+            --producer .local/ai07-ci-source --native-output accepted-anomaly
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: bbf570d1eba9fbf71c1cee8c53a17abe557cb035
+          path: .local/ai10-native-output-consumer
+          persist-credentials: false
+      - name: Verify immutable independent output consumer bytes
+        run: |
+          python -c 'import hashlib,json,subprocess;from pathlib import Path;pin=json.loads(Path("docs/reference/ai10-native-output-consumer.json").read_text());root=Path(".local/ai10-native-output-consumer");assert subprocess.check_output(["git","rev-parse","HEAD"],cwd=root,text=True).strip()==pin["commit"];assert all(hashlib.sha256((root/name).read_bytes()).hexdigest()==digest for name,digest in pin["sha256"].items())'
+      - name: Prepare independent Source SQL broker and API runtime
+        run: |
+          uv venv --python 3.11.15 .local/ai10-native-output-consumer/services/api/.venv
+          uv pip install --python .local/ai10-native-output-consumer/services/api/.venv/bin/python \
+            -r .local/ai10-native-output-consumer/services/api/requirements-dev.txt \
+            -r .local/ai10-native-output-consumer/data/requirements-parquet.txt
+          docker pull postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+          docker pull redpandadata/redpanda:v25.3.6@sha256:ac152ec27adccf9482af2649d293f398eb03c860d7469fc49f86e30d870ea408
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "22"
+      - name: Build the actual RetailOps frontend and install Chromium
+        working-directory: .local/ai10-native-output-consumer/frontend
+        run: |
+          npm ci
+          npm run build
+          node node_modules/@playwright/test/cli.js install --with-deps chromium
+      - name: Require complete original anomaly census through broker SQL TCP API and UI
+        working-directory: .local/ai10-native-output-consumer
+        env:
+          REQUIRE_BROKER_TESTS: "1"
+          REQUIRE_AI10_NATIVE_MODEL_READ: "1"
+          REQUIRE_AI10_NATIVE_BROWSER: "1"
+          AI10_NATIVE_MODEL_KIND: anomaly_detected
+          AI10_NATIVE_ANOMALY_OUTPUT: ${{ github.workspace }}/accepted-anomaly
+          AI10_NATIVE_PRODUCER_COMMIT: ${{ github.sha }}
+          AI10_NATIVE_READ_REPORT: ${{ github.workspace }}/accepted-anomaly/source-native-read.json
+        run: |
+          services/api/.venv/bin/python -m pytest -q -x \
+            services/api/tests/test_native_intelligence_output_durability.py \
+            --junitxml="$GITHUB_WORKSPACE/accepted-anomaly/source-native-tests.xml"
+      - name: Retain original frozen anomaly model full batch census and UI evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai10-qualified-anomaly-output-${{ github.sha }}
+          path: |
+            accepted-anomaly/
+            reports/ai07-oci-acceptance.json
           if-no-files-found: warn
           retention-days: 30
           overwrite: false

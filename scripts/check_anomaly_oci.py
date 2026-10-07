@@ -17,8 +17,40 @@ from typing import Any
 import local_stack
 from refresh_anomaly_compatibility import refresh
 
+from retailops_ai.source_snapshot.files import read_bytes
+
 ROOT = Path(__file__).resolve().parents[1]
 PRODUCER_COMMIT = "48439ebd9515dc1c7adc633609bbe33d1657c3df"
+
+
+def export_native_output(source: Path, report: dict[str, Any], output: Path) -> None:
+    """Copy only the original public output/census after the whole native acceptance succeeds."""
+    census_id = report["acceptance"]["native_outbox_census_id"]
+    require(
+        report["status"] == "passed"
+        and bool(re.fullmatch(r"native-model-outbox-sha256-[0-9a-f]{64}", census_id)),
+        "anomaly_native_completed_census_required",
+    )
+    names = [
+        "native-batch-output.json",
+        "native-frozen-model.json",
+        "native-outbox/" + census_id + "/receipt.json",
+        "native-outbox/" + census_id + "/events.jsonl",
+    ]
+    files = {name: read_bytes(source, name, 64 * 1024**2) for name in names}
+    output.mkdir(mode=0o700)
+    try:
+        for name, raw in files.items():
+            target = output / name
+            target.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+            target.write_bytes(raw)
+            target.chmod(0o600)
+        acceptance = output / "acceptance.json"
+        acceptance.write_text(json.dumps(report, indent=2) + "\n")
+        acceptance.chmod(0o600)
+    except BaseException:
+        shutil.rmtree(output)
+        raise
 
 
 def require(condition: bool, message: str) -> None:
@@ -317,6 +349,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "transport_durability": "offline_only",
             "deployment_attestation": "not_attested",
         }
+        if args.native_output is not None:
+            require(
+                os.getenv("GITHUB_RUN_ID", "").isdecimal(),
+                "anomaly_native_workflow_identity_required",
+            )
+            report["workflow_run_id"] = int(os.environ["GITHUB_RUN_ID"])
+            export_native_output(output, report, args.native_output)
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + "\n")
         return {
@@ -334,6 +373,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--producer", type=Path, required=True)
     parser.add_argument("--prepared-receipt", type=Path)
+    parser.add_argument("--native-output", type=Path)
     parser.add_argument("--report", type=Path, default=ROOT / "reports/ai07-oci-acceptance.json")
     args = parser.parse_args()
     try:
