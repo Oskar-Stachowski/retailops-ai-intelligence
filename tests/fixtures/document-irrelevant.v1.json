@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "contract_type": "agent_tool_result",
+  "tool": "search_knowledge",
+  "status": "ok",
+  "index_id": "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6",
+  "pin_generation": 1,
+  "provider": "bedrock",
+  "retrieval_config_id": "retrieval-config-sha256-39f5f998dea99bde765d259102ed605fa77583edcb22da6e39d5b0e871fd786b",
+  "content_trust": "untrusted_reference",
+  "items": [
+    {
+      "score": 1.0,
+      "chunk": {
+        "path": "docs/agent-evaluation-example-1.md",
+        "title": "Offline fixture",
+        "byte_sha256": "780ef9e17222aa5bba15a7d7470559fd9a3789ed15fd35442243d0443294f121",
+        "document_type": "guide",
+        "document_status": "specified",
+        "access_class": "public_project",
+        "fact_scope": "Synthetic offline fixture only",
+        "implementation_refs": [],
+        "verification": null,
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "commit_sha": "1111111111111111111111111111111111111111",
+        "document_id": "document-sha256-da517da97a1f232419569d3329527dcd30ef4f8fff2959ffbe859aeb987a2f2d",
+        "content_id": "markdown-sha256-780ef9e17222aa5bba15a7d7470559fd9a3789ed15fd35442243d0443294f121",
+        "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-example-1.md",
+        "chunk_id": "chunk-sha256-13c193d34bf41b760f86fb292fc5232c83fe42752f0259b60f26cf969f08cbc0",
+        "chunk_index": 0,
+        "chunker_version": "markdown-blocks-v1",
+        "chunker_config_id": "chunker-config-sha256-2222222222222222222222222222222222222222222222222222222222222222",
+        "heading_path": [
+          {
+            "level": 1,
+            "title": "Offline fixture"
+          }
+        ],
+        "block_type": "paragraph",
+        "text": "Synthetic offline documentation fixture. It proves no deployment.",
+        "content_checksum": "780ef9e17222aa5bba15a7d7470559fd9a3789ed15fd35442243d0443294f121",
+        "token_estimate": 17,
+        "occurrences": [
+          {
+            "start_offset": 0,
+            "end_offset": 65,
+            "start_line": 1,
+            "end_line": 1,
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-example-1.md#L1-L1"
+          }
+        ]
+      },
+      "claim_kind": "plan"
+    }
+  ],
+  "context_tokens": 390,
+  "context_bytes": 1557,
+  "source_kind": "fixture"
+}

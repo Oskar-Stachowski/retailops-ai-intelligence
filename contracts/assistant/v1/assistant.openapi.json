@@ -1,0 +1,1306 @@
+{
+  "components": {
+    "schemas": {
+      "AnswerFreshness": {
+        "additionalProperties": false,
+        "properties": {
+          "inventory": {
+            "$ref": "#/components/schemas/DomainFreshness"
+          },
+          "predictions": {
+            "$ref": "#/components/schemas/DomainFreshness"
+          },
+          "sales": {
+            "$ref": "#/components/schemas/DomainFreshness"
+          }
+        },
+        "required": [
+          "sales",
+          "inventory",
+          "predictions"
+        ],
+        "title": "AnswerFreshness",
+        "type": "object"
+      },
+      "AssistantAnswer": {
+        "additionalProperties": false,
+        "properties": {
+          "agent_config_version": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Agent Config Version",
+            "type": "string"
+          },
+          "answer_id": {
+            "format": "uuid",
+            "title": "Answer Id",
+            "type": "string"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/DraftCitation"
+            },
+            "maxItems": 5,
+            "title": "Citations",
+            "type": "array"
+          },
+          "confidence": {
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Confidence",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Created At",
+            "type": "string"
+          },
+          "data_freshness": {
+            "$ref": "#/components/schemas/AnswerFreshness"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceClaim"
+            },
+            "maxItems": 20,
+            "title": "Evidence",
+            "type": "array"
+          },
+          "index_id": {
+            "title": "Index Id",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "maxLength": 2000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Limitations",
+            "type": "array"
+          },
+          "outcome": {
+            "enum": [
+              "answered",
+              "insufficient_evidence",
+              "refused"
+            ],
+            "title": "Outcome",
+            "type": "string"
+          },
+          "recommended_actions": {
+            "items": {
+              "$ref": "#/components/schemas/RecommendedAction"
+            },
+            "maxItems": 5,
+            "title": "Recommended Actions",
+            "type": "array"
+          },
+          "summary": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Summary",
+            "type": "string"
+          },
+          "trace_id": {
+            "format": "uuid",
+            "title": "Trace Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "outcome",
+          "summary",
+          "evidence",
+          "recommended_actions",
+          "confidence",
+          "data_freshness",
+          "citations",
+          "limitations",
+          "answer_id",
+          "trace_id",
+          "agent_config_version",
+          "index_id",
+          "created_at"
+        ],
+        "title": "AssistantAnswer",
+        "type": "object"
+      },
+      "AssistantQuery": {
+        "additionalProperties": false,
+        "properties": {
+          "conversation_id": {
+            "title": "Conversation Id",
+            "type": "null"
+          },
+          "question": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Question",
+            "type": "string"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/QueryScope"
+          }
+        },
+        "required": [
+          "question",
+          "scope"
+        ],
+        "title": "AssistantQuery",
+        "type": "object"
+      },
+      "AssistantRun": {
+        "additionalProperties": false,
+        "properties": {
+          "agent_config_version": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Agent Config Version",
+            "type": "string"
+          },
+          "answer_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answer Id"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "enum": [
+                  "invalid_scope",
+                  "unauthorized",
+                  "dependency_unavailable",
+                  "budget_exceeded",
+                  "deadline_exceeded",
+                  "provider_unavailable",
+                  "invalid_output",
+                  "invalid_evidence",
+                  "unauthorized_tool",
+                  "invalid_repair",
+                  "trace_unavailable",
+                  "cancelled"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Code"
+          },
+          "index_id": {
+            "title": "Index Id",
+            "type": "string"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/TraceNode"
+            },
+            "maxItems": 20,
+            "title": "Nodes",
+            "type": "array"
+          },
+          "outcome": {
+            "anyOf": [
+              {
+                "enum": [
+                  "answered",
+                  "insufficient_evidence",
+                  "refused"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outcome"
+          },
+          "requested_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Requested At",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "running",
+              "succeeded",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "tools": {
+            "items": {
+              "$ref": "#/components/schemas/SafeToolAudit"
+            },
+            "maxItems": 6,
+            "title": "Tools",
+            "type": "array"
+          },
+          "trace_id": {
+            "format": "uuid",
+            "title": "Trace Id",
+            "type": "string"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/TraceUsage"
+          }
+        },
+        "required": [
+          "trace_id",
+          "answer_id",
+          "status",
+          "outcome",
+          "requested_at",
+          "completed_at",
+          "agent_config_version",
+          "index_id",
+          "nodes",
+          "tools",
+          "usage",
+          "error_code"
+        ],
+        "title": "AssistantRun",
+        "type": "object"
+      },
+      "DependencyStatus": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "pattern": "^[a-z][a-z0-9_]{0,31}$",
+            "title": "Name",
+            "type": "string"
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "up",
+              "down",
+              "timeout"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "required",
+          "status"
+        ],
+        "title": "DependencyStatus",
+        "type": "object"
+      },
+      "DomainFreshness": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "As Of"
+          },
+          "status": {
+            "enum": [
+              "current",
+              "stale",
+              "missing",
+              "unavailable",
+              "not_requested"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "as_of",
+          "status"
+        ],
+        "title": "DomainFreshness",
+        "type": "object"
+      },
+      "DraftCitation": {
+        "additionalProperties": false,
+        "properties": {
+          "chunk_id": {
+            "pattern": "^chunk-sha256-[0-9a-f]{64}$",
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "commit_sha": {
+            "pattern": "^[0-9a-f]{40}$",
+            "title": "Commit Sha",
+            "type": "string"
+          },
+          "document_status": {
+            "enum": [
+              "specified",
+              "implemented",
+              "verified",
+              "deprecated",
+              "historical"
+            ],
+            "title": "Document Status",
+            "type": "string"
+          },
+          "heading": {
+            "maxLength": 1200,
+            "title": "Heading",
+            "type": "string"
+          },
+          "path": {
+            "maxLength": 240,
+            "title": "Path",
+            "type": "string"
+          },
+          "repository": {
+            "enum": [
+              "Oskar-Stachowski/retailops-cloud-native-platform",
+              "Oskar-Stachowski/retailops-ai-intelligence"
+            ],
+            "title": "Repository",
+            "type": "string"
+          },
+          "source_ref": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "title": "Source Ref",
+            "type": "string"
+          }
+        },
+        "required": [
+          "repository",
+          "commit_sha",
+          "path",
+          "heading",
+          "chunk_id",
+          "document_status",
+          "source_ref"
+        ],
+        "title": "DraftCitation",
+        "type": "object"
+      },
+      "EvidenceClaim": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "As Of"
+          },
+          "calculation_id": {
+            "anyOf": [
+              {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Calculation Id"
+          },
+          "claim": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Claim",
+            "type": "string"
+          },
+          "source_ref": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "title": "Source Ref",
+            "type": "string"
+          },
+          "source_type": {
+            "enum": [
+              "tool",
+              "document",
+              "calculation"
+            ],
+            "title": "Source Type",
+            "type": "string"
+          },
+          "supporting_refs": {
+            "items": {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 8,
+            "title": "Supporting Refs",
+            "type": "array"
+          }
+        },
+        "required": [
+          "claim",
+          "source_type",
+          "source_ref",
+          "as_of",
+          "supporting_refs"
+        ],
+        "title": "EvidenceClaim",
+        "type": "object"
+      },
+      "Problem": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "enum": [
+                  "configuration-not-approved",
+                  "idempotency-conflict",
+                  "index-run-not-found",
+                  "index-not-configured",
+                  "queue-full",
+                  "worker-busy",
+                  "claim-lost",
+                  "index-report-not-found"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "database-not-ready",
+                  "scope-denied",
+                  "batch-scope-limit",
+                  "forecast-run-not-found",
+                  "forecast-run-denied",
+                  "invalid-idempotency-key",
+                  "idempotency-conflict",
+                  "input-from-future",
+                  "model-not-approved",
+                  "model-decision-incomplete",
+                  "input-not-prepared",
+                  "input-origin-mismatch",
+                  "queue-full",
+                  "input-coverage-mismatch",
+                  "input-runtime-incompatible",
+                  "run-not-active"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "forecast-read-denied",
+                  "forecast-scope-invalid",
+                  "forecast-scope-limit",
+                  "forecast-output-not-found",
+                  "forecast-view-changed",
+                  "forecast-view-required",
+                  "forecast-read-budget",
+                  "forecast-output-invalid"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "model-read-denied",
+                  "model-scope-invalid",
+                  "model-scope-limit",
+                  "model-not-found",
+                  "model-view-required",
+                  "model-view-changed",
+                  "model-read-budget",
+                  "model-metadata-invalid"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "evaluation-read-denied",
+                  "evaluation-scope-invalid",
+                  "evaluation-scope-limit",
+                  "evaluation-not-found",
+                  "evaluation-view-required",
+                  "evaluation-view-changed",
+                  "evaluation-read-budget",
+                  "evaluation-evidence-invalid"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "anomaly-scope-denied",
+                  "anomaly-pipeline-denied",
+                  "anomaly-idempotency-conflict",
+                  "anomaly-read-budget",
+                  "anomaly-view-changed",
+                  "anomaly-not-found",
+                  "anomaly-output-unavailable"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "stockout-run-not-found",
+                  "stockout-run-denied",
+                  "stockout-risk-not-found",
+                  "stockout-scope-denied",
+                  "stockout-input-not-prepared",
+                  "stockout-input-origin-mismatch",
+                  "stockout-input-coverage-mismatch",
+                  "stockout-input-runtime-incompatible",
+                  "stockout-input-from-future",
+                  "stockout-model-not-approved",
+                  "stockout-model-decision-incomplete",
+                  "stockout-queue-full",
+                  "stockout-idempotency-conflict",
+                  "stockout-invalid-idempotency-key",
+                  "stockout-run-not-active",
+                  "stockout-database-not-ready",
+                  "stockout-view-changed",
+                  "stockout-read-budget"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "correlation_id": {
+            "format": "uuid",
+            "title": "Correlation Id",
+            "type": "string"
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "instance": {
+            "pattern": "^urn:uuid:[0-9a-f-]{36}$",
+            "title": "Instance",
+            "type": "string"
+          },
+          "readiness": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Ready"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "maximum": 599.0,
+            "minimum": 400.0,
+            "title": "Status",
+            "type": "integer"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "default": "about:blank",
+            "pattern": "^about:blank$|^urn:retailops:problem:[a-z-]+$",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "status",
+          "detail",
+          "instance",
+          "correlation_id"
+        ],
+        "title": "Problem",
+        "type": "object"
+      },
+      "QueryScope": {
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "format": "date",
+            "title": "From",
+            "type": "string"
+          },
+          "product_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Product Ids",
+            "type": "array"
+          },
+          "store_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Store Ids",
+            "type": "array"
+          },
+          "to": {
+            "format": "date",
+            "title": "To",
+            "type": "string"
+          }
+        },
+        "required": [
+          "product_ids",
+          "store_ids",
+          "from",
+          "to"
+        ],
+        "title": "QueryScope",
+        "type": "object"
+      },
+      "Ready": {
+        "additionalProperties": false,
+        "properties": {
+          "dependencies": {
+            "items": {
+              "$ref": "#/components/schemas/DependencyStatus"
+            },
+            "title": "Dependencies",
+            "type": "array"
+          },
+          "role": {
+            "default": "foundation",
+            "enum": [
+              "foundation",
+              "ai_api"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ready",
+              "degraded",
+              "not_ready"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "dependencies"
+        ],
+        "title": "Ready",
+        "type": "object"
+      },
+      "RecommendedAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Action",
+            "type": "string"
+          },
+          "evidence_refs": {
+            "items": {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Evidence Refs",
+            "type": "array"
+          },
+          "priority": {
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Priority",
+            "type": "string"
+          },
+          "rationale": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Rationale",
+            "type": "string"
+          },
+          "recommendation_id": {
+            "format": "uuid",
+            "title": "Recommendation Id",
+            "type": "string"
+          },
+          "requires_human_review": {
+            "const": true,
+            "title": "Requires Human Review",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "action",
+          "priority",
+          "rationale",
+          "evidence_refs",
+          "requires_human_review",
+          "recommendation_id"
+        ],
+        "title": "RecommendedAction",
+        "type": "object"
+      },
+      "SafeToolAudit": {
+        "additionalProperties": false,
+        "properties": {
+          "freshness_status": {
+            "enum": [
+              "current",
+              "stale",
+              "missing",
+              "unavailable",
+              "not_requested"
+            ],
+            "title": "Freshness Status",
+            "type": "string"
+          },
+          "name": {
+            "pattern": "^get_[a-z_]+$|^search_knowledge$",
+            "title": "Name",
+            "type": "string"
+          },
+          "source_refs": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 100,
+            "title": "Source Refs",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "no_data",
+              "error"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status",
+          "source_refs",
+          "freshness_status"
+        ],
+        "title": "SafeToolAudit",
+        "type": "object"
+      },
+      "TraceNode": {
+        "additionalProperties": false,
+        "properties": {
+          "duration_ms": {
+            "minimum": 0.0,
+            "title": "Duration Ms",
+            "type": "number"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "enum": [
+                  "invalid_scope",
+                  "unauthorized",
+                  "dependency_unavailable",
+                  "budget_exceeded",
+                  "deadline_exceeded",
+                  "provider_unavailable",
+                  "invalid_output",
+                  "invalid_evidence",
+                  "unauthorized_tool",
+                  "invalid_repair",
+                  "trace_unavailable",
+                  "cancelled"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Code"
+          },
+          "name": {
+            "pattern": "^[a-z_]{1,32}$",
+            "title": "Name",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "error"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status",
+          "duration_ms",
+          "error_code"
+        ],
+        "title": "TraceNode",
+        "type": "object"
+      },
+      "TraceUsage": {
+        "additionalProperties": false,
+        "properties": {
+          "currency": {
+            "const": "USD",
+            "default": "USD",
+            "title": "Currency",
+            "type": "string"
+          },
+          "duration_ms": {
+            "minimum": 0.0,
+            "title": "Duration Ms",
+            "type": "number"
+          },
+          "estimated_cost": {
+            "pattern": "^[0-9]+(?:\\.[0-9]+)?(?:E-[0-9]+)?$",
+            "title": "Estimated Cost",
+            "type": "string"
+          },
+          "input_tokens": {
+            "maximum": 16000.0,
+            "minimum": 0.0,
+            "title": "Input Tokens",
+            "type": "integer"
+          },
+          "output_tokens": {
+            "maximum": 3000.0,
+            "minimum": 0.0,
+            "title": "Output Tokens",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "input_tokens",
+          "output_tokens",
+          "duration_ms",
+          "estimated_cost"
+        ],
+        "title": "TraceUsage",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "apiBearer": {
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "title": "RetailOps AI Assistant",
+    "version": "0.1.0.dev0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/assistant/queries": {
+      "post": {
+        "operationId": "query_api_v1_assistant_queries_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssistantQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssistantAnswer"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "424": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Failed Dependency"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "502": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Gateway"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Gateway Timeout"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Query"
+      }
+    },
+    "/api/v1/assistant/runs/{trace_id}": {
+      "get": {
+        "operationId": "get_run_api_v1_assistant_runs__trace_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trace_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Trace Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssistantRun"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "424": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Failed Dependency"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "502": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Gateway"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Gateway Timeout"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Get Run"
+      }
+    }
+  }
+}

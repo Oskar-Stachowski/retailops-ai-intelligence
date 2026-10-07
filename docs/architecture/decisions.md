@@ -237,3 +237,63 @@ przy cytacie. Nie generujemy odpowiedzi ani semantycznego rozstrzygnięcia konfl
 36 pytań i progi golden v1 powstały przed ewaluacją, bez etykiet z wyników rankera.
 Wynik fake jest mechaniczny i nigdy nie daje release approval; real provider
 i agent wymagają osobnego odbioru. [Kontrakt i źródła](../knowledge-retrieval.md).
+
+## ADR-20 — skończony graf i kanoniczne fakty przed swobodnymi odpowiedziami
+
+AI 12 używa LangGraph **1.2.12**, przypiętego z zależnościami w `uv.lock`.
+API StateGraph wykonuje acykliczne ścieżki z jednym dograniem i jedną wspólną
+naprawą. Nie używamy prebuilt autonomicznego agenta, checkpointów, pamięci
+konwersacji ani eksportu LangSmith. Prywatny kontekst ma zakres jednego runa;
+stan routingu i bezpieczny trace nie kopiują pytania/wyników narzędzi.
+
+Pierwszy profil waliduje kanoniczne twierdzenia wygenerowane z typed values,
+jawny wzór różnicy dwóch okresów i literalne cytaty ze statusem źródła.
+Model wybiera fakty; nie nadaje im nowego znaczenia. Ten kompromis ogranicza
+swobodę języka, ale pozwala deterministycznie odrzucić poprawnie cytowaną,
+nieprawdziwą liczbę lub wniosek. Nie jest pomiarem jakości dowolnych parafraz.
+Rozszerzenie języka wymaga osobnej polityki i golden odpowiedzi.
+
+Metadata zainstalowanych LangGraph/core/checkpoint/prebuilt/SDK/LangSmith
+podają MIT. Python >=3.10 z metadata LangGraph obejmuje wybrany 3.11.15;
+wspólny runtime potwierdzają testy tego zakresu. [Instrukcja](../agent-graph.md).
+Źródła: [PyPI LangGraph](https://pypi.org/project/langgraph/1.2.12/),
+[Graph API](https://docs.langchain.com/oss/python/langgraph/graph-api),
+[compile i wyłączenie checkpointera](https://reference.langchain.com/python/langgraph/graph/state/StateGraph/compile).
+
+
+## ADR-21 — kwalifikacja sugestii przez reguły i niezależne oracles fixtures
+
+Polityka read-only-review-v1 ustala warunki, priorytet, tekst i refs kandydatów.
+Model tylko kopiuje akcje wspierane przez wybrane fakty dla tego samego grain.
+Wyliczenie ilości ani zapis operacyjny nie jest narzędziem agenta. Identity
+wiąże źródła, politykę i expiry; aktualność sprawdza zegar serwera. Kandydat
+pozostaje proposed/requires_human_review; trwały zapis własny AI dodaje ADR-22,
+outbox/UI należą do AI 10.
+
+Golden ma zapisane typed fixtures, odpowiedzi scripted fake oraz odrębne oracles,
+których runtime nie generuje ani nie przepisuje. Raport porównuje rzeczywisty
+graf z etykietą, wiąże config/model/index/prompt/schema/policy/golden/evaluator
+i lock oraz podaje numerator/denominator. Krytyczny failure blokuje lokalną
+bramkę. Zmiana oracle w teście powoduje failed, bez dopasowania runtime do label.
+
+Przyjęcie tego lokalnego profilu nie jest business approval reguł, akceptacją
+jakości realnego LLM ani ponownym pomiarem retrieval AI 11. Syntetyczny pin
+nigdy nie trafia do aktywacji. Pełny agent wymaga realnego modelu, prawdziwych
+źródeł i E2E z AI 10. [Instrukcja](../agent-evaluation.md).
+
+## ADR-22 — Assistant z transakcyjnymi wynikami i rezerwacją przed grafem
+
+HTTP request ma tylko pytanie i źródłowy scope. Planner/resolver i fabryka grafu
+są serwerowymi zależnościami; warstwa HTTP nie wymyśla mapowania ani intencji.
+Brak runtime daje 503. Fake/backend store można wstrzyknąć tylko w testach.
+
+PostgreSQL AI zapisuje running przed wykonaniem i atomowo utrwala odpowiedź,
+bezpieczny trace i pełnych kandydatów do przeglądu. Owner, scope i snapshot
+wymaganych praw ograniczają odczyt także po cofnięciu grants. Admin potrzebuje
+assistant:audit. Publiczny trace nie zawiera odpowiedzi, pytania lub tool payloadu.
+
+Przed grafem wspólny transakcyjny lock rezerwuje pełny budżet tokenów/kosztu.
+Debit nie jest zwracany w oknie; crash/retry nie otwiera nowego budżetu. DB zegar,
+lease i claim blokują późne completion. Retencja/capacity ograniczają własny
+store. Zapis nie publikuje zdarzenia ani nie uruchamia workflow RetailOps.
+[Instrukcja](../assistant-api.md), [odbiór](../evidence/12-assistant.md).

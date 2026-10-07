@@ -1,0 +1,226 @@
+{
+  "$defs": {
+    "ModelStatusItem": {
+      "additionalProperties": false,
+      "properties": {
+        "alias": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Alias"
+        },
+        "approved": {
+          "const": true,
+          "title": "Approved",
+          "type": "boolean"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "deployed_release_ref": {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "title": "Deployed Release Ref",
+          "type": "string"
+        },
+        "deployment_environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Deployment Environment",
+          "type": "string"
+        },
+        "evaluation_ref": {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "title": "Evaluation Ref",
+          "type": "string"
+        },
+        "model_id": {
+          "pattern": "^model-sha256-[0-9a-f]{64}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "model_id",
+        "deployed_release_ref",
+        "deployment_environment",
+        "alias",
+        "evaluation_ref",
+        "approved"
+      ],
+      "title": "ModelStatusItem",
+      "type": "object"
+    },
+    "ToolError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_scope",
+            "unauthorized",
+            "unavailable",
+            "stale",
+            "not_found",
+            "unsupported_grain",
+            "budget_exceeded"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "description": {
+          "enum": [
+            "The requested scope is invalid.",
+            "The requested scope is not authorized.",
+            "The required source is unavailable.",
+            "The requested source is stale.",
+            "The requested output was not found.",
+            "The requested grain is unsupported.",
+            "The tool budget was exceeded."
+          ],
+          "title": "Description",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "description",
+        "retryable"
+      ],
+      "title": "ToolError",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:agent:get_model_status:result:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "as_of": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "As Of"
+    },
+    "contract_type": {
+      "const": "agent_tool_result",
+      "title": "Contract Type",
+      "type": "string"
+    },
+    "error": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ToolError"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "freshness_status": {
+      "enum": [
+        "current",
+        "stale",
+        "missing",
+        "unavailable"
+      ],
+      "title": "Freshness Status",
+      "type": "string"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/ModelStatusItem"
+      },
+      "maxItems": 50,
+      "title": "Items",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_kind": {
+      "enum": [
+        "fixture",
+        "runtime"
+      ],
+      "title": "Source Kind",
+      "type": "string"
+    },
+    "source_ref": {
+      "anyOf": [
+        {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Source Ref"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "no_data",
+        "error"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "tool": {
+      "const": "get_model_status",
+      "title": "Tool",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "contract_type",
+    "status",
+    "as_of",
+    "freshness_status",
+    "source_ref",
+    "items",
+    "error",
+    "source_kind",
+    "tool"
+  ],
+  "title": "ModelStatusResult",
+  "type": "object"
+}

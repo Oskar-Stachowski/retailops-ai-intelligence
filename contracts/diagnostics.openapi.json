@@ -204,8 +204,8 @@
             "type": "string"
           },
           "type": {
-            "const": "about:blank",
             "default": "about:blank",
+            "pattern": "^about:blank$|^urn:retailops:problem:[a-z-]+$",
             "title": "Type",
             "type": "string"
           }

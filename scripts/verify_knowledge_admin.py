@@ -442,7 +442,8 @@ finally:
                     return error.code, json.loads(error.read()), error.headers
 
             try:
-                for _ in range(80):
+                # Bound cold startup separately from tool/provider request deadlines.
+                for _ in range(400):
                     try:
                         code, current, headers = http("knowledge-indexes/current")
                         break

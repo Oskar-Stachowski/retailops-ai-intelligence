@@ -35,6 +35,12 @@ class Settings(BaseSettings):
         default=None, validation_alias="API_AUTH_FILE", exclude=True, repr=False
     )
     rag_bedrock_enabled: bool = Field(default=False, validation_alias="RAG_BEDROCK_ENABLED")
+    assistant_runtime_file: Path | None = Field(
+        default=None, validation_alias="ASSISTANT_RUNTIME_FILE", exclude=True, repr=False
+    )
+    assistant_source_import: Path | None = Field(
+        default=None, validation_alias="ASSISTANT_SOURCE_IMPORT", exclude=True, repr=False
+    )
     metrics_token: SecretStr | None = Field(default=None, validation_alias="METRICS_TOKEN")
     readiness_timeout_seconds: float = Field(
         default=1.0, ge=0.01, le=5.0, validation_alias="READINESS_TIMEOUT_SECONDS"
@@ -70,6 +76,12 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def valid_network_boundary(self) -> "Settings":
+        if (self.assistant_runtime_file is None) != (self.assistant_source_import is None):
+            raise ValueError("assistant_runtime_requires_source_import")
+        if self.assistant_runtime_file is not None and (
+            self.database_url is None or not self.rag_bedrock_enabled
+        ):
+            raise ValueError("assistant_runtime_requires_database_and_bedrock_opt_in")
         if self.network_mode == "compose" and self.database_url is None:
             raise ValueError("Compose mode requires a database URL")
         if self.http_host == "0.0.0.0" and self.network_mode != "compose":  # noqa: S104
@@ -85,7 +97,13 @@ class Settings(BaseSettings):
             raise ValueError("metrics token must contain 32-128 URL-safe characters")
         return value
 
-    @field_validator("artifact_root", "api_auth_file", mode="before")
+    @field_validator(
+        "artifact_root",
+        "api_auth_file",
+        "assistant_runtime_file",
+        "assistant_source_import",
+        mode="before",
+    )
     @classmethod
     def nonempty_path(cls, value: object) -> object:
         if isinstance(value, str) and (not value.strip() or "\x00" in value):

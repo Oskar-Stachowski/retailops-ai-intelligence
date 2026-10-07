@@ -15,9 +15,26 @@ Capability = Literal[
     "anomaly:run",
     "stockout:read",
     "stockout:run",
+    "assistant:query",
+    "assistant:audit",
+    "sales:read",
+    "inventory:read",
+    "anomalies:read",
+    "operations:read",
+    "model:read",
 ]
 Channel = Literal["store", "online", "marketplace", "wholesale"]
 
+
+# Selling scopes and physical stock scopes remain separate. In particular,
+# stockout:read never grants access to a selling location by itself.
+DATA_CAPABILITIES: frozenset[Capability] = frozenset(
+    {
+        "assistant:query", "forecast:read", "forecast:run", "anomaly:read",
+        "anomaly:run", "sales:read", "inventory:read", "anomalies:read",
+        "operations:read", "model:read",
+    }
+)
 
 @dataclass(frozen=True)
 class KnowledgeAccess:

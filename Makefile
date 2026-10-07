@@ -4,6 +4,9 @@ ENV_FILE ?= .env.example
 UV_RUN = $(UV) run --locked --extra snapshot --extra forecast
 
 .PHONY: day-qualification-check full-raw-dq-check return-inputs-check raw-dq-check anomaly-inputs-check forecast-acceptance-check bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke mlflow-store-smoke
+PROVIDER ?= fake
+BEDROCK_ARGS ?=
+.PHONY: agent-security-test agent-evaluate bedrock-smoke
 
 bootstrap:
 	$(UV) sync --locked --extra snapshot --extra forecast
@@ -86,11 +89,11 @@ forecast-acceptance-check:
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check anomaly-detectors-check return-inputs-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check contracts-check package compose-config tensorflow-check
+check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check anomaly-detectors-check return-inputs-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check contracts-check agent-evaluate package compose-config tensorflow-check
 
 # CI uses isolated runners for these complete groups; local make check stays complete.
 .PHONY: ci-checks ci-source-inputs ci-qualified-inputs ci-detectors ci-forecast
-ci-checks: lint type-check docs-check forecast-runtime-check contracts-check package compose-config
+ci-checks: lint type-check docs-check forecast-runtime-check contracts-check agent-evaluate package compose-config
 ci-source-inputs: handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check
 ci-qualified-inputs: full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check
 ci-detectors: anomaly-detectors-check
@@ -123,6 +126,11 @@ contracts:
 	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py
 	$(UV_RUN) python scripts/update_stockout_job_contracts.py
+	$(UV_RUN) python scripts/update_agent_contracts.py
+	$(UV_RUN) python scripts/update_agent_chat_contracts.py
+	$(UV_RUN) python scripts/update_agent_graph_contracts.py
+	$(UV_RUN) python scripts/update_agent_bedrock_contracts.py
+	$(UV_RUN) python scripts/update_assistant_contracts.py
 
 contracts-check:
 	$(UV_RUN) python scripts/update_tensorflow_challenger_contracts.py --check
@@ -141,6 +149,20 @@ contracts-check:
 	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py --check
 	$(UV_RUN) python scripts/update_stockout_job_contracts.py --check
+	$(UV_RUN) python scripts/update_agent_contracts.py --check
+	$(UV_RUN) python scripts/update_agent_chat_contracts.py --check
+	$(UV_RUN) python scripts/update_agent_graph_contracts.py --check
+	$(UV_RUN) python scripts/update_agent_bedrock_contracts.py --check
+	$(UV_RUN) python scripts/update_assistant_contracts.py --check
+
+agent-security-test:
+	$(UV_RUN) pytest tests/test_assistant_routes.py tests/test_bedrock_access.py tests/test_agent_tools.py tests/test_agent_chat.py tests/test_agent_graph.py tests/test_document_evidence.py tests/test_agent_suggestions.py tests/test_agent_evaluation.py tests/test_assistant.py tests/test_document_runtime.py tests/test_bedrock_chat.py
+
+agent-evaluate:
+	$(UV_RUN) retailops-ai agent-evaluate --provider "$(PROVIDER)" --config agent/graph.evaluate.fake.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.resume.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock
+
+bedrock-smoke:
+	$(UV_RUN) retailops-ai bedrock-smoke --config agent/graph.bedrock-smoke.v1.json --offline-config agent/graph.evaluate.fake.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.resume.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock --profile agent/bedrock-smoke.resume.v1.json $(BEDROCK_ARGS)
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up

@@ -11,7 +11,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 CI_GROUPS = {
-    "ci-checks": "lint type-check docs-check forecast-runtime-check contracts-check package compose-config",
+    "ci-checks": "lint type-check docs-check forecast-runtime-check contracts-check agent-evaluate package compose-config",
     "ci-source-inputs": "handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check",
     "ci-qualified-inputs": "full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check",
     "ci-detectors": "anomaly-detectors-check",

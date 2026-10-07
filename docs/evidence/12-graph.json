@@ -1,0 +1,231 @@
+{
+  "schema_version": "1.0",
+  "stage": "12",
+  "status": "in_progress",
+  "scope": "bounded_langgraph_and_canonical_numeric_semantic_evidence",
+  "verified_at": "2026-09-29T06:28:34.518553+00:00",
+  "parent_commit": "ca5618edbfdcdda4dd75474cf4e016c763b1725b",
+  "branch": "ai/12-tools",
+  "config_id": "agent-graph-config-sha256-85759d3cee6a8cc64c3a2048a2db424181cd3511be14a0624ba1eb9499bfa13e",
+  "chat_config_id": "agent-chat-config-sha256-8a155743209998caddc013bc640b6bd6740a08d8a30d9794831513603a44ffd8",
+  "graph_version": "bounded-langgraph-v1",
+  "evidence_policy_version": "typed-facts-v1",
+  "code_sha256": "5b9000b538edac4653116da4027b8acd0785da1b1d3cee95d4d66d18f58fc811",
+  "schemas_sha256": "eeaba15d68858a22e30c4f6044ba443ba2bd2d2d30ebeaa72bd5e55c4531e313",
+  "dependency_lock_sha256": "b00e58676e3ff07d7af9de4eaa4fe426574bc2a6c90439977a70f2831378f84a",
+  "runtime_versions": {
+    "langgraph": "1.2.12",
+    "langchain-core": "1.6.5",
+    "langsmith": "0.14.1",
+    "langgraph-checkpoint": "4.2.0",
+    "langgraph-prebuilt": "1.1.0",
+    "langgraph-sdk": "0.4.5"
+  },
+  "verification": {
+    "full_regression": {
+      "passed": 879,
+      "duration_seconds": 126.93
+    },
+    "agent_cases_in_full_regression": 236,
+    "new_graph_cases": 60,
+    "ruff_format": {
+      "status": "passed",
+      "files": 200
+    },
+    "mypy": {
+      "status": "passed",
+      "files": 118
+    },
+    "contracts": "passed",
+    "docs": "passed",
+    "wheel_sdist": "passed",
+    "compose_config": "passed",
+    "wheel_graph_outside_source": {
+      "status": "passed",
+      "provider": "fake",
+      "tool_calls": 1,
+      "model_calls": 2,
+      "outcome": "answered"
+    },
+    "gitleaks": "passed"
+  },
+  "trace_backend": "bounded_owner_authorized_memory_store",
+  "trace_durable_after_restart": false,
+  "checkpointer_enabled": false,
+  "remote_tracing_enabled": false,
+  "semantic_validation_scope": "Canonical typed observations, exact unit/grain/period/as-of, one registered difference formula, literal document quote with status/scope/revision; no arbitrary paraphrase entailment or general natural-language intent classifier",
+  "aws_chat_executed": false,
+  "new_embedding_quality_measurement": false,
+  "business_source_acceptance": false,
+  "ai10_required_for_this_scope": false,
+  "knowledge_test_backend": "Synthetic vectors and pinned backend spy",
+  "remote_ci": "not_run",
+  "published_to_main": false,
+  "checksums": [
+    {
+      "path": "Makefile",
+      "sha256": "9f4617c3b2af8e63e09db2d8c5e95cf3f0ca751668ed71d012d4bdb64b8024c4"
+    },
+    {
+      "path": "agent/chat.fake.v1.json",
+      "sha256": "bb11d7afddd92639b5b7f01638e057895c2cad204fcdcec7892b0c4052b581f5"
+    },
+    {
+      "path": "agent/graph.fake.v1.json",
+      "sha256": "fd92de87043fd5aa3785eb40bee0e06701a551b5db9cceb7719237156042be1a"
+    },
+    {
+      "path": "contracts/agent/v1/graph-bindings.v1.json",
+      "sha256": "5f21bd685e162ed50c29c9f50548d2879b7aee2d975106895a10a8162c843149"
+    },
+    {
+      "path": "contracts/agent/v1/graph-config.v1.example.json",
+      "sha256": "fd92de87043fd5aa3785eb40bee0e06701a551b5db9cceb7719237156042be1a"
+    },
+    {
+      "path": "contracts/agent/v1/graph-config.v1.schema.json",
+      "sha256": "231ead4513db89e805798b29f2883302db424c64f057d4807493a3daae5394b5"
+    },
+    {
+      "path": "contracts/agent/v1/graph-policy.v1.example.json",
+      "sha256": "54f384be336a0af75196a581398829c287db5c4f2bcf6d5a3947e9329a4315ab"
+    },
+    {
+      "path": "contracts/agent/v1/graph-policy.v1.schema.json",
+      "sha256": "88a640157b01431ca5934b202fd6c2db4d0afb17881f6bbc550ff271ae4c7047"
+    },
+    {
+      "path": "contracts/agent/v1/graph-request.v1.example.json",
+      "sha256": "d4de74c7ce569ede3fd1768f55c6ecd51e8051f8729c1c89e497c73112544ba2"
+    },
+    {
+      "path": "contracts/agent/v1/graph-request.v1.schema.json",
+      "sha256": "3281551bf8469de6eac49fc28c289b713384a17947853eb308177339a13ac295"
+    },
+    {
+      "path": "contracts/agent/v1/graph-result.v1.example.json",
+      "sha256": "29624251b12e1c3848a1a7ecc9efd2e9c93d60c76669d4b81ec5860f6e4dad38"
+    },
+    {
+      "path": "contracts/agent/v1/graph-result.v1.schema.json",
+      "sha256": "4eb904f9ddc84b9ff054411361fe062459ea3bc68b7ba41311a278c9892a7e5d"
+    },
+    {
+      "path": "contracts/agent/v1/safe-trace.v1.example.json",
+      "sha256": "d8f2c63256b80ebb5cbb0440526cf575c254560f68a81a9dec64ad98a8a4dee9"
+    },
+    {
+      "path": "contracts/agent/v1/safe-trace.v1.schema.json",
+      "sha256": "3da14821e8f4302125af10f6fef5c12ba35faccbb42639242ae978248889d7e7"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "sha256": "559e162fde6b6df100559461d228ff23b69ca2e7686895a29471429dee789425"
+    },
+    {
+      "path": "docs/agent-graph.md",
+      "sha256": "a9750acb250f70e9d02850438e18f67d287663380d6ab55158769e18e69bfceb"
+    },
+    {
+      "path": "docs/evidence/12-graph.md",
+      "sha256": "4d95eb0d027a33219c3aa107a14388fc487c3681c2a7e1679b29cb6d0c16d58d"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "9204bfbf6673381ad00977a5fbbd3926aeb29af41a87f6e0dcc96ae372f35c19"
+    },
+    {
+      "path": "scripts/update_agent_graph_contracts.py",
+      "sha256": "9dbd7a4226e95de2443db9afa141a0754ee12a1795eb015145837c9c94cd218f"
+    },
+    {
+      "path": "src/retailops_ai/agent/__init__.py",
+      "sha256": "c217050bdb775762270065a7bf1872527bb737bd23407cb1892fddbacd3c3912"
+    },
+    {
+      "path": "src/retailops_ai/agent/chat.py",
+      "sha256": "9577e838f42bff2a7ec398be3be55614cf2e7dc5e11c8626c374e4afd48bc7e0"
+    },
+    {
+      "path": "src/retailops_ai/agent/chat_config.py",
+      "sha256": "67d7e57e7273991f4c2a7889353adcb0692a88f816976b739a502eb838df60f7"
+    },
+    {
+      "path": "src/retailops_ai/agent/chat_context.py",
+      "sha256": "f589cd57f128b5559b636131fd309fa952a2500c83461c47fd47b91b448883e2"
+    },
+    {
+      "path": "src/retailops_ai/agent/chat_contracts.py",
+      "sha256": "5e18bbcf5ee2db55e3a2158acab1c83acd5b224581ddba1bc4129bce922ecd40"
+    },
+    {
+      "path": "src/retailops_ai/agent/evidence.py",
+      "sha256": "ba7623bdffab737d1d3c3ca029f0b50f9433fe58e75e9cb8d9f6c5d90834d66c"
+    },
+    {
+      "path": "src/retailops_ai/agent/execution.py",
+      "sha256": "44dfe6b0207ca06f8aa8e47f9f80c69e9e380133da1f80283bd30bdbc6a6c992"
+    },
+    {
+      "path": "src/retailops_ai/agent/graph.py",
+      "sha256": "cbe4cd79f34d3c3f979bd763944e5924bb57731ca6d4db60ac7755adfb5d7d13"
+    },
+    {
+      "path": "src/retailops_ai/agent/graph_config.py",
+      "sha256": "34e63516f83992ee5790531f83e4a89fd01fa7942420760ea7cb74cf9999b926"
+    },
+    {
+      "path": "src/retailops_ai/agent/graph_contracts.py",
+      "sha256": "3aeb983c0380a14bcf82a04bc7ff2a22de766fd936911e3f123b49315870aa41"
+    },
+    {
+      "path": "src/retailops_ai/agent/graph_traces.py",
+      "sha256": "37698377f89ae0cb87f4c5f30ad4865ed09a24ea0e40c4b5d479b93b2c2c4146"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/evidence.v2.md",
+      "sha256": "4479f9899186e7f0b861daf830076e3397a563f28027f0e169c85bea9f45e3a8"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/examples.v2.md",
+      "sha256": "cc13ebe587e1f26b0263eae818f276a6ec8f7c5d050aa4552e32c60782d57a4e"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/policy.v2.md",
+      "sha256": "fbb6d5ad02c01ddd4a41371e04cd9d85bda544a36d6210a09a8bc2f3dbf6be9b"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/refusal.v2.md",
+      "sha256": "4c5b42d42f62bf3609773b2c834d305300f99d8bd7280503af86526b6c09481b"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/response.v2.md",
+      "sha256": "3c1a1e21d62f9fd5a62148a5e4e34d7c7f2c192ee77ccc6227eb391f7f2d4e22"
+    },
+    {
+      "path": "src/retailops_ai/agent/prompts/tool_selection.v2.md",
+      "sha256": "572f1b6bc660aef3714738c249cd913a698cef3f88903b6699c9f79eb17b07c7"
+    },
+    {
+      "path": "src/retailops_ai/agent/tools.py",
+      "sha256": "5cc425bba0727b352f731e56cd1fd0d1d0a7aad2d43de693368676036dfad00d"
+    },
+    {
+      "path": "src/retailops_ai/cli.py",
+      "sha256": "63154964d7c4b442dfed7dd066686a2958e11d66380630d3fe8145a9f5c82b82"
+    },
+    {
+      "path": "src/retailops_ai/cli_agent.py",
+      "sha256": "d13cdcb5fc67c5da1c53f706a28e838d105628c0589a956ed5453d8a170b4740"
+    },
+    {
+      "path": "tests/test_agent_graph.py",
+      "sha256": "42869a25fa6e7e1ee5db4dce7afb2dc9a00d6cff7f96787d7eaa7ca45ca98f55"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "b00e58676e3ff07d7af9de4eaa4fe426574bc2a6c90439977a70f2831378f84a"
+    }
+  ],
+  "current_status_document": "docs/STATUS.md"
+}

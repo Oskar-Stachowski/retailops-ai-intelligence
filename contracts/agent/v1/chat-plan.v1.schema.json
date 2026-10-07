@@ -1,0 +1,736 @@
+{
+  "$defs": {
+    "AnomalyRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_detected_anomalies",
+          "title": "Tool",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool",
+        "window"
+      ],
+      "title": "AnomalyRequest",
+      "type": "object"
+    },
+    "DataScope": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "product_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Product Ids",
+          "type": "array"
+        },
+        "selling_location_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Selling Location Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "product_ids",
+        "selling_location_ids",
+        "channel"
+      ],
+      "title": "DataScope",
+      "type": "object"
+    },
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    },
+    "ForecastScope": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "product_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Product Ids",
+          "type": "array"
+        },
+        "selling_location_ids": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Selling Location Ids",
+          "type": "array"
+        },
+        "target_from": {
+          "format": "date",
+          "title": "Target From",
+          "type": "string"
+        },
+        "target_to": {
+          "format": "date",
+          "title": "Target To",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_ids",
+        "selling_location_ids",
+        "channel",
+        "target_from",
+        "target_to"
+      ],
+      "title": "ForecastScope",
+      "type": "object"
+    },
+    "InventoryRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_inventory_status",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool"
+      ],
+      "title": "InventoryRequest",
+      "type": "object"
+    },
+    "KnowledgeRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "retrieval": {
+          "$ref": "#/$defs/RetrievalRequest"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "tool": {
+          "const": "search_knowledge",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "tool",
+        "retrieval"
+      ],
+      "title": "KnowledgeRequest",
+      "type": "object"
+    },
+    "ModelStatusRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_model_status",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool"
+      ],
+      "title": "ModelStatusRequest",
+      "type": "object"
+    },
+    "OperationsRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_live_operations",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool"
+      ],
+      "title": "OperationsRequest",
+      "type": "object"
+    },
+    "RetrievalFilters": {
+      "additionalProperties": false,
+      "properties": {
+        "access_classes": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "public_project",
+                  "project_internal",
+                  "restricted"
+                ],
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Access Classes"
+        },
+        "document_statuses": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "specified",
+                  "implemented",
+                  "verified",
+                  "deprecated",
+                  "historical"
+                ],
+                "type": "string"
+              },
+              "maxItems": 5,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Document Statuses"
+        },
+        "document_types": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "architecture",
+                  "contract",
+                  "guide",
+                  "runbook",
+                  "policy",
+                  "plan",
+                  "evidence",
+                  "model_card"
+                ],
+                "type": "string"
+              },
+              "maxItems": 8,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Document Types"
+        },
+        "repositories": {
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "Oskar-Stachowski/retailops-cloud-native-platform",
+                  "Oskar-Stachowski/retailops-ai-intelligence"
+                ],
+                "type": "string"
+              },
+              "maxItems": 2,
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repositories"
+        }
+      },
+      "title": "RetrievalFilters",
+      "type": "object"
+    },
+    "RetrievalRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "filters": {
+          "$ref": "#/$defs/RetrievalFilters"
+        },
+        "max_context_tokens": {
+          "default": 6000,
+          "maximum": 6000,
+          "minimum": 1,
+          "title": "Max Context Tokens",
+          "type": "integer"
+        },
+        "purpose": {
+          "default": "documentation",
+          "enum": [
+            "documentation",
+            "implementation",
+            "verified_state",
+            "history"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "question": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "top_k": {
+          "default": 5,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Top K",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "question"
+      ],
+      "title": "RetrievalRequest",
+      "type": "object"
+    },
+    "RiskRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_stockout_risk",
+          "title": "Tool",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool",
+        "window"
+      ],
+      "title": "RiskRequest",
+      "type": "object"
+    },
+    "SalesRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "grain": {
+          "const": "product_selling_location_channel_period",
+          "title": "Grain",
+          "type": "string"
+        },
+        "limit": {
+          "default": 20,
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool": {
+          "const": "get_sales_summary",
+          "title": "Tool",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "scope",
+        "as_of",
+        "tool",
+        "window",
+        "grain"
+      ],
+      "title": "SalesRequest",
+      "type": "object"
+    },
+    "ToolRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "contract_type": {
+          "const": "tool_request",
+          "title": "Contract Type",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/ForecastScope"
+        },
+        "tool": {
+          "const": "get_demand_forecast",
+          "title": "Tool",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "contract_type",
+        "tool",
+        "as_of",
+        "scope",
+        "limit"
+      ],
+      "title": "ToolRequest",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:agent:chat-plan:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "const": "tool_plan",
+      "title": "Kind",
+      "type": "string"
+    },
+    "tools": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "get_demand_forecast": "#/$defs/ToolRequest",
+            "get_detected_anomalies": "#/$defs/AnomalyRequest",
+            "get_inventory_status": "#/$defs/InventoryRequest",
+            "get_live_operations": "#/$defs/OperationsRequest",
+            "get_model_status": "#/$defs/ModelStatusRequest",
+            "get_sales_summary": "#/$defs/SalesRequest",
+            "get_stockout_risk": "#/$defs/RiskRequest",
+            "search_knowledge": "#/$defs/KnowledgeRequest"
+          },
+          "propertyName": "tool"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/SalesRequest"
+          },
+          {
+            "$ref": "#/$defs/InventoryRequest"
+          },
+          {
+            "$ref": "#/$defs/ToolRequest"
+          },
+          {
+            "$ref": "#/$defs/RiskRequest"
+          },
+          {
+            "$ref": "#/$defs/AnomalyRequest"
+          },
+          {
+            "$ref": "#/$defs/OperationsRequest"
+          },
+          {
+            "$ref": "#/$defs/ModelStatusRequest"
+          },
+          {
+            "$ref": "#/$defs/KnowledgeRequest"
+          }
+        ]
+      },
+      "maxItems": 6,
+      "title": "Tools",
+      "type": "array"
+    }
+  },
+  "required": [
+    "kind",
+    "tools"
+  ],
+  "title": "PlanDraft",
+  "type": "object"
+}

@@ -1,0 +1,90 @@
+{
+  "$id": "urn:retailops:assistant:admission-policy:1.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capacity": {
+      "default": 100,
+      "maximum": 100,
+      "minimum": 1,
+      "title": "Capacity",
+      "type": "integer"
+    },
+    "cost_per_principal_window": {
+      "default": "1",
+      "pattern": "^[0-9]+(?:\\.[0-9]{1,9})?$",
+      "title": "Cost Per Principal Window",
+      "type": "string"
+    },
+    "cost_total_window": {
+      "default": "4",
+      "pattern": "^[0-9]+(?:\\.[0-9]{1,9})?$",
+      "title": "Cost Total Window",
+      "type": "string"
+    },
+    "parallel_per_principal": {
+      "default": 2,
+      "maximum": 2,
+      "minimum": 1,
+      "title": "Parallel Per Principal",
+      "type": "integer"
+    },
+    "parallel_total": {
+      "default": 8,
+      "maximum": 8,
+      "minimum": 1,
+      "title": "Parallel Total",
+      "type": "integer"
+    },
+    "policy_version": {
+      "const": "assistant-admission-v1",
+      "default": "assistant-admission-v1",
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "retention_seconds": {
+      "default": 900,
+      "maximum": 900,
+      "minimum": 300,
+      "title": "Retention Seconds",
+      "type": "integer"
+    },
+    "runs_per_principal_window": {
+      "default": 6,
+      "maximum": 6,
+      "minimum": 1,
+      "title": "Runs Per Principal Window",
+      "type": "integer"
+    },
+    "runs_total_window": {
+      "default": 24,
+      "maximum": 24,
+      "minimum": 1,
+      "title": "Runs Total Window",
+      "type": "integer"
+    },
+    "tokens_per_principal_window": {
+      "default": 81000,
+      "maximum": 81000,
+      "minimum": 1,
+      "title": "Tokens Per Principal Window",
+      "type": "integer"
+    },
+    "tokens_total_window": {
+      "default": 324000,
+      "maximum": 324000,
+      "minimum": 1,
+      "title": "Tokens Total Window",
+      "type": "integer"
+    },
+    "window_seconds": {
+      "default": 60,
+      "maximum": 300,
+      "minimum": 60,
+      "title": "Window Seconds",
+      "type": "integer"
+    }
+  },
+  "title": "AdmissionPolicy",
+  "type": "object"
+}

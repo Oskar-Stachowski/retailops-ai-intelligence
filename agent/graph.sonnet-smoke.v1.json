@@ -1,0 +1,247 @@
+{
+  "chat": {
+    "budget": {
+      "max_calls": 6,
+      "max_input_tokens": 16000,
+      "max_output_tokens": 3000,
+      "max_repairs": 1,
+      "max_retries": 2,
+      "pricing": {
+        "currency": "USD",
+        "input_per_million": "3.3",
+        "kind": "reviewed_provider_rates",
+        "max_run_cost": "0.11",
+        "max_smoke_cost": "0.25",
+        "output_per_million": "16.5",
+        "rate_version": "aws-sonnet46-frankfurt-20260928"
+      },
+      "provider_timeout_seconds": 20.0,
+      "retry_base_seconds": 0.05,
+      "retry_max_seconds": 0.2
+    },
+    "embeddings": {
+      "dimension": 1024,
+      "distance": "cosine",
+      "inference_profile": null,
+      "model_id": "amazon.titan-embed-text-v2:0",
+      "normalization": "l2-unit",
+      "provider": "bedrock",
+      "region": "eu-north-1",
+      "schema_version": "1.0",
+      "transformation_version": "utf8-heading-path-body-v1",
+      "vector_format": "float32-big-endian-v1"
+    },
+    "graph_version": "bounded-langgraph-v1",
+    "knowledge_index_id": "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6",
+    "model": {
+      "inference_profile": "eu.anthropic.claude-sonnet-4-6",
+      "max_output_tokens": 1500,
+      "model_id": "anthropic.claude-sonnet-4-6",
+      "provider": "bedrock",
+      "region": "eu-central-1",
+      "temperature": 0.0
+    },
+    "profile": "agent-bounded-v1",
+    "prompt_version": "prompts-v4",
+    "prompts": [
+      {
+        "name": "policy",
+        "resource_version": "v4",
+        "sha256": "4f71cd6be32ed612e6750ef977648669f133a494a110b5857db42009dfb6bef8"
+      },
+      {
+        "name": "tool_selection",
+        "resource_version": "v4",
+        "sha256": "572f1b6bc660aef3714738c249cd913a698cef3f88903b6699c9f79eb17b07c7"
+      },
+      {
+        "name": "evidence",
+        "resource_version": "v4",
+        "sha256": "479452c87995779bc024cb5da23a7486f7a074a588892c9c55264971d13b5115"
+      },
+      {
+        "name": "response",
+        "resource_version": "v4",
+        "sha256": "cba6113494dd6b73f94baba1d25e586ef5d00b7da681b5ff0169cb032fc33185"
+      },
+      {
+        "name": "refusal",
+        "resource_version": "v4",
+        "sha256": "4c5b42d42f62bf3609773b2c834d305300f99d8bd7280503af86526b6c09481b"
+      },
+      {
+        "name": "examples",
+        "resource_version": "v4",
+        "sha256": "cc13ebe587e1f26b0263eae818f276a6ec8f7c5d050aa4552e32c60782d57a4e"
+      }
+    ],
+    "response_schema_sha256": "5f5a8e14081a9ac0fa82cb86144bbf2326e3cfd93da4e1007480f3ccc992aa5a",
+    "response_schema_version": "agent-draft-v1",
+    "retrieval": {
+      "candidate_limit": 256,
+      "diversification": "score-then-document-v1",
+      "max_chunks_per_document": 2,
+      "max_context_bytes": 24000,
+      "max_context_tokens": 6000,
+      "max_top_k": 5,
+      "min_cosine_score": 0.0,
+      "retrieval_version": "pgvector-cosine-exact-v1",
+      "schema_version": "1.0",
+      "size_estimator": "serialized-hits-utf8-div4-v1"
+    },
+    "schema_version": "1.0",
+    "tool_policy": {
+      "freshness_seconds": 300,
+      "max_calls": 6,
+      "max_locations": 5,
+      "max_period_days": 90,
+      "max_products": 20,
+      "max_result_bytes": 131072,
+      "max_rows": 50,
+      "profile": "agent-tools-bounded-v1",
+      "request_deadline_seconds": 45.0,
+      "schema_version": "1.0",
+      "tool_timeout_seconds": 5.0
+    },
+    "tool_schemas_sha256": "c724b1fce12a8cf790249749280710aef045767d8c0ab5adb4f40163ec115dbe"
+  },
+  "code_sha256": "ec4650311d4991fca1be13fab330b4e299bd72b3b81b92fc7be38dc10e797f7e",
+  "evidence_policy_version": "typed-facts-v2",
+  "graph_version": "bounded-langgraph-v1",
+  "langgraph_version": "1.2.12",
+  "policy": {
+    "document_rules": [
+      {
+        "intent": "documentation",
+        "question": "Jak rozpocz\u0105\u0107 prac\u0119 lokaln\u0105 nad pakietem AI?",
+        "requirements": [
+          {
+            "description": "Local prerequisites, dependency install and server start",
+            "requirement_id": "local-start",
+            "supports": [
+              {
+                "chunk_id": "chunk-sha256-5a3601dab1a345329f7420a139619291ebcf0ef166fe4cef37c9dfe48f6cd9b8",
+                "chunk_sha256": "c143d418c18043a422639e3904380bde436fb0ada50e8bfedaf899b3058113d5",
+                "quote": "Local development requires Python 3.11.15, uv 0.12.19 and Make. Run make bootstrap from the repository root to install the locked dependencies. Then run make serve to start the local diagnostic API on port 8081 with .env.example. Use make serve ENV_FILE=.env for a private local configuration. Ctrl+C stops the process."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "intent": "documentation",
+        "question": "Jakie kontrole nale\u017cy uruchomi\u0107 przed commitem AI?",
+        "requirements": [
+          {
+            "description": "The full local quality gates and secret scan",
+            "requirement_id": "precommit-checks",
+            "supports": [
+              {
+                "chunk_id": "chunk-sha256-d188021a31ec4d301541128d77234ae88fcb095a1803d91a2e283cc0fbc8cfec",
+                "chunk_sha256": "e5df39f25de17acb12f64fbfac9816b58de184fb87ff9355c0571313429ba3bc",
+                "quote": "Before a commit, run make check for lint, types, tests, documentation, contracts, offline agent evaluation, packaging and Compose configuration. Run make secrets for the Git history and current-file secret scans; make ci-local combines both groups."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "intent": "documentation",
+        "question": "Kt\u00f3re endpointy zwracaj\u0105 zweryfikowan\u0105 to\u017csamo\u015b\u0107 i scope?",
+        "requirements": [
+          {
+            "description": "Endpoint returning the authenticated principal and scope",
+            "requirement_id": "identity-endpoint",
+            "supports": [
+              {
+                "chunk_id": "chunk-sha256-e40fd077c9ee5bddc7fec29d74d329682250f2e974b2c744c7671f18ffd958f4",
+                "chunk_sha256": "dbb27c0956a3fbbc139c005875bcb32f55f7dbf1622eacde23ed19966cd322d1",
+                "quote": "GET /api/v1/identity returns the principal, roles, capabilities and configured scope of the verified Bearer token. POST /api/v1/access/forecast-check checks forecast:read and the entire requested scope; it does not return a forecast."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "intent": "documentation",
+        "question": "Kiedy zmiana grant\u00f3w lub revoke wymaga restartu procesu?",
+        "requirements": [
+          {
+            "description": "Changes requiring restart and per-request expiry",
+            "requirement_id": "policy-restart",
+            "supports": [
+              {
+                "chunk_id": "chunk-sha256-32112fe91d1d13c27b9cd633128b9fb3ddffd9833fe79437dcd55c26cb32e806",
+                "chunk_sha256": "0c80d06f9fab070b65caa13904d7b57661e5ab459d8ef554eaf2b003ef0bea99",
+                "quote": "Grants, revoked flags and token rotation are loaded as a process snapshot. Restart every API process after such changes. Credential expiry is checked on each request and does not require a restart. There is no automatic hot reload of the authorization policy."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "intent": "verified_state",
+        "question": "Jak zabezpieczono odczyt metryk diagnostycznych?",
+        "requirements": [
+          {
+            "description": "Verified diagnostic metrics access controls",
+            "requirement_id": "metrics-controls",
+            "supports": [
+              {
+                "chunk_id": "chunk-sha256-3c557a0ecbe1490944ff76a44e36019bf94c4de8261015c65c579ad6688b8ee4",
+                "chunk_sha256": "a55cd22ae12dc514e3fdcde775d0b8c22cf5e1d78fe2622afdfc9ddb441b1271",
+                "quote": "Verified local diagnostic test: /metrics returned 404 without a configured metrics token and 401 for missing or wrong authorization. The dedicated metrics token was compared in constant time; the API identity token did not grant metrics access."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "intent": "documentation",
+        "question": "Co sprawdzaj\u0105 health i ready serwisu AI?",
+        "requirements": [
+          {
+            "description": "What health checks",
+            "requirement_id": "health-meaning",
+            "supports": [
+              {
+                "chunk_id": "chunk-sha256-b0c86c7aa57ee5dbc0d534be0442c8b2af1aee476ff464118286f26fc520287b",
+                "chunk_sha256": "cb0b41b29f8a353a32023e074c49c11bcbc5e4e95c5f43d2ec0d2c6d34205d3c",
+                "quote": "GET /health reports that the API process responds to requests. It does not probe dependencies or prove readiness of a database or model."
+              }
+            ]
+          },
+          {
+            "description": "What ready checks",
+            "requirement_id": "ready-meaning",
+            "supports": [
+              {
+                "chunk_id": "chunk-sha256-e297760ee0b0461e1ba384a070a9cfd2daa3f853711e5f256efb59ecbe5c8301",
+                "chunk_sha256": "a40bfb8f2a18ed40f996e8706154863edf24813de89caf423e5fbe0895fbaaf8",
+                "quote": "GET /ready evaluates the dependencies required by the configured role. A failed required dependency produces 503; an optional failure can produce degraded with 200. Readiness does not certify model quality."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "max_catalogue_facts": 40,
+    "max_extra_evidence_rounds": 1,
+    "max_selected_facts": 5,
+    "max_steps": 20,
+    "profile": "bounded-evidence-graph-v1",
+    "schema_version": "1.0",
+    "suggestions": {
+      "lifetime_seconds": 300,
+      "max_candidates": 5,
+      "minimum_stockout_probability": 0.8,
+      "operations_lag_seconds": 60.0,
+      "policy_version": "read-only-review-v1",
+      "schema_version": "1.0"
+    },
+    "trace_capacity": 100,
+    "trace_retention_seconds": 900
+  },
+  "schema_version": "1.0",
+  "schemas_sha256": "a229f96199649c577ae59cda77b2c8c3f9334b3de8dd0681951ec9bc67245760"
+}

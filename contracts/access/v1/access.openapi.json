@@ -2502,7 +2502,14 @@
                 "anomaly:read",
                 "anomaly:run",
                 "stockout:read",
-                "stockout:run"
+                "stockout:run",
+                "assistant:query",
+                "assistant:audit",
+                "sales:read",
+                "inventory:read",
+                "anomalies:read",
+                "operations:read",
+                "model:read"
               ],
               "type": "string"
             },
@@ -4062,8 +4069,8 @@
             "type": "string"
           },
           "type": {
-            "const": "about:blank",
             "default": "about:blank",
+            "pattern": "^about:blank$|^urn:retailops:problem:[a-z-]+$",
             "title": "Type",
             "type": "string"
           }

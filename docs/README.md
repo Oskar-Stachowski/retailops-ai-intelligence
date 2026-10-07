@@ -43,6 +43,24 @@ zmiany i PR-y, [security](security.md) — granice dostępu i zgłoszenia.
 [Semantyczny RAG](knowledge-semantic.md) opisuje rzeczywiste embeddings,
 kwalifikację jakości, aktywację i rollback Etapu 11. Historyczne evidence
 zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
+[Narzędzia agenta AI 12](agent-tools.md) opisują typowany katalog, uprawnienia,
+budżet i testowe źródła; [odbiór pierwszego zakresu](evidence/12-tools.md)
+wiąże je z lokalnymi testami. [Konfiguracja i fake chat](agent-chat.md) opisują
+wersjonowane prompty, kontrolę draftów oraz budżet rozmowy;
+[odbiór drugiego zakresu](evidence/12-chat.md) podaje jego granice.
+[Graf i sprawdzalne dowody](agent-graph.md) opisują skończony przebieg,
+kontrolę liczb/znaczenia i bezpieczny ślad; [odbiór](evidence/12-graph.md).
+[Sugestie i ewaluacja](agent-evaluation.md) opisują reguły serwera, 50 pytań
+golden i wersjonowany fixture release; [odbiór](evidence/12-evaluation.md).
+[Dowody dokumentowe](agent-document-evidence.md) opisują powiązanie pytania
+z wymaganymi informacjami, cytatami i odmową przy brakach;
+[odbiór](evidence/12-document-evidence.md).
+[Assistant API i persistence](assistant-api.md) opisują queries/runs,
+trwałe wyniki, bezpieczny odczyt i wspólne admission; [odbiór](evidence/12-assistant.md).
+[Runtime dokumentacyjny](assistant-document-runtime.md) łączy planner, źródło AI 03,
+HTTP, rzeczywisty RAG i Bedrock; [odbiór](evidence/12-document-runtime.md).
+[Chat Bedrock](agent-bedrock.md) opisuje adapter, kontrolę dostępu i tokenów,
+europejskie profile oraz limit kosztu; [bieżący odbiór](evidence/12-document-runtime.md).
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
 [Przygotowanie oceny AI 09](evaluation-preparation.md) przypina wymagania,
@@ -258,6 +276,7 @@ etykiety i progi. Worker zachowuje pełny raport także po niezaliczonym progu.
 | `src/retailops_ai/` | CLI/settings oraz warstwy api/domain/pipelines/adapters lokalnego serwera |
 | `contracts/` | OpenAPI/CLI, access/intelligence/knowledge oraz source_snapshot, curated i forecast/v1 |
 | `knowledge/` | Przypięty rejestr RAG, konfiguracje, golden set oraz osobne zgody właściciela |
+| `agent/` | Wersjonowane konfiguracje grafu, golden fixtures i release ewaluacji; prompty są zasobami pakietu |
 | `tests/` | Konfiguracja, HTTP i socket, awarie, korelacja, kontrakty oraz bramki CI |
 | `scripts/` | Kontroler Compose, rzeczywisty smoke, kontrakty i bramki workflow |
 | `.github/` | Required CI, szablon PR, wskaźnik do security |
@@ -272,3 +291,6 @@ ograniczenia; nie jest listą zakończonych zadań ani deklaracją wdrożenia.
 
 - [Pełna bramka cross-repo AI 03.6](evidence/03-06-cross-repo.md) — wspólny odbiór RetailOps i AI, publikacja oraz kolejne etapy.
 - [Lokalny odbiór zaakceptowanego v12 i import APFS](forecast-v12-development.md).
+
+- [Wersjonowany wybór pytań AI12](assistant-routing.md)
+- [Wznowienie i ponowna kwalifikacja AI12](evidence/12-resume.md)

@@ -1,0 +1,260 @@
+{
+  "ai10_required_for_this_scope": false,
+  "ai12_closed": false,
+  "aws_chat_executed": false,
+  "base_commit": "42493cd2d683733ffca94cfa30de91e499516702",
+  "branch": "ai/12-tools",
+  "business_policy_approved": false,
+  "checked_at": "2026-09-29T08:02:44.671007+00:00",
+  "checksums": [
+    {
+      "path": "Makefile",
+      "sha256": "9cd31c4b2f49abb338fd546cf85934c64e6bcecc9c0add57bd2ee74e6c28e65e"
+    },
+    {
+      "path": "agent/evaluation-release.fake.v1.json",
+      "sha256": "ba9d1bc7ba387eef98664b2d43b210aca51f184fcba734c5a6134f4976aa627f"
+    },
+    {
+      "path": "agent/golden.canonical.v1.json",
+      "sha256": "5a011ee7f5a8180ff32b40e163be16d8748b07651f5a88f688c329d6676d5ef1"
+    },
+    {
+      "path": "agent/graph.evaluate.fake.v1.json",
+      "sha256": "fcb528493dcdbc94745507325203df6c55fbab4064b1dc0ba36c7089d114ecd0"
+    },
+    {
+      "path": "agent/graph.fake.v1.json",
+      "sha256": "3d36b46a020fb39a4a693bfc19df9c7476050416be26261673a1d2a3e6a91c97"
+    },
+    {
+      "path": "contracts/assistant/v1/admission-policy.v1.example.json",
+      "sha256": "66f9fb7e139ca74ebcbde789cec8e5b04ae215373aadeddbcd84b227e671ba76"
+    },
+    {
+      "path": "contracts/assistant/v1/admission-policy.v1.schema.json",
+      "sha256": "1fdba904e13749cf346d40b5360c662cdeba2654dab4ed69ae80313a2970cebb"
+    },
+    {
+      "path": "contracts/assistant/v1/answer.v1.schema.json",
+      "sha256": "69d4dbaf54d58412123cd33f9bc0b8a5abbc22bd5d1be36cbcdafbc1fe8e3b16"
+    },
+    {
+      "path": "contracts/assistant/v1/assistant.openapi.json",
+      "sha256": "5199bfa53ff4dee499e08e8840cc6e18b22ef075262281e314d6bb753957e04b"
+    },
+    {
+      "path": "contracts/assistant/v1/query.v1.example.json",
+      "sha256": "28ffd7e85c1fa9a1811656e2413788404540b21120cb4e164fa85d878249ca76"
+    },
+    {
+      "path": "contracts/assistant/v1/query.v1.schema.json",
+      "sha256": "6a54375b0a6dec4895a71a4cdedc5639e967e5df2b5cb9cb59080e9dfbcbf018"
+    },
+    {
+      "path": "contracts/assistant/v1/run.v1.schema.json",
+      "sha256": "086f1aa7487dfad77e07a3322ad61ef5c4f8d8690539e6dd1abd2fec6d5ef341"
+    },
+    {
+      "path": "contracts/assistant/v1/suggestion.v1.schema.json",
+      "sha256": "5d7ebc50237dc98c28cebb9b93f498f5d9c26d1f46dac189bbd3392376fa2eec"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "sha256": "b9ae3f68f2049b8de3ee12793ebbcc27a879bff36b50a6c19e0ee0c095d4c6c3"
+    },
+    {
+      "path": "docs/assistant-api.md",
+      "sha256": "dd7d631c00f2df3513c4754ba5f31a7a6789621b6fdd0d080afe9b4c5d4789d4"
+    },
+    {
+      "path": "docs/evidence/12-assistant-compose.json",
+      "sha256": "aefeaeac8729645c66a2ea606f138ff7521a032e3b1a6d82074a060771a40339"
+    },
+    {
+      "path": "docs/evidence/12-assistant-golden.json",
+      "sha256": "3d979d5515b93f213b9e74e9fa6946721052f815f667d4e8414b74f50fc17ace"
+    },
+    {
+      "path": "scripts/update_assistant_contracts.py",
+      "sha256": "2cf74949965872730d784a24f1ce5eb4a1bc9b564aa55ffc254dae8e84f633ef"
+    },
+    {
+      "path": "scripts/verify_assistant.py",
+      "sha256": "5786ded71dd2d114b6ee2c1a50ab79923764140c243e5bb27950d4bc500a2dd3"
+    },
+    {
+      "path": "scripts/verify_knowledge_admin.py",
+      "sha256": "74cb8477c33f923029d07acb0f23bc4e6363a0b938a72a51f386caa811885a79"
+    },
+    {
+      "path": "scripts/verify_knowledge_search.py",
+      "sha256": "9147a4d91abf77673fd419637e022ed43a3b92e8d5a7e26a38b96070c45fad43"
+    },
+    {
+      "path": "scripts/verify_local_stack.py",
+      "sha256": "79795772da1c2aeb5495b45420d605f579f51043841716630d04ea841ed37732"
+    },
+    {
+      "path": "src/retailops_ai/adapters/assistant_store.py",
+      "sha256": "173bd7dd7adb16543193d7d0a095eced3df8f971b822b9e176bb813195893aaf"
+    },
+    {
+      "path": "src/retailops_ai/adapters/database.py",
+      "sha256": "7db9b9f28c611218c121d48200e5d302ea82d1a35a2755bf7882decc3e0fd904"
+    },
+    {
+      "path": "src/retailops_ai/agent/graph.py",
+      "sha256": "04287fc8a3ca1e03f5993dde830d088034f6136079bbcce2fbfd50c8ffeab4a6"
+    },
+    {
+      "path": "src/retailops_ai/agent/graph_contracts.py",
+      "sha256": "c69f7b97d0134c4f29e8fbbf69fc189e44b8d0c6a033fc4e0b6daba3ddfddd52"
+    },
+    {
+      "path": "src/retailops_ai/api/app.py",
+      "sha256": "1e4a7d97cda5d3683c860e68bb9e78d695fd82b513b2e717f8d8d3e949267734"
+    },
+    {
+      "path": "src/retailops_ai/api/assistant.py",
+      "sha256": "6f5d5aa805a3f062d8960284a98d9bec9399c58b88cc5601a9d8dfaacd267d8f"
+    },
+    {
+      "path": "src/retailops_ai/api/errors.py",
+      "sha256": "99442d4263739c4f54db243dcbd11ec6ce3b253d0a245568d5f812cafe4c5f63"
+    },
+    {
+      "path": "src/retailops_ai/api/models.py",
+      "sha256": "cd05d3fa0be75714e4bbf771481c346b219b523a6d52c21d9d469b20e8084353"
+    },
+    {
+      "path": "src/retailops_ai/api/schema.py",
+      "sha256": "264adb119413bd75c2bfc338a470a749fa76ead381c8aae553e421895e239b12"
+    },
+    {
+      "path": "src/retailops_ai/assistant/__init__.py",
+      "sha256": "163c3d32a5894b3871e020c4d606efb4f6bad82b683a928d73fc2cebc46a3eab"
+    },
+    {
+      "path": "src/retailops_ai/assistant/contracts.py",
+      "sha256": "dc24dd2854ba47caa121528f423e1c0c26c66ca85c7068f38327073de8080d73"
+    },
+    {
+      "path": "src/retailops_ai/assistant/service.py",
+      "sha256": "a708358957db36e4817bcbe1b4da32979f1ffd5cc45c282d0318ce10f2daaf29"
+    },
+    {
+      "path": "src/retailops_ai/domain/access.py",
+      "sha256": "b444a234058fdb424fbe5942d08e00033e1a1e1bae7e5f66412ec5710dbfb12e"
+    },
+    {
+      "path": "src/retailops_ai/migrations/versions/0009_assistant.py",
+      "sha256": "9542c85f06b438690527e7e5f7933fcdf66b644202e554b7c3f9aa69ee773404"
+    },
+    {
+      "path": "src/retailops_ai/security/models.py",
+      "sha256": "ae0b92a320f63252a10e727e4755118c5eb2776664da6f99cec94056c2083298"
+    },
+    {
+      "path": "tests/test_assistant.py",
+      "sha256": "36733ed2c4529902697c2891c7b6a37411078a0bcd446835d9cec0b8c669d340"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "b00e58676e3ff07d7af9de4eaa4fe426574bc2a6c90439977a70f2831378f84a"
+    }
+  ],
+  "default_serve_query": "unavailable_503_without_runtime",
+  "focused_http_tests_after_lazy_import": 144,
+  "full_regression_tests": 944,
+  "golden_latency_p95_ms": 840.9090829954948,
+  "golden_metrics": {
+    "action_policy": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "answer_exact": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "call_budget": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "case_pass": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "citation_correctness": {
+      "passed": 6,
+      "total": 6,
+      "value": 1.0
+    },
+    "citation_coverage": {
+      "passed": 6,
+      "total": 6,
+      "value": 1.0
+    },
+    "critical_cases": {
+      "passed": 36,
+      "total": 36,
+      "value": 1.0
+    },
+    "groundedness": {
+      "passed": 46,
+      "total": 46,
+      "value": 1.0
+    },
+    "numeric_faithfulness": {
+      "passed": 40,
+      "total": 40,
+      "value": 1.0
+    },
+    "outcome": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "refusal_correctness": {
+      "passed": 4,
+      "total": 4,
+      "value": 1.0
+    },
+    "safety_outcome": {
+      "passed": 15,
+      "total": 15,
+      "value": 1.0
+    },
+    "schema_pass": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "tool_selection_arguments": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    }
+  },
+  "golden_release_id": "agent-evaluation-release-sha256-2671526d68390826c81e8f312c4fc9558d1ca1fafbafee96d4cca02b2fd0b84d",
+  "golden_status": "passed",
+  "migration_revision": "0009_assistant",
+  "mypy_source_files": 129,
+  "new_assistant_tests": 33,
+  "open_gates_ref": "docs/STATUS.md",
+  "postgres_http_mechanics": "passed",
+  "proof_backend": "explicit_scripted_test_only",
+  "published": false,
+  "rag_quality_remeasured": false,
+  "real_business_sources_accepted": false,
+  "remote_ci_executed": false,
+  "result": "passed",
+  "ruff_files": 224,
+  "schema_version": "1.0",
+  "scope": "assistant_http_durable_results_shared_admission",
+  "wheel_outside_source": "passed"
+}

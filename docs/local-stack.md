@@ -94,6 +94,11 @@ Sprawdza także rzeczywiste wektory pgvector, kompletność i atomowość kandyd
 idempotencję, cache i izolację przestrzeni; fragmenty zachowują się po restarcie.
 Weryfikuje brak haseł w logach. Na końcu zatrzymuje kontenery i pozostawia wolumeny.
 Raport bez sekretów: `.local/persistence-smoke.json`. Porty 8081/5010 muszą być wolne.
+Migracja `0009_assistant` dodaje własne runy/wyniki/sugestie AI, a
+`0010_assistant_token_budget` ustala limit rezerwacji chatu na 19 000 tokenów. Smoke obejmuje
+[Assistant API](assistant-api.md), współbieżne admission dwóch procesów,
+token/cost debit, rollback po awarii zapisu oraz zachowanie wyników po SIGKILL
+API/bazy. Jego backend jest jawnie scripted i nie mierzy jakości Bedrock.
 Test zapisuje wyłącznie własne dane testowe; uruchamiaj go w deweloperskim checkoutcie.
 
 Jednorazowe testy AI 05 (`mlflow-store-smoke`, `model-lifecycle-smoke`,
@@ -119,3 +124,10 @@ pozostaje do wykonania po ich push.
 [MLflow migration](https://mlflow.org/docs/latest/self-hosting/migration/),
 [Compose readiness](https://docs.docker.com/compose/how-tos/startup-order/),
 [pgvector](https://github.com/pgvector/pgvector).
+
+Wznowienie AI12 dodaje head `0026_ai12`, który łączy `0023_ai07_ai08` oraz
+`0010_assistant_token_budget`. Zachowuje oba opublikowane łańcuchy migracji.
+Nie zastępuje migracji kolejki, modeli ani fizycznego stockout. Numer 0026
+pozostawia 0024/0025 dla osobnego zakresu AI10; po jego integracji może być
+potrzebna kolejna migracja łącząca heady. `compose-smoke` obejmuje również
+PostgreSQL admission i trwałość Assistant API przez `verify_assistant.py`.

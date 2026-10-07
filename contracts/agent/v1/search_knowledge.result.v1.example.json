@@ -1,0 +1,15 @@
+{
+  "content_trust": "untrusted_reference",
+  "context_bytes": 0,
+  "context_tokens": 0,
+  "contract_type": "agent_tool_result",
+  "index_id": "index-sha256-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "items": [],
+  "pin_generation": 1,
+  "provider": "bedrock",
+  "retrieval_config_id": "retrieval-config-sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "schema_version": "1.0",
+  "source_kind": "fixture",
+  "status": "no_data",
+  "tool": "search_knowledge"
+}
