@@ -166,6 +166,12 @@ class PrivateSourceReplay:
     source_tables: int
     source_rows: int
     check_parents: Callable[[], None]
+    producer_commit: str | None = None
+    producer_code_state: str | None = None
+    producer_lock_sha256: str | None = None
+    exporter_commit: str | None = None
+    exporter_lock_sha256: str | None = None
+    declared_exporter_lock_sha256: str | None = None
 
 
 @contextmanager
@@ -245,6 +251,7 @@ def _open_verified_source_parent(
         if logical_document(actual) != logical_document(replayed):
             raise SnapshotError("forecast_source_replay_complete_logical_mismatch")
         actual_metadata_sha256 = canonical_sha256(actual)
+        source_metadata_sha256 = canonical_sha256(source.manifest)
         active = True
 
         def check_parents() -> None:
@@ -252,6 +259,8 @@ def _open_verified_source_parent(
                 raise SnapshotError("forecast_source_replay_outside_private_context")
             if canonical_sha256(actual) != actual_metadata_sha256:
                 raise SnapshotError("forecast_source_replay_mutable_metadata_changed")
+            if canonical_sha256(source.manifest) != source_metadata_sha256:
+                raise SnapshotError("forecast_source_replay_mutable_source_metadata_changed")
             if (
                 _seal_parent(snapshot, names[0], limits.max_bytes),
                 _seal_parent(curated, names[1], limits.max_bytes),
@@ -276,6 +285,16 @@ def _open_verified_source_parent(
                 source_tables=len(source.manifest["tables"]),
                 source_rows=sum(t["row_count"] for t in source.manifest["tables"]),
                 check_parents=check_parents,
+                producer_commit=source.manifest["source"]["provenance"].get("git_commit"),
+                producer_code_state=source.manifest["source"]["provenance"].get("code_state"),
+                producer_lock_sha256=source.manifest["source"]["provenance"].get(
+                    "dependency_sha256"
+                ),
+                exporter_commit=source.manifest["exporter"].get("git_commit"),
+                exporter_lock_sha256=source.manifest["exporter"].get("dependency_sha256"),
+                declared_exporter_lock_sha256=source.manifest["source"]["provenance"]
+                .get("dependency_files", {})
+                .get("data/requirements-parquet.txt"),
             )
             check_parents()
         finally:

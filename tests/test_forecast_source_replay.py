@@ -128,6 +128,37 @@ def state(root):
     return outcome_journal.summary(outcome_journal.inspect(root))
 
 
+def test_replay_producer_binding_comes_from_the_same_verified_private_snapshot(
+    replay_fixture, monkeypatch
+):
+    """Previously exposed public fixture proves metadata origin, not fresh holdout."""
+    snapshot, _, _, _ = replay_fixture
+    metadata = json.loads((snapshot / "snapshot_manifest.json").read_bytes())
+    provenance, exporter = metadata["source"]["provenance"], metadata["exporter"]
+    original = source_replay._open_verified_source_parent
+    observed = []
+    from contextlib import contextmanager
+
+    @contextmanager
+    def capture(*args, **kwargs):
+        with original(*args, **kwargs) as replay:
+            observed.append(replay.producer_commit)
+            assert replay.producer_commit == provenance.get("git_commit")
+            assert replay.producer_code_state == provenance.get("code_state")
+            assert replay.producer_lock_sha256 == provenance.get("dependency_sha256")
+            assert replay.exporter_commit == exporter.get("git_commit")
+            assert replay.exporter_lock_sha256 == exporter.get("dependency_sha256")
+            assert replay.declared_exporter_lock_sha256 == provenance.get(
+                "dependency_files", {}
+            ).get("data/requirements-parquet.txt")
+            yield replay
+
+    monkeypatch.setattr(source_replay, "_open_verified_source_parent", capture)
+    run(replay_fixture)
+    assert len(observed) == 1
+    assert state(replay_fixture[3])["completed_reads"] == 5
+
+
 def seals(snapshot, curated):
     return _parent_seal(snapshot), _parent_seal(curated)
 

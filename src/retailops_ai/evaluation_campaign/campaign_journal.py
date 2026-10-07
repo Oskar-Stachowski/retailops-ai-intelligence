@@ -8,6 +8,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
+from time import perf_counter
 from typing import Any, Literal
 from uuid import uuid4
 
@@ -264,6 +265,7 @@ def audited_operation(root: Path, operation_id: str) -> Iterator[OperationComple
     A SIGKILL leaves a charged unresolved reservation; ordinary failure is charged
     and recorded without sensitive exception text. There is no budget refund.
     """
+    started = perf_counter()
     handle = OperationCompletion(reserve(root, operation_id))
     reservation_id = str(handle.reservation.reservation_id)
     try:
@@ -278,7 +280,22 @@ def audited_operation(root: Path, operation_id: str) -> Iterator[OperationComple
             cost=handle.cost,
         )
     except BaseException:
-        finish(root, reservation_id, result="failed", error_code="campaign_operation_failed")
+        # Ordinary failures have an observed wall cost. A SIGKILL still leaves
+        # an unresolved charge with unknown costs; never replace it with zero.
+        partial = handle.cost
+        finish(
+            root,
+            reservation_id,
+            result="failed",
+            error_code="campaign_operation_failed",
+            cost=CampaignCost(
+                wall_seconds=perf_counter() - started,
+                peak_process_tree_rss_bytes=(
+                    partial.peak_process_tree_rss_bytes if partial is not None else None
+                ),
+                artifact_bytes=partial.artifact_bytes if partial is not None else None,
+            ),
+        )
         raise
 
 
