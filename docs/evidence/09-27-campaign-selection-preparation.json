@@ -36,7 +36,9 @@
     "worker_system_peak_retained_even_if_sampled_peak_lower": true,
     "worker_peak_limit_failure_preserves_cost": true,
     "post_mlflow_artifact_scope_checks_passed": 21,
-    "post_mlflow_artifact_scope_seconds": 15.25
+    "post_mlflow_artifact_scope_seconds": 15.25,
+    "post_tracking_backend_checks_passed": 21,
+    "post_tracking_backend_checks_seconds": 14.67
   },
   "native_cpu_control": {
     "test": "existing real fit/reload/six-model scoring extended with fresh Tune worker and MLflow",
@@ -48,7 +50,38 @@
     "scope": "small typed controls; mocked input preparation, no completed project journal/canonical proof",
     "controlled_selection_expected": "not_ready because fewer than100 eligible rows",
     "collection_seconds": 1.7,
-    "tracking_artifact_scope": "explicit private worker tracking-artifacts, no default CWD mlruns"
+    "tracking_artifact_scope": "explicit private worker tracking-artifacts, no default CWD mlruns",
+    "first_execution_result": "failed6passed1; correction pending new exact-head CI",
+    "tracking_backend": "private MLflow file store matching accepted fitting/scoring; SQLite unsupported by this locked MLflow/SQLAlchemy pairing",
+    "metadata_only_file_backend_control": {
+      "scope": "Native locked MLflow SDK API only; no Tune labels, model fitting/inference or project campaign",
+      "sdk_result": {
+        "backend": "private_file",
+        "status": "FINISHED",
+        "tracking_artifacts_inside_owned_root": true,
+        "params_metrics_artifact_verified": true,
+        "models_fitted": 0,
+        "labels_read": 0
+      },
+      "resources": {
+        "status": "failed",
+        "reason": "tree_rss_limit",
+        "exit_code": -9,
+        "wall_seconds": 2.127902249994804,
+        "sampled_tree_peak_rss_bytes": 204161024,
+        "sampled_scratch_peak_bytes": 61440,
+        "sampled_worker_cpu_seconds": 0.978072512,
+        "cpu_measurement": "worker_tree_sampled_lower_bound_excludes_supervisor",
+        "memory_measurement": "sampled_supervisor_and_owned_worker_tree_not_continuous_peak",
+        "minimum_free_disk_bytes": 76258217984,
+        "minimum_available_memory_bytes": 1328742400,
+        "samples": 11,
+        "sample_seconds": 0.2
+      },
+      "prospective_control_budget_bytes": 201326592,
+      "resource_qualified": false,
+      "interpretation": "Actual params,metrics,artifact and FINISHED file-store run verified; whole supervisor/worker control exceeded192MiB and remains failed. Does not replace fresh full Tune CPU acceptance."
+    }
   },
   "static_checks": {
     "mypy_source_files": 682,
@@ -60,11 +93,11 @@
     "final_checks_pending": false
   },
   "package": {
-    "wheel_bytes": 1807777,
-    "wheel_sha256": "06c58fe96ddff1ea21eb6a32ae52312dc50248eba9e868b222b5638ce852cda9",
     "module_byte_parity": 562,
     "v17_schema_byte_parity": 3,
-    "previous_evaluation_files_unchanged": 54
+    "previous_evaluation_files_unchanged": 54,
+    "wheel_bytes": 1807761,
+    "wheel_sha256": "bd31347db7b71554be41cefa080d913e3e40f8aa8909ce3f693977194caf5b07"
   },
   "retained_failed_controls": [
     {
@@ -95,6 +128,34 @@
       "failed": 1,
       "seconds": 14.68,
       "cause": "extra-triplet fixture counted operations rather than frozen maximum_attempts; compute exact attempt inventory"
+    },
+    {
+      "scope": "first native extended CPU acceptance",
+      "head": "d3ecc04016ce48f0068027e51417ad55af3dd3d8",
+      "ci": 37683018498,
+      "job": 113003938107,
+      "passed": 6,
+      "failed": 1,
+      "seconds": 137.66,
+      "failed_phase": "fresh Tune worker",
+      "worker_wall_seconds": 2.4594523539999926,
+      "worker_result": "worker_exit,exit1; truncated import traceback ends sqlalchemy/pool/__init__.py",
+      "worker_peak_rss_bytes": "not_available_in_truncated_native_failure_output",
+      "confirmed_local_dependency_error": "MLflow3.4 sqlalchemy_store imports FallbackAsyncAdaptedQueuePool, removed from installed SQLAlchemy2.1.1",
+      "correction": "Use same private MLflow file store as accepted fitting/scoring workers, with explicit in-root tracking-artifacts. Preserve pinned environment, real params/metrics/artifacts and costs. Make native failure assertion emit full bounded worker traceback.",
+      "native_execution_after_correction_pending": true
+    },
+    {
+      "scope": "metadata-only MLflow API control",
+      "reason": "tree_rss_limit",
+      "budget_bytes": 201326592,
+      "wall_seconds": 2.127902249994804,
+      "sampled_tree_peak_rss_bytes": 204161024,
+      "reserves_preserved": true,
+      "models_fitted": 0,
+      "labels_read": 0,
+      "backend_API_finished_before_resource_guard": true,
+      "retry_performed": false
     }
   ],
   "main_integration": {

@@ -237,10 +237,13 @@ def test_real_fresh_six_model_cpu_inference_preserves_every_controlled_role_key(
         deadline=perf_counter() + tune.resources.wall_seconds,
     )
     assert measured["status"] == "passed", (
-        measured,
-        (tune_root / "select.log").read_text()[-5000:]
-        if (tune_root / "select.log").exists()
-        else "preflight refused",
+        str(measured)
+        + "\n"
+        + (
+            (tune_root / "select.log").read_text()[-5000:]
+            if (tune_root / "select.log").exists()
+            else "preflight refused"
+        )
     )
     selected = read(tune_root / "select.json")
     assert all(
@@ -260,7 +263,7 @@ def test_real_fresh_six_model_cpu_inference_preserves_every_controlled_role_key(
     assert selected["selection"]["status"] == "not_ready"
     assert "insufficient_tune_rows" in selected["selection"]["reasons"]
     assert selected["worker_seconds"] > 0 and selected["worker_peak_rss_bytes"] > 0
-    tune_run = MlflowClient(tracking_uri="sqlite:///" + str(tune_root / "tracking.db")).get_run(
+    tune_run = MlflowClient(tracking_uri=(tune_root / "tracking").as_uri()).get_run(
         selected["mlflow_run_id"]
     )
     assert tune_run.info.status == "FINISHED" and tune_run.data.params["role"] == "tune"
@@ -269,7 +272,7 @@ def test_real_fresh_six_model_cpu_inference_preserves_every_controlled_role_key(
     assert tune_run.info.artifact_uri.startswith((tune_root / "tracking-artifacts").as_uri())
     assert {
         item.path
-        for item in MlflowClient(
-            tracking_uri="sqlite:///" + str(tune_root / "tracking.db")
-        ).list_artifacts(selected["mlflow_run_id"], "tune")
+        for item in MlflowClient(tracking_uri=(tune_root / "tracking").as_uri()).list_artifacts(
+            selected["mlflow_run_id"], "tune"
+        )
     } == {"tune/plan.json", "tune/parents.json", "tune/metrics.json", "tune/selection.json"}

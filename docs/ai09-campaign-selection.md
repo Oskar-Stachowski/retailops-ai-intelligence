@@ -46,8 +46,14 @@ Kontrole danych badają rzeczywiste pliki ról, parowanie i matematykę. Kontrol
 ordering używają jawnie mocked workerów; kontrola pełnego `select` ma mocked
 gate wersji pakietów. Required test CPU rozszerza rzeczywisty trening/reload
 i sześć prognoz o świeży proces Tune oraz MLflow, nadal na małych kontrolowanych
-danych i mocked przygotowaniu features. Jego wykonanie na nowym headzie
-pozostaje wymagane; lokalnie sprawdzono wyłącznie collection, aby zachować
+danych i mocked przygotowaniu features. Pierwszy native head `d3ecc040`
+zaliczył sześć testów, lecz Tune worker zakończył się błędem importu backendu
+SQLite. Lokalny import potwierdza brak `FallbackAsyncAdaptedQueuePool`
+w SQLAlchemy 2.1.1 używanym z MLflow 3.4. Runner korzysta teraz z tego samego
+prywatnego magazynu plikowego MLflow co fitting/scoring, z jawnie przypiętym
+katalogiem artefaktów. Environment lock i zakres ewaluacji pozostają zachowane.
+Wykonanie skorygowanego headu nadal jest wymagane; lokalnie sprawdzono collection,
+aby zachować
 rezerwę RAM otwartych sesji.
 
 [Receipt przygotowania](evidence/09-27-campaign-selection-preparation.json)

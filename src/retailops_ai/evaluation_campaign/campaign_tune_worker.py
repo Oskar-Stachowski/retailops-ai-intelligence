@@ -105,7 +105,7 @@ def main(root: Path) -> None:
     started = perf_counter()
     request = read(root / "request.json")
     mlflow = importlib.import_module("mlflow")
-    mlflow.set_tracking_uri("sqlite:///" + str(root / "tracking.db"))
+    mlflow.set_tracking_uri((root / "tracking").as_uri())
     experiment = mlflow.create_experiment(
         "ai09-audited-tune-selection",
         artifact_location=(root / "tracking-artifacts").as_uri(),
