@@ -65,6 +65,7 @@ class SourceIndex:
         start = origin.origin_date - timedelta(days=27)
         end = origin.origin_date + timedelta(days=14)
         for table in TABLES:
+            columns = columns_for(table)
             query = "SELECT body FROM source WHERE kind=? AND available<=?"
             params: list[Any] = [table, cell(origin.availability_cutoff)]
             if table in {"daily_demand_versions", "business_calendar", "category_calendar"}:
@@ -82,7 +83,7 @@ class SourceIndex:
                 count += 1
                 if count > MAX_ORIGIN_INPUT_ROWS:
                     raise SnapshotError("forecast_origin_input_row_limit")
-                rows.append(decoded(body, columns_for(table)))
+                rows.append(decoded(body, columns))
             result[table] = rows
         return result
 
@@ -468,6 +469,7 @@ def verify_inputs(root: Path) -> dict[str, Any]:
         raise SnapshotError("forecast_inputs_unsupported_logical_budget")
     if set(manifest["tables"]) != {"history", "features"}:
         raise SnapshotError("forecast_inputs_tables_mismatch")
+    allowed_origins = {origin.forecast_origin for origin in calendar.origins}
     with tempfile.TemporaryDirectory(prefix="forecast-inputs-verify-") as temporary:
         db = sqlite3.connect(Path(temporary) / "rows.sqlite")
         try:
@@ -516,9 +518,7 @@ def verify_inputs(root: Path) -> dict[str, Any]:
                                     )
                                     if physical_row(model) != physical:
                                         raise SnapshotError("forecast_inputs_typed_body_mismatch")
-                                    if model.forecast_origin not in {
-                                        o.forecast_origin for o in calendar.origins
-                                    }:
+                                    if model.forecast_origin not in allowed_origins:
                                         raise SnapshotError(
                                             "forecast_inputs_origin_outside_calendar"
                                         )

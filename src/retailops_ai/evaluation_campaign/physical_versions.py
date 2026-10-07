@@ -46,6 +46,8 @@ class PhysicalVersionIndex:
     ) -> None:
         self.db = db
         self.version = str(manifest["schema_version"])
+        self._observation_columns = columns_for("daily_demand_observations", self.version)
+        self._version_columns = columns_for("daily_demand_versions", self.version)
         self.maximum_bytes = maximum_bytes
         self._cache: OrderedDict[bytes, tuple[ForecastSourceVersion, ...]] = OrderedDict()
         db.execute("CREATE TABLE observations(id TEXT PRIMARY KEY, grain BLOB UNIQUE, body BLOB)")
@@ -97,15 +99,13 @@ class PhysicalVersionIndex:
 
     def _joined(self, identity: str, raw: bytes) -> Iterator[ForecastSourceVersion]:
         versions = [
-            decoded(row[0], columns_for("daily_demand_versions", self.version))
+            decoded(row[0], self._version_columns)
             for row in self.db.execute(
                 "SELECT body FROM versions WHERE observation_id=? ORDER BY version LIMIT 9",
                 (identity,),
             )
         ]
-        yield from _records(
-            decoded(raw, columns_for("daily_demand_observations", self.version)), versions
-        )
+        yield from _records(decoded(raw, self._observation_columns), versions)
 
     def _for_grain(self, grain: bytes) -> tuple[ForecastSourceVersion, ...]:
         if grain in self._cache:

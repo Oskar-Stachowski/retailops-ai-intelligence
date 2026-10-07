@@ -28,9 +28,18 @@ Role = Literal["source", "curated", "features", "labels", "split", "predictions"
 
 
 def _finite(value: object) -> None:
+    # Canonical payloads overwhelmingly contain builtin scalars and containers.
+    # Keep subclasses and custom mappings on the original validation path.
+    kind = type(value)
+    if kind is str or kind is int or kind is bool or value is None:
+        return
+    if type(value) is list or type(value) is tuple:
+        for item in value:
+            _finite(item)
+        return
     if isinstance(value, float) and not math.isfinite(value):
         raise ValueError("nonfinite_json_number")
-    if isinstance(value, Mapping):
+    if type(value) is dict or isinstance(value, Mapping):
         if any(not isinstance(k, str) for k in value):
             raise ValueError("json_keys_must_be_strings")
         for item in value.values():
