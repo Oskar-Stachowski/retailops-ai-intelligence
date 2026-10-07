@@ -1,5 +1,5 @@
 {
-  "scope": "Frozen forecast components and complete-role/separate-label adapter preparation; public audited runner and actual campaign incomplete",
+  "scope": "Frozen forecast components, complete-role/separate-label adapter and internal phase controls; public audited runner and actual campaign incomplete",
   "wire": "evaluation v19:4 new schemas, prior60 evaluation files and legacy quality_v2 bytes unchanged",
   "stage_ready": false,
   "project_journal_initialized": false,
@@ -154,5 +154,60 @@
     "legacy_quality_v2_bytes_unchanged": true,
     "wheel_bytes": 1848942,
     "wheel_sha256": "fdbe829bd3e214bc82ecc45c091bec20b55774392e2b49524de0db705b881bf9"
+  },
+  "worker_phase_components": {
+    "phases": [
+      "prepare",
+      "predict",
+      "consume",
+      "finalize"
+    ],
+    "public_audited_reservation_and_supervisor_complete": false,
+    "prediction_request_has_no_actual_index_or_dataset_path": true,
+    "frozen_fit_receipt_and_configuration_binding_checked": true,
+    "all_frozen_trials_and_whole_keys_required": true,
+    "selected_mean_and_median_can_come_from_different_trials": true,
+    "full_raw_prediction_index_needed_only_for_current_trial": true,
+    "bounded_selected_projection_retains_all_trial_completion_and_traces": true,
+    "changed_prediction_index_rejected_before_actual_iteration": true,
+    "critical_segment_inventory_complete": false,
+    "block_uncertainty_complete": false,
+    "quality_qualified": false,
+    "stage_ready": false,
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "project_final_test_opened": false,
+    "tests": {
+      "integration_passed": 105,
+      "integration_seconds": 65.75,
+      "worker_controls_included": 22,
+      "fake_models_and_declared_receipt_parents_used": true,
+      "mlflow_sdk_mocked": true,
+      "actual_fresh_core_aggregation_processes": 2,
+      "native_tensorflow_prediction_acceptance": false,
+      "not_project_or_canonical_qualification": true
+    },
+    "static_checks": {
+      "mypy_files": 697,
+      "ruff": "passed",
+      "format_files": 1187
+    },
+    "retained_failed_controls": [
+      {
+        "kind": "initial worker phase suite",
+        "passed": 15,
+        "failed": 3,
+        "seconds": 4.05,
+        "cause": "Two final projection records needed strict JSON model validation for dates/tuples; one test replaced global importlib instead of only the MLflow module",
+        "corrected": true
+      },
+      {
+        "kind": "initial lint",
+        "remaining_errors": 2,
+        "cause": "Dynamic column interpolation in fixed two-head queries; replaced by literal SQL statements without scanner exceptions",
+        "corrected": true
+      }
+    ],
+    "publication_pending": true
   }
 }

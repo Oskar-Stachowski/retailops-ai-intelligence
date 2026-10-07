@@ -65,7 +65,7 @@ wcześniejsze schematy pozostają bajtowo bez zmian. Testy różnicowe porównuj
 obie implementacje na tych samych parach.
 
 To przygotowanie komponentów. Pozostają audytowane wywołanie adaptera pełnych
-plików development/final, fresh worker i supervised runner z pomiarem całego własnego
+plików development/final, integracja fresh workerów i supervised runner z pomiarem całego własnego
 drzewa, complete segment inventory, block uncertainty, rzeczywista kampania
 wszystkich trzech zastosowań, lifecycle i końcowy odbiór main. Projektowy journal
 nie jest zainicjalizowany, nowe projektowe fity wynoszą zero, final test pozostaje
@@ -86,3 +86,22 @@ schematów pozostają bez zmian. Nowy probe zaimportował adapter z faktycznie
 zainstalowanego wheel bez TensorFlow/MLflow. Mypy dla 695 plików, Ruff, format
 1184 plików i schematy przeszły. Nie wykonano projektowych fitów, niezależnej
 oceny projektu ani odczytu projektowego final test.
+
+Wewnętrzny `campaign_evaluation_worker` ma osobne fazy przygotowania, predykcji,
+konsumpcji jednej próby oraz końcowej agregacji. Request predykcji dopuszcza
+wyłącznie określone pola i nie zawiera ścieżki do actuals lub całego datasetu.
+Wiązania pełnych receiptów fitów i zamrożonej konfiguracji są sprawdzane przed
+użyciem. Wszystkie próby zachowują pełne klucze; osobne wybrane mean i median
+trafiają do bounded projekcji na dysku. Agregacja wymaga potwierdzenia każdej
+zamrożonej próby, nawet gdy jej model nie został wybrany. Zmiana indeksu predykcji
+blokuje odczyt etykiet. Wynik końcowy nadal jawnie nie kwalifikuje jakości:
+critical segment inventory i block uncertainty są nieukończone.
+
+105 testów integracji przeszło w 65.75 s, w tym 22 kontrole faz workera.
+Kontrole używają deklarowanych rodziców i fake modeli; SDK MLflow jest osobno
+mockowany. Dwa rzeczywiste świeże procesy core wykonały końcową agregację
+kontrolnych development/final i zapisały własny czas/CPU/peak RSS. Nie jest to
+native odbiór TF inference ani pomiar całego drzewa publicznego supervisora.
+Mypy dla 697 plików, Ruff i format 1187 plików przeszły. Nadal wymagane są
+publiczna rezerwacja przed parent/label I/O, dowody ukończonych rodziców,
+prywatne trwałe receipty kosztów i wyników oraz weryfikacja ich publikacji.
