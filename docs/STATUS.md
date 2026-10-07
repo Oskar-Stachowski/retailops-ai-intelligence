@@ -1032,3 +1032,22 @@ import/reuse. Główny lock i kod modeli nie zmieniają się. Przypięte kopie
 importera pochodzą z zatwierdzonego ownera, a profil transferu ma osobny lock.
 Cały AI10 nadal jest `in_progress`; live SQL snapshot, snapshot/offset/replay,
 kwalifikacja trzech modeli i pełny UI E2E wymagają własnego odbioru.
+
+## 2026-10-07 — AI12: pełny katalog adapterów natywnych
+
+Dodano cztery pozostałe adaptery: stockout, anomalie, operacje i status modeli.
+Fabryka serwerowa składa **8/8 adapterów**. Odczyty zachowują natywne dowody,
+zakres, osobne uprawnienia źródłowe, fizyczne mapowania i aktualność; niepełne
+dane wstrzymują cały zakres. Operacje nie deklarują nieobserwowanego heartbeat
+ani Kafka lag; katalog modeli nie deklaruje wdrożenia czy driftu.
+[Zachowanie](agent-native-tools.md), [odbiór](evidence/12-native-tools.md).
+
+Main `2dc0a5ba` scalono wyłącznie w izolowanej gałęzi `ai/12-resume`.
+Migracja `0027_ai10_ai12` łączy opublikowane historie, a nowa rodzina
+`.native-tools.v1` zachowuje wcześniejsze kandydaty i etykiety. Osobny pin
+integracji Source zachowuje oryginalny manifest AI10 i oba locki; 83 moduły
+wspólnego kodu modeli oraz wersje wszystkich wcześniejszych zależności są
+niezmienione. Nie uruchamiano AWS, treningu, pełnego eksportu ani wspólnych
+usług. Stan nadal **in_progress**; PR32 pozostaje draft. Pełna kwalifikacja
+runtime/LLM, obserwacje heartbeat, natywna polityka sugestii i przekazanie
+AI10 oraz odbiór etykiet pytań pozostają otwarte.

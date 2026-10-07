@@ -308,3 +308,5 @@ ograniczenia; nie jest listą zakończonych zadań ani deklaracją wdrożenia.
 - [Wznowienie i ponowna kwalifikacja AI12](evidence/12-resume.md)
 - [AI10: odbiorca replay historii obserwacji](source-observation-replay.md).
 - [AI10: authenticated observation broker input](observation-broker.md).
+- [AI12: pełny katalog natywnych adapterów odczytu](agent-native-tools.md).
+- [AI12: odbiór adapterów i granice kwalifikacji](evidence/12-native-tools.md).

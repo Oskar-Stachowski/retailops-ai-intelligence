@@ -143,10 +143,40 @@ def test_real_download_verifies_full_fixture_and_reuses_immutable_import(tmp_pat
             Path(__file__).resolve().parents[1] / "src/retailops_ai/source_bundle/upstream.json"
         ).read_bytes()
     )
-    assert canonical_sha256(frozen) == pin["accepted_main_campaign_pin_sha256"]
+    from scripts.check_source_bundle_contract import integration_bindings
+
+    integration = integration_bindings()
+    expected = (
+        integration[1] if integration is not None else pin["accepted_main_campaign_pin_sha256"]
+    )
+    assert canonical_sha256(frozen) == expected
     assert pin["frozen_v12_campaign_pin_sha256"] == (
         "8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011"
     )
+
+
+@pytest.mark.parametrize("changed", ["owner", "original_lock", "current_lock"])
+def test_assistant_integration_preserves_and_verifies_both_lock_histories(
+    tmp_path: Path, monkeypatch, changed: str
+) -> None:
+    from scripts import check_source_bundle_contract as guard
+
+    root = Path(__file__).resolve().parents[1]
+    paths = {
+        "owner": "src/retailops_ai/source_bundle/upstream.json",
+        "original_lock": "environments/anomaly/qualification.uv.lock",
+        "current_lock": "uv.lock",
+    }
+    for relative in [*paths.values(), "agent/source-bundle.native-tools.v1.json"]:
+        destination = tmp_path / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes((root / relative).read_bytes())
+    monkeypatch.setattr(guard, "ROOT", tmp_path)
+    assert guard.integration_bindings() is not None
+    target = tmp_path / paths[changed]
+    target.write_bytes(target.read_bytes() + b"\nchanged")
+    with pytest.raises(ValueError, match="source_bundle_assistant_integration_binding_changed"):
+        guard.integration_bindings()
 
 
 @pytest.mark.parametrize("mode", ["corrupt", "redirect"])

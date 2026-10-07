@@ -19,8 +19,25 @@ def registry_versions(document: dict[str, Any]) -> dict[str, str]:
 
 def check(core: Path, delivery: Path, project: Path) -> dict[str, Any]:
     raw = core.read_bytes()
-    if hashlib.sha256(raw).hexdigest() != CORE_LOCK_SHA256:
-        raise ValueError("intelligence_delivery_frozen_ml_lock_changed")
+    lock_sha256 = hashlib.sha256(raw).hexdigest()
+    if lock_sha256 != CORE_LOCK_SHA256:
+        root = Path(__file__).resolve().parents[1]
+        integration = json.loads((root / "agent/source-bundle.native-tools.v1.json").read_bytes())
+        frozen_raw = (root / "environments/anomaly/qualification.uv.lock").read_bytes()
+        if (
+            integration["version"] != "ai12-source-bundle-integration-1.0"
+            or lock_sha256 != integration["integration_dependency_lock_sha256"]
+            or hashlib.sha256(frozen_raw).hexdigest() != CORE_LOCK_SHA256
+            or hashlib.sha256(
+                (root / "src/retailops_ai/source_bundle/upstream.json").read_bytes()
+            ).hexdigest()
+            != integration["owner_pin_sha256"]
+        ):
+            raise ValueError("intelligence_delivery_frozen_ml_lock_changed")
+        frozen = registry_versions(tomllib.loads(frozen_raw.decode()))
+        current = registry_versions(tomllib.loads(raw.decode()))
+        if any(current.get(name) != version for name, version in frozen.items()):
+            raise ValueError("intelligence_delivery_ml_dependency_drift")
     original = registry_versions(tomllib.loads(raw.decode()))
     isolated = registry_versions(tomllib.loads(delivery.read_text()))
     if "confluent-kafka" in original or isolated.get("confluent-kafka") != "2.15.1":
@@ -37,7 +54,8 @@ def check(core: Path, delivery: Path, project: Path) -> dict[str, Any]:
         raise ValueError("intelligence_delivery_core_constraints_or_source_changed")
     return {
         "status": "passed",
-        "core_lock_sha256": CORE_LOCK_SHA256,
+        "core_lock_sha256": lock_sha256,
+        "original_ml_lock_sha256": CORE_LOCK_SHA256,
         "delivery_registry_packages": len(isolated),
         "transport_package": "confluent-kafka==2.15.1",
     }
