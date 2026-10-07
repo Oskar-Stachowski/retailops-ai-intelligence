@@ -35,6 +35,15 @@ znanych planów forecast nie zmienia prawdziwej wersji snapshotu 1.1.
 14 testów supervisora, w tym rzeczywistych procesów oraz native generację, kwalifikację,
 eksport, import i curated małego `ai-load` 45 × 2 × 1 × 1. Otrzymano 2124
 operacyjne wiersze snapshot/curated, 0 odrzuconych i `forecast_source: passed`.
-To sprawdzenie połączeń API i obsługi zasobów; pełny canonical pomiar oczekuje
-na publikację i uruchomienie. Wynik należy odczytać z konkretnego run/commita,
-bez uznawania kontrolnych testów supervisora za odbiór danych.
+To sprawdzenie połączeń API i obsługi zasobów.
+
+[Pierwszy pełny pomiar](evidence/09-16-development-capacity-first-run.json)
+na `cef4f08`, run `37611605538`, zakończył się `tree_rss_limit` po 127,875 s.
+Generacja osiągnęła próbkowane 4295168000 B, ponad 4 GiB; nie ukończyła źródła,
+więc kwalifikacja, eksport, import i curated nie rozpoczęły się. Supervisor
+zatrzymał wyłącznie własnego workera (`exit_code: -9`). Plan i koszt są zachowane
+w artefakcie GitHuba, bez automatycznego retry. To zmierzona dolna granica
+potrzeb pełnego producenta; całkowity peak zakończonego profilu pozostaje nieznany.
+Kolejny większy budżet wymaga osobnej prospektywnej receptury i własnego pomiaru,
+albo ograniczenia pamięci producenta. Rozmiar canonical i stare limity pozostają
+przypięte. Ten wynik nie kwalifikuje żadnej kampanii lub `ai-training`.

@@ -53,13 +53,19 @@ Nowe CI zachowuje wszystkie kontrole AI 07–08 oraz osobny wymagany job TensorF
 [Pomiar pełnego development](ai09-development-capacity.md) ma przygotowany
 osobny runner oraz [kontrolny odbiór](evidence/09-15-development-capacity-preparation.json):
 14 testów supervisora, w tym rzeczywistych procesów i wszystkie pięć faz na małym `ai-load`.
-Próba canonical `ai-dev` oczekuje na osobne uruchomienie; nie rozpoczęto jeszcze
-projektowej kampanii ani generacji finalnych danych. Prawdziwa wersja planned
+[Pierwsza próba canonical `ai-dev`](evidence/09-16-development-capacity-first-run.json)
+przekroczyła 4 GiB RSS po 127,875 s podczas generacji; nie ukończyła źródła.
+Plan, porażka i koszt są zachowane bez retry; potrzebny jest osobny pomiar
+większego prospektywnego budżetu albo ograniczenie pamięci producenta.
+Nie rozpoczęto projektowej kampanii ani generacji finalnych danych. Prawdziwa wersja planned
 forecast to snapshot 1.1; kontrakt anomalii 1.2 pozostaje osobnym wymaganiem.
 
-Szacunek zamknięcia na 2026-10-07: **24–40 godzin aktywnej pracy**, około
-**3–5 dni roboczych**; przy problemach pełnego profilu rezerwa **5–7 dni**.
-To szacunek implementacji i odbiorów, a nie zmierzony czas pełnej kampanii.
+Szacunek zamknięcia na 2026-10-07: poprzednia lista prac to **24–40 godzin
+aktywnej pracy**. Po zmierzonym przekroczeniu 4 GiB podczas pełnego development
+planuj **5–7 dni roboczych**, z **3–5 dniami** jako wariantem optymistycznym,
+jeżeli osobny odbiór większego budżetu szybko zakończy się sukcesem.
+To szacunek implementacji i odbiorów; zakończony pełny profil i kampania
+nadal nie mają zmierzonego całkowitego kosztu.
 Największa niewiadoma to zasoby i czas canonical `ai-training`; kontrolne
 14560 kluczy nie pozwala potwierdzić kosztu całego portfolio. Zakres czasu:
 
