@@ -21,6 +21,35 @@ def test_workflow_is_covered_by_required_result():
     assert module.workflow_errors(workflow()) == []
 
 
+def test_development_push_is_not_a_second_full_pr_run():
+    events = workflow()[True]
+    assert events["push"] == {"branches": ["main"]}
+    assert "pull_request" in events and "workflow_dispatch" in events
+
+
+@pytest.mark.parametrize(
+    "name",
+    ["tests", "acceptance", "persistence", "persistence-forecast", "anomaly-oci", "tensorflow"],
+)
+def test_expensive_jobs_cannot_bypass_preflight(name):
+    data = workflow()
+    data["jobs"][name].pop("needs")
+    assert module.workflow_errors(data)
+
+
+def test_v12_and_full_collection_proofs_remain_mandatory():
+    data = workflow()
+    data["jobs"]["persistence"]["steps"] = [
+        step
+        for step in data["jobs"]["persistence"]["steps"]
+        if step.get("run") != "make v12-backup-smoke"
+    ]
+    assert module.workflow_errors(data)
+    data = workflow()
+    data["jobs"]["required-result"]["steps"].pop()
+    assert module.workflow_errors(data)
+
+
 @pytest.mark.parametrize("mutation", ["missing-job", "bypassed-training", "skipped-job"])
 def test_required_ci_preserves_real_tensorflow_acceptance(mutation):
     data = workflow()
@@ -75,9 +104,9 @@ def test_required_ci_cannot_drop_combined_lifecycle_restore():
 
 def test_required_ci_cannot_drop_forecast_input_store_acceptance():
     data = workflow()
-    data["jobs"]["persistence"]["steps"] = [
+    data["jobs"]["persistence-forecast"]["steps"] = [
         step
-        for step in data["jobs"]["persistence"]["steps"]
+        for step in data["jobs"]["persistence-forecast"]["steps"]
         if step.get("run") != "make forecast-input-store-smoke"
     ]
     assert "persistence must execute forecast input store acceptance" in module.workflow_errors(
@@ -140,7 +169,7 @@ def test_make_check_includes_snapshot_gate():
     "event,settings",
     [
         ("push", {"branches": ["ai/**"]}),
-        ("push", {"branches": ["main"]}),
+        ("push", {"branches": ["main", "ai/**"]}),
         ("push", {"branches-ignore": ["main"]}),
         ("pull_request", {"types": ["opened"]}),
         ("pull_request", {"branches": ["develop"]}),
@@ -166,9 +195,9 @@ def test_required_ci_cannot_drop_forecast_queue():
 
 def test_required_ci_cannot_drop_forecast_publication_acceptance():
     data = workflow()
-    data["jobs"]["persistence"]["steps"] = [
+    data["jobs"]["persistence-forecast"]["steps"] = [
         step
-        for step in data["jobs"]["persistence"]["steps"]
+        for step in data["jobs"]["persistence-forecast"]["steps"]
         if step.get("run") != "make forecast-publication-smoke"
     ]
     assert "persistence must execute forecast publication acceptance" in module.workflow_errors(
@@ -178,9 +207,9 @@ def test_required_ci_cannot_drop_forecast_publication_acceptance():
 
 def test_required_ci_cannot_drop_forecast_read_acceptance():
     data = workflow()
-    data["jobs"]["persistence"]["steps"] = [
+    data["jobs"]["persistence-forecast"]["steps"] = [
         step
-        for step in data["jobs"]["persistence"]["steps"]
+        for step in data["jobs"]["persistence-forecast"]["steps"]
         if step.get("run") != "make forecast-read-smoke"
     ]
     assert "persistence must execute forecast read acceptance" in module.workflow_errors(data)
@@ -188,9 +217,9 @@ def test_required_ci_cannot_drop_forecast_read_acceptance():
 
 def test_required_ci_cannot_drop_model_catalog_acceptance():
     data = workflow()
-    data["jobs"]["persistence"]["steps"] = [
+    data["jobs"]["persistence-forecast"]["steps"] = [
         step
-        for step in data["jobs"]["persistence"]["steps"]
+        for step in data["jobs"]["persistence-forecast"]["steps"]
         if step.get("run") != "make model-catalog-smoke"
     ]
     assert "persistence must execute model catalog acceptance" in module.workflow_errors(data)
@@ -198,9 +227,9 @@ def test_required_ci_cannot_drop_model_catalog_acceptance():
 
 def test_required_ci_cannot_drop_evaluation_acceptance():
     data = workflow()
-    data["jobs"]["persistence"]["steps"] = [
+    data["jobs"]["persistence-forecast"]["steps"] = [
         step
-        for step in data["jobs"]["persistence"]["steps"]
+        for step in data["jobs"]["persistence-forecast"]["steps"]
         if step.get("run") != "make evaluations-smoke"
     ]
     assert "persistence must execute evaluation acceptance" in module.workflow_errors(data)

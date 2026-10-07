@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - main
-      - "ai/**"
   workflow_dispatch:
 
 permissions:
@@ -31,6 +30,7 @@ jobs:
           enable-cache: true
       - run: make bootstrap ci-checks
   tests:
+    needs: [checks, secrets]
     name: tests (${{ matrix.shard }})
     runs-on: ubuntu-24.04
     timeout-minutes: 45
@@ -52,7 +52,16 @@ jobs:
         env:
           CI_TEST_SHARD: ${{ matrix.shard }}
         run: uv run --frozen python -m scripts.run_ci_tests --shard "$CI_TEST_SHARD" --shards 4
+      - name: Preserve complete shard execution and phase timings
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ci-test-shard-${{ matrix.shard }}-attempt-${{ github.run_attempt }}
+          path: reports/ci-tests-${{ matrix.shard }}.*
+          if-no-files-found: error
+          retention-days: 14
   acceptance:
+    needs: [checks, secrets]
     name: acceptance (${{ matrix.target }})
     runs-on: ubuntu-24.04
     timeout-minutes: 45
@@ -88,6 +97,7 @@ jobs:
           GITLEAKS_ENABLE_COMMENTS: "false"
           GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
   persistence:
+    needs: [checks, secrets]
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
@@ -104,14 +114,29 @@ jobs:
       - run: make model-lifecycle-smoke
       - run: make lifecycle-store-smoke
       - run: make forecast-queue-smoke
+      - name: Accept v12 registry, jobs, publication, metadata, backup and recovery
+        run: make v12-backup-smoke
+  persistence-forecast:
+    needs: [checks, secrets]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - run: make bootstrap
       - run: make forecast-input-store-smoke
       - run: make forecast-publication-smoke
       - run: make forecast-read-smoke
       - run: make model-catalog-smoke
       - run: make evaluations-smoke
-      - name: Accept v12 registry, jobs, publication, metadata, backup and recovery
-        run: make v12-backup-smoke
   anomaly-oci:
+    needs: [checks, secrets]
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
@@ -136,7 +161,16 @@ jobs:
           uv pip install --python .local/ai07-ci-source/services/api/.venv/bin/python -r .local/ai07-ci-source/services/api/requirements-dev.txt -r .local/ai07-ci-source/data/requirements-parquet.txt
       - name: Accept qualified anomaly models, native parents, OCI, PostgreSQL 16 and recovery
         run: uv run --frozen python scripts/check_anomaly_oci.py --producer .local/ai07-ci-source
+      - name: Preserve safe preparation phase timings
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ci-anomaly-phase-timings
+          path: reports/ci-anomaly-timings.jsonl
+          if-no-files-found: error
+          retention-days: 14
   tensorflow:
+    needs: [checks, secrets]
     name: TensorFlow CPU training, artifact and reload
     runs-on: ubuntu-24.04
     timeout-minutes: 45
@@ -152,7 +186,7 @@ jobs:
       - run: make bootstrap tensorflow-check
   required-result:
     if: always()
-    needs: [checks, tests, acceptance, secrets, persistence, anomaly-oci, tensorflow]
+    needs: [checks, tests, acceptance, secrets, persistence, persistence-forecast, anomaly-oci, tensorflow]
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     steps:
@@ -163,6 +197,7 @@ jobs:
           TESTS_RESULT: ${{ needs.tests.result }}
           ACCEPTANCE_RESULT: ${{ needs.acceptance.result }}
           PERSISTENCE_RESULT: ${{ needs.persistence.result }}
+          PERSISTENCE_FORECAST_RESULT: ${{ needs.persistence-forecast.result }}
           SECRETS_RESULT: ${{ needs.secrets.result }}
           ANOMALY_OCI_RESULT: ${{ needs.anomaly-oci.result }}
         run: |
@@ -172,4 +207,15 @@ jobs:
           test "$ACCEPTANCE_RESULT" = "success"
           test "$SECRETS_RESULT" = "success"
           test "$PERSISTENCE_RESULT" = "success"
+          test "$PERSISTENCE_FORECAST_RESULT" = "success"
           test "$ANOMALY_OCI_RESULT" = "success"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: ci-test-shard-*
+          path: reports/ci-shards
+          merge-multiple: false
+      - name: Verify the four reports cover the exact complete test collection
+        run: python3 scripts/update_ci_test_timings.py --reports reports/ci-shards --check

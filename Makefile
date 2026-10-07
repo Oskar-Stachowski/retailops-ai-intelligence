@@ -92,9 +92,9 @@ check: lint type-check test docs-check forecast-runtime-check handoff-check snap
 .PHONY: ci-checks ci-source-inputs ci-qualified-inputs ci-detectors ci-forecast
 ci-checks: lint type-check docs-check forecast-runtime-check contracts-check package compose-config
 ci-source-inputs: handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check
-ci-qualified-inputs: full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check
-ci-detectors: anomaly-detectors-check
-ci-forecast: forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check
+ci-qualified-inputs: qualified-anomaly-inputs-check
+ci-detectors: anomaly-detectors-check day-qualification-check
+ci-forecast: forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check full-raw-dq-check
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner

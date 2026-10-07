@@ -5,7 +5,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
+import os
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -17,7 +20,7 @@ def assign_files(files: set[str], weights: dict[str, float], count: int) -> list
     """Assign every current file exactly once; new files receive a positive default."""
     if count < 1 or count > len(files):
         raise ValueError("shard count must be between one and the current file count")
-    if any(value <= 0 for value in weights.values()):
+    if any(not math.isfinite(value) or value <= 0 for value in weights.values()):
         raise ValueError("file timing weights must be positive")
     groups: list[list[str]] = [[] for _ in range(count)]
     totals = [0.0] * count
@@ -29,10 +32,16 @@ def assign_files(files: set[str], weights: dict[str, float], count: int) -> list
 
 
 class Shard:
-    def __init__(self, index: int, count: int, report: Path | None) -> None:
+    def __init__(
+        self, index: int, count: int, report: Path | None, timings: Path | None = None
+    ) -> None:
         self.index = index
         self.count = count
         self.report = report
+        self.timings = timings
+        self.full_ids: list[str] = []
+        self.selected_ids: list[str] = []
+        self.phases: dict[str, dict[str, dict[str, Any]]] = {}
 
     def pytest_collection_modifyitems(
         self, config: pytest.Config, items: list[pytest.Item]
@@ -48,6 +57,8 @@ class Shard:
         deselected = [item for item in items if item.path.relative_to(ROOT).as_posix() not in paths]
         if not selected or len(selected) + len(deselected) != len(items):
             raise pytest.UsageError("empty or incomplete CI shard")
+        self.full_ids = sorted(ids)
+        self.selected_ids = sorted(item.nodeid for item in selected)
         plan = {
             "version": "ci-complete-test-shards-1.0.0",
             "full_collection_count": len(items),
@@ -81,6 +92,36 @@ class Shard:
         config.hook.pytest_deselected(items=deselected)
         items[:] = selected
 
+    def pytest_runtest_logreport(self, report: pytest.TestReport) -> None:
+        self.phases.setdefault(report.nodeid, {})[report.when] = {
+            "seconds": report.duration,
+            "outcome": report.outcome,
+        }
+
+    def pytest_sessionfinish(self, session: pytest.Session, exitstatus: int) -> None:
+        if self.timings is None:
+            return
+        seconds: dict[str, float] = {}
+        for node, phases in self.phases.items():
+            name = node.split("::", 1)[0]
+            seconds[name] = seconds.get(name, 0.0) + sum(p["seconds"] for p in phases.values())
+        result = {
+            "version": "ci-test-execution-1.0.0",
+            "run_id": os.environ.get("GITHUB_RUN_ID", "local"),
+            "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT", "local"),
+            "commit": os.environ.get("GITHUB_SHA", "local"),
+            "shard": self.index,
+            "shards": self.count,
+            "exit_code": int(exitstatus),
+            "full_collection_sha256": hashlib.sha256("\n".join(self.full_ids).encode()).hexdigest(),
+            "full_node_ids": self.full_ids,
+            "selected_node_ids": self.selected_ids,
+            "phases": self.phases,
+            "seconds": seconds,
+        }
+        self.timings.parent.mkdir(parents=True, exist_ok=True)
+        self.timings.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -91,10 +132,16 @@ def main() -> int:
     args = parser.parse_args()
     if args.shards < 1 or not 0 <= args.shard < args.shards:
         parser.error("shard index must be within the positive shard count")
+    output = ROOT / "reports" / f"ci-tests-{args.shard}"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    report = args.report or output.with_suffix(".plan.json")
+    timings = None if args.plan_only else output.with_suffix(".timings.json")
     options = [str(ROOT / "tests")]
     if args.plan_only:
         options.extend(["--collect-only", "-q"])
-    return int(pytest.main(options, plugins=[Shard(args.shard, args.shards, args.report)]))
+    else:
+        options.extend(["--durations=30", "--junitxml=" + str(output.with_suffix(".xml"))])
+    return int(pytest.main(options, plugins=[Shard(args.shard, args.shards, report, timings)]))
 
 
 if __name__ == "__main__":
