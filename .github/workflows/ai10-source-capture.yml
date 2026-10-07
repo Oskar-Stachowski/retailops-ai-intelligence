@@ -6,6 +6,7 @@ on:
     paths:
       - ".github/workflows/ai10-source-capture.yml"
       - "docs/reference/ai10-source-capture-producer.json"
+      - "scripts/check_ai10_source_sql_handoff.py"
   workflow_dispatch:
 
 permissions:
@@ -28,7 +29,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: face6db68430d54e5217f5bc78e13f3012183412
+          ref: f4535a3529545ae4a12d2bb471788d5defde74ab
           path: .local/source-capture-producer
           persist-credentials: false
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
@@ -50,6 +51,7 @@ jobs:
       - name: Install isolated Source and AI receiver runtimes
         run: |
           uv sync --locked --extra snapshot --extra forecast
+          uv sync --locked --project tools/intelligence-delivery
           uv venv --python 3.11.15 .local/source-capture-producer/services/api/.venv
           uv pip install --python .local/source-capture-producer/services/api/.venv/bin/python \
             -r .local/source-capture-producer/services/api/requirements-dev.txt \
@@ -62,6 +64,8 @@ jobs:
         env:
           REQUIRE_BROKER_TESTS: "1"
           PYTHONPATH: ${{ github.workspace }}/.local/source-capture-producer:${{ github.workspace }}/.local/source-capture-producer/services/api
+          AI10_SOURCE_CAPTURE_RECEIVER_PYTHON: ${{ github.workspace }}/tools/intelligence-delivery/.venv/bin/python
+          AI10_SOURCE_CAPTURE_RECEIVER_SCRIPT: ${{ github.workspace }}/scripts/check_ai10_source_sql_handoff.py
           SOURCE_OBSERVATION_CAPTURE_REPORT: ${{ github.workspace }}/source-capture-proofs/source-observation-capture-report.json
         run: |
           .venv/bin/python -m pytest -q -x tests/test_source_observation_capture.py \
@@ -82,6 +86,13 @@ jobs:
           assert source['rows']==2 and source['receipts']==3 and source['later_replay_receipts']==4
           raw=(root/'source-observation-capture.json').read_bytes()
           captured=Capture.model_validate_json(raw)
+          sql=json.loads((root/'independent-ai-sql-handoff.json').read_bytes())
+          assert sql['status']=='passed' and sql['actual_AI_SQL_or_ACK'] is True
+          assert sql['capture_id']==captured.capture_id and sql['receiver_commit']==os.environ['GITHUB_SHA']
+          assert sql['source_commit']=='f4535a3529545ae4a12d2bb471788d5defde74ab'
+          assert sql['full_equals_capture_overlap'] is True and sql['actual_original_broker_overlap_records']==3
+          assert sql['quantity_before_correction']==4 and sql['quantity_after_correction']==7
+          assert sql['final_facts']==3 and sql['final_receipts']==4
           wire=json.loads((root/'source-observation-capture-replay.json').read_bytes())
           stream=Stream.model_validate_json(json.dumps(wire['stream']))
           assert captured.stream==stream and len(captured.boundaries)==3
@@ -94,7 +105,7 @@ jobs:
           assert canonical(resumed.capture())==canonical(full.capture())
           origin=datetime.now(UTC)
           assert restored.quantity_total(origin)==4 and resumed.quantity_total(origin)==7
-          report=dict(status='passed',scope='original_Source_SQL_broker_capture_to_independent_AI_restore_and_overlap',source_commit='face6db68430d54e5217f5bc78e13f3012183412',receiver_commit=os.environ['GITHUB_SHA'],workflow_run_id=int(os.environ['GITHUB_RUN_ID']),capture_id=captured.capture_id,capture_sha256=hashlib.sha256(raw).hexdigest(),captured_rows=2,captured_receipts=3,final_rows=3,final_receipts=4,partitions=3,full_equals_capture_overlap=True,quantity_before_correction=4,quantity_after_correction=7,actual_Source_SQL_TLS_SCRAM=True,actual_AI_SQL_or_ACK=False,full_43_table_snapshot=False,model_qualification=False,acceptance_inputs='explicit generated observation fixtures')
+          report=dict(status='passed',scope='original_Source_SQL_broker_capture_to_independent_AI_restore_SQL_ACK_and_overlap',source_commit='f4535a3529545ae4a12d2bb471788d5defde74ab',receiver_commit=os.environ['GITHUB_SHA'],workflow_run_id=int(os.environ['GITHUB_RUN_ID']),capture_id=captured.capture_id,capture_sha256=hashlib.sha256(raw).hexdigest(),captured_rows=2,captured_receipts=3,final_rows=3,final_receipts=4,partitions=3,full_equals_capture_overlap=True,quantity_before_correction=4,quantity_after_correction=7,actual_Source_SQL_TLS_SCRAM=True,actual_AI_SQL_or_ACK=True,prefix_AI_ACK=sql['prefix_ACK'],final_AI_ACK=sql['final_ACK'],full_43_table_snapshot=False,model_qualification=False,acceptance_inputs='explicit generated observation fixtures')
           path=root/'independent-ai-handoff.json';path.write_text(json.dumps(report,sort_keys=True,indent=2)+'\n');path.chmod(0o600)
           print(json.dumps({k:report[k] for k in ('status','scope','captured_rows','captured_receipts','quantity_after_correction','full_equals_capture_overlap')}))
           PY

@@ -29,6 +29,21 @@ V12 run `37604263732` zakończył model boundary tests oraz przygotowanie
 `c8df654` wykrył błąd ponownego uruchomienia bazy w istniejącym compose smoke;
 następny pełny CI ma ponownie sprawdzić tę samą bramkę bez zmiany jej limitów.
 
+**Source capture → rzeczywisty AI SQL/ACK — nowy przyrost, runtime pending:**
+Source `f4535a3` zachowuje oryginalny TLS/SCRAM broker podczas niezależnego
+odbioru AI. `check_ai10_source_sql_handoff.py` tworzy osobny własny PostgreSQL,
+porównuje pełny prefix SQL z capture Source, potwierdza prawdziwe offsety,
+ponawia trzy oryginalne rekordy i późną korektę, a następnie porównuje pełny
+replay drugiej grupy. Oczekiwane sumy 4 → 7 nie doliczają duplikatów.
+Trzy negatywne lokalne guards, mypy 607+10 i Source setup-plan passed.
+To nadal protokół `daily_demand_versions` na jawnych obserwacjach testowych,
+bez kwalifikacji modeli i bez twierdzenia o pełnym 43-table SQL snapshot.
+
+Nowy Required CI `a9f087f` przeszedł poprzednio blokujący compose smoke.
+Jego lint wykrył dwa komentarze `noqa` przesunięte przez formatowanie;
+komentarze poprawiono, a pełny lint/format 1015 plików i docs-check passed.
+Bramek bezpieczeństwa ani zasad publishera nie pominięto.
+
 **Bieżący przyrost z 7 października:** pełny native anomaly workflow
 `37594406280`, job `112705553204`, zakończył się **success**. Wszystkie 1232
 oryginalne wyniki, 2464 broker receipts, 1232 duplicates, pełny TCP API i 25
@@ -165,10 +180,9 @@ jeszcze zaliczyć aktualny head obu PR-ów.
    Nowa kwalifikacja, frozen cold worker, cały batch i Source broker/SQL/API/UI
    passed. Nie powtarzać treningu ani ocen końcowych. Osobno pozostaje dowód
    wysyłki z oryginalnej bazy AI oraz integracja w pełnym bounded E2E.
-2. **Domknąć rzeczywiste native anomaly -> Source -> UI.** Obecny OCI
-   acceptor wykonuje model i zachowuje nowy census oryginalnego outboxu.
-   Trzeba odebrać te rzeczywiste wyniki w Source oraz pokazać je w UI;
-   zaliczony browser drill na fixture pozostaje dowodem mechaniki.
+2. **Domknąć publisher oryginalnej bazy anomaly.** Pełne 1232 native wyniki
+   i 25 stron built UI są odebrane w `37594406280`; nowy workflow
+   `37606671405` wykonuje oryginalny SQL publisher przed cleanupem.
 3. **Domknąć rzeczywisty forecast v12 -> Source -> UI na temporalnych wejściach.**
    Zachować zatwierdzony development scope i oryginalne quality `not_ready`.
    Oryginalny pełny eksport ma 664 pliki, 31 994 707 803 bytes i jest
@@ -179,7 +193,10 @@ jeszcze zaliczyć aktualny head obu PR-ów.
    z kompletnym wektorem granic. Obecny stream/replay obsługuje wyłącznie
    `daily_demand_versions`. Odbiór musi wiązać rzeczywisty broker prefix,
    wszystkie granice partycji, included facts i korekty; receipts publishera
-   nie wystarczają jako boundary vector. Nie udawać pełnego capture.
+   nie wystarczają jako boundary vector. Source capture i niezależny
+   in-memory replay passed; nowy workflow wymaga także rzeczywistych AI
+   SQL/ACK i tego samego brokera. Pełny 43-table SQL snapshot pozostaje
+   jawnie niewspierany; pełny immutable file bundle jest osobną działającą ścieżką.
 5. **Zebrać raport wspólnego bounded E2E i awarii na 102 dniach.** Porównać
    oryginalne IDs/payloads, sumy snapshot+overlap replay, deduplikację,
    późne korekty, DB/ACK/SIGKILL/DLQ, auth i degraded broker. Sugestie mogą

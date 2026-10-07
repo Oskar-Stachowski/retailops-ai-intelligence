@@ -34,13 +34,12 @@ def run_source_model_read(
     if git is None:
         raise ValueError("ai10_model_consumer_git_required")
     pin = read_json(ROOT, "docs/reference/ai10-native-output-consumer.json")
-    if (
-        subprocess.check_output([git, "rev-parse", "HEAD"], cwd=consumer, text=True).strip()
-        != pin["commit"]  # noqa: S603 - resolved git, fixed read-only arguments
-        or any(
-            hashlib.sha256((consumer / name).read_bytes()).hexdigest() != digest
-            for name, digest in pin["sha256"].items()
-        )
+    source_head = subprocess.check_output(  # noqa: S603 - resolved git, fixed read-only arguments
+        [git, "rev-parse", "HEAD"], cwd=consumer, text=True
+    ).strip()
+    if source_head != pin["commit"] or any(
+        hashlib.sha256((consumer / name).read_bytes()).hexdigest() != digest
+        for name, digest in pin["sha256"].items()
     ):
         raise ValueError("ai10_model_consumer_exact_original_revision")
     acceptance = read_json(output, "acceptance.json")
@@ -98,8 +97,8 @@ def run_source_model_read(
     }
     try:
         with (work / "model-source-consumer.log").open("wb") as log:
-            result = subprocess.run(
-                [  # noqa: S603 - fixed test in the byte-verified pinned checkout
+            result = subprocess.run(  # noqa: S603 - fixed test in the byte-verified pinned checkout
+                [
                     str(consumer / "services/api/.venv/bin/python"),
                     "-m",
                     "pytest",

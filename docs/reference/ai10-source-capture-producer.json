@@ -1,5 +1,5 @@
 {
-  "commit": "face6db68430d54e5217f5bc78e13f3012183412",
+  "commit": "f4535a3529545ae4a12d2bb471788d5defde74ab",
   "full_43_table_snapshot": false,
   "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
   "scope": "daily_demand_versions_only",
@@ -14,7 +14,7 @@
     "services/api/requirements-dev.txt": "e8f7e6f546631ecdfea7c2b5783d68a1e1df45047e0f3c8e638bb58f0bbeed63",
     "services/api/tests/source_observation_runtime.py": "ae80af22d039e71a539726ca4838df070614deda362c3eea3d7ef208d42a68b3",
     "services/api/tests/test_source_observation_capture.py": "2b64796da9d1db63995f2e588b7df3469e29093462a9625e502fad6866e84801",
-    "services/api/tests/test_source_observation_capture_durability.py": "92747ed40c7629b17bef7c0b484d8ce95d97138659420a35df17ea0392688835",
+    "services/api/tests/test_source_observation_capture_durability.py": "f52ad77598966f77713e540f1a5630ca569396266f456ba4b63d9f4bd27b289f",
     "services/api/tests/test_source_observation_outbox.py": "363ef0fcd6d48d010286602bcb657406e2f2b8b0638f8d504074b6861f6e5f9c"
   }
 }
