@@ -201,3 +201,18 @@ def test_resource_revision_cannot_change_parent_caps_or_erase_previous_failure(c
         plan["previous_attempt"]["plan_sha256"] = "0" * 64
     with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
         probe.validate_plan(plan)
+
+
+@pytest.mark.parametrize("change", ["producer", "entrypoint", "failure_digest", "failure_flag"])
+def test_cached_revision_preserves_exact_producer_and_both_failed_attempts(change: str) -> None:
+    plan = probe.read(probe.PLAN_PATH)
+    if change == "producer":
+        plan["producer_commit"] = "1" * 40
+    elif change == "entrypoint":
+        plan["generation_entrypoint"] = "data.inventory.run_source_dataset.run"
+    elif change == "failure_digest":
+        plan["previous_attempt"]["resource_receipt_sha256"] = "0" * 64
+    else:
+        plan["previous_attempt"]["previous_failure_preserved"] = False
+    with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
+        probe.validate_plan(plan)

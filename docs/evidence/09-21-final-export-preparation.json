@@ -1,0 +1,124 @@
+{
+  "recorded_at_utc": "2026-10-07T14:56:21.389829+00:00",
+  "scope": "final-only exporter mechanism and exposed smoke replay; not canonical project campaign",
+  "stage_ready": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "final_generation_started": false,
+  "final_test_opened": false,
+  "code": {
+    "public_api": "campaign_final_export.export_final_forecast",
+    "wire": "v14 final_evaluation only",
+    "selection_freeze_bound": true,
+    "durable_generation_receipt_required": true,
+    "canonical_scope_required_by_public_runner": "730x200x10x4",
+    "own_export_tree_peak_measured": false
+  },
+  "native_smoke": {
+    "passed": 1,
+    "seconds": 40.49,
+    "scope": "exposed source/snapshot/curated plus real source replay, feature/label rebuild and complete final-wire verification; controlled July4-5 origins",
+    "canonical_profile_qualified": false
+  },
+  "retained_failures": [
+    {
+      "scope": "initial_ordering_expectations",
+      "failed": 5,
+      "passed": 7,
+      "reason": "Wrong expected exception types for exhausted budget and parent-budget bind"
+    },
+    {
+      "scope": "generation_receipt_unavailable",
+      "failed": 1,
+      "passed": 15,
+      "reason": "Missing receipt escaped as FileNotFoundError; final runner maps it to SnapshotError"
+    },
+    {
+      "scope": "package_command_resolution",
+      "reason": "uv absent from shell PATH; corrected using existing workspace tool binary",
+      "corrected_build": "passed"
+    },
+    {
+      "scope": "post_main_integration_test_command",
+      "reason": "Requested a nonexistent test filename; no tests ran; corrected file inventory then 93 passed"
+    }
+  ],
+  "integrated_regression": {
+    "passed": 176,
+    "seconds": 231.82,
+    "scope": "final-only native smoke and audited final/generation/development-export/journal/cached-capacity/CI contracts"
+  },
+  "publication": {
+    "prepared_on_main_parent": "a128bb38eca7da2161f45b9c841af565e88c9817",
+    "main_ci": 37635615858,
+    "main_ci_jobs": "15_success",
+    "generation_pr": 35,
+    "generation_head": "d81e78acbaf3f2ca87f6f3f7c205e4629a494949",
+    "generation_ci": 37638548322,
+    "generation_ci_state": "success_15_of_15",
+    "source_pr": 103,
+    "source_head": "16d34887b058b3dfb270af474f28242194a968ca",
+    "source_ci": 37637743439,
+    "source_ci_state": "success_all_23_jobs_19_success_4_intentional_skips",
+    "final_export_published": true
+  },
+  "cached_capacity_recipe": {
+    "version": "1.2.0",
+    "source_head": "16d34887b058b3dfb270af474f28242194a968ca",
+    "dispatched": false,
+    "historical_controls_kept": true,
+    "old_plans_kept": true
+  },
+  "remaining": [
+    "Exact full CI and protected publication for source103 and generation35",
+    "Native six-phase controls and full canonical capacity",
+    "Fair project fitting, calibration and selection freeze",
+    "Fresh final3-seed3-use-case campaign",
+    "Segments, scenarios, uncertainty, measured resource costs, MLflow, lifecycle, cards/reports",
+    "Exact final main and full CI"
+  ],
+  "updated_at_utc": "2026-10-07T15:02:30.414681+00:00",
+  "native_resealed_corruption": {
+    "passed": 1,
+    "seconds": 139.07,
+    "scope": "native replay/rebuild plus feature-hash, duplicate-key and dropped-key corruptions with recomputed manifest hashes; ordinary checksum mutation"
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_files": 619,
+    "contracts": "passed",
+    "docs": "passed"
+  },
+  "package": {
+    "built": true,
+    "python_module_byte_parity": 506,
+    "v14_schema_byte_parity": 5
+  },
+  "latest_publication": {
+    "final_export_pr": 36,
+    "previous_final_export_head": "cd6106a9c0dfb6d8605bbc9ee465c7523e8c38d7",
+    "previous_final_export_ci": 37642451429,
+    "previous_final_export_ci_jobs_success": 15,
+    "integrated_generation_head": "4238b2fc9218410a53dbbe6b485109dae8757418",
+    "generation_exact_ci": 37650879421,
+    "generation_exact_ci_pending": true,
+    "source_integrated_head": "a28101bfcf8bc010c32ef28427a8cca19ebf7d9e",
+    "source_integrated_ci": 37646475371,
+    "source_integrated_ci_success": 21,
+    "source_integrated_ci_intentional_skips": 4,
+    "new_exact_final_export_ci_required": true,
+    "main_publication_complete": false,
+    "source_protected_merge_commit": "b7234899769119c67f27a62867c1d2153dbd6a00",
+    "source_exact_main_ci": 37651259188,
+    "source_exact_main_ci_pending": true,
+    "post_main_integration_validation": {
+      "tests_passed": 93,
+      "tests_seconds": 64.7,
+      "mypy_source_files": 665,
+      "ruff_and_format": "passed",
+      "source_bundle_contract": "passed",
+      "evaluation_schemas": "passed"
+    }
+  }
+}

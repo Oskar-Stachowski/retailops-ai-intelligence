@@ -1,0 +1,87 @@
+{
+  "recorded_at": "2026-10-07T13:08:25.010214+00:00",
+  "scope": "Prospective cached canonical resource recipe and tiny native API wiring; not canonical execution or campaign",
+  "version": "ai09-development-capacity-probe-1.2.0",
+  "producer_commit": "5bec26f9cfb1daaa1ef12e7db05b0b05bf126521",
+  "producer_pr": 101,
+  "producer_ci_run": 37623701164,
+  "producer_publication_required_before_dispatch": true,
+  "diagnostic_dispatched": false,
+  "previous_canonical_runs": [
+    37611605538,
+    37613368332
+  ],
+  "previous_failures_preserved": true,
+  "old_plans_byte_unchanged": true,
+  "canonical_dimensions_and_budgets_unchanged": true,
+  "generation_entrypoint": "data.inventory.source_cohort_batch_v2.run",
+  "supervisor_tests_passed": 21,
+  "supervisor_seconds": 0.92,
+  "ruff": "passed",
+  "targeted_mypy": "1 file passed",
+  "docs": "passed",
+  "native_control": {
+    "generation": {
+      "business_timezone": "UTC",
+      "days": 45,
+      "end_date": "2026-07-31",
+      "forecast_plan_days": 14,
+      "forecast_plan_version": "known-forecast-plans-1.0.0",
+      "label_tail_days": 0,
+      "max_daily_rows": 90,
+      "origin_days": 0,
+      "output_format": "csv",
+      "products": 2,
+      "profile": "ai-load",
+      "seed": 42,
+      "start_date": "2026-06-17",
+      "stores": 1,
+      "warehouses": 1,
+      "warmup_days": 0
+    },
+    "completed_phases": [
+      "generation",
+      "qualification",
+      "export",
+      "import",
+      "curation"
+    ],
+    "source_dataset_id": "source-sha256-f435e69841f6e2b7de684cfe9812739480e3fb44669d95c889e8d4295e006687",
+    "snapshot_id": "snapshot-sha256-7e267f0c6af13da40eb77aa1caa5b0acd95adeaab2ce1f0737979f89469e81f0",
+    "curated_dataset_id": "curated-sha256-f98a789356df8afadf1b75f31c64e9d5ee83a9e13ca485649fe6d723af650ba6",
+    "source_rows": 2800,
+    "source_tables": 58,
+    "snapshot_and_curated_rows": 2124,
+    "operational_tables": 43,
+    "rejected_rows": 0,
+    "readiness": {
+      "anomaly": "not_ready",
+      "forecast_model": "not_ready",
+      "forecast_source": "passed",
+      "inventory_ready": true,
+      "rag": "not_applicable",
+      "replay": "not_ready",
+      "stockout": "not_ready"
+    },
+    "tree_rss_measured": false,
+    "canonical_profile_qualified": false
+  },
+  "qualifications": {
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "final_generation_attempted": false,
+    "final_test_opened": false,
+    "canonical_ai_training_qualified": false,
+    "quality_qualified": false,
+    "stage_ready": false
+  },
+  "prospective_publication_revision": {
+    "producer_commit": "16d34887b058b3dfb270af474f28242194a968ca",
+    "producer_pr": 103,
+    "producer_ci_run": 37637743439,
+    "native_cohort_plan_regression_passed": 31,
+    "full_ci_and_main_required": true,
+    "dispatched": false,
+    "historical_native_control_unchanged": true
+  }
+}
