@@ -29,13 +29,19 @@ V12 run `37604263732` zakończył model boundary tests oraz przygotowanie
 `c8df654` wykrył błąd ponownego uruchomienia bazy w istniejącym compose smoke;
 następny pełny CI ma ponownie sprawdzić tę samą bramkę bez zmiany jej limitów.
 
-**Source capture → rzeczywisty AI SQL/ACK — nowy przyrost, runtime pending:**
+**Source capture → rzeczywisty AI SQL/ACK — odebrany przyrost:**
 Source `f4535a3` zachowuje oryginalny TLS/SCRAM broker podczas niezależnego
 odbioru AI. `check_ai10_source_sql_handoff.py` tworzy osobny własny PostgreSQL,
 porównuje pełny prefix SQL z capture Source, potwierdza prawdziwe offsety,
 ponawia trzy oryginalne rekordy i późną korektę, a następnie porównuje pełny
 replay drugiej grupy. Oczekiwane sumy 4 → 7 nie doliczają duplikatów.
-Trzy negatywne lokalne guards, mypy 607+10 i Source setup-plan passed.
+Run `37607732767`, job `112747249701`, zakończył się **success**: 9 testów
+bez pominięć, prefix ACK `[0, 0, 3]`, final ACK `[0, 0, 4]` i zgodność pełnego
+SQL replay. ZIP 4400 B pobrano i niezależnie sprawdzono względem SHA
+`a145565bf85a8bc2fc27eaa3492473b856f01471f067cd0ae189e7e05a5a5401`.
+[Receipt](evidence/ai10-source-sql-handoff-accepted.json) zachowuje dokładne
+Source/AI SHA oraz wszystkie raporty. Trzy negatywne lokalne guards,
+mypy 607+10 i Source setup-plan także passed.
 To nadal protokół `daily_demand_versions` na jawnych obserwacjach testowych,
 bez kwalifikacji modeli i bez twierdzenia o pełnym 43-table SQL snapshot.
 
@@ -43,6 +49,15 @@ Nowy Required CI `a9f087f` przeszedł poprzednio blokujący compose smoke.
 Jego lint wykrył dwa komentarze `noqa` przesunięte przez formatowanie;
 komentarze poprawiono, a pełny lint/format 1015 plików i docs-check passed.
 Bramek bezpieczeństwa ani zasad publishera nie pominięto.
+
+Native stockout w `37606671405` przeszedł oryginalny model/MLflow/SQL,
+lecz odbiór Source zatrzymało błędne porównanie SHA wartości z pełnym
+transport fingerprint `value/key/headers/timestamp`. Source `cbbf711`
+porównuje osobno oryginalne wire bytes na ACK coordinates i cały fingerprint
+SQL, przez bounded read bez zapisu offsetów. 41 testów parsera/negatywnych
+bindings passed. Nowy native workflow przypina dokładne poprawione bytes;
+stare własne próby z potwierdzonym błędnym assertem zatrzymano, zachowując
+ich artefakty. V12 i przyjęty Source SQL handoff pozostają niezależne.
 
 **Bieżący przyrost z 7 października:** pełny native anomaly workflow
 `37594406280`, job `112705553204`, zakończył się **success**. Wszystkie 1232

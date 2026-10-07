@@ -115,13 +115,22 @@ def run_source_model_read(
                 check=False,
             )
         if result.returncode:
+            private_log = (work / "model-source-consumer.log").read_text()
             print(
                 json.dumps(
                     dict(
                         category="ai10_model_original_source_consumer_failed",
                         tests=re.findall(
                             r"FAILED (services/api/tests/[a-zA-Z0-9_/.]+::[a-zA-Z0-9_]+)",
-                            (work / "model-source-consumer.log").read_text(),
+                            private_log,
+                        ),
+                        locations=re.findall(
+                            r"(services/api/tests/[a-zA-Z0-9_/.]+\.py):([0-9]{1,5}): ([A-Za-z_][A-Za-z0-9_.]{0,80})",
+                            private_log,
+                        ),
+                        publisher_failure_categories=re.findall(
+                            r'"reason": "(ai10_model_[a-z_]{1,100})"',
+                            private_log,
                         ),
                     )
                 )

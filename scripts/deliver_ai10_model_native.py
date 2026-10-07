@@ -162,8 +162,15 @@ FROM ai.model_intelligence_outbox WHERE environment='test' ORDER BY event_id LIM
             )
         )
         return 0
-    except Exception:
-        print('{"status":"failed","category":"ai10_model_original_outbox_delivery"}')
+    except Exception as error:
+        failure = dict(
+            status="failed",
+            category="ai10_model_original_outbox_delivery",
+            exception_type=type(error).__name__,
+        )
+        if isinstance(error, ValueError) and re.fullmatch(r"ai10_model_[a-z_]{1,100}", str(error)):
+            failure["reason"] = str(error)
+        print(json.dumps(failure))
         return 1
     finally:
         if engine is not None:
