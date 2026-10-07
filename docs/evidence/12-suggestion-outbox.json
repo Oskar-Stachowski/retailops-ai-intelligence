@@ -3,19 +3,38 @@
   "candidate_family": "suggestion-outbox.v1",
   "ci_checks": {
     "compose_config_only": true,
-    "log_sha256": "e70e3385c6933697dbfcc6a73da24722d56d03ac13d3c90147faf988b51c18b1",
+    "log_sha256": "2c4ae09ec5f84cf66f17148f5c0293487259d68a1caaf3bacdf2fa660e38ecb1",
     "status": "passed"
   },
   "ci_collection": {
-    "cases": 4833,
+    "cases": 4834,
     "collection_only": true,
     "every_case_once": true,
-    "files": 218,
-    "sha256": "31f68949a1ad6fb9a3111cfb7749affe181fc927fa74d28f78ca5584ba53e4fb",
+    "files": 219,
+    "sha256": "ddf4bd82ae6b7a09cef336898dc7fbc04c4b9ffad1006d7a52d3200353e09479",
     "shards": 4
   },
   "code_sha256": "4ee93c6bbd9dbb29708dc16f34f45e691319b12473ebc0b144cf37d3c5f8b64f",
+  "container_build_regression": {
+    "collected": 57,
+    "failures": 0,
+    "passed": 57,
+    "sha256": "adfeb2b227e913ee3ee2737d1f077d631c541686dd38eef903d747031c486e84",
+    "skipped": 0
+  },
   "evaluation_release_id": "agent-evaluation-release-sha256-446f6f1d277a8e413e84b2e65c8a49967020316470bd7c9e481b739ad018d468",
+  "first_emitter_ci_failure": {
+    "corrected_head_ci": "pending",
+    "failed_jobs": [
+      "persistence",
+      "persistence-forecast"
+    ],
+    "fix": "Copy contracts/events/suggestion-source-v1 into the API build stage; regression verifies complete wheel contents.",
+    "head": "b91a15fe05dfdb8b53ef9024b9b6586a7c1556c9",
+    "phase": "image_startup_before_sql_acceptance",
+    "reproduced": "Hatchling build from API Dockerfile COPY inputs rejected absent forced Source suggestion include.",
+    "run": 37674285775
+  },
   "implementation_commit": "cd578d1",
   "integrated_main": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
   "limitations": [
@@ -121,6 +140,8 @@
       "tools/intelligence-delivery/qualification.uv.lock",
       "tools/intelligence-delivery/qualification.pyproject.toml"
     ],
+    "emitter_published_agent_files": 95,
+    "emitter_published_base": "b91a15fe05dfdb8b53ef9024b9b6586a7c1556c9",
     "historical_receipts_and_migrations": 435,
     "model_modules_equal_main": 83,
     "published_agent_files": 83,
