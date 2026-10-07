@@ -32,8 +32,13 @@
     "job": 112900689298,
     "total_native_cpu_tests_passed": 6,
     "native_cpu_test_seconds": 101.69,
-    "full_ci_pending": true,
-    "scope": "real fitting, MLflow tracking and fresh reload over every controlled-array eligible key; not canonical source preparation or project fitting"
+    "full_ci_pending": false,
+    "scope": "real fitting, MLflow tracking and fresh reload over every controlled-array eligible key; not canonical source preparation or project fitting",
+    "full_ci_conclusion": "failure",
+    "full_ci_jobs_read": 17,
+    "full_ci_jobs_success": 12,
+    "full_ci_jobs_failed": 5,
+    "infrastructure_failure": "Four jobs were never acquired after five scheduling attempts; required-result was the fifth failure. No test steps started in those four jobs; cost unknown."
   },
   "component_validation": {
     "integrated_regression_passed": 124,
@@ -64,7 +69,6 @@
     }
   ],
   "remaining": [
-    "Exact native CPU fit/reload CI for all three families",
     "Canonical full-profile capacity and completed audited development generation/export",
     "Frozen project fitting, common scoring, fair selection, calibration and policies",
     "Fresh final three-seed evaluation for all three use cases",
@@ -94,11 +98,14 @@
     "evaluation_schemas": "passed",
     "source_protected_main": "b7234899769119c67f27a62867c1d2153dbd6a00",
     "source_exact_main_ci": 37651259188,
-    "source_exact_main_ci_pending": true,
+    "source_exact_main_ci_pending": false,
     "package": {
       "module_byte_parity": 549,
       "v15_schema_byte_parity": 3
-    }
+    },
+    "source_exact_main_jobs_total": 25,
+    "source_exact_main_jobs_success": 21,
+    "source_exact_main_jobs_skipped": 4
   },
   "shared_scoring_inputs_preparation": {
     "shared_train_and_inference_vectors": true,
@@ -114,8 +121,36 @@
     "tests_seconds": 25.24,
     "mypy_source_files": 671,
     "package_module_byte_parity": 551,
-    "new_native_signature_control_pending": true,
+    "new_native_signature_control_pending": false,
     "audited_scoring_runner_implemented": false,
     "project_fit_or_final_metrics_produced": false
+  },
+  "updated_at_utc": "2026-10-07T18:47:21.306228+00:00",
+  "accepted_signature_control": {
+    "head": "ab1229892d573a22be201f2757fba0aeb490ffaf",
+    "ci": 37659317202,
+    "jobs_read": 17,
+    "jobs_total": 17,
+    "jobs_success": 17,
+    "required_result": "success",
+    "native_cpu_job": 112922884299,
+    "native_cpu_tests_passed": 6,
+    "native_cpu_seconds": 102.64,
+    "actual_corrupted_signature_rejected": true,
+    "project_fit": false,
+    "canonical_preparation": false
+  },
+  "publication_to_main": {
+    "pr": 37,
+    "base": "main",
+    "integrates_final_export_merge": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
+    "integrates_snapshot_path_fix": "e3bc68ef6f1fff9238fe6d07b3f6feacc5edf091",
+    "targeted_tests_passed": 40,
+    "targeted_tests_seconds": 37.37,
+    "mypy_source_files": 671,
+    "ruff_format_schemas_docs": "passed",
+    "new_exact_head_ci_pending": true,
+    "project_fit_completed": false,
+    "stage_ready": false
   }
 }

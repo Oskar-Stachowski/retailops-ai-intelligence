@@ -175,6 +175,10 @@ Rezerwacja poprzedza I/O, a receipt następuje po mierzonym fit i reload w
 MLflow i trzy nowe rzeczywiste kontrole CPU należą do wymaganego odbioru.
 174 kontrole integracji i Mypy 669 plików przeszły. [Evidence](evidence/09-23-campaign-fitting-preparation.json)
 rozdziela ten odbiór komponentów od niewykonanych nowych treningów projektu.
+Head `ab122989` ma pełne 17/17 success CI `37659317202` oraz 6 rzeczywistych
+kontroli CPU w 102.64 s, w tym odrzucenie uszkodzonego podpisu. PR #37 jest
+skierowany na main; integracja ze scalonym eksporterem i poprawką snapshotu
+wymaga własnego pełnego CI. 40 testów tej integracji przeszło w 37.37 s.
 Scoring, kalibracja/wybór, pełne profile i końcowa ocena trzech zastosowań
 nadal pozostają do wykonania.
 
