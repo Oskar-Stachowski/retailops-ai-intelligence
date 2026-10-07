@@ -145,7 +145,7 @@ def test_diagnostic_receipt_is_private_and_never_overwritten(tmp_path: Path) -> 
 
 @pytest.mark.parametrize(
     "self_peak,reason",
-    [(5 * 1024**3, "worker_self_rss_limit"), (None, "worker_self_rss_measurement_invalid")],
+    [(16 * 1024**3, "worker_self_rss_limit"), (None, "worker_self_rss_measurement_invalid")],
 )
 def test_system_peak_rejects_phase_even_if_sample_missed_it(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, self_peak: int | None, reason: str
@@ -157,11 +157,16 @@ def test_system_peak_rejects_phase_even_if_sample_missed_it(
     monkeypatch.setattr(probe, "require_remote", lambda: None)
     monkeypatch.setattr(probe, "clean_pin", lambda *a: None)
     monkeypatch.setattr(probe, "git", lambda *a: "a" * 40)
+    original_sha = probe.sha
     monkeypatch.setattr(
         probe,
         "sha",
         lambda p: (
-            plan["consumer_lock_sha256"] if p.name == "uv.lock" else plan["exporter_lock_sha256"]
+            plan["consumer_lock_sha256"]
+            if p.name == "uv.lock"
+            else plan["exporter_lock_sha256"]
+            if p.name == "requirements-parquet.txt"
+            else original_sha(p)
         ),
     )
     monkeypatch.setattr(psutil, "virtual_memory", lambda: SimpleNamespace(available=10 * 1024**3))
@@ -183,3 +188,16 @@ def test_system_peak_rejects_phase_even_if_sample_missed_it(
     assert receipt["completed_phases"] == 0
     assert len(calls) == 1
     assert receipt["project_journal_initialized"] is False
+
+
+@pytest.mark.parametrize("change", ["parent_limit", "budget", "prior_digest"])
+def test_resource_revision_cannot_change_parent_caps_or_erase_previous_failure(change: str) -> None:
+    plan = probe.read(probe.PLAN_PATH)
+    if change == "parent_limit":
+        plan["parent_limits"]["max_bytes"] *= 2
+    elif change == "budget":
+        plan["budgets"]["minimum_available_memory_bytes"] = 1
+    else:
+        plan["previous_attempt"]["plan_sha256"] = "0" * 64
+    with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
+        probe.validate_plan(plan)

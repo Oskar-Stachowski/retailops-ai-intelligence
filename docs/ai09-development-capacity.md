@@ -1,6 +1,6 @@
 # Pomiar pełnego development AI 09
 
-[Plan](reference/ai09-development-capacity.json) określa prawdziwe `ai-dev`:
+[Plan 1.1](reference/ai09-development-capacity-v1.1.json) określa prawdziwe `ai-dev`:
 365 dni, 100 produktów, 5 sklepów, 3 lokalizacje zapasu i seed 42. Generator
 jest przypięty do `1de4627`, historia kończy się 2026-07-31, a znane plany mają
 14 dni. To diagnostyka zasobów na wcześniej eksponowanych datach development.
@@ -17,7 +17,7 @@ Każdy zakończony worker zapisuje też własny systemowy peak RSS; przekroczeni
 limitu przez ten dodatkowy pomiar odrzuca fazę. Czas CPU jest
 próbkowaną dolną granicą workera i nie obejmuje CPU supervisora.
 
-Limity próby: 4 GiB RSS, 8 GiB scratch, 3600 s, 6 GiB rezerwy dysku i 1 GiB
+Limity nowej próby: 8 GiB RSS, 8 GiB scratch, 3600 s, 6 GiB rezerwy dysku i 1 GiB
 dostępnej pamięci. Przed startem wymagany jest dodatkowo wolny zapas równy
 całemu budżetowi scratch/RSS. Przekroczenie limitu, awaria pomiaru lub błąd
 workera zatrzymuje jego własną grupę procesów i zachowuje koszt oraz porażkę.
@@ -47,3 +47,14 @@ potrzeb pełnego producenta; całkowity peak zakończonego profilu pozostaje nie
 Kolejny większy budżet wymaga osobnej prospektywnej receptury i własnego pomiaru,
 albo ograniczenia pamięci producenta. Rozmiar canonical i stare limity pozostają
 przypięte. Ten wynik nie kwalifikuje żadnej kampanii lub `ai-training`.
+
+Osobna receptura 1.1 przypina tę porażkę i zachowuje [plan 1.0](reference/ai09-development-capacity.json)
+bajt w bajt. Przed pierwszym startem runner miał 15532302336 B dostępnej pamięci;
+to pozwala zaplanować próbę 8 GiB z dodatkową rezerwą 1 GiB. Wymagany preflight
+i bieżące limity nadal działają. To nowy limit diagnostyczny, którego nie
+uznajemy za zmierzony koszt ukończonego profilu. Kod producenta, pełny rozmiar
+danych, historia, parent limits i zakazy fitów/final generation pozostają
+przypięte; 1.1 wymaga własnego wyniku. Pierwsza porażka pozostaje odrębnym
+runem i nie jest nadpisywana.
+Receptura 1.1 ma 17 zaliczonych testów supervisora i kontroli scope; obejmują
+odrzucenie zmiany parent limits, rezerwy pamięci oraz skrótu wcześniejszego planu.

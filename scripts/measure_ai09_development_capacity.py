@@ -25,7 +25,9 @@ from pathlib import Path
 from typing import Any
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
-PLAN_PATH = Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity.json"
+PLAN_PATH = (
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.1.json"
+)
 
 
 def read(path: Path) -> dict[str, Any]:
@@ -287,10 +289,27 @@ def require_remote() -> None:
 
 def validate_plan(plan: dict[str, Any]) -> None:
     """Do not let a smaller or final profile inherit this diagnostic's name."""
+    previous_path = PLAN_PATH.with_name("ai09-development-capacity.json")
+    previous = read(previous_path)
+    revision_keys = {"version", "budgets", "previous_attempt", "revision_reason"}
+    if {k: v for k, v in plan.items() if k not in revision_keys} != {
+        k: v for k, v in previous.items() if k not in revision_keys
+    }:
+        raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.0.0"
+        plan["version"] != "ai09-development-capacity-probe-1.1.0"
         or plan["scope"] != "isolated_resource_diagnostic_on_previously_exposed_development_dates"
         or plan["expected_snapshot_schema_version"] != "1.1.0"
+        or plan["budgets"]
+        != {
+            "tree_rss_bytes": 8 * 1024**3,
+            "scratch_bytes": 8 * 1024**3,
+            "wall_seconds": 3600,
+            "minimum_free_disk_bytes": 6 * 1024**3,
+            "minimum_available_memory_bytes": 1024**3,
+            "sample_seconds": 0.2,
+        }
+        or plan["previous_attempt"]["plan_sha256"] != sha(previous_path)
         or plan["generation"]
         != {
             "profile": "ai-dev",

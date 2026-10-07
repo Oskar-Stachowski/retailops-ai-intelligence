@@ -57,6 +57,10 @@ osobny runner oraz [kontrolny odbiór](evidence/09-15-development-capacity-prepa
 przekroczyła 4 GiB RSS po 127,875 s podczas generacji; nie ukończyła źródła.
 Plan, porażka i koszt są zachowane bez retry; potrzebny jest osobny pomiar
 większego prospektywnego budżetu albo ograniczenie pamięci producenta.
+[Osobna receptura 1.1](reference/ai09-development-capacity-v1.1.json) planuje
+próbę 8 GiB na podstawie zmierzonej dostępnej pamięci runnera, zachowując
+pierwszy plan i porażkę oraz wszystkie stare limity i wymagania jakości.
+Jej wynik jest jeszcze wymagany.
 Nie rozpoczęto projektowej kampanii ani generacji finalnych danych. Prawdziwa wersja planned
 forecast to snapshot 1.1; kontrakt anomalii 1.2 pozostaje osobnym wymaganiem.
 

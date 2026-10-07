@@ -6,7 +6,7 @@ on:
     paths:
       - ".github/workflows/ai09-development-capacity.yml"
       - "scripts/measure_ai09_development_capacity.py"
-      - "docs/reference/ai09-development-capacity.json"
+      - "docs/reference/ai09-development-capacity*.json"
   workflow_dispatch:
 
 permissions:
