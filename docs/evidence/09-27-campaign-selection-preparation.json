@@ -1,0 +1,123 @@
+{
+  "updated_at_utc": "2026-10-07T20:26:02.298517+00:00",
+  "scope": "Audited selection over every preregistered Tune triplet; controlled component verification, no project selection/calibration/quality result",
+  "stage_ready": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "final_test_opened": false,
+  "wire": "evaluation v17: plan, selection, durable receipt; prior v1-v16 bytes retained",
+  "population": "all common Tune keys; every frozen RF/HGB/TensorFlow fit participates exactly once; baseline predictions identical across trials",
+  "selection": {
+    "mean": "minimum MSE with learned normalized-bias guard <=10% when denominator defined",
+    "median": "minimum MAE, learned improvement strictly >5% over best baseline; RF median forbidden",
+    "baseline_interval": "minimum proper central interval score at nominal90%",
+    "candidate_interval": "center follows selected median; later separate calibration-role fit required",
+    "minimum_eligible_rows": 100,
+    "minimum_eligibility_coverage": 0.8,
+    "zero_actual_ratios": "undefined, no denominator floor",
+    "tie_breaker": "baseline,model order,frozen trial order"
+  },
+  "ordering": "durable reservation before parent or label I/O; fsync/private receipt before completion",
+  "label_passes": "one complete Tune pass per frozen triplet; zero calibration/independent/final passes",
+  "training_or_preprocessing_refitted": false,
+  "calibration_fitted": false,
+  "model_or_quality_promoted": false,
+  "component_tests": {
+    "previous_integration_passed": 124,
+    "previous_integration_seconds": 45.6,
+    "final_integration_pending": false,
+    "roles_and_prediction_files_real": true,
+    "audit_workers_mocked": true,
+    "worker_select_only_package_version_gate_mocked": true,
+    "project_journal": false,
+    "canonical_profile": false,
+    "integration_passed": 126,
+    "integration_seconds": 46.55,
+    "worker_system_peak_retained_even_if_sampled_peak_lower": true,
+    "worker_peak_limit_failure_preserves_cost": true,
+    "post_mlflow_artifact_scope_checks_passed": 21,
+    "post_mlflow_artifact_scope_seconds": 15.25
+  },
+  "native_cpu_control": {
+    "test": "existing real fit/reload/six-model scoring extended with fresh Tune worker and MLflow",
+    "collection_passed": true,
+    "suite_tests_collected": 7,
+    "required_command": "make tensorflow-check",
+    "execution_pending_on_new_head": true,
+    "native_workers_started_locally": false,
+    "scope": "small typed controls; mocked input preparation, no completed project journal/canonical proof",
+    "controlled_selection_expected": "not_ready because fewer than100 eligible rows",
+    "collection_seconds": 1.7,
+    "tracking_artifact_scope": "explicit private worker tracking-artifacts, no default CWD mlruns"
+  },
+  "static_checks": {
+    "mypy_source_files": 682,
+    "ruff": "passed",
+    "format_files": 1160,
+    "evaluation_schemas": "passed",
+    "source_bundle_owner_guard": "passed",
+    "docs_links_required_ci_contract": "passed",
+    "final_checks_pending": false
+  },
+  "package": {
+    "wheel_bytes": 1807777,
+    "wheel_sha256": "06c58fe96ddff1ea21eb6a32ae52312dc50248eba9e868b222b5638ce852cda9",
+    "module_byte_parity": 562,
+    "v17_schema_byte_parity": 3,
+    "previous_evaluation_files_unchanged": 54
+  },
+  "retained_failed_controls": [
+    {
+      "passed": 24,
+      "failed": 1,
+      "seconds": 5.48,
+      "cause": "test floating 9.05 vs10 produced error0.9499999999999993; replaced boundary fixture by exact integer baseline20/candidate19, no threshold change"
+    },
+    {
+      "passed": 25,
+      "failed": 11,
+      "seconds": 9.45,
+      "cause": "fixture initialize interceptor created new protocol while caller generated receipt retained old protocol SHA; finalize document before protocol validation"
+    },
+    {
+      "passed": 45,
+      "failed": 1,
+      "seconds": 22.33,
+      "cause": "real JSON-to-strict-contract tuple decoding error in select result; use canonical JSON model validation for result and score parents"
+    },
+    {
+      "errors": 7,
+      "seconds": 4.48,
+      "cause": "controlled fixture attempted no-replace write to existing parents file; fixture reseals owned parent bytes, production no-replace preserved"
+    },
+    {
+      "passed": 18,
+      "failed": 1,
+      "seconds": 14.68,
+      "cause": "extra-triplet fixture counted operations rather than frozen maximum_attempts; compute exact attempt inventory"
+    }
+  ],
+  "main_integration": {
+    "pr": 39,
+    "head": "8497908dde4531b6ee4c82f439c58c77c43c71eb",
+    "required_ci": 37671721214,
+    "all_jobs_success": 17,
+    "required_result": "success",
+    "protected_merge": "5ed0544ef5f7d4ee34300a4f770171389664cff7",
+    "integrates_automatically_merged_prs": [
+      37,
+      40
+    ],
+    "exact_main_ci": 37678417692,
+    "exact_main_ci_pending": true
+  },
+  "full_profile_resource_result": "Third actual canonical diagnostic failed8GiB RSS; see09-28, not qualified",
+  "remaining": [
+    "Full canonical generation/export and capacity of planned-anomaly source as well as forecast",
+    "Actual preregistered project fits and selection; calibration only on own role",
+    "Independent development evaluation and anomaly/stockout campaign adapters using closed07/08 policies",
+    "Selection freeze, fresh final three seeds/all uses/four scenarios and critical segments",
+    "Paired time/series uncertainty, costs, MLflow lifecycle compatible bundles,three cards/reports/runbooks",
+    "Protected publication and full exact-final-main Required CI"
+  ]
+}

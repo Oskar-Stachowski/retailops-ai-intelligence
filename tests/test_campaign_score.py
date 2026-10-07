@@ -25,7 +25,7 @@ from retailops_ai.forecasting.quality_v2_contract import FunctionalForecast
 from retailops_ai.source_snapshot.files import SnapshotError
 
 
-def case(tmp_path, monkeypatch):
+def case(tmp_path, monkeypatch, *, finalize_document=None):
     seed = tmp_path / "metadata"
     seed.mkdir()
     _, previous, export_plan, generated = setup_campaign(seed)
@@ -71,6 +71,8 @@ def case(tmp_path, monkeypatch):
     document["maximum_new_attempts"] = (
         sum(o["maximum_attempts"] for o in document["operations"][:-1]) + 1
     )
+    if finalize_document is not None:
+        finalize_document(document)
     protocol = CampaignProtocol.model_validate_json(canonical_bytes(document))
     journal.initialize(root, protocol)
     start = journal.reserve(root, "development-42-generate")

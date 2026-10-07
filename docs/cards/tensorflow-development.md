@@ -49,8 +49,9 @@ oddzielnie. Przekroczenie budżetu, niezgodny signature/checksum/normalizer
 lub brak kompletnej próby blokują przyjęcie artefaktu.
 
 Ograniczenia: brak osobnej kalibracji interval, brak pełnego `ai-training`,
-brak finalnych wyników AI 07/08, brak niezależnej końcowej ewaluacji trzech
-seedów/scenariuszy i review lifecycle. Brak gotowości nie jest passed gate.
+brak wspólnej końcowej kampanii AI09 na nowych danych trzech
+seedów/scenariuszy i review lifecycle. AI07/08 mają własny zamknięty odbiór;
+nie zastępuje on tej kampanii. Brak gotowości nie jest passed gate.
 Szczegółowe hashes, lineage kontrolnej fixture, koszt i negatywne wyniki
 pozostają w [wersjonowanym receipt](../evidence/09-02-tensorflow-challenger.json).
 

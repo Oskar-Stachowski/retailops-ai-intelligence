@@ -72,8 +72,9 @@ Wspólne raw scoring i kalibracja mają osobny zakres odbioru.
 PR #37 jest skierowany bezpośrednio na main. Nowa integracja obejmuje scalony
 eksporter PR #36 oraz poprawkę snapshotu z [receipt 09.26](evidence/09-26-generation-snapshot-verification.json).
 40 testów generation/fit/data oraz Mypy 671 plików przeszły po integracji.
-Jej pełny Required CI pozostaje wymagany; wcześniejszy zielony head nie
-zastępuje odbioru nowego commita integracji.
+Wspólna integracja PR39 `8497908d` zaliczyła własny Required CI 17/17
+success i została chronioną ścieżką scalona na main `5ed0544e`.
+PR37 został automatycznie oznaczony merged; CI dokładnego main jest w toku.
 
 [Evidence przygotowania](evidence/09-23-campaign-fitting-preparation.json)
 zachowuje wcześniejsze porażki kontroli i zakres dowodu. Projektowy journal

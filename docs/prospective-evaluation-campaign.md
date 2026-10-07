@@ -147,7 +147,8 @@ export/holdout wymaga odrębnego jawnego API po selection freeze.
 W tym przyroście nie inicjalizowano nowego dziennika projektu i nie wygenerowano
 nowych danych projektu. Testy używają jawnych, kontrolowanych metadanych.
 Przed uruchomieniem kampanii trzeba przygotować kompletne receptury i polityki,
-dokończyć rzeczywisty runner generacji/curation oraz pozostałe audytowane runnery.
+odebrać pełne wykonanie audytowanych runnerów generacji/curation i treningu
+oraz dokończyć kalibrację i niezależną ocenę.
 Powiązanie development read z [fizycznym eksporterem](physical-forecast-export.md)
 jest zaimplementowane; nie wykonano jeszcze pełnego canonical przebiegu tego API.
 Eksporter odtwarza features i etykiety z tych samych prywatnych rodziców; jego
