@@ -1,0 +1,22 @@
+{
+  "version": "ai10-native-output-consumer-1.0",
+  "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+  "commit": "cbbf7111f093b30026e12e1ef614403df6ed2d0e",
+  "sha256": {
+    "services/api/tests/native_intelligence_bundle.py": "014f3b754ddb7a3a7b8626810998d280d2cb1ef05c829892ce543b16d631a990",
+    "services/api/tests/test_native_intelligence_output_durability.py": "9004c59a92ebee88083f746e237c0995639bd923abd2722732252260a19fe805",
+    "services/api/tests/test_intelligence_durability.py": "ebdc077a7ad7c0f66843adbf50feca171505a418233ea4e9125708b8e8e59b6c",
+    "services/api/tests/test_intelligence_checkpoint_durability.py": "99dc2c880253d18559f75d14e03767066b6ea9a71a629e746b15d9486f5c061a",
+    "services/api/tests/test_realtime_durability.py": "c1e7f5d5d8b47e4f5f231b66d5aa81dfc4a196e6e87430919c02aebbd2e40295",
+    "services/api/app/services/intelligence_model_contract.py": "aafffd6e6648a073f7a536861dc69875cad714db3c7580b8eaab707efd0ade7d",
+    "services/api/app/api/intelligence_models.py": "7615d4acc057b8b62637b67ccfb1e2995628c1c66dfd8799ba41cf7793749bc7",
+    "services/api/tests/native_intelligence_browser.py": "637278cdf40d78754c68f0a06452f2945863849c31812845a1f9d552e58a2323",
+    "frontend/playwright.config.js": "7997a5eb1cb9a829b067003e4fe284dd64ee32ebb78184bb3ffaae37a0821e54",
+    "frontend/eslint.config.js": "73dc6901be9734ea5779008e86b1948cb66ee477262cc73a9658cb1686b1b682",
+    "frontend/vite.native-preview.config.js": "6d3c1b839296565d7b3b3c1fac93a9d8e247cfcc82abba38d4f0212e1f32b2e2",
+    "frontend/e2e/intelligence-native-models.spec.js": "2d3e588d2186930a88d65a8e670e6ab82ce0719348d67a9eb1354365f9418a7c",
+    ".github/actions/setup-node-ci/action.yml": "4a77391cccdf15771cce49639bc5caf1f08f3d987ef26b04b81ac102d3be02c5",
+    "frontend/package-lock.json": "079e227ffb749e9b637b355766e7d095d321abc9ddc003a285b3e1f14a062207",
+    "services/api/tests/native_model_delivery.py": "fcb4ef5cc58c070248a1506bf8c9406841396adf54224446983fb90ecf1ff29e"
+  }
+}

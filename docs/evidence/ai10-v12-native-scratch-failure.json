@@ -1,0 +1,52 @@
+{
+  "ai_commit": "c8df6545b6aa4ffcd5a6d51b3742e0a144abe6da",
+  "artifact": {
+    "id": 11477702364,
+    "size_bytes": 96001,
+    "zip_sha256": "ee8f91da25d6f8f0992de319dfbb870d03ceca46b2aee33bc4479ca44bb10962"
+  },
+  "evidence_boundary": "Full unchanged archive, exact frozen qualification/two cold predictions and ten review gates passed; MLflow import guard refused intermediate directory permissions. Native SQL, publisher, Source API/UI remain unaccepted in this attempt.",
+  "handoff_cleanup": {
+    "objects_deleted": 6,
+    "original_archive_mutated": false,
+    "unique_secret_deleted": true
+  },
+  "job_id": 112735822756,
+  "reports": {
+    "acceptance.json": {
+      "exception_type": "ValueError",
+      "failed_stage": "real_owned_pg16_mlflow_and_full_original_http_import",
+      "failure_category": "v12_scratch_private_owned_directory_required",
+      "model_refits": 0,
+      "original_quality_reclassified": false,
+      "original_quality_status": "not_ready",
+      "owned_containers_and_anonymous_volumes_removed": true,
+      "production_deployed": false,
+      "stages": [
+        "full_original_qualification_and_two_frozen_cold_predictions",
+        "ten_actual_review_gates_and_full_original_approval"
+      ],
+      "status": "failed"
+    },
+    "recovered-byte-census.json": {
+      "bytes": 31995395775,
+      "files": 669,
+      "model_quality_status": "not_ready",
+      "model_refits": 0,
+      "run_id": "functional-v12-run-sha256-345a725d435a477374292cb9483350fb5c50c8ba87d06668c727e0a9f964fb6b",
+      "scope": "complete_original_archive_bytes_only_not_serving_or_model_qualification",
+      "source_generation": false,
+      "status": "passed"
+    }
+  },
+  "source_commit": "1a7f558d718ed3dddaed277c07ccfd7d023f34ce",
+  "status": "failed",
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 251
+  },
+  "version": "ai10-v12-partial-attempt-1.0",
+  "workflow_run_id": 37604263732
+}

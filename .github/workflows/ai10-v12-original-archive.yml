@@ -1,0 +1,87 @@
+name: AI10 original v12 archive
+
+on:
+  workflow_dispatch:
+    inputs:
+      archive_secret:
+        description: "Task-owned temporary read-only S3 handoff secret name"
+        required: true
+      handoff_sha256:
+        description: "SHA-256 of the exact private read map"
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai10-original-v12-archive-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  original:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      UV_NO_CACHE: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - name: Verify bounded download guards before opening the private read handoff
+        run: |
+          uv sync --locked --extra snapshot --extra forecast
+          uv run --frozen python -m pytest -q tests/test_ai10_v12_archive_recovery.py
+          mkdir -m 700 .local
+          mkdir -m 700 v12-original-proofs
+      - name: Recover all original archive bytes with temporary GET-only URLs
+        env:
+          AI10_V12_HANDOFF_URL: ${{ secrets[inputs.archive_secret] }}
+          HANDOFF_SHA256: ${{ inputs.handoff_sha256 }}
+        run: |
+          uv run --frozen python scripts/recover_ai10_v12_archive.py \
+            --handoff-sha256 "$HANDOFF_SHA256" \
+            --output .local/ai10-v12-original --reserve-gib 6 \
+            --report v12-original-proofs/recovered-byte-census.json
+      - name: Install the exact retained original wheel in its frozen isolated runtime
+        run: |
+          uv sync --directory .local/ai10-v12-original/support/frozen-runtime \
+            --locked --no-install-project --no-dev --extra snapshot --extra forecast
+          uv pip install --python .local/ai10-v12-original/support/frozen-runtime/.venv/bin/python \
+            --no-deps .local/ai10-v12-original/support/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl
+      - name: Require original wheel full semantic verification and unchanged owner acceptance
+        run: |
+          uv run --frozen python - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          from retailops_ai.model_lifecycle.v12_evidence import load_evidence
+          from retailops_ai.model_lifecycle.v12_development import read_development_acceptance
+          root=Path('.local/ai10-v12-original').resolve()
+          run_id='functional-v12-run-sha256-345a725d435a477374292cb9483350fb5c50c8ba87d06668c727e0a9f964fb6b'
+          evidence=load_evidence(root/'archive'/run_id, root/'support/frozen-runtime/.venv/bin/python',timeout_seconds=3600)
+          evidence.verify_bytes()
+          acceptance=read_development_acceptance(root/'support/04-v12-acceptance.json')
+          assert evidence.run_id==run_id and len(evidence.files)==664
+          assert evidence.manifest_receipt.sha256=='29bf6837ca2cb7504213168743239b037041f375763bc8f01ae28c1f6d09b26e'
+          assert evidence.metrics['status']=='not_ready'
+          report=dict(status='passed',scope='original_full_v12_evidence_and_owner_development_acceptance',commit=os.environ['GITHUB_SHA'],workflow_run_id=int(os.environ['GITHUB_RUN_ID']),run_id=run_id,files=664,run_manifest_sha256=evidence.manifest_receipt.sha256,verifier=evidence.verifier,development_acceptance=acceptance.model_dump(mode='json'),original_model_status='not_ready',original_quality_status='not_ready',source_generation=False,model_refits=0,serving_acceptance=False,source_api_ui_acceptance=False,production_deployed=False)
+          path=Path('v12-original-proofs/original-semantic-verification.json')
+          path.write_text(json.dumps(report,sort_keys=True,indent=2)+'\n');path.chmod(0o600)
+          print(json.dumps({k:report[k] for k in ('status','scope','run_id','files','original_quality_status','source_generation','model_refits','serving_acceptance')}))
+          PY
+      - name: Preserve only verification receipts without signed URLs or archive duplication
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai10-original-v12-proof-${{ github.sha }}
+          path: v12-original-proofs/
+          if-no-files-found: warn
+          retention-days: 30
+          overwrite: false

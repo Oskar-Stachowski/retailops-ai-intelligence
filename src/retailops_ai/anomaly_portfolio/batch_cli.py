@@ -83,7 +83,7 @@ def main() -> int:
             request.as_of,
             datetime.now(UTC),
         )
-        result = PostgresResults(engine).publish(
+        result = PostgresResults(engine, settings.app_env).publish(
             request.request_id, actor, release, manifest, items
         )
         print(json.dumps(result, sort_keys=True))

@@ -1,0 +1,98 @@
+{
+  "ai_commit": "b1df980b41f7cc31cecd50fac75aaca8c149aa9d",
+  "artifact": {
+    "id": 11478601780,
+    "size_bytes": 478994,
+    "zip_sha256": "3e1c2f17aa685a5bd85f3a771682da67139cd54fdd9711078cc8f3a1d6c329a9"
+  },
+  "evidence_boundary": "The preserved original export status passed records complete frozen native model/lifecycle/1232-row SQL batch and SIGKILL recovery only. The workflow exited 2 before original SQL publisher delivery or Source API/UI. This wrapper is failed and cannot attest the complete transport acceptance.",
+  "failure_boundary": "original_owned_AI_database_port_lookup_before_original_publisher_callback",
+  "failure_category": "anomaly_oci_child_command_failed",
+  "job_id": 112750655905,
+  "original_AI_database_publisher_attested": false,
+  "original_native_phase_report": {
+    "acceptance": {
+      "aliases": {
+        "candidate": "3",
+        "champion": "1",
+        "rollback": "2"
+      },
+      "batch_id": "anomaly-batch-sha256-96de3d26bcb946d7fe4576fd8d79a4549eff29ed3dee2de0a3413466d5366fbf",
+      "checks": [
+        "authenticated_private_register_and_idempotent_projection",
+        "pipeline_cannot_make_model_decisions",
+        "qualified_primary_promoted_with_actual_image_pin",
+        "real_version_creation_crash_reconciled_without_duplicate",
+        "concurrent_recovery_serialized_in_postgresql",
+        "real_alias_write_crash_reconciled",
+        "explicit_rejection_blocks_promotion",
+        "rollback_restores_exact_saved_model_and_image",
+        "authenticated_installed_batch_cli_and_viewer_write_refusal",
+        "external_alias_drift_blocks_decisions",
+        "actual_saved_model_scores_native_verified_public_features",
+        "complete_census_atomic_postgresql_publication",
+        "idempotency_and_logical_reuse_keep_original_detection_times",
+        "native_insert_failure_leaves_no_partial_batch_or_request",
+        "native_outbox_insert_failure_rolls_back_complete_batch_request_and_events",
+        "native_outbox_preserves_original_payload_ids_and_detection_times_on_retry_and_reuse",
+        "scoped_read_api_counts_403_404_and_read_only_routes",
+        "common_model_and_evaluation_metadata_on_native_persistence",
+        "historical_stale_and_unknown_inputs_reported_honestly"
+      ],
+      "database_counts": {
+        "anomaly_batches": 1,
+        "anomaly_evaluations": 3,
+        "anomaly_requests": 2,
+        "anomaly_results": 1232,
+        "model_intelligence_outbox": 1232
+      },
+      "image_digest": "sha256:84ef3de69e55803b5de90db09eb007dfbbed24c61da19337234a1e923f4328ed",
+      "model_sha256": "febb4393e3d93d6f47bd59d464c245a09315ba6ad18d96e1c186207d1d27af56",
+      "native_batch_output_sha256": "a8b1883e693f5857953918424b55566cd3effb4bb9aad8990953a511270736f1",
+      "native_outbox_census_id": "native-model-outbox-sha256-2a261e0976ea72e94f8b3f3f0fa42e25152de89a782282e8f3aca0950fcf58a9",
+      "native_outbox_rows": 1232,
+      "qualification_scope": "synthetic_ai_07_portfolio_v4",
+      "rejected_version": "3",
+      "release_id": "anomaly-release-sha256-bb1945e14fcb4bde26697ea8d3c73d2f9087204421d4c731fe9a3514e065be8f",
+      "status": "passed",
+      "transport_durability": "offline_only",
+      "versions": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    "checked_at": "2026-10-07T11:23:35.738479+00:00",
+    "consumer_commit": "b1df980b41f7cc31cecd50fac75aaca8c149aa9d",
+    "deployment_attestation": "not_attested",
+    "image_pin_kind": "actual_local_oci_image_configuration_sha256",
+    "oci_image_digest": "sha256:84ef3de69e55803b5de90db09eb007dfbbed24c61da19337234a1e923f4328ed",
+    "producer_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+    "qualification_scope": "synthetic_ai_07_portfolio_v4",
+    "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-ad326bf56fdffd199d235e974878f57a0025c57ec82f433bf99ee69179ad81c4",
+    "restart": {
+      "checks": [
+        "native_restart_preserves_saved_models_aliases_releases_evaluations_complete_batches"
+      ],
+      "release_id": "anomaly-release-sha256-bb1945e14fcb4bde26697ea8d3c73d2f9087204421d4c731fe9a3514e065be8f",
+      "status": "passed"
+    },
+    "source_dataset_id": "source-sha256-043276380483acdf72d06f253d682e4bf4aabce0721b653a30e5a5bb7da157c9",
+    "stages": [
+      "saved_models_frozen_evaluation_and_current_compatibility",
+      "native_complete_public_source_snapshot_dq_coverage_features",
+      "migrated_api_service_ready_without_host_ports",
+      "actual_built_oci_pinned_pg16_mlflow_and_all_migrations",
+      "real_qualified_versions_lifecycle_recovery_atomic_batch_scoped_http",
+      "sigkill_restart_preserves_exact_complete_state"
+    ],
+    "status": "passed",
+    "transport_durability": "offline_only",
+    "workflow_run_id": 37608775665
+  },
+  "source_API_UI_attested": false,
+  "source_consumer_commit": "cbbf7111f093b30026e12e1ef614403df6ed2d0e",
+  "status": "failed",
+  "version": "ai10-native-anomaly-partial-attempt-1.0",
+  "workflow_run_id": 37608775665
+}

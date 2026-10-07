@@ -45,6 +45,18 @@ kwalifikację jakości, aktywację i rollback Etapu 11. Historyczne evidence
 zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
+[Integracja wyników AI 10](intelligence-integration-v2.md) opisuje pierwszy przyrost
+forecast v2, atomowy outbox i trwały odczyt po stronie RetailOps.
+[Trwały replay obserwacji](durable-observation-replay.md) opisuje transakcyjny
+magazyn AI, kwarantannę, fencing i spójny capture pojedynczej projekcji SQL.
+[Typowany REST źródła](source-rest-v2.md) opisuje drugi przyrost: chronione
+bounded live reads, pin rzeczywistego OpenAPI, deadline/retry i jawny brak snapshotu.
+Etap pozostaje w toku; [dowód przyrostu](evidence/10-forecast-integration.md)
+rozdziela wykonane kontrole od pełnego odbioru AI 10.
+[Bieżący odbiór AI10 i pełna instrukcja](ai10-acceptance.md) podają aktualne
+granice trzech ścieżek ML, snapshot/REST/stream, real SQL/ACK i pozostałe warunki
+protected publikacji na obu main.
+
 [Przygotowanie oceny AI 09](evaluation-preparation.md) przypina wymagania,
 seedy i granice przyszłej kampanii, z jawnym preflight `not_ready`.
 [Challenger TensorFlow](tensorflow-challenger.md) dodaje rzeczywisty trening CPU,
@@ -272,3 +284,5 @@ ograniczenia; nie jest listą zakończonych zadań ani deklaracją wdrożenia.
 
 - [Pełna bramka cross-repo AI 03.6](evidence/03-06-cross-repo.md) — wspólny odbiór RetailOps i AI, publikacja oraz kolejne etapy.
 - [Lokalny odbiór zaakceptowanego v12 i import APFS](forecast-v12-development.md).
+- [AI10: odbiorca replay historii obserwacji](source-observation-replay.md).
+- [AI10: authenticated observation broker input](observation-broker.md).

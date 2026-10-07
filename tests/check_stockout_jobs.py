@@ -10,7 +10,7 @@ from uuid import uuid4
 import pytest
 from check_stockout_lifecycle import owned_control
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, event, text
 from sqlalchemy.exc import IntegrityError
 from test_access import bearer, policy_file
 from test_stockout_batch import backend as backend
@@ -27,6 +27,8 @@ from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.domain.access import Principal, StockoutAccess
 from retailops_ai.forecast_jobs.contracts import QueuePolicy
 from retailops_ai.forecast_jobs.queue import LeaseLost
+from retailops_ai.intelligence_events.model_contracts import stockout_event
+from retailops_ai.intelligence_events.model_outbox import deliver_model_one
 from retailops_ai.stockout_jobs.batch import compute
 from retailops_ai.stockout_jobs.contracts import StockoutRequest
 from retailops_ai.stockout_jobs.input_store import StockoutError
@@ -176,6 +178,35 @@ def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(reques
                     ),
                     dict(record=json.dumps(raw), run=run.run_id),
                 )
+
+        def fail_outbox(conn, cursor, statement, parameters, context, executemany):
+            if "INSERT INTO ai.model_intelligence_outbox" in statement:
+                raise RuntimeError("ai10_test_outbox_insert_failure")
+
+        event.listen(engine, "after_cursor_execute", fail_outbox)
+        try:
+            with pytest.raises(RuntimeError, match="outbox_insert_failure"):
+                queue.complete(claim, output)
+        finally:
+            event.remove(engine, "after_cursor_execute", fail_outbox)
+        assert queue.get(run.run_id, principal).status == "running"
+        with engine.connect() as connection:
+            assert (
+                connection.scalar(
+                    text("SELECT count(*) FROM ai.stockout_batch_outputs WHERE run_id=:run"),
+                    {"run": run.run_id},
+                )
+                == 0
+            )
+            assert (
+                connection.scalar(
+                    text(
+                        "SELECT count(*) FROM ai.model_intelligence_outbox WHERE document->>'correlation_id'=:run"
+                    ),
+                    {"run": run.run_id},
+                )
+                == 0
+            )
         assert (
             run_attempt(
                 queue,
@@ -188,6 +219,19 @@ def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(reques
         output = queue.output(run.run_id, principal)
         done = queue.get(run.run_id, principal)
         assert done.status == "succeeded" and queue.output(run.run_id, principal) == output
+        with engine.connect() as connection:
+            documents = connection.scalars(
+                text(
+                    "SELECT document FROM ai.model_intelligence_outbox WHERE stockout_output_id=:id ORDER BY result_id"
+                ),
+                {"id": output.output_id},
+            ).all()
+        expected = [
+            stockout_event(item).model_dump(mode="json")
+            for item in sorted(output.items, key=lambda item: item.risk_id)
+        ]
+        assert documents == expected
+        _accept_model_delivery(engine)
         assert len(queue.attempts(run.run_id, principal)) == 1
         with pytest.raises(LeaseLost):
             queue.complete(claim, output)
@@ -332,6 +376,8 @@ def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(reques
                         "real_sql_idempotency_and_physical_scope_authorization",
                         "real_sql_lease_heartbeat_and_old_attempt_fencing",
                         "atomic_output_success_and_history_no_partial_publication",
+                        "native_model_outbox_insert_failure_rolls_back_output_history_and_success",
+                        "model_outbox_broker_callback_failure_and_sql_receipt_crash_repeat_identical_bytes",
                         "scoped_latest_risk_and_stable_pagination",
                         "append_only_inputs_attempts_and_outputs",
                         "retry_then_cancel_records_closed_attempts",
@@ -352,3 +398,44 @@ def test_real_stockout_queue_fences_complete_publication_and_scoped_reads(reques
         )
     finally:
         engine.dispose()
+
+
+def _accept_model_delivery(engine):
+    from types import SimpleNamespace
+
+    class Producer:
+        def __init__(self):
+            self.calls, self.confirm = [], False
+
+        def produce(self, topic, *, key, value, on_delivery):
+            self.calls.append((topic, key, value))
+            if self.confirm:
+                on_delivery(
+                    None,
+                    SimpleNamespace(
+                        topic=lambda: topic, partition=lambda: 0, offset=lambda: len(self.calls) - 1
+                    ),
+                )
+
+        def flush(self, timeout):
+            return 0
+
+    producer = Producer()
+    with pytest.raises(RuntimeError, match="delivery_unconfirmed"):
+        deliver_model_one(engine, producer, environment="test")
+    producer.confirm = True
+
+    def fail_receipt(conn, cursor, statement, parameters, context, executemany):
+        if "UPDATE ai.model_intelligence_outbox" in statement:
+            raise RuntimeError("ai10_test_crash_after_broker_delivery")
+
+    event.listen(engine, "after_cursor_execute", fail_receipt)
+    try:
+        with pytest.raises(RuntimeError, match="crash_after_broker_delivery"):
+            deliver_model_one(engine, producer, environment="test")
+    finally:
+        event.remove(engine, "after_cursor_execute", fail_receipt)
+    assert deliver_model_one(engine, producer, environment="test")
+    assert producer.calls[0] == producer.calls[1] == producer.calls[2]
+    while deliver_model_one(engine, producer, environment="test"):
+        pass

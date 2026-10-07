@@ -28,6 +28,7 @@ dependencies = [
 [project.scripts]
 retailops-ai = "retailops_ai.cli:main"
 retailops-ai-snapshot = "retailops_ai.source_snapshot.cli:main"
+retailops-ai-source-bundle = "retailops_ai.source_bundle.cli:main"
 retailops-ai-curated = "retailops_ai.curated.cli:main"
 retailops-ai-forecast = "retailops_ai.forecasting.cli:main"
 retailops-ai-anomaly-inputs = "retailops_ai.anomalies.cli:main"
@@ -150,6 +151,9 @@ ignore = ["E501"]
 python_version = "3.11"
 strict = true
 files = ["src", "scripts"]
+# These byte-identical owner copies run under source_snapshot in a separate
+# process. The type-check target below checks that exact runtime namespace.
+exclude = ["src/retailops_ai/source_snapshot_native/"]
 plugins = ["pydantic.mypy"]
 
 [tool.pytest.ini_options]

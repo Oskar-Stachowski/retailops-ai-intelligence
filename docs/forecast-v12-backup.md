@@ -8,10 +8,13 @@ ich wejścia i historię, kompletne wyniki, publikacje oraz oryginalne oceny.
 Używamy istniejącego [kontrolera wspólnego backupu](lifecycle-backup.md).
 Nie ma osobnego eksportu kilku tabel v12: kontroler sprawdza wszystkie
 tabele i sekwencje schematów `ai` i MLflow `public`, również puste.
-Zachowuje ich liczby wierszy, SHA-256, rewizję bieżącego schematu (wymagany head `0020_stockout_lifecycle`)
+Zachowuje ich liczby wierszy, SHA-256, aktualną rewizję bazy
 oraz checksum całego archiwum plików, także niepowiązanych z aktywnym modelem.
 Zestawienie liczby wierszy jest wykonywane jednym zapytaniem na bazę;
 limit wierszy i poprawność nazw są sprawdzane przed kopiowaniem treści.
+Odbiór historyczny poniżej dotyczy `0019_v12_development`; gałąź
+[AI 10](intelligence-integration-v2.md) dodaje `0020_intelligence_outbox`.
+Nie stanowi to dowodu odtworzenia rzeczywistej kampanii z nowym head.
 
 ## Procedura operatora
 

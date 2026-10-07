@@ -21,7 +21,8 @@ from retailops_ai.model_lifecycle.contracts import GATES, Gate, Receipt
 from retailops_ai.source_snapshot.files import canonical_json
 
 
-def test_batch_context_and_publication_retry_keep_content_identity(tmp_path, saved_model):  # noqa: F811
+@pytest.fixture
+def batch_case(tmp_path, saved_model):  # noqa: F811
     raw = canonical_json(saved_model.model_dump(mode="json")) + b"\n"
     model_path = tmp_path / "model.json"
     model_path.write_bytes(raw)
@@ -94,6 +95,11 @@ def test_batch_context_and_publication_retry_keep_content_identity(tmp_path, sav
         Window(start=day, end=day),
         datetime(2026, 8, 16, tzinfo=UTC),
     )
+    return args, generated, p
+
+
+def test_batch_context_and_publication_retry_keep_content_identity(batch_case):
+    args, generated, p = batch_case
     first, items = batch(*args, generated)
     second, retry = batch(*args, generated + timedelta(days=1))
     assert first["batch_id"] == second["batch_id"]
@@ -101,7 +107,7 @@ def test_batch_context_and_publication_retry_keep_content_identity(tmp_path, sav
     assert items[0].signal_episode_id == retry[0].signal_episode_id
     assert logical(items) == logical(retry)
     assert items[0].detected_at == generated
-    assert items[0].observed_window.start == day
+    assert items[0].observed_window.start == p.business_date
     assert items[0].inventory_context.on_hand == p.context.on_hand
     assert items[0].promotion_context.planned_price == p.context.planned_price
     assert items[0].status == "scored" and items[0].role == "batch"

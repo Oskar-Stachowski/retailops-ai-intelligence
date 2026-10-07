@@ -1,0 +1,69 @@
+{
+  "Source_API_UI_attested": false,
+  "ai_commit": "2b4f6f2fecbe5093d965b837932925f7f6d2e37a",
+  "artifact": {
+    "id": 11487791642,
+    "size_bytes": 96260,
+    "zip_sha256": "a3e7435b6f3bb634a652e317ced089397904437add15b917d003af93c0e0ac18"
+  },
+  "boundary_tests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 258
+  },
+  "cleanup": {
+    "original_S3_preserved": true,
+    "own_handoff_objects_removed": 6,
+    "own_unique_secret_removed": true
+  },
+  "control_flow_inference": {
+    "actual_authenticated_intake_and_cold_worker_reached": true,
+    "scope": "inference from the exact controller failure location; not a separately completed native publication stage or independent Source attestation"
+  },
+  "evidence_boundary": "Full original qualification/two frozen cold probes, ten real review gates, complete 664-file MLflow HTTP import and development registration/promotion/preload passed. The actual controller subsequently failed because its INSERT fault hook ignored the leading newline in SQL emitted by the real outbox emitter. Atomic rollback, original SQL delivery and Source API/UI were not accepted.",
+  "file_sha256": {
+    "acceptance-proofs/recovered-byte-census.json": "7013de11dba1d87c2e3286b8e8f7ec4d4a69afe4802166071e2f512019fbe1af",
+    "acceptance-proofs/secrets.json": "465d753757bd8d6a49bbd23a825c875b76b44592a33f6c40e0fa331ffc49bee9",
+    "acceptance-proofs/tests.xml": "88d01dd736156fb2563d500dfc224a1fef661c137a3fb9eb1e59c9d5fc9d0dd1",
+    "accepted-v12/acceptance.json": "c352bfe02200f4b1fd327311bd7f2e94f18f33e116bf0f943e6a74f7be3afd3b",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/inputs.json": "bfd4fee6c9522f981e07f434e30e42c41a65d361a9458f791c8bd032248667b4",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/qualification.json": "4651cfb9a4c0c84ab3aab667872736f870b46609cc50f15aa0b4ea53202fe37e",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/release.json": "4757f11df307a83f523d675edb4dabafe023b6ee9494fd8d443bd3201ced3ca7",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/reports/features.json": "cc0d923a21313b946147bd74ee996d54e2474b9be6da6c28534f76c03e321493",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/reports/freshness_drift_compatibility.json": "9b3082248a6c9fdb97dd529fae1d9ceb1659f11be8b41eb5bee78ffef81c47bf",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/reports/model_card.json": "74e60bd1d2d6aa5f358391ff940f2258845cf78d53ebc18d8528892682319951",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/reports/pit.json": "5eeca1f0a770ca97015084e86b890b9f398b2b90752da53fb060cb7d1e251630",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/reports/protocol.json": "01e016187fdffd887e98b1fb1b160caab93ae7524deaeb28aa07c9e8b4b35734",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/reports/resources.json": "91d2e932846b19c3241a8597e2403531c300043bb85bdcfa0cb69e5c61ea3afd",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/reports/security_license.json": "5a529f7e23791b93c5b6497f3a37fea79b544c524b1fc81df9f4f01ff432751b",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/reports/segments.json": "00d9beff77ff755fb9cff982b624b06334d7248c375d6d0ac93e9b2c7fc7373b",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/reports/signature.json": "4194db9bb5a26ea4366784bfb9c7662d77c07b3ef3047b441579a1474c624321",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/reports/source.json": "6e014d53e359a5b981ff7459373fab4d85e5992f6f6bf27adb027d0a583df76b",
+    "accepted-v12/approved-release/v12-inference-release-sha256-233bb25e93de8c0cfa4d6ee35c563db8a99470e84810b725fae0c002266ac9cb/smoke.json": "b07f4d48b55f75ec276ab7a8419133f4afdd68d9361e7c57327585bdfa94ac09",
+    "accepted-v12/frozen-recipe.json": "d14f3167aa0d6945d12750ce9d762e7c8bb6178e1045137d74a81201103e42e6"
+  },
+  "job_id": 112801151584,
+  "original_AI_SQL_publisher_attested": false,
+  "report": {
+    "exception_type": "ValueError",
+    "failed_stage": "actual_authenticated_intake_cold_worker_atomic_publication_and_outbox",
+    "failure_category": "ai10_v12_outbox_failure_not_exercised",
+    "model_refits": 0,
+    "original_quality_reclassified": false,
+    "original_quality_status": "not_ready",
+    "owned_containers_and_anonymous_volumes_removed": true,
+    "production_deployed": false,
+    "stages": [
+      "full_original_qualification_and_two_frozen_cold_predictions",
+      "ten_actual_review_gates_and_full_original_approval",
+      "real_owned_pg16_mlflow_and_full_original_http_import",
+      "real_development_registration_promotion_and_preload_before_intake"
+    ],
+    "status": "failed"
+  },
+  "source_commit": "1a7f558d718ed3dddaed277c07ccfd7d023f34ce",
+  "status": "failed",
+  "version": "ai10-v12-native-outbox-hook-failure-1.0",
+  "workflow_run_id": 37624038527
+}
