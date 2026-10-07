@@ -13,9 +13,9 @@ ROOT = Path(__file__).resolve().parents[1]
 CI_GROUPS = {
     "ci-checks": "lint type-check docs-check forecast-runtime-check contracts-check package compose-config",
     "ci-source-inputs": "handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check observation-replay-check",
-    "ci-qualified-inputs": "full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check",
-    "ci-detectors": "anomaly-detectors-check",
-    "ci-forecast": "forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check",
+    "ci-qualified-inputs": "qualified-anomaly-inputs-check",
+    "ci-detectors": "anomaly-detectors-check day-qualification-check",
+    "ci-forecast": "forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check full-raw-dq-check",
 }
 
 
@@ -43,8 +43,8 @@ def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None
         errors.append("CI must cover push, pull_request and workflow_dispatch")
     push = events.get("push") or {}
     pull_request = events.get("pull_request") or {}
-    if "branches" in push and not {"main", "ai/**"}.issubset(push["branches"]):
-        errors.append("CI push must cover main and AI development branches")
+    if push != {"branches": ["main"]}:
+        errors.append("CI push must cover only main; PRs and dispatch cover development branches")
     if "types" in pull_request and not {"opened", "synchronize", "reopened"}.issubset(
         pull_request["types"]
     ):
@@ -72,56 +72,47 @@ def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None
         for step in jobs.get("anomaly-oci", {}).get("steps", [])
     ):
         errors.append("anomaly-oci must execute qualified native OCI and Pg16 acceptance")
+    persistence_gates = {
+        "persistence": {
+            "make bootstrap compose-smoke": "real Compose",
+            "make mlflow-store-smoke": "MLflow backup/restore",
+            "make model-lifecycle-smoke": "model lifecycle recovery",
+            "make lifecycle-store-smoke": "combined lifecycle backup/restore",
+            "make forecast-queue-smoke": "forecast queue",
+            "make v12-backup-smoke": "v12 coherent backup/restore and recovery",
+        },
+        "persistence-forecast": {
+            "make forecast-input-store-smoke": "forecast input store",
+            "make forecast-publication-smoke": "forecast publication",
+            "make forecast-read-smoke": "forecast read",
+            "make model-catalog-smoke": "model catalog",
+            "make evaluations-smoke": "evaluation",
+        },
+    }
+    outbox_steps = jobs.get("persistence-forecast", {}).get("steps", [])
+    required_outbox_commands = (
+        "make intelligence-delivery-bootstrap",
+        "uv run --locked --project tools/intelligence-delivery python scripts/intelligence_outbox.py --help",
+        "make integration-replay-test integration-failure-test",
+    )
     if not any(
-        step.get("run") == "make bootstrap compose-smoke"
-        for step in jobs.get("persistence", {}).get("steps", [])
+        not step.get("if")
+        and all(command in step.get("run", "").splitlines() for command in required_outbox_commands)
+        for step in outbox_steps
     ):
-        errors.append("persistence must execute real Compose acceptance")
-    if not any(
-        step.get("run") == "make mlflow-store-smoke"
-        for step in jobs.get("persistence", {}).get("steps", [])
-    ):
-        errors.append("persistence must execute MLflow backup/restore acceptance")
-    if not any(
-        step.get("run") == "make model-lifecycle-smoke"
-        for step in jobs.get("persistence", {}).get("steps", [])
-    ):
-        errors.append("persistence must execute model lifecycle recovery acceptance")
-    if not any(
-        step.get("run") == "make lifecycle-store-smoke"
-        for step in jobs.get("persistence", {}).get("steps", [])
-    ):
-        errors.append("persistence must execute combined lifecycle backup/restore acceptance")
-    if not any(
-        step.get("run") == "make forecast-queue-smoke"
-        for step in jobs.get("persistence", {}).get("steps", [])
-    ):
-        errors.append("persistence must execute forecast queue acceptance")
-    if not any(
-        step.get("run") == "make forecast-input-store-smoke"
-        for step in jobs.get("persistence", {}).get("steps", [])
-    ):
-        errors.append("persistence must execute forecast input store acceptance")
-    if not any(
-        step.get("run") == "make forecast-publication-smoke"
-        for step in jobs.get("persistence", {}).get("steps", [])
-    ):
-        errors.append("persistence must execute forecast publication acceptance")
-    if not any(
-        step.get("run") == "make forecast-read-smoke"
-        for step in jobs.get("persistence", {}).get("steps", [])
-    ):
-        errors.append("persistence must execute forecast read acceptance")
-    if not any(
-        step.get("run") == "make model-catalog-smoke"
-        for step in jobs.get("persistence", {}).get("steps", [])
-    ):
-        errors.append("persistence must execute model catalog acceptance")
-    if not any(
-        step.get("run") == "make evaluations-smoke"
-        for step in jobs.get("persistence", {}).get("steps", [])
-    ):
-        errors.append("persistence must execute evaluation acceptance")
+        errors.append(
+            "persistence-forecast must execute actual AI10 transactional outbox acceptance"
+        )
+    for name, gates in persistence_gates.items():
+        for command, description in gates.items():
+            matching = [s for s in jobs.get(name, {}).get("steps", []) if s.get("run") == command]
+            if len(matching) != 1 or matching[0].get("if"):
+                errors.append(f"persistence must execute {description} acceptance")
+    for name, job in jobs.items():
+        if name in {"checks", "secrets", "required-result"}:
+            continue
+        if job.get("needs") != ["checks", "secrets"] or job.get("if"):
+            errors.append(f"{name} must require passing checks and secrets before expensive work")
     errors.extend(make_ci_errors((ROOT / "Makefile").read_text()))
     if not any(
         step.get("run") == "make bootstrap ci-checks"
@@ -188,6 +179,13 @@ def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None
     for name in expected:
         if not any(f'test "${name}" = "success"' in step.get("run", "") for step in result_steps):
             errors.append(f"required-result must require {name} success")
+    if not any(
+        step.get("run")
+        == "python3 scripts/update_ci_test_timings.py --reports reports/ci-shards --check"
+        and not step.get("if")
+        for step in result_steps
+    ):
+        errors.append("required-result must validate complete executed shard evidence")
     for job in jobs.values():
         if job.get("continue-on-error"):
             errors.append("jobs cannot ignore failures")

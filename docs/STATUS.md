@@ -7,8 +7,8 @@ Nowy head `0025_model_intelligence_outbox` dodaje atomowe zdarzenia native
 anomaly i stockout. [Instrukcja integracji modeli](intelligence-models-v2.md).
 Rzeczywisty Source capture → ten sam TLS/SCRAM broker → AI SQL/ACK/overlap
 jest odebrany. Qualified stockout/anomaly mają pełny Source API i built UI.
-Stockout ma także odebrany oryginalny AI SQL publisher; publisher anomaly
-i v12 na 102-dniowych wejściach są nadal w odbiorze.
+Stockout i anomaly mają odebrane oryginalne AI SQL publishery. Pełny v12
+na 102-dniowych wejściach wymaga ponownego odbioru po poprawce konfiguracji bazy.
 [Bieżąca instrukcja i checklist](ai10-acceptance.md) wiążą dowody wykonania.
 Protected merge i Required CI obu main pozostają wymagane przed `ready`.
 Wcześniejsze wpisy opisują historię.

@@ -66,8 +66,11 @@ jedną ścieżkę tylko dla rozpoznanych plików acceptora, przy common/unknown 
 Native v12 sam odzyskuje oryginalne archiwum; osobny archive-only nie jest
 prerequisite. Nie wdrożono cache semantycznego verifiera ani skip cold/recovery.
 [Kroki i impact](plan-usprawnien-ai-00-10.md) podają ograniczenia szacunków.
-Wspólne usprawnienia CI PR #34 pozostają w zdalnym odbiorze; integracja zachowa
-wszystkie bramki AI10.
+Wspólne usprawnienia CI PR #34 z `02554284` zintegrowano lokalnie, zachowując
+wszystkie bramki AI10: replay/broker SQL, transactional outbox i pełny v12
+backup/recovery. Pełny native v12 ponowiono ręcznie w runie `37624038527`
+na `2b4f6f2`; wczesny preflight aplikacji passed. Zdalny Required CI
+zintegrowanego headu oraz odbiór/merge PR #34 nadal pozostają wymagane.
 
 **Integracja z nowszym main AI09:** merge zachowuje `3329a81`, wszystkie
 kontrakty i kod AI09 oraz wymagany osobny job TensorFlow. Żadna bramka AI10

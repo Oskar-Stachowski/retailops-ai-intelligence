@@ -67,6 +67,44 @@ def test_actual_broker_make_target_cannot_drop_execution_or_report(required):
     assert module.workflow_errors(workflow(), makefile)
 
 
+def test_development_push_is_not_a_second_full_pr_run():
+    events = workflow()[True]
+    assert events["push"] == {"branches": ["main"]}
+    assert "pull_request" in events and "workflow_dispatch" in events
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "tests",
+        "acceptance",
+        "persistence",
+        "persistence-forecast",
+        "anomaly-oci",
+        "tensorflow",
+        "observation-replay",
+        "observation-broker",
+    ],
+)
+def test_expensive_jobs_cannot_bypass_preflight(name):
+    data = workflow()
+    data["jobs"][name].pop("needs")
+    assert module.workflow_errors(data)
+
+
+def test_v12_and_full_collection_proofs_remain_mandatory():
+    data = workflow()
+    data["jobs"]["persistence"]["steps"] = [
+        step
+        for step in data["jobs"]["persistence"]["steps"]
+        if step.get("run") != "make v12-backup-smoke"
+    ]
+    assert module.workflow_errors(data)
+    data = workflow()
+    data["jobs"]["required-result"]["steps"].pop()
+    assert module.workflow_errors(data)
+
+
 @pytest.mark.parametrize("mutation", ["missing-job", "bypassed-training", "skipped-job"])
 def test_required_ci_preserves_real_tensorflow_acceptance(mutation):
     data = workflow()
@@ -121,9 +159,9 @@ def test_required_ci_cannot_drop_combined_lifecycle_restore():
 
 def test_required_ci_cannot_drop_forecast_input_store_acceptance():
     data = workflow()
-    data["jobs"]["persistence"]["steps"] = [
+    data["jobs"]["persistence-forecast"]["steps"] = [
         step
-        for step in data["jobs"]["persistence"]["steps"]
+        for step in data["jobs"]["persistence-forecast"]["steps"]
         if step.get("run") != "make forecast-input-store-smoke"
     ]
     assert "persistence must execute forecast input store acceptance" in module.workflow_errors(
@@ -191,7 +229,7 @@ def test_make_check_includes_snapshot_gate():
     "event,settings",
     [
         ("push", {"branches": ["ai/**"]}),
-        ("push", {"branches": ["main"]}),
+        ("push", {"branches": ["main", "ai/**"]}),
         ("push", {"branches-ignore": ["main"]}),
         ("pull_request", {"types": ["opened"]}),
         ("pull_request", {"branches": ["develop"]}),
@@ -217,9 +255,9 @@ def test_required_ci_cannot_drop_forecast_queue():
 
 def test_required_ci_cannot_drop_forecast_publication_acceptance():
     data = workflow()
-    data["jobs"]["persistence"]["steps"] = [
+    data["jobs"]["persistence-forecast"]["steps"] = [
         step
-        for step in data["jobs"]["persistence"]["steps"]
+        for step in data["jobs"]["persistence-forecast"]["steps"]
         if step.get("run") != "make forecast-publication-smoke"
     ]
     assert "persistence must execute forecast publication acceptance" in module.workflow_errors(
@@ -229,9 +267,9 @@ def test_required_ci_cannot_drop_forecast_publication_acceptance():
 
 def test_required_ci_cannot_drop_forecast_read_acceptance():
     data = workflow()
-    data["jobs"]["persistence"]["steps"] = [
+    data["jobs"]["persistence-forecast"]["steps"] = [
         step
-        for step in data["jobs"]["persistence"]["steps"]
+        for step in data["jobs"]["persistence-forecast"]["steps"]
         if step.get("run") != "make forecast-read-smoke"
     ]
     assert "persistence must execute forecast read acceptance" in module.workflow_errors(data)
@@ -239,9 +277,9 @@ def test_required_ci_cannot_drop_forecast_read_acceptance():
 
 def test_required_ci_cannot_drop_model_catalog_acceptance():
     data = workflow()
-    data["jobs"]["persistence"]["steps"] = [
+    data["jobs"]["persistence-forecast"]["steps"] = [
         step
-        for step in data["jobs"]["persistence"]["steps"]
+        for step in data["jobs"]["persistence-forecast"]["steps"]
         if step.get("run") != "make model-catalog-smoke"
     ]
     assert "persistence must execute model catalog acceptance" in module.workflow_errors(data)
@@ -249,9 +287,9 @@ def test_required_ci_cannot_drop_model_catalog_acceptance():
 
 def test_required_ci_cannot_drop_evaluation_acceptance():
     data = workflow()
-    data["jobs"]["persistence"]["steps"] = [
+    data["jobs"]["persistence-forecast"]["steps"] = [
         step
-        for step in data["jobs"]["persistence"]["steps"]
+        for step in data["jobs"]["persistence-forecast"]["steps"]
         if step.get("run") != "make evaluations-smoke"
     ]
     assert "persistence must execute evaluation acceptance" in module.workflow_errors(data)
@@ -284,3 +322,39 @@ def test_parallel_make_groups_cannot_drop_or_duplicate_a_gate():
         makefile.replace("ci-detectors: anomaly-detectors-check", "ci-detectors: docs-check")
     )
     assert module.make_ci_errors(makefile.replace("check: lint", "check: new-required-gate lint"))
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "make intelligence-delivery-bootstrap",
+        "uv run --locked --project tools/intelligence-delivery python scripts/intelligence_outbox.py --help",
+        "make integration-replay-test integration-failure-test",
+    ],
+)
+def test_ai10_outbox_cannot_be_lost_when_persistence_is_split(command):
+    data = workflow()
+    step = next(
+        step
+        for step in data["jobs"]["persistence-forecast"]["steps"]
+        if "make integration-replay-test integration-failure-test" in step.get("run", "")
+    )
+    step["run"] = step["run"].replace(command, "")
+    assert (
+        "persistence-forecast must execute actual AI10 transactional outbox acceptance"
+        in module.workflow_errors(data)
+    )
+
+
+def test_ai10_outbox_cannot_be_conditionally_skipped():
+    data = workflow()
+    step = next(
+        step
+        for step in data["jobs"]["persistence-forecast"]["steps"]
+        if "make integration-replay-test integration-failure-test" in step.get("run", "")
+    )
+    step["if"] = "false"
+    assert (
+        "persistence-forecast must execute actual AI10 transactional outbox acceptance"
+        in module.workflow_errors(data)
+    )
