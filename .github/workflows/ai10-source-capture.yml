@@ -61,6 +61,7 @@ jobs:
         working-directory: .local/source-capture-producer/services/api
         env:
           REQUIRE_BROKER_TESTS: "1"
+          PYTHONPATH: ${{ github.workspace }}/.local/source-capture-producer:${{ github.workspace }}/.local/source-capture-producer/services/api
           SOURCE_OBSERVATION_CAPTURE_REPORT: ${{ github.workspace }}/source-capture-proofs/source-observation-capture-report.json
         run: |
           .venv/bin/python -m pytest -q -x tests/test_source_observation_capture.py \
