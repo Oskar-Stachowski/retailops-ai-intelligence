@@ -95,6 +95,32 @@ httpx2 odpowiada wymaganiom przypiętej wersji Starlette.
 
 Persistence i wymagania Docker opisuje [instrukcja lokalnego stosu](local-stack.md).
 
+## Pomiary i balans CI
+
+`scripts/ci_test_timings.json` służy wyłącznie do rozdzielenia pełnej kolekcji
+między cztery shardy. Nowy plik zawsze trafia do jednego sharda, nawet gdy nie
+ma historycznej wagi. Początkowe wagi pochodzą z dwóch kompletnych przebiegów
+Linux: `37615123521` i `37609002350`; są przybliżeniem z logów, nie obietnicą ETA.
+
+Po udanym CI pobierz artefakty `ci-test-shard-*` do jednego katalogu, zachowując
+podkatalogi prób. Przed przeglądem aktualizacji wag uruchom:
+
+```bash
+python3 scripts/update_ci_test_timings.py --reports reports/downloaded-shards --check
+python3 scripts/update_ci_test_timings.py --reports reports/downloaded-shards --output scripts/ci_test_timings.json
+```
+
+Aktualizacja wymaga pełnych raportów z tego samego runu i commitu, z fazami
+każdego testu. Raport nieudanej lub niekompletnej najnowszej próby jest odrzucany.
+Wagi nie zmieniają testów, wyników, limitów zasobów ani zakresu akceptacji.
+
+`ci-anomaly-phase-timings` zawiera tylko nazwy faz, czasy i status. Rozdziela
+generację producenta, przygotowanie publicznego pakietu, import, curation,
+DQ, cechy i niezależną weryfikację oraz etapy OCI/lifecycle. Prywatne logi
+usług i konfiguracja nie są publikowane. Budowa obrazów zachodzi równolegle
+do świeżego przygotowania danych; obie części muszą się udać przed startem
+usług. Cleanup czeka na zakończenie własnego builda również po błędzie.
+
 [Tożsamość i uprawnienia API](access-control.md) opisują access-init, prywatne
 pliki i API_AUTH_FILE. Config-check weryfikuje jawny plik oraz rozdział tokenów;
 nie tworzy danych i nie sprawdza usług zewnętrznych.
