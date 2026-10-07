@@ -8,9 +8,12 @@ from pydantic import Field, TypeAdapter, model_validator
 from retailops_ai.agent.native_forecast import NativeForecastRead
 from retailops_ai.data_contracts.common import (
     Contract,
+    CuratedID,
     DateWindow,
     ModelID,
     SellingKey,
+    Sha256,
+    SourceID,
     Symbol,
     TrueFlag,
     Units,
@@ -19,8 +22,10 @@ from retailops_ai.data_contracts.common import (
 )
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.data_contracts.tool import ToolError, ToolRequest, ToolResult
+from retailops_ai.day_qualification.contract import Point
 from retailops_ai.knowledge.indexes import IndexID
 from retailops_ai.knowledge.retrieval import KnowledgeHit, RetrievalConfigID, RetrievalRequest
+from retailops_ai.raw_dq.contract import stamp
 
 ToolName = Literal[
     "get_sales_summary",
@@ -37,6 +42,7 @@ SourceRef = Annotated[
     Field(pattern=r"^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$"),
 ]
 ReadLimit = Annotated[int, Field(ge=1, le=50)]
+MAX_QUALIFIED_SALES_POINTS = 200
 
 
 class DataScope(Contract):
@@ -237,8 +243,128 @@ class DataResult(Versioned, Generic[ItemT]):
         return self
 
 
+class QualifiedSalesEvidence(Contract):
+    """Exact causal days and verified parents, retained with the accepted tool output."""
+
+    version: Literal["qualified-sales-days-v1"] = "qualified-sales-days-v1"
+    environment: Literal["local", "test"]
+    request: SalesRequest
+    source_dataset_id: SourceID
+    curated_dataset_id: CuratedID
+    full_dq_replay_id: Annotated[str, Field(pattern=r"^full-dq-replay-sha256-[0-9a-f]{64}$")]
+    full_dq_descriptor_sha256: Sha256
+    day_coverage_id: Annotated[str, Field(pattern=r"^day-coverage-sha256-[0-9a-f]{64}$")]
+    day_coverage_descriptor_sha256: Sha256
+    qualification_runtime_sha256: Sha256
+    points: tuple[Point, ...] = Field(min_length=1, max_length=MAX_QUALIFIED_SALES_POINTS)
+
+    @model_validator(mode="after")
+    def exact_days(self) -> Self:
+        request = self.request
+        scope = request.scope
+        if (
+            self.full_dq_replay_id != "full-dq-replay-sha256-" + self.full_dq_descriptor_sha256
+            or self.day_coverage_id != "day-coverage-sha256-" + self.day_coverage_descriptor_sha256
+        ):
+            raise ValueError("qualified_sales_parent_identity_mismatch")
+        if scope is None:
+            raise ValueError("qualified_sales_scope_required")
+        days = (request.window.end - request.window.start).days + 1
+        expected = {
+            (
+                product,
+                location,
+                scope.channel,
+                (request.window.start + timedelta(days=i)).isoformat(),
+            )
+            for product in scope.product_ids
+            for location in scope.selling_location_ids
+            for i in range(days)
+        }
+        actual = {
+            (p.product_id, p.selling_location_id, p.channel, p.business_date) for p in self.points
+        }
+        if (
+            len(actual) != len(self.points)
+            or actual != expected
+            or len(scope.product_ids) * len(scope.selling_location_ids) > request.limit
+            or any(
+                p.event_type != "sale_completed" or stamp(p.as_of) != request.as_of
+                for p in self.points
+            )
+        ):
+            raise ValueError("qualified_sales_day_grid_mismatch")
+        currencies: dict[tuple[str, str, str], set[str]] = {}
+        for point in self.points:
+            key = (point.product_id, point.selling_location_id, point.channel)
+            currencies.setdefault(key, set()).add(point.currency)
+        if any(len(values) != 1 for values in currencies.values()):
+            raise ValueError("qualified_sales_currency_changed")
+        # The existing public unit type is float. Refuse an inexact integer conversion.
+        for item in self.sales_items():
+            total = sum(
+                p.observed_units or 0
+                for p in self.points
+                if (p.product_id, p.selling_location_id, p.channel)
+                == (item.product_id, item.selling_location_id, item.channel)
+            )
+            if item.observed_sales_units != total:
+                raise ValueError("qualified_sales_units_precision")
+        return self
+
+    @property
+    def complete(self) -> bool:
+        return all(p.status == "qualified" for p in self.points)
+
+    @property
+    def view_ref(self) -> str:
+        return "sales-view-sha256-" + canonical_sha256(self.model_dump(mode="json"))
+
+    def sales_items(self) -> list[SalesItem]:
+        if not self.complete:
+            return []
+        scope = self.request.scope
+        if scope is None:
+            raise ValueError("qualified_sales_scope_required")
+        totals: dict[tuple[str, str, str], int] = {}
+        for point in self.points:
+            if point.observed_units is None:
+                raise ValueError("qualified_sales_units_missing")
+            key = (point.product_id, point.selling_location_id, point.channel)
+            totals[key] = totals.get(key, 0) + point.observed_units
+        return [
+            SalesItem(
+                product_id=product,
+                selling_location_id=location,
+                channel=scope.channel,
+                window=self.request.window,
+                observed_sales_units=float(total),
+                unit_of_measure="unit",
+            )
+            for (product, location, channel), total in sorted(totals.items())
+        ]
+
+
 class SalesResult(DataResult[SalesItem]):
     tool: Literal["get_sales_summary"]
+    qualified_days: QualifiedSalesEvidence | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
+
+    @model_validator(mode="after")
+    def qualified_outcome(self) -> Self:
+        evidence = self.qualified_days
+        if evidence is not None and (
+            self.source_kind != "runtime"
+            or self.as_of != evidence.request.as_of
+            or self.source_ref != evidence.view_ref
+            or self.items != evidence.sales_items()
+            or self.status != ("ok" if evidence.complete else "no_data")
+            or self.freshness_status != ("current" if evidence.complete else "missing")
+            or self.error is not None
+        ):
+            raise ValueError("qualified_sales_result_binding_mismatch")
+        return self
 
 
 class InventoryResult(DataResult[InventoryItem]):

@@ -197,133 +197,6 @@
       "title": "Point",
       "type": "object"
     },
-    "QualifiedSalesEvidence": {
-      "additionalProperties": false,
-      "description": "Exact causal days and verified parents, retained with the accepted tool output.",
-      "properties": {
-        "curated_dataset_id": {
-          "pattern": "^curated-sha256-[0-9a-f]{64}$",
-          "title": "Curated Dataset Id",
-          "type": "string"
-        },
-        "day_coverage_descriptor_sha256": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Day Coverage Descriptor Sha256",
-          "type": "string"
-        },
-        "day_coverage_id": {
-          "pattern": "^day-coverage-sha256-[0-9a-f]{64}$",
-          "title": "Day Coverage Id",
-          "type": "string"
-        },
-        "environment": {
-          "enum": [
-            "local",
-            "test"
-          ],
-          "title": "Environment",
-          "type": "string"
-        },
-        "full_dq_descriptor_sha256": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Full Dq Descriptor Sha256",
-          "type": "string"
-        },
-        "full_dq_replay_id": {
-          "pattern": "^full-dq-replay-sha256-[0-9a-f]{64}$",
-          "title": "Full Dq Replay Id",
-          "type": "string"
-        },
-        "points": {
-          "items": {
-            "$ref": "#/$defs/Point"
-          },
-          "maxItems": 200,
-          "minItems": 1,
-          "title": "Points",
-          "type": "array"
-        },
-        "qualification_runtime_sha256": {
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Qualification Runtime Sha256",
-          "type": "string"
-        },
-        "request": {
-          "$ref": "#/$defs/SalesRequest"
-        },
-        "source_dataset_id": {
-          "pattern": "^source-sha256-[0-9a-f]{64}$",
-          "title": "Source Dataset Id",
-          "type": "string"
-        },
-        "version": {
-          "const": "qualified-sales-days-v1",
-          "default": "qualified-sales-days-v1",
-          "title": "Version",
-          "type": "string"
-        }
-      },
-      "required": [
-        "environment",
-        "request",
-        "source_dataset_id",
-        "curated_dataset_id",
-        "full_dq_replay_id",
-        "full_dq_descriptor_sha256",
-        "day_coverage_id",
-        "day_coverage_descriptor_sha256",
-        "qualification_runtime_sha256",
-        "points"
-      ],
-      "title": "QualifiedSalesEvidence",
-      "type": "object"
-    },
-    "SalesItem": {
-      "additionalProperties": false,
-      "properties": {
-        "channel": {
-          "enum": [
-            "store",
-            "online"
-          ],
-          "title": "Channel",
-          "type": "string"
-        },
-        "observed_sales_units": {
-          "minimum": 0,
-          "title": "Observed Sales Units",
-          "type": "number"
-        },
-        "product_id": {
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
-          "title": "Product Id",
-          "type": "string"
-        },
-        "selling_location_id": {
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
-          "title": "Selling Location Id",
-          "type": "string"
-        },
-        "unit_of_measure": {
-          "const": "unit",
-          "title": "Unit Of Measure",
-          "type": "string"
-        },
-        "window": {
-          "$ref": "#/$defs/DateWindow"
-        }
-      },
-      "required": [
-        "product_id",
-        "selling_location_id",
-        "channel",
-        "window",
-        "observed_sales_units",
-        "unit_of_measure"
-      ],
-      "title": "SalesItem",
-      "type": "object"
-    },
     "SalesRequest": {
       "additionalProperties": false,
       "properties": {
@@ -385,163 +258,87 @@
       ],
       "title": "SalesRequest",
       "type": "object"
-    },
-    "ToolError": {
-      "additionalProperties": false,
-      "properties": {
-        "code": {
-          "enum": [
-            "invalid_scope",
-            "unauthorized",
-            "unavailable",
-            "stale",
-            "not_found",
-            "unsupported_grain",
-            "budget_exceeded"
-          ],
-          "title": "Code",
-          "type": "string"
-        },
-        "description": {
-          "enum": [
-            "The requested scope is invalid.",
-            "The requested scope is not authorized.",
-            "The required source is unavailable.",
-            "The requested source is stale.",
-            "The requested output was not found.",
-            "The requested grain is unsupported.",
-            "The tool budget was exceeded."
-          ],
-          "title": "Description",
-          "type": "string"
-        },
-        "retryable": {
-          "title": "Retryable",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "code",
-        "description",
-        "retryable"
-      ],
-      "title": "ToolError",
-      "type": "object"
     }
   },
-  "$id": "urn:retailops:agent:get_sales_summary:result:1.0",
+  "$id": "urn:retailops:agent:qualified-sales-evidence:1.0",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
+  "description": "Exact causal days and verified parents, retained with the accepted tool output.",
   "properties": {
-    "as_of": {
-      "anyOf": [
-        {
-          "format": "date-time",
-          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "title": "As Of"
-    },
-    "contract_type": {
-      "const": "agent_tool_result",
-      "title": "Contract Type",
+    "curated_dataset_id": {
+      "pattern": "^curated-sha256-[0-9a-f]{64}$",
+      "title": "Curated Dataset Id",
       "type": "string"
     },
-    "error": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/ToolError"
-        },
-        {
-          "type": "null"
-        }
-      ]
+    "day_coverage_descriptor_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Day Coverage Descriptor Sha256",
+      "type": "string"
     },
-    "freshness_status": {
+    "day_coverage_id": {
+      "pattern": "^day-coverage-sha256-[0-9a-f]{64}$",
+      "title": "Day Coverage Id",
+      "type": "string"
+    },
+    "environment": {
       "enum": [
-        "current",
-        "stale",
-        "missing",
-        "unavailable"
+        "local",
+        "test"
       ],
-      "title": "Freshness Status",
+      "title": "Environment",
       "type": "string"
     },
-    "items": {
+    "full_dq_descriptor_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Full Dq Descriptor Sha256",
+      "type": "string"
+    },
+    "full_dq_replay_id": {
+      "pattern": "^full-dq-replay-sha256-[0-9a-f]{64}$",
+      "title": "Full Dq Replay Id",
+      "type": "string"
+    },
+    "points": {
       "items": {
-        "$ref": "#/$defs/SalesItem"
+        "$ref": "#/$defs/Point"
       },
-      "maxItems": 50,
-      "title": "Items",
+      "maxItems": 200,
+      "minItems": 1,
+      "title": "Points",
       "type": "array"
     },
-    "qualified_days": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/QualifiedSalesEvidence"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null
-    },
-    "schema_version": {
-      "const": "1.0",
-      "title": "Schema Version",
+    "qualification_runtime_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Qualification Runtime Sha256",
       "type": "string"
     },
-    "source_kind": {
-      "enum": [
-        "fixture",
-        "runtime"
-      ],
-      "title": "Source Kind",
+    "request": {
+      "$ref": "#/$defs/SalesRequest"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
       "type": "string"
     },
-    "source_ref": {
-      "anyOf": [
-        {
-          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "title": "Source Ref"
-    },
-    "status": {
-      "enum": [
-        "ok",
-        "no_data",
-        "error"
-      ],
-      "title": "Status",
-      "type": "string"
-    },
-    "tool": {
-      "const": "get_sales_summary",
-      "title": "Tool",
+    "version": {
+      "const": "qualified-sales-days-v1",
+      "default": "qualified-sales-days-v1",
+      "title": "Version",
       "type": "string"
     }
   },
   "required": [
-    "schema_version",
-    "contract_type",
-    "status",
-    "as_of",
-    "freshness_status",
-    "source_ref",
-    "items",
-    "error",
-    "source_kind",
-    "tool"
+    "environment",
+    "request",
+    "source_dataset_id",
+    "curated_dataset_id",
+    "full_dq_replay_id",
+    "full_dq_descriptor_sha256",
+    "day_coverage_id",
+    "day_coverage_descriptor_sha256",
+    "qualification_runtime_sha256",
+    "points"
   ],
-  "title": "SalesResult",
+  "title": "QualifiedSalesEvidence",
   "type": "object"
 }

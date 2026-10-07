@@ -7,7 +7,14 @@ from pathlib import Path
 
 from retailops_ai.agent.execution import READ_CAPABILITIES
 from retailops_ai.agent.native_forecast import NativeForecastRead
-from retailops_ai.agent.tools import INPUT, OUTPUT, REQUEST_MODELS, RESULT_MODELS, ToolPolicy
+from retailops_ai.agent.tools import (
+    INPUT,
+    OUTPUT,
+    REQUEST_MODELS,
+    RESULT_MODELS,
+    QualifiedSalesEvidence,
+    ToolPolicy,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_ROOT = ROOT / "contracts/agent/v1"
@@ -171,6 +178,8 @@ def artifacts() -> dict[str, object]:
                     if tool == "search_knowledge"
                     else "native_v12_forecast_reader"
                     if tool == "get_demand_forecast"
+                    else "verified_source_curated_raw_dq_day_sales"
+                    if tool == "get_sales_summary"
                     else "not_implemented_requires_upstream_stages"
                 ),
             }
@@ -192,6 +201,13 @@ def artifacts() -> dict[str, object]:
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "urn:retailops:agent:native-forecast-read:1.0",
     }
+    result["qualified-sales-evidence.v1.schema.json"] = (
+        QualifiedSalesEvidence.model_json_schema()
+        | {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "urn:retailops:agent:qualified-sales-evidence:1.0",
+        }
+    )
     return result
 
 

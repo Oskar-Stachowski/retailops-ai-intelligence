@@ -24,6 +24,7 @@ from retailops_ai.agent.tools import (
     RiskRequest,
     SalesItem,
     SalesRequest,
+    SalesResult,
     ToolInput,
     ToolName,
     ToolOutput,
@@ -364,6 +365,14 @@ class ToolSession:
             return
         if isinstance(output, KnowledgeResult):
             raise ToolFailure("unavailable")
+        if isinstance(output, SalesResult) and output.source_kind == "runtime":
+            evidence = output.qualified_days
+            if (
+                evidence is None
+                or evidence.request != request
+                or evidence.environment != self.executor.environment
+            ):
+                raise ToolFailure("unavailable")
         if output.error is not None:
             raise ToolFailure(output.error.code)
         if output.as_of is None or output.as_of > request.as_of:

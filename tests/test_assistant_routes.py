@@ -29,8 +29,8 @@ PRODUCT = "22222222-2222-4222-8222-222222222222"
 STORE = "33333333-3333-4333-8333-333333333333"
 STOCK = "44444444-4444-4444-8444-444444444444"
 NOW = datetime(2026, 8, 23, tzinfo=UTC)
-GRAPH = load_graph_config(ROOT / "agent/graph.evaluate.fake.native-v12.v1.json")
-PROFILE = load_question_routes(ROOT / "agent/question-routes.native-v12.proposed.v1.json")
+GRAPH = load_graph_config(ROOT / "agent/graph.evaluate.fake.native-sources.v1.json")
+PROFILE = load_question_routes(ROOT / "agent/question-routes.native-sources.proposed.v1.json")
 
 
 def catalog():
@@ -330,7 +330,7 @@ def test_registered_sales_question_reaches_http_graph_and_store_with_explicit_fa
     baseline = asyncio.run(
         original.prepare(AssistantQuery.model_validate_json(json.dumps(body)), actor)
     )
-    graph = load_graph_config(ROOT / "agent/graph.fake.native-v12.v1.json")
+    graph = load_graph_config(ROOT / "agent/graph.fake.native-sources.v1.json")
     routes = QuestionRoutes(
         schema_version="1.0",
         profile="assistant-question-routes-v1",

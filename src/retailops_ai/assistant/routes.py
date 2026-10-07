@@ -14,7 +14,7 @@ from retailops_ai.agent.execution import READ_CAPABILITIES
 from retailops_ai.agent.graph import GraphRunner
 from retailops_ai.agent.graph_config import ResolvedGraphConfig
 from retailops_ai.agent.graph_contracts import GraphRequest, Intent
-from retailops_ai.agent.tools import ToolName
+from retailops_ai.agent.tools import MAX_QUALIFIED_SALES_POINTS, ToolName
 from retailops_ai.assistant.contracts import AssistantQuery
 from retailops_ai.assistant.planner import validate_source_scope
 from retailops_ai.assistant.service import AssistantError, GraphAssistant, authorized
@@ -132,6 +132,12 @@ class ReviewedPlanner:
                 "end": query.scope.from_ - timedelta(days=1),
             }
         limit = 5
+        if intent in {"sales", "sales_comparison", "investigation"}:
+            series = len(query.scope.product_ids) * len(query.scope.store_ids)
+            days = (query.scope.to - query.scope.from_).days + 1
+            if series > self.max_forecast_rows or series * days > MAX_QUALIFIED_SALES_POINTS:
+                raise AssistantError(422)
+            limit = min(max(limit, series), self.max_forecast_rows)
         if intent in {"forecast", "recommendations"}:
             # Native pages must contain the entire requested product/location/day
             # grid. Reject oversized requests before admission rather than taking

@@ -39,7 +39,9 @@ sklep × dzień, domyślnie co najmniej 5, najwyżej dotychczasowy limit grafu 2
 i limit wierszy narzędzia, także jeśli ten jest zaostrzony poniżej 5.
 Większy zakres daje 422 przed admission. Tygodniowy zakres
 jednego produktu/sklepu ma limit 7; nie jest przycinany do pięciu dni.
-Pozostałe intencje zachowują limit 5.
+Sprzedaż i porównanie sprzedaży mają limit obejmujący wszystkie serie
+produkt × lokalizacja, nadal w ramach budżetu grafu. Więcej niż 200 punktów
+serie × dni daje 422 przed admission. Pozostałe intencje zachowują limit 5.
 
 `reviewed_backend` łączy planer z istniejącym `GraphAssistant` i fabryką grafu.
 Nie tworzy klienta AWS. Identyfikator runtime wiąże profil pytań, graph config,
@@ -52,6 +54,8 @@ i Assistant API.
 Wznowienie nie rejestruje automatycznie rzeczywistych adapterów biznesowych.
 Adapter [natywnej prognozy v12](agent-forecast-v12.md) jest dostępny do jawnego
 podłączenia server-owned readera i kwalifikacji runtime.
+Adapter [sprzedaży z kwalifikowanych dni](agent-qualified-sales.md) odczytuje
+zweryfikowane rodzice Source/Curated/Raw DQ i zachowuje dzienne dowody.
 Ich kontrakty, świeżość, snapshot/model/release binding oraz fizyczne zakresy
 stockout muszą zostać sprawdzone przy integracji z AI10. Brakujący adapter jest
 przeszkodą, a nie pustym wynikiem lub zerową wartością.
@@ -65,6 +69,6 @@ make contracts-check
 ```
 
 Aktualny kandydat offline używa
-[nowego release](../agent/evaluation-release.fake.native-v12-main.v1.json). Historyczny
+[nowego release](../agent/evaluation-release.fake.native-sources.v1.json). Historyczny
 [release](../agent/evaluation-release.fake.v1.json) i wyniki Bedrock pozostają
 zachowane; ich kwalifikacja nie przechodzi automatycznie na nowy kod.

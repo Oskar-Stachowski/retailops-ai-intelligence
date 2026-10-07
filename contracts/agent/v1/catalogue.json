@@ -49,7 +49,7 @@
       "read_only": true,
       "request_schema": "get_sales_summary.request.v1.schema.json",
       "result_schema": "get_sales_summary.result.v1.schema.json",
-      "runtime_adapter": "not_implemented_requires_upstream_stages",
+      "runtime_adapter": "verified_source_curated_raw_dq_day_sales",
       "tool": "get_sales_summary"
     },
     {

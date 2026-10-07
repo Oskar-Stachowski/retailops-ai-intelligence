@@ -1,0 +1,12 @@
+{
+  "acceptance_scope": "canonical_fixture_invariants_only",
+  "dependency_lock_sha256": "a9eed66c2fe18a55cdcb639e8c3dcd74d2e3f66f1a4d45e64ba84a364c3b1933",
+  "evaluator_sha256": "221ebf171dbd1e987abb26ca6e2717ca55a8a44924fe35da050caeedea3b1526",
+  "fixture_only": true,
+  "golden_sha256": "44d8686bc95bedb479d51aac1fe49360f245efd75ee803c526691583a8be6f83",
+  "graph_config_id": "agent-graph-config-sha256-42e5d86e399ed7f7027b3f752f16564e2e26d953ad6caef022b0482c33a6a828",
+  "provider": "fake",
+  "release_id": "agent-evaluation-release-sha256-3a52dd238262de4405941b1c46664a270592a3ed94af818a150d3d62fc05747f",
+  "schema_version": "1.0",
+  "set_version": "agent-canonical-golden-v2"
+}

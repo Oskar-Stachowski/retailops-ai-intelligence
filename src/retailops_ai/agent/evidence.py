@@ -309,6 +309,15 @@ class EvidencePolicy:
                 continue
             status = output.result.status if isinstance(output, ForecastResult) else output.status
             if status != "ok":
+                if isinstance(output, SalesResult) and output.qualified_days is not None:
+                    states = sorted(
+                        {p.status for p in output.qualified_days.points if p.status != "qualified"}
+                    )
+                    limitations.append(
+                        "The entire sales period is withheld because some days are not qualified: "
+                        + ", ".join(states)
+                        + ". No zero or partial period total is inferred."
+                    )
                 limitations.append(
                     f"{output.tool}: checked source returned no rows; this is not a measured zero."
                 )

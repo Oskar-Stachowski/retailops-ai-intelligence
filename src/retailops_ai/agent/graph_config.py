@@ -47,6 +47,9 @@ def graph_code_checksum() -> str:
             "adapters/forecast_v12_tool.py": hashlib.sha256(
                 files("retailops_ai.adapters").joinpath("forecast_v12_tool.py").read_bytes()
             ).hexdigest(),
+            "adapters/qualified_sales_tool.py": hashlib.sha256(
+                files("retailops_ai.adapters").joinpath("qualified_sales_tool.py").read_bytes()
+            ).hexdigest(),
         }
     )
 
