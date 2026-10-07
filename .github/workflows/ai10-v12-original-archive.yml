@@ -1,22 +1,14 @@
 name: AI10 original v12 archive
 
 on:
-  push:
-    branches: ["ai/10-ready"]
-    paths:
-      - ".github/workflows/ai10-v12-original-archive.yml"
-      - "scripts/recover_ai10_v12_archive.py"
-      - "docs/reference/ai10-v12-original-archive.json"
   workflow_dispatch:
     inputs:
       archive_secret:
         description: "Task-owned temporary read-only S3 handoff secret name"
         required: true
-        default: AI10_V12_READ_HANDOFF_7AF69EA1708443B78F883D7814D9C516
       handoff_sha256:
         description: "SHA-256 of the exact private read map"
         required: true
-        default: 6e6b25d66986e8b5b0a8b979c3489d68314d0c050624cd321a20dc3d2fca2dd6
 
 permissions:
   contents: read
@@ -51,8 +43,8 @@ jobs:
           mkdir -m 700 v12-original-proofs
       - name: Recover all original archive bytes with temporary GET-only URLs
         env:
-          AI10_V12_HANDOFF_URL: ${{ secrets[inputs.archive_secret || 'AI10_V12_READ_HANDOFF_7AF69EA1708443B78F883D7814D9C516'] }}
-          HANDOFF_SHA256: ${{ inputs.handoff_sha256 || '6e6b25d66986e8b5b0a8b979c3489d68314d0c050624cd321a20dc3d2fca2dd6' }}
+          AI10_V12_HANDOFF_URL: ${{ secrets[inputs.archive_secret] }}
+          HANDOFF_SHA256: ${{ inputs.handoff_sha256 }}
         run: |
           uv run --frozen python scripts/recover_ai10_v12_archive.py \
             --handoff-sha256 "$HANDOFF_SHA256" \

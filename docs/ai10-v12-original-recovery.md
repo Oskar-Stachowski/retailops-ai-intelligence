@@ -20,10 +20,15 @@ archiwum nie nadaje produkcyjnej jakości ani uprawnień do deploymentu.
    konta AWS do runnera. Nie zapisywać signed URLs w Git, receipts lub logach.
    Własność prefixu/secretu oraz deadline zachować w prywatnym state file.
 4. Uruchomić [AI10 original v12 archive](../.github/workflows/ai10-v12-original-archive.yml)
-   na dokładnym commicie `ai/10-ready`, przekazując nazwę secretu i SHA-256
+   ręcznie przez `workflow_dispatch` na dokładnym commicie, przekazując nazwę secretu i SHA-256
    prywatnej mapy. Downloader pozwala wyłącznie na HTTPS do przypiętego bucketu,
    dokładne object keys oraz pełny census. Redirect, brak/extra file, zmienione
    bytes, niezgodny hash i niewystarczający disk reserve przerywają odbiór.
+   Workflow nie uruchamia downloadu po push i nie ma domyślnego starego secretu.
+   Pełny odbiór [AI10 original v12 native output](../.github/workflows/ai10-v12-native-output.yml)
+   również wymaga ręcznego uruchomienia, świeżego handoff i jawnej zamkniętej
+   daty UTC inference. Jego trwające wykonanie zachowuje definicję z własnego
+   przypiętego commitu.
 5. Domyślny local reserve pozostaje **50 GiB**. Niższy **6 GiB** dopuszcza
    wyłącznie disposable GitHub-hosted Linux runner. Preflight wymaga wolnego
    miejsca na pełny archive i reserve przed utworzeniem outputu. Istniejący

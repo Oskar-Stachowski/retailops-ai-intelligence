@@ -6,13 +6,19 @@ AI 07 i AI 08 są **ready** na zaakceptowanym main AI
 historyczne przyrosty z 4–5 października; ich oceny gotowości 07/08 nie są
 bieżącymi blockerami. Oryginalne receipts zachowano bez zmian.
 
-Bieżąca integracja jest na `ai/10-ready` w dwóch draft PR-ach:
+Bieżąca integracja jest na `ai/10-ready` w PR-ach:
 [AI #28](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/28)
 i [RetailOps #100](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/100).
 Wszystkie wcześniej odebrane przyrosty połączono z zaakceptowanym main.
 Nie przeniesiono jeszcze tego etapu na `origin/main`.
 
 ### Odebrane komponenty bieżącej integracji
+
+**Powtarzalność v12:** archive i native workflow uruchamiają się wyłącznie przez
+`workflow_dispatch`, ze świeżą nazwą task-owned secretu i SHA prywatnej mapy.
+Native wymaga również jawnej zamkniętej daty UTC inference. Nie ma automatycznego
+downloadu po push ani fallbacku do usuniętych handoff secrets. Oba workflowy
+przeszły actionlint; trwający native run zachowuje definicję z własnego commitu.
 
 **Anomaly — oryginalny publisher jeszcze nieodebrany:** run `37608775665`,
 job `112750655905`, zaliczył pełne przygotowanie publicznego Source/DQ/features,

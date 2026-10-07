@@ -1,11 +1,6 @@
 name: AI10 original v12 native output
 
 on:
-  push:
-    branches: ["ai/10-ready"]
-    paths:
-      - ".github/workflows/ai10-v12-native-output.yml"
-      - "docs/reference/ai10-v12-serving-request.json"
   workflow_dispatch:
     inputs:
       archive_secret:
@@ -17,7 +12,6 @@ on:
       origin_date:
         description: "Closed UTC inference day, YYYY-MM-DD"
         required: true
-        default: "2026-10-06"
 
 permissions:
   contents: read
@@ -35,7 +29,7 @@ jobs:
       OPENBLAS_NUM_THREADS: "1"
       OMP_NUM_THREADS: "1"
       MKL_NUM_THREADS: "1"
-      AI10_ORIGIN_DATE: ${{ inputs.origin_date || '2026-10-06' }}
+      AI10_ORIGIN_DATE: ${{ inputs.origin_date }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -121,8 +115,8 @@ jobs:
             --origin "${AI10_ORIGIN_DATE}T23:59:59Z"
       - name: Recover unchanged complete original archive with temporary GET-only URLs
         env:
-          AI10_V12_HANDOFF_URL: ${{ secrets[inputs.archive_secret || 'AI10_V12_READ_HANDOFF_9D1E93BE76764A2C9C12E733FD9D0FC6'] }}
-          HANDOFF_SHA256: ${{ inputs.handoff_sha256 || 'eeed72afd43014c5b553672cb86f220846f31a460cb3777458a53a0ae2b842b1' }}
+          AI10_V12_HANDOFF_URL: ${{ secrets[inputs.archive_secret] }}
+          HANDOFF_SHA256: ${{ inputs.handoff_sha256 }}
         run: |
           uv run --frozen python scripts/recover_ai10_v12_archive.py \
             --handoff-sha256 "$HANDOFF_SHA256" --output .local/ai10-v12-original \
