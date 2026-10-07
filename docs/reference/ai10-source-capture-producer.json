@@ -1,0 +1,20 @@
+{
+  "commit": "6fa6e00ceb01df5436e1284b5b336e28794259fe",
+  "full_43_table_snapshot": false,
+  "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+  "scope": "daily_demand_versions_only",
+  "sha256": {
+    "data/requirements-parquet.txt": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+    "services/api/app/contracts/source-observations-v1/capture-upstream.json": "17b274d37cdc06cd78f4438ef944c395c2c01846cccc88af4d8f356b5da57a6b",
+    "services/api/app/contracts/source-observations-v1/capture.schema.json": "732c5d20e03b4fe9f95910947e89d621e222f5a6cfa6d4a7003e14f2b854b4a1",
+    "services/api/app/services/source_observation_broker.py": "8bd3d9ff6e0f2fc2dc3cbf4cdb10cfe1b0a94c29cbfdc7b98f6eb7c9fde3218b",
+    "services/api/app/services/source_observation_capture.py": "c9cfeb2d73fdfc0f1d3896d4b9f93ba9682e6da515cfd8870cd181634b1db95e",
+    "services/api/app/services/source_observation_outbox.py": "977c60bda54dd6058e0c82dd5c3cb3eaf554d7bb7469a2e5cd07efc76cd46889",
+    "services/api/app/services/source_observation_wire.py": "3cefcec46241c26bef3af47da966a0173f1d6580e640a3850fa89f591789cdce",
+    "services/api/requirements-dev.txt": "e8f7e6f546631ecdfea7c2b5783d68a1e1df45047e0f3c8e638bb58f0bbeed63",
+    "services/api/tests/source_observation_runtime.py": "ef3915599bb2e5bdebbbc116a8a5c7c435896a9965858cbff2e43c83c5f70423",
+    "services/api/tests/test_source_observation_capture.py": "2b64796da9d1db63995f2e588b7df3469e29093462a9625e502fad6866e84801",
+    "services/api/tests/test_source_observation_capture_durability.py": "21b433dc7617fab4dbc6ae4b89bb947ecca0b364b4a76520e062982e4bd8f4ab",
+    "services/api/tests/test_source_observation_outbox.py": "363ef0fcd6d48d010286602bcb657406e2f2b8b0638f8d504074b6861f6e5f9c"
+  }
+}

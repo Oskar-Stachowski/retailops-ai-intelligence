@@ -65,6 +65,19 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
   `53c85b4` sprawdza pełne native UUID w `aria-label` istniejących komórek;
   pełne ID/lineage pozostają porównywane w read API i szczegółach. Ponowne
   wykonanie całego browser odbioru nadal wymagane.
+- **Stockout odebrany także w rzeczywistym UI:** job `112705553131` w
+  [runie 37594406280](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37594406280)
+  na AI `e49969c` i Source `53c85b4` jest **success**. Wszystkie 40 oryginalnych
+  wyników, 80 receipts, 40 duplicates i 40 literal IDs zaliczyły SQL/TCP API,
+  built Chromium, lineage oraz live revocation. ZIP pobrano i sprawdzono
+  niezależnie względem rozmiaru i SHA. [Receipt](evidence/ai10-native-stockout-accepted.json)
+  zachowuje granicę file handoff committed outbox; nie poświadcza publishera
+  oryginalnej bazy AI ani wspólnego E2E trzech modeli.
+- Anomaly w poprzednim runie `37592264044` zaliczył prawdziwy OCI/registry,
+  SIGKILL restart, wszystkie **1232** native wyniki, **2464** broker receipts,
+  **1232** duplicates oraz wszystkie literal IDs/auth w TCP API. Built UI
+  napotkał tę samą poprawioną asercję UUID. Ponowny pełny odbiór UI trwa w
+  runie `37594406280`; nie zaliczono go na podstawie samego poprzedniego API.
 - Dla oryginalnego forecastu v12 przygotowano bounded remote recovery **669**
   plików (664 archive + 5 niezmienionych wheel/runtime/acceptance), bez
   treningu ani generowania Source. 18 testów boundary/digest/host/private
@@ -75,16 +88,30 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
   oryginalne bytes i semantic replay zaakceptowanym frozen wheel. Sam recovery
   nie zalicza jeszcze serving ani Source API/UI. Cleanup dotyczy wyłącznie
   sześciu własnych tymczasowych obiektów i własnego secretu.
+- **Recovery oryginalnego v12 passed:**
+  [run 37594406356](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37594406356)
+  na `e49969c` zakończył się **success**. Zweryfikował pełne 664 archive files,
+  niezmienione bytes i semantykę oryginalnym frozen wheel oraz dokładną decyzję
+  właściciela. Zachowano oryginalne `not_ready` i zero refitów. Tymczasowy sekret
+  oraz dokładnie sześć własnych obiektów zostały usunięte; oryginalnego S3
+  archiwum nie zmieniono. Serving i Source API/UI v12 nadal nie są odebrane.
+- Source `6fa6e00` dodaje rzeczywisty capture opt-in `daily_demand_versions`
+  pod SQL authority barrier i z pełnym prefixem brokera, razem z retry
+  nieobjętym SQL delivery receipt. **8** negatywnych/jednostkowych testów,
+  mypy **43** modułów, Ruff/format i secret scan **0 findings** passed.
+  Lokalny niezależny odbiorca AI potwierdził seal 2 facts / 3 receipts,
+  capture + overlap = full replay oraz późną korektę 4 -> 7. To lokalny test
+  wygenerowanych facts. Dedykowany `AI10 Source capture handoff` wymaga
+  realnego SQL/TLS/SCRAM wykonania Source i dopiero potem odbioru jego
+  oryginalnych bytes przez AI. Pełny 43-table SQL capture i AI SQL/ACK tego
+  handoffu nie są tu poświadczone.
 
 ### Co dokładnie pozostaje do ready AI 10
 
-1. **Zaliczyć nowy qualified stockout workflow.** Oryginalna jednodniowa
-   kwalifikacja wykonawcza wygasła 6 października. Ponowna kwalifikacja ma
-   odtworzyć pełnych rodziców za pomocą zaakceptowanego wheel AI08, bez
-   treningu i ponownego otwierania ocen końcowych. Bieżący obraz wykonuje
-   prawdziwy cold worker i utrwala pełny batch oraz oryginalny outbox.
-   Przypięty Source consumer ma odbierać wszystkie oryginalne wyniki przez
-   rzeczywisty broker/SQL i odczytywać każde literalne ID przez TCP API.
+1. **Zachować odebrany qualified stockout i domknąć oryginalny publisher.**
+   Nowa kwalifikacja, frozen cold worker, cały batch i Source broker/SQL/API/UI
+   passed. Nie powtarzać treningu ani ocen końcowych. Osobno pozostaje dowód
+   wysyłki z oryginalnej bazy AI oraz integracja w pełnym bounded E2E.
 2. **Domknąć rzeczywiste native anomaly -> Source -> UI.** Obecny OCI
    acceptor wykonuje model i zachowuje nowy census oryginalnego outboxu.
    Trzeba odebrać te rzeczywiste wyniki w Source oraz pokazać je w UI;

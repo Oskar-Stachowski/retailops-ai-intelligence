@@ -1,0 +1,73 @@
+{
+  "artifact": {
+    "id": 11470099650,
+    "size_bytes": 661890,
+    "zip_sha256": "99fb5e3c4b2c9e994e9156b70f8e8eda117f7b15a17ab132e1a93f8a599a577c"
+  },
+  "consumer_commit": "53c85b4fde255cd1f8ee33e923e6dfe7801a37fd",
+  "full_three_model_E2E": false,
+  "job_id": 112705553131,
+  "original_AI_database_publisher_attested": false,
+  "producer_commit": "e49969c27416ea7c56f1ecacb7b2f67a19b2755f",
+  "reports": {
+    "browser": {
+      "credential_storage": false,
+      "fixture_fallback": false,
+      "live_revocation": true,
+      "results": [
+        {
+          "kind": "stockout_risk_scored",
+          "literal_native_id": true,
+          "original_lineage_in_UI": true,
+          "original_payloads": true,
+          "pages": 1,
+          "rows": 40
+        }
+      ],
+      "rows": 40,
+      "scope": "original_native_model_publications_in_built_RetailOps_UI",
+      "status": "passed"
+    },
+    "read": {
+      "browser": {
+        "credential_storage": false,
+        "fixture_fallback": false,
+        "live_revocation": true,
+        "results": [
+          {
+            "kind": "stockout_risk_scored",
+            "literal_native_id": true,
+            "original_lineage_in_UI": true,
+            "original_payloads": true,
+            "pages": 1,
+            "rows": 40
+          }
+        ],
+        "rows": 40,
+        "scope": "original_native_model_publications_in_built_RetailOps_UI",
+        "status": "passed"
+      },
+      "census_id": "native-model-outbox-sha256-4537a79836c620d8c1784a2865a982813fbe236afc64e00189f64baf53590ca3",
+      "committed_next_offsets": {
+        "0": 34,
+        "1": 46
+      },
+      "duplicates": 40,
+      "evidence_boundary": "file-handoff replay of committed outbox; original AI database publisher is not attested",
+      "http_literal_original_ids": 40,
+      "model_kind": "stockout_risk_scored",
+      "model_refits": 0,
+      "native_payloads_unchanged": true,
+      "producer_commit": "e49969c27416ea7c56f1ecacb7b2f67a19b2755f",
+      "projected": 40,
+      "qualification_id": "stockout-qualification-serving-sha256-375722b93d11e55a6330afd87ef2a6ddf7d5ce57b5ba008a169d8a684596d8e3",
+      "rows": 40,
+      "scope": "qualified_native_model_output_to_broker_sql_and_authenticated_TCP_API",
+      "source_commit": "53c85b4fde255cd1f8ee33e923e6dfe7801a37fd",
+      "status": "passed"
+    }
+  },
+  "scope": "actual_frozen_stockout_model_full_output_broker_SQL_TCP_API_built_UI",
+  "status": "passed",
+  "workflow_run_id": 37594406280
+}

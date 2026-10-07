@@ -1,0 +1,108 @@
+name: AI10 Source capture handoff
+
+on:
+  push:
+    branches: ["ai/10-ready"]
+    paths:
+      - ".github/workflows/ai10-source-capture.yml"
+      - "docs/reference/ai10-source-capture-producer.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai10-source-capture-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      UV_NO_CACHE: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: 6fa6e00ceb01df5436e1284b5b336e28794259fe
+          path: .local/source-capture-producer
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - name: Verify original Source capture producer and exact copied wire schema
+        run: |
+          python - <<'PY'
+          import hashlib,json,subprocess
+          from pathlib import Path
+          pin=json.loads(Path('docs/reference/ai10-source-capture-producer.json').read_bytes())
+          root=Path('.local/source-capture-producer')
+          assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()==pin['commit']
+          assert all(hashlib.sha256((root/name).read_bytes()).hexdigest()==digest for name,digest in pin['sha256'].items())
+          assert (root/'services/api/app/contracts/source-observations-v1/capture.schema.json').read_bytes()==Path('contracts/source_replay/v1/capture.schema.json').read_bytes()
+          PY
+      - name: Install isolated Source and AI receiver runtimes
+        run: |
+          uv sync --locked --extra snapshot --extra forecast
+          uv venv --python 3.11.15 .local/source-capture-producer/services/api/.venv
+          uv pip install --python .local/source-capture-producer/services/api/.venv/bin/python \
+            -r .local/source-capture-producer/services/api/requirements-dev.txt \
+            -r .local/source-capture-producer/data/requirements-parquet.txt
+          docker pull postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+          docker pull redpandadata/redpanda:v25.3.6@sha256:ac152ec27adccf9482af2649d293f398eb03c860d7469fc49f86e30d870ea408
+          mkdir -m 700 source-capture-proofs
+      - name: Execute original Source SQL TLS SCRAM capture with crash retry and later correction
+        working-directory: .local/source-capture-producer/services/api
+        env:
+          REQUIRE_BROKER_TESTS: "1"
+          SOURCE_OBSERVATION_CAPTURE_REPORT: ${{ github.workspace }}/source-capture-proofs/source-observation-capture-report.json
+        run: |
+          .venv/bin/python -m pytest -q -x tests/test_source_observation_capture.py \
+            tests/test_source_observation_capture_durability.py \
+            --junitxml="$GITHUB_WORKSPACE/source-capture-proofs/source-tests.xml"
+      - name: Require independent AI restore overlap and correction against the original Source capture
+        run: |
+          uv run --frozen python - <<'PY'
+          import hashlib,json,os
+          from datetime import UTC,datetime
+          from pathlib import Path
+          from retailops_ai.source_replay import Capture,Stream,Record,ObservationHistory
+          from retailops_ai.source_replay.wire import canonical
+          root=Path('source-capture-proofs')
+          source=json.loads((root/'source-observation-capture-report.json').read_bytes())
+          assert source['status']=='passed' and source['actual_source_sql_tls_scram_broker'] is True
+          assert source['publisher_receipts_used_as_complete_prefix'] is False
+          assert source['rows']==2 and source['receipts']==3 and source['later_replay_receipts']==4
+          raw=(root/'source-observation-capture.json').read_bytes()
+          captured=Capture.model_validate_json(raw)
+          wire=json.loads((root/'source-observation-capture-replay.json').read_bytes())
+          stream=Stream.model_validate_json(json.dumps(wire['stream']))
+          assert captured.stream==stream and len(captured.boundaries)==3
+          records=[Record.model_validate_json(json.dumps(record)) for record in wire['records']]
+          prefix=ObservationHistory(stream,partitions=3).apply_batch(records[:3],stream=stream)
+          assert canonical(prefix.capture())==canonical(captured)
+          restored=ObservationHistory.restore(raw,stream=stream,partitions=3)
+          resumed=restored.apply_batch(records,stream=stream)
+          full=ObservationHistory(stream,partitions=3).apply_batch(records,stream=stream)
+          assert canonical(resumed.capture())==canonical(full.capture())
+          origin=datetime.now(UTC)
+          assert restored.quantity_total(origin)==4 and resumed.quantity_total(origin)==7
+          report=dict(status='passed',scope='original_Source_SQL_broker_capture_to_independent_AI_restore_and_overlap',source_commit='6fa6e00ceb01df5436e1284b5b336e28794259fe',receiver_commit=os.environ['GITHUB_SHA'],workflow_run_id=int(os.environ['GITHUB_RUN_ID']),capture_id=captured.capture_id,capture_sha256=hashlib.sha256(raw).hexdigest(),captured_rows=2,captured_receipts=3,final_rows=3,final_receipts=4,partitions=3,full_equals_capture_overlap=True,quantity_before_correction=4,quantity_after_correction=7,actual_Source_SQL_TLS_SCRAM=True,actual_AI_SQL_or_ACK=False,full_43_table_snapshot=False,model_qualification=False,acceptance_inputs='explicit generated observation fixtures')
+          path=root/'independent-ai-handoff.json';path.write_text(json.dumps(report,sort_keys=True,indent=2)+'\n');path.chmod(0o600)
+          print(json.dumps({k:report[k] for k in ('status','scope','captured_rows','captured_receipts','quantity_after_correction','full_equals_capture_overlap')}))
+          PY
+      - name: Preserve original Source capture and bounded independent receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai10-source-capture-${{ github.sha }}
+          path: source-capture-proofs/
+          if-no-files-found: warn
+          retention-days: 30
+          overwrite: false
