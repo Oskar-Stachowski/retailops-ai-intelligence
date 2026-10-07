@@ -2,7 +2,9 @@
 
 **2026-10-07 — AI 10: końcowa integracja w toku.**
 Łączymy wszystkie odebrane przyrosty z zatwierdzonym AI 07/08 na main.
-Nowy head bazy `0024_ai10_integration` zachowuje obie wcześniejsze historie.
+Migracja `0024_ai10_integration` zachowuje obie wcześniejsze historie.
+Nowy head `0025_model_intelligence_outbox` dodaje atomowe zdarzenia native
+anomaly i stockout. [Instrukcja integracji modeli](intelligence-models-v2.md).
 Pełny capture źródła, trzy rzeczywiste modele, API/UI i temporal E2E
 pozostają wymagane przed statusem ready. Wcześniejsze wpisy opisują historię.
 

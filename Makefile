@@ -221,7 +221,7 @@ evaluations-smoke:
 integration-replay-test:
 	$(UV_RUN) python scripts/check_intelligence_delivery.py
 	$(UV_RUN) python scripts/update_intelligence_event_contracts.py --check
-	$(UV_RUN) python -m pytest tests/test_intelligence_events.py tests/test_intelligence_delivery.py tests/test_observation_replay.py
+	$(UV_RUN) python -m pytest tests/test_intelligence_events.py tests/test_model_intelligence_events.py tests/test_intelligence_delivery.py tests/test_observation_replay.py
 
 integration-failure-test:
 	REQUIRE_AI10_OUTBOX_TESTS=1 $(UV_RUN) python -m pytest tests/test_intelligence_outbox.py

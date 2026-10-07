@@ -13,6 +13,7 @@ from sqlalchemy import create_engine
 
 from retailops_ai.config import load_settings
 from retailops_ai.intelligence_events.kafka import ConfluentEventProducer
+from retailops_ai.intelligence_events.model_outbox import deliver_model_one
 from retailops_ai.intelligence_events.outbox import EventProducer, deliver_one
 
 
@@ -21,6 +22,11 @@ def main() -> int:
     parser.add_argument("--env-file", type=Path)
     parser.add_argument("--broker-config", type=Path, required=True)
     parser.add_argument("--max-events", type=int, default=100)
+    parser.add_argument(
+        "--model-results",
+        action="store_true",
+        help="Deliver native anomaly/stockout events instead of the forecast outbox",
+    )
     args = parser.parse_args()
     engine = None
     try:
@@ -54,7 +60,8 @@ def main() -> int:
             hide_parameters=True,
         )
         delivered = 0
-        while delivered < args.max_events and deliver_one(
+        delivery = deliver_model_one if args.model_results else deliver_one
+        while delivered < args.max_events and delivery(
             engine, producer, environment=settings.app_env
         ):
             delivered += 1

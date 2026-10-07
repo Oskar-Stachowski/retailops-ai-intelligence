@@ -5,13 +5,14 @@ import json
 from datetime import UTC, datetime, timedelta
 from typing import Any, Protocol
 
-from sqlalchemy import Engine, text
+from sqlalchemy import Connection, Engine, text
 
 from retailops_ai.anomaly_detectors.protocol import Scope, Window, series_key
 from retailops_ai.anomaly_evaluation.contract import Decision, dates
 from retailops_ai.anomaly_portfolio.lifecycle_contract import Release
 from retailops_ai.anomaly_portfolio.serving_contract import ErrorCode, Item, Page, Pagination, Query
 from retailops_ai.domain.access import Principal
+from retailops_ai.intelligence_events.model_outbox import enqueue_anomalies
 from retailops_ai.source_snapshot.files import canonical_json, json_sha256
 
 
@@ -49,8 +50,10 @@ def logical(items: list[Item]) -> list[dict[str, Any]]:
 
 
 class PostgresResults:
-    def __init__(self, engine: Engine) -> None:
-        self.engine = engine
+    def __init__(self, engine: Engine, environment: str = "local") -> None:
+        if environment not in {"local", "test"}:
+            raise ValueError("anomaly_publication_environment")
+        self.engine, self.environment = engine, environment
 
     def publish(
         self,
@@ -145,6 +148,11 @@ class PostgresResults:
             if existing is not None:
                 if dict(existing) != {"request_sha256": digest, "batch_id": batch_id}:
                     raise ReadError(409, "anomaly-idempotency-conflict")
+                # Replay and migration backfill keep the original publication timestamps.
+                stored = self._stored_items(conn, batch_id)
+                if logical(stored) != logical(items):
+                    raise ValueError("anomaly_publication_immutable_conflict")
+                enqueue_anomalies(conn, stored, environment=self.environment)
                 return {"status": "replayed", "batch_id": batch_id}
             enrolled = conn.execute(
                 text("SELECT release FROM ai.anomaly_model_releases WHERE release_id=:id"),
@@ -165,15 +173,7 @@ class PostgresResults:
                 text("SELECT manifest FROM ai.anomaly_batches WHERE batch_id=:id"), {"id": batch_id}
             ).scalar_one_or_none()
             if previous is not None:
-                stored = [
-                    Item.model_validate_json(json.dumps(v))
-                    for v in conn.execute(
-                        text(
-                            "SELECT record FROM ai.anomaly_results WHERE batch_id=:id ORDER BY position"
-                        ),
-                        {"id": batch_id},
-                    ).scalars()
-                ]
+                stored = self._stored_items(conn, batch_id)
                 if previous["descriptor"] != desc or logical(stored) != logical(items):
                     raise ValueError("anomaly_publication_immutable_conflict")
             else:
@@ -210,6 +210,8 @@ class PostgresResults:
                         for n, i in enumerate(items)
                     ],
                 )
+                stored = items
+            enqueue_anomalies(conn, stored, environment=self.environment)
             conn.execute(
                 text(
                     "INSERT INTO ai.anomaly_requests(principal_id,request_id,request_sha256,batch_id) VALUES(:principal,:request,:sha,:id)"
@@ -226,6 +228,16 @@ class PostgresResults:
                 "batch_id": batch_id,
                 "row_count": len(items),
             }
+
+    @staticmethod
+    def _stored_items(conn: Connection, batch_id: str) -> list[Item]:
+        values: list[dict[str, Any]] = list(
+            conn.execute(
+                text("SELECT record FROM ai.anomaly_results WHERE batch_id=:id ORDER BY position"),
+                {"id": batch_id},
+            ).scalars()
+        )
+        return [Item.model_validate_json(json.dumps(value)) for value in values]
 
     def read(self, query: Query, actor: Principal) -> Page:
         query = Query.model_validate_json(query.model_dump_json())

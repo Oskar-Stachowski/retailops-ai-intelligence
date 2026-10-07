@@ -98,7 +98,7 @@ podzbiorem. Niezgodność daje 503 `forecast-output-invalid`, bez częściowej o
 
 Migracja publikacji to `0017_v12_outputs`, po `0016_v12_queue`.
 `0018_v12_evaluations` opisuje [katalog i oceny](forecast-v12-metadata.md).
-Aktualny head `0024_ai10_integration` łączy wcześniejsze historie modeli
+Aktualny head `0025_model_intelligence_outbox` łączy wcześniejsze historie modeli
 z [integracją wyników AI 10](intelligence-integration-v2.md). Tabela jest
 oddzielna od publikacji v1. Przed wdrożeniem należy jawnie migrować bazę
 według [runbooka Compose](local-stack.md). Trwałego stosu nie migrowano.

@@ -1,15 +1,19 @@
 # AI 10 — pierwszy przyrost integracji wyników
 
-Status: **implementacja w toku; AI 10 nie jest ready**. Ten przyrost wdraża
-forecast v2, atomowy outbox po stronie AI i kompatybilny projektor/read API
-po stronie RetailOps. Anomalie, stockout risk, sugestie, UI oraz snapshot/REST
-są kolejnymi przyrostami. Nie zmieniono sesji ani worktree AI 07/08.
+Status: **implementacja w toku; AI 10 nie jest ready**. Pierwotny przyrost
+opisany poniżej wdrożył forecast v2 i atomowy outbox. Aktualna integracja
+dodaje [native anomaly i stockout](intelligence-models-v2.md), osobne read API
+oraz widoki istniejącego frontendu RetailOps. Sugestie mają jawny kontrakt
+fixture. Pełny capture/snapshot/replay i odbiór temporalny trzech modeli
+pozostają wymagane. Nie zmieniono sesji ani worktree AI 07/08.
 
 ## Granice kontraktu
 
 - Topic: `retailops.intelligence.v2`, wersja envelope `2.0`, source `retailops-ai`.
-- Obsługiwany typ: `forecast_generated`. Trzy pozostałe typy z planu są
-  zarezerwowane i **odrzucane**, dopóki nie mają zatwierdzonych schematów ML.
+- Pierwotny typ: `forecast_generated`. Aktualne registry dodaje
+  `anomaly_detected` i `stockout_risk_scored` z dokładnymi native payloadami.
+  `recommendation_generated` ma osobny, jawnie włączany kontrakt fixture
+  po stronie RetailOps; nie jest dowodem działania producenta AI 12.
 - Payload to dokładny `V12ForecastItem` z istniejącego API ML. Zachowuje
   candidate mean, reference median/interval, exclusion/null, grain,
   model/release/approval, źródłowe dataset IDs, run i politykę świeżości.

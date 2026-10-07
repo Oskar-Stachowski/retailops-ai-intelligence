@@ -100,7 +100,7 @@ Verifier sprawdza oryginalny eksport i replay przed projekcją. Importer
 ponownie sprawdza bajty przed i po odczycie członkostwa, zgodność cohort,
 fold/role/kluczy i liczników raportu. Nie wykonuje nowych refitów.
 Nie ma publicznego endpointu zapisu oceny ani promocji modelu.
-Migracja ocen to `0018_v12_evaluations`; aktualny head `0024_ai10_integration`
+Migracja ocen to `0018_v12_evaluations`; aktualny head `0025_model_intelligence_outbox`
 łączy [lokalne dopuszczenie v12](forecast-v12-development.md), stockout/anomaly
 i [integrację AI 10](intelligence-integration-v2.md).
 Trwałego stosu w tym przyroście nie migrowano.
