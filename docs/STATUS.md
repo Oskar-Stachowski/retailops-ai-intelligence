@@ -1,5 +1,18 @@
 # Aktualny status
 
+**2026-10-07 — AI 10: końcowa integracja w toku.**
+Łączymy wszystkie odebrane przyrosty z zatwierdzonym AI 07/08 na main.
+Migracja `0024_ai10_integration` zachowuje obie wcześniejsze historie.
+Nowy head `0025_model_intelligence_outbox` dodaje atomowe zdarzenia native
+anomaly i stockout. [Instrukcja integracji modeli](intelligence-models-v2.md).
+Rzeczywisty Source capture → ten sam TLS/SCRAM broker → AI SQL/ACK/overlap
+jest odebrany. Qualified stockout/anomaly mają pełny Source API i built UI.
+Stockout i anomaly mają odebrane oryginalne AI SQL publishery. Pełny v12
+na 102-dniowych wejściach wymaga ponownego odbioru po poprawce konfiguracji bazy.
+[Bieżąca instrukcja i checklist](ai10-acceptance.md) wiążą dowody wykonania.
+Protected merge i Required CI obu main pozostają wymagane przed `ready`.
+Wcześniejsze wpisy opisują historię.
+
 **2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**
 [PR #33](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/33)
 jest scalony jako `a128bb38` po pełnym zielonym CI jego head `be3b264`.
@@ -118,13 +131,23 @@ Lokalny native control został zatrzymany przez rezerwę RAM przed generation;
 manualny odbiór na izolowanym runnerze jest przygotowany i jeszcze nie ruszył.
 
 [PR #35](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/35)
-publikuje runner na `d81e78a`; jego pełne CI nadal trwa. Osobny
-[eksport końcowej oceny](ai09-final-export.md) dodaje format wyłącznie
+na `d81e78a` zaliczył pełny
+[Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37638548322):
+15/15 jobów success. Przed chronionym merge zintegrowano nowszy main `2dc0a5b`,
+zachowując przyrosty AI 10. [CI integracji na `7ca2d56`](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37646472103)
+ujawnił nieaktualne przypięcie jednego wspólnego pliku importera.
+[Poprawka przypięcia](evidence/09-22-shared-importer-integration.json) zachowuje
+poprzedni odebrany pin oraz osobno identyfikuje nową implementację z `d81e78a`.
+64 kontrole zgodności, w tym rzeczywisty transfer/reuse bundle, oraz wszystkie
+kontrole kontraktów przeszły. Nowy dokładny head wymaga własnego pełnego CI;
+projektowa kampania, treningi i końcowa ocena pozostają niewykonane.
+
+[Eksport końcowej oceny](ai09-final-export.md) dodaje format wyłącznie
 `final_evaluation`, wiązanie selection freeze i generacji oraz trwały receipt.
-Mały rzeczywisty smoke potwierdza pełny replay i odbudowę cech/etykiet;
-kontrole obejmują blokadę przed freeze, brak retry i awarie przed completion.
-To przygotowanie mechanizmu. Projektowa kampania, treningi i final test
-nadal nie zostały rozpoczęte; pełny odbiór i publikacja są wymagane.
+[PR #36](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/36)
+na `cd6106a` zaliczył cały [Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37642451429):
+15/15 jobów success. Integracja z nowszym main i poprawką importera wymaga
+własnego CI. Rzeczywista kampania, treningi i final test pozostają niewykonane.
 
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
@@ -138,10 +161,13 @@ wiążą zakres, konkretne commity i zaliczone kontrole.
 Publikacja została zatwierdzona i wykonana w
 [AI PR #24](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/24)
 oraz [source PR #97](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/97).
-Pełne **AI 07 `ready` na `main`** jest zamknięte: PR #24 i #97 są scalone,
-a odbiór integracji i obu main jest zaliczony. Wcześniejsze warunkowe wpisy
-zachowują stan historyczny i nie otwierają ponownie tego etapu. [Zakres połączenia z main](evidence/07-main-integration.md)
-opisuje wspólne migracje i zachowanie AI 05/08.
+**AI 07 jest `ready` na zaakceptowanych main.** Oba PR-y są scalone.
+AI `18e771f9c2e89e91bf7afeb1744e0cd9112f50b5` ma zielony
+[Required CI 37304852763](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37304852763),
+a Source `1de462729012a1bad458a8da4ad317ec22dbc5b8` ma zielony
+[Required CI 37305855911](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37305855911).
+[Zakres połączenia z main](evidence/07-main-integration.md) zachowuje
+wspólne migracje i odbiór AI 05/08.
 
 **2026-10-05: cały etap AI 08 jest READY.**
 [Końcowe zamknięcie](evidence/08-28-final-ready.md) i
@@ -533,6 +559,20 @@ wiąże PR #8 AI, PR #81 źródła i końcową dokumentację PR #82.
 Poniższe wcześniejsze sekcje AI 05 zachowują historyczny zakres prób;
 ich informacje o otwartych blokadach zostały zastąpione końcowym odbiorem.
 
+**2026-10-04 — AI 10, przyrost REST źródła.**
+[Runbook](source-rest-v2.md) opisuje klienta wygenerowanego z rzeczywistego
+OpenAPI chronionych `/integration/v2` odczytów, hard deadline, retry/breaker
+i sprawdzenie scope/paginacji. To bounded live reads; immutable snapshot,
+pełny ML grain i snapshot/log handoff nadal nie są obsługiwane.
+AI 10 pozostaje `in_progress`; końcowy CI/cross-repo odbiór mają własne dowody.
+
+**2026-10-03 — AI 10 rozpoczęty, pierwszy przyrost forecast v2.**
+[Instrukcja](intelligence-integration-v2.md) i [dowód](evidence/10-forecast-integration.md)
+obejmują atomowy outbox, schemat wyników ML oraz osobny projektor/read API
+RetailOps. Head bazy tej gałęzi to `0020_intelligence_outbox`.
+AI 10 pozostaje `in_progress`; trzech modeli, UI, snapshot/replay i całego E2E
+jeszcze nie odebrano. Historyczne pomiary AI 05 poniżej zachowują swój zakres.
+
 **AI 05 — lokalny przepływ finalnego v12 jest odebrany także na świeżym snapshocie.**
 [Raport i pomiary](evidence/05-v12-real-serving.md) oraz
 [wersjonowany zapis dowodów](evidence/05-v12-real-serving.json) obejmują cały
@@ -848,3 +888,14 @@ osobno dla historii przed ocenianym dniem i wyniku po jego zamknięciu.
 baseline/Isolation Forest i progi wyznaczane z walidacji. Artefakty odtwarzają
 trening i wynik; nie kwalifikują jeszcze jakości modelu. AI07 wymaga oceny
 obserwacji i epizodów na większych danych, porównania modeli oraz własnego lifecycle.
+
+# AI10 — kolejny przyrost: immutable source bundles
+
+**2026-10-04.** [Instrukcja pobrania i importu](source-bundles.md) opisuje
+przesłanie istniejącego, kompletnego eksportu przez chronione API Source i
+rzeczywisty typowany importer AI, także dla natywnego Snapshot 1.2 / Source 2.8.
+Zachowano oryginalne identyfikatory, osobny grant na cały eksport oraz atomowy
+import/reuse. Główny lock i kod modeli nie zmieniają się. Przypięte kopie
+importera pochodzą z zatwierdzonego ownera, a profil transferu ma osobny lock.
+Cały AI10 nadal jest `in_progress`; live SQL snapshot, snapshot/offset/replay,
+kwalifikacja trzech modeli i pełny UI E2E wymagają własnego odbioru.

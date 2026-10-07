@@ -1,0 +1,64 @@
+{
+  "artifact": {
+    "id": 11471107222,
+    "size_bytes": 1242,
+    "zip_sha256": "d7093d0275eb8a483ab4287929f95cc60a05c01a85e9373e01811064525bb225"
+  },
+  "job_id": 112703371706,
+  "producer_commit": "e49969c27416ea7c56f1ecacb7b2f67a19b2755f",
+  "reports": {
+    "original-semantic-verification.json": {
+      "commit": "e49969c27416ea7c56f1ecacb7b2f67a19b2755f",
+      "development_acceptance": {
+        "decision": {
+          "sha256": "11cd0e1fdd10629543bcb66aaedb3bd9b7b7fc5b31473575b998d951c93f00d2",
+          "size_bytes": 3513
+        },
+        "original_quality_reclassified": false,
+        "production_deployment_authorized": false,
+        "scope": "local_development_only",
+        "version": "v12-development-acceptance-1.0.0"
+      },
+      "files": 664,
+      "model_refits": 0,
+      "original_model_status": "not_ready",
+      "original_quality_status": "not_ready",
+      "production_deployed": false,
+      "run_id": "functional-v12-run-sha256-345a725d435a477374292cb9483350fb5c50c8ba87d06668c727e0a9f964fb6b",
+      "run_manifest_sha256": "29bf6837ca2cb7504213168743239b037041f375763bc8f01ae28c1f6d09b26e",
+      "scope": "original_full_v12_evidence_and_owner_development_acceptance",
+      "serving_acceptance": false,
+      "source_api_ui_acceptance": false,
+      "source_generation": false,
+      "status": "passed",
+      "verifier": {
+        "model_refits": 0,
+        "package_file": "/home/runner/work/retailops-ai-intelligence/retailops-ai-intelligence/.local/ai10-v12-original/support/frozen-runtime/.venv/lib/python3.11/site-packages/retailops_ai/__init__.py",
+        "run_id": "functional-v12-run-sha256-345a725d435a477374292cb9483350fb5c50c8ba87d06668c727e0a9f964fb6b",
+        "run_manifest_sha256": "29bf6837ca2cb7504213168743239b037041f375763bc8f01ae28c1f6d09b26e",
+        "source_generation": false,
+        "status": "passed",
+        "verifier_code_sha256": "1961a96c8a1bbdfe7b4259f24b3dcb2a20def08723d5ef7000c40ed5f68a44fe"
+      },
+      "workflow_run_id": 37594406356
+    },
+    "recovered-byte-census.json": {
+      "bytes": 31995395775,
+      "files": 669,
+      "model_quality_status": "not_ready",
+      "model_refits": 0,
+      "run_id": "functional-v12-run-sha256-345a725d435a477374292cb9483350fb5c50c8ba87d06668c727e0a9f964fb6b",
+      "scope": "complete_original_archive_bytes_only_not_serving_or_model_qualification",
+      "source_generation": false,
+      "status": "passed"
+    }
+  },
+  "status": "passed",
+  "temporary_handoff_cleanup": {
+    "objects_removed": 6,
+    "original_archive_changed": false,
+    "own_repo_secret_removed": true,
+    "status": "passed"
+  },
+  "workflow_run_id": 37594406356
+}

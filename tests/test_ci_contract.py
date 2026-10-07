@@ -21,6 +21,52 @@ def test_workflow_is_covered_by_required_result():
     assert module.workflow_errors(workflow()) == []
 
 
+@pytest.mark.parametrize("mutation", ["removed", "bypassed", "not-required"])
+def test_observation_persistence_gate_cannot_be_skipped(mutation):
+    data = workflow()
+    if mutation == "removed":
+        data["jobs"].pop("observation-replay")
+    elif mutation == "bypassed":
+        gate = next(
+            step
+            for step in data["jobs"]["observation-replay"]["steps"]
+            if step.get("run") == "make bootstrap observation-persistence-test"
+        )
+        gate["run"] = "make bootstrap"
+    else:
+        data["jobs"]["required-result"]["needs"].remove("observation-replay")
+    assert module.workflow_errors(data)
+
+
+@pytest.mark.parametrize("mutation", ["removed", "bypassed", "not-required"])
+def test_actual_observation_broker_gate_cannot_be_skipped(mutation):
+    data = workflow()
+    if mutation == "removed":
+        data["jobs"].pop("observation-broker")
+    elif mutation == "bypassed":
+        gate = next(
+            step
+            for step in data["jobs"]["observation-broker"]["steps"]
+            if step.get("run") == "make intelligence-delivery-bootstrap observation-broker-test"
+        )
+        gate["run"] = "make intelligence-delivery-bootstrap"
+    else:
+        data["jobs"]["required-result"]["needs"].remove("observation-broker")
+    assert module.workflow_errors(data)
+
+
+@pytest.mark.parametrize(
+    "required",
+    [
+        "REQUIRE_AI10_OBSERVATION_BROKER_TESTS=1",
+        "AI10_OBSERVATION_BROKER_REPORT=artifacts/ai10-observation-broker.json",
+    ],
+)
+def test_actual_broker_make_target_cannot_drop_execution_or_report(required):
+    makefile = (ROOT / "Makefile").read_text().replace(required, "")
+    assert module.workflow_errors(workflow(), makefile)
+
+
 def test_development_push_is_not_a_second_full_pr_run():
     events = workflow()[True]
     assert events["push"] == {"branches": ["main"]}
@@ -29,7 +75,16 @@ def test_development_push_is_not_a_second_full_pr_run():
 
 @pytest.mark.parametrize(
     "name",
-    ["tests", "acceptance", "persistence", "persistence-forecast", "anomaly-oci", "tensorflow"],
+    [
+        "tests",
+        "acceptance",
+        "persistence",
+        "persistence-forecast",
+        "anomaly-oci",
+        "tensorflow",
+        "observation-replay",
+        "observation-broker",
+    ],
 )
 def test_expensive_jobs_cannot_bypass_preflight(name):
     data = workflow()
@@ -136,7 +191,12 @@ def test_ci_guard_rejects_weakened_gates(mutation):
 def test_ci_rejects_bypassed_checks_or_malformed_result_expression(mutation):
     data = workflow()
     if mutation == "checks-bypass":
-        data["jobs"]["checks"]["steps"][-1]["run"] = "make bootstrap test"
+        gate = next(
+            step
+            for step in data["jobs"]["checks"]["steps"]
+            if step.get("run") == "make bootstrap ci-checks"
+        )
+        gate["run"] = "make bootstrap test"
     else:
         data["jobs"]["required-result"]["steps"][0]["env"]["PERSISTENCE_RESULT"] = (
             "invalid-expression"
@@ -262,3 +322,39 @@ def test_parallel_make_groups_cannot_drop_or_duplicate_a_gate():
         makefile.replace("ci-detectors: anomaly-detectors-check", "ci-detectors: docs-check")
     )
     assert module.make_ci_errors(makefile.replace("check: lint", "check: new-required-gate lint"))
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "make intelligence-delivery-bootstrap",
+        "uv run --locked --project tools/intelligence-delivery python scripts/intelligence_outbox.py --help",
+        "make integration-replay-test integration-failure-test",
+    ],
+)
+def test_ai10_outbox_cannot_be_lost_when_persistence_is_split(command):
+    data = workflow()
+    step = next(
+        step
+        for step in data["jobs"]["persistence-forecast"]["steps"]
+        if "make integration-replay-test integration-failure-test" in step.get("run", "")
+    )
+    step["run"] = step["run"].replace(command, "")
+    assert (
+        "persistence-forecast must execute actual AI10 transactional outbox acceptance"
+        in module.workflow_errors(data)
+    )
+
+
+def test_ai10_outbox_cannot_be_conditionally_skipped():
+    data = workflow()
+    step = next(
+        step
+        for step in data["jobs"]["persistence-forecast"]["steps"]
+        if "make integration-replay-test integration-failure-test" in step.get("run", "")
+    )
+    step["if"] = "false"
+    assert (
+        "persistence-forecast must execute actual AI10 transactional outbox acceptance"
+        in module.workflow_errors(data)
+    )

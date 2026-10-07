@@ -1,0 +1,898 @@
+{
+  "version": "ai10-shared-runtime-ci-receipt-1.0",
+  "status": "complete",
+  "whole_ai10_status": "in_progress",
+  "source_repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+  "draft_pr": 89,
+  "branch": "ai/10-shared-intelligence-runtime",
+  "base": "ai/10-approved-forecast-head",
+  "commit": "318d3704dc757390226066a197f6bee95571d31d",
+  "required_ci_run_id": 37204598373,
+  "local_checks": {
+    "controller_tests": 5,
+    "change_detector_tests": 16,
+    "immutable_input_tests": 11,
+    "immutable_references": 188,
+    "ruff": "passed",
+    "compose_configuration_without_daemon": "passed",
+    "checkpoint_and_contract_tests": 62,
+    "mypy_source_files": 22,
+    "mypy_runtime_files": 3
+  },
+  "prior_attempts": [
+    {
+      "commit": "65a40223c198819d0b29a7af1972e6be3be16ae4",
+      "run_id": 37201369478,
+      "job_id": 111433599002,
+      "status": "failed",
+      "diagnosis": "probe imported httpx available only in source dev dependencies; replaced by Python standard library",
+      "artifact_id": 11302754943,
+      "zip_sha256": "b8275629d7648e4bc9f319c7d6277c932bff6038e1795f0d6568544ad6084daf",
+      "report_sha256": "a668789d45d59c7ef708c3b3fd533ae2f748c9285f97fe3584b4de5b9a8c7bd8",
+      "report": {
+        "version": "ai10-runtime-mechanics-1.0",
+        "evidence_class": "invented_transport_fixture",
+        "project": "retailops-ai10-runtime-4d7350bfa527",
+        "status": "failed",
+        "started_at": "2026-10-04T12:13:49.845288+00:00",
+        "stages": [
+          "build_pinned_images",
+          "start_owned_databases",
+          "start_private_broker",
+          "cleanup_owned_project"
+        ],
+        "cleanup": "passed",
+        "owner": {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+          "sha256": {
+            "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "tools/intelligence-delivery/uv.lock": "d018fd51b6b176e707307179f5d8c953522b676349b053a98470e834261d3f58",
+            "tools/intelligence-delivery/pyproject.toml": "5e987ed95a72173684643104da194b58c58b9313bcb4075b495c0b401534f0cb",
+            "scripts/intelligence_outbox.py": "23a57559b3c15a9cf73b111afee41df9e616418fe82cc9bc21a7cf7f371e5212",
+            "contracts/events/v2/forecast_generated.fixture.json": "5801e52ff621df1762872b39ba8362ff5e58381839a4ece2915eac899d1dcbe3"
+          }
+        },
+        "source_commit": "d95acf31d5d74e0dca7926d79079f27cbe8ab0c6",
+        "failure_stage": "bootstrap_auth_and_database_roles",
+        "failure_code": "runtime_command_failed",
+        "error_class": "RuntimeCommandError",
+        "completed_at": "2026-10-04T12:14:44.377868+00:00"
+      }
+    },
+    {
+      "commit": "e88de314323e178dd418f7ff395e1ed7cfef9c40",
+      "run_id": 37201588852,
+      "job_id": 111434333381,
+      "runtime_job_status": "failed",
+      "diagnosis": "broker config needed an owned writable parent directory; API also hit an unavailable stream identity",
+      "artifact_id": 11302114756,
+      "zip_sha256": "0f65e18eb3830a708091bfa2936914da45097532feb4506c779364068b41ba84",
+      "report_sha256": "d101614c85d79f4cc028ede969bc8d931869fe97a275f7c70026b911f3f4282f",
+      "report": {
+        "version": "ai10-runtime-mechanics-1.0",
+        "evidence_class": "invented_transport_fixture",
+        "project": "retailops-ai10-runtime-068a30786108",
+        "status": "failed",
+        "started_at": "2026-10-04T12:18:25.364272+00:00",
+        "stages": [
+          "build_pinned_images",
+          "start_owned_databases",
+          "start_private_broker",
+          "cleanup_owned_project"
+        ],
+        "cleanup": "passed",
+        "owner": {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+          "sha256": {
+            "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "tools/intelligence-delivery/uv.lock": "d018fd51b6b176e707307179f5d8c953522b676349b053a98470e834261d3f58",
+            "tools/intelligence-delivery/pyproject.toml": "5e987ed95a72173684643104da194b58c58b9313bcb4075b495c0b401534f0cb",
+            "scripts/intelligence_outbox.py": "23a57559b3c15a9cf73b111afee41df9e616418fe82cc9bc21a7cf7f371e5212",
+            "contracts/events/v2/forecast_generated.fixture.json": "5801e52ff621df1762872b39ba8362ff5e58381839a4ece2915eac899d1dcbe3"
+          }
+        },
+        "source_commit": "79321605b883dd20a5c723f6a47d966efa9c9b4d",
+        "failure_stage": "bootstrap_auth_and_database_roles",
+        "failure_code": "broker_tls_admin_not_ready",
+        "error_class": "RuntimeCommandError",
+        "completed_at": "2026-10-04T12:20:48.273863+00:00"
+      },
+      "later_api_diagnosis": "Real topic UUID standard Base64 characters + and / were rejected by the identity validator; startup retries alone did not fix it."
+    },
+    {
+      "commit": "0f0ee6d179936963e9d1c1dd44477c5042a7d319",
+      "run_id": 37202035330,
+      "job_id": 111435659888,
+      "runtime_job_status": "failed",
+      "diagnosis": "Admin superuser endpoint correctly denies anonymous with 403; test incorrectly expected 401; fixture reused startup metadata",
+      "artifact_id": 11302953180,
+      "zip_sha256": "a96bdb8ab885d223039829a37afd7d3d09da951230356c5a432edc20a92862c2",
+      "report_sha256": "95de67b016fb9b0cd2b0bb84b7f8e647035336ae9a69717e5103482aff13e213",
+      "report": {
+        "version": "ai10-runtime-mechanics-1.0",
+        "evidence_class": "invented_transport_fixture",
+        "project": "retailops-ai10-runtime-698796afca1d",
+        "status": "failed",
+        "started_at": "2026-10-04T12:26:03.220895+00:00",
+        "stages": [
+          "build_pinned_images",
+          "start_owned_databases",
+          "start_private_broker",
+          "cleanup_owned_project"
+        ],
+        "cleanup": "passed",
+        "owner": {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+          "sha256": {
+            "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "tools/intelligence-delivery/uv.lock": "d018fd51b6b176e707307179f5d8c953522b676349b053a98470e834261d3f58",
+            "tools/intelligence-delivery/pyproject.toml": "5e987ed95a72173684643104da194b58c58b9313bcb4075b495c0b401534f0cb",
+            "scripts/intelligence_outbox.py": "23a57559b3c15a9cf73b111afee41df9e616418fe82cc9bc21a7cf7f371e5212",
+            "contracts/events/v2/forecast_generated.fixture.json": "5801e52ff621df1762872b39ba8362ff5e58381839a4ece2915eac899d1dcbe3"
+          }
+        },
+        "source_commit": "4aeceaa02d2b8163e3ca19aac0eea6fffec3a829",
+        "failure_stage": "bootstrap_auth_and_database_roles",
+        "failure_code": "admin_anonymous_denied",
+        "broker_diagnostics": [
+          "broker-1  | ERROR 2026-10-04 12:26:52,256 [shard 0:main] syschecks - Memory: '536870912' below recommended: '1073741824'"
+        ],
+        "error_class": "RuntimeCommandError",
+        "completed_at": "2026-10-04T12:26:53.618993+00:00"
+      },
+      "later_api_diagnosis": "Real topic UUID standard Base64 characters + and / were rejected by the identity validator; startup retries alone did not fix it."
+    },
+    {
+      "commit": "177c937a08b556a1b15eb90dbe6b9b489ad6ae19",
+      "run_id": 37202391404,
+      "job_id": 111436654624,
+      "runtime_job_status": "failed",
+      "diagnosis": "artifact confirmed anonymous Admin 403; fixture readiness still failed",
+      "artifact_id": 11303272886,
+      "zip_sha256": "a85e70ac706c480d6207bd86c94f5c5fd60dd3561d220dcfa90a870d8aa742af",
+      "report_sha256": "c214e31f75428ac1985a68ef76fd41b65b18fc92cb34e38dd63812b48640aa95",
+      "report": {
+        "version": "ai10-runtime-mechanics-1.0",
+        "evidence_class": "invented_transport_fixture",
+        "project": "retailops-ai10-runtime-e66f2cf26e42",
+        "status": "failed",
+        "started_at": "2026-10-04T12:32:01.980841+00:00",
+        "stages": [
+          "build_pinned_images",
+          "start_owned_databases",
+          "start_private_broker",
+          "cleanup_owned_project"
+        ],
+        "cleanup": "passed",
+        "owner": {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+          "sha256": {
+            "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "tools/intelligence-delivery/uv.lock": "d018fd51b6b176e707307179f5d8c953522b676349b053a98470e834261d3f58",
+            "tools/intelligence-delivery/pyproject.toml": "5e987ed95a72173684643104da194b58c58b9313bcb4075b495c0b401534f0cb",
+            "scripts/intelligence_outbox.py": "23a57559b3c15a9cf73b111afee41df9e616418fe82cc9bc21a7cf7f371e5212",
+            "contracts/events/v2/forecast_generated.fixture.json": "5801e52ff621df1762872b39ba8362ff5e58381839a4ece2915eac899d1dcbe3"
+          }
+        },
+        "source_commit": "1a894b9af732d667eb630de5a8cafdc2c7b59a49",
+        "failure_stage": "bootstrap_auth_and_database_roles",
+        "failure_code": "admin_anonymous_denied_403",
+        "broker_diagnostics": [
+          "broker-1  | ERROR 2026-10-04 12:32:52,280 [shard 0:main] syschecks - Memory: '536870912' below recommended: '1073741824'"
+        ],
+        "error_class": "RuntimeCommandError",
+        "completed_at": "2026-10-04T12:32:53.697930+00:00"
+      },
+      "later_api_diagnosis": "Real topic UUID standard Base64 characters + and / were rejected by the identity validator; startup retries alone did not fix it."
+    },
+    {
+      "commit": "59eabcc26b7ed2f43ebf549e7e559ed672d49819",
+      "run_id": 37202561377,
+      "job_id": 111437139286,
+      "runtime_job_status": "failed",
+      "diagnosis": "probe used nonexistent ResourceType.CLUSTER; SDK uses BROKER for ACL resource 4; static types added; cluster discovery now precedes topic lookup",
+      "artifact_id": 11303296886,
+      "zip_sha256": "8eab9722d155df6cf6db572823adaaf74e47659ba4756a6812f747269d1374bd",
+      "report_sha256": "00a93dbab8e72d04874292b57c14bd627242d055a21c849ecc44e0cd8d2bf502",
+      "report": {
+        "version": "ai10-runtime-mechanics-1.0",
+        "evidence_class": "invented_transport_fixture",
+        "project": "retailops-ai10-runtime-b160b266b242",
+        "status": "failed",
+        "started_at": "2026-10-04T12:34:53.039336+00:00",
+        "stages": [
+          "build_pinned_images",
+          "start_owned_databases",
+          "start_private_broker",
+          "cleanup_owned_project"
+        ],
+        "cleanup": "passed",
+        "owner": {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+          "sha256": {
+            "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "tools/intelligence-delivery/uv.lock": "d018fd51b6b176e707307179f5d8c953522b676349b053a98470e834261d3f58",
+            "tools/intelligence-delivery/pyproject.toml": "5e987ed95a72173684643104da194b58c58b9313bcb4075b495c0b401534f0cb",
+            "scripts/intelligence_outbox.py": "23a57559b3c15a9cf73b111afee41df9e616418fe82cc9bc21a7cf7f371e5212",
+            "contracts/events/v2/forecast_generated.fixture.json": "5801e52ff621df1762872b39ba8362ff5e58381839a4ece2915eac899d1dcbe3"
+          }
+        },
+        "source_commit": "c9072d793d6e184f32b2f364137dfa33b66494e4",
+        "failure_stage": "bootstrap_auth_and_database_roles",
+        "failure_code": "AttributeError",
+        "broker_diagnostics": [],
+        "error_class": "RuntimeCommandError",
+        "completed_at": "2026-10-04T12:35:40.442947+00:00"
+      }
+    },
+    {
+      "commit": "eb92964d470c5e104e17230346a63b1bf01b3f9b",
+      "run_id": 37203151989,
+      "job_id": 111438885092,
+      "runtime_job_status": "failed",
+      "artifact_id": 11303269243,
+      "zip_sha256": "0ab0d7f8ec5b900a9956a3102cca8a53e01afba22aaea03923e5a0e90029425d",
+      "report_sha256": "6d5a79061849dbfbf4ec8a253891947ce0be1899690ef2458a32fcb9a9771ecb",
+      "diagnosis": "actual AI outbox delivered one event; source identity validation rejected valid standard Base64 SDK topic UUIDs containing + or /; fixed topic alphabet without rewriting stored pins",
+      "report": {
+        "version": "ai10-runtime-mechanics-1.0",
+        "evidence_class": "invented_transport_fixture",
+        "project": "retailops-ai10-runtime-bacecef86152",
+        "status": "failed",
+        "started_at": "2026-10-04T12:45:18.715424+00:00",
+        "stages": [
+          "build_pinned_images",
+          "start_owned_databases",
+          "start_private_broker",
+          "bootstrap_auth_and_database_roles",
+          "migrate_source",
+          "prepare_invented_ai_outbox",
+          "grant_scoped_source_tables",
+          "start_api_and_checkpoint_consumer",
+          "deliver_pinned_ai_outbox",
+          "cleanup_owned_project"
+        ],
+        "cleanup": "passed",
+        "owner": {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+          "sha256": {
+            "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "tools/intelligence-delivery/uv.lock": "d018fd51b6b176e707307179f5d8c953522b676349b053a98470e834261d3f58",
+            "tools/intelligence-delivery/pyproject.toml": "5e987ed95a72173684643104da194b58c58b9313bcb4075b495c0b401534f0cb",
+            "scripts/intelligence_outbox.py": "23a57559b3c15a9cf73b111afee41df9e616418fe82cc9bc21a7cf7f371e5212",
+            "contracts/events/v2/forecast_generated.fixture.json": "5801e52ff621df1762872b39ba8362ff5e58381839a4ece2915eac899d1dcbe3"
+          }
+        },
+        "source_commit": "6aa32845bb970f4315c030636c329fc098b9543a",
+        "first_delivery": {
+          "status": "completed",
+          "delivered": 1
+        },
+        "failure_stage": "verify_projection_and_negative_auth",
+        "failure_code": "durable_projection_not_complete",
+        "error_class": "RuntimeCommandError",
+        "completed_at": "2026-10-04T12:47:22.950182+00:00"
+      }
+    },
+    {
+      "commit": "cf00872b1f623193c49d168c9e7273344896bf85",
+      "run_id": 37203604097,
+      "job_id": 111440208854,
+      "runtime_job_status": "failed",
+      "diagnosis": "Actual AI delivery succeeded; Source consumer direct script invocation could not import app without PYTHONPATH. Reproduced locally and changed to python -m scripts.run_checkpointed_intelligence_consumer.",
+      "artifact_id": 11304101110,
+      "zip_sha256": "26a2ce0757b6e8f9692b40b38c9542e5d13896039967f1ecdd17ca0240927d96",
+      "report_sha256": "458662b3f3b3bfe53549acfe668c22aeb805436ee7384d6f54ee8a4a8a176cea",
+      "report": {
+        "version": "ai10-runtime-mechanics-1.0",
+        "evidence_class": "invented_transport_fixture",
+        "project": "retailops-ai10-runtime-3b3ed065960d",
+        "status": "failed",
+        "started_at": "2026-10-04T12:53:00.409096+00:00",
+        "stages": [
+          "build_pinned_images",
+          "start_owned_databases",
+          "start_private_broker",
+          "bootstrap_auth_and_database_roles",
+          "migrate_source",
+          "prepare_invented_ai_outbox",
+          "grant_scoped_source_tables",
+          "start_api_and_checkpoint_consumer",
+          "deliver_pinned_ai_outbox",
+          "cleanup_owned_project"
+        ],
+        "cleanup": "passed",
+        "owner": {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+          "sha256": {
+            "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "tools/intelligence-delivery/uv.lock": "d018fd51b6b176e707307179f5d8c953522b676349b053a98470e834261d3f58",
+            "tools/intelligence-delivery/pyproject.toml": "5e987ed95a72173684643104da194b58c58b9313bcb4075b495c0b401534f0cb",
+            "scripts/intelligence_outbox.py": "23a57559b3c15a9cf73b111afee41df9e616418fe82cc9bc21a7cf7f371e5212",
+            "contracts/events/v2/forecast_generated.fixture.json": "5801e52ff621df1762872b39ba8362ff5e58381839a4ece2915eac899d1dcbe3"
+          }
+        },
+        "source_commit": "d26d782530bed68ac8ec48ccd9fb386b037eda71",
+        "first_delivery": {
+          "status": "completed",
+          "delivered": 1
+        },
+        "failure_stage": "verify_projection_and_negative_auth",
+        "failure_code": "durable_projection_not_complete",
+        "error_class": "RuntimeCommandError",
+        "completed_at": "2026-10-04T12:55:13.268987+00:00"
+      }
+    },
+    {
+      "commit": "0212f0c78642ddcbad7b7a9947f65c86430cfa43",
+      "run_id": 37203968588,
+      "job_id": 111441295376,
+      "runtime_job_status": "failed",
+      "diagnosis": "Projection, outbox receipt, checkpoints and authenticated HTTP assertions completed; producer Fetch denial probe stopped on an earlier group authorization error. Probe now requires a separate topic authorization failure and never accepts the group denial as evidence of missing topic Read.",
+      "artifact_id": 11304081832,
+      "zip_sha256": "53012944259cfa4fba4734f058d0c4b245f79c7b3abc332fbabd6b397bfe55dd",
+      "report_sha256": "326bdd3721ee627ba006626df15652abe1f9d26947bd16e618e7304f51246686",
+      "report": {
+        "version": "ai10-runtime-mechanics-1.0",
+        "evidence_class": "invented_transport_fixture",
+        "project": "retailops-ai10-runtime-ae24958740ac",
+        "status": "failed",
+        "started_at": "2026-10-04T12:59:19.432560+00:00",
+        "stages": [
+          "build_pinned_images",
+          "start_owned_databases",
+          "start_private_broker",
+          "bootstrap_auth_and_database_roles",
+          "migrate_source",
+          "prepare_invented_ai_outbox",
+          "grant_scoped_source_tables",
+          "start_api_and_checkpoint_consumer",
+          "deliver_pinned_ai_outbox",
+          "cleanup_owned_project"
+        ],
+        "cleanup": "passed",
+        "owner": {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+          "sha256": {
+            "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "tools/intelligence-delivery/uv.lock": "d018fd51b6b176e707307179f5d8c953522b676349b053a98470e834261d3f58",
+            "tools/intelligence-delivery/pyproject.toml": "5e987ed95a72173684643104da194b58c58b9313bcb4075b495c0b401534f0cb",
+            "scripts/intelligence_outbox.py": "23a57559b3c15a9cf73b111afee41df9e616418fe82cc9bc21a7cf7f371e5212",
+            "contracts/events/v2/forecast_generated.fixture.json": "5801e52ff621df1762872b39ba8362ff5e58381839a4ece2915eac899d1dcbe3"
+          }
+        },
+        "source_commit": "8254737abd75c255472399285e827c540d306412",
+        "first_delivery": {
+          "status": "completed",
+          "delivered": 1
+        },
+        "failure_stage": "verify_projection_and_negative_auth",
+        "failure_code": "producer_fetch_denied",
+        "error_class": "RuntimeCommandError",
+        "completed_at": "2026-10-04T13:00:30.990909+00:00"
+      }
+    },
+    {
+      "commit": "75495ec8478ea4946487955ff7b58d03d7e5d6a3",
+      "run_id": 37204366455,
+      "job_id": 111442476658,
+      "runtime_job_status": "failed",
+      "diagnosis": "Producer Fetch correctly returned topic authorization failure; foreign group Consumer.committed returned a timeout rather than explicit authorization. Replaced with AdminClient.describe_consumer_groups, which must return GROUP_AUTHORIZATION_FAILED.",
+      "artifact_id": 11304067675,
+      "zip_sha256": "849fbfeac22cb878f0bcceeaa7a3c1a42c54ffbb61a0ecc48d739d2cfc4bc984",
+      "report_sha256": "1ecde8f852768c7934101a9cbd765bf91a7beb7ae88ab6ef27143a1bf0f186f3",
+      "report": {
+        "version": "ai10-runtime-mechanics-1.0",
+        "evidence_class": "invented_transport_fixture",
+        "project": "retailops-ai10-runtime-3501577d1b93",
+        "status": "failed",
+        "started_at": "2026-10-04T13:05:58.222974+00:00",
+        "stages": [
+          "build_pinned_images",
+          "start_owned_databases",
+          "start_private_broker",
+          "bootstrap_auth_and_database_roles",
+          "migrate_source",
+          "prepare_invented_ai_outbox",
+          "grant_scoped_source_tables",
+          "start_api_and_checkpoint_consumer",
+          "deliver_pinned_ai_outbox",
+          "cleanup_owned_project"
+        ],
+        "cleanup": "passed",
+        "owner": {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+          "sha256": {
+            "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "tools/intelligence-delivery/uv.lock": "d018fd51b6b176e707307179f5d8c953522b676349b053a98470e834261d3f58",
+            "tools/intelligence-delivery/pyproject.toml": "5e987ed95a72173684643104da194b58c58b9313bcb4075b495c0b401534f0cb",
+            "scripts/intelligence_outbox.py": "23a57559b3c15a9cf73b111afee41df9e616418fe82cc9bc21a7cf7f371e5212",
+            "contracts/events/v2/forecast_generated.fixture.json": "5801e52ff621df1762872b39ba8362ff5e58381839a4ece2915eac899d1dcbe3"
+          }
+        },
+        "source_commit": "781179a92a1ea39ca957ef16e0341e41f65a0d0b",
+        "first_delivery": {
+          "status": "completed",
+          "delivered": 1
+        },
+        "failure_stage": "verify_projection_and_negative_auth",
+        "failure_code": "foreign_group_denied_unexpected_error",
+        "error_class": "RuntimeCommandError",
+        "completed_at": "2026-10-04T13:07:10.736966+00:00"
+      }
+    }
+  ],
+  "scope": "invented mechanics output transport; actual pinned AI outbox migration/worker; AI publication parent storage double; real source migrations/checkpoint/projection/HTTP; no model qualification or promotion",
+  "untouched": {
+    "ai_main_head": "abf3f69a6a78c444b5a8a910fef8b3b43ba047a9",
+    "source_main_head": "599735a5fd13328e05f6100a07f644f4676e1ced",
+    "docker_daemon_started": false,
+    "sessions_ai07_ai08_changed": false
+  },
+  "remaining": [
+    "owner-qualified anomaly/stockout output schemas and results",
+    "full ML grain native snapshot export and source capture/replay handoff",
+    "full AI database/publication/runtime and supervision",
+    "automated owner revocation handoff",
+    "three real outputs in existing UI",
+    "102-day three-model cross-repo E2E"
+  ],
+  "superseded_runs": [
+    {
+      "commit": "8bb411aa1085e5b9cbee8b740192ddfe7c6e2b83",
+      "run_id": 37201538817,
+      "conclusion": "cancelled"
+    },
+    {
+      "commit": "f87341325c3ffb698fba83bf76df90c1cdece878",
+      "run_id": 37201980355,
+      "conclusion": "cancelled"
+    },
+    {
+      "commit": "a9c519f3c9af9c6ab3e66bb68b84205566d68319",
+      "run_id": 37203863216,
+      "conclusion": "cancelled"
+    }
+  ],
+  "production_identity_fix": {
+    "root_cause": "The real confluent_kafka.Uuid representation is unpadded standard Base64, including + and /. The earlier StreamIdentity validator rejected these valid topic identifiers.",
+    "behavior": "Accept + and / in topic IDs, preserve exact stored identifier, reject empty/zero IDs. No migration or normalization of existing checkpoints.",
+    "regressions": "Two tests construct actual SDK Uuid instances whose representations contain + and /; discovery ordering and real fixture readiness are also verified."
+  },
+  "runtime_acceptance": {
+    "status": "passed",
+    "job_id": 111443162184,
+    "artifact_id": 11304730545,
+    "zip_sha256": "a96f180a90e12f3ad728807de517f542a6ead298df49e830f2e425371f637d75",
+    "report_sha256": "ef1d7234916601392a8743fb38a0b289a522afa55347655c261ddabff1318e98",
+    "report": {
+      "version": "ai10-runtime-mechanics-1.0",
+      "evidence_class": "invented_transport_fixture",
+      "project": "retailops-ai10-runtime-f9478a101963",
+      "status": "passed",
+      "started_at": "2026-10-04T13:09:58.772467+00:00",
+      "stages": [
+        "build_pinned_images",
+        "start_owned_databases",
+        "start_private_broker",
+        "bootstrap_auth_and_database_roles",
+        "migrate_source",
+        "prepare_invented_ai_outbox",
+        "grant_scoped_source_tables",
+        "start_api_and_checkpoint_consumer",
+        "deliver_pinned_ai_outbox",
+        "verify_projection_and_negative_auth",
+        "kill_owned_consumer",
+        "simulate_delivery_after_broker_ack_before_db_receipt",
+        "redeliver_identical_ai_event",
+        "restart_owned_consumer",
+        "verify_durable_resume_and_exact_dedup",
+        "cleanup_owned_project"
+      ],
+      "cleanup": "passed",
+      "owner": {
+        "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+        "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+        "sha256": {
+          "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+          "tools/intelligence-delivery/uv.lock": "d018fd51b6b176e707307179f5d8c953522b676349b053a98470e834261d3f58",
+          "tools/intelligence-delivery/pyproject.toml": "5e987ed95a72173684643104da194b58c58b9313bcb4075b495c0b401534f0cb",
+          "scripts/intelligence_outbox.py": "23a57559b3c15a9cf73b111afee41df9e616418fe82cc9bc21a7cf7f371e5212",
+          "contracts/events/v2/forecast_generated.fixture.json": "5801e52ff621df1762872b39ba8362ff5e58381839a4ece2915eac899d1dcbe3"
+        }
+      },
+      "source_commit": "ea01346fd4c045e0a4f3213eed15d8b05c92cf81",
+      "first_delivery": {
+        "status": "completed",
+        "delivered": 1
+      },
+      "initial": {
+        "status": "passed",
+        "transport": [
+          {
+            "outcome": "projected",
+            "partition": 0,
+            "offset_number": 0
+          }
+        ],
+        "checkpoint": [
+          {
+            "partition": 0,
+            "next_offset": 1,
+            "coverage_start": 0
+          },
+          {
+            "partition": 1,
+            "next_offset": 0,
+            "coverage_start": 0
+          },
+          {
+            "partition": 2,
+            "next_offset": 0,
+            "coverage_start": 0
+          }
+        ],
+        "counts": {
+          "ai_forecast_results": 1,
+          "ai_intelligence_inbox": 1,
+          "ai_intelligence_partitions": 3
+        },
+        "prediction_id": "prediction-sha256-d3b002719177bdf489fbc1404ace26550da4d0f4809a89fab9af4ef8e53e7fd6",
+        "payload_sha256": "ce7716a4ea32413bbed3c383309ffd4e2c1cb4160661e24bb9303dd894bd4919",
+        "event_sha256": "b3af493f5283c822e944a08f9540ea17205d47eb49965b4f97f12f7ba2d8b54d",
+        "negative_auth": [
+          "consumer_write_topic_authorization_failed",
+          "producer_read_topic_authorization_failed",
+          "foreign_group_authorization_failed",
+          "foreign_topic_authorization_failed",
+          "workload_create_topic_authorization_failed",
+          "wrong_password_explicit_client_rejection",
+          "untrusted_ca_explicit_client_rejection",
+          "anonymous_cannot_obtain_kafka_metadata",
+          "anonymous_admin_403",
+          "workload_admin_403",
+          "source_credential_rejected_by_ai_database",
+          "ai_credential_rejected_by_source_database",
+          "ai_worker_cannot_create_roles",
+          "source_worker_cannot_create_roles",
+          "source_reader_cannot_create_roles",
+          "api_reader_cannot_delete_results"
+        ],
+        "http_checks": [
+          "anonymous_history_401",
+          "source_token_history_401",
+          "intelligence_token_source_401",
+          "active_head_unconfigured_503",
+          "original_unknown_freshness_preserved"
+        ]
+      },
+      "second_delivery": {
+        "status": "completed",
+        "delivered": 1
+      },
+      "final": {
+        "status": "passed",
+        "transport": [
+          {
+            "outcome": "projected",
+            "partition": 0,
+            "offset_number": 0
+          },
+          {
+            "outcome": "duplicate",
+            "partition": 0,
+            "offset_number": 1
+          }
+        ],
+        "checkpoint": [
+          {
+            "partition": 0,
+            "next_offset": 2,
+            "coverage_start": 0
+          },
+          {
+            "partition": 1,
+            "next_offset": 0,
+            "coverage_start": 0
+          },
+          {
+            "partition": 2,
+            "next_offset": 0,
+            "coverage_start": 0
+          }
+        ],
+        "counts": {
+          "ai_forecast_results": 1,
+          "ai_intelligence_inbox": 1,
+          "ai_intelligence_partitions": 3
+        },
+        "prediction_id": "prediction-sha256-d3b002719177bdf489fbc1404ace26550da4d0f4809a89fab9af4ef8e53e7fd6",
+        "payload_sha256": "ce7716a4ea32413bbed3c383309ffd4e2c1cb4160661e24bb9303dd894bd4919",
+        "event_sha256": "b3af493f5283c822e944a08f9540ea17205d47eb49965b4f97f12f7ba2d8b54d",
+        "negative_auth": [],
+        "http_checks": [
+          "anonymous_history_401",
+          "source_token_history_401",
+          "intelligence_token_source_401",
+          "active_head_unconfigured_503",
+          "original_unknown_freshness_preserved"
+        ]
+      },
+      "completed_at": "2026-10-04T13:11:21.733776+00:00"
+    },
+    "elapsed_seconds": 82.961
+  },
+  "git_evidence": {
+    "pr": 89,
+    "draft": true,
+    "head": "318d3704dc757390226066a197f6bee95571d31d",
+    "base": "ef8c29e4c90541671762504af071d9d97e9aeabb",
+    "ci_checkout": "ea01346fd4c045e0a4f3213eed15d8b05c92cf81",
+    "ci_parents": [
+      "ef8c29e4c90541671762504af071d9d97e9aeabb",
+      "318d3704dc757390226066a197f6bee95571d31d"
+    ],
+    "head_tree": "7d77246d72763230beaf76bd99398d2420fb7603",
+    "ci_tree": "7d77246d72763230beaf76bd99398d2420fb7603",
+    "identical_trees": true
+  },
+  "required_contract_job": {
+    "job_id": 111443139879,
+    "status": "passed",
+    "change_detector_tests": 16,
+    "immutable_input_tests": 11,
+    "runtime_controller_tests": 5
+  },
+  "completed_at": "2026-10-04T13:32:13.169343+00:00",
+  "required_ci": {
+    "run_id": 37204598373,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37204598373",
+    "successful_jobs": 27,
+    "total_jobs": 27,
+    "jobs": [
+      {
+        "id": 111443139879,
+        "name": "Required CI contract tests",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443139970,
+        "name": "Detect changed areas",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443161585,
+        "name": "Repository diff hygiene",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162004,
+        "name": "terraform-validation-gate / Terraform fmt, init and validate",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162028,
+        "name": "data-gate / AI 03 full cross-repo gate",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162075,
+        "name": "data-gate / AI 06 full cross-repo gate",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162079,
+        "name": "data-gate / Synthetic data quality gate",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162142,
+        "name": "frontend-gate / Frontend tests and lint",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162151,
+        "name": "iac-security-gate / TFLint IaC quality gate",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162184,
+        "name": "docker-gate / Authenticated cross-repo intelligence runtime",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162186,
+        "name": "api-gate / API integration tests",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162208,
+        "name": "docker-gate / Validate Docker Compose config",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162232,
+        "name": "security-gate / Filesystem vulnerability scan",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162234,
+        "name": "iac-security-gate / Checkov IaC security report",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162242,
+        "name": "security-gate / Backend image vulnerability scan",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162260,
+        "name": "security-gate / Secret scanning with Gitleaks",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162266,
+        "name": "security-gate / Frontend dependency audit",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162279,
+        "name": "security-gate / Python dependency audit",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162298,
+        "name": "security-gate / Frontend image vulnerability scan",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443162314,
+        "name": "kubernetes-gate / Kustomize, schema and policy gates",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443195899,
+        "name": "docker-gate / Build full stack and run smoke tests",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443205829,
+        "name": "frontend-gate / Build frontend application",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443269676,
+        "name": "frontend-gate / Build frontend Docker image",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443269941,
+        "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111443386719,
+        "name": "security-gate / Security evidence summary",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111446426294,
+        "name": "api-gate / API Docker image build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111446551223,
+        "name": "required-result",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "api_acceptance": {
+    "job_id": 111443162186,
+    "durability": {
+      "passed": 35,
+      "skipped": 0,
+      "seconds": 45.47
+    },
+    "broad_regression": {
+      "passed": 900,
+      "skipped": 0,
+      "seconds": 940.8
+    },
+    "total_distinct_tests": 935,
+    "coverage_percent": 87.09,
+    "assessment_subset": {
+      "passed": 21,
+      "seconds": 6.92,
+      "already_included_in_broad_regression": true
+    },
+    "mypy_source_modules": 22,
+    "mypy_runtime_files": 3
+  },
+  "additional_ci_artifacts": [
+    {
+      "id": 11304562004,
+      "name": "kubernetes-runtime-evidence",
+      "size_in_bytes": 74886,
+      "digest": "sha256:95c1dd7a15d8cb543b4e555ac445a5ca31201afab41152093a85d477c64add58",
+      "head_sha": "318d3704dc757390226066a197f6bee95571d31d",
+      "verification": "GitHub metadata only; not downloaded"
+    },
+    {
+      "id": 11304301738,
+      "name": "docker-compose-ci-evidence",
+      "size_in_bytes": 80717,
+      "digest": "sha256:c76e3069b576af9b18e33ca8520e97b25d260fe01c1e082d9ea9ab34530b3be4",
+      "head_sha": "318d3704dc757390226066a197f6bee95571d31d",
+      "verification": "GitHub metadata only; not downloaded"
+    },
+    {
+      "id": 11304023784,
+      "name": "api-image-build-evidence",
+      "size_in_bytes": 2166,
+      "digest": "sha256:8eaab2f54246c72a789fcbd1d4a7e827cfe1b8cf977273579b8e6c3a757ade4d",
+      "head_sha": "318d3704dc757390226066a197f6bee95571d31d",
+      "verification": "GitHub metadata only; not downloaded"
+    },
+    {
+      "id": 11303952660,
+      "name": "immutable-build-inputs",
+      "size_in_bytes": 3551,
+      "digest": "sha256:52a81387897ad4b253cc0d90cf762a0af51fc882c7bd225211afc3775ab94baa",
+      "head_sha": "318d3704dc757390226066a197f6bee95571d31d",
+      "verification": "GitHub metadata only; not downloaded"
+    },
+    {
+      "id": 11303919119,
+      "name": "api-coverage-evidence",
+      "size_in_bytes": 12634,
+      "digest": "sha256:6f12dd29b846f725f54d5256f196d94cff5719e6e86339cc4812b3a25d797b4a",
+      "head_sha": "318d3704dc757390226066a197f6bee95571d31d",
+      "verification": "GitHub metadata only; not downloaded"
+    }
+  ],
+  "owner_ref_observations": {
+    "kind": "read_only_committed_refs",
+    "ai07": "1a1916630fa3ed6601a27fec5b5feaf480fc9b1b",
+    "ai08": "077add2c2419c0bf5827be8a7f77a897507485c2",
+    "qualification_claim": false
+  }
+}

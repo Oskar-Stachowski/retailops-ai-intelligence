@@ -171,7 +171,7 @@ def create_app(
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     if anomaly_reader is None and knowledge_engine is not None:
-        anomaly_reader = PostgresResults(knowledge_engine)
+        anomaly_reader = PostgresResults(knowledge_engine, settings.app_env)
     readiness = Readiness(dependencies, settings.readiness_timeout_seconds)
     metrics = HttpMetrics()
     started = False

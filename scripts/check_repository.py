@@ -12,7 +12,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 CI_GROUPS = {
     "ci-checks": "lint type-check docs-check forecast-runtime-check contracts-check package compose-config",
-    "ci-source-inputs": "handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check",
+    "ci-source-inputs": "handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check observation-replay-check",
     "ci-qualified-inputs": "qualified-anomaly-inputs-check",
     "ci-detectors": "anomaly-detectors-check day-qualification-check",
     "ci-forecast": "forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check full-raw-dq-check",
@@ -36,7 +36,7 @@ def make_ci_errors(makefile: str) -> list[str]:
     return errors
 
 
-def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
+def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None) -> list[str]:
     errors = []
     events: dict[str, Any] = workflow.get("on") or workflow.get(True) or {}
     if not all(event in events for event in ("push", "pull_request", "workflow_dispatch")):
@@ -89,6 +89,20 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
             "make evaluations-smoke": "evaluation",
         },
     }
+    outbox_steps = jobs.get("persistence-forecast", {}).get("steps", [])
+    required_outbox_commands = (
+        "make intelligence-delivery-bootstrap",
+        "uv run --locked --project tools/intelligence-delivery python scripts/intelligence_outbox.py --help",
+        "make integration-replay-test integration-failure-test",
+    )
+    if not any(
+        not step.get("if")
+        and all(command in step.get("run", "").splitlines() for command in required_outbox_commands)
+        for step in outbox_steps
+    ):
+        errors.append(
+            "persistence-forecast must execute actual AI10 transactional outbox acceptance"
+        )
     for name, gates in persistence_gates.items():
         for command, description in gates.items():
             matching = [s for s in jobs.get(name, {}).get("steps", []) if s.get("run") == command]
@@ -128,8 +142,30 @@ def workflow_errors(workflow: dict[str | bool, Any]) -> list[str]:
     ):
         errors.append("acceptance must execute every unchanged gate")
     required = jobs.get("required-result", {})
+    if not any(
+        step.get("run") == "make bootstrap observation-persistence-test"
+        for step in jobs.get("observation-replay", {}).get("steps", [])
+    ):
+        errors.append("observation-replay must execute real PostgreSQL acceptance")
     if set(required.get("needs", [])) != set(jobs) - {"required-result"}:
         errors.append("required-result must depend on every check")
+    if not any(
+        step.get("run") == "make intelligence-delivery-bootstrap observation-broker-test"
+        for step in jobs.get("observation-broker", {}).get("steps", [])
+    ):
+        errors.append("observation-broker must execute actual authenticated transport acceptance")
+    makefile = (ROOT / "Makefile").read_text() if makefile is None else makefile
+    broker_target = re.search(r"^observation-broker-test:\n\t([^\n]+)", makefile, re.MULTILINE)
+    if broker_target is None or not all(
+        required in broker_target.group(1)
+        for required in (
+            "REQUIRE_AI10_OBSERVATION_BROKER_TESTS=1",
+            "AI10_OBSERVATION_BROKER_REPORT=artifacts/ai10-observation-broker.json",
+            "tests/test_observation_broker_runtime.py",
+            "--junitxml=artifacts/ai10-observation-broker-tests.xml",
+        )
+    ):
+        errors.append("observation-broker target must require runtime execution and evidence")
     if required.get("if") != "always()":
         errors.append("required-result must run even after a failure")
     result_steps = required.get("steps", [])

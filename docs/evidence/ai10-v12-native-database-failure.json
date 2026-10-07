@@ -1,0 +1,65 @@
+{
+  "Source_API_UI_attested": false,
+  "ai_commit": "8665f43005abe972c55e3e36225a7d9f4f6474bd",
+  "artifact": {
+    "id": 11481172873,
+    "size_bytes": 96086,
+    "zip_sha256": "d2869d8a3bcf2bd01fbac09c82bc72fbbbd02f00825e1cfac453affa05082f91"
+  },
+  "boundary_tests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 254
+  },
+  "cleanup": {
+    "original_S3_preserved": true,
+    "own_handoff_objects_removed": 6,
+    "own_unique_secret_removed": true
+  },
+  "evidence_boundary": "full original qualification and cold probes, ten approval gates, actual complete 664-file MLflow HTTP import and development registry/preload passed; actual API intake failed its isolated AI database user/name guard; original SQL publisher and Source API/UI not accepted",
+  "file_sha256": {
+    "acceptance-proofs/recovered-byte-census.json": "7013de11dba1d87c2e3286b8e8f7ec4d4a69afe4802166071e2f512019fbe1af",
+    "acceptance-proofs/secrets.json": "e9594b0766f992b500d06d77131c4d94463d2705e155b6e26b8f03713b66b7f2",
+    "acceptance-proofs/tests.xml": "33a50a223abd79e127a7ca1ca1f062074e7d3b5989152973ce222c0b7407ba54",
+    "accepted-v12/acceptance.json": "27a873a5186a89b52c5e5fb3cd85f4ca5145657f17bde9bf61a0ffe4b60113fe",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/inputs.json": "1b394b8fdfa82b172943797229ad37cf7e7f82b29fdd8c49b95ee1c00e4a2632",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/qualification.json": "6803d9027e55ef8840d8746117b24918f242f7452aaaf9d638bcd6cd9594e6cd",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/release.json": "08ef93e0be734d9adf02bc47ce8525adcb8c948d76c2bb2368a3b40c847c0e84",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/reports/features.json": "f74f180fe099bee3b24bc1266c43082cf5b60423ab034abfc5d239bc95f14019",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/reports/freshness_drift_compatibility.json": "8e723d1fc919023bfa8c9d99dedbaed19461ce89f4032677337a41a81626a4fe",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/reports/model_card.json": "a436fdb16a6f423f97c33fc039902358bb4f12d1246d58a13eccfc74a684526c",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/reports/pit.json": "8e8e7b07d23fa9baca606e1e21e9c20fe7cd2a2a39c14a7572889e82c0f08a13",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/reports/protocol.json": "6b784416e5c927c5aadfeffdecd1dc3469a3c1d04492b0489e083ab0ef538ef7",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/reports/resources.json": "7ef4da9260371eaca5fcf566ef1e3df557c69fe3cb5dff59ffdca9e87d926c12",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/reports/security_license.json": "46f7a992b9d59e60231b7f33af859d5b526561efb1b04540be5e9b68841bfc01",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/reports/segments.json": "bc36a0520ed4851c4c96cbc4f462d3a0e790bda9d029779162e51d8e526bbf03",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/reports/signature.json": "a90491c8c16c7f3d1a9caa03a8203fd5a0debdfddcf9c6fcf25e4892fcf38d2d",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/reports/source.json": "0bdd5e43e7684555686bcb8e3e5a76daba0cea3edce4f79c17e1d5f1b2a90a95",
+    "accepted-v12/approved-release/v12-inference-release-sha256-e7ee34495ba7364f7484548799fc1525f4082f86d429632679e0e9d63bd0dc00/smoke.json": "95db2254a7fa49d38c2ce59a2ac3dfc6e1e263deebfc5ef59c08acc152cab534",
+    "accepted-v12/frozen-recipe.json": "d14f3167aa0d6945d12750ce9d762e7c8bb6178e1045137d74a81201103e42e6"
+  },
+  "job_id": 112763107955,
+  "original_AI_SQL_publisher_attested": false,
+  "report": {
+    "exception_type": "CorpusError",
+    "failed_stage": "actual_authenticated_intake_cold_worker_atomic_publication_and_outbox",
+    "failure_category": "isolated_ai_database_required",
+    "model_refits": 0,
+    "original_quality_reclassified": false,
+    "original_quality_status": "not_ready",
+    "owned_containers_and_anonymous_volumes_removed": true,
+    "production_deployed": false,
+    "stages": [
+      "full_original_qualification_and_two_frozen_cold_predictions",
+      "ten_actual_review_gates_and_full_original_approval",
+      "real_owned_pg16_mlflow_and_full_original_http_import",
+      "real_development_registration_promotion_and_preload_before_intake"
+    ],
+    "status": "failed"
+  },
+  "source_commit": "1a7f558d718ed3dddaed277c07ccfd7d023f34ce",
+  "status": "failed",
+  "version": "ai10-v12-native-database-failure-1.0",
+  "workflow_run_id": 37612565927
+}

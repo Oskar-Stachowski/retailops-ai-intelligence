@@ -37,6 +37,10 @@
       "scope": "package_command_resolution",
       "reason": "uv absent from shell PATH; corrected using existing workspace tool binary",
       "corrected_build": "passed"
+    },
+    {
+      "scope": "post_main_integration_test_command",
+      "reason": "Requested a nonexistent test filename; no tests ran; corrected file inventory then 93 passed"
     }
   ],
   "integrated_regression": {
@@ -51,12 +55,12 @@
     "generation_pr": 35,
     "generation_head": "d81e78acbaf3f2ca87f6f3f7c205e4629a494949",
     "generation_ci": 37638548322,
-    "generation_ci_state": "live",
+    "generation_ci_state": "success_15_of_15",
     "source_pr": 103,
     "source_head": "16d34887b058b3dfb270af474f28242194a968ca",
     "source_ci": 37637743439,
-    "source_ci_state": "live",
-    "final_export_published": false
+    "source_ci_state": "success_all_23_jobs_19_success_4_intentional_skips",
+    "final_export_published": true
   },
   "cached_capacity_recipe": {
     "version": "1.2.0",
@@ -90,5 +94,31 @@
     "built": true,
     "python_module_byte_parity": 506,
     "v14_schema_byte_parity": 5
+  },
+  "latest_publication": {
+    "final_export_pr": 36,
+    "previous_final_export_head": "cd6106a9c0dfb6d8605bbc9ee465c7523e8c38d7",
+    "previous_final_export_ci": 37642451429,
+    "previous_final_export_ci_jobs_success": 15,
+    "integrated_generation_head": "4238b2fc9218410a53dbbe6b485109dae8757418",
+    "generation_exact_ci": 37650879421,
+    "generation_exact_ci_pending": true,
+    "source_integrated_head": "a28101bfcf8bc010c32ef28427a8cca19ebf7d9e",
+    "source_integrated_ci": 37646475371,
+    "source_integrated_ci_success": 21,
+    "source_integrated_ci_intentional_skips": 4,
+    "new_exact_final_export_ci_required": true,
+    "main_publication_complete": false,
+    "source_protected_merge_commit": "b7234899769119c67f27a62867c1d2153dbd6a00",
+    "source_exact_main_ci": 37651259188,
+    "source_exact_main_ci_pending": true,
+    "post_main_integration_validation": {
+      "tests_passed": 93,
+      "tests_seconds": 64.7,
+      "mypy_source_files": 665,
+      "ruff_and_format": "passed",
+      "source_bundle_contract": "passed",
+      "evaluation_schemas": "passed"
+    }
   }
 }

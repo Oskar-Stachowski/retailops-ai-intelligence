@@ -1,0 +1,257 @@
+{
+  "$defs": {
+    "Boundary": {
+      "additionalProperties": false,
+      "properties": {
+        "next_offset": {
+          "maximum": 9223372036854775807,
+          "minimum": 0,
+          "title": "Next Offset",
+          "type": "integer"
+        },
+        "partition": {
+          "maximum": 31,
+          "minimum": 0,
+          "title": "Partition",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "partition",
+        "next_offset"
+      ],
+      "title": "Boundary",
+      "type": "object"
+    },
+    "ObservationVersion": {
+      "additionalProperties": false,
+      "properties": {
+        "available_at": {
+          "format": "date-time",
+          "title": "Available At",
+          "type": "string"
+        },
+        "business_date": {
+          "format": "date",
+          "title": "Business Date",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online",
+            "marketplace",
+            "wholesale"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "history_policy_version": {
+          "const": "observed-quantity-history-1.0.0",
+          "title": "History Policy Version",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "observation_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Observation Id",
+          "type": "string"
+        },
+        "observation_status": {
+          "enum": [
+            "observed_positive",
+            "observed_zero",
+            "closed",
+            "missing"
+          ],
+          "title": "Observation Status",
+          "type": "string"
+        },
+        "observed_units": {
+          "anyOf": [
+            {
+              "maximum": 9223372036854775807,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed Units"
+        },
+        "product_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "version": {
+          "maximum": 9223372036854775807,
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "observation_id",
+        "business_date",
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "version",
+        "observed_units",
+        "observation_status",
+        "available_at",
+        "history_policy_version"
+      ],
+      "title": "ObservationVersion",
+      "type": "object"
+    },
+    "Receipt": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "event_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Event Sha256",
+          "type": "string"
+        },
+        "fact_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fact Sha256",
+          "type": "string"
+        },
+        "offset": {
+          "exclusiveMaximum": 9223372036854775807,
+          "minimum": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "partition": {
+          "maximum": 31,
+          "minimum": 0,
+          "title": "Partition",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "partition",
+        "offset",
+        "event_id",
+        "event_sha256",
+        "fact_sha256"
+      ],
+      "title": "Receipt",
+      "type": "object"
+    },
+    "Stream": {
+      "additionalProperties": false,
+      "properties": {
+        "cluster_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._:-]+$",
+          "title": "Cluster Id",
+          "type": "string"
+        },
+        "source_authority_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Source Authority Id",
+          "type": "string"
+        },
+        "topic": {
+          "const": "retailops.source-observations.v1",
+          "default": "retailops.source-observations.v1",
+          "title": "Topic",
+          "type": "string"
+        },
+        "topic_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9._:+/-]+$",
+          "title": "Topic Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_authority_id",
+        "cluster_id",
+        "topic_id"
+      ],
+      "title": "Stream",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "boundaries": {
+      "items": {
+        "$ref": "#/$defs/Boundary"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "Boundaries",
+      "type": "array"
+    },
+    "capture_id": {
+      "pattern": "^observation-capture-sha256-[0-9a-f]{64}$",
+      "title": "Capture Id",
+      "type": "string"
+    },
+    "receipts": {
+      "items": {
+        "$ref": "#/$defs/Receipt"
+      },
+      "maxItems": 20000,
+      "title": "Receipts",
+      "type": "array"
+    },
+    "rows": {
+      "items": {
+        "$ref": "#/$defs/ObservationVersion"
+      },
+      "maxItems": 10000,
+      "title": "Rows",
+      "type": "array"
+    },
+    "stream": {
+      "$ref": "#/$defs/Stream"
+    },
+    "table": {
+      "const": "daily_demand_versions",
+      "default": "daily_demand_versions",
+      "title": "Table",
+      "type": "string"
+    },
+    "version": {
+      "const": "source-observation-capture-1.0",
+      "default": "source-observation-capture-1.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "stream",
+    "boundaries",
+    "rows",
+    "receipts",
+    "capture_id"
+  ],
+  "title": "Capture",
+  "type": "object"
+}

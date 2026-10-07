@@ -123,8 +123,8 @@ Przed wdrożeniem wymagany jest odbiór całego rzeczywistego przepływu.
 Migracja kolejki to **`0016_v12_queue`**, po `0015_v12_lifecycle`.
 Po kolejce dodano `0017_v12_outputs` opisany w [publikacji v12](forecast-v12-publication.md)
 oraz `0018_v12_evaluations` w [katalogu i ocenach](forecast-v12-metadata.md).
-Aktualny wymagany head to `0020_stockout_lifecycle`, opisany w
-[wspólnym mechanizmie stockout/v12](reference/stockout-lifecycle.md).
+Aktualny wymagany head to `0025_model_intelligence_outbox`, łączący v12/stockout/anomaly
+z [integracją AI 10](intelligence-integration-v2.md). Istniejących stosów innych sesji nie migruj.
 Tabele `ai.v12_batch_runs`, `ai.v12_batch_attempts` i `ai.v12_batch_receipts`
 są oddzielne od kolejki/publikacji v1. Readiness i wspólny DB guard wymagają
 jawnej migracji według [runbooka Compose](local-stack.md). Trwałego stosu

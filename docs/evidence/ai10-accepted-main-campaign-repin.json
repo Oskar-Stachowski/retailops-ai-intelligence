@@ -1,0 +1,47 @@
+{
+  "accepted_main_commit": "e1f864c33678f2bed65b550e7676c21a21934e35",
+  "changed_shared_files": {
+    "data_contracts/identity.py": {
+      "accepted_main_sha256": "c746a7bd508459dd042fc384384df5a05da3877e906d04657387dacf3fab8704",
+      "previous_sha256": "af0127e976a9c25b3289b5e96728b781a9afe4d56a273e57170ab97c047f8976"
+    },
+    "forecasting/features_store.py": {
+      "accepted_main_sha256": "d72b86bfcf2edb3673c4d5c5d4721ad7d8178b7a413ab526fbafaf1471978912",
+      "previous_sha256": "6f6ccfe1a4e1e22cf502e6c001a36d71a3b4afb133cd4798c343c3cff9541625"
+    }
+  },
+  "current_pin_sha256": "d0df4db9a143e8e0dd5573dec8f55e5f6650da88af0dae61c800230d6d09c2ef",
+  "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "local_compatibility": {
+    "HTTP_bundle_fixture_tables": 25,
+    "all_contracts_checked": true,
+    "counts": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 141
+    },
+    "junit_sha256": "6ca84c99a686bff09ff3350b351bd32c5e02d5ca5132933cc85621cf287fa29c",
+    "lint_formatted_files": 1107,
+    "mypy_modules": 654,
+    "native_importer_wire_schema_and_lock_files_unchanged": 26,
+    "native_namespace_mypy_modules": 10,
+    "original_frozen_reference_files_unchanged": true,
+    "tests": [
+      "tests/test_canonical_identity_parity.py",
+      "tests/test_forecast_input_origin_validation.py",
+      "tests/test_source_bundle.py",
+      "tests/test_forecast_source_replay.py"
+    ]
+  },
+  "model_refits": 0,
+  "original_frozen_v12_campaign_pin_sha256": "8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011",
+  "original_quality_reclassified": false,
+  "original_v12_wheel_sha256": "c56a18ce09e0007bcd0f9e571541de4d8fe1d1e644a39e18b4973e15c122a14f",
+  "previous_integration_commit": "b0e51984a68bcb84c5858fd405be93e07d56fc3e",
+  "previous_pin_sha256": "cdbd3c1307bb8c3d07b2325f7166d2061ed4a017a4f20bf7f42e1e79b5039b35",
+  "recorded_date": "2026-10-07",
+  "scope": "integration guard for unchanged bundle transfer against accepted current main implementation; not a replacement of frozen v12 scientific evidence",
+  "status": "passed",
+  "version": "ai10-accepted-main-campaign-repin-1.0"
+}
