@@ -117,7 +117,7 @@ def original_database_binding(docker: str, base: list[str], project: str) -> str
         and 0 < int(mappings[0]["HostPort"]) <= 65535,
         "anomaly_original_database_loopback_required",
     )
-    return "127.0.0.1:" + mappings[0]["HostPort"]
+    return "127.0.0.1:" + str(mappings[0]["HostPort"])
 
 
 def extract_capsule(path: Path, output: Path, expected: dict[str, Any]) -> None:
