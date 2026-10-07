@@ -1134,6 +1134,11 @@ zmieniana na v1. [Opis](assistant-suggestion-outbox.md),
 [odbiór](evidence/12-suggestion-outbox.md). Aktywna rodzina kandydatów to
 `.suggestion-outbox.v1`; wcześniejsze rodziny i dowody pozostają niezmienione.
 
+Main `b0e2de1` z audytowanym eksporterem AI09 v14 scalono wyłącznie w gałęzi
+AI12. Zachowano oba zestawy kontraktów w wheel i odświeżono aktywne przypięcia.
+Poprzedni head `6b05497` zakończył Required CI **17/17 success**; bieżący przyrost
+wymaga osobnego odbioru CI.
+
 Stan nadal **in_progress**, PR32 pozostaje draft. Faktyczne dostarczenie do
 Source/UI, odbiór natywnej polityki, etykiety oraz AWS/LLM pozostają otwarte.
 Nie uruchamiano brokera, AWS ani usług AI10 i nie zmieniano sąsiednich sesji.

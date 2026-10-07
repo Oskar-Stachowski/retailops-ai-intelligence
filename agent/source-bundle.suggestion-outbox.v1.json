@@ -29,7 +29,7 @@
   "integration_campaign_pin_sha256": "9c9ec5212d640ad10e75e222300b48c0f97887861b6741357fdd443c382099f5",
   "integration_dependency_lock_sha256": "a9eed66c2fe18a55cdcb639e8c3dcd74d2e3f66f1a4d45e64ba84a364c3b1933",
   "owner_dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
-  "owner_main": "16a02aecbc4f9558e8222c02ad5a24d82745545b",
+  "owner_main": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
   "owner_model_code_unchanged": true,
   "owner_pin_sha256": "8420886f75c46c97d991f9f2c89a35ace4209ec14d0dedf06f69d7da7c860efc",
   "scope": "Current assistant integration guard only; original model quality and owner acceptance are unchanged.",

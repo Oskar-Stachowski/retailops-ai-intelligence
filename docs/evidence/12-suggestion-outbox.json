@@ -3,36 +3,31 @@
   "candidate_family": "suggestion-outbox.v1",
   "ci_checks": {
     "compose_config_only": true,
-    "log_sha256": "b89889102b62291034749cdbf4889f71216d5b84efdcd2df2e0b03fb6d6b1669",
+    "log_sha256": "e70e3385c6933697dbfcc6a73da24722d56d03ac13d3c90147faf988b51c18b1",
     "status": "passed"
   },
   "ci_collection": {
-    "cases": 4812,
+    "cases": 4833,
     "collection_only": true,
     "every_case_once": true,
-    "files": 217,
-    "sha256": "b21472d2ec05983c8aae3d720239bbff2fe84a371e70b4539dd2f9fbf5134e2c",
+    "files": 218,
+    "sha256": "31f68949a1ad6fb9a3111cfb7749affe181fc927fa74d28f78ca5584ba53e4fb",
     "shards": 4
   },
-  "code_sha256": "e8e17b680ea85f3b55dfc000b0e0cac3146d0370513cc7873fce35d26dcd6d2c",
-  "evaluation_release_id": "agent-evaluation-release-sha256-46bf4635fa38f1f17130306731a81be6f0f2d8dc6c763dd521600185cae2f4e8",
-  "final_format_regression": {
-    "collected": 169,
-    "failures": 0,
-    "passed": 169,
-    "sha256": "8fb3268422386c4574956308ff4b71d50baff8212a2305844c57553339bc5858",
-    "skipped": 0
-  },
-  "integrated_main": "16a02aecbc4f9558e8222c02ad5a24d82745545b",
+  "code_sha256": "4ee93c6bbd9dbb29708dc16f34f45e691319b12473ebc0b144cf37d3c5f8b64f",
+  "evaluation_release_id": "agent-evaluation-release-sha256-446f6f1d277a8e413e84b2e65c8a49967020316470bd7c9e481b739ad018d468",
+  "implementation_commit": "cd578d1",
+  "integrated_main": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
   "limitations": [
     "Broker callbacks are scripted; no live broker or Source projection/UI was qualified.",
     "Only pinned Source v1 review payloads are transportable; native-v2 acceptance remains open.",
     "A broker ACK before a SQL crash can repeat identical event bytes; Source must deduplicate by event ID.",
     "Independent labels/policy, current Source/model publication, operational observations and AWS/LLM remain open."
   ],
+  "main_integration_commit": "b39edbb",
   "model_refits": 0,
   "native_http_sql_acceptance": {
-    "application_code_sha256": "e8e17b680ea85f3b55dfc000b0e0cac3146d0370513cc7873fce35d26dcd6d2c",
+    "application_code_sha256": "4ee93c6bbd9dbb29708dc16f34f45e691319b12473ebc0b144cf37d3c5f8b64f",
     "authorized_trace_restart": "passed",
     "aws_executed": false,
     "canonical_forecast_and_stockout_sql": "missing_outputs_preserved",
@@ -61,14 +56,14 @@
     "positive_model_publication": "not_qualified_by_this_run",
     "producer_write_denied": true,
     "query_duration_seconds": [
-      0.5428076249954756,
-      0.45588120800675824,
-      0.001123458001529798,
-      0.0010888749966397882,
-      0.4436850000056438,
-      0.4636015839932952,
-      0.47206075000576675,
-      0.47177258400188293
+      1.4310610000102315,
+      0.780958165996708,
+      0.0025750420027179644,
+      0.0017955420044017956,
+      0.7998257500003092,
+      0.8501857920055045,
+      0.906927292002365,
+      0.9987808340083575
     ],
     "semantic_quality": "not_evaluated_fake_vectors",
     "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09",
@@ -87,7 +82,36 @@
     "utc_readiness_rejection": true
   },
   "neighbor_worktrees_modified": false,
-  "new_head_remote_ci": "pending_publication",
+  "new_head_remote_ci": "pending_new_published_head",
+  "post_main_integration_regression": {
+    "failure_disposition": "Six AI09 process-inspection cases were denied by the macOS sandbox; the complete affected file passed with owned-process inspection permitted. No implementation change was required.",
+    "final_failures": 0,
+    "passed": 400,
+    "runs": [
+      {
+        "collected": 400,
+        "failures": 6,
+        "passed": 394,
+        "sha256": "698834aea354159bac798a730924b462f063c3c713ed74a365d57fc7fe043fc2",
+        "skipped": 0
+      },
+      {
+        "collected": 21,
+        "failures": 0,
+        "passed": 21,
+        "sha256": "2ab470b697e40ec9d14cd9d086ab0e31096eb4e75eeeb371df1fc6b2f84998a9",
+        "skipped": 0
+      }
+    ],
+    "unique_cases": 400
+  },
+  "pre_main_integration_regression": {
+    "collected": 899,
+    "failures": 0,
+    "passed": 898,
+    "sha256": "c3f4154fdb9b38c3166f56ecbad65ba09a13d4c0d2bb959a547ee5ca3799d877",
+    "skipped": 1
+  },
   "preserved": {
     "dependency_locks": [
       "uv.lock",
@@ -111,18 +135,11 @@
   },
   "published_base": "6b05497904a4b36915c5d1c5978edcd35dd4945d",
   "recorded_date": "2026-10-07",
-  "regression": {
-    "collected": 899,
-    "failures": 0,
-    "passed": 898,
-    "sha256": "c3f4154fdb9b38c3166f56ecbad65ba09a13d4c0d2bb959a547ee5ca3799d877",
-    "skipped": 1
-  },
   "secrets": {
     "history": "passed",
-    "history_log_sha256": "6d9c2610fb562bdcec4d7d4665a6d7b422ad1f05bfde363ea6061a67b0d59fb6",
+    "history_log_sha256": "ab5823c78519675d271be2204eed9f7c6f63c620572c661ad314c5dcc0a84951",
     "tree": "passed",
-    "tree_log_sha256": "3095f375022abf9d152de9712bd1f3e717182ca038c9d2c2d3fae030f6aa87de"
+    "tree_log_sha256": "54ab0b3b769d71042de1b3251072b70831b4b7527efd4009dcc66b30677a0903"
   },
   "shared_services_started": false,
   "source_contract": {
@@ -143,7 +160,7 @@
   },
   "source_projection_executed": false,
   "sql_acceptance": {
-    "application_code_sha256": "e8e17b680ea85f3b55dfc000b0e0cac3146d0370513cc7873fce35d26dcd6d2c",
+    "application_code_sha256": "4ee93c6bbd9dbb29708dc16f34f45e691319b12473ebc0b144cf37d3c5f8b64f",
     "atomic_completion": true,
     "aws_executed": false,
     "competing_workers_skip_locked": true,
@@ -157,8 +174,8 @@
     "source_projection_executed": false,
     "status": "passed",
     "stored_lifecycle_counts": {
-      "delivered": 28,
-      "expired": 6,
+      "delivered": 29,
+      "expired": 5,
       "pending": 1
     }
   },
@@ -166,7 +183,7 @@
     "collected": 19,
     "failures": 0,
     "passed": 19,
-    "sha256": "d2e384a1f5c87abc2cf388597318ca49f8bad69b3ae3029a0a11db6cdd4f3dc9",
+    "sha256": "66a1ced7caeb37dcd7832e33ed9f497db74adcdbd8575a85959700bed8176dc5",
     "skipped": 0
   },
   "stage": "AI12",
@@ -181,7 +198,7 @@
         "total": 50,
         "value": 1.0
       },
-      "code_sha256": "e8e17b680ea85f3b55dfc000b0e0cac3146d0370513cc7873fce35d26dcd6d2c",
+      "code_sha256": "4ee93c6bbd9dbb29708dc16f34f45e691319b12473ebc0b144cf37d3c5f8b64f",
       "critical_cases": {
         "passed": 36,
         "total": 36,
@@ -206,9 +223,9 @@
       "provider": "fake",
       "status": "passed"
     },
-    "python_modules_equal_to_checkout": 593,
+    "python_modules_equal_to_checkout": 596,
     "runtime_locks_equal_to_checkout": 2,
-    "sha256": "59169f419269fe107ad4121138cf389da69a5e7d1513ad8d08d94dd9b4c1d8c5",
+    "sha256": "28f581dbc2d5ba0fee9f44d8ea3c018507ff35472387cc18ca4fee9c04843ea6",
     "source_contract_files_equal_to_checkout": 6
   }
 }
