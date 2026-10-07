@@ -17,8 +17,10 @@ kwalifikowany model, rzeczywisty lifecycle/batch/API oraz zielone CI obu main.
 **AI 10: końcowa integracja w toku.**
 [Bieżący odbiór i instrukcja krok po kroku](docs/ai10-acceptance.md) obejmują
 snapshot/REST/stream, real SQL/ACK i wyniki trzech ścieżek ML w RetailOps API/UI.
-Oryginalne publishery SQL stockout i anomaly są odebrane; pełny v12 jest w odbiorze.
-Publikacja na obu `origin/main` pozostaje warunkiem zamknięcia.
+Kod jest na obu `origin/main`, z pełnym zielonym Required CI: AI 17/17 i Source 30/30.
+Oryginalne publishery SQL stockout i anomaly są odebrane. V12 ma 56 oryginalnych
+wyników i atomowy rollback; pełny odbiór oryginalnego publishera przez Source
+oraz końcowa publikacja dokumentacji `ready` pozostają wymagane.
 
 **Status: AI 04 — finalna v12, `ready` z zaakceptowanymi odstępstwami jakościowymi.**
 [Decyzja i zakres odbioru](docs/evidence/04-v12-acceptance.md) obowiązują po

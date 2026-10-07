@@ -1,14 +1,14 @@
 # AI 10 — odbiór integracji RetailOps
 
-Aktualizacja: 2026-10-07. **Status: in_progress.** Bieżące PR-y:
+Aktualizacja: 2026-10-07. **Status: in_progress.** Kod opublikowano przez PR-y:
 [AI #28](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/28)
 i [Source #100](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/100).
 Status `ready` wymaga wszystkich dowodów niżej oraz chronionego merge i zielonego
 Required CI obu `origin/main`. Szczegóły starszych przyrostów zachowuje
 [historia](ai10-progress.md); wcześniejsze receipts nie są przepisywane.
-Pełne Required CI komponentów Source `cbbf711` zaliczyło wszystkie 30 jobów:
-[receipt](evidence/ai10-source-components-ci.json). Końcowe heady dokumentacji
-i oba opublikowane main wymagają własnego potwierdzenia.
+[Pełny CI main AI `2dc0a5b`](evidence/ai10-ai-code-main-ci.json) ma 17/17 success,
+[pełny CI main Source `467f990`](evidence/ai10-source-code-main-ci.json) 30/30 success.
+Pełny oryginalny V12 i końcowe heady dokumentacji pozostają wymagane.
 [Raport bounded odbioru](evidence/ai10-bounded-acceptance.json) wiąże SHA
 wszystkich receipts, sumy przed/po korekcie, offsety i jawne pending gates.
 
@@ -22,10 +22,10 @@ wszystkich receipts, sumy przed/po korekcie, offsety i jawne pending gates.
 | Stream obserwacji | Source SQL outbox i capture pełnego TLS/SCRAM prefixu; osobny AI SQL, checkpoint, ACK, overlap i późna korekta | **Passed**: [oryginalny receipt](evidence/ai10-source-sql-handoff-accepted.json), 9 testów, sumy 4 → 7, ACK `[0,0,3]` → `[0,0,4]` |
 | Qualified stockout | Frozen model, registry/cold worker, oryginalny publisher AI SQL i 40 ACK, Source SQL/API i built UI | **Passed**: [oryginalny SQL receipt](evidence/ai10-native-stockout-original-sql-accepted.json), 40 wyników/40 duplikatów, ACK `[34,46]` |
 | Qualified anomaly | Oryginalny model AI07, OCI/registry/SIGKILL recovery, oryginalny publisher SQL i 1232 ACK, Source SQL/API i 25 stron built UI | **Passed**: [oryginalny SQL receipt](evidence/ai10-native-anomaly-original-sql-accepted.json), 1232 wyników/1232 duplikatów, ACK `[1064,1400]` |
-| Oryginalny forecast v12 | 664 oryginalne pliki i frozen wheel, nowy Source 102 dni/43 tabele, 56 wyników/4 szeregi/horyzont 14, MLflow/SQL/publisher/Source API/UI | Archiwum [passed](evidence/ai10-original-v12-recovered.json); pełny native runtime pending |
+| Oryginalny forecast v12 | 664 oryginalne pliki i frozen wheel, nowy Source 102 dni/43 tabele, 56 wyników/4 szeregi/horyzont 14, MLflow/SQL/publisher/Source API/UI | 262 boundary tests i oryginalne 56 wyników/atomic rollback passed; [Source failed](evidence/ai10-v12-native-source-consumer-failure.json); pełny odbiór pending |
 | Awarie i trwałość | Brak ACK przed SQL commit, SIGKILL po commit, fencing, gaps, raw quarantine, niedostępne SQL/broker/DLQ i recovery | Odebrane obowiązkowe komponenty; [SQL](ai10-durable-observation-replay-ci-receipt.json), [TLS broker](ai10-observation-broker-ci-receipt.json), [checkpoints](ai10-checkpoint-ci-receipt.json) |
 | Sugestie | Jawny poprawny fixture, human approval, auth, trwałe read API i istniejący UI | Odebrany zakres AI10; rzeczywisty producent należy do AI12: [receipt](ai10-suggestion-ui-ci-receipt.json) |
-| Publikacja | Oba dokładne HEAD, Required CI, protected merge, Required CI obu main | Pending |
+| Publikacja | Oba dokładne HEAD, Required CI, protected merge, Required CI obu main | Kod #28/#100 i main CI 17/30 passed; końcowa dokumentacja ready pending |
 
 Każdy receipt podaje własny dokładny commit i run ID. Ich zestaw jest odbiorem
 integracji; nie jest nowym wspólnym eksperymentem jakości trzech modeli.

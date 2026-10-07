@@ -6,41 +6,52 @@ AI 07 i AI 08 są **ready** na zaakceptowanym main AI
 historyczne przyrosty z 4–5 października; ich oceny gotowości 07/08 nie są
 bieżącymi blockerami. Oryginalne receipts zachowano bez zmian.
 
-Bieżąca integracja jest na `ai/10-ready` w PR-ach:
+Kod integracji opublikowano normalnym chronionym merge:
 [AI #28](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/28)
-i [RetailOps #100](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/100).
-Wszystkie wcześniej odebrane przyrosty połączono z zaakceptowanym main.
-Nie przeniesiono jeszcze tego etapu na `origin/main`.
+na `2dc0a5b` i [RetailOps #100](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/100)
+na `467f990`. [CI main AI](evidence/ai10-ai-code-main-ci.json) ma 17/17 success,
+a [CI main Source](evidence/ai10-source-code-main-ci.json) 30/30 success.
+AI10 zachowuje upstream CI #34, AI09 #33 oraz wszystkie własne bramki
+SQL/broker/replay, outbox i pełny v12 backup/recovery.
 
 ### Odebrane komponenty bieżącej integracji
 
-**Aktualny checkpoint 2026-10-07:** wspólny CI PR #34 jest na main `89b64d2`,
-a PR AI09 #33 na nowszym main `a128bb3`. Integracja AI10 zachowuje wszystkie
-własne bramki SQL/broker/replay, outbox i pełny v12 backup/recovery.
-[Core CI](evidence/ai10-shared-ci-upstream-accepted.json) ma 15/15 success;
-[AI10 CI `433f5ed`](evidence/ai10-ai-integrated-head-ci.json) ma 17/17 success.
-Source `4b03664`, run `37617019955`, ma 30/30 success. Nowa poprawka hooka
-wymaga ponownego Required CI na aktualnym headzie.
+**Powtórzony stockout i anomaly na `64a4c71`:** run `37636434765` ponownie
+odebrał oryginalne modele i SQL publishery, bez refitów.
+[Stockout](evidence/ai10-native-stockout-64a4c71-accepted.json): 40 wyników,
+40 oryginalnych ACK, 40 projekcji i duplikatów oraz pełny TCP API/built UI.
+[Anomaly](evidence/ai10-native-anomaly-64a4c71-accepted.json): 1232 wyników
+i ACK, 1232 projekcji i duplikatów, 25 stron built UI oraz live revocation.
+Niezależne Source parsery zweryfikowały oba pełne census.
+[CI head AI](evidence/ai10-ai-64a4c71-ci.json) ma 17/17 success,
+[CI head Source](evidence/ai10-source-9382681-ci.json) 30/30 success.
+Oba merge commit trees zachowują dokładnie drzewa odebranych headów.
 
-**Powtórzony stockout i anomaly na zintegrowanym `433f5ed`:** run
-`37624498603` odebrał oba modele i oryginalne SQL publishery, bez refitów.
-[Stockout](evidence/ai10-native-stockout-final-head-accepted.json): 40 wyników,
-40 oryginalnych ACK, 40 projekcji i duplicates oraz pełny TCP API/built UI.
-[Anomaly](evidence/ai10-native-anomaly-final-head-accepted.json): 1232 wyników
-i ACK, 1232 projekcji i duplicates, 25 stron built UI oraz live revocation.
-Niezależne Source parsery ponownie zweryfikowały oba pełne census.
+**V12 — czwarta próba failed przy odbiorze Source:** run `37636569401`
+na `64a4c71` zaliczył 262 boundary tests, pełną kwalifikację i dwa cold probes,
+dziesięć review gates, 664-file MLflow HTTP import, registry/preload oraz
+rzeczywisty authenticated API intake i cold worker. Hook rzeczywistego emittera
+zadziałał; atomowy rollback i późniejsza publikacja 56 oryginalnych prognoz
+z ich SQL outbox są potwierdzone. [Receipt failed](evidence/ai10-v12-native-source-consumer-failure.json)
+zachowuje wszystkie 25 plików i ich SHA. Oryginalny publisher SQL oraz końcowy
+Source API/UI pozostają nieodebrane. Kontroler nie zachował failing JUnit/logu,
+więc bardziej szczegółowa przyczyna tej próby nie jest znana. Usunięto sześć
+własnych handoff objects i unikalny secret; oryginalne S3 zachowano.
 
-**V12 — trzecia próba failed:** run `37624038527` na `2b4f6f2` zaliczył
-258 boundary tests, rzeczywisty preflight aplikacji, pełną kwalifikację/cold
-probes, review gates, MLflow import i registry/preload. Kontroler doszedł do
-actual API intake i cold worker, ale `ai10_v12_outbox_failure_not_exercised`
-zatrzymał test atomowego rollbacku: hook ignorował nową linię na początku
-SQL rzeczywistego emittera. [Receipt failed](evidence/ai10-v12-native-outbox-hook-failure.json)
-nie poświadcza finalnego publishera ani Source API/UI. Hook teraz rozpoznaje
-whitespace i dokładną nazwę tabeli; test kompiluje SQL rzeczywistego emittera.
-13 testów runner/workflow, lint/format 1112 plików, mypy 656+10 i docs/contracts
-passed. Nowy pełny zdalny run pozostaje wymagany. Usunięto sześć własnych
-handoff objects i unikalny secret; oryginalne S3 oraz quality `not_ready` zachowano.
+**Diagnostyka Source:** run `37651238268` odtworzył wyłącznie prywatną bazę
+fixture z zachowanych oryginalnych 56 event bytes. Pełny niezmieniony Source test
+na `1a7f558` przeszedł real broker, projekcje/duplikaty, authenticated TCP API,
+built UI i revocation. [Diagnostic receipt](evidence/ai10-v12-reconstructed-source-diagnostic.json)
+ma 1 passed / zero failures/errors/skips. Odtworzona baza nie poświadcza
+oryginalnego publishera ani pełnego odbioru V12; nowy pełny run jest wymagany.
+Poprawka raportowania zachowuje fixed test identity, counts, exception type,
+lokalizacje testu i stałe kategorie guardów bez raw logu, credentials i URL-i.
+
+Pozostają pełny oryginalny V12 end-to-end oraz publikacja końcowych dokumentów
+`ready` normalnym protected merge i Required CI dokładnych main.
+Oryginalne quality `not_ready`, development namespace i decyzja właściciela
+pozostają niezmienione. [Raport zbiorczy](evidence/ai10-bounded-acceptance.json)
+wiąże pełną historię, aktualne dowody oraz jawnie otwarte wymagania.
 
 Niższe checkpointy pozostają historią zakresów i wcześniejszych prób.
 

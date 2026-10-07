@@ -851,6 +851,27 @@ kontrole; odbiór zdalny i chroniona publikacja pozostają wymagane.
    original SQL ACK i 25 stron UI, stockout 40 ACK i pełny UI. V12 failed receipt
    zachowuje wykonane wcześniejsze gates. **Impact bezpośredni: 0 min**;
    uniknięcie zbędnych powtórzeń mieści się we wcześniejszym P07.
+5. **Sprawdzać hook awarii na SQL rzeczywistego emittera przed archiwum.**
+   Uruchomić `test_fault_hook_matches_actual_production_emitter_sql` razem
+   z trzema negatywnymi przypadkami: SELECT, inna tabela i podobny suffix.
+   Test kompiluje rzeczywisty `enqueue_forecasts`; hook musi rozpoznawać
+   multiline SQL i dokładną tabelę. Dopiero po wszystkich boundary tests
+   uruchomić pełny original verifier, registry, SQL rollback i Source API/UI.
+   **Impact całego AI00–10: 0 min na poprawnym przebiegu; warunkowo do 65 min**
+   przy uniknięciu jednej takiej późnej awarii, jeżeli AI10 jest na critical path.
+   Zmierzona failed próba trwała 75 min 36 s; jej boundary tests 10 min 33 s.
+   Nie przypisywać tego oszczędzonego czasu już poniesionej awarii ani dodawać
+   do wspólnego impactu P07/CI-A. Poprawka jest wdrożona i lokalnie odebrana.
+6. **Nakładać chronioną publikację odebranych komponentów na końcówkę native.**
+   Po pełnym zielonym Required CI dokładnego headu scalić kod normalnym PR,
+   zachowując `in_progress`, jawny pending V12 i niezmienione model/source pins.
+   Uruchomić obowiązkowe main CI równolegle z pełnym native; nie kasować żadnej
+   bramki. Po obu main CI i kompletnym V12 odebrać końcowe docs/registry przez
+   zwykłe chronione PR-y i ich wymagane CI. **Impact całego AI00–10: 0–40 min**,
+   tylko gdy AI10 ogranicza zakończenie projektu. Dla AI10 orientacyjnie
+   15–40 min przy rzeczywistym nakładaniu; górna granica to krótszy z czasów
+   pozostającego native i pierwszego main CI. Gdy AI09 trwa dłużej, impact
+   kalendarzowy całego projektu może wynieść 0 min. To szacunek, nie pomiar.
 
 Reuse wyników semantycznego verifiera wewnątrz procesu nie wdrożono i nie
 przypisano mu impactu. Original recovery już pobiera niezależne pliki równolegle;

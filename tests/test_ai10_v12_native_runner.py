@@ -1,6 +1,7 @@
 """A native runner refuses local execution and preserves existing unrelated evidence."""
 
 import importlib.util
+import json
 from pathlib import Path
 
 import pytest
@@ -123,3 +124,89 @@ def test_fault_hook_matches_actual_production_emitter_sql(monkeypatch):
         outbox.enqueue_forecasts(Connection(), output, None, None)
     assert len(statements) == 1
     assert statements[0].startswith("\nINSERT")
+
+
+@pytest.mark.parametrize("prefix", ["tests/", "services/api/tests/"])
+def test_source_failure_preserves_actual_pytest_identity_without_raw_output(
+    monkeypatch, tmp_path, prefix
+):
+    module = runner(monkeypatch)
+    log = tmp_path / "private.log"
+    test = "test_original_v12_sql_outbox_complete_api_and_browser"
+    log.write_text(
+        f"FAILED {prefix}test_native_forecast_output_durability.py::{test}\n"
+        "Authorization: Bearer PRIVATE-CREDENTIAL\n"
+    )
+    report = module.source_failure_details(tmp_path / "absent.xml", log)
+    assert report == {
+        "junit_status": "missing",
+        "failed_tests": ["tests/test_native_forecast_output_durability.py::" + test],
+        "delivery_failure_categories": [],
+    }
+    assert "PRIVATE-CREDENTIAL" not in json.dumps(report)
+
+
+def test_source_junit_preserves_failure_location_and_counts_without_private_message(
+    monkeypatch, tmp_path
+):
+    module = runner(monkeypatch)
+    junit = tmp_path / "tests.xml"
+    junit.write_text("""<testsuites><testsuite tests="1" failures="1" errors="0" skipped="0">
+<testcase name="test_original_v12_sql_outbox_complete_api_and_browser">
+<failure type="AssertionError" message="Bearer PRIVATE-CREDENTIAL">
+tests/test_native_forecast_output_durability.py:213: AssertionError
+postgresql://private-user:PRIVATE-CREDENTIAL@127.0.0.1/private-db
+</failure></testcase></testsuite></testsuites>""")
+    report = module.source_failure_details(junit, tmp_path / "absent.log")
+    assert report["test_counts"] == dict(tests=1, failures=1, errors=0, skipped=0)
+    assert report["failures"] == [
+        dict(
+            kind="failure",
+            test="test_original_v12_sql_outbox_complete_api_and_browser",
+            exception_type="AssertionError",
+            test_locations=[dict(path="tests/test_native_forecast_output_durability.py", line=213)],
+        )
+    ]
+    assert "PRIVATE-CREDENTIAL" not in json.dumps(report)
+    assert "postgresql" not in json.dumps(report)
+
+
+@pytest.mark.parametrize(
+    "content", ["invalid XML", '<testsuites><testsuite tests="-1"/></testsuites>']
+)
+def test_invalid_source_junit_cannot_become_passed_evidence(monkeypatch, tmp_path, content):
+    junit = tmp_path / "tests.xml"
+    junit.write_text(content)
+    assert runner(monkeypatch).source_failure_details(junit, tmp_path / "absent.log") == {
+        "junit_status": "invalid",
+        "failed_tests": [],
+    }
+
+
+@pytest.mark.parametrize(
+    "error",
+    [
+        ValueError("postgresql://private-user:PRIVATE-CREDENTIAL@127.0.0.1/private-db"),
+        RuntimeError("Authorization: Bearer PRIVATE-CREDENTIAL"),
+    ],
+)
+def test_delivery_failure_summary_omits_unknown_private_messages(monkeypatch, error):
+    runner(monkeypatch)
+    from deliver_ai10_v12_native import failure_summary
+
+    report = failure_summary(error)
+    assert report["status"] == "failed"
+    assert report["category"] == "ai10_v12_original_outbox_delivery"
+    assert "PRIVATE-CREDENTIAL" not in json.dumps(report)
+
+
+def test_delivery_failure_summary_retains_exact_original_census_guard(monkeypatch):
+    runner(monkeypatch)
+    from deliver_ai10_v12_native import failure_summary
+
+    error = ValueError("ai10_v12_delivery_complete_original_pending_census")
+    assert failure_summary(error) == dict(
+        status="failed",
+        exception_type="ValueError",
+        category="ai10_v12_delivery_complete_original_pending_census",
+    )

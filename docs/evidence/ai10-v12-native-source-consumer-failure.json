@@ -1,0 +1,174 @@
+{
+  "Source_API_UI_attested": false,
+  "ai_commit": "64a4c7156023da5750e5da92d465afa9205b4a1d",
+  "artifact": {
+    "id": 11493987768,
+    "size_bytes": 128296,
+    "zip_sha256": "9ba4bce6e1066c786a52ffd889cfdc109959e9771fde904fa90c270c91bcd797"
+  },
+  "boundary_tests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 262
+  },
+  "cleanup": {
+    "original_S3_preserved": true,
+    "own_handoff_objects_removed": 6,
+    "own_unique_secret_removed": true
+  },
+  "evidence_boundary": "The original full model qualification, two frozen cold probes, ten actual review gates, complete 664-file MLflow HTTP import, development registration and preload, authenticated intake, cold worker and atomic SQL publication/rollback passed. All 56 original forecasts and native events are preserved. Original SQL delivery and independent Source API/UI did not complete. Source child log and failing JUnit were not retained; no more specific Source cause is asserted.",
+  "file_sha256": [
+    {
+      "path": "acceptance-proofs/recovered-byte-census.json",
+      "sha256": "7013de11dba1d87c2e3286b8e8f7ec4d4a69afe4802166071e2f512019fbe1af"
+    },
+    {
+      "path": "acceptance-proofs/secrets.json",
+      "sha256": "eaa69ab9c60ba680565eac60d2bcb55d809161f63a10ae310650437d9f114c54"
+    },
+    {
+      "path": "acceptance-proofs/tests.xml",
+      "sha256": "ce02cac4f9eea4bd53958d43de9a6246a60b229290dc4ce7a416688286d518cf"
+    },
+    {
+      "path": "accepted-v12/acceptance.json",
+      "sha256": "fcf285d29d929ec410b34e94a01082733be855191c298cae777668231198f2c2"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/inputs.json",
+      "sha256": "afd10ecdf329dd897e5cb99686d431889173f5030d5405772ee6aaac2599b0a3"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/qualification.json",
+      "sha256": "78a942f8fe9b43cd9006d4fe9c5faaec142e811d349b20e06d26c99f269881f6"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/release.json",
+      "sha256": "d47c9a96df6c2d328f8febc9d899714b50439aaa364a133250023fd229823889"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/reports/features.json",
+      "sha256": "d648eb1613a80c085ef71a2169b7b1cd78779010fea9a57e0156d4f2a57ef3d8"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/reports/freshness_drift_compatibility.json",
+      "sha256": "68853900163e4829fceb41acf9e36bfa90335a11360de9b226dc957b44ebf774"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/reports/model_card.json",
+      "sha256": "7808e3494b50fd3c78a006188f5da048653675f40c890e2004708ec2dbc32404"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/reports/pit.json",
+      "sha256": "4ecc6c144ab2a3cf7ee6afbfb7e9fe5f5325cee9b476d4ab385708222e79d75a"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/reports/protocol.json",
+      "sha256": "c7d5b4414ac96c5cae75eede00dddc7bf76d8846046be1320e8a7beee1d1caaf"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/reports/resources.json",
+      "sha256": "880922decc9fd74041d33a83fa3fb791636fca7bae83e2704f643267670ad1ec"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/reports/security_license.json",
+      "sha256": "0d76ee69ca1072b366b86ea9692041a0eafdf44f561369d357dbd48aa18ce3e1"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/reports/segments.json",
+      "sha256": "c4aaefd6b20e41078db0479d9ec598e76e39af5402b2b89cd0c7afe1ff9d22ed"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/reports/signature.json",
+      "sha256": "90ec253c80f9cc01c6cee659ff4550ef2db7bbb360c2f7db0ed45aeaf6d53392"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/reports/source.json",
+      "sha256": "3afbe4886c2091ebe8fea92a2a43953b6175e0f9a2aadac53b563d70ececc7d4"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5/smoke.json",
+      "sha256": "14637427593100646b8451e9f99b1e820bbe2c9b49a52125314e1cc3939628b7"
+    },
+    {
+      "path": "accepted-v12/development-acceptance.json",
+      "sha256": "29a5fbbe7ccd2f73bbe05d2f9d03a163859a56ba8b65c3b423197638947c63a9"
+    },
+    {
+      "path": "accepted-v12/events.jsonl",
+      "sha256": "59ca9bec2e69374e2f140e3ef4673f8803eb469d8e1fe549f15f31efbc42d142"
+    },
+    {
+      "path": "accepted-v12/frozen-recipe.json",
+      "sha256": "d14f3167aa0d6945d12750ce9d762e7c8bb6178e1045137d74a81201103e42e6"
+    },
+    {
+      "path": "accepted-v12/native-computation.json",
+      "sha256": "42ab9221ce57e630d2ad4708bde5075f165fffb7e1e34d80dacd83042526febf"
+    },
+    {
+      "path": "accepted-v12/native-publication.json",
+      "sha256": "a8fc83cc442543e76e3ea64f6b96d73b48a1bbfe02491aea69d4665bb3fbf68d"
+    },
+    {
+      "path": "accepted-v12/native-run.json",
+      "sha256": "b75d379e009820d90450504de8306d240d8c0b046ef3e5bf4515598e7366719a"
+    },
+    {
+      "path": "accepted-v12/owner-review.json",
+      "sha256": "927d41a59d7896e0ef64bc96641865406f8a461b01f2c2c488a7036871b1a553"
+    }
+  ],
+  "job_id": 112844252758,
+  "original_AI_SQL_publisher_attested": false,
+  "report": {
+    "actual_HTTP_auth_scope_idempotency": true,
+    "actual_complete_mlflow_http_import_files": 664,
+    "actual_original_full_semantic_verifier": true,
+    "approval_id": "v12-inference-release-sha256-96f40d8fbc6261c5e420a9bf300a7ac0dae8631481c502e3b83542a12f1f1ae5",
+    "atomic_outbox_failure_rollback": true,
+    "commit": "64a4c7156023da5750e5da92d465afa9205b4a1d",
+    "events_sha256": "59ca9bec2e69374e2f140e3ef4673f8803eb469d8e1fe549f15f31efbc42d142",
+    "exception_type": "ValueError",
+    "failed_stage": "original_sql_delivery_complete_Source_API_and_built_browser",
+    "failure_category": "ai10_v12_original_source_consumer_failed",
+    "forecast_plan_days": 14,
+    "history_days": 102,
+    "image_digest": "sha256:c606d04c0aae5472910545cbc695ec2c71571e831c5243ce9a4bbf2cf165ed00",
+    "mlflow_archive_storage": "shared_inodes_of_owned_disposable_recovered_scratch_not_independent_backup",
+    "model_refits": 0,
+    "native_publication_sha256": "a8fc83cc442543e76e3ea64f6b96d73b48a1bbfe02491aea69d4665bb3fbf68d",
+    "original_AI_database_publisher_attested": false,
+    "original_manifest_sha256": "29bf6837ca2cb7504213168743239b037041f375763bc8f01ae28c1f6d09b26e",
+    "original_quality_reclassified": false,
+    "original_quality_status": "not_ready",
+    "original_run_id": "functional-v12-run-sha256-345a725d435a477374292cb9483350fb5c50c8ba87d06668c727e0a9f964fb6b",
+    "owned_containers_and_anonymous_volumes_removed": true,
+    "production_deployed": false,
+    "profile_id": "batch-profile-sha256-f55a99fd9c8812752753f848e81b3040354a934c256397a24744477afdbeb147",
+    "publication_id": "v12-forecasts-sha256-f823bb408dea16fb5fac0481f8a352108bc52c5020696fe3c3993c462996f3f0",
+    "qualification_id": "v12-qualification-sha256-4d45a954232aa0158c044b1b6eaf2d7ccffa01dcbd6432d0543030e05ab58b9c",
+    "real_frozen_cold_worker": true,
+    "real_postgres": true,
+    "rows": 56,
+    "run_id": "run-4e6935cc2fad40f387a700563aa4747f",
+    "snapshot_id": "snapshot-sha256-624b9bce2add89ab1e68681308bb7f27abab7b2cff62bd838c546badfb4d070a",
+    "source_API_UI_attested": false,
+    "source_dataset_id": "source-sha256-b4b75aa40d1524781c28616fecb4a9e537e84768db2b83fbd9606fd6e493692f",
+    "source_failure_tests": [],
+    "stages": [
+      "full_original_qualification_and_two_frozen_cold_predictions",
+      "ten_actual_review_gates_and_full_original_approval",
+      "real_owned_pg16_mlflow_and_full_original_http_import",
+      "real_development_registration_promotion_and_preload_before_intake",
+      "actual_authenticated_intake_cold_worker_atomic_publication_and_outbox"
+    ],
+    "status": "failed",
+    "workflow_run_id": 37636569401
+  },
+  "source_commit": "1a7f558d718ed3dddaed277c07ccfd7d023f34ce",
+  "status": "failed",
+  "version": "ai10-v12-native-source-consumer-failure-1.1",
+  "workflow_run_id": 37636569401
+}

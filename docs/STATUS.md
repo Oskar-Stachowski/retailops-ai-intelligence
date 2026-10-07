@@ -7,10 +7,17 @@ Nowy head `0025_model_intelligence_outbox` dodaje atomowe zdarzenia native
 anomaly i stockout. [Instrukcja integracji modeli](intelligence-models-v2.md).
 Rzeczywisty Source capture → ten sam TLS/SCRAM broker → AI SQL/ACK/overlap
 jest odebrany. Qualified stockout/anomaly mają pełny Source API i built UI.
-Stockout i anomaly mają odebrane oryginalne AI SQL publishery. Pełny v12
-na 102-dniowych wejściach wymaga ponownego odbioru po poprawce konfiguracji bazy.
+Stockout i anomaly mają odebrane oryginalne AI SQL publishery, 40/1232 wyników
+oraz kompletne Source API/UI. Kod jest na obu main po protected merge #28/#100;
+[AI main CI](evidence/ai10-ai-code-main-ci.json) ma 17/17 success,
+[Source main CI](evidence/ai10-source-code-main-ci.json) 30/30 success.
+Pełny V12 zaliczył 262 boundary tests, real registry/MLflow/intake/cold worker,
+atomowy rollback i 56 native wyników. [Odbiór Source failed](evidence/ai10-v12-native-source-consumer-failure.json).
+[Odtworzona diagnostyczna baza](evidence/ai10-v12-reconstructed-source-diagnostic.json)
+przeszła pełny Source test, ale nie zastępuje oryginalnego publishera.
 [Bieżąca instrukcja i checklist](ai10-acceptance.md) wiążą dowody wykonania.
-Protected merge i Required CI obu main pozostają wymagane przed `ready`.
+Do `ready` pozostają pełny oryginalny V12 oraz publikacja końcowych dokumentów
+z protected merge i zielonym Required CI dokładnych main.
 Wcześniejsze wpisy opisują historię.
 
 **2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**

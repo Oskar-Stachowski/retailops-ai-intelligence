@@ -1,8 +1,18 @@
 {
+  "AI_code_main_CI": {
+    "path": "docs/evidence/ai10-ai-code-main-ci.json",
+    "receipt_status": "passed",
+    "sha256": "8a7d684cb00b3deebfc575e69f977ab8d5066c3734ab3c95102ac65cf329426a"
+  },
   "AI_integrated_head_CI": {
     "path": "docs/evidence/ai10-ai-integrated-head-ci.json",
     "receipt_status": "passed",
     "sha256": "d9c97c6ba952720b6b26747ca2359726fdd97284f4946b82943e242356614aa4"
+  },
+  "Source_code_main_CI": {
+    "path": "docs/evidence/ai10-source-code-main-ci.json",
+    "receipt_status": "passed",
+    "sha256": "651b96711391180d4d0aa7b73cf13b3960474a3c6b04cae89f374c6963fbf37a"
   },
   "Source_component_CI": {
     "path": "docs/evidence/ai10-source-components-ci.json",
@@ -107,6 +117,11 @@
       "accepted_file_handoff_rows": 1232,
       "built_UI_pages": 25,
       "built_UI_rows": 1232,
+      "earlier_integrated_head_receipt": {
+        "path": "docs/evidence/ai10-native-anomaly-final-head-accepted.json",
+        "receipt_status": "passed",
+        "sha256": "d3992e4d438b199b8c365f833ff0c65c2802cadce6d24dbba0a04f5244bfaa54"
+      },
       "earlier_original_SQL_receipt": {
         "path": "docs/evidence/ai10-native-anomaly-original-sql-accepted.json",
         "receipt_status": "passed",
@@ -122,15 +137,17 @@
       "native_payloads_unchanged": true,
       "original_AI_SQL_publisher": true,
       "original_SQL_receipt": {
-        "path": "docs/evidence/ai10-native-anomaly-final-head-accepted.json",
+        "path": "docs/evidence/ai10-native-anomaly-64a4c71-accepted.json",
         "receipt_status": "passed",
-        "sha256": "d3992e4d438b199b8c365f833ff0c65c2802cadce6d24dbba0a04f5244bfaa54"
+        "sha256": "96229c37ec47972d8aa14f125eb669cf3f9ac902184ff37b7e8dd77aed25e76c"
       },
       "source_duplicates": 1232,
       "source_projected": 1232,
       "status": "passed"
     },
     "forecast_v12": {
+      "completed_original_AI_stage_rows": 56,
+      "completed_original_atomic_outbox_rollback": true,
       "development_namespace": "retailops-demand-forecast-v12-development",
       "earlier_database_failed_attempt": {
         "path": "docs/evidence/ai10-v12-native-database-failure.json",
@@ -141,6 +158,11 @@
         "path": "docs/evidence/ai10-v12-native-scratch-failure.json",
         "receipt_status": "failed",
         "sha256": "10599060cd3cfc7512e83437d223864cecc4dc147a7f72d48853112a90e255b1"
+      },
+      "earlier_outbox_hook_failed_attempt": {
+        "path": "docs/evidence/ai10-v12-native-outbox-hook-failure.json",
+        "receipt_status": "failed",
+        "sha256": "938c221c4c8673f22361610ee253819991d884de0bd403135763716957584925"
       },
       "expected_output_rows": 56,
       "expected_series": 4,
@@ -157,9 +179,14 @@
       "original_quality_status": "not_ready",
       "owner_acceptance_sha256": "11cd0e1fdd10629543bcb66aaedb3bd9b7b7fc5b31473575b998d951c93f00d2",
       "partial_failed_attempt": {
-        "path": "docs/evidence/ai10-v12-native-outbox-hook-failure.json",
+        "path": "docs/evidence/ai10-v12-native-source-consumer-failure.json",
         "receipt_status": "failed",
-        "sha256": "938c221c4c8673f22361610ee253819991d884de0bd403135763716957584925"
+        "sha256": "fe3fd4125e1a69108c8a6041a00fc1342729eeb346e71c19db7d6328c9f2f3f0"
+      },
+      "reconstructed_SQL_diagnostic_only": {
+        "path": "docs/evidence/ai10-v12-reconstructed-source-diagnostic.json",
+        "receipt_status": "passed_diagnostic_only",
+        "sha256": "d93c2e2e164e045f53e8444ba526f99dcc1662c8ca7dc18270d4c445de4ae2de"
       },
       "status": "pending_full_native_runtime"
     },
@@ -169,6 +196,11 @@
         "1": 46
       },
       "built_UI_rows": 40,
+      "earlier_integrated_head_receipt": {
+        "path": "docs/evidence/ai10-native-stockout-final-head-accepted.json",
+        "receipt_status": "passed",
+        "sha256": "2749018151c3a27ceeb45b096d8a3a60ba88ff6dccc0a11a2a2c5af207813443"
+      },
       "earlier_original_SQL_receipt": {
         "path": "docs/evidence/ai10-native-stockout-original-sql-accepted.json",
         "receipt_status": "passed",
@@ -180,9 +212,9 @@
       "payloads_unchanged": true,
       "qualification_id": "stockout-qualification-serving-sha256-131dba942a20f026b74a1ba1c99fd5c9727b27e1d02c4d353f0954e2c12464e0",
       "receipt": {
-        "path": "docs/evidence/ai10-native-stockout-final-head-accepted.json",
+        "path": "docs/evidence/ai10-native-stockout-64a4c71-accepted.json",
         "receipt_status": "passed",
-        "sha256": "2749018151c3a27ceeb45b096d8a3a60ba88ff6dccc0a11a2a2c5af207813443"
+        "sha256": "cd9371b4cd735539df0cd453a42f48ebe68f45996be06a65b8ca8b260acc5bd1"
       },
       "source_duplicates": 40,
       "source_projected": 40,
@@ -193,14 +225,14 @@
   "publication": {
     "AI_PR": 28,
     "Source_PR": 100,
+    "code_status": "both_normal_protected_merges_and_full_required_main_CI_passed",
     "receipt": null,
-    "status": "pending_protected_merge_and_required_main_CI"
+    "status": "pending_full_native_acceptance_and_final_ready_documentation_publication"
   },
   "recorded_date": "2026-10-07",
   "remaining": [
     "full_original_v12_registry_SQL_publisher_API_UI_receipt",
-    "final_documentation_and_exact_head_required_CI",
-    "both_protected_main_merges_and_required_main_CI"
+    "final_ready_documentation_protected_merges_and_required_main_CI"
   ],
   "stage_status": "in_progress",
   "suggestions": {
