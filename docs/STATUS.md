@@ -1,6 +1,11 @@
 # Aktualny status
 
 **2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08.**
+[Przyrost 09.12](evidence/09-12-prospective-campaign-journal.md) zachowuje historię
+11 dawnych prób bez odtwarzania utraconych budżetów i dodaje trwały dziennik
+prospektywnej kampanii. 52 testy odłączonego wheela przeszły, w tym SIGKILL,
+fsync, konkurujące klienty oraz blokada końcowych danych przed freeze. To odbiór
+mechanizmu i kontrolowanych metadanych; rzeczywista kampania jeszcze nie ruszyła.
 [Integracja 09.11](evidence/09-11-main-integration.md) ma 420 zaliczonych testów,
 114 kontroli po zmianie SciPy i 3 rzeczywiste testy TensorFlow/MLflow/reload.
 Pełny Required CI oraz scalenie tego przyrostu wymagają osobnego potwierdzenia.
@@ -20,6 +25,8 @@ oraz pełny odbiór dokładnego commita na `main`. Dawne prywatne katalogi AI 09
 w `/private/tmp` nie istnieją. Kod i opublikowane dowody są w Git; ciągłość
 budżetów oraz ekspozycji wymaga odtworzenia dzienników lub jawnego,
 konserwatywnego rozliczenia brakującej historii przed nowymi eksperymentami.
+09.12 przygotowuje takie rozliczenie z przypiętych receiptów i wymaga jawnego
+powiązania go w nowym prospektywnym protokole; nie kwalifikuje świeżości danych.
 Nowe CI zachowuje wszystkie kontrole AI 07–08 oraz osobny wymagany job TensorFlow.
 
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
@@ -309,9 +316,9 @@ Trzy pary świeżych buildów dały medianę 21,32 → 18,42 s, CPU 20,57 → 17
 mediana próbkowanego peak RSS wyniosła 131,75 → 131,98 MiB.
 Sorty ledgeru spadły z 45 696 do 1632. Indeks powstaje na granicy wiedzy
 każdego origin; późna korekta nie nadpisuje dawnych danych.
-Przyrost ma 150/150 testów ukierunkowanych, w tym 37 nowych,
+Przyrost ma 150/152 testy ukierunkowanych, w tym 37 nowych,
 bez ostrzeżeń. Pełny `make ci-local` przeszedł:
-1950/1950 testów bez ostrzeżeń, wszystkie targety, pakiet, Compose
+1950/1952 testy bez ostrzeżeń, wszystkie targety, pakiet, Compose
 config i oba skany sekretów. Końcowe receipt mają ponowne kontrole
 dokumentacji i sekretów; nowy commit wymaga własnego CI w draft PR #14.
 Poprzedni commit `858abcf` ma zielone Required CI PR i push.

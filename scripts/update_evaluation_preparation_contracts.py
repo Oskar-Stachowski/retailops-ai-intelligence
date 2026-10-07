@@ -4,6 +4,11 @@ import argparse
 import json
 from pathlib import Path
 
+from retailops_ai.evaluation_campaign.campaign_contract import (
+    CampaignJournal,
+    CampaignProtocol,
+    SelectionFreeze,
+)
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
 from retailops_ai.evaluation_campaign.label_contract import (
     ForecastOutcomeReadProtocol,
@@ -11,6 +16,7 @@ from retailops_ai.evaluation_campaign.label_contract import (
     OutcomeEvidenceManifest,
     QualifiedForecastOutcome,
 )
+from retailops_ai.evaluation_campaign.legacy_carryover import LegacyCampaignCarryover
 from retailops_ai.evaluation_campaign.outcome_contract import (
     OutcomeAccessBinding,
     OutcomeAccessPlan,
@@ -160,6 +166,35 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Forecast source version contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    schema = LegacyCampaignCarryover.model_json_schema()
+    schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+    schema["$id"] = "urn:retailops:evaluation:legacy_campaign_carryover:9.0.0"
+    path = ROOT / "contracts/evaluation/v9/legacy_campaign_carryover.schema.json"
+    raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    if args.check:
+        if not path.is_file() or path.read_text() != raw:
+            print("Legacy campaign carryover contract differs")
+            return 1
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(raw)
+    for name, campaign_model in (
+        ("prospective_campaign_protocol", CampaignProtocol),
+        ("prospective_campaign_journal", CampaignJournal),
+        ("prospective_selection_freeze", SelectionFreeze),
+    ):
+        schema = campaign_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:10.0.0"
+        path = ROOT / "contracts/evaluation/v10" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Prospective campaign contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

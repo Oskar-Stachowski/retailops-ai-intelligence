@@ -58,6 +58,9 @@ wyników z jednym trwałym budżetem, zachowuje awarie i obserwowaną historię.
 pięć chronologicznych ról i pełne klucze, z jawną blokadą odczytu wyników oceny.
 [Dziennik dostępu do wyników](outcome-access-journal.md) zachowuje historię
 odczytów i rezerwuje dostęp przed czytnikiem, również po awarii procesu.
+[Prospektywna kampania AI 09](prospective-evaluation-campaign.md) rozlicza
+niedostępną historię i dodaje trwały budżet, późniejsze źródła oraz zamrożenie
+trzech pakietów przed końcową oceną, bez nadawania kwalifikacji jakości.
 [Czytnik etykiet pięciu ról](forecast-outcome-reader.md) sprawdza pełne klucze,
 wersje, dojrzałość i eligibility w audytowanym kontekście; źródło i niezależna
 kampania nadal wymagają osobnego odbioru.

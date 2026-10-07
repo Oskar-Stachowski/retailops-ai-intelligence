@@ -1,0 +1,90 @@
+{
+  "$defs": {
+    "SelectionBundle": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Calibration Sha256",
+          "type": "string"
+        },
+        "feature_schema_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Feature Schema Sha256",
+          "type": "string"
+        },
+        "model_artifact_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Artifact Sha256",
+          "type": "string"
+        },
+        "preprocessing_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Preprocessing Sha256",
+          "type": "string"
+        },
+        "selection_evidence_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Selection Evidence Sha256",
+          "type": "string"
+        },
+        "threshold_policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Threshold Policy Sha256",
+          "type": "string"
+        },
+        "use_case": {
+          "enum": [
+            "forecast",
+            "anomaly",
+            "stockout"
+          ],
+          "title": "Use Case",
+          "type": "string"
+        }
+      },
+      "required": [
+        "use_case",
+        "model_artifact_sha256",
+        "preprocessing_sha256",
+        "calibration_sha256",
+        "threshold_policy_sha256",
+        "feature_schema_sha256",
+        "selection_evidence_sha256"
+      ],
+      "title": "SelectionBundle",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:prospective_selection_freeze:10.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bundles": {
+      "items": {
+        "$ref": "#/$defs/SelectionBundle"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "title": "Bundles",
+      "type": "array"
+    },
+    "development_journal_head_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Development Journal Head Sha256",
+      "type": "string"
+    },
+    "quality_and_freshness_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality And Freshness Qualified",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "bundles",
+    "development_journal_head_sha256"
+  ],
+  "title": "SelectionFreeze",
+  "type": "object"
+}

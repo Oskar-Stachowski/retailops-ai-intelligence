@@ -1,0 +1,210 @@
+{
+  "boundaries": {
+    "ai09_ready": false,
+    "final_test_opened": false,
+    "full_local_make_ci_local": false,
+    "full_profile_resource_qualified": false,
+    "global_exposure_audit_proved": false,
+    "models_promoted": false,
+    "new_project_fits": 0,
+    "new_project_journal_initialized": false,
+    "new_project_outcomes_read": false,
+    "new_project_source_generated": false
+  },
+  "current_focused": {
+    "errors": 0,
+    "failures": 0,
+    "junit": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/journal-tests-release.xml",
+      "sha256": "508b230a30c8a8325ca26bc6c5740878bc8006517dec66a2e459076702d3ea7e",
+      "size_bytes": 8263
+    },
+    "log": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/journal-tests-release.log",
+      "sha256": "7cd747acb655f344f3cc4fef7b83dfcb786748c8ecb3bd331f41a0ec3b659f6b",
+      "size_bytes": 99
+    },
+    "seconds": 6.435,
+    "skipped": 0,
+    "tests": 52
+  },
+  "failed_attempts": [
+    {
+      "corrected_by": "wait for build exit0 then reinstall and repeat isolated current wheel tests and full runtime comparison",
+      "kind": "installed_wheel_probe_failed_due_to_build_not_finished_before_install",
+      "native_installed_runtime_comparison": "failed, no pass report written",
+      "tests": {
+        "errors": 22,
+        "failures": 2,
+        "junit": {
+          "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/journal-wheel-tests-stale-build-attempt.xml",
+          "sha256": "9376156cb1246aa6dac27304637d668f77a90848b3581577e73b08f0516735b0",
+          "size_bytes": 54008
+        },
+        "log": {
+          "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/journal-wheel-tests-stale-build-attempt.log",
+          "sha256": "6a47062616b3284418cdc5d43740629f5e1f10bf3c2e7a839ef9594bc7d2f4b0",
+          "size_bytes": 33901
+        },
+        "seconds": 1.666,
+        "skipped": 0,
+        "tests": 52
+      }
+    }
+  ],
+  "final_static_checks": {
+    "checks": [
+      "lint",
+      "format",
+      "mypy",
+      "docs_and_required_ci_contract",
+      "forecast_runtime",
+      "all_contract_snapshots",
+      "package",
+      "compose_config"
+    ],
+    "log": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/campaign-checks-release.log",
+      "sha256": "517d4ab43562be65c0b4289623880fec72605880b5e1e12e74988243bc47fbca",
+      "size_bytes": 4568
+    },
+    "mypy_files": 604,
+    "passed": true
+  },
+  "implementation_parent": "dd766fa1624211a2d95649d9af8a194ac2495223",
+  "installed_wheel_tests": {
+    "errors": 0,
+    "failures": 0,
+    "junit": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/journal-wheel-tests-release.xml",
+      "sha256": "b5516cdc29742eec6bc6dcc29578f3c459f15d8062f5ed57372056d96164718f",
+      "size_bytes": 8263
+    },
+    "log": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/journal-wheel-tests-release.log",
+      "sha256": "4c017a2c9dd20198919d8ffe1d59bbffb4efe707d82c7c5cd9d99a715a074d6e",
+      "size_bytes": 99
+    },
+    "seconds": 6.676,
+    "skipped": 0,
+    "tests": 52
+  },
+  "legacy": {
+    "content_sha256": "9a30d543df19d61b3de9cd1df3e5b6650b60f74b1ccbf1c462d1ad1d0bba86ce",
+    "historical_cost": "unknown_not_zero",
+    "legacy_budget_available": 0,
+    "original_journal_bytes_recovered": false,
+    "published_attempts": 11,
+    "published_fit_completions": 40,
+    "published_fit_starts": 44,
+    "unlisted_source_freshness": "unknown_not_unseen"
+  },
+  "next": [
+    "publish tested component after integration acceptance",
+    "wire audited fully reconstructed five-role export and qualify full profile resources",
+    "fair training and calibration",
+    "frozen final portfolio campaign segments uncertainty costs",
+    "three model cards evaluation reports MLflow lifecycle and main acceptance"
+  ],
+  "package": {
+    "build_log": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/journal-package-release.log",
+      "sha256": "07ce3edfb003aeeb9cfe4e075aaacd7f814c56f4762d697b172743c4fcaddea9",
+      "size_bytes": 221
+    },
+    "carryover_sha256": "9a30d543df19d61b3de9cd1df3e5b6650b60f74b1ccbf1c462d1ad1d0bba86ce",
+    "installed_module": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/wheel-venv/lib/python3.11/site-packages/retailops_ai/evaluation_campaign/campaign_journal.py",
+    "native_installed_runtime_equal": true,
+    "runtime_code_sha256": "19a729a14bfad59c7cf5fb24e02eec7f4202b3b99dc042969df25686dbd7b80f",
+    "source_python_files": 494,
+    "tensorflow_imported": false,
+    "v10_schemas": 3,
+    "wheel": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "sha256": "97a02a5a3f2fde644adad3276378b7433f03d97c3e8784275e0e8f6e9fc043f3",
+      "size_bytes": 1582491
+    }
+  },
+  "previous_static_checks": {
+    "log": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/campaign-checks.log",
+      "sha256": "a62985e2ad2affb44b30d05f0a5450b82da1887c2333844b5d5e22df80e69c5b",
+      "size_bytes": 4847
+    },
+    "mypy_files": 604,
+    "passed": true,
+    "scope": "before fair-family addition; final source checks required"
+  },
+  "prior_focused": {
+    "log": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/journal-tests-first.log",
+      "sha256": "2ca11370c8faebf9f5ea1c01894f830914656771a6d4285609004a86f1adae19",
+      "size_bytes": 99
+    },
+    "scope": "initial journal before additional fsync and fair-family tests",
+    "seconds": 5.18,
+    "tests": 48
+  },
+  "prior_regression": {
+    "errors": 0,
+    "failures": 0,
+    "junit": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/campaign-regression.xml",
+      "sha256": "b9c3d9ce11772a9b4889dba4421a895fdb8c410434d6820eadf5f7686bab68b8",
+      "size_bytes": 61951
+    },
+    "log": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/campaign-regression.log",
+      "sha256": "6a2af1a9ef43c88af8dbab0b207ad51424cb436427cef186e7e9c775439f16ea",
+      "size_bytes": 512
+    },
+    "scope": "412 passes before equal-family budget addition; not asserted as full final-source regression",
+    "seconds": 365.803,
+    "skipped": 0,
+    "tests": 412
+  },
+  "protocol_invariants": [
+    "canonical ai-dev development and ai-training final scopes",
+    "all three source seeds and use cases",
+    "predeclared integer seed and scenario weights",
+    "equal RF HGB TensorFlow trial and initialization seed budgets",
+    "one generation per source and topologically completed dependencies",
+    "train-only model fit and calibration-only calibrator fit",
+    "three compatible selections bound to exact development journal head before final generation",
+    "durable pre-operation reservation with no failure refund",
+    "unresolved attempts block same operation and freeze",
+    "all final operations completed before closing execution",
+    "no quality or freshness or stage_ready grant"
+  ],
+  "publication": {
+    "integration_pr": 18,
+    "origin_main": "not_merged",
+    "required_ci": "not_started_for_current_source_commit"
+  },
+  "recorded_at_utc": "2026-10-07T07:28:34.836919+00:00",
+  "secrets": {
+    "directory_before_final_receipt_and_fair_family_update": {
+      "log": {
+        "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/campaign-secrets.log",
+        "sha256": "e455ca118791980ae3afd34041bfc21cb9ec02fbb68ec0e5c39f689c7be8f90c",
+        "size_bytes": 81
+      },
+      "passed": true
+    },
+    "final": {
+      "directory_passed": true,
+      "git_scan": "required_after_commit",
+      "log": {
+        "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-campaign/.local/ai09-campaign-state/campaign-secrets-release.log",
+        "sha256": "b9ebd4736260fb7dca8224f241b179820fe376b2c6a6a163f0b2a9be5556003f",
+        "size_bytes": 81
+      }
+    }
+  },
+  "slice": "AI 09.12",
+  "source_files": {
+    "src/retailops_ai/evaluation_campaign/campaign_contract.py": "5b906321a156583e44b22e7d715bc1d1b5ad941a298caddb02e462b6b4173a8e",
+    "src/retailops_ai/evaluation_campaign/campaign_journal.py": "91d042d2cdc169052c9f924a1b0a6caa0ffaec12982d7953b41d580de6971ca4",
+    "src/retailops_ai/evaluation_campaign/legacy_carryover.py": "edde2e9bd99f91dcca25d3efadc3ed8ad70b766baed5aef072fbdf733eecc0aa"
+  }
+}
