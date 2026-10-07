@@ -353,13 +353,13 @@ def smoke_inputs(variant="bedrock"):
     runtime = load_graph_config(ROOT / f"agent/graph.{variant}-smoke.native-v12.v1.json")
     suite, release = load_evaluation(
         ROOT / "agent/golden.canonical.v1.json",
-        ROOT / "agent/evaluation-release.fake.native-v12.v1.json",
+        ROOT / "agent/evaluation-release.fake.native-v12-main.v1.json",
         offline,
         ROOT / "knowledge/golden.semantic.v1.json",
         ROOT / "uv.lock",
     )
     profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / f"agent/{variant}-smoke.native-v12.v1.json").read_bytes()
+        (ROOT / f"agent/{variant}-smoke.native-v12-main.v1.json").read_bytes()
     )
     return profile, suite, release, offline, runtime
 
@@ -379,7 +379,7 @@ def test_comparison_profile_uses_the_same_cases_oracles_and_policy():
     baseline, suite, release, offline, runtime = smoke_inputs()
     comparison = load_graph_config(ROOT / "agent/graph.sonnet-smoke.native-v12.v1.json")
     profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/sonnet-smoke.native-v12.v1.json").read_bytes()
+        (ROOT / "agent/sonnet-smoke.native-v12-main.v1.json").read_bytes()
     )
     verify_smoke(profile, suite, release, offline, comparison)
     assert profile.case_ids == baseline.case_ids
@@ -479,10 +479,10 @@ def smoke_args():
         ("config", "agent/graph.bedrock-smoke.native-v12.v1.json"),
         ("offline-config", "agent/graph.evaluate.fake.native-v12.v1.json"),
         ("golden", "agent/golden.canonical.v1.json"),
-        ("release", "agent/evaluation-release.fake.native-v12.v1.json"),
+        ("release", "agent/evaluation-release.fake.native-v12-main.v1.json"),
         ("rag-golden", "knowledge/golden.semantic.v1.json"),
         ("lock", "uv.lock"),
-        ("profile", "agent/bedrock-smoke.native-v12.v1.json"),
+        ("profile", "agent/bedrock-smoke.native-v12-main.v1.json"),
     ]:
         args.extend(["--" + flag, str(ROOT / path)])
     return args

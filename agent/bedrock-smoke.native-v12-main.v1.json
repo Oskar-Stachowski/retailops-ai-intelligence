@@ -1,0 +1,19 @@
+{
+  "case_ids": [
+    "business-sales",
+    "business-inventory",
+    "business-comparison",
+    "document-1",
+    "refuse-order",
+    "auth-foreign-scope"
+  ],
+  "circuit": {
+    "failure_threshold": 3,
+    "max_inflight": 2,
+    "recovery_seconds": 30.0,
+    "schema_version": "1.0"
+  },
+  "offline_release_id": "agent-evaluation-release-sha256-78a1fed5e7147ba1599f4c9f7c3cc3c0dd21f9dcce8bc057b9ec3e21440960a6",
+  "runtime_graph_config_id": "agent-graph-config-sha256-b6a38061534d8300bb0f4bad4d7076530d24eb97a16e82c62da9d3bfe2ae894d",
+  "schema_version": "1.0"
+}

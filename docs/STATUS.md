@@ -921,3 +921,11 @@ z zachowaniem `agent-evaluate`, frozen training lock i bramek bezpieczeństwa.
 191/191 testów integracji i pełne `ci-checks` passed; plan obejmuje wszystkie
 3992 testy dokładnie raz. [Odbiór integracji](evidence/12-ci-integration.md)
 rozróżnia wynik poprzedniego head od wymaganego nowego zdalnego CI.
+
+Preflight nowego PR merge prawidłowo wykrył różnicę pełnego checksumu aplikacji
+względem kandydata gałęzi. AI12 scaliła opublikowany `main/e1f864c` we własnym
+worktree i utworzyła osobny kandydat `.native-v12-main.v1`, zachowując wcześniejsze
+manifesty i etykiety. [Odbiór zgodności](evidence/12-main-binding.md): 858/858
+testów, pełne `ci-checks`, golden 50/50, zgodność 536 plików Python checkout /
+wheel / faktyczne drzewo merge CI. Nowy head wymaga pełnego zdalnego runu;
+AI12 pozostaje **in_progress**.
