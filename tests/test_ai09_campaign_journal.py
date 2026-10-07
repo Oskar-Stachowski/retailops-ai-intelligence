@@ -255,7 +255,10 @@ def test_failures_and_unresolved_reservations_never_refund_fit_budget(campaign):
         journal.reserve(root, "development-fit")
     assert journal.summary(root)["charged_new_fit_attempts"] == 3
     assert journal.summary(root)["failed_new_attempts"] == 2
-    assert journal.inspect(root).events[5].cost is None
+    ordinary_failure = journal.inspect(root).events[5].cost
+    assert ordinary_failure is not None and ordinary_failure.wall_seconds > 0
+    assert ordinary_failure.peak_process_tree_rss_bytes is None
+    assert journal.inspect(root).events[7].cost is None  # externally interrupted, unknown
 
 
 def test_missing_output_or_full_fit_cost_is_a_charged_failure(campaign):
