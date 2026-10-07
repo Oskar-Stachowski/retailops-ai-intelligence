@@ -1,0 +1,335 @@
+{
+  "$defs": {
+    "SpecificationPin": {
+      "additionalProperties": false,
+      "properties": {
+        "commit_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Commit Sha",
+          "type": "string"
+        },
+        "relative_path": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "repository": {
+          "enum": [
+            "retailops-cloud-native-platform",
+            "retailops-ai-intelligence"
+          ],
+          "title": "Repository",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 1048576,
+          "minimum": 1,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "repository",
+        "commit_sha",
+        "relative_path",
+        "sha256",
+        "size_bytes"
+      ],
+      "title": "SpecificationPin",
+      "type": "object"
+    },
+    "TensorFlowDevelopmentBudget": {
+      "additionalProperties": false,
+      "description": "A bounded initial recipe proposal, not a measured performance acceptance.",
+      "properties": {
+        "cpu_threads": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "early_stopping": {
+          "const": "development_validation_only",
+          "default": "development_validation_only",
+          "title": "Early Stopping",
+          "type": "string"
+        },
+        "maximum_epochs": {
+          "default": 25,
+          "maximum": 25,
+          "minimum": 1,
+          "title": "Maximum Epochs",
+          "type": "integer"
+        },
+        "maximum_process_tree_rss_mib": {
+          "default": 1024,
+          "maximum": 1024,
+          "minimum": 1,
+          "title": "Maximum Process Tree Rss Mib",
+          "type": "integer"
+        },
+        "maximum_trial_wall_seconds": {
+          "default": 1200,
+          "maximum": 1200,
+          "minimum": 1,
+          "title": "Maximum Trial Wall Seconds",
+          "type": "integer"
+        },
+        "maximum_trials": {
+          "default": 2,
+          "maximum": 2,
+          "minimum": 1,
+          "title": "Maximum Trials",
+          "type": "integer"
+        },
+        "measured_budget_passed": {
+          "const": false,
+          "default": false,
+          "title": "Measured Budget Passed",
+          "type": "boolean"
+        },
+        "scope": {
+          "const": "initial_development_recipe_proposal",
+          "default": "initial_development_recipe_proposal",
+          "title": "Scope",
+          "type": "string"
+        }
+      },
+      "title": "TensorFlowDevelopmentBudget",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:preparation:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "aggregate_policy": {
+      "const": "must_be_reviewed_and_bound_before_final_test",
+      "default": "must_be_reviewed_and_bound_before_final_test",
+      "title": "Aggregate Policy",
+      "type": "string"
+    },
+    "data_seeds": {
+      "default": [
+        42,
+        137,
+        2026
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "prefixItems": [
+        {
+          "const": 42,
+          "type": "integer"
+        },
+        {
+          "const": 137,
+          "type": "integer"
+        },
+        {
+          "const": 2026,
+          "type": "integer"
+        }
+      ],
+      "title": "Data Seeds",
+      "type": "array"
+    },
+    "final_profile": {
+      "const": "ai-training",
+      "default": "ai-training",
+      "title": "Final Profile",
+      "type": "string"
+    },
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "inherited_ai04_exceptions": {
+      "const": false,
+      "default": false,
+      "title": "Inherited Ai04 Exceptions",
+      "type": "boolean"
+    },
+    "missing_metrics": {
+      "const": "not_evaluable_never_ideal_by_default",
+      "default": "not_evaluable_never_ideal_by_default",
+      "title": "Missing Metrics",
+      "type": "string"
+    },
+    "model_promotion_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Model Promotion Authorized",
+      "type": "boolean"
+    },
+    "prediction_population": {
+      "const": "same_complete_evaluated_keys_for_every_model",
+      "default": "same_complete_evaluated_keys_for_every_model",
+      "title": "Prediction Population",
+      "type": "string"
+    },
+    "preprocessing_fit_scope": {
+      "const": "eligible_train_of_current_fold_only",
+      "default": "eligible_train_of_current_fold_only",
+      "title": "Preprocessing Fit Scope",
+      "type": "string"
+    },
+    "quality_policy": {
+      "const": "pin_use_case_rules_and_actual_thresholds_before_final_test",
+      "default": "pin_use_case_rules_and_actual_thresholds_before_final_test",
+      "title": "Quality Policy",
+      "type": "string"
+    },
+    "requires_upstream_acceptance": {
+      "const": true,
+      "default": true,
+      "title": "Requires Upstream Acceptance",
+      "type": "boolean"
+    },
+    "scenarios": {
+      "default": [
+        "normal",
+        "promotion",
+        "demand_shock",
+        "inventory_constraint"
+      ],
+      "items": {
+        "enum": [
+          "normal",
+          "promotion",
+          "demand_shock",
+          "inventory_constraint"
+        ],
+        "type": "string"
+      },
+      "title": "Scenarios",
+      "type": "array"
+    },
+    "scope": {
+      "const": "planning_only_no_dataset_or_split_binding",
+      "default": "planning_only_no_dataset_or_split_binding",
+      "title": "Scope",
+      "type": "string"
+    },
+    "seed_reporting": {
+      "const": "every_seed_and_scenario_before_any_aggregate",
+      "default": "every_seed_and_scenario_before_any_aggregate",
+      "title": "Seed Reporting",
+      "type": "string"
+    },
+    "specifications": {
+      "items": {
+        "$ref": "#/$defs/SpecificationPin"
+      },
+      "maxItems": 7,
+      "minItems": 7,
+      "title": "Specifications",
+      "type": "array"
+    },
+    "tensorflow_architecture": {
+      "const": "compact_dense_direct_multi_horizon",
+      "default": "compact_dense_direct_multi_horizon",
+      "title": "Tensorflow Architecture",
+      "type": "string"
+    },
+    "tensorflow_budget": {
+      "$ref": "#/$defs/TensorFlowDevelopmentBudget",
+      "default": {
+        "cpu_threads": 1,
+        "early_stopping": "development_validation_only",
+        "maximum_epochs": 25,
+        "maximum_process_tree_rss_mib": 1024,
+        "maximum_trial_wall_seconds": 1200,
+        "maximum_trials": 2,
+        "measured_budget_passed": false,
+        "scope": "initial_development_recipe_proposal"
+      }
+    },
+    "tensorflow_horizons": {
+      "default": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "items": {
+        "type": "integer"
+      },
+      "title": "Tensorflow Horizons",
+      "type": "array"
+    },
+    "training_initialization_seeds": {
+      "default": [
+        42
+      ],
+      "items": {
+        "maximum": 2147483647,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "title": "Training Initialization Seeds",
+      "type": "array"
+    },
+    "uncertainty_resampling": {
+      "const": "time_block_or_series_cluster_not_independent_rows",
+      "default": "time_block_or_series_cluster_not_independent_rows",
+      "title": "Uncertainty Resampling",
+      "type": "string"
+    },
+    "use_cases": {
+      "default": [
+        "forecast",
+        "anomaly",
+        "stockout"
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "prefixItems": [
+        {
+          "const": "forecast",
+          "type": "string"
+        },
+        {
+          "const": "anomaly",
+          "type": "string"
+        },
+        {
+          "const": "stockout",
+          "type": "string"
+        }
+      ],
+      "title": "Use Cases",
+      "type": "array"
+    },
+    "version": {
+      "const": "ai09-evaluation-preparation-1.0.0",
+      "default": "ai09-evaluation-preparation-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "specifications"
+  ],
+  "title": "EvaluationPreparation",
+  "type": "object"
+}

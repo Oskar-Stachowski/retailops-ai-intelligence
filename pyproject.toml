@@ -115,6 +115,17 @@ packages = ["src/retailops_ai"]
 "contracts/raw_dq/v2" = "retailops_ai/full_raw_dq/contracts"
 "contracts/return_inputs/v1" = "retailops_ai/return_inputs/contracts"
 "contracts/source_snapshot/v1_1" = "retailops_ai/source_snapshot/v1_1"
+"contracts/evaluation/v1" = "retailops_ai/evaluation_campaign"
+"contracts/evaluation/v3" = "retailops_ai/evaluation_campaign/v3"
+"contracts/evaluation/v4" = "retailops_ai/evaluation_campaign/v4"
+"contracts/evaluation/v5" = "retailops_ai/evaluation_campaign/v5"
+"contracts/evaluation/v6" = "retailops_ai/evaluation_campaign/v6"
+"contracts/evaluation/v7" = "retailops_ai/evaluation_campaign/v7"
+"contracts/evaluation/v8" = "retailops_ai/evaluation_campaign/v8"
+"contracts/evaluation/v9" = "retailops_ai/evaluation_campaign/v9"
+"contracts/evaluation/v10" = "retailops_ai/evaluation_campaign/v10"
+"environments/tensorflow/uv.lock" = "retailops_ai/tensorflow_challenger/dependencies.lock"
+"contracts/evaluation/v2" = "retailops_ai/tensorflow_challenger"
 "contracts/source_snapshot/v1_2" = "retailops_ai/source_snapshot/v1_2"
 
 [tool.uv]
@@ -130,6 +141,7 @@ ignore = ["E501"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101", "S603"]
+"environments/tensorflow/tests/**" = ["S101", "S603"]
 "scripts/local_stack.py" = ["S603"]
 
 [tool.mypy]

@@ -86,7 +86,7 @@ forecast-acceptance-check:
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check anomaly-detectors-check return-inputs-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check contracts-check package compose-config
+check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check anomaly-detectors-check return-inputs-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check contracts-check package compose-config tensorflow-check
 
 # CI uses isolated runners for these complete groups; local make check stays complete.
 .PHONY: ci-checks ci-source-inputs ci-qualified-inputs ci-detectors ci-forecast
@@ -106,6 +106,8 @@ serve:
 	$(UV_RUN) retailops-ai serve --env-file "$(ENV_FILE)"
 
 contracts:
+	$(UV_RUN) python scripts/update_tensorflow_challenger_contracts.py
+	$(UV_RUN) python scripts/update_evaluation_preparation_contracts.py
 	$(UV_RUN) python scripts/update_anomaly_portfolio_contracts.py
 	$(UV_RUN) python scripts/update_anomaly_evaluation_contracts.py
 	$(UV_RUN) python scripts/update_anomaly_detector_contracts.py
@@ -123,6 +125,8 @@ contracts:
 	$(UV_RUN) python scripts/update_stockout_job_contracts.py
 
 contracts-check:
+	$(UV_RUN) python scripts/update_tensorflow_challenger_contracts.py --check
+	$(UV_RUN) python scripts/update_evaluation_preparation_contracts.py --check
 	$(UV_RUN) python scripts/update_anomaly_portfolio_contracts.py --check
 	$(UV_RUN) python scripts/update_anomaly_evaluation_contracts.py --check
 	$(UV_RUN) python scripts/update_anomaly_detector_contracts.py --check
@@ -208,3 +212,7 @@ model-catalog-smoke:
 .PHONY: evaluations-smoke
 evaluations-smoke:
 	$(UV_RUN) python scripts/check_evaluations.py
+
+.PHONY: tensorflow-check
+tensorflow-check:
+	PYTHONPATH=tests OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 TF_CPP_MIN_LOG_LEVEL=2 $(UV) run --project environments/tensorflow --locked python -m pytest environments/tensorflow/tests -q

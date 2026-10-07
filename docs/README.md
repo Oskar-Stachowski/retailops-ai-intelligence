@@ -1,3 +1,8 @@
+**AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
+i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
+[odbiorze 09.11](evidence/09-11-main-integration.md). Dawne katalogi
+robocze AI 09 w `/private/tmp` wymagają odtworzenia historii, przed nowymi fitami.
+
 **AI 08 jest READY.** [Końcowe zamknięcie](evidence/08-28-final-ready.md)
 i [trwały receipt](evidence/08-28-final-ready.json) zapisują odbiór obu main,
 2543 testy i 90 passed / 3 accepted warnings / 0 blockers.
@@ -39,6 +44,31 @@ kwalifikację jakości, aktywację i rollback Etapu 11. Historyczne evidence
 zachowuje zakres poszczególnych pomiarów; bieżące bramki podaje status.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
+[Przygotowanie oceny AI 09](evaluation-preparation.md) przypina wymagania,
+seedy i granice przyszłej kampanii, z jawnym preflight `not_ready`.
+[Challenger TensorFlow](tensorflow-challenger.md) dodaje rzeczywisty trening CPU,
+train-only preprocessing, wspólny evaluator i checksummed MLflow artifact.
+[Porównanie development](forecast-development-comparison.md) dodaje wspólną
+populację baseline/RF/HGB/TF, zapis prób, segmenty i replay bez treningu.
+[Odbiór pamięci](evidence/09-04-development-memory.md) dodaje wspólne lineage,
+strumieniowy digest i osobny CPU reload z pomiarem całego własnego drzewa.
+[Rejestr prób development](development-trial-registry.md) wiąże wiele katalogów
+wyników z jednym trwałym budżetem, zachowuje awarie i obserwowaną historię.
+[Niezależny podział prognoz](independent-forecast-partitions.md) przygotowuje
+pięć chronologicznych ról i pełne klucze, z jawną blokadą odczytu wyników oceny.
+[Dziennik dostępu do wyników](outcome-access-journal.md) zachowuje historię
+odczytów i rezerwuje dostęp przed czytnikiem, również po awarii procesu.
+[Prospektywna kampania AI 09](prospective-evaluation-campaign.md) rozlicza
+niedostępną historię i dodaje trwały budżet, późniejsze źródła oraz zamrożenie
+trzech pakietów przed końcową oceną, bez nadawania kwalifikacji jakości.
+[Czytnik etykiet pięciu ról](forecast-outcome-reader.md) sprawdza pełne klucze,
+wersje, dojrzałość i eligibility w audytowanym kontekście; źródło i niezależna
+kampania nadal wymagają osobnego odbioru.
+[Pełne odtworzenie źródła forecast](forecast-source-replay.md) porównuje
+całe curated z typed snapshotem po pięciu rezerwacjach dostępu. Odbiór
+scoped etykiet i integracja z treningiem pozostają kolejnymi krokami.
+[Wersje obserwacji](forecast-source-versions.md) zachowują osobny czas dowodu
+kompletności i nie przenoszą jakości ostatniej obserwacji wstecz.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
 registry snapshotu i niezależny checker. [Importer 03.4](source-snapshot-import.md)
 sprawdza typed Parquet i publikuje immutable source. [Curated 03.5](curated.md)

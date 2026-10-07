@@ -1,0 +1,173 @@
+{
+  "$id": "urn:retailops:ai09:challenger_policy:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "architecture": {
+      "const": "history28_target_covariates_dense_direct14_mean_median",
+      "default": "history28_target_covariates_dense_direct14_mean_median",
+      "title": "Architecture",
+      "type": "string"
+    },
+    "artifact_bytes": {
+      "default": 33554432,
+      "maximum": 33554432,
+      "minimum": 1024,
+      "title": "Artifact Bytes",
+      "type": "integer"
+    },
+    "batch_size": {
+      "default": 32,
+      "maximum": 128,
+      "minimum": 1,
+      "title": "Batch Size",
+      "type": "integer"
+    },
+    "cpu_seconds": {
+      "default": 1200.0,
+      "exclusiveMinimum": 0,
+      "maximum": 1200,
+      "title": "Cpu Seconds",
+      "type": "number"
+    },
+    "cpu_threads": {
+      "const": 1,
+      "default": 1,
+      "title": "Cpu Threads",
+      "type": "integer"
+    },
+    "data_seed": {
+      "default": 42,
+      "maximum": 2147483647,
+      "minimum": 0,
+      "title": "Data Seed",
+      "type": "integer"
+    },
+    "early_stopping": {
+      "const": "development_validation_only_restore_best_epoch",
+      "default": "development_validation_only_restore_best_epoch",
+      "title": "Early Stopping",
+      "type": "string"
+    },
+    "epochs": {
+      "default": 25,
+      "maximum": 25,
+      "minimum": 1,
+      "title": "Epochs",
+      "type": "integer"
+    },
+    "final_test_accessed": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Accessed",
+      "type": "boolean"
+    },
+    "hidden_units": {
+      "default": [
+        32,
+        16
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "const": 32,
+          "type": "integer"
+        },
+        {
+          "const": 16,
+          "type": "integer"
+        }
+      ],
+      "title": "Hidden Units",
+      "type": "array"
+    },
+    "initialization_seed": {
+      "default": 42,
+      "maximum": 2147483647,
+      "minimum": 0,
+      "title": "Initialization Seed",
+      "type": "integer"
+    },
+    "interval_policy": {
+      "const": "absent_pending_separate_development_calibration",
+      "default": "absent_pending_separate_development_calibration",
+      "title": "Interval Policy",
+      "type": "string"
+    },
+    "learning_rate": {
+      "default": 0.001,
+      "exclusiveMinimum": 0,
+      "maximum": 0.01,
+      "title": "Learning Rate",
+      "type": "number"
+    },
+    "max_matrix_bytes": {
+      "default": 67108864,
+      "maximum": 67108864,
+      "minimum": 1024,
+      "title": "Max Matrix Bytes",
+      "type": "integer"
+    },
+    "max_windows": {
+      "default": 3000,
+      "maximum": 3000,
+      "minimum": 1,
+      "title": "Max Windows",
+      "type": "integer"
+    },
+    "objective": {
+      "const": "masked_train_scaled_mean_mse_plus_median_mae",
+      "default": "masked_train_scaled_mean_mse_plus_median_mae",
+      "title": "Objective",
+      "type": "string"
+    },
+    "patience": {
+      "default": 4,
+      "maximum": 5,
+      "minimum": 1,
+      "title": "Patience",
+      "type": "integer"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "rss_bytes": {
+      "default": 1073741824,
+      "maximum": 1073741824,
+      "minimum": 1048576,
+      "title": "Rss Bytes",
+      "type": "integer"
+    },
+    "scope": {
+      "const": "development_only_no_final_test_or_release",
+      "default": "development_only_no_final_test_or_release",
+      "title": "Scope",
+      "type": "string"
+    },
+    "trials": {
+      "const": 1,
+      "default": 1,
+      "title": "Trials",
+      "type": "integer"
+    },
+    "version": {
+      "const": "ai09-keras-development-1.0.0",
+      "default": "ai09-keras-development-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "wall_seconds": {
+      "default": 1200.0,
+      "exclusiveMinimum": 0,
+      "maximum": 1200,
+      "title": "Wall Seconds",
+      "type": "number"
+    }
+  },
+  "title": "ChallengerPolicy",
+  "type": "object"
+}

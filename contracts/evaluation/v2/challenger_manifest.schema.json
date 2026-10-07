@@ -1,0 +1,665 @@
+{
+  "$defs": {
+    "ArtifactFile": {
+      "additionalProperties": false,
+      "properties": {
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 33554432,
+          "minimum": 1,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "size_bytes",
+        "sha256"
+      ],
+      "title": "ArtifactFile",
+      "type": "object"
+    },
+    "Binding": {
+      "additionalProperties": false,
+      "properties": {
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "environment_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Environment Lock Sha256",
+          "type": "string"
+        },
+        "feature_set_id": {
+          "pattern": "^features-sha256-[0-9a-f]{64}$",
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "preprocessing_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Preprocessing Sha256",
+          "type": "string"
+        },
+        "split_id": {
+          "pattern": "^split-sha256-[0-9a-f]{64}$",
+          "title": "Split Id",
+          "type": "string"
+        },
+        "train_population_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Train Population Sha256",
+          "type": "string"
+        },
+        "validation_population_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Validation Population Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feature_set_id",
+        "split_id",
+        "preprocessing_sha256",
+        "environment_lock_sha256",
+        "policy_sha256",
+        "code_sha256",
+        "train_population_sha256",
+        "validation_population_sha256"
+      ],
+      "title": "Binding",
+      "type": "object"
+    },
+    "ChallengerPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "architecture": {
+          "const": "history28_target_covariates_dense_direct14_mean_median",
+          "default": "history28_target_covariates_dense_direct14_mean_median",
+          "title": "Architecture",
+          "type": "string"
+        },
+        "artifact_bytes": {
+          "default": 33554432,
+          "maximum": 33554432,
+          "minimum": 1024,
+          "title": "Artifact Bytes",
+          "type": "integer"
+        },
+        "batch_size": {
+          "default": 32,
+          "maximum": 128,
+          "minimum": 1,
+          "title": "Batch Size",
+          "type": "integer"
+        },
+        "cpu_seconds": {
+          "default": 1200.0,
+          "exclusiveMinimum": 0,
+          "maximum": 1200,
+          "title": "Cpu Seconds",
+          "type": "number"
+        },
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "data_seed": {
+          "default": 42,
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Data Seed",
+          "type": "integer"
+        },
+        "early_stopping": {
+          "const": "development_validation_only_restore_best_epoch",
+          "default": "development_validation_only_restore_best_epoch",
+          "title": "Early Stopping",
+          "type": "string"
+        },
+        "epochs": {
+          "default": 25,
+          "maximum": 25,
+          "minimum": 1,
+          "title": "Epochs",
+          "type": "integer"
+        },
+        "final_test_accessed": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Accessed",
+          "type": "boolean"
+        },
+        "hidden_units": {
+          "default": [
+            32,
+            16
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": 32,
+              "type": "integer"
+            },
+            {
+              "const": 16,
+              "type": "integer"
+            }
+          ],
+          "title": "Hidden Units",
+          "type": "array"
+        },
+        "initialization_seed": {
+          "default": 42,
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Initialization Seed",
+          "type": "integer"
+        },
+        "interval_policy": {
+          "const": "absent_pending_separate_development_calibration",
+          "default": "absent_pending_separate_development_calibration",
+          "title": "Interval Policy",
+          "type": "string"
+        },
+        "learning_rate": {
+          "default": 0.001,
+          "exclusiveMinimum": 0,
+          "maximum": 0.01,
+          "title": "Learning Rate",
+          "type": "number"
+        },
+        "max_matrix_bytes": {
+          "default": 67108864,
+          "maximum": 67108864,
+          "minimum": 1024,
+          "title": "Max Matrix Bytes",
+          "type": "integer"
+        },
+        "max_windows": {
+          "default": 3000,
+          "maximum": 3000,
+          "minimum": 1,
+          "title": "Max Windows",
+          "type": "integer"
+        },
+        "objective": {
+          "const": "masked_train_scaled_mean_mse_plus_median_mae",
+          "default": "masked_train_scaled_mean_mse_plus_median_mae",
+          "title": "Objective",
+          "type": "string"
+        },
+        "patience": {
+          "default": 4,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Patience",
+          "type": "integer"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "rss_bytes": {
+          "default": 1073741824,
+          "maximum": 1073741824,
+          "minimum": 1048576,
+          "title": "Rss Bytes",
+          "type": "integer"
+        },
+        "scope": {
+          "const": "development_only_no_final_test_or_release",
+          "default": "development_only_no_final_test_or_release",
+          "title": "Scope",
+          "type": "string"
+        },
+        "trials": {
+          "const": 1,
+          "default": 1,
+          "title": "Trials",
+          "type": "integer"
+        },
+        "version": {
+          "const": "ai09-keras-development-1.0.0",
+          "default": "ai09-keras-development-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "wall_seconds": {
+          "default": 1200.0,
+          "exclusiveMinimum": 0,
+          "maximum": 1200,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "title": "ChallengerPolicy",
+      "type": "object"
+    },
+    "EpochReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "epoch": {
+          "maximum": 25,
+          "minimum": 1,
+          "title": "Epoch",
+          "type": "integer"
+        },
+        "validation_loss": {
+          "minimum": 0,
+          "title": "Validation Loss",
+          "type": "number"
+        }
+      },
+      "required": [
+        "epoch",
+        "validation_loss"
+      ],
+      "title": "EpochReceipt",
+      "type": "object"
+    },
+    "ModelDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "binding": {
+          "$ref": "#/$defs/Binding"
+        },
+        "files": {
+          "additionalProperties": {
+            "$ref": "#/$defs/ArtifactFile"
+          },
+          "title": "Files",
+          "type": "object"
+        },
+        "input_width": {
+          "minimum": 1,
+          "title": "Input Width",
+          "type": "integer"
+        },
+        "output_order": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": "mean",
+              "type": "string"
+            },
+            {
+              "const": "median",
+              "type": "string"
+            }
+          ],
+          "title": "Output Order",
+          "type": "array"
+        },
+        "policy": {
+          "$ref": "#/$defs/ChallengerPolicy"
+        }
+      },
+      "required": [
+        "binding",
+        "policy",
+        "files",
+        "input_width",
+        "output_order"
+      ],
+      "title": "ModelDescriptor",
+      "type": "object"
+    },
+    "TrainingResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_seconds": {
+          "minimum": 0,
+          "title": "Cpu Seconds",
+          "type": "number"
+        },
+        "cpu_threads": {
+          "const": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "monitor_interval_seconds": {
+          "maximum": 0.05,
+          "minimum": 0.05,
+          "title": "Monitor Interval Seconds",
+          "type": "number"
+        },
+        "peak_tree_rss_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Peak Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "exclusiveMinimum": 0,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "cpu_seconds",
+        "peak_tree_rss_bytes",
+        "monitor_interval_seconds",
+        "cpu_threads"
+      ],
+      "title": "TrainingResources",
+      "type": "object"
+    },
+    "WorkerReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "batch_inference_seconds": {
+          "minimum": 0,
+          "title": "Batch Inference Seconds",
+          "type": "number"
+        },
+        "best_epoch": {
+          "maximum": 25,
+          "minimum": 1,
+          "title": "Best Epoch",
+          "type": "integer"
+        },
+        "cold_load_seconds": {
+          "minimum": 0,
+          "title": "Cold Load Seconds",
+          "type": "number"
+        },
+        "determinism_enabled": {
+          "const": true,
+          "title": "Determinism Enabled",
+          "type": "boolean"
+        },
+        "determinism_scope": {
+          "const": "fixed_versions_platform_and_initialization_seed_not_cross_platform_bitwise",
+          "title": "Determinism Scope",
+          "type": "string"
+        },
+        "epochs_run": {
+          "maximum": 25,
+          "minimum": 1,
+          "title": "Epochs Run",
+          "type": "integer"
+        },
+        "final_test_accessed": {
+          "const": false,
+          "title": "Final Test Accessed",
+          "type": "boolean"
+        },
+        "history": {
+          "items": {
+            "$ref": "#/$defs/EpochReceipt"
+          },
+          "maxItems": 25,
+          "minItems": 1,
+          "title": "History",
+          "type": "array"
+        },
+        "input_shape": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "null"
+            },
+            {
+              "minimum": 1,
+              "type": "integer"
+            }
+          ],
+          "title": "Input Shape",
+          "type": "array"
+        },
+        "interval_status": {
+          "const": "not_ready",
+          "title": "Interval Status",
+          "type": "string"
+        },
+        "keras_version": {
+          "const": "3.11.3",
+          "title": "Keras Version",
+          "type": "string"
+        },
+        "machine": {
+          "enum": [
+            "arm64",
+            "x86_64"
+          ],
+          "title": "Machine",
+          "type": "string"
+        },
+        "mlflow_run_id": {
+          "pattern": "^[0-9a-f]{32}$",
+          "title": "Mlflow Run Id",
+          "type": "string"
+        },
+        "mlflow_version": {
+          "const": "3.4.0",
+          "title": "Mlflow Version",
+          "type": "string"
+        },
+        "output_order": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": "mean",
+              "type": "string"
+            },
+            {
+              "const": "median",
+              "type": "string"
+            }
+          ],
+          "title": "Output Order",
+          "type": "array"
+        },
+        "output_shape": {
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "null"
+            },
+            {
+              "const": 14,
+              "type": "integer"
+            },
+            {
+              "const": 2,
+              "type": "integer"
+            }
+          ],
+          "title": "Output Shape",
+          "type": "array"
+        },
+        "peak_self_rss_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Peak Self Rss Bytes",
+          "type": "integer"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "python_version": {
+          "const": "3.11.15",
+          "title": "Python Version",
+          "type": "string"
+        },
+        "reload_atol": {
+          "maximum": 1e-06,
+          "minimum": 1e-06,
+          "title": "Reload Atol",
+          "type": "number"
+        },
+        "reload_rtol": {
+          "maximum": 1e-06,
+          "minimum": 1e-06,
+          "title": "Reload Rtol",
+          "type": "number"
+        },
+        "self_cpu_seconds": {
+          "minimum": 0,
+          "title": "Self Cpu Seconds",
+          "type": "number"
+        },
+        "status": {
+          "const": "passed",
+          "title": "Status",
+          "type": "string"
+        },
+        "system": {
+          "enum": [
+            "Darwin",
+            "Linux"
+          ],
+          "title": "System",
+          "type": "string"
+        },
+        "tensorflow_version": {
+          "const": "2.20.0",
+          "title": "Tensorflow Version",
+          "type": "string"
+        },
+        "training_seconds": {
+          "minimum": 0,
+          "title": "Training Seconds",
+          "type": "number"
+        },
+        "visible_gpu_count": {
+          "const": 0,
+          "title": "Visible Gpu Count",
+          "type": "integer"
+        },
+        "worker_seconds": {
+          "minimum": 0,
+          "title": "Worker Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "status",
+        "training_seconds",
+        "worker_seconds",
+        "cold_load_seconds",
+        "batch_inference_seconds",
+        "best_epoch",
+        "epochs_run",
+        "history",
+        "mlflow_run_id",
+        "tensorflow_version",
+        "keras_version",
+        "mlflow_version",
+        "system",
+        "machine",
+        "python_version",
+        "determinism_enabled",
+        "determinism_scope",
+        "visible_gpu_count",
+        "input_shape",
+        "output_shape",
+        "output_order",
+        "reload_rtol",
+        "reload_atol",
+        "interval_status",
+        "promotion_allowed",
+        "final_test_accessed",
+        "peak_self_rss_bytes",
+        "self_cpu_seconds"
+      ],
+      "title": "WorkerReceipt",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:ai09:challenger_manifest:1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_bytes": {
+      "exclusiveMinimum": 0,
+      "title": "Artifact Bytes",
+      "type": "integer"
+    },
+    "deployment_status": {
+      "const": "not_ready",
+      "title": "Deployment Status",
+      "type": "string"
+    },
+    "descriptor": {
+      "$ref": "#/$defs/ModelDescriptor"
+    },
+    "final_test_accessed": {
+      "const": false,
+      "title": "Final Test Accessed",
+      "type": "boolean"
+    },
+    "interval_status": {
+      "const": "not_ready",
+      "title": "Interval Status",
+      "type": "string"
+    },
+    "model_id": {
+      "pattern": "^model-sha256-[0-9a-f]{64}$",
+      "title": "Model Id",
+      "type": "string"
+    },
+    "preparation_seconds": {
+      "minimum": 0,
+      "title": "Preparation Seconds",
+      "type": "number"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "resources": {
+      "$ref": "#/$defs/TrainingResources"
+    },
+    "schema_version": {
+      "const": "ai09-tensorflow-artifact-1.0.0",
+      "default": "ai09-tensorflow-artifact-1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "const": "trained_and_reloaded_development_only",
+      "title": "Status",
+      "type": "string"
+    },
+    "worker": {
+      "$ref": "#/$defs/WorkerReceipt"
+    }
+  },
+  "required": [
+    "model_id",
+    "descriptor",
+    "worker",
+    "resources",
+    "preparation_seconds",
+    "artifact_bytes",
+    "status",
+    "deployment_status",
+    "interval_status",
+    "final_test_accessed",
+    "promotion_allowed"
+  ],
+  "title": "ChallengerManifest",
+  "type": "object"
+}

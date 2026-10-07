@@ -1,0 +1,240 @@
+{
+  "version": "ai09-main-integration-1.0.0",
+  "recorded_at_utc": "2026-10-07T06:32:57.020969+00:00",
+  "stage_status": "in_progress",
+  "evaluation_status": "not_ready",
+  "scope": "integration_of_existing_ai09_with_ready_ai07_ai08_and_locked_tensorflow_cpu_environment",
+  "previous_ai09_head": "7f10f8e42f110423381aa0f934bba60b78db0bb4",
+  "accepted_consumer_main": "18e771f9c2e89e91bf7afeb1744e0cd9112f50b5",
+  "accepted_producer_main": "1de462729012a1bad458a8da4ad317ec22dbc5b8",
+  "branch": "ai/09-ready",
+  "pull_request": 18,
+  "resolved_conflicts": [
+    ".github/workflows/required-ci.yml",
+    ".gitleaks.toml",
+    "Dockerfile.api",
+    "Makefile",
+    "docs/STATUS.md",
+    "pyproject.toml"
+  ],
+  "ci_invariants": {
+    "all_original_ai07_ai08_jobs_preserved": true,
+    "four_complete_native_pytest_shards": true,
+    "all_acceptance_groups_preserved": true,
+    "separate_required_locked_tensorflow_job": true,
+    "required_result_depends_on_all_jobs": true,
+    "negative_guard_tests_added": 3
+  },
+  "source_runtime": {
+    "python_files": 491,
+    "code_sha256": "48b6c00cef69dd148ad0c3df4cc3d6b9eb5fdaf9eab14077477f717102f8b21a",
+    "core_dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "python_version": "3.11.15",
+    "tensorflow_lock_sha256": "105f6de592a64c4da475c938ffdede6e4e8c640032f48101c1127ad0dd26ff88"
+  },
+  "validation": {
+    "focused_before_scipy_update": {
+      "passed": 420,
+      "seconds": 509.43,
+      "exit_code": 0,
+      "log": {
+        "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/integration-focused.log",
+        "bytes": 512,
+        "sha256": "2a8aa2c7118b64477e73734b58d6ac4b6b6811fbb8a54ff75674a0ee3119afa1"
+      }
+    },
+    "affected_after_scipy_update": {
+      "passed": 114,
+      "seconds": 21.73,
+      "exit_code": 0,
+      "log": {
+        "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/integration-post-scipy-focused.log",
+        "bytes": 181,
+        "sha256": "8a1cf2e7d82df02d67e14a7b52e385f21441d222bf1612523c545b97109e9411"
+      }
+    },
+    "real_tensorflow": {
+      "passed": 3,
+      "seconds": 104.42,
+      "exit_code": 0,
+      "scope": "controlled_synthetic_fixtures_real_fitting_supported_mlflow_signature_cpu_reload_and_comparison_no_project_final_test",
+      "log": {
+        "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/integration-tensorflow.log",
+        "bytes": 394,
+        "sha256": "82e30446c4b11387c477bad2918704ff1f9bc5c1e1d8822593d226766287f148"
+      }
+    },
+    "static_checks": {
+      "status": "passed",
+      "mypy_files": 601,
+      "scope": [
+        "lint",
+        "format",
+        "mypy",
+        "documentation_links",
+        "required_ci_contract",
+        "all_contracts",
+        "forecast_runtime",
+        "package",
+        "compose_config"
+      ],
+      "log": {
+        "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/integration-checks-final.log",
+        "bytes": 4564,
+        "sha256": "159a32f86d4fdf4106b32084f35c63983efede86a8e35b89a697a9b79034e297"
+      }
+    },
+    "secrets": {
+      "git": {
+        "status": "passed",
+        "log": {
+          "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/integration-secrets-git.log",
+          "bytes": 113,
+          "sha256": "1335b6c16f4e1aebef01aff822b479cc1aa87bc6ed38b74503e0971261b2e959"
+        }
+      },
+      "directory_before_final_docs": {
+        "status": "passed",
+        "log": {
+          "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/integration-secrets-dir.log",
+          "bytes": 81,
+          "sha256": "7a3885b63d2b138fc891505ff05041a8317f66f3fc4925223ddcbad2e53b7aac"
+        }
+      },
+      "exact_path_and_value_negative_controls": [
+        {
+          "case": "exact_public_metadata",
+          "exit_code": 0,
+          "expected_exit_code": 0,
+          "passed": true
+        },
+        {
+          "case": "same_hash_elsewhere",
+          "exit_code": 1,
+          "expected_exit_code": 1,
+          "passed": true
+        },
+        {
+          "case": "different_value_same_file",
+          "exit_code": 1,
+          "expected_exit_code": 1,
+          "passed": true
+        }
+      ],
+      "directory_final_source_and_docs": {
+        "status": "passed",
+        "log": {
+          "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/integration-secrets-dir-final.log",
+          "bytes": 81,
+          "sha256": "f34e39b490d4a1dc904894e1a62354f895e6d2ca69f76983c1f03ab87d1bbb34"
+        }
+      }
+    },
+    "local_source_and_forecast_acceptance": {
+      "status": "running",
+      "session_id": 72178,
+      "log_path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/integration-acceptance.log",
+      "not_claimed_complete": true
+    },
+    "remote_required_ci": {
+      "status": "pending_publication",
+      "not_claimed_success": true
+    }
+  },
+  "retained_failed_attempts": [
+    {
+      "scope": "initial_static_format_check",
+      "reason": "check_repository.py required formatting",
+      "note": "final passing run is separately recorded",
+      "original_log_retained": false,
+      "evidence": "tool result and final format/check rerun; overwritten scratch log is not claimed to preserve the failed bytes"
+    },
+    {
+      "scope": "initial_focused_invocation",
+      "reason": "incorrect test filename; zero tests executed; corrected invocation separately recorded",
+      "exit_code": 4
+    },
+    {
+      "scope": "real_tensorflow_initial",
+      "failed": 3,
+      "seconds": 65.1,
+      "exit_code": 2,
+      "reason": "SciPy1.15.3 Darwin PROPACK Mach-O zero-fill import failure; MLflow inferred Any instead of TensorSpec and tree worker failed",
+      "log": {
+        "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/integration-tensorflow-first-failed.log",
+        "bytes": 15672,
+        "sha256": "3f51542a4af4a93ca0d754a5d651f21811cd0ab1bb435f9121393e2823144a14"
+      }
+    },
+    {
+      "scope": "scipy_compatibility_initial_probe",
+      "reason": "private PROPACK module layout differs in SciPy1.17.1; corrected public sparse.linalg import and signature/tree probe passed",
+      "log": {
+        "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/scipy-compatibility-probe.log",
+        "bytes": 326,
+        "sha256": "b76b0e29aa24c5fe8cd2c01fd1a9a28591d38d11f0b49b381a6a73bed4a00642"
+      }
+    }
+  ],
+  "tensorflow_environment_change": {
+    "from_scipy": "1.15.3",
+    "to_scipy": "1.17.1",
+    "core_uv_lock_changed": false,
+    "locked_environment_and_saved_bundle_requirements_match": true,
+    "numeric_reload_rtol": 1e-06,
+    "numeric_reload_atol": 1e-06,
+    "compatibility_probe": {
+      "path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-ready/.local/ai09-ready-state/logs/scipy-compatibility-probe-2.log",
+      "bytes": 143,
+      "sha256": "346d380de50a0bfedc1229bc280fed945dd624ad124af46bd704b82c4ca6ce7b"
+    }
+  },
+  "legacy_audit": {
+    "private_tmp_directories_present": false,
+    "historical_bytes_recovered": false,
+    "published_historical_attempts": 11,
+    "published_historical_model_starts": 44,
+    "published_historical_model_completions": 40,
+    "last_published_access_plans": 4,
+    "last_published_new_project_reservations": 0,
+    "later_unrecorded_exposure": "unknown_not_unseen",
+    "budget_reset_performed": false,
+    "required_next_action": "explicit_conservative_recovery_or_migration_before_new_project_outcomes_or_fits"
+  },
+  "final_profile_requirement": {
+    "profile": "ai-training",
+    "days": 730,
+    "products": 200,
+    "active_selling_pairs": 10,
+    "stock_locations": 4,
+    "maximum_daily_rows_before_lifecycle": 1460000,
+    "seeds": [
+      42,
+      137,
+      2026
+    ],
+    "scenarios": [
+      "normal",
+      "promotion",
+      "demand_shock",
+      "inventory_constraint"
+    ],
+    "qualified_by_this_receipt": false
+  },
+  "remaining": [
+    "qualified_source_to_real_five_role_feature_history_and_outcome_export",
+    "fair_five_role_training_calibration_and_freeze",
+    "fresh_final_campaign_shared_population_three_seeds_and_all_required_scenarios",
+    "segment_gates_dependence_aware_uncertainty_and_full_pipeline_cost",
+    "three_model_cards_reports_and_mlflow_lifecycle_decisions",
+    "complete_required_ci_and_main_publication_then_final_ready_acceptance"
+  ],
+  "boundaries": {
+    "new_project_data_fits": 0,
+    "new_project_target_outcomes_read": false,
+    "portfolio_final_test_accessed": false,
+    "promotion_performed": false,
+    "other_sessions_mutated": false,
+    "full_stage_ready_claimed": false
+  }
+}

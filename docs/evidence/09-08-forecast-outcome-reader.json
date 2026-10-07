@@ -1,0 +1,436 @@
+{
+  "acceptance": {
+    "all_own_acceptance_processes_finished": true,
+    "commands": [
+      {
+        "exit_code": 0,
+        "installed_wheel": false,
+        "minimum_free_disk_gib": 53.64079284667969,
+        "name": "native-train",
+        "peak_process_tree_rss_mib": 129.140625,
+        "sampled_cpu_seconds": 3.707034048,
+        "sampled_peak_scratch_bytes": 2491041,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "00cfe4b9ba44652611f78dfc9fadafbc38e20e96be45d802c28860c08c9ba713",
+        "wall_seconds": 3.9254232090024743
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": false,
+        "minimum_free_disk_gib": 53.64543533325195,
+        "name": "native-early_stopping",
+        "peak_process_tree_rss_mib": 130.3125,
+        "sampled_cpu_seconds": 3.657767296,
+        "sampled_peak_scratch_bytes": 2495715,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "eb620198d9ede3291b7480c96b7872f4b130114a1f32b5a15e6876b5b80958d5",
+        "wall_seconds": 3.854599957994651
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": false,
+        "minimum_free_disk_gib": 53.64543533325195,
+        "name": "native-tune",
+        "peak_process_tree_rss_mib": 130.265625,
+        "sampled_cpu_seconds": 3.6974858559999997,
+        "sampled_peak_scratch_bytes": 2499819,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "bc92ce9da30d9aff472635d696f955c12a0977c737acd684d73ad37b2ecd3a0a",
+        "wall_seconds": 3.8378352079889737
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": false,
+        "minimum_free_disk_gib": 53.646018981933594,
+        "name": "native-calibration",
+        "peak_process_tree_rss_mib": 130.390625,
+        "sampled_cpu_seconds": 3.6359710400000003,
+        "sampled_peak_scratch_bytes": 2491611,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "5455e6d3f6666aabcf44f9f3921e4f8ae1dfd4864527bcce9b0438c65aca7230",
+        "wall_seconds": 3.7318097909883363
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": false,
+        "minimum_free_disk_gib": 53.64576721191406,
+        "name": "native-development_evaluation",
+        "peak_process_tree_rss_mib": 129.703125,
+        "sampled_cpu_seconds": 3.306767024,
+        "sampled_peak_scratch_bytes": 2346077,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "2d6e0d7926fda18b795702c04166c79d42fe82f232524cb36e38f933fdd37358",
+        "wall_seconds": 3.4007674579916056
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": true,
+        "minimum_free_disk_gib": 53.64464569091797,
+        "name": "wheel-train",
+        "peak_process_tree_rss_mib": 132.015625,
+        "sampled_cpu_seconds": 3.425564704,
+        "sampled_peak_scratch_bytes": 2491041,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "00cfe4b9ba44652611f78dfc9fadafbc38e20e96be45d802c28860c08c9ba713",
+        "wall_seconds": 3.598436792002758
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": true,
+        "minimum_free_disk_gib": 53.644527435302734,
+        "name": "wheel-early_stopping",
+        "peak_process_tree_rss_mib": 130.4375,
+        "sampled_cpu_seconds": 3.266562664,
+        "sampled_peak_scratch_bytes": 2491043,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "eb620198d9ede3291b7480c96b7872f4b130114a1f32b5a15e6876b5b80958d5",
+        "wall_seconds": 3.372001832991373
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": true,
+        "minimum_free_disk_gib": 53.64434814453125,
+        "name": "wheel-tune",
+        "peak_process_tree_rss_mib": 130.109375,
+        "sampled_cpu_seconds": 3.30648068,
+        "sampled_peak_scratch_bytes": 2491043,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "bc92ce9da30d9aff472635d696f955c12a0977c737acd684d73ad37b2ecd3a0a",
+        "wall_seconds": 3.4085939999931725
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": true,
+        "minimum_free_disk_gib": 53.646705627441406,
+        "name": "wheel-calibration",
+        "peak_process_tree_rss_mib": 128.0625,
+        "sampled_cpu_seconds": 3.4079124800000002,
+        "sampled_peak_scratch_bytes": 2491611,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "5455e6d3f6666aabcf44f9f3921e4f8ae1dfd4864527bcce9b0438c65aca7230",
+        "wall_seconds": 3.5311201669974253
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": true,
+        "minimum_free_disk_gib": 53.616722106933594,
+        "name": "wheel-development_evaluation",
+        "peak_process_tree_rss_mib": 127.3125,
+        "sampled_cpu_seconds": 3.5844309599999997,
+        "sampled_peak_scratch_bytes": 515725,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "2d6e0d7926fda18b795702c04166c79d42fe82f232524cb36e38f933fdd37358",
+        "wall_seconds": 3.7208259999897564
+      },
+      {
+        "exit_code": 0,
+        "installed_wheel": true,
+        "minimum_free_disk_gib": 53.61366271972656,
+        "name": "wheel-schema-import-proof",
+        "peak_process_tree_rss_mib": 130.0625,
+        "sampled_cpu_seconds": 3.771445504,
+        "sampled_peak_scratch_bytes": 2491041,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "437e12123e4f4e52c6cb381bc3005ba8087ed28c097fdfbcf3b0d8a069afc0c4",
+        "wall_seconds": 3.8970057499973336
+      },
+      {
+        "exit_code": 2,
+        "installed_wheel": true,
+        "minimum_free_disk_gib": 53.61717987060547,
+        "name": "wheel-physical-corruption-rejection",
+        "peak_process_tree_rss_mib": 75.625,
+        "sampled_cpu_seconds": 0.450638464,
+        "sampled_peak_scratch_bytes": 0,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "53ef6dd872d3dc0a8a4af227ae0bbaf39448db46088e703a5b89be10fcaae325",
+        "wall_seconds": 0.5303679999924498
+      },
+      {
+        "exit_code": 2,
+        "installed_wheel": true,
+        "minimum_free_disk_gib": 53.61716079711914,
+        "name": "wheel-budget-rejection",
+        "peak_process_tree_rss_mib": 75.0625,
+        "sampled_cpu_seconds": 0.399622032,
+        "sampled_peak_scratch_bytes": 0,
+        "sampling_seconds": 0.05,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "ffbdd93998b3ef082e73b803f50cda2895a9a19c6167106552d69f8e05c21d3f",
+        "wall_seconds": 0.4669395419914508
+      }
+    ],
+    "controlled_journal": {
+      "audit_scope": "cooperating_development_readers_partial_historical_inventory",
+      "completed_reads": 11,
+      "evaluation_status": "not_ready",
+      "failed_reads": 1,
+      "final_test_access_authorized": false,
+      "freshness_of_unlisted_data": "unknown_not_automatically_unseen",
+      "head_sha256": "07eb34d10cca02183c65e7851701e273b047844cc009a1b8d0638c2705ecedb8",
+      "historical_attempts": 11,
+      "historical_protocols": 10,
+      "independent_evaluation_access_authorized": false,
+      "policy_sha256": "b2f2a3442a036521280e9ebb86e8636bcead7f9d5199cb849c82ef6aca36dcb5",
+      "promotion_allowed": false,
+      "registered_plans": 1,
+      "remaining_read_budget": 0,
+      "reserved_reads": 12,
+      "unresolved_reads": 0
+    },
+    "feature_fingerprint_sha256": "11733b2f10d4d52315645239d96eb9bfcc29a4b561b213f16f02375539bf010f",
+    "new_project_data_fits": 0,
+    "new_project_target_labels_read": false,
+    "partition_id": "ai09-partitions-sha256-91d41c3727952e50713393622da962b8b6a9169c409d1ee1f5d367286b15939a",
+    "partition_role_counts": {
+      "calibration": 14,
+      "development_evaluation": 5,
+      "early_stopping": 14,
+      "purged": 804,
+      "train": 14,
+      "tune": 14
+    },
+    "peak_process_tree_rss_mib": 132.015625,
+    "portfolio_final_test_accessed": false,
+    "project_history_events_preserved": true,
+    "project_journal": {
+      "audit_scope": "cooperating_development_readers_partial_historical_inventory",
+      "completed_reads": 0,
+      "evaluation_status": "not_ready",
+      "failed_reads": 0,
+      "final_test_access_authorized": false,
+      "freshness_of_unlisted_data": "unknown_not_automatically_unseen",
+      "head_sha256": "ab729375d97d6f35cef09662dabb9a8590c6535b5bb07c4075884f2a6fa2f357",
+      "historical_attempts": 11,
+      "historical_protocols": 10,
+      "independent_evaluation_access_authorized": false,
+      "policy_sha256": "ec26d85b4e270ecf2fb6e6dbfde49ee5578f70fdd163aff4980dba0a74ec13e7",
+      "promotion_allowed": false,
+      "registered_plans": 4,
+      "remaining_read_budget": 64,
+      "reserved_reads": 0,
+      "unresolved_reads": 0
+    },
+    "project_journal_path": "/private/tmp/ai09-development-outcome-journal",
+    "project_journal_sha256": "6fc55628ccaffe6b8aa418c7fc59ac6899ce658a74ba96255aee3f241d083242",
+    "project_new_reads": 0,
+    "project_plan_sha256": "732d2ac64748b52fe2ded05473a030d9b98129b8b8dac3fe2e8037fc8393a7b5",
+    "project_policy_unchanged": true,
+    "promotion_allowed": false,
+    "protocol_sha256": "3c2420a6079b5cd8a3f90999a2cea11885c3cc5e2616d1fc22fb983810993b42",
+    "roles": {
+      "calibration": {
+        "counts": {
+          "eligible": 14,
+          "label_eligible": 14,
+          "rows": 14
+        },
+        "evaluation_status": "not_ready",
+        "final_test_access_authorized": false,
+        "freshness": "not_asserted_partial_access_audit",
+        "promotion_allowed": false,
+        "qualified_content_sha256": "b47774ef1badfb001fc28421a818c018045acb86135f4e9b01e464b7680986e7",
+        "source_qualification": "not_established"
+      },
+      "development_evaluation": {
+        "counts": {
+          "eligible": 5,
+          "label_eligible": 5,
+          "rows": 5
+        },
+        "evaluation_status": "not_ready",
+        "final_test_access_authorized": false,
+        "freshness": "not_asserted_partial_access_audit",
+        "promotion_allowed": false,
+        "qualified_content_sha256": "9d78702373f6fc7eacdd8b8726467f5df6ae5e4b7e1c72996d0c5f9636daebbe",
+        "source_qualification": "not_established"
+      },
+      "early_stopping": {
+        "counts": {
+          "eligible": 14,
+          "label_eligible": 14,
+          "rows": 14
+        },
+        "evaluation_status": "not_ready",
+        "final_test_access_authorized": false,
+        "freshness": "not_asserted_partial_access_audit",
+        "promotion_allowed": false,
+        "qualified_content_sha256": "7ecb16d960125577c5983896400a0d620ec5a891c73c299595b885569531ae2c",
+        "source_qualification": "not_established"
+      },
+      "train": {
+        "counts": {
+          "censored_label": 2,
+          "eligible": 12,
+          "label_censored": 2,
+          "label_eligible": 12,
+          "rows": 14
+        },
+        "evaluation_status": "not_ready",
+        "final_test_access_authorized": false,
+        "freshness": "not_asserted_partial_access_audit",
+        "promotion_allowed": false,
+        "qualified_content_sha256": "2fef72ad08c520828ead7a1803e346c2d67e0c90bb4229fc4928f9b69082f3b7",
+        "source_qualification": "not_established"
+      },
+      "tune": {
+        "counts": {
+          "eligible": 14,
+          "label_eligible": 14,
+          "rows": 14
+        },
+        "evaluation_status": "not_ready",
+        "final_test_access_authorized": false,
+        "freshness": "not_asserted_partial_access_audit",
+        "promotion_allowed": false,
+        "qualified_content_sha256": "2234d9d1f07f2bb3a25a192258ed1c794d36b3907851a36f9fe7d365a95ef6a7",
+        "source_qualification": "not_established"
+      }
+    },
+    "sampled_peak_scratch_bytes": 2499819,
+    "scope": "controlled_physical_feature_and_declared_outcome_fixture_not_project_source_or_quality",
+    "source_python_files_identical": 277,
+    "status": "passed",
+    "unchanged_feature_files": 8,
+    "unchanged_historical_metadata_files": 14,
+    "wheel_proof": {
+      "framework_imported": false,
+      "imported_installed_modules": 42,
+      "runtime_code_sha256": "f7a90e43688e2842fb325cc5bebb1394568242e2835423dc2c9e7cb5b63e7648",
+      "schema_checks": 4,
+      "schema_instances": 4,
+      "schema_reads_audited": true,
+      "source_python_files": 277
+    }
+  },
+  "ai07_readonly_head": "8581230",
+  "ai08_current_readonly_head": "4faaf4b",
+  "ai08_initial_readonly_head": "92b8d5f",
+  "all_own_local_processes_finished": true,
+  "core_seconds": 1693.32,
+  "core_tests": 2020,
+  "focused_seconds": 94.12,
+  "focused_tests": 181,
+  "full_local_ci": {
+    "changed_source_files": [],
+    "command": [
+      "nice",
+      "-n",
+      "15",
+      "make",
+      "ci-local",
+      "UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv",
+      "GITLEAKS=/opt/homebrew/bin/gitleaks"
+    ],
+    "exit_code": 0,
+    "log_path": "/private/tmp/ai09-labels-verified-ci-local.log",
+    "log_sha256": "97fcaeef7d7536791a562ce155f8789b58884b6002f7e37d3144235a2b60eae4",
+    "source_freeze_files": 806,
+    "status": "passed",
+    "wall_seconds": 2003.7389709949493
+  },
+  "increment": "AI 09.8",
+  "larger_profile_qualified": false,
+  "new_head_required_ci": "required_separately_after_publication",
+  "new_project_data_fits": 0,
+  "new_project_target_labels_read": false,
+  "new_reader_tests": 60,
+  "other_sessions_mutated": false,
+  "parent_required_ci": {
+    "conclusion": "success",
+    "exact_sha": "08fdc52a29a9d7e9fc2e1dfcf49a97a996d1367a",
+    "run_id": 37220980245,
+    "run_number": 166,
+    "status": "completed",
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37220980245"
+  },
+  "portfolio_final_test_accessed": false,
+  "promotion_allowed": false,
+  "proof_scope": "controlled_physical_feature_and_declared_outcome_fixture_not_project_source_or_quality",
+  "prototype_acceptance_receipts": [
+    "/private/tmp/ai09-labels-acceptance/receipt.json",
+    "/private/tmp/ai09-labels-maturity-acceptance/receipt.json",
+    "/private/tmp/ai09-labels-release-acceptance/receipt.json"
+  ],
+  "real_tf_cpu_seconds": 79.48,
+  "real_tf_cpu_tests": 3,
+  "source_code_unchanged_through_ci": true,
+  "source_freeze": "/private/tmp/ai09-labels-verified-source-freeze.json",
+  "source_qualification": "not_established",
+  "stage_status": "in_progress/not_ready",
+  "status": "local_acceptance_passed",
+  "superseded_validation_attempts": [
+    {
+      "changed_source_files": [],
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "make",
+        "ci-local",
+        "UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv",
+        "GITLEAKS=/opt/homebrew/bin/gitleaks"
+      ],
+      "exit_code": 2,
+      "log_path": "/private/tmp/ai09-labels-final-ci-local.log",
+      "log_sha256": "3bf7699e96fc23b327a8899fc6448333db13f77e78cf415fa64874ece58e4ec3",
+      "source_freeze_files": 806,
+      "status": "failed",
+      "wall_seconds": 1.1246769428253174
+    },
+    {
+      "changed_source_files": [],
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "make",
+        "ci-local",
+        "UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv",
+        "GITLEAKS=/opt/homebrew/bin/gitleaks"
+      ],
+      "exit_code": -15,
+      "log_path": "/private/tmp/ai09-labels-complete-ci-local.log",
+      "log_sha256": "2a0289c98248adc2e1cdb1b0c201147ad45edab46079360f8595d6d23ea2961f",
+      "source_freeze_files": 806,
+      "status": "failed",
+      "wall_seconds": 605.939019203186
+    },
+    {
+      "changed_source_files": [],
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "make",
+        "ci-local",
+        "UV=/Users/oskarstachowski/retailops-ai-intelligence/.tools/bin/uv",
+        "GITLEAKS=/opt/homebrew/bin/gitleaks"
+      ],
+      "exit_code": -15,
+      "log_path": "/private/tmp/ai09-labels-maturity-ci-local.log",
+      "log_sha256": "cb874dc444263fb47e5eba519ffa6ced3e243acb68f9e9c88d2813bad9a0537a",
+      "source_freeze_files": 806,
+      "status": "failed",
+      "wall_seconds": 478.08798837661743
+    }
+  ],
+  "wheel": {
+    "bytes": 1037818,
+    "installed": "/private/tmp/ai09-labels-verified-installed",
+    "path": "/private/tmp/ai09-labels-verified-wheel/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "sha256": "82ebbfec1553799ec674babe9e0ff8382c6edb420c33a6fc184d4979839bbeed"
+  }
+}

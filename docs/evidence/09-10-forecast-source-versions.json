@@ -1,0 +1,207 @@
+{
+  "boundaries": {
+    "ai09_ready": false,
+    "full_physical_five_role_outcome_export": false,
+    "independent_evaluation_authorized": false,
+    "model_promoted": false,
+    "portfolio_final_test_opened": false,
+    "source_1_1_qualified": false,
+    "whole_pipeline_or_larger_profile_resources_qualified": false
+  },
+  "current_exact_head_required_ci": "required_after_publication",
+  "current_runtime_code_sha256": "cc78b26f3919fdd0702e926b58b2e4474fcc9d5fd644414ffb354041dbb5f0bc",
+  "current_slice_full_local_make_ci_local": "not_run_not_inferred_from_parent_or_focused_results",
+  "focused": {
+    "junit": {
+      "path": "/private/tmp/ai09-source-versions-final-focused.xml",
+      "sha256": "30b0b103f42dce6306c3c0cc3e7e75de66a47205b1da3eed102f1a4ef7087f68"
+    },
+    "log": {
+      "path": "/private/tmp/ai09-source-versions-final-focused.log",
+      "sha256": "2817c77f021aca6e789229952b3df2c550bfec4cca17cd028ae655bb3cd19b3f"
+    },
+    "new_tests_passed": 52,
+    "seconds": 408.899,
+    "skipped": 0,
+    "tests_passed": 278
+  },
+  "foreign_session_read_only_audit": {
+    "ai07_head": "8581230b21e33a466c346b107ae936f0a98e3e08",
+    "ai08_existing_single_replay_mechanism_checked": true,
+    "ai08_head_at_start": "7585a6d8c63f8cfc99d32be48f4163e9e1d05e50",
+    "ai08_head_now": "b319b7dd4665c7287b072203aca8d515e2cc9fc9",
+    "ai08_pilot_repeated": false,
+    "foreign_processes_interrupted": false,
+    "foreign_worktrees_mutated_by_this_turn": false
+  },
+  "frozen_source_bytes_unchanged_through_final_checks": true,
+  "frozen_source_python_files": 283,
+  "native_public_smoke_component": {
+    "complete_inventory_verified_before_first_public_row": true,
+    "five_roles_reserved_before_parent_io": true,
+    "multi_version_history": "controlled_unit_cases_not_a_new_project_dataset",
+    "observations": 1612,
+    "physical_five_role_keys_qualified": false,
+    "snapshot_schema": "1.0.0",
+    "source_replays_per_read": 1,
+    "source_rows": 31171,
+    "tables": 25,
+    "versions": 1612,
+    "versions_per_observation": 1
+  },
+  "next_work": [
+    "native/wheel measured source-version replay after free space is at least 50 GiB",
+    "audited exporter binding complete physical feature/partition keys and source-version proof, retaining all censored keys",
+    "frozen training recipe/candidate artifacts plus durable fit reservations",
+    "AI07/08 integration and full independent campaign after dependency acceptance and exposure audit"
+  ],
+  "package": {
+    "installed_path": "/private/tmp/ai09-source-versions-final-installed",
+    "journal_read_or_mutated": false,
+    "native_wheel_source_replay_performed": false,
+    "proof": {
+      "installed_imports": 46,
+      "runtime_code_sha256": "cc78b26f3919fdd0702e926b58b2e4474fcc9d5fd644414ffb354041dbb5f0bc",
+      "schema_definitions_checked": 2,
+      "tensorflow_or_keras_imported": false
+    },
+    "source_facts_or_outcomes_read": false,
+    "source_python_files_identical": 283,
+    "status": "passed_static_installed_package_proof",
+    "wheel_bytes": 1057943,
+    "wheel_path": "/private/tmp/ai09-source-versions-final-wheel/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "wheel_sha256": "bf1cc3af7cac100d37a99a4c66cbabd9dce7fa3d6a6cf6e9f68ce20098c577b7",
+    "whole_pipeline_or_resource_profile_qualified": false
+  },
+  "parent_head": "3b1ee7e1b11069400364d0497eb402c4687e0570",
+  "parent_required_ci": {
+    "conclusion": "success",
+    "run_id": 37233267515,
+    "run_number": 178,
+    "status": "completed"
+  },
+  "recorded_at_utc": "2026-10-05T06:38:24.155080+00:00",
+  "resource_acceptance": {
+    "current_free_gib": 34.025333404541016,
+    "foreign_artifacts_deleted": false,
+    "foreign_processes_interrupted": false,
+    "guard_lowered": false,
+    "measured_source_replay_started": false,
+    "minimum_free_bytes": 53687091200,
+    "observed_free_bytes": 36619452416,
+    "observed_free_gib": 34.104522705078125,
+    "ordinary_unit_tests_and_static_package_checks_do_not_qualify_resource_profile": true,
+    "project_outcome_reads_reserved": 0,
+    "recorded_at_utc": "2026-10-05T06:33:47.839061+00:00",
+    "status": "blocked_before_measured_native_wheel_replay"
+  },
+  "secrets": {
+    "application_bytes_changed_after_focused_regression": false,
+    "foreign_worktree_config_changed": false,
+    "git_commits_scanned": 268,
+    "later_foreign_capacity_metadata_resolution": {
+      "after_exact_exception_findings": 2,
+      "baseline_findings": 3,
+      "different_key_same_file_detected": true,
+      "foreign_branch_metadata_or_config_modified": false,
+      "metadata_field": "content.development_keys_sha256",
+      "postcommit_scan_failed_because_foreign_history_advanced_after_prior_success": true,
+      "same_hash_other_file_detected": true,
+      "source_commit": "048f7b311b82dbf831718565289a54166cbe7d36",
+      "status": "passed",
+      "whole_file_not_excluded": true
+    },
+    "negative_controls": {
+      "after_rule_specific_exception_findings": 3,
+      "all_controls_synthetic_or_public_noncredential_hashes": true,
+      "baseline_findings": 5,
+      "different_key_in_same_file_still_detected": true,
+      "foreign_branch_config_or_recipe_mutated": false,
+      "initial_probe_invalid": "detector did not recognize a string explicitly containing Synthetic; original 4/2 reports and failed assertions are retained and do not establish negative control",
+      "known_hashes_allowed_only_in_exact_file": true,
+      "metadata_fields": [
+        "pipeline.base.preprocessing.train_keys_sha256",
+        "pipeline.calibrator.calibration_keys_sha256"
+      ],
+      "original_shared_history_commits": [
+        "a1e8471fcb83f5ea720fcbebe529009563225092",
+        "549df9372e94fa2dc34fe31914dfe40becc85800"
+      ],
+      "original_shared_history_false_positives": 4,
+      "public_recipe_metadata_sha256": "0cda2e6c412716213f94c8edb33d8bae10c75db6652362240f6ee501255acf8d",
+      "same_hashes_in_other_file_still_detected": true,
+      "status": "passed",
+      "whole_file_not_excluded": true
+    },
+    "original_attempt_failed_on_four_metadata_findings": true,
+    "original_attempt_log": "/private/tmp/ai09-source-versions-final-secrets.log",
+    "original_attempt_log_sha256": "915e2e36a501c93014e1caf17724cc2d2fa00ef53cb2360433c7d48a7cff9fb7",
+    "passed_log": "/private/tmp/ai09-source-versions-secrets-after-control.log",
+    "passed_log_sha256": "49e7b07ad9809ffda741da93defd3455a7095c923ac4d9c6eb6db4d442e8821b",
+    "postcommit_failed_scan_log": "/private/tmp/ai09-source-versions-postcommit-git-secrets.log",
+    "postcommit_failed_scan_not_due_to_ai09_application_changes": true,
+    "status": "passed_git_and_directory_after_exact_rule_specific_shared_history_metadata_exception"
+  },
+  "shared_project_journal": {
+    "audit_scope": "cooperating_development_readers_partial_historical_inventory",
+    "completed_reads": 0,
+    "evaluation_status": "not_ready",
+    "failed_reads": 0,
+    "file_sha256": "6fc55628ccaffe6b8aa418c7fc59ac6899ce658a74ba96255aee3f241d083242",
+    "final_test_access_authorized": false,
+    "freshness_of_unlisted_data": "unknown_not_automatically_unseen",
+    "head_sha256": "ab729375d97d6f35cef09662dabb9a8590c6535b5bb07c4075884f2a6fa2f357",
+    "historical_attempts": 11,
+    "historical_protocols": 10,
+    "independent_evaluation_access_authorized": false,
+    "new_project_data_fits": 0,
+    "path": "/private/tmp/ai09-development-outcome-journal",
+    "policy_sha256": "ec26d85b4e270ecf2fb6e6dbfde49ee5578f70fdd163aff4980dba0a74ec13e7",
+    "promotion_allowed": false,
+    "registered_plans": 4,
+    "remaining_read_budget": 64,
+    "reserved_reads": 0,
+    "unchanged": true,
+    "unresolved_reads": 0
+  },
+  "slice": "AI 09.10",
+  "source_freeze": {
+    "path": "/private/tmp/ai09-source-versions-source-freeze.json",
+    "sha256": "a3cb0b035c95eaaff940dfc10017128ce027e1fa995665c70a1296585e8e75dc"
+  },
+  "static_checks": {
+    "lint_format_docs_and_all_contracts": true,
+    "log": {
+      "path": "/private/tmp/ai09-source-versions-final-static-checks.log",
+      "sha256": "c70a85f5ba1cd8c211f39bf9c97d502afb91e386d1ce77e62df7691263cece64"
+    },
+    "mypy_files": 358,
+    "status": "passed"
+  },
+  "status": "implementation_and_focused_regression_passed_full_acceptance_pending",
+  "superseded_attempts": [
+    {
+      "log": {
+        "path": "/private/tmp/ai09-source-versions-component.log",
+        "sha256": "b6b232bc79b6f0f2202e07b028e3050aa831e988b046b2d58f19249a1492b898"
+      },
+      "resolution": "restored fixture dependencies; enforced producer day-close at next UTC midnight",
+      "result": "40 passed, 1 failed, 8 fixture errors"
+    },
+    {
+      "log": {
+        "path": "/private/tmp/ai09-source-versions-focused.log",
+        "sha256": "caa8bfeaedc5fadd7fc61825d1db2693551c80553cbebd69826a403ee8d2eef9"
+      },
+      "resolution": "adversarial test used an independent SQLite writer blocked by the live read cursor; changed to direct private-byte mutation, retaining failure evidence",
+      "result": "274 passed, 1 failed"
+    },
+    {
+      "package_proof": {
+        "path": "/private/tmp/ai09-source-versions-package-proof.json",
+        "sha256": "0721b21e31e59478ac9a65f8e578c0f886df1a0a67b1b9ac8b2cb59e54670360"
+      },
+      "scope": "earlier runtime before additional public-yield parent seal; final package proof supersedes this receipt"
+    }
+  ]
+}

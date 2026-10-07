@@ -1,0 +1,1399 @@
+{
+  "artifact": {
+    "bytes": 16066045,
+    "files": 75,
+    "manifest_sha256": "ded9d959e87ea12cd1f0957f9c45fa4c14f5db0235cb1c6056dad05b592cc4a8",
+    "predictions_sha256": "aa5b51f7e8c52b7899ab9b6f3bbf871cff047239c4ac4593c5ba4fc799af1ea6",
+    "report_sha256": "3557b8998ddb5a1b2cdc52c7fb9beeb7fa6ccf8c44159b2c87d37b1138c85f7a",
+    "retained_local_path": "/private/tmp/ai09-forecast-development-comparison-3"
+  },
+  "boundaries": {
+    "ai07_ai08_final_results_bound": false,
+    "ai_dev_or_training_qualified": false,
+    "all_three_data_seeds_evaluated": false,
+    "final_test_accessed": false,
+    "global_trial_audit_completed": false,
+    "independent_quality_acceptance": false,
+    "individual_model_worker_budgets_passed": true,
+    "interval_calibrated": false,
+    "one_gib_whole_comparison_budget_passed": false,
+    "original_checkout_or_other_sessions_mutated": false,
+    "promotion_allowed": false,
+    "whole_comparison_completed_under_predeclared_1_5gib_budget": true
+  },
+  "checks": {
+    "full_ci_local": {
+      "all_required_targets": "passed",
+      "compose_scope": "config_only_no_service_start",
+      "core_test_seconds": 1353.69,
+      "core_test_warnings": 0,
+      "core_tests_passed": 1815,
+      "exit_code": 0,
+      "log": "/private/tmp/ai09-comparison-ci-local.log",
+      "log_sha256": "b5bae2869b7f0809e326c06e06c33fd454cb7ade5d1fdf8640bd36dbba1f58c3",
+      "remaining_gates": "passed",
+      "status": "passed",
+      "tensorflow_test_seconds": 40.42,
+      "tensorflow_tests_passed": 3
+    },
+    "packaged_replay": {
+      "all_modules_from_installed_package": true,
+      "comparison_id": "ai09-development-sha256-49d5c5fb307f62f80651907e221529fff1aee028cb32f2d55ba13b7db8283b88",
+      "final_test_accessed": false,
+      "module_count": 53,
+      "package_path": "/private/tmp/ai09-comparison-installed/retailops_ai/__init__.py",
+      "prediction_and_metric_replay": "identical_without_refits",
+      "promotion_allowed": false,
+      "seconds": 88.71773941700667,
+      "status": "passed",
+      "wheel_matches_full_ci_package": true,
+      "wheel_sha256": "bf2058cad9fe14574090867c59a442ce2d39cb57d756b515fb81a28aa78ba2b8"
+    },
+    "post_receipt_docs_and_secrets": {
+      "command": "make docs-check secrets",
+      "exit_code": 0,
+      "full_regression_repeated_for_receipt_only": false,
+      "log_sha256": "d99483542a3ef743c278e69af48de5edbedb2c8b8eaa78f1a81bf96ceea2f17f",
+      "status": "passed"
+    },
+    "previous_pr_ci": {
+      "commit": "9ddd1f504a535a8b0fd8d2dd01986a7d376397bd",
+      "conclusion": "success",
+      "run_id": 37190248558,
+      "scope": "exact_9ddd1f5_required_ci_including_real_linux_cpu_tensorflow_fit_reload",
+      "status": "completed",
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37190248558"
+    },
+    "targeted": {
+      "log_sha256": "c869f839eeea383a2496977975b424da89a680aa4bd9a2b6c15e077f707f5262",
+      "passed": 85,
+      "seconds": 1.68
+    }
+  },
+  "comparison_id": "ai09-development-sha256-49d5c5fb307f62f80651907e221529fff1aee028cb32f2d55ba13b7db8283b88",
+  "data": {
+    "copy_identical": true,
+    "curated": "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+    "development_split_verification_reads_existing_development_labels": true,
+    "feature_id": "features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+    "feature_rows": 20076,
+    "features": "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+    "fold": "development-v1",
+    "original_curated_unchanged": true,
+    "portfolio_final_test_accessed": false,
+    "prepare_seconds": 275.10668570800044,
+    "source_dataset_id": "source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+    "source_parameters": {
+      "business_timezone": "UTC",
+      "days": 102,
+      "end_date": "2026-07-31",
+      "label_tail_days": 14,
+      "max_daily_rows": 2448,
+      "origin_days": 60,
+      "output_format": "csv",
+      "products": 8,
+      "profile": "ai-temporal-smoke",
+      "seed": 42,
+      "start_date": "2026-04-21",
+      "stores": 3,
+      "warehouses": 2,
+      "warmup_days": 28
+    },
+    "source_schema_version": "2.7.0",
+    "split": "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+    "split_counts": {
+      "closed_target": 1060,
+      "development-v1:development_holdout:eligible": 2968,
+      "development-v1:development_holdout:total": 3276,
+      "development-v1:purged:eligible": 0,
+      "development-v1:purged:total": 10080,
+      "development-v1:train:eligible": 2710,
+      "development-v1:train:total": 3360,
+      "development-v1:validation:eligible": 3040,
+      "development-v1:validation:total": 3360,
+      "insufficient_history": 252,
+      "purged_origin": 10080
+    },
+    "split_id": "split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6"
+  },
+  "global_results": {
+    "hgb": {
+      "baseline": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": true,
+          "coverage": 0.9697368421052631,
+          "mean_score": 13.180921052631579,
+          "mean_width": 11.509868421052632,
+          "width_to_mean_actual": 2.1265345812568373
+        },
+        "mean": {
+          "bias_units": -0.41076998050682256,
+          "complete": true,
+          "mae": 3.9445419103313837,
+          "mse": 45.03608042740597,
+          "normalized_bias": -0.07589283704514044,
+          "wape": 0.728783724772542,
+          "zero_actual_excess_units": 3355.777777777778
+        },
+        "median": {
+          "bias_units": -0.48026315789473684,
+          "complete": true,
+          "mae": 3.994078947368421,
+          "mse": 57.420394736842105,
+          "normalized_bias": -0.08873222316761882,
+          "wape": 0.7379360641789231,
+          "zero_actual_excess_units": 3304.0
+        },
+        "rows": 3040
+      },
+      "candidate": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": false,
+          "coverage": null,
+          "mean_score": null,
+          "mean_width": null,
+          "width_to_mean_actual": null
+        },
+        "mean": {
+          "bias_units": 0.6542285709081678,
+          "complete": true,
+          "mae": 3.998802892699778,
+          "mse": 58.357086174499685,
+          "normalized_bias": 0.12087363896686702,
+          "wape": 0.7388088485357558,
+          "zero_actual_excess_units": 4337.896108245571
+        },
+        "median": {
+          "bias_units": 0.158760645087627,
+          "complete": true,
+          "mae": 4.059671818203868,
+          "mse": 57.86811807697513,
+          "normalized_bias": 0.029332220801409143,
+          "wape": 0.7500548393910148,
+          "zero_actual_excess_units": 4007.7738333736293
+        },
+        "rows": 3040
+      },
+      "diagnostics": {
+        "mean_mae_above_legacy_regression_limit": false,
+        "median_bias_above_legacy_mean_limit": false
+      },
+      "dimension": "global",
+      "eligibility_coverage": 0.9047619047619048,
+      "eligible_rows": 3040,
+      "failed_reasons": [
+        "global_median_mae_improvement_below_minimum",
+        "mean_mse_regression",
+        "absolute_normalized_mean_bias_exceeded"
+      ],
+      "has_measurable_failures": true,
+      "legacy_width_ratio_exceeded": null,
+      "not_ready_reasons": [
+        "interval_predictions_incomplete_or_empty"
+      ],
+      "perfect_median_baseline_tied": false,
+      "protocol_version": "forecast-quality-2.0.0",
+      "relative_median_mae_change": 0.01642252737108868,
+      "scope": "segment_component_not_campaign_qualification",
+      "status": "not_ready",
+      "total_rows": 3360
+    },
+    "history28": {
+      "baseline": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": true,
+          "coverage": 0.9697368421052631,
+          "mean_score": 13.180921052631579,
+          "mean_width": 11.509868421052632,
+          "width_to_mean_actual": 2.1265345812568373
+        },
+        "mean": {
+          "bias_units": -0.41076998050682256,
+          "complete": true,
+          "mae": 3.9445419103313837,
+          "mse": 45.03608042740597,
+          "normalized_bias": -0.07589283704514044,
+          "wape": 0.728783724772542,
+          "zero_actual_excess_units": 3355.777777777778
+        },
+        "median": {
+          "bias_units": -0.48026315789473684,
+          "complete": true,
+          "mae": 3.994078947368421,
+          "mse": 57.420394736842105,
+          "normalized_bias": -0.08873222316761882,
+          "wape": 0.7379360641789231,
+          "zero_actual_excess_units": 3304.0
+        },
+        "rows": 3040
+      },
+      "candidate": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": true,
+          "coverage": 0.9697368421052631,
+          "mean_score": 13.180921052631579,
+          "mean_width": 11.509868421052632,
+          "width_to_mean_actual": 2.1265345812568373
+        },
+        "mean": {
+          "bias_units": -0.41076998050682256,
+          "complete": true,
+          "mae": 3.9445419103313837,
+          "mse": 45.03608042740597,
+          "normalized_bias": -0.07589283704514044,
+          "wape": 0.728783724772542,
+          "zero_actual_excess_units": 3355.777777777778
+        },
+        "median": {
+          "bias_units": -0.48026315789473684,
+          "complete": true,
+          "mae": 3.994078947368421,
+          "mse": 57.420394736842105,
+          "normalized_bias": -0.08873222316761882,
+          "wape": 0.7379360641789231,
+          "zero_actual_excess_units": 3304.0
+        },
+        "rows": 3040
+      },
+      "diagnostics": {
+        "mean_mae_above_legacy_regression_limit": false,
+        "median_bias_above_legacy_mean_limit": false
+      },
+      "dimension": "global",
+      "eligibility_coverage": 0.9047619047619048,
+      "eligible_rows": 3040,
+      "failed_reasons": [],
+      "has_measurable_failures": false,
+      "legacy_width_ratio_exceeded": true,
+      "not_ready_reasons": [],
+      "perfect_median_baseline_tied": false,
+      "protocol_version": "forecast-quality-2.0.0",
+      "relative_median_mae_change": 0.0,
+      "scope": "segment_component_not_campaign_qualification",
+      "status": "passed",
+      "total_rows": 3360
+    },
+    "history7": {
+      "baseline": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": true,
+          "coverage": 0.9697368421052631,
+          "mean_score": 13.180921052631579,
+          "mean_width": 11.509868421052632,
+          "width_to_mean_actual": 2.1265345812568373
+        },
+        "mean": {
+          "bias_units": -0.41076998050682256,
+          "complete": true,
+          "mae": 3.9445419103313837,
+          "mse": 45.03608042740597,
+          "normalized_bias": -0.07589283704514044,
+          "wape": 0.728783724772542,
+          "zero_actual_excess_units": 3355.777777777778
+        },
+        "median": {
+          "bias_units": -0.48026315789473684,
+          "complete": true,
+          "mae": 3.994078947368421,
+          "mse": 57.420394736842105,
+          "normalized_bias": -0.08873222316761882,
+          "wape": 0.7379360641789231,
+          "zero_actual_excess_units": 3304.0
+        },
+        "rows": 3040
+      },
+      "candidate": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": true,
+          "coverage": 0.9075657894736842,
+          "mean_score": 14.4,
+          "mean_width": 9.840789473684211,
+          "width_to_mean_actual": 1.818159718001702
+        },
+        "mean": {
+          "bias_units": -0.5451754385964912,
+          "complete": true,
+          "mae": 3.9671052631578947,
+          "mse": 46.585087719298244,
+          "normalized_bias": -0.10072525424415542,
+          "wape": 0.7329524735626596,
+          "zero_actual_excess_units": 3189.6666666666665
+        },
+        "median": {
+          "bias_units": -0.5930921052631579,
+          "complete": true,
+          "mae": 4.043421052631579,
+          "mse": 55.63174342105263,
+          "normalized_bias": -0.10957821806247721,
+          "wape": 0.7470523884769661,
+          "zero_actual_excess_units": 3076.5
+        },
+        "rows": 3040
+      },
+      "diagnostics": {
+        "mean_mae_above_legacy_regression_limit": false,
+        "median_bias_above_legacy_mean_limit": true
+      },
+      "dimension": "global",
+      "eligibility_coverage": 0.9047619047619048,
+      "eligible_rows": 3040,
+      "failed_reasons": [
+        "global_median_mae_improvement_below_minimum",
+        "mean_mse_regression",
+        "absolute_normalized_mean_bias_exceeded",
+        "interval_score_regression"
+      ],
+      "has_measurable_failures": true,
+      "legacy_width_ratio_exceeded": false,
+      "not_ready_reasons": [],
+      "perfect_median_baseline_tied": false,
+      "protocol_version": "forecast-quality-2.0.0",
+      "relative_median_mae_change": 0.012353813210344166,
+      "scope": "segment_component_not_campaign_qualification",
+      "status": "failed",
+      "total_rows": 3360
+    },
+    "rf_mean": {
+      "baseline": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": true,
+          "coverage": 0.9697368421052631,
+          "mean_score": 13.180921052631579,
+          "mean_width": 11.509868421052632,
+          "width_to_mean_actual": 2.1265345812568373
+        },
+        "mean": {
+          "bias_units": -0.41076998050682256,
+          "complete": true,
+          "mae": 3.9445419103313837,
+          "mse": 45.03608042740597,
+          "normalized_bias": -0.07589283704514044,
+          "wape": 0.728783724772542,
+          "zero_actual_excess_units": 3355.777777777778
+        },
+        "median": {
+          "bias_units": -0.48026315789473684,
+          "complete": true,
+          "mae": 3.994078947368421,
+          "mse": 57.420394736842105,
+          "normalized_bias": -0.08873222316761882,
+          "wape": 0.7379360641789231,
+          "zero_actual_excess_units": 3304.0
+        },
+        "rows": 3040
+      },
+      "candidate": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": false,
+          "coverage": null,
+          "mean_score": null,
+          "mean_width": null,
+          "width_to_mean_actual": null
+        },
+        "mean": {
+          "bias_units": -0.09933213684035973,
+          "complete": true,
+          "mae": 3.9664938509491083,
+          "mse": 50.29225234111776,
+          "normalized_bias": -0.018352357845793945,
+          "wape": 0.7328395105679646,
+          "zero_actual_excess_units": 3727.9913221752818
+        },
+        "median": {
+          "bias_units": null,
+          "complete": false,
+          "mae": null,
+          "mse": null,
+          "normalized_bias": null,
+          "wape": null,
+          "zero_actual_excess_units": null
+        },
+        "rows": 3040
+      },
+      "diagnostics": {
+        "mean_mae_above_legacy_regression_limit": false,
+        "median_bias_above_legacy_mean_limit": null
+      },
+      "dimension": "global",
+      "eligibility_coverage": 0.9047619047619048,
+      "eligible_rows": 3040,
+      "failed_reasons": [
+        "mean_mse_regression"
+      ],
+      "has_measurable_failures": true,
+      "legacy_width_ratio_exceeded": null,
+      "not_ready_reasons": [
+        "median_predictions_incomplete_or_empty",
+        "interval_predictions_incomplete_or_empty"
+      ],
+      "perfect_median_baseline_tied": false,
+      "protocol_version": "forecast-quality-2.0.0",
+      "relative_median_mae_change": null,
+      "scope": "segment_component_not_campaign_qualification",
+      "status": "not_ready",
+      "total_rows": 3360
+    },
+    "tensorflow": {
+      "baseline": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": true,
+          "coverage": 0.9697368421052631,
+          "mean_score": 13.180921052631579,
+          "mean_width": 11.509868421052632,
+          "width_to_mean_actual": 2.1265345812568373
+        },
+        "mean": {
+          "bias_units": -0.41076998050682256,
+          "complete": true,
+          "mae": 3.9445419103313837,
+          "mse": 45.03608042740597,
+          "normalized_bias": -0.07589283704514044,
+          "wape": 0.728783724772542,
+          "zero_actual_excess_units": 3355.777777777778
+        },
+        "median": {
+          "bias_units": -0.48026315789473684,
+          "complete": true,
+          "mae": 3.994078947368421,
+          "mse": 57.420394736842105,
+          "normalized_bias": -0.08873222316761882,
+          "wape": 0.7379360641789231,
+          "zero_actual_excess_units": 3304.0
+        },
+        "rows": 3040
+      },
+      "candidate": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": false,
+          "coverage": null,
+          "mean_score": null,
+          "mean_width": null,
+          "width_to_mean_actual": null
+        },
+        "mean": {
+          "bias_units": -0.20552285319733385,
+          "complete": true,
+          "mae": 3.7634095439577084,
+          "mse": 44.689410379017154,
+          "normalized_bias": -0.03797188973622796,
+          "wape": 0.6953181605464588,
+          "zero_actual_excess_units": 3132.903608912602
+        },
+        "median": {
+          "bias_units": -0.9521321892346206,
+          "complete": true,
+          "mae": 3.893831626244968,
+          "mse": 54.57759010570812,
+          "normalized_bias": -0.17591356844981443,
+          "wape": 0.7194146191676615,
+          "zero_actual_excess_units": 2635.7081403695047
+        },
+        "rows": 3040
+      },
+      "diagnostics": {
+        "mean_mae_above_legacy_regression_limit": false,
+        "median_bias_above_legacy_mean_limit": true
+      },
+      "dimension": "global",
+      "eligibility_coverage": 0.9047619047619048,
+      "eligible_rows": 3040,
+      "failed_reasons": [
+        "global_median_mae_improvement_below_minimum"
+      ],
+      "has_measurable_failures": true,
+      "legacy_width_ratio_exceeded": null,
+      "not_ready_reasons": [
+        "interval_predictions_incomplete_or_empty"
+      ],
+      "perfect_median_baseline_tied": false,
+      "protocol_version": "forecast-quality-2.0.0",
+      "relative_median_mae_change": -0.02509898338126318,
+      "scope": "segment_component_not_campaign_qualification",
+      "status": "not_ready",
+      "total_rows": 3360
+    },
+    "weekday28": {
+      "baseline": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": true,
+          "coverage": 0.9697368421052631,
+          "mean_score": 13.180921052631579,
+          "mean_width": 11.509868421052632,
+          "width_to_mean_actual": 2.1265345812568373
+        },
+        "mean": {
+          "bias_units": -0.41076998050682256,
+          "complete": true,
+          "mae": 3.9445419103313837,
+          "mse": 45.03608042740597,
+          "normalized_bias": -0.07589283704514044,
+          "wape": 0.728783724772542,
+          "zero_actual_excess_units": 3355.777777777778
+        },
+        "median": {
+          "bias_units": -0.48026315789473684,
+          "complete": true,
+          "mae": 3.994078947368421,
+          "mse": 57.420394736842105,
+          "normalized_bias": -0.08873222316761882,
+          "wape": 0.7379360641789231,
+          "zero_actual_excess_units": 3304.0
+        },
+        "rows": 3040
+      },
+      "candidate": {
+        "actual_sum": 16454,
+        "interval": {
+          "complete": true,
+          "coverage": 0.8361842105263158,
+          "mean_score": 18.55789473684211,
+          "mean_width": 9.031578947368422,
+          "width_to_mean_actual": 1.6686519995137963
+        },
+        "mean": {
+          "bias_units": 0.08399122807017544,
+          "complete": true,
+          "mae": 3.995065789473684,
+          "mse": 50.74294590643275,
+          "normalized_bias": 0.015518009805113244,
+          "wape": 0.7381183906648839,
+          "zero_actual_excess_units": 3665.5
+        },
+        "median": {
+          "bias_units": 0.22960526315789473,
+          "complete": true,
+          "mae": 4.130263157894737,
+          "mse": 63.63388157894737,
+          "normalized_bias": 0.04242129573356023,
+          "wape": 0.7630971192415218,
+          "zero_actual_excess_units": 3726.5
+        },
+        "rows": 3040
+      },
+      "diagnostics": {
+        "mean_mae_above_legacy_regression_limit": false,
+        "median_bias_above_legacy_mean_limit": false
+      },
+      "dimension": "global",
+      "eligibility_coverage": 0.9047619047619048,
+      "eligible_rows": 3040,
+      "failed_reasons": [
+        "global_median_mae_improvement_below_minimum",
+        "mean_mse_regression",
+        "interval_score_regression"
+      ],
+      "has_measurable_failures": true,
+      "legacy_width_ratio_exceeded": false,
+      "not_ready_reasons": [],
+      "perfect_median_baseline_tied": false,
+      "protocol_version": "forecast-quality-2.0.0",
+      "relative_median_mae_change": 0.0340965244605501,
+      "scope": "segment_component_not_campaign_qualification",
+      "status": "failed",
+      "total_rows": 3360
+    }
+  },
+  "increment": "09.3",
+  "interrupted_pilots": [
+    {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "compare-development",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--fold",
+        "development-v1",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison"
+      ],
+      "error": "whole_comparison_budget_exceeded",
+      "exit_code": -9,
+      "final_test_accessed": false,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed_tree_cpu_seconds": 93.849433096,
+      "output": "/private/tmp/ai09-forecast-development-comparison",
+      "promotion_allowed": false,
+      "sampled_peak_tree_rss_bytes": 1076199424,
+      "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+      "wall_seconds": 96.99522370799968
+    },
+    {
+      "budget": {
+        "cpu_seconds": 1200,
+        "monitor_interval_seconds": 0.05,
+        "nice": 15,
+        "peak_tree_rss_bytes": 1073741824,
+        "threads": 1,
+        "wall_seconds": 1200
+      },
+      "command": [
+        "nice",
+        "-n",
+        "15",
+        "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+        "-m",
+        "retailops_ai.tensorflow_challenger.cli",
+        "compare-development",
+        "--features",
+        "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+        "--split",
+        "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+        "--curated",
+        "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+        "--fold",
+        "development-v1",
+        "--output",
+        "/private/tmp/ai09-forecast-development-comparison-2"
+      ],
+      "error": "whole_comparison_budget_exceeded",
+      "exit_code": -9,
+      "final_test_accessed": false,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed_tree_cpu_seconds": 92.74730137600001,
+      "output": "/private/tmp/ai09-forecast-development-comparison-2",
+      "process_cpu_seconds_by_pid": {
+        "82135": 85.285713152,
+        "82433": 2.1423451680000003,
+        "82444": 1.700960976,
+        "82462": 1.804933232,
+        "82503": 1.813348848
+      },
+      "promotion_allowed": false,
+      "sampled_peak_tree_rss_bytes": 1074790400,
+      "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+      "wall_seconds": 94.7999956670028
+    }
+  ],
+  "model_ids": {
+    "hgb_mean": "model-sha256-a2b893996c747ba8c3ce7204d73da155129425100a699fe420306ebfc54d3202",
+    "hgb_median": "model-sha256-598cbcf472a039aed03657111266e4dd2daa300f9dfb22a5c8e082c8807832a2",
+    "rf_mean": "model-sha256-280c7fff1b4d467928061b02fc75d2bbab76c9b7fcae2af52a60907ff67d7d4d",
+    "tensorflow": "model-sha256-b23f2854960c49b9b3a9eb676e71ae1eb2cbeeb7df252db67f19fd98f057fa43"
+  },
+  "populations": {
+    "prediction_rows_all_models": 20160,
+    "train_eligible_keys": 2710,
+    "train_windows": 240,
+    "validation_eligible_keys": 3040,
+    "validation_population_sha256": "c28076124c866dcb7fa8f268e63529f1bab6bd1e2e1d2c85ca7afa085224f790",
+    "validation_total_keys_per_model": 3360,
+    "validation_windows": 240
+  },
+  "protocol": {
+    "core_environment": {
+      "code_files": {
+        "forecasting/baselines.py": "fb339916e02683932b254e73d05d0a43ce7aec4eca7c818441e6a99f7f4a2560",
+        "forecasting/evaluation.py": "3eed80ae124780d447d698aae748d818f10df9054a5b00b56abc53e678aad1b8",
+        "forecasting/evaluation_contract.py": "d154ad2c5fc01756b7905933dcab1827541250034101cfcf92acea948e9ee26a",
+        "forecasting/features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+        "forecasting/manifest_contract.py": "6cc088e4ec6cd1e15399745affef8feaf7978325a346431d9679f20f526add2b",
+        "forecasting/manifest_io.py": "0a290464dbb1957d9e0ea96c53246e9d55046852d7d2f046ae594051d99c3346",
+        "forecasting/manifests.py": "8ea6b52b5c4ac9b4cda1c17146e22c4b3ee550100e9dc39cac0a0b367d58feeb",
+        "forecasting/model_contract.py": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+        "forecasting/model_trees.py": "b38ae31b8ab1c37c17f695fac103d0872adb5afa2c5e18b244187e839cf65d23",
+        "forecasting/model_worker.py": "5662e8de5fb3d65c05a82e717144ab1064b3e447b00a1e96531488831085c859",
+        "forecasting/models.py": "16814cc2022f87a15e32ebfe4d2b474ac486ec84d58fad9838afe986556a57be",
+        "forecasting/preprocessing.py": "c0520d819d30d952e3169dccc47d651b9128d08f2d51b88892f5571a0c4b3aff",
+        "forecasting/splits.py": "7564af16532313a4b94950c10d9ea8b16d31d82affd9161b708bef5601a04ba1"
+      },
+      "code_sha256": "111d89c3ae93fcbe6b395bde113aae1c0b859582b999e77cdba0d706ba3f11a3",
+      "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+      "machine": "arm64",
+      "system": "Darwin",
+      "version": "forecast-models-1.0.0",
+      "versions": {
+        "joblib": "1.6.0",
+        "numpy": "2.2.6",
+        "psutil": "7.2.2",
+        "pyarrow": "25.0.1",
+        "python": "3.11.15",
+        "scikit-learn": "1.9.1",
+        "scipy": "1.15.3",
+        "threadpoolctl": "3.7.0"
+      }
+    },
+    "feature_descriptor_sha256": "39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+    "feature_set_id": "features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+    "final_test_accessed": false,
+    "fold": {
+      "development_holdout": {
+        "end": "2026-07-17",
+        "start": "2026-07-08"
+      },
+      "evaluation_cutoff": "2026-08-01T23:59:59Z",
+      "name": "development-v1",
+      "purge_days": 15,
+      "selection_cutoff": "2026-07-07T23:59:59Z",
+      "train": {
+        "end": "2026-05-28",
+        "start": "2026-05-19"
+      },
+      "training_cutoff": "2026-06-12T23:59:59Z",
+      "validation": {
+        "end": "2026-06-22",
+        "start": "2026-06-13"
+      }
+    },
+    "implementation_sha256": "7942ac9ed8b40c4ce1d129674348c85bd02d04c2d1b6299bdc0257ec7aa6056e",
+    "parent": {
+      "business_timezone": "UTC",
+      "curated_dataset_id": "curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+      "curated_descriptor_sha256": "6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+      "forecast_source_status": "passed",
+      "snapshot_id": "snapshot-sha256-e706605e8cdac85ce859fb536a5136e15639cb555fcab8952154ac9437c6e810",
+      "source_dataset_id": "source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d"
+    },
+    "policy": {
+      "evaluation_scope": "early_stopping_validation_diagnostic_not_independent_acceptance",
+      "final_test_accessed": false,
+      "interval_scope": "raw_empirical_baselines_only_no_calibrated_candidate",
+      "max_output_bytes": 134217728,
+      "promotion_allowed": false,
+      "reference": "fixed_history28_declared_before_fitting",
+      "rf_functional": "conditional_mean_only_no_median_substitution",
+      "selection": "none_one_frozen_configuration_per_family",
+      "tensorflow": {
+        "architecture": "history28_target_covariates_dense_direct14_mean_median",
+        "artifact_bytes": 33554432,
+        "batch_size": 32,
+        "cpu_seconds": 1200.0,
+        "cpu_threads": 1,
+        "data_seed": 42,
+        "early_stopping": "development_validation_only_restore_best_epoch",
+        "epochs": 25,
+        "final_test_accessed": false,
+        "hidden_units": [
+          32,
+          16
+        ],
+        "initialization_seed": 42,
+        "interval_policy": "absent_pending_separate_development_calibration",
+        "learning_rate": 0.001,
+        "max_matrix_bytes": 67108864,
+        "max_windows": 3000,
+        "objective": "masked_train_scaled_mean_mse_plus_median_mae",
+        "patience": 4,
+        "promotion_allowed": false,
+        "rss_bytes": 1073741824,
+        "scope": "development_only_no_final_test_or_release",
+        "trials": 1,
+        "version": "ai09-keras-development-1.0.0",
+        "wall_seconds": 1200.0
+      },
+      "tree_heads": [
+        "rf_mean",
+        "hgb_mean",
+        "hgb_median"
+      ],
+      "trees": {
+        "baseline_candidates": [
+          "history7",
+          "history28",
+          "weekday28"
+        ],
+        "baseline_statistics": "empirical_median_mean_and_inverted_cdf_05_95_of_as_of_history",
+        "heads": [
+          "rf_mean",
+          "hgb_mean",
+          "hgb_median",
+          "hgb_lower",
+          "hgb_upper"
+        ],
+        "interval_calibration": "first_half_endpoint_residual_quantiles_05_95",
+        "interval_fallback": [
+          "volume_category",
+          "volume",
+          "global"
+        ],
+        "interval_gate": "second_block_score_no_regression_and_coverage_or_baseline",
+        "max_index_bytes": 2147483648,
+        "max_prediction_bytes": 2147483648,
+        "maximum_correction_ratio": 2.0,
+        "mean_gate": "both_blocks_bias_guard_and_mse_no_regression_or_exact_baseline",
+        "median_gate": "both_blocks_mae_guard_second_block_global_5pct_or_exact_baseline",
+        "minimum_correction_ratio": 0.5,
+        "minimum_group_rows": 30,
+        "model": {
+          "baseline": {
+            "candidates": [
+              "last_observed",
+              "moving_average",
+              "seasonal_naive7"
+            ],
+            "closed_history": "confirmed_closed_zero_is_observed",
+            "common_keys": "all_split_memberships_no_model_specific_drops",
+            "incomplete_candidate": "not_ready_no_selection_no_partial_metrics",
+            "missing_history": "skip_unknown_never_impute_zero",
+            "moving_average_calendar_days": 7,
+            "moving_average_minimum_known_days": 1,
+            "origin_mode": "fixed_origin_no_recursive_actuals",
+            "portfolio_final_test": "not_included_not_opened",
+            "required_prediction_coverage": 1.0,
+            "schema_version": "1.0.0",
+            "seasonal_missing": "last_known_same_weekday_within_28_days_or_insufficient_data",
+            "selection_metric": "mae",
+            "selection_role": "validation_only_per_fold",
+            "tie_break": "candidate_order"
+          },
+          "cpu_threads": 1,
+          "fit_cpu_seconds": 90.0,
+          "fit_rss_bytes": 1073741824,
+          "fit_wall_seconds": 120.0,
+          "grid": "one_frozen_configuration_per_family",
+          "hgb": {
+            "categorical_features": null,
+            "early_stopping": false,
+            "l2_regularization": 0.0,
+            "learning_rate": 0.1,
+            "loss": "squared_error",
+            "max_bins": 255,
+            "max_iter": 100,
+            "max_leaf_nodes": 31,
+            "min_samples_leaf": 20,
+            "validation_fraction": null
+          },
+          "legacy_retailops_serving": "unchanged_rejection_not_overridden",
+          "max_matrix_bytes": 67108864,
+          "max_train_rows": 50000,
+          "minimum_relative_improvement": 0.05,
+          "monitor_interval_seconds": 0.05,
+          "portfolio_final_test": "not_included_not_opened",
+          "postprocessing": "clip_negative_to_zero_no_rounding",
+          "primary_metric": "validation_mae",
+          "random_state": 42,
+          "rf": {
+            "bootstrap": true,
+            "criterion": "squared_error",
+            "max_depth": 12,
+            "max_features": 1.0,
+            "min_samples_leaf": 2,
+            "min_samples_split": 2,
+            "n_estimators": 64,
+            "n_jobs": 1
+          },
+          "schema_version": "1.0.0",
+          "selection_use": "diagnostic_only_pending_04_6_to_04_8",
+          "strategy": "direct_global_with_horizon_feature",
+          "target_type": "observed_sales_units",
+          "tie_break": "baseline_then_rf_then_hgb"
+        },
+        "point_correction": "first_half_median_residual_or_mean_ratio_candidates_identity_retained",
+        "portfolio_final_test": "not_included_not_opened",
+        "quality": {
+          "baseline_selection": "validation_only_separately_by_mae_mse_and_interval_score",
+          "compatibility": "v1_reports_immutable_single_output_never_relabelled_as_two_targets",
+          "evaluation_use": "freeze_before_unseen_development_holdout_no_reselection",
+          "interval_objective": "central_interval_score_no_regression_against_baseline",
+          "legacy_width_ratio_threshold": 2.0,
+          "maximum_absolute_normalized_mean_bias": 0.1,
+          "maximum_segment_mae_regression": 0.1,
+          "mean_mse_guard": "no_regression_against_mean_baseline",
+          "mean_objective": "mse_with_bias_guard",
+          "median_objective": "mae",
+          "minimum_calibration_rows": 50,
+          "minimum_eligibility_coverage": 0.8,
+          "minimum_empirical_coverage": 0.8,
+          "minimum_global_rows": 100,
+          "minimum_prediction_coverage": 1.0,
+          "minimum_relative_mae_improvement": 0.05,
+          "minimum_segment_rows": 30,
+          "nominal_coverage": 0.9,
+          "perfect_baseline": "zero_error_tie_passes_positive_error_fails",
+          "point_contract": "separate_conditional_median_and_mean",
+          "portfolio_final_test": "not_included_not_opened",
+          "required_volume_bins": [
+            "zero",
+            "low",
+            "medium",
+            "high"
+          ],
+          "version": "forecast-quality-2.0.0",
+          "volume_basis": "origin_known_rolling_28_mean_not_target_outcome",
+          "width_to_actual_ratio": "diagnostic_only_no_denominator_floor",
+          "zero_actuals": "absolute_errors_and_false_positive_units_no_ratio_gate"
+        },
+        "reused_model_policy_scope": "estimator_hyperparameters_resources_only_selection_is_functional_recipe",
+        "selection_groups": "origin_known_volume_category",
+        "tie_break": "baseline_candidate_order_then_identity_then_head_order",
+        "validation_partition": "first_half_calibration_second_half_selection",
+        "version": "forecast-functional-recipe-1.0.0"
+      },
+      "version": "ai09-forecast-development-comparison-1.0.0"
+    },
+    "promotion_allowed": false,
+    "schema_version": "ai09-forecast-development-protocol-1.0.0",
+    "source_parameters": {
+      "business_timezone": "UTC",
+      "days": 102,
+      "end_date": "2026-07-31",
+      "label_tail_days": 14,
+      "max_daily_rows": 2448,
+      "origin_days": 60,
+      "output_format": "csv",
+      "products": 8,
+      "profile": "ai-temporal-smoke",
+      "seed": 42,
+      "start_date": "2026-04-21",
+      "stores": 3,
+      "warehouses": 2,
+      "warmup_days": 28
+    },
+    "source_schema_version": "2.7.0",
+    "split_descriptor_sha256": "ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+    "split_id": "split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+    "tensorflow_lock_sha256": "b9298cc21e673263498bcb846ded3f550934de89247ddcdddcef672e37010e26",
+    "train_population_sha256": "ac1a15dfe0742e8d1ccb3bff0461536c53b7358bb7a4debe920bfb1ede49dd78",
+    "validation_population_sha256": "c28076124c866dcb7fa8f268e63529f1bab6bd1e2e1d2c85ca7afa085224f790"
+  },
+  "replay": {
+    "budget": {
+      "cpu_seconds": 1200,
+      "monitor_interval_seconds": 0.05,
+      "nice": 15,
+      "peak_tree_rss_bytes": 1610612736,
+      "threads": 1,
+      "wall_seconds": 1200
+    },
+    "command": [
+      "nice",
+      "-n",
+      "15",
+      "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+      "-m",
+      "retailops_ai.tensorflow_challenger.cli",
+      "verify-comparison",
+      "--features",
+      "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+      "--split",
+      "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+      "--curated",
+      "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+      "--output",
+      "/private/tmp/ai09-forecast-development-comparison-3"
+    ],
+    "error": null,
+    "exit_code": 0,
+    "final_test_accessed": false,
+    "log_sha256": "8582fc56c4ef20c02eef62d7d0cc89118ed978c26e6833135de78948d6d90ccc",
+    "observed_tree_cpu_seconds": 84.23480550400001,
+    "output": "/private/tmp/ai09-forecast-development-comparison-3",
+    "process_cpu_seconds_by_pid": {
+      "84810": 84.23480550400001
+    },
+    "promotion_allowed": false,
+    "sampled_peak_rss_by_pid": {
+      "84810": 1195147264
+    },
+    "sampled_peak_tree_rss_bytes": 1195147264,
+    "scope": "post_inventory_development_replay_without_refits",
+    "wall_seconds": 86.77594924999721
+  },
+  "segment_counts": {
+    "hgb": {
+      "category": {
+        "failed": 0,
+        "not_ready": 8,
+        "passed": 0,
+        "with_measurable_failures": 7
+      },
+      "channel": {
+        "failed": 0,
+        "not_ready": 2,
+        "passed": 0,
+        "with_measurable_failures": 2
+      },
+      "horizon": {
+        "failed": 0,
+        "not_ready": 14,
+        "passed": 0,
+        "with_measurable_failures": 14
+      },
+      "volume": {
+        "failed": 0,
+        "not_ready": 4,
+        "passed": 0,
+        "with_measurable_failures": 2
+      }
+    },
+    "history28": {
+      "category": {
+        "failed": 3,
+        "not_ready": 0,
+        "passed": 5,
+        "with_measurable_failures": 3
+      },
+      "channel": {
+        "failed": 1,
+        "not_ready": 0,
+        "passed": 1,
+        "with_measurable_failures": 1
+      },
+      "horizon": {
+        "failed": 4,
+        "not_ready": 0,
+        "passed": 10,
+        "with_measurable_failures": 4
+      },
+      "volume": {
+        "failed": 0,
+        "not_ready": 2,
+        "passed": 2,
+        "with_measurable_failures": 0
+      }
+    },
+    "history7": {
+      "category": {
+        "failed": 7,
+        "not_ready": 0,
+        "passed": 1,
+        "with_measurable_failures": 7
+      },
+      "channel": {
+        "failed": 2,
+        "not_ready": 0,
+        "passed": 0,
+        "with_measurable_failures": 2
+      },
+      "horizon": {
+        "failed": 13,
+        "not_ready": 0,
+        "passed": 1,
+        "with_measurable_failures": 13
+      },
+      "volume": {
+        "failed": 2,
+        "not_ready": 2,
+        "passed": 0,
+        "with_measurable_failures": 2
+      }
+    },
+    "rf_mean": {
+      "category": {
+        "failed": 0,
+        "not_ready": 8,
+        "passed": 0,
+        "with_measurable_failures": 8
+      },
+      "channel": {
+        "failed": 0,
+        "not_ready": 2,
+        "passed": 0,
+        "with_measurable_failures": 2
+      },
+      "horizon": {
+        "failed": 0,
+        "not_ready": 14,
+        "passed": 0,
+        "with_measurable_failures": 12
+      },
+      "volume": {
+        "failed": 0,
+        "not_ready": 4,
+        "passed": 0,
+        "with_measurable_failures": 2
+      }
+    },
+    "tensorflow": {
+      "category": {
+        "failed": 0,
+        "not_ready": 8,
+        "passed": 0,
+        "with_measurable_failures": 7
+      },
+      "channel": {
+        "failed": 0,
+        "not_ready": 2,
+        "passed": 0,
+        "with_measurable_failures": 2
+      },
+      "horizon": {
+        "failed": 0,
+        "not_ready": 14,
+        "passed": 0,
+        "with_measurable_failures": 7
+      },
+      "volume": {
+        "failed": 0,
+        "not_ready": 4,
+        "passed": 0,
+        "with_measurable_failures": 1
+      }
+    },
+    "weekday28": {
+      "category": {
+        "failed": 8,
+        "not_ready": 0,
+        "passed": 0,
+        "with_measurable_failures": 8
+      },
+      "channel": {
+        "failed": 2,
+        "not_ready": 0,
+        "passed": 0,
+        "with_measurable_failures": 2
+      },
+      "horizon": {
+        "failed": 14,
+        "not_ready": 0,
+        "passed": 0,
+        "with_measurable_failures": 14
+      },
+      "volume": {
+        "failed": 2,
+        "not_ready": 2,
+        "passed": 0,
+        "with_measurable_failures": 2
+      }
+    }
+  },
+  "stage": "AI09",
+  "status": "development_diagnostic_completed_stage_in_progress",
+  "tensorflow": {
+    "artifact_bytes": 342601,
+    "artifact_id": "model-sha256-b23f2854960c49b9b3a9eb676e71ae1eb2cbeeb7df252db67f19fd98f057fa43",
+    "preparation_seconds": 4.623835500002315,
+    "resources": {
+      "cpu_seconds": 6.503468517999999,
+      "cpu_threads": 1,
+      "monitor_interval_seconds": 0.05,
+      "peak_tree_rss_bytes": 617676800,
+      "wall_seconds": 8.749496958000236
+    },
+    "worker": {
+      "batch_inference_seconds": 0.009530040995741729,
+      "best_epoch": 17,
+      "cold_load_seconds": 0.01081079099822091,
+      "determinism_enabled": true,
+      "determinism_scope": "fixed_versions_platform_and_initialization_seed_not_cross_platform_bitwise",
+      "epochs_run": 21,
+      "final_test_accessed": false,
+      "history": [
+        {
+          "epoch": 1,
+          "validation_loss": 2.8457323401382095
+        },
+        {
+          "epoch": 2,
+          "validation_loss": 2.661924668126985
+        },
+        {
+          "epoch": 3,
+          "validation_loss": 2.5205471902301437
+        },
+        {
+          "epoch": 4,
+          "validation_loss": 2.407048139525087
+        },
+        {
+          "epoch": 5,
+          "validation_loss": 2.327010976327093
+        },
+        {
+          "epoch": 6,
+          "validation_loss": 2.2511692619245305
+        },
+        {
+          "epoch": 7,
+          "validation_loss": 2.168181268086559
+        },
+        {
+          "epoch": 8,
+          "validation_loss": 2.1193908981586755
+        },
+        {
+          "epoch": 9,
+          "validation_loss": 2.0388216549628657
+        },
+        {
+          "epoch": 10,
+          "validation_loss": 1.9974453217889134
+        },
+        {
+          "epoch": 11,
+          "validation_loss": 1.9356956986612395
+        },
+        {
+          "epoch": 12,
+          "validation_loss": 1.9114791025848765
+        },
+        {
+          "epoch": 13,
+          "validation_loss": 1.8647869683017857
+        },
+        {
+          "epoch": 14,
+          "validation_loss": 1.8678019894973228
+        },
+        {
+          "epoch": 15,
+          "validation_loss": 1.8484129178680873
+        },
+        {
+          "epoch": 16,
+          "validation_loss": 1.8571266204903
+        },
+        {
+          "epoch": 17,
+          "validation_loss": 1.824905210615773
+        },
+        {
+          "epoch": 18,
+          "validation_loss": 1.8509837485849858
+        },
+        {
+          "epoch": 19,
+          "validation_loss": 1.8324911626546005
+        },
+        {
+          "epoch": 20,
+          "validation_loss": 1.8570970482339983
+        },
+        {
+          "epoch": 21,
+          "validation_loss": 1.8526280283927918
+        }
+      ],
+      "input_shape": [
+        null,
+        1484
+      ],
+      "interval_status": "not_ready",
+      "keras_version": "3.11.3",
+      "machine": "arm64",
+      "mlflow_run_id": "9dfcc4da91d34facb45a3a72b45c5e90",
+      "mlflow_version": "3.4.0",
+      "output_order": [
+        "mean",
+        "median"
+      ],
+      "output_shape": [
+        null,
+        14,
+        2
+      ],
+      "peak_self_rss_bytes": 609943552,
+      "promotion_allowed": false,
+      "python_version": "3.11.15",
+      "reload_atol": 1e-06,
+      "reload_rtol": 1e-06,
+      "self_cpu_seconds": 6.132014,
+      "status": "passed",
+      "system": "Darwin",
+      "tensorflow_version": "2.20.0",
+      "training_seconds": 1.6299071660032496,
+      "visible_gpu_count": 0,
+      "worker_seconds": 8.07476070899429
+    }
+  },
+  "tree_resources": {
+    "hgb_mean.resources.json": {
+      "cpu_seconds": 1.6797913119999999,
+      "peak_rss_bytes": 245448704,
+      "status": "passed",
+      "threads": 1,
+      "train_rows": 2710,
+      "wall_seconds": 1.7574127909974777
+    },
+    "hgb_median.resources.json": {
+      "cpu_seconds": 1.7929414080000001,
+      "peak_rss_bytes": 249872384,
+      "status": "passed",
+      "threads": 1,
+      "train_rows": 2710,
+      "wall_seconds": 1.8712052080009016
+    },
+    "rf_mean.resources.json": {
+      "cpu_seconds": 2.21141912,
+      "peak_rss_bytes": 334807040,
+      "status": "passed",
+      "threads": 1,
+      "train_rows": 2710,
+      "wall_seconds": 2.796317749998707
+    }
+  },
+  "whole_comparison": {
+    "budget": {
+      "cpu_seconds": 1200,
+      "monitor_interval_seconds": 0.05,
+      "nice": 15,
+      "peak_tree_rss_bytes": 1610612736,
+      "threads": 1,
+      "wall_seconds": 1200
+    },
+    "command": [
+      "nice",
+      "-n",
+      "15",
+      "/private/tmp/retailops-ai09-evaluation-protocol/environments/tensorflow/.venv/bin/python",
+      "-m",
+      "retailops_ai.tensorflow_challenger.cli",
+      "compare-development",
+      "--features",
+      "/private/tmp/ai09-forecast-development-data/features/features-sha256-39d254cd735ef31045c439e367b74c3b5e84114231742da479e50072e5982594",
+      "--split",
+      "/private/tmp/ai09-forecast-development-data/splits/split-sha256-ead97871b985cf6f41c116ab8ac15bd98c9ba8218ea702035af5cd5fcc3dd0f6",
+      "--curated",
+      "/private/tmp/ai09-forecast-development-data/curated/curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+      "--fold",
+      "development-v1",
+      "--output",
+      "/private/tmp/ai09-forecast-development-comparison-3"
+    ],
+    "error": null,
+    "exit_code": 0,
+    "final_test_accessed": false,
+    "log_sha256": "8582fc56c4ef20c02eef62d7d0cc89118ed978c26e6833135de78948d6d90ccc",
+    "observed_tree_cpu_seconds": 108.76532373799999,
+    "output": "/private/tmp/ai09-forecast-development-comparison-3",
+    "process_cpu_seconds_by_pid": {
+      "83479": 96.61886438399999,
+      "84009": 2.188823504,
+      "84227": 1.6697537919999998,
+      "84238": 1.801436176,
+      "84269": 6.479351424000001,
+      "84295": 0.005537958,
+      "84324": 0.0015565000000000002
+    },
+    "promotion_allowed": false,
+    "sampled_peak_rss_by_pid": {
+      "83479": 1363525632,
+      "84009": 332005376,
+      "84227": 244858880,
+      "84238": 239468544,
+      "84269": 611303424,
+      "84295": 7667712,
+      "84324": 147456
+    },
+    "sampled_peak_tree_rss_bytes": 1363525632,
+    "scope": "post_inventory_ai_temporal_smoke_development_diagnostic",
+    "wall_seconds": 113.24330787500367
+  }
+}

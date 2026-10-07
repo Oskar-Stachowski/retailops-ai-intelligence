@@ -1,0 +1,171 @@
+{
+  "$defs": {
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    },
+    "RoleWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "label_knowledge_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Label Knowledge Cutoff",
+          "type": "string"
+        },
+        "origins": {
+          "$ref": "#/$defs/DateWindow"
+        },
+        "role": {
+          "enum": [
+            "train",
+            "early_stopping",
+            "tune",
+            "calibration",
+            "development_evaluation"
+          ],
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "origins",
+        "label_knowledge_cutoff"
+      ],
+      "title": "RoleWindow",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:forecast_partition_policy:4.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "calibration": {
+      "const": "fit_after_recipe_selection_on_calibration_only",
+      "default": "fit_after_recipe_selection_on_calibration_only",
+      "title": "Calibration",
+      "type": "string"
+    },
+    "development_evaluation_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Development Evaluation Access Authorized",
+      "type": "boolean"
+    },
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "holdout_freshness": {
+      "const": "not_asserted_requires_outcome_access_audit",
+      "default": "not_asserted_requires_outcome_access_audit",
+      "title": "Holdout Freshness",
+      "type": "string"
+    },
+    "independence": {
+      "const": "chronological_roles_not_a_statistical_independence_claim",
+      "default": "chronological_roles_not_a_statistical_independence_claim",
+      "title": "Independence",
+      "type": "string"
+    },
+    "label_delay_days": {
+      "default": 1,
+      "maximum": 30,
+      "minimum": 1,
+      "title": "Label Delay Days",
+      "type": "integer"
+    },
+    "max_artifact_bytes": {
+      "default": 134217728,
+      "maximum": 134217728,
+      "minimum": 1024,
+      "title": "Max Artifact Bytes",
+      "type": "integer"
+    },
+    "max_horizon_days": {
+      "const": 14,
+      "default": 14,
+      "title": "Max Horizon Days",
+      "type": "integer"
+    },
+    "max_index_bytes": {
+      "default": 134217728,
+      "maximum": 134217728,
+      "minimum": 4096,
+      "title": "Max Index Bytes",
+      "type": "integer"
+    },
+    "max_population_rows": {
+      "default": 100000,
+      "maximum": 100000,
+      "minimum": 5,
+      "title": "Max Population Rows",
+      "type": "integer"
+    },
+    "portfolio_final_test": {
+      "const": "not_included_not_opened",
+      "default": "not_included_not_opened",
+      "title": "Portfolio Final Test",
+      "type": "string"
+    },
+    "preprocessing": {
+      "const": "fit_on_train_only",
+      "default": "fit_on_train_only",
+      "title": "Preprocessing",
+      "type": "string"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "purge_days": {
+      "default": 15,
+      "maximum": 90,
+      "minimum": 15,
+      "title": "Purge Days",
+      "type": "integer"
+    },
+    "roles": {
+      "items": {
+        "$ref": "#/$defs/RoleWindow"
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "title": "Roles",
+      "type": "array"
+    },
+    "version": {
+      "const": "ai09-independent-forecast-partitions-1.0.0",
+      "default": "ai09-independent-forecast-partitions-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "roles"
+  ],
+  "title": "ForecastPartitionPolicy",
+  "type": "object"
+}

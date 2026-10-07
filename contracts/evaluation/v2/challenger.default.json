@@ -1,0 +1,28 @@
+{
+  "architecture": "history28_target_covariates_dense_direct14_mean_median",
+  "artifact_bytes": 33554432,
+  "batch_size": 32,
+  "cpu_seconds": 1200.0,
+  "cpu_threads": 1,
+  "data_seed": 42,
+  "early_stopping": "development_validation_only_restore_best_epoch",
+  "epochs": 25,
+  "final_test_accessed": false,
+  "hidden_units": [
+    32,
+    16
+  ],
+  "initialization_seed": 42,
+  "interval_policy": "absent_pending_separate_development_calibration",
+  "learning_rate": 0.001,
+  "max_matrix_bytes": 67108864,
+  "max_windows": 3000,
+  "objective": "masked_train_scaled_mean_mse_plus_median_mae",
+  "patience": 4,
+  "promotion_allowed": false,
+  "rss_bytes": 1073741824,
+  "scope": "development_only_no_final_test_or_release",
+  "trials": 1,
+  "version": "ai09-keras-development-1.0.0",
+  "wall_seconds": 1200.0
+}
