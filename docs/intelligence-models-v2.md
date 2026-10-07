@@ -132,7 +132,13 @@ Jednodniowa kwalifikacja wykonawcza AI 08 z 5 października wygasła
 siedem dokładnie przypiętych oryginalnych artefaktów i sprawdza sześć
 zakończonych ocen. Istniejący `qualify_stockout_final.py` rekonstruuje publiczne
 wejścia z pełnych rodziców i wykonuje zamrożony model, tworząc nową jednodniową
-kwalifikację. Nie zmienia starej kwalifikacji i nie trenuje, nie kalibruje oraz
+kwalifikację. Odtworzenie używa osobnego zainstalowanego wheel z zaakceptowanego
+commitu AI08 `68a3ede16da4bd8b93609c2489514c08e95a7384`: rodzice wiążą
+historyczne hashe kodu curation, które różnią się po późniejszej integracji
+main. Oryginalnych manifestów i hashów nie zastępuj aktualnymi. Późniejszy
+cold worker, obraz, registry i outbox używają bieżącego kodu AI10; jego hash
+zamrożonego scorera, locka i public-input adaptera musi zgadzać się z dowodami.
+Workflow nie zmienia starej kwalifikacji i nie trenuje, nie kalibruje oraz
 nie uruchamia ponownie ocen końcowych. Dalej wymagane są niezmienione bramki
 review, secret scan, testy modelu, rzeczywisty MLflow/PostgreSQL, cold worker
 i authenticated API. Raport zachowuje oryginalny pełny output i jego SHA-256.

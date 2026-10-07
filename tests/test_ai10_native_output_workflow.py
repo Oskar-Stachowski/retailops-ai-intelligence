@@ -14,6 +14,18 @@ def test_ai10_requalification_uses_original_successful_jobs_without_repeating_ev
     commands = "\n".join(step.get("run", "") for step in steps)
     assert "scripts/recover_stockout_final_receipts.py" in commands
     assert "scripts/qualify_stockout_final.py" in commands
+    assert (
+        ".local/ai10-original-qualified-runtime/.venv/bin/python scripts/qualify_stockout_final.py"
+        in commands
+    )
+    assert "--no-editable" in commands
+    original_runtime = next(
+        step["with"]
+        for step in steps
+        if step.get("with", {}).get("path") == ".local/ai10-original-qualified-runtime"
+    )
+    assert original_runtime["ref"] == "68a3ede16da4bd8b93609c2489514c08e95a7384"
+    assert original_runtime["persist-credentials"] is False
     assert "--final-execution-commit 048f7b311b82dbf831718565289a54166cbe7d36" in commands
     assert "--final-run-id 37273978383" in commands
     assert "scripts/run_stockout_final_world.py" not in commands

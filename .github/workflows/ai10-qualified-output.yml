@@ -38,6 +38,13 @@ jobs:
           python-version: "3.11.15"
           enable-cache: false
       - run: uv sync --locked --extra snapshot --extra forecast
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 68a3ede16da4bd8b93609c2489514c08e95a7384
+          path: .local/ai10-original-qualified-runtime
+          persist-credentials: false
+      - name: Install the original accepted qualifier as an isolated wheel
+        run: uv sync --directory .local/ai10-original-qualified-runtime --locked --extra snapshot --extra forecast --no-editable
       - name: Requalify the unchanged model from the six original successful evaluations
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,7 +53,7 @@ jobs:
           uv run --locked --extra snapshot --extra forecast python scripts/recover_stockout_final_receipts.py \
             --request docs/reference/stockout-final-acceptance-request-v1.json \
             --freeze docs/reference/stockout-final-campaign-v2.json --output original-final-receipts
-          uv run --locked --extra snapshot --extra forecast python scripts/qualify_stockout_final.py \
+          .local/ai10-original-qualified-runtime/.venv/bin/python scripts/qualify_stockout_final.py \
             --freeze docs/reference/stockout-final-campaign-v2.json \
             --permission docs/reference/stockout-final-permission-v2.json \
             --recipe docs/reference/stockout-final-selected-recipe.json \
