@@ -24,6 +24,11 @@
     "receipt_status": "passed_component",
     "sha256": "2d4348dc5842065903657810e8939fdebb1d23397f363ba3bc770244f08be291"
   },
+  "AI_source_launcher_fix_CI": {
+    "path": "docs/evidence/ai10-source-launcher-fix-ci.json",
+    "receipt_status": "passed",
+    "sha256": "3cc14ecb0c4d62c1bb346dbac9277e087f4b3be499b373a41e280cf52649314d"
+  },
   "Source_code_main_CI": {
     "path": "docs/evidence/ai10-source-code-main-ci.json",
     "receipt_status": "passed",
