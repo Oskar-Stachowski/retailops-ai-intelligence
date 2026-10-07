@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: 16d34887b058b3dfb270af474f28242194a968ca
+          ref: 5182782321e9aca15f28c467071e92f268aafb85
           persist-credentials: false
           path: source
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0

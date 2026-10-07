@@ -1,0 +1,68 @@
+{
+  "version": "ai09-development-capacity-probe-1.3.0",
+  "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+  "producer_commit": "5182782321e9aca15f28c467071e92f268aafb85",
+  "producer_lock_sha256": "f55452e6f30020829f87d8c040440e7b589fd0f431e84c082aff87a9fe8b35f4",
+  "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+  "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "generation": {
+    "profile": "ai-dev",
+    "seed": 42,
+    "days": 365,
+    "products": 100,
+    "stores": 5,
+    "warehouses": 3,
+    "start_date": "2025-08-01",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 182500,
+    "forecast_plan_days": 14
+  },
+  "budgets": {
+    "tree_rss_bytes": 8589934592,
+    "scratch_bytes": 8589934592,
+    "wall_seconds": 3600,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "parent_limits": {
+    "max_bytes": 2147483648,
+    "max_files": 10000,
+    "max_rows": 20000000,
+    "batch_rows": 256
+  },
+  "expected_snapshot_schema_version": "1.1.0",
+  "snapshot": {
+    "include_truth": false,
+    "chunk_rows": 256,
+    "partition_by_day": false,
+    "required_use_cases": [
+      "forecast_source",
+      "inventory_source"
+    ]
+  },
+  "project_campaign_authorized": false,
+  "model_fit_authorized": false,
+  "final_generation_authorized": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "previous_attempt": {
+    "version": "ai09-development-capacity-probe-1.2.0",
+    "workflow_run": 37676033214,
+    "plan_sha256": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "resource_receipt_sha256": "b75dcf1cd2ea0dfff8262d33ee2651fe152fea37393675a40e0fec4d85f24a5d",
+    "reason": "tree_rss_limit",
+    "previous_failure_preserved": true
+  },
+  "revision_reason": "Use reviewed cached-path selective commerce input copy, preserving the existing AI08 indexed IDs/cache/releases. Add bounded periodic generation worker stack observations to locate remaining live allocation stages. Preserve all three failed attempts, old plan bytes, full canonical dimensions, time/RSS/scratch caps, reserves and campaign prohibitions. Dispatch only after exact producer/full main acceptance.",
+  "generation_entrypoint": "data.inventory.source_cohort_batch_v2.run",
+  "worker_stack_observation": {
+    "phases": [
+      "generation"
+    ],
+    "interval_seconds": 120,
+    "repeat": true,
+    "locals_dumped": false,
+    "periodic_observation_not_allocation_measurement": true
+  }
+}

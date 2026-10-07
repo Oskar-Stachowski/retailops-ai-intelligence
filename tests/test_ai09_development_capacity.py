@@ -204,7 +204,7 @@ def test_resource_revision_cannot_change_parent_caps_or_erase_previous_failure(c
 
 
 @pytest.mark.parametrize("change", ["producer", "entrypoint", "failure_digest", "failure_flag"])
-def test_cached_revision_preserves_exact_producer_and_both_failed_attempts(change: str) -> None:
+def test_cached_revision_preserves_exact_producer_and_prior_failed_attempts(change: str) -> None:
     plan = probe.read(probe.PLAN_PATH)
     if change == "producer":
         plan["producer_commit"] = "1" * 40
@@ -216,3 +216,86 @@ def test_cached_revision_preserves_exact_producer_and_both_failed_attempts(chang
         plan["previous_attempt"]["previous_failure_preserved"] = False
     with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
         probe.validate_plan(plan)
+
+
+@pytest.mark.parametrize("change", ["interval", "phase", "locals", "classification"])
+def test_stack_observation_cannot_change_scope_or_claim_allocation_measurement(change: str) -> None:
+    plan = probe.read(probe.PLAN_PATH)
+    if change == "interval":
+        plan["worker_stack_observation"]["interval_seconds"] = 1
+    elif change == "phase":
+        plan["worker_stack_observation"]["phases"] = ["import"]
+    elif change == "locals":
+        plan["worker_stack_observation"]["locals_dumped"] = True
+    else:
+        plan["worker_stack_observation"]["periodic_observation_not_allocation_measurement"] = False
+    with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
+        probe.validate_plan(plan)
+
+
+def test_all_three_prior_plan_bytes_and_failure_chain_are_retained() -> None:
+    path = probe.PLAN_PATH
+    for version, run_id in (("1.2", 37676033214), ("1.1", 37613368332), ("1.0", 37611605538)):
+        current = probe.read(path)
+        previous = path.with_name(
+            "ai09-development-capacity.json"
+            if version == "1.0"
+            else "ai09-development-capacity-v" + version + ".json"
+        )
+        assert current["previous_attempt"]["plan_sha256"] == probe.sha(previous)
+        assert current["previous_attempt"]["workflow_run"] == run_id
+        if version == "1.0":
+            assert current["previous_attempt"]["status"] == "failed_tree_rss_limit"
+            assert current["previous_attempt"]["completed_phases"] == 0
+            assert current["previous_attempt"]["wall_seconds"] > 0
+        else:
+            assert current["previous_attempt"]["previous_failure_preserved"] is True
+        path = previous
+
+
+def test_actual_periodic_generation_stack_is_bounded_and_cancelled_without_locals(
+    tmp_path: Path,
+) -> None:
+    # Shortened timing applies only to this isolated stdlib control; the frozen
+    # full-profile plan above rejects this value and always requires120 seconds.
+    program = """
+import sys,time
+from types import SimpleNamespace
+sys.path.insert(0, ROOT)
+from scripts import measure_ai09_development_capacity as probe
+def controlled_generation(args,plan):
+    local_value = 'CONTROL_LOCAL_VALUE_MUST_NOT_APPEAR'
+    time.sleep(0.11)
+    return {'length':len(local_value)}
+probe.producer_worker = controlled_generation
+plan = probe.read(probe.PLAN_PATH)
+plan['worker_stack_observation']['interval_seconds'] = 0.025
+probe.observed_worker(SimpleNamespace(worker='generation'),plan)
+print('CONTROL_COMPLETED',flush=True)
+time.sleep(0.08)
+""".replace("ROOT", repr(str(probe.PLAN_PATH.parents[2])))
+    result = run(tmp_path, program)
+    assert result["status"] == "passed"
+    log = (tmp_path / "worker.log").read_text()
+    before, after = log.split("CONTROL_COMPLETED", 1)
+    assert "Timeout" in before and "controlled_generation" in before
+    assert "CONTROL_LOCAL_VALUE_MUST_NOT_APPEAR" not in log
+    assert "Timeout" not in after and len(log.encode()) < 16384
+
+
+def test_stack_timer_is_cancelled_before_propagating_generation_failure(monkeypatch) -> None:
+    calls = []
+    monkeypatch.setattr(
+        probe.faulthandler, "dump_traceback_later", lambda *a, **k: calls.append("start")
+    )
+    monkeypatch.setattr(
+        probe.faulthandler, "cancel_dump_traceback_later", lambda: calls.append("cancel")
+    )
+
+    def failed(*args):
+        raise ValueError("controlled_generation_failure")
+
+    monkeypatch.setattr(probe, "producer_worker", failed)
+    with pytest.raises(ValueError, match="controlled_generation_failure"):
+        probe.observed_worker(SimpleNamespace(worker="generation"), probe.read(probe.PLAN_PATH))
+    assert calls == ["start", "cancel"]

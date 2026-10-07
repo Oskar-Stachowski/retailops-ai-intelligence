@@ -9,6 +9,7 @@ limit, campaign budget or source provenance is rewritten.
 from __future__ import annotations
 
 import argparse
+import faulthandler
 import hashlib
 import importlib
 import json
@@ -26,7 +27,7 @@ from typing import Any
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
-    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.2.json"
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.3.json"
 )
 
 
@@ -289,10 +290,10 @@ def require_remote() -> None:
 
 def validate_plan(plan: dict[str, Any]) -> None:
     """Do not let a smaller or final profile inherit this diagnostic's name."""
-    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.1.json")
+    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.2.json")
     previous = read(previous_path)
     previous_result = read(
-        PLAN_PATH.parents[1] / "evidence/09-18-development-capacity-second-run.json"
+        PLAN_PATH.parents[1] / "evidence/09-28-development-capacity-third-run.json"
     )
     revision_keys = {
         "version",
@@ -300,14 +301,23 @@ def validate_plan(plan: dict[str, Any]) -> None:
         "generation_entrypoint",
         "previous_attempt",
         "revision_reason",
+        "worker_stack_observation",
     }
     if {k: v for k, v in plan.items() if k not in revision_keys} != {
         k: v for k, v in previous.items() if k not in revision_keys
     }:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.2.0"
-        or plan["producer_commit"] != "16d34887b058b3dfb270af474f28242194a968ca"
+        plan["version"] != "ai09-development-capacity-probe-1.3.0"
+        or plan["producer_commit"] != "5182782321e9aca15f28c467071e92f268aafb85"
+        or plan["worker_stack_observation"]
+        != {
+            "phases": ["generation"],
+            "interval_seconds": 120,
+            "repeat": True,
+            "locals_dumped": False,
+            "periodic_observation_not_allocation_measurement": True,
+        }
         or plan["generation_entrypoint"] != "data.inventory.source_cohort_batch_v2.run"
         or plan["scope"] != "isolated_resource_diagnostic_on_previously_exposed_development_dates"
         or plan["expected_snapshot_schema_version"] != "1.1.0"
@@ -323,10 +333,10 @@ def validate_plan(plan: dict[str, Any]) -> None:
         or plan["previous_attempt"]
         != {
             "version": previous["version"],
-            "workflow_run": 37613368332,
+            "workflow_run": 37676033214,
             "plan_sha256": sha(previous_path),
             "resource_receipt_sha256": previous_result["resource_receipt_sha256"],
-            "reason": "wall_limit",
+            "reason": "tree_rss_limit",
             "previous_failure_preserved": True,
         }
         or plan["generation"]
@@ -500,6 +510,24 @@ def run(args: argparse.Namespace) -> None:  # noqa: PLR0915 - ordered probe evid
         raise SystemExit(1)
 
 
+def observed_worker(args: argparse.Namespace, plan: dict[str, Any]) -> dict[str, Any]:
+    """Observe only our generation worker stack; no locals or foreign process signals."""
+    observe = args.worker in plan["worker_stack_observation"]["phases"]
+    if observe:
+        faulthandler.dump_traceback_later(
+            plan["worker_stack_observation"]["interval_seconds"], repeat=True, file=sys.stderr
+        )
+    try:
+        return (
+            producer_worker(args, plan)
+            if args.worker in PHASES[:3]
+            else consumer_worker(args, plan)
+        )
+    finally:
+        if observe:
+            faulthandler.cancel_dump_traceback_later()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
@@ -510,11 +538,7 @@ def main() -> None:
         require_remote()
         plan = read(PLAN_PATH)
         validate_plan(plan)
-        result = (
-            producer_worker(args, plan)
-            if args.worker in PHASES[:3]
-            else consumer_worker(args, plan)
-        )
+        result = observed_worker(args, plan)
         peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         result["worker_peak_self_rss_bytes"] = int(
             peak if sys.platform == "darwin" else peak * 1024
