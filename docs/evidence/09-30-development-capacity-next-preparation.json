@@ -85,5 +85,56 @@
     "Exact producer Required CI completed with all required successes; protected merge and exact Source main acceptance",
     "This recipe/implementation protected publication and full exact AI main acceptance",
     "Fresh isolated owned runner output with existing resource preflight, no silent retry or shrinking canonical profile"
-  ]
+  ],
+  "first_capacity_head_full_required_ci": {
+    "run": 37690635892,
+    "head": "cf092d5ef7cf3f704dee3c9f17d7a589abecf3aa",
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs_read_and_total": 17,
+    "success": 15,
+    "failed": [
+      "tests (0)",
+      "required-result"
+    ],
+    "failed_job": 113031474652,
+    "test_results": {
+      "passed": 962,
+      "failed": 21,
+      "errors": 54,
+      "skipped": 30,
+      "seconds": 1483.69
+    },
+    "cause": "Old64KiB partition manifest metadata bound; complete inventory already exceeded this cap",
+    "original_result_preserved": true
+  },
+  "corrected_base_integration": {
+    "calibration_head": "b2e12a5d437699f069f7fa7e88598ae447c53fd8",
+    "main": "92c2a3cd91294250b8a8110c1330600ab494285f",
+    "main_required_ci": 37689831146,
+    "main_jobs_read_and_total": 17,
+    "main_success": 17,
+    "manifest_metadata_cap_bytes": 131072,
+    "complete_module_hash_inventory_retained": true,
+    "interrupted_backup_safe_child_diagnostics_included": true,
+    "post_integration_tests_passed": 48,
+    "post_integration_seconds": 2.27,
+    "mypy_source_files": 688,
+    "all_canonical_dimensions_and_limits_and_old_plan_bytes_unchanged": true,
+    "updated_exact_head_full_ci_required": true
+  },
+  "producer_protected_publication": {
+    "pr": 105,
+    "head": "6bc96e2f68eff777f4e45a26084ef65e144e482a",
+    "required_ci": 37692294899,
+    "jobs_read_and_total": 25,
+    "success": 21,
+    "expected_scoped_skips": 4,
+    "required_result": "success",
+    "protected_merge": "5c05445e8105c378107099785bae7355388ed7e7",
+    "exact_main_required_ci": 37698252427,
+    "exact_main_acceptance_pending": true,
+    "recipe_producer_pin_unchanged": true,
+    "canonical_attempt_dispatched": false
+  }
 }

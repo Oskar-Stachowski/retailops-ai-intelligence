@@ -28,6 +28,22 @@ Oryginalny wynik jest zachowany, ponowiono tylko niezaliczone zadania CI.
 Nie ponowiono canonical ani żadnej projektowej generacji. Aktualny source main
 `39d56447` ma pełny odbiór 30/30 success. AI07/08 pozostają zamknięte.
 
+Producent został następnie scalony przez chroniony
+[Source PR #105](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/105):
+head `6bc96e2f` ma zakończony Required CI `37692294899`, 25 odczytanych z 25
+jobs, 21 success, cztery zamierzone scoped skips i required-result success.
+Merge `5c05445e` jest na Source/main; jego dokładny odbiór `37698252427`
+pozostaje w toku. Przypięcie producenta `51827823` w recepturze nie zmienia się.
+Pierwszy head diagnostyki `cf092d5e`, CI `37690635892`, zakończył się failure
+z 15/17 success przez dotychczasowy limit manifestu 64 KiB. Zachowano
+21 failed, 962 passed, 54 errors, 30 skipped i koszt 1483.69 s tego sharda.
+Nowa gałąź zawiera poprawkę bounded metadata cap 128 KiB oraz diagnostykę
+przerwanego backupu z kalibracji `b2e12a5d` i zaakceptowany main `92c2a3cd`.
+48 testów diagnostyki, przerwania i limitu manifestu przeszło w 2.27 s;
+Mypy dla 688 plików przeszło. Nowy dokładny head wymaga pełnego CI,
+chronionego merge i odbioru AI/main przed dispatch. Pełna próba 1.3 nadal
+nie została uruchomiona, a poprzednie plany, limity i porażki są zachowane.
+
 [Prospektywna receptura 1.2](reference/ai09-development-capacity-v1.2.json)
 została uruchomiona na `16d34887` z zaakceptowanego main `b0e2de16`.
 [Trzeci pełny pomiar](evidence/09-28-development-capacity-third-run.json),
