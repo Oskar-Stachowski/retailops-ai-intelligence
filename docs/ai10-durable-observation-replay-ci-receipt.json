@@ -1,0 +1,1085 @@
+{
+  "ai10_open_drafts_after_increment": 14,
+  "base_branch": "ai/10-observation-replay",
+  "base_commit": "873116daf88a50c84cb4e7fe22c93a05907acb1a",
+  "branch": "ai/10-durable-observation-replay",
+  "ci_artifacts_verified": [
+    {
+      "artifact_id": 11329241265,
+      "github_metadata": {
+        "archive_download_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11329241265/zip",
+        "created_at": "2026-10-05T06:30:49Z",
+        "digest": "sha256:1ecadb059309c955f0f77ddb3c0c754818454989c40c8a1bc47ff5f079849498",
+        "expired": false,
+        "expires_at": "2026-10-19T06:30:49Z",
+        "id": 11329241265,
+        "name": "ai10-durable-observation-replay",
+        "size_in_bytes": 1907,
+        "updated_at": "2026-10-05T06:30:49Z",
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11329241265",
+        "workflow_run": {
+          "head_branch": "ai/10-durable-observation-replay",
+          "head_repository_id": 1391921598,
+          "head_sha": "571b174018937dad7b5b3b14ba44b4d6f4397c76",
+          "id": 37272703816,
+          "repository_id": 1391921598
+        }
+      },
+      "records": [
+        {
+          "bytes": 870,
+          "entry": "ai10-durable-observation-replay.json",
+          "local_file": "11329241265-0.json",
+          "sha256": "2bdb619deeb19a584aebd365e19161ab377e0b0d23a544a0d8e21c417539e535"
+        },
+        {
+          "bytes": 5008,
+          "entry": "ai10-durable-observation-replay-tests.xml",
+          "local_file": "11329241265-1.xml",
+          "sha256": "1ad44397b8d3ac711702d8103ddbf6f631d4a7f8c54f9f98b0e8ae4b7b51b780"
+        }
+      ],
+      "zip_sha256": "1ecadb059309c955f0f77ddb3c0c754818454989c40c8a1bc47ff5f079849498"
+    },
+    {
+      "artifact_id": 11329270621,
+      "github_metadata": {
+        "archive_download_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11329270621/zip",
+        "created_at": "2026-10-05T06:30:44Z",
+        "digest": "sha256:b3c6fe9be66f434a1d25ff89a1d57fa1fd41ecda2dc9c44b71cd337d832cbada",
+        "expired": false,
+        "expires_at": "2026-10-19T06:30:43Z",
+        "id": 11329270621,
+        "name": "ai10-durable-observation-replay",
+        "size_in_bytes": 1902,
+        "updated_at": "2026-10-05T06:30:44Z",
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11329270621",
+        "workflow_run": {
+          "head_branch": "ai/10-durable-observation-replay",
+          "head_repository_id": 1391921598,
+          "head_sha": "571b174018937dad7b5b3b14ba44b4d6f4397c76",
+          "id": 37272699953,
+          "repository_id": 1391921598
+        }
+      },
+      "records": [
+        {
+          "bytes": 5007,
+          "entry": "ai10-durable-observation-replay-tests.xml",
+          "local_file": "11329270621-0.xml",
+          "sha256": "72994378a5d5ff80bb2fb7bc89d92a7d573d6d4ccf4130ab25180f322ee464a2"
+        },
+        {
+          "bytes": 870,
+          "entry": "ai10-durable-observation-replay.json",
+          "local_file": "11329270621-1.json",
+          "sha256": "2bdb619deeb19a584aebd365e19161ab377e0b0d23a544a0d8e21c417539e535"
+        }
+      ],
+      "zip_sha256": "b3c6fe9be66f434a1d25ff89a1d57fa1fd41ecda2dc9c44b71cd337d832cbada"
+    },
+    {
+      "artifact_id": 11330095784,
+      "github_metadata": {
+        "archive_download_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11330095784/zip",
+        "created_at": "2026-10-05T06:57:32Z",
+        "digest": "sha256:653a59476aec743255b88166313f99e933513e0c77ad522a86975201073aa4ad",
+        "expired": false,
+        "expires_at": "2026-10-19T06:57:31Z",
+        "id": 11330095784,
+        "name": "ai10-observation-replay",
+        "size_in_bytes": 891,
+        "updated_at": "2026-10-05T06:57:32Z",
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11330095784",
+        "workflow_run": {
+          "head_branch": "ai/10-durable-observation-replay",
+          "head_repository_id": 1391921598,
+          "head_sha": "571b174018937dad7b5b3b14ba44b4d6f4397c76",
+          "id": 37272699953,
+          "repository_id": 1391921598
+        }
+      },
+      "records": [
+        {
+          "bytes": 1844,
+          "entry": "ai10-observation-replay.json",
+          "local_file": "11330095784-0.json",
+          "sha256": "e5e583e030b330856f1dd3458873a8f42d4dbd53451082e2b088ca78e617a24e"
+        }
+      ],
+      "zip_sha256": "653a59476aec743255b88166313f99e933513e0c77ad522a86975201073aa4ad"
+    },
+    {
+      "artifact_id": 11331314034,
+      "github_metadata": {
+        "archive_download_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11331314034/zip",
+        "created_at": "2026-10-05T07:46:47Z",
+        "digest": "sha256:f6610a11ed149c7b5f91c106196c38fe36fbe730a0683d0cbc5888612d91fd48",
+        "expired": false,
+        "expires_at": "2026-10-19T07:46:46Z",
+        "id": 11331314034,
+        "name": "ai10-observation-replay",
+        "size_in_bytes": 891,
+        "updated_at": "2026-10-05T07:46:47Z",
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11331314034",
+        "workflow_run": {
+          "head_branch": "ai/10-durable-observation-replay",
+          "head_repository_id": 1391921598,
+          "head_sha": "571b174018937dad7b5b3b14ba44b4d6f4397c76",
+          "id": 37272703816,
+          "repository_id": 1391921598
+        }
+      },
+      "records": [
+        {
+          "bytes": 1844,
+          "entry": "ai10-observation-replay.json",
+          "local_file": "11331314034-0.json",
+          "sha256": "e5e583e030b330856f1dd3458873a8f42d4dbd53451082e2b088ca78e617a24e"
+        }
+      ],
+      "zip_sha256": "f6610a11ed149c7b5f91c106196c38fe36fbe730a0683d0cbc5888612d91fd48"
+    }
+  ],
+  "ci_existing_acceptance_preserved": {
+    "compose_mlflow_lifecycle_queue_input_publish_read_catalog_evals": "passed",
+    "contracts_and_byte_pins": "passed",
+    "core_uv_lock_unchanged": true,
+    "detached_packaged_imports": "passed",
+    "docs_and_repository_guard": "passed",
+    "forecast_pipeline_and_acceptance": "passed; original not_ready and accepted exceptions preserved",
+    "models_qualified_or_promoted_by_this_increment": false,
+    "mypy_files": 349,
+    "native_owner_mypy_files": 10,
+    "postgres_backups_mlflow_artifact_restore_recovery_cleanup": "passed",
+    "ruff_and_format_files": 591,
+    "source_snapshot_and_curated_regression": "passed",
+    "workflow_negative_guards": 27
+  },
+  "ci_offline_replay_report": {
+    "as_of": [
+      {
+        "observations": 0,
+        "origin": "2026-07-02T23:59:59.999999+00:00",
+        "units": 0
+      },
+      {
+        "observations": 799,
+        "origin": "2026-07-17T00:00:00+00:00",
+        "units": 5496
+      },
+      {
+        "observations": 1612,
+        "origin": "2026-08-02T00:00:00+00:00",
+        "units": 11047
+      }
+    ],
+    "broker_ack_performed": false,
+    "business_dedup_and_correction_equal": true,
+    "capture_id": "observation-capture-sha256-da8ab44e60f49ffd96b44fb92e0eaf528480a0c1a7439dc3b96de45e3b52b4d7",
+    "captured_native_versions": 806,
+    "captured_next_offsets": [
+      {
+        "next_offset": 260,
+        "partition": 0
+      },
+      {
+        "next_offset": 263,
+        "partition": 1
+      },
+      {
+        "next_offset": 283,
+        "partition": 2
+      }
+    ],
+    "curated_as_of_equal": true,
+    "final_capture_id": "observation-capture-sha256-e89053311dc23816ac2e1549a7c23f3d93578459ac33ecedfa1ad01c4b64d8e9",
+    "final_capture_sha256": "7c5f8c5656a81b70cd52c7f4dddedb279ba20d2f466ff4db8be3f26a6d3d0dc0",
+    "final_next_offsets": [
+      {
+        "next_offset": 550,
+        "partition": 0
+      },
+      {
+        "next_offset": 533,
+        "partition": 1
+      },
+      {
+        "next_offset": 531,
+        "partition": 2
+      }
+    ],
+    "full_43_table_handoff": false,
+    "native_versions": 1612,
+    "overlap_full_replay_equal": true,
+    "partitions": 3,
+    "scope": "offline daily_demand_versions receiver mechanics; transport and correction are explicit fixtures",
+    "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+    "source_live_capture_supported": false,
+    "source_snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+    "source_snapshot_version": "1.0.0",
+    "status": "passed",
+    "units_after_correction": 11050,
+    "units_before_correction": 11047
+  },
+  "ci_offline_report_sha256": "e5e583e030b330856f1dd3458873a8f42d4dbd53451082e2b088ca78e617a24e",
+  "ci_previous_final_head_attempt": {
+    "aggregate_conclusion": "failure",
+    "aggregate_job": 111655258552,
+    "attempt": 1,
+    "broad_seconds": 2325.98,
+    "broad_tests_failed": 0,
+    "broad_tests_passed": 1874,
+    "broad_tests_skipped": 31,
+    "checks_conclusion": "cancelled",
+    "checks_job": 111643017145,
+    "code_failure": false,
+    "connector_retry_forbidden": true,
+    "existing_git_auth_retry_http_status": 201,
+    "persistence_gate": "success",
+    "postgres_gate": "success",
+    "previously_successful_jobs_reexecuted": false,
+    "reason": "45-minute checks limit interrupted final in-memory observation replay drill after passing pytest/contracts/package",
+    "retry": "only cancelled checks and dependents; exact same head; no gate bypass or timeout increase",
+    "retry_final_conclusion": "success",
+    "secrets_gate": "success"
+  },
+  "ci_report_sha256": "2bdb619deeb19a584aebd365e19161ab377e0b0d23a544a0d8e21c417539e535",
+  "ci_sql_capture_report": {
+    "broker_ack_performed": false,
+    "captured_native_versions": 806,
+    "database": "actual isolated PostgreSQL 16",
+    "final_capture_id": "observation-capture-sha256-a3f7a51da4a1e1a58c251b1decab30ef8315a44868f9d570ee154e61fd004845",
+    "final_capture_sha256": "afbe4df1ca369aafe2bd803dc11081b83dc8fc93da234ad4cca8c50ea1a3923e",
+    "final_next_offsets": [
+      548,
+      533,
+      531
+    ],
+    "full_43_table_handoff": false,
+    "native_versions": 1612,
+    "prefix_capture_id": "observation-capture-sha256-da8ab44e60f49ffd96b44fb92e0eaf528480a0c1a7439dc3b96de45e3b52b4d7",
+    "scope": "AI receiver projection of native daily_demand_versions; transport is fixture",
+    "source_live_capture_supported": false,
+    "source_snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+    "sql_capture_overlap_full_equal": true,
+    "status": "passed"
+  },
+  "closed_at_utc": "2026-10-05T07:58:02.044261+00:00",
+  "deployed": false,
+  "detached_wheel_smoke": {
+    "modules_loaded_from_detached_wheel": [
+      "retailops_ai.source_replay.store",
+      "retailops_ai.source_replay.wire",
+      "retailops_ai.source_replay.history",
+      "retailops_ai.migrations.versions.0021_observation_replay"
+    ],
+    "revision": "0021_observation_replay",
+    "scope": "detached wheel import/runtime smoke, no SQL or broker execution",
+    "status": "passed",
+    "transport_sha256": "6f7e919378a6f9b1e2f5a66f9e2e6516903784211c7a593d357ae5bb3eca2338"
+  },
+  "draft_pr": {
+    "draft": true,
+    "merged": false,
+    "number": 25,
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/25"
+  },
+  "head": "571b174018937dad7b5b3b14ba44b4d6f4397c76",
+  "implementation": {
+    "ack_callback_after_commit": true,
+    "atomic_fact_raw_receipt_quarantine_checkpoint": true,
+    "epoch_fencing": true,
+    "full_43_table_handoff": false,
+    "migration": "0021_observation_replay",
+    "new_ai_tables": 6,
+    "new_protocol_actual_broker_test": false,
+    "raw_transport_fingerprint": true,
+    "repeatable_read_ai_projection_capture": true,
+    "retention_gap_log_rewind_and_broker_ahead_stop": true,
+    "source_live_sql_capture": false
+  },
+  "increment": 11,
+  "increment_status": "complete",
+  "local_checks": {
+    "docs_workflow": "passed",
+    "format": "passed",
+    "mypy_files": 349,
+    "native_owner_mypy_files": 10,
+    "postgres_docker_only_tests_pending": 0,
+    "ruff": "passed",
+    "targeted_distinct_tests_passed": 125
+  },
+  "merged": false,
+  "model_owner_status_read_only": {
+    "AI07": {
+      "head": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+      "local_published_rows": 1232,
+      "local_quality_gates": "56/56",
+      "status": "local acceptance complete; pending_required_ci; publication awaits owner consent"
+    },
+    "AI08": {
+      "frozen_final_memberships": 9296,
+      "head": "633ccf80937f65ae10334cadb75ff0c77aba105c",
+      "status": "not_ready; worker/HTTP/priority/backup passed; final orchestration/qualification/open owner approval"
+    },
+    "sessions_modified": false
+  },
+  "postgres_tests": {
+    "actual_sigkill_before_commit_and_after_commit_before_ack": "passed",
+    "connection_termination_before_ack": "passed",
+    "counting": "same 30 tests in PR and push; not summed",
+    "failed": 0,
+    "native_fixture_sql_capture_overlap_full_equal": "passed",
+    "nonempty_six_table_pg_dump_restore": "passed",
+    "passed": 30,
+    "pr_seconds": 23.03,
+    "push_seconds": 17.23,
+    "skipped": 0
+  },
+  "pr_push_offline_report_byte_parity": true,
+  "pr_push_sql_report_byte_parity": true,
+  "previous_attempts": [
+    {
+      "failure": "test expected observation_availability_regression, correct reason is observation_history_availability_regression",
+      "fix": "expected test reason corrected; production code unchanged",
+      "head": "d5f381b6c70a4b0721182a005d1a1cf30cb5f138",
+      "postgres_failed": 1,
+      "postgres_job": 111642458602,
+      "postgres_passed": 29,
+      "postgres_seconds": 22.55,
+      "pr_run_id": 37272582430,
+      "push_run_id": 37272553186
+    }
+  ],
+  "protected_checkouts": {
+    "ai07_ai08_sessions_touched": false,
+    "ai_main": {
+      "branch": "ai/11-completion",
+      "head": "abf3f69a6a78c444b5a8a910fef8b3b43ba047a9",
+      "tracked_files_changed": false
+    },
+    "local_docker_started": false,
+    "owned_worktree_clean": true,
+    "source_files_edited": false,
+    "source_main": {
+      "branch": "ai/16a-infrastructure-contracts",
+      "clean": true,
+      "head": "599735a5fd13328e05f6100a07f644f4676e1ced"
+    }
+  },
+  "remaining": [
+    "Source consistent SQL capture and complete table scope with trusted offset handoff",
+    "Real observation broker adapter/topology/authentication/ACK integration with this SQL receiver",
+    "Qualified final AI07 and AI08 lifecycle and serving",
+    "Anomaly/model-stockout intelligence.v2 projections and scoped Source API/UI",
+    "102-day actual forecast/anomaly/stockout temporal E2E"
+  ],
+  "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+  "required_ci": {
+    "aggregate": "success",
+    "checks": "success",
+    "conclusion": "success",
+    "expected_head": "571b174018937dad7b5b3b14ba44b4d6f4397c76",
+    "persistence": "success",
+    "pr_attempt": 2,
+    "pr_jobs": [
+      {
+        "conclusion": "success",
+        "id": 111656630454,
+        "logs_url": null,
+        "name": "checks",
+        "run_id": 37272703816,
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Verify workflow contract before broad checks",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make bootstrap check",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Preserve bounded observation replay evidence",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 13,
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "conclusion": "success",
+        "id": 111656631640,
+        "logs_url": null,
+        "name": "persistence",
+        "run_id": 37272703816,
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make bootstrap compose-smoke",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make mlflow-store-smoke",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make model-lifecycle-smoke",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make lifecycle-store-smoke",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make forecast-queue-smoke",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make forecast-input-store-smoke",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make forecast-publication-smoke",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make forecast-read-smoke",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make model-catalog-smoke",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make evaluations-smoke",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Verify AI10 forecast contracts and transactional outbox",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Accept v12 registry, jobs, publication, metadata, backup and recovery",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 29,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 30,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 31,
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "conclusion": "success",
+        "id": 111656632263,
+        "logs_url": null,
+        "name": "secrets",
+        "run_id": 37272703816,
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 7,
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "conclusion": "success",
+        "id": 111656672473,
+        "logs_url": null,
+        "name": "observation-replay",
+        "run_id": 37272703816,
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Pull immutable PostgreSQL image",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Accept durable observation replay on actual PostgreSQL",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Preserve SQL capture and transaction evidence",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 13,
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "conclusion": "success",
+        "id": 111664512025,
+        "logs_url": null,
+        "name": "required-result",
+        "run_id": 37272703816,
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Require every gate",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 3,
+            "status": "completed"
+          }
+        ]
+      }
+    ],
+    "pr_run": {
+      "conclusion": "success",
+      "created_at": "2026-10-05T06:29:47Z",
+      "event": "pull_request",
+      "head_sha": "571b174018937dad7b5b3b14ba44b4d6f4397c76",
+      "id": 37272703816,
+      "run_started_at": "2026-10-05T07:20:05Z",
+      "status": "completed",
+      "updated_at": "2026-10-05T07:46:56Z"
+    },
+    "pr_successful_jobs": 5,
+    "pr_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37272703816",
+    "push_conclusion": "success",
+    "push_jobs": [
+      {
+        "conclusion": "success",
+        "id": 111642998807,
+        "logs_url": null,
+        "name": "observation-replay",
+        "run_id": 37272699953,
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Pull immutable PostgreSQL image",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Accept durable observation replay on actual PostgreSQL",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Preserve SQL capture and transaction evidence",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 13,
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "conclusion": "success",
+        "id": 111642999022,
+        "logs_url": null,
+        "name": "secrets",
+        "run_id": 37272699953,
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 7,
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "conclusion": "success",
+        "id": 111642999039,
+        "logs_url": null,
+        "name": "checks",
+        "run_id": 37272699953,
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Verify workflow contract before broad checks",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make bootstrap check",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Preserve bounded observation replay evidence",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 13,
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "conclusion": "success",
+        "id": 111642999094,
+        "logs_url": null,
+        "name": "persistence",
+        "run_id": 37272699953,
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make bootstrap compose-smoke",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make mlflow-store-smoke",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make model-lifecycle-smoke",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make lifecycle-store-smoke",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make forecast-queue-smoke",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make forecast-input-store-smoke",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make forecast-publication-smoke",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make forecast-read-smoke",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make model-catalog-smoke",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run make evaluations-smoke",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Verify AI10 forecast contracts and transactional outbox",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Accept v12 registry, jobs, publication, metadata, backup and recovery",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+            "number": 29,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "number": 30,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 31,
+            "status": "completed"
+          }
+        ]
+      },
+      {
+        "conclusion": "success",
+        "id": 111651427649,
+        "logs_url": null,
+        "name": "required-result",
+        "run_id": 37272699953,
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Require every gate",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 3,
+            "status": "completed"
+          }
+        ]
+      }
+    ],
+    "push_run": {
+      "conclusion": "success",
+      "created_at": "2026-10-05T06:29:44Z",
+      "event": "push",
+      "head_sha": "571b174018937dad7b5b3b14ba44b4d6f4397c76",
+      "id": 37272699953,
+      "run_started_at": "2026-10-05T06:29:44Z",
+      "status": "completed",
+      "updated_at": "2026-10-05T07:03:12Z"
+    },
+    "push_run_id": 37272699953,
+    "push_status": "completed",
+    "push_successful_jobs": 5,
+    "push_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37272699953",
+    "real_postgres_gate": "success",
+    "retry_checks_job": 111656630454,
+    "run_id": 37272703816,
+    "secrets": "success",
+    "status": "completed"
+  },
+  "status": "passed",
+  "technical_ci_merge": {
+    "parents": [
+      "873116daf88a50c84cb4e7fe22c93a05907acb1a",
+      "571b174018937dad7b5b3b14ba44b4d6f4397c76"
+    ],
+    "same_tree_as_final_head": true,
+    "sha": "1c53df5a9a56e79cf1eeef4948496ca4107867a6",
+    "tree": "564aa3a61f948e0f9451431b77cf8f6b929e36d8"
+  },
+  "test_counts": {
+    "counting_rule": "1874 broad + 30 mandatory actual PostgreSQL observation + 1 mandatory actual PostgreSQL outbox = 1905; no sum across triggers, reruns or targeted subsets",
+    "distinct_tests_executed_passed": 1905,
+    "distinct_tests_failed": 0,
+    "docker_only_cases_covered_separately": 31,
+    "new_distinct_tests": 63,
+    "nonduplicated_count": true,
+    "pr_broad_failed": 0,
+    "pr_broad_passed": 1874,
+    "pr_broad_seconds": 1397.55,
+    "pr_broad_skipped": 31,
+    "pr_retry_complete": true,
+    "push_broad_failed": 0,
+    "push_broad_passed": 1874,
+    "push_broad_seconds": 1438.68,
+    "push_broad_skipped": 31,
+    "real_observation_passed": 30,
+    "real_outbox_passed": 1,
+    "real_outbox_seconds": 13.51,
+    "unexecuted_skips_across_required_jobs": 0
+  },
+  "tree": "564aa3a61f948e0f9451431b77cf8f6b929e36d8",
+  "version": "ai10-durable-observation-replay-receipt-1.0",
+  "whole_ai10_status": "in_progress"
+}

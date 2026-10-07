@@ -285,15 +285,23 @@ def test_worker_lost_lease_never_writes_failure_or_result(
     assert not queue.completed and not queue.failed
 
 
-def test_wrong_runtime_image_publishes_nothing(monkeypatch, claim, matching_fixture_runtime):
+@pytest.mark.parametrize("wrong_pin", ["image", "dependencies"])
+def test_wrong_runtime_pin_publishes_nothing(
+    monkeypatch, claim, matching_fixture_runtime, wrong_pin
+):
     queue = Queue()
 
     def compute(*args, **kwargs):
-        pytest.fail("wrong image entered computation")
+        pytest.fail("wrong runtime pin entered computation")
 
     monkeypatch.setattr(worker, "supervise", compute)
+    image_digest = claim.run.image_digest
+    if wrong_pin == "image":
+        image_digest = "sha256:" + "b" * 64
+    else:
+        monkeypatch.setattr(worker, "resource_bytes", lambda _: b"mismatched dependency lock")
     assert (
-        worker.run_forecast_attempt(queue, claim, compose=False, image_digest="sha256:" + "b" * 64)
+        worker.run_forecast_attempt(queue, claim, compose=False, image_digest=image_digest)
         == "failed"
     )
     assert not queue.completed and len(queue.failed) == 1

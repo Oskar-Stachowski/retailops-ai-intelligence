@@ -13,12 +13,16 @@ from retailops_ai.forecast_jobs.v12_publication import (
     verify_publication,
 )
 from retailops_ai.forecast_jobs.v12_queue import PostgresV12Queue, record
+from retailops_ai.intelligence_events.outbox import enqueue_forecasts
 from retailops_ai.model_lifecycle.v12_registry import MLflowV12Registry
 
 
 class PostgresV12Publisher:
-    def __init__(self, queue: PostgresV12Queue, registry: MLflowV12Registry) -> None:
+    def __init__(
+        self, queue: PostgresV12Queue, registry: MLflowV12Registry, *, events_enabled: bool = False
+    ) -> None:
         self.queue, self.registry = queue, registry
+        self.events_enabled = events_enabled
 
     def publish(self, run_id: str, principal: Principal) -> V12Publication:
         if "pipeline" not in principal.roles or "forecast:run" not in principal.capabilities:
@@ -56,6 +60,8 @@ class PostgresV12Publisher:
             if existing is not None:
                 result = V12Publication.model_validate_json(json.dumps(existing))
                 verify_publication(result, run, receipt)
+                if self.events_enabled:
+                    enqueue_forecasts(connection, result, run, receipt)
                 return result
             # The same model lock used by lifecycle prevents a concurrent decision across HTTP checks.
             self.queue._guard(connection, receipt.release)
@@ -90,4 +96,6 @@ class PostgresV12Publisher:
                     document=result.model_dump_json(),
                 ),
             )
+            if self.events_enabled:
+                enqueue_forecasts(connection, result, run, receipt)
             return result

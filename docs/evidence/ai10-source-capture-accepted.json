@@ -1,0 +1,52 @@
+{
+  "artifact": {
+    "id": 11472257421,
+    "size_bytes": 3608,
+    "zip_sha256": "37d33b666138fdd9ada415581741e4eceff33aabdf75286c8241f54aa51140ea"
+  },
+  "reports": {
+    "receiver": {
+      "acceptance_inputs": "explicit generated observation fixtures",
+      "actual_AI_SQL_or_ACK": false,
+      "actual_Source_SQL_TLS_SCRAM": true,
+      "capture_id": "observation-capture-sha256-266834e92dc8810e425cb8341e7efa1f315e681e661dc186a1a8bf763661a1db",
+      "capture_sha256": "f77eab3b7afb28ef7e439b4f31df28b36349b9e10ff8e28f29a02f1ee7cc1792",
+      "captured_receipts": 3,
+      "captured_rows": 2,
+      "final_receipts": 4,
+      "final_rows": 3,
+      "full_43_table_snapshot": false,
+      "full_equals_capture_overlap": true,
+      "model_qualification": false,
+      "partitions": 3,
+      "quantity_after_correction": 7,
+      "quantity_before_correction": 4,
+      "receiver_commit": "5f961f70d05b07e9ededc8c666afd1d8355aa532",
+      "scope": "original_Source_SQL_broker_capture_to_independent_AI_restore_and_overlap",
+      "source_commit": "face6db68430d54e5217f5bc78e13f3012183412",
+      "status": "passed",
+      "workflow_run_id": 37599182565
+    },
+    "source": {
+      "acceptance_inputs": "explicit generated observation fixtures",
+      "actual_source_sql_tls_scram_broker": true,
+      "boundaries": [
+        0,
+        3,
+        0
+      ],
+      "capture_id": "observation-capture-sha256-266834e92dc8810e425cb8341e7efa1f315e681e661dc186a1a8bf763661a1db",
+      "full_43_table_snapshot": false,
+      "later_replay_receipts": 4,
+      "model_qualification": false,
+      "no_broker_commits_or_offset_stores_by_capture_reader": true,
+      "publisher_receipts_used_as_complete_prefix": false,
+      "receipts": 3,
+      "rows": 2,
+      "scope": "daily_demand_versions_only",
+      "status": "passed"
+    }
+  },
+  "status": "passed",
+  "workflow_run_id": 37599182565
+}

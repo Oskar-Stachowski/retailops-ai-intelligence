@@ -1,0 +1,134 @@
+{
+  "$defs": {
+    "ObservationVersion": {
+      "additionalProperties": false,
+      "properties": {
+        "available_at": {
+          "format": "date-time",
+          "title": "Available At",
+          "type": "string"
+        },
+        "business_date": {
+          "format": "date",
+          "title": "Business Date",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online",
+            "marketplace",
+            "wholesale"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "history_policy_version": {
+          "const": "observed-quantity-history-1.0.0",
+          "title": "History Policy Version",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "observation_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Observation Id",
+          "type": "string"
+        },
+        "observation_status": {
+          "enum": [
+            "observed_positive",
+            "observed_zero",
+            "closed",
+            "missing"
+          ],
+          "title": "Observation Status",
+          "type": "string"
+        },
+        "observed_units": {
+          "anyOf": [
+            {
+              "maximum": 9223372036854775807,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed Units"
+        },
+        "product_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "version": {
+          "maximum": 9223372036854775807,
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "observation_id",
+        "business_date",
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "version",
+        "observed_units",
+        "observation_status",
+        "available_at",
+        "history_policy_version"
+      ],
+      "title": "ObservationVersion",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "title": "Event Id",
+      "type": "string"
+    },
+    "fact": {
+      "$ref": "#/$defs/ObservationVersion"
+    },
+    "source_authority_id": {
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "title": "Source Authority Id",
+      "type": "string"
+    },
+    "table": {
+      "const": "daily_demand_versions",
+      "default": "daily_demand_versions",
+      "title": "Table",
+      "type": "string"
+    },
+    "version": {
+      "const": "source-observation-event-1.0",
+      "default": "source-observation-event-1.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_authority_id",
+    "event_id",
+    "fact"
+  ],
+  "title": "Envelope",
+  "type": "object"
+}

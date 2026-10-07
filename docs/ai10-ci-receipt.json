@@ -1,0 +1,290 @@
+{
+  "schema_version": "1.0",
+  "observed_at_utc": "2026-10-03 21:32:08 UTC",
+  "stage": "AI 10",
+  "stage_status": "in_progress",
+  "scope": "First forecast v2 contract/outbox/projection/scoped-read increment; not three-model E2E or new ML qualification.",
+  "repositories": [
+    {
+      "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+      "commit": "8406ff2c6ed416773ccba2283527470f79c5b8d5",
+      "base_commit": "f4ae14fe6588b91506383a709b5a0185208a4ea6",
+      "branch": "ai/10-intelligence-contract",
+      "draft_pr": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/16",
+      "required_ci": {
+        "run_id": 37153392494,
+        "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37153392494",
+        "jobs": [
+          {
+            "id": 111291760249,
+            "name": "checks",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111291760374,
+            "name": "persistence",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111291760439,
+            "name": "secrets",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111297537704,
+            "name": "required-result",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ],
+        "status": "completed",
+        "conclusion": "success"
+      }
+    },
+    {
+      "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+      "commit": "a6f706782295c702574e6e6f1efac31b50a35801",
+      "base_commit": "ce7a93f6410b06f7c4d4e33be2212a0d65734243",
+      "branch": "ai/10-intelligence-projection",
+      "draft_pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/84",
+      "required_ci": {
+        "run_id": 37153842595,
+        "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37153842595",
+        "jobs": [
+          {
+            "id": 111293037910,
+            "name": "Required CI contract tests",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293038160,
+            "name": "Detect changed areas",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072004,
+            "name": "Repository diff hygiene",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072484,
+            "name": "frontend-gate / Frontend tests and lint",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072515,
+            "name": "data-gate / AI 03 full cross-repo gate",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072534,
+            "name": "data-gate / Synthetic data quality gate",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072542,
+            "name": "api-gate / API integration tests",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072590,
+            "name": "data-gate / AI 06 full cross-repo gate",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072640,
+            "name": "terraform-validation-gate / Terraform fmt, init and validate",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072657,
+            "name": "security-gate / Filesystem vulnerability scan",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072681,
+            "name": "security-gate / Secret scanning with Gitleaks",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072698,
+            "name": "docker-gate / Validate Docker Compose config",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072704,
+            "name": "security-gate / Backend image vulnerability scan",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072720,
+            "name": "iac-security-gate / Checkov IaC security report",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072740,
+            "name": "security-gate / Python dependency audit",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072760,
+            "name": "iac-security-gate / TFLint IaC quality gate",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072764,
+            "name": "security-gate / Frontend image vulnerability scan",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072786,
+            "name": "security-gate / Frontend dependency audit",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293072801,
+            "name": "kubernetes-gate / Kustomize, schema and policy gates",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293111268,
+            "name": "docker-gate / Build full stack and run smoke tests",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293124036,
+            "name": "frontend-gate / Build frontend application",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293183628,
+            "name": "frontend-gate / Build frontend Docker image",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293199784,
+            "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111293274498,
+            "name": "security-gate / Security evidence summary",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111295639870,
+            "name": "api-gate / API Docker image build",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "id": 111295735368,
+            "name": "required-result",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ],
+        "status": "completed",
+        "conclusion": "success"
+      }
+    }
+  ],
+  "evidence": {
+    "retailops_api": {
+      "passed": 771,
+      "warnings": 1,
+      "coverage_percent": 85.4,
+      "seconds": 754.87,
+      "job_id": 111293072542
+    },
+    "ai10_contract_and_delivery_guard": {
+      "passed": 13,
+      "seconds": 12.22,
+      "job_id": 111291760374
+    },
+    "ai10_postgres_outbox": {
+      "passed": 1,
+      "seconds": 12.89,
+      "require_actual_database": true,
+      "job_id": 111291760374
+    },
+    "ai_persistence": {
+      "all_steps": "success",
+      "backup_restore": "Both databases, sequences and artifact bytes restored; recovery passed.",
+      "job_id": 111291760374
+    },
+    "source_data_gate": {
+      "ai_smoke_repeats_passed": 2,
+      "ai_temporal_smoke_repeats_passed": 2,
+      "job_id": 111293072590
+    },
+    "rollback": {
+      "compose": "success",
+      "kubernetes": "success",
+      "schema_and_data": "Expanded schema, legacy data and mechanics forecast result/inbox retained across both application versions."
+    },
+    "ai_regression": {
+      "passed": 1744,
+      "skipped": 1,
+      "seconds": 1716,
+      "job_id": 111291760249,
+      "skip_reason": "PostgreSQL outbox drill is explicitly required and passed separately in persistence."
+    }
+  },
+  "integrity": {
+    "frozen_ml_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "forecast_schema_sha256": "17e9a9c05f6f39101e6a00dbfed89203800dd388818ee7b0b9cf7a87c05af511",
+    "registry_sha256": "124a6589f6264e595709b240b7f7dd2d2321119b196538296deb2be44cf8526b",
+    "source_contract_copies": "Byte-identical; upstream pin matches the AI commit.",
+    "main_checkouts_unchanged": [
+      {
+        "repository": "retailops-ai-intelligence",
+        "branch": "ai/11-completion",
+        "commit": "abf3f69a6a78c444b5a8a910fef8b3b43ba047a9"
+      },
+      {
+        "repository": "retailops-cloud-native-platform",
+        "branch": "ai/16a-infrastructure-contracts",
+        "commit": "599735a5fd13328e05f6100a07f644f4676e1ced"
+      }
+    ],
+    "owned_worktrees_clean": true,
+    "local_container_final_inventory": "Unavailable: Docker daemon was not running. It was not restarted."
+  },
+  "remaining": [
+    "Approved public outputs and schemas AI 07/08",
+    "Typed upstream REST and immutable full-grain export",
+    "Snapshot/log handoff and corrections",
+    "Approved head selection and checkpoint/fencing telemetry",
+    "Shared broker overlay and transport authentication",
+    "Existing UI with three real ML outputs and explicit recommendation fixture",
+    "Three-model temporal E2E on the 102-day profile"
+  ]
+}
