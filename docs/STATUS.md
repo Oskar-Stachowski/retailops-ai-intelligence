@@ -21,6 +21,11 @@ z protected merge i zielonym Required CI dokładnych main.
 Wcześniejsze wpisy opisują historię.
 
 **2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**
+[PR #33](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/33)
+jest scalony jako `a128bb38` po pełnym zielonym CI jego head `be3b264`.
+[Required CI dokładnego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37635615858)
+jest zielony, z kompletem 15 wymaganych jobów. PR #34 zachował komplet bramek i zaliczył pełny odbiór swojego main
+`89b64d2`; AI 07–08 pozostają zamknięte.
 [PR #29](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/29)
 ma komplet 14 zielonych jobów dla `4a0a6b5` i został scalony jako `5216e31`.
 [CI dokładnego merge/main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37592860960)
@@ -96,7 +101,11 @@ regresji, osobne 16 kontroli parity kohort oraz 3 kontrole known plans na seedac
 42/137/2026. Pełny [Required CI dokładnego head](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37623701164)
 jest zielony; zwykły chroniony merge opublikował `cbcac6eb` na source `main`.
 [Required CI dokładnego source main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37629010997)
-jeszcze trwa. Pięć kontrolnych par daje −14.81% alokacji Python podczas kopii
+zakończył się pojedynczą porażką testowego odczytu koordynatora Kafka;
+742 kontrole API zaliczono. [Source PR #103](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/103)
+na `16d34887` dodaje ograniczoną poprawkę tego odczytu i rzeczywistą obsługę
+source2.8 z known plans oraz wymaga pełnego CI i odbioru swojego main.
+Pięć kontrolnych par daje −14.81% alokacji Python podczas kopii
 i −89.62% CPU projekcji dziennych snapshotów, z identycznymi wynikami.
 To pomiary komponentów; pełny RSS i koszt pipeline na nowym producencie nadal
 wymagają odbioru. Wykorzystanie istniejącej szybkiej ścieżki AI08 sprawdzono
@@ -121,6 +130,24 @@ Największa niewiadoma to zasoby i czas canonical `ai-training`; kontrolne
 | Robustness, segmenty, niepewność i koszty | 3–5 h |
 | MLflow/lifecycle oraz trzy karty i raporty | 3–5 h |
 | Publikacja i odbiór dokładnego main z pełnym CI | 2–3 h |
+
+[Audytowany runner generacji](ai09-audited-generation.md) wykonuje sześć faz
+wewnątrz jednej zarezerwowanej próby, z pełnym replayem i osobnym lockiem
+eksportera. Kod i kontrolowane testy nie stanowią odbioru canonical kampanii.
+Lokalny native control został zatrzymany przez rezerwę RAM przed generation;
+manualny odbiór na izolowanym runnerze jest przygotowany i jeszcze nie ruszył.
+
+[PR #35](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/35)
+na `d81e78a` zaliczył pełny
+[Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37638548322):
+15/15 jobów success. Przed chronionym merge zintegrowano nowszy main `2dc0a5b`,
+zachowując przyrosty AI 10. [CI integracji na `7ca2d56`](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37646472103)
+ujawnił nieaktualne przypięcie jednego wspólnego pliku importera.
+[Poprawka przypięcia](evidence/09-22-shared-importer-integration.json) zachowuje
+poprzedni odebrany pin oraz osobno identyfikuje nową implementację z `d81e78a`.
+64 kontrole zgodności, w tym rzeczywisty transfer/reuse bundle, oraz wszystkie
+kontrole kontraktów przeszły. Nowy dokładny head wymaga własnego pełnego CI;
+projektowa kampania, treningi i końcowa ocena pozostają niewykonane.
 
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
