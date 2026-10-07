@@ -929,3 +929,16 @@ manifesty i etykiety. [Odbiór zgodności](evidence/12-main-binding.md): 858/858
 testów, pełne `ci-checks`, golden 50/50, zgodność 536 plików Python checkout /
 wheel / faktyczne drzewo merge CI. Nowy head wymaga pełnego zdalnego runu;
 AI12 pozostaje **in_progress**.
+
+**AI12 — sprzedaż z kwalifikowanych dni.** Read-only adapter korzysta z
+oryginalnej weryfikacji Source/Curated/Raw DQ i zachowuje dzienne dowody na
+dokładny cutoff. Jedna niekwalifikowana doba wstrzymuje cały okres; zero
+wymaga potwierdzenia każdego dnia. Planner sprawdza pełne serie i limit
+punktów przed admission. [Opis](agent-qualified-sales.md),
+[odbiór](evidence/12-qualified-sales.md): 58/58 testów adaptera, 652 unikalne
+przypadki regresji z końcowym wynikiem passed, pełne `ci-checks`, golden 50/50
+i wheel/checkout 537 modułów Python. Fake chat i fixtures pozostają jawne.
+Nowe kandydaty `.native-sources.v1` zachowują wcześniejsze manifesty i etykiety.
+Scalono opublikowany `main/89b64d23` bez zmiany drzewa aplikacji.
+Wcześniejszy head `35dae7e` ma pełny Required CI **15/15 success**;
+nowy przyrost wymaga osobnego odbioru. Status nadal **in_progress**.
