@@ -1,0 +1,79 @@
+{
+  "scope": "Complete-population forecast fitting mechanism; no project training or final campaign result",
+  "stage_ready": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "final_test_opened": false,
+  "wire": "evaluation v15, separate plan/encoding/fit receipt",
+  "population": "all eligible train and early_stopping keys, no sampling",
+  "legacy_limits_and_evaluation_schema_bytes_unchanged": 48,
+  "preprocessing_fitted_on": "train only",
+  "worker_phases": [
+    "prepare",
+    "fit",
+    "reload"
+  ],
+  "worker_environment": "existing pinned TensorFlow CPU lock; installed versions checked for all families",
+  "real_native_cpu_tests": {
+    "added": 3,
+    "families": [
+      "rf",
+      "hgb",
+      "tensorflow"
+    ],
+    "required_command": "make tensorflow-check",
+    "result_pending": true,
+    "local_processes_started": false,
+    "local_available_memory_bytes": 1331183616,
+    "required_limit_plus_reserve_bytes": 2147483648,
+    "canonical_profile": false
+  },
+  "component_validation": {
+    "integrated_regression_passed": 124,
+    "integrated_regression_seconds": 124.34,
+    "artifact_validation_and_data_controls_passed": 22,
+    "artifact_validation_and_data_controls_seconds": 11.24,
+    "audited_supervisor_mocked_explicitly": true,
+    "complete_project_fit_verified": false
+  },
+  "retained_failed_controls": [
+    {
+      "passed": 8,
+      "failed": 1,
+      "reason": "Changed value retained missing availability metadata in the negative control; corrected to a valid available typed value"
+    },
+    {
+      "passed": 18,
+      "failed": 4,
+      "reason": "Failure test incorrectly required the completed parent export receipt to disappear; corrected to reject only failed fit receipt"
+    },
+    {
+      "scope": "package command environment",
+      "reason": "Default build interpreter lacked hatchling; corrected with the existing owned locked build interpreter"
+    },
+    {
+      "scope": "package probe",
+      "reason": "Probe used an incorrect schema archive path; existing package destination is evaluation_campaign/v15"
+    }
+  ],
+  "remaining": [
+    "Exact native CPU fit/reload CI for all three families",
+    "Canonical full-profile capacity and completed audited development generation/export",
+    "Frozen project fitting, common scoring, fair selection, calibration and policies",
+    "Fresh final three-seed evaluation for all three use cases",
+    "Robustness, uncertainty, full resource measurements, lifecycle and cards/reports",
+    "Protected publication and exact final-main full CI"
+  ],
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_source_files": 623,
+    "evaluation_schemas": "passed",
+    "docs": "passed"
+  },
+  "package": {
+    "built": true,
+    "module_byte_parity": 510,
+    "v15_schema_byte_parity": 3
+  }
+}

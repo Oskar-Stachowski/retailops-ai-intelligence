@@ -1,0 +1,141 @@
+{
+  "$defs": {
+    "CampaignCategoricalEncoding": {
+      "additionalProperties": false,
+      "properties": {
+        "categories": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Categories",
+          "type": "array"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "categories"
+      ],
+      "title": "CampaignCategoricalEncoding",
+      "type": "object"
+    },
+    "CampaignNumericEncoding": {
+      "additionalProperties": false,
+      "properties": {
+        "center": {
+          "title": "Center",
+          "type": "number"
+        },
+        "fill": {
+          "title": "Fill",
+          "type": "number"
+        },
+        "known_count": {
+          "minimum": 0,
+          "title": "Known Count",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "spread": {
+          "exclusiveMinimum": 0,
+          "title": "Spread",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "fill",
+        "known_count",
+        "center",
+        "spread"
+      ],
+      "title": "CampaignNumericEncoding",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:campaign_forecast_encoding:15.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "categorical": {
+      "items": {
+        "$ref": "#/$defs/CampaignCategoricalEncoding"
+      },
+      "title": "Categorical",
+      "type": "array"
+    },
+    "history_center": {
+      "title": "History Center",
+      "type": "number"
+    },
+    "history_fill": {
+      "title": "History Fill",
+      "type": "number"
+    },
+    "history_spread": {
+      "exclusiveMinimum": 0,
+      "title": "History Spread",
+      "type": "number"
+    },
+    "numeric": {
+      "items": {
+        "$ref": "#/$defs/CampaignNumericEncoding"
+      },
+      "title": "Numeric",
+      "type": "array"
+    },
+    "output_columns": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Output Columns",
+      "type": "array"
+    },
+    "target_scale": {
+      "minimum": 1,
+      "title": "Target Scale",
+      "type": "number"
+    },
+    "train_keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Train Keys Sha256",
+      "type": "string"
+    },
+    "train_labels_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Train Labels Sha256",
+      "type": "string"
+    },
+    "train_rows": {
+      "minimum": 1,
+      "title": "Train Rows",
+      "type": "integer"
+    },
+    "version": {
+      "const": "ai09-campaign-train-encoding-1.0.0",
+      "default": "ai09-campaign-train-encoding-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "train_keys_sha256",
+    "train_labels_sha256",
+    "train_rows",
+    "numeric",
+    "categorical",
+    "history_fill",
+    "history_center",
+    "history_spread",
+    "target_scale",
+    "output_columns"
+  ],
+  "title": "CampaignForecastEncoding",
+  "type": "object"
+}
