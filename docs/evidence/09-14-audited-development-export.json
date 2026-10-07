@@ -43,8 +43,8 @@
       ]
     },
     "updated_docs_check": "passed",
-    "installed_wheel": "pending",
-    "gitleaks": "pending_final_receipt_scan"
+    "installed_wheel": "see complete integrated two-part validation below",
+    "gitleaks": "working directory and full HEAD history passed; final documentation scan remains required"
   },
   "enforced_bindings": [
     "reserve complete parent before metadata/hashes/source replay",
@@ -86,5 +86,59 @@
     "explicit final-only exporter and3-seed three-use-case campaign",
     "segments uncertainty costs reports cards MLflow lifecycle",
     "exact new-code and final main publication with complete CI"
-  ]
+  ],
+  "integrated_validation": {
+    "integration_code_head": "6272bb0",
+    "runtime_code_sha256": "01b0a2921943f81786ec239624fac2cb19f7b65ac0c7cf1ff17d66a1aacd384f",
+    "python_modules": 499,
+    "native": {
+      "passed": 272,
+      "wall_seconds": 434.2,
+      "scope": [
+        "campaign export",
+        "campaign journal",
+        "canonical identity parity",
+        "calendar origin validation",
+        "complete source replay",
+        "source versions",
+        "physical export"
+      ]
+    },
+    "wheel": {
+      "passed_total": 198,
+      "parts": [
+        {
+          "passed": 187,
+          "wall_seconds": 144.89
+        },
+        {
+          "passed": 11,
+          "wall_seconds": 96.76
+        }
+      ],
+      "scope": [
+        "campaign export",
+        "campaign journal",
+        "canonical identity parity",
+        "calendar origin validation",
+        "complete source replay"
+      ],
+      "outside_checkout": true,
+      "complete_module_and_runtime_parity": true,
+      "all3_v12_schema_byte_parity": true,
+      "tensorflow_imported": false,
+      "wheel_sha256": "97c70feb001225a9ecd67f31214456605491a784ee1a0509a84847556110bafa"
+    },
+    "ci_checks": {
+      "result": "passed",
+      "mypy_source_files": 609,
+      "formatted_files": 1017,
+      "package": "wheel and sdist passed",
+      "compose_config": "passed"
+    },
+    "performance_evidence": "ai09-performance.json",
+    "performance_changes": "ad66aa0 and c54abea cherry-picked from authorized performance session; final integrated CI remains required",
+    "end_to_end_speed_claim": false,
+    "canonical_profiles_qualified": false
+  }
 }

@@ -50,6 +50,17 @@ musi mieć ocenę forecast, anomaly i stockout. Mniejszy profil nazwany
 `ai-training`, brak seeda lub zastosowania oraz dodatkowy niezadeklarowany
 budżet są odrzucane przed wykonaniem.
 
+Warunek dat w samym `CampaignProtocol` sprawdza minimalną separację od
+zadanego development. Nie zastępuje inventory wszystkich wcześniejszych
+odczytów z AI 06–08 i AI 09 ani nie kwalifikuje globalnej świeżości. Źródła
+[końcowego AI 08](reference/stockout-resource-pilot-1.8-future-seed42.json)
+obejmują dane do 2026-09-18. Rzeczywiste końcowe okna AI 09 trzeba ustalić po
+sprawdzeniu wszystkich znanych zakresów rodziców, targetów i dostępności;
+nie wolno przyjąć wcześniejszego okna tylko dlatego, że przechodzi minimalny
+walidator. Inny dataset ID, profile, seed albo parametr nie dowodzi braku
+wcześniejszej ekspozycji. Final gen/read pozostają po selection freeze, a
+osobny dowód generacji i historii dostępu jest wymagany przed kwalifikacją.
+
 Fit modelu jest dozwolony wyłącznie na development/train, fit kalibratora na
 development/calibration. Przed generacją lub odczytem końcowego źródła trzeba
 utrwalić `SelectionFreeze`: trzy pakiety model/preprocessing/calibration/

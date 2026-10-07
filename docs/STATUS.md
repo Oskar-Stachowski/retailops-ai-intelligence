@@ -4,7 +4,10 @@
 [PR #29](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/29)
 ma komplet 14 zielonych jobów dla `4a0a6b5` i został scalony jako `5216e31`.
 [CI dokładnego merge/main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37592860960)
-jest zielone, z kompletem 14 wymaganych jobów. Nowy [eksporter fizyczny](physical-forecast-export.md)
+jest zielone, z kompletem 14 wymaganych jobów. [PR #30](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/30)
+ma także 14 zielonych jobów na `9bb10f0` i jest scalony jako `3329a81`;
+[CI dokładnego merge/main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37604312440)
+jest w toku. Nowy [eksporter fizyczny](physical-forecast-export.md)
 odtwarza cechy i etykiety wszystkich pięciu ról z jednego prywatnego replayu.
 Jego kontrolny profil `ai-load` nie kwalifikuje pełnego `ai-training` ani kampanii.
 [Przyrost 09.12](evidence/09-12-prospective-campaign-journal.md) zachowuje historię
@@ -25,10 +28,16 @@ a kontrola miejsca 2026-10-07 wykazała około 82 GiB wolnego, ponad rezerwę 50
 Te fakty usuwają wcześniejsze przeszkody, lecz nie zastępują odbioru większego
 profilu ani końcowej kampanii.
 
-Nowy reader kampanii wiąże plan eksportu v12 z zakończoną generacją i trwale
+[Reader kampanii](evidence/09-14-audited-development-export.json) wiąże plan
+eksportu v12 z zakończoną generacją i trwale
 rezerwuje pełny parent read przed I/O. Kontrolowane testy powiązań i wcześniejszy
 publiczny source-replay potwierdzają mechanizm; canonical przebieg tego API,
 runner generacji/curation i reszta kampanii nadal nie są odebrane.
+Po integracji [optymalizacji](evidence/ai09-performance.md) jest 272 native passed
+oraz 198 testów wheela w dwóch częściach, z identycznymi bajtami 499 modułów
+i schematów v12 w wheelu oraz kodzie źródłowym. Mniejszy RSS i CPU kanonicznego JSON nie są dowodem szybszego
+całego eksportu: kontrolna para wall ma wzrost 3.37%. Końcowy head readera
+i optymalizacji wymaga własnego pełnego Required CI oraz odbioru main.
 
 Do zamknięcia pozostają: pełny audytowany eksport rzeczywistych pięciu ról,
 integracja fitów i kalibracji, ocena RF/HGB/baseline/TensorFlow na trzech seedach,
