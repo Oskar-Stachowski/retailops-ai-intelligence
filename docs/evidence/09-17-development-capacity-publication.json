@@ -1,0 +1,58 @@
+{
+  "recorded_at": "2026-10-07T12:27:09.426444+00:00",
+  "scope": "publication and prospective resource revision; not project campaign or full stage acceptance",
+  "base_main": "e1f864c33678f2bed65b550e7676c21a21934e35",
+  "reader_publication": {
+    "pr": 31,
+    "head": "db3aeb81bba29a5ac69ef52d06e5dd1631033e76",
+    "pr_ci_run": 37609002350,
+    "pr_ci_result": "completed_success_all14",
+    "merge": "e1f864c33678f2bed65b550e7676c21a21934e35",
+    "main_ci_run": 37615123521,
+    "main_ci_observed": "completed_success_all14",
+    "protection_bypassed": false
+  },
+  "resource_revision": {
+    "plan": "../reference/ai09-development-capacity-v1.1.json",
+    "version": "ai09-development-capacity-probe-1.1.0",
+    "previous_run": 37611605538,
+    "previous_failure_preserved": true,
+    "old_plan_byte_identical": true,
+    "only_budget_change": "tree_rss4GiB_to8GiB",
+    "canonical_size_changed": false,
+    "producer_changed": false,
+    "parent_limits_changed": false,
+    "new_run": 37613368332,
+    "new_run_head": "d88d4a2b7615d826f61a8a2fb807f015d73e2b44",
+    "observed_state": "completed_failure_wall_limit",
+    "full_profile_qualified": false,
+    "result": "09-18-development-capacity-second-run.json"
+  },
+  "revision_checks": {
+    "supervisor_tests_passed": 17,
+    "supervisor_test_seconds": 0.93,
+    "ruff": "passed",
+    "mypy": "passed",
+    "docs": "passed",
+    "secret_scans": "directory staged and full259commit reachable history passed"
+  },
+  "qualifications": {
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "final_test_opened": false,
+    "canonical_ai_training_qualified": false,
+    "quality_qualified": false,
+    "stage_ready": false
+  },
+  "remaining": "Actual resource receipts, audited canonical project generation and role export, fair fits and calibration, the final three-seed and three-use-case campaign, metrics, segments, uncertainty, costs, MLflow, lifecycle, reports, cards, and exact-main CI for later changes.",
+  "producer_optimization": {
+    "pr": 101,
+    "head": "3be92bffa33c59173804b16da4946b9dba8fe20c",
+    "combined_tests_passed": 456,
+    "component_copy_python_allocation_reduction_percent": 14.812128315505884,
+    "component_daily_snapshot_cpu_reduction_percent": 89.62192138313587,
+    "whole_pipeline_measured": false,
+    "canonical_profile_qualified": false,
+    "publication_state": "PR open; exact Required CI and normal protected merge required"
+  }
+}

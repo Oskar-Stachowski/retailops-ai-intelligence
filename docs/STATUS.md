@@ -20,7 +20,7 @@ ma komplet 14 zielonych jobów dla `4a0a6b5` i został scalony jako `5216e31`.
 jest zielone, z kompletem 14 wymaganych jobów. [PR #30](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/30)
 ma także 14 zielonych jobów na `9bb10f0` i jest scalony jako `3329a81`;
 [CI dokładnego merge/main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37604312440)
-jest w toku. Nowy [eksporter fizyczny](physical-forecast-export.md)
+jest zielone, z kompletem 14 wymaganych jobów. Nowy [eksporter fizyczny](physical-forecast-export.md)
 odtwarza cechy i etykiety wszystkich pięciu ról z jednego prywatnego replayu.
 Jego kontrolny profil `ai-load` nie kwalifikuje pełnego `ai-training` ani kampanii.
 [Przyrost 09.12](evidence/09-12-prospective-campaign-journal.md) zachowuje historię
@@ -49,8 +49,12 @@ runner generacji/curation i reszta kampanii nadal nie są odebrane.
 Po integracji [optymalizacji](evidence/ai09-performance.md) jest 272 native passed
 oraz 198 testów wheela w dwóch częściach, z identycznymi bajtami 499 modułów
 i schematów v12 w wheelu oraz kodzie źródłowym. Mniejszy RSS i CPU kanonicznego JSON nie są dowodem szybszego
-całego eksportu: kontrolna para wall ma wzrost 3.37%. Końcowy head readera
-i optymalizacji wymaga własnego pełnego Required CI oraz odbioru main.
+całego eksportu: kontrolna para wall ma wzrost 3.37%. Reader i optymalizacje
+mają pełne 14 zielonych jobów [PR #31](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/31)
+na `db3aeb8` i są scalone jako `e1f864c`.
+[CI dokładnego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37615123521)
+jest zielone, z kompletem 14 wymaganych jobów na `e1f864c`.
+To odbiór komponentów; pełna kampania nadal jest wymagana.
 
 Do zamknięcia pozostają: pełny audytowany eksport rzeczywistych pięciu ról,
 integracja fitów i kalibracji, ocena RF/HGB/baseline/TensorFlow na trzech seedach,
@@ -63,9 +67,42 @@ konserwatywnego rozliczenia brakującej historii przed nowymi eksperymentami.
 powiązania go w nowym prospektywnym protokole; nie kwalifikuje świeżości danych.
 Nowe CI zachowuje wszystkie kontrole AI 07–08 oraz osobny wymagany job TensorFlow.
 
-Szacunek zamknięcia na 2026-10-07: **24–40 godzin aktywnej pracy**, około
-**3–5 dni roboczych**; przy problemach pełnego profilu rezerwa **5–7 dni**.
-To szacunek implementacji i odbiorów, a nie zmierzony czas pełnej kampanii.
+[Pomiar pełnego development](ai09-development-capacity.md) ma przygotowany
+osobny runner oraz [kontrolny odbiór](evidence/09-15-development-capacity-preparation.json):
+14 testów supervisora, w tym rzeczywistych procesów i wszystkie pięć faz na małym `ai-load`.
+[Pierwsza próba canonical `ai-dev`](evidence/09-16-development-capacity-first-run.json)
+przekroczyła 4 GiB RSS po 127,875 s podczas generacji; nie ukończyła źródła.
+Plan, porażka i koszt są zachowane bez retry; potrzebny jest osobny pomiar
+większego prospektywnego budżetu albo ograniczenie pamięci producenta.
+[Osobna receptura 1.1](reference/ai09-development-capacity-v1.1.json) planuje
+próbę 8 GiB na podstawie zmierzonej dostępnej pamięci runnera, zachowując
+pierwszy plan i porażkę oraz wszystkie stare limity i wymagania jakości.
+Jej [wynik](evidence/09-18-development-capacity-second-run.json),
+[run 37613368332](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37613368332)
+na `d88d4a2`, zakończył się `wall_limit` po 3600.552 s podczas generacji.
+Próbkowany peak własnego drzewa wyniósł 7679963136 B (7.15 GiB), poniżej 8 GiB;
+nie ukończono żadnej fazy. Obie porażki i ich koszty są zachowane. Następny
+pomiar wymaga osobnej receptury na zwalidowanym producencie.
+[Source PR #101](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/101)
+na `5bec26f9` ogranicza kopie wejść i dzienny replay. Zaliczył 456 testów
+regresji, osobne 16 kontroli parity kohort oraz 3 kontrole known plans na seedach
+42/137/2026. Pełny [Required CI dokładnego head](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37623701164)
+jest zielony; zwykły chroniony merge opublikował `cbcac6eb` na source `main`.
+[Required CI dokładnego source main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37629010997)
+jeszcze trwa. Pięć kontrolnych par daje −14.81% alokacji Python podczas kopii
+i −89.62% CPU projekcji dziennych snapshotów, z identycznymi wynikami.
+To pomiary komponentów; pełny RSS i koszt pipeline na nowym producencie nadal
+wymagają odbioru. Wykorzystanie istniejącej szybkiej ścieżki AI08 sprawdzono
+oddzielnie na małym native planned-forecast; nowy pomiar canonical nie ruszył.
+Nie rozpoczęto projektowej kampanii ani generacji finalnych danych. Prawdziwa wersja planned
+forecast to snapshot 1.1; kontrakt anomalii 1.2 pozostaje osobnym wymaganiem.
+
+Szacunek zamknięcia na 2026-10-07: poprzednia lista prac to **24–40 godzin
+aktywnej pracy**. Po przekroczeniu 4 GiB i osobnym limicie godziny podczas development
+planuj **5–7 dni roboczych**, z **3–5 dniami** jako wariantem optymistycznym,
+jeżeli odbiór zoptymalizowanego producenta szybko zakończy się sukcesem.
+To szacunek implementacji i odbiorów; zakończony pełny profil i kampania
+nadal nie mają zmierzonego całkowitego kosztu.
 Największa niewiadoma to zasoby i czas canonical `ai-training`; kontrolne
 14560 kluczy nie pozwala potwierdzić kosztu całego portfolio. Zakres czasu:
 
