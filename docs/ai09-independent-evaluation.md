@@ -23,6 +23,24 @@ wire v16 i odrzuca niewłaściwą rolę przed inference. Nowe typy prognoz mają
 jawnie `development_evaluation` albo `final_test`; final nie jest przedstawiany
 jako dawna membership development.
 
+`campaign_evaluation_data` indeksuje pełny wskazany plik roli jednym odczytem:
+`development_evaluation.jsonl` albo rzeczywisty final wire `final_evaluation.jsonl`.
+Sprawdza kolejność wszystkich kluczy, canonical bytes, kompletne checksums,
+liczebności, eligibility, cenzurowanie, zera i powody wykluczeń. Final source
+recipe musi odpowiadać planowi. Features i historia mają dokładne wiązania
+hash; każde okno 1–14 jest sprawdzane także wtedy, gdy wszystkie jego obserwacje
+są wykluczone. Brakujące lub powtórzone features/history blokują wykonanie.
+
+Indeks covariates i osobny indeks actuals używają prywatnych baz SQLite.
+Współdzielenie pliku, połączenia lub attached database jest odrzucane;
+łączny rozmiar obu indeksów podlega jednemu limitowi. Proces predykcji ma
+otrzymać wyłącznie pierwszy indeks: rekordy `EvaluationRecord` i wspólne
+`InferenceRecord` nie zawierają targetu ani całego outcome. Actual wykluczonej
+obserwacji pozostaje `None` w agregacji. Przygotowany indeks przypina dokładny
+plan; inny plan albo niepełny strumień nie może go konsumować jako zakończonej
+pełnej oceny. Ten wewnętrzny adapter nadal wymaga publicznego runnera,
+który zweryfikuje journal, rodziców i dostęp przed otwarciem etykiet.
+
 `FrozenForecastComposer` sprawdza i hashuje konfigurację raz dla całego
 strumienia. Dla każdego klucza wymaga kompletu prób w ustalonej kolejności,
 identycznego example hash, eligibility i wyników bazowych. Średnia i mediana
@@ -46,8 +64,8 @@ niezależną oraz końcową ocenę po zamrożeniu. Dotychczasowy evaluator v2 i
 wcześniejsze schematy pozostają bajtowo bez zmian. Testy różnicowe porównują
 obie implementacje na tych samych parach.
 
-To przygotowanie komponentów. Pozostają audytowany adapter pełnych plików
-development/final, fresh worker i supervised runner z pomiarem całego własnego
+To przygotowanie komponentów. Pozostają audytowane wywołanie adaptera pełnych
+plików development/final, fresh worker i supervised runner z pomiarem całego własnego
 drzewa, complete segment inventory, block uncertainty, rzeczywista kampania
 wszystkich trzech zastosowań, lifecycle i końcowy odbiór main. Projektowy journal
 nie jest zainicjalizowany, nowe projektowe fity wynoszą zero, final test pozostaje
@@ -58,3 +76,13 @@ zachowuje 130 zaliczonych testów integracji w 23.90 s, kontrole typów
 oraz zgodność 573 modułów i czterech schematów w wheel. Odrębny probe
 zaimportował zainstalowany wheel bez TensorFlow/MLflow i potwierdził
 `not_ready` pustej oceny. Te kontrole nie są wykonaniem projektu.
+
+Po dodaniu pełnego adaptera 116 testów integracji przeszło w 65.55 s,
+w tym rzeczywisty eksport małego, wcześniej dostępnego source oraz pełny join
+features/history final wire. Osobna kontrola po ostatnim strażniku attached
+database ma 2 passed w 1.73 s. Wheel ma 574 moduły i cztery schematy v19,
+wszystkie bajtowo zgodne ze źródłami; stary evaluator i 60 wcześniejszych
+schematów pozostają bez zmian. Nowy probe zaimportował adapter z faktycznie
+zainstalowanego wheel bez TensorFlow/MLflow. Mypy dla 695 plików, Ruff, format
+1184 plików i schematy przeszły. Nie wykonano projektowych fitów, niezależnej
+oceny projektu ani odczytu projektowego final test.
