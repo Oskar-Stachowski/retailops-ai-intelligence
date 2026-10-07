@@ -1,6 +1,7 @@
 """Accept actual qualified models, native MLflow/PostgreSQL, pinned batch and scoped read APIs."""
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -27,6 +28,8 @@ from retailops_ai.anomaly_portfolio.result_store import PostgresResults
 from retailops_ai.anomaly_portfolio.serving_contract import Query
 from retailops_ai.api.app import create_app
 from retailops_ai.config import load_settings
+from retailops_ai.intelligence_events.acceptance_export import export_committed_model_events
+from retailops_ai.intelligence_events.model_contracts import anomaly_event
 from retailops_ai.model_lifecycle.anomaly_evaluation_store import PostgresAnomalyEvaluations
 from retailops_ai.security.model_operator import model_operator, private_principal
 from retailops_ai.security.provision import provision
@@ -99,7 +102,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     }
     registry = AnomalyRegistry(**registry_args)
     journal = PostgresJournal(engine)
-    results = PostgresResults(engine)
+    results = PostgresResults(engine, settings.app_env)
     checkpoint = args.output / "checkpoint.json"
     checks: list[str] = []
     try:
@@ -126,6 +129,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                         "anomaly_results",
                         "anomaly_evaluations",
                         "anomaly_requests",
+                        "model_intelligence_outbox",
                     )
                 }
             require(counts == before["database_counts"], "anomaly_restart_complete_results")
@@ -466,6 +470,21 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             == "reused",
             "anomaly_complete_batch_reuse_preserves_original_time",
         )
+        with engine.connect() as connection:
+            actual_events = connection.scalars(
+                text(
+                    "SELECT document FROM ai.model_intelligence_outbox WHERE document->>'correlation_id'=:batch ORDER BY result_id"
+                ),
+                {"batch": manifest["batch_id"]},
+            ).all()
+        require(
+            actual_events
+            == [
+                anomaly_event(item).model_dump(mode="json")
+                for item in sorted(items, key=lambda item: item.anomaly_id)
+            ],
+            "anomaly_outbox_replays_original_native_payloads_and_times",
+        )
         # Force a real PostgreSQL failure during row insertion; the full batch and request roll back.
         with engine.begin() as connection:
             connection.execute(
@@ -519,12 +538,69 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                     text("DROP TRIGGER ai07_acceptance_fail_row ON ai.anomaly_results")
                 )
                 connection.execute(text("DROP FUNCTION ai.ai07_acceptance_fail_row()"))
+        # A broker-publication staging failure must also roll back the native
+        # complete batch and the request, rather than leave an unpublished result.
+        with engine.begin() as connection:
+            connection.execute(
+                text(
+                    "CREATE FUNCTION ai.ai10_acceptance_fail_outbox() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'ai10_test_outbox_insert_failure'; END $$"
+                )
+            )
+            connection.execute(
+                text(
+                    "CREATE TRIGGER ai10_acceptance_fail_outbox BEFORE INSERT ON ai.model_intelligence_outbox FOR EACH ROW EXECUTE FUNCTION ai.ai10_acceptance_fail_outbox()"
+                )
+            )
+        try:
+            try:
+                results.publish(
+                    "ai10-native-outbox-failure", pipeline, active, failed_manifest, failed_items
+                )
+            except Exception:
+                with engine.connect() as connection:
+                    require(
+                        connection.scalar(
+                            text("SELECT count(*) FROM ai.anomaly_batches WHERE batch_id=:id"),
+                            {"id": failed_manifest["batch_id"]},
+                        )
+                        == 0,
+                        "anomaly_outbox_failure_left_native_batch",
+                    )
+                    require(
+                        connection.scalar(
+                            text(
+                                "SELECT count(*) FROM ai.anomaly_requests WHERE request_id='ai10-native-outbox-failure'"
+                            )
+                        )
+                        == 0,
+                        "anomaly_outbox_failure_left_request",
+                    )
+                    require(
+                        connection.scalar(
+                            text(
+                                "SELECT count(*) FROM ai.model_intelligence_outbox WHERE document->>'correlation_id'=:id"
+                            ),
+                            {"id": failed_manifest["batch_id"]},
+                        )
+                        == 0,
+                        "anomaly_outbox_failure_left_events",
+                    )
+            else:
+                raise ValueError("anomaly_outbox_failure_not_exercised")
+        finally:
+            with engine.begin() as connection:
+                connection.execute(
+                    text("DROP TRIGGER ai10_acceptance_fail_outbox ON ai.model_intelligence_outbox")
+                )
+                connection.execute(text("DROP FUNCTION ai.ai10_acceptance_fail_outbox()"))
         checks += [
             "external_alias_drift_blocks_decisions",
             "actual_saved_model_scores_native_verified_public_features",
             "complete_census_atomic_postgresql_publication",
             "idempotency_and_logical_reuse_keep_original_detection_times",
             "native_insert_failure_leaves_no_partial_batch_or_request",
+            "native_outbox_insert_failure_rolls_back_complete_batch_request_and_events",
+            "native_outbox_preserves_original_payload_ids_and_detection_times_on_retry_and_reuse",
         ]
         all_rows = results.read(Query(limit=100), reader)
         require(all_rows.pagination.total == len(items), "anomaly_native_read_census")
@@ -599,8 +675,29 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                     "anomaly_results",
                     "anomaly_evaluations",
                     "anomaly_requests",
+                    "model_intelligence_outbox",
                 )
             }
+        census = export_committed_model_events(
+            engine,
+            tuple(anomaly_event(item) for item in items),
+            args.output / "native-outbox",
+            environment=settings.app_env,
+        )
+        native_output = json.dumps(
+            {
+                "batch_id": manifest["batch_id"],
+                "items": [item.model_dump(mode="json") for item in items],
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode()
+        native_path = args.output / "native-batch-output.json"
+        native_path.write_bytes(native_output)
+        native_path.chmod(0o600)
+        frozen_path = args.output / "native-frozen-model.json"
+        frozen_path.write_bytes(read_bytes(args.primary, "model.json", 8 * 1024**2))
+        frozen_path.chmod(0o600)
         output = {
             "status": "passed",
             "checks": checks,
@@ -610,6 +707,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "aliases": registry.aliases(MODEL),
             "database_counts": counts,
             "batch_id": manifest["batch_id"],
+            "native_outbox_census_id": census.name,
+            "native_outbox_rows": len(items),
+            "native_batch_output_sha256": hashlib.sha256(native_output).hexdigest(),
             "model_sha256": active.binding.qualification.model.sha256,
             "image_digest": args.image_digest,
             "qualification_scope": active.binding.qualification.qualification_scope,

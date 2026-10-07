@@ -27,8 +27,11 @@ def main() -> int:
     commands = parser.add_subparsers(dest="command", required=True)
     submit = commands.add_parser("submit")
     submit.add_argument("--idempotency-key", required=True)
-    for name in ("get", "attempts", "receipt", "publish"):
+    for name in ("get", "attempts", "receipt"):
         commands.add_parser(name).add_argument("--run-id", required=True)
+    publish = commands.add_parser("publish")
+    publish.add_argument("--run-id", required=True)
+    publish.add_argument("--integration-events", action="store_true")
     args = parser.parse_args()
     engine = None
     try:
@@ -62,7 +65,7 @@ def main() -> int:
                 compose=settings.network_mode == "compose", environment=settings.app_env
             )
             result = (
-                PostgresV12Publisher(queue, registry)
+                PostgresV12Publisher(queue, registry, events_enabled=args.integration_events)
                 .publish(args.run_id, actor)
                 .model_dump(mode="json")
             )

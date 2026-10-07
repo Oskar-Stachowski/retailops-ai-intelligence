@@ -15,6 +15,7 @@ from sqlalchemy import Connection, Engine, text
 from retailops_ai.domain.access import Principal
 from retailops_ai.forecast_jobs.contracts import QueuePolicy
 from retailops_ai.forecast_jobs.queue import LeaseLost, clock
+from retailops_ai.intelligence_events.model_outbox import enqueue_stockout
 from retailops_ai.stockout_jobs.batch import StockoutOutput, check_inputs, verify_output
 from retailops_ai.stockout_jobs.contracts import StockoutInputRef, StockoutRequest, StockoutRun
 from retailops_ai.stockout_jobs.input_store import (
@@ -494,6 +495,7 @@ class PostgresStockoutQueue:
             transition(claim.run, done)
             self._write(connection, done)
             self._history(connection, done, "stockout_computation_completed")
+            enqueue_stockout(connection, output, environment=claim.run.environment)
 
     def output(self, run_id: str, principal: Principal) -> StockoutOutput:
         run = self.get(run_id, principal)

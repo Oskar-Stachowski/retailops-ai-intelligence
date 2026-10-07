@@ -18,6 +18,7 @@ from typing import Any, Literal
 import mlflow_store as store
 from check_v12_lifecycle import IMAGES, ROOT, docker, wait_ready
 from fastapi.testclient import TestClient
+from run_ai10_model_consumer import run_source_model_read
 from sqlalchemy import create_engine, text
 from v12_backup_fixture_stack import FixtureStack
 
@@ -25,6 +26,8 @@ from retailops_ai.api.app import create_app
 from retailops_ai.config import Settings
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.domain.access import Principal
+from retailops_ai.intelligence_events.acceptance_export import export_committed_model_events
+from retailops_ai.intelligence_events.model_contracts import stockout_event
 from retailops_ai.migrations.runner import migrate
 from retailops_ai.security.local import LocalAccess, load_private_policy, token_fingerprint
 from retailops_ai.security.models import AccessPolicy
@@ -307,6 +310,7 @@ def main() -> int:
     parser.add_argument("--tests", type=Path, required=True)
     parser.add_argument("--secret-scan", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--source-consumer-root", type=Path)
     args = parser.parse_args()
     require(
         sys.platform == "linux"
@@ -556,6 +560,13 @@ def main() -> int:
                 and all(r.model_name == MODEL for r in output.items),
                 "final_acceptance_complete_batch",
             )
+            census = export_committed_model_events(
+                engine,
+                tuple(stockout_event(item) for item in output.items),
+                args.output / "native-outbox",
+                environment="test",
+            )
+            private_json(args.output / "native-batch-output.json", output.model_dump(mode="json"))
             state = dict(
                 status="passed",
                 purpose="actual_final_model_on_isolated_disposable_runner",
@@ -570,6 +581,12 @@ def main() -> int:
                 rejected_version=v3,
                 batch_run_id=run_id,
                 output_id=output.output_id,
+                native_outbox_census_id=census.name,
+                native_outbox_rows=len(output.items),
+                native_batch_output_sha256=receipt(
+                    read_bytes(args.output, "native-batch-output.json")
+                ).sha256,
+                broker_delivery_attested=False,
                 smoke_rows=q.smoke_rows,
                 real_public_inputs=True,
                 real_mlflow=True,
@@ -588,6 +605,22 @@ def main() -> int:
             private_json(args.output / "api-attention-example.json", examples)
             private_json(args.output / "approval.json", approval.model_dump(mode="json"))
             shutil.copytree(capsule / "reports", args.output / "reports")
+            if args.source_consumer_root is not None:
+                source_report = run_source_model_read(
+                    engine=engine,
+                    database_url=url,
+                    output=args.output,
+                    consumer=args.source_consumer_root,
+                    work=work,
+                    kind="stockout_risk_scored",
+                )
+                state.update(
+                    broker_delivery_attested=True,
+                    original_AI_database_publisher_attested=True,
+                    source_API_UI_attested=True,
+                    source_commit=source_report["source_commit"],
+                )
+                private_json(args.output / "acceptance.json", state)
         finally:
             if engine is not None:
                 engine.dispose()

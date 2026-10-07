@@ -1,0 +1,12 @@
+{
+  "anomaly_quality_status": "literal_native_schema_value_not_a_qualification_receipt",
+  "kind": "synthetic_contract_mechanics_only",
+  "model_qualification": "not_claimed",
+  "producer": "tests/test_model_intelligence_events.py native batch fixtures",
+  "sha256": {
+    "anomaly_detected.fixture.json": "47707260a56381e68704352fdcbeaf06179f4996286ac77cff21c4f2da07a727",
+    "stockout_risk_scored.fixture.json": "8854c8066be42b0ff4163eb9751b830d70421facfba8d86d292bf52ba52ee717"
+  },
+  "stockout_quality_status": "mechanics_only",
+  "version": "model-intelligence-contract-fixtures-1.0"
+}

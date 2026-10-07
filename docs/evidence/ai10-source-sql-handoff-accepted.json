@@ -1,0 +1,102 @@
+{
+  "ai_commit": "0d75f5987f52892e505465672867bd24bfa25768",
+  "artifact": {
+    "id": 11476035340,
+    "size_bytes": 4400,
+    "zip_sha256": "a145565bf85a8bc2fc27eaa3492473b856f01471f067cd0ae189e7e05a5a5401"
+  },
+  "evidence_boundary": "actual Source SQL TLS SCRAM publisher and capture to same broker actual AI SQL ACK overlap; generated protocol observations; no full 43 table SQL snapshot or model qualification",
+  "job_id": 112747249701,
+  "reports": {
+    "independent-ai-handoff.json": {
+      "acceptance_inputs": "explicit generated observation fixtures",
+      "actual_AI_SQL_or_ACK": true,
+      "actual_Source_SQL_TLS_SCRAM": true,
+      "capture_id": "observation-capture-sha256-523a58d9739059bf5c034e7610899abd837c608786d99b59822d85accba5526e",
+      "capture_sha256": "b5bf9563af93c9c34ace6447ce63c883f05fb9805089bacd78753c79f8a05b26",
+      "captured_receipts": 3,
+      "captured_rows": 2,
+      "final_AI_ACK": [
+        0,
+        0,
+        4
+      ],
+      "final_receipts": 4,
+      "final_rows": 3,
+      "full_43_table_snapshot": false,
+      "full_equals_capture_overlap": true,
+      "model_qualification": false,
+      "partitions": 3,
+      "prefix_AI_ACK": [
+        0,
+        0,
+        3
+      ],
+      "quantity_after_correction": 7,
+      "quantity_before_correction": 4,
+      "receiver_commit": "0d75f5987f52892e505465672867bd24bfa25768",
+      "scope": "original_Source_SQL_broker_capture_to_independent_AI_restore_SQL_ACK_and_overlap",
+      "source_commit": "f4535a3529545ae4a12d2bb471788d5defde74ab",
+      "status": "passed",
+      "workflow_run_id": 37607732767
+    },
+    "independent-ai-sql-handoff.json": {
+      "acceptance_inputs": "explicit generated observation fixtures; operational original Source publisher executed",
+      "actual_AI_SQL_or_ACK": true,
+      "actual_Source_SQL_TLS_SCRAM": true,
+      "actual_original_broker_overlap_records": 3,
+      "capture_id": "observation-capture-sha256-523a58d9739059bf5c034e7610899abd837c608786d99b59822d85accba5526e",
+      "capture_sha256": "b5bf9563af93c9c34ace6447ce63c883f05fb9805089bacd78753c79f8a05b26",
+      "final_ACK": [
+        0,
+        0,
+        4
+      ],
+      "final_AI_capture_id": "observation-capture-sha256-dcc60c19906690c8852ee2f4cbfb7c12d69196f3e72b52dc1194a859843610d4",
+      "final_facts": 3,
+      "final_receipts": 4,
+      "full_43_table_SQL_snapshot": false,
+      "full_equals_capture_overlap": true,
+      "model_qualification": false,
+      "partitions": 3,
+      "prefix_ACK": [
+        0,
+        0,
+        3
+      ],
+      "prefix_AI_capture_id": "observation-capture-sha256-523a58d9739059bf5c034e7610899abd837c608786d99b59822d85accba5526e",
+      "prefix_facts": 2,
+      "prefix_receipts": 3,
+      "quantity_after_correction": 7,
+      "quantity_before_correction": 4,
+      "receiver_commit": "0d75f5987f52892e505465672867bd24bfa25768",
+      "scope": "original_Source_SQL_TLS_SCRAM_capture_to_same_broker_actual_AI_SQL_and_ACK",
+      "source_commit": "f4535a3529545ae4a12d2bb471788d5defde74ab",
+      "status": "passed",
+      "workflow_run_id": 37607732767
+    },
+    "source-observation-capture-report.json": {
+      "acceptance_inputs": "explicit generated observation fixtures",
+      "actual_source_sql_tls_scram_broker": true,
+      "boundaries": [
+        0,
+        0,
+        3
+      ],
+      "capture_id": "observation-capture-sha256-523a58d9739059bf5c034e7610899abd837c608786d99b59822d85accba5526e",
+      "full_43_table_snapshot": false,
+      "later_replay_receipts": 4,
+      "model_qualification": false,
+      "no_broker_commits_or_offset_stores_by_capture_reader": true,
+      "publisher_receipts_used_as_complete_prefix": false,
+      "receipts": 3,
+      "rows": 2,
+      "scope": "daily_demand_versions_only",
+      "status": "passed"
+    }
+  },
+  "source_commit": "f4535a3529545ae4a12d2bb471788d5defde74ab",
+  "status": "passed",
+  "version": "ai10-source-sql-handoff-accepted-1.0",
+  "workflow_run_id": 37607732767
+}
