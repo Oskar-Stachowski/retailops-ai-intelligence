@@ -14,6 +14,26 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
 
 ### Odebrane komponenty bieżącej integracji
 
+**Integracja z nowszym main AI09:** merge zachowuje `3329a81`, wszystkie
+kontrakty i kod AI09 oraz wymagany osobny job TensorFlow. Żadna bramka AI10
+SQL/broker/replay nie została zastąpiona. Wszystkie 41 negatywnych kontroli
+kontraktu CI, lint/format 1101 plików, mypy 652+10 i pełne contracts-check
+przeszły lokalnie; końcowy Required CI nadal wymaga dokładnego nowego HEAD.
+
+**Pełny v12 — pierwsza próba pozostaje failed:** run `37604263732`
+zweryfikował wszystkie 669 oryginalnych plików, zaliczył 251 boundary tests,
+kwalifikację z dwoma frozen cold predictions i dziesięć rzeczywistych review
+gates. Import MLflow zatrzymał `v12_scratch_private_owned_directory_required`.
+`Path.mkdir(parents=True, mode=0o700)` ustawiał 0700 tylko na ostatnim katalogu;
+pośredni katalog oryginalnego runu powstawał z 0755. Recovery tworzy teraz
+każdy katalog osobno z 0700 i sprawdza UID, typ oraz uprawnienia. Rzeczywisty
+mały download → nested run → ScratchTracking hardlink odtwarza tę granicę;
+symlink i publiczny parent są odrzucane przed siecią. Wszystkie 33 recovery,
+scratch i runner guards passed. [Receipt nieudanej próby](evidence/ai10-v12-native-scratch-failure.json)
+zachowuje prawdziwy zakres; SQL/publisher/Source API/UI wymagają następnego
+pełnego wykonania. Usunięto dokładnie sześć własnych handoff objects i
+unikalny secret; oryginalne S3 pozostaje zachowane.
+
 **Oryginalny publisher stockout passed:** run `37608775665`, job
 `112750656385`, AI `b1df980` i Source `cbbf711`. Oryginalny frozen model,
 registry/cold worker, 40 native wyników i 40 rzeczywistych SQL ACK przeszły
@@ -35,8 +55,8 @@ AI, 35 testów Source, setup-plan rzeczywistego odbioru i mypy 606+10 passed.
 Fixture nie kwalifikują modeli. Pełny nowy workflow musi jeszcze wykonać
 publisher na oryginalnych frozen wynikach.
 
-V12 run `37604263732` zakończył model boundary tests oraz przygotowanie
-102-dniowego wejścia i pobiera pełne oryginalne archiwum. Required CI AI
+V12 run `37604263732` zakończył pełne recovery i później zatrzymał się na
+guardzie opisanym wyżej. Required CI AI
 `c8df654` wykrył błąd ponownego uruchomienia bazy w istniejącym compose smoke;
 następny pełny CI ma ponownie sprawdzić tę samą bramkę bez zmiany jej limitów.
 
@@ -76,7 +96,8 @@ oryginalne wyniki, 2464 broker receipts, 1232 duplicates, pełny TCP API i 25
 stron built UI przeszły wraz z oryginalnym testem SIGKILL/recovery.
 [Receipt](evidence/ai10-native-anomaly-accepted.json) zachowuje dokładny SHA ZIP.
 Granica tego dowodu pozostaje file handoff committed outbox; publisher
-oryginalnej bazy AI nie jest jeszcze poświadczony dla anomaly/stockout.
+oryginalnej bazy AI nie jest poświadczony przez ten wcześniejszy receipt.
+Nowszy pełny receipt stockout jest wskazany na początku dokumentu.
 
 Dedykowany Source capture workflow `37599182565` jest **success**.
 [Receipt](evidence/ai10-source-capture-accepted.json) potwierdza rzeczywisty

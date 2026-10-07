@@ -26,7 +26,7 @@ def main() -> int:
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(raw, encoding="utf-8")
-    print("Observation replay receiver schemas match; Source live capture is unsupported.")
+    print("Observation replay receiver schemas match; full 43-table broker handoff is unsupported.")
     return 0
 
 

@@ -121,8 +121,8 @@ jobs:
             --origin "${AI10_ORIGIN_DATE}T23:59:59Z"
       - name: Recover unchanged complete original archive with temporary GET-only URLs
         env:
-          AI10_V12_HANDOFF_URL: ${{ secrets[inputs.archive_secret || 'AI10_V12_READ_HANDOFF_1242006266C9479B98A91FE2F479BA6E'] }}
-          HANDOFF_SHA256: ${{ inputs.handoff_sha256 || '4555daf0ecdc28dd486dd960bc945a04e47af135265afbf619308f8c25cb2286' }}
+          AI10_V12_HANDOFF_URL: ${{ secrets[inputs.archive_secret || 'AI10_V12_READ_HANDOFF_9D1E93BE76764A2C9C12E733FD9D0FC6'] }}
+          HANDOFF_SHA256: ${{ inputs.handoff_sha256 || 'eeed72afd43014c5b553672cb86f220846f31a460cb3777458a53a0ae2b842b1' }}
         run: |
           uv run --frozen python scripts/recover_ai10_v12_archive.py \
             --handoff-sha256 "$HANDOFF_SHA256" --output .local/ai10-v12-original \

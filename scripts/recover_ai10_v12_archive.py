@@ -9,6 +9,7 @@ import os
 import re
 import shutil
 import ssl
+import stat
 import sys
 import urllib.error
 import urllib.parse
@@ -174,8 +175,20 @@ def bind_handoff(pin: dict[str, Any], handoff: dict[str, Any], url: str) -> dict
 
 def download(name: str, reference: dict[str, Any], url: str, output: Path) -> None:
     # The whole output directory is new and private. Existing evidence is never replaced.
+    relative(name)
     target = output / name
-    target.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+    # pathlib's parents=True applies mode only to the final directory. The run
+    # root is itself an intermediate directory and must retain the same private
+    # owner boundary required by the real hosted scratch/MLflow transport.
+    parent = output
+    for component in PurePosixPath(name).parts[:-1]:
+        parent /= component
+        parent.mkdir(mode=0o700, exist_ok=True)
+        info = parent.lstat()
+        require(
+            stat.S_ISDIR(info.st_mode) and info.st_uid == os.geteuid() and not info.st_mode & 0o077,
+            "v12_archive_private_owned_directory_required",
+        )
     staging = output / ".partial" / hashlib.sha256(name.encode()).hexdigest()
     digest, size = hashlib.sha256(), 0
     with staging.open("xb") as stream:
