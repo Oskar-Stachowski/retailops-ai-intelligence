@@ -460,6 +460,10 @@ class AssistantService:
             )
         except TimeoutError:
             raise AssistantError(504) from None
+        except AssistantError:
+            raise
+        except Exception:
+            raise AssistantError(503) from None
         if cancelled:
             raise asyncio.CancelledError()
         if answer is None:

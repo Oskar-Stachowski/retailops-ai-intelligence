@@ -126,13 +126,15 @@ jobs:
       - run: make forecast-queue-smoke
       - name: Accept v12 registry, jobs, publication, metadata, backup and recovery
         run: make v12-backup-smoke
-      - name: Accept all eight native Assistant adapters with offline chat and isolated SQL
+      - name: Accept native Assistant SQL and atomic suggestion outbox
         run: make native-offline-smoke
       - name: Preserve safe native Assistant SQL receipt
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: ai12-native-offline-postgres
-          path: artifacts/ai12-native-offline-postgres.json
+          path: |
+            artifacts/ai12-native-offline-postgres.json
+            artifacts/ai12-suggestion-outbox.json
           if-no-files-found: error
           retention-days: 14
   persistence-forecast:

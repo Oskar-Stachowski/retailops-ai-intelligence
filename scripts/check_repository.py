@@ -80,6 +80,7 @@ def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None
             "make lifecycle-store-smoke": "combined lifecycle backup/restore",
             "make forecast-queue-smoke": "forecast queue",
             "make v12-backup-smoke": "v12 coherent backup/restore and recovery",
+            "make native-offline-smoke": "native Assistant and suggestion SQL",
         },
         "persistence-forecast": {
             "make forecast-input-store-smoke": "forecast input store",

@@ -1,0 +1,453 @@
+"""Real Assistant completion/SQL outbox; broker callbacks are explicit test doubles."""
+
+import asyncio
+import hashlib
+import json
+import os
+import time
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
+from unittest.mock import patch
+from uuid import UUID, uuid4, uuid5
+
+import pytest
+from fastapi.testclient import TestClient
+from sqlalchemy import create_engine, event, text
+from sqlalchemy.exc import DBAPIError
+from sqlalchemy.ext.asyncio import create_async_engine
+from test_assistant import headers, setup
+
+from retailops_ai.api.app import create_app
+from retailops_ai.assistant.contracts import PersistedSuggestion
+from retailops_ai.config import Settings
+from retailops_ai.intelligence_events.suggestion_contracts import (
+    RecommendationGenerated,
+    suggestion_event,
+)
+from retailops_ai.intelligence_events.suggestion_outbox import (
+    deliver_suggestion_one,
+    enqueue_suggestions,
+)
+
+
+class Message:
+    def __init__(self, mode="ack"):
+        self.mode = mode
+
+    def topic(self):
+        return "wrong-topic" if self.mode == "wrong_topic" else "retailops.intelligence.v2"
+
+    def partition(self):
+        return -1 if self.mode == "negative_partition" else 0
+
+    def offset(self):
+        return -1 if self.mode == "negative_offset" else 42
+
+
+class Producer:
+    """No socket or broker; deliberately scripted ACK/failure positions."""
+
+    def __init__(self, mode="ack", delay=0):
+        self.mode, self.delay, self.sent = mode, delay, []
+
+    def produce(self, topic, *, key, value, on_delivery):
+        self.sent.append((topic, key, value))
+        self.callback = on_delivery
+
+    def flush(self, timeout):
+        assert 0 < timeout <= 15
+        if self.delay:
+            time.sleep(self.delay)
+        if self.mode == "no_ack":
+            return 0
+        self.callback(
+            RuntimeError("fixture failure") if self.mode == "error" else None, Message(self.mode)
+        )
+        if self.mode == "duplicate_ack":
+            self.callback(None, Message())
+        return 1 if self.mode == "pending" else 0
+
+
+@pytest.fixture(scope="module")
+def database(request):
+    url = os.getenv("AI12_NATIVE_DATABASE_URL")
+    if not url:
+        if os.getenv("REQUIRE_AI12_NATIVE_POSTGRES") == "1":
+            pytest.fail("dedicated AI12 SQL URL required")
+        pytest.skip("dedicated AI12 SQL acceptance is not provisioned")
+    engine = create_engine(url, hide_parameters=True)
+    try:
+        yield url, engine
+    finally:
+        report = os.getenv("AI12_SUGGESTION_REPORT")
+        if report and request.session.testsfailed == 0:
+            from retailops_ai.agent.evaluation import evaluator_checksum
+
+            with engine.connect() as connection:
+                revision = connection.scalar(text("SELECT version_num FROM ai.alembic_version"))
+                counts = dict(
+                    connection.execute(
+                        text(
+                            "SELECT status,count(*) FROM ai.assistant_suggestion_outbox GROUP BY status"
+                        )
+                    ).all()
+                )
+            Path(report).parent.mkdir(parents=True, exist_ok=True)
+            Path(report).write_text(
+                json.dumps(
+                    dict(
+                        status="passed",
+                        application_code_sha256=evaluator_checksum(),
+                        database_revision=revision,
+                        producer="scripted_delivery_callback_no_broker",
+                        aws_executed=False,
+                        source_projection_executed=False,
+                        policy="read-only-review-v1",
+                        atomic_completion=True,
+                        rollback_after_enqueue=True,
+                        retry_after_ack_sql_crash=True,
+                        identical_retry_bytes=True,
+                        competing_workers_skip_locked=True,
+                        expired_send_withheld=True,
+                        stored_lifecycle_counts=counts,
+                    ),
+                    indent=2,
+                    sort_keys=True,
+                )
+                + "\n"
+            )
+        engine.dispose()
+
+
+@pytest.fixture(autouse=True)
+def drain_test_queue(database):
+    # This is the explicitly provisioned, private acceptance database only.
+    while deliver_suggestion_one(database[1], Producer(), environment="test"):
+        pass
+
+
+def query(database, tmp_path, *, enabled=True, lifetime=300, expected_status=200):
+    from retailops_ai.agent.graph_config import load_graph_config, resolve_graph_config
+
+    def configured(path):
+        value = load_graph_config(path)
+        raw = value.config.model_dump(mode="json")
+        raw["policy"]["suggestions"]["lifetime_seconds"] = lifetime
+        return resolve_graph_config(type(value.config).model_validate_json(json.dumps(raw)))
+
+    with patch("test_assistant.load_graph_config", configured):
+        path, tokens, authority, body, backend, _ = setup(tmp_path, intent="operations")
+    raw = json.loads(path.read_bytes())
+    ids = {g["principal_id"]: g["principal_id"] + "-" + uuid4().hex for g in raw["grants"]}
+    for g in raw["grants"]:
+        g["principal_id"] = ids[g["principal_id"]]
+    for credential in raw["credentials"]:
+        credential["principal_id"] = ids[credential["principal_id"]]
+    from retailops_ai.security.local import LocalAccess
+    from retailops_ai.security.models import AccessPolicy
+
+    fresh = LocalAccess(AccessPolicy.model_validate_json(json.dumps(raw)))
+    authority.__dict__.update(fresh.__dict__)
+    path.write_text(json.dumps(raw))
+    settings = Settings(
+        APP_ENV="test",
+        ARTIFACT_ROOT=str(tmp_path / "artifacts"),
+        API_AUTH_FILE=path,
+        DATABASE_URL=database[0],
+        ASSISTANT_SUGGESTION_OUTBOX_ENABLED=enabled,
+    )
+    with TestClient(
+        create_app(settings, assistant_backend=backend), base_url="http://127.0.0.1"
+    ) as client:
+        response = client.post("/api/v1/assistant/queries", headers=headers(tokens), json=body)
+        assert response.status_code == expected_status, response.text
+        return response.json()
+
+
+def stored(engine, answer):
+    with engine.connect() as connection:
+        return (
+            connection.execute(
+                text("SELECT * FROM ai.assistant_suggestion_outbox WHERE trace_id=:trace"),
+                {"trace": UUID(answer["trace_id"])},
+            )
+            .mappings()
+            .one()
+        )
+
+
+def test_api_completion_atomically_enqueues_compatible_event(database, tmp_path):
+    answer = query(database, tmp_path)
+    row = stored(database[1], answer)
+    assert row["status"] == "pending"
+    value = RecommendationGenerated.model_validate_json(json.dumps(row["document"]))
+    assert value.payload.recommendation_id == UUID(
+        answer["recommended_actions"][0]["recommendation_id"]
+    )
+    assert value.payload.trace_id == UUID(answer["trace_id"])
+    assert bytes(row["wire_bytes"]) == value.wire_bytes()
+    assert row["wire_sha256"] == hashlib.sha256(value.wire_bytes()).hexdigest()
+    with database[1].connect() as connection:
+        assert (
+            connection.scalar(
+                text("SELECT status FROM ai.assistant_runs WHERE trace_id=:id"),
+                {"id": value.payload.trace_id},
+            )
+            == "succeeded"
+        )
+
+
+def test_default_profile_does_not_enqueue(database, tmp_path):
+    answer = query(database, tmp_path, enabled=False)
+    with database[1].connect() as connection:
+        assert (
+            connection.scalar(
+                text("SELECT count(*) FROM ai.assistant_suggestion_outbox WHERE trace_id=:id"),
+                {"id": UUID(answer["trace_id"])},
+            )
+            == 0
+        )
+
+
+def test_expired_pending_candidate_is_withheld_without_a_broker_call(database, tmp_path):
+    answer = query(database, tmp_path, lifetime=4)
+    row = stored(database[1], answer)
+    with database[1].connect() as connection:
+        now = connection.scalar(text("SELECT clock_timestamp()"))
+    time.sleep(max(0, (row["expires_at"] - now).total_seconds()) + 0.05)
+    producer = Producer()
+    assert not deliver_suggestion_one(database[1], producer, environment="test")
+    assert producer.sent == []
+    assert stored(database[1], answer)["status"] == "expired"
+
+
+def test_outbox_failure_rolls_back_answer_suggestion_and_terminal_run(
+    database, tmp_path, monkeypatch
+):
+    from retailops_ai.intelligence_events import suggestion_outbox
+
+    original = suggestion_outbox.enqueue_suggestions
+
+    async def fail_after_enqueue(*args, **kwargs):
+        await original(*args, **kwargs)
+        raise RuntimeError("scripted enqueue crash")
+
+    monkeypatch.setattr(suggestion_outbox, "enqueue_suggestions", fail_after_enqueue)
+    response = query(database, tmp_path, expected_status=503)
+    with database[1].connect() as connection:
+        row = (
+            connection.execute(
+                text("SELECT trace_id,status FROM ai.assistant_runs WHERE correlation_id=:id"),
+                {"id": UUID(response["correlation_id"])},
+            )
+            .mappings()
+            .one()
+        )
+        assert row["status"] == "running"
+        assert (
+            connection.scalar(
+                text("""SELECT
+              (SELECT count(*) FROM ai.assistant_answers WHERE trace_id=:id)+
+              (SELECT count(*) FROM ai.assistant_suggestions WHERE trace_id=:id)+
+              (SELECT count(*) FROM ai.assistant_suggestion_outbox WHERE trace_id=:id)"""),
+                {"id": row["trace_id"]},
+            )
+            == 0
+        )
+
+
+@pytest.mark.parametrize(
+    "mode",
+    [
+        "error",
+        "no_ack",
+        "duplicate_ack",
+        "pending",
+        "wrong_topic",
+        "negative_partition",
+        "negative_offset",
+    ],
+)
+def test_unconfirmed_delivery_rolls_back_and_repeats_original_bytes(database, tmp_path, mode):
+    answer = query(database, tmp_path)
+    bad = Producer(mode)
+    with pytest.raises(RuntimeError, match="delivery_(unconfirmed|position_invalid)"):
+        deliver_suggestion_one(database[1], bad, environment="test")
+    assert stored(database[1], answer)["status"] == "pending"
+    good = Producer()
+    assert deliver_suggestion_one(database[1], good, environment="test")
+    assert bad.sent == good.sent
+    assert stored(database[1], answer)["status"] == "delivered"
+    assert not deliver_suggestion_one(database[1], good, environment="test")
+
+
+def test_repeated_enqueue_is_identical_and_collision_is_rejected(database, tmp_path):
+    answer = query(database, tmp_path)
+    row = stored(database[1], answer)
+    suggestion = PersistedSuggestion.model_validate_json(json.dumps(row["document"]["payload"]))
+
+    async def enqueue(value):
+        engine = create_async_engine(database[0], hide_parameters=True)
+        try:
+            async with engine.begin() as connection:
+                return await enqueue_suggestions(connection, [value], environment="test")
+        finally:
+            await engine.dispose()
+
+    assert asyncio.run(enqueue(suggestion)) == 1
+    altered = suggestion.model_copy(
+        update={"summary": "Altered envelope with the same immutable identity"}
+    )
+    with pytest.raises(ValueError, match="identity_collision"):
+        asyncio.run(enqueue(altered))
+    assert bytes(stored(database[1], answer)["wire_bytes"]) == bytes(row["wire_bytes"])
+
+
+def test_database_requires_persisted_assistant_origin(database, tmp_path):
+    answer = query(database, tmp_path)
+    row = stored(database[1], answer)
+    raw = dict(row["document"]["payload"])
+    trace = uuid4()
+    raw.update(
+        trace_id=str(trace),
+        answer_id=str(uuid5(trace, "answer")),
+        recommendation_id=str(uuid5(trace, raw["candidate_id"])),
+    )
+    forged = suggestion_event(PersistedSuggestion.model_validate_json(json.dumps(raw)))
+    wire = forged.wire_bytes()
+    with database[1].begin() as connection, pytest.raises(DBAPIError, match="origin_or_capacity"):
+        connection.execute(
+            text("""INSERT INTO ai.assistant_suggestion_outbox
+          (event_id,recommendation_id,answer_id,trace_id,environment,partition_key,
+           document,wire_bytes,wire_sha256,expires_at,retain_until)
+          VALUES (:id,:recommendation,:answer,:trace,'test',:key,CAST(:document AS jsonb),
+                  :wire,:digest,:expires,:retain)"""),
+            dict(
+                id=forged.event_id,
+                recommendation=forged.payload.recommendation_id,
+                answer=forged.payload.answer_id,
+                trace=forged.payload.trace_id,
+                key=forged.partition_key,
+                document=wire.decode(),
+                wire=wire,
+                digest=hashlib.sha256(wire).hexdigest(),
+                expires=forged.payload.expires_at,
+                retain=row["retain_until"],
+            ),
+        )
+
+
+def test_expiry_during_validation_is_checked_before_produce(database, tmp_path, monkeypatch):
+    from retailops_ai.intelligence_events import suggestion_outbox
+
+    answer = query(database, tmp_path, lifetime=4)
+    original = suggestion_outbox.RecommendationGenerated.model_validate_json
+
+    def slow_validation(value):
+        result = original(value)
+        row = stored(database[1], answer)
+        with database[1].connect() as connection:
+            now = connection.scalar(text("SELECT clock_timestamp()"))
+        time.sleep(max(0, (row["expires_at"] - now).total_seconds()) + 0.05)
+        return result
+
+    monkeypatch.setattr(
+        suggestion_outbox.RecommendationGenerated, "model_validate_json", slow_validation
+    )
+    producer = Producer()
+    assert not deliver_suggestion_one(database[1], producer, environment="test")
+    assert producer.sent == []
+    assert stored(database[1], answer)["status"] == "expired"
+
+
+def test_ack_then_sql_crash_has_safe_identical_retry(database, tmp_path):
+    answer = query(database, tmp_path)
+    first = Producer()
+
+    def crash(connection, cursor, statement, parameters, context, executemany):
+        if "SET status='delivered'" in statement:
+            raise RuntimeError("scripted SQL completion crash")
+
+    event.listen(database[1], "before_cursor_execute", crash)
+    try:
+        with pytest.raises(RuntimeError, match="scripted SQL"):
+            deliver_suggestion_one(database[1], first, environment="test")
+    finally:
+        event.remove(database[1], "before_cursor_execute", crash)
+    assert stored(database[1], answer)["status"] == "pending"
+    second = Producer()
+    assert deliver_suggestion_one(database[1], second, environment="test")
+    assert first.sent == second.sent
+
+
+def test_competing_workers_publish_one_row_once(database, tmp_path):
+    answer = query(database, tmp_path)
+    producers = [Producer(delay=0.2), Producer(delay=0.2)]
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = list(
+            pool.map(
+                lambda p: deliver_suggestion_one(database[1], p, environment="test"), producers
+            )
+        )
+    assert sorted(results) == [False, True]
+    assert sum(len(p.sent) for p in producers) == 1
+    assert stored(database[1], answer)["status"] == "delivered"
+
+
+def test_outbox_keeps_its_copy_when_assistant_records_are_pruned(database, tmp_path):
+    answer = query(database, tmp_path)
+    before = bytes(stored(database[1], answer)["wire_bytes"])
+    # Simulate the Assistant's independent retention cleanup on this owned DB.
+    with database[1].begin() as connection:
+        connection.execute(
+            text("DELETE FROM ai.assistant_runs WHERE trace_id=:id"),
+            {"id": UUID(answer["trace_id"])},
+        )
+        assert (
+            connection.scalar(
+                text("SELECT count(*) FROM ai.assistant_suggestions WHERE trace_id=:id"),
+                {"id": UUID(answer["trace_id"])},
+            )
+            == 0
+        )
+    producer = Producer()
+    assert deliver_suggestion_one(database[1], producer, environment="test")
+    assert producer.sent[0][2] == before
+
+
+def test_downgrade_cannot_discard_retained_events(database, tmp_path):
+    import importlib
+
+    from alembic.migration import MigrationContext
+    from alembic.operations import Operations
+
+    answer = query(database, tmp_path)
+    migration = importlib.import_module(
+        "retailops_ai.migrations.versions.0028_ai12_suggestion_outbox"
+    )
+    with (
+        database[1].begin() as connection,
+        pytest.raises(DBAPIError, match="downgrade_requires_empty"),
+    ):
+        with Operations.context(MigrationContext.configure(connection)):
+            migration.downgrade()
+    assert stored(database[1], answer)["status"] == "pending"
+
+
+def test_outbox_rejects_mutation_premature_expiry_and_deletion(database, tmp_path):
+    answer = query(database, tmp_path)
+    for statement in (
+        "UPDATE ai.assistant_suggestion_outbox SET wire_bytes='tampered' WHERE trace_id=:id",
+        "UPDATE ai.assistant_suggestion_outbox SET status='expired',completed_at=clock_timestamp() WHERE trace_id=:id",
+    ):
+        with database[1].begin() as connection, pytest.raises(DBAPIError):
+            connection.execute(
+                text(statement),
+                {"id": UUID(answer["trace_id"])},
+            )
+    with database[1].begin() as connection, pytest.raises(DBAPIError):
+        connection.execute(
+            text("DELETE FROM ai.assistant_suggestion_outbox WHERE trace_id=:id"),
+            {"id": UUID(answer["trace_id"])},
+        )
+    assert stored(database[1], answer)["status"] == "pending"

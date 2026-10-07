@@ -1,0 +1,214 @@
+{
+  "aws_executed": false,
+  "candidate_family": "suggestion-outbox.v1",
+  "ci_checks": {
+    "compose_config_only": true,
+    "log_sha256": "b89889102b62291034749cdbf4889f71216d5b84efdcd2df2e0b03fb6d6b1669",
+    "status": "passed"
+  },
+  "ci_collection": {
+    "cases": 4812,
+    "collection_only": true,
+    "every_case_once": true,
+    "files": 217,
+    "sha256": "b21472d2ec05983c8aae3d720239bbff2fe84a371e70b4539dd2f9fbf5134e2c",
+    "shards": 4
+  },
+  "code_sha256": "e8e17b680ea85f3b55dfc000b0e0cac3146d0370513cc7873fce35d26dcd6d2c",
+  "evaluation_release_id": "agent-evaluation-release-sha256-46bf4635fa38f1f17130306731a81be6f0f2d8dc6c763dd521600185cae2f4e8",
+  "final_format_regression": {
+    "collected": 169,
+    "failures": 0,
+    "passed": 169,
+    "sha256": "8fb3268422386c4574956308ff4b71d50baff8212a2305844c57553339bc5858",
+    "skipped": 0
+  },
+  "integrated_main": "16a02aecbc4f9558e8222c02ad5a24d82745545b",
+  "limitations": [
+    "Broker callbacks are scripted; no live broker or Source projection/UI was qualified.",
+    "Only pinned Source v1 review payloads are transportable; native-v2 acceptance remains open.",
+    "A broker ACK before a SQL crash can repeat identical event bytes; Source must deduplicate by event ID.",
+    "Independent labels/policy, current Source/model publication, operational observations and AWS/LLM remain open."
+  ],
+  "model_refits": 0,
+  "native_http_sql_acceptance": {
+    "application_code_sha256": "e8e17b680ea85f3b55dfc000b0e0cac3146d0370513cc7873fce35d26dcd6d2c",
+    "authorized_trace_restart": "passed",
+    "aws_executed": false,
+    "canonical_forecast_and_stockout_sql": "missing_outputs_preserved",
+    "chat_provider": "fake",
+    "curated_dataset_id": "curated-sha256-7253251d1a4666819b6f25dadfb10530cf8ce1b71d4091593721b2fbad02967e",
+    "deadline_seconds": 45.0,
+    "embedding_provider": "fake",
+    "http_rejected_expired_source_horizons": [
+      "forecast",
+      "risk"
+    ],
+    "http_succeeded_intents": [
+      "sales",
+      "inventory",
+      "anomalies",
+      "operations",
+      "model",
+      "documentation"
+    ],
+    "index_generation_drift_rejected": true,
+    "native_and_knowledge_trace_revocation": "passed_after_policy_restart",
+    "native_read_adapters": 7,
+    "persisted_answers": 6,
+    "persisted_operations_review_outbox_events": 1,
+    "persisted_operations_review_suggestions": 1,
+    "positive_model_publication": "not_qualified_by_this_run",
+    "producer_write_denied": true,
+    "query_duration_seconds": [
+      0.5428076249954756,
+      0.45588120800675824,
+      0.001123458001529798,
+      0.0010888749966397882,
+      0.4436850000056438,
+      0.4636015839932952,
+      0.47206075000576675,
+      0.47177258400188293
+    ],
+    "semantic_quality": "not_evaluated_fake_vectors",
+    "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09",
+    "source_fixture": "full-raw-dq-v2/physical + day-coverage-v1/physical",
+    "status": "passed",
+    "tools": [
+      "get_demand_forecast",
+      "get_detected_anomalies",
+      "get_inventory_status",
+      "get_live_operations",
+      "get_model_status",
+      "get_sales_summary",
+      "get_stockout_risk",
+      "search_knowledge"
+    ],
+    "utc_readiness_rejection": true
+  },
+  "neighbor_worktrees_modified": false,
+  "new_head_remote_ci": "pending_publication",
+  "preserved": {
+    "dependency_locks": [
+      "uv.lock",
+      "environments/tensorflow/uv.lock",
+      "environments/anomaly/qualification.uv.lock",
+      "tools/intelligence-delivery/uv.lock",
+      "tools/intelligence-delivery/qualification.uv.lock",
+      "tools/intelligence-delivery/qualification.pyproject.toml"
+    ],
+    "historical_receipts_and_migrations": 435,
+    "model_modules_equal_main": 83,
+    "published_agent_files": 83,
+    "source_owner_equal_main": true
+  },
+  "prior_published_ci": {
+    "head": "6b05497904a4b36915c5d1c5978edcd35dd4945d",
+    "passed": 17,
+    "result": "success",
+    "run": 37664390045,
+    "total": 17
+  },
+  "published_base": "6b05497904a4b36915c5d1c5978edcd35dd4945d",
+  "recorded_date": "2026-10-07",
+  "regression": {
+    "collected": 899,
+    "failures": 0,
+    "passed": 898,
+    "sha256": "c3f4154fdb9b38c3166f56ecbad65ba09a13d4c0d2bb959a547ee5ca3799d877",
+    "skipped": 1
+  },
+  "secrets": {
+    "history": "passed",
+    "history_log_sha256": "6d9c2610fb562bdcec4d7d4665a6d7b422ad1f05bfde363ea6061a67b0d59fb6",
+    "tree": "passed",
+    "tree_log_sha256": "3095f375022abf9d152de9712bd1f3e717182ca038c9d2c2d3fae030f6aa87de"
+  },
+  "shared_services_started": false,
+  "source_contract": {
+    "accepted_payload_policy": "read-only-review-v1",
+    "commit": "090c26307fd508899ad6ef24504c151875db820b",
+    "files": {
+      "recommendation_generated.fixture.json": "242504af2ad28150796db3870739529938cfc0921c923fd0719e829428e7bac6",
+      "recommendation_generated.schema.json": "7187f64c637cb77eb3944d28776b1d0517925e676c9e63a2527eada0401d337a",
+      "registry.json": "91663e01261b355452b90b0f406aaceca5dc4e261b032e7488d4dbe60171bc41",
+      "suggestion-candidate.v1.schema.json": "401b3bb30cf959fc7b8f3b1cb89d60076825d31563bc4a04a464ba199eac638d",
+      "suggestion.v1.schema.json": "5d7ebc50237dc98c28cebb9b93f498f5d9c26d1f46dac189bbd3392376fa2eec"
+    },
+    "native_v2_transport_accepted": false,
+    "qualification": "source_fixture_transport_contract_only",
+    "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+    "source_directory": "services/api/app/contracts/intelligence-suggestions-v1/",
+    "version": "ai12-suggestion-source-owner-1.0"
+  },
+  "source_projection_executed": false,
+  "sql_acceptance": {
+    "application_code_sha256": "e8e17b680ea85f3b55dfc000b0e0cac3146d0370513cc7873fce35d26dcd6d2c",
+    "atomic_completion": true,
+    "aws_executed": false,
+    "competing_workers_skip_locked": true,
+    "database_revision": "0028_ai12_suggestion_outbox",
+    "expired_send_withheld": true,
+    "identical_retry_bytes": true,
+    "policy": "read-only-review-v1",
+    "producer": "scripted_delivery_callback_no_broker",
+    "retry_after_ack_sql_crash": true,
+    "rollback_after_enqueue": true,
+    "source_projection_executed": false,
+    "status": "passed",
+    "stored_lifecycle_counts": {
+      "delivered": 28,
+      "expired": 6,
+      "pending": 1
+    }
+  },
+  "sql_tests": {
+    "collected": 19,
+    "failures": 0,
+    "passed": 19,
+    "sha256": "d2e384a1f5c87abc2cf388597318ca49f8bad69b3ae3029a0a11db6cdd4f3dc9",
+    "skipped": 0
+  },
+  "stage": "AI12",
+  "stage_status": "in_progress",
+  "status": "passed_local_sql_and_transport_mechanics",
+  "version": "ai12-suggestion-outbox-acceptance-1.0",
+  "wheel": {
+    "network_blocked_runtime": {
+      "aws_executed": false,
+      "case_pass": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "code_sha256": "e8e17b680ea85f3b55dfc000b0e0cac3146d0370513cc7873fce35d26dcd6d2c",
+      "critical_cases": {
+        "passed": 36,
+        "total": 36,
+        "value": 1.0
+      },
+      "native_tool_module_files": [
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/intelligence_events/suggestion_contracts.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/intelligence_events/suggestion_outbox.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/assistant/native_runtime.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/offline_policy_chat.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_inventory_tool.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_read_tools.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_stockout_tool.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_anomaly_tool.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_operations_tool.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_model_status_tool.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_assistant_tools.py"
+      ],
+      "network_connections_disallowed": true,
+      "package_file": "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/__init__.py",
+      "producer_imports_available": false,
+      "provider": "fake",
+      "status": "passed"
+    },
+    "python_modules_equal_to_checkout": 593,
+    "runtime_locks_equal_to_checkout": 2,
+    "sha256": "59169f419269fe107ad4121138cf389da69a5e7d1513ad8d08d94dd9b4c1d8c5",
+    "source_contract_files_equal_to_checkout": 6
+  }
+}

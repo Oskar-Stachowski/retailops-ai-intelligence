@@ -200,6 +200,7 @@ def test_all_eight_native_adapters_http_sql_persistence_revocation_and_index_dri
         ASSISTANT_REPLAY=replay,
         ASSISTANT_COVERAGE=coverage,
         ASSISTANT_PRODUCER_DATABASE_URL=producer_url,
+        ASSISTANT_SUGGESTION_OUTBOX_ENABLED=True,
     )
     # No AWS SDK client may be constructed, even accidentally by a fallback.
     import boto3
@@ -324,6 +325,17 @@ def test_all_eight_native_adapters_http_sql_persistence_revocation_and_index_dri
                         == 1
                     )
             snapshots.append((intent, answer["trace_id"], trace.json(), headers))
+            if intent == "operations":
+                with engine.connect() as conn:
+                    assert (
+                        conn.scalar(
+                            text(
+                                "SELECT count(*) FROM ai.assistant_suggestion_outbox WHERE trace_id=:id"
+                            ),
+                            {"id": UUID(answer["trace_id"])},
+                        )
+                        == 1
+                    )
             with engine.connect() as conn:
                 access = conn.scalar(
                     text("SELECT access_context FROM ai.assistant_runs WHERE trace_id=:id"),
@@ -417,6 +429,7 @@ def test_all_eight_native_adapters_http_sql_persistence_revocation_and_index_dri
             positive_model_publication="not_qualified_by_this_run",
             persisted_answers=len(snapshots),
             persisted_operations_review_suggestions=1,
+            persisted_operations_review_outbox_events=1,
             authorized_trace_restart="passed",
             native_and_knowledge_trace_revocation="passed_after_policy_restart",
             producer_write_denied=True,

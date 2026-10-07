@@ -35,6 +35,9 @@ class Settings(BaseSettings):
         default=None, validation_alias="API_AUTH_FILE", exclude=True, repr=False
     )
     rag_bedrock_enabled: bool = Field(default=False, validation_alias="RAG_BEDROCK_ENABLED")
+    assistant_suggestion_outbox_enabled: bool = Field(
+        default=False, validation_alias="ASSISTANT_SUGGESTION_OUTBOX_ENABLED"
+    )
     assistant_runtime_file: Path | None = Field(
         default=None, validation_alias="ASSISTANT_RUNTIME_FILE", exclude=True, repr=False
     )
@@ -91,6 +94,8 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def valid_network_boundary(self) -> "Settings":
+        if self.assistant_suggestion_outbox_enabled and self.database_url is None:
+            raise ValueError("suggestion_outbox_requires_database")
         runtime = (
             self.assistant_runtime_file is not None
             or self.assistant_native_offline_file is not None

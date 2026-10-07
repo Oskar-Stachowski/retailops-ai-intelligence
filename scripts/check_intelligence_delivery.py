@@ -22,7 +22,9 @@ def check(core: Path, delivery: Path, project: Path) -> dict[str, Any]:
     lock_sha256 = hashlib.sha256(raw).hexdigest()
     if lock_sha256 != CORE_LOCK_SHA256:
         root = Path(__file__).resolve().parents[1]
-        integration = json.loads((root / "agent/source-bundle.native-offline.v1.json").read_bytes())
+        integration = json.loads(
+            (root / "agent/source-bundle.suggestion-outbox.v1.json").read_bytes()
+        )
         frozen_raw = (root / "environments/anomaly/qualification.uv.lock").read_bytes()
         if (
             integration["version"] != "ai12-source-bundle-integration-1.0"

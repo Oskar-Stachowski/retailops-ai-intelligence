@@ -521,8 +521,8 @@ def test_verified_source_fixture_reaches_http_planner_graph_and_stored_trace(
     auth = LocalAccess(AccessPolicy.model_validate_json(json.dumps(raw)))
     now = datetime.now(UTC).replace(microsecond=0)
     root = Path(__file__).parents[1]
-    graph = load_graph_config(root / "agent/graph.evaluate.fake.native-offline.v1.json")
-    routes = load_question_routes(root / "agent/question-routes.native-offline.proposed.v1.json")
+    graph = load_graph_config(root / "agent/graph.evaluate.fake.suggestion-outbox.v1.json")
+    routes = load_question_routes(root / "agent/question-routes.suggestion-outbox.proposed.v1.json")
     body["question"] = next(row.question for row in routes.routes if row.intent == "sales")
     body["scope"].update(
         product_ids=[day.product_id],

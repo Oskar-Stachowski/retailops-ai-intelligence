@@ -50,3 +50,4 @@ Plan bazowy audytu: [RetailOps na cbf28b2](https://github.com/Oskar-Stachowski/r
 Generator, frontend i baza operacyjna należą do RetailOps. To repo ma własny lifecycle.
 
 [Native Assistant offline integration](docs/assistant-native-offline.md).
+[Transactional human-review suggestion emitter](docs/assistant-suggestion-outbox.md).

@@ -130,13 +130,23 @@ def main() -> int:
                 "AI12_NATIVE_REPORT": str(
                     Path("artifacts/ai12-native-offline-postgres.json").absolute()
                 ),
+                "AI12_SUGGESTION_REPORT": str(
+                    Path("artifacts/ai12-suggestion-outbox.json").absolute()
+                ),
                 "OMP_NUM_THREADS": "1",
                 "OPENBLAS_NUM_THREADS": "1",
                 "MKL_NUM_THREADS": "1",
                 "VECLIB_MAXIMUM_THREADS": "1",
             }
             return subprocess.run(
-                [sys.executable, "-m", "pytest", "tests/test_native_offline_postgres.py", "-q"],
+                [
+                    sys.executable,
+                    "-m",
+                    "pytest",
+                    "tests/test_native_offline_postgres.py",
+                    "tests/test_suggestion_outbox_postgres.py",
+                    "-q",
+                ],
                 env=env,
                 check=False,
             ).returncode

@@ -89,7 +89,7 @@ def setup(tmp_path, *, intent="sales", capabilities=None, provider_options=None,
     path.write_text(json.dumps(raw))
     path.chmod(0o600)
     authority = LocalAccess(AccessPolicy.model_validate_json(json.dumps(raw)))
-    config = load_graph_config(ROOT / "agent/graph.fake.native-offline.v1.json")
+    config = load_graph_config(ROOT / "agent/graph.fake.suggestion-outbox.v1.json")
     question = "What evidence is available?"
     body = {
         "question": question,

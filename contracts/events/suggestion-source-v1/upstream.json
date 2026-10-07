@@ -1,0 +1,16 @@
+{
+  "accepted_payload_policy": "read-only-review-v1",
+  "commit": "090c26307fd508899ad6ef24504c151875db820b",
+  "files": {
+    "recommendation_generated.fixture.json": "242504af2ad28150796db3870739529938cfc0921c923fd0719e829428e7bac6",
+    "recommendation_generated.schema.json": "7187f64c637cb77eb3944d28776b1d0517925e676c9e63a2527eada0401d337a",
+    "registry.json": "91663e01261b355452b90b0f406aaceca5dc4e261b032e7488d4dbe60171bc41",
+    "suggestion-candidate.v1.schema.json": "401b3bb30cf959fc7b8f3b1cb89d60076825d31563bc4a04a464ba199eac638d",
+    "suggestion.v1.schema.json": "5d7ebc50237dc98c28cebb9b93f498f5d9c26d1f46dac189bbd3392376fa2eec"
+  },
+  "native_v2_transport_accepted": false,
+  "qualification": "source_fixture_transport_contract_only",
+  "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+  "source_directory": "services/api/app/contracts/intelligence-suggestions-v1/",
+  "version": "ai12-suggestion-source-owner-1.0"
+}

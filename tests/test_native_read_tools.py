@@ -889,7 +889,9 @@ def test_http_native_routes_persist_required_grants_and_safe_trace(tmp_path, mon
         else dict(start="2026-08-22", end="2026-08-22"),
     )
     tool, _ = adapter(kind, state="no_alert" if kind == "anomalies" else "alert")
-    graph = load_graph_config(Path(__file__).parents[1] / "agent/graph.fake.native-offline.v1.json")
+    graph = load_graph_config(
+        Path(__file__).parents[1] / "agent/graph.fake.suggestion-outbox.v1.json"
+    )
 
     async def planner(body, principal):
         assert {str(v) for v in body.scope.product_ids} == set(call.scope.product_ids)

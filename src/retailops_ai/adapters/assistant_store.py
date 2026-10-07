@@ -37,10 +37,13 @@ def run_record(value: object) -> AssistantRun:
 
 
 class PostgresAssistantStore:
-    def __init__(self, engine: AsyncEngine, environment: str) -> None:
+    def __init__(
+        self, engine: AsyncEngine, environment: str, *, suggestion_outbox_enabled: bool = False
+    ) -> None:
         if environment not in {"local", "test"}:
             raise ValueError("assistant_environment_invalid")
         self.engine, self.environment = engine, environment
+        self.suggestion_outbox_enabled = suggestion_outbox_enabled
 
     async def admit(
         self, lease: RunLease, policy: AdmissionPolicy, deadline_seconds: float
@@ -232,6 +235,10 @@ class PostgresAssistantStore:
                 ),
                 {"id": run.trace_id, "status": run.status, "record": run.model_dump_json()},
             )
+            if self.suggestion_outbox_enabled:
+                from retailops_ai.intelligence_events.suggestion_outbox import enqueue_suggestions
+
+                await enqueue_suggestions(connection, suggestions, environment=self.environment)
 
     async def get(self, trace_id: UUID, principal: Principal) -> AssistantRun | None:
         async with self.engine.begin() as connection:

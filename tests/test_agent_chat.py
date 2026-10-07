@@ -26,7 +26,7 @@ from retailops_ai.agent.tools import OUTPUT
 from retailops_ai.cli import main
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "agent/chat.fake.native-offline.v1.json"
+CONFIG = ROOT / "agent/chat.fake.suggestion-outbox.v1.json"
 QUESTION = "What evidence is available?"
 PRIVATE = "private-chat-secret-marker"
 

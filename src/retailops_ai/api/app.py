@@ -114,8 +114,21 @@ def create_app(
     engine = database_engine(settings) if settings.database_url is not None else None
     if assistant_store is not None and settings.app_env != "test":
         raise ValueError("injected_assistant_store_requires_test_environment")
+    if (
+        settings.assistant_suggestion_outbox_enabled
+        and assistant_store is not None
+        and (
+            not isinstance(assistant_store, PostgresAssistantStore)
+            or not assistant_store.suggestion_outbox_enabled
+        )
+    ):
+        raise ValueError("suggestion_outbox_requires_enabled_postgres_store")
     if assistant_store is None and engine is not None:
-        assistant_store = PostgresAssistantStore(engine, settings.app_env)
+        assistant_store = PostgresAssistantStore(
+            engine,
+            settings.app_env,
+            suggestion_outbox_enabled=settings.assistant_suggestion_outbox_enabled,
+        )
     assistant_service = None
     knowledge_engine = None
     producer_engine = None
@@ -235,6 +248,11 @@ def create_app(
             authority,
             settings.app_env,
         )
+        if settings.assistant_suggestion_outbox_enabled and (
+            assistant_backend.runtime_config.graph.policy.suggestions.policy_version
+            != "read-only-review-v1"
+        ):
+            raise ValueError("suggestion_transport_requires_source_accepted_v1_policy")
         dependencies = (
             *dependencies,
             Dependency("assistant_native_offline", assistant_backend.check),

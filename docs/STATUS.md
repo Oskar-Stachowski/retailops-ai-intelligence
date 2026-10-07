@@ -1103,3 +1103,22 @@ checkpoint wymaga własnego Required CI. Lokalny odbiór i ograniczenia opisują
 Stan AI12 pozostaje **in_progress**, PR32 jest draft. Pełne dane bieżące i dodatnia
 publikacja modeli, niezależne etykiety/polityka, runtime Sonnet/Titan, obserwacje
 operacyjne i przekazanie AI10 pozostają otwarte. Sąsiednich sesji nie zmieniano.
+
+## 2026-10-07 — AI12: atomowy emiter sugestii
+
+Opcjonalny outbox zapisuje odpowiedź, sugestie review, końcowy run i zdarzenie
+`recommendation_generated` w jednej transakcji. Worker zachowuje ID oraz dokładne
+bajty przy ponowieniu, pomija wygasłe sugestie i zapisuje potwierdzenie dopiero po
+poprawnym ACK. Migracja `0028_ai12_suggestion_outbox` chroni pochodzenie, cykl
+życia, limit 1000 rekordów i własną retencję. Transport domyślnie jest wyłączony.
+
+19 przypadków na prywatnym PostgreSQL przeszło, w tym rollback, awaria po ACK,
+konkurencyjni workerzy i ochrona przed utratą przy downgrade. Kontrakt wiąże
+przypiętą projekcję Source v1; proponowana polityka native-v2 nie jest automatycznie
+zmieniana na v1. [Opis](assistant-suggestion-outbox.md),
+[odbiór](evidence/12-suggestion-outbox.md). Aktywna rodzina kandydatów to
+`.suggestion-outbox.v1`; wcześniejsze rodziny i dowody pozostają niezmienione.
+
+Stan nadal **in_progress**, PR32 pozostaje draft. Faktyczne dostarczenie do
+Source/UI, odbiór natywnej polityki, etykiety oraz AWS/LLM pozostają otwarte.
+Nie uruchamiano brokera, AWS ani usług AI10 i nie zmieniano sąsiednich sesji.

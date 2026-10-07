@@ -21,6 +21,19 @@ def test_workflow_is_covered_by_required_result():
     assert module.workflow_errors(workflow()) == []
 
 
+def test_native_assistant_and_suggestion_sql_gate_cannot_be_dropped():
+    data = workflow()
+    data["jobs"]["persistence"]["steps"] = [
+        step
+        for step in data["jobs"]["persistence"]["steps"]
+        if step.get("run") != "make native-offline-smoke"
+    ]
+    assert (
+        "persistence must execute native Assistant and suggestion SQL acceptance"
+        in module.workflow_errors(data)
+    )
+
+
 @pytest.mark.parametrize("mutation", ["removed", "bypassed", "not-required"])
 def test_observation_persistence_gate_cannot_be_skipped(mutation):
     data = workflow()

@@ -156,6 +156,7 @@ contracts-check:
 	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py --check
 	$(UV_RUN) python scripts/update_intelligence_event_contracts.py --check
+	$(UV_RUN) python scripts/check_suggestion_source_contract.py
 	$(UV_RUN) python scripts/update_stockout_job_contracts.py --check
 	$(UV_RUN) python scripts/update_agent_contracts.py --check
 	$(UV_RUN) python scripts/update_agent_chat_contracts.py --check
@@ -167,13 +168,13 @@ agent-security-test:
 	$(UV_RUN) pytest tests/test_native_forecast_tool.py tests/test_qualified_sales_tool.py tests/test_native_inventory_tool.py tests/test_native_read_tools.py tests/test_assistant_routes.py tests/test_bedrock_access.py tests/test_agent_tools.py tests/test_agent_chat.py tests/test_agent_graph.py tests/test_document_evidence.py tests/test_agent_suggestions.py tests/test_agent_evaluation.py tests/test_assistant.py tests/test_document_runtime.py tests/test_bedrock_chat.py
 
 agent-evaluate:
-	$(UV_RUN) retailops-ai agent-evaluate --provider "$(PROVIDER)" --config agent/graph.evaluate.fake.native-offline.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.native-offline.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock
+	$(UV_RUN) retailops-ai agent-evaluate --provider "$(PROVIDER)" --config agent/graph.evaluate.fake.suggestion-outbox.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.suggestion-outbox.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock
 
 native-offline-smoke:
 	$(UV_RUN) python scripts/check_native_offline_postgres.py
 
 bedrock-smoke:
-	$(UV_RUN) retailops-ai bedrock-smoke --config agent/graph.bedrock-smoke.native-offline.v1.json --offline-config agent/graph.evaluate.fake.native-offline.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.native-offline.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock --profile agent/bedrock-smoke.native-offline.v1.json $(BEDROCK_ARGS)
+	$(UV_RUN) retailops-ai bedrock-smoke --config agent/graph.bedrock-smoke.suggestion-outbox.v1.json --offline-config agent/graph.evaluate.fake.suggestion-outbox.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.suggestion-outbox.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock --profile agent/bedrock-smoke.suggestion-outbox.v1.json $(BEDROCK_ARGS)
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up
