@@ -1,6 +1,7 @@
 # AI 10 — typowany klient chronionych odczytów źródła
 
-Status: drugi przyrost; cały AI 10 pozostaje `in_progress`.
+Implementacja bounded live reads ma odbiór cross-repo. Bieżący stan całego
+etapu i dokładne receipts podaje [raport AI10](ai10-acceptance.md).
 `SourceClient` czyta `/integration/v2/*` przez osobne credentials usługi.
 Nie używa bezpośredniego połączenia AI z bazą RetailOps ani demo usera.
 
@@ -93,5 +94,7 @@ HTTP/API/PostgreSQL wymaga przypiętego klienta i własnych testowych rekordów.
 
 Rollback: zatrzymaj własnego klienta i usuń jego grant z prywatnej policy,
 restartując wyłącznie własne API. Nie ma migracji ani cleanup wspólnej bazy.
-Pozostają pełny grain/export, snapshot/log handoff, korekty, modele AI 07/08,
-approved-head, UI i pełne temporalne E2E trzech modeli.
+Pełne native grain, wersje i availability zapewnia osobny wersjonowany
+[immutable bundle](source-bundles.md). Stream/capture, oryginalne publisher SQL,
+modele i API/UI mają odrębne receipts w [raporcie AI10](ai10-acceptance.md).
+Zaliczenie bounded REST nie rozszerza jego deklarowanych capabilities.

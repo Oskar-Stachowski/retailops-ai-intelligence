@@ -9,6 +9,12 @@ oraz zielony Required CI dokładnych HEAD i merge commitów obu repozytoriów.
 **AI 08 jest READY.** [Końcowy raport](docs/evidence/08-28-final-ready.md) obejmuje
 kwalifikowany model, rzeczywisty lifecycle/batch/API oraz zielone CI obu main.
 
+**AI 10: końcowa integracja w toku.**
+[Bieżący odbiór i instrukcja krok po kroku](docs/ai10-acceptance.md) obejmują
+snapshot/REST/stream, real SQL/ACK i wyniki trzech ścieżek ML w RetailOps API/UI.
+Oryginalny publisher stockout jest odebrany; publisher anomaly i pełny v12 są w odbiorze.
+Publikacja na obu `origin/main` pozostaje warunkiem zamknięcia.
+
 **Status: AI 04 — finalna v12, `ready` z zaakceptowanymi odstępstwami jakościowymi.**
 [Decyzja i zakres odbioru](docs/evidence/04-v12-acceptance.md) obowiązują po
 chronionym merge i Required CI. Etapy 01 i 11 są odebrane lokalnie.

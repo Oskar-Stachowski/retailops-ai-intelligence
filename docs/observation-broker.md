@@ -5,6 +5,13 @@ to a real Kafka-compatible broker. It does not create a Source producer or topic
 capture operational Source SQL, hand off all 43 SourceSnapshot tables, or qualify
 models. The acceptance publisher is an explicit synthetic observation fixture.
 
+The separate Source-owned operational publisher/capture is now implemented.
+Its [dedicated same-broker handoff](evidence/ai10-source-sql-handoff-accepted.json)
+executes original Source SQL/TLS/SCRAM, then this actual AI SQL/ACK adapter;
+the generated protocol observations are explicit and do not qualify models.
+The twelve-check broker job described below remains its own independent
+failure/auth/transport acceptance and preserves its original fixture scope.
+
 ## Run a bounded batch
 
 1. Apply migration `0021_observation_replay` explicitly using the existing AI

@@ -2,8 +2,11 @@
 
 This extends the [in-memory receiver](source-observation-replay.md) with a real
 PostgreSQL projection. It does **not** turn live Source REST into an immutable
-snapshot, create a Source emitter/topic, or qualify AI07/AI08. The full 43-table
-Source capture remains separate acceptance work. The
+snapshot, create a Source emitter/topic, or qualify AI07/AI08. Source owns a
+separate operational publisher/capture for `daily_demand_versions`; its
+[same-broker Source to AI SQL/ACK receipt](evidence/ai10-source-sql-handoff-accepted.json)
+has passed. Full 43-table immutable bundles remain separate from this stream;
+general 43-table SQL snapshot/handoff is explicitly unsupported. The
 [authenticated broker adapter](observation-broker.md) builds on this SQL core.
 
 ## Processing and recovery
@@ -11,7 +14,7 @@ Source capture remains separate acceptance work. The
 1. Apply explicit Alembic migration `0021_observation_replay`. No API startup
    migration or new dependency is introduced. Six new `ai.observation_*` tables
    are additive; downgrade removes this projection, leaving prior AI tables.
-2. Supply a trusted `Stream` and partition count from the eventual transport
+2. Supply a trusted `Stream` and partition count from the authenticated transport
    adapter. `ObservationStore.claim()` pins authority, cluster, native topic ID
    and complete partition count per group. Every group starts from offset zero;
    a retention gap, log rewind or broker commit ahead of SQL requires resync.

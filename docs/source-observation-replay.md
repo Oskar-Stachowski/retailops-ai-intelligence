@@ -5,13 +5,15 @@ Pakiet `retailops_ai.source_replay` oblicza ograniczony kandydat historii
 as-of; obydwie wersje pozostają w historii. Odbiorca porównuje nakładające się
 zdarzenia z receiptami objętymi capture, wykrywa luki i kolizje identyfikatorów.
 
-**Status: mechanika odbiorcy, protokół proponowany.** Nie istnieje jeszcze
-źródłowy producent tego capture ani topicu `retailops.source-observations.v1`.
-Nie jest to odbiór live SQL, PostgreSQL/brokera, trwałego checkpointu, ACK/DLQ
-ani pełnego 43-table SourceSnapshot 1.2. Warstwa nie wykonuje ACK, nie zapisuje
-do bazy i nie uruchamia modeli. Dotychczasowy bundle zachowuje
-`replay_handoff=false`, a REST nadal zwraca unsupported dla snapshot/handoff.
-Fixture transportu i dodatkowej korekty są jawne.
+**Status modułu: mechanika odbiorcy w pamięci.** Source ma teraz osobny
+operacyjny publisher/capture `retailops.source-observations.v1`, a AI ma
+[trwały SQL](durable-observation-replay.md) i [adapter TLS/SCRAM](observation-broker.md).
+Ich rzeczywisty wspólny handoff zaliczył SQL, ACK, overlap oraz późną korektę:
+[receipt](evidence/ai10-source-sql-handoff-accepted.json). Sam opisany niżej
+moduł pamięciowy nie wykonuje ACK, nie zapisuje do bazy i nie uruchamia modeli.
+Scope streamu obejmuje `daily_demand_versions`; pełny 43-table immutable bundle
+zachowuje `replay_handoff=false`, a ogólny snapshot REST/SQL jest unsupported.
+Fixture protokołu i dodatkowej korekty są jawne; nie kwalifikują modeli.
 
 ## Kontrakt
 
@@ -36,8 +38,9 @@ faktu. Nowy envelope dla tej samej wersji tworzy receipt i przesuwa granicę,
 ale nie dodaje drugiego wkładu. Ten sam offset musi wskazywać dokładnie ten sam
 envelope i fakt. Ponowne użycie event ID z inną treścią, row ID z inną wersją,
 wersji z inną wartością lub naturalnego grain z innym observation ID zatrzymuje
-przetwarzanie. Receipts nie są fingerprintem surowych bajtów Kafka; przyszła
-warstwa trwałości musi zachować także raw/key/headers i transport metadata.
+przetwarzanie. Receipts semantycznego capture nie są fingerprintem surowych
+bajtów Kafka; istniejąca warstwa trwałości zachowuje dodatkowo
+raw/key/headers/timestamp i sprawdza cały odcisk transportu przed replay/ACK.
 
 ## Krok po kroku
 
@@ -105,13 +108,13 @@ missing/closed, granice rozmiaru oraz zmodyfikowany i ponownie zahashowany captu
 
 ## Następny krok i rollback
 
-Source musi utrwalić capture, wersje i granice w jednej spójnej transakcji,
-z niezależną autoryzacją dostępu. Potem potrzebna jest trwała projekcja AI:
-fact inbox, raw receipts, checkpoint i quarantine z fencing w jednej transakcji,
-ACK dopiero po commit, oraz testy realnego SQL/brokera, SIGKILL i konkurencyjnego
-eksportu. Pełny handoff musi objąć wszystkie wymagane tabele i zależności,
-a temporalny odbiór modeli użyć profilu 102 dni.
+Source utrwala single-table capture pod SQL authority barrier i porównuje
+pełny broker prefix; AI ma atomowe facts/raw receipts/checkpoint/quarantine,
+fencing i ACK po commit. Dedykowane real SQL/broker/SIGKILL i concurrent
+capture jobs są obowiązkowe. Dokładny stan całego etapu oraz temporalnych
+modeli na 102 dniach podaje [odbiór AI10](ai10-acceptance.md).
 
-Zmiana jest opt-in biblioteką i bramką offline. Rollback polega na niewłączeniu
-odbiorcy lub wycofaniu przyrostu. Nie ma migracji, konfiguracji runtime,
-przełączenia produkcyjnych modeli ani zmian w istniejących capabilities.
+Moduł pamięciowy pozostaje opt-in. Runtime SQL ma jawną migrację
+`0021_observation_replay`; rollback zatrzymuje własnego odbiorcę i zachowuje
+historię, sealed captures oraz backlog. Nie usuwaj niepustych tabel, aby
+cofnąć aplikację. Produkcyjne modele i zakresy capabilities mają osobny odbiór.

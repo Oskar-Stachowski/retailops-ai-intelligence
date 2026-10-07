@@ -14,6 +14,17 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
 
 ### Odebrane komponenty bieżącej integracji
 
+**Oryginalny publisher stockout passed:** run `37608775665`, job
+`112750656385`, AI `b1df980` i Source `cbbf711`. Oryginalny frozen model,
+registry/cold worker, 40 native wyników i 40 rzeczywistych SQL ACK przeszły
+pełny Source broker/SQL/TCP API/built UI, 40 duplicates, original payloads,
+lineage i live revocation. ACK vector `[34,46]`. ZIP 662587 B niezależnie
+zweryfikowano względem SHA `e9637201743809a5ecf2c4c98fab2899cab9efd7c4a0bd8a97b0aad422f0c55c`;
+[receipt](evidence/ai10-native-stockout-original-sql-accepted.json) zachowuje
+oryginalne raporty. Niezależny lokalny Source parser ponownie zweryfikował
+wszystkie 40 native outputów i oryginalnych ACK bindings. Zero refitów i brak
+production deployment pozostają zachowane. Publisher anomaly i v12 jeszcze pending.
+
 **Publisher z oryginalnej bazy — nowy przyrost, runtime pending:** Source
 `b73468a` dodaje wiązanie pełnego census z oryginalnymi AI SQL ACK i SHA
 rzeczywistych konsumowanych bytes. Natywne acceptory stockout/anomaly

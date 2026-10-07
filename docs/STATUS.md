@@ -5,8 +5,13 @@
 Migracja `0024_ai10_integration` zachowuje obie wcześniejsze historie.
 Nowy head `0025_model_intelligence_outbox` dodaje atomowe zdarzenia native
 anomaly i stockout. [Instrukcja integracji modeli](intelligence-models-v2.md).
-Pełny capture źródła, trzy rzeczywiste modele, API/UI i temporal E2E
-pozostają wymagane przed statusem ready. Wcześniejsze wpisy opisują historię.
+Rzeczywisty Source capture → ten sam TLS/SCRAM broker → AI SQL/ACK/overlap
+jest odebrany. Qualified stockout/anomaly mają pełny Source API i built UI.
+Stockout ma także odebrany oryginalny AI SQL publisher; publisher anomaly
+i v12 na 102-dniowych wejściach są nadal w odbiorze.
+[Bieżąca instrukcja i checklist](ai10-acceptance.md) wiążą dowody wykonania.
+Protected merge i Required CI obu main pozostają wymagane przed `ready`.
+Wcześniejsze wpisy opisują historię.
 
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
@@ -20,11 +25,13 @@ wiążą zakres, konkretne commity i zaliczone kontrole.
 Publikacja została zatwierdzona i wykonana w
 [AI PR #24](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/24)
 oraz [source PR #97](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/97).
-Pełne **AI 07 `ready` na `main`** wymaga scalenia PR #24 i #97 oraz zielonego
-Required CI dokładnych commitów integracji i obu merge commitów. Wyniki są
-wiązane z SHA w tych PR-ach; wcześniejszy odbiór na gałęziach nie zastępuje
-odbioru integracji. [Zakres połączenia z main](evidence/07-main-integration.md)
-opisuje wspólne migracje i zachowanie AI 05/08.
+**AI 07 jest `ready` na zaakceptowanych main.** Oba PR-y są scalone.
+AI `18e771f9c2e89e91bf7afeb1744e0cd9112f50b5` ma zielony
+[Required CI 37304852763](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37304852763),
+a Source `1de462729012a1bad458a8da4ad317ec22dbc5b8` ma zielony
+[Required CI 37305855911](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37305855911).
+[Zakres połączenia z main](evidence/07-main-integration.md) zachowuje
+wspólne migracje i odbiór AI 05/08.
 
 **2026-10-05: cały etap AI 08 jest READY.**
 [Końcowe zamknięcie](evidence/08-28-final-ready.md) i
