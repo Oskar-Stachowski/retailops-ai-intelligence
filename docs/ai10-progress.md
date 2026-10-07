@@ -14,6 +14,17 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
 
 ### Odebrane komponenty bieżącej integracji
 
+**Nowszy main AI09 — zgodność current campaign pin:** dołączono `e1f864c`
+z audytowanym eksportem i zaakceptowanymi optymalizacjami. Bieżący campaign hash
+zmieniły dokładnie `data_contracts/identity.py` i `forecasting/features_store.py`.
+Guard importu bundle wymaga teraz pinu `d0df4db9a143e8e0dd5573dec8f55e5f6650da88af0dae61c800230d6d09c2ef`;
+poprzedni `cdbd3c` zachowano. Wszystkie 26 wire/importer/schema/lock pins,
+oryginalny frozen v12 i jego decyzja pozostają zachowane. [Dowód zgodności](evidence/ai10-accepted-main-campaign-repin.json)
+obejmuje 141 wykonanych testów bez failures/skips, rzeczywisty HTTP bundle import,
+byte/error parity serializacji oraz odmowę origin spoza kalendarza. Lint/format
+1107 plików, mypy 654+10 i wszystkie kontrakty passed. Końcowy CI nowego HEAD
+pozostaje wymagany; ten przyrost nie ponawia naukowej kwalifikacji modeli.
+
 **Powtarzalność v12:** archive i native workflow uruchamiają się wyłącznie przez
 `workflow_dispatch`, ze świeżą nazwą task-owned secretu i SHA prywatnej mapy.
 Native wymaga również jawnej zamkniętej daty UTC inference. Nie ma automatycznego

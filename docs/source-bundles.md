@@ -14,9 +14,12 @@ Ich sumy mają osobny pin `ai_model_snapshot_importer_commit`; historia
 Historyczny pin kampanii v12
 `8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011`
 pozostaje zapisany przy wcześniejszych dowodach. Pin bieżącej implementacji
-zaakceptowanego `main` to
-`cdbd3c1307bb8c3d07b2325f7166d2061ed4a017a4f20bf7f42e1e79b5039b35`;
-różnica obejmuje przyjęte zmiany importerów 1.2 i kodu współdzielonego.
+zaakceptowanego `main` `e1f864c33678f2bed65b550e7676c21a21934e35` to
+`d0df4db9a143e8e0dd5573dec8f55e5f6650da88af0dae61c800230d6d09c2ef`.
+Poprzedni pin `cdbd3c1307bb8c3d07b2325f7166d2061ed4a017a4f20bf7f42e1e79b5039b35`
+jest zachowany jako historia. Zmiana bieżącego pinu obejmuje zaakceptowane
+optymalizacje AI09 w `data_contracts/identity.py` i `forecasting/features_store.py`.
+Moduły importera, główny lock, oryginalny wheel i historyczny pin v12 zachowano.
 Kontrola transferu pilnuje bieżącego pinu i nie modyfikuje kampanii ani modelu.
 Kontrola typów sprawdza osobno dokładny namespace wykonania natywnej kopii.
 

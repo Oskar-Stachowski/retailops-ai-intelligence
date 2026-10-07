@@ -36,5 +36,7 @@
   "legacy_snapshot_commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
   "frozen_v12_campaign_pin_sha256": "8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011",
   "ai_model_snapshot_importer_commit": "18e771f9c2e89e91bf7afeb1744e0cd9112f50b5",
-  "accepted_main_campaign_pin_sha256": "cdbd3c1307bb8c3d07b2325f7166d2061ed4a017a4f20bf7f42e1e79b5039b35"
+  "accepted_main_campaign_pin_sha256": "d0df4db9a143e8e0dd5573dec8f55e5f6650da88af0dae61c800230d6d09c2ef",
+  "accepted_main_campaign_commit": "e1f864c33678f2bed65b550e7676c21a21934e35",
+  "previous_accepted_main_campaign_pin_sha256": "cdbd3c1307bb8c3d07b2325f7166d2061ed4a017a4f20bf7f42e1e79b5039b35"
 }
