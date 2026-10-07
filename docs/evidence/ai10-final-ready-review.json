@@ -1,0 +1,328 @@
+{
+  "delivery_gate": {
+    "AI_PR": 38,
+    "AI_URL": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/38",
+    "Source_PR": 104,
+    "Source_URL": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/104",
+    "both_final_exact_main_Required_CI_required": true,
+    "future_main_CI_claimed_as_executed": false,
+    "method": "normal_protected_merge",
+    "verification_source": "actual GitHub PR state, merge commit and Required CI of the resulting origin/main; the record deliberately does not contain a self-referential future commit or CI receipt"
+  },
+  "development_namespace": "retailops-demand-forecast-v12-development",
+  "earlier_increment_heads_contained_in_main": {
+    "AI": 7,
+    "Source": 11,
+    "proof": "actual git merge-base --is-ancestor for each previous owned increment branch"
+  },
+  "exact_receipts": [
+    {
+      "path": "docs/evidence/ai10-ai-code-main-ci.json",
+      "receipt_status": "passed",
+      "sha256": "8a7d684cb00b3deebfc575e69f977ab8d5066c3734ab3c95102ac65cf329426a"
+    },
+    {
+      "path": "docs/evidence/ai10-v12-controller-fix-ci.json",
+      "receipt_status": "passed",
+      "sha256": "656fa453726cac0368631b9c89722042d5b80ff089974cb45ddfcc303f12e4eb"
+    },
+    {
+      "path": "docs/evidence/ai10-ai-integrated-head-ci.json",
+      "receipt_status": "passed",
+      "sha256": "d9c97c6ba952720b6b26747ca2359726fdd97284f4946b82943e242356614aa4"
+    },
+    {
+      "path": "docs/evidence/ai10-ai-b0-main-ci.json",
+      "receipt_status": "passed",
+      "sha256": "60012596e0d6fc1c42dd69218da8ef40c85b586714567fa7b7cf976dbeaa447f"
+    },
+    {
+      "path": "docs/evidence/ai10-ai09-main-integration.json",
+      "receipt_status": "passed_component",
+      "sha256": "2d4348dc5842065903657810e8939fdebb1d23397f363ba3bc770244f08be291"
+    },
+    {
+      "path": "docs/evidence/ai10-source-launcher-fix-ci.json",
+      "receipt_status": "passed",
+      "sha256": "3cc14ecb0c4d62c1bb346dbac9277e087f4b3be499b373a41e280cf52649314d"
+    },
+    {
+      "path": "docs/evidence/ai10-source-code-main-ci.json",
+      "receipt_status": "passed",
+      "sha256": "651b96711391180d4d0aa7b73cf13b3960474a3c6b04cae89f374c6963fbf37a"
+    },
+    {
+      "path": "docs/evidence/ai10-source-components-ci.json",
+      "receipt_status": "passed",
+      "sha256": "ec099dfab3045cde1c2811fbc5be423d4d62c40c6a4fe98520cdf4c9ba6b6e8f"
+    },
+    {
+      "path": "docs/evidence/ai10-source-final-head-ci.json",
+      "receipt_status": "passed",
+      "sha256": "03e825e916f7e40f766db9955042ccd09c5468b384ebc25f79566a74ab1ad292"
+    },
+    {
+      "path": "docs/evidence/ai10-source-b723489-main-result-failure.json",
+      "receipt_status": "failed",
+      "sha256": "ff88f595350a8d1a01c9777527fd3a71d4f3a2b166503010567992a42f1d43b0"
+    },
+    {
+      "path": "docs/evidence/ai10-source-b723489-main-ci.json",
+      "receipt_status": "passed",
+      "sha256": "b5f145448b000261b40ed1d65f414d4cdd8b3c35aef6f613d0b2b019153742d6"
+    },
+    {
+      "path": "docs/evidence/ai10-source-python-launcher-fix.json",
+      "receipt_status": "passed_component",
+      "sha256": "9cf728e2f1fc090a1d11f6d7558b4e0609790787fa9b46ad9c784b386e9645f9"
+    },
+    {
+      "path": "docs/evidence/ai10-accepted-main-campaign-repin.json",
+      "receipt_status": "passed",
+      "sha256": "1a70d105084886668809e03307b7d1f32ae4ad5fb71cf7c1980f549f45b1664f"
+    },
+    {
+      "path": "docs/ai10-checkpoint-ci-receipt.json",
+      "receipt_status": "ready_for_review",
+      "sha256": "dc0154fbcc2159288f25e5ea73f9e6133548a630aface812f87d5a85450fecb0"
+    },
+    {
+      "path": "docs/ai10-durable-observation-replay-ci-receipt.json",
+      "receipt_status": "passed",
+      "sha256": "4b30f11498fb5d222f9b779dfaaa71bdc2e8fe0985551b2da9aaf25d1035f2f1"
+    },
+    {
+      "path": "docs/ai10-observation-broker-ci-receipt.json",
+      "receipt_status": "passed",
+      "sha256": "67c08c8d63516b67fa6b4022830fc81ec0f8f7308a3abe77b3671bccaa40b69b"
+    },
+    {
+      "path": "docs/ai10-runtime-ci-receipt.json",
+      "receipt_status": "complete",
+      "sha256": "831a256391dd2b25485e65d4972a4a74492429ae101813bc5deb8bb29e2fde1b"
+    },
+    {
+      "path": "docs/ai10-rest-ci-receipt.json",
+      "receipt_status": "ready_for_review",
+      "sha256": "4c6d78912717dcba0549111b254355a3882761047a66b9ccc923ff6ca33b4a85"
+    },
+    {
+      "path": "docs/ai10-source-bundle-ci-receipt.json",
+      "receipt_status": "success",
+      "sha256": "0f3431514979b8ae09cac1875fbf618f69a81fa6a32adc29ec1c74a9249ef6b1"
+    },
+    {
+      "path": "docs/evidence/ai10-source-sql-handoff-accepted.json",
+      "receipt_status": "passed",
+      "sha256": "d623e9ba82a137f618b4f0ba89a87c956d6597891e3c11bb70bf964da22e281a"
+    },
+    {
+      "path": "docs/evidence/ai10-native-anomaly-final-head-accepted.json",
+      "receipt_status": "passed",
+      "sha256": "d3992e4d438b199b8c365f833ff0c65c2802cadce6d24dbba0a04f5244bfaa54"
+    },
+    {
+      "path": "docs/evidence/ai10-native-anomaly-original-sql-accepted.json",
+      "receipt_status": "passed",
+      "sha256": "d6daefee6462f57c7d8c75901a9abe69a36ce927ebff56729e77dcdcc28933dd"
+    },
+    {
+      "path": "docs/evidence/ai10-native-anomaly-accepted.json",
+      "receipt_status": "passed",
+      "sha256": "0a7080d7a161cf79a5b06b69dc79e85abf47244d1d617444a3b992840293dc7e"
+    },
+    {
+      "path": "docs/evidence/ai10-native-anomaly-64a4c71-accepted.json",
+      "receipt_status": "passed",
+      "sha256": "96229c37ec47972d8aa14f125eb669cf3f9ac902184ff37b7e8dd77aed25e76c"
+    },
+    {
+      "path": "docs/evidence/ai10-v12-native-database-failure.json",
+      "receipt_status": "failed",
+      "sha256": "5afeb59e28c6f782faf0f4f28b12ce665fcbbdd6f11ddc2692950fcf1b800c54"
+    },
+    {
+      "path": "docs/evidence/ai10-v12-native-scratch-failure.json",
+      "receipt_status": "failed",
+      "sha256": "10599060cd3cfc7512e83437d223864cecc4dc147a7f72d48853112a90e255b1"
+    },
+    {
+      "path": "docs/evidence/ai10-v12-native-outbox-hook-failure.json",
+      "receipt_status": "failed",
+      "sha256": "938c221c4c8673f22361610ee253819991d884de0bd403135763716957584925"
+    },
+    {
+      "path": "docs/evidence/ai10-v12-native-source-consumer-failure.json",
+      "receipt_status": "failed",
+      "sha256": "fe3fd4125e1a69108c8a6041a00fc1342729eeb346e71c19db7d6328c9f2f3f0"
+    },
+    {
+      "path": "docs/evidence/ai10-native-v12-22de575-accepted.json",
+      "receipt_status": "passed",
+      "sha256": "901dc8861fa95fb8a17f2e7ee8ec551c2733f5894e92dc1fd8faa4a9e94067ee"
+    },
+    {
+      "path": "docs/evidence/ai10-original-v12-recovered.json",
+      "receipt_status": "passed",
+      "sha256": "2ff03652ca983ac1e90259cadf28f27010828491f61cb0f7e53242c1b1bc3ee4"
+    },
+    {
+      "path": "docs/evidence/ai10-v12-native-source-startup-failure.json",
+      "receipt_status": "failed",
+      "sha256": "7cf6cc0094473404c9155a626eb19ac2c571ea905fe3cd1ea6dcc2201fb10e99"
+    },
+    {
+      "path": "docs/evidence/ai10-v12-reconstructed-source-diagnostic.json",
+      "receipt_status": "passed_diagnostic_only",
+      "sha256": "d93c2e2e164e045f53e8444ba526f99dcc1662c8ca7dc18270d4c445de4ae2de"
+    },
+    {
+      "path": "docs/evidence/ai10-native-stockout-final-head-accepted.json",
+      "receipt_status": "passed",
+      "sha256": "2749018151c3a27ceeb45b096d8a3a60ba88ff6dccc0a11a2a2c5af207813443"
+    },
+    {
+      "path": "docs/evidence/ai10-native-stockout-original-sql-accepted.json",
+      "receipt_status": "passed",
+      "sha256": "853a621d089fe546398a67cabaa7db087b6a10c8677207b57406c1bf6478d974"
+    },
+    {
+      "path": "docs/evidence/ai10-native-stockout-64a4c71-accepted.json",
+      "receipt_status": "passed",
+      "sha256": "cd9371b4cd735539df0cd453a42f48ebe68f45996be06a65b8ca8b260acc5bd1"
+    },
+    {
+      "path": "docs/evidence/ai10-native-runtime-main-compatibility.json",
+      "receipt_status": "passed",
+      "sha256": "820ba020df3067ad1b932c8c53dd496ff69fa5703569604a23b9460cf76cc9a3"
+    },
+    {
+      "path": "docs/ai10-suggestion-ui-ci-receipt.json",
+      "receipt_status": "success",
+      "sha256": "4aa01d50ea4b67b71811f06b121b7f1bace08a28e1916fa8631676b9820f84d7"
+    },
+    {
+      "path": "docs/evidence/ai10-ai16a-main-ci.json",
+      "receipt_status": "passed",
+      "sha256": "bd5c9926048b4de675fc10e28eaa6b679deeb377d666f7d5da4eb762b32bc4cf"
+    }
+  ],
+  "model_refits": 0,
+  "native_counts": {
+    "anomaly": 1232,
+    "forecast_v12": 56,
+    "stockout": 40
+  },
+  "original_quality_not_ready_preserved": true,
+  "preserved_original_scope": "all seven Source AI10 plan items; existing three-model read API and UI; immutable bundle and honest bounded REST/stream; explicit suggestion fixture belongs to AI10 while real producer belongs to AI12",
+  "production_deployed": false,
+  "recorded_date": "2026-10-07",
+  "requirement_matrix": [
+    {
+      "artifacts": [
+        "docs/intelligence-integration-v2.md",
+        "src/retailops_ai/intelligence_events/contracts.py"
+      ],
+      "evidence": [
+        "docs/ai10-runtime-ci-receipt.json",
+        "docs/evidence/ai10-source-code-main-ci.json"
+      ],
+      "plan_item": 1,
+      "requirement": "Legacy v1 plus separate typed v2 topic and compatibility",
+      "state": "verified_component_and_current_code_baselines"
+    },
+    {
+      "artifacts": [
+        "docs/source-rest-v2.md"
+      ],
+      "evidence": [
+        "docs/ai10-rest-ci-receipt.json",
+        "docs/ai10-source-bundle-ci-receipt.json"
+      ],
+      "plan_item": 2,
+      "requirement": "Actual typed bounded REST, authentication and full native grain through versioned export",
+      "state": "verified_components_actual_Source_HTTP_PostgreSQL_and_immutable_native_bundle"
+    },
+    {
+      "artifacts": [
+        "docs/source-observation-replay.md"
+      ],
+      "evidence": [
+        "docs/evidence/ai10-source-sql-handoff-accepted.json"
+      ],
+      "plan_item": 3,
+      "requirement": "Honest snapshot capabilities and actual prefix plus overlap correction",
+      "state": "verified_actual_same_broker_AI_SQL_ACK_4_to_7; general_43_table_SQL_snapshot_explicitly_unsupported"
+    },
+    {
+      "artifacts": [
+        "docs/intelligence-integration-v2.md"
+      ],
+      "evidence": [
+        "docs/ai10-checkpoint-ci-receipt.json",
+        "docs/ai10-durable-observation-replay-ci-receipt.json",
+        "docs/ai10-observation-broker-ci-receipt.json"
+      ],
+      "plan_item": 4,
+      "requirement": "Durable projection/inbox/outbox, no ACK before commit, fencing, gaps, poison and recovery",
+      "state": "verified_mandatory_actual_SQL_broker_components_not_only_offline_skips"
+    },
+    {
+      "artifacts": [
+        "docs/intelligence-models-v2.md"
+      ],
+      "evidence": [
+        "docs/evidence/ai10-native-stockout-64a4c71-accepted.json",
+        "docs/evidence/ai10-native-anomaly-64a4c71-accepted.json",
+        "docs/ai10-suggestion-ui-ci-receipt.json",
+        "docs/evidence/ai10-native-v12-22de575-accepted.json"
+      ],
+      "plan_item": 5,
+      "requirement": "Three original native model projections, lineage, freshness and explicit human-approved suggestion fixture",
+      "state": "verified_original_SQL_publisher_and_all_payloads_Source_API_UI_stockout_40_anomaly_1232_forecast_56"
+    },
+    {
+      "Source_artifacts": [
+        "scripts/intelligence-runtime/compose.yml",
+        "docs/runbooks/intelligence-shared-runtime.md"
+      ],
+      "evidence": [
+        "docs/ai10-runtime-ci-receipt.json",
+        "docs/evidence/ai10-native-stockout-64a4c71-accepted.json",
+        "docs/evidence/ai10-native-anomaly-64a4c71-accepted.json",
+        "docs/evidence/ai10-native-v12-22de575-accepted.json"
+      ],
+      "plan_item": 6,
+      "requirement": "Existing frontend and separated services using shared broker with owned Compose resources",
+      "state": "verified_owned_shared_broker_Compose_mechanics_and_actual_three_model_existing_UI"
+    },
+    {
+      "Source_artifacts": [
+        "docs/runbooks/intelligence-checkpoints.md",
+        "docs/runbooks/source-observation-capture.md",
+        "docs/runbooks/intelligence-models-v2.md"
+      ],
+      "artifacts": [
+        "docs/ai10-acceptance.md"
+      ],
+      "evidence": [
+        "docs/ai10-checkpoint-ci-receipt.json",
+        "docs/ai10-runtime-ci-receipt.json",
+        "docs/evidence/ai10-source-sql-handoff-accepted.json",
+        "docs/evidence/ai10-native-v12-22de575-accepted.json"
+      ],
+      "plan_item": 7,
+      "requirement": "Service/personal scope, recovery runbook, partition stop/replay/resync and owned cleanup",
+      "state": "verified_fault_auth_recovery_components_native_owned_containers_removed_and_temporary_handoff_cleaned"
+    }
+  ],
+  "stage": "AI10",
+  "status": "functional_acceptance_passed",
+  "temporary_handoff_cleanup": {
+    "original_archive_untouched": true,
+    "own_small_objects_removed": 6,
+    "status": "completed",
+    "unique_secret_removed": true
+  },
+  "version": "ai10-final-ready-review-1.0"
+}

@@ -1,28 +1,27 @@
 # AI 10 — bieżący stan i kontynuacja
 
-Aktualizacja bieżąca: **2026-10-07**. Status AI 10: **in_progress**.
-AI 07 i AI 08 są **ready** na zaakceptowanym main AI
-`18e771f9c2e89e91bf7afeb1744e0cd9112f50b5`. Poniższe starsze sekcje opisują
-historyczne przyrosty z 4–5 października; ich oceny gotowości 07/08 nie są
-bieżącymi blockerami. Oryginalne receipts zachowano bez zmian.
+Aktualizacja bieżąca: **2026-10-07**. Status AI 10: **ready**.
+AI 07 i AI 08 są gotowe; wcześniejsze sekcje pozostają historią przyrostów,
+nie bieżącą listą blockerów. [Końcowy raport](evidence/ai10-bounded-acceptance.json)
+i [mapa wymagań](evidence/ai10-final-ready-review.json) wiążą pełny oryginalny odbiór
+trzech ścieżek: 40 stockout, 1232 anomaly i 56 forecast przez oryginalne SQL
+publishery, broker ACK, komplet Source SQL/TCP API i istniejącego built UI.
+[Pełny V12](evidence/ai10-native-v12-22de575-accepted.json), run `37665627162`
+na `22de575`, zaliczył 273 boundary tests i 1 rzeczywisty Source E2E,
+bez errors/failures/skips. Potwierdzono wszystkie sześć etapów, atomowy rollback,
+56 projekcji/duplikatów, dwie strony UI i revocation. Oryginalne quality `not_ready`
+oraz development namespace pozostają zachowane. Własne tymczasowe zasoby usunięto.
 
-Kod integracji opublikowano normalnym chronionym merge:
-[AI #28](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/28)
-na `2dc0a5b` i [RetailOps #100](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/100)
-na `467f990`. [CI main AI](evidence/ai10-ai-code-main-ci.json) ma 17/17 success,
-a [CI main Source](evidence/ai10-source-code-main-ci.json) 30/30 success.
-AI10 zachowuje upstream CI #34, AI09 #33 oraz wszystkie własne bramki
-SQL/broker/replay, outbox i pełny v12 backup/recovery.
+[AI main CI](evidence/ai10-ai-b0-main-ci.json) ma 17/17,
+[Source baseline](evidence/ai10-source-code-main-ci.json) 30/30,
+a [nowszy scoped Source main](evidence/ai10-source-b723489-main-ci.json) 21 success / 4 celowe skipped.
+Końcowe dokumenty publikuje [AI #38](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/38)
+i [Source #104](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/104).
+Normalne protected merges i Required CI dokładnych wynikowych main są bramką
+publikacji tego rekordu; ich ostatni stan weryfikuje GitHub, bez samoodnoszącego
+się przyszłego SHA/CI wewnątrz commitu. Pozostałe sekcje zachowują wcześniejsze próby.
 
-Nowszy [Source main `b723489`](evidence/ai10-source-b723489-main-ci.json)
-ma 21 success i 4 celowe skipped zgodnie z istniejącym wykrywaniem obszarów;
-[pierwsza awaria agregatora](evidence/ai10-source-b723489-main-result-failure.json)
-jest zachowana. AI09 `16a02ae` dołączono do gałęzi publikacji:
-[74 testy zgodności importera i granic V12](evidence/ai10-ai09-main-integration.json)
-przeszły bez błędów i pominięć. [21 identycznych obiektów native runtime](evidence/ai10-native-runtime-main-compatibility.json)
-wiąże ten kod z wykonanymi odbiorami; cały katalog src nie jest identyczny.
-[CI poprawki kontrolera `adf8d1c`](evidence/ai10-v12-controller-fix-ci.json)
-ma 17/17 success. CI końcowego head po integracji pozostaje wymagane.
+### Historia wykonania
 
 ### Odebrane komponenty bieżącej integracji
 
@@ -57,8 +56,8 @@ oryginalnego publishera ani pełnego odbioru V12; nowy pełny run jest wymagany.
 Poprawka raportowania zachowuje fixed test identity, counts, exception type,
 lokalizacje testu i stałe kategorie guardów bez raw logu, credentials i URL-i.
 
-Pozostają pełny oryginalny V12 end-to-end oraz publikacja końcowych dokumentów
-`ready` normalnym protected merge i Required CI dokładnych main.
+Na tym historycznym checkpointcie pozostawały pełny oryginalny V12 oraz
+końcowa publikacja; aktualny odbiór i bramkę dostarczenia opisuje początek pliku.
 Oryginalne quality `not_ready`, development namespace i decyzja właściciela
 pozostają niezmienione. [Raport zbiorczy](evidence/ai10-bounded-acceptance.json)
 wiąże pełną historię, aktualne dowody oraz jawnie otwarte wymagania.

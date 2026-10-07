@@ -14,13 +14,13 @@ oraz zielony Required CI dokładnych HEAD i merge commitów obu repozytoriów.
 **AI 08 jest READY.** [Końcowy raport](docs/evidence/08-28-final-ready.md) obejmuje
 kwalifikowany model, rzeczywisty lifecycle/batch/API oraz zielone CI obu main.
 
-**AI 10: końcowa integracja w toku.**
-[Bieżący odbiór i instrukcja krok po kroku](docs/ai10-acceptance.md) obejmują
-snapshot/REST/stream, real SQL/ACK i wyniki trzech ścieżek ML w RetailOps API/UI.
-Kod jest na obu `origin/main`, z pełnym zielonym Required CI: AI 17/17 i Source 30/30.
-Oryginalne publishery SQL stockout i anomaly są odebrane. V12 ma 56 oryginalnych
-wyników i atomowy rollback; pełny odbiór oryginalnego publishera przez Source
-oraz końcowa publikacja dokumentacji `ready` pozostają wymagane.
+**AI 10: READY — pełny odbiór integracji.**
+[Instrukcja krok po kroku](docs/ai10-acceptance.md) i
+[raport bounded](docs/evidence/ai10-bounded-acceptance.json) wiążą snapshot/REST/stream,
+real SQL/ACK oraz oryginalne 40 stockout, 1232 anomaly i 56 forecast w RetailOps API/UI.
+Pełny V12 ma 273 testy granic i rzeczywisty Source E2E, bez failures/errors/skips.
+V12 zachowuje quality `not_ready` i zaakceptowany development namespace.
+Końcowe dowody i status są objęte chronionymi PR #38/#104 oraz Required CI obu main.
 
 **Status: AI 04 — finalna v12, `ready` z zaakceptowanymi odstępstwami jakościowymi.**
 [Decyzja i zakres odbioru](docs/evidence/04-v12-acceptance.md) obowiązują po

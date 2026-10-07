@@ -888,8 +888,10 @@ kontrole; odbiór zdalny i chroniona publikacja pozostają wymagane.
    awaria o 17:59:28 UTC: różnica 64 min 39 s. To granica potencjalnego kosztu
    przyszłej awarii, bez zaliczania już poniesionego kosztu jako oszczędności.
    Nie sumować z punktami 1/5 ani P07; gdy AI09 trwa dłużej, impact całego
-   projektu może wynieść 0 min. Poprawka i 55 testów są lokalnie odebrane;
-   nowy pełny V12 oraz chroniona publikacja pozostają wymagane.
+   projektu może wynieść 0 min. Poprawka i 55 testów są odebrane, a pełny V12
+   w runie `37665627162` zaliczył 273 boundary tests i rzeczywisty Source E2E.
+   Jest to dowód poprawności preflightu i pełnego odbioru, bez nowego pomiaru
+   skrócenia czasu całego projektu. Chronione dostarczenie opisują PR #38/#104.
 
 Reuse wyników semantycznego verifiera wewnątrz procesu nie wdrożono i nie
 przypisano mu impactu. Original recovery już pobiera niezależne pliki równolegle;

@@ -1,0 +1,158 @@
+{
+  "completed_at": "2026-10-07T19:24:25Z",
+  "created_at": "2026-10-07T18:32:54Z",
+  "event": "push",
+  "head_sha": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
+  "jobs": [
+    {
+      "completed_at": "2026-10-07T18:33:03Z",
+      "conclusion": "success",
+      "id": 112950961977,
+      "name": "secrets",
+      "started_at": "2026-10-07T18:32:57Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:33:53Z",
+      "conclusion": "success",
+      "id": 112950962609,
+      "name": "checks",
+      "started_at": "2026-10-07T18:32:57Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:35:04Z",
+      "conclusion": "success",
+      "id": 112951398590,
+      "name": "TensorFlow CPU training, artifact and reload",
+      "started_at": "2026-10-07T18:33:56Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:46:36Z",
+      "conclusion": "success",
+      "id": 112951398630,
+      "name": "persistence-forecast",
+      "started_at": "2026-10-07T18:33:57Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:51:06Z",
+      "conclusion": "success",
+      "id": 112951398689,
+      "name": "persistence",
+      "started_at": "2026-10-07T18:33:57Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:40:48Z",
+      "conclusion": "success",
+      "id": 112951398743,
+      "name": "acceptance (ci-qualified-inputs)",
+      "started_at": "2026-10-07T18:33:56Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:55:45Z",
+      "conclusion": "success",
+      "id": 112951398751,
+      "name": "acceptance (ci-detectors)",
+      "started_at": "2026-10-07T18:36:50Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T19:20:57Z",
+      "conclusion": "success",
+      "id": 112951398765,
+      "name": "anomaly-oci",
+      "started_at": "2026-10-07T18:39:38Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:59:33Z",
+      "conclusion": "success",
+      "id": 112951398766,
+      "name": "tests (0)",
+      "started_at": "2026-10-07T18:33:56Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:57:29Z",
+      "conclusion": "success",
+      "id": 112951398768,
+      "name": "tests (2)",
+      "started_at": "2026-10-07T18:36:49Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:36:47Z",
+      "conclusion": "success",
+      "id": 112951398819,
+      "name": "observation-replay",
+      "started_at": "2026-10-07T18:35:58Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:41:27Z",
+      "conclusion": "success",
+      "id": 112951398858,
+      "name": "acceptance (ci-forecast)",
+      "started_at": "2026-10-07T18:34:00Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:57:48Z",
+      "conclusion": "success",
+      "id": 112951398929,
+      "name": "tests (1)",
+      "started_at": "2026-10-07T18:41:29Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:53:22Z",
+      "conclusion": "success",
+      "id": 112951398984,
+      "name": "tests (3)",
+      "started_at": "2026-10-07T18:35:07Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:41:44Z",
+      "conclusion": "success",
+      "id": 112951399045,
+      "name": "observation-broker",
+      "started_at": "2026-10-07T18:40:51Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T18:50:58Z",
+      "conclusion": "success",
+      "id": 112951399123,
+      "name": "acceptance (ci-source-inputs)",
+      "started_at": "2026-10-07T18:37:24Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T19:24:25Z",
+      "conclusion": "success",
+      "id": 112971976941,
+      "name": "required-result",
+      "started_at": "2026-10-07T19:24:17Z",
+      "status": "completed"
+    }
+  ],
+  "repo": "Oskar-Stachowski/retailops-ai-intelligence",
+  "run_attempt": 1,
+  "scope": "all mandatory code component jobs executed successfully",
+  "status": "passed",
+  "total_jobs": 17,
+  "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37667669693",
+  "version": "ai10-exact-head-required-ci-1.1",
+  "workflow_git_blob_ids": [
+    {
+      "git_blob_id": "104cf3437f4dfba7300138476a8109e3a7fd908c",
+      "path": ".github/workflows/required-ci.yml"
+    }
+  ],
+  "workflow_run_id": 37667669693
+}

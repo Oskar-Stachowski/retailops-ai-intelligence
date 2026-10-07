@@ -15,14 +15,19 @@
     "sha256": "d9c97c6ba952720b6b26747ca2359726fdd97284f4946b82943e242356614aa4"
   },
   "AI_latest_main_CI": {
-    "path": "docs/evidence/ai10-ai16a-main-ci.json",
+    "path": "docs/evidence/ai10-ai-b0-main-ci.json",
     "receipt_status": "passed",
-    "sha256": "bd5c9926048b4de675fc10e28eaa6b679deeb377d666f7d5da4eb762b32bc4cf"
+    "sha256": "60012596e0d6fc1c42dd69218da8ef40c85b586714567fa7b7cf976dbeaa447f"
   },
   "AI_latest_main_integration": {
     "path": "docs/evidence/ai10-ai09-main-integration.json",
     "receipt_status": "passed_component",
     "sha256": "2d4348dc5842065903657810e8939fdebb1d23397f363ba3bc770244f08be291"
+  },
+  "AI_previous_16a_main_CI": {
+    "path": "docs/evidence/ai10-ai16a-main-ci.json",
+    "receipt_status": "passed",
+    "sha256": "bd5c9926048b4de675fc10e28eaa6b679deeb377d666f7d5da4eb762b32bc4cf"
   },
   "AI_source_launcher_fix_CI": {
     "path": "docs/evidence/ai10-source-launcher-fix-ci.json",
@@ -141,7 +146,7 @@
       "status": "passed"
     }
   },
-  "integration_runtime_status": "in_progress",
+  "integration_runtime_status": "passed",
   "native_models": {
     "anomaly": {
       "ACK_next_offsets": {
@@ -181,9 +186,18 @@
       "status": "passed"
     },
     "forecast_v12": {
+      "ACK_next_offsets": {
+        "0": 70,
+        "1": 42
+      },
+      "actual_Source_E2E_tests": 1,
+      "boundary_tests": 273,
+      "built_UI_pages": 2,
+      "built_UI_rows": 56,
       "completed_original_AI_stage_rows": 56,
       "completed_original_atomic_outbox_rollback": true,
       "development_namespace": "retailops-demand-forecast-v12-development",
+      "development_warning_visible": true,
       "earlier_database_failed_attempt": {
         "path": "docs/evidence/ai10-v12-native-database-failure.json",
         "receipt_status": "failed",
@@ -206,10 +220,20 @@
       },
       "expected_output_rows": 56,
       "expected_series": 4,
-      "full_native_receipt": null,
+      "full_native_receipt": {
+        "path": "docs/evidence/ai10-native-v12-22de575-accepted.json",
+        "receipt_status": "passed",
+        "sha256": "901dc8861fa95fb8a17f2e7ee8ec551c2733f5894e92dc1fd8faa4a9e94067ee"
+      },
       "history_days": 102,
       "horizon_days": 14,
       "immutable_input_tables": 43,
+      "literal_TCP_native_ids": 56,
+      "live_revocation": true,
+      "model_refits": 0,
+      "native_outputs": 56,
+      "original_ACKs": 56,
+      "original_AI_SQL_publisher": true,
       "original_archive_receipt": {
         "path": "docs/evidence/ai10-original-v12-recovered.json",
         "receipt_status": "passed",
@@ -228,7 +252,9 @@
         "receipt_status": "passed_diagnostic_only",
         "sha256": "d93c2e2e164e045f53e8444ba526f99dcc1662c8ca7dc18270d4c445de4ae2de"
       },
-      "status": "pending_full_native_runtime"
+      "source_duplicates": 56,
+      "source_projected": 56,
+      "status": "passed"
     },
     "stockout": {
       "ACK_next_offsets": {
@@ -264,22 +290,26 @@
   "native_runtime_main_compatibility": {
     "path": "docs/evidence/ai10-native-runtime-main-compatibility.json",
     "receipt_status": "passed",
-    "sha256": "0a97ab0f30618e98a959026e5d897fd41cda0d553821b934a4457f549a772f3c"
+    "sha256": "820ba020df3067ad1b932c8c53dd496ff69fa5703569604a23b9460cf76cc9a3"
   },
   "production_deployed": false,
   "publication": {
-    "AI_PR": 28,
-    "Source_PR": 100,
-    "code_status": "both_normal_protected_merges_and_full_required_main_CI_passed",
-    "receipt": null,
-    "status": "pending_full_native_acceptance_and_final_ready_documentation_publication"
+    "AI_final_PR": 38,
+    "Source_final_PR": 104,
+    "baseline_code_status": "both_normal_protected_merges_and_full_required_main_CI_passed",
+    "initial_AI_code_PR": 28,
+    "initial_Source_code_PR": 100,
+    "main_CI_verification_source": "GitHub checks on the actual resulting main commits; no future execution is asserted inside this immutable candidate record",
+    "receipt": {
+      "path": "docs/evidence/ai10-final-ready-review.json",
+      "receipt_status": "functional_acceptance_passed",
+      "sha256": "baabb5b9c912dc78c9da5fe3830592fc1539a91f06a086a6f48881f2c8ee84bd"
+    },
+    "status": "ready_record_governed_by_normal_protected_merges_and_exact_main_Required_CI"
   },
   "recorded_date": "2026-10-07",
-  "remaining": [
-    "full_original_v12_registry_SQL_publisher_API_UI_receipt",
-    "final_ready_documentation_protected_merges_and_required_main_CI"
-  ],
-  "stage_status": "in_progress",
+  "remaining": [],
+  "stage_status": "ready",
   "suggestions": {
     "receipt": {
       "path": "docs/ai10-suggestion-ui-ci-receipt.json",
@@ -288,5 +318,5 @@
     },
     "scope": "explicit contract/mechanics fixture with human approval; real recommendation producer belongs to AI12"
   },
-  "version": "ai10-bounded-acceptance-1.0"
+  "version": "ai10-bounded-acceptance-1.1"
 }
