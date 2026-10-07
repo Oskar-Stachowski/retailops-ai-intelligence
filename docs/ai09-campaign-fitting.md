@@ -49,7 +49,10 @@ z jawnymi mockami supervisora w testach audytu. Wymagany `make tensorflow-check`
 na dokładnym headzie `9b09660` zaliczył 6 testów w 101.69 s, w tym trzy nowe
 rzeczywiste kontrole CPU fit/reload RF/HGB/TF. [Job](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37652743985/job/112900689298)
 obejmuje zapis MLflow, całą kontrolną populację i odrzucenie uszkodzonych
-predykcji. Pełne CI tego headu jeszcze trwa. Lokalny odczyt dostępnej RAM
+predykcji. Pełne CI tego headu zakończyło się porażką: cztery zadania nie
+otrzymały runnera po pięciu próbach przydziału; piątym nieudanym zadaniem był
+agregator. Nie rozpoczęto testów w tych czterech zadaniach, ich koszt jest
+nieznany. Wynik CPU i porażka infrastruktury pozostają zapisane. Lokalny odczyt dostępnej RAM
 wykazał około 1.24 GiB, poniżej wymaganej sumy limitu 1 GiB i rezerwy 1 GiB,
 więc nie rozpoczęto tu procesów tych kontroli.
 
@@ -59,10 +62,18 @@ Konwersja TF zachowuje mean/median, wszystkie 14 horyzontów i oryginalne
 jednostki sprzedaży. Dodatkowa kontrola rzeczywistego MLmodel sprawdza CPU
 backend, podpis float32 o dokładnej szerokości wejścia i wyjściu 14 × 2 oraz
 digest planu przed załadowaniem frameworka. 48 kontroli danych/audytu/wektorów
-i podpisu oraz Mypy 671 plików przeszły. Nowa negatywna kontrola podpisu
-w rzeczywistym workerze wymaga własnego odbioru CPU; wcześniejsze 6 passed
-nie stanowią jej dowodu. Audytowany runner scoringu i kalibracja są nadal
-do wykonania.
+i podpisu oraz Mypy 671 plików przeszły. Head `ab122989` ma pełny
+[Required CI 37659317202](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37659317202):
+17/17 success wraz z required-result. Jego rzeczywisty job CPU zaliczył
+6 testów w 102.64 s, obejmujących również odrzucenie uszkodzonego podpisu
+MLmodel. Są to kontrolowane dane, bez projektowego treningu lub kwalifikacji.
+Wspólne raw scoring i kalibracja mają osobny zakres odbioru.
+
+PR #37 jest skierowany bezpośrednio na main. Nowa integracja obejmuje scalony
+eksporter PR #36 oraz poprawkę snapshotu z [receipt 09.26](evidence/09-26-generation-snapshot-verification.json).
+40 testów generation/fit/data oraz Mypy 671 plików przeszły po integracji.
+Jej pełny Required CI pozostaje wymagany; wcześniejszy zielony head nie
+zastępuje odbioru nowego commita integracji.
 
 [Evidence przygotowania](evidence/09-23-campaign-fitting-preparation.json)
 zachowuje wcześniejsze porażki kontroli i zakres dowodu. Projektowy journal

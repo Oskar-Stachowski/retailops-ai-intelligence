@@ -156,7 +156,7 @@ def generate_campaign_parent(
             source=verified["source"],
             runtime=ledger.protocol.runtime,
         )
-        snapshot = Path(read(root / "import.json")["destination"])
+        snapshot = Path(read(root / "import.json")["destination"]) / "snapshot"
         curated = Path(read(root / "curation.json")["destination"])
         if (
             receipt.source.schema_version != plan.snapshot_schema_version
