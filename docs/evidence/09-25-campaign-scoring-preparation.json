@@ -1,0 +1,104 @@
+{
+  "updated_at_utc": "2026-10-07T18:04:45.078412+00:00",
+  "scope": "Audited raw development forecast scoring over all common keys; no calibration, qualification or project campaign result",
+  "stage_ready": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "final_test_opened": false,
+  "wire": "evaluation v16; separate score plan, raw prediction and durable score receipt",
+  "models": [
+    "history7",
+    "history28",
+    "weekday28",
+    "rf_mean",
+    "hgb",
+    "tensorflow"
+  ],
+  "roles": [
+    "tune",
+    "calibration"
+  ],
+  "shared_population": "every role key retained, with common eligibility and explicit exclusions",
+  "preprocessing_refitted": false,
+  "tensorflow_target_scale_restored": true,
+  "rf_median_supported": false,
+  "calibration_fitted": false,
+  "worker_phases": [
+    "prepare",
+    "predict"
+  ],
+  "ordering": "reservation before parent/model/label reads; durable verified receipt before completion",
+  "static_checks": {
+    "mypy_source_files": 677,
+    "ruff": "passed",
+    "format": "passed",
+    "evaluation_schemas": "passed",
+    "source_bundle_owner_guard": "passed"
+  },
+  "component_tests": {
+    "integration_passed": 166,
+    "integration_seconds": 122.37,
+    "final_worker_guards_passed": 10,
+    "final_worker_guards_seconds": 8.37,
+    "audit_workers_mocked": true,
+    "unit_inference_models_mocked": true,
+    "canonical_source_preparation_verified": false
+  },
+  "package": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "module_byte_parity": 557,
+    "v16_schema_byte_parity": 3,
+    "legacy_evaluation_files_unchanged": 51
+  },
+  "real_common_scoring_cpu_control": {
+    "tests_added": 1,
+    "collection_passed": true,
+    "required_command": "make tensorflow-check",
+    "execution_pending": true,
+    "native_workers_started_locally": false,
+    "scope": "real fitting and fresh six-model CPU scoring on controlled typed records; input preparation fixture is mocked",
+    "canonical_profile": false,
+    "audited_project_fit": false
+  },
+  "accepted_parent_signature_control": {
+    "head": "ab1229892d573a22be201f2757fba0aeb490ffaf",
+    "ci": 37659317202,
+    "jobs_read": 17,
+    "jobs_total": 17,
+    "all_jobs_success": 17,
+    "required_result": "success",
+    "native_cpu_job": 112922884299,
+    "native_cpu_passed": 6,
+    "native_cpu_seconds": 102.64,
+    "scope": "fit/reload control including actual corrupted Keras signature rejection; not new common scoring CPU test"
+  },
+  "retained_failed_controls": [
+    {
+      "passed": 17,
+      "failed": 5,
+      "reason": "Raw prediction builder initially included InputRow.values alongside forecast values; restricted input copy to ForecastKey fields"
+    },
+    {
+      "passed": 22,
+      "failed": 10,
+      "reason": "Controlled parent fit completion omitted measured-resource fixture field; restored explicit simulated RSS in mocked audit evidence"
+    },
+    {
+      "passed": 3,
+      "failed": 7,
+      "reason": "Controlled forecast origin used an Origin wrapper rather than its timestamp; corrected typed fixture"
+    },
+    {
+      "scope": "collection environment",
+      "reason": "Core environment has no MLflow; collection repeated using existing pinned TensorFlow environment, without running workers"
+    }
+  ],
+  "remaining": [
+    "Exact new native common scoring CPU and complete required CI",
+    "Canonical completed generation/export and full-profile capacity",
+    "Frozen fair tuning/selection, calibration and independent development evaluation",
+    "Anomaly/stockout adapters and policies from closed AI07/08",
+    "Fresh final three-seed evaluation, robustness, uncertainty and full resource accounting",
+    "Lifecycle decisions, three cards/reports and exact final-main publication/CI"
+  ]
+}

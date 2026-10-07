@@ -164,6 +164,16 @@ rozdziela ten odbiór komponentów od niewykonanych nowych treningów projektu.
 Scoring, kalibracja/wybór, pełne profile i końcowa ocena trzech zastosowań
 nadal pozostają do wykonania.
 
+[Wspólne prognozy development](ai09-campaign-scoring.md) mają nowy osobny plan v16,
+pełne klucze jednej roli tune/calibration i sześć modeli na tych samych obserwacjach.
+Audytowany runner rezerwuje próbę przed odczytem i zapisuje trwały receipt po
+świeżej predykcji, hashach i pełnej kontroli populacji. Komponenty przeszły
+166 testów integracji; późniejsze dodatkowe kontrole wymagają własnego zapisu
+w [evidence](evidence/09-25-campaign-scoring-preparation.json).
+Nowy rzeczywisty test wspólnej predykcji CPU czeka na odbiór. To surowe prognozy
+i diagnostyka, bez kalibracji, wyboru modelu, niezależnego development_evaluation
+lub końcowego testu. Projektowe treningi i końcowe wyniki pozostają niewykonane.
+
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
 Świeży OCI/PostgreSQL 16/MLflow sprawdził komplet native publicznych rodziców,
