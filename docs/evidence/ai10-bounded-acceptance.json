@@ -70,6 +70,11 @@
     "sha256": "1a70d105084886668809e03307b7d1f32ae4ad5fb71cf7c1980f549f45b1664f"
   },
   "evidence_boundary": "Composition of separately executed bounded integration lanes on exact receipt commits; preserves each qualified model lineage, not a new common scientific qualification campaign.",
+  "existing_project_overlay": {
+    "path": "docs/evidence/ai10-existing-project-overlays.json",
+    "receipt_status": "passed_component",
+    "sha256": "d0784ccb31b1f4acf359a5925b2f9000db768c67aedc37162cb323b20dc64998"
+  },
   "fault_and_access_components": [
     {
       "path": "docs/ai10-checkpoint-ci-receipt.json",
@@ -303,7 +308,7 @@
     "receipt": {
       "path": "docs/evidence/ai10-final-ready-review.json",
       "receipt_status": "functional_acceptance_passed",
-      "sha256": "baabb5b9c912dc78c9da5fe3830592fc1539a91f06a086a6f48881f2c8ee84bd"
+      "sha256": "5e57922fc80c666beda94234b65985cca5e5cf570d2e6be1acff340aa16e78f5"
     },
     "status": "ready_record_governed_by_normal_protected_merges_and_exact_main_Required_CI"
   },

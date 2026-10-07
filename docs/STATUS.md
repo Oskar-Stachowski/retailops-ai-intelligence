@@ -26,6 +26,8 @@ Dowód ostatniej publikacji stanowią aktualne checks i merge commity w GitHub;
 nie dopisujemy do tego rekordu niewykonanego przyszłego CI.
 V12 zachowuje oryginalne quality `not_ready` i wyłącznie zaakceptowany development
 namespace. Sugestie są jawnym fixture AI10; rzeczywisty producent należy do AI12.
+[Overlay istniejących projektów](ai10-acceptance.md#overlay-istniejących-projektów)
+zachowuje prywatne bazy, jeden broker Source i jego external network.
 AI09 pozostaje osobnym otwartym etapem. Wcześniejsze wpisy opisują historię.
 
 **2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**

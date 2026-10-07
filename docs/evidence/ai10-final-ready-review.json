@@ -205,6 +205,11 @@
       "path": "docs/evidence/ai10-ai16a-main-ci.json",
       "receipt_status": "passed",
       "sha256": "bd5c9926048b4de675fc10e28eaa6b679deeb377d666f7d5da4eb762b32bc4cf"
+    },
+    {
+      "path": "docs/evidence/ai10-existing-project-overlays.json",
+      "receipt_status": "passed_component",
+      "sha256": "d0784ccb31b1f4acf359a5925b2f9000db768c67aedc37162cb323b20dc64998"
     }
   ],
   "model_refits": 0,
@@ -214,6 +219,7 @@
     "stockout": 40
   },
   "original_quality_not_ready_preserved": true,
+  "overlay_source_commit": "ed87052cbe41ba2d537970655d88a4689f53ae19",
   "preserved_original_scope": "all seven Source AI10 plan items; existing three-model read API and UI; immutable bundle and honest bounded REST/stream; explicit suggestion fixture belongs to AI10 while real producer belongs to AI12",
   "production_deployed": false,
   "recorded_date": "2026-10-07",
@@ -284,17 +290,25 @@
     {
       "Source_artifacts": [
         "scripts/intelligence-runtime/compose.yml",
-        "docs/runbooks/intelligence-shared-runtime.md"
+        "docs/runbooks/intelligence-shared-runtime.md",
+        "docker-compose.intelligence.yml",
+        "docs/runbooks/intelligence-existing-projects.md"
+      ],
+      "artifacts": [
+        "infra/compose-intelligence.yaml",
+        "Dockerfile.intelligence",
+        "scripts/check_ai10_compose_overlays.py"
       ],
       "evidence": [
         "docs/ai10-runtime-ci-receipt.json",
         "docs/evidence/ai10-native-stockout-64a4c71-accepted.json",
         "docs/evidence/ai10-native-anomaly-64a4c71-accepted.json",
-        "docs/evidence/ai10-native-v12-22de575-accepted.json"
+        "docs/evidence/ai10-native-v12-22de575-accepted.json",
+        "docs/evidence/ai10-existing-project-overlays.json"
       ],
       "plan_item": 6,
       "requirement": "Existing frontend and separated services using shared broker with owned Compose resources",
-      "state": "verified_owned_shared_broker_Compose_mechanics_and_actual_three_model_existing_UI"
+      "state": "actual_two_existing_project_overlay_compilation_and_11_negative_guards_passed; mandatory_CI_requires_locked_delivery_image_SDK_CLI; original_three_model_UI_separately_verified"
     },
     {
       "Source_artifacts": [

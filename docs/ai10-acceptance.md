@@ -48,6 +48,21 @@ Kompletne native ziarno sprzedaży, wersje i availability dostarcza wersjonowany
 immutable bundle. Bounded REST zachowuje swoje rzeczywiste ograniczenia;
 `require_full_sales_grain()` zwraca `unsupported_grain`.
 
+## Overlay istniejących projektów
+
+[Wykonawcza instrukcja krok po kroku](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/runbooks/intelligence-existing-projects.md)
+wiąże Source `docker-compose.intelligence.yml` i AI `infra/compose-intelligence.yaml`.
+[Rzeczywista kompilacja i 11 guard tests](evidence/ai10-existing-project-overlays.json)
+potwierdzają jedną Source-owned external network, aliasy `retailops-api`/`retailops-ai`,
+reachable advertised listener `redpanda:9092` oraz odrębne prywatne bazy/MLflow.
+AI nie tworzy drugiego brokera i nie usuwa Source network ani stosu.
+`Dockerfile.intelligence` używa istniejącego osobnego locked delivery runtime;
+worker jest jawnym bounded profilem z private configuration mounted read-only.
+Required CI kompiluje oba rzeczywiste projekty i sprawdza build/SDK/CLI tego obrazu.
+Kompilacja nie uruchamia daemonu; podstawowy lokalny Compose nie zyskuje TLS
+przez zmianę sieci. Zachowaj prywatne, wcześniej skonfigurowane granty i transport.
+Pełne native modele/API/UI są odebrane odrębnymi rzeczywistymi receipts.
+
 ## Własność danych i granice zapisu
 
 ```mermaid
