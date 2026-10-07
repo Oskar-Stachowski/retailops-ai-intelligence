@@ -70,10 +70,7 @@ def contract_document(version: str = VERSION) -> dict[str, Any]:
 
 
 def validate_schema(document: Any, name: str, version: str = VERSION) -> None:
-    if (
-        version == VERSION
-        and document.get("source", {}).get("descriptor", {}).get("generator_version") == "0.9.1"
-    ):
+    if _forecast_plans(document.get("source", {})):
         name = "forecast_" + name
     try:
         Draft202012Validator(
@@ -83,10 +80,22 @@ def validate_schema(document: Any, name: str, version: str = VERSION) -> None:
         raise SnapshotError("invalid_inventory_snapshot_schema") from exc
 
 
+def _forecast_plans(source: dict[str, Any]) -> bool:
+    parent = source.get("descriptor", {})
+    return bool(
+        parent.get("generator_version") == "0.9.1"
+        or (
+            source.get("schema_version") == "2.8.0"
+            and parent.get("generator_version") == "1.0.0"
+            and "forecast_plan_days" in parent.get("resolved_parameters", {})
+        )
+    )
+
+
 def check_lineage(manifest: dict[str, Any], contract: dict[str, Any], allow_truth: bool) -> None:
     source, desc = manifest["source"], manifest["descriptor"]
     parent, qualification = source["descriptor"], desc["qualification"]
-    planned = parent["generator_version"] == "0.9.1"
+    planned = _forecast_plans(source)
     if planned:
         requested, resolved = source["requested_parameters"], parent["resolved_parameters"]
         declarations = parent.get("forecast_watermarks")
@@ -248,8 +257,8 @@ def verify_metadata(root: Path, snapshot: Snapshot, required: tuple[str, ...]) -
         raise SnapshotError("source_manifest_copy_mismatch")
     if {p: r["sha256"] for p, r in metadata.items() if p.startswith("schemas/")} != desc["schemas"]:
         raise SnapshotError("schema_fingerprint_mismatch")
-    planned = source["descriptor"]["generator_version"] == "0.9.1"
-    schema_variants = (False,) if version == "1.2.0" else ((True,) if planned else (False, True))
+    planned = _forecast_plans(source)
+    schema_variants = (True,) if planned else (False, True)
     if not any(
         all(
             read_bytes(root, "schemas/" + source_name)

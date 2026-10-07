@@ -1,0 +1,40 @@
+{
+  "scope": "AI09 planned-anomaly importer integration with current AI10 contract guards; not project fitting, quality or final evaluation",
+  "stage_ready": false,
+  "retained_failure": {
+    "run": 37646472103,
+    "head": "7ca2d56e8a2ff88d514aa98c708d3aa94bb0f139",
+    "job": 112878434115,
+    "reason": "source_bundle_owner_copy_changed: src/retailops_ai/source_snapshot/inventory_protocol.py"
+  },
+  "changed_shared_files": [
+    "src/retailops_ai/source_snapshot/inventory_protocol.py"
+  ],
+  "immutable_implementation_owner": "d81e78acbaf3f2ca87f6f3f7c205e4629a494949",
+  "original_owner_full_ci": {
+    "run": 37638548322,
+    "jobs_success": 15
+  },
+  "new_shared_campaign_pin_sha256": "6d2219bf2f004f1dc3a9fd2a18454632ad52375b34e45f75a9abb49ab5793303",
+  "previous_accepted_main_campaign_pin_sha256": "d0df4db9a143e8e0dd5573dec8f55e5f6650da88af0dae61c800230d6d09c2ef",
+  "previous_pin_reproduced_by_recursive_single_file_reversal": true,
+  "frozen_native_importer_files_unchanged": true,
+  "original_frozen_v12_campaign_pin_unchanged": true,
+  "original_scientific_evidence_reclassified": false,
+  "retained_pre_fix_control": {
+    "passed": 63,
+    "failed": 1,
+    "wall_seconds": 65.37,
+    "reason": "old shared importer campaign pin before the integration fix"
+  },
+  "local_validation": {
+    "compatibility_tests_passed": 64,
+    "compatibility_tests_wall_seconds": 119.79,
+    "real_bundle_download_and_immutable_reuse_included": true,
+    "all_repository_contract_checks": "passed",
+    "project_campaign_fits": 0,
+    "final_test_opened": false
+  },
+  "compatibility_tests_pending": false,
+  "new_exact_head_ci_required": true
+}

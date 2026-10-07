@@ -1,0 +1,222 @@
+{
+  "$defs": {
+    "CampaignGenerationResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "max_log_bytes": {
+          "default": 16777216,
+          "maximum": 16777216,
+          "minimum": 1024,
+          "title": "Max Log Bytes",
+          "type": "integer"
+        },
+        "minimum_available_memory_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Available Memory Bytes",
+          "type": "integer"
+        },
+        "minimum_free_disk_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Free Disk Bytes",
+          "type": "integer"
+        },
+        "sample_seconds": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0.01,
+          "title": "Sample Seconds",
+          "type": "number"
+        },
+        "scratch_bytes": {
+          "maximum": 137438953472,
+          "minimum": 1024,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "tree_rss_bytes": {
+          "maximum": 68719476736,
+          "minimum": 1024,
+          "title": "Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "tree_rss_bytes",
+        "scratch_bytes",
+        "minimum_free_disk_bytes",
+        "minimum_available_memory_bytes"
+      ],
+      "title": "CampaignGenerationResources",
+      "type": "object"
+    },
+    "CampaignParentBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "batch_rows": {
+          "default": 256,
+          "maximum": 8192,
+          "minimum": 1,
+          "title": "Batch Rows",
+          "type": "integer"
+        },
+        "max_parent_bytes": {
+          "default": 2147483648,
+          "maximum": 2147483648,
+          "minimum": 1024,
+          "title": "Max Parent Bytes",
+          "type": "integer"
+        },
+        "max_parent_files": {
+          "default": 10000,
+          "maximum": 10000,
+          "minimum": 2,
+          "title": "Max Parent Files",
+          "type": "integer"
+        },
+        "max_rows_per_parent": {
+          "default": 20000000,
+          "maximum": 20000000,
+          "minimum": 1,
+          "title": "Max Rows Per Parent",
+          "type": "integer"
+        }
+      },
+      "title": "CampaignParentBudget",
+      "type": "object"
+    },
+    "JsonValue": {}
+  },
+  "$id": "urn:retailops:evaluation:campaign_generation_plan:13.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "chunk_rows": {
+      "default": 256,
+      "maximum": 8192,
+      "minimum": 1,
+      "title": "Chunk Rows",
+      "type": "integer"
+    },
+    "entrypoint": {
+      "enum": [
+        "cached_inventory_v2",
+        "planned_anomaly"
+      ],
+      "title": "Entrypoint",
+      "type": "string"
+    },
+    "exporter_lock_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Exporter Lock Sha256",
+      "type": "string"
+    },
+    "include_truth": {
+      "const": false,
+      "default": false,
+      "title": "Include Truth",
+      "type": "boolean"
+    },
+    "parent_budget": {
+      "$ref": "#/$defs/CampaignParentBudget",
+      "default": {
+        "batch_rows": 256,
+        "max_parent_bytes": 2147483648,
+        "max_parent_files": 10000,
+        "max_rows_per_parent": 20000000
+      }
+    },
+    "requested_parameters": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Requested Parameters",
+      "type": "object"
+    },
+    "required_use_cases": {
+      "default": [
+        "forecast_source",
+        "inventory_source"
+      ],
+      "items": {
+        "enum": [
+          "forecast_source",
+          "inventory_source",
+          "anomaly_source"
+        ],
+        "type": "string"
+      },
+      "maxItems": 3,
+      "minItems": 2,
+      "title": "Required Use Cases",
+      "type": "array"
+    },
+    "resolved_parameters": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Resolved Parameters",
+      "type": "object"
+    },
+    "resources": {
+      "$ref": "#/$defs/CampaignGenerationResources"
+    },
+    "scenario_plan": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Scenario Plan"
+    },
+    "snapshot_schema_version": {
+      "enum": [
+        "1.1.0",
+        "1.2.0"
+      ],
+      "title": "Snapshot Schema Version",
+      "type": "string"
+    },
+    "source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Recipe Sha256",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-campaign-generation-plan-1.0.0",
+      "default": "ai09-campaign-generation-plan-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_recipe_sha256",
+    "exporter_lock_sha256",
+    "requested_parameters",
+    "resolved_parameters",
+    "entrypoint",
+    "snapshot_schema_version",
+    "resources"
+  ],
+  "title": "CampaignGenerationPlan",
+  "type": "object"
+}

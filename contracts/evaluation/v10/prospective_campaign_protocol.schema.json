@@ -257,6 +257,19 @@
           ],
           "default": null
         },
+        "exporter_lock_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exporter Lock Sha256"
+        },
         "generation_config_sha256": {
           "pattern": "^[0-9a-f]{64}$",
           "title": "Generation Config Sha256",

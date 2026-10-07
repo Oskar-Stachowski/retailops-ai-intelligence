@@ -14,6 +14,10 @@ from retailops_ai.evaluation_campaign.campaign_export_contract import (
     CampaignDevelopmentExportReceipt,
     CampaignGeneratedParentReceipt,
 )
+from retailops_ai.evaluation_campaign.campaign_generation_contract import (
+    CampaignGenerationPlan,
+    CampaignGenerationResources,
+)
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
 from retailops_ai.evaluation_campaign.label_contract import (
     ForecastOutcomeReadProtocol,
@@ -241,6 +245,22 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Campaign development export contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, generation_model in (
+        ("campaign_generation_plan", CampaignGenerationPlan),
+        ("campaign_generation_resources", CampaignGenerationResources),
+    ):
+        schema = generation_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:13.0.0"
+        path = ROOT / "contracts/evaluation/v13" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign generation contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

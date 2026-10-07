@@ -143,7 +143,9 @@ def test_real_download_verifies_full_fixture_and_reuses_immutable_import(tmp_pat
             Path(__file__).resolve().parents[1] / "src/retailops_ai/source_bundle/upstream.json"
         ).read_bytes()
     )
-    assert canonical_sha256(frozen) == pin["accepted_main_campaign_pin_sha256"]
+    assert canonical_sha256(frozen) == pin.get(
+        "shared_campaign_implementation_pin_sha256", pin["accepted_main_campaign_pin_sha256"]
+    )
     assert pin["frozen_v12_campaign_pin_sha256"] == (
         "8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011"
     )
