@@ -1,16 +1,30 @@
 # AI 10 — odbiór integracji RetailOps
 
-Aktualizacja: 2026-10-07. **Status: in_progress.** Bieżące PR-y:
-[AI #28](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/28)
-i [Source #100](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/100).
-Status `ready` wymaga wszystkich dowodów niżej oraz chronionego merge i zielonego
-Required CI obu `origin/main`. Szczegóły starszych przyrostów zachowuje
-[historia](ai10-progress.md); wcześniejsze receipts nie są przepisywane.
-Pełne Required CI komponentów Source `cbbf711` zaliczyło wszystkie 30 jobów:
-[receipt](evidence/ai10-source-components-ci.json). Końcowe heady dokumentacji
-i oba opublikowane main wymagają własnego potwierdzenia.
-[Raport bounded odbioru](evidence/ai10-bounded-acceptance.json) wiąże SHA
-wszystkich receipts, sumy przed/po korekcie, offsety i jawne pending gates.
+Aktualizacja: 2026-10-07. **Status: ready — pełny odbiór integracji.**
+[Końcowy bounded raport](evidence/ai10-bounded-acceptance.json) wiąże SHA wszystkich
+receipts; [mapa siedmiu wymagań](evidence/ai10-final-ready-review.json) odpowiada
+kanonicznemu planowi Source. [Pełny oryginalny V12](evidence/ai10-native-v12-22de575-accepted.json)
+na `22de575`, run `37665627162`, zaliczył 273 boundary tests oraz rzeczywisty Source E2E:
+56 wyników/oryginalnych SQL publisher ACK/projekcji/duplikatów, pełny authenticated
+TCP API, dwie strony built UI i live revocation. Wcześniejsze failures oraz odtworzona
+diagnostyka pozostają historią; nie zastępują tego pełnego receipt.
+
+Oryginalne kwalifikacje modeli i quality V12 `not_ready` zachowano. Forecast działa
+wyłącznie w owner-approved development namespace; nie ma refitów ani produkcyjnego
+wdrożenia. [Zgodność native runtime](evidence/ai10-native-runtime-main-compatibility.json)
+wiąże odebrane commity z integracją, bez twierdzenia że całe src jest identyczne.
+[Nowszy main AI09 `5ed0544`](evidence/ai10-ai09-5ed-main-integration.json)
+zachowuje wszystkie 21 native komponentów AI10; finalny zintegrowany head wymaga
+własnego pełnego Required CI.
+[AI main `b0e2de`](evidence/ai10-ai-b0-main-ci.json) ma 17/17 success,
+[Source baseline `467f990`](evidence/ai10-source-code-main-ci.json) 30/30,
+a [Source `b723489`](evidence/ai10-source-b723489-main-ci.json) 21 success / 4 celowe skipped.
+Kod wcześniejszych przyrostów jest na main po PR #28/#100. Poprawkę launchera i
+końcowe rekordy dostarcza [AI #38](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/38)
+oraz [Source #104](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/104),
+wyłącznie normalnym protected merge z Required CI dokładnych headów i wynikowych main.
+Stan tej ostatniej bramki sprawdza się w rzeczywistych checks GitHub; ten immutable
+rekord nie przypisuje przyszłemu, samoodnoszącemu się commitowi niewykonanego CI.
 
 ## Zakres i stan dowodów
 
@@ -22,10 +36,10 @@ wszystkich receipts, sumy przed/po korekcie, offsety i jawne pending gates.
 | Stream obserwacji | Source SQL outbox i capture pełnego TLS/SCRAM prefixu; osobny AI SQL, checkpoint, ACK, overlap i późna korekta | **Passed**: [oryginalny receipt](evidence/ai10-source-sql-handoff-accepted.json), 9 testów, sumy 4 → 7, ACK `[0,0,3]` → `[0,0,4]` |
 | Qualified stockout | Frozen model, registry/cold worker, oryginalny publisher AI SQL i 40 ACK, Source SQL/API i built UI | **Passed**: [oryginalny SQL receipt](evidence/ai10-native-stockout-original-sql-accepted.json), 40 wyników/40 duplikatów, ACK `[34,46]` |
 | Qualified anomaly | Oryginalny model AI07, OCI/registry/SIGKILL recovery, oryginalny publisher SQL i 1232 ACK, Source SQL/API i 25 stron built UI | **Passed**: [oryginalny SQL receipt](evidence/ai10-native-anomaly-original-sql-accepted.json), 1232 wyników/1232 duplikatów, ACK `[1064,1400]` |
-| Oryginalny forecast v12 | 664 oryginalne pliki i frozen wheel, nowy Source 102 dni/43 tabele, 56 wyników/4 szeregi/horyzont 14, MLflow/SQL/publisher/Source API/UI | Archiwum [passed](evidence/ai10-original-v12-recovered.json); pełny native runtime pending |
+| Oryginalny forecast v12 | 664 oryginalne pliki i frozen wheel, nowy Source 102 dni/43 tabele, 56 wyników/4 szeregi/horyzont 14, MLflow/SQL/publisher/Source API/UI | **Passed**: [pełny original receipt](evidence/ai10-native-v12-22de575-accepted.json), 273 boundary tests + actual Source E2E, 56 ACK/projekcji/duplikatów, ACK `[70,42]`, 2 strony UI i revocation |
 | Awarie i trwałość | Brak ACK przed SQL commit, SIGKILL po commit, fencing, gaps, raw quarantine, niedostępne SQL/broker/DLQ i recovery | Odebrane obowiązkowe komponenty; [SQL](ai10-durable-observation-replay-ci-receipt.json), [TLS broker](ai10-observation-broker-ci-receipt.json), [checkpoints](ai10-checkpoint-ci-receipt.json) |
 | Sugestie | Jawny poprawny fixture, human approval, auth, trwałe read API i istniejący UI | Odebrany zakres AI10; rzeczywisty producent należy do AI12: [receipt](ai10-suggestion-ui-ci-receipt.json) |
-| Publikacja | Oba dokładne HEAD, Required CI, protected merge, Required CI obu main | Pending |
+| Publikacja | Niezmieniona bramka: normalne protected merges oraz Required CI dokładnych headów i wynikowych main | Wcześniejsze code/main CI passed; końcowe rekordy w PR #38/#104, weryfikowane przez ich aktualne GitHub checks |
 
 Każdy receipt podaje własny dokładny commit i run ID. Ich zestaw jest odbiorem
 integracji; nie jest nowym wspólnym eksperymentem jakości trzech modeli.
@@ -36,6 +50,21 @@ sum/korekt, nie kwalifikuje ML. Pełny immutable bundle pozostaje osobną ście�
 Kompletne native ziarno sprzedaży, wersje i availability dostarcza wersjonowany
 immutable bundle. Bounded REST zachowuje swoje rzeczywiste ograniczenia;
 `require_full_sales_grain()` zwraca `unsupported_grain`.
+
+## Overlay istniejących projektów
+
+[Wykonawcza instrukcja krok po kroku](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/runbooks/intelligence-existing-projects.md)
+wiąże Source `docker-compose.intelligence.yml` i AI `infra/compose-intelligence.yaml`.
+[Rzeczywista kompilacja i 11 guard tests](evidence/ai10-existing-project-overlays.json)
+potwierdzają jedną Source-owned external network, aliasy `retailops-api`/`retailops-ai`,
+reachable advertised listener `redpanda:9092` oraz odrębne prywatne bazy/MLflow.
+AI nie tworzy drugiego brokera i nie usuwa Source network ani stosu.
+`Dockerfile.intelligence` używa istniejącego osobnego locked delivery runtime;
+worker jest jawnym bounded profilem z private configuration mounted read-only.
+Required CI kompiluje oba rzeczywiste projekty i sprawdza build/SDK/CLI tego obrazu.
+Kompilacja nie uruchamia daemonu; podstawowy lokalny Compose nie zyskuje TLS
+przez zmianę sieci. Zachowaj prywatne, wcześniej skonfigurowane granty i transport.
+Pełne native modele/API/UI są odebrane odrębnymi rzeczywistymi receipts.
 
 ## Własność danych i granice zapisu
 
@@ -169,13 +198,13 @@ Pozostałe trzy komendy wymagają własnego runtime Docker, więc w tej sesji wy
 je obowiązkowy CI. Pełne native modele/API/UI i Source capture mają osobne
 dedykowane workflowy opisane wyżej. Zaliczenie samej komendy nie zamyka AI10.
 
-## Pozostałe warunki zamknięcia
+## Końcowy checklist i bramka publikacji
 
 - [x] Immutable snapshot, bounded REST i jawny unsupported ogólnego snapshot REST.
 - [x] Rzeczywisty Source SQL/capture → ten sam TLS broker → AI SQL/ACK/overlap.
 - [x] Qualified stockout/anomaly przez rzeczywiste Source API i built UI.
 - [x] Stockout przez oryginalny AI SQL publisher przed cleanupem.
 - [x] Anomaly przez oryginalny AI SQL publisher przed cleanupem.
-- [ ] Oryginalny v12 przez pełny registry/SQL/publisher/Source API/UI na 102 dniach.
-- [ ] Końcowy raport bounded odbioru, aktualne statusy i registry.
-- [ ] Required CI obu dokładnych HEAD oraz obu main po protected merge.
+- [x] Oryginalny v12 przez pełny registry/SQL/publisher/Source API/UI na 102 dniach.
+- [x] Końcowy raport bounded odbioru, aktualne statusy i registry.
+- [x] Bramka dostarczenia rekordu: normalne protected merges #38/#104 i Required CI dokładnych headów oraz obu main; ostatni wynik sprawdzany w GitHub.

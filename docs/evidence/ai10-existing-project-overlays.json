@@ -1,0 +1,51 @@
+{
+  "ai_cleanup_preserves_external_source_network": true,
+  "ai_second_broker": false,
+  "api_aliases": [
+    "retailops-api",
+    "retailops-ai"
+  ],
+  "database_isolation": true,
+  "delivery_image_acceptance": "required_in_final_AI_Required_CI_not_yet_claimed_as_executed",
+  "existing_source_advertised_broker": "redpanda:9092",
+  "external_network_owned_by": "Source",
+  "file_sha256": [
+    {
+      "path": "compose.yaml",
+      "repository": "AI",
+      "sha256": "6239ec8779bfab312495f288c257e46d530bcbd1ffa7cc08b06f7ab4ecfd3ff4"
+    },
+    {
+      "path": "infra/compose-intelligence.yaml",
+      "repository": "AI",
+      "sha256": "560156b54ff3b5f810ed4f0523eaa82c1b9c797fa317e853023d30c0e8d7b174"
+    },
+    {
+      "path": "Dockerfile.intelligence",
+      "repository": "AI",
+      "sha256": "0dd873d665c9c1eed88e6088479fd41e03f45d0c522fb3824eac68f9ec25c2e2"
+    },
+    {
+      "path": "docker-compose.yml",
+      "repository": "Source",
+      "sha256": "eddeda169c9ddc2d8f3aa31c25f66d73383573ccf015e473212f0ea480cd87a9"
+    },
+    {
+      "path": "docker-compose.intelligence.yml",
+      "repository": "Source",
+      "sha256": "e137778007612224410ed200eb3f4a35836f74b044311e20d5084f8e00d5daa7"
+    }
+  ],
+  "local_Docker_daemon_started": false,
+  "local_guard_tests": {
+    "errors": 0,
+    "failures": 0,
+    "junit_sha256": "f917bf654f4d058e5fb50a149ee546a6a92f0b06b07b90658f2c11778bd1a849",
+    "passed": 11,
+    "skipped": 0
+  },
+  "original_three_model_qualification": "separately_accepted_original_40_1232_56_SQL_publisher_API_UI_receipts",
+  "scope": "actual Compose CLI compilation of both existing-project overlays; no daemon, image, network or runtime mutation; model/API/UI qualification is separately attested",
+  "status": "passed_component",
+  "version": "ai10-existing-project-overlays-1.0"
+}

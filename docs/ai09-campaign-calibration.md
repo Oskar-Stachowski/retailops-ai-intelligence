@@ -53,7 +53,37 @@ workers. Worker controls mają deklarowanego rodzica Tune i mocked gate wersji.
 Wymagany native test uruchamia świeży worker i rzeczywisty MLflow na małych
 plikach Calibration; jest dodany do ośmiotestowego `make tensorflow-check`.
 Lokalnie wykonano tylko collection, aby zachować rezerwy otwartych sesji.
-Jego wykonanie na dokładnym headzie CI pozostaje wymagane.
+Native job `113023848619` na `c686ca97` zaliczył 8 testów w 135.72 s.
+Pełny Required CI `37688813627` zakończył się failure: 15/17 success.
+Scoring matematyczny i native CPU przeszły, ale dotychczasowy manifest partycji
+z pełnym przypięciem 567 modułów miał 65 716 bajtów i przekroczył techniczne
+64 KiB. Lokalna regresja odtworzyła ten błąd. Bounded metadata cap wynosi teraz
+128 KiB; wszystkie hashe, schematy i limity profili oraz zasoby kampanii pozostają.
+158 testów partycji/outcome/journal przeszło w 90.14 s, a dodatkowa kontrola
+odrzuca zbyt duży manifest przed feature I/O i przed publikacją.
+Oryginalny wynik oraz koszty są zachowane. Poprawiony head wymaga własnego
+pełnego CI i native CPU. [PR #42](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/42)
+zawiera także aktualny main `92c2a3cd`: Required CI `37689831146`
+ma 17/17 success, w tym required-result. Poprawiony head kalibracji
+wymaga osobnego pełnego odbioru przed protected merge.
+
+CI `37694343795` na `0796d27e` ujawniło dodatkową porażkę testu przerwanego
+backupu w jobie `113042573697`: `backup_interruption_not_observed`.
+Cały run zakończył się failure z 15/17 success: persistence i required-result
+nie przeszły. Wszystkie shardy testów, w tym regresje limitu manifestu,
+przeszły; native CPU `113042573734` zaliczył 8 testów w 112.19 s.
+Dotychczasowy komunikat nie pokazywał kodu wyjścia dziecka ani przyczyny
+wewnętrznej. Nowa kontrola zachowuje rzeczywisty SIGKILL, maintenance,
+fence obu baz i odrzucenie połączeń aplikacyjnych przed jawnym resume.
+Świeży proces stosuje ten sam acceptance Compose overlay co rodzic.
+Porażka podaje tylko bounded, allowlisted kody, klasę wyjątku i pozycje
+we własnym kodzie. Nie wypisuje treści poleceń, tracebacków, locals ani
+credentials. Przyczyna awarii bazy nie jest jeszcze potwierdzona.
+78 lokalnych testów backupu, przerwania i cleanup przeszło w 2.38 s;
+kontrola OS rzeczywiście zabiła wyłącznie nowy własny proces, z mocked
+operacjami bazy. To nie jest native PostgreSQL acceptance. Mypy dla 688
+plików, Ruff i format przeszły. Nie uruchamiano lokalnie Dockera.
+Poprawiony head nadal wymaga pełnego CI przed scaleniem.
 
 Journal projektu nadal nie jest zainicjalizowany, nowe projektowe fity wynoszą
 zero, projektowa kalibracja nie jest wykonana i final test pozostaje zamknięty.

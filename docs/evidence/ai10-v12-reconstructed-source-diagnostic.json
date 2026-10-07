@@ -1,0 +1,37 @@
+{
+  "artifact": {
+    "id": 11497341269,
+    "size_bytes": 336,
+    "zip_sha256": "033422f58b0b17f1ebcb4b11a211f6dd30df98408dc788d734ad7f86948aa57f"
+  },
+  "diagnostic_commit": "e522cf7312c1ff11f0bcd7cd860be6097ddd205f",
+  "job_id": 112894818416,
+  "original_events_sha256": "59ca9bec2e69374e2f140e3ef4673f8803eb469d8e1fe549f15f31efbc42d142",
+  "original_native_publication_sha256": "a8fc83cc442543e76e3ea64f6b96d73b48a1bbfe02491aea69d4665bb3fbf68d",
+  "prior_original_failed_run": 37636569401,
+  "producer_commit": "64a4c7156023da5750e5da92d465afa9205b4a1d",
+  "report": {
+    "exception_types": [],
+    "failure_categories": [],
+    "failure_locations": [],
+    "full_v12_accepted": false,
+    "original_publisher_accepted": false,
+    "owned_fixture_removed": true,
+    "returncode": 0,
+    "scope": "diagnostic_reconstructed_SQL_only",
+    "status": "passed",
+    "test_counts": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 1
+    },
+    "test_failure_types": []
+  },
+  "report_sha256": "5972c9cac541f242884f91961d731456facc678003773fea3a7724ec44f51c07",
+  "scope": "actual original forecast bytes in explicitly reconstructed SQL; does not attest original publisher database or full original v12 acceptance",
+  "source_commit": "1a7f558d718ed3dddaed277c07ccfd7d023f34ce",
+  "status": "passed_diagnostic_only",
+  "version": "ai10-v12-reconstructed-source-diagnostic-1.0",
+  "workflow_run_id": 37651238268
+}

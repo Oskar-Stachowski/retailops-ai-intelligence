@@ -78,6 +78,7 @@ jobs:
           uv pip install --python .local/ai10-native-v12-source/services/api/.venv/bin/python \
             -r .local/ai10-native-v12-source/services/api/requirements-dev.txt \
             -r .local/ai10-native-v12-source/data/requirements-parquet.txt
+          uv run --frozen python -c 'import sys;from pathlib import Path;sys.path.insert(0,"scripts");from check_ai10_v12_native import preflight_source_python;preflight_source_python(Path(".local/ai10-native-v12-source"))'
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
         with:
           node-version: "22"

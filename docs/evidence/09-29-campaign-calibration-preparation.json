@@ -46,13 +46,19 @@
     "suite_tests_collected": 8,
     "collection_seconds": 2.2,
     "collection_only_locally": true,
-    "execution_pending": true,
+    "execution_pending": false,
     "scope": "fresh real Calibration/MLflow worker on small real role files, declared controlled Tune metadata; no completed project campaign",
     "expected_result": "operation successful but calibrator not_ready because each horizon needs100 eligible rows",
-    "private_tracking_artifacts_scope_checked": true
+    "private_tracking_artifacts_scope_checked": true,
+    "workflow_run": 37688813627,
+    "job": 113023848619,
+    "head": "c686ca97f2e2838449239a5a92a3a14249668325",
+    "passed": 8,
+    "seconds": 135.72,
+    "corrected_head_native_ci_still_required": true
   },
   "static_checks": {
-    "mypy_source_files": 687,
+    "mypy_source_files": 688,
     "ruff": "passed",
     "schemas": "passed",
     "remaining_checks_pending": false,
@@ -71,11 +77,138 @@
     "Paired time/series uncertainty, costs, compatible lifecycle bundles and three cards/reports/runbooks",
     "Protected publication and full exact-final-main Required CI"
   ],
-  "package": {
+  "first_full_required_ci": {
+    "run": 37688813627,
+    "head": "c686ca97f2e2838449239a5a92a3a14249668325",
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs_read_and_total": 17,
+    "success": 15,
+    "failed": [
+      "tests (0)",
+      "required-result"
+    ],
+    "failed_job": 113023848849,
+    "test_job_result": {
+      "passed": 962,
+      "failed": 21,
+      "errors": 54,
+      "skipped": 30,
+      "seconds": 1518.34
+    },
+    "cause": "Complete installed-module hashes made the partition manifest65716 bytes, beyond the technical64KiB metadata cap; no calibration math/model failure",
+    "original_result_preserved": true
+  },
+  "metadata_cap_correction": {
+    "complete_manifest_bytes": 65716,
+    "complete_python_module_count": 567,
+    "old_cap_bytes": 65536,
+    "new_bounded_cap_bytes": 131072,
+    "entire_runtime_hash_inventory_retained": true,
+    "campaign_RSS_wall_scratch_and_reserves_unchanged": true,
+    "existing_contract_and_profile_limits_unchanged": true,
+    "regression_passed": 158,
+    "regression_seconds": 90.14,
+    "new_oversized_read_and_publication_control_passed": 1,
+    "new_control_seconds": 0.81,
+    "actual_publication_measurement_control_passed": 1,
+    "measurement_seconds": 0.8,
+    "reproduced_original_failure": {
+      "passed": 30,
+      "failed": 1,
+      "seconds": 0.73
+    },
+    "retained_measurement_control_failure": {
+      "failed": 1,
+      "seconds": 0.23,
+      "cause": "test-only write spy assumed a three-argument writer; corrected to actual path/raw signature",
+      "canonical_or_project_workers_started": false
+    }
+  },
+  "previous_published_head_package": {
     "module_byte_parity": 567,
     "v18_schema_byte_parity": 3,
     "previous_evaluation_files_unchanged": 57,
     "wheel_bytes": 1825967,
     "wheel_sha256": "24d5772162ff09b9695c55e68e205a4e1a71a557c1e44ac2c6c768b4c67d98c2"
+  },
+  "base_integration": {
+    "main": "92c2a3cd91294250b8a8110c1330600ab494285f",
+    "required_ci": 37689831146,
+    "required_ci_acceptance_pending": false,
+    "closed_stages_reopened": false,
+    "jobs_read_and_total": 17,
+    "success": 17,
+    "required_result": "success"
+  },
+  "package": {
+    "module_byte_parity": 567,
+    "v18_schema_byte_parity": 3,
+    "previous_evaluation_files_unchanged": 57,
+    "wheel_bytes": 1826122,
+    "wheel_sha256": "bd2f9fd5b37da02f6bdd45f3fc42ce7fe61fd58317c1be8688deabbcbf307f6e"
+  },
+  "interrupted_backup_control_preparation": {
+    "observed_required_ci": 37694343795,
+    "observed_head": "0796d27e437271dc9c09b78fb087454fb6494a35",
+    "failed_job": 113042573697,
+    "failed_phase": "interrupted_backup",
+    "reported_reason": "backup_interruption_not_observed",
+    "child_returncode_and_internal_cause_previously_not_reported": true,
+    "underlying_database_failure_cause_confirmed": false,
+    "parent_and_fresh_child_acceptance_compose_configuration_now_identical": true,
+    "diagnostic": "Bounded allowlisted reason/exception/owned function positions and exit code; no raw command output, traceback text, local values or credentials",
+    "real_sigkill_maintenance_two_database_fences_and_rejected_app_connection_gates_retained": true,
+    "native_docker_execution_performed_locally": false,
+    "component_tests": {
+      "passed": 78,
+      "seconds": 2.38,
+      "actual_owned_os_child_sigkill_checked": true,
+      "database_operations_in_os_child_control_mocked": true,
+      "not_real_postgresql_acceptance": true,
+      "final_child_controls_passed": 19,
+      "final_child_controls_seconds": 0.38
+    },
+    "static_checks": {
+      "mypy_source_files": 688,
+      "ruff": "passed",
+      "format": "passed",
+      "docs_links_and_required_ci": "passed"
+    },
+    "retained_preliminary_check_failure": {
+      "mypy_errors": 2,
+      "cause": "Child hook keyword parameter differed from the replaced function; frame accumulator lacked type annotation",
+      "corrected": true,
+      "project_or_canonical_workers_started": false
+    },
+    "exact_updated_head_native_acceptance_pending": true,
+    "publication_pending": true,
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "final_test_opened": false,
+    "stage_ready": false
+  },
+  "corrected_manifest_head_full_ci": {
+    "run": 37694343795,
+    "head": "0796d27e437271dc9c09b78fb087454fb6494a35",
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs_read_and_total": 17,
+    "success": 15,
+    "failed": [
+      "persistence",
+      "required-result"
+    ],
+    "failed_job": 113042573697,
+    "manifest_regressions_passed": true,
+    "test_shards_all_passed": true,
+    "native_cpu": {
+      "job": 113042573734,
+      "passed": 8,
+      "seconds": 112.19
+    },
+    "original_failure_retained": true,
+    "backup_control_root_cause_unconfirmed": true,
+    "updated_child_control_full_ci_required": true
   }
 }
