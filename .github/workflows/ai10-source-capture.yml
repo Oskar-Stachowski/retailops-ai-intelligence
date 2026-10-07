@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: 6fa6e00ceb01df5436e1284b5b336e28794259fe
+          ref: face6db68430d54e5217f5bc78e13f3012183412
           path: .local/source-capture-producer
           persist-credentials: false
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
@@ -93,7 +93,7 @@ jobs:
           assert canonical(resumed.capture())==canonical(full.capture())
           origin=datetime.now(UTC)
           assert restored.quantity_total(origin)==4 and resumed.quantity_total(origin)==7
-          report=dict(status='passed',scope='original_Source_SQL_broker_capture_to_independent_AI_restore_and_overlap',source_commit='6fa6e00ceb01df5436e1284b5b336e28794259fe',receiver_commit=os.environ['GITHUB_SHA'],workflow_run_id=int(os.environ['GITHUB_RUN_ID']),capture_id=captured.capture_id,capture_sha256=hashlib.sha256(raw).hexdigest(),captured_rows=2,captured_receipts=3,final_rows=3,final_receipts=4,partitions=3,full_equals_capture_overlap=True,quantity_before_correction=4,quantity_after_correction=7,actual_Source_SQL_TLS_SCRAM=True,actual_AI_SQL_or_ACK=False,full_43_table_snapshot=False,model_qualification=False,acceptance_inputs='explicit generated observation fixtures')
+          report=dict(status='passed',scope='original_Source_SQL_broker_capture_to_independent_AI_restore_and_overlap',source_commit='face6db68430d54e5217f5bc78e13f3012183412',receiver_commit=os.environ['GITHUB_SHA'],workflow_run_id=int(os.environ['GITHUB_RUN_ID']),capture_id=captured.capture_id,capture_sha256=hashlib.sha256(raw).hexdigest(),captured_rows=2,captured_receipts=3,final_rows=3,final_receipts=4,partitions=3,full_equals_capture_overlap=True,quantity_before_correction=4,quantity_after_correction=7,actual_Source_SQL_TLS_SCRAM=True,actual_AI_SQL_or_ACK=False,full_43_table_snapshot=False,model_qualification=False,acceptance_inputs='explicit generated observation fixtures')
           path=root/'independent-ai-handoff.json';path.write_text(json.dumps(report,sort_keys=True,indent=2)+'\n');path.chmod(0o600)
           print(json.dumps({k:report[k] for k in ('status','scope','captured_rows','captured_receipts','quantity_after_correction','full_equals_capture_overlap')}))
           PY
