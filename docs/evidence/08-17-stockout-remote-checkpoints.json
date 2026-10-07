@@ -1,0 +1,39 @@
+{
+  "schema_version": "stockout-remote-checkpoint-evidence-1.0.0",
+  "parent_commit": "42ff595ab04d77fd6bf0faeae10884f406035413",
+  "required_ci_parent": {
+    "push": 37242229498,
+    "pull_request": 37242232270,
+    "tests": 2337,
+    "status": "success"
+  },
+  "actual_seed42": {
+    "artifact_id": 11318333546,
+    "zip_bytes": 54045542,
+    "zip_sha256": "71816e3817709c11b1177e4695f59ba1abd5da69a979b83bde3dd1928b3f0634",
+    "checkpoint_sha256": "9fce6469dcfeb8bcc973be5697a48d7e2fe4286a40d4fbe7a2e3f3aeda2b597b",
+    "native_wheel_capsule_sha256": "f210b23bb62ef1b1391f7a97b4122c140d8af548316e970c376b22f33d209871",
+    "selection_id": "stockout-selection-sha256-01832134958dc4ee8ad9ad91fab707412b28938b3e5607da2dea15a002b5828e",
+    "selected": "logistic_regression:with_upstream:conditional-C10.0",
+    "policy_id": "stockout-scoring-policy-sha256-4c2a95fc879e54a67784e0b3f3d021572d3fc507899d3ada00670d5346e54300"
+  },
+  "seeds": {
+    "seed42": "completed_success",
+    "seed137": "completed_success",
+    "seed2026": "in_progress"
+  },
+  "new_future_source_profiles": "1.8_prospective_not_executed",
+  "focused_tests": {
+    "passed": 80,
+    "new": 23,
+    "failures": 0,
+    "warnings": 0,
+    "existing": 57,
+    "wall_seconds": 11.01
+  },
+  "independent_quality_accepted": false,
+  "final_test_outcomes_evaluated": false,
+  "thresholds_approved": false,
+  "model_promoted": false,
+  "ai08_ready": false
+}

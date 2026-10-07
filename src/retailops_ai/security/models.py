@@ -26,7 +26,7 @@ class KnowledgeResourceScope(Contract):
 class ResourceScope(Contract):
     product_ids: list[Symbol] = Field(min_length=1, max_length=200)
     selling_location_ids: list[Symbol] = Field(min_length=1, max_length=100)
-    channels: list[Channel] = Field(min_length=1, max_length=2)
+    channels: list[Channel] = Field(min_length=1, max_length=4)
 
     @model_validator(mode="after")
     def no_duplicates(self) -> Self:
@@ -36,12 +36,29 @@ class ResourceScope(Contract):
         return self
 
 
+class StockoutResourceScope(Contract):
+    product_ids: list[Symbol] = Field(min_length=1, max_length=200)
+    stock_location_ids: list[Symbol] = Field(min_length=1, max_length=100)
+
+    @model_validator(mode="after")
+    def unique_physical_keys(self) -> Self:
+        if any(
+            len(set(values)) != len(values)
+            for values in (self.product_ids, self.stock_location_ids)
+        ):
+            raise ValueError("duplicate_stockout_access_scope")
+        return self
+
+
 class AccessGrant(Contract):
     principal_id: Symbol
     roles: list[Role] = Field(min_length=1, max_length=5)
-    capabilities: list[Capability] = Field(min_length=1, max_length=6)
+    capabilities: list[Capability] = Field(min_length=1, max_length=8)
     scope: ResourceScope | None
     knowledge_scope: KnowledgeResourceScope | None = None
+    stockout_scope: StockoutResourceScope | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
 
     @model_validator(mode="after")
     def explicit_capabilities(self) -> Self:
@@ -57,12 +74,21 @@ class AccessGrant(Contract):
             raise ValueError("model_decision_capability_requires_promoter_role")
         if "forecast:run" in self.capabilities and "pipeline" not in self.roles:
             raise ValueError("forecast_run_capability_requires_pipeline_role")
-        if bool({"forecast:read", "forecast:run"} & set(self.capabilities)) != (
-            self.scope is not None
-        ):
+        if "stockout:run" in self.capabilities and "pipeline" not in self.roles:
+            raise ValueError("stockout_run_capability_requires_pipeline_role")
+        if "anomaly:run" in self.capabilities and "pipeline" not in self.roles:
+            raise ValueError("anomaly_run_capability_requires_pipeline_role")
+        if bool(
+            {"forecast:read", "forecast:run", "anomaly:read", "anomaly:run"}
+            & set(self.capabilities)
+        ) != (self.scope is not None):
             raise ValueError("forecast_capability_requires_explicit_scope")
         if ("knowledge:read" in self.capabilities) != (self.knowledge_scope is not None):
             raise ValueError("knowledge_capability_requires_explicit_scope")
+        if bool({"stockout:read", "stockout:run"} & set(self.capabilities)) != (
+            self.stockout_scope is not None
+        ):
+            raise ValueError("stockout_capability_requires_explicit_physical_scope")
         return self
 
 

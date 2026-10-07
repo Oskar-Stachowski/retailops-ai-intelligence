@@ -1,0 +1,890 @@
+{
+  "archive_sha256": "e899afaeb045a30d62b47fe2f8c9dfb6449ae2fc8f6959750c08e254c7c99775",
+  "cases": {
+    "demand": {
+      "files": {
+        "demand/capture/raw/events.jsonl": {
+          "bytes": 1766253,
+          "sha256": "890028d632e1d7c7ea4551ddcca3bd06eee4fcc750cb71f3079ed05692031464"
+        },
+        "demand/capture/source_binding.json": {
+          "bytes": 2922,
+          "sha256": "bcebbc4de120866fda2e56600e69aa80eb0323b193c7dcf593f8c069265d79c0"
+        },
+        "demand/public/facts/assortment/part-000000.parquet": {
+          "bytes": 5535,
+          "sha256": "bbef3a94d524fd8b2ef5f210ba98cb7fe842fd6b22f1615388089ae2e3f4a97b"
+        },
+        "demand/public/facts/business_calendar/part-000000.parquet": {
+          "bytes": 12530,
+          "sha256": "e5382c82a7dde15127f6e82d0b0b454aa906dcabd60ad0f112286cac020987e7"
+        },
+        "demand/public/facts/catalog_categories/part-000000.parquet": {
+          "bytes": 2707,
+          "sha256": "3c96863a3d8e6d0b209308bc1c3ddb282c8cb8c2d0454c34551be26cd2420a1f"
+        },
+        "demand/public/facts/category_calendar/part-000000.parquet": {
+          "bytes": 7869,
+          "sha256": "52105646e29643cd13ef171f41c60b37d0fb5436f60f8c9866d194eead03b502"
+        },
+        "demand/public/facts/channel_assignments/part-000000.parquet": {
+          "bytes": 4005,
+          "sha256": "0c1230f0dd3cf71820bce7a0426f9c0fc901c20df2a2a26435dd45a06d483a7a"
+        },
+        "demand/public/facts/daily_demand_exclusions/part-000000.parquet": {
+          "bytes": 4379,
+          "sha256": "9f66df297e9045f69697d366035aeedb8514568167c11dd9548082d197390bcd"
+        },
+        "demand/public/facts/daily_demand_observations/part-000000.parquet": {
+          "bytes": 26213,
+          "sha256": "34f10dcc055e5b7eefc71a51522011c0191b31f640ece5d78fd0fb899cfad683"
+        },
+        "demand/public/facts/daily_demand_versions/part-000000.parquet": {
+          "bytes": 34017,
+          "sha256": "b1d77e9c2cf7222de4d7ac1af3e72f050d095c5b5df9e8244e440b72237f52a9"
+        },
+        "demand/public/facts/daily_price_observations/part-000000.parquet": {
+          "bytes": 18598,
+          "sha256": "f70e6ce8bddf3947daf43674fb4644c0b9739322959e7d9e43b52a18e3488e5a"
+        },
+        "demand/public/facts/daily_return_cohorts/part-000000.parquet": {
+          "bytes": 40111,
+          "sha256": "2f00c0a17614ac3b8c87d3be9c466f18b7c7acef9c5c5353883b2d31a4e4f1ea"
+        },
+        "demand/public/facts/delivery_plan_versions/part-000000.parquet": {
+          "bytes": 11395,
+          "sha256": "40d74651f9ab797fb3c39d0c0ffd378d49391cae352e716d25c97e4661b03abe"
+        },
+        "demand/public/facts/fulfillment_routes/part-000000.parquet": {
+          "bytes": 3978,
+          "sha256": "53435659bf4a3d66f33548fde61f9801be5a6f59806115f82014f91aa720ace6"
+        },
+        "demand/public/facts/inventory_daily_snapshots/part-000000.parquet": {
+          "bytes": 27997,
+          "sha256": "a51b5d733bdd263266dc8358f71e5e7329d8f2069f4876ced6643bc1ac18b90c"
+        },
+        "demand/public/facts/inventory_fulfillment_routes/part-000000.parquet": {
+          "bytes": 3474,
+          "sha256": "dcf566d83ffd9a61ff5699501eb6158d918ae45b0984923a3e267bb9b7bf873f"
+        },
+        "demand/public/facts/inventory_history_coverage/part-000000.parquet": {
+          "bytes": 14198,
+          "sha256": "87c0c710ecfbe68e0fa76bb1f4e00922972c518cbd0babff7a6c98152564b137"
+        },
+        "demand/public/facts/inventory_ledger/part-000000.parquet": {
+          "bytes": 92389,
+          "sha256": "23737912878d3401100a427e629e629f1e8de032874e2af58a71c5f9d5a45bc7"
+        },
+        "demand/public/facts/inventory_products/part-000000.parquet": {
+          "bytes": 1307,
+          "sha256": "d29cf44a17c30b8e93bd59a9cb3ac96fd312e98e80ab2427e58f2f59d4ec3a8e"
+        },
+        "demand/public/facts/inventory_reorder_rules/part-000000.parquet": {
+          "bytes": 3246,
+          "sha256": "ab62c5ce9e7dba3f608dacda96f3d18903541310b6e4cc8ae31a6b1ad3446940"
+        },
+        "demand/public/facts/inventory_returns/part-000000.parquet": {
+          "bytes": 15724,
+          "sha256": "4e1140e61a2f7120637f8c60c6e28fff08d570160d54d6ea09943ededa907f34"
+        },
+        "demand/public/facts/inventory_route_versions/part-000000.parquet": {
+          "bytes": 1695,
+          "sha256": "c480f5da257cf2704f7155544697f7a5536b7cf5c53be6d479f86b3aef578f26"
+        },
+        "demand/public/facts/inventory_sales/part-000000.parquet": {
+          "bytes": 108895,
+          "sha256": "8435a73a7337a6f73884d08a499c99ef9ed4876ff3b24f0b2598ced2e9bd3de1"
+        },
+        "demand/public/facts/inventory_scope/part-000000.parquet": {
+          "bytes": 1547,
+          "sha256": "2e69fbf8dc786f6818d0498f2a6fdf769847f7abcdb55944ad6275c34259a0db"
+        },
+        "demand/public/facts/inventory_selling_locations/part-000000.parquet": {
+          "bytes": 1200,
+          "sha256": "fbf2d11a91529ca96ec7d4d991eb44d9baeb3f51da3a7857c0e27abc3a7d0c99"
+        },
+        "demand/public/facts/inventory_stock_locations/part-000000.parquet": {
+          "bytes": 1196,
+          "sha256": "0c04b0232630ef3a352ad39abac5f34bac40b5874bb8a46b19b2036e8e87393d"
+        },
+        "demand/public/facts/order_items/part-000000.parquet": {
+          "bytes": 55051,
+          "sha256": "36e7589265e119990305fad5985c75ac2ffbac1ba2b8ad47e60cbed6dd95ca95"
+        },
+        "demand/public/facts/orders/part-000000.parquet": {
+          "bytes": 34980,
+          "sha256": "5650761b3b973869fc6c18550359b83bdaa8c4c10a944af05cc1759b502e1108"
+        },
+        "demand/public/facts/price_plans/part-000000.parquet": {
+          "bytes": 6942,
+          "sha256": "59e2d74f928d2bcc344f9e947e3fd5d30cc580d2f1fad05cd70324dfa284d3aa"
+        },
+        "demand/public/facts/product_catalog/part-000000.parquet": {
+          "bytes": 6217,
+          "sha256": "6383db8d641620326241bd15b6e4ba646641f72e45a95e3da234ddb5f80a1c20"
+        },
+        "demand/public/facts/product_suppliers/part-000000.parquet": {
+          "bytes": 6459,
+          "sha256": "5cfef799aedb5788a1d8471469dcbfe9e74bd06b8a327368b900638e1fe95aec"
+        },
+        "demand/public/facts/products/part-000000.parquet": {
+          "bytes": 2783,
+          "sha256": "e240ef661f81be799b4e6479b47ca24eca513bb0012425dc3dda1a1241a7631a"
+        },
+        "demand/public/facts/promotion_plans/part-000000.parquet": {
+          "bytes": 7879,
+          "sha256": "02d3cf5d022bcd7506339d317e65c56803baf9f6accdd8b8f44416815e9bd1ff"
+        },
+        "demand/public/facts/replenishment_orders/part-000000.parquet": {
+          "bytes": 11635,
+          "sha256": "3129977d295b6ee172fce5cde9199c7971abbf5281bb383a68f3e38113fd9325"
+        },
+        "demand/public/facts/replenishment_receipts/part-000000.parquet": {
+          "bytes": 14312,
+          "sha256": "ed6143e09d157d47a8dca0e28feddee6560054511422077a146dd1e389df8597"
+        },
+        "demand/public/facts/return_events/part-000000.parquet": {
+          "bytes": 30107,
+          "sha256": "11d0b620cd252491bf25f43538ea02c6ff71be031d8cdb5a3881fcdaa8af951b"
+        },
+        "demand/public/facts/return_inventory_decisions/part-000000.parquet": {
+          "bytes": 17635,
+          "sha256": "31383bebe73e424620487f8b841c1b2e4bf8e9e8459f9e0168c8930f68065920"
+        },
+        "demand/public/facts/return_policies/part-000000.parquet": {
+          "bytes": 3941,
+          "sha256": "378782a756dfe225206c16a342dd199aaca2497a6846aac60a23c1d22359ea17"
+        },
+        "demand/public/facts/sale_price_references/part-000000.parquet": {
+          "bytes": 100122,
+          "sha256": "9ce39d356f37e7147ecd4e9bcf49734c13fff57263545aff46db4f147c118b11"
+        },
+        "demand/public/facts/sales/part-000000.parquet": {
+          "bytes": 50899,
+          "sha256": "fc4c541aec289982b847c82a259a819bfea1530daebfc736ab3df05dc1933ec9"
+        },
+        "demand/public/facts/selling_locations/part-000000.parquet": {
+          "bytes": 3340,
+          "sha256": "b93a9993974181f2c50f1aed593ac338ac8bf941d6968f4f8d0a55942e4b1681"
+        },
+        "demand/public/facts/stock_locations/part-000000.parquet": {
+          "bytes": 2698,
+          "sha256": "e2ed5144fc749fa9ce4e47e1875d21c8f3ebf27b610780c8e0073979b0bfa983"
+        },
+        "demand/public/facts/stores/part-000000.parquet": {
+          "bytes": 2988,
+          "sha256": "7c972ab416e3652ebc019ac71733a0958441959302ab1d3b6822a51e6445ea33"
+        },
+        "demand/public/facts/suppliers/part-000000.parquet": {
+          "bytes": 2460,
+          "sha256": "5b4f5c211f384d085a206a822051db525c56c00c11d46e45f4ea19b3a3dabfe2"
+        },
+        "demand/public/facts/warehouses/part-000000.parquet": {
+          "bytes": 2631,
+          "sha256": "ad3f1e9da3a86ac2e2240f567354d3d3981b3692ad447fd2b02810a77a448869"
+        },
+        "demand/public/manifest.sha256": {
+          "bytes": 65,
+          "sha256": "1b0c971ef954760a7ed5260634159d981ee64fadc5601bd6e5d2cb1ffd78ab6d"
+        },
+        "demand/public/manifests/dataset_manifest.v2.json": {
+          "bytes": 49340,
+          "sha256": "d140771156ae4e7f7a44b486c43b8ff4b35a2db0d50e8f12cb9c6fbe316b8e56"
+        },
+        "demand/public/reports/realism_report.json": {
+          "bytes": 17905,
+          "sha256": "0117cead9c4b8ca5cbc3e3ff7269d8a14568286ca8d45fe441426d67174dd341"
+        },
+        "demand/public/reports/realism_report.md": {
+          "bytes": 5271,
+          "sha256": "2384f0be9838b310ba3ab49c6287c00458242f9c3a0c4e590b7acfea08597fc4"
+        },
+        "demand/public/reports/source_report.json": {
+          "bytes": 10285,
+          "sha256": "0756f1940f48fefbe7279fd0a4de5091d3d95863a621d8aceb94aa24f09b9e25"
+        },
+        "demand/public/reports/source_report.md": {
+          "bytes": 3590,
+          "sha256": "7c1958faa420bb9d371eb5598861e11b3ed6e12d123c0398da67460456f0f384"
+        },
+        "demand/public/schemas/anomaly_snapshot.v1_2.schema.json": {
+          "bytes": 19018,
+          "sha256": "a6da67a0f2471a5e2229da07a63a8d1361d1e51d46b44410f04e2858a6419e03"
+        },
+        "demand/public/schemas/anomaly_source_dataset.v2_8.schema.json": {
+          "bytes": 10649,
+          "sha256": "cddd1e5d1af5ac961771eb904507165e16a2a8ae40df8c27b43f1db30526ac1a"
+        },
+        "demand/public/schemas/assortment.arrow.json": {
+          "bytes": 560,
+          "sha256": "6d5cce53c74dc918e3d6d86750b00aaaeba3bffa9aecc9dbcace9853e5cf6689"
+        },
+        "demand/public/schemas/business_anomaly_plan.v1.schema.json": {
+          "bytes": 5898,
+          "sha256": "26986401ce4bda6080940e9e4fdf491be8e44cbae28bc1a4a48b8865251d5cdb"
+        },
+        "demand/public/schemas/business_calendar.arrow.json": {
+          "bytes": 1735,
+          "sha256": "b6e65e1b0387a5b5f87f631ac76d84ad19ac2cfbb4fc7d06328cdaceb56e6acf"
+        },
+        "demand/public/schemas/business_physical_anomaly_plan.v1.schema.json": {
+          "bytes": 5482,
+          "sha256": "7bca3bded54856a40554e372b4e1fe67fdc0cd17a4a347031813f95068edcff4"
+        },
+        "demand/public/schemas/catalog_categories.arrow.json": {
+          "bytes": 362,
+          "sha256": "fc3708d9d036faac6c9d91092a7a88aac0dd0357b59202754b61d8907cae42a8"
+        },
+        "demand/public/schemas/category_calendar.arrow.json": {
+          "bytes": 401,
+          "sha256": "17cdcec181544072b045c9b8678b888d0072e7874fce9387c6bcb79c0878c9d5"
+        },
+        "demand/public/schemas/channel_assignments.arrow.json": {
+          "bytes": 574,
+          "sha256": "d840ca331e593be4c5995145c7fcfed87582f57ec590712a727196064fd43ec2"
+        },
+        "demand/public/schemas/daily_demand_exclusions.arrow.json": {
+          "bytes": 518,
+          "sha256": "88ce8bf7b643c66def110659eba63e6cf83b15041b4c9753a3bc03f4780caf75"
+        },
+        "demand/public/schemas/daily_demand_observations.arrow.json": {
+          "bytes": 1328,
+          "sha256": "4874efb732e71f516e711d80f4fed257d7a999d8e156540eda0d9631a4d11077"
+        },
+        "demand/public/schemas/daily_demand_versions.arrow.json": {
+          "bytes": 695,
+          "sha256": "71249fa1f5d6d5d885254726481104727e5b241392f60e29642eec5e8bcc2bea"
+        },
+        "demand/public/schemas/daily_price_observations.arrow.json": {
+          "bytes": 837,
+          "sha256": "328441936fe36c556de18049adc2e927453e40c3771a2e581a2f1b1bafd59274"
+        },
+        "demand/public/schemas/daily_return_cohorts.arrow.json": {
+          "bytes": 1080,
+          "sha256": "3fe4fe1ab7983dbad3f9b193f400d4618c1cad4d976b3cec92a26c0969623f03"
+        },
+        "demand/public/schemas/delivery_plan_versions.arrow.json": {
+          "bytes": 576,
+          "sha256": "dec3dd76d36482f724cf06a84aa96e7657b94a35c486e4d0afcc7000c5ae71a2"
+        },
+        "demand/public/schemas/fulfillment_routes.arrow.json": {
+          "bytes": 570,
+          "sha256": "45b63b1ebd4bffb7fa49c8e1d44ff555f9444a26d186d35a9ae420555a7caff7"
+        },
+        "demand/public/schemas/inventory_daily_snapshots.arrow.json": {
+          "bytes": 1110,
+          "sha256": "c8ec885a76f2ec7439acbe0b7a588daf842bf660a890bd20cd85369e54ea3cd6"
+        },
+        "demand/public/schemas/inventory_fulfillment_routes.arrow.json": {
+          "bytes": 526,
+          "sha256": "9197b7bd4cc8235584bf08140169b2048097c0cd69840066c158cebb9c9b5589"
+        },
+        "demand/public/schemas/inventory_history_coverage.arrow.json": {
+          "bytes": 509,
+          "sha256": "f599bc16513edaa3cffa5ab891abe14ca7cb034abdb3035d063242d294d5f9d1"
+        },
+        "demand/public/schemas/inventory_label_qualification.v1.schema.json": {
+          "bytes": 9054,
+          "sha256": "4b795786692a382e1d2a6dce382edb1355e170c5c11cb0a91f9db38f58c2263e"
+        },
+        "demand/public/schemas/inventory_ledger.arrow.json": {
+          "bytes": 944,
+          "sha256": "de7abc5ab16cd7afc719ae165e4074bd5e1bba53edaff1813fcca21a5278d7b3"
+        },
+        "demand/public/schemas/inventory_products.arrow.json": {
+          "bytes": 149,
+          "sha256": "86d57132abef2aea2ff2bf00192add3ab768f044bad02076014eca72db10ac7a"
+        },
+        "demand/public/schemas/inventory_reorder_rules.arrow.json": {
+          "bytes": 469,
+          "sha256": "be9174b1190c47a9dd5119f3de6758fe4ea4d8faa9b6ac6fd1d3071813c5d3cd"
+        },
+        "demand/public/schemas/inventory_returns.arrow.json": {
+          "bytes": 884,
+          "sha256": "0396929e6072b356cc9c606bd3f779b9547258835ad6903b5cc34fbf58388abe"
+        },
+        "demand/public/schemas/inventory_route_versions.arrow.json": {
+          "bytes": 221,
+          "sha256": "f29c31fc0dba8ba987e68b7d922ca4b54948e7553259fd592cbb988efaee26ec"
+        },
+        "demand/public/schemas/inventory_sales.arrow.json": {
+          "bytes": 1135,
+          "sha256": "a0840671445694c70b947782a7ed6e56f026cda8a7f3c2df8e6ce2eb5aeaf694"
+        },
+        "demand/public/schemas/inventory_scope.arrow.json": {
+          "bytes": 156,
+          "sha256": "46ca63d4954b0eb2859a167400be9dba64a05947a1dfb1697ab798112bfa4e09"
+        },
+        "demand/public/schemas/inventory_selling_locations.arrow.json": {
+          "bytes": 156,
+          "sha256": "dcc49ef3268eb5525737f2f4895d8ad5a199aa9c40d5a4d35e4d584a6aa6b394"
+        },
+        "demand/public/schemas/inventory_source_tables.v1.schema.json": {
+          "bytes": 68803,
+          "sha256": "00196e851cb149da78f253f3405d6d9a53dbe4547a6b9113148edca4fb4bcda7"
+        },
+        "demand/public/schemas/inventory_stock_locations.arrow.json": {
+          "bytes": 154,
+          "sha256": "093e0f4cd3b163f70b24afa4a7f0bf46ac60af830fc67ae208ac8ab198dfa74f"
+        },
+        "demand/public/schemas/order_items.arrow.json": {
+          "bytes": 429,
+          "sha256": "101020e9aabaf157d8c7e4fc991b4c4b8f8e2278bf340c0e1a725112a13173b4"
+        },
+        "demand/public/schemas/orders.arrow.json": {
+          "bytes": 604,
+          "sha256": "877bc7eea672f6acb80e689cf2c0fa8c72b14eba79e0c6dcc44ea0d6049651ef"
+        },
+        "demand/public/schemas/price_plans.arrow.json": {
+          "bytes": 853,
+          "sha256": "612629a221e4a703e57297944c2c9307a83dd1a95ecad3765e60c9bb292a2502"
+        },
+        "demand/public/schemas/product_catalog.arrow.json": {
+          "bytes": 946,
+          "sha256": "72e45ebcf50a5aa4c5d7b2ad4724d2d258c7e17ba8420810dc470c16f512af4c"
+        },
+        "demand/public/schemas/product_suppliers.arrow.json": {
+          "bytes": 968,
+          "sha256": "e5a71faaab57012db0989d85b377b30cf01b5e3aed7c3faab54d981b535f555a"
+        },
+        "demand/public/schemas/products.arrow.json": {
+          "bytes": 330,
+          "sha256": "0a609a9a1ec0a722c59d6ccd07ebd6aedffd4c07860e070fa6ab6b7e6d84d5bb"
+        },
+        "demand/public/schemas/promotion_plans.arrow.json": {
+          "bytes": 1102,
+          "sha256": "b574efda3c6c4923815c219d613733a2beb892d0cb97e6ea109c14978fbc3448"
+        },
+        "demand/public/schemas/replenishment_orders.arrow.json": {
+          "bytes": 873,
+          "sha256": "b392c2320ecb0f64739f1ae481caadccd17426ec320dbe3e2a634948c36b16f4"
+        },
+        "demand/public/schemas/replenishment_receipts.arrow.json": {
+          "bytes": 789,
+          "sha256": "0ad10cba410b09b2bb89a3ce8a92f60c82380c6b064121192991c336eac6dd41"
+        },
+        "demand/public/schemas/return_events.arrow.json": {
+          "bytes": 1029,
+          "sha256": "9551fc834550c2efc4f5cfe1a21a67cb26cca2762a9c51e16169d3262c667c46"
+        },
+        "demand/public/schemas/return_inventory_decisions.arrow.json": {
+          "bytes": 684,
+          "sha256": "fe80d8b38fbb58a8888ef2b0b041a7b620f738b0ff68f5a1eb4150d3141cceaf"
+        },
+        "demand/public/schemas/return_policies.arrow.json": {
+          "bytes": 452,
+          "sha256": "40c17eeb352238ee5a2851defbb699d6ea1871d8f3b000e6fcefdbac8f0df12d"
+        },
+        "demand/public/schemas/sale_price_references.arrow.json": {
+          "bytes": 692,
+          "sha256": "511958e47ece7359f99f080dd00aba36061b3406379d008f3d97f13ac5fbee7f"
+        },
+        "demand/public/schemas/sales.arrow.json": {
+          "bytes": 853,
+          "sha256": "b4734dbc4934cc3e96555be200c43c933d86cb96499e6f74eef126ab4276c8df"
+        },
+        "demand/public/schemas/selling_locations.arrow.json": {
+          "bytes": 544,
+          "sha256": "855482c0b51597264b4f4f409a40defed9b84ec512fcbfef91be7eccb83fd7b5"
+        },
+        "demand/public/schemas/source_snapshot_handoff.v1_2.json": {
+          "bytes": 92024,
+          "sha256": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c"
+        },
+        "demand/public/schemas/stock_locations.arrow.json": {
+          "bytes": 413,
+          "sha256": "d0dd7fac48df0961e72f851517f74826a515ed7a7e5eca8e8fbc5ce574aeb8c6"
+        },
+        "demand/public/schemas/stores.arrow.json": {
+          "bytes": 436,
+          "sha256": "9a0e7c4d7a46243952168d578aea64ea0deca6c6e4d4b340feedc7acce8fc7c3"
+        },
+        "demand/public/schemas/suppliers.arrow.json": {
+          "bytes": 393,
+          "sha256": "ed313c1d76f608f1ba32c25756999575ebefbef2b02b188b3677ef2fbcb168a6"
+        },
+        "demand/public/schemas/warehouses.arrow.json": {
+          "bytes": 392,
+          "sha256": "022fa85ac5aa21b0185cf5d11557d1985df99be3bb01bfc756a4403434fc8052"
+        },
+        "demand/public/snapshot_manifest.json": {
+          "bytes": 168878,
+          "sha256": "cd0915971f10e8454d94f6767b3d993ad7d41e157e9698b201d3b1bb3746fab8"
+        }
+      },
+      "producer_fixture_id": "raw-dq-sha256-49c3b360e381325b6174d7eb7382685a0636457d03da790d57c2bd4677709f5b",
+      "producer_operational_replay_sha256": "1dc5b9e6dd520e7bf0c275411c95bf6d0e9ddaeb1165cef77b9f0fa376dac8ce",
+      "producer_report": {
+        "accepted": 1627,
+        "accepted_return_claims": 229,
+        "accepted_sales": 1398,
+        "aggregate_revisions": 1627,
+        "curated_completeness": "not_qualified",
+        "declared_source_watermark": "2026-08-31T23:59:59.999999+00:00",
+        "duplicate_business": 2,
+        "duplicate_event": 2,
+        "input_records": 1690,
+        "late": 2,
+        "max_accepted_event_time": "2026-08-31T09:01:04+00:00",
+        "missing_grain_policy": "unknown_not_zero",
+        "missing_parent_facts": 6,
+        "out_of_order": 2,
+        "policy_version": "operational-offline-replay-2.0.0",
+        "progress_declarations": 53,
+        "quarantined": 6,
+        "raw_events": 1637,
+        "scope": "all_parent_sales_and_return_claims",
+        "status": "completed",
+        "transport_durability_proven": false,
+        "watermark_meaning": "explicit_parent_stream_progress_not_business_event_day_completeness"
+      },
+      "snapshot_id": "snapshot-sha256-96431ac77d2ee7287cf2d072ebd5bb013990b9df09bbd3ba7d68753176c9800d",
+      "source_dataset_id": "source-sha256-3c13e783d52b74bb0955122fd70403eb8f10624acfa11e8b54d587b487cff2fd"
+    },
+    "physical": {
+      "files": {
+        "physical/capture/raw/events.jsonl": {
+          "bytes": 1768564,
+          "sha256": "1d895c3ae8860416ad88e7dde196ab3804d50ac1053392cfe66fad54725b3e53"
+        },
+        "physical/capture/source_binding.json": {
+          "bytes": 2922,
+          "sha256": "f2614c5eaa81550bd54dcd2de27d7d7707054348047e1400f9eb015b1595a5dd"
+        },
+        "physical/public/facts/assortment/part-000000.parquet": {
+          "bytes": 5535,
+          "sha256": "bbef3a94d524fd8b2ef5f210ba98cb7fe842fd6b22f1615388089ae2e3f4a97b"
+        },
+        "physical/public/facts/business_calendar/part-000000.parquet": {
+          "bytes": 12530,
+          "sha256": "e5382c82a7dde15127f6e82d0b0b454aa906dcabd60ad0f112286cac020987e7"
+        },
+        "physical/public/facts/catalog_categories/part-000000.parquet": {
+          "bytes": 2707,
+          "sha256": "3c96863a3d8e6d0b209308bc1c3ddb282c8cb8c2d0454c34551be26cd2420a1f"
+        },
+        "physical/public/facts/category_calendar/part-000000.parquet": {
+          "bytes": 7869,
+          "sha256": "52105646e29643cd13ef171f41c60b37d0fb5436f60f8c9866d194eead03b502"
+        },
+        "physical/public/facts/channel_assignments/part-000000.parquet": {
+          "bytes": 4005,
+          "sha256": "0c1230f0dd3cf71820bce7a0426f9c0fc901c20df2a2a26435dd45a06d483a7a"
+        },
+        "physical/public/facts/daily_demand_exclusions/part-000000.parquet": {
+          "bytes": 4379,
+          "sha256": "9f66df297e9045f69697d366035aeedb8514568167c11dd9548082d197390bcd"
+        },
+        "physical/public/facts/daily_demand_observations/part-000000.parquet": {
+          "bytes": 26236,
+          "sha256": "df08023c748803da230f81f9bee944323bfc4833cad769d82b17182be7226b0a"
+        },
+        "physical/public/facts/daily_demand_versions/part-000000.parquet": {
+          "bytes": 34009,
+          "sha256": "47c2d610248a333c25ee2bd2c6f8fc70f62c74fe28b3ccde0f5788073a8abbb8"
+        },
+        "physical/public/facts/daily_price_observations/part-000000.parquet": {
+          "bytes": 18632,
+          "sha256": "ad9c8ee0ccf8313bf19adde9264ae54d329352bcc69dcbc2ff265a86cca09257"
+        },
+        "physical/public/facts/daily_return_cohorts/part-000000.parquet": {
+          "bytes": 40138,
+          "sha256": "2c8c1922eb855bf25ce1ccc971523f7f440ed16f78e7bdee3b64767aef3db8a5"
+        },
+        "physical/public/facts/delivery_plan_versions/part-000000.parquet": {
+          "bytes": 11428,
+          "sha256": "b7bfa54ea9244b8b58814e3bf44357c8b75acb618a541001973489e81d44f36d"
+        },
+        "physical/public/facts/fulfillment_routes/part-000000.parquet": {
+          "bytes": 3978,
+          "sha256": "53435659bf4a3d66f33548fde61f9801be5a6f59806115f82014f91aa720ace6"
+        },
+        "physical/public/facts/inventory_daily_snapshots/part-000000.parquet": {
+          "bytes": 28115,
+          "sha256": "e4f624431e5dd8e831aa8d199b3b99577e0728adf5d795e1418c10b19196caf8"
+        },
+        "physical/public/facts/inventory_fulfillment_routes/part-000000.parquet": {
+          "bytes": 3474,
+          "sha256": "dcf566d83ffd9a61ff5699501eb6158d918ae45b0984923a3e267bb9b7bf873f"
+        },
+        "physical/public/facts/inventory_history_coverage/part-000000.parquet": {
+          "bytes": 14198,
+          "sha256": "87c0c710ecfbe68e0fa76bb1f4e00922972c518cbd0babff7a6c98152564b137"
+        },
+        "physical/public/facts/inventory_ledger/part-000000.parquet": {
+          "bytes": 92478,
+          "sha256": "c68c51b4fb4e767e9af032c4cbdd60112d0b3077c1ebb43b3f4c9262dcd7fd90"
+        },
+        "physical/public/facts/inventory_products/part-000000.parquet": {
+          "bytes": 1307,
+          "sha256": "d29cf44a17c30b8e93bd59a9cb3ac96fd312e98e80ab2427e58f2f59d4ec3a8e"
+        },
+        "physical/public/facts/inventory_reorder_rules/part-000000.parquet": {
+          "bytes": 3246,
+          "sha256": "ab62c5ce9e7dba3f608dacda96f3d18903541310b6e4cc8ae31a6b1ad3446940"
+        },
+        "physical/public/facts/inventory_returns/part-000000.parquet": {
+          "bytes": 15736,
+          "sha256": "a1d96455a6c1ddda82e5c1128c34dce35fc6d54663707b9925e7a9c0e01e0060"
+        },
+        "physical/public/facts/inventory_route_versions/part-000000.parquet": {
+          "bytes": 1695,
+          "sha256": "c480f5da257cf2704f7155544697f7a5536b7cf5c53be6d479f86b3aef578f26"
+        },
+        "physical/public/facts/inventory_sales/part-000000.parquet": {
+          "bytes": 108727,
+          "sha256": "0efc059946b8fe90725a5f5b8302206e309855815819bbe0747ff813088d1749"
+        },
+        "physical/public/facts/inventory_scope/part-000000.parquet": {
+          "bytes": 1547,
+          "sha256": "2e69fbf8dc786f6818d0498f2a6fdf769847f7abcdb55944ad6275c34259a0db"
+        },
+        "physical/public/facts/inventory_selling_locations/part-000000.parquet": {
+          "bytes": 1200,
+          "sha256": "fbf2d11a91529ca96ec7d4d991eb44d9baeb3f51da3a7857c0e27abc3a7d0c99"
+        },
+        "physical/public/facts/inventory_stock_locations/part-000000.parquet": {
+          "bytes": 1196,
+          "sha256": "0c04b0232630ef3a352ad39abac5f34bac40b5874bb8a46b19b2036e8e87393d"
+        },
+        "physical/public/facts/order_items/part-000000.parquet": {
+          "bytes": 54956,
+          "sha256": "a48670b45f46699adb4c8f8c7561629013e31c8b68ddb8d49cf47fc2e387d326"
+        },
+        "physical/public/facts/orders/part-000000.parquet": {
+          "bytes": 35222,
+          "sha256": "a80f673a386f0759f30d7bf07ddeb2db97bb7df41fcb4321efeae5c65c296153"
+        },
+        "physical/public/facts/price_plans/part-000000.parquet": {
+          "bytes": 6942,
+          "sha256": "59e2d74f928d2bcc344f9e947e3fd5d30cc580d2f1fad05cd70324dfa284d3aa"
+        },
+        "physical/public/facts/product_catalog/part-000000.parquet": {
+          "bytes": 6217,
+          "sha256": "6383db8d641620326241bd15b6e4ba646641f72e45a95e3da234ddb5f80a1c20"
+        },
+        "physical/public/facts/product_suppliers/part-000000.parquet": {
+          "bytes": 6459,
+          "sha256": "5cfef799aedb5788a1d8471469dcbfe9e74bd06b8a327368b900638e1fe95aec"
+        },
+        "physical/public/facts/products/part-000000.parquet": {
+          "bytes": 2783,
+          "sha256": "e240ef661f81be799b4e6479b47ca24eca513bb0012425dc3dda1a1241a7631a"
+        },
+        "physical/public/facts/promotion_plans/part-000000.parquet": {
+          "bytes": 7879,
+          "sha256": "02d3cf5d022bcd7506339d317e65c56803baf9f6accdd8b8f44416815e9bd1ff"
+        },
+        "physical/public/facts/replenishment_orders/part-000000.parquet": {
+          "bytes": 11632,
+          "sha256": "16e1f94fa41c912a5aeddd07af4dce96e4c921021ee0138258bd3668fb95fb39"
+        },
+        "physical/public/facts/replenishment_receipts/part-000000.parquet": {
+          "bytes": 14388,
+          "sha256": "c04a04efaf9e501c76aefa6a94fc3d63a75e5ee069661d01e3675d8d9f031957"
+        },
+        "physical/public/facts/return_events/part-000000.parquet": {
+          "bytes": 31552,
+          "sha256": "bdd557fff723dc6a78f358c3c0e52150f768f119cdd5e9c1222260dc589f9f1f"
+        },
+        "physical/public/facts/return_inventory_decisions/part-000000.parquet": {
+          "bytes": 18452,
+          "sha256": "17f06f475d8a789cb3b864652731ce74efa9d6892194a5edfe5cadc0c516a15c"
+        },
+        "physical/public/facts/return_policies/part-000000.parquet": {
+          "bytes": 3941,
+          "sha256": "378782a756dfe225206c16a342dd199aaca2497a6846aac60a23c1d22359ea17"
+        },
+        "physical/public/facts/sale_price_references/part-000000.parquet": {
+          "bytes": 99351,
+          "sha256": "a8340f139e5932a3b1f452140458b0e12b61cb3034d2b0d3277e599653872ed4"
+        },
+        "physical/public/facts/sales/part-000000.parquet": {
+          "bytes": 50708,
+          "sha256": "1bdc16b5e5cc73fe702950838ea4ec4b5e90e55c319056164afb6b020e649d51"
+        },
+        "physical/public/facts/selling_locations/part-000000.parquet": {
+          "bytes": 3340,
+          "sha256": "b93a9993974181f2c50f1aed593ac338ac8bf941d6968f4f8d0a55942e4b1681"
+        },
+        "physical/public/facts/stock_locations/part-000000.parquet": {
+          "bytes": 2698,
+          "sha256": "e2ed5144fc749fa9ce4e47e1875d21c8f3ebf27b610780c8e0073979b0bfa983"
+        },
+        "physical/public/facts/stores/part-000000.parquet": {
+          "bytes": 2988,
+          "sha256": "7c972ab416e3652ebc019ac71733a0958441959302ab1d3b6822a51e6445ea33"
+        },
+        "physical/public/facts/suppliers/part-000000.parquet": {
+          "bytes": 2460,
+          "sha256": "5b4f5c211f384d085a206a822051db525c56c00c11d46e45f4ea19b3a3dabfe2"
+        },
+        "physical/public/facts/warehouses/part-000000.parquet": {
+          "bytes": 2631,
+          "sha256": "ad3f1e9da3a86ac2e2240f567354d3d3981b3692ad447fd2b02810a77a448869"
+        },
+        "physical/public/manifest.sha256": {
+          "bytes": 65,
+          "sha256": "a66698ba71ad20edf0dc25b0a48389c7761cf9f85d54e5db67df9b0a8395e47a"
+        },
+        "physical/public/manifests/dataset_manifest.v2.json": {
+          "bytes": 49339,
+          "sha256": "8d6538e1528b2ea60f2b5d3786990c905f47c84a3ad1deeb2bdda7eb22e3dc85"
+        },
+        "physical/public/reports/realism_report.json": {
+          "bytes": 17929,
+          "sha256": "8fef6c5f9d4f23c426d3b017e4e1e6dfd153f108375a8210f1dc52cd95ba0f0c"
+        },
+        "physical/public/reports/realism_report.md": {
+          "bytes": 5295,
+          "sha256": "ffe082cc66c342b3adbf9a4291a2cc0f9855af10ec05956560b6732b0a9c170d"
+        },
+        "physical/public/reports/source_report.json": {
+          "bytes": 10285,
+          "sha256": "7814051236de165e8636825852e517a628e09df58a27f066e18007285cbcaeda"
+        },
+        "physical/public/reports/source_report.md": {
+          "bytes": 3590,
+          "sha256": "2f6a2f25f6bbfa291e7825ad71d4b7a2fd3a613ee79bd8aae4400918eb07d7e7"
+        },
+        "physical/public/schemas/anomaly_snapshot.v1_2.schema.json": {
+          "bytes": 19018,
+          "sha256": "a6da67a0f2471a5e2229da07a63a8d1361d1e51d46b44410f04e2858a6419e03"
+        },
+        "physical/public/schemas/anomaly_source_dataset.v2_8.schema.json": {
+          "bytes": 10649,
+          "sha256": "cddd1e5d1af5ac961771eb904507165e16a2a8ae40df8c27b43f1db30526ac1a"
+        },
+        "physical/public/schemas/assortment.arrow.json": {
+          "bytes": 560,
+          "sha256": "6d5cce53c74dc918e3d6d86750b00aaaeba3bffa9aecc9dbcace9853e5cf6689"
+        },
+        "physical/public/schemas/business_anomaly_plan.v1.schema.json": {
+          "bytes": 5898,
+          "sha256": "26986401ce4bda6080940e9e4fdf491be8e44cbae28bc1a4a48b8865251d5cdb"
+        },
+        "physical/public/schemas/business_calendar.arrow.json": {
+          "bytes": 1735,
+          "sha256": "b6e65e1b0387a5b5f87f631ac76d84ad19ac2cfbb4fc7d06328cdaceb56e6acf"
+        },
+        "physical/public/schemas/business_physical_anomaly_plan.v1.schema.json": {
+          "bytes": 5482,
+          "sha256": "7bca3bded54856a40554e372b4e1fe67fdc0cd17a4a347031813f95068edcff4"
+        },
+        "physical/public/schemas/catalog_categories.arrow.json": {
+          "bytes": 362,
+          "sha256": "fc3708d9d036faac6c9d91092a7a88aac0dd0357b59202754b61d8907cae42a8"
+        },
+        "physical/public/schemas/category_calendar.arrow.json": {
+          "bytes": 401,
+          "sha256": "17cdcec181544072b045c9b8678b888d0072e7874fce9387c6bcb79c0878c9d5"
+        },
+        "physical/public/schemas/channel_assignments.arrow.json": {
+          "bytes": 574,
+          "sha256": "d840ca331e593be4c5995145c7fcfed87582f57ec590712a727196064fd43ec2"
+        },
+        "physical/public/schemas/daily_demand_exclusions.arrow.json": {
+          "bytes": 518,
+          "sha256": "88ce8bf7b643c66def110659eba63e6cf83b15041b4c9753a3bc03f4780caf75"
+        },
+        "physical/public/schemas/daily_demand_observations.arrow.json": {
+          "bytes": 1328,
+          "sha256": "4874efb732e71f516e711d80f4fed257d7a999d8e156540eda0d9631a4d11077"
+        },
+        "physical/public/schemas/daily_demand_versions.arrow.json": {
+          "bytes": 695,
+          "sha256": "71249fa1f5d6d5d885254726481104727e5b241392f60e29642eec5e8bcc2bea"
+        },
+        "physical/public/schemas/daily_price_observations.arrow.json": {
+          "bytes": 837,
+          "sha256": "328441936fe36c556de18049adc2e927453e40c3771a2e581a2f1b1bafd59274"
+        },
+        "physical/public/schemas/daily_return_cohorts.arrow.json": {
+          "bytes": 1080,
+          "sha256": "3fe4fe1ab7983dbad3f9b193f400d4618c1cad4d976b3cec92a26c0969623f03"
+        },
+        "physical/public/schemas/delivery_plan_versions.arrow.json": {
+          "bytes": 576,
+          "sha256": "dec3dd76d36482f724cf06a84aa96e7657b94a35c486e4d0afcc7000c5ae71a2"
+        },
+        "physical/public/schemas/fulfillment_routes.arrow.json": {
+          "bytes": 570,
+          "sha256": "45b63b1ebd4bffb7fa49c8e1d44ff555f9444a26d186d35a9ae420555a7caff7"
+        },
+        "physical/public/schemas/inventory_daily_snapshots.arrow.json": {
+          "bytes": 1110,
+          "sha256": "c8ec885a76f2ec7439acbe0b7a588daf842bf660a890bd20cd85369e54ea3cd6"
+        },
+        "physical/public/schemas/inventory_fulfillment_routes.arrow.json": {
+          "bytes": 526,
+          "sha256": "9197b7bd4cc8235584bf08140169b2048097c0cd69840066c158cebb9c9b5589"
+        },
+        "physical/public/schemas/inventory_history_coverage.arrow.json": {
+          "bytes": 509,
+          "sha256": "f599bc16513edaa3cffa5ab891abe14ca7cb034abdb3035d063242d294d5f9d1"
+        },
+        "physical/public/schemas/inventory_label_qualification.v1.schema.json": {
+          "bytes": 9054,
+          "sha256": "4b795786692a382e1d2a6dce382edb1355e170c5c11cb0a91f9db38f58c2263e"
+        },
+        "physical/public/schemas/inventory_ledger.arrow.json": {
+          "bytes": 944,
+          "sha256": "de7abc5ab16cd7afc719ae165e4074bd5e1bba53edaff1813fcca21a5278d7b3"
+        },
+        "physical/public/schemas/inventory_products.arrow.json": {
+          "bytes": 149,
+          "sha256": "86d57132abef2aea2ff2bf00192add3ab768f044bad02076014eca72db10ac7a"
+        },
+        "physical/public/schemas/inventory_reorder_rules.arrow.json": {
+          "bytes": 469,
+          "sha256": "be9174b1190c47a9dd5119f3de6758fe4ea4d8faa9b6ac6fd1d3071813c5d3cd"
+        },
+        "physical/public/schemas/inventory_returns.arrow.json": {
+          "bytes": 884,
+          "sha256": "0396929e6072b356cc9c606bd3f779b9547258835ad6903b5cc34fbf58388abe"
+        },
+        "physical/public/schemas/inventory_route_versions.arrow.json": {
+          "bytes": 221,
+          "sha256": "f29c31fc0dba8ba987e68b7d922ca4b54948e7553259fd592cbb988efaee26ec"
+        },
+        "physical/public/schemas/inventory_sales.arrow.json": {
+          "bytes": 1135,
+          "sha256": "a0840671445694c70b947782a7ed6e56f026cda8a7f3c2df8e6ce2eb5aeaf694"
+        },
+        "physical/public/schemas/inventory_scope.arrow.json": {
+          "bytes": 156,
+          "sha256": "46ca63d4954b0eb2859a167400be9dba64a05947a1dfb1697ab798112bfa4e09"
+        },
+        "physical/public/schemas/inventory_selling_locations.arrow.json": {
+          "bytes": 156,
+          "sha256": "dcc49ef3268eb5525737f2f4895d8ad5a199aa9c40d5a4d35e4d584a6aa6b394"
+        },
+        "physical/public/schemas/inventory_source_tables.v1.schema.json": {
+          "bytes": 68803,
+          "sha256": "00196e851cb149da78f253f3405d6d9a53dbe4547a6b9113148edca4fb4bcda7"
+        },
+        "physical/public/schemas/inventory_stock_locations.arrow.json": {
+          "bytes": 154,
+          "sha256": "093e0f4cd3b163f70b24afa4a7f0bf46ac60af830fc67ae208ac8ab198dfa74f"
+        },
+        "physical/public/schemas/order_items.arrow.json": {
+          "bytes": 429,
+          "sha256": "101020e9aabaf157d8c7e4fc991b4c4b8f8e2278bf340c0e1a725112a13173b4"
+        },
+        "physical/public/schemas/orders.arrow.json": {
+          "bytes": 604,
+          "sha256": "877bc7eea672f6acb80e689cf2c0fa8c72b14eba79e0c6dcc44ea0d6049651ef"
+        },
+        "physical/public/schemas/price_plans.arrow.json": {
+          "bytes": 853,
+          "sha256": "612629a221e4a703e57297944c2c9307a83dd1a95ecad3765e60c9bb292a2502"
+        },
+        "physical/public/schemas/product_catalog.arrow.json": {
+          "bytes": 946,
+          "sha256": "72e45ebcf50a5aa4c5d7b2ad4724d2d258c7e17ba8420810dc470c16f512af4c"
+        },
+        "physical/public/schemas/product_suppliers.arrow.json": {
+          "bytes": 968,
+          "sha256": "e5a71faaab57012db0989d85b377b30cf01b5e3aed7c3faab54d981b535f555a"
+        },
+        "physical/public/schemas/products.arrow.json": {
+          "bytes": 330,
+          "sha256": "0a609a9a1ec0a722c59d6ccd07ebd6aedffd4c07860e070fa6ab6b7e6d84d5bb"
+        },
+        "physical/public/schemas/promotion_plans.arrow.json": {
+          "bytes": 1102,
+          "sha256": "b574efda3c6c4923815c219d613733a2beb892d0cb97e6ea109c14978fbc3448"
+        },
+        "physical/public/schemas/replenishment_orders.arrow.json": {
+          "bytes": 873,
+          "sha256": "b392c2320ecb0f64739f1ae481caadccd17426ec320dbe3e2a634948c36b16f4"
+        },
+        "physical/public/schemas/replenishment_receipts.arrow.json": {
+          "bytes": 789,
+          "sha256": "0ad10cba410b09b2bb89a3ce8a92f60c82380c6b064121192991c336eac6dd41"
+        },
+        "physical/public/schemas/return_events.arrow.json": {
+          "bytes": 1029,
+          "sha256": "9551fc834550c2efc4f5cfe1a21a67cb26cca2762a9c51e16169d3262c667c46"
+        },
+        "physical/public/schemas/return_inventory_decisions.arrow.json": {
+          "bytes": 684,
+          "sha256": "fe80d8b38fbb58a8888ef2b0b041a7b620f738b0ff68f5a1eb4150d3141cceaf"
+        },
+        "physical/public/schemas/return_policies.arrow.json": {
+          "bytes": 452,
+          "sha256": "40c17eeb352238ee5a2851defbb699d6ea1871d8f3b000e6fcefdbac8f0df12d"
+        },
+        "physical/public/schemas/sale_price_references.arrow.json": {
+          "bytes": 692,
+          "sha256": "511958e47ece7359f99f080dd00aba36061b3406379d008f3d97f13ac5fbee7f"
+        },
+        "physical/public/schemas/sales.arrow.json": {
+          "bytes": 853,
+          "sha256": "b4734dbc4934cc3e96555be200c43c933d86cb96499e6f74eef126ab4276c8df"
+        },
+        "physical/public/schemas/selling_locations.arrow.json": {
+          "bytes": 544,
+          "sha256": "855482c0b51597264b4f4f409a40defed9b84ec512fcbfef91be7eccb83fd7b5"
+        },
+        "physical/public/schemas/source_snapshot_handoff.v1_2.json": {
+          "bytes": 92024,
+          "sha256": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c"
+        },
+        "physical/public/schemas/stock_locations.arrow.json": {
+          "bytes": 413,
+          "sha256": "d0dd7fac48df0961e72f851517f74826a515ed7a7e5eca8e8fbc5ce574aeb8c6"
+        },
+        "physical/public/schemas/stores.arrow.json": {
+          "bytes": 436,
+          "sha256": "9a0e7c4d7a46243952168d578aea64ea0deca6c6e4d4b340feedc7acce8fc7c3"
+        },
+        "physical/public/schemas/suppliers.arrow.json": {
+          "bytes": 393,
+          "sha256": "ed313c1d76f608f1ba32c25756999575ebefbef2b02b188b3677ef2fbcb168a6"
+        },
+        "physical/public/schemas/warehouses.arrow.json": {
+          "bytes": 392,
+          "sha256": "022fa85ac5aa21b0185cf5d11557d1985df99be3bb01bfc756a4403434fc8052"
+        },
+        "physical/public/snapshot_manifest.json": {
+          "bytes": 168876,
+          "sha256": "a61ee1b7ead3299666fc304247079771a2715e68572e4327f8e964afbfd9ce09"
+        }
+      },
+      "producer_fixture_id": "raw-dq-sha256-0bcc03f0cfa0adf8d431a17bea57919dc72e59ebeccc5c76513d913d15c08aab",
+      "producer_operational_replay_sha256": "4f1e48c44adadddf8f86debd34716d0dfa1843f0f656e7dc07637dc69bd9d3e5",
+      "producer_report": {
+        "accepted": 1630,
+        "accepted_return_claims": 243,
+        "accepted_sales": 1387,
+        "aggregate_revisions": 1630,
+        "curated_completeness": "not_qualified",
+        "declared_source_watermark": "2026-08-31T23:59:59.999999+00:00",
+        "duplicate_business": 2,
+        "duplicate_event": 2,
+        "input_records": 1693,
+        "late": 2,
+        "max_accepted_event_time": "2026-08-31T09:01:04+00:00",
+        "missing_grain_policy": "unknown_not_zero",
+        "missing_parent_facts": 6,
+        "out_of_order": 2,
+        "policy_version": "operational-offline-replay-2.0.0",
+        "progress_declarations": 53,
+        "quarantined": 6,
+        "raw_events": 1640,
+        "scope": "all_parent_sales_and_return_claims",
+        "status": "completed",
+        "transport_durability_proven": false,
+        "watermark_meaning": "explicit_parent_stream_progress_not_business_event_day_completeness"
+      },
+      "snapshot_id": "snapshot-sha256-960377356fb35203d2e455775638840e0486aee0dd29b29e04ca7144525620dd",
+      "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09"
+    }
+  },
+  "evaluation_truth": "excluded",
+  "expanded_bytes": 6146340,
+  "producer_commit": "1fc2787d21a49911fcf663cfd67b4407f3a85986",
+  "producer_runtime_commit": "ae1178ccfc7f3019645a364acb4ca210f8a05c95",
+  "scope": "all_parent_sales_and_return_claims"
+}

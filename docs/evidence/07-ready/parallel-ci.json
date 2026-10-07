@@ -1,0 +1,65 @@
+{
+  "version": "ai07-parallel-required-ci-1.0.0",
+  "status": "local_structure_and_collection_verified_pending_actual_ci",
+  "baseline": {
+    "run_id": 37272207226,
+    "job_id": 111641663693,
+    "whole_job_minutes": 125,
+    "tests_passed": 2140,
+    "test_elapsed_seconds": 4232.21,
+    "termination": "post-job cache packaging timeout after every make check gate passed"
+  },
+  "partition": {
+    "method": "native pytest full collection, deterministic weighted file assignment, isolated GitHub runners",
+    "dependency_changes": false,
+    "full_current_collection_count": 2151,
+    "full_collection_sha256": "3dd95182083f4e30cd8c537541f0019c5e3f40ef8c622894c71d169bb2a08022",
+    "all_tests_covered_exactly_once": true,
+    "groups": [
+      {
+        "tests": 386,
+        "files": 26,
+        "estimated_seconds": 1074
+      },
+      {
+        "tests": 552,
+        "files": 27,
+        "estimated_seconds": 1074
+      },
+      {
+        "tests": 464,
+        "files": 27,
+        "estimated_seconds": 1073.0
+      },
+      {
+        "tests": 749,
+        "files": 27,
+        "estimated_seconds": 1073
+      }
+    ]
+  },
+  "acceptance": {
+    "groups": [
+      "ci-source-inputs",
+      "ci-qualified-inputs",
+      "ci-detectors",
+      "ci-forecast"
+    ],
+    "all_original_make_check_targets": "covered exactly once including ci-checks and native pytest",
+    "per_process_seconds_and_rss_gates": "unchanged"
+  },
+  "required_result": "requires checks, all tests shards, all acceptance groups, secrets, persistence and anomaly-oci to succeed",
+  "validation": {
+    "ci_contract_and_shard_tests_passed": 35,
+    "strict_mypy_files": 414,
+    "actionlint": "passed",
+    "ruff": "passed"
+  },
+  "estimated_elapsed_minutes": [
+    30,
+    45
+  ],
+  "estimate_scope": "Scheduling estimate from previous sequential logs; actual publication run is the acceptance measurement.",
+  "uv_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "frozen_model_artifacts": "unchanged"
+}

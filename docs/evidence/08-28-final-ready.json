@@ -1,0 +1,297 @@
+{
+  "stage": "08",
+  "status": "ready",
+  "date": "2026-10-05",
+  "scope": "Completed stockout-risk implementation, six-world independent qualification and actual isolated serving acceptance; technical publication accepted on protected main in both repositories",
+  "repositories": [
+    {
+      "repository": "retailops-ai-intelligence",
+      "accepted_main_commit": "2565a216fa7807a756387dcbaa408d6ccc07840d",
+      "main_push_required_ci": {
+        "id": 37288700026,
+        "name": "Required CI",
+        "head_sha": "2565a216fa7807a756387dcbaa408d6ccc07840d",
+        "head_branch": "main",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37288700026",
+        "updated_at": "2026-10-05T10:14:45Z"
+      },
+      "jobs": [
+        {
+          "id": 111693723737,
+          "name": "secrets",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37288700026/job/111693723737"
+        },
+        {
+          "id": 111693723925,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37288700026/job/111693723925"
+        },
+        {
+          "id": 111693724030,
+          "name": "persistence",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37288700026/job/111693724030"
+        },
+        {
+          "id": 111713721633,
+          "name": "required-result",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37288700026/job/111713721633"
+        }
+      ]
+    },
+    {
+      "repository": "retailops-cloud-native-platform",
+      "accepted_main_commit": "684f18f999ce6bddc5aa83bf6d7fa7aaef9fc832",
+      "main_push_required_ci": {
+        "id": 37262096351,
+        "name": "Required CI",
+        "head_sha": "684f18f999ce6bddc5aa83bf6d7fa7aaef9fc832",
+        "head_branch": "main",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351",
+        "updated_at": "2026-10-05T04:23:24Z"
+      },
+      "jobs": [
+        {
+          "id": 111611257048,
+          "name": "Required CI contract tests",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611257048"
+        },
+        {
+          "id": 111611257200,
+          "name": "Detect changed areas",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611257200"
+        },
+        {
+          "id": 111611286589,
+          "name": "Repository diff hygiene",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611286589"
+        },
+        {
+          "id": 111611287065,
+          "name": "api-gate / API integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287065"
+        },
+        {
+          "id": 111611287076,
+          "name": "docker-gate / Validate Docker Compose config",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287076"
+        },
+        {
+          "id": 111611287120,
+          "name": "data-gate / Synthetic data quality gate",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287120"
+        },
+        {
+          "id": 111611287191,
+          "name": "data-gate / AI 03 full cross-repo gate",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287191"
+        },
+        {
+          "id": 111611287213,
+          "name": "security-gate / Frontend dependency audit",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287213"
+        },
+        {
+          "id": 111611287220,
+          "name": "data-gate / AI 06 full cross-repo gate",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287220"
+        },
+        {
+          "id": 111611287236,
+          "name": "security-gate / Secret scanning with Gitleaks",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287236"
+        },
+        {
+          "id": 111611287260,
+          "name": "security-gate / Backend image vulnerability scan",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287260"
+        },
+        {
+          "id": 111611287261,
+          "name": "security-gate / Python dependency audit",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287261"
+        },
+        {
+          "id": 111611287271,
+          "name": "security-gate / Filesystem vulnerability scan",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287271"
+        },
+        {
+          "id": 111611287288,
+          "name": "security-gate / Frontend image vulnerability scan",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287288"
+        },
+        {
+          "id": 111611287666,
+          "name": "iac-security-gate",
+          "status": "completed",
+          "conclusion": "skipped",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287666"
+        },
+        {
+          "id": 111611287801,
+          "name": "kubernetes-gate",
+          "status": "completed",
+          "conclusion": "skipped",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287801"
+        },
+        {
+          "id": 111611287821,
+          "name": "terraform-validation-gate",
+          "status": "completed",
+          "conclusion": "skipped",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287821"
+        },
+        {
+          "id": 111611287877,
+          "name": "frontend-gate",
+          "status": "completed",
+          "conclusion": "skipped",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611287877"
+        },
+        {
+          "id": 111611328431,
+          "name": "docker-gate / Build full stack and run smoke tests",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611328431"
+        },
+        {
+          "id": 111611452688,
+          "name": "security-gate / Security evidence summary",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111611452688"
+        },
+        {
+          "id": 111614619772,
+          "name": "api-gate / API Docker image build",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111614619772"
+        },
+        {
+          "id": 111614777440,
+          "name": "required-result",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37262096351/job/111614777440"
+        }
+      ]
+    }
+  ],
+  "model_acceptance": {
+    "commit": "68a3ede16da4bd8b93609c2489514c08e95a7384",
+    "workflow_run_id": 37281251759,
+    "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37281251759",
+    "status": "passed",
+    "focused_tests_passed": 206,
+    "review_gates_passed": 12,
+    "batch_rows": 40,
+    "attention_rows": 15,
+    "real_postgres": true,
+    "real_mlflow": true,
+    "real_cold_worker": true,
+    "actual_HTTP_auth_scope_idempotency": true,
+    "register_promote_rollback_reject": "passed"
+  },
+  "model_publication": {
+    "pr": 14,
+    "merged": true,
+    "head_sha": "6fb5c7ae3b01e1e63deefe6acdc0fcdc4391068d",
+    "merge_commit": "2565a216fa7807a756387dcbaa408d6ccc07840d",
+    "pr_required_ci_run": 37282434148,
+    "pr_required_ci_conclusion": "success",
+    "main_required_ci_run": 37288700026,
+    "main_required_ci_conclusion": "success",
+    "full_suite_tests_passed": 2543,
+    "protected_normal_merge": true
+  },
+  "quality": {
+    "sources": 6,
+    "eligible_points": 9296,
+    "passed_gates": 90,
+    "approved_warnings": 3,
+    "blockers": 0,
+    "worlds": "matching and later stress on preregistered seeds 42/137/2026, assessed separately",
+    "overlapping_windows_are_independent_episodes": false,
+    "evidence": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/blob/2565a216fa7807a756387dcbaa408d6ccc07840d/docs/evidence/08-25-final-quality.json"
+  },
+  "frozen_policy": {
+    "model": "LogisticRegression with_upstream",
+    "calibration": "conditional sigmoid C10",
+    "risk_bands_percent": [
+      25,
+      50,
+      90
+    ],
+    "capacity_top_percent": 50,
+    "development_cost_top20": 605,
+    "development_cost_top40": 201,
+    "development_cost_top50": 113,
+    "final_refits": 0,
+    "final_recalibrations": 0,
+    "warning_rule": "Prospectively approved category-only warning: 20 <= n < 100, >= 5 per class, AP/Brier pass, 0.15 < ECE <= 0.20. Original strict calibration result remains visible."
+  },
+  "completed_requirements": [
+    "mature seven-day incident labels and eligibility",
+    "physical stock-location grain and causal features",
+    "historical forecast upstream and censored-sales comparison",
+    "separate temporal TRAIN/TUNE/CALIBRATION/TEST with purge",
+    "LR/HGB and calibration comparison before final evaluation",
+    "frozen development policy and six native/installed-wheel final evaluations",
+    "qualified model/card, factual explanations and twelve review gates",
+    "actual SQL/MLflow register/promote/rollback/reject, durable worker/batch/scoped API",
+    "required PR CI, protected merge and main CI including coherent backup/restore"
+  ],
+  "remaining_required_work": [],
+  "limits": {
+    "synthetic_sources": true,
+    "real_retailer_generalization_established": false,
+    "FP_FN_costs": "illustrative units",
+    "production_deployed": false,
+    "serving_qualification_expiry_does_not_rewrite_historical_stage_acceptance": true
+  },
+  "publication_note": "This immutable receipt records completed acceptance at the listed code revisions. Subsequent documentation publication uses separate protected PRs and their Required CI; it does not refit the model or renew serving freshness."
+}

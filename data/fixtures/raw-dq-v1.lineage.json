@@ -1,0 +1,30 @@
+{
+  "demand": {
+    "files": {
+      "raw/events.jsonl": {
+        "bytes": 273400,
+        "sha256": "349d8781a98fddb35c1c0bd945f851ed411c27fb750f68fa966548baaad4d188"
+      },
+      "source_binding.json": {
+        "bytes": 499,
+        "sha256": "9e927483af9a9329ee85784f4ac01dc84997feb5058d7c6e9ebe1679e7d21a6e"
+      }
+    },
+    "operational_replay_sha256": "0aef9d154d4e0cfb9564909e4d578af69c27258c9f79eeb1640d39b77c728f70",
+    "producer_fixture_id": "raw-dq-sha256-b31b2af63bfb56ca1342828d8d37243b8b57dce01eb0529bd2ac846b0bb44dfb"
+  },
+  "physical": {
+    "files": {
+      "raw/events.jsonl": {
+        "bytes": 273381,
+        "sha256": "dfb4992abdd34e7f444119e17aa87f0c4b886f8b6dacd913cbb2ea5afb35a3aa"
+      },
+      "source_binding.json": {
+        "bytes": 499,
+        "sha256": "f855e2b5289a1b8be8efd0e8e8b1399026bb2ee1318b45e0cb15784ef54532c6"
+      }
+    },
+    "operational_replay_sha256": "9ab8a7f43c8b6c71ffd006a3caf09abe284603a1031fb1eec38c3e15a62fec92",
+    "producer_fixture_id": "raw-dq-sha256-b4b592fdc707c4f064f036940897f71edcbc877715ff5c3111392da0cb3e4a05"
+  }
+}

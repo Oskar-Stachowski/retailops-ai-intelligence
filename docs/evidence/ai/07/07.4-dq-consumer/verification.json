@@ -1,0 +1,337 @@
+{
+  "container": {
+    "build": "passed",
+    "image_digest": "sha256:1b9630fc6e19a6a36ca781705e58bf45f8dbc661bdc9557502f49a38001b8139",
+    "ports": [],
+    "probe": "five_packaged_contracts_read",
+    "probe_network": "none",
+    "probe_root_fs": "read_only",
+    "volumes": []
+  },
+  "curated_completeness": "not_qualified",
+  "development": {
+    "limits": {
+      "peak_rss_mib": 1024,
+      "seconds_per_process": 300
+    },
+    "raw_fixture_sha256": "4640ed308864d872715cc32f6a055e3e18238fe5bd268e97734860d249472e06",
+    "runs": [
+      {
+        "cases": [
+          {
+            "case": "demand",
+            "curated_dataset_id": "curated-sha256-f28d0f49e09eb392c7effc8f3edcc446fecf6a599b8f9ff8d414e6a05fff81c9",
+            "dq_replay_id": "dq-replay-sha256-19385a7b389b0c670351699af159611da0c755dd86dcb4f6a4e9e7ada481f2c0",
+            "publication_bytes": 687883,
+            "replay_sha256": "0defd123b2585330dc37548b9e13e554589def61973bc5bf0c74ea0269741096",
+            "report": {
+              "accepted": 253,
+              "aggregate_revisions": 253,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-07-31T23:59:59.999999+00:00",
+              "dlq_fixture": 3,
+              "duplicate_business": 1,
+              "duplicate_event": 1,
+              "input_records": 287,
+              "late": 1,
+              "max_accepted_event_time": "2026-07-31T09:01:12+00:00",
+              "out_of_order": 1,
+              "policy_version": "ai-selected-sales-replay-1.0.0",
+              "progress_declarations": 29,
+              "quarantined": 3,
+              "raw_events": 258,
+              "scope": "offline_selected_sales_only",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_selected_stream_progress_not_curated_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+            "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8"
+          },
+          {
+            "case": "physical",
+            "curated_dataset_id": "curated-sha256-2d9969a004df97bd2d976b4a409a5d598f0a46006f33df56bbbd2e6de4a61a70",
+            "dq_replay_id": "dq-replay-sha256-604943b8f4a8026962088c93e69f5476f07345c2a001ff348031eb149691e39d",
+            "publication_bytes": 687279,
+            "replay_sha256": "baeb301290652061f2b5baaab56b3472e7c28c78293ad582b75c67160c63ad69",
+            "report": {
+              "accepted": 253,
+              "aggregate_revisions": 253,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-07-31T23:59:59.999999+00:00",
+              "dlq_fixture": 3,
+              "duplicate_business": 1,
+              "duplicate_event": 1,
+              "input_records": 287,
+              "late": 1,
+              "max_accepted_event_time": "2026-07-31T09:01:23+00:00",
+              "out_of_order": 1,
+              "policy_version": "ai-selected-sales-replay-1.0.0",
+              "progress_declarations": 29,
+              "quarantined": 3,
+              "raw_events": 258,
+              "scope": "offline_selected_sales_only",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_selected_stream_progress_not_curated_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+            "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721"
+          }
+        ],
+        "elapsed_seconds": 64.863,
+        "peak_rss_mib": 109.781,
+        "producer_available": false,
+        "status": "passed"
+      },
+      {
+        "cases": [
+          {
+            "case": "demand",
+            "curated_dataset_id": "curated-sha256-f28d0f49e09eb392c7effc8f3edcc446fecf6a599b8f9ff8d414e6a05fff81c9",
+            "dq_replay_id": "dq-replay-sha256-19385a7b389b0c670351699af159611da0c755dd86dcb4f6a4e9e7ada481f2c0",
+            "publication_bytes": 687883,
+            "replay_sha256": "0defd123b2585330dc37548b9e13e554589def61973bc5bf0c74ea0269741096",
+            "report": {
+              "accepted": 253,
+              "aggregate_revisions": 253,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-07-31T23:59:59.999999+00:00",
+              "dlq_fixture": 3,
+              "duplicate_business": 1,
+              "duplicate_event": 1,
+              "input_records": 287,
+              "late": 1,
+              "max_accepted_event_time": "2026-07-31T09:01:12+00:00",
+              "out_of_order": 1,
+              "policy_version": "ai-selected-sales-replay-1.0.0",
+              "progress_declarations": 29,
+              "quarantined": 3,
+              "raw_events": 258,
+              "scope": "offline_selected_sales_only",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_selected_stream_progress_not_curated_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+            "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8"
+          },
+          {
+            "case": "physical",
+            "curated_dataset_id": "curated-sha256-2d9969a004df97bd2d976b4a409a5d598f0a46006f33df56bbbd2e6de4a61a70",
+            "dq_replay_id": "dq-replay-sha256-604943b8f4a8026962088c93e69f5476f07345c2a001ff348031eb149691e39d",
+            "publication_bytes": 687279,
+            "replay_sha256": "baeb301290652061f2b5baaab56b3472e7c28c78293ad582b75c67160c63ad69",
+            "report": {
+              "accepted": 253,
+              "aggregate_revisions": 253,
+              "curated_completeness": "not_qualified",
+              "declared_source_watermark": "2026-07-31T23:59:59.999999+00:00",
+              "dlq_fixture": 3,
+              "duplicate_business": 1,
+              "duplicate_event": 1,
+              "input_records": 287,
+              "late": 1,
+              "max_accepted_event_time": "2026-07-31T09:01:23+00:00",
+              "out_of_order": 1,
+              "policy_version": "ai-selected-sales-replay-1.0.0",
+              "progress_declarations": 29,
+              "quarantined": 3,
+              "raw_events": 258,
+              "scope": "offline_selected_sales_only",
+              "status": "completed",
+              "transport_durability_proven": false,
+              "watermark_meaning": "explicit_selected_stream_progress_not_curated_completeness"
+            },
+            "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+            "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721"
+          }
+        ],
+        "elapsed_seconds": 56.324,
+        "peak_rss_mib": 111.781,
+        "producer_available": false,
+        "status": "passed"
+      }
+    ],
+    "source_fixture_sha256": "c344a5cfeea086e1054add724c830d747815e9eab425a19a17c1d0691671066c",
+    "status": "passed"
+  },
+  "installed_wheel_runs": [
+    {
+      "ai_module_count": 26,
+      "all_ai_modules_from_wheel": true,
+      "cases": [
+        {
+          "case": "demand",
+          "curated_dataset_id": "curated-sha256-f28d0f49e09eb392c7effc8f3edcc446fecf6a599b8f9ff8d414e6a05fff81c9",
+          "dq_replay_id": "dq-replay-sha256-19385a7b389b0c670351699af159611da0c755dd86dcb4f6a4e9e7ada481f2c0",
+          "publication_bytes": 687883,
+          "replay_sha256": "0defd123b2585330dc37548b9e13e554589def61973bc5bf0c74ea0269741096",
+          "report": {
+            "accepted": 253,
+            "aggregate_revisions": 253,
+            "curated_completeness": "not_qualified",
+            "declared_source_watermark": "2026-07-31T23:59:59.999999+00:00",
+            "dlq_fixture": 3,
+            "duplicate_business": 1,
+            "duplicate_event": 1,
+            "input_records": 287,
+            "late": 1,
+            "max_accepted_event_time": "2026-07-31T09:01:12+00:00",
+            "out_of_order": 1,
+            "policy_version": "ai-selected-sales-replay-1.0.0",
+            "progress_declarations": 29,
+            "quarantined": 3,
+            "raw_events": 258,
+            "scope": "offline_selected_sales_only",
+            "status": "completed",
+            "transport_durability_proven": false,
+            "watermark_meaning": "explicit_selected_stream_progress_not_curated_completeness"
+          },
+          "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+          "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8"
+        },
+        {
+          "case": "physical",
+          "curated_dataset_id": "curated-sha256-2d9969a004df97bd2d976b4a409a5d598f0a46006f33df56bbbd2e6de4a61a70",
+          "dq_replay_id": "dq-replay-sha256-604943b8f4a8026962088c93e69f5476f07345c2a001ff348031eb149691e39d",
+          "publication_bytes": 687279,
+          "replay_sha256": "baeb301290652061f2b5baaab56b3472e7c28c78293ad582b75c67160c63ad69",
+          "report": {
+            "accepted": 253,
+            "aggregate_revisions": 253,
+            "curated_completeness": "not_qualified",
+            "declared_source_watermark": "2026-07-31T23:59:59.999999+00:00",
+            "dlq_fixture": 3,
+            "duplicate_business": 1,
+            "duplicate_event": 1,
+            "input_records": 287,
+            "late": 1,
+            "max_accepted_event_time": "2026-07-31T09:01:23+00:00",
+            "out_of_order": 1,
+            "policy_version": "ai-selected-sales-replay-1.0.0",
+            "progress_declarations": 29,
+            "quarantined": 3,
+            "raw_events": 258,
+            "scope": "offline_selected_sales_only",
+            "status": "completed",
+            "transport_durability_proven": false,
+            "watermark_meaning": "explicit_selected_stream_progress_not_curated_completeness"
+          },
+          "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+          "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721"
+        }
+      ],
+      "elapsed_seconds": 69.269,
+      "peak_rss_mib": 102.609,
+      "producer_available": false,
+      "status": "passed"
+    },
+    {
+      "ai_module_count": 26,
+      "all_ai_modules_from_wheel": true,
+      "cases": [
+        {
+          "case": "demand",
+          "curated_dataset_id": "curated-sha256-f28d0f49e09eb392c7effc8f3edcc446fecf6a599b8f9ff8d414e6a05fff81c9",
+          "dq_replay_id": "dq-replay-sha256-19385a7b389b0c670351699af159611da0c755dd86dcb4f6a4e9e7ada481f2c0",
+          "publication_bytes": 687883,
+          "replay_sha256": "0defd123b2585330dc37548b9e13e554589def61973bc5bf0c74ea0269741096",
+          "report": {
+            "accepted": 253,
+            "aggregate_revisions": 253,
+            "curated_completeness": "not_qualified",
+            "declared_source_watermark": "2026-07-31T23:59:59.999999+00:00",
+            "dlq_fixture": 3,
+            "duplicate_business": 1,
+            "duplicate_event": 1,
+            "input_records": 287,
+            "late": 1,
+            "max_accepted_event_time": "2026-07-31T09:01:12+00:00",
+            "out_of_order": 1,
+            "policy_version": "ai-selected-sales-replay-1.0.0",
+            "progress_declarations": 29,
+            "quarantined": 3,
+            "raw_events": 258,
+            "scope": "offline_selected_sales_only",
+            "status": "completed",
+            "transport_durability_proven": false,
+            "watermark_meaning": "explicit_selected_stream_progress_not_curated_completeness"
+          },
+          "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+          "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8"
+        },
+        {
+          "case": "physical",
+          "curated_dataset_id": "curated-sha256-2d9969a004df97bd2d976b4a409a5d598f0a46006f33df56bbbd2e6de4a61a70",
+          "dq_replay_id": "dq-replay-sha256-604943b8f4a8026962088c93e69f5476f07345c2a001ff348031eb149691e39d",
+          "publication_bytes": 687279,
+          "replay_sha256": "baeb301290652061f2b5baaab56b3472e7c28c78293ad582b75c67160c63ad69",
+          "report": {
+            "accepted": 253,
+            "aggregate_revisions": 253,
+            "curated_completeness": "not_qualified",
+            "declared_source_watermark": "2026-07-31T23:59:59.999999+00:00",
+            "dlq_fixture": 3,
+            "duplicate_business": 1,
+            "duplicate_event": 1,
+            "input_records": 287,
+            "late": 1,
+            "max_accepted_event_time": "2026-07-31T09:01:23+00:00",
+            "out_of_order": 1,
+            "policy_version": "ai-selected-sales-replay-1.0.0",
+            "progress_declarations": 29,
+            "quarantined": 3,
+            "raw_events": 258,
+            "scope": "offline_selected_sales_only",
+            "status": "completed",
+            "transport_durability_proven": false,
+            "watermark_meaning": "explicit_selected_stream_progress_not_curated_completeness"
+          },
+          "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+          "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721"
+        }
+      ],
+      "elapsed_seconds": 69.14,
+      "peak_rss_mib": 101.844,
+      "producer_available": false,
+      "status": "passed"
+    }
+  ],
+  "model_readiness": "not_qualified",
+  "remaining": [
+    "full_daily_dq_coverage_and_temporal_join",
+    "return_event_day_coverage_and_inputs",
+    "labels_and_temporal_splits",
+    "detectors_and_heldout_multiseed_evaluation",
+    "mlflow_batch_and_read_only_serving"
+  ],
+  "reviewed_contract_hashes": {
+    "binding.schema.json": "113b28a8079f1ca4a431021c3a527ccd935537ad5dc8f582c5704353ef0daa08",
+    "manifest.schema.json": "19312286f4c8610c48b6f493106707284924a50e8e08568608cb92289fba89ee",
+    "producer_capture.schema.json": "9bd51b410a9c9f88fce8ea34f724449a28fcf563a77972a39f3be871eb6deffe",
+    "realtime-events.contract.json": "5bf8621026a3befe0ddedd6a71e307ccedcfc22453a8f2298b5eca18f9f0c859",
+    "realtime-events.schema.json": "e8bdf016a3f8362a81c5ee2b6cde21bce07991c5692d8aebd3e3f40b700b078e"
+  },
+  "runtime_commit": "89d03e6ae9b54406d9ea0c6b579b60f6c220ce81",
+  "scope": "offline_selected_sales_only",
+  "static_checks": {
+    "docs": "passed",
+    "format_files": 358,
+    "mypy_files": 206,
+    "ruff": "passed",
+    "secrets": "passed"
+  },
+  "status": "passed",
+  "targeted_tests": {
+    "elapsed_seconds": 90.84,
+    "passed": 36
+  },
+  "transport_durability_proven": false,
+  "wheel": {
+    "bytes": 675992,
+    "contracts": 5,
+    "duplicate_paths": false,
+    "sha256": "72bb72e2bc401b28a2836c43fb24589eb0ff5b59440bbeac62b5dabb20f2cf0a"
+  }
+}

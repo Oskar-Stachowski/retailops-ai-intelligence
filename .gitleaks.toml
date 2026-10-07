@@ -21,22 +21,36 @@ regexes = ['^38f0cbbcae1f207489c2a1ba889b0dd54af911626fdef3e442c7e37a6470aab0$']
 id = "generic-api-key"
 
 [[rules.allowlists]]
-description = "Exact canonical SHA-256 of the AI09.9 verification access plan in source-replay evidence; not a credential"
-condition = "AND"
-paths = ['(^|/)docs/evidence/09-09-forecast-source-replay[.]json$']
-regexTarget = "secret"
-regexes = ['^4e2717d8782ab1a124e4a2775f170338b21f08b33319340112f6da2ff0d3d826$']
-
-[[rules.allowlists]]
-description = "Exact public stockout training/calibration membership hashes in shared Git history; not credentials"
+description = "Exact hashes of physical training/calibration row keys in the public frozen stockout recipe; not API credentials"
 condition = "AND"
 paths = ['(^|/)docs/reference/stockout-final-selected-recipe[.]json$']
 regexTarget = "secret"
 regexes = ['^a18aa9669f671cc877f1681a25c13feb91917c465b4375c6fe9d309e7e0c1b11$', '^d9a458211ef331c15b570039435ea0f76b7f61b076aefd3d1bf40852983b6acd$']
 
 [[rules.allowlists]]
-description = "Exact public stockout development membership hash in shared Git history; not a credential"
+description = "Exact SHA-256 of frozen physical development row keys in the public capacity comparison; not a credential"
 condition = "AND"
 paths = ['(^|/)docs/evidence/08-24-capacity-comparison[.]json$']
 regexTarget = "secret"
 regexes = ['^cd3a1191c28c78fbb3f1b20ff38a296b27e06c426be23732eea06daf8f7e1907$']
+
+[[rules.allowlists]]
+description = "Exact canonical SHA-256 of the AI09 verification access plan in source-replay evidence in fetched Git history; not a credential"
+condition = "AND"
+paths = ['(^|/)docs/evidence/09-09-forecast-source-replay[.]json$']
+regexTarget = "secret"
+regexes = ['^4e2717d8782ab1a124e4a2775f170338b21f08b33319340112f6da2ff0d3d826$']
+
+[[rules.allowlists]]
+description = "Exact physical TRAIN/TUNE/CALIBRATION row-key SHA-256 values from the already verified frozen model, repeated in public qualification/card evidence; not credentials"
+condition = "AND"
+paths = ['(^|/)docs/evidence/08-26-(qualification|model-card)[.]json$']
+regexTarget = "secret"
+regexes = ['^a18aa9669f671cc877f1681a25c13feb91917c465b4375c6fe9d309e7e0c1b11$', '^d9a458211ef331c15b570039435ea0f76b7f61b076aefd3d1bf40852983b6acd$', '^cd3a1191c28c78fbb3f1b20ff38a296b27e06c426be23732eea06daf8f7e1907$']
+
+[[rules.allowlists]]
+description = "Exact physical TRAIN/TUNE row-key SHA-256 values repeated in the real isolated stockout approval receipt; not credentials"
+condition = "AND"
+paths = ['(^|/)docs/evidence/08-27-accepted-model/approval[.]json$']
+regexTarget = "secret"
+regexes = ['^a18aa9669f671cc877f1681a25c13feb91917c465b4375c6fe9d309e7e0c1b11$', '^d9a458211ef331c15b570039435ea0f76b7f61b076aefd3d1bf40852983b6acd$']

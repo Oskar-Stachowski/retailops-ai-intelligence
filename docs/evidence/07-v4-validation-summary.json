@@ -1,0 +1,4939 @@
+{
+  "comparison_sha256": "3f216cee31e0b2d219a233a319598d0e6f0dd0be38bdb115f71f5a2a9ee28947",
+  "deferred_sample_checks_reason": "Validation has one declared development seed and one episode of each physical type. All six cases and original three-episode minimum remain mandatory for final qualification.",
+  "final_qualification": "not_assessed",
+  "final_test": "not_scored",
+  "ranking": "maximum_minimum_relative_margin_across_original_numeric_gates_then_precision_recall_false_alerts",
+  "recorded_at": "2026-10-05T03:37:44.344507+00:00",
+  "reference_preference": "best_eligible_distinct_detector_other_family_if_available",
+  "results": [
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-bc98b667516e1a35f93834276057eaf75d046dca86b9f7439d723ec47cd0cfaf",
+      "eligible_for_selection": true,
+      "family": "seasonal_residual",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.85
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.85
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9833240236466038
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8461538461538461
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9142292397110383
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-bc98b667516e1a35f93834276057eaf75d046dca86b9f7439d723ec47cd0cfaf",
+      "eligible_for_selection": false,
+      "family": "isolation_forest",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": null,
+        "precision": 1.0,
+        "recall": 0.775
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.775
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "not_evaluable",
+          "threshold": 0.9,
+          "value": null
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8670371860658663
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.6153846153846154
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9294463498285153
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-0b093d209719b06638e3cf3b7865f935c024d65cd81a492b34dc7cef303a8e7f",
+      "eligible_for_selection": true,
+      "family": "seasonal_residual",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.85
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.85
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9833240236466038
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8461538461538461
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9142292397110383
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-0b093d209719b06638e3cf3b7865f935c024d65cd81a492b34dc7cef303a8e7f",
+      "eligible_for_selection": true,
+      "family": "isolation_forest",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.775
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.775
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8670371860658663
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.6153846153846154
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9294463498285153
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-6a69ec9caa8ac0a29a5078d20eee3fd4a99caf23bcd6f5261d6ef29ca33e2583",
+      "eligible_for_selection": true,
+      "family": "seasonal_residual",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.925
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.925
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9629629629629629
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9833240236466038
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8461538461538461
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9142292397110383
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-6a69ec9caa8ac0a29a5078d20eee3fd4a99caf23bcd6f5261d6ef29ca33e2583",
+      "eligible_for_selection": false,
+      "family": "isolation_forest",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 1.0188487009679064,
+        "high_severity_precision": null,
+        "precision": 0.9459459459459459,
+        "recall": 0.875
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 0.9459459459459459
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.875
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.0188487009679064
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "not_evaluable",
+          "threshold": 0.9,
+          "value": null
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.9940179461615155
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9642857142857143
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0869565217391304
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8670371860658663
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8888888888888888
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.6153846153846154
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9587727708533078
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9294463498285153
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-cd026b115d6fe5866beb0086ea46fdabfe730ef4654a03dc8c231b27f054f45e",
+      "eligible_for_selection": true,
+      "family": "seasonal_residual",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.85
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.85
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9833240236466038
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8461538461538461
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9142292397110383
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-cd026b115d6fe5866beb0086ea46fdabfe730ef4654a03dc8c231b27f054f45e",
+      "eligible_for_selection": true,
+      "family": "isolation_forest",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.5094243504839532,
+        "high_severity_precision": 1.0,
+        "precision": 0.9722222222222222,
+        "recall": 0.875
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 0.9722222222222222
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.875
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.5094243504839532
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.0416666666666667
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9583333333333334
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0869565217391304
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8670371860658663
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9230769230769231
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9294463498285153
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-d59d28413781e4a2a78dd8f40179a01c8ef0f3cecfb546319cc68f603f006dc1",
+      "eligible_for_selection": true,
+      "family": "seasonal_residual",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.925
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.925
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9629629629629629
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9833240236466038
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8461538461538461
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9142292397110383
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-d59d28413781e4a2a78dd8f40179a01c8ef0f3cecfb546319cc68f603f006dc1",
+      "eligible_for_selection": true,
+      "family": "isolation_forest",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 1.5282730514518594,
+        "high_severity_precision": 1.0,
+        "precision": 0.9285714285714286,
+        "recall": 0.975
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 0.9285714285714286
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.975
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.5282730514518594
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.0416666666666667
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.9940179461615155
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9310344827586207
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 2.1739130434782608
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8670371860658663
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9230769230769231
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9230769230769231
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9587727708533078
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9294463498285153
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-8947545931669b54738850ac255e2fecb268e605a75af22758dcf06bc44b93c6",
+      "eligible_for_selection": true,
+      "family": "seasonal_residual",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.925
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.925
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9629629629629629
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9833240236466038
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8461538461538461
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9142292397110383
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-8947545931669b54738850ac255e2fecb268e605a75af22758dcf06bc44b93c6",
+      "eligible_for_selection": false,
+      "family": "isolation_forest",
+      "metrics": {
+        "episode_recall": 0.9090909090909091,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 1.0188487009679064,
+        "high_severity_precision": null,
+        "precision": 0.9375,
+        "recall": 0.75
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 0.9375
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.75
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.0188487009679064
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "not_evaluable",
+          "threshold": 0.9,
+          "value": null
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 0.9090909090909091
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 0.5,
+          "value": 0.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.9940179461615155
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9642857142857143
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0869565217391304
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8670371860658663
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.75
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.23076923076923078
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9587727708533078
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9294463498285153
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-dc2a1a12aca7eb306e26d185b286cb71271f6bd64bd4dfc0da97f20f413a11b2",
+      "eligible_for_selection": true,
+      "family": "seasonal_residual",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.925
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.925
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9629629629629629
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9833240236466038
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8461538461538461
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9142292397110383
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-dc2a1a12aca7eb306e26d185b286cb71271f6bd64bd4dfc0da97f20f413a11b2",
+      "eligible_for_selection": true,
+      "family": "isolation_forest",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 1.0188487009679064,
+        "high_severity_precision": 1.0,
+        "precision": 0.9459459459459459,
+        "recall": 0.875
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 0.9459459459459459
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.875
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.0188487009679064
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.9940179461615155
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9642857142857143
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0869565217391304
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8670371860658663
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8888888888888888
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.6153846153846154
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9587727708533078
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9294463498285153
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-3099705b5ec7db11970579b5b010d9b46380fb084234e9d89099fddb6572a34a",
+      "eligible_for_selection": true,
+      "family": "seasonal_residual",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.85
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.85
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9833240236466038
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8461538461538461
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9142292397110383
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-3099705b5ec7db11970579b5b010d9b46380fb084234e9d89099fddb6572a34a",
+      "eligible_for_selection": true,
+      "family": "isolation_forest",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.5094243504839532,
+        "high_severity_precision": 1.0,
+        "precision": 0.9722222222222222,
+        "recall": 0.875
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 0.9722222222222222
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.875
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.5094243504839532
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 1.0416666666666667
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9583333333333334
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0869565217391304
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8670371860658663
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9230769230769231
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9294463498285153
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-817e886307b3437dd63cc9244f83febe656539b2b840acebe7d9e9902202eeaa",
+      "eligible_for_selection": true,
+      "family": "seasonal_residual",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.85
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.85
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9833240236466038
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8461538461538461
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9142292397110383
+        }
+      ]
+    },
+    {
+      "deferred_final_sample_checks": [
+        "all_frozen_seeds_scenarios",
+        "episode_sample/inventory_censored_episode",
+        "episode_sample/return_spike"
+      ],
+      "detector_id": "anomaly-detector-sha256-817e886307b3437dd63cc9244f83febe656539b2b840acebe7d9e9902202eeaa",
+      "eligible_for_selection": true,
+      "family": "isolation_forest",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.775
+      },
+      "validation_checks": [
+        {
+          "check_id": "all_frozen_seeds_scenarios",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 6,
+          "value": 2
+        },
+        {
+          "check_id": "precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.8,
+          "value": 1.0
+        },
+        {
+          "check_id": "recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.65,
+          "value": 0.775
+        },
+        {
+          "check_id": "false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "high_severity_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.9,
+          "value": 1.0
+        },
+        {
+          "check_id": "episode_recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.75,
+          "value": 1.0
+        },
+        {
+          "check_id": "evaluable_coverage",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.55,
+          "value": 0.7112926136363636
+        },
+        {
+          "check_id": "episode_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/one_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/multi_day_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 9
+        },
+        {
+          "check_id": "episode_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "episode_recall/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/sustained_drop",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 15
+        },
+        {
+          "check_id": "episode_sample/return_spike",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/return_spike",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 10
+        },
+        {
+          "check_id": "episode_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "failed",
+          "threshold": 3,
+          "value": 1
+        },
+        {
+          "check_id": "episode_recall/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 0.5,
+          "value": 1.0
+        },
+        {
+          "check_id": "positive_observation_sample/inventory_censored_episode",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 3,
+          "value": 3
+        },
+        {
+          "check_id": "segment_false_alerts/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/return_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 960
+        },
+        {
+          "check_id": "segment_false_alerts/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 10.0,
+          "value": 0.0
+        },
+        {
+          "check_id": "segment_clean_sample/sale_completed/PLN",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1003
+        },
+        {
+          "check_id": "clean_sample/42/demand",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 920
+        },
+        {
+          "check_id": "metric_validity/42/demand/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8518518518518519
+        },
+        {
+          "check_id": "metric_validity/42/demand/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/demand/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.8670371860658663
+        },
+        {
+          "check_id": "clean_sample/42/physical",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": 300,
+          "value": 1043
+        },
+        {
+          "check_id": "metric_validity/42/physical/precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 1.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/recall",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.6153846153846154
+        },
+        {
+          "check_id": "metric_validity/42/physical/false_alerts_per_1000",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.0
+        },
+        {
+          "check_id": "metric_validity/42/physical/average_precision",
+          "severity": "hard",
+          "status": "passed",
+          "threshold": "evaluable",
+          "value": 0.9294463498285153
+        }
+      ]
+    }
+  ],
+  "scope": "synthetic_ai_07_portfolio_v4",
+  "selected": [
+    {
+      "detector_id": "anomaly-detector-sha256-dc2a1a12aca7eb306e26d185b286cb71271f6bd64bd4dfc0da97f20f413a11b2",
+      "family": "seasonal_residual",
+      "kind": "primary",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.925
+      }
+    },
+    {
+      "detector_id": "anomaly-detector-sha256-817e886307b3437dd63cc9244f83febe656539b2b840acebe7d9e9902202eeaa",
+      "family": "isolation_forest",
+      "kind": "reference",
+      "metrics": {
+        "episode_recall": 1.0,
+        "evaluable_coverage": 0.7112926136363636,
+        "false_alerts_per_1000": 0.0,
+        "high_severity_precision": 1.0,
+        "precision": 1.0,
+        "recall": 0.775
+      }
+    }
+  ],
+  "selection_status": "validation_only_complete_final_inventory_freeze_pending",
+  "source_seed": 42,
+  "version": "ai07-validation-selection-1.0.0"
+}

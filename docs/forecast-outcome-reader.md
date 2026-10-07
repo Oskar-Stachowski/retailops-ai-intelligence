@@ -125,5 +125,5 @@ fixture podaje [odbiór 09.8](evidence/09-08-forecast-outcome-reader.md).
 Pozostają: audytowany eksport i pełny source replay, szerszy audyt raw/curated/
 history, rzeczywiste świeże okna danych, połączenie pięciu ról z rejestrem
 fitów, kalibracja i niezależna ocena, większy profil, uncertainty/robustness
-oraz końcowa integracja AI 07/08. Dotychczasowy comparator i jego historyczne
+oraz włączenie gotowych dowodów AI 07/08 do końcowej kampanii. Dotychczasowy comparator i jego historyczne
 etykiety nie zostały automatycznie przepięte na ten czytnik.

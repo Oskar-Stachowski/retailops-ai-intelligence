@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "anomaly_id": {
+      "anyOf": [
+        {
+          "pattern": "^anomaly-sha256-[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Anomaly Id"
+    },
+    "anomaly_type": {
+      "anyOf": [
+        {
+          "enum": [
+            "sales_spike",
+            "sales_drop",
+            "residual_outlier",
+            "return_spike",
+            "stockout_censored_demand",
+            "data_quality_suspicion"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Anomaly Type"
+    },
+    "batch_id": {
+      "anyOf": [
+        {
+          "pattern": "^anomaly-batch-sha256-[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Batch Id"
+    },
+    "business_from": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Business From"
+    },
+    "business_to": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Business To"
+    },
+    "channel": {
+      "anyOf": [
+        {
+          "enum": [
+            "store",
+            "online",
+            "marketplace",
+            "wholesale"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Channel"
+    },
+    "event_type": {
+      "anyOf": [
+        {
+          "enum": [
+            "sale_completed",
+            "return_completed"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Event Type"
+    },
+    "limit": {
+      "default": 50,
+      "maximum": 200,
+      "minimum": 1,
+      "title": "Limit",
+      "type": "integer"
+    },
+    "offset": {
+      "default": 0,
+      "maximum": 10000,
+      "minimum": 0,
+      "title": "Offset",
+      "type": "integer"
+    },
+    "product_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Product Id"
+    },
+    "selling_location_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selling Location Id"
+    },
+    "severity": {
+      "anyOf": [
+        {
+          "enum": [
+            "none",
+            "medium",
+            "high"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Severity"
+    },
+    "status": {
+      "anyOf": [
+        {
+          "enum": [
+            "scored",
+            "insufficient_data"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Status"
+    },
+    "view_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "View Sha256"
+    }
+  },
+  "title": "Query",
+  "type": "object"
+}

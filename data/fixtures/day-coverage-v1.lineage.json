@@ -1,0 +1,44 @@
+{
+  "archive_sha256": "1c0611fef0cee0f8e9a7bf5474d01c118a72d6889de75026e26c7277ccfc1040",
+  "cases": {
+    "demand": {
+      "coverage_id": "day-coverage-sha256-2a1102d5068df76ee276eadea3e9afdf772703b915c16f4e00373ba2af0d5aef",
+      "files": {
+        "demand/coverage_manifest.json": {
+          "bytes": 3164,
+          "sha256": "fda3c01dc4ff882ba92770f79878c24d66f6b9dc932cafb54554d7d07bfd89a8"
+        },
+        "demand/days.jsonl": {
+          "bytes": 2336842,
+          "sha256": "81940c7e5e72871bee3c0d902ea249205af0ee8ef1196672de5f3285b49599ec"
+        },
+        "demand/manifest.sha256": {
+          "bytes": 65,
+          "sha256": "49dc2e5975d6f4a97d9eda65092b2d3e5b85dcd4656fb93d5b5de083d1796732"
+        }
+      },
+      "row_count": 1713,
+      "source_dataset_id": "source-sha256-3c13e783d52b74bb0955122fd70403eb8f10624acfa11e8b54d587b487cff2fd"
+    },
+    "physical": {
+      "coverage_id": "day-coverage-sha256-cd82a5392012a8ec57a7b73301f6c579034f95f40b29f484834d5888e17444d5",
+      "files": {
+        "physical/coverage_manifest.json": {
+          "bytes": 3164,
+          "sha256": "430fddc9e0612c6ba7150271062a74ec83ed7a4ca25c07d93d42623122cef9fd"
+        },
+        "physical/days.jsonl": {
+          "bytes": 2339143,
+          "sha256": "bed710209320e74e17fc2cbc015df4c9c832b00abcd6554ff64f2e27ade122e4"
+        },
+        "physical/manifest.sha256": {
+          "bytes": 65,
+          "sha256": "2d44c46655d704d83ca5aafa7f21b63b38c9229a4fa960669d0259a7e2335075"
+        }
+      },
+      "row_count": 1717,
+      "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09"
+    }
+  },
+  "scope": "purchases_in_parent_source_only"
+}

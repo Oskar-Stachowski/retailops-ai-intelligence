@@ -1,0 +1,23 @@
+{
+  "cause": "acceptance_expected_both_concurrent_recoveries_to_succeed_immediately_but_shared_native_advisory_lock_is_deliberately_fail_fast",
+  "checked_at": "2026-10-05T04:35:00.567719+00:00",
+  "consumer_commit": "5fa78ceba0742dfd4cec229172ae8e9c27319b37",
+  "correction": "bounded_retry_only_of_busy_with_observed_contention_and_same_version_false_true_replay_checks",
+  "failure": "model_lifecycle_busy",
+  "logs": {
+    "acceptance.log": "c17d79fc3eb907a944d431c6130568098d36f8ff3ae24b671fa3bb3af8cfaf10",
+    "build.log": "e3c5c62bba3646b81eeb985f3a8bef4eb47e934e492eac41954d130b9828ac4e",
+    "cleanup.log": "99bec6b9545079f0d2da3af26eb9b3a6cfc8a32c4e4dff6de69a930f0b8d424b"
+  },
+  "oci_status": "failed_before_complete_lifecycle_acceptance",
+  "owned_project_cleanup": "completed",
+  "passed_stages": [
+    "saved_models_and_compatibility",
+    "complete_native_public_parents",
+    "actual_built_oci_pinned_pg16_mlflow_all_migrations"
+  ],
+  "quality_status": "both_frozen_versions_passed_unchanged",
+  "runtime_lock_change": "none",
+  "source_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+  "version": "ai07-oci-preflight-1.0.0"
+}

@@ -14,7 +14,7 @@
           "type": "string"
         },
         "release_id": {
-          "pattern": "^model-release-sha256-[0-9a-f]{64}$",
+          "pattern": "^(model-release|anomaly-release)-sha256-[0-9a-f]{64}$",
           "title": "Release Id",
           "type": "string"
         }
@@ -95,8 +95,11 @@
       "type": "string"
     },
     "model_name": {
-      "const": "retailops-demand-forecast",
       "default": "retailops-demand-forecast",
+      "enum": [
+        "retailops-demand-forecast",
+        "retailops-sales-anomaly"
+      ],
       "title": "Model Name",
       "type": "string"
     },

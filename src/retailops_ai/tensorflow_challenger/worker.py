@@ -113,7 +113,7 @@ def main(root: Path) -> None:
             "mlflow-skinny==3.4.0",
             "numpy==2.2.6",
             "pandas==2.2.3",
-            "scipy==1.15.3",
+            "scipy==1.17.1",
         ],
         metadata=metadata,
     )

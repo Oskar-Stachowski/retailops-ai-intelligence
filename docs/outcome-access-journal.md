@@ -66,10 +66,16 @@ w przyszłym protokole treningowym.
 
 ## Polecenia
 
-Rzeczywisty dziennik tej sesji znajduje się w
-`/private/tmp/ai09-development-outcome-journal`.
-Powstał z istniejącej deklaracji; nie ma jeszcze nowych planów ani odczytów
-etykiet projektu. Poniższy przykład korzysta z jej dokładnej sumy:
+Historyczny dziennik z odbiorów 09.7–09.10 znajdował się w
+`/private/tmp/ai09-development-outcome-journal`. Na 2026-10-07 ten katalog oraz
+powiązane prywatne metadane nie istnieją. Ostatni wersjonowany receipt zachowuje
+cztery plany i zero nowych rezerwacji projektu. Nie jest to odzyskany dziennik
+ani kompletny audyt późniejszych sesji. Przed dalszymi odczytami trzeba
+odtworzyć historię lub jawnie przenieść jej konserwatywne rozliczenie do nowego
+protokołu, bez resetowania budżetu i bez uznania nieznanych danych za nietknięte.
+
+Poniższe polecenia dokumentują wcześniejszy odbiór i nie są bieżącą procedurą
+odtworzenia brakujących plików:
 
 ```bash
 .venv/bin/python -m retailops_ai.evaluation_campaign.outcome_cli freeze \

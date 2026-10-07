@@ -1,0 +1,449 @@
+{
+  "base_main": "f4ae14fe6588b91506383a709b5a0185208a4ea6",
+  "boundaries": {
+    "ablation_model_results": "pending",
+    "ai05_runtime_changed": false,
+    "final_test_outcomes_evaluated": false,
+    "full_training_profile_measured": false,
+    "model_ready": false,
+    "original_v12_changed": false,
+    "outcomes_used_for_selection": false,
+    "parameters_fitted": false
+  },
+  "comparison_descriptor": {
+    "common_grain_sha256": "b480b816387b3add3a9da13f68ca066c1874c87cbc5ef1f21f8090d2433c0fb9",
+    "data_class": "features",
+    "feature_dataset_id": "features-sha256-6e366900938378d07d1814d7bb46789265049a7b8742be65d2c5123d83141949",
+    "preprocessing": "retain_nullable_values_fit_only_in_training_later",
+    "role": "stockout_comparison_inputs",
+    "rows": 1632,
+    "rows_sha256": "9565577c76d9dcc60d095f83f091252e4efece254112400b50036fcd6c4b1cdd",
+    "schema_version": "1.0.0",
+    "upstream_id": "upstream-sha256-a56a4fb27af6d68f6f9bd77142733a5d6c89e483596faa5c98bd19f6e8c2cd17",
+    "variants": {
+      "with_upstream": [
+        "available_qty",
+        "snapshot_age_hours",
+        "history_known_days",
+        "history_missing_days",
+        "observed_sales_mean",
+        "observed_sales_std",
+        "in_stock_sales_mean",
+        "history_in_stock_days",
+        "history_constrained_days",
+        "history_inventory_unknown_days",
+        "historical_stockout_onsets",
+        "days_of_supply_observed",
+        "days_of_supply_in_stock",
+        "open_order_quantity",
+        "due_within_7d_quantity",
+        "overdue_order_quantity",
+        "next_expected_delivery_hours",
+        "quoted_lead_time_days",
+        "forecast_units_7d",
+        "forecast_days_of_supply",
+        "forecast_unavailable"
+      ],
+      "without_upstream": [
+        "available_qty",
+        "snapshot_age_hours",
+        "history_known_days",
+        "history_missing_days",
+        "observed_sales_mean",
+        "observed_sales_std",
+        "in_stock_sales_mean",
+        "history_in_stock_days",
+        "history_constrained_days",
+        "history_inventory_unknown_days",
+        "historical_stockout_onsets",
+        "days_of_supply_observed",
+        "days_of_supply_in_stock",
+        "open_order_quantity",
+        "due_within_7d_quantity",
+        "overdue_order_quantity",
+        "next_expected_delivery_hours",
+        "quoted_lead_time_days"
+      ]
+    }
+  },
+  "installed_wheel": {
+    "artifact_sha256": "0e16f62088e00dc06ec9655ea9f66550782ebccb658344c8f9fc7a214bda456a",
+    "artifacts_private_0600": true,
+    "input_fingerprint_sha256": "9861463bc9762c2cadaab7a99a7d66ccbf9125466529b39ca22917c462e42a2b",
+    "inputs_unchanged": true,
+    "label_or_truth_input_supplied": false,
+    "metrics": {
+      "comparison-build": {
+        "peak_child_rss_bytes": 190251008,
+        "seconds": 80.347627,
+        "status": "published"
+      },
+      "comparison-verify": {
+        "peak_child_rss_bytes": 211042304,
+        "seconds": 71.98202,
+        "status": "verified"
+      },
+      "features-build": {
+        "peak_child_rss_bytes": 148881408,
+        "seconds": 28.381909,
+        "status": "published"
+      },
+      "upstream-build": {
+        "peak_child_rss_bytes": 155828224,
+        "seconds": 98.823102,
+        "status": "published"
+      },
+      "upstream-rebuild": {
+        "peak_child_rss_bytes": 180797440,
+        "seconds": 87.355137,
+        "status": "reused"
+      },
+      "upstream-verify": {
+        "peak_child_rss_bytes": 180797440,
+        "seconds": 90.63856,
+        "status": "verified"
+      }
+    },
+    "native_bytes_and_ids_identical": true,
+    "producer_package_unavailable": true,
+    "scope": "installed CLI historical upstream and comparison inputs, public curated only"
+  },
+  "limits": {
+    "comparison_output_bytes": 16777216,
+    "input_bytes": 67108864,
+    "input_rows": 500000,
+    "physical_points": 10000,
+    "upstream_output_bytes": 16777216
+  },
+  "native": {
+    "artifacts": {
+      "comparison": {
+        "bytes": 1407074,
+        "id": "comparison-sha256-0a2dcaf2832d2e829c2775730d819552ec9b9c5dbd357b6e0f05582ca798723f",
+        "report": {
+          "ablation_model_results": "pending",
+          "common_keys_identical": true,
+          "model_ready": false,
+          "model_specific_drops": 0,
+          "preprocessing_fitted": false,
+          "upstream_forecast_ready": false
+        },
+        "sha256": "4423b50bbb5231806a2e12a0cf7e573d4455eb7340e6c5fdfac72c09424b478d"
+      },
+      "features": {
+        "bytes": 10249881,
+        "id": "features-sha256-6e366900938378d07d1814d7bb46789265049a7b8742be65d2c5123d83141949",
+        "report": {
+          "model_ready": false,
+          "preprocessing_fitted": false,
+          "reasons": {
+            "inactive_or_unknown_product": 28,
+            "insufficient_sales_history": 68
+          },
+          "statuses": {
+            "already_stockout": 432,
+            "eligible": 1104,
+            "insufficient_data": 96
+          },
+          "upstream_forecast_ready": false
+        },
+        "sha256": "1b32b9892a96e15b7cfe985808848d830e909a7bb826a73705abc95d018230ac"
+      },
+      "labels": {
+        "bytes": 666623,
+        "id": "labels-sha256-a0e221a244cc31809487cf9f09c3e865798bce469883977fa84e7cbdc153ebb0",
+        "report": {
+          "label_ledger_replay": "passed",
+          "model_ready": false,
+          "negative_labels": 611,
+          "positive_labels": 472,
+          "reasons": {
+            "inactive_lifecycle": 28,
+            "incomplete_window": 77,
+            "window_inactive_lifecycle": 12
+          },
+          "scope": "bounded qualified labels; no features, splits, calibration or model acceptance",
+          "statuses": {
+            "already_stockout": 432,
+            "evaluable": 1083,
+            "not_evaluable": 117
+          }
+        },
+        "sha256": "3b721f3feae53597c7b32c382802d6b4d8098bcb1dc326a8d5ee468dc81627de"
+      },
+      "split": {
+        "bytes": 483435,
+        "id": "split-sha256-e596f7b54f42f7d96899cf2926f4188840685a3984cea63e35c0721cbc946627",
+        "report": {
+          "development_classes": {
+            "calibration": {
+              "0": 67,
+              "1": 63
+            },
+            "train": {
+              "0": 193,
+              "1": 147
+            },
+            "tune": {
+              "0": 73,
+              "1": 62
+            }
+          },
+          "eligible_by_role": {
+            "calibration": 130,
+            "test": 131,
+            "train": 340,
+            "tune": 135
+          },
+          "final_test_outcomes_evaluated": false,
+          "model_ready": false,
+          "reasons": {
+            "feature_already_stockout": 432,
+            "feature_inactive_or_unknown_product": 28,
+            "feature_insufficient_sales_history": 68,
+            "label_incomplete_window": 77,
+            "label_window_inactive_lifecycle": 12,
+            "purged_boundary_or_delayed_label": 279
+          },
+          "temporal_membership_ready": true,
+          "upstream_forecast_ready": false
+        },
+        "sha256": "9f0635e1b8efbed92a8a9acdfd7f0676f02635d331977b7c97b9e696621be170"
+      },
+      "upstream": {
+        "bytes": 2127982,
+        "id": "upstream-sha256-a56a4fb27af6d68f6f9bd77142733a5d6c89e483596faa5c98bd19f6e8c2cd17",
+        "report": {
+          "base_eligible_rows": 1104,
+          "base_eligible_with_forecast": 1015,
+          "model_ready": false,
+          "outcomes_used_for_selection": false,
+          "parameters_fitted": false,
+          "reasons": {
+            "inactive_or_unknown_origin_mapping": 28,
+            "inactive_or_unknown_target_assortment": 112,
+            "insufficient_calendar_window": 112
+          },
+          "statuses": {
+            "available": 1380,
+            "insufficient_data": 252
+          },
+          "upstream_forecast_ready": false,
+          "upstream_lineage_status": "passed"
+        },
+        "sha256": "9a0cfe036e004aa5f4d3a2e9b58001070e0d62dee5b59557e93e39913a24c1f1"
+      }
+    },
+    "input_files": 225,
+    "input_fingerprint_sha256": "9861463bc9762c2cadaab7a99a7d66ccbf9125466529b39ca22917c462e42a2b",
+    "inputs_unchanged": true,
+    "metrics": {
+      "comparison_build": {
+        "peak_process_rss_bytes": 178569216,
+        "seconds": 0.291556
+      },
+      "features_build": {
+        "peak_process_rss_bytes": 136298496,
+        "seconds": 26.122143
+      },
+      "labels_build": {
+        "peak_process_rss_bytes": 178569216,
+        "seconds": 12.77699
+      },
+      "upstream_build": {
+        "peak_process_rss_bytes": 178569216,
+        "seconds": 44.899618
+      },
+      "upstream_replay": {
+        "peak_process_rss_bytes": 178569216,
+        "seconds": 50.822233
+      }
+    },
+    "scope": "native 102-day fixture, historical baseline and paired model inputs only",
+    "split_forecast_coverage": {
+      "calibration": {
+        "eligible": 130,
+        "forecast_available": 130
+      },
+      "test": {
+        "eligible": 131,
+        "forecast_available": 131
+      },
+      "train": {
+        "eligible": 340,
+        "forecast_available": 340
+      },
+      "tune": {
+        "eligible": 135,
+        "forecast_available": 135
+      }
+    }
+  },
+  "next": [
+    "LR/HGB and upstream/no-upstream comparison on identical development membership",
+    "train-only preprocessing; later separate development calibration and capacity",
+    "full profile, protected final test, lifecycle and batch/read API"
+  ],
+  "previous_commit": "3265ed1ebbc5db85adde77c65722247936e5e684",
+  "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+  "recorded_on": "2026-10-03",
+  "schema_version": "1.0.0",
+  "scope": "bounded retrospective rolling-origin MA28 and paired model inputs; no model acceptance",
+  "upstream_descriptor": {
+    "curated_dataset_id": "curated-sha256-6fade44efa8fc8ba81c3a90ca30d031b729d949272e16d89593ca6a75c94bb00",
+    "data_class": "features",
+    "feature_dataset_id": "features-sha256-6e366900938378d07d1814d7bb46789265049a7b8742be65d2c5123d83141949",
+    "forecast_code": {
+      "__init__.py": "dea36c64e4d5a578a29e5cdaf56a1a6436ee938e3b6acd8cc16101962b3d40d0",
+      "backtest.py": "c49116ee14c1235832c8c08d3e186538477cfab5486a2dba2f517160fd61e3ec",
+      "backtest_contract.py": "6992a0fb87bf7239db55841d29e0abdbf5c242789d0a6c039fcd4182f0aa6f46",
+      "baselines.py": "fb339916e02683932b254e73d05d0a43ce7aec4eca7c818441e6a99f7f4a2560",
+      "calendar.py": "44cb79df37b6a519394e210736b21374dd5e15f46dc67dd0ec175d4383cba81c",
+      "cli.py": "e69f98cbb880c85c675c3bddd492a23c9c568b1519e9527bf4fe69726e2417cc",
+      "contract.py": "6d144700475ddfe6868e5a15815ed7de6b6bbfcb8142744f6a87d7b1db43fe1b",
+      "data_contracts/identity.py": "af0127e976a9c25b3289b5e96728b781a9afe4d56a273e57170ab97c047f8976",
+      "evaluation.py": "3eed80ae124780d447d698aae748d818f10df9054a5b00b56abc53e678aad1b8",
+      "evaluation_contract.py": "d154ad2c5fc01756b7905933dcab1827541250034101cfcf92acea948e9ee26a",
+      "features.py": "b069639e0bcd996fdeefca52a7498ca543431eb744b83072d7b1c6b3f1e93283",
+      "features_contract.py": "45a50e9854f0533bfd91c8986d85a6dba1879f2d5a1d12423dcb66702f75da3d",
+      "features_store.py": "6f6ccfe1a4e1e22cf502e6c001a36d71a3b4afb133cd4798c343c3cff9541625",
+      "functional_campaign.py": "79ebca4e877c7809df3a95344d343e2266a76680c7cda4897072d4bb6d290bcf",
+      "functional_contract.py": "e7b38de848b20be9a88c8c6ed17365ad87c40772c1077d8ed3a83b9bd6116894",
+      "functional_development.py": "8d8cd24aa347ca5cd2e9ca8a81f056766b89ba51aa3db24aafe4dbf48e1dc7a9",
+      "functional_evidence.py": "b4d08bb8158af90161730ff2e6c0396312a56f940d18166b16d827c8dc7a8a5a",
+      "functional_models.py": "0e199cbc174dbb88a902c678118ba758ac83b26c60f4a37caf2667fa91fa0290",
+      "functional_preprocessing.py": "4fcaf4cc88fde5bb7bc9601a4414897b46addccd110d1a380299132e596a4c54",
+      "functional_recipe.py": "1d50014cc300d67cc0dab89d32657ba32a5474f010121de31f0d52b2e3b7347a",
+      "functional_run.py": "9516125aec89c61998c0531ec3243c955e483bf2ed06a40b2faf349ab6028deb",
+      "functional_v12_archive.py": "1bdb9bbde18598713a9f745e4648cbbca84d0c45e5ce8199917126cbed44d178",
+      "functional_v12_campaign.py": "2ad738a95332a0512fff6a239798f0a2a59439919e62f58cf925cf9a5052eaf7",
+      "functional_v12_cohort.py": "99c7d6eeccfc6cdc1e25d77fb40a0ce3232e5c962376b88abc2f3d9cc91a9e67",
+      "functional_v12_exposure.py": "1159359a864d2791e82ee4690986e98a5910bcf89774ef244edf05bcfa634ab0",
+      "functional_v12_inputs.py": "b55c49e9de1682a922c2333403d5328db47de204b9a9e73f1df272fdf4b1397e",
+      "functional_v12_quality.py": "314ddbe3dcf2270418fb625744bf0db37253ce3c7933ce6afb4ce0456541684e",
+      "functional_v12_recipe.py": "dbe70c03d42bcd3682ab2d42fd7d0a09eea34cc694080d8c468a7bf44554d2ab",
+      "functional_v12_resources.py": "3f2409f22f1d965eff85bb6574782e28a05e9758ef3a40845d8544ae0bc42b03",
+      "functional_v12_run.py": "43d2505ab830863968e34012300e07d004ceab5faaf4e76a14b0deeed91aad13",
+      "functional_worker.py": "46eff7c8a399b54305917a36dbc8e0d7710a81bfd5f973b6558636a88b30b16e",
+      "manifest_contract.py": "6cc088e4ec6cd1e15399745affef8feaf7978325a346431d9679f20f526add2b",
+      "manifest_io.py": "0a290464dbb1957d9e0ea96c53246e9d55046852d7d2f046ae594051d99c3346",
+      "manifests.py": "8ea6b52b5c4ac9b4cda1c17146e22c4b3ee550100e9dc39cac0a0b367d58feeb",
+      "mean_validation_weights.py": "8eb782b205d1e97b8678bbfafa00ccf5c2bb6083032f2429568e47b13711f00a",
+      "model_contract.py": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+      "model_trees.py": "b38ae31b8ab1c37c17f695fac103d0872adb5afa2c5e18b244187e839cf65d23",
+      "model_worker.py": "5662e8de5fb3d65c05a82e717144ab1064b3e447b00a1e96531488831085c859",
+      "models.py": "16814cc2022f87a15e32ebfe4d2b474ac486ec84d58fad9838afe986556a57be",
+      "preprocessing.py": "c0520d819d30d952e3169dccc47d651b9128d08f2d51b88892f5571a0c4b3aff",
+      "quality.py": "704f0ec86810b5447520fe2d95ffd44fe6269da99ac81f0ea91b22ead51033bb",
+      "quality_contract.py": "9a8b973443e3c7d2749c79765a355d926272ad1c0970485087208a89e9a80287",
+      "quality_metrics.py": "1b3d13eec3d40d439e7421cf719c5e8a6ebfc673f025aed05c0baabd669704b0",
+      "quality_v2.py": "7ac6a2bc7e11633704bff636e5fa86793ad19a2b261511964e3f9368ca4db0c2",
+      "quality_v2_contract.py": "6c87af085df7961f5245037dcbe6b1d4e2fcb3080efc2595dc60879b3b2466ce",
+      "remediation.py": "cfb56b29d10e999999e505d9c53da5c97e7cf461cccd2dc87f3006feef41e2ce",
+      "remediation_contract.py": "d5697404f47feec426232aba13280f0e28fa62122480d62742bac000aa148b79",
+      "remediation_preflight.py": "161a8686542d3f81383e1b819d4a8f39c62fc806ddc9c5354e888b905e6821c2",
+      "remediation_source_preflight.py": "0f293708e34f84c92710fd4adf76b11f35d86154d738b31c1db70f3178cac772",
+      "remediation_v2.py": "f527ddf6352ed7fed849710e499eb241242a8bebc33718590b133d7287e4fcc4",
+      "remediation_v2_contract.py": "df7b291330f2a5aea6e377fe9297259957918cc7a35f2e01aa553a7ccda89334",
+      "run.py": "c6e810db5084d266ab2dcd316f43096501a6bd60cbacae7f59a39b852ad0de9d",
+      "run_contract.py": "0e51e0910a12812107250eb1f89cdecda31c63fdb24dee46450c1ed1fc82f940",
+      "splits.py": "7564af16532313a4b94950c10d9ea8b16d31d82affd9161b708bef5601a04ba1"
+    },
+    "implementation": {
+      "code_files": {
+        "retailops_ai.data_contracts/common.py": "9f4cbd1533e8ea7eef0eb0bb84e51920c759d9648ffe4370482cac7ed4cc686a",
+        "retailops_ai.source_snapshot/__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+        "retailops_ai.source_snapshot/canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+        "retailops_ai.source_snapshot/cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+        "retailops_ai.source_snapshot/files.py": "2c1019d1f8217bba6d10ac8dd82a272c15465b92eed5c80f369a160f29b3270a",
+        "retailops_ai.source_snapshot/importer.py": "cd61025000b5bffec68bbcbdf19db5d04a33537afc89e6fadeda6df9c7c612a0",
+        "retailops_ai.source_snapshot/inventory_projection.py": "c66da418866362eea8d856afa34195f16108dc5f4cbe725da250a43460a483ae",
+        "retailops_ai.source_snapshot/inventory_protocol.py": "f9d32a45212905e8840c611232b580d1a3991253b0fe1ba95033a1187646cf11",
+        "retailops_ai.source_snapshot/protocol.py": "34584dc93fb1f491ac255ee3a514135af4a0ee4b2d3cfca10b760115b6c061c6",
+        "retailops_ai.source_snapshot/publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+        "retailops_ai.source_snapshot/tables.py": "332502d4f236e83dbd5326951be11042481cf998e78b9296437690f38e8feb79",
+        "retailops_ai.stockout/__init__.py": "6dad8820c040913c19a51991c133c7811e05a32efae6eaefc87a25e54424d06a",
+        "retailops_ai.stockout/artifacts.py": "5f9cffe890c5472ff9b651b09f5ae2069acd83b04ffc35efa0b3feac34973df9",
+        "retailops_ai.stockout/cli.py": "eb378529f1a7662450b746d14868a9cc0780e230815719ec828e4e50a1d04a8b",
+        "retailops_ai.stockout/contract.py": "efdfed0a2a5a61f9a2705893a5949c7df414f94baca918a016179030593dce03",
+        "retailops_ai.stockout/dataset.py": "a358eb98a9dd8a203e103003df2e4c9ce665816dfbfbd3931b99cd1310355647",
+        "retailops_ai.stockout/feature_contract.py": "c0cd50a06fc97afdd53f76da105ee780b6c894cde9e1e3f0b864a8a9fe15d6a3",
+        "retailops_ai.stockout/feature_dataset.py": "404f51656427494fa22e651f2df9ddc89567a1cd411f497d5a5a59e0345567c2",
+        "retailops_ai.stockout/features.py": "28bc48b32e60109d9e0ad8c72de6bab3083d04748c302dc89371d460923fb60a",
+        "retailops_ai.stockout/labels.py": "df52ccf67071d0e40ea91b40e608d87c6dc3f3a124a3e6f338a5a6402239d7bd",
+        "retailops_ai.stockout/prepare.py": "9672b8cba7313c8a6921d7342a2fe077449dbd7505fb2ff67c886e0d3459329e",
+        "retailops_ai.stockout/split.py": "45ef4c3a4f870da83c62524e5f1bcd5b5f7f9f3a6b46d6737cf88f7edc16b332",
+        "retailops_ai.stockout/upstream.py": "c68a9856c0e5b00a525dfc2fdec2dbcd15393b1f68228c802e0631632a65b51a",
+        "retailops_ai.stockout/upstream_contract.py": "ef697eb68f9b8d7c3e9bcb1284681ae7c58f642c483d702ac5cf6df27dff52d8",
+        "retailops_ai.stockout/upstream_dataset.py": "640df15152fe7c108500cb108a4503267af5a2957b84e3a974af2295bf632e2b"
+      },
+      "code_sha256": "8a044e155d9ce687736be74af703a6c6771d5f4ad94b06109d2fe4712324d442",
+      "curated_code_sha256": "605be92b95b3f703da11cb9101de9c18fe15fd4e2688f4ed3e4339ede700fe5f",
+      "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+      "python_version": "3.11.15"
+    },
+    "points_sha256": "fab2ef43890e4ee270fd5d4f7e954c4387ec1b1f8e134535cb58ec1dac84bd3e",
+    "policy": {
+      "closed_target": "known_closed_zero_unknown_calendar_not_zero",
+      "history_calendar_days": 28,
+      "history_eligibility": "seven_known_days_short_active_history_allowed",
+      "horizon_days": 7,
+      "mapping": "sum_selling_series_once_to_physical_route_known_at_origin",
+      "minimum_known_days": 7,
+      "model": "moving_average",
+      "origin_adapter": "same_date_end_of_day_second_never_after_inventory_origin",
+      "parameters": "fixed_algorithm_no_fitted_parameters",
+      "reconstruction": "retrospective_rolling_origin",
+      "sales_measure": "observed_sales_units_not_latent_demand",
+      "selection": "fixed_recipe_no_outcome_selection",
+      "version": "stockout-upstream-ma28-1.0.0"
+    },
+    "qualification_id": "inventory-labels-sha256-2e1e107aea8b0ffc3cd64b70052b16a94e8129a5626606e33620bda7becc3bed",
+    "role": "stockout_upstream",
+    "rows": 1632,
+    "schema_version": "1.0.0",
+    "source_dataset_id": "source-sha256-dbdddbc6c5c553df3bd62d37dbdaa2c2f9f034412bdb203ad83b0f3535cbee0d",
+    "upstream_model_version": "baseline-sha256-51ce64bf1595cd8981964fe6cd69de28b68bbf83d2a42ad7177bcbd2d547a323"
+  },
+  "verification": {
+    "full_ci": "passed",
+    "full_ci_completed_at_utc": "2026-10-03T07:12:23.944141+00:00",
+    "full_ci_exit_code": 0,
+    "full_test_seconds": 1678.21,
+    "full_tests": 1816,
+    "installed_wheel": "passed",
+    "mypy_source_files": 333,
+    "package_matches_installed_acceptance": true,
+    "remote_ci_for_this_commit": "pending_publication",
+    "required_check_targets": [
+      "lint",
+      "type-check",
+      "test",
+      "docs-check",
+      "forecast-runtime-check",
+      "handoff-check",
+      "snapshot-import-check",
+      "curated-check",
+      "forecast-calendar-check",
+      "forecast-features-check",
+      "forecast-manifests-check",
+      "forecast-baselines-check",
+      "forecast-models-check",
+      "forecast-backtest-check",
+      "forecast-quality-check",
+      "forecast-run-check",
+      "contracts-check",
+      "package",
+      "compose-config",
+      "forecast-remediation-check",
+      "forecast-acceptance-check"
+    ],
+    "ruff_formatted_files": 556,
+    "secret_scans": [
+      "git history",
+      "working directory"
+    ],
+    "targeted_seconds": 25.98,
+    "targeted_tests": 102
+  }
+}

@@ -11,6 +11,7 @@ from retailops_ai.domain.access import Principal
 from retailops_ai.forecast_jobs.queue import checked
 from retailops_ai.forecast_jobs.read_contracts import ForecastQuery
 from retailops_ai.forecast_jobs.reader import ForecastReadError, ReadScope, resolve_scope
+from retailops_ai.model_lifecycle.anomaly_evaluation_contracts import AnomalyEvaluationDetail
 from retailops_ai.model_lifecycle.evaluation_contracts import (
     EvaluationDetail,
     EvaluationErrorCode,
@@ -36,7 +37,7 @@ class EvaluationReader(Protocol):
     def evaluations(self, query: EvaluationQuery, actor: Principal) -> EvaluationPage: ...
     def evaluation(
         self, identity: str, scope: CatalogScope, actor: Principal
-    ) -> EvaluationDetail: ...
+    ) -> EvaluationDetail | AnomalyEvaluationDetail: ...
 
 
 def authorized(scope: CatalogScope, actor: Principal, *, campaign: bool = False) -> ReadScope:

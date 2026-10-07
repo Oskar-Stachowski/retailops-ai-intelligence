@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "maximum_false_alerts_per_1000": {
+      "maximum": 1000,
+      "minimum": 0,
+      "title": "Maximum False Alerts Per 1000",
+      "type": "number"
+    },
+    "minimum_clean_per_case": {
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Minimum Clean Per Case",
+      "type": "integer"
+    },
+    "minimum_episode_recall": {
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "title": "Minimum Episode Recall",
+      "type": "number"
+    },
+    "minimum_episode_recall_per_type": {
+      "default": 0.5,
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "title": "Minimum Episode Recall Per Type",
+      "type": "number"
+    },
+    "minimum_episodes_per_type": {
+      "default": 3,
+      "maximum": 100,
+      "minimum": 3,
+      "title": "Minimum Episodes Per Type",
+      "type": "integer"
+    },
+    "minimum_evaluable_coverage": {
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "title": "Minimum Evaluable Coverage",
+      "type": "number"
+    },
+    "minimum_high_severity_precision": {
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "title": "Minimum High Severity Precision",
+      "type": "number"
+    },
+    "minimum_positive_observations_per_type": {
+      "default": 3,
+      "maximum": 10000,
+      "minimum": 3,
+      "title": "Minimum Positive Observations Per Type",
+      "type": "integer"
+    },
+    "minimum_precision": {
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "title": "Minimum Precision",
+      "type": "number"
+    },
+    "minimum_recall": {
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "title": "Minimum Recall",
+      "type": "number"
+    },
+    "null_required_metric": {
+      "const": "blocks_qualification",
+      "default": "blocks_qualification",
+      "title": "Null Required Metric",
+      "type": "string"
+    },
+    "qualification_scope": {
+      "default": "synthetic_ai_07_portfolio_v1",
+      "enum": [
+        "synthetic_ai_07_portfolio_v1",
+        "synthetic_ai_07_portfolio_v2",
+        "synthetic_ai_07_portfolio_v3",
+        "synthetic_ai_07_portfolio_v4"
+      ],
+      "title": "Qualification Scope",
+      "type": "string"
+    },
+    "required_types": {
+      "default": [
+        "one_day_spike",
+        "multi_day_spike",
+        "sustained_drop",
+        "return_spike",
+        "inventory_censored_episode"
+      ],
+      "items": {
+        "enum": [
+          "one_day_spike",
+          "multi_day_spike",
+          "sustained_drop",
+          "return_spike",
+          "inventory_censored_episode"
+        ],
+        "type": "string"
+      },
+      "title": "Required Types",
+      "type": "array"
+    },
+    "segment_policy": {
+      "const": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+      "default": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+      "title": "Segment Policy",
+      "type": "string"
+    },
+    "source_scenarios": {
+      "default": [
+        "demand",
+        "physical"
+      ],
+      "items": {
+        "enum": [
+          "demand",
+          "physical"
+        ],
+        "type": "string"
+      },
+      "title": "Source Scenarios",
+      "type": "array"
+    },
+    "source_seeds": {
+      "default": [
+        42,
+        137,
+        2026
+      ],
+      "items": {
+        "enum": [
+          42,
+          137,
+          2026
+        ],
+        "type": "integer"
+      },
+      "title": "Source Seeds",
+      "type": "array"
+    },
+    "version": {
+      "const": "anomaly-portfolio-quality-1.0.0",
+      "default": "anomaly-portfolio-quality-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "minimum_precision",
+    "minimum_recall",
+    "maximum_false_alerts_per_1000",
+    "minimum_high_severity_precision",
+    "minimum_episode_recall",
+    "minimum_evaluable_coverage",
+    "minimum_clean_per_case"
+  ],
+  "title": "QualityPolicy",
+  "type": "object"
+}

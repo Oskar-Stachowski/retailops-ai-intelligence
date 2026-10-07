@@ -1,0 +1,71 @@
+{
+  "actual_fit_commit": "fcd09f68187b8d21e9dff756a24688b790221023",
+  "artifact_secret_scan": {
+    "checked_at": "2026-10-05T04:23:46.019712+00:00",
+    "findings": 0,
+    "report_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "status": "passed",
+    "tool": "gitleaks",
+    "uncompressed_json_files": 46
+  },
+  "data_class": "generated_synthetic_offline_qualification_no_real_business_data",
+  "primary": {
+    "detector_id": "anomaly-detector-sha256-dc2a1a12aca7eb306e26d185b286cb71271f6bd64bd4dfc0da97f20f413a11b2",
+    "family": "seasonal_residual",
+    "qualification_scope": "synthetic_ai_07_portfolio_v4",
+    "sha256": "453556c69bf92c8873552e64f1b178769aec5dc0528379431bfa566c03ad38d4",
+    "size_bytes": 480348
+  },
+  "reference": {
+    "detector_id": "anomaly-detector-sha256-817e886307b3437dd63cc9244f83febe656539b2b840acebe7d9e9902202eeaa",
+    "family": "isolation_forest",
+    "qualification_scope": "synthetic_ai_07_portfolio_v4",
+    "sha256": "51bdd48b2ba7a1e58ae038a69d100c582187aa57a131cc218c79c63cda0cd98a",
+    "size_bytes": 492162
+  },
+  "source_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+  "stage_status": "ready",
+  "version": "anomaly-qualified-capsules-1.0.0",
+  "local_oci": {
+    "status": "passed",
+    "consumer_commit": "5be04b19ee2890ea80a413dd92b7229eea7dff52",
+    "producer_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+    "evidence_sha256": "19880986b61738ab6e1043980f367e61261db3b0470750f7c9fa287f6b882bea",
+    "oci_image_digest": "sha256:e8a2822a707db40fbe82eea77d6d3ed33c7c7b2fda9c317d4c2ba79bddb22ade",
+    "checks": 17,
+    "restart": "passed",
+    "published_results": 1232,
+    "owned_project_cleanup": "completed",
+    "log_sha256": {
+      "acceptance.log": "490f548fecd9f710cc0bbd3c853031f4e289dfdccb4328bb79110145c7f68e92",
+      "restart-inspection.log": "6c45e1c72f93cf25a82214e4b29169260b7781ae664b34b424022bd94692aeb8",
+      "cleanup.log": "edb9e4d34f6cfb542fdecf3d577b36ec8aab2d98ee33c986e7bff08f27b613cb"
+    }
+  },
+  "source_publication_commit": "8747074adceea2fe6bbeccdf9068dcee6dd81d02",
+  "archive_uncompressed_bytes": {
+    "primary": 10686040,
+    "reference": 10728596
+  },
+  "implementation_required_ci": {
+    "path": "required-ci.json",
+    "status": "passed",
+    "consumer_commit": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+    "source_commit": "8747074adceea2fe6bbeccdf9068dcee6dd81d02"
+  },
+  "ci_remediated_local_oci": {
+    "status": "passed",
+    "consumer_commit": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+    "producer_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+    "path": "ci-fix-oci-acceptance.json",
+    "evidence_sha256": "e8e9d292e9b3f6140816f700bac4c766b0f8cdcaef522b4c9830c930e966b12c",
+    "oci_image_digest": "sha256:f5b5162fa1d49d411aed11bc15cc8ecb4f65c9350275e6b428eddebb3fd96efc",
+    "fresh_native_source_and_complete_public_parents": "passed",
+    "api_ready_http_status": 200,
+    "checks": 17,
+    "published_results": 1232,
+    "restart": "passed",
+    "owned_project_cleanup": "completed",
+    "owned_vm": "stopped"
+  }
+}

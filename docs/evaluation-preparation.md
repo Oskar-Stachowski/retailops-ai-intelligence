@@ -2,8 +2,10 @@
 
 Status całego AI 09: **in_progress**. [Przyrost 09.2](tensorflow-challenger.md)
 dodaje rzeczywisty kompaktowy Keras CPU i osobne środowisko. Przyrost 09.1 przygotowuje plan;
-nie uruchamia treningu TensorFlow ani końcowej oceny modeli. AI 07 i AI 08
-wciąż przygotowują kwalifikację swoich danych i wyników.
+nie uruchamia treningu TensorFlow ani końcowej oceny modeli. Na 2026-10-07
+AI 07 i AI 08 są gotowe i zamknięte na main. AI 09 wykorzysta ich kwalifikowane
+dowody; poniższy początkowy plan zachowuje historyczne piny i nie zastępuje
+zamrożonego protokołu końcowej kampanii.
 
 ## Co robi wykonywalny plan
 
@@ -24,8 +26,8 @@ Wyjątki zaakceptowane dla AI 04 v12 nie są przenoszone na nową kampanię.
 Początkowa propozycja dla kompaktowego Keras dense/direct multi-horizon to
 co najwyżej 2 próby, 25 epok, 1 wątek CPU, 1200 s i 1024 MiB RSS drzewa
 na próbę. Te liczby nie są zmierzonym odbiorem zasobów ani budżetem całego
-portfolio. Wymuszanie limitów i rzeczywisty trening należą do następnego przyrostu.
-TensorFlow będzie wymagać osobnego przypiętego środowiska; lock kampanii v12
+portfolio. Wymuszanie limitów i rzeczywisty trening dodano w przyroście 09.2.
+TensorFlow ma osobne przypięte środowisko; lock kampanii v12
 pozostaje nienaruszony.
 
 Manifest przygotowania wiąże plan, hash implementacji, istniejący lock zależności

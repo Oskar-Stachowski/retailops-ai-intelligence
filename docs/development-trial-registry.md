@@ -1,5 +1,12 @@
 # AI 09 — wspólny rejestr prób development
 
+**2026-10-07:** dawne prywatne katalogi rejestru i wyników w `/private/tmp`
+nie istnieją. [Odbiór 09.5](evidence/09-05-development-trial-registry.md)
+zachowuje inwentaryzację 11 prób, 44 rozpoczętych i 40 zakończonych fitów.
+Nie potwierdza odtworzenia utraconych bajtów ani późniejszego zużycia budżetu.
+Nowa kampania wymaga jawnego rozliczenia tej historii; nie wolno udawać
+kontynuacji poprzedniego limitu przez pusty rejestr pod nową ścieżką.
+
 Przyrost 09.5 dodaje jeden prywatny rejestr dla wielu katalogów wyników.
 Przypina jego bezwzględną ścieżkę, pełne protokoły, kod audytu i budżet nowych
 uruchomień. Rezerwacja jest zapisywana przed odczytem rodziców i przed fitem.

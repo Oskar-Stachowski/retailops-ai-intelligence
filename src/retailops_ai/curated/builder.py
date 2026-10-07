@@ -122,14 +122,15 @@ def implementation(version: str = VERSION) -> dict[str, Any]:
 
 
 def manifest_schema_bytes(version: str = VERSION) -> bytes:
-    if version == "1.1.0":
-        schema = files("retailops_ai.curated").joinpath("v1_1/curated_manifest.schema.json")
+    if version in {"1.1.0", "1.2.0"}:
+        directory = {"1.1.0": "v1_1", "1.2.0": "v1_2"}[version]
+        schema = files("retailops_ai.curated").joinpath(directory + "/curated_manifest.schema.json")
         return (
             schema.read_bytes()
             if schema.is_file()
             else (
                 Path(__file__).resolve().parents[3]
-                / "contracts/curated/v1_1/curated_manifest.schema.json"
+                / ("contracts/curated/" + directory + "/curated_manifest.schema.json")
             ).read_bytes()
         )
     schema = files("retailops_ai.curated").joinpath("curated_manifest.schema.json")
@@ -211,7 +212,7 @@ def derive(
     version = snapshot.manifest["schema_version"]
     specs = source_contract(version)["fact_tables"]
     transform_row = transform
-    if version == "1.1.0":
+    if version in {"1.1.0", "1.2.0"}:
         from retailops_ai.curated.inventory import transform_inventory
 
         transform_row = transform_inventory
@@ -300,7 +301,7 @@ def derive(
         "tables": logical,
         "quarantine": {k: v for k, v in q.items() if k != "files"},
     }
-    if version == "1.1.0":
+    if version in {"1.1.0", "1.2.0"}:
         descriptor["parent_qualification_id"] = snapshot.manifest["descriptor"][
             "parent_qualification_id"
         ]
@@ -311,7 +312,7 @@ def derive(
         "stockout": "not_ready",
         "replay": "not_ready",
         "rag": "not_applicable",
-        "inventory_ready": version == "1.1.0" and not q["row_count"],
+        "inventory_ready": version in {"1.1.0", "1.2.0"} and not q["row_count"],
     }
     return {
         "schema_version": version,
@@ -468,11 +469,11 @@ def verify_curated(
             "stockout": "not_ready",
             "replay": "not_ready",
             "rag": "not_applicable",
-            "inventory_ready": version == "1.1.0" and not rejected,
+            "inventory_ready": version in {"1.1.0", "1.2.0"} and not rejected,
         }
     ):
         raise SnapshotError("curated_readiness_or_quarantine_mismatch")
-    if version == "1.1.0" and not rejected:
+    if version in {"1.1.0", "1.2.0"} and not rejected:
         from retailops_ai.curated.inventory import verify_semantics
 
         with tempfile.TemporaryDirectory(prefix="curated-semantic-verify-") as tmp:
@@ -507,6 +508,8 @@ def build_curated(
     initial = verify_import(
         import_root, allow_evaluation_truth=allow_evaluation_truth, limits=limits
     )
+    if initial.manifest["schema_version"] not in {"1.0.0", "1.1.0", "1.2.0"}:
+        raise SnapshotError("unsupported_curated_snapshot_version")
     with tempfile.TemporaryDirectory(prefix=".curated-build-", dir=root) as tmp:
         stage = Path(tmp)
         # Seal a bounded private input to prevent input mutation during transform.

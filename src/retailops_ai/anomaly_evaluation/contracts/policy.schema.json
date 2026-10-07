@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "average_precision": {
+      "const": "score_ties_grouped_stepwise_average_precision",
+      "default": "score_ties_grouped_stepwise_average_precision",
+      "title": "Average Precision",
+      "type": "string"
+    },
+    "early_lead_days": {
+      "const": 0,
+      "default": 0,
+      "title": "Early Lead Days",
+      "type": "integer"
+    },
+    "episode_coverage": {
+      "const": "all_mature_episodes_in_complete_requested_census",
+      "default": "all_mature_episodes_in_complete_requested_census",
+      "title": "Episode Coverage",
+      "type": "string"
+    },
+    "false_alert_denominator": {
+      "const": "scored_mature_truth_clean_observations",
+      "default": "scored_mature_truth_clean_observations",
+      "title": "False Alert Denominator",
+      "type": "string"
+    },
+    "late_tolerance_days": {
+      "const": 1,
+      "default": 1,
+      "title": "Late Tolerance Days",
+      "type": "integer"
+    },
+    "overlap": {
+      "const": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+      "default": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+      "title": "Overlap",
+      "type": "string"
+    },
+    "repeat_alerts": {
+      "const": "report_without_increasing_episode_recall",
+      "default": "report_without_increasing_episode_recall",
+      "title": "Repeat Alerts",
+      "type": "string"
+    },
+    "unknown_truth": {
+      "const": "excluded_and_counted",
+      "default": "excluded_and_counted",
+      "title": "Unknown Truth",
+      "type": "string"
+    },
+    "version": {
+      "const": "anomaly-evaluation-1.0.0",
+      "default": "anomaly-evaluation-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "zero_prediction_precision": {
+      "const": "not_evaluable",
+      "default": "not_evaluable",
+      "title": "Zero Prediction Precision",
+      "type": "string"
+    }
+  },
+  "title": "EvaluationPolicy",
+  "type": "object"
+}

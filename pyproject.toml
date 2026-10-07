@@ -30,6 +30,16 @@ retailops-ai = "retailops_ai.cli:main"
 retailops-ai-snapshot = "retailops_ai.source_snapshot.cli:main"
 retailops-ai-curated = "retailops_ai.curated.cli:main"
 retailops-ai-forecast = "retailops_ai.forecasting.cli:main"
+retailops-ai-anomaly-inputs = "retailops_ai.anomalies.cli:main"
+retailops-ai-raw-dq = "retailops_ai.raw_dq.cli:main"
+retailops-ai-full-raw-dq = "retailops_ai.full_raw_dq.cli:main"
+retailops-ai-return-inputs = "retailops_ai.return_inputs.cli:main"
+retailops-ai-day-qualification = "retailops_ai.day_qualification.cli:main"
+retailops-ai-qualified-anomaly-inputs = "retailops_ai.qualified_anomalies.cli:main"
+retailops-ai-anomaly-detectors = "retailops_ai.anomaly_detectors.cli:main"
+retailops-ai-anomaly-evaluation = "retailops_ai.anomaly_evaluation.cli:main"
+retailops-ai-anomaly-operator = "retailops_ai.anomaly_portfolio.operator_cli:main"
+retailops-ai-anomaly-batch = "retailops_ai.anomaly_portfolio.batch_cli:main"
 
 [project.optional-dependencies]
 snapshot = ["pyarrow==25.0.1", "jsonschema==4.26.0"]
@@ -99,6 +109,11 @@ packages = ["src/retailops_ai"]
 "contracts/forecast/v2" = "retailops_ai/forecasting/v2"
 "contracts/forecast/v3" = "retailops_ai/forecasting/v3"
 "contracts/curated/v1_1" = "retailops_ai/curated/v1_1"
+"contracts/curated/v1_2" = "retailops_ai/curated/v1_2"
+"contracts/anomaly/v1" = "retailops_ai/anomalies/contracts"
+"contracts/raw_dq/v1" = "retailops_ai/raw_dq/contracts"
+"contracts/raw_dq/v2" = "retailops_ai/full_raw_dq/contracts"
+"contracts/return_inputs/v1" = "retailops_ai/return_inputs/contracts"
 "contracts/source_snapshot/v1_1" = "retailops_ai/source_snapshot/v1_1"
 "contracts/evaluation/v1" = "retailops_ai/evaluation_campaign"
 "contracts/evaluation/v3" = "retailops_ai/evaluation_campaign/v3"
@@ -109,6 +124,7 @@ packages = ["src/retailops_ai"]
 "contracts/evaluation/v8" = "retailops_ai/evaluation_campaign/v8"
 "environments/tensorflow/uv.lock" = "retailops_ai/tensorflow_challenger/dependencies.lock"
 "contracts/evaluation/v2" = "retailops_ai/tensorflow_challenger"
+"contracts/source_snapshot/v1_2" = "retailops_ai/source_snapshot/v1_2"
 
 [tool.uv]
 required-version = "==0.12.19"

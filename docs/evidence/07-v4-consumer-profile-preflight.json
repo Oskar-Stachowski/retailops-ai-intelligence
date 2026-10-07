@@ -1,0 +1,27 @@
+{
+  "cause": "new_profile_missing_in_explicit_consumer_partition_projection_and_source_clock_allowlists",
+  "consumer_before_fix": "51529d752854d53945c70cedb7b15860a5b0d199",
+  "correction": "extend_only_explicit_v4_profile_and_public_evaluation_scope_allowlists_with_unchanged_schema_and_capture_bounds",
+  "error": "inventory_source_projection_mismatch",
+  "final_test": "not_opened",
+  "logs": [
+    {
+      "error": "inventory_source_projection_mismatch",
+      "log_sha256": "1bf042c8bfbaa9d0fb60f259f15f964496a825398fcb5660ed4141da41940cac",
+      "scenario": "demand",
+      "size_bytes": 1468
+    },
+    {
+      "error": "inventory_source_projection_mismatch",
+      "log_sha256": "1bf042c8bfbaa9d0fb60f259f15f964496a825398fcb5660ed4141da41940cac",
+      "scenario": "physical",
+      "size_bytes": 1468
+    }
+  ],
+  "recorded_at": "2026-10-05T03:18:41.953398+00:00",
+  "source_and_gate_changes": "none",
+  "source_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+  "source_profile": "ai-07-portfolio-v4",
+  "status": "failed_before_training",
+  "version": "ai07-consumer-preflight-1.0.0"
+}

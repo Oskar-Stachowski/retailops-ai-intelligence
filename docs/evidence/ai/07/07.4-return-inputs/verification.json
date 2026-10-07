@@ -1,0 +1,196 @@
+{
+  "api_image": {
+    "contract_probe": "passed; ephemeral, no network, ports or volumes",
+    "digest": "sha256:5b351e288411454c41a53f3c6736b7e6ca412008d9457c12b2ef7dec678234dd",
+    "tag": "retailops-ai07-returns-package:verify"
+  },
+  "base_commit": "d03f84bb45172ed3ec8e814b4c9b3071d2873863",
+  "cases": [
+    {
+      "case": "demand",
+      "curated_dataset_id": "curated-sha256-08fe668a7db3c240bd4fb46f8399577c9849264fbc09b1a58d4114a87ad767d0",
+      "snapshot_id": "snapshot-sha256-2bdd52397d96c9cb206d9462c0b5524614f37a677516173fbe61c56b5c8fb156",
+      "source_dataset_id": "source-sha256-ccadc8f75527261bbcc187383269c4a3f82b7f75290c0baf1e61adbc73fc87e8",
+      "views": [
+        {
+          "content_sha256": "d81d79d79242b095eeaea758fab951c852495567e50fe916baf5e86a4fde0b06",
+          "known_events": 124,
+          "known_refunded_units": 143,
+          "known_rejected_units": 14,
+          "post_sales_history_events": 0,
+          "publication_bytes": 475356,
+          "return_input_id": "return-inputs-sha256-c9af37ea2161c338b8d4d276729f9a40a1633653e7fce5bfc8f6f1aea32bca2b",
+          "rows": 720,
+          "view": "history"
+        },
+        {
+          "content_sha256": "0c15b62d925222c811250ae730ede221b780612ca62762837b3e4ba0d66c7b42",
+          "known_events": 130,
+          "known_refunded_units": 149,
+          "known_rejected_units": 15,
+          "post_sales_history_events": 0,
+          "publication_bytes": 475697,
+          "return_input_id": "return-inputs-sha256-925b511515249f461691fa5cd3fa929db92cbe636799f62c9d77698dabc320d7",
+          "rows": 720,
+          "view": "history_corrected"
+        },
+        {
+          "content_sha256": "e5f6b68e53ed1338a315dad49beaa9be3511abc37c7eabe112db059368aab1d2",
+          "known_events": 232,
+          "known_refunded_units": 272,
+          "known_rejected_units": 23,
+          "post_sales_history_events": 102,
+          "publication_bytes": 1084485,
+          "return_input_id": "return-inputs-sha256-3ddf38c7dc771713763e2a55f74c71f27aa2d043f9d49522da031dc35a2bd089",
+          "rows": 1656,
+          "view": "full_tail"
+        }
+      ]
+    },
+    {
+      "case": "physical",
+      "curated_dataset_id": "curated-sha256-86e670599852f6f36d9b1b1b1ab7661d0476109cf39b7af1104f1a389770f473",
+      "snapshot_id": "snapshot-sha256-0f4570d70c2cabbb754f4810ec14b03c82748534c364d7a52a97c022e2602e70",
+      "source_dataset_id": "source-sha256-0eb05ee1e8b903de4c318703ecc74708b0f7ca9568b0c8e4e479684f13521721",
+      "views": [
+        {
+          "content_sha256": "7a9239c5f71e2d75b4ac82116f409e266eb0b0f5e01c34b5249a7d30a9bb3798",
+          "known_events": 125,
+          "known_refunded_units": 144,
+          "known_rejected_units": 15,
+          "post_sales_history_events": 0,
+          "publication_bytes": 475525,
+          "return_input_id": "return-inputs-sha256-a5ea29f20b93043b9915d9af051aa1a15ef882832fb6892a6daaeb504a48fcb3",
+          "rows": 720,
+          "view": "history"
+        },
+        {
+          "content_sha256": "5b3847456c214df25afe191625a679bc90d419da48e1c494e5fc5aaecaf81a1a",
+          "known_events": 130,
+          "known_refunded_units": 148,
+          "known_rejected_units": 16,
+          "post_sales_history_events": 0,
+          "publication_bytes": 475809,
+          "return_input_id": "return-inputs-sha256-e119a759426cc9c5487e7ca691204905c017cc5e0e92eb3dea4d3f320500f9ca",
+          "rows": 720,
+          "view": "history_corrected"
+        },
+        {
+          "content_sha256": "4ffd563b04835f95e32d5dd6dd1475d3aeb08d92d3ac5ad9f26a772e1a4c2edd",
+          "known_events": 246,
+          "known_refunded_units": 283,
+          "known_rejected_units": 28,
+          "post_sales_history_events": 116,
+          "publication_bytes": 1084882,
+          "return_input_id": "return-inputs-sha256-1ba0f27703b7a215fa6b07853a8d8936c905865e242196f431eed5e589de01c5",
+          "rows": 1656,
+          "view": "full_tail"
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "detached_wheel_cli_build_and_verify": "passed; identical build reused publication",
+    "docs_and_wire_contracts": "passed",
+    "mypy": "passed; 212 files",
+    "remaining_make_regression_gates": "passed",
+    "ruff_and_format": "passed; 370 files",
+    "scoped_and_working_tree_secrets": "passed",
+    "targeted_tests": {
+      "command": ".venv/bin/python -m pytest -q tests/test_return_projection.py tests/test_return_inputs.py tests/test_inventory_curated.py tests/test_ci_contract.py",
+      "passed": 73,
+      "seconds": 159.0
+    }
+  },
+  "ci_budget": {
+    "checks_minutes": 50,
+    "prior_minutes": 45,
+    "reason": "Additional 73-test scope includes 48 new regressions; new gate runs two measured 132\u2013147 s processes. Existing gates and per-process limits are unchanged."
+  },
+  "contract_sha256": {
+    "manifest.schema.json": "b3e710bdfb6f0988647841ff78fe5d0faf8a45ebaf051bcf04e646d8ffce2247",
+    "point.schema.json": "d1bf5d5ba0d7e3d7c633019d05093e02f6244cfa1ce1a94865ccb68c67a6b091",
+    "policy.schema.json": "c3a049a2cfe709c464a6dd5d9699f2252df4d79b47d8789bfca44f707bb59d01"
+  },
+  "editable_and_wheel_ids_and_content_equal": true,
+  "final_regression_receipt_location": "Final local regression and Required CI are linked to the final PR head in PR #12 description.",
+  "fresh_editable_runs": [
+    {
+      "elapsed_seconds": 131.986,
+      "peak_rss_mib": 115.172,
+      "producer_available": false,
+      "status": "passed"
+    },
+    {
+      "elapsed_seconds": 146.555,
+      "peak_rss_mib": 116.953,
+      "producer_available": false,
+      "status": "passed"
+    }
+  ],
+  "fresh_wheel_runs": [
+    {
+      "ai_module_count": 22,
+      "all_ai_modules_from_wheel": true,
+      "elapsed_seconds": 185.761,
+      "peak_rss_mib": 114.188,
+      "producer_available": false,
+      "status": "passed"
+    },
+    {
+      "ai_module_count": 22,
+      "all_ai_modules_from_wheel": true,
+      "elapsed_seconds": 185.796,
+      "peak_rss_mib": 114.656,
+      "producer_available": false,
+      "status": "passed"
+    }
+  ],
+  "pr": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/12",
+  "process_limits": {
+    "peak_rss_mib": 1024,
+    "seconds_per_process": 300
+  },
+  "queries": [
+    {
+      "as_of_time": "2026-08-01T00:00:00Z",
+      "end_date": "2026-07-31",
+      "start_date": "2026-07-02",
+      "view": "history"
+    },
+    {
+      "as_of_time": "2026-09-09T00:00:00Z",
+      "end_date": "2026-07-31",
+      "start_date": "2026-07-02",
+      "view": "history_corrected"
+    },
+    {
+      "as_of_time": "2026-09-09T00:00:00Z",
+      "end_date": "2026-09-08",
+      "start_date": "2026-07-02",
+      "view": "full_tail"
+    }
+  ],
+  "readiness": {
+    "ai07": "open",
+    "detector": "not_qualified",
+    "event_day_coverage": "not_qualified",
+    "model_feature_allowlist": [],
+    "observed_return_units": null
+  },
+  "remaining": [
+    "versioned full operational DQ and sales/return event-day coverage",
+    "scoreable PIT residual features",
+    "seasonal residual baseline and Isolation Forest",
+    "leakage-free observation and episode evaluation",
+    "AI05 lifecycle integration after dependency stack acceptance"
+  ],
+  "runtime_commit": "e2924a8b2143b21cb98e918babcb48cebe947d1d",
+  "scope": "AI07.4 native PIT returns and operational event-day views; AI07 remains open",
+  "source_fixture_sha256": "c344a5cfeea086e1054add724c830d747815e9eab425a19a17c1d0691671066c",
+  "wheel": {
+    "bytes": 687719,
+    "contracts_once": true,
+    "sha256": "3d371a46bba6bdded4a72db5b0608fb088253ec9eded6c2bdbec6ad974196df0"
+  }
+}

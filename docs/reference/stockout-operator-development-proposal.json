@@ -1,0 +1,23 @@
+{
+  "version": "stockout-threshold-proposal-2.0.0",
+  "thresholds": {
+    "medium_from": 0.25,
+    "high_from": 0.5,
+    "critical_from": 0.9
+  },
+  "capacity": {
+    "mode": "top_fraction",
+    "top_n": null,
+    "fraction": 0.2,
+    "unit": "physical_product_stock_keys_per_origin",
+    "ties": "product_stock_lexical"
+  },
+  "costs": {
+    "false_attention": 1.0,
+    "missed_incident": 5.0,
+    "interpretation": "operator_proposal_not_validated_business_savings"
+  },
+  "evaluation_role": "calibration",
+  "final_test_access": "forbidden",
+  "approval_status": "proposal_requires_operator_review"
+}

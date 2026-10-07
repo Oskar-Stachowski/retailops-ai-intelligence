@@ -1,0 +1,33 @@
+{
+  "schema_version": "stockout-api-startup-repair-evidence-1.0.0",
+  "parent_commit": "a131179177223cf52922a09b8f8660a2d4902aa0",
+  "failed_ci": {
+    "run_id": 37250135424,
+    "checks_job": 111575920760,
+    "persistence_job": 111575920520,
+    "checks_failure": "script_ModelMetaclass_model_json_schema",
+    "persistence_failure": "rag_knowledge_loopback_not_started"
+  },
+  "repair": {
+    "typed_schema_model_mapping": true,
+    "public_contracts_do_not_import_stockout_execution": true,
+    "cold_database_api_regression_passed": true,
+    "http_and_job_schemas_unchanged": true,
+    "loopback_deadline_unchanged": true
+  },
+  "full_configured_mypy": "passed_src_and_scripts",
+  "actual_sql21": "pending_ci",
+  "all_six_source_preparations": "passed",
+  "previous_ci": {
+    "commit": "7ac8ab65c538480dda3469d654fbb993535c1825",
+    "run_id": 37246436824,
+    "all_gates": "passed",
+    "tests_passed": 2383
+  },
+  "final_test_outcomes_evaluated": false,
+  "independent_quality_accepted": false,
+  "thresholds_approved": false,
+  "model_promoted": false,
+  "ai08_ready": false,
+  "focused_tests_passed": 186
+}

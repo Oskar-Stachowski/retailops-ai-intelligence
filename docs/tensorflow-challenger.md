@@ -47,8 +47,13 @@ Validation użyta do early stopping nie jest niezależnym dowodem jakości.
 
 [Osobny projekt](../environments/tensorflow/pyproject.toml) i jego
 [uv.lock](../environments/tensorflow/uv.lock) przypinają Python 3.11.15,
-TensorFlow 2.20.0, Keras 3.11.3, MLflow skinny 3.4.0 i NumPy 2.2.6.
+TensorFlow 2.20.0, Keras 3.11.3, MLflow skinny 3.4.0, NumPy 2.2.6 i SciPy 1.17.1.
 Obsługiwane cele to macOS ARM64 (`tensorflow`) oraz Linux x86_64 (`tensorflow-cpu`).
+Integracja po AI 07–08 zastępuje SciPy 1.15.3: świeże odtworzenie na macOS
+odrzucało jego bibliotekę PROPACK jako niepoprawny Mach-O. To blokowało drzewa
+oraz inferowanie tensorowego podpisu MLflow, mimo ukończonego treningu Keras.
+Nowy lock i wymagania w zapisywanym bundle są zgodne; historyczne receipty
+zachowują wcześniejsze środowisko i nie są nowym odbiorem tych zależności.
 Główny `uv.lock` i środowisko v12 pozostają bez zmian. Nie ma CUDA extras.
 Końcowy release wymaga rzeczywistego reload acceptance na swojej architekturze.
 

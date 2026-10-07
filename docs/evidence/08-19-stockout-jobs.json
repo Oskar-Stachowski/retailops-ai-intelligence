@@ -1,0 +1,18 @@
+{
+  "schema_version": "stockout-jobs-foundation-evidence-1.0.0",
+  "parent_commit": "7ac8ab65c538480dda3469d654fbb993535c1825",
+  "focused_tests_passed": 163,
+  "http_tests_passed": 36,
+  "mypy": "passed",
+  "ruff": "passed",
+  "migration_head": "0021_stockout_jobs",
+  "actual_postgres": "pending_ci",
+  "previous_sql_and_backup_passed": {"commit": "7ac8ab65c538480dda3469d654fbb993535c1825", "run_id": 37246436824, "job_id": 111565234443},
+  "real_stockout_mlflow": "not_integrated",
+  "private_worker": "not_integrated",
+  "independent_quality_accepted": false,
+  "final_test_outcomes_evaluated": false,
+  "thresholds_approved": false,
+  "production_model_promoted": false,
+  "ai08_ready": false
+}
