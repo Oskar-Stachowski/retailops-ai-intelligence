@@ -13,6 +13,7 @@ from retailops_ai.agent.tools import (
     OUTPUT,
     AnomalyItem,
     AnomalyRequest,
+    AnomalyResult,
     DataRequest,
     DataScope,
     ForecastResult,
@@ -21,8 +22,11 @@ from retailops_ai.agent.tools import (
     KnowledgeRequest,
     KnowledgeResult,
     ModelStatusItem,
+    ModelStatusResult,
+    OperationsResult,
     RiskItem,
     RiskRequest,
+    RiskResult,
     SalesItem,
     SalesRequest,
     SalesResult,
@@ -30,6 +34,7 @@ from retailops_ai.agent.tools import (
     ToolName,
     ToolOutput,
     ToolPolicy,
+    catalog_scope_verified,
 )
 from retailops_ai.data_contracts.common import SellingKey
 from retailops_ai.data_contracts.identity import canonical_sha256
@@ -51,6 +56,15 @@ READ_CAPABILITIES: dict[str, Capability] = {
 }
 
 
+def read_capabilities(tool: str, *, native: bool) -> set[Capability]:
+    extra: dict[str, set[Capability]] = {
+        "get_stockout_risk": {"inventory:read"},
+        "get_detected_anomalies": {"anomaly:read"},
+        "get_model_status": {"forecast:read", "anomaly:read"},
+    }
+    return {READ_CAPABILITIES[tool]} | (extra.get(tool, set()) if native else set())
+
+
 class ToolFailure(ValueError):
     """Canonical public error, never the upstream exception or rejected input."""
 
@@ -64,7 +78,8 @@ class ToolFailure(ValueError):
 
 
 class ToolAdapter(Protocol):
-    source_kind: Literal["fixture", "runtime"]
+    @property
+    def source_kind(self) -> Literal["fixture", "runtime"]: ...
 
     async def execute(
         self, request: ToolInput, principal: Principal, pin: IndexPin | None
@@ -265,7 +280,13 @@ class ToolSession:
 
     def _authorize(self, request: ToolInput) -> ToolInput:
         policy = self.executor.policy
-        if READ_CAPABILITIES[request.tool] not in self.principal.capabilities:
+        adapter = self.executor.adapters.get(request.tool)
+        if (
+            not read_capabilities(
+                request.tool, native=adapter is not None and adapter.source_kind == "runtime"
+            )
+            <= self.principal.capabilities
+        ):
             raise ToolFailure("unauthorized")
         if isinstance(request, KnowledgeRequest):
             resolve_scope(self.principal, request.retrieval, self.executor.environment)
@@ -366,6 +387,89 @@ class ToolSession:
             return
         if isinstance(output, KnowledgeResult):
             raise ToolFailure("unavailable")
+        if (
+            isinstance(output, (RiskResult, AnomalyResult, OperationsResult, ModelStatusResult))
+            and output.source_kind == "runtime"
+        ):
+            proof = output.native_view
+            now, policy = self.executor.clock(), self.executor.policy
+            if (
+                proof is None
+                or proof.request != request
+                or proof.environment != self.executor.environment
+            ):
+                raise ToolFailure("unavailable")
+            if len(output.items) > request.limit:
+                raise ToolFailure("unavailable")
+            if isinstance(output, RiskResult):
+                risk_view = output.native_view
+                if risk_view is None:
+                    raise ToolFailure("unavailable")
+                physical_access = self.principal.stockout
+                if (
+                    "inventory:read" not in self.principal.capabilities
+                    or physical_access is None
+                    or any(
+                        p.product_id not in physical_access.product_ids
+                        or (
+                            p.route is not None
+                            and p.route.stock_location_id not in physical_access.stock_location_ids
+                        )
+                        for p in risk_view.inventory.points
+                    )
+                ):
+                    raise ToolFailure("unauthorized")
+                page = risk_view.page
+                if page is not None:
+                    if (
+                        page.generated_at > now
+                        or (now - page.generated_at).total_seconds() > policy.freshness_seconds
+                    ):
+                        raise ToolFailure("unavailable")
+                    if any(
+                        r.generated_at > now
+                        or (now - r.as_of).total_seconds() > r.max_origin_age_seconds
+                        for r in page.items
+                    ):
+                        raise ToolFailure("stale")
+            elif isinstance(output, AnomalyResult):
+                if "anomaly:read" not in self.principal.capabilities:
+                    raise ToolFailure("unauthorized")
+                anomaly_view = output.native_view
+                if anomaly_view is None:
+                    raise ToolFailure("unavailable")
+                anomaly_page = anomaly_view.page
+                if (
+                    anomaly_page.generated_at > now
+                    or (now - anomaly_page.generated_at).total_seconds() > policy.freshness_seconds
+                ):
+                    raise ToolFailure("unavailable")
+                if any(
+                    r.scoring_origin > now or (now - r.scoring_origin).total_seconds() > 7 * 86400
+                    for r in anomaly_page.items
+                    if r.status == "scored"
+                ):
+                    raise ToolFailure("stale")
+            else:
+                if (
+                    isinstance(output, ModelStatusResult)
+                    and not {"forecast:read", "anomaly:read"} <= self.principal.capabilities
+                ):
+                    raise ToolFailure("unauthorized")
+                current_view = output.native_view
+                if current_view is None:
+                    raise ToolFailure("unavailable")
+                if isinstance(output, ModelStatusResult) and (
+                    output.native_view is None
+                    or not catalog_scope_verified(output.native_view, self.principal.principal_id)
+                ):
+                    raise ToolFailure("unavailable")
+                observed = current_view.observed_at
+                if observed > now or (now - observed).total_seconds() > policy.freshness_seconds:
+                    raise ToolFailure("unavailable")
+                if (now - request.as_of).total_seconds() > policy.freshness_seconds:
+                    raise ToolFailure("stale")
+            return
         if isinstance(output, SalesResult) and output.source_kind == "runtime":
             evidence = output.qualified_days
             if (

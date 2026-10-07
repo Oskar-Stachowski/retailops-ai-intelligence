@@ -157,11 +157,29 @@
         },
         "items": {
           "items": {
-            "$ref": "#/$defs/AnomalyItem"
+            "anyOf": [
+              {
+                "$ref": "#/$defs/AnomalyItem"
+              },
+              {
+                "$ref": "#/$defs/NativeAnomalyItem"
+              }
+            ]
           },
           "maxItems": 50,
           "title": "Items",
           "type": "array"
+        },
+        "native_view": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NativeAnomalyEvidence"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "schema_version": {
           "const": "1.0",
@@ -321,6 +339,174 @@
         "predictions"
       ],
       "title": "AnswerFreshness",
+      "type": "object"
+    },
+    "ApprovedModelRelease": {
+      "additionalProperties": false,
+      "properties": {
+        "image_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Image Digest",
+          "type": "string"
+        },
+        "model_version": {
+          "pattern": "^[1-9][0-9]{0,9}$",
+          "title": "Model Version",
+          "type": "string"
+        },
+        "release_id": {
+          "pattern": "^(model-release|anomaly-release)-sha256-[0-9a-f]{64}$",
+          "title": "Release Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "release_id",
+        "model_version",
+        "image_digest"
+      ],
+      "title": "ApprovedModelRelease",
+      "type": "object"
+    },
+    "CatalogFreshness": {
+      "additionalProperties": false,
+      "properties": {
+        "evaluated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Evaluated At",
+          "type": "string"
+        },
+        "reason": {
+          "const": "registry_and_runtime_not_observed",
+          "default": "registry_and_runtime_not_observed",
+          "title": "Reason",
+          "type": "string"
+        },
+        "status": {
+          "const": "unknown",
+          "default": "unknown",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evaluated_at"
+      ],
+      "title": "CatalogFreshness",
+      "type": "object"
+    },
+    "CatalogModel": {
+      "additionalProperties": false,
+      "properties": {
+        "approved_release": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApprovedModelRelease"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deployed_model_version": {
+          "default": null,
+          "title": "Deployed Model Version",
+          "type": "null"
+        },
+        "deployment_status": {
+          "const": "not_attested",
+          "default": "not_attested",
+          "title": "Deployment Status",
+          "type": "string"
+        },
+        "drift_status": {
+          "const": "not_run",
+          "default": "not_run",
+          "title": "Drift Status",
+          "type": "string"
+        },
+        "freshness": {
+          "$ref": "#/$defs/CatalogFreshness"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "model_name": {
+          "default": "retailops-demand-forecast",
+          "enum": [
+            "retailops-demand-forecast",
+            "retailops-sales-anomaly"
+          ],
+          "title": "Model Name",
+          "type": "string"
+        },
+        "registry_aliases": {
+          "default": null,
+          "title": "Registry Aliases",
+          "type": "null"
+        },
+        "visible_version_count": {
+          "maximum": 1000,
+          "minimum": 1,
+          "title": "Visible Version Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "visible_version_count",
+        "approved_release",
+        "freshness",
+        "generated_at"
+      ],
+      "title": "CatalogModel",
+      "type": "object"
+    },
+    "CatalogPagination": {
+      "additionalProperties": false,
+      "properties": {
+        "limit": {
+          "maximum": 200,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "next_offset": {
+          "anyOf": [
+            {
+              "maximum": 1000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Offset"
+        },
+        "offset": {
+          "maximum": 1000,
+          "minimum": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "total": {
+          "maximum": 1000,
+          "minimum": 0,
+          "title": "Total",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "limit",
+        "offset",
+        "total",
+        "next_offset"
+      ],
+      "title": "CatalogPagination",
       "type": "object"
     },
     "ChatFixture": {
@@ -1012,6 +1198,60 @@
         "tool_attempts"
       ],
       "title": "ExpectedAnswer",
+      "type": "object"
+    },
+    "FactualFactor": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "known_available_stock",
+            "inventory_snapshot_age",
+            "supply_from_observed_sales",
+            "supply_from_verified_in_stock_sales",
+            "known_delivery_plan_within_horizon",
+            "known_overdue_order_quantity",
+            "history_had_inventory_constraints",
+            "history_inventory_coverage_missing",
+            "current_stockout",
+            "input_not_evaluable",
+            "stale_inventory"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "field": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Field",
+          "type": "string"
+        },
+        "interpretation": {
+          "const": "verified_PIT_fact_not_causal_attribution",
+          "default": "verified_PIT_fact_not_causal_attribution",
+          "title": "Interpretation",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "code",
+        "field",
+        "value"
+      ],
+      "title": "FactualFactor",
       "type": "object"
     },
     "ForecastFreshness": {
@@ -1728,6 +1968,51 @@
       "title": "IndexPin",
       "type": "object"
     },
+    "InventoryContext": {
+      "additionalProperties": false,
+      "properties": {
+        "on_hand": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "On Hand"
+        },
+        "status": {
+          "enum": [
+            "unavailable",
+            "potential_stockout",
+            "no_stockout_signal"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "stock_location_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Stock Location Id"
+        }
+      },
+      "required": [
+        "stock_location_id",
+        "on_hand",
+        "status"
+      ],
+      "title": "InventoryContext",
+      "type": "object"
+    },
     "InventoryItem": {
       "additionalProperties": false,
       "properties": {
@@ -1959,6 +2244,413 @@
         "tool"
       ],
       "title": "InventoryResult",
+      "type": "object"
+    },
+    "Item": {
+      "additionalProperties": false,
+      "properties": {
+        "alert": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Alert"
+        },
+        "alert_status": {
+          "enum": [
+            "open",
+            "no_alert",
+            "insufficient_data"
+          ],
+          "title": "Alert Status",
+          "type": "string"
+        },
+        "anomaly_id": {
+          "pattern": "^anomaly-sha256-[0-9a-f]{64}$",
+          "title": "Anomaly Id",
+          "type": "string"
+        },
+        "anomaly_type": {
+          "anyOf": [
+            {
+              "enum": [
+                "sales_spike",
+                "sales_drop",
+                "residual_outlier",
+                "return_spike",
+                "stockout_censored_demand",
+                "data_quality_suspicion"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Anomaly Type"
+        },
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "batch_id": {
+          "pattern": "^anomaly-batch-sha256-[0-9a-f]{64}$",
+          "title": "Batch Id",
+          "type": "string"
+        },
+        "business_date": {
+          "format": "date",
+          "title": "Business Date",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online",
+            "marketplace",
+            "wholesale"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "currency": {
+          "enum": [
+            "PLN",
+            "EUR"
+          ],
+          "title": "Currency",
+          "type": "string"
+        },
+        "detected_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Detected At",
+          "type": "string"
+        },
+        "detector_id": {
+          "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",
+          "title": "Detector Id",
+          "type": "string"
+        },
+        "detector_name": {
+          "const": "retailops-sales-anomaly",
+          "default": "retailops-sales-anomaly",
+          "title": "Detector Name",
+          "type": "string"
+        },
+        "detector_version": {
+          "pattern": "^[1-9][0-9]{0,9}$",
+          "title": "Detector Version",
+          "type": "string"
+        },
+        "event_type": {
+          "enum": [
+            "sale_completed",
+            "return_completed"
+          ],
+          "title": "Event Type",
+          "type": "string"
+        },
+        "expected_units": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Units"
+        },
+        "explanation_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Explanation Codes",
+          "type": "array"
+        },
+        "family": {
+          "enum": [
+            "seasonal_residual",
+            "isolation_forest"
+          ],
+          "title": "Family",
+          "type": "string"
+        },
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "unknown"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "full_dq_replay_id": {
+          "pattern": "^full-dq-replay-sha256-[0-9a-f]{64}$",
+          "title": "Full Dq Replay Id",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "inference_run_id": {
+          "pattern": "^anomaly-batch-sha256-[0-9a-f]{64}$",
+          "title": "Inference Run Id",
+          "type": "string"
+        },
+        "input_status": {
+          "enum": [
+            "ready_input",
+            "insufficient_history",
+            "day_unqualified",
+            "no_declaration"
+          ],
+          "title": "Input Status",
+          "type": "string"
+        },
+        "inventory_context": {
+          "$ref": "#/$defs/InventoryContext"
+        },
+        "observed_units": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed Units"
+        },
+        "observed_window": {
+          "$ref": "#/$defs/Window"
+        },
+        "on_hand": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "On Hand"
+        },
+        "product_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "promotion_context": {
+          "$ref": "#/$defs/PromotionContext"
+        },
+        "promotion_offered": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Promotion Offered"
+        },
+        "qualified_anomaly_input_id": {
+          "pattern": "^qualified-anomaly-inputs-sha256-[0-9a-f]{64}$",
+          "title": "Qualified Anomaly Input Id",
+          "type": "string"
+        },
+        "quality_status": {
+          "const": "passed_at_publication",
+          "default": "passed_at_publication",
+          "title": "Quality Status",
+          "type": "string"
+        },
+        "release_id": {
+          "pattern": "^anomaly-release-sha256-[0-9a-f]{64}$",
+          "title": "Release Id",
+          "type": "string"
+        },
+        "residual_units": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Residual Units"
+        },
+        "role": {
+          "enum": [
+            "validation",
+            "final_test",
+            "batch"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "score": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Score"
+        },
+        "score_definition": {
+          "enum": [
+            "absolute_causal_standardized_residual",
+            "portable_isolation_forest_path_length"
+          ],
+          "title": "Score Definition",
+          "type": "string"
+        },
+        "scoring_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Scoring Origin",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "severity": {
+          "anyOf": [
+            {
+              "enum": [
+                "none",
+                "medium",
+                "high"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Severity"
+        },
+        "signal_episode_id": {
+          "anyOf": [
+            {
+              "pattern": "^signal-episode-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Signal Episode Id"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "insufficient_data"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "threshold": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Threshold"
+        },
+        "threshold_version": {
+          "const": "validation-alert-capacity-1.0.0",
+          "default": "validation-alert-capacity-1.0.0",
+          "title": "Threshold Version",
+          "type": "string"
+        },
+        "version": {
+          "const": "anomaly-portfolio-decision-1.0.0",
+          "default": "anomaly-portfolio-decision-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_type",
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "currency",
+        "business_date",
+        "scoring_origin",
+        "detector_id",
+        "family",
+        "role",
+        "status",
+        "score",
+        "threshold",
+        "alert",
+        "severity",
+        "explanation_codes",
+        "observed_units",
+        "expected_units",
+        "residual_units",
+        "promotion_offered",
+        "on_hand",
+        "input_status",
+        "anomaly_id",
+        "batch_id",
+        "signal_episode_id",
+        "observed_window",
+        "detected_at",
+        "inference_run_id",
+        "inventory_context",
+        "promotion_context",
+        "detector_version",
+        "release_id",
+        "source_dataset_id",
+        "curated_dataset_id",
+        "qualified_anomaly_input_id",
+        "full_dq_replay_id",
+        "generated_at",
+        "as_of",
+        "freshness_status",
+        "anomaly_type",
+        "alert_status",
+        "score_definition"
+      ],
+      "title": "Item",
       "type": "object"
     },
     "KnowledgeHit": {
@@ -2324,6 +3016,56 @@
       "title": "MarkdownChunk",
       "type": "object"
     },
+    "ModelPage": {
+      "additionalProperties": false,
+      "properties": {
+        "data_status": {
+          "enum": [
+            "available",
+            "no_data"
+          ],
+          "title": "Data Status",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/CatalogModel"
+          },
+          "maxItems": 200,
+          "title": "Items",
+          "type": "array"
+        },
+        "pagination": {
+          "$ref": "#/$defs/CatalogPagination"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "view_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "View Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "items",
+        "pagination",
+        "generated_at",
+        "data_status",
+        "view_sha256"
+      ],
+      "title": "ModelPage",
+      "type": "object"
+    },
     "ModelRecord": {
       "additionalProperties": false,
       "properties": {
@@ -2626,11 +3368,29 @@
         },
         "items": {
           "items": {
-            "$ref": "#/$defs/ModelStatusItem"
+            "anyOf": [
+              {
+                "$ref": "#/$defs/ModelStatusItem"
+              },
+              {
+                "$ref": "#/$defs/NativeModelStatusItem"
+              }
+            ]
           },
           "maxItems": 50,
           "title": "Items",
           "type": "array"
+        },
+        "native_view": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NativeModelStatusEvidence"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "schema_version": {
           "const": "1.0",
@@ -2685,6 +3445,82 @@
         "tool"
       ],
       "title": "ModelStatusResult",
+      "type": "object"
+    },
+    "NativeAnomalyEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "evidence_version": {
+          "const": "native-anomaly-read-v1",
+          "default": "native-anomaly-read-v1",
+          "title": "Evidence Version",
+          "type": "string"
+        },
+        "page": {
+          "$ref": "#/$defs/Page"
+        },
+        "request": {
+          "$ref": "#/$defs/AnomalyRequest"
+        }
+      },
+      "required": [
+        "environment",
+        "request",
+        "page"
+      ],
+      "title": "NativeAnomalyEvidence",
+      "type": "object"
+    },
+    "NativeAnomalyItem": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "decisions": {
+          "items": {
+            "$ref": "#/$defs/Item"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Decisions",
+          "type": "array"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "window",
+        "decisions"
+      ],
+      "title": "NativeAnomalyItem",
       "type": "object"
     },
     "NativeForecastRead": {
@@ -3091,6 +3927,346 @@
       "title": "NativeInventorySnapshot",
       "type": "object"
     },
+    "NativeModelStatusEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "anomaly": {
+          "$ref": "#/$defs/ModelPage"
+        },
+        "covered_models": {
+          "default": [
+            "retailops-demand-forecast-v12",
+            "retailops-sales-anomaly"
+          ],
+          "items": {
+            "enum": [
+              "retailops-demand-forecast-v12",
+              "retailops-sales-anomaly"
+            ],
+            "type": "string"
+          },
+          "title": "Covered Models",
+          "type": "array"
+        },
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "evidence_version": {
+          "const": "native-model-status-read-v1",
+          "default": "native-model-status-read-v1",
+          "title": "Evidence Version",
+          "type": "string"
+        },
+        "forecast": {
+          "$ref": "#/$defs/V12ModelPage"
+        },
+        "request": {
+          "$ref": "#/$defs/ModelStatusRequest"
+        }
+      },
+      "required": [
+        "environment",
+        "request",
+        "forecast",
+        "anomaly"
+      ],
+      "title": "NativeModelStatusEvidence",
+      "type": "object"
+    },
+    "NativeModelStatusItem": {
+      "additionalProperties": false,
+      "properties": {
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/V12CatalogModel"
+            },
+            {
+              "$ref": "#/$defs/CatalogModel"
+            }
+          ],
+          "title": "Record"
+        },
+        "record_kind": {
+          "const": "scoped_catalog_metadata",
+          "default": "scoped_catalog_metadata",
+          "title": "Record Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "record"
+      ],
+      "title": "NativeModelStatusItem",
+      "type": "object"
+    },
+    "NativeOperationsEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "evidence_version": {
+          "const": "native-operations-read-v1",
+          "default": "native-operations-read-v1",
+          "title": "Evidence Version",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "points": {
+          "items": {
+            "$ref": "#/$defs/NativeOperationsItem"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "title": "Points",
+          "type": "array"
+        },
+        "request": {
+          "$ref": "#/$defs/OperationsRequest"
+        },
+        "source_view_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source View Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "environment",
+        "request",
+        "observed_at",
+        "source_view_sha256",
+        "points"
+      ],
+      "title": "NativeOperationsEvidence",
+      "type": "object"
+    },
+    "NativeOperationsItem": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "consumer_lag_seconds": {
+          "default": null,
+          "title": "Consumer Lag Seconds",
+          "type": "null"
+        },
+        "failed_dead_lettered": {
+          "minimum": 0,
+          "title": "Failed Dead Lettered",
+          "type": "integer"
+        },
+        "ignored_duplicate": {
+          "minimum": 0,
+          "title": "Ignored Duplicate",
+          "type": "integer"
+        },
+        "latest_ingested_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Latest Ingested At"
+        },
+        "latest_processed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Latest Processed At"
+        },
+        "max_processing_latency_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Max Processing Latency Seconds"
+        },
+        "measurement_kind": {
+          "const": "scoped_persisted_event_processing",
+          "default": "scoped_persisted_event_processing",
+          "title": "Measurement Kind",
+          "type": "string"
+        },
+        "newer_state_not_evaluable": {
+          "minimum": 0,
+          "title": "Newer State Not Evaluable",
+          "type": "integer"
+        },
+        "processed": {
+          "minimum": 0,
+          "title": "Processed",
+          "type": "integer"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "received": {
+          "minimum": 0,
+          "title": "Received",
+          "type": "integer"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "stream_status": {
+          "const": "not_observed",
+          "default": "not_observed",
+          "title": "Stream Status",
+          "type": "string"
+        },
+        "window_minutes": {
+          "const": 15,
+          "default": 15,
+          "title": "Window Minutes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "received",
+        "processed",
+        "failed_dead_lettered",
+        "ignored_duplicate",
+        "newer_state_not_evaluable",
+        "latest_ingested_at",
+        "latest_processed_at",
+        "max_processing_latency_seconds"
+      ],
+      "title": "NativeOperationsItem",
+      "type": "object"
+    },
+    "NativeRiskEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "environment": {
+          "enum": [
+            "local",
+            "test"
+          ],
+          "title": "Environment",
+          "type": "string"
+        },
+        "evidence_version": {
+          "const": "native-stockout-read-v1",
+          "default": "native-stockout-read-v1",
+          "title": "Evidence Version",
+          "type": "string"
+        },
+        "inventory": {
+          "$ref": "#/$defs/NativeInventoryEvidence"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StockoutRiskPage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "request": {
+          "$ref": "#/$defs/RiskRequest"
+        }
+      },
+      "required": [
+        "environment",
+        "request",
+        "inventory",
+        "page"
+      ],
+      "title": "NativeRiskEvidence",
+      "type": "object"
+    },
+    "NativeRiskItem": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "mapping_ref": {
+          "pattern": "^(?:[a-z][a-z0-9_-]{0,31}-sha256-[0-9a-f]{64}|fixture-[A-Za-z0-9_.-]{1,100})$",
+          "title": "Mapping Ref",
+          "type": "string"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "risk": {
+          "$ref": "#/$defs/StockoutRisk"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/DateWindow"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "window",
+        "mapping_ref",
+        "risk"
+      ],
+      "title": "NativeRiskItem",
+      "type": "object"
+    },
     "OperationsItem": {
       "additionalProperties": false,
       "properties": {
@@ -3232,11 +4408,29 @@
         },
         "items": {
           "items": {
-            "$ref": "#/$defs/OperationsItem"
+            "anyOf": [
+              {
+                "$ref": "#/$defs/OperationsItem"
+              },
+              {
+                "$ref": "#/$defs/NativeOperationsItem"
+              }
+            ]
           },
           "maxItems": 50,
           "title": "Items",
           "type": "array"
+        },
+        "native_view": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NativeOperationsEvidence"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "schema_version": {
           "const": "1.0",
@@ -3293,48 +4487,76 @@
       "title": "OperationsResult",
       "type": "object"
     },
-    "Pagination": {
+    "Page": {
       "additionalProperties": false,
       "properties": {
-        "limit": {
-          "maximum": 200,
-          "minimum": 1,
-          "title": "Limit",
-          "type": "integer"
-        },
-        "next_offset": {
-          "anyOf": [
-            {
-              "maximum": 2800,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
+        "data_status": {
+          "enum": [
+            "available",
+            "no_data"
           ],
-          "title": "Next Offset"
+          "title": "Data Status",
+          "type": "string"
         },
-        "offset": {
-          "maximum": 2800,
-          "minimum": 0,
-          "title": "Offset",
-          "type": "integer"
+        "episode_policy": {
+          "const": "consecutive_calendar_alerts_same_scope_direction_release_no_unknown_gap",
+          "default": "consecutive_calendar_alerts_same_scope_direction_release_no_unknown_gap",
+          "title": "Episode Policy",
+          "type": "string"
         },
-        "total": {
-          "maximum": 2800,
-          "minimum": 0,
-          "title": "Total",
-          "type": "integer"
+        "freshness_policy": {
+          "const": "scoring_origin_older_than_7_days_is_stale_unknown_remains_unknown",
+          "default": "scoring_origin_older_than_7_days_is_stale_unknown_remains_unknown",
+          "title": "Freshness Policy",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/Item"
+          },
+          "maxItems": 200,
+          "title": "Items",
+          "type": "array"
+        },
+        "pagination": {
+          "$ref": "#/$defs/retailops_ai__anomaly_portfolio__serving_contract__Pagination"
+        },
+        "selection": {
+          "enum": [
+            "latest_complete_batch",
+            "pinned_batch",
+            "anomaly_id"
+          ],
+          "title": "Selection",
+          "type": "string"
+        },
+        "version": {
+          "const": "anomaly-read-page-1.0.0",
+          "default": "anomaly-read-page-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "view_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "View Sha256",
+          "type": "string"
         }
       },
       "required": [
-        "limit",
-        "offset",
-        "total",
-        "next_offset"
+        "items",
+        "pagination",
+        "generated_at",
+        "view_sha256",
+        "selection",
+        "data_status"
       ],
-      "title": "Pagination",
+      "title": "Page",
       "type": "object"
     },
     "Point": {
@@ -3646,6 +4868,39 @@
         "quality_status"
       ],
       "title": "PredictionRecord",
+      "type": "object"
+    },
+    "PromotionContext": {
+      "additionalProperties": false,
+      "properties": {
+        "offered": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Offered"
+        },
+        "planned_price": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Planned Price"
+        }
+      },
+      "required": [
+        "offered",
+        "planned_price"
+      ],
+      "title": "PromotionContext",
       "type": "object"
     },
     "Provenance": {
@@ -4159,11 +5414,29 @@
         },
         "items": {
           "items": {
-            "$ref": "#/$defs/RiskItem"
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RiskItem"
+              },
+              {
+                "$ref": "#/$defs/NativeRiskItem"
+              }
+            ]
           },
           "maxItems": 50,
           "title": "Items",
           "type": "array"
+        },
+        "native_view": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NativeRiskEvidence"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "schema_version": {
           "const": "1.0",
@@ -4218,6 +5491,63 @@
         "tool"
       ],
       "title": "RiskResult",
+      "type": "object"
+    },
+    "RuntimeLineage": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "feature_set_id": {
+          "pattern": "^feature-partitions-sha256-[0-9a-f]{64}$",
+          "title": "Feature Set Id",
+          "type": "string"
+        },
+        "source_completeness_status": {
+          "enum": [
+            "complete",
+            "not_ready",
+            "unavailable"
+          ],
+          "title": "Source Completeness Status",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "source_watermark": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Watermark"
+        },
+        "upstream_bundle_id": {
+          "pattern": "^upstream-partitions-sha256-[0-9a-f]{64}$",
+          "title": "Upstream Bundle Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "feature_set_id",
+        "upstream_bundle_id",
+        "source_watermark",
+        "source_completeness_status"
+      ],
+      "title": "RuntimeLineage",
       "type": "object"
     },
     "SalesItem": {
@@ -4483,6 +5813,414 @@
         "source_ref"
       ],
       "title": "SourceLocation",
+      "type": "object"
+    },
+    "StockoutPriority": {
+      "additionalProperties": false,
+      "properties": {
+        "capacity_slots": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Capacity Slots"
+        },
+        "eligible_in_universe": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Eligible In Universe"
+        },
+        "other_scope_context": {
+          "enum": [
+            "visible_authorized",
+            "withheld"
+          ],
+          "title": "Other Scope Context",
+          "type": "string"
+        },
+        "rank_at_origin": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rank At Origin"
+        },
+        "selected_at_origin": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Selected At Origin"
+        },
+        "universe": {
+          "const": "complete_registered_profile_at_origin",
+          "default": "complete_registered_profile_at_origin",
+          "title": "Universe",
+          "type": "string"
+        },
+        "universe_id": {
+          "pattern": "^stockout-inputs-sha256-[0-9a-f]{64}$",
+          "title": "Universe Id",
+          "type": "string"
+        },
+        "version": {
+          "const": "stockout-origin-priority-1.0.0",
+          "default": "stockout-origin-priority-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "universe_id",
+        "selected_at_origin",
+        "rank_at_origin",
+        "eligible_in_universe",
+        "capacity_slots",
+        "other_scope_context"
+      ],
+      "title": "StockoutPriority",
+      "type": "object"
+    },
+    "StockoutRisk": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "As Of",
+          "type": "string"
+        },
+        "calibrator_version": {
+          "pattern": "^stockout-calibrator-sha256-[0-9a-f]{64}$",
+          "title": "Calibrator Version",
+          "type": "string"
+        },
+        "feature_lineage_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Feature Lineage Sha256",
+          "type": "string"
+        },
+        "freshness_reason": {
+          "enum": [
+            "source_watermark_unavailable",
+            "origin_age_exceeded",
+            "within_policy",
+            "newer_run_unpublished"
+          ],
+          "title": "Freshness Reason",
+          "type": "string"
+        },
+        "freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "unknown"
+          ],
+          "title": "Freshness Status",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "horizon_days": {
+          "const": 7,
+          "default": 7,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "inference_run_id": {
+          "pattern": "^run-[0-9a-f]{32}$",
+          "title": "Inference Run Id",
+          "type": "string"
+        },
+        "inventory_freshness_status": {
+          "enum": [
+            "current",
+            "stale",
+            "unknown"
+          ],
+          "title": "Inventory Freshness Status",
+          "type": "string"
+        },
+        "lineage": {
+          "$ref": "#/$defs/RuntimeLineage"
+        },
+        "max_origin_age_seconds": {
+          "const": 86400,
+          "default": 86400,
+          "title": "Max Origin Age Seconds",
+          "type": "integer"
+        },
+        "model_name": {
+          "enum": [
+            "retailops-stockout-risk",
+            "retailops-stockout-risk-test-mechanics"
+          ],
+          "title": "Model Name",
+          "type": "string"
+        },
+        "model_version": {
+          "pattern": "^[1-9][0-9]{0,8}$",
+          "title": "Model Version",
+          "type": "string"
+        },
+        "origin_age_seconds": {
+          "minimum": 0,
+          "title": "Origin Age Seconds",
+          "type": "number"
+        },
+        "output_age_seconds": {
+          "minimum": 0,
+          "title": "Output Age Seconds",
+          "type": "number"
+        },
+        "priority": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StockoutPriority"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "probability": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Probability"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "quality_status": {
+          "enum": [
+            "passed_at_publication",
+            "mechanics_only"
+          ],
+          "title": "Quality Status",
+          "type": "string"
+        },
+        "read_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Read At",
+          "type": "string"
+        },
+        "release_id": {
+          "pattern": "^stockout-release-sha256-[0-9a-f]{64}$",
+          "title": "Release Id",
+          "type": "string"
+        },
+        "risk_band": {
+          "anyOf": [
+            {
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "critical"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Risk Band"
+        },
+        "risk_id": {
+          "pattern": "^risk-sha256-[0-9a-f]{64}$",
+          "title": "Risk Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "already_stockout",
+            "insufficient_data",
+            "stale_input"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "status_reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "already_stockout",
+                "inventory_unknown",
+                "stale_inventory_snapshot",
+                "inactive_or_unknown_product",
+                "inactive_or_unknown_assortment_routing",
+                "insufficient_sales_history"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Status Reason"
+        },
+        "stock_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Stock Location Id",
+          "type": "string"
+        },
+        "threshold_version": {
+          "pattern": "^stockout-scoring-policy-sha256-[0-9a-f]{64}$",
+          "title": "Threshold Version",
+          "type": "string"
+        },
+        "top_factors": {
+          "items": {
+            "$ref": "#/$defs/FactualFactor"
+          },
+          "maxItems": 12,
+          "minItems": 1,
+          "title": "Top Factors",
+          "type": "array"
+        },
+        "upstream_lineage_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Upstream Lineage Sha256"
+        }
+      },
+      "required": [
+        "risk_id",
+        "product_id",
+        "stock_location_id",
+        "as_of",
+        "status",
+        "status_reason",
+        "probability",
+        "risk_band",
+        "threshold_version",
+        "calibrator_version",
+        "model_name",
+        "model_version",
+        "release_id",
+        "top_factors",
+        "inventory_freshness_status",
+        "freshness_status",
+        "lineage",
+        "upstream_lineage_sha256",
+        "feature_lineage_sha256",
+        "inference_run_id",
+        "generated_at",
+        "quality_status",
+        "read_at",
+        "origin_age_seconds",
+        "output_age_seconds",
+        "freshness_reason"
+      ],
+      "title": "StockoutRisk",
+      "type": "object"
+    },
+    "StockoutRiskPage": {
+      "additionalProperties": false,
+      "properties": {
+        "data_status": {
+          "enum": [
+            "available",
+            "no_data"
+          ],
+          "title": "Data Status",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/StockoutRisk"
+          },
+          "maxItems": 100,
+          "title": "Items",
+          "type": "array"
+        },
+        "pagination": {
+          "$ref": "#/$defs/retailops_ai__forecast_jobs__read_contracts__Pagination"
+        },
+        "selection": {
+          "enum": [
+            "latest_per_product_stock",
+            "origin",
+            "inference_run"
+          ],
+          "title": "Selection",
+          "type": "string"
+        },
+        "version": {
+          "const": "stockout-risk-page-1.0.0",
+          "default": "stockout-risk-page-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "view_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "View Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "items",
+        "pagination",
+        "generated_at",
+        "data_status",
+        "selection",
+        "view_sha256"
+      ],
+      "title": "StockoutRiskPage",
       "type": "object"
     },
     "ToolError": {
@@ -4767,6 +6505,103 @@
       "title": "ToolResult",
       "type": "object"
     },
+    "V12ApprovedRelease": {
+      "additionalProperties": false,
+      "properties": {
+        "image_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Image Digest",
+          "type": "string"
+        },
+        "model_version": {
+          "pattern": "^[1-9][0-9]{0,9}$",
+          "title": "Model Version",
+          "type": "string"
+        },
+        "release_id": {
+          "pattern": "^v12-model-release-sha256-[0-9a-f]{64}$",
+          "title": "Release Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "release_id",
+        "model_version",
+        "image_digest"
+      ],
+      "title": "V12ApprovedRelease",
+      "type": "object"
+    },
+    "V12CatalogModel": {
+      "additionalProperties": false,
+      "properties": {
+        "approved_release": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/V12ApprovedRelease"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deployed_model_version": {
+          "default": null,
+          "title": "Deployed Model Version",
+          "type": "null"
+        },
+        "deployment_status": {
+          "const": "not_attested",
+          "default": "not_attested",
+          "title": "Deployment Status",
+          "type": "string"
+        },
+        "drift_status": {
+          "const": "not_run",
+          "default": "not_run",
+          "title": "Drift Status",
+          "type": "string"
+        },
+        "freshness": {
+          "$ref": "#/$defs/CatalogFreshness"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "model_name": {
+          "enum": [
+            "retailops-demand-forecast-v12",
+            "retailops-demand-forecast-v12-mechanics",
+            "retailops-demand-forecast-v12-development"
+          ],
+          "title": "Model Name",
+          "type": "string"
+        },
+        "registry_aliases": {
+          "default": null,
+          "title": "Registry Aliases",
+          "type": "null"
+        },
+        "visible_version_count": {
+          "maximum": 1000,
+          "minimum": 1,
+          "title": "Visible Version Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "model_name",
+        "visible_version_count",
+        "approved_release",
+        "freshness",
+        "generated_at"
+      ],
+      "title": "V12CatalogModel",
+      "type": "object"
+    },
     "V12Forecast": {
       "additionalProperties": false,
       "properties": {
@@ -5046,7 +6881,7 @@
           "type": "array"
         },
         "pagination": {
-          "$ref": "#/$defs/Pagination"
+          "$ref": "#/$defs/retailops_ai__forecast_jobs__read_contracts__Pagination"
         },
         "selection": {
           "enum": [
@@ -5099,6 +6934,56 @@
         "upper"
       ],
       "title": "V12Interval",
+      "type": "object"
+    },
+    "V12ModelPage": {
+      "additionalProperties": false,
+      "properties": {
+        "data_status": {
+          "enum": [
+            "available",
+            "no_data"
+          ],
+          "title": "Data Status",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/V12CatalogModel"
+          },
+          "maxItems": 200,
+          "title": "Items",
+          "type": "array"
+        },
+        "pagination": {
+          "$ref": "#/$defs/CatalogPagination"
+        },
+        "version": {
+          "const": "forecast-v12-model-page-1.0.0",
+          "default": "forecast-v12-model-page-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "view_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "View Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "items",
+        "pagination",
+        "generated_at",
+        "data_status",
+        "view_sha256"
+      ],
+      "title": "V12ModelPage",
       "type": "object"
     },
     "V12Prediction": {
@@ -5197,6 +7082,101 @@
         "recipe_id"
       ],
       "title": "V12PredictionMetadata",
+      "type": "object"
+    },
+    "Window": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "Window",
+      "type": "object"
+    },
+    "retailops_ai__anomaly_portfolio__serving_contract__Pagination": {
+      "additionalProperties": false,
+      "properties": {
+        "limit": {
+          "maximum": 200,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "offset": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "total": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Total",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "limit",
+        "offset",
+        "total"
+      ],
+      "title": "Pagination",
+      "type": "object"
+    },
+    "retailops_ai__forecast_jobs__read_contracts__Pagination": {
+      "additionalProperties": false,
+      "properties": {
+        "limit": {
+          "maximum": 200,
+          "minimum": 1,
+          "title": "Limit",
+          "type": "integer"
+        },
+        "next_offset": {
+          "anyOf": [
+            {
+              "maximum": 2800,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Offset"
+        },
+        "offset": {
+          "maximum": 2800,
+          "minimum": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "total": {
+          "maximum": 2800,
+          "minimum": 0,
+          "title": "Total",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "limit",
+        "offset",
+        "total",
+        "next_offset"
+      ],
+      "title": "Pagination",
       "type": "object"
     }
   },

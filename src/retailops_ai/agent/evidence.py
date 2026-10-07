@@ -30,6 +30,10 @@ from retailops_ai.agent.tools import (
     InventoryResult,
     KnowledgeResult,
     ModelStatusItem,
+    NativeAnomalyItem,
+    NativeModelStatusItem,
+    NativeOperationsItem,
+    NativeRiskItem,
     OperationsItem,
     RiskItem,
     SalesItem,
@@ -310,6 +314,15 @@ class EvidencePolicy:
                 continue
             status = output.result.status if isinstance(output, ForecastResult) else output.status
             if status != "ok":
+                if getattr(output, "native_view", None) is not None and output.tool in {
+                    "get_stockout_risk",
+                    "get_detected_anomalies",
+                    "get_live_operations",
+                    "get_model_status",
+                }:
+                    limitations.append(
+                        f"{output.tool}: the complete requested native view is not evaluable; partial rows and unknown values are withheld."
+                    )
                 if isinstance(output, InventoryResult) and output.native_view is not None:
                     inventory_states = sorted(
                         {p.status for p in output.native_view.points if p.status != "known"}
@@ -337,12 +350,68 @@ class EvidencePolicy:
             rows = output.result.items if isinstance(output, ForecastResult) else output.items
             if isinstance(output, SalesResult):
                 sales.append((output, cid))
+            value: str
+            measurement: str
             for item in rows:
+                if isinstance(item, NativeModelStatusItem):
+                    record = item.record
+                    release = record.approved_release
+                    value = release.release_id if release else "no_visible_approved_release_record"
+                    measurement = f"model-catalog:{record.model_name}"
+                    text = f"Scoped catalog metadata: model={record.model_name}; visible_version_count={record.visible_version_count}; approved_release_record={value}; approved_version={release.model_version if release else None}; deployment_status=not_attested; deployed_version=None; registry_aliases=None; drift_status=not_run; runtime_freshness=unknown; observed_at={record.generated_at}. This metadata describes publications visible in the requested scope, not deployment or coverage of every requested series."
+                    claim = EvidenceClaim(
+                        claim=text,
+                        source_type="tool",
+                        source_ref=source,
+                        as_of=as_of,
+                        supporting_refs=[],
+                        calculation_id=None,
+                    )
+                    facts.append(Fact(measurement, value, claim.model_dump_json(), (cid,)))
+                    successful.add(cid)
+                    limitations.append(
+                        "Catalog release approval does not attest live deployment, registry aliases, runtime freshness or drift. Stockout model pins are reported by the stockout reader; this catalog covers forecast-v12 and anomalies."
+                    )
+                    continue
                 key = item.key if isinstance(item, PredictionRecord) else item
                 grain = f"product={key.product_id}; selling_location={key.selling_location_id}; channel={key.channel}"
-                value: str
-                measurement: str
-                if isinstance(item, SalesItem):
+                if isinstance(item, NativeAnomalyItem):
+                    for decision in item.decisions:
+                        value = f"{decision.alert_status}:{decision.score}:{decision.threshold}"
+                        measurement = (
+                            f"native-anomaly:{grain}:{decision.business_date}:{decision.event_type}"
+                        )
+                        text = f"Native detector decision={decision.alert_status}; alert={decision.alert}; observed_sales={decision.observed_units} pcs; expected_sales={decision.expected_units} pcs; score={decision.score}; threshold={decision.threshold}; score_definition={decision.score_definition}; {grain}; business_date={decision.business_date}; currency={decision.currency}; detector_version={decision.detector_version}; release={decision.release_id}; anomaly_id={decision.anomaly_id}; batch={decision.batch_id}; threshold_version={decision.threshold_version}; source={decision.source_dataset_id}; curated={decision.curated_dataset_id}; scoring_origin={decision.scoring_origin}; batch_as_of={decision.as_of}; generated_at={decision.generated_at}."
+                        claim = EvidenceClaim(
+                            claim=text,
+                            source_type="tool",
+                            source_ref=source,
+                            as_of=as_of,
+                            supporting_refs=[],
+                            calculation_id=None,
+                        )
+                        facts.append(Fact(measurement, value, claim.model_dump_json(), (cid,)))
+                    successful.add(cid)
+                    limitations.append(
+                        "Detector alerts are native score decisions; unequal observed and expected units alone do not establish an alert or its cause."
+                    )
+                    continue
+                if isinstance(item, NativeRiskItem):
+                    risk = item.risk
+                    value = f"{risk.status}:{risk.probability}:{risk.risk_band}"
+                    measurement = f"native-risk:{grain}:{risk.stock_location_id}:{item.window.start}:{item.window.end}"
+                    text = f"Native physical stockout status={risk.status}; reason={risk.status_reason}; probability={risk.probability}; risk_band={risk.risk_band}; {grain}; stock_location={risk.stock_location_id}; mapping={item.mapping_ref}; horizon={item.window.start}..{item.window.end}; origin={risk.as_of}; policy={risk.threshold_version}; calibrator={risk.calibrator_version}; model={risk.model_name}; version={risk.model_version}; release={risk.release_id}; risk_id={risk.risk_id}; run={risk.inference_run_id}; inventory_freshness={risk.inventory_freshness_status}; read_freshness={risk.freshness_status}; generated_at={risk.generated_at}."
+                    limitations.append(
+                        "Physical risk is shared by selling scopes mapped to the same stock location and is not additive. Already-stockout and insufficient-data states have no probability; no numeric policy threshold or replenishment quantity is inferred."
+                    )
+                elif isinstance(item, NativeOperationsItem):
+                    value = f"{item.received}:{item.processed}:{item.failed_dead_lettered}:{item.ignored_duplicate}"
+                    measurement = f"native-operations:{grain}:{as_of}"
+                    text = f"Scoped persisted sales-event processing over the trailing 15 minutes: pending_received={item.received}; processed={item.processed}; failed_dead_lettered={item.failed_dead_lettered}; ignored_duplicate={item.ignored_duplicate}; latest_ingested_at={item.latest_ingested_at}; latest_processed_at={item.latest_processed_at}; max_processing_latency_seconds={item.max_processing_latency_seconds}; {grain}; cutoff={as_of}; stream_status=not_observed; consumer_lag_seconds=None."
+                    limitations.append(
+                        "Persisted scoped sales-event processing does not attest consumer heartbeat or Kafka lag. Processing latency is measured from ingest to processing, and is not consumer lag. Events without a complete product/store/channel scope are excluded."
+                    )
+                elif isinstance(item, SalesItem):
                     value = number(item.observed_sales_units)
                     measurement = f"sales:{grain}:{item.window.start}:{item.window.end}"
                     text = f"Observed sales={value} unit; {grain}; period={item.window.start}..{item.window.end}; as_of={as_of}."

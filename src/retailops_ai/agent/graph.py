@@ -30,7 +30,11 @@ from retailops_ai.agent.tools import (
     AnomalyResult,
     ForecastResult,
     KnowledgeResult,
+    ModelStatusItem,
     ModelStatusResult,
+    NativeAnomalyItem,
+    NativeModelStatusItem,
+    NativeRiskItem,
     RiskResult,
     ToolInput,
 )
@@ -317,9 +321,22 @@ class _Execution:
             if isinstance(output, ForecastResult):
                 releases.update(item.release_id for item in output.result.items)
             elif isinstance(output, (RiskResult, AnomalyResult)):
-                releases.update(item.model_release_ref for item in output.items)
+                for item in output.items:
+                    if isinstance(item, NativeRiskItem):
+                        releases.add(item.risk.release_id)
+                    elif isinstance(item, NativeAnomalyItem):
+                        releases.update(row.release_id for row in item.decisions)
+                    else:
+                        releases.add(item.model_release_ref)
             elif isinstance(output, ModelStatusResult):
-                releases.update(item.deployed_release_ref for item in output.items)
+                for model_item in output.items:
+                    if isinstance(model_item, ModelStatusItem):
+                        releases.add(model_item.deployed_release_ref)
+                    elif (
+                        isinstance(model_item, NativeModelStatusItem)
+                        and model_item.record.approved_release is not None
+                    ):
+                        releases.add(model_item.record.approved_release.release_id)
             elif isinstance(output, KnowledgeResult):
                 sources.update(
                     chunk.source_ref for hit in output.items for chunk in hit.chunk.occurrences

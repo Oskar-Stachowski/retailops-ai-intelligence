@@ -46,7 +46,7 @@ def catalog(imported):
 
 
 def runtime_config(catalog):
-    graph = load_graph_config(ROOT / "agent/graph.sonnet-smoke.native-inventory.v1.json").config
+    graph = load_graph_config(ROOT / "agent/graph.sonnet-smoke.native-tools.v1.json").config
     return DocumentRuntimeConfig(
         schema_version="1.0",
         runtime_version="assistant-documents-v1",
@@ -119,7 +119,7 @@ def backend(tmp_path, catalog, monkeypatch):
     transport = Replies()
 
     def create():
-        graph = load_graph_config(ROOT / "agent/graph.sonnet-smoke.native-inventory.v1.json")
+        graph = load_graph_config(ROOT / "agent/graph.sonnet-smoke.native-tools.v1.json")
         return BedrockChatProvider(
             graph.chat, config.circuit, client=transport, profiles=Profiles(graph.chat)
         )

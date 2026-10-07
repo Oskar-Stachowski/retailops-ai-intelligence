@@ -13,7 +13,7 @@ from uuid import UUID, uuid4, uuid5
 from pydantic import Field
 
 from retailops_ai.agent.evidence import required_calls
-from retailops_ai.agent.execution import READ_CAPABILITIES
+from retailops_ai.agent.execution import READ_CAPABILITIES, read_capabilities
 from retailops_ai.agent.graph_contracts import GraphCode, GraphRequest, GraphResult
 from retailops_ai.agent.tools import KnowledgeRequest
 from retailops_ai.assistant.contracts import (
@@ -113,6 +113,7 @@ class GraphAssistant:
         runner: Callable[[], GraphRunner],
         *,
         runtime_version: str | None = None,
+        native_tools: frozenset[str] | None = None,
     ) -> None:
         self.graph_config_version = config_version
         self.config_version = runtime_version or config_version
@@ -121,6 +122,11 @@ class GraphAssistant:
         self.reserved_tokens = reserved_tokens
         self.reserved_cost = reserved_cost
         self.source_kind = source_kind
+        self.native_tools = (
+            native_tools
+            if native_tools is not None
+            else (frozenset(READ_CAPABILITIES) if source_kind == "runtime" else frozenset())
+        )
         self.planner = planner
         self.runner = runner
 
@@ -248,7 +254,18 @@ class AssistantService:
             if request.scope.channel not in principal.channels:
                 raise AssistantError(403)
             for call in required_calls(request):
-                if READ_CAPABILITIES[call.tool] not in principal.capabilities:
+                capabilities = read_capabilities(
+                    call.tool,
+                    native=call.tool
+                    in getattr(
+                        self.backend,
+                        "native_tools",
+                        frozenset(READ_CAPABILITIES)
+                        if self.backend.source_kind == "runtime"
+                        else frozenset(),
+                    ),
+                )
+                if not capabilities <= principal.capabilities:
                     raise AssistantError(403)
                 if isinstance(call, KnowledgeRequest):
                     resolve_scope(principal, call.retrieval, self.environment)
@@ -285,7 +302,22 @@ class AssistantService:
             reserved_tokens=self.backend.reserved_tokens,
             reserved_cost=self.backend.reserved_cost,
             required_capabilities=sorted(
-                {READ_CAPABILITIES[call.tool] for call in required_calls(request)}
+                set().union(
+                    *(
+                        read_capabilities(
+                            call.tool,
+                            native=call.tool
+                            in getattr(
+                                self.backend,
+                                "native_tools",
+                                frozenset(READ_CAPABILITIES)
+                                if self.backend.source_kind == "runtime"
+                                else frozenset(),
+                            ),
+                        )
+                        for call in required_calls(request)
+                    )
+                )
                 | {"assistant:query"}
             ),
             knowledge_scope=KnowledgeResourceScope.model_validate_json(

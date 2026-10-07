@@ -69,7 +69,7 @@ make contracts-check
 ```
 
 Aktualny kandydat offline używa
-[nowego release](../agent/evaluation-release.fake.native-inventory.v1.json). Historyczny
+[nowego release](../agent/evaluation-release.fake.native-tools.v1.json). Historyczny
 [release](../agent/evaluation-release.fake.v1.json) i wyniki Bedrock pozostają
 zachowane; ich kwalifikacja nie przechodzi automatycznie na nowy kod.
 
@@ -78,3 +78,8 @@ dla każdego produktu i magazynu rozwiązanego przez natywną trasę. Planner
 sprawdza pełną liczbę serii przed admission. Brak lub nieaktualność któregokolwiek
 snapshotu wstrzymuje cały scope. [Adapter inventory](agent-native-inventory.md)
 zachowuje rzeczywisty czas pomiaru i nie sumuje wspólnego zapasu między sklepami.
+
+Pełny [katalog adapterów natywnych](agent-native-tools.md) obejmuje także
+anomalie, fizyczny stockout, obserwacje przetwarzania zdarzeń i katalog modeli.
+Planner budżetuje całą siatkę dni dla anomalii/investigation. Operacje nie
+poświadczają heartbeat ani lag Kafki; katalog modeli zachowuje `not_attested`.

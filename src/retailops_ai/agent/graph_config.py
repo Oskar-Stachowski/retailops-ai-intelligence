@@ -53,6 +53,19 @@ def graph_code_checksum() -> str:
             "adapters/native_inventory_tool.py": hashlib.sha256(
                 files("retailops_ai.adapters").joinpath("native_inventory_tool.py").read_bytes()
             ).hexdigest(),
+            **{
+                "adapters/" + name: hashlib.sha256(
+                    files("retailops_ai.adapters").joinpath(name).read_bytes()
+                ).hexdigest()
+                for name in (
+                    "native_read_tools.py",
+                    "native_stockout_tool.py",
+                    "native_anomaly_tool.py",
+                    "native_operations_tool.py",
+                    "native_model_status_tool.py",
+                    "native_assistant_tools.py",
+                )
+            },
         }
     )
 

@@ -1,7 +1,7 @@
 {
-  "chat_config_id": "agent-chat-config-sha256-d8dcd9c922707d13244323bb85cbb840d3873b1cacf7afcc8a0bd775f55e75f1",
-  "code_sha256": "38bf3c66b5c92c4a6b00275eea9b2f15de60638fcf109b02ccbea6264363c3d5",
-  "config_id": "agent-graph-config-sha256-d6c8847d0e96b315d06e4316e45757b69840d7fa2ee4700833760c6f1ade2bb7",
+  "chat_config_id": "agent-chat-config-sha256-4a5b97cdf737a66452b862b55065a8e50cf9a2dca3ae622d97b8964726ce451e",
+  "code_sha256": "2278dfc964dd82d9ed7a99f1f36bce09ab9eb7937cb0c8202ada37112d4c071e",
+  "config_id": "agent-graph-config-sha256-be7cccf6c8c3324fcca3eac087fcb0ad3e700eff912945ae32107cc847d7f88f",
   "evidence_policy_version": "typed-facts-v2",
   "examples_are_synthetic_metadata": true,
   "fixture_only": true,

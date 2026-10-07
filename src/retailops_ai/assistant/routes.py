@@ -132,7 +132,7 @@ class ReviewedPlanner:
                 "end": query.scope.from_ - timedelta(days=1),
             }
         limit = 5
-        if intent == "inventory":
+        if intent in {"inventory", "risk", "operations", "model"}:
             series = len(query.scope.product_ids) * len(query.scope.store_ids)
             if series > self.max_forecast_rows:
                 raise AssistantError(422)
@@ -143,7 +143,7 @@ class ReviewedPlanner:
             if series > self.max_forecast_rows or series * days > MAX_QUALIFIED_SALES_POINTS:
                 raise AssistantError(422)
             limit = min(max(limit, series), self.max_forecast_rows)
-        if intent in {"forecast", "recommendations"}:
+        if intent in {"forecast", "recommendations", "anomalies", "investigation"}:
             # Native pages must contain the entire requested product/location/day
             # grid. Reject oversized requests before admission rather than taking
             # a truncated page or increasing the evaluated graph's row budget.

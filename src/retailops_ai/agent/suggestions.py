@@ -13,8 +13,12 @@ from retailops_ai.agent.tools import (
     AnomalyResult,
     ForecastResult,
     InventoryResult,
+    ModelStatusItem,
     ModelStatusResult,
+    NativeAnomalyItem,
+    NativeOperationsItem,
     OperationsResult,
+    RiskItem,
     RiskResult,
 )
 from retailops_ai.data_contracts.common import (
@@ -143,6 +147,21 @@ def candidates(tools: ToolSession, policy: SuggestionPolicy) -> tuple[Suggestion
     for output in outputs:
         if isinstance(output, AnomalyResult) and output.status == "ok":
             for item in output.items:
+                if isinstance(item, NativeAnomalyItem):
+                    alerts = [row for row in item.decisions if row.alert is True]
+                    if alerts and output.as_of is not None:
+                        add(
+                            "investigate_anomaly",
+                            *grain(item),
+                            None,
+                            "Review the native detector alert and source data with an operator.",
+                            "high" if any(row.severity == "high" for row in alerts) else "medium",
+                            "The saved detector reports an alert above its recorded score threshold; this does not establish a cause.",
+                            [tool_result_ref(output)],
+                            sorted({row.release_id for row in alerts}),
+                            [output.as_of],
+                        )
+                    continue
                 if item.observed_units == item.expected_units or output.as_of is None:
                     continue
                 add(
@@ -158,6 +177,20 @@ def candidates(tools: ToolSession, policy: SuggestionPolicy) -> tuple[Suggestion
                 )
         elif isinstance(output, OperationsResult) and output.status == "ok":
             for operation in output.items:
+                if isinstance(operation, NativeOperationsItem):
+                    if operation.failed_dead_lettered > 0 and output.as_of is not None:
+                        add(
+                            "refresh_source_data",
+                            *grain(operation),
+                            None,
+                            "Ask an operator to review scoped failed event processing.",
+                            "medium",
+                            "The persisted scoped event log reports failed dead-lettered events; consumer heartbeat and Kafka lag are not observed.",
+                            [tool_result_ref(output)],
+                            [],
+                            [output.as_of],
+                        )
+                    continue
                 if output.as_of is None or (
                     operation.stream_status == "healthy"
                     and operation.lag_seconds < policy.operations_lag_seconds
@@ -176,6 +209,10 @@ def candidates(tools: ToolSession, policy: SuggestionPolicy) -> tuple[Suggestion
                 )
         elif isinstance(output, RiskResult) and output.status == "ok":
             for risk in output.items:
+                if not isinstance(risk, RiskItem):
+                    # Native policy/calibration pins are factual evidence; the
+                    # legacy replenishment rule also needs attested deployment.
+                    continue
                 if output.as_of is None or risk.probability < max(
                     policy.minimum_stockout_probability, risk.threshold
                 ):
@@ -194,7 +231,8 @@ def candidates(tools: ToolSession, policy: SuggestionPolicy) -> tuple[Suggestion
                     for other in outputs
                     if isinstance(other, ModelStatusResult) and other.status == "ok"
                     for row in other.items
-                    if grain(row) == grain(risk)
+                    if isinstance(row, ModelStatusItem)
+                    and grain(row) == grain(risk)
                     and row.model_id == risk.model_id
                     and row.deployed_release_ref == risk.model_release_ref
                 ]

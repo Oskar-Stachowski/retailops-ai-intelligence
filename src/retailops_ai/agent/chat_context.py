@@ -12,7 +12,7 @@ from retailops_ai.agent.chat_contracts import (
     DraftCitation,
     EvidenceClaim,
 )
-from retailops_ai.agent.tools import ForecastResult, KnowledgeResult, ToolOutput
+from retailops_ai.agent.tools import ForecastResult, KnowledgeResult, ModelStatusResult, ToolOutput
 from retailops_ai.data_contracts.common import UtcTime
 from retailops_ai.data_contracts.identity import canonical_sha256
 
@@ -96,6 +96,12 @@ class EvidenceSnapshot:
                 != "ok"
                 for output in outputs
             ):
+                values[name] = DomainFreshness(as_of=None, status="missing")
+            elif any(
+                isinstance(output, ModelStatusResult) and output.native_view is not None
+                for output in outputs
+            ):
+                # A current metadata read does not observe prediction runtime.
                 values[name] = DomainFreshness(as_of=None, status="missing")
             else:
                 available = [value for value in timestamps if value is not None]

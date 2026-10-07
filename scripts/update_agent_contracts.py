@@ -12,7 +12,11 @@ from retailops_ai.agent.tools import (
     OUTPUT,
     REQUEST_MODELS,
     RESULT_MODELS,
+    NativeAnomalyEvidence,
     NativeInventoryEvidence,
+    NativeModelStatusEvidence,
+    NativeOperationsEvidence,
+    NativeRiskEvidence,
     QualifiedSalesEvidence,
     ToolPolicy,
 )
@@ -183,6 +187,14 @@ def artifacts() -> dict[str, object]:
                     if tool == "get_sales_summary"
                     else "verified_source_curated_physical_inventory"
                     if tool == "get_inventory_status"
+                    else "verified_native_anomaly_batches"
+                    if tool == "get_detected_anomalies"
+                    else "verified_native_physical_stockout_and_routes"
+                    if tool == "get_stockout_risk"
+                    else "scoped_producer_persisted_event_processing"
+                    if tool == "get_live_operations"
+                    else "scoped_v12_and_anomaly_catalog_not_attested"
+                    if tool == "get_model_status"
                     else "not_implemented_requires_upstream_stages"
                 ),
             }
@@ -218,6 +230,16 @@ def artifacts() -> dict[str, object]:
             "$id": "urn:retailops:agent:native-inventory-evidence:1.0",
         }
     )
+    for name, model in (
+        ("native-anomaly-evidence", NativeAnomalyEvidence),
+        ("native-stockout-evidence", NativeRiskEvidence),
+        ("native-operations-evidence", NativeOperationsEvidence),
+        ("native-model-status-evidence", NativeModelStatusEvidence),
+    ):
+        result[name + ".v1.schema.json"] = model.model_json_schema() | {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": f"urn:retailops:agent:{name}:1.0",
+        }
     return result
 
 

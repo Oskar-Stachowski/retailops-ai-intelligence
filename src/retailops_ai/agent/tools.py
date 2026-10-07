@@ -1,11 +1,13 @@
 """Closed, typed read-only catalogue. Arguments never carry identity or provider URLs."""
 
 from datetime import date, timedelta
-from typing import Annotated, Generic, Literal, Self, TypeVar
+from typing import Annotated, Any, Generic, Literal, Self, TypeVar
 
 from pydantic import Field, TypeAdapter, model_validator
 
 from retailops_ai.agent.native_forecast import NativeForecastRead
+from retailops_ai.anomaly_portfolio.serving_contract import Item as NativeDetection
+from retailops_ai.anomaly_portfolio.serving_contract import Page as AnomalyPage
 from retailops_ai.data_contracts.common import (
     Contract,
     CuratedID,
@@ -25,7 +27,10 @@ from retailops_ai.data_contracts.tool import ToolError, ToolRequest, ToolResult
 from retailops_ai.day_qualification.contract import Point
 from retailops_ai.knowledge.indexes import IndexID
 from retailops_ai.knowledge.retrieval import KnowledgeHit, RetrievalConfigID, RetrievalRequest
+from retailops_ai.model_lifecycle.read_contracts import CatalogModel, ModelPage
+from retailops_ai.model_lifecycle.v12_metadata_contracts import V12CatalogModel, V12ModelPage
 from retailops_ai.raw_dq.contract import stamp
+from retailops_ai.stockout_jobs.read_contracts import StockoutRisk, StockoutRiskPage
 
 ToolName = Literal[
     "get_sales_summary",
@@ -583,20 +588,472 @@ class InventoryResult(DataResult[InventoryItem]):
         return self
 
 
-class RiskResult(DataResult[RiskItem]):
+class NativeRiskItem(SellingKey):
+    window: DateWindow
+    mapping_ref: SourceRef
+    risk: StockoutRisk
+
+
+class NativeRiskEvidence(Contract):
+    evidence_version: Literal["native-stockout-read-v1"] = "native-stockout-read-v1"
+    environment: Literal["local", "test"]
+    request: RiskRequest
+    inventory: NativeInventoryEvidence
+    page: StockoutRiskPage | None
+
+    @model_validator(mode="after")
+    def binding(self) -> Self:
+        scope, page = self.request.scope, self.page
+        if (
+            scope is None
+            or self.inventory.environment != self.environment
+            or self.inventory.request.scope != scope
+            or self.inventory.request.as_of != self.request.as_of
+            or self.inventory.request.limit != self.request.limit
+            or self.request.window.start != self.request.as_of.date() + timedelta(days=1)
+            or self.request.window.end != self.request.as_of.date() + timedelta(days=7)
+        ):
+            raise ValueError("native_stockout_request_or_mapping_mismatch")
+        routes = [p.route for p in self.inventory.points]
+        expected = {
+            (p.product_id, p.route.stock_location_id)
+            for p in self.inventory.points
+            if p.route is not None
+        }
+        if page is None:
+            if all(r is not None for r in routes):
+                raise ValueError("native_stockout_page_required")
+            return self
+        if any(r is None for r in routes):
+            raise ValueError("native_stockout_page_without_complete_mapping")
+        actual = [(r.product_id, r.stock_location_id) for r in page.items]
+        if (
+            page.selection != "origin"
+            or page.pagination.offset != 0
+            or page.pagination.next_offset is not None
+            or page.pagination.total != len(page.items)
+            or page.pagination.limit != self.request.limit
+            or len(actual) != len(set(actual))
+            or not set(actual) <= expected
+            or (page.data_status == "available") != bool(page.items)
+            or any(
+                r.as_of != self.request.as_of
+                or r.model_name != "retailops-stockout-risk"
+                or r.quality_status != "passed_at_publication"
+                or r.read_at != page.generated_at
+                or r.lineage.source_dataset_id != self.inventory.source_dataset_id
+                or r.lineage.curated_dataset_id != self.inventory.curated_dataset_id
+                or (r.lineage.source_watermark is not None and r.lineage.source_watermark > r.as_of)
+                for r in page.items
+            )
+        ):
+            raise ValueError("native_stockout_page_scope_lineage_or_namespace_mismatch")
+        return self
+
+    @property
+    def complete(self) -> bool:
+        return (
+            self.page is not None
+            and len(self.page.items)
+            == len(
+                {
+                    (p.product_id, p.route.stock_location_id)
+                    for p in self.inventory.points
+                    if p.route
+                }
+            )
+            and all(r.freshness_status == "current" for r in self.page.items)
+        )
+
+    @property
+    def view_ref(self) -> str:
+        return "stockout-view-sha256-" + canonical_sha256(self.model_dump(mode="json"))
+
+    def result_items(self) -> list[NativeRiskItem]:
+        if not self.complete or self.page is None:
+            return []
+        rows = {(r.product_id, r.stock_location_id): r for r in self.page.items}
+        return [
+            NativeRiskItem(
+                product_id=p.product_id,
+                selling_location_id=p.selling_location_id,
+                channel=p.channel,
+                window=self.request.window,
+                mapping_ref=p.route.mapping_ref,
+                risk=rows[(p.product_id, p.route.stock_location_id)],
+            )
+            for p in self.inventory.points
+            if p.route is not None
+        ]
+
+
+class NativeAnomalyItem(SellingKey):
+    window: DateWindow
+    decisions: tuple[NativeDetection, ...] = Field(min_length=1, max_length=50)
+
+
+class NativeAnomalyEvidence(Contract):
+    evidence_version: Literal["native-anomaly-read-v1"] = "native-anomaly-read-v1"
+    environment: Literal["local", "test"]
+    request: AnomalyRequest
+    page: AnomalyPage
+
+    @model_validator(mode="after")
+    def binding(self) -> Self:
+        scope, page = self.request.scope, self.page
+        if scope is None:
+            raise ValueError("native_anomaly_scope_required")
+        n = (self.request.window.end - self.request.window.start).days + 1
+        expected = {
+            (p, s, scope.channel, self.request.window.start + timedelta(days=i))
+            for p in scope.product_ids
+            for s in scope.selling_location_ids
+            for i in range(n)
+        }
+        actual = [
+            (r.product_id, r.selling_location_id, r.channel, r.business_date) for r in page.items
+        ]
+        if (
+            len(expected) > self.request.limit
+            or page.selection != "latest_complete_batch"
+            or page.pagination.offset != 0
+            or page.pagination.total != len(page.items)
+            or page.pagination.limit != self.request.limit
+            or len(actual) != len(set(actual))
+            or not set(actual) <= expected
+            or (page.data_status == "available") != bool(page.items)
+            or len({r.batch_id for r in page.items}) > 1
+            or len({r.release_id for r in page.items}) > 1
+            or page.generated_at < self.request.as_of
+            or any(
+                r.event_type != "sale_completed"
+                or r.role != "batch"
+                or r.as_of > self.request.as_of
+                or r.generated_at > page.generated_at
+                or r.detector_name != "retailops-sales-anomaly"
+                or r.freshness_status
+                != (
+                    "unknown"
+                    if r.status == "insufficient_data"
+                    else "stale"
+                    if (page.generated_at - r.scoring_origin).total_seconds() > 7 * 86400
+                    else "current"
+                )
+                for r in page.items
+            )
+        ):
+            raise ValueError("native_anomaly_page_scope_time_or_budget_mismatch")
+        currencies: dict[tuple[str, str, str], set[str]] = {}
+        for r in page.items:
+            currencies.setdefault((r.product_id, r.selling_location_id, r.channel), set()).add(
+                r.currency
+            )
+        if any(len(v) != 1 for v in currencies.values()):
+            raise ValueError("native_anomaly_currency_changed")
+        return self
+
+    @property
+    def complete(self) -> bool:
+        scope = self.request.scope
+        return (
+            scope is not None
+            and len(self.page.items)
+            == len(scope.product_ids)
+            * len(scope.selling_location_ids)
+            * ((self.request.window.end - self.request.window.start).days + 1)
+            and all(
+                r.status == "scored" and r.freshness_status == "current" for r in self.page.items
+            )
+        )
+
+    @property
+    def view_ref(self) -> str:
+        return "anomaly-view-sha256-" + canonical_sha256(self.model_dump(mode="json"))
+
+    def result_items(self) -> list[NativeAnomalyItem]:
+        if not self.complete or self.request.scope is None:
+            return []
+        return [
+            NativeAnomalyItem(
+                product_id=p,
+                selling_location_id=s,
+                channel=self.request.scope.channel,
+                window=self.request.window,
+                decisions=tuple(
+                    r for r in self.page.items if r.product_id == p and r.selling_location_id == s
+                ),
+            )
+            for p in sorted(self.request.scope.product_ids)
+            for s in sorted(self.request.scope.selling_location_ids)
+        ]
+
+
+class NativeOperationsItem(SellingKey):
+    measurement_kind: Literal["scoped_persisted_event_processing"] = (
+        "scoped_persisted_event_processing"
+    )
+    stream_status: Literal["not_observed"] = "not_observed"
+    consumer_lag_seconds: None = None
+    window_minutes: Literal[15] = 15
+    received: Annotated[int, Field(ge=0)]
+    processed: Annotated[int, Field(ge=0)]
+    failed_dead_lettered: Annotated[int, Field(ge=0)]
+    ignored_duplicate: Annotated[int, Field(ge=0)]
+    newer_state_not_evaluable: Annotated[int, Field(ge=0)]
+    latest_ingested_at: UtcTime | None
+    latest_processed_at: UtcTime | None
+    max_processing_latency_seconds: Annotated[float, Field(ge=0)] | None
+
+    @property
+    def event_count(self) -> int:
+        return self.received + self.processed + self.failed_dead_lettered + self.ignored_duplicate
+
+    @model_validator(mode="after")
+    def counts(self) -> Self:
+        if (
+            (self.latest_ingested_at is None) != (self.event_count == 0)
+            or (self.latest_processed_at is None) != (self.processed == 0)
+            or (self.max_processing_latency_seconds is None) != (self.processed == 0)
+        ):
+            raise ValueError("native_operations_unknown_or_count_mismatch")
+        return self
+
+
+class NativeOperationsEvidence(Contract):
+    evidence_version: Literal["native-operations-read-v1"] = "native-operations-read-v1"
+    environment: Literal["local", "test"]
+    request: OperationsRequest
+    observed_at: UtcTime
+    source_view_sha256: Sha256
+    points: tuple[NativeOperationsItem, ...] = Field(min_length=1, max_length=50)
+
+    @model_validator(mode="after")
+    def binding(self) -> Self:
+        scope = self.request.scope
+        if scope is None:
+            raise ValueError("native_operations_scope_required")
+        expected = {
+            (p, s, scope.channel) for p in scope.product_ids for s in scope.selling_location_ids
+        }
+        actual = [(r.product_id, r.selling_location_id, r.channel) for r in self.points]
+        if (
+            len(expected) > self.request.limit
+            or len(set(actual)) != len(actual)
+            or set(actual) != expected
+        ):
+            raise ValueError("native_operations_partial_duplicate_or_extra_scope")
+        if not 0 <= (self.observed_at - self.request.as_of).total_seconds() <= 300 or any(
+            t is not None
+            and not self.request.as_of - timedelta(minutes=15) <= t <= self.request.as_of
+            for p in self.points
+            for t in (p.latest_ingested_at, p.latest_processed_at)
+        ):
+            raise ValueError("native_operations_noncausal_or_historical_observation")
+        return self
+
+    @property
+    def complete(self) -> bool:
+        return all(p.event_count > 0 and p.newer_state_not_evaluable == 0 for p in self.points)
+
+    @property
+    def view_ref(self) -> str:
+        return "operations-view-sha256-" + canonical_sha256(self.model_dump(mode="json"))
+
+    def result_items(self) -> list[NativeOperationsItem]:
+        return list(self.points) if self.complete else []
+
+
+class NativeModelStatusItem(Contract):
+    record_kind: Literal["scoped_catalog_metadata"] = "scoped_catalog_metadata"
+    record: V12CatalogModel | CatalogModel
+
+
+class NativeModelStatusEvidence(Contract):
+    evidence_version: Literal["native-model-status-read-v1"] = "native-model-status-read-v1"
+    environment: Literal["local", "test"]
+    request: ModelStatusRequest
+    forecast: V12ModelPage
+    anomaly: ModelPage
+    covered_models: tuple[
+        Literal["retailops-demand-forecast-v12", "retailops-sales-anomaly"], ...
+    ] = (
+        "retailops-demand-forecast-v12",
+        "retailops-sales-anomaly",
+    )
+
+    @model_validator(mode="after")
+    def binding(self) -> Self:
+        if self.request.scope is None or self.covered_models != (
+            "retailops-demand-forecast-v12",
+            "retailops-sales-anomaly",
+        ):
+            raise ValueError("native_model_status_scope_required")
+        for page, name in (
+            (self.forecast, "retailops-demand-forecast-v12"),
+            (self.anomaly, "retailops-sales-anomaly"),
+        ):
+            if (
+                page.pagination.offset != 0
+                or page.pagination.next_offset is not None
+                or page.pagination.total != len(page.items)
+                or len(page.items) > 1
+                or page.pagination.limit != self.request.limit
+                or (page.data_status == "available") != bool(page.items)
+                or not 0 <= (page.generated_at - self.request.as_of).total_seconds() <= 300
+                or any(
+                    r.model_name != name
+                    or r.generated_at > page.generated_at
+                    or r.freshness.evaluated_at > page.generated_at
+                    for r in page.items
+                )
+            ):
+                raise ValueError("native_model_status_page_or_namespace_mismatch")
+        return self
+
+    @property
+    def complete(self) -> bool:
+        return bool(self.forecast.items) and bool(self.anomaly.items)
+
+    @property
+    def observed_at(self) -> UtcTime:
+        return max(self.forecast.generated_at, self.anomaly.generated_at)
+
+    @property
+    def view_ref(self) -> str:
+        return "model-status-view-sha256-" + canonical_sha256(self.model_dump(mode="json"))
+
+    def result_items(self) -> list[NativeModelStatusItem]:
+        return (
+            (
+                [NativeModelStatusItem(record=r) for r in self.forecast.items]
+                + [NativeModelStatusItem(record=r) for r in self.anomaly.items]
+            )
+            if self.complete
+            else []
+        )
+
+
+def catalog_scope_verified(evidence: NativeModelStatusEvidence, principal_id: str) -> bool:
+    scope = evidence.request.scope
+    if scope is None:
+        return False
+    forecast = canonical_sha256(
+        dict(
+            projection="v12-catalog-v1",
+            model="retailops-demand-forecast-v12",
+            models=True,
+            principal_id=principal_id,
+            scope=dict(
+                products=sorted(scope.product_ids),
+                locations=sorted(scope.selling_location_ids),
+                channels=[scope.channel],
+            ),
+            items=[
+                r.model_dump(mode="json", exclude={"freshness", "generated_at"})
+                for r in evidence.forecast.items
+            ],
+        )
+    )
+    anomaly = canonical_sha256(
+        dict(
+            principal=principal_id,
+            scope=dict(product_id=None, selling_location_id=None, channel=scope.channel),
+            items=[
+                r.model_dump(mode="json", exclude={"freshness", "generated_at"})
+                for r in evidence.anomaly.items
+            ],
+        )
+    )
+    return evidence.forecast.view_sha256 == forecast and evidence.anomaly.view_sha256 == anomaly
+
+
+def native_result_matches(
+    output: DataResult[Any],
+    evidence: NativeRiskEvidence
+    | NativeAnomalyEvidence
+    | NativeOperationsEvidence
+    | NativeModelStatusEvidence,
+) -> bool:
+    return (
+        output.source_kind == "runtime"
+        and output.as_of
+        == (
+            evidence.observed_at
+            if isinstance(evidence, NativeModelStatusEvidence)
+            else evidence.request.as_of
+        )
+        and output.source_ref == evidence.view_ref
+        and output.items == evidence.result_items()
+        and output.status == ("ok" if evidence.complete else "no_data")
+        and output.freshness_status == ("current" if evidence.complete else "missing")
+        and output.error is None
+    )
+
+
+class RiskResult(DataResult[RiskItem | NativeRiskItem]):
     tool: Literal["get_stockout_risk"]
+    native_view: NativeRiskEvidence | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
+
+    @model_validator(mode="after")
+    def native_outcome(self) -> Self:
+        if self.native_view is not None and not native_result_matches(self, self.native_view):
+            raise ValueError("native_stockout_result_binding_mismatch")
+        if any(isinstance(r, NativeRiskItem) for r in self.items) and self.native_view is None:
+            raise ValueError("native_stockout_evidence_required")
+        return self
 
 
-class AnomalyResult(DataResult[AnomalyItem]):
+class AnomalyResult(DataResult[AnomalyItem | NativeAnomalyItem]):
     tool: Literal["get_detected_anomalies"]
+    native_view: NativeAnomalyEvidence | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
+
+    @model_validator(mode="after")
+    def native_outcome(self) -> Self:
+        if self.native_view is not None and not native_result_matches(self, self.native_view):
+            raise ValueError("native_anomaly_result_binding_mismatch")
+        if any(isinstance(r, NativeAnomalyItem) for r in self.items) and self.native_view is None:
+            raise ValueError("native_anomaly_evidence_required")
+        return self
 
 
-class OperationsResult(DataResult[OperationsItem]):
+class OperationsResult(DataResult[OperationsItem | NativeOperationsItem]):
     tool: Literal["get_live_operations"]
+    native_view: NativeOperationsEvidence | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
+
+    @model_validator(mode="after")
+    def native_outcome(self) -> Self:
+        if self.native_view is not None and not native_result_matches(self, self.native_view):
+            raise ValueError("native_operations_result_binding_mismatch")
+        if (
+            any(isinstance(r, NativeOperationsItem) for r in self.items)
+            and self.native_view is None
+        ):
+            raise ValueError("native_operations_evidence_required")
+        return self
 
 
-class ModelStatusResult(DataResult[ModelStatusItem]):
+class ModelStatusResult(DataResult[ModelStatusItem | NativeModelStatusItem]):
     tool: Literal["get_model_status"]
+    native_view: NativeModelStatusEvidence | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
+
+    @model_validator(mode="after")
+    def native_outcome(self) -> Self:
+        if self.native_view is not None and not native_result_matches(self, self.native_view):
+            raise ValueError("native_model_status_result_binding_mismatch")
+        if (
+            any(isinstance(r, NativeModelStatusItem) for r in self.items)
+            and self.native_view is None
+        ):
+            raise ValueError("native_model_status_evidence_required")
+        return self
 
 
 class ForecastResult(Versioned):

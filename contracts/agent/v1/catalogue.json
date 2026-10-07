@@ -17,7 +17,7 @@
       "read_only": true,
       "request_schema": "get_detected_anomalies.request.v1.schema.json",
       "result_schema": "get_detected_anomalies.result.v1.schema.json",
-      "runtime_adapter": "not_implemented_requires_upstream_stages",
+      "runtime_adapter": "verified_native_anomaly_batches",
       "tool": "get_detected_anomalies"
     },
     {
@@ -33,7 +33,7 @@
       "read_only": true,
       "request_schema": "get_live_operations.request.v1.schema.json",
       "result_schema": "get_live_operations.result.v1.schema.json",
-      "runtime_adapter": "not_implemented_requires_upstream_stages",
+      "runtime_adapter": "scoped_producer_persisted_event_processing",
       "tool": "get_live_operations"
     },
     {
@@ -41,7 +41,7 @@
       "read_only": true,
       "request_schema": "get_model_status.request.v1.schema.json",
       "result_schema": "get_model_status.result.v1.schema.json",
-      "runtime_adapter": "not_implemented_requires_upstream_stages",
+      "runtime_adapter": "scoped_v12_and_anomaly_catalog_not_attested",
       "tool": "get_model_status"
     },
     {
@@ -57,7 +57,7 @@
       "read_only": true,
       "request_schema": "get_stockout_risk.request.v1.schema.json",
       "result_schema": "get_stockout_risk.result.v1.schema.json",
-      "runtime_adapter": "not_implemented_requires_upstream_stages",
+      "runtime_adapter": "verified_native_physical_stockout_and_routes",
       "tool": "get_stockout_risk"
     },
     {
