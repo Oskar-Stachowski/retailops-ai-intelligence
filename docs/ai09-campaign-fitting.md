@@ -45,11 +45,24 @@ bundle i prywatnych plików 22 kontrole danych/audytu przeszły w 11.24 s.
 Obejmują brak wpływu early_stopping na encoding, pełne klucze także dla
 częściowych horyzontów, limity bez cichego sampling, rezerwację przed I/O,
 rozliczenie porażek i uszkodzony artefakt/receipt. Są to kontrole komponentów,
-z jawnymi mockami supervisora w testach audytu. Trzy osobne rzeczywiste testy
-CPU fit/reload RF/HGB/TF należą do wymaganego `make tensorflow-check`; ich
-odbiór dla tego przyrostu jeszcze nie nastąpił. Lokalny odczyt dostępnej RAM
+z jawnymi mockami supervisora w testach audytu. Wymagany `make tensorflow-check`
+na dokładnym headzie `9b09660` zaliczył 6 testów w 101.69 s, w tym trzy nowe
+rzeczywiste kontrole CPU fit/reload RF/HGB/TF. [Job](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37652743985/job/112900689298)
+obejmuje zapis MLflow, całą kontrolną populację i odrzucenie uszkodzonych
+predykcji. Pełne CI tego headu jeszcze trwa. Lokalny odczyt dostępnej RAM
 wykazał około 1.24 GiB, poniżej wymaganej sumy limitu 1 GiB i rezerwy 1 GiB,
 więc nie rozpoczęto tu procesów tych kontroli.
+
+Przygotowanie wspólnego scoringu używa teraz tych samych funkcji budowania
+wektorów w treningu i predykcjach. Nie uczy ponownie encoding ani target scale.
+Konwersja TF zachowuje mean/median, wszystkie 14 horyzontów i oryginalne
+jednostki sprzedaży. Dodatkowa kontrola rzeczywistego MLmodel sprawdza CPU
+backend, podpis float32 o dokładnej szerokości wejścia i wyjściu 14 × 2 oraz
+digest planu przed załadowaniem frameworka. 48 kontroli danych/audytu/wektorów
+i podpisu oraz Mypy 671 plików przeszły. Nowa negatywna kontrola podpisu
+w rzeczywistym workerze wymaga własnego odbioru CPU; wcześniejsze 6 passed
+nie stanowią jej dowodu. Audytowany runner scoringu i kalibracja są nadal
+do wykonania.
 
 [Evidence przygotowania](evidence/09-23-campaign-fitting-preparation.json)
 zachowuje wcześniejsze porażki kontroli i zakres dowodu. Projektowy journal

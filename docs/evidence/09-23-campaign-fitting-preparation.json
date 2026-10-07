@@ -22,11 +22,18 @@
       "tensorflow"
     ],
     "required_command": "make tensorflow-check",
-    "result_pending": true,
+    "result_pending": false,
     "local_processes_started": false,
     "local_available_memory_bytes": 1331183616,
     "required_limit_plus_reserve_bytes": 2147483648,
-    "canonical_profile": false
+    "canonical_profile": false,
+    "head": "9b09660b9f9dbfc1c427199e9a1623d61e1ba0bd",
+    "ci_run": 37652743985,
+    "job": 112900689298,
+    "total_native_cpu_tests_passed": 6,
+    "native_cpu_test_seconds": 101.69,
+    "full_ci_pending": true,
+    "scope": "real fitting, MLflow tracking and fresh reload over every controlled-array eligible key; not canonical source preparation or project fitting"
   },
   "component_validation": {
     "integrated_regression_passed": 124,
@@ -92,5 +99,23 @@
       "module_byte_parity": 549,
       "v15_schema_byte_parity": 3
     }
+  },
+  "shared_scoring_inputs_preparation": {
+    "shared_train_and_inference_vectors": true,
+    "encoding_refitted": false,
+    "tensorflow_target_scale_restored": true,
+    "tensorflow_heads": [
+      "mean",
+      "median"
+    ],
+    "horizons": 14,
+    "keras_actual_signature_checked_before_framework_loading": true,
+    "tests_passed": 48,
+    "tests_seconds": 25.24,
+    "mypy_source_files": 671,
+    "package_module_byte_parity": 551,
+    "new_native_signature_control_pending": true,
+    "audited_scoring_runner_implemented": false,
+    "project_fit_or_final_metrics_produced": false
   }
 }
