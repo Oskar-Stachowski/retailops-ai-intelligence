@@ -15,11 +15,19 @@ Wcześniejsze wpisy opisują historię.
 
 **2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**
 Runner generacji z PR #35 jest scalony jako `16a02ae` po pełnym Required CI
-17/17 success na `4238b2f`. CI dokładnego nowego main `37657724470` trwa.
+17/17 success na `4238b2f`. CI dokładnego main `37657724470` ma 17/17 success.
 Source main `b7234899` ma pełny odbiór: 21 success i 4 przewidziane skipped.
-Eksporter PR #36 zaliczył 17/17 success na `eb796aa` i został skierowany na main;
-nowa integracja wymaga własnego odbioru. [Receipt publikacji](evidence/09-24-generation-publication.json)
+Eksporter PR #36 jest scalony jako `b0e2de1` po 17/17 success na `f0fbbc9`;
+CI dokładnego nowego main `37667669693` trwa. [Receipt publikacji](evidence/09-24-generation-publication.json)
 zachowuje również porażkę przydziału runnerów w poprzednim CI treningowym.
+Native kontrola generacji `37664228881` zakończyła pięć faz dla obu profili;
+verify ujawnił błędną ścieżkę snapshotu. Poprawka ma 72 zaliczone testy,
+w tym pełny replay rzeczywiście zaimportowanego publicznego smoke.
+[Receipt 09.26](evidence/09-26-generation-snapshot-verification.json) zachowuje
+koszty porażki. Nowy native run `37669667688` na `e3bc68e` zaliczył wszystkie
+sześć faz dla obu profili. Scoring `e4d6371` ma pełne 17/17 success i 7 native
+testów CPU w 144.78 s. Wspólny PR #39 do main obejmuje także trening PR #37
+i poprawkę PR #40; nowy head integracji i jej main wymagają własnego pełnego CI.
 AI 09 nadal wymaga projektowej kampanii i wyników końcowych.
 
 [PR #33](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/33)
@@ -104,8 +112,11 @@ jest zielony; zwykły chroniony merge opublikował `cbcac6eb` na source `main`.
 [Required CI dokładnego source main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37629010997)
 zakończył się pojedynczą porażką testowego odczytu koordynatora Kafka;
 742 kontrole API zaliczono. [Source PR #103](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/103)
-na `16d34887` dodaje ograniczoną poprawkę tego odczytu i rzeczywistą obsługę
-source2.8 z known plans oraz wymaga pełnego CI i odbioru swojego main.
+na `a28101bf` dodaje ograniczoną poprawkę tego odczytu i rzeczywistą obsługę
+source2.8 z known plans. Zaliczył cały [Required CI](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37646475371):
+21 success i 4 przewidziane skipped; chroniony merge opublikował `b7234899`.
+[CI dokładnego Source main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37651259188)
+jeszcze trwa i pozostaje wymagany przed nowym pomiarem canonical.
 Pięć kontrolnych par daje −14.81% alokacji Python podczas kopii
 i −89.62% CPU projekcji dziennych snapshotów, z identycznymi wynikami.
 To pomiary komponentów; pełny RSS i koszt pipeline na nowym producencie nadal
@@ -136,7 +147,8 @@ Największa niewiadoma to zasoby i czas canonical `ai-training`; kontrolne
 wewnątrz jednej zarezerwowanej próby, z pełnym replayem i osobnym lockiem
 eksportera. Kod i kontrolowane testy nie stanowią odbioru canonical kampanii.
 Lokalny native control został zatrzymany przez rezerwę RAM przed generation;
-manualny odbiór na izolowanym runnerze jest przygotowany i jeszcze nie ruszył.
+manualny odbiór na izolowanym runnerze ma zachowane pięć zaliczonych faz i
+porażkę verify opisaną w receipt 09.26. Pełne sześć faz nadal wymaga odbioru.
 
 [PR #35](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/35)
 na `d81e78a` zaliczył pełny
@@ -156,6 +168,33 @@ projektowa kampania, treningi i końcowa ocena pozostają niewykonane.
 na `cd6106a` zaliczył cały [Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37642451429):
 15/15 jobów success. Integracja z nowszym main i poprawką importera wymaga
 własnego CI. Rzeczywista kampania, treningi i final test pozostają niewykonane.
+
+[Audytowany trening forecastingu](ai09-campaign-fitting.md) ma osobny plan v15
+i pełną populację wszystkich kwalifikujących się kluczy train/early_stopping,
+bez zmiany starych limitów. RF ma mean, HGB oddzielne mean/median, a TF
+kompaktowy Keras direct 14-horizon z train-only encoding i maskami.
+Rezerwacja poprzedza I/O, a receipt następuje po mierzonym fit i reload w
+świeżym procesie oraz sprawdzeniu wszystkich plików modelu. Zapis kosztów
+MLflow i trzy nowe rzeczywiste kontrole CPU należą do wymaganego odbioru.
+174 kontrole integracji i Mypy 669 plików przeszły. [Evidence](evidence/09-23-campaign-fitting-preparation.json)
+rozdziela ten odbiór komponentów od niewykonanych nowych treningów projektu.
+Head `ab122989` ma pełne 17/17 success CI `37659317202` oraz 6 rzeczywistych
+kontroli CPU w 102.64 s, w tym odrzucenie uszkodzonego podpisu. PR #37 jest
+skierowany na main; integracja ze scalonym eksporterem i poprawką snapshotu
+wymaga własnego pełnego CI. 40 testów tej integracji przeszło w 37.37 s.
+Scoring, kalibracja/wybór, pełne profile i końcowa ocena trzech zastosowań
+nadal pozostają do wykonania.
+
+[Wspólne prognozy development](ai09-campaign-scoring.md) mają nowy osobny plan v16,
+pełne klucze jednej roli tune/calibration i sześć modeli na tych samych obserwacjach.
+Audytowany runner rezerwuje próbę przed odczytem i zapisuje trwały receipt po
+świeżej predykcji, hashach i pełnej kontroli populacji. Komponenty przeszły
+166 testów integracji; późniejsze dodatkowe kontrole wymagają własnego zapisu
+w [evidence](evidence/09-25-campaign-scoring-preparation.json).
+Nowy rzeczywisty test wspólnej predykcji CPU przeszedł; cały CI `37664383535`
+ma 17/17 success. To surowe prognozy
+i diagnostyka, bez kalibracji, wyboru modelu, niezależnego development_evaluation
+lub końcowego testu. Projektowe treningi i końcowe wyniki pozostają niewykonane.
 
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.

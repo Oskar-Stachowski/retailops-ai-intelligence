@@ -1,0 +1,542 @@
+{
+  "$defs": {
+    "CampaignForecastFitPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "batch_size": {
+          "default": 64,
+          "maximum": 256,
+          "minimum": 1,
+          "title": "Batch Size",
+          "type": "integer"
+        },
+        "early_stopping_role": {
+          "const": "early_stopping",
+          "default": "early_stopping",
+          "title": "Early Stopping Role",
+          "type": "string"
+        },
+        "epochs": {
+          "default": 25,
+          "maximum": 25,
+          "minimum": 1,
+          "title": "Epochs",
+          "type": "integer"
+        },
+        "export_operation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Export Operation Id",
+          "type": "string"
+        },
+        "family": {
+          "enum": [
+            "rf",
+            "hgb",
+            "tensorflow"
+          ],
+          "title": "Family",
+          "type": "string"
+        },
+        "final_test_accessed": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Accessed",
+          "type": "boolean"
+        },
+        "hgb": {
+          "$ref": "#/$defs/HGBConfig",
+          "default": {
+            "categorical_features": null,
+            "early_stopping": false,
+            "l2_regularization": 0.0,
+            "learning_rate": 0.1,
+            "loss": "squared_error",
+            "max_bins": 255,
+            "max_iter": 100,
+            "max_leaf_nodes": 31,
+            "min_samples_leaf": 20,
+            "validation_fraction": null
+          }
+        },
+        "hidden_units": {
+          "default": [
+            32,
+            16
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": 32,
+              "type": "integer"
+            },
+            {
+              "const": 16,
+              "type": "integer"
+            }
+          ],
+          "title": "Hidden Units",
+          "type": "array"
+        },
+        "initialization_seed": {
+          "maximum": 2147483647,
+          "minimum": 0,
+          "title": "Initialization Seed",
+          "type": "integer"
+        },
+        "learning_rate": {
+          "default": 0.001,
+          "exclusiveMinimum": 0,
+          "maximum": 0.01,
+          "title": "Learning Rate",
+          "type": "number"
+        },
+        "max_artifact_bytes": {
+          "default": 134217728,
+          "maximum": 536870912,
+          "minimum": 1024,
+          "title": "Max Artifact Bytes",
+          "type": "integer"
+        },
+        "max_index_bytes": {
+          "default": 2147483648,
+          "maximum": 8589934592,
+          "minimum": 4096,
+          "title": "Max Index Bytes",
+          "type": "integer"
+        },
+        "max_matrix_bytes": {
+          "default": 1073741824,
+          "maximum": 4294967296,
+          "minimum": 1024,
+          "title": "Max Matrix Bytes",
+          "type": "integer"
+        },
+        "max_train_rows": {
+          "default": 2000000,
+          "maximum": 2000000,
+          "minimum": 1,
+          "title": "Max Train Rows",
+          "type": "integer"
+        },
+        "max_windows": {
+          "default": 200000,
+          "maximum": 200000,
+          "minimum": 1,
+          "title": "Max Windows",
+          "type": "integer"
+        },
+        "patience": {
+          "default": 4,
+          "maximum": 5,
+          "minimum": 1,
+          "title": "Patience",
+          "type": "integer"
+        },
+        "preprocessing": {
+          "const": "train_median_imputation_missing_unk_one_hot_and_train_scaling",
+          "default": "train_median_imputation_missing_unk_one_hot_and_train_scaling",
+          "title": "Preprocessing",
+          "type": "string"
+        },
+        "quality_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Quality Qualified",
+          "type": "boolean"
+        },
+        "resources": {
+          "$ref": "#/$defs/CampaignGenerationResources"
+        },
+        "rf": {
+          "$ref": "#/$defs/RFConfig",
+          "default": {
+            "bootstrap": true,
+            "criterion": "squared_error",
+            "max_depth": 10,
+            "max_features": 1.0,
+            "min_samples_leaf": 4,
+            "min_samples_split": 2,
+            "n_estimators": 64,
+            "n_jobs": 1
+          }
+        },
+        "source_recipe_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Recipe Sha256",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "tensorflow_representation": {
+          "const": "history28_and_all14_asof_covariates_masked_direct_mean_median",
+          "default": "history28_and_all14_asof_covariates_masked_direct_mean_median",
+          "title": "Tensorflow Representation",
+          "type": "string"
+        },
+        "training_population": {
+          "const": "all_eligible_train_keys_no_sampling",
+          "default": "all_eligible_train_keys_no_sampling",
+          "title": "Training Population",
+          "type": "string"
+        },
+        "version": {
+          "const": "ai09-campaign-forecast-fit-1.0.0",
+          "default": "ai09-campaign-forecast-fit-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "worker_environment_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Worker Environment Lock Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_recipe_sha256",
+        "export_operation_id",
+        "family",
+        "initialization_seed",
+        "worker_environment_lock_sha256",
+        "resources"
+      ],
+      "title": "CampaignForecastFitPlan",
+      "type": "object"
+    },
+    "CampaignGenerationResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "max_log_bytes": {
+          "default": 16777216,
+          "maximum": 16777216,
+          "minimum": 1024,
+          "title": "Max Log Bytes",
+          "type": "integer"
+        },
+        "minimum_available_memory_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Available Memory Bytes",
+          "type": "integer"
+        },
+        "minimum_free_disk_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Free Disk Bytes",
+          "type": "integer"
+        },
+        "sample_seconds": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0.01,
+          "title": "Sample Seconds",
+          "type": "number"
+        },
+        "scratch_bytes": {
+          "maximum": 137438953472,
+          "minimum": 1024,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "tree_rss_bytes": {
+          "maximum": 68719476736,
+          "minimum": 1024,
+          "title": "Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "tree_rss_bytes",
+        "scratch_bytes",
+        "minimum_free_disk_bytes",
+        "minimum_available_memory_bytes"
+      ],
+      "title": "CampaignGenerationResources",
+      "type": "object"
+    },
+    "HGBConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "categorical_features": {
+          "default": null,
+          "title": "Categorical Features",
+          "type": "null"
+        },
+        "early_stopping": {
+          "const": false,
+          "default": false,
+          "title": "Early Stopping",
+          "type": "boolean"
+        },
+        "l2_regularization": {
+          "default": 0.0,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "L2 Regularization",
+          "type": "number"
+        },
+        "learning_rate": {
+          "default": 0.1,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Learning Rate",
+          "type": "number"
+        },
+        "loss": {
+          "const": "squared_error",
+          "default": "squared_error",
+          "title": "Loss",
+          "type": "string"
+        },
+        "max_bins": {
+          "const": 255,
+          "default": 255,
+          "title": "Max Bins",
+          "type": "integer"
+        },
+        "max_iter": {
+          "default": 100,
+          "maximum": 200,
+          "minimum": 1,
+          "title": "Max Iter",
+          "type": "integer"
+        },
+        "max_leaf_nodes": {
+          "default": 31,
+          "maximum": 63,
+          "minimum": 2,
+          "title": "Max Leaf Nodes",
+          "type": "integer"
+        },
+        "min_samples_leaf": {
+          "default": 20,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Min Samples Leaf",
+          "type": "integer"
+        },
+        "validation_fraction": {
+          "default": null,
+          "title": "Validation Fraction",
+          "type": "null"
+        }
+      },
+      "title": "HGBConfig",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "RFConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "bootstrap": {
+          "const": true,
+          "default": true,
+          "title": "Bootstrap",
+          "type": "boolean"
+        },
+        "criterion": {
+          "const": "squared_error",
+          "default": "squared_error",
+          "title": "Criterion",
+          "type": "string"
+        },
+        "max_depth": {
+          "default": 12,
+          "maximum": 12,
+          "minimum": 1,
+          "title": "Max Depth",
+          "type": "integer"
+        },
+        "max_features": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Max Features",
+          "type": "number"
+        },
+        "min_samples_leaf": {
+          "default": 2,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Min Samples Leaf",
+          "type": "integer"
+        },
+        "min_samples_split": {
+          "default": 2,
+          "maximum": 200,
+          "minimum": 2,
+          "title": "Min Samples Split",
+          "type": "integer"
+        },
+        "n_estimators": {
+          "default": 64,
+          "maximum": 128,
+          "minimum": 1,
+          "title": "N Estimators",
+          "type": "integer"
+        },
+        "n_jobs": {
+          "const": 1,
+          "default": 1,
+          "title": "N Jobs",
+          "type": "integer"
+        }
+      },
+      "title": "RFConfig",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:campaign_forecast_fit_receipt:15.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_files": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Artifact Files",
+      "type": "object"
+    },
+    "dataset_id": {
+      "pattern": "^ai09-physical-forecast-sha256-[0-9a-f]{64}$",
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "early_stopping_eligible_rows": {
+      "minimum": 1,
+      "title": "Early Stopping Eligible Rows",
+      "type": "integer"
+    },
+    "early_stopping_keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Early Stopping Keys Sha256",
+      "type": "string"
+    },
+    "encoding_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Encoding Sha256",
+      "type": "string"
+    },
+    "export_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Export Receipt Sha256",
+      "type": "string"
+    },
+    "final_test_accessed": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Accessed",
+      "type": "boolean"
+    },
+    "model_artifact_bytes": {
+      "minimum": 1,
+      "title": "Model Artifact Bytes",
+      "type": "integer"
+    },
+    "model_artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Model Artifact Sha256",
+      "type": "string"
+    },
+    "operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Operation Id",
+      "type": "string"
+    },
+    "plan": {
+      "$ref": "#/$defs/CampaignForecastFitPlan"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "protocol_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Protocol Sha256",
+      "type": "string"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "reservation_id": {
+      "pattern": "^campaign-operation-[0-9a-f]{32}$",
+      "title": "Reservation Id",
+      "type": "string"
+    },
+    "runtime_code_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Runtime Code Sha256",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "train_eligible_rows": {
+      "minimum": 1,
+      "title": "Train Eligible Rows",
+      "type": "integer"
+    },
+    "train_keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Train Keys Sha256",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-campaign-forecast-fit-receipt-1.0.0",
+      "default": "ai09-campaign-forecast-fit-receipt-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "worker_evidence": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Worker Evidence",
+      "type": "object"
+    }
+  },
+  "required": [
+    "protocol_sha256",
+    "operation_id",
+    "reservation_id",
+    "plan",
+    "export_receipt_sha256",
+    "dataset_id",
+    "runtime_code_sha256",
+    "train_keys_sha256",
+    "early_stopping_keys_sha256",
+    "train_eligible_rows",
+    "early_stopping_eligible_rows",
+    "encoding_sha256",
+    "model_artifact_sha256",
+    "model_artifact_bytes",
+    "artifact_files",
+    "worker_evidence"
+  ],
+  "title": "CampaignForecastFitReceipt",
+  "type": "object"
+}

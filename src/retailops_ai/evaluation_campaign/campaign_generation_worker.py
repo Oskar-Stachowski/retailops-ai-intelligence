@@ -164,7 +164,8 @@ def consumer(phase: str, root: Path, request: dict[str, Any]) -> dict[str, Any]:
     from retailops_ai.source_snapshot.files import file_hash
 
     curated_result = read(root / "curation.json")
-    snapshot, curated = Path(imported["destination"]), Path(curated_result["destination"])
+    snapshot = Path(imported["destination"]) / "snapshot"
+    curated = Path(curated_result["destination"])
     actual = read(curated / "curated_manifest.json")
     descriptor = actual["descriptor"]
     source = PhysicalSourceSpec(
