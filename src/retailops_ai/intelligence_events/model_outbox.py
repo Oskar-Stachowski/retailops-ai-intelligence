@@ -1,7 +1,10 @@
 """Accepted model publications and their outbox commit in the same SQL transaction."""
 
+from __future__ import annotations
+
 import json
 from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 from sqlalchemy import Connection, Engine, text
 
@@ -14,7 +17,9 @@ from retailops_ai.intelligence_events.model_contracts import (
     stockout_event,
 )
 from retailops_ai.intelligence_events.outbox import DeliveryMessage, EventProducer
-from retailops_ai.stockout_jobs.batch import StockoutOutput
+
+if TYPE_CHECKING:
+    from retailops_ai.stockout_jobs.batch import StockoutOutput
 
 
 def _environment(environment: str) -> None:
@@ -82,6 +87,8 @@ def enqueue_anomalies(connection: Connection, items: Sequence[Item], *, environm
 
 
 def enqueue_stockout(connection: Connection, output: StockoutOutput, *, environment: str) -> int:
+    from retailops_ai.stockout_jobs.batch import StockoutOutput
+
     output = StockoutOutput.model_validate_json(output.model_dump_json())
     for item in output.items:
         _enqueue(
@@ -123,6 +130,8 @@ ORDER BY created_at,event_id LIMIT 1 FOR UPDATE SKIP LOCKED
             anomaly = anomaly_event(Item.model_validate_json(json.dumps(native)))
             expected, result_id = anomaly, anomaly.payload.anomaly_id
         elif row["event_type"] == "stockout_risk_scored":
+            from retailops_ai.stockout_jobs.batch import StockoutOutput
+
             event = StockoutRiskScored.model_validate_json(json.dumps(row["document"]))
             native = connection.scalar(
                 text("SELECT output FROM ai.stockout_batch_outputs WHERE output_id=:id"),
