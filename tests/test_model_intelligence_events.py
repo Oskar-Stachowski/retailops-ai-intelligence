@@ -6,16 +6,7 @@ from pathlib import Path
 
 import pytest
 from jsonschema import Draft202012Validator, FormatChecker
-from test_anomaly_batch import batch_case as batch_case
-from test_anomaly_batch import saved_model as saved_model
-from test_stockout_batch import backend as backend
-from test_stockout_batch import conditional as conditional
-from test_stockout_batch import context as context
-from test_stockout_batch import job as job
-from test_stockout_batch import records as records
-from test_stockout_batch import source as source
 
-from retailops_ai.anomaly_portfolio.batch import batch
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.intelligence_events.model_contracts import (
     AnomalyDetected,
@@ -23,18 +14,21 @@ from retailops_ai.intelligence_events.model_contracts import (
     anomaly_event,
     stockout_event,
 )
-from retailops_ai.stockout_jobs.batch import compute
 
 ROOT = Path(__file__).resolve().parents[1] / "contracts/events/v2"
 
 
 @pytest.fixture
-def model_events(batch_case, job):
-    args, generated, _ = batch_case
-    _, items = batch(*args, generated)
-    run, inputs, release, now = job
-    output = compute(run, inputs, release, generated_at=now)
-    return anomaly_event(items[0]), stockout_event(output.items[0])
+def model_events():
+    # Envelope validation needs the existing explicit contract fixtures, not an
+    # unrelated training fit in a long-lived shard with cumulative process RSS.
+    # Genuine original-model publication is exercised by the dedicated native CI.
+    return (
+        AnomalyDetected.model_validate_json((ROOT / "anomaly_detected.fixture.json").read_bytes()),
+        StockoutRiskScored.model_validate_json(
+            (ROOT / "stockout_risk_scored.fixture.json").read_bytes()
+        ),
+    )
 
 
 def test_generated_schemas_and_envelopes_preserve_native_payloads(model_events):

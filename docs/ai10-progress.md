@@ -14,6 +14,44 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
 
 ### Odebrane komponenty bieżącej integracji
 
+**Bieżący przyrost z 7 października:** pełny native anomaly workflow
+`37594406280`, job `112705553204`, zakończył się **success**. Wszystkie 1232
+oryginalne wyniki, 2464 broker receipts, 1232 duplicates, pełny TCP API i 25
+stron built UI przeszły wraz z oryginalnym testem SIGKILL/recovery.
+[Receipt](evidence/ai10-native-anomaly-accepted.json) zachowuje dokładny SHA ZIP.
+Granica tego dowodu pozostaje file handoff committed outbox; publisher
+oryginalnej bazy AI nie jest jeszcze poświadczony dla anomaly/stockout.
+
+Dedykowany Source capture workflow `37599182565` jest **success**.
+[Receipt](evidence/ai10-source-capture-accepted.json) potwierdza rzeczywisty
+Source SQL/TLS/SCRAM, crash po broker ACK, retry tych samych bajtów, pełny
+prefix trzech partycji i niezależny replay AI z późną korektą 4 → 7.
+To jest `daily_demand_versions`, bez twierdzenia o pełnym snapshotcie 43 tabel
+lub o ACK/zapisie SQL po stronie AI.
+
+Oryginalny v12 ma przygotowane nowe wejście inference: snapshot 43 tabel,
+102 dni historii, 14 dni planów, import/curated/features i 56 wierszy dla
+czterech szeregów. Publiczny `prepare_ai10_v12_inputs.py` zaliczył pełny
+lokalny replay przygotowania. Oryginalne treningi i quality nie są uruchamiane
+ponownie. Source `1a7f558` dodaje odbiór osobnej przestrzeni development z
+dokładnym dokumentem właściciela, oryginalnym publisherem SQL i obowiązkowym
+built UI, którego nowy runtime CI wymaga jeszcze wykonania.
+
+Nowy workflow `AI10 original v12 native output` zachowuje pełny verifier,
+dziesięć real review gates, pełny import do MLflow z HTTP checksum oraz
+preload przed intake. Własna baza AI pozostaje aktywna podczas odbioru Source.
+Shared-inode transport ogranicza zajętość jednorazowego runnera; nie jest
+niezależnym backupem. Lokalnie: 48 testów Source policy, mypy 43 modułów,
+frontend lint/build oraz setup-plan nowych fixtures passed. Ostateczny wynik
+tego nowego natywnego runtime pozostaje pending.
+
+Required CI na AI `5f961f7` wykrył resource-budget błąd fixture podczas testu
+kopert zdarzeń. Envelope test nie wymaga nowego treningu: używa teraz
+istniejących jawnych fixtures kontraktu, a oryginalny test native modelu
+pozostaje w obowiązkowym CI. Produkcyjne limity modelu nie zostały zmienione.
+Wszystkie 14 testów kopert po tej korekcie passed; final Required CI musi
+jeszcze zaliczyć aktualny head obu PR-ów.
+
 - Native anomaly `Item` i physical stockout `RiskItem` mają wspólny v2 topic,
   zachowują pełny oryginalny payload, native ID, run/release i lineage.
   Forecast v12 oraz legacy v1 zachowują wcześniejsze znaczenie.

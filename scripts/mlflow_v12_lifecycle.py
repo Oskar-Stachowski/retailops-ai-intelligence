@@ -105,6 +105,9 @@ def main() -> int:
                         pending_decisions=journal.pending(args.model),
                         runtime_status="not_integrated",
                     )
+                    acceptance = binding.approval.qualification.development_acceptance
+                    if acceptance is not None:
+                        result["development_acceptance_sha256"] = acceptance.decision.sha256
         print(json.dumps(result, sort_keys=True))
         return 0
     except Exception:

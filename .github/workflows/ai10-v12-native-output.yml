@@ -1,0 +1,151 @@
+name: AI10 original v12 native output
+
+on:
+  push:
+    branches: ["ai/10-ready"]
+    paths:
+      - ".github/workflows/ai10-v12-native-output.yml"
+      - "docs/reference/ai10-v12-serving-request.json"
+  workflow_dispatch:
+    inputs:
+      archive_secret:
+        description: "Task-owned temporary GET-only archive handoff secret name"
+        required: true
+      handoff_sha256:
+        description: "SHA-256 of the exact private read map"
+        required: true
+      origin_date:
+        description: "Closed UTC inference day, YYYY-MM-DD"
+        required: true
+        default: "2026-10-06"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai10-native-v12-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      UV_NO_CACHE: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      AI10_ORIGIN_DATE: ${{ inputs.origin_date || '2026-10-06' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: 1a7f558d718ed3dddaed277c07ccfd7d023f34ce
+          path: .local/ai10-native-v12-source
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - name: Install locked AI boundary and separate original outbox delivery runtime
+        run: |
+          uv sync --locked --extra snapshot --extra forecast
+          uv sync --locked --project tools/intelligence-delivery
+          mkdir -m 700 acceptance-proofs
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_VERSION: "8.30.1"
+          GITLEAKS_ENABLE_COMMENTS: "false"
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+      - name: Retain successful whole-history scan and require every unchanged v12 boundary
+        run: |
+          python -c 'import json,os;from pathlib import Path;Path("acceptance-proofs/secrets.json").write_text(json.dumps(dict(passed=True,workflow_run_id=os.environ["GITHUB_RUN_ID"],commit=os.environ["GITHUB_SHA"],scanner="gitleaks-8.30.1",scope="complete_git_history")))'
+          uv run --frozen python -m pytest -q \
+            tests/test_ai10_v12_archive_recovery.py tests/test_v12_scratch_tracking.py \
+            tests/test_ai10_v12_native_runner.py \
+            tests/test_v12_evidence.py tests/test_v12_runtime.py tests/test_v12_inference.py \
+            tests/test_v12_inference_source.py tests/test_v12_development.py \
+            tests/test_v12_publication.py tests/test_v12_queue.py tests/test_v12_jobs_api.py \
+            tests/test_v12_lifecycle.py tests/test_v12_mlflow_transport.py \
+            tests/test_model_intelligence_events.py \
+            --junitxml=acceptance-proofs/tests.xml
+      - name: Prepare exact Source producer and independent consumer runtime
+        run: |
+          python -c 'import json,subprocess;from pathlib import Path;p=json.loads(Path("docs/reference/ai10-v12-serving-request.json").read_text());assert subprocess.check_output(["git","rev-parse","HEAD"],cwd=".local/ai10-native-v12-source",text=True).strip()==p["source_commit"]'
+          uv venv --python 3.11.15 .local/ai10-native-v12-source/services/api/.venv
+          uv pip install --python .local/ai10-native-v12-source/services/api/.venv/bin/python \
+            -r .local/ai10-native-v12-source/services/api/requirements-dev.txt \
+            -r .local/ai10-native-v12-source/data/requirements-parquet.txt
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "22"
+      - name: Build the actual existing Source frontend and install Chromium
+        working-directory: .local/ai10-native-v12-source/frontend
+        run: |
+          npm ci
+          npm run build
+          node node_modules/@playwright/test/cli.js install --with-deps chromium
+      - name: Build actual locked boundary image and pull fixed owned service images
+        run: |
+          docker build -f Dockerfile.api -t "retailops-ai10-v12-acceptance:$GITHUB_SHA" .
+          docker pull pgvector/pgvector:0.8.6-pg16-trixie@sha256:c8483555ce48101872f888c1df8a895ff689d6c7c7a5f7ac266475f9dfe89e0b
+          docker pull ghcr.io/mlflow/mlflow:v3.16.1@sha256:06058cc872276873e9759c635e773342aca4731e240f6d20d88ea43774083984
+          docker pull postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+          docker pull redpandadata/redpanda:v25.3.6@sha256:ac152ec27adccf9482af2649d293f398eb03c860d7469fc49f86e30d870ea408
+      - name: Generate separate 102-day complete immutable inference Source without truth
+        working-directory: .local/ai10-native-v12-source
+        env:
+          PYTHONPATH: ${{ github.workspace }}/.local/ai10-native-v12-source
+        run: |
+          services/api/.venv/bin/python - <<'PY'
+          import json,os
+          from datetime import date
+          from pathlib import Path
+          from data.export.current_source import generate_snapshot
+          from data.generator.configuration import DatasetGenerationConfig
+          result=generate_snapshot(DatasetGenerationConfig(profile='ai-temporal-smoke',days=102,seed=42,end_date=date.fromisoformat(os.environ['AI10_ORIGIN_DATE']),forecast_plan_days=14),Path('data/generated/ai10-v12-inference'),include_truth=False)
+          path=Path(os.environ['GITHUB_WORKSPACE'])/'.local/source-snapshot-path.txt'
+          path.write_text(str(Path(result['path']).resolve())+'\n');path.chmod(0o600)
+          print(json.dumps(dict(status='passed',scope='separate_new_inference_Source',history_days=102,forecast_plan_days=14,original_training_or_quality_evaluation=False)))
+          PY
+      - name: Import all 43 tables and prepare verified curated features and bounded label-free inputs
+        run: |
+          TASK_SOURCE_SNAPSHOT="$(cat .local/source-snapshot-path.txt)"
+          uv run --frozen python scripts/prepare_ai10_v12_inputs.py \
+            --snapshot "$TASK_SOURCE_SNAPSHOT" --output .local/v12-inference-parents \
+            --origin "${AI10_ORIGIN_DATE}T23:59:59Z"
+      - name: Recover unchanged complete original archive with temporary GET-only URLs
+        env:
+          AI10_V12_HANDOFF_URL: ${{ secrets[inputs.archive_secret || 'AI10_V12_READ_HANDOFF_1242006266C9479B98A91FE2F479BA6E'] }}
+          HANDOFF_SHA256: ${{ inputs.handoff_sha256 || '4555daf0ecdc28dd486dd960bc945a04e47af135265afbf619308f8c25cb2286' }}
+        run: |
+          uv run --frozen python scripts/recover_ai10_v12_archive.py \
+            --handoff-sha256 "$HANDOFF_SHA256" --output .local/ai10-v12-original \
+            --reserve-gib 6 --report acceptance-proofs/recovered-byte-census.json
+          uv sync --directory .local/ai10-v12-original/support/frozen-runtime \
+            --locked --no-install-project --no-dev --extra snapshot --extra forecast
+          uv pip install --python .local/ai10-v12-original/support/frozen-runtime/.venv/bin/python \
+            --no-deps .local/ai10-v12-original/support/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl
+      - name: Require original verifier real registry SQL publisher and complete Source API and UI
+        run: |
+          uv run --frozen python scripts/check_ai10_v12_native.py \
+            --original .local/ai10-v12-original --parents .local/v12-inference-parents/parents.json \
+            --consumer-root .local/ai10-native-v12-source --output accepted-v12 \
+            --image "retailops-ai10-v12-acceptance:$GITHUB_SHA" \
+            --tests acceptance-proofs/tests.xml --secret-scan acceptance-proofs/secrets.json
+      - name: Retain original native outputs and public execution receipts without the archive or controls
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai10-original-v12-native-${{ github.sha }}
+          path: |
+            accepted-v12/
+            acceptance-proofs/
+          if-no-files-found: warn
+          retention-days: 30
+          overwrite: false

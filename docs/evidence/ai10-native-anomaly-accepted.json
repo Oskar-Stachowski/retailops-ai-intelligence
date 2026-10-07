@@ -1,0 +1,73 @@
+{
+  "artifact": {
+    "id": 11473415177,
+    "size_bytes": 910482,
+    "zip_sha256": "82fb906ab213017c68bf660c1c5d13de10de2a21414f6142067cfcdb79538883"
+  },
+  "consumer_commit": "53c85b4fde255cd1f8ee33e923e6dfe7801a37fd",
+  "full_three_model_E2E": false,
+  "job_id": 112705553204,
+  "original_AI_database_publisher_attested": false,
+  "producer_commit": "e49969c27416ea7c56f1ecacb7b2f67a19b2755f",
+  "reports": {
+    "browser": {
+      "credential_storage": false,
+      "fixture_fallback": false,
+      "live_revocation": true,
+      "results": [
+        {
+          "kind": "anomaly_detected",
+          "literal_native_id": true,
+          "original_lineage_in_UI": true,
+          "original_payloads": true,
+          "pages": 25,
+          "rows": 1232
+        }
+      ],
+      "rows": 1232,
+      "scope": "original_native_model_publications_in_built_RetailOps_UI",
+      "status": "passed"
+    },
+    "read": {
+      "browser": {
+        "credential_storage": false,
+        "fixture_fallback": false,
+        "live_revocation": true,
+        "results": [
+          {
+            "kind": "anomaly_detected",
+            "literal_native_id": true,
+            "original_lineage_in_UI": true,
+            "original_payloads": true,
+            "pages": 25,
+            "rows": 1232
+          }
+        ],
+        "rows": 1232,
+        "scope": "original_native_model_publications_in_built_RetailOps_UI",
+        "status": "passed"
+      },
+      "census_id": "native-model-outbox-sha256-285fdcf7410c05ed1ab09493727ea593ee28f818633a30fa951989cfcf37ad02",
+      "committed_next_offsets": {
+        "0": 1064,
+        "1": 1400
+      },
+      "duplicates": 1232,
+      "evidence_boundary": "file-handoff replay of committed outbox; original AI database publisher is not attested",
+      "http_literal_original_ids": 1232,
+      "model_kind": "anomaly_detected",
+      "model_refits": 0,
+      "native_payloads_unchanged": true,
+      "producer_commit": "e49969c27416ea7c56f1ecacb7b2f67a19b2755f",
+      "projected": 1232,
+      "qualification_id": "qualified-anomaly-inputs-sha256-ad326bf56fdffd199d235e974878f57a0025c57ec82f433bf99ee69179ad81c4",
+      "rows": 1232,
+      "scope": "qualified_native_model_output_to_broker_sql_and_authenticated_TCP_API",
+      "source_commit": "53c85b4fde255cd1f8ee33e923e6dfe7801a37fd",
+      "status": "passed"
+    }
+  },
+  "scope": "actual_frozen_anomaly_model_full_output_broker_SQL_TCP_API_built_UI_and_SIGKILL_recovery",
+  "status": "passed",
+  "workflow_run_id": 37594406280
+}
