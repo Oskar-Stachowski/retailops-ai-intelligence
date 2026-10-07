@@ -58,6 +58,24 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
   obu modeli. Nowy workflow wymaga osobnych wyników execution, nie deklaruje
   jeszcze zaliczenia tych nowych odbiorów.
 
+- Native stockout run `37592264044` na `3ada65d` zaliczył wykonanie modelu,
+  transport pełnego census 40 wyników, 80 receipts, deduplikację oraz wszystkie
+  literalne ID/auth przez rzeczywisty TCP API. Pierwszy built-browser odbiór
+  przerwał tylko assert pełnego UUID w skróconym widocznym tekście. Source
+  `53c85b4` sprawdza pełne native UUID w `aria-label` istniejących komórek;
+  pełne ID/lineage pozostają porównywane w read API i szczegółach. Ponowne
+  wykonanie całego browser odbioru nadal wymagane.
+- Dla oryginalnego forecastu v12 przygotowano bounded remote recovery **669**
+  plików (664 archive + 5 niezmienionych wheel/runtime/acceptance), bez
+  treningu ani generowania Source. 18 testów boundary/digest/host/private
+  paths/disk reserve passed; mypy **600** modułów i snapshot types **10**
+  passed. Prywatny GET-only handoff w S3 ma 3h ważności i jeden zaszyfrowany
+  tymczasowy repo secret; wszystkie 669 URL bindings lokalnie sprawdzono,
+  signed URLs nie trafiły do Git/logów. Workflow ma zweryfikować pełne
+  oryginalne bytes i semantic replay zaakceptowanym frozen wheel. Sam recovery
+  nie zalicza jeszcze serving ani Source API/UI. Cleanup dotyczy wyłącznie
+  sześciu własnych tymczasowych obiektów i własnego secretu.
+
 ### Co dokładnie pozostaje do ready AI 10
 
 1. **Zaliczyć nowy qualified stockout workflow.** Oryginalna jednodniowa

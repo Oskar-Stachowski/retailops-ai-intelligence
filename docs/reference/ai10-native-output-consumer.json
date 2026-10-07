@@ -1,7 +1,7 @@
 {
   "version": "ai10-native-output-consumer-1.0",
   "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
-  "commit": "bbf570d1eba9fbf71c1cee8c53a17abe557cb035",
+  "commit": "53c85b4fde255cd1f8ee33e923e6dfe7801a37fd",
   "sha256": {
     "services/api/tests/native_intelligence_bundle.py": "014f3b754ddb7a3a7b8626810998d280d2cb1ef05c829892ce543b16d631a990",
     "services/api/tests/test_native_intelligence_output_durability.py": "bbaa99a024008291974eb154174aa2da718fc2a148d4d6068fa9e0d12c9df24d",
@@ -14,7 +14,7 @@
     "frontend/playwright.config.js": "78943a3a6612dd4067b551e28d6a27bbb6661f94cb754fa31540067d78b44135",
     "frontend/eslint.config.js": "73dc6901be9734ea5779008e86b1948cb66ee477262cc73a9658cb1686b1b682",
     "frontend/vite.native-preview.config.js": "6d3c1b839296565d7b3b3c1fac93a9d8e247cfcc82abba38d4f0212e1f32b2e2",
-    "frontend/e2e/intelligence-native-models.spec.js": "1596b81ad40029be652a6dd20e06c770e786e2c2adddbaba3bcf4b45693cf235",
+    "frontend/e2e/intelligence-native-models.spec.js": "2d3e588d2186930a88d65a8e670e6ab82ce0719348d67a9eb1354365f9418a7c",
     ".github/actions/setup-node-ci/action.yml": "4a77391cccdf15771cce49639bc5caf1f08f3d987ef26b04b81ac102d3be02c5",
     "frontend/package-lock.json": "079e227ffb749e9b637b355766e7d095d321abc9ddc003a285b3e1f14a062207"
   }

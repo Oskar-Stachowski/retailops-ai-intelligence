@@ -114,7 +114,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: bbf570d1eba9fbf71c1cee8c53a17abe557cb035
+          ref: 53c85b4fde255cd1f8ee33e923e6dfe7801a37fd
           path: .local/ai10-native-output-consumer
           persist-credentials: false
       - name: Verify immutable independent output consumer bytes
@@ -198,7 +198,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: bbf570d1eba9fbf71c1cee8c53a17abe557cb035
+          ref: 53c85b4fde255cd1f8ee33e923e6dfe7801a37fd
           path: .local/ai10-native-output-consumer
           persist-credentials: false
       - name: Verify immutable independent output consumer bytes
