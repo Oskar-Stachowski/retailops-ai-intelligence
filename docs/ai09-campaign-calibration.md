@@ -67,6 +67,21 @@ zawiera także aktualny main `92c2a3cd`: Required CI `37689831146`
 ma 17/17 success, w tym required-result. Poprawiony head kalibracji
 wymaga osobnego pełnego odbioru przed protected merge.
 
+CI `37694343795` na `0796d27e` ujawniło dodatkową porażkę testu przerwanego
+backupu w jobie `113042573697`: `backup_interruption_not_observed`.
+Dotychczasowy komunikat nie pokazywał kodu wyjścia dziecka ani przyczyny
+wewnętrznej. Nowa kontrola zachowuje rzeczywisty SIGKILL, maintenance,
+fence obu baz i odrzucenie połączeń aplikacyjnych przed jawnym resume.
+Świeży proces stosuje ten sam acceptance Compose overlay co rodzic.
+Porażka podaje tylko bounded, allowlisted kody, klasę wyjątku i pozycje
+we własnym kodzie. Nie wypisuje treści poleceń, tracebacków, locals ani
+credentials. Przyczyna awarii bazy nie jest jeszcze potwierdzona.
+78 lokalnych testów backupu, przerwania i cleanup przeszło w 2.38 s;
+kontrola OS rzeczywiście zabiła wyłącznie nowy własny proces, z mocked
+operacjami bazy. To nie jest native PostgreSQL acceptance. Mypy dla 688
+plików, Ruff i format przeszły. Nie uruchamiano lokalnie Dockera.
+Poprawiony head nadal wymaga pełnego CI przed scaleniem.
+
 Journal projektu nadal nie jest zainicjalizowany, nowe projektowe fity wynoszą
 zero, projektowa kalibracja nie jest wykonana i final test pozostaje zamknięty.
 Do AI 09 ready pozostają pełne profile, projektowy wybór i kalibracja,
