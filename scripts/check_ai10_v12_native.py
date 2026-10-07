@@ -89,6 +89,13 @@ def preflight_application_database() -> None:
     print('{"stage":"actual_application_database_configuration","status":"passed"}')
 
 
+def fail_outbox_insert(conn: Any, cursor: Any, statement: str, *rest: Any) -> None:
+    # Match the actual multiline SQL emitted by enqueue_forecasts, with an exact
+    # target table boundary. The hook fires after insertion, inside its transaction.
+    if re.match(r"\s*INSERT\s+INTO\s+ai\.intelligence_outbox\s*\(", statement, re.IGNORECASE):
+        raise RuntimeError("ai10_v12_controlled_outbox_insert_failure")
+
+
 def access(work: Path, inputs: PreparedInputs) -> tuple[Path, dict[str, str], Principal, Principal]:
     now = datetime.now(UTC)
     tokens = {name: secrets.token_urlsafe(32) for name in ("promoter", "pipeline", "outsider")}
@@ -616,11 +623,7 @@ def main() -> int:
             )
             publisher = PostgresV12Publisher(queue, registry, events_enabled=True)
 
-            def fail_insert(conn: Any, cursor: Any, statement: str, *rest: Any) -> None:
-                if statement.startswith("INSERT INTO ai.intelligence_outbox"):
-                    raise RuntimeError("ai10_v12_controlled_outbox_insert_failure")
-
-            event.listen(engine, "after_cursor_execute", fail_insert)
+            event.listen(engine, "after_cursor_execute", fail_outbox_insert)
             try:
                 try:
                     publisher.publish(run_id, pipeline)
@@ -631,7 +634,7 @@ def main() -> int:
                         "ai10_v12_expected_failure",
                     )
             finally:
-                event.remove(engine, "after_cursor_execute", fail_insert)
+                event.remove(engine, "after_cursor_execute", fail_outbox_insert)
             with engine.connect() as connection:
                 require(
                     connection.scalar(text("SELECT count(*) FROM ai.v12_forecast_outputs")) == 0

@@ -116,10 +116,14 @@ ani streamu wszystkich 43 tabel. HTTP/broker credentials pozostają poza Git.
    dwóch zaliczonych ścieżek. Zmiany wyłącznie znanego acceptora wybierają właściwy
    model, a wspólne/nieznane zmiany albo brak poprawnego zakresu Git wybierają oba.
 7. Istniejący publisher musi dostarczyć pełny census z oryginalnego AI SQL,
-   uzyskać ACK, następnie utrwalić partition/offset. Source porównuje original
-   native IDs/payloads, SHA wartości na tych ACK coordinates oraz pełny SQL
-   transport fingerprint, z kluczem, headers i timestamp. Jednorazowy replay
-   daje dokładnie N wyników i N duplikatów. [Instrukcja modeli](intelligence-models-v2.md).
+   uzyskać ACK, następnie utrwalić partition/offset. Source porównuje pełne
+   original native IDs/payloads i wiąże original ACK coordinates z checkpoint
+   receipts. Stockout/anomaly dodatkowo sprawdzają SHA odczytanych wire bytes
+   oraz pełny SQL transport fingerprint z key/headers/timestamp. V12 sprawdza
+   original event SHA w publisher receipt i pełną zgodność native payloadów
+   SQL/API/UI; ten receipt nie poświadcza osobnego bounded reread wire bytes.
+   Jednorazowy replay daje dokładnie N wyników i N duplikatów.
+   [Instrukcja modeli](intelligence-models-v2.md).
 8. Dla v12 użyj `AI10 original v12 native output` i [instrukcji recovery](ai10-v12-original-recovery.md).
    Pełny oryginalny verifier i wszystkie dziesięć review gates są obowiązkowe.
    Nowe wejście inference ma 102 dni historii, 14 dni planów, 43 tabele i brak truth.

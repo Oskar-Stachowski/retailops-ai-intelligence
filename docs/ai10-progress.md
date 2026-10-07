@@ -14,6 +14,36 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
 
 ### Odebrane komponenty bieżącej integracji
 
+**Aktualny checkpoint 2026-10-07:** wspólny CI PR #34 jest na main `89b64d2`,
+a PR AI09 #33 na nowszym main `a128bb3`. Integracja AI10 zachowuje wszystkie
+własne bramki SQL/broker/replay, outbox i pełny v12 backup/recovery.
+[Core CI](evidence/ai10-shared-ci-upstream-accepted.json) ma 15/15 success;
+[AI10 CI `433f5ed`](evidence/ai10-ai-integrated-head-ci.json) ma 17/17 success.
+Source `4b03664`, run `37617019955`, ma 30/30 success. Nowa poprawka hooka
+wymaga ponownego Required CI na aktualnym headzie.
+
+**Powtórzony stockout i anomaly na zintegrowanym `433f5ed`:** run
+`37624498603` odebrał oba modele i oryginalne SQL publishery, bez refitów.
+[Stockout](evidence/ai10-native-stockout-final-head-accepted.json): 40 wyników,
+40 oryginalnych ACK, 40 projekcji i duplicates oraz pełny TCP API/built UI.
+[Anomaly](evidence/ai10-native-anomaly-final-head-accepted.json): 1232 wyników
+i ACK, 1232 projekcji i duplicates, 25 stron built UI oraz live revocation.
+Niezależne Source parsery ponownie zweryfikowały oba pełne census.
+
+**V12 — trzecia próba failed:** run `37624038527` na `2b4f6f2` zaliczył
+258 boundary tests, rzeczywisty preflight aplikacji, pełną kwalifikację/cold
+probes, review gates, MLflow import i registry/preload. Kontroler doszedł do
+actual API intake i cold worker, ale `ai10_v12_outbox_failure_not_exercised`
+zatrzymał test atomowego rollbacku: hook ignorował nową linię na początku
+SQL rzeczywistego emittera. [Receipt failed](evidence/ai10-v12-native-outbox-hook-failure.json)
+nie poświadcza finalnego publishera ani Source API/UI. Hook teraz rozpoznaje
+whitespace i dokładną nazwę tabeli; test kompiluje SQL rzeczywistego emittera.
+13 testów runner/workflow, lint/format 1112 plików, mypy 656+10 i docs/contracts
+passed. Nowy pełny zdalny run pozostaje wymagany. Usunięto sześć własnych
+handoff objects i unikalny secret; oryginalne S3 oraz quality `not_ready` zachowano.
+
+Niższe checkpointy pozostają historią zakresów i wcześniejszych prób.
+
 **Nowszy main AI09 — zgodność current campaign pin:** dołączono `e1f864c`
 z audytowanym eksportem i zaakceptowanymi optymalizacjami. Bieżący campaign hash
 zmieniły dokładnie `data_contracts/identity.py` i `forecasting/features_store.py`.

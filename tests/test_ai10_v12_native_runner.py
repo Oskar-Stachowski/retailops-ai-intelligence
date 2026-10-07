@@ -83,3 +83,43 @@ def test_preflight_rejects_wrong_user_or_database_through_actual_application_gua
     monkeypatch.setattr(module, "original_database_url", lambda *args: url)
     with pytest.raises(CorpusError, match="isolated_ai_database_required"):
         module.preflight_application_database()
+
+
+@pytest.mark.parametrize(
+    "statement",
+    [
+        "SELECT document FROM ai.intelligence_outbox WHERE event_id=:id",
+        "INSERT INTO ai.model_intelligence_outbox(event_id) VALUES (:id)",
+        "INSERT INTO ai.intelligence_outbox_backup(event_id) VALUES (:id)",
+    ],
+)
+def test_fault_hook_does_not_match_reads_or_another_table(monkeypatch, statement):
+    runner(monkeypatch).fail_outbox_insert(None, None, statement)
+
+
+def test_fault_hook_matches_actual_production_emitter_sql(monkeypatch):
+    from types import SimpleNamespace
+
+    from sqlalchemy.dialects import postgresql
+
+    from retailops_ai.intelligence_events import outbox
+
+    module = runner(monkeypatch)
+    record = SimpleNamespace(
+        event_id="explicit-mechanics-event", partition_key="fixture-key", topic="fixture-topic"
+    )
+    record.model_dump_json = lambda: '{"explicit_mechanics_fixture":true}'
+    monkeypatch.setattr(outbox, "forecast_events", lambda *args: [record])
+    statements = []
+
+    class Connection:
+        def execute(self, statement, parameters):
+            sql = str(statement.compile(dialect=postgresql.dialect()))
+            statements.append(sql)
+            module.fail_outbox_insert(None, None, sql)
+
+    output = SimpleNamespace(artifact_id="explicit-mechanics-publication", environment="test")
+    with pytest.raises(RuntimeError, match="^ai10_v12_controlled_outbox_insert_failure$"):
+        outbox.enqueue_forecasts(Connection(), output, None, None)
+    assert len(statements) == 1
+    assert statements[0].startswith("\nINSERT")

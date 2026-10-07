@@ -96,3 +96,17 @@ condition = "AND"
 paths = ['(^|/)docs/evidence/ai10-v12-native-database-failure[.]json$']
 regexTarget = "secret"
 regexes = ['^e9594b0766f992b500d06d77131c4d94463d2705e155b6e26b8f03713b66b7f2$']
+
+[[allowlists]]
+description = "Exact SHA-256 of public successful gitleaks execution receipt in v12 outbox-hook failed-run evidence; not a credential"
+condition = "AND"
+paths = ['(^|/)docs/evidence/ai10-v12-native-outbox-hook-failure[.]json$']
+regexTarget = "secret"
+regexes = ['^465d753757bd8d6a49bbd23a825c875b76b44592a33f6c40e0fa331ffc49bee9$']
+
+[[allowlists]]
+description = "Exact SHA-256 of the public successful whole-history scan receipt in accepted stockout evidence; not a credential"
+condition = "AND"
+paths = ['(^|/)docs/evidence/ai10-native-stockout-final-head-accepted[.]json$']
+regexTarget = "secret"
+regexes = ['^6c99d78521efcdb19dd746ae2bf06834629b1d6c34557702e52e6cdb335cc869$']

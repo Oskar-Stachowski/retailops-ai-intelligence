@@ -1,8 +1,18 @@
 {
+  "AI_integrated_head_CI": {
+    "path": "docs/evidence/ai10-ai-integrated-head-ci.json",
+    "receipt_status": "passed",
+    "sha256": "d9c97c6ba952720b6b26747ca2359726fdd97284f4946b82943e242356614aa4"
+  },
   "Source_component_CI": {
     "path": "docs/evidence/ai10-source-components-ci.json",
     "receipt_status": "passed",
     "sha256": "ec099dfab3045cde1c2811fbc5be423d4d62c40c6a4fe98520cdf4c9ba6b6e8f"
+  },
+  "Source_final_head_CI": {
+    "path": "docs/evidence/ai10-source-final-head-ci.json",
+    "receipt_status": "passed",
+    "sha256": "03e825e916f7e40f766db9955042ccd09c5468b384ebc25f79566a74ab1ad292"
   },
   "accepted_main_compatibility": {
     "path": "docs/evidence/ai10-accepted-main-campaign-repin.json",
@@ -97,6 +107,11 @@
       "accepted_file_handoff_rows": 1232,
       "built_UI_pages": 25,
       "built_UI_rows": 1232,
+      "earlier_original_SQL_receipt": {
+        "path": "docs/evidence/ai10-native-anomaly-original-sql-accepted.json",
+        "receipt_status": "passed",
+        "sha256": "d6daefee6462f57c7d8c75901a9abe69a36ce927ebff56729e77dcdcc28933dd"
+      },
       "earlier_scope_receipt": {
         "path": "docs/evidence/ai10-native-anomaly-accepted.json",
         "receipt_status": "passed",
@@ -107,9 +122,9 @@
       "native_payloads_unchanged": true,
       "original_AI_SQL_publisher": true,
       "original_SQL_receipt": {
-        "path": "docs/evidence/ai10-native-anomaly-original-sql-accepted.json",
+        "path": "docs/evidence/ai10-native-anomaly-final-head-accepted.json",
         "receipt_status": "passed",
-        "sha256": "d6daefee6462f57c7d8c75901a9abe69a36ce927ebff56729e77dcdcc28933dd"
+        "sha256": "d3992e4d438b199b8c365f833ff0c65c2802cadce6d24dbba0a04f5244bfaa54"
       },
       "source_duplicates": 1232,
       "source_projected": 1232,
@@ -117,6 +132,16 @@
     },
     "forecast_v12": {
       "development_namespace": "retailops-demand-forecast-v12-development",
+      "earlier_database_failed_attempt": {
+        "path": "docs/evidence/ai10-v12-native-database-failure.json",
+        "receipt_status": "failed",
+        "sha256": "5afeb59e28c6f782faf0f4f28b12ce665fcbbdd6f11ddc2692950fcf1b800c54"
+      },
+      "earlier_failed_attempt": {
+        "path": "docs/evidence/ai10-v12-native-scratch-failure.json",
+        "receipt_status": "failed",
+        "sha256": "10599060cd3cfc7512e83437d223864cecc4dc147a7f72d48853112a90e255b1"
+      },
       "expected_output_rows": 56,
       "expected_series": 4,
       "full_native_receipt": null,
@@ -132,9 +157,9 @@
       "original_quality_status": "not_ready",
       "owner_acceptance_sha256": "11cd0e1fdd10629543bcb66aaedb3bd9b7b7fc5b31473575b998d951c93f00d2",
       "partial_failed_attempt": {
-        "path": "docs/evidence/ai10-v12-native-scratch-failure.json",
+        "path": "docs/evidence/ai10-v12-native-outbox-hook-failure.json",
         "receipt_status": "failed",
-        "sha256": "10599060cd3cfc7512e83437d223864cecc4dc147a7f72d48853112a90e255b1"
+        "sha256": "938c221c4c8673f22361610ee253819991d884de0bd403135763716957584925"
       },
       "status": "pending_full_native_runtime"
     },
@@ -144,15 +169,20 @@
         "1": 46
       },
       "built_UI_rows": 40,
+      "earlier_original_SQL_receipt": {
+        "path": "docs/evidence/ai10-native-stockout-original-sql-accepted.json",
+        "receipt_status": "passed",
+        "sha256": "853a621d089fe546398a67cabaa7db087b6a10c8677207b57406c1bf6478d974"
+      },
       "literal_TCP_native_ids": 40,
       "model_refits": 0,
       "original_AI_SQL_publisher": true,
       "payloads_unchanged": true,
       "qualification_id": "stockout-qualification-serving-sha256-131dba942a20f026b74a1ba1c99fd5c9727b27e1d02c4d353f0954e2c12464e0",
       "receipt": {
-        "path": "docs/evidence/ai10-native-stockout-original-sql-accepted.json",
+        "path": "docs/evidence/ai10-native-stockout-final-head-accepted.json",
         "receipt_status": "passed",
-        "sha256": "853a621d089fe546398a67cabaa7db087b6a10c8677207b57406c1bf6478d974"
+        "sha256": "2749018151c3a27ceeb45b096d8a3a60ba88ff6dccc0a11a2a2c5af207813443"
       },
       "source_duplicates": 40,
       "source_projected": 40,
