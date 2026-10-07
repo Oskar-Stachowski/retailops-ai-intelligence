@@ -10,6 +10,29 @@ from typing import Any
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+CI_GROUPS = {
+    "ci-checks": "lint type-check docs-check forecast-runtime-check contracts-check package compose-config",
+    "ci-source-inputs": "handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check observation-replay-check",
+    "ci-qualified-inputs": "full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check",
+    "ci-detectors": "anomaly-detectors-check",
+    "ci-forecast": "forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check",
+}
+
+
+def make_ci_errors(makefile: str) -> list[str]:
+    errors = []
+    rules = {
+        name: targets.split()
+        for name, targets in re.findall(r"^([a-z][a-z-]+): ([^\n]+)$", makefile, re.MULTILINE)
+    }
+    targets = ["test"]
+    for name, expected in CI_GROUPS.items():
+        if rules.get(name) != expected.split():
+            errors.append(f"{name} must preserve every original acceptance gate")
+        targets.extend(expected.split())
+    if set(targets) != set(rules.get("check", [])) or len(targets) != len(set(targets)):
+        errors.append("CI groups must cover every make check target exactly once")
+    return errors
 
 
 def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None) -> list[str]:
@@ -37,6 +60,12 @@ def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append("workflow permissions must be contents:read")
     jobs = workflow.get("jobs", {})
+    if not any(
+        step.get("run")
+        == "uv run --frozen python scripts/check_anomaly_oci.py --producer .local/ai07-ci-source"
+        for step in jobs.get("anomaly-oci", {}).get("steps", [])
+    ):
+        errors.append("anomaly-oci must execute qualified native OCI and Pg16 acceptance")
     if not any(
         step.get("run") == "make bootstrap compose-smoke"
         for step in jobs.get("persistence", {}).get("steps", [])
@@ -87,11 +116,34 @@ def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None
         for step in jobs.get("persistence", {}).get("steps", [])
     ):
         errors.append("persistence must execute evaluation acceptance")
+    errors.extend(make_ci_errors((ROOT / "Makefile").read_text()))
     if not any(
-        step.get("run") == "make bootstrap check"
+        step.get("run") == "make bootstrap ci-checks"
         for step in jobs.get("checks", {}).get("steps", [])
     ):
-        errors.append("checks must run every make check gate")
+        errors.append("checks must run the complete ci-checks group")
+    tests = jobs.get("tests", {})
+    if tests.get("strategy") != {"fail-fast": False, "matrix": {"shard": [0, 1, 2, 3]}}:
+        errors.append("tests must run all four complete native pytest shards")
+    if tests.get("if") or not any(
+        step.get("env") == {"CI_TEST_SHARD": "${{ matrix.shard }}"}
+        and step.get("run")
+        == 'uv run --frozen python -m scripts.run_ci_tests --shard "$CI_TEST_SHARD" --shards 4'
+        for step in tests.get("steps", [])
+    ):
+        errors.append("tests must execute the full native collection partition")
+    acceptance = jobs.get("acceptance", {})
+    if acceptance.get("strategy") != {
+        "fail-fast": False,
+        "matrix": {"target": [name for name in CI_GROUPS if name != "ci-checks"]},
+    }:
+        errors.append("acceptance must run every complete make check group")
+    if acceptance.get("if") or not any(
+        step.get("env") == {"CI_ACCEPTANCE_TARGET": "${{ matrix.target }}"}
+        and step.get("run") == 'make bootstrap "$CI_ACCEPTANCE_TARGET"'
+        for step in acceptance.get("steps", [])
+    ):
+        errors.append("acceptance must execute every unchanged gate")
     required = jobs.get("required-result", {})
     if not any(
         step.get("run") == "make bootstrap observation-persistence-test"
@@ -127,6 +179,9 @@ def workflow_errors(workflow: dict[str | bool, Any], makefile: str | None = None
     }
     if not any(step.get("env") == expected for step in result_steps):
         errors.append("required-result must read the exact result expressions")
+    for name in expected:
+        if not any(f'test "${name}" = "success"' in step.get("run", "") for step in result_steps):
+            errors.append(f"required-result must require {name} success")
     for job in jobs.values():
         if job.get("continue-on-error"):
             errors.append("jobs cannot ignore failures")

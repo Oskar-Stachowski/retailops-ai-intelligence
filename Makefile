@@ -3,7 +3,7 @@ GITLEAKS ?= gitleaks
 ENV_FILE ?= .env.example
 UV_RUN = $(UV) run --locked --extra snapshot --extra forecast
 
-.PHONY: bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke mlflow-store-smoke forecast-acceptance-check forecast-remediation-check
+.PHONY: day-qualification-check full-raw-dq-check return-inputs-check raw-dq-check anomaly-inputs-check forecast-acceptance-check bootstrap lint type-check test docs-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check package check secrets ci-local serve contracts contracts-check compose-up compose-down compose-config compose-smoke mlflow-store-smoke
 
 bootstrap:
 	$(UV) sync --locked --extra snapshot --extra forecast
@@ -30,6 +30,29 @@ snapshot-import-check:
 
 curated-check:
 	$(UV_RUN) python scripts/check_curated.py
+
+anomaly-inputs-check:
+	$(UV_RUN) python scripts/check_anomaly_inputs.py
+
+return-inputs-check:
+	$(UV_RUN) python scripts/check_return_inputs.py
+
+raw-dq-check:
+	$(UV_RUN) python scripts/check_raw_dq.py
+
+full-raw-dq-check:
+	$(UV_RUN) python scripts/check_full_raw_dq.py
+
+.PHONY: qualified-anomaly-inputs-check
+qualified-anomaly-inputs-check:
+	$(UV_RUN) python scripts/check_qualified_anomaly_inputs.py
+
+.PHONY: anomaly-detectors-check
+anomaly-detectors-check:
+	$(UV_RUN) python scripts/check_anomaly_detectors.py
+
+day-qualification-check:
+	$(UV_RUN) python scripts/check_day_qualification.py
 
 forecast-calendar-check:
 	$(UV_RUN) python scripts/check_forecast_calendar.py
@@ -64,7 +87,15 @@ forecast-acceptance-check:
 package:
 	$(UV) build --no-build-isolation
 
-check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-run-check contracts-check package compose-config forecast-remediation-check forecast-acceptance-check observation-replay-check
+check: lint type-check test docs-check forecast-runtime-check handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check anomaly-detectors-check return-inputs-check forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check contracts-check package compose-config observation-replay-check
+
+# CI uses isolated runners for these complete groups; local make check stays complete.
+.PHONY: ci-checks ci-source-inputs ci-qualified-inputs ci-detectors ci-forecast
+ci-checks: lint type-check docs-check forecast-runtime-check contracts-check package compose-config
+ci-source-inputs: handoff-check snapshot-import-check curated-check anomaly-inputs-check raw-dq-check return-inputs-check observation-replay-check
+ci-qualified-inputs: full-raw-dq-check day-qualification-check qualified-anomaly-inputs-check
+ci-detectors: anomaly-detectors-check
+ci-forecast: forecast-calendar-check forecast-features-check forecast-manifests-check forecast-baselines-check forecast-models-check forecast-backtest-check forecast-quality-check forecast-remediation-check forecast-run-check forecast-acceptance-check
 
 secrets:
 	$(GITLEAKS) git . --redact --no-banner
@@ -76,6 +107,9 @@ serve:
 	$(UV_RUN) retailops-ai serve --env-file "$(ENV_FILE)"
 
 contracts:
+	$(UV_RUN) python scripts/update_anomaly_portfolio_contracts.py
+	$(UV_RUN) python scripts/update_anomaly_evaluation_contracts.py
+	$(UV_RUN) python scripts/update_anomaly_detector_contracts.py
 	$(UV_RUN) python scripts/update_http_contracts.py
 	$(UV_RUN) python scripts/update_intelligence_contracts.py
 	$(UV_RUN) python scripts/update_access_contracts.py
@@ -89,11 +123,16 @@ contracts:
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py
 	$(UV_RUN) python scripts/update_intelligence_event_contracts.py
 
+	$(UV_RUN) python scripts/update_stockout_job_contracts.py
+
 contracts-check:
 	$(UV_RUN) python scripts/update_observation_replay_contract.py --check
 	$(UV_RUN) python scripts/check_source_bundle_contract.py
 	$(UV_RUN) python scripts/update_source_rest_contract.py --check
 	$(UV_RUN) python scripts/check_intelligence_delivery.py
+	$(UV_RUN) python scripts/update_anomaly_portfolio_contracts.py --check
+	$(UV_RUN) python scripts/update_anomaly_evaluation_contracts.py --check
+	$(UV_RUN) python scripts/update_anomaly_detector_contracts.py --check
 	$(UV_RUN) python scripts/update_intelligence_contracts.py --check
 	$(UV_RUN) python scripts/update_access_contracts.py --check
 	$(UV_RUN) python scripts/update_knowledge_contracts.py --check
@@ -105,6 +144,7 @@ contracts-check:
 	$(UV_RUN) python scripts/update_v12_lifecycle_contracts.py --check
 	$(UV_RUN) python scripts/update_v12_batch_contracts.py --check
 	$(UV_RUN) python scripts/update_intelligence_event_contracts.py --check
+	$(UV_RUN) python scripts/update_stockout_job_contracts.py --check
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up

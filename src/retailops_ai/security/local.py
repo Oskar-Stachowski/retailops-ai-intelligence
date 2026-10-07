@@ -10,7 +10,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from retailops_ai.domain.access import KnowledgeAccess, Principal
+from retailops_ai.domain.access import KnowledgeAccess, Principal, StockoutAccess
 from retailops_ai.security.models import AccessPolicy
 
 MAX_POLICY_BYTES = 131072
@@ -67,6 +67,7 @@ class LocalAccess:
             for grant in policy.grants:
                 scope = grant.scope
                 knowledge = grant.knowledge_scope
+                stockout = grant.stockout_scope
                 self._principals[grant.principal_id] = Principal(
                     principal_id=grant.principal_id,
                     roles=frozenset(grant.roles),
@@ -83,6 +84,12 @@ class LocalAccess:
                         document_statuses=frozenset(knowledge.document_statuses),
                     )
                     if knowledge
+                    else None,
+                    stockout=StockoutAccess(
+                        product_ids=frozenset(stockout.product_ids),
+                        stock_location_ids=frozenset(stockout.stock_location_ids),
+                    )
+                    if stockout
                     else None,
                 )
 

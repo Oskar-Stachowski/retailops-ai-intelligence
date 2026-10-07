@@ -11,8 +11,12 @@ Capability = Literal[
     "knowledge:index",
     "model:decide",
     "forecast:run",
+    "anomaly:read",
+    "anomaly:run",
+    "stockout:read",
+    "stockout:run",
 ]
-Channel = Literal["store", "online"]
+Channel = Literal["store", "online", "marketplace", "wholesale"]
 
 
 @dataclass(frozen=True)
@@ -24,6 +28,12 @@ class KnowledgeAccess:
 
 
 @dataclass(frozen=True)
+class StockoutAccess:
+    product_ids: frozenset[str]
+    stock_location_ids: frozenset[str]
+
+
+@dataclass(frozen=True)
 class Principal:
     principal_id: str
     roles: frozenset[Role]
@@ -32,6 +42,7 @@ class Principal:
     selling_location_ids: frozenset[str]
     channels: frozenset[Channel]
     knowledge: KnowledgeAccess | None = None
+    stockout: StockoutAccess | None = None
 
 
 def can_read_forecast(
@@ -44,4 +55,18 @@ def can_read_forecast(
         and products <= principal.product_ids
         and locations <= principal.selling_location_ids
         and channel in principal.channels
+    )
+
+
+def can_read_stockout(
+    principal: Principal, *, products: set[str], stock_locations: set[str]
+) -> bool:
+    scope = principal.stockout
+    return (
+        "stockout:read" in principal.capabilities
+        and scope is not None
+        and bool(products)
+        and bool(stock_locations)
+        and products <= scope.product_ids
+        and stock_locations <= scope.stock_location_ids
     )

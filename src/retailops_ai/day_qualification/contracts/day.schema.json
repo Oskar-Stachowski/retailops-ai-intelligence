@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "activity": {
+      "enum": [
+        "open",
+        "closed",
+        "missing"
+      ],
+      "title": "Activity",
+      "type": "string"
+    },
+    "business_date": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "title": "Business Date",
+      "type": "string"
+    },
+    "channel": {
+      "enum": [
+        "store",
+        "online",
+        "marketplace",
+        "wholesale"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "currency": {
+      "enum": [
+        "PLN",
+        "EUR"
+      ],
+      "title": "Currency",
+      "type": "string"
+    },
+    "event_type": {
+      "enum": [
+        "sale_completed",
+        "return_completed"
+      ],
+      "title": "Event Type",
+      "type": "string"
+    },
+    "expected_business_ids": {
+      "items": {
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        "type": "string"
+      },
+      "maxItems": 4096,
+      "title": "Expected Business Ids",
+      "type": "array"
+    },
+    "known_at": {
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Known At",
+      "type": "string"
+    },
+    "product_id": {
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "required_sale_ids": {
+      "items": {
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        "type": "string"
+      },
+      "maxItems": 4096,
+      "title": "Required Sale Ids",
+      "type": "array"
+    },
+    "selling_location_id": {
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "title": "Selling Location Id",
+      "type": "string"
+    },
+    "source_complete": {
+      "title": "Source Complete",
+      "type": "boolean"
+    },
+    "window_end": {
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Window End",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_type",
+    "business_date",
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "currency",
+    "window_end",
+    "known_at",
+    "source_complete",
+    "activity",
+    "expected_business_ids",
+    "required_sale_ids"
+  ],
+  "title": "Day",
+  "type": "object"
+}

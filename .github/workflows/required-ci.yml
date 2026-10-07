@@ -19,7 +19,7 @@ concurrency:
 jobs:
   checks:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -31,9 +31,53 @@ jobs:
           enable-cache: true
       - name: Verify workflow contract before broad checks
         run: uv run --locked --extra snapshot --extra forecast python -m pytest -q tests/test_ci_contract.py
-      - run: make bootstrap check
+      - run: make bootstrap ci-checks
+  tests:
+    name: tests (${{ matrix.shard }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - run: make bootstrap
+      - name: Run a complete, balanced native pytest shard
+        env:
+          CI_TEST_SHARD: ${{ matrix.shard }}
+        run: uv run --frozen python -m scripts.run_ci_tests --shard "$CI_TEST_SHARD" --shards 4
+  acceptance:
+    name: acceptance (${{ matrix.target }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ci-source-inputs, ci-qualified-inputs, ci-detectors, ci-forecast]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - name: Run every unchanged acceptance gate in this isolated group
+        env:
+          CI_ACCEPTANCE_TARGET: ${{ matrix.target }}
+        run: make bootstrap "$CI_ACCEPTANCE_TARGET"
       - name: Preserve bounded observation replay evidence
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: matrix.target == 'ci-source-inputs'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: ai10-observation-replay
           path: artifacts/ai10-observation-replay.json
@@ -83,6 +127,31 @@ jobs:
           make integration-replay-test integration-failure-test
       - name: Accept v12 registry, jobs, publication, metadata, backup and recovery
         run: make v12-backup-smoke
+  anomaly-oci:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: 48439ebd9515dc1c7adc633609bbe33d1657c3df
+          path: .local/ai07-ci-source
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: true
+      - run: make bootstrap
+      - name: Prepare the pinned native producer toolchain
+        run: |
+          uv venv --python 3.11.15 .local/ai07-ci-source/services/api/.venv
+          uv pip install --python .local/ai07-ci-source/services/api/.venv/bin/python -r .local/ai07-ci-source/services/api/requirements-dev.txt -r .local/ai07-ci-source/data/requirements-parquet.txt
+      - name: Accept qualified anomaly models, native parents, OCI, PostgreSQL 16 and recovery
+        run: uv run --frozen python scripts/check_anomaly_oci.py --producer .local/ai07-ci-source
   observation-replay:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -139,20 +208,26 @@ jobs:
           retention-days: 14
   required-result:
     if: always()
-    needs: [checks, secrets, persistence, observation-replay, observation-broker]
+    needs: [checks, tests, acceptance, secrets, persistence, anomaly-oci, observation-replay, observation-broker]
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     steps:
       - name: Require every gate
         env:
           CHECKS_RESULT: ${{ needs.checks.result }}
+          TESTS_RESULT: ${{ needs.tests.result }}
+          ACCEPTANCE_RESULT: ${{ needs.acceptance.result }}
           PERSISTENCE_RESULT: ${{ needs.persistence.result }}
           SECRETS_RESULT: ${{ needs.secrets.result }}
+          ANOMALY_OCI_RESULT: ${{ needs.anomaly-oci.result }}
           OBSERVATION_REPLAY_RESULT: ${{ needs.observation-replay.result }}
           OBSERVATION_BROKER_RESULT: ${{ needs.observation-broker.result }}
         run: |
           test "$CHECKS_RESULT" = "success"
+          test "$TESTS_RESULT" = "success"
+          test "$ACCEPTANCE_RESULT" = "success"
           test "$SECRETS_RESULT" = "success"
           test "$PERSISTENCE_RESULT" = "success"
+          test "$ANOMALY_OCI_RESULT" = "success"
           test "$OBSERVATION_REPLAY_RESULT" = "success"
           test "$OBSERVATION_BROKER_RESULT" = "success"

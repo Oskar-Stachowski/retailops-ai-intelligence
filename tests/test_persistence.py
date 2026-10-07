@@ -6,6 +6,8 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 import yaml
 from alembic import op
+from alembic.config import Config
+from alembic.script import ScriptDirectory
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
 from sqlalchemy import text
@@ -59,6 +61,9 @@ def test_actual_unreachable_database_is_required_and_health_is_independent():
     "revision,extension,expected",
     [
         (EXPECTED_REVISION, 1, True),
+        ("0019_v12_development", 1, False),
+        ("0022_anomaly_evaluations", 1, False),
+        ("0021_stockout_jobs", 1, False),
         ("old_schema", 1, False),
         (EXPECTED_REVISION, None, False),
     ],
@@ -74,6 +79,12 @@ def test_database_probe_checks_revision_extension_and_table(revision, extension,
     engine.connect.return_value = context
     assert asyncio.run(DatabaseProbe(engine).check()) is expected
     assert connection.execute.await_count == (1 if expected else 0)
+
+
+def test_readiness_revision_matches_the_actual_migration_head():
+    config = Config()
+    config.set_main_option("script_location", str(ROOT / "src/retailops_ai/migrations"))
+    assert ScriptDirectory.from_config(config).get_heads() == [EXPECTED_REVISION]
 
 
 def test_reserved_probe_cannot_be_overridden():

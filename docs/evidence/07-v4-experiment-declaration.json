@@ -1,0 +1,175 @@
+{
+  "descriptor": {
+    "calendar": [
+      "2025-01-01",
+      "2025-05-08"
+    ],
+    "calibration_columns": [
+      "sale_alert",
+      "return_alert",
+      "sale_high",
+      "return_high"
+    ],
+    "calibration_truth_access": "excluded",
+    "calibrations": [
+      [
+        0.075,
+        0.005,
+        0.005,
+        0.001
+      ],
+      [
+        0.075,
+        0.005,
+        0.05,
+        0.0025
+      ],
+      [
+        0.1,
+        0.005,
+        0.005,
+        0.001
+      ],
+      [
+        0.075,
+        0.01,
+        0.05,
+        0.005
+      ],
+      [
+        0.1,
+        0.01,
+        0.05,
+        0.005
+      ],
+      [
+        0.1,
+        0.0025,
+        0.005,
+        0.001
+      ],
+      [
+        0.1,
+        0.005,
+        0.05,
+        0.0025
+      ],
+      [
+        0.075,
+        0.01,
+        0.025,
+        0.005
+      ],
+      [
+        0.075,
+        0.005,
+        0.025,
+        0.001
+      ]
+    ],
+    "declared_at": "2026-10-05T03:02:16.726817+00:00",
+    "development": "seed_42_training_and_validation_only",
+    "dimensions": {
+      "channels": [
+        "store",
+        "online"
+      ],
+      "days": 128,
+      "products": 12,
+      "selling_locations": 1,
+      "stock_locations": 2
+    },
+    "families": [
+      "seasonal_residual",
+      "isolation_forest"
+    ],
+    "feature_recipe": "multiscale",
+    "features": [
+      "standardized_residual",
+      "short_count_residual",
+      "long_count_residual",
+      "inventory_shortfall"
+    ],
+    "final_test": "unopened",
+    "limitations": [
+      "correlated_repeated_synthetic_experiments",
+      "qualifies_only_declared_v4_scope_if_all_gates_pass",
+      "not_a_production_or_prior_cohort_qualification"
+    ],
+    "native_fit_count": 9,
+    "offsets": {
+      "final_test": [
+        100,
+        127
+      ],
+      "training": [
+        28,
+        59
+      ],
+      "validation": [
+        64,
+        95
+      ]
+    },
+    "prior_failures": {
+      "07-v2-final-not-ready.json": "1bc258011cf5684c569052dd82faf16bc4655d3838be6d69877fadf696c7643d",
+      "07-v3-final-not-ready.json": "d6d8b605bef6dc6663da62ab4d32eb919828b325f76781bc0d423af2f2157304"
+    },
+    "quality_policy": {
+      "maximum_false_alerts_per_1000": 10.0,
+      "minimum_clean_per_case": 300,
+      "minimum_episode_recall": 0.75,
+      "minimum_episode_recall_per_type": 0.5,
+      "minimum_episodes_per_type": 3,
+      "minimum_evaluable_coverage": 0.55,
+      "minimum_high_severity_precision": 0.9,
+      "minimum_positive_observations_per_type": 3,
+      "minimum_precision": 0.8,
+      "minimum_recall": 0.65,
+      "null_required_metric": "blocks_qualification",
+      "qualification_scope": "synthetic_ai_07_portfolio_v4",
+      "required_types": [
+        "one_day_spike",
+        "multi_day_spike",
+        "sustained_drop",
+        "return_spike",
+        "inventory_censored_episode"
+      ],
+      "segment_policy": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+      "source_scenarios": [
+        "demand",
+        "physical"
+      ],
+      "source_seeds": [
+        42,
+        137,
+        2026
+      ],
+      "version": "anomaly-portfolio-quality-1.0.0"
+    },
+    "recipe": "causal-count-residuals-2.0.0",
+    "scenarios": [
+      "demand",
+      "physical"
+    ],
+    "selection": "all_required_validation_metrics_and_sample_checks_before_final_freeze",
+    "source_commit": "48439ebd9515dc1c7adc633609bbe33d1657c3df",
+    "source_profile": "ai-07-portfolio-v4",
+    "source_seeds": [
+      42,
+      137,
+      2026
+    ],
+    "unchanged": [
+      "five_intervention_types_and_magnitudes",
+      "complete_native_source_and_four_parent_replay",
+      "8192_canonical_event_budget",
+      "conservative_truth_mask",
+      "uniform_native_demand_factor_0.50",
+      "opening_stock_256_reorder_128_safety_64_minimum_order_64",
+      "all_original_numeric_gates"
+    ],
+    "version": "ai07-experiment-declaration-1.0.0"
+  },
+  "experiment_id": "ai07-experiment-sha256-a55be9a221c3cd315258408634866f8e356c7288a8b0425c623fd5244650f055"
+}

@@ -14,6 +14,7 @@ from retailops_ai.data_contracts.common import Channel, Sha256, Symbol
 from retailops_ai.domain.access import Principal
 from retailops_ai.forecast_jobs.queue import BatchError
 from retailops_ai.forecasting.quality_contract import QualityStatus
+from retailops_ai.model_lifecycle.anomaly_evaluation_contracts import AnomalyEvaluationDetail
 from retailops_ai.model_lifecycle.evaluation_contracts import (
     EvaluationDetail,
     EvaluationID,
@@ -54,13 +55,15 @@ def add_evaluation_routes(
     router: APIRouter, verified: Callable[..., object], backend: EvaluationReader | None
 ) -> None:
     async def reader(principal: Annotated[Principal, Depends(verified)]) -> Principal:
-        if "forecast:read" not in principal.capabilities:
+        if not {"forecast:read", "anomaly:read"} & principal.capabilities:
             raise HTTPException(403)
         return principal
 
     def call(
-        action: Callable[[EvaluationReader], EvaluationPage | EvaluationDetail],
-    ) -> EvaluationPage | EvaluationDetail | JSONResponse:
+        action: Callable[
+            [EvaluationReader], EvaluationPage | EvaluationDetail | AnomalyEvaluationDetail
+        ],
+    ) -> EvaluationPage | EvaluationDetail | AnomalyEvaluationDetail | JSONResponse:
         if backend is None:
             raise HTTPException(503)
         try:
@@ -84,17 +87,17 @@ def add_evaluation_routes(
     def evaluations(
         principal: Annotated[Principal, Depends(reader)],
         query: Annotated[EvaluationQuery, Depends(list_query)],
-    ) -> EvaluationPage | EvaluationDetail | JSONResponse:
+    ) -> EvaluationPage | EvaluationDetail | AnomalyEvaluationDetail | JSONResponse:
         return call(lambda b: b.evaluations(query, principal))
 
     @router.get(
         "/evaluations/{evaluation_id}",
-        response_model=EvaluationDetail,
+        response_model=EvaluationDetail | AnomalyEvaluationDetail,
         responses={503: {"model": Problem}},
     )
     def evaluation(
         evaluation_id: EvaluationID,
         principal: Annotated[Principal, Depends(reader)],
         scope: Annotated[CatalogScope, Depends(scope_query)],
-    ) -> EvaluationPage | EvaluationDetail | JSONResponse:
+    ) -> EvaluationPage | EvaluationDetail | AnomalyEvaluationDetail | JSONResponse:
         return call(lambda b: b.evaluation(evaluation_id, scope, principal))

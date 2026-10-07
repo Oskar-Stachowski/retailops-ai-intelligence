@@ -1,0 +1,172 @@
+{
+  "$defs": {
+    "TableIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "columns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Columns",
+          "type": "array"
+        },
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "data_class": {
+          "enum": [
+            "source_observation",
+            "source_plan",
+            "simulation_truth"
+          ],
+          "title": "Data Class",
+          "type": "string"
+        },
+        "grain": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Grain",
+          "type": "array"
+        },
+        "row_count": {
+          "minimum": 0,
+          "title": "Row Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "row_count",
+        "columns",
+        "grain",
+        "data_class",
+        "content_sha256"
+      ],
+      "title": "TableIdentity",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "business_event_day_completeness": {
+      "const": "not_qualified",
+      "title": "Business Event Day Completeness",
+      "type": "string"
+    },
+    "contract_version": {
+      "const": "raw-dq-binding-2.1.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "missing_grain_policy": {
+      "const": "unknown_not_zero",
+      "title": "Missing Grain Policy",
+      "type": "string"
+    },
+    "projection": {
+      "const": "legacy_operational_sales_and_returns_allowlist_v1",
+      "title": "Projection",
+      "type": "string"
+    },
+    "projection_tables": {
+      "additionalProperties": {
+        "$ref": "#/$defs/TableIdentity"
+      },
+      "maxProperties": 6,
+      "minProperties": 6,
+      "propertyNames": {
+        "enum": [
+          "sales",
+          "orders",
+          "sale_price_references",
+          "products",
+          "inventory_sales",
+          "return_events"
+        ]
+      },
+      "title": "Projection Tables",
+      "type": "object"
+    },
+    "return_scope": {
+      "const": "purchases_in_parent_source_only",
+      "title": "Return Scope",
+      "type": "string"
+    },
+    "return_status_source": {
+      "const": "verified_native_parent_not_refund_amount_inference",
+      "title": "Return Status Source",
+      "type": "string"
+    },
+    "scope": {
+      "const": "all_parent_sales_and_return_claims",
+      "title": "Scope",
+      "type": "string"
+    },
+    "selection_policy": {
+      "const": "all_canonical_sales_and_native_return_claims_v1",
+      "title": "Selection Policy",
+      "type": "string"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_descriptor_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Descriptor Sha256",
+      "type": "string"
+    },
+    "source_event_count": {
+      "maximum": 8192,
+      "minimum": 12,
+      "title": "Source Event Count",
+      "type": "integer"
+    },
+    "source_events_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Events Sha256",
+      "type": "string"
+    },
+    "source_facts_ready": {
+      "const": true,
+      "title": "Source Facts Ready",
+      "type": "boolean"
+    },
+    "source_return_count": {
+      "maximum": 8192,
+      "minimum": 0,
+      "title": "Source Return Count",
+      "type": "integer"
+    },
+    "source_sales_count": {
+      "maximum": 8192,
+      "minimum": 0,
+      "title": "Source Sales Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "contract_version",
+    "source_dataset_id",
+    "source_descriptor_sha256",
+    "source_events_sha256",
+    "source_event_count",
+    "source_sales_count",
+    "source_return_count",
+    "source_facts_ready",
+    "selection_policy",
+    "projection",
+    "scope",
+    "projection_tables",
+    "return_scope",
+    "return_status_source",
+    "business_event_day_completeness",
+    "missing_grain_policy"
+  ],
+  "title": "PortfolioBinding",
+  "type": "object"
+}

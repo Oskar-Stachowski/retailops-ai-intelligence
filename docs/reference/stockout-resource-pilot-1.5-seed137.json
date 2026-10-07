@@ -1,0 +1,106 @@
+{
+  "schema_version": "stockout-resource-pilot-1.5.0",
+  "scope": "prospective frozen19x140 robustness seed137; original temporal and protected final-test boundaries unchanged",
+  "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+  "consumer_baseline_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+  "generation": {
+    "profile": "ai-load",
+    "days": 140,
+    "products": 19,
+    "stores": 3,
+    "warehouses": 2,
+    "seed": 137,
+    "start_date": "2026-03-14",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 7980,
+    "forecast_plan_days": 0
+  },
+  "physical_origin_upper_bound": 5320,
+  "inventory_configuration": "pinned default_inventory_config; no supplier/scenario/stock overrides",
+  "producer_timeline_metadata": {
+    "warmup_days": 0,
+    "origin_days": 0,
+    "label_tail_days": 0
+  },
+  "split_policy": {
+    "version": "stockout-temporal-split-1.0.0",
+    "start_at": "2026-04-21T00:00:00Z",
+    "train_until": "2026-06-05T00:00:00Z",
+    "tune_until": "2026-06-24T00:00:00Z",
+    "calibration_until": "2026-07-13T00:00:00Z",
+    "test_until": "2026-08-01T00:00:00Z",
+    "evaluated_at": "2026-08-01T00:00:00Z",
+    "purge": "outcome_end_and_availability_strictly_before_next_role",
+    "final_test": "membership_only_no_outcome_metrics_no_training_access"
+  },
+  "budgets": {
+    "scratch_bytes": 570425344,
+    "tree_rss_bytes": 1073741824,
+    "wall_seconds": 2700,
+    "minimum_free_bytes": 53687091200
+  },
+  "budget_revision": {
+    "reason": "Measured5320-origin warmup pilot used427.86MiB peak scratch;20percent preflight estimate is513.44MiB.544MiB cap exceeds both.1GiB RAM,2700s wall,50GiB reserve and all input caps unchanged. Initial137 preflight prevented generation due to free disk; no generated outputs or model outcome were used to revise this resource cap."
+  },
+  "unchanged_consumer_limits": {
+    "input_rows": 500000,
+    "input_bytes": 67108864,
+    "qualification_bytes": 4194304,
+    "ledger_rows": 100000,
+    "physical_origins": 10000,
+    "main_database_bytes": 134217728,
+    "development_bytes": 16777216
+  },
+  "future_quality_scope": {
+    "robustness_seeds": [
+      42,
+      137,
+      2026
+    ],
+    "required_scenarios": [
+      "normal",
+      "promotion",
+      "demand_shock",
+      "inventory_constraint"
+    ],
+    "metrics": [
+      "average_precision",
+      "prevalence",
+      "brier",
+      "reliability",
+      "recall_at_capacity",
+      "precision_at_capacity"
+    ],
+    "segments": [
+      "category",
+      "stock_location",
+      "inventory_constrained"
+    ],
+    "resource_pass_is_not_quality_pass": true,
+    "calibration_fit_diagnostics_are_not_independent_quality": true,
+    "business_thresholds_and_capacity_require_approval": true,
+    "final_test_requires_separate_approved_campaign": true,
+    "promotion_requires_approval": true
+  },
+  "supersedes_unexecuted_profile": "New warmup-aware attempt; existing accepted cold-start profiles remain immutable.",
+  "retain_accepted_outputs_for_independent_quality": true,
+  "measured_resource_baseline": {
+    "receipt": "ai08-qualification-warm19-resource.json",
+    "sha256": "1b38aa73bb6cbab2d32638753a051eb52da64b7119856dd97081195b7c582173",
+    "physical_origins": 5320
+  },
+  "campaign_warmup": {
+    "days_before_campaign_start": 38,
+    "campaign_start_at": "2026-04-21T00:00:00Z",
+    "reason": "Complete prior28day window exists before the first campaign origin. Actual current-day availability remains unknown until received; nominal28day window can contain27 known complete daily observations. No role or label boundary changes."
+  },
+  "robustness_campaign": {
+    "seeds": [
+      42,
+      137,
+      2026
+    ],
+    "selection_and_calibration": "new pooled-development protocol must be frozen separately; earlier one-seed failures retained; no final-test access",
+    "required_reports": "each seed and pooled category/location/constraint; no unsupported scenario labels"
+  }
+}

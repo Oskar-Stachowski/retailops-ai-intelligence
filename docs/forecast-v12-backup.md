@@ -110,3 +110,7 @@ Odbiór dotyczy mechaniki przechowywania i odzyskiwania. Rzeczywisty końcowy
 eksport AI 04, jego źródło inference, kwalifikacja i przegląd operatora,
 pełny batch/serving z pomiarami, zdalny Required CI i jawna migracja
 trwałego środowiska pozostają osobnymi krokami.
+
+Nowa akceptacja obejmuje także tabele stockout lifecycle i techniczny head po
+odtworzeniu oraz restarcie. Jest oczekująca; historyczne receipts rewizji 0019
+zachowują swój pierwotny zakres. [Kontrakt stockout](reference/stockout-lifecycle.md).

@@ -5,12 +5,14 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from retailops_ai.anomaly_portfolio.serving_contract import ErrorCode as AnomalyErrorCode
 from retailops_ai.contracts import ApplicationInfo
 from retailops_ai.forecast_jobs.contracts import BatchErrorCode
 from retailops_ai.forecast_jobs.read_contracts import ReadErrorCode
 from retailops_ai.knowledge.jobs import IndexErrorCode
 from retailops_ai.model_lifecycle.evaluation_contracts import EvaluationErrorCode
 from retailops_ai.model_lifecycle.read_contracts import CatalogErrorCode
+from retailops_ai.stockout_jobs.public_contracts import StockoutErrorCode
 
 
 class Contract(BaseModel):
@@ -55,5 +57,7 @@ class Problem(Contract):
         | ReadErrorCode
         | CatalogErrorCode
         | EvaluationErrorCode
+        | AnomalyErrorCode
+        | StockoutErrorCode
         | None
     ) = None

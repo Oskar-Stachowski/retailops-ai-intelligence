@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "as_of": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "As Of"
+    },
+    "repaired_fact_policy": {
+      "const": "accepted_native_replacement_qualifies_only_later_views",
+      "default": "accepted_native_replacement_qualifies_only_later_views",
+      "title": "Repaired Fact Policy",
+      "type": "string"
+    },
+    "returns_delay_hours": {
+      "default": 72,
+      "maximum": 168,
+      "minimum": 0,
+      "title": "Returns Delay Hours",
+      "type": "integer"
+    },
+    "sales_delay_hours": {
+      "default": 24,
+      "maximum": 168,
+      "minimum": 0,
+      "title": "Sales Delay Hours",
+      "type": "integer"
+    },
+    "unknown_quarantine_policy": {
+      "const": "withhold_all_days_until_attributable",
+      "default": "withhold_all_days_until_attributable",
+      "title": "Unknown Quarantine Policy",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai-business-day-qualification-1.0.0",
+      "default": "ai-business-day-qualification-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "title": "Policy",
+  "type": "object"
+}

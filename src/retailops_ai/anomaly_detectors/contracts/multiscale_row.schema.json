@@ -1,0 +1,145 @@
+{
+  "$defs": {
+    "CountLag": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_units": {
+          "minimum": 0,
+          "title": "Expected Units",
+          "type": "integer"
+        },
+        "lag_days": {
+          "maximum": 6,
+          "minimum": 1,
+          "title": "Lag Days",
+          "type": "integer"
+        },
+        "observed_units": {
+          "minimum": 0,
+          "title": "Observed Units",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lag_days",
+        "observed_units",
+        "expected_units"
+      ],
+      "title": "CountLag",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "expected_units": {
+      "minimum": 0,
+      "title": "Expected Units",
+      "type": "integer"
+    },
+    "inventory_shortfall": {
+      "maximum": 8,
+      "minimum": 0,
+      "title": "Inventory Shortfall",
+      "type": "number"
+    },
+    "long_count_residual": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Long Count Residual"
+    },
+    "observed_units": {
+      "minimum": 0,
+      "title": "Observed Units",
+      "type": "integer"
+    },
+    "on_hand": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "On Hand"
+    },
+    "planned_price": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Planned Price"
+    },
+    "promotion_offered": {
+      "title": "Promotion Offered",
+      "type": "boolean"
+    },
+    "recent_counts": {
+      "items": {
+        "$ref": "#/$defs/CountLag"
+      },
+      "maxItems": 6,
+      "title": "Recent Counts",
+      "type": "array"
+    },
+    "residual_recipe": {
+      "const": "causal-count-residuals-1.0.0",
+      "default": "causal-count-residuals-1.0.0",
+      "title": "Residual Recipe",
+      "type": "string"
+    },
+    "residual_units": {
+      "title": "Residual Units",
+      "type": "integer"
+    },
+    "robust_scale_units": {
+      "minimum": 1,
+      "title": "Robust Scale Units",
+      "type": "number"
+    },
+    "short_count_residual": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Short Count Residual"
+    },
+    "standardized_residual": {
+      "title": "Standardized Residual",
+      "type": "number"
+    }
+  },
+  "required": [
+    "observed_units",
+    "expected_units",
+    "residual_units",
+    "robust_scale_units",
+    "standardized_residual",
+    "planned_price",
+    "promotion_offered",
+    "on_hand",
+    "recent_counts",
+    "short_count_residual",
+    "long_count_residual",
+    "inventory_shortfall"
+  ],
+  "title": "MultiscaleRow",
+  "type": "object"
+}

@@ -1,0 +1,1325 @@
+{
+  "schema_version": "stockout-independent-development-evidence-1.0.0",
+  "status": "artifact_accepted_quality_not_ready",
+  "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+  "consumer_baseline_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+  "profile": "stockout-resource-pilot-1.2.0",
+  "resource_receipt": {
+    "schema_version": "stockout-whole-resource-probe-1.0.0",
+    "recorded_at_utc": "2026-10-04T20:12:16.059107+00:00",
+    "status": "passed",
+    "failure": null,
+    "scope": "one fresh complete intermediate ai-load pilot pipeline; producer, exports, import, curated, actual partition parents, assembly and six fits; sampled whole process tree",
+    "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+    "consumer_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+    "budgets": {
+      "scratch_bytes": 2147483648,
+      "tree_rss_bytes": 1073741824,
+      "wall_seconds": 1800,
+      "minimum_free_bytes": 53687091200
+    },
+    "measurement": {
+      "wall_seconds": 1243.649035082999,
+      "parent_cpu_seconds": 143.76050899999998,
+      "child_cpu_seconds": 1192.1288240000001,
+      "sampled_tree_peak_rss_bytes": 515997696,
+      "sampled_peak_scratch_logical_bytes": 327092742,
+      "sampled_peak_scratch_allocated_bytes": 341614592,
+      "sampled_peak_files": 2037,
+      "sample_seconds": 0.2,
+      "samples": 5351,
+      "final_scratch": {
+        "logical_bytes": 155105021,
+        "allocated_bytes": 159723520,
+        "files": 1980
+      },
+      "free_before_bytes": 56866947072,
+      "minimum_free_bytes": 55860490240,
+      "free_after_cleanup_bytes": 56028000256
+    },
+    "producer": {
+      "paths": {
+        "source": "/private/tmp/ai08-whole-probe-x3zqe9av/producer-code/data/generated/resource-probe/source/source-sha256-894779e0aa87d4deca4bee8ca93311a78bf36fa627223d05898bd7f6732c5529",
+        "qualification": "/private/tmp/ai08-whole-probe-x3zqe9av/producer-code/data/generated/resource-probe/qualification/inventory-labels-sha256-ab612b009b1ab4a36527b5a8c04c1afc7d235c04a7e9fc8de52073223a6eb129",
+        "facts_export": "/private/tmp/ai08-whole-probe-x3zqe9av/producer-code/data/generated/resource-probe/facts/source-sha256-894779e0aa87d4deca4bee8ca93311a78bf36fa627223d05898bd7f6732c5529",
+        "private_export": "/private/tmp/ai08-whole-probe-x3zqe9av/producer-code/data/generated/resource-probe/private/source-sha256-894779e0aa87d4deca4bee8ca93311a78bf36fa627223d05898bd7f6732c5529"
+      },
+      "stages": [
+        {
+          "stage": "producer_checkout",
+          "wall_seconds": 0.6917779999930644,
+          "cpu_seconds": 0.0027390000000000053
+        },
+        {
+          "stage": "source",
+          "wall_seconds": 127.37461925001116,
+          "cpu_seconds": 125.02703600000001
+        },
+        {
+          "stage": "qualification",
+          "wall_seconds": 43.90750516699336,
+          "cpu_seconds": 43.46066999999999
+        },
+        {
+          "stage": "facts_export",
+          "wall_seconds": 34.1778729170037,
+          "cpu_seconds": 33.54245700000001
+        },
+        {
+          "stage": "private_export",
+          "wall_seconds": 47.25715887499973,
+          "cpu_seconds": 46.562206
+        }
+      ],
+      "effective_config": {
+        "profile": "ai-load",
+        "days": 102,
+        "products": 19,
+        "stores": 3,
+        "warehouses": 2,
+        "seed": 42,
+        "start_date": "2026-04-21",
+        "end_date": "2026-07-31",
+        "max_daily_rows": 5814,
+        "business_timezone": "UTC",
+        "output_format": "csv",
+        "warmup_days": 0,
+        "origin_days": 0,
+        "label_tail_days": 0
+      },
+      "source_dataset_id": "source-sha256-894779e0aa87d4deca4bee8ca93311a78bf36fa627223d05898bd7f6732c5529",
+      "qualification_id": "inventory-labels-sha256-ab612b009b1ab4a36527b5a8c04c1afc7d235c04a7e9fc8de52073223a6eb129"
+    },
+    "consumer": {
+      "stages": [
+        {
+          "stage": "facts_import",
+          "wall_seconds": 19.762928333002492,
+          "cpu_seconds": 19.196935
+        },
+        {
+          "stage": "curated",
+          "wall_seconds": 91.22065137499885,
+          "cpu_seconds": 89.280047
+        },
+        {
+          "stage": "private_import",
+          "wall_seconds": 27.146322499989765,
+          "cpu_seconds": 26.463335999999984
+        },
+        {
+          "stage": "features",
+          "wall_seconds": 41.92597104200104,
+          "cpu_seconds": 40.53118600000002
+        },
+        {
+          "stage": "labels",
+          "wall_seconds": 33.195088417007355,
+          "cpu_seconds": 31.754947999999985
+        },
+        {
+          "stage": "upstream",
+          "wall_seconds": 216.67119629199442,
+          "cpu_seconds": 208.084879
+        },
+        {
+          "stage": "temporal",
+          "wall_seconds": 257.2735066250025,
+          "cpu_seconds": 242.76057100000003
+        },
+        {
+          "stage": "assemble_development",
+          "wall_seconds": 297.8477680829965,
+          "cpu_seconds": 281.71976799999993
+        },
+        {
+          "stage": "fit_six_models",
+          "wall_seconds": 1.2698840419907356,
+          "cpu_seconds": 1.11831200000006
+        }
+      ],
+      "input_stats": {
+        "facts": {
+          "snapshot_id": "snapshot-sha256-135d24fa17d682fbde719bf4e2c1da944c2d3452da21a3b8ce3138fffc588837",
+          "rows": 122806,
+          "bytes": 6817508,
+          "ledger_rows": 15309
+        },
+        "private": {
+          "snapshot_id": "snapshot-sha256-8c9d3fe36b48c9528df08429f5d2fb0789bdf0d291a2aee217d8d96ac299eaf8",
+          "rows": 194199,
+          "bytes": 11562636,
+          "ledger_rows": 15309
+        },
+        "qualification_bytes": 2194464
+      },
+      "parity": null,
+      "paths": {
+        "source": "/private/tmp/ai08-whole-probe-x3zqe9av/producer-code/data/generated/resource-probe/source/source-sha256-894779e0aa87d4deca4bee8ca93311a78bf36fa627223d05898bd7f6732c5529",
+        "qualification": "/private/tmp/ai08-whole-probe-x3zqe9av/producer-code/data/generated/resource-probe/qualification/inventory-labels-sha256-ab612b009b1ab4a36527b5a8c04c1afc7d235c04a7e9fc8de52073223a6eb129",
+        "facts_export": "/private/tmp/ai08-whole-probe-x3zqe9av/producer-code/data/generated/resource-probe/facts/source-sha256-894779e0aa87d4deca4bee8ca93311a78bf36fa627223d05898bd7f6732c5529",
+        "private_export": "/private/tmp/ai08-whole-probe-x3zqe9av/producer-code/data/generated/resource-probe/private/source-sha256-894779e0aa87d4deca4bee8ca93311a78bf36fa627223d05898bd7f6732c5529",
+        "facts_import": "/private/tmp/ai08-whole-probe-x3zqe9av/facts_import/data/generated/snapshots/source-sha256-894779e0aa87d4deca4bee8ca93311a78bf36fa627223d05898bd7f6732c5529",
+        "curated": "/private/tmp/ai08-whole-probe-x3zqe9av/curated/data/generated/curated/curated-sha256-f16d8d9a850f016948af4fb0a58f0d490ab5e96290281928f41bd83dfe8e3e6f",
+        "private_import": "/private/tmp/ai08-whole-probe-x3zqe9av/private_import/data/generated/snapshots/source-sha256-894779e0aa87d4deca4bee8ca93311a78bf36fa627223d05898bd7f6732c5529"
+      },
+      "ids": {
+        "feature_bundle_id": "feature-partitions-sha256-c474ff4d2af5c824007888c3e8d58e6234c189eaff3d3ce241038bf09c19a351",
+        "label_bundle_id": "label-partitions-sha256-49c7f4e8aecdf422aad8b77f4af9c221429a2e322434d4fbd178780aff946e6c",
+        "upstream_bundle_id": "upstream-partitions-sha256-5b171c69ccec161513d90165573576c482d58f955e13d6f58f76926aa2555cba",
+        "temporal_bundle_id": "temporal-partitions-sha256-df963e607ce7800fdc8b29ebfaf104f68cb8873cd2525f17d294776f800adb95",
+        "development_id": "development-sha256-4979edc1605a170db3bcdd88cb7bba1bc4fac8647bd37662b93c0f7a8f0be6ff"
+      },
+      "groups": {
+        "source": {
+          "logical_bytes": 47660590,
+          "allocated_bytes": 47804416,
+          "files": 64
+        },
+        "qualification": {
+          "logical_bytes": 2210995,
+          "allocated_bytes": 2215936,
+          "files": 3
+        },
+        "facts_export": {
+          "logical_bytes": 6984949,
+          "allocated_bytes": 7241728,
+          "files": 105
+        },
+        "private_export": {
+          "logical_bytes": 11763894,
+          "allocated_bytes": 12111872,
+          "files": 137
+        },
+        "facts_import": {
+          "logical_bytes": 7001207,
+          "allocated_bytes": 7262208,
+          "files": 107
+        },
+        "private_import": {
+          "logical_bytes": 11785196,
+          "allocated_bytes": 12140544,
+          "files": 139
+        },
+        "curated": {
+          "logical_bytes": 14738553,
+          "allocated_bytes": 14852096,
+          "files": 53
+        },
+        "features": {
+          "logical_bytes": 3699016,
+          "allocated_bytes": 3911680,
+          "files": 115
+        },
+        "upstream": {
+          "logical_bytes": 1406224,
+          "allocated_bytes": 1703936,
+          "files": 103
+        },
+        "labels": {
+          "logical_bytes": 253269,
+          "allocated_bytes": 331776,
+          "files": 39
+        },
+        "temporal": {
+          "logical_bytes": 404889,
+          "allocated_bytes": 479232,
+          "files": 33
+        }
+      },
+      "selected_on_tune": "logistic_regression:without_upstream",
+      "development_rows_by_role": {
+        "train": 839,
+        "tune": 321,
+        "calibration": 313
+      },
+      "development_payload_bytes": 1293024,
+      "physical_origins": {
+        "comparison": 3876,
+        "membership": 3876
+      },
+      "final_test_membership": 317,
+      "development_report": {
+        "coverage": {
+          "train": {
+            "eligible": 839,
+            "forecast_available": 839
+          },
+          "tune": {
+            "eligible": 321,
+            "forecast_available": 321
+          },
+          "calibration": {
+            "eligible": 313,
+            "forecast_available": 313
+          },
+          "final_test": {
+            "eligible_membership_only": 317,
+            "outcomes_evaluated": false
+          },
+          "raw_global_upstream_forecast_ready": false
+        },
+        "models_compared": 6,
+        "common_development_keys_identical": true,
+        "model_specific_drops": 0,
+        "upstream_campaign_development_coverage_complete": true,
+        "raw_global_upstream_forecast_ready": false,
+        "selected_on_tune": "logistic_regression:without_upstream",
+        "selection_provisional": true,
+        "calibration_generalization": "not_evaluated_fit_diagnostics_only",
+        "sigmoid_fitted_models": 6,
+        "sigmoid_monotone_models": 6,
+        "final_test_outcomes_evaluated": false,
+        "thresholds_fitted": false,
+        "threshold_policy_ready": false,
+        "production_promoted": false,
+        "full_training_profile_measured": false,
+        "model_ready": false,
+        "caution": "synthetic_temporal_smoke_overlapping_7d_windows_not_independent_episodes"
+      },
+      "final_test_outcomes_evaluated": false,
+      "model_promoted": false,
+      "producer_roots_unimportable": [
+        "data",
+        "ml",
+        "retailops"
+      ]
+    },
+    "phases": [
+      {
+        "phase": "producer",
+        "exit_code": 0,
+        "log_sha256": "5fa089a6bb18107faa3afc803c2822725f37f1c32d9026b73e63adbf41b9a803",
+        "log_tail": "{\"event\": \"started\", \"stage\": \"producer_checkout\"}\nhint: Using 'master' as the name for the initial branch. This default branch name\nhint: is subject to change. To configure the initial branch name to use in all\nhint: of your new repositories, which will suppress this warning, call:\nhint:\nhint: \tgit config --global init.defaultBranch <name>\nhint:\nhint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\nhint: 'development'. The just-created branch can be renamed via this command:\nhint:\nhint: \tgit branch -m <name>\n{\"stage\": \"producer_checkout\", \"wall_seconds\": 0.6917779999930644, \"cpu_seconds\": 0.0027390000000000053}\n{\"event\": \"started\", \"stage\": \"source\"}\n{\"stage\": \"source\", \"wall_seconds\": 127.37461925001116, \"cpu_seconds\": 125.02703600000001}\n{\"event\": \"started\", \"stage\": \"qualification\"}\n{\"stage\": \"qualification\", \"wall_seconds\": 43.90750516699336, \"cpu_seconds\": 43.46066999999999}\n{\"event\": \"started\", \"stage\": \"facts_export\"}\n{\"stage\": \"facts_export\", \"wall_seconds\": 34.1778729170037, \"cpu_seconds\": 33.54245700000001}\n{\"event\": \"started\", \"stage\": \"private_export\"}\n{\"stage\": \"private_export\", \"wall_seconds\": 47.25715887499973, \"cpu_seconds\": 46.562206}\n"
+      },
+      {
+        "phase": "consumer",
+        "exit_code": 0,
+        "log_sha256": "dd2dfaeb6b7f1674aaf313297e55fbd1e06f80e497cf1f12cc2adcc6648a12eb",
+        "log_tail": "{\"event\": \"started\", \"stage\": \"facts_import\"}\n{\"stage\": \"facts_import\", \"wall_seconds\": 19.762928333002492, \"cpu_seconds\": 19.196935}\n{\"event\": \"started\", \"stage\": \"curated\"}\n{\"stage\": \"curated\", \"wall_seconds\": 91.22065137499885, \"cpu_seconds\": 89.280047}\n{\"curated_dataset_id\": \"curated-sha256-f16d8d9a850f016948af4fb0a58f0d490ab5e96290281928f41bd83dfe8e3e6f\"}\n{\"event\": \"started\", \"stage\": \"private_import\"}\n{\"stage\": \"private_import\", \"wall_seconds\": 27.146322499989765, \"cpu_seconds\": 26.463335999999984}\n{\"event\": \"started\", \"stage\": \"features\"}\n{\"stage\": \"features\", \"wall_seconds\": 41.92597104200104, \"cpu_seconds\": 40.53118600000002}\n{\"event\": \"started\", \"stage\": \"labels\"}\n{\"stage\": \"labels\", \"wall_seconds\": 33.195088417007355, \"cpu_seconds\": 31.754947999999985}\n{\"event\": \"started\", \"stage\": \"upstream\"}\n{\"stage\": \"upstream\", \"wall_seconds\": 216.67119629199442, \"cpu_seconds\": 208.084879}\n{\"event\": \"started\", \"stage\": \"temporal\"}\n{\"stage\": \"temporal\", \"wall_seconds\": 257.2735066250025, \"cpu_seconds\": 242.76057100000003}\n{\"event\": \"started\", \"stage\": \"assemble_development\"}\n{\"stage\": \"assemble_development\", \"wall_seconds\": 297.8477680829965, \"cpu_seconds\": 281.71976799999993}\n{\"event\": \"started\", \"stage\": \"fit_six_models\"}\n{\"stage\": \"fit_six_models\", \"wall_seconds\": 1.2698840419907356, \"cpu_seconds\": 1.11831200000006}\n{\"parity\": null}\n"
+      }
+    ],
+    "profile": {
+      "schema_version": "stockout-resource-pilot-1.2.0",
+      "scope": "bounded intermediate 19-product qualification development; not full ai-dev or ai-training",
+      "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+      "consumer_baseline_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+      "generation": {
+        "profile": "ai-load",
+        "days": 102,
+        "products": 19,
+        "stores": 3,
+        "warehouses": 2,
+        "seed": 42,
+        "start_date": "2026-04-21",
+        "end_date": "2026-07-31",
+        "max_daily_rows": 5814,
+        "forecast_plan_days": 0
+      },
+      "physical_origin_upper_bound": 3876,
+      "inventory_configuration": "pinned default_inventory_config; no supplier/scenario/stock overrides",
+      "producer_timeline_metadata": {
+        "warmup_days": 0,
+        "origin_days": 0,
+        "label_tail_days": 0
+      },
+      "split_policy": {
+        "version": "stockout-temporal-split-1.0.0",
+        "start_at": "2026-04-21T00:00:00Z",
+        "train_until": "2026-06-05T00:00:00Z",
+        "tune_until": "2026-06-24T00:00:00Z",
+        "calibration_until": "2026-07-13T00:00:00Z",
+        "test_until": "2026-08-01T00:00:00Z",
+        "evaluated_at": "2026-08-01T00:00:00Z",
+        "purge": "outcome_end_and_availability_strictly_before_next_role",
+        "final_test": "membership_only_no_outcome_metrics_no_training_access"
+      },
+      "budgets": {
+        "scratch_bytes": 2147483648,
+        "tree_rss_bytes": 1073741824,
+        "wall_seconds": 1800,
+        "minimum_free_bytes": 53687091200
+      },
+      "budget_revision": {
+        "previous_proposal_scratch_bytes": 5368709120,
+        "previous_proposal_wall_seconds": 600,
+        "reason": "The completed 14-product whole pilot measured 622.23 MiB RSS. Scaling to 19 products with 20% headroom estimates about 1013 MiB within the unchanged 1 GiB budget. Add category representation across a third complete eight-category cycle, before any final-test access. Actual monitored limits remain mandatory; 50 GiB reserve is unchanged."
+      },
+      "unchanged_consumer_limits": {
+        "input_rows": 500000,
+        "input_bytes": 67108864,
+        "qualification_bytes": 4194304,
+        "ledger_rows": 100000,
+        "physical_origins": 10000,
+        "main_database_bytes": 134217728,
+        "development_bytes": 16777216
+      },
+      "future_quality_scope": {
+        "robustness_seeds": [
+          42,
+          137,
+          2026
+        ],
+        "required_scenarios": [
+          "normal",
+          "promotion",
+          "demand_shock",
+          "inventory_constraint"
+        ],
+        "metrics": [
+          "average_precision",
+          "prevalence",
+          "brier",
+          "reliability",
+          "recall_at_capacity",
+          "precision_at_capacity"
+        ],
+        "segments": [
+          "category",
+          "stock_location",
+          "inventory_constrained"
+        ],
+        "resource_pass_is_not_quality_pass": true,
+        "calibration_fit_diagnostics_are_not_independent_quality": true,
+        "business_thresholds_and_capacity_require_approval": true,
+        "final_test_requires_separate_approved_campaign": true,
+        "promotion_requires_approval": true
+      },
+      "supersedes_unexecuted_profile": "No previous accepted profile overwritten; new attempt uses actual qualified2856 whole-pipeline baseline.",
+      "retain_accepted_outputs_for_independent_quality": true,
+      "measured_resource_baseline": {
+        "receipt": "ai08-resource-pilot-accepted.json",
+        "sha256": "025fe584b6cc5ddcf29f810a07564ac2158046c38033297ad52dc93faf83fe1d",
+        "physical_origins": 2856
+      }
+    },
+    "preflight": {
+      "ready_to_attempt": true,
+      "estimates": {
+        "tree_rss_bytes": 1062577766.4,
+        "wall_seconds": 1172.269987260181,
+        "scratch_bytes": 442689594.5142857,
+        "input_rows": 242512.2,
+        "input_bytes": 14318807.142857144,
+        "ledger_rows": 18971.22857142857,
+        "qualification_bytes": 2614515.0857142857
+      },
+      "checks": {
+        "tree_rss_bytes": true,
+        "wall_seconds": true,
+        "scratch_bytes": true,
+        "input_rows": true,
+        "input_bytes": true,
+        "ledger_rows": true,
+        "qualification_bytes": true,
+        "free_disk": true,
+        "physical_origins": true
+      },
+      "scale_from_measured_smoke": 1.3571428571428572,
+      "estimate_headroom_fraction": 0.2,
+      "measured_baseline": "qualified_intermediate_pilot",
+      "scope": "heuristic estimates, not guaranteed upper bounds; databases, selected arrays and all input caps still enforced by actual pipeline",
+      "larger_profile_qualified": false,
+      "quality_qualified": false
+    },
+    "retained_root": "/private/tmp/ai08-whole-probe-x3zqe9av",
+    "temporary_outputs_removed": false,
+    "whole_smoke_budget_passed": false,
+    "whole_pilot_budget_passed": true,
+    "larger_profile_generation_attempted": true,
+    "larger_profile_generated": true,
+    "larger_profile_qualified": true,
+    "full_ai_dev_or_ai_training_qualified": false,
+    "independent_quality_accepted": false,
+    "final_test_outcomes_evaluated": false,
+    "model_promoted": false,
+    "ai08_ready": false
+  },
+  "native_qualification": {
+    "status": "passed",
+    "exit_code": 0,
+    "failure": null,
+    "wall_seconds": 277.5901069170068,
+    "peak_tree_rss_bytes": 280117248,
+    "peak_allocated_scratch_bytes": 186449920,
+    "peak_logical_scratch_bytes": 176118816,
+    "minimum_free_bytes": 55769792512,
+    "sample_seconds": 0.2,
+    "samples": 1324,
+    "retained_root": "/private/tmp/ai08-qualification-accepted-7yqjj3j9",
+    "proof": {
+      "status": "artifact_passed",
+      "qualification_id": "stockout-qualification-sha256-2ad4bc02b539ec8f75fae6a79944f4b51599c849a7d740cd484177e17b74af7c",
+      "card_id": "stockout-card-sha256-c573b49af2d8950ed49ccafc888faa71c59542b430e3e958e19a227aeaf0ce28",
+      "quality_status": "not_ready",
+      "gates": {
+        "status": "not_ready",
+        "segments": {
+          "all": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.049873357502,
+            "rows": 313,
+            "positives": 153,
+            "negatives": 160
+          },
+          "category:197c13ee-8ab3-580d-8ccc-a0c3195d9925": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.104971986517,
+            "rows": 48,
+            "positives": 23,
+            "negatives": 25
+          },
+          "category:28b88987-7084-5c08-a3c5-2b8ffa807492": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.086435101847,
+            "rows": 36,
+            "positives": 14,
+            "negatives": 22
+          },
+          "category:42c5eb6c-ad87-5271-aa04-cafcd641d9eb": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.086363325642,
+            "rows": 35,
+            "positives": 24,
+            "negatives": 11
+          },
+          "category:445dff34-464a-5d4e-b54d-324bf9aca10e": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.031143322161,
+            "rows": 36,
+            "positives": 14,
+            "negatives": 22
+          },
+          "category:4c17cc52-89f8-58a1-937b-4fb5fe940ff1": {
+            "status": "failed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": false
+            },
+            "expected_calibration_error": 0.231373340401,
+            "rows": 36,
+            "positives": 22,
+            "negatives": 14
+          },
+          "category:655e5f7a-c40d-5c55-b071-175c1b2d6502": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.064528262761,
+            "rows": 34,
+            "positives": 23,
+            "negatives": 11
+          },
+          "category:c8956032-5a0a-57f1-9118-b9b2c526cbda": {
+            "status": "failed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": false
+            },
+            "expected_calibration_error": 0.167579417461,
+            "rows": 33,
+            "positives": 22,
+            "negatives": 11
+          },
+          "category:d916b3fd-e110-5a11-af32-41fdef07aaa0": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.044413862462,
+            "rows": 55,
+            "positives": 11,
+            "negatives": 44
+          },
+          "historical_inventory_constraint:true": {
+            "status": "not_evaluable",
+            "reason": "insufficient_both_class_segment_support",
+            "rows": 149,
+            "positives": 146,
+            "negatives": 3
+          },
+          "stock_location:af89475f-8f1b-536e-86e0-f114c3261eb6": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.053617967365,
+            "rows": 167,
+            "positives": 64,
+            "negatives": 103
+          },
+          "stock_location:d07cb367-ec18-59c1-bfcc-be6270c0cdf6": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.075127053592,
+            "rows": 146,
+            "positives": 89,
+            "negatives": 57
+          }
+        },
+        "required_segment_universe_complete": true,
+        "policy_status": "proposal_before_final_test",
+        "final_test_qualified": false
+      },
+      "rows": {
+        "base_train": {
+          "rows": 370,
+          "classes": {
+            "1": 150,
+            "0": 220
+          },
+          "labels_sha256": "cc015b184d78fc09ac4a3e09f6def2edc087be0411fd0778e10b7426f6ae6a63",
+          "physical_membership_sha256": "c0895e0494aec9dc65baa092fffa599c27eaea6d1c3b4c61158e2440da20ca9b"
+        },
+        "calibration_fit": {
+          "rows": 232,
+          "classes": {
+            "1": 105,
+            "0": 127
+          },
+          "labels_sha256": "30cc7a8bb51bf2da54ba70a568876a62321fdd9bca47170e19d23ff14350ff49",
+          "physical_membership_sha256": "0073bb94e3b2369a4cfb505ae995fb33e12d338d57c0d950651c89564f23e048"
+        },
+        "tune": {
+          "rows": 321,
+          "classes": {
+            "1": 148,
+            "0": 173
+          },
+          "labels_sha256": "a4e985ce620242e2c9688289762601910b8c5781fa9f80d536558aefd5bdba38",
+          "physical_membership_sha256": "42683daf4e070b56af00241b0bcfc4fa9b0456bb9ac164d4241d722c6e153814"
+        },
+        "independent_validation": {
+          "rows": 313,
+          "classes": {
+            "1": 153,
+            "0": 160
+          },
+          "labels_sha256": "7b9e2dd782321d6ff3d28f4e23f4c07dcdf5aa8455fe87c95e95b193486093f7",
+          "physical_membership_sha256": "687fa4d32579b2592117e29d0aa8fde3f52057eed562d5a24e6fbfca893beb6e"
+        }
+      },
+      "selected": "logistic_regression:without_upstream",
+      "validation_all": {
+        "raw": {
+          "rows": 313,
+          "positives": 153,
+          "negatives": 160,
+          "average_precision": 0.991448537276,
+          "brier": 0.035440197524,
+          "prevalence": 0.488817891374
+        },
+        "sigmoid": {
+          "rows": 313,
+          "positives": 153,
+          "negatives": 160,
+          "average_precision": 0.991448537276,
+          "brier": 0.050294297561,
+          "prevalence": 0.488817891374
+        }
+      },
+      "native_module": "/private/tmp/retailops-ai08-partitions/src/retailops_ai/stockout_qualification/bundle.py",
+      "installed_modules": [],
+      "build_seconds": 274.79471316699346,
+      "capsule_bytes": 1325720,
+      "capsule_sha256": "5c909b24c87372a817ebdd2d6ef8dcabf2dfa5b73f8a7433c6a0ab56f4bf4918",
+      "final_test_outcomes_evaluated": false,
+      "model_promoted": false,
+      "thresholds_approved": false,
+      "ai08_ready": false,
+      "source_parents_unchanged": true,
+      "output": "/private/tmp/ai08-qualification-accepted-7yqjj3j9/qualification.json"
+    },
+    "child_log_sha256": "50c92f5f24b8ea663a87eddbf6720b4e50e390ec261b559c1d026669dd4b9b94",
+    "final_test_outcomes_evaluated": false,
+    "ai08_ready": false
+  },
+  "wheel_qualification": {
+    "status": "passed",
+    "exit_code": 0,
+    "failure": null,
+    "wall_seconds": 217.8784469999955,
+    "peak_tree_rss_bytes": 324616192,
+    "peak_allocated_scratch_bytes": 186191872,
+    "peak_logical_scratch_bytes": 176118816,
+    "minimum_free_bytes": 55646973952,
+    "sample_seconds": 0.2,
+    "samples": 1032,
+    "retained_root": "/private/tmp/ai08-qualification-accepted-tnyxhl_n",
+    "proof": {
+      "status": "artifact_passed",
+      "qualification_id": "stockout-qualification-sha256-2ad4bc02b539ec8f75fae6a79944f4b51599c849a7d740cd484177e17b74af7c",
+      "card_id": "stockout-card-sha256-c573b49af2d8950ed49ccafc888faa71c59542b430e3e958e19a227aeaf0ce28",
+      "quality_status": "not_ready",
+      "gates": {
+        "status": "not_ready",
+        "segments": {
+          "all": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.049873357502,
+            "rows": 313,
+            "positives": 153,
+            "negatives": 160
+          },
+          "category:197c13ee-8ab3-580d-8ccc-a0c3195d9925": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.104971986517,
+            "rows": 48,
+            "positives": 23,
+            "negatives": 25
+          },
+          "category:28b88987-7084-5c08-a3c5-2b8ffa807492": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.086435101847,
+            "rows": 36,
+            "positives": 14,
+            "negatives": 22
+          },
+          "category:42c5eb6c-ad87-5271-aa04-cafcd641d9eb": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.086363325642,
+            "rows": 35,
+            "positives": 24,
+            "negatives": 11
+          },
+          "category:445dff34-464a-5d4e-b54d-324bf9aca10e": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.031143322161,
+            "rows": 36,
+            "positives": 14,
+            "negatives": 22
+          },
+          "category:4c17cc52-89f8-58a1-937b-4fb5fe940ff1": {
+            "status": "failed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": false
+            },
+            "expected_calibration_error": 0.231373340401,
+            "rows": 36,
+            "positives": 22,
+            "negatives": 14
+          },
+          "category:655e5f7a-c40d-5c55-b071-175c1b2d6502": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.064528262761,
+            "rows": 34,
+            "positives": 23,
+            "negatives": 11
+          },
+          "category:c8956032-5a0a-57f1-9118-b9b2c526cbda": {
+            "status": "failed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": false
+            },
+            "expected_calibration_error": 0.167579417461,
+            "rows": 33,
+            "positives": 22,
+            "negatives": 11
+          },
+          "category:d916b3fd-e110-5a11-af32-41fdef07aaa0": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.044413862462,
+            "rows": 55,
+            "positives": 11,
+            "negatives": 44
+          },
+          "historical_inventory_constraint:true": {
+            "status": "not_evaluable",
+            "reason": "insufficient_both_class_segment_support",
+            "rows": 149,
+            "positives": 146,
+            "negatives": 3
+          },
+          "stock_location:af89475f-8f1b-536e-86e0-f114c3261eb6": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.053617967365,
+            "rows": 167,
+            "positives": 64,
+            "negatives": 103
+          },
+          "stock_location:d07cb367-ec18-59c1-bfcc-be6270c0cdf6": {
+            "status": "passed",
+            "checks": {
+              "AP_above_no_skill": true,
+              "brier_better_than_train_constant": true,
+              "calibration_error_in_budget": true
+            },
+            "expected_calibration_error": 0.075127053592,
+            "rows": 146,
+            "positives": 89,
+            "negatives": 57
+          }
+        },
+        "required_segment_universe_complete": true,
+        "policy_status": "proposal_before_final_test",
+        "final_test_qualified": false
+      },
+      "rows": {
+        "base_train": {
+          "rows": 370,
+          "classes": {
+            "1": 150,
+            "0": 220
+          },
+          "labels_sha256": "cc015b184d78fc09ac4a3e09f6def2edc087be0411fd0778e10b7426f6ae6a63",
+          "physical_membership_sha256": "c0895e0494aec9dc65baa092fffa599c27eaea6d1c3b4c61158e2440da20ca9b"
+        },
+        "calibration_fit": {
+          "rows": 232,
+          "classes": {
+            "1": 105,
+            "0": 127
+          },
+          "labels_sha256": "30cc7a8bb51bf2da54ba70a568876a62321fdd9bca47170e19d23ff14350ff49",
+          "physical_membership_sha256": "0073bb94e3b2369a4cfb505ae995fb33e12d338d57c0d950651c89564f23e048"
+        },
+        "tune": {
+          "rows": 321,
+          "classes": {
+            "1": 148,
+            "0": 173
+          },
+          "labels_sha256": "a4e985ce620242e2c9688289762601910b8c5781fa9f80d536558aefd5bdba38",
+          "physical_membership_sha256": "42683daf4e070b56af00241b0bcfc4fa9b0456bb9ac164d4241d722c6e153814"
+        },
+        "independent_validation": {
+          "rows": 313,
+          "classes": {
+            "1": 153,
+            "0": 160
+          },
+          "labels_sha256": "7b9e2dd782321d6ff3d28f4e23f4c07dcdf5aa8455fe87c95e95b193486093f7",
+          "physical_membership_sha256": "687fa4d32579b2592117e29d0aa8fde3f52057eed562d5a24e6fbfca893beb6e"
+        }
+      },
+      "selected": "logistic_regression:without_upstream",
+      "validation_all": {
+        "raw": {
+          "rows": 313,
+          "positives": 153,
+          "negatives": 160,
+          "average_precision": 0.991448537276,
+          "brier": 0.035440197524,
+          "prevalence": 0.488817891374
+        },
+        "sigmoid": {
+          "rows": 313,
+          "positives": 153,
+          "negatives": 160,
+          "average_precision": 0.991448537276,
+          "brier": 0.050294297561,
+          "prevalence": 0.488817891374
+        }
+      },
+      "native_module": "/private/tmp/ai08-qualification-installed/retailops_ai/stockout_qualification/bundle.py",
+      "installed_modules": [
+        "retailops_ai",
+        "retailops_ai.curated",
+        "retailops_ai.curated.builder",
+        "retailops_ai.curated.contract",
+        "retailops_ai.curated.inventory",
+        "retailops_ai.curated.transform",
+        "retailops_ai.data_contracts",
+        "retailops_ai.data_contracts.common",
+        "retailops_ai.data_contracts.identity",
+        "retailops_ai.forecasting",
+        "retailops_ai.forecasting.baselines",
+        "retailops_ai.forecasting.calendar",
+        "retailops_ai.forecasting.contract",
+        "retailops_ai.forecasting.evaluation_contract",
+        "retailops_ai.forecasting.features",
+        "retailops_ai.forecasting.features_contract",
+        "retailops_ai.forecasting.features_store",
+        "retailops_ai.forecasting.manifest_contract",
+        "retailops_ai.forecasting.manifest_io",
+        "retailops_ai.forecasting.manifests",
+        "retailops_ai.forecasting.model_contract",
+        "retailops_ai.forecasting.model_trees",
+        "retailops_ai.forecasting.preprocessing",
+        "retailops_ai.forecasting.splits",
+        "retailops_ai.source_snapshot",
+        "retailops_ai.source_snapshot.canonical",
+        "retailops_ai.source_snapshot.files",
+        "retailops_ai.source_snapshot.importer",
+        "retailops_ai.source_snapshot.inventory_projection",
+        "retailops_ai.source_snapshot.inventory_protocol",
+        "retailops_ai.source_snapshot.protocol",
+        "retailops_ai.source_snapshot.publish",
+        "retailops_ai.source_snapshot.tables",
+        "retailops_ai.stockout",
+        "retailops_ai.stockout.artifacts",
+        "retailops_ai.stockout.contract",
+        "retailops_ai.stockout.dataset",
+        "retailops_ai.stockout.feature_contract",
+        "retailops_ai.stockout.feature_dataset",
+        "retailops_ai.stockout.features",
+        "retailops_ai.stockout.labels",
+        "retailops_ai.stockout.split",
+        "retailops_ai.stockout.upstream",
+        "retailops_ai.stockout.upstream_contract",
+        "retailops_ai.stockout.upstream_dataset",
+        "retailops_ai.stockout_explanation",
+        "retailops_ai.stockout_explanation.card",
+        "retailops_ai.stockout_explanation.diagnostics",
+        "retailops_ai.stockout_history",
+        "retailops_ai.stockout_history.bundle",
+        "retailops_ai.stockout_history.index",
+        "retailops_ai.stockout_history.projection",
+        "retailops_ai.stockout_label_partitions",
+        "retailops_ai.stockout_label_partitions.bundle",
+        "retailops_ai.stockout_label_partitions.schema",
+        "retailops_ai.stockout_label_partitions.store",
+        "retailops_ai.stockout_preparation",
+        "retailops_ai.stockout_preparation.bundle",
+        "retailops_ai.stockout_preparation.index",
+        "retailops_ai.stockout_preparation.schema",
+        "retailops_ai.stockout_qualification",
+        "retailops_ai.stockout_qualification.bundle",
+        "retailops_ai.stockout_qualification.contract",
+        "retailops_ai.stockout_qualification.fit",
+        "retailops_ai.stockout_storage",
+        "retailops_ai.stockout_storage.bundle",
+        "retailops_ai.stockout_storage.store",
+        "retailops_ai.stockout_temporal_series",
+        "retailops_ai.stockout_temporal_series.bundle",
+        "retailops_ai.stockout_temporal_series.store",
+        "retailops_ai.stockout_temporal_storage",
+        "retailops_ai.stockout_temporal_storage.bundle",
+        "retailops_ai.stockout_temporal_storage.schema",
+        "retailops_ai.stockout_temporal_storage.store",
+        "retailops_ai.stockout_training",
+        "retailops_ai.stockout_training.contract",
+        "retailops_ai.stockout_training.development",
+        "retailops_ai.stockout_training.evaluation",
+        "retailops_ai.stockout_training.inputs",
+        "retailops_ai.stockout_training.pipeline",
+        "retailops_ai.stockout_upstream_series",
+        "retailops_ai.stockout_upstream_series.bundle",
+        "retailops_ai.stockout_upstream_series.store",
+        "retailops_ai.stockout_upstream_storage",
+        "retailops_ai.stockout_upstream_storage.bundle",
+        "retailops_ai.stockout_upstream_storage.schema",
+        "retailops_ai.stockout_upstream_storage.store"
+      ],
+      "build_seconds": 214.5115974579967,
+      "capsule_bytes": 1325720,
+      "capsule_sha256": "5c909b24c87372a817ebdd2d6ef8dcabf2dfa5b73f8a7433c6a0ab56f4bf4918",
+      "final_test_outcomes_evaluated": false,
+      "model_promoted": false,
+      "thresholds_approved": false,
+      "ai08_ready": false,
+      "source_parents_unchanged": true,
+      "output": "/private/tmp/ai08-qualification-accepted-tnyxhl_n/qualification.json"
+    },
+    "child_log_sha256": "a602f64819c811d1a7d9362b0384affaaa764c917f7a0b37f157636ad6acf274",
+    "final_test_outcomes_evaluated": false,
+    "ai08_ready": false
+  },
+  "qualification_descriptor": {
+    "categorical_lineage_sha256": "2156908dc21c95a8b034799308039bc50cd2fa289757e419b433ae1d4bf22cdb",
+    "content_sha256": "7d261d35a08378dd76a82ffdf1480c79b938673c38163114146d870add63d977",
+    "implementation": {
+      "code": {
+        "__init__.py": "e59d348605b115ac713ff935d29ce9c29a99736eb9c1aadedb96e0c45998d7c8",
+        "bundle.py": "8a48ad6efe61c121191469a42b8ba3401e38236caf3a884193d5b34e2d5f1af9",
+        "cli.py": "2fb58ec57580afae71db9777b8d4bbfc6fef29061527a53a43e31666d888990b",
+        "contract.py": "4ef96ab58f7ddcf7cc659f7a85baddc6784efecf03e12781c74fb45a039658f7",
+        "fit.py": "38e443db2b1d3e53423975b49074b594a95eee8c24e364308a4fc44ccafb775d"
+      },
+      "code_sha256": "4fb5f01f0331901102bcd5b0361053aec206b3080c1660c5893f925d459849cd",
+      "dependencies": {
+        "code_sha256": "8f50477bcc069b40d588756353de28a6ad53976e4822eacc71e9a37077a1f412",
+        "explanation_code": {
+          "__init__.py": "849928118a7f7fa327d14c11693c8895fe11a07f968df9808caa66b1e8377b7b",
+          "card.py": "69782bb7be404759a0598cfffd28184746e91cc00f7ccceadaa2e84e0dbc7396",
+          "cli.py": "2cb2184d6ea2a4c5c753c82f241acbf71b8c4c4d317193d76bc0e00371a57d60",
+          "diagnostics.py": "a13d9b5bc60bffa75d1378881b37f9c11c3403727e5d1ebed0b746a9f576888e"
+        },
+        "training": {
+          "preparation": {
+            "code_files": {
+              "retailops_ai.data_contracts/common.py": "9f4cbd1533e8ea7eef0eb0bb84e51920c759d9648ffe4370482cac7ed4cc686a",
+              "retailops_ai.source_snapshot/__init__.py": "ad6baf6286e9c63e7007d349a198290a2451035dd2f454ec65e515dd037d04fa",
+              "retailops_ai.source_snapshot/canonical.py": "d013e782a22c7057e16e318daca55d493c9fad3b24d952ae5e1c2ee3e3d568ed",
+              "retailops_ai.source_snapshot/cli.py": "6718531a5c89ecc394b3c028dfec898034c611daa0837afe5e796e185621dbb0",
+              "retailops_ai.source_snapshot/files.py": "2c1019d1f8217bba6d10ac8dd82a272c15465b92eed5c80f369a160f29b3270a",
+              "retailops_ai.source_snapshot/importer.py": "cd61025000b5bffec68bbcbdf19db5d04a33537afc89e6fadeda6df9c7c612a0",
+              "retailops_ai.source_snapshot/inventory_projection.py": "c66da418866362eea8d856afa34195f16108dc5f4cbe725da250a43460a483ae",
+              "retailops_ai.source_snapshot/inventory_protocol.py": "f9d32a45212905e8840c611232b580d1a3991253b0fe1ba95033a1187646cf11",
+              "retailops_ai.source_snapshot/protocol.py": "34584dc93fb1f491ac255ee3a514135af4a0ee4b2d3cfca10b760115b6c061c6",
+              "retailops_ai.source_snapshot/publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e",
+              "retailops_ai.source_snapshot/tables.py": "332502d4f236e83dbd5326951be11042481cf998e78b9296437690f38e8feb79",
+              "retailops_ai.stockout/__init__.py": "6dad8820c040913c19a51991c133c7811e05a32efae6eaefc87a25e54424d06a",
+              "retailops_ai.stockout/artifacts.py": "5f9cffe890c5472ff9b651b09f5ae2069acd83b04ffc35efa0b3feac34973df9",
+              "retailops_ai.stockout/cli.py": "eb378529f1a7662450b746d14868a9cc0780e230815719ec828e4e50a1d04a8b",
+              "retailops_ai.stockout/contract.py": "efdfed0a2a5a61f9a2705893a5949c7df414f94baca918a016179030593dce03",
+              "retailops_ai.stockout/dataset.py": "a358eb98a9dd8a203e103003df2e4c9ce665816dfbfbd3931b99cd1310355647",
+              "retailops_ai.stockout/feature_contract.py": "c0cd50a06fc97afdd53f76da105ee780b6c894cde9e1e3f0b864a8a9fe15d6a3",
+              "retailops_ai.stockout/feature_dataset.py": "404f51656427494fa22e651f2df9ddc89567a1cd411f497d5a5a59e0345567c2",
+              "retailops_ai.stockout/features.py": "28bc48b32e60109d9e0ad8c72de6bab3083d04748c302dc89371d460923fb60a",
+              "retailops_ai.stockout/labels.py": "df52ccf67071d0e40ea91b40e608d87c6dc3f3a124a3e6f338a5a6402239d7bd",
+              "retailops_ai.stockout/prepare.py": "9672b8cba7313c8a6921d7342a2fe077449dbd7505fb2ff67c886e0d3459329e",
+              "retailops_ai.stockout/split.py": "45ef4c3a4f870da83c62524e5f1bcd5b5f7f9f3a6b46d6737cf88f7edc16b332",
+              "retailops_ai.stockout/upstream.py": "c68a9856c0e5b00a525dfc2fdec2dbcd15393b1f68228c802e0631632a65b51a",
+              "retailops_ai.stockout/upstream_contract.py": "ef697eb68f9b8d7c3e9bcb1284681ae7c58f642c483d702ac5cf6df27dff52d8",
+              "retailops_ai.stockout/upstream_dataset.py": "640df15152fe7c108500cb108a4503267af5a2957b84e3a974af2295bf632e2b"
+            },
+            "code_sha256": "8a044e155d9ce687736be74af703a6c6771d5f4ad94b06109d2fe4712324d442",
+            "curated_code_sha256": "605be92b95b3f703da11cb9101de9c18fe15fd4e2688f4ed3e4339ede700fe5f",
+            "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+            "python_version": "3.11.15"
+          },
+          "python": "3.11.15",
+          "training_code": {
+            "__init__.py": "4f8ec399a373e1a74fdc92affbcc1a442cedf00642bd8f0dd11ddfda586ea6c3",
+            "cli.py": "89389368249dcf023355bad0569d2b849afe189c7942a28ffa9772d4c2fb0fb2",
+            "contract.py": "357a5443bfdc0e649968a6ca8e54627b63a1c676a1a7d036d094938bd441a9f1",
+            "development.py": "72457fc43ebb3567bbb246ab06e1e9ed156cf32c803c5b076e6f372f1a4837ce",
+            "evaluation.py": "2b12b61849e9243adcc07e24a94cc78c454a15263a116735fc5bd51643565bc3",
+            "inputs.py": "2467be59dc90de2c813b341329c7e0e1e4bb1fcb94fbf771e100149de6a0ec3d",
+            "pipeline.py": "f598f13be7bdc47008bf9b57f3235a94bdd84b25c92b729096bc23f09ab854d9",
+            "retailops_ai.forecasting.model_contract": "ca3211a1a21c0c4d29955277f0835d6cb7e5f445b5b8f8889ffb05dd5ef0fa0f",
+            "retailops_ai.forecasting.model_trees": "b38ae31b8ab1c37c17f695fac103d0872adb5afa2c5e18b244187e839cf65d23"
+          },
+          "training_code_sha256": "9914c2bfb18218987044adb7e15047d1a0c133bd4ad542bb13fe73c18c3492b9",
+          "versions": {
+            "numpy": "2.4.6",
+            "scikit-learn": "1.9.1",
+            "scipy": "1.17.1",
+            "threadpoolctl": "3.7.0"
+          }
+        }
+      }
+    },
+    "original_split_policy": {
+      "calibration_until": "2026-07-13T00:00:00Z",
+      "evaluated_at": "2026-08-01T00:00:00Z",
+      "final_test": "membership_only_no_outcome_metrics_no_training_access",
+      "purge": "outcome_end_and_availability_strictly_before_next_role",
+      "start_at": "2026-04-21T00:00:00Z",
+      "test_until": "2026-08-01T00:00:00Z",
+      "train_until": "2026-06-05T00:00:00Z",
+      "tune_until": "2026-06-24T00:00:00Z",
+      "version": "stockout-temporal-split-1.0.0"
+    },
+    "parents": {
+      "curated_dataset_id": "curated-sha256-f16d8d9a850f016948af4fb0a58f0d490ab5e96290281928f41bd83dfe8e3e6f",
+      "feature_bundle_id": "feature-partitions-sha256-c474ff4d2af5c824007888c3e8d58e6234c189eaff3d3ce241038bf09c19a351",
+      "label_bundle_id": "label-partitions-sha256-49c7f4e8aecdf422aad8b77f4af9c221429a2e322434d4fbd178780aff946e6c",
+      "source_dataset_id": "source-sha256-894779e0aa87d4deca4bee8ca93311a78bf36fa627223d05898bd7f6732c5529",
+      "temporal_bundle_id": "temporal-partitions-sha256-df963e607ce7800fdc8b29ebfaf104f68cb8873cd2525f17d294776f800adb95",
+      "upstream_bundle_id": "upstream-partitions-sha256-5b171c69ccec161513d90165573576c482d58f955e13d6f58f76926aa2555cba"
+    },
+    "policy": {
+      "base_fit_known_at": "2026-05-20T00:00:00Z",
+      "calibration_fit_known_at": "2026-06-05T00:00:00Z",
+      "calibration_protocol": "later_out_of_sample_predictions_with_exact_label_purge",
+      "calibration_source_role": "train",
+      "calibration_start_at": "2026-05-20T00:00:00Z",
+      "expected_category_count": 8,
+      "expected_stock_location_count": 2,
+      "final_test": "unopened_separate_approved_campaign_required",
+      "maximum_expected_calibration_error": 0.15,
+      "minimum_segment_per_class": 5,
+      "minimum_segment_rows": 20,
+      "model_selection": "raw_tune_AP_then_Brier_then_LR_without_upstream",
+      "quality_policy_status": "proposal_before_final_test",
+      "validation_role": "calibration",
+      "version": "stockout-independent-development-1.0.0"
+    },
+    "role": "stockout_independent_development_qualification",
+    "schema_version": "1.0.0",
+    "training_algorithm": {
+      "calibration": "fixed_regularized_sigmoid_separate_calibration_period",
+      "calibration_reporting": "in_sample_fit_diagnostic_not_generalization",
+      "capacity_fraction": 0.2,
+      "capacity_unit": "ceil_fraction_per_origin_physical_keys_lexical_ties",
+      "categories": "train_only_stock_location_and_PIT_category_unknown_all_zero",
+      "configurations": "one_frozen_configuration_per_family",
+      "cost_interpretation": "fixed_exploratory_units_not_validated_business_savings",
+      "cpu_threads": 1,
+      "false_attention_cost": 1.0,
+      "final_test": "no_outcome_scoring_selection_calibration_or_threshold_access",
+      "hgb_early_stopping": false,
+      "hgb_l2_regularization": 1.0,
+      "hgb_learning_rate": 0.1,
+      "hgb_max_iter": 80,
+      "hgb_max_leaf_nodes": 15,
+      "hgb_min_samples_leaf": 20,
+      "imputation": "train_median_empty_zero_all_column_missing_indicators",
+      "lr_C": 1.0,
+      "lr_max_iter": 1000,
+      "lr_tol": 1e-08,
+      "minimum_calibration_per_class": 10,
+      "missed_incident_cost": 5.0,
+      "random_state": 42,
+      "sampling": "all_eligible_rows_natural_prevalence_no_class_weights",
+      "selection": "tune_AP_then_Brier_then_LR_without_upstream",
+      "version": "stockout-development-models-1.0.0"
+    }
+  },
+  "native_wheel_capsule_identical": true,
+  "focused_tests": {
+    "qualification": 27,
+    "resource": 36,
+    "dependency_regression": 37,
+    "total": 100,
+    "warnings": 0,
+    "new_cases": 34
+  },
+  "quality": {
+    "final_test_qualified": false,
+    "policy_status": "proposal_before_final_test",
+    "required_segment_universe_complete": true,
+    "segments": {
+      "all": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": true
+        },
+        "expected_calibration_error": 0.049873357502,
+        "negatives": 160,
+        "positives": 153,
+        "rows": 313,
+        "status": "passed"
+      },
+      "category:197c13ee-8ab3-580d-8ccc-a0c3195d9925": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": true
+        },
+        "expected_calibration_error": 0.104971986517,
+        "negatives": 25,
+        "positives": 23,
+        "rows": 48,
+        "status": "passed"
+      },
+      "category:28b88987-7084-5c08-a3c5-2b8ffa807492": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": true
+        },
+        "expected_calibration_error": 0.086435101847,
+        "negatives": 22,
+        "positives": 14,
+        "rows": 36,
+        "status": "passed"
+      },
+      "category:42c5eb6c-ad87-5271-aa04-cafcd641d9eb": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": true
+        },
+        "expected_calibration_error": 0.086363325642,
+        "negatives": 11,
+        "positives": 24,
+        "rows": 35,
+        "status": "passed"
+      },
+      "category:445dff34-464a-5d4e-b54d-324bf9aca10e": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": true
+        },
+        "expected_calibration_error": 0.031143322161,
+        "negatives": 22,
+        "positives": 14,
+        "rows": 36,
+        "status": "passed"
+      },
+      "category:4c17cc52-89f8-58a1-937b-4fb5fe940ff1": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": false
+        },
+        "expected_calibration_error": 0.231373340401,
+        "negatives": 14,
+        "positives": 22,
+        "rows": 36,
+        "status": "failed"
+      },
+      "category:655e5f7a-c40d-5c55-b071-175c1b2d6502": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": true
+        },
+        "expected_calibration_error": 0.064528262761,
+        "negatives": 11,
+        "positives": 23,
+        "rows": 34,
+        "status": "passed"
+      },
+      "category:c8956032-5a0a-57f1-9118-b9b2c526cbda": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": false
+        },
+        "expected_calibration_error": 0.167579417461,
+        "negatives": 11,
+        "positives": 22,
+        "rows": 33,
+        "status": "failed"
+      },
+      "category:d916b3fd-e110-5a11-af32-41fdef07aaa0": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": true
+        },
+        "expected_calibration_error": 0.044413862462,
+        "negatives": 44,
+        "positives": 11,
+        "rows": 55,
+        "status": "passed"
+      },
+      "historical_inventory_constraint:true": {
+        "negatives": 3,
+        "positives": 146,
+        "reason": "insufficient_both_class_segment_support",
+        "rows": 149,
+        "status": "not_evaluable"
+      },
+      "stock_location:af89475f-8f1b-536e-86e0-f114c3261eb6": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": true
+        },
+        "expected_calibration_error": 0.053617967365,
+        "negatives": 103,
+        "positives": 64,
+        "rows": 167,
+        "status": "passed"
+      },
+      "stock_location:d07cb367-ec18-59c1-bfcc-be6270c0cdf6": {
+        "checks": {
+          "AP_above_no_skill": true,
+          "brier_better_than_train_constant": true,
+          "calibration_error_in_budget": true
+        },
+        "expected_calibration_error": 0.075127053592,
+        "negatives": 57,
+        "positives": 89,
+        "rows": 146,
+        "status": "passed"
+      }
+    },
+    "status": "not_ready"
+  },
+  "boundaries": {
+    "independent_validation_never_fits_model_calibrator_or_selection": true,
+    "final_test_outcomes_evaluated": false,
+    "thresholds_approved": false,
+    "model_promoted": false,
+    "full_ai_training_qualified": false,
+    "ai08_ready": false
+  },
+  "log_receipts": {
+    "ai08-qualification-focused-accepted.log": "6059d3e482ff6449e08171a9779fc12afdef480298ab31acdd4fa6d5c2b5b579",
+    "ai08-qualification-dependency-regression.log": "6a09fe72f2a1fc1bfc6837ee171c6a358ab944b20fd42ab846f0af8fbcc94ae8",
+    "ai08-qualification-19-native.log": "e790571411c5f4e86c656af7d04382f3c65e88310d0d9b4ac60477a4d4d81372",
+    "ai08-qualification-19-wheel.log": "3662992eede5cffe1ad506d1fb5e4ef755692a42640134a5309e0bb732eda7ad"
+  },
+  "raw_receipt_sha256": {
+    "resource": "63347d33caff5b811314ce2fc4a6414ec543a4db0cb943ff3de0fbad708db4e5",
+    "native": "b0cdcc4a6dbbd51a6497c486768d80c9fd36d56243739c439437ed1147076149",
+    "wheel": "679583455dd72920164e55cb813d24fedcc6068eb62824fb33befd626982ba15"
+  },
+  "receipt_projection": {
+    "native_wheel_role_field_rename": {
+      "original": "keys_sha256",
+      "published": "physical_membership_sha256"
+    },
+    "reason": "These are verified digests of physical row membership, not API credentials. Original byte-level receipts remain SHA-bound above. Values are unchanged."
+  }
+}

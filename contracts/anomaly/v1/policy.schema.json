@@ -1,0 +1,80 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "closed_policy": {
+      "const": "retain_without_residual_exclude_from_fit",
+      "default": "retain_without_residual_exclude_from_fit",
+      "title": "Closed Policy",
+      "type": "string"
+    },
+    "dq_policy": {
+      "const": "canonical_source_quality_only_raw_completeness_not_qualified",
+      "default": "canonical_source_quality_only_raw_completeness_not_qualified",
+      "title": "Dq Policy",
+      "type": "string"
+    },
+    "expected_policy": {
+      "const": "same_series_day_minus_7_known_before_window",
+      "default": "same_series_day_minus_7_known_before_window",
+      "title": "Expected Policy",
+      "type": "string"
+    },
+    "history_days": {
+      "const": 28,
+      "default": 28,
+      "title": "History Days",
+      "type": "integer"
+    },
+    "metric": {
+      "const": "observed_sales_units",
+      "default": "observed_sales_units",
+      "title": "Metric",
+      "type": "string"
+    },
+    "minimum_history_days": {
+      "const": 14,
+      "default": 14,
+      "title": "Minimum History Days",
+      "type": "integer"
+    },
+    "minimum_residuals": {
+      "const": 7,
+      "default": 7,
+      "title": "Minimum Residuals",
+      "type": "integer"
+    },
+    "promotion_policy": {
+      "const": "known_context_no_automatic_alert",
+      "default": "known_context_no_automatic_alert",
+      "title": "Promotion Policy",
+      "type": "string"
+    },
+    "scale_policy": {
+      "const": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+      "default": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+      "title": "Scale Policy",
+      "type": "string"
+    },
+    "scoring_delay_hours": {
+      "default": 24,
+      "maximum": 168,
+      "minimum": 0,
+      "title": "Scoring Delay Hours",
+      "type": "integer"
+    },
+    "seasonal_lag_days": {
+      "const": 7,
+      "default": 7,
+      "title": "Seasonal Lag Days",
+      "type": "integer"
+    },
+    "version": {
+      "const": "anomaly-demand-inputs-1.0.0",
+      "default": "anomaly-demand-inputs-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "title": "Policy",
+  "type": "object"
+}

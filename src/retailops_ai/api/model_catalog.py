@@ -66,7 +66,7 @@ def add_model_catalog_routes(
     router: APIRouter, verified: Callable[..., object], backend: ModelCatalog | None
 ) -> None:
     async def reader(principal: Annotated[Principal, Depends(verified)]) -> Principal:
-        if "forecast:read" not in principal.capabilities:
+        if not {"forecast:read", "anomaly:read"} & principal.capabilities:
             raise HTTPException(403)
         return principal
 

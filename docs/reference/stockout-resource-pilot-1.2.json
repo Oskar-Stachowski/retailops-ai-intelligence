@@ -1,0 +1,94 @@
+{
+  "schema_version": "stockout-resource-pilot-1.2.0",
+  "scope": "bounded intermediate 19-product qualification development; not full ai-dev or ai-training",
+  "producer_commit": "08639e9188badb352ed64686a088fe237badad41",
+  "consumer_baseline_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+  "generation": {
+    "profile": "ai-load",
+    "days": 102,
+    "products": 19,
+    "stores": 3,
+    "warehouses": 2,
+    "seed": 42,
+    "start_date": "2026-04-21",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 5814,
+    "forecast_plan_days": 0
+  },
+  "physical_origin_upper_bound": 3876,
+  "inventory_configuration": "pinned default_inventory_config; no supplier/scenario/stock overrides",
+  "producer_timeline_metadata": {
+    "warmup_days": 0,
+    "origin_days": 0,
+    "label_tail_days": 0
+  },
+  "split_policy": {
+    "version": "stockout-temporal-split-1.0.0",
+    "start_at": "2026-04-21T00:00:00Z",
+    "train_until": "2026-06-05T00:00:00Z",
+    "tune_until": "2026-06-24T00:00:00Z",
+    "calibration_until": "2026-07-13T00:00:00Z",
+    "test_until": "2026-08-01T00:00:00Z",
+    "evaluated_at": "2026-08-01T00:00:00Z",
+    "purge": "outcome_end_and_availability_strictly_before_next_role",
+    "final_test": "membership_only_no_outcome_metrics_no_training_access"
+  },
+  "budgets": {
+    "scratch_bytes": 2147483648,
+    "tree_rss_bytes": 1073741824,
+    "wall_seconds": 1800,
+    "minimum_free_bytes": 53687091200
+  },
+  "budget_revision": {
+    "previous_proposal_scratch_bytes": 5368709120,
+    "previous_proposal_wall_seconds": 600,
+    "reason": "The completed 14-product whole pilot measured 622.23 MiB RSS. Scaling to 19 products with 20% headroom estimates about 1013 MiB within the unchanged 1 GiB budget. Add category representation across a third complete eight-category cycle, before any final-test access. Actual monitored limits remain mandatory; 50 GiB reserve is unchanged."
+  },
+  "unchanged_consumer_limits": {
+    "input_rows": 500000,
+    "input_bytes": 67108864,
+    "qualification_bytes": 4194304,
+    "ledger_rows": 100000,
+    "physical_origins": 10000,
+    "main_database_bytes": 134217728,
+    "development_bytes": 16777216
+  },
+  "future_quality_scope": {
+    "robustness_seeds": [
+      42,
+      137,
+      2026
+    ],
+    "required_scenarios": [
+      "normal",
+      "promotion",
+      "demand_shock",
+      "inventory_constraint"
+    ],
+    "metrics": [
+      "average_precision",
+      "prevalence",
+      "brier",
+      "reliability",
+      "recall_at_capacity",
+      "precision_at_capacity"
+    ],
+    "segments": [
+      "category",
+      "stock_location",
+      "inventory_constrained"
+    ],
+    "resource_pass_is_not_quality_pass": true,
+    "calibration_fit_diagnostics_are_not_independent_quality": true,
+    "business_thresholds_and_capacity_require_approval": true,
+    "final_test_requires_separate_approved_campaign": true,
+    "promotion_requires_approval": true
+  },
+  "supersedes_unexecuted_profile": "No previous accepted profile overwritten; new attempt uses actual qualified2856 whole-pipeline baseline.",
+  "retain_accepted_outputs_for_independent_quality": true,
+  "measured_resource_baseline": {
+    "receipt": "ai08-resource-pilot-accepted.json",
+    "sha256": "025fe584b6cc5ddcf29f810a07564ac2158046c38033297ad52dc93faf83fe1d",
+    "physical_origins": 2856
+  }
+}

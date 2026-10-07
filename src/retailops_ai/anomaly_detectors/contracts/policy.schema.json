@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contamination": {
+      "anyOf": [
+        {
+          "const": "auto",
+          "type": "string"
+        },
+        {
+          "exclusiveMinimum": 0,
+          "maximum": 0.5,
+          "type": "number"
+        }
+      ],
+      "default": "auto",
+      "title": "Contamination"
+    },
+    "features": {
+      "default": [
+        "observed_units",
+        "expected_units",
+        "residual_units",
+        "robust_scale_units",
+        "standardized_residual",
+        "planned_price",
+        "promotion_offered",
+        "on_hand"
+      ],
+      "items": {
+        "enum": [
+          "observed_units",
+          "expected_units",
+          "residual_units",
+          "robust_scale_units",
+          "standardized_residual",
+          "planned_price",
+          "promotion_offered",
+          "on_hand",
+          "short_count_residual",
+          "long_count_residual",
+          "inventory_shortfall"
+        ],
+        "type": "string"
+      },
+      "title": "Features",
+      "type": "array"
+    },
+    "fit_cpu_seconds": {
+      "const": 60,
+      "default": 60,
+      "title": "Fit Cpu Seconds",
+      "type": "integer"
+    },
+    "fit_rss_bytes": {
+      "const": 536870912,
+      "default": 536870912,
+      "title": "Fit Rss Bytes",
+      "type": "integer"
+    },
+    "fit_wall_seconds": {
+      "const": 60,
+      "default": 60,
+      "title": "Fit Wall Seconds",
+      "type": "integer"
+    },
+    "max_features": {
+      "default": 1.0,
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "title": "Max Features",
+      "type": "number"
+    },
+    "max_matrix_bytes": {
+      "const": 4194304,
+      "default": 4194304,
+      "title": "Max Matrix Bytes",
+      "type": "integer"
+    },
+    "max_samples": {
+      "default": 64,
+      "maximum": 256,
+      "minimum": 16,
+      "title": "Max Samples",
+      "type": "integer"
+    },
+    "max_train_rows": {
+      "const": 10000,
+      "default": 10000,
+      "title": "Max Train Rows",
+      "type": "integer"
+    },
+    "minimum_train_rows": {
+      "default": 16,
+      "maximum": 10000,
+      "minimum": 16,
+      "title": "Minimum Train Rows",
+      "type": "integer"
+    },
+    "minimum_validation_rows": {
+      "default": 16,
+      "maximum": 10000,
+      "minimum": 16,
+      "title": "Minimum Validation Rows",
+      "type": "integer"
+    },
+    "model_seed": {
+      "default": 137,
+      "maximum": 4294967295,
+      "minimum": 0,
+      "title": "Model Seed",
+      "type": "integer"
+    },
+    "n_estimators": {
+      "default": 32,
+      "maximum": 128,
+      "minimum": 8,
+      "title": "N Estimators",
+      "type": "integer"
+    },
+    "score_arithmetic": {
+      "const": "decimal50_half_even_12_places",
+      "default": "decimal50_half_even_12_places",
+      "title": "Score Arithmetic",
+      "type": "string"
+    },
+    "selection": {
+      "const": "unlabelled_validation_alert_capacity",
+      "default": "unlabelled_validation_alert_capacity",
+      "title": "Selection",
+      "type": "string"
+    },
+    "validation_alert_fraction": {
+      "default": 0.05,
+      "exclusiveMinimum": 0,
+      "maximum": 0.2,
+      "title": "Validation Alert Fraction",
+      "type": "number"
+    },
+    "validation_high_fraction": {
+      "default": 0.01,
+      "exclusiveMinimum": 0,
+      "maximum": 0.2,
+      "title": "Validation High Fraction",
+      "type": "number"
+    },
+    "version": {
+      "default": "anomaly-detector-fit-1.0.0",
+      "enum": [
+        "anomaly-detector-fit-1.0.0",
+        "anomaly-detector-fit-2.0.0"
+      ],
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "title": "FitPolicy",
+  "type": "object"
+}

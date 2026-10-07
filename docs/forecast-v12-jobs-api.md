@@ -82,9 +82,9 @@ Wbudowana konfiguracja API wybiera namespace `retailops-demand-forecast-v12`.
 Namespace mechanics wymaga jawnego wstrzyknięcia backendu w testach;
 samo `APP_ENV=test` go nie włącza.
 Migracja publikacji to `0017_v12_outputs`; `0018_v12_evaluations`
-opisuje [katalog i oceny v12](forecast-v12-metadata.md), a head podstawowego v12
-`0019_v12_development` [lokalne dopuszczenie](forecast-v12-development.md).
-Gałąź [AI 10](intelligence-integration-v2.md) wymaga `0020_intelligence_outbox`.
+opisuje [katalog i oceny v12](forecast-v12-metadata.md). Aktualny head
+`0024_ai10_integration` łączy v12/stockout/anomaly z [integracją AI 10](intelligence-integration-v2.md),
+bez przepisywania wcześniejszych migracji.
 Dotychczasowego długotrwałego stosu nie migrowano.
 Dotychczasowe 17 ścieżek OpenAPI i ich 60 definicji schema pozostały identyczne.
 Job `persistence` Required CI uruchamia teraz `make v12-backup-smoke`,

@@ -129,6 +129,41 @@
                 "type": "string"
               },
               {
+                "enum": [
+                  "anomaly-scope-denied",
+                  "anomaly-pipeline-denied",
+                  "anomaly-idempotency-conflict",
+                  "anomaly-read-budget",
+                  "anomaly-view-changed",
+                  "anomaly-not-found",
+                  "anomaly-output-unavailable"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "stockout-run-not-found",
+                  "stockout-run-denied",
+                  "stockout-risk-not-found",
+                  "stockout-scope-denied",
+                  "stockout-input-not-prepared",
+                  "stockout-input-origin-mismatch",
+                  "stockout-input-coverage-mismatch",
+                  "stockout-input-runtime-incompatible",
+                  "stockout-input-from-future",
+                  "stockout-model-not-approved",
+                  "stockout-model-decision-incomplete",
+                  "stockout-queue-full",
+                  "stockout-idempotency-conflict",
+                  "stockout-invalid-idempotency-key",
+                  "stockout-run-not-active",
+                  "stockout-database-not-ready",
+                  "stockout-view-changed",
+                  "stockout-read-budget"
+                ],
+                "type": "string"
+              },
+              {
                 "type": "null"
               }
             ],

@@ -141,7 +141,7 @@ def test_ci_rejects_bypassed_checks_or_malformed_result_expression(mutation):
         gate = next(
             step
             for step in data["jobs"]["checks"]["steps"]
-            if step.get("run") == "make bootstrap check"
+            if step.get("run") == "make bootstrap ci-checks"
         )
         gate["run"] = "make bootstrap test"
     else:
@@ -240,3 +240,32 @@ def test_required_ci_cannot_drop_evaluation_acceptance():
         if step.get("run") != "make evaluations-smoke"
     ]
     assert "persistence must execute evaluation acceptance" in module.workflow_errors(data)
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    ["missing-shard", "excluded-shard", "skipped-tests", "missing-group", "ignored-test-result"],
+)
+def test_parallel_ci_cannot_omit_tests_or_acceptance(mutation):
+    data = workflow()
+    if mutation == "missing-shard":
+        data["jobs"]["tests"]["strategy"]["matrix"]["shard"].pop()
+    elif mutation == "excluded-shard":
+        data["jobs"]["tests"]["strategy"]["matrix"]["exclude"] = [{"shard": 3}]
+    elif mutation == "skipped-tests":
+        data["jobs"]["tests"]["if"] = "false"
+    elif mutation == "missing-group":
+        data["jobs"]["acceptance"]["strategy"]["matrix"]["target"].pop()
+    else:
+        step = data["jobs"]["required-result"]["steps"][0]
+        step["run"] = step["run"].replace('test "$TESTS_RESULT" = "success"', "")
+    assert module.workflow_errors(data)
+
+
+def test_parallel_make_groups_cannot_drop_or_duplicate_a_gate():
+    makefile = (ROOT / "Makefile").read_text()
+    assert module.make_ci_errors(makefile) == []
+    assert module.make_ci_errors(
+        makefile.replace("ci-detectors: anomaly-detectors-check", "ci-detectors: docs-check")
+    )
+    assert module.make_ci_errors(makefile.replace("check: lint", "check: new-required-gate lint"))

@@ -1,0 +1,101 @@
+name: AI08 pinned cohort preparation
+
+# Preparation only. Protected final outcomes, registry and serving are excluded.
+on:
+  push:
+    branches: ["ai/08-stockout-labels"]
+    paths:
+      - ".github/workflows/ai08-cohort-preparation.yml"
+      - "scripts/prepare_stockout_remote.py"
+      - "scripts/measure_stockout_pipeline.py"
+      - "docs/reference/stockout-resource-pilot-1.7-remote-seed*.json"
+      - "docs/reference/stockout-resource-baseline-30.json"
+      - "docs/reference/stockout-later-selection-policy.json"
+      - "docs/reference/stockout-operator-development-proposal.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai08-pinned-preparation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 110
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        seed: [42, 137, 2026]
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONNOUSERSITE: "1"
+      UV_NO_CACHE: "1"
+    steps:
+      - name: Checkout exact control and model implementation
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          path: control
+      - name: Checkout frozen preparation consumer
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 4faaf4b6c1997fda3a609645595165643bf302a9
+          persist-credentials: false
+          path: consumer
+      - name: Checkout frozen public source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: 08639e9188badb352ed64686a088fe237badad41
+          persist-credentials: false
+          path: source
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.19"
+          python-version: "3.11.15"
+          enable-cache: false
+      - name: Install only pinned consumer and build dependencies
+        run: uv sync --directory consumer --locked --extra snapshot --extra forecast
+      - name: Prepare and seal one cohort; develop only on seed 42
+        env:
+          PLANNED_SEED: ${{ matrix.seed }}
+        run: |
+          consumer/.venv/bin/python control/scripts/prepare_stockout_remote.py \
+            --control control --consumer consumer --source source \
+            --seed "$PLANNED_SEED" --output "checkpoints/seed-$PLANNED_SEED"
+      - name: Upload bounded verified synthetic parent checkpoint
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai08-${{ github.sha }}-seed-${{ matrix.seed }}
+          path: checkpoints/seed-${{ matrix.seed }}/verified-upload/*
+          if-no-files-found: warn
+          compression-level: 0
+          retention-days: 7
+          overwrite: false
+      - name: Retain failure receipts without publishing a checkpoint
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai08-failure-${{ github.sha }}-seed-${{ matrix.seed }}
+          path: |
+            checkpoints/seed-${{ matrix.seed }}/plan.json
+            checkpoints/seed-${{ matrix.seed }}/resource.json
+            checkpoints/seed-${{ matrix.seed }}/resource.log
+            checkpoints/seed-${{ matrix.seed }}/selection-native.json
+            checkpoints/seed-${{ matrix.seed }}/selection-wheel.json
+            checkpoints/seed-${{ matrix.seed }}/policy-native.json
+            checkpoints/seed-${{ matrix.seed }}/selection-native/worker.log
+            checkpoints/seed-${{ matrix.seed }}/selection-wheel/worker.log
+            checkpoints/seed-${{ matrix.seed }}/policy-native/worker.log
+          if-no-files-found: warn
+          compression-level: 6
+          retention-days: 7
+          overwrite: false

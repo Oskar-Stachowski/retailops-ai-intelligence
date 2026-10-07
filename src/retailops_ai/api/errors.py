@@ -6,12 +6,14 @@ from uuid import UUID
 from starlette.responses import JSONResponse
 
 from retailops_ai.adapters.telemetry import CORRELATION_ID
+from retailops_ai.anomaly_portfolio.serving_contract import ErrorCode as AnomalyErrorCode
 from retailops_ai.api.models import Problem, Ready
 from retailops_ai.forecast_jobs.contracts import BatchErrorCode
 from retailops_ai.forecast_jobs.read_contracts import ReadErrorCode
 from retailops_ai.knowledge.jobs import IndexErrorCode
 from retailops_ai.model_lifecycle.evaluation_contracts import EvaluationErrorCode
 from retailops_ai.model_lifecycle.read_contracts import CatalogErrorCode
+from retailops_ai.stockout_jobs.public_contracts import StockoutErrorCode
 
 DETAILS = {
     400: "The request cannot be accepted.",
@@ -39,6 +41,8 @@ def problem_response(
     | ReadErrorCode
     | CatalogErrorCode
     | EvaluationErrorCode
+    | AnomalyErrorCode
+    | StockoutErrorCode
     | None = None,
 ) -> JSONResponse:
     current = CORRELATION_ID.get()

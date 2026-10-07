@@ -4,6 +4,10 @@ import argparse
 import json
 from pathlib import Path
 
+from retailops_ai.model_lifecycle.anomaly_evaluation_contracts import (
+    AnomalyEvaluationDetail,
+    AnomalyEvaluationEvidence,
+)
 from retailops_ai.model_lifecycle.contracts import Binding, Qualification, Release, Request
 from retailops_ai.model_lifecycle.evaluation_contracts import (
     EvaluationDetail,
@@ -38,6 +42,8 @@ def main() -> int:
         ("evaluation_query", EvaluationQuery),
         ("evaluations", EvaluationPage),
         ("evaluation", EvaluationDetail),
+        ("anomaly_evaluation_evidence", AnomalyEvaluationEvidence),
+        ("anomaly_evaluation", AnomalyEvaluationDetail),
     ):
         expected = json.dumps(model.model_json_schema(), indent=2, sort_keys=True) + "\n"
         path = ROOT / (name + ".schema.json")

@@ -1,0 +1,1494 @@
+{
+  "acceptance_partition": {
+    "all_parent_reconstruction_checks_retained": true,
+    "basis": "two-profile retry timed out at 360 seconds; measured reconstruction took 214.878 seconds for demand and 204.450 seconds for physical, 419.328 seconds total; partition complete profiles instead of increasing limits",
+    "complete_public_profiles_per_process": 1,
+    "failed_attempts": [
+      {
+        "kind": "two_profile_parent_timeout",
+        "seconds": 360
+      },
+      {
+        "kind": "instrumented_two_profile_budget_failure",
+        "peak_rss_mib": 295.781,
+        "seconds": 419.328
+      }
+    ],
+    "fresh_processes": 4,
+    "per_process_rss_mib": 1024,
+    "per_process_seconds": 300
+  },
+  "ai05_modified": false,
+  "ai07_ready": false,
+  "ci_checks_budget_minutes": 125,
+  "component": "anomaly-detectors-1.0.0",
+  "consumer_base_sha": "8581230b21e33a466c346b107ae936f0a98e3e08",
+  "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "detector_readiness": "not_qualified",
+  "editable": {
+    "cases": [
+      {
+        "artifact_files": {
+          "manifest.sha256": "d58a240d444e845a4ed5377db2e4e70bcc829fce5c16f4af4851e4a771623e43",
+          "membership.jsonl": "b64987764524aaf421f8e8d814aababca9b8a28686681aaeaab87d9569799a87",
+          "model.json": "1eaabb9cd8a0a86f9a48374b56c2dff784d162d9d8bbe49332b521eaf5be98f1",
+          "run_manifest.json": "a3c06298f1a0ff4ca7b1a28fc7c25d76188acc97e6f1416759bba1ab0065ce43",
+          "test_scores.jsonl": "2d50535faaaca710b3e5e3d983ab452c88ec7366a3e4ef76fec9e5810d69dc4a",
+          "validation_scores.jsonl": "128cbed770542aa9775f498c43a332801a199a65ee270fda21d957e7992ebd7b"
+        },
+        "case": "demand",
+        "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+        "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+        "portable_reader": {
+          "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+          "status": "passed",
+          "training_libraries_available": false,
+          "verified_test_scores": 818
+        },
+        "prediction_status_counts": {
+          "isolation_forest/insufficient_data": 1319,
+          "isolation_forest/scored": 409,
+          "seasonal_residual/insufficient_data": 1319,
+          "seasonal_residual/scored": 409
+        },
+        "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-41319d204e6e5152995f0907054e2557e5ba92d87ebac53996f1de2f06d7f52f",
+        "requested_rows": 3024,
+        "role_status_counts": {
+          "gap/day_unqualified/excluded": 27,
+          "gap/no_declaration/excluded": 7,
+          "gap/ready_input/excluded": 62,
+          "test/day_unqualified/excluded": 38,
+          "test/insufficient_history/excluded": 4,
+          "test/no_declaration/excluded": 1277,
+          "test/ready_input/eligible": 409,
+          "train/day_unqualified/excluded": 269,
+          "train/insufficient_history/excluded": 638,
+          "train/no_declaration/excluded": 21,
+          "train/ready_input/eligible": 86,
+          "train/ready_input/excluded": 42,
+          "validation/day_unqualified/excluded": 52,
+          "validation/no_declaration/excluded": 6,
+          "validation/ready_input/eligible": 86
+        },
+        "run_artifact_id": "anomaly-detector-run-sha256-3da74a961fcc378dcbf74569a65e5b802f0087088a321be66defb6db8560c8a9"
+      },
+      {
+        "artifact_files": {
+          "manifest.sha256": "6d93006da24f9870a9e0b8101d43b5064ad953bb61a941b30b87a9186f2c7e8a",
+          "membership.jsonl": "1566ead9b7d1714b84e1cd4e5c881145193168eac4bb4e0e9594f4a314bb708b",
+          "model.json": "4a43a42da350bfa857a42a8cc36d174a68f5028223d3db9707195e70b264a312",
+          "run_manifest.json": "dc5d8c3e92fc8d527c07fdc4f07d0006a4931d43d2cf95ac8435db22608ff976",
+          "test_scores.jsonl": "da7a11a47749a272107ec6beb52b037d28c1959fc9540aa23f046ef66d2756d3",
+          "validation_scores.jsonl": "1bf91286eab9334e7760040963d0d67b4051ab04d51528fd5561c74db6086b5d"
+        },
+        "case": "physical",
+        "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+        "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+        "portable_reader": {
+          "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+          "status": "passed",
+          "training_libraries_available": false,
+          "verified_test_scores": 806
+        },
+        "prediction_status_counts": {
+          "isolation_forest/insufficient_data": 1325,
+          "isolation_forest/scored": 403,
+          "seasonal_residual/insufficient_data": 1325,
+          "seasonal_residual/scored": 403
+        },
+        "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-4e9cdc909ed98df2de81d9e67ee63814a1ecf00b3ed82c7d60ee50f68a7e553e",
+        "requested_rows": 3024,
+        "role_status_counts": {
+          "gap/day_unqualified/excluded": 27,
+          "gap/no_declaration/excluded": 7,
+          "gap/ready_input/excluded": 62,
+          "test/day_unqualified/excluded": 48,
+          "test/insufficient_history/excluded": 4,
+          "test/no_declaration/excluded": 1273,
+          "test/ready_input/eligible": 403,
+          "train/day_unqualified/excluded": 279,
+          "train/insufficient_history/excluded": 630,
+          "train/no_declaration/excluded": 21,
+          "train/ready_input/eligible": 84,
+          "train/ready_input/excluded": 42,
+          "validation/day_unqualified/excluded": 47,
+          "validation/insufficient_history/excluded": 1,
+          "validation/no_declaration/excluded": 6,
+          "validation/ready_input/eligible": 90
+        },
+        "run_artifact_id": "anomaly-detector-run-sha256-b64288873c4f93973145db5550e7f73989759afdb7dbf68ab83884019fcae1c5"
+      }
+    ],
+    "processes": [
+      {
+        "cases": [
+          {
+            "artifact_files": {
+              "manifest.sha256": "d58a240d444e845a4ed5377db2e4e70bcc829fce5c16f4af4851e4a771623e43",
+              "membership.jsonl": "b64987764524aaf421f8e8d814aababca9b8a28686681aaeaab87d9569799a87",
+              "model.json": "1eaabb9cd8a0a86f9a48374b56c2dff784d162d9d8bbe49332b521eaf5be98f1",
+              "run_manifest.json": "a3c06298f1a0ff4ca7b1a28fc7c25d76188acc97e6f1416759bba1ab0065ce43",
+              "test_scores.jsonl": "2d50535faaaca710b3e5e3d983ab452c88ec7366a3e4ef76fec9e5810d69dc4a",
+              "validation_scores.jsonl": "128cbed770542aa9775f498c43a332801a199a65ee270fda21d957e7992ebd7b"
+            },
+            "case": "demand",
+            "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+            "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+            "portable_reader": {
+              "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+              "status": "passed",
+              "training_libraries_available": false,
+              "verified_test_scores": 818
+            },
+            "prediction_status_counts": {
+              "isolation_forest/insufficient_data": 1319,
+              "isolation_forest/scored": 409,
+              "seasonal_residual/insufficient_data": 1319,
+              "seasonal_residual/scored": 409
+            },
+            "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-41319d204e6e5152995f0907054e2557e5ba92d87ebac53996f1de2f06d7f52f",
+            "requested_rows": 3024,
+            "role_status_counts": {
+              "gap/day_unqualified/excluded": 27,
+              "gap/no_declaration/excluded": 7,
+              "gap/ready_input/excluded": 62,
+              "test/day_unqualified/excluded": 38,
+              "test/insufficient_history/excluded": 4,
+              "test/no_declaration/excluded": 1277,
+              "test/ready_input/eligible": 409,
+              "train/day_unqualified/excluded": 269,
+              "train/insufficient_history/excluded": 638,
+              "train/no_declaration/excluded": 21,
+              "train/ready_input/eligible": 86,
+              "train/ready_input/excluded": 42,
+              "validation/day_unqualified/excluded": 52,
+              "validation/no_declaration/excluded": 6,
+              "validation/ready_input/eligible": 86
+            },
+            "run_artifact_id": "anomaly-detector-run-sha256-3da74a961fcc378dcbf74569a65e5b802f0087088a321be66defb6db8560c8a9"
+          }
+        ],
+        "elapsed_seconds": 179.143,
+        "evaluation_truth_available": false,
+        "fit_resources": [
+          {
+            "case": "demand",
+            "fits": [
+              {
+                "cpu_seconds": 1.739815744,
+                "native_max_score_error": 4.860001290296623e-13,
+                "peak_rss_bytes": 146341888,
+                "wall_seconds": 3.0420281250117114
+              },
+              {
+                "cpu_seconds": 1.572485696,
+                "native_max_score_error": 4.989342272665453e-13,
+                "peak_rss_bytes": 144621568,
+                "wall_seconds": 1.7405987910024123
+              }
+            ]
+          }
+        ],
+        "model_quality": "not_evaluated",
+        "parent_bytes_unchanged": true,
+        "peak_rss_mib": 345.938,
+        "producer_imports_available": false,
+        "stage_timings": [
+          {
+            "case": "demand",
+            "cpu_seconds": 3.701,
+            "elapsed_seconds": 3.555,
+            "stage": "snapshot"
+          },
+          {
+            "case": "demand",
+            "cpu_seconds": 19.226,
+            "elapsed_seconds": 20.347,
+            "stage": "curated"
+          },
+          {
+            "case": "demand",
+            "cpu_seconds": 44.356,
+            "elapsed_seconds": 47.476,
+            "stage": "full_dq"
+          },
+          {
+            "case": "demand",
+            "cpu_seconds": 84.699,
+            "elapsed_seconds": 90.61,
+            "stage": "qualified_features"
+          },
+          {
+            "case": "demand",
+            "cpu_seconds": 123.751,
+            "elapsed_seconds": 136.297,
+            "stage": "detector_build"
+          },
+          {
+            "case": "demand",
+            "cpu_seconds": 160.281,
+            "elapsed_seconds": 177.99,
+            "stage": "independent_verification"
+          },
+          {
+            "case": "demand",
+            "cpu_seconds": 160.287,
+            "elapsed_seconds": 179.07,
+            "stage": "portable_reader"
+          }
+        ]
+      },
+      {
+        "cases": [
+          {
+            "artifact_files": {
+              "manifest.sha256": "6d93006da24f9870a9e0b8101d43b5064ad953bb61a941b30b87a9186f2c7e8a",
+              "membership.jsonl": "1566ead9b7d1714b84e1cd4e5c881145193168eac4bb4e0e9594f4a314bb708b",
+              "model.json": "4a43a42da350bfa857a42a8cc36d174a68f5028223d3db9707195e70b264a312",
+              "run_manifest.json": "dc5d8c3e92fc8d527c07fdc4f07d0006a4931d43d2cf95ac8435db22608ff976",
+              "test_scores.jsonl": "da7a11a47749a272107ec6beb52b037d28c1959fc9540aa23f046ef66d2756d3",
+              "validation_scores.jsonl": "1bf91286eab9334e7760040963d0d67b4051ab04d51528fd5561c74db6086b5d"
+            },
+            "case": "physical",
+            "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+            "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+            "portable_reader": {
+              "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+              "status": "passed",
+              "training_libraries_available": false,
+              "verified_test_scores": 806
+            },
+            "prediction_status_counts": {
+              "isolation_forest/insufficient_data": 1325,
+              "isolation_forest/scored": 403,
+              "seasonal_residual/insufficient_data": 1325,
+              "seasonal_residual/scored": 403
+            },
+            "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-4e9cdc909ed98df2de81d9e67ee63814a1ecf00b3ed82c7d60ee50f68a7e553e",
+            "requested_rows": 3024,
+            "role_status_counts": {
+              "gap/day_unqualified/excluded": 27,
+              "gap/no_declaration/excluded": 7,
+              "gap/ready_input/excluded": 62,
+              "test/day_unqualified/excluded": 48,
+              "test/insufficient_history/excluded": 4,
+              "test/no_declaration/excluded": 1273,
+              "test/ready_input/eligible": 403,
+              "train/day_unqualified/excluded": 279,
+              "train/insufficient_history/excluded": 630,
+              "train/no_declaration/excluded": 21,
+              "train/ready_input/eligible": 84,
+              "train/ready_input/excluded": 42,
+              "validation/day_unqualified/excluded": 47,
+              "validation/insufficient_history/excluded": 1,
+              "validation/no_declaration/excluded": 6,
+              "validation/ready_input/eligible": 90
+            },
+            "run_artifact_id": "anomaly-detector-run-sha256-b64288873c4f93973145db5550e7f73989759afdb7dbf68ab83884019fcae1c5"
+          }
+        ],
+        "elapsed_seconds": 140.553,
+        "evaluation_truth_available": false,
+        "fit_resources": [
+          {
+            "case": "physical",
+            "fits": [
+              {
+                "cpu_seconds": 1.380422976,
+                "native_max_score_error": 4.939937348069634e-13,
+                "peak_rss_bytes": 145915904,
+                "wall_seconds": 1.8262956670077983
+              },
+              {
+                "cpu_seconds": 1.318918784,
+                "native_max_score_error": 4.98434626905464e-13,
+                "peak_rss_bytes": 144719872,
+                "wall_seconds": 1.4605761659913696
+              }
+            ]
+          }
+        ],
+        "model_quality": "not_evaluated",
+        "parent_bytes_unchanged": true,
+        "peak_rss_mib": 378.781,
+        "producer_imports_available": false,
+        "stage_timings": [
+          {
+            "case": "physical",
+            "cpu_seconds": 2.826,
+            "elapsed_seconds": 2.525,
+            "stage": "snapshot"
+          },
+          {
+            "case": "physical",
+            "cpu_seconds": 15.148,
+            "elapsed_seconds": 15.289,
+            "stage": "curated"
+          },
+          {
+            "case": "physical",
+            "cpu_seconds": 35.596,
+            "elapsed_seconds": 36.401,
+            "stage": "full_dq"
+          },
+          {
+            "case": "physical",
+            "cpu_seconds": 69.778,
+            "elapsed_seconds": 71.566,
+            "stage": "qualified_features"
+          },
+          {
+            "case": "physical",
+            "cpu_seconds": 100.957,
+            "elapsed_seconds": 106.633,
+            "stage": "detector_build"
+          },
+          {
+            "case": "physical",
+            "cpu_seconds": 130.476,
+            "elapsed_seconds": 139.644,
+            "stage": "independent_verification"
+          },
+          {
+            "case": "physical",
+            "cpu_seconds": 130.481,
+            "elapsed_seconds": 140.493,
+            "stage": "portable_reader"
+          }
+        ]
+      }
+    ]
+  },
+  "evaluation_truth": "excluded",
+  "final_head_required_ci": "recorded_in_draft_pr_after_completion",
+  "final_portfolio_test": "not_included_not_opened",
+  "installed_cli": {
+    "artifact_files": {
+      "manifest.sha256": "d58a240d444e845a4ed5377db2e4e70bcc829fce5c16f4af4851e4a771623e43",
+      "membership.jsonl": "b64987764524aaf421f8e8d814aababca9b8a28686681aaeaab87d9569799a87",
+      "model.json": "1eaabb9cd8a0a86f9a48374b56c2dff784d162d9d8bbe49332b521eaf5be98f1",
+      "run_manifest.json": "a3c06298f1a0ff4ca7b1a28fc7c25d76188acc97e6f1416759bba1ab0065ce43",
+      "test_scores.jsonl": "2d50535faaaca710b3e5e3d983ab452c88ec7366a3e4ef76fec9e5810d69dc4a",
+      "validation_scores.jsonl": "128cbed770542aa9775f498c43a332801a199a65ee270fda21d957e7992ebd7b"
+    },
+    "build": {
+      "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+      "detector_readiness": "not_qualified",
+      "directory": "/private/tmp/ai07-anomaly-detectors-installed-cli/data/generated/anomaly-detectors/anomaly-detector-run-sha256-3da74a961fcc378dcbf74569a65e5b802f0087088a321be66defb6db8560c8a9",
+      "fit_resources": [
+        {
+          "cpu_seconds": 1.333625968,
+          "native_max_score_error": 4.860001290296623e-13,
+          "peak_rss_bytes": 144228352,
+          "wall_seconds": 1.7912841659999685
+        },
+        {
+          "cpu_seconds": 1.292270976,
+          "native_max_score_error": 4.989342272665453e-13,
+          "peak_rss_bytes": 144654336,
+          "wall_seconds": 1.3692367500043474
+        }
+      ],
+      "model_quality": "not_evaluated",
+      "prediction_status_counts": {
+        "isolation_forest/insufficient_data": 1319,
+        "isolation_forest/scored": 409,
+        "seasonal_residual/insufficient_data": 1319,
+        "seasonal_residual/scored": 409
+      },
+      "role_status_counts": {
+        "gap/day_unqualified/excluded": 27,
+        "gap/no_declaration/excluded": 7,
+        "gap/ready_input/excluded": 62,
+        "test/day_unqualified/excluded": 38,
+        "test/insufficient_history/excluded": 4,
+        "test/no_declaration/excluded": 1277,
+        "test/ready_input/eligible": 409,
+        "train/day_unqualified/excluded": 269,
+        "train/insufficient_history/excluded": 638,
+        "train/no_declaration/excluded": 21,
+        "train/ready_input/eligible": 86,
+        "train/ready_input/excluded": 42,
+        "validation/day_unqualified/excluded": 52,
+        "validation/no_declaration/excluded": 6,
+        "validation/ready_input/eligible": 86
+      },
+      "run_artifact_id": "anomaly-detector-run-sha256-3da74a961fcc378dcbf74569a65e5b802f0087088a321be66defb6db8560c8a9",
+      "status": "created"
+    },
+    "parent_bytes_unchanged": true,
+    "resealed_native_corruption_rejected": true,
+    "status": "passed",
+    "verified": true
+  },
+  "installed_wheel": {
+    "all_six_files_equal_to_editable": true,
+    "round": {
+      "cases": [
+        {
+          "artifact_files": {
+            "manifest.sha256": "d58a240d444e845a4ed5377db2e4e70bcc829fce5c16f4af4851e4a771623e43",
+            "membership.jsonl": "b64987764524aaf421f8e8d814aababca9b8a28686681aaeaab87d9569799a87",
+            "model.json": "1eaabb9cd8a0a86f9a48374b56c2dff784d162d9d8bbe49332b521eaf5be98f1",
+            "run_manifest.json": "a3c06298f1a0ff4ca7b1a28fc7c25d76188acc97e6f1416759bba1ab0065ce43",
+            "test_scores.jsonl": "2d50535faaaca710b3e5e3d983ab452c88ec7366a3e4ef76fec9e5810d69dc4a",
+            "validation_scores.jsonl": "128cbed770542aa9775f498c43a332801a199a65ee270fda21d957e7992ebd7b"
+          },
+          "case": "demand",
+          "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+          "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+          "portable_reader": {
+            "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+            "status": "passed",
+            "training_libraries_available": false,
+            "verified_test_scores": 818
+          },
+          "prediction_status_counts": {
+            "isolation_forest/insufficient_data": 1319,
+            "isolation_forest/scored": 409,
+            "seasonal_residual/insufficient_data": 1319,
+            "seasonal_residual/scored": 409
+          },
+          "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-41319d204e6e5152995f0907054e2557e5ba92d87ebac53996f1de2f06d7f52f",
+          "requested_rows": 3024,
+          "role_status_counts": {
+            "gap/day_unqualified/excluded": 27,
+            "gap/no_declaration/excluded": 7,
+            "gap/ready_input/excluded": 62,
+            "test/day_unqualified/excluded": 38,
+            "test/insufficient_history/excluded": 4,
+            "test/no_declaration/excluded": 1277,
+            "test/ready_input/eligible": 409,
+            "train/day_unqualified/excluded": 269,
+            "train/insufficient_history/excluded": 638,
+            "train/no_declaration/excluded": 21,
+            "train/ready_input/eligible": 86,
+            "train/ready_input/excluded": 42,
+            "validation/day_unqualified/excluded": 52,
+            "validation/no_declaration/excluded": 6,
+            "validation/ready_input/eligible": 86
+          },
+          "run_artifact_id": "anomaly-detector-run-sha256-3da74a961fcc378dcbf74569a65e5b802f0087088a321be66defb6db8560c8a9"
+        },
+        {
+          "artifact_files": {
+            "manifest.sha256": "6d93006da24f9870a9e0b8101d43b5064ad953bb61a941b30b87a9186f2c7e8a",
+            "membership.jsonl": "1566ead9b7d1714b84e1cd4e5c881145193168eac4bb4e0e9594f4a314bb708b",
+            "model.json": "4a43a42da350bfa857a42a8cc36d174a68f5028223d3db9707195e70b264a312",
+            "run_manifest.json": "dc5d8c3e92fc8d527c07fdc4f07d0006a4931d43d2cf95ac8435db22608ff976",
+            "test_scores.jsonl": "da7a11a47749a272107ec6beb52b037d28c1959fc9540aa23f046ef66d2756d3",
+            "validation_scores.jsonl": "1bf91286eab9334e7760040963d0d67b4051ab04d51528fd5561c74db6086b5d"
+          },
+          "case": "physical",
+          "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+          "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+          "portable_reader": {
+            "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+            "status": "passed",
+            "training_libraries_available": false,
+            "verified_test_scores": 806
+          },
+          "prediction_status_counts": {
+            "isolation_forest/insufficient_data": 1325,
+            "isolation_forest/scored": 403,
+            "seasonal_residual/insufficient_data": 1325,
+            "seasonal_residual/scored": 403
+          },
+          "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-4e9cdc909ed98df2de81d9e67ee63814a1ecf00b3ed82c7d60ee50f68a7e553e",
+          "requested_rows": 3024,
+          "role_status_counts": {
+            "gap/day_unqualified/excluded": 27,
+            "gap/no_declaration/excluded": 7,
+            "gap/ready_input/excluded": 62,
+            "test/day_unqualified/excluded": 48,
+            "test/insufficient_history/excluded": 4,
+            "test/no_declaration/excluded": 1273,
+            "test/ready_input/eligible": 403,
+            "train/day_unqualified/excluded": 279,
+            "train/insufficient_history/excluded": 630,
+            "train/no_declaration/excluded": 21,
+            "train/ready_input/eligible": 84,
+            "train/ready_input/excluded": 42,
+            "validation/day_unqualified/excluded": 47,
+            "validation/insufficient_history/excluded": 1,
+            "validation/no_declaration/excluded": 6,
+            "validation/ready_input/eligible": 90
+          },
+          "run_artifact_id": "anomaly-detector-run-sha256-b64288873c4f93973145db5550e7f73989759afdb7dbf68ab83884019fcae1c5"
+        }
+      ],
+      "processes": [
+        {
+          "cases": [
+            {
+              "artifact_files": {
+                "manifest.sha256": "d58a240d444e845a4ed5377db2e4e70bcc829fce5c16f4af4851e4a771623e43",
+                "membership.jsonl": "b64987764524aaf421f8e8d814aababca9b8a28686681aaeaab87d9569799a87",
+                "model.json": "1eaabb9cd8a0a86f9a48374b56c2dff784d162d9d8bbe49332b521eaf5be98f1",
+                "run_manifest.json": "a3c06298f1a0ff4ca7b1a28fc7c25d76188acc97e6f1416759bba1ab0065ce43",
+                "test_scores.jsonl": "2d50535faaaca710b3e5e3d983ab452c88ec7366a3e4ef76fec9e5810d69dc4a",
+                "validation_scores.jsonl": "128cbed770542aa9775f498c43a332801a199a65ee270fda21d957e7992ebd7b"
+              },
+              "case": "demand",
+              "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+              "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+              "portable_reader": {
+                "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+                "status": "passed",
+                "training_libraries_available": false,
+                "verified_test_scores": 818
+              },
+              "prediction_status_counts": {
+                "isolation_forest/insufficient_data": 1319,
+                "isolation_forest/scored": 409,
+                "seasonal_residual/insufficient_data": 1319,
+                "seasonal_residual/scored": 409
+              },
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-41319d204e6e5152995f0907054e2557e5ba92d87ebac53996f1de2f06d7f52f",
+              "requested_rows": 3024,
+              "role_status_counts": {
+                "gap/day_unqualified/excluded": 27,
+                "gap/no_declaration/excluded": 7,
+                "gap/ready_input/excluded": 62,
+                "test/day_unqualified/excluded": 38,
+                "test/insufficient_history/excluded": 4,
+                "test/no_declaration/excluded": 1277,
+                "test/ready_input/eligible": 409,
+                "train/day_unqualified/excluded": 269,
+                "train/insufficient_history/excluded": 638,
+                "train/no_declaration/excluded": 21,
+                "train/ready_input/eligible": 86,
+                "train/ready_input/excluded": 42,
+                "validation/day_unqualified/excluded": 52,
+                "validation/no_declaration/excluded": 6,
+                "validation/ready_input/eligible": 86
+              },
+              "run_artifact_id": "anomaly-detector-run-sha256-3da74a961fcc378dcbf74569a65e5b802f0087088a321be66defb6db8560c8a9"
+            }
+          ],
+          "elapsed_seconds": 131.616,
+          "evaluation_truth_available": false,
+          "fit_resources": [
+            {
+              "case": "demand",
+              "fits": [
+                {
+                  "cpu_seconds": 1.55311936,
+                  "native_max_score_error": 4.860001290296623e-13,
+                  "peak_rss_bytes": 138756096,
+                  "wall_seconds": 2.88220204199024
+                },
+                {
+                  "cpu_seconds": 1.396184672,
+                  "native_max_score_error": 4.989342272665453e-13,
+                  "peak_rss_bytes": 144850944,
+                  "wall_seconds": 1.5512949999974808
+                }
+              ]
+            }
+          ],
+          "model_quality": "not_evaluated",
+          "parent_bytes_unchanged": true,
+          "peak_rss_mib": 293.266,
+          "producer_imports_available": false,
+          "stage_timings": [
+            {
+              "case": "demand",
+              "cpu_seconds": 2.45,
+              "elapsed_seconds": 2.108,
+              "stage": "snapshot"
+            },
+            {
+              "case": "demand",
+              "cpu_seconds": 12.506,
+              "elapsed_seconds": 12.344,
+              "stage": "curated"
+            },
+            {
+              "case": "demand",
+              "cpu_seconds": 29.61,
+              "elapsed_seconds": 29.723,
+              "stage": "full_dq"
+            },
+            {
+              "case": "demand",
+              "cpu_seconds": 58.461,
+              "elapsed_seconds": 58.976,
+              "stage": "qualified_features"
+            },
+            {
+              "case": "demand",
+              "cpu_seconds": 89.476,
+              "elapsed_seconds": 95.105,
+              "stage": "detector_build"
+            },
+            {
+              "case": "demand",
+              "cpu_seconds": 120.588,
+              "elapsed_seconds": 130.758,
+              "stage": "independent_verification"
+            },
+            {
+              "case": "demand",
+              "cpu_seconds": 120.597,
+              "elapsed_seconds": 131.558,
+              "stage": "portable_reader"
+            }
+          ]
+        },
+        {
+          "cases": [
+            {
+              "artifact_files": {
+                "manifest.sha256": "6d93006da24f9870a9e0b8101d43b5064ad953bb61a941b30b87a9186f2c7e8a",
+                "membership.jsonl": "1566ead9b7d1714b84e1cd4e5c881145193168eac4bb4e0e9594f4a314bb708b",
+                "model.json": "4a43a42da350bfa857a42a8cc36d174a68f5028223d3db9707195e70b264a312",
+                "run_manifest.json": "dc5d8c3e92fc8d527c07fdc4f07d0006a4931d43d2cf95ac8435db22608ff976",
+                "test_scores.jsonl": "da7a11a47749a272107ec6beb52b037d28c1959fc9540aa23f046ef66d2756d3",
+                "validation_scores.jsonl": "1bf91286eab9334e7760040963d0d67b4051ab04d51528fd5561c74db6086b5d"
+              },
+              "case": "physical",
+              "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+              "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+              "portable_reader": {
+                "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+                "status": "passed",
+                "training_libraries_available": false,
+                "verified_test_scores": 806
+              },
+              "prediction_status_counts": {
+                "isolation_forest/insufficient_data": 1325,
+                "isolation_forest/scored": 403,
+                "seasonal_residual/insufficient_data": 1325,
+                "seasonal_residual/scored": 403
+              },
+              "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-4e9cdc909ed98df2de81d9e67ee63814a1ecf00b3ed82c7d60ee50f68a7e553e",
+              "requested_rows": 3024,
+              "role_status_counts": {
+                "gap/day_unqualified/excluded": 27,
+                "gap/no_declaration/excluded": 7,
+                "gap/ready_input/excluded": 62,
+                "test/day_unqualified/excluded": 48,
+                "test/insufficient_history/excluded": 4,
+                "test/no_declaration/excluded": 1273,
+                "test/ready_input/eligible": 403,
+                "train/day_unqualified/excluded": 279,
+                "train/insufficient_history/excluded": 630,
+                "train/no_declaration/excluded": 21,
+                "train/ready_input/eligible": 84,
+                "train/ready_input/excluded": 42,
+                "validation/day_unqualified/excluded": 47,
+                "validation/insufficient_history/excluded": 1,
+                "validation/no_declaration/excluded": 6,
+                "validation/ready_input/eligible": 90
+              },
+              "run_artifact_id": "anomaly-detector-run-sha256-b64288873c4f93973145db5550e7f73989759afdb7dbf68ab83884019fcae1c5"
+            }
+          ],
+          "elapsed_seconds": 135.823,
+          "evaluation_truth_available": false,
+          "fit_resources": [
+            {
+              "case": "physical",
+              "fits": [
+                {
+                  "cpu_seconds": 1.58718064,
+                  "native_max_score_error": 4.939937348069634e-13,
+                  "peak_rss_bytes": 140181504,
+                  "wall_seconds": 3.0207340829947498
+                },
+                {
+                  "cpu_seconds": 1.34399928,
+                  "native_max_score_error": 4.98434626905464e-13,
+                  "peak_rss_bytes": 144375808,
+                  "wall_seconds": 1.6647099999972852
+                }
+              ]
+            }
+          ],
+          "model_quality": "not_evaluated",
+          "parent_bytes_unchanged": true,
+          "peak_rss_mib": 316.906,
+          "producer_imports_available": false,
+          "stage_timings": [
+            {
+              "case": "physical",
+              "cpu_seconds": 2.361,
+              "elapsed_seconds": 2.083,
+              "stage": "snapshot"
+            },
+            {
+              "case": "physical",
+              "cpu_seconds": 12.726,
+              "elapsed_seconds": 12.593,
+              "stage": "curated"
+            },
+            {
+              "case": "physical",
+              "cpu_seconds": 30.278,
+              "elapsed_seconds": 30.478,
+              "stage": "full_dq"
+            },
+            {
+              "case": "physical",
+              "cpu_seconds": 60.538,
+              "elapsed_seconds": 61.416,
+              "stage": "qualified_features"
+            },
+            {
+              "case": "physical",
+              "cpu_seconds": 92.421,
+              "elapsed_seconds": 98.881,
+              "stage": "detector_build"
+            },
+            {
+              "case": "physical",
+              "cpu_seconds": 123.486,
+              "elapsed_seconds": 134.826,
+              "stage": "independent_verification"
+            },
+            {
+              "case": "physical",
+              "cpu_seconds": 123.491,
+              "elapsed_seconds": 135.751,
+              "stage": "portable_reader"
+            }
+          ]
+        }
+      ]
+    },
+    "wheel_sha256": "20f2e0a36d931581d34fdf55c297c9eb444c31fe377f2885ecbd7b992f3fcaec"
+  },
+  "local_checks": {
+    "all_contract_snapshots": "passed",
+    "compose_config_only": "passed",
+    "documentation_and_required_ci_contract": "passed",
+    "gitleaks_history": "passed",
+    "gitleaks_worktree": "passed",
+    "mypy": "passed",
+    "package": "passed",
+    "ruff_check": "passed",
+    "ruff_format": "passed"
+  },
+  "model_quality": "not_evaluated",
+  "native_acceptance": {
+    "limits": {
+      "peak_rss_mib": 1024,
+      "seconds_per_process": 300
+    },
+    "process_partition": "one_complete_public_profile_per_process",
+    "runs": [
+      {
+        "cases": [
+          {
+            "artifact_files": {
+              "manifest.sha256": "d58a240d444e845a4ed5377db2e4e70bcc829fce5c16f4af4851e4a771623e43",
+              "membership.jsonl": "b64987764524aaf421f8e8d814aababca9b8a28686681aaeaab87d9569799a87",
+              "model.json": "1eaabb9cd8a0a86f9a48374b56c2dff784d162d9d8bbe49332b521eaf5be98f1",
+              "run_manifest.json": "a3c06298f1a0ff4ca7b1a28fc7c25d76188acc97e6f1416759bba1ab0065ce43",
+              "test_scores.jsonl": "2d50535faaaca710b3e5e3d983ab452c88ec7366a3e4ef76fec9e5810d69dc4a",
+              "validation_scores.jsonl": "128cbed770542aa9775f498c43a332801a199a65ee270fda21d957e7992ebd7b"
+            },
+            "case": "demand",
+            "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+            "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+            "portable_reader": {
+              "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+              "status": "passed",
+              "training_libraries_available": false,
+              "verified_test_scores": 818
+            },
+            "prediction_status_counts": {
+              "isolation_forest/insufficient_data": 1319,
+              "isolation_forest/scored": 409,
+              "seasonal_residual/insufficient_data": 1319,
+              "seasonal_residual/scored": 409
+            },
+            "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-41319d204e6e5152995f0907054e2557e5ba92d87ebac53996f1de2f06d7f52f",
+            "requested_rows": 3024,
+            "role_status_counts": {
+              "gap/day_unqualified/excluded": 27,
+              "gap/no_declaration/excluded": 7,
+              "gap/ready_input/excluded": 62,
+              "test/day_unqualified/excluded": 38,
+              "test/insufficient_history/excluded": 4,
+              "test/no_declaration/excluded": 1277,
+              "test/ready_input/eligible": 409,
+              "train/day_unqualified/excluded": 269,
+              "train/insufficient_history/excluded": 638,
+              "train/no_declaration/excluded": 21,
+              "train/ready_input/eligible": 86,
+              "train/ready_input/excluded": 42,
+              "validation/day_unqualified/excluded": 52,
+              "validation/no_declaration/excluded": 6,
+              "validation/ready_input/eligible": 86
+            },
+            "run_artifact_id": "anomaly-detector-run-sha256-3da74a961fcc378dcbf74569a65e5b802f0087088a321be66defb6db8560c8a9"
+          },
+          {
+            "artifact_files": {
+              "manifest.sha256": "6d93006da24f9870a9e0b8101d43b5064ad953bb61a941b30b87a9186f2c7e8a",
+              "membership.jsonl": "1566ead9b7d1714b84e1cd4e5c881145193168eac4bb4e0e9594f4a314bb708b",
+              "model.json": "4a43a42da350bfa857a42a8cc36d174a68f5028223d3db9707195e70b264a312",
+              "run_manifest.json": "dc5d8c3e92fc8d527c07fdc4f07d0006a4931d43d2cf95ac8435db22608ff976",
+              "test_scores.jsonl": "da7a11a47749a272107ec6beb52b037d28c1959fc9540aa23f046ef66d2756d3",
+              "validation_scores.jsonl": "1bf91286eab9334e7760040963d0d67b4051ab04d51528fd5561c74db6086b5d"
+            },
+            "case": "physical",
+            "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+            "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+            "portable_reader": {
+              "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+              "status": "passed",
+              "training_libraries_available": false,
+              "verified_test_scores": 806
+            },
+            "prediction_status_counts": {
+              "isolation_forest/insufficient_data": 1325,
+              "isolation_forest/scored": 403,
+              "seasonal_residual/insufficient_data": 1325,
+              "seasonal_residual/scored": 403
+            },
+            "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-4e9cdc909ed98df2de81d9e67ee63814a1ecf00b3ed82c7d60ee50f68a7e553e",
+            "requested_rows": 3024,
+            "role_status_counts": {
+              "gap/day_unqualified/excluded": 27,
+              "gap/no_declaration/excluded": 7,
+              "gap/ready_input/excluded": 62,
+              "test/day_unqualified/excluded": 48,
+              "test/insufficient_history/excluded": 4,
+              "test/no_declaration/excluded": 1273,
+              "test/ready_input/eligible": 403,
+              "train/day_unqualified/excluded": 279,
+              "train/insufficient_history/excluded": 630,
+              "train/no_declaration/excluded": 21,
+              "train/ready_input/eligible": 84,
+              "train/ready_input/excluded": 42,
+              "validation/day_unqualified/excluded": 47,
+              "validation/insufficient_history/excluded": 1,
+              "validation/no_declaration/excluded": 6,
+              "validation/ready_input/eligible": 90
+            },
+            "run_artifact_id": "anomaly-detector-run-sha256-b64288873c4f93973145db5550e7f73989759afdb7dbf68ab83884019fcae1c5"
+          }
+        ],
+        "processes": [
+          {
+            "cases": [
+              {
+                "artifact_files": {
+                  "manifest.sha256": "d58a240d444e845a4ed5377db2e4e70bcc829fce5c16f4af4851e4a771623e43",
+                  "membership.jsonl": "b64987764524aaf421f8e8d814aababca9b8a28686681aaeaab87d9569799a87",
+                  "model.json": "1eaabb9cd8a0a86f9a48374b56c2dff784d162d9d8bbe49332b521eaf5be98f1",
+                  "run_manifest.json": "a3c06298f1a0ff4ca7b1a28fc7c25d76188acc97e6f1416759bba1ab0065ce43",
+                  "test_scores.jsonl": "2d50535faaaca710b3e5e3d983ab452c88ec7366a3e4ef76fec9e5810d69dc4a",
+                  "validation_scores.jsonl": "128cbed770542aa9775f498c43a332801a199a65ee270fda21d957e7992ebd7b"
+                },
+                "case": "demand",
+                "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+                "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+                "portable_reader": {
+                  "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+                  "status": "passed",
+                  "training_libraries_available": false,
+                  "verified_test_scores": 818
+                },
+                "prediction_status_counts": {
+                  "isolation_forest/insufficient_data": 1319,
+                  "isolation_forest/scored": 409,
+                  "seasonal_residual/insufficient_data": 1319,
+                  "seasonal_residual/scored": 409
+                },
+                "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-41319d204e6e5152995f0907054e2557e5ba92d87ebac53996f1de2f06d7f52f",
+                "requested_rows": 3024,
+                "role_status_counts": {
+                  "gap/day_unqualified/excluded": 27,
+                  "gap/no_declaration/excluded": 7,
+                  "gap/ready_input/excluded": 62,
+                  "test/day_unqualified/excluded": 38,
+                  "test/insufficient_history/excluded": 4,
+                  "test/no_declaration/excluded": 1277,
+                  "test/ready_input/eligible": 409,
+                  "train/day_unqualified/excluded": 269,
+                  "train/insufficient_history/excluded": 638,
+                  "train/no_declaration/excluded": 21,
+                  "train/ready_input/eligible": 86,
+                  "train/ready_input/excluded": 42,
+                  "validation/day_unqualified/excluded": 52,
+                  "validation/no_declaration/excluded": 6,
+                  "validation/ready_input/eligible": 86
+                },
+                "run_artifact_id": "anomaly-detector-run-sha256-3da74a961fcc378dcbf74569a65e5b802f0087088a321be66defb6db8560c8a9"
+              }
+            ],
+            "elapsed_seconds": 179.143,
+            "evaluation_truth_available": false,
+            "fit_resources": [
+              {
+                "case": "demand",
+                "fits": [
+                  {
+                    "cpu_seconds": 1.739815744,
+                    "native_max_score_error": 4.860001290296623e-13,
+                    "peak_rss_bytes": 146341888,
+                    "wall_seconds": 3.0420281250117114
+                  },
+                  {
+                    "cpu_seconds": 1.572485696,
+                    "native_max_score_error": 4.989342272665453e-13,
+                    "peak_rss_bytes": 144621568,
+                    "wall_seconds": 1.7405987910024123
+                  }
+                ]
+              }
+            ],
+            "model_quality": "not_evaluated",
+            "parent_bytes_unchanged": true,
+            "peak_rss_mib": 345.938,
+            "producer_imports_available": false,
+            "stage_timings": [
+              {
+                "case": "demand",
+                "cpu_seconds": 3.701,
+                "elapsed_seconds": 3.555,
+                "stage": "snapshot"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 19.226,
+                "elapsed_seconds": 20.347,
+                "stage": "curated"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 44.356,
+                "elapsed_seconds": 47.476,
+                "stage": "full_dq"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 84.699,
+                "elapsed_seconds": 90.61,
+                "stage": "qualified_features"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 123.751,
+                "elapsed_seconds": 136.297,
+                "stage": "detector_build"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 160.281,
+                "elapsed_seconds": 177.99,
+                "stage": "independent_verification"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 160.287,
+                "elapsed_seconds": 179.07,
+                "stage": "portable_reader"
+              }
+            ]
+          },
+          {
+            "cases": [
+              {
+                "artifact_files": {
+                  "manifest.sha256": "6d93006da24f9870a9e0b8101d43b5064ad953bb61a941b30b87a9186f2c7e8a",
+                  "membership.jsonl": "1566ead9b7d1714b84e1cd4e5c881145193168eac4bb4e0e9594f4a314bb708b",
+                  "model.json": "4a43a42da350bfa857a42a8cc36d174a68f5028223d3db9707195e70b264a312",
+                  "run_manifest.json": "dc5d8c3e92fc8d527c07fdc4f07d0006a4931d43d2cf95ac8435db22608ff976",
+                  "test_scores.jsonl": "da7a11a47749a272107ec6beb52b037d28c1959fc9540aa23f046ef66d2756d3",
+                  "validation_scores.jsonl": "1bf91286eab9334e7760040963d0d67b4051ab04d51528fd5561c74db6086b5d"
+                },
+                "case": "physical",
+                "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+                "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+                "portable_reader": {
+                  "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+                  "status": "passed",
+                  "training_libraries_available": false,
+                  "verified_test_scores": 806
+                },
+                "prediction_status_counts": {
+                  "isolation_forest/insufficient_data": 1325,
+                  "isolation_forest/scored": 403,
+                  "seasonal_residual/insufficient_data": 1325,
+                  "seasonal_residual/scored": 403
+                },
+                "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-4e9cdc909ed98df2de81d9e67ee63814a1ecf00b3ed82c7d60ee50f68a7e553e",
+                "requested_rows": 3024,
+                "role_status_counts": {
+                  "gap/day_unqualified/excluded": 27,
+                  "gap/no_declaration/excluded": 7,
+                  "gap/ready_input/excluded": 62,
+                  "test/day_unqualified/excluded": 48,
+                  "test/insufficient_history/excluded": 4,
+                  "test/no_declaration/excluded": 1273,
+                  "test/ready_input/eligible": 403,
+                  "train/day_unqualified/excluded": 279,
+                  "train/insufficient_history/excluded": 630,
+                  "train/no_declaration/excluded": 21,
+                  "train/ready_input/eligible": 84,
+                  "train/ready_input/excluded": 42,
+                  "validation/day_unqualified/excluded": 47,
+                  "validation/insufficient_history/excluded": 1,
+                  "validation/no_declaration/excluded": 6,
+                  "validation/ready_input/eligible": 90
+                },
+                "run_artifact_id": "anomaly-detector-run-sha256-b64288873c4f93973145db5550e7f73989759afdb7dbf68ab83884019fcae1c5"
+              }
+            ],
+            "elapsed_seconds": 140.553,
+            "evaluation_truth_available": false,
+            "fit_resources": [
+              {
+                "case": "physical",
+                "fits": [
+                  {
+                    "cpu_seconds": 1.380422976,
+                    "native_max_score_error": 4.939937348069634e-13,
+                    "peak_rss_bytes": 145915904,
+                    "wall_seconds": 1.8262956670077983
+                  },
+                  {
+                    "cpu_seconds": 1.318918784,
+                    "native_max_score_error": 4.98434626905464e-13,
+                    "peak_rss_bytes": 144719872,
+                    "wall_seconds": 1.4605761659913696
+                  }
+                ]
+              }
+            ],
+            "model_quality": "not_evaluated",
+            "parent_bytes_unchanged": true,
+            "peak_rss_mib": 378.781,
+            "producer_imports_available": false,
+            "stage_timings": [
+              {
+                "case": "physical",
+                "cpu_seconds": 2.826,
+                "elapsed_seconds": 2.525,
+                "stage": "snapshot"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 15.148,
+                "elapsed_seconds": 15.289,
+                "stage": "curated"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 35.596,
+                "elapsed_seconds": 36.401,
+                "stage": "full_dq"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 69.778,
+                "elapsed_seconds": 71.566,
+                "stage": "qualified_features"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 100.957,
+                "elapsed_seconds": 106.633,
+                "stage": "detector_build"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 130.476,
+                "elapsed_seconds": 139.644,
+                "stage": "independent_verification"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 130.481,
+                "elapsed_seconds": 140.493,
+                "stage": "portable_reader"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "cases": [
+          {
+            "artifact_files": {
+              "manifest.sha256": "d58a240d444e845a4ed5377db2e4e70bcc829fce5c16f4af4851e4a771623e43",
+              "membership.jsonl": "b64987764524aaf421f8e8d814aababca9b8a28686681aaeaab87d9569799a87",
+              "model.json": "1eaabb9cd8a0a86f9a48374b56c2dff784d162d9d8bbe49332b521eaf5be98f1",
+              "run_manifest.json": "a3c06298f1a0ff4ca7b1a28fc7c25d76188acc97e6f1416759bba1ab0065ce43",
+              "test_scores.jsonl": "2d50535faaaca710b3e5e3d983ab452c88ec7366a3e4ef76fec9e5810d69dc4a",
+              "validation_scores.jsonl": "128cbed770542aa9775f498c43a332801a199a65ee270fda21d957e7992ebd7b"
+            },
+            "case": "demand",
+            "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+            "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+            "portable_reader": {
+              "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+              "status": "passed",
+              "training_libraries_available": false,
+              "verified_test_scores": 818
+            },
+            "prediction_status_counts": {
+              "isolation_forest/insufficient_data": 1319,
+              "isolation_forest/scored": 409,
+              "seasonal_residual/insufficient_data": 1319,
+              "seasonal_residual/scored": 409
+            },
+            "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-41319d204e6e5152995f0907054e2557e5ba92d87ebac53996f1de2f06d7f52f",
+            "requested_rows": 3024,
+            "role_status_counts": {
+              "gap/day_unqualified/excluded": 27,
+              "gap/no_declaration/excluded": 7,
+              "gap/ready_input/excluded": 62,
+              "test/day_unqualified/excluded": 38,
+              "test/insufficient_history/excluded": 4,
+              "test/no_declaration/excluded": 1277,
+              "test/ready_input/eligible": 409,
+              "train/day_unqualified/excluded": 269,
+              "train/insufficient_history/excluded": 638,
+              "train/no_declaration/excluded": 21,
+              "train/ready_input/eligible": 86,
+              "train/ready_input/excluded": 42,
+              "validation/day_unqualified/excluded": 52,
+              "validation/no_declaration/excluded": 6,
+              "validation/ready_input/eligible": 86
+            },
+            "run_artifact_id": "anomaly-detector-run-sha256-3da74a961fcc378dcbf74569a65e5b802f0087088a321be66defb6db8560c8a9"
+          },
+          {
+            "artifact_files": {
+              "manifest.sha256": "6d93006da24f9870a9e0b8101d43b5064ad953bb61a941b30b87a9186f2c7e8a",
+              "membership.jsonl": "1566ead9b7d1714b84e1cd4e5c881145193168eac4bb4e0e9594f4a314bb708b",
+              "model.json": "4a43a42da350bfa857a42a8cc36d174a68f5028223d3db9707195e70b264a312",
+              "run_manifest.json": "dc5d8c3e92fc8d527c07fdc4f07d0006a4931d43d2cf95ac8435db22608ff976",
+              "test_scores.jsonl": "da7a11a47749a272107ec6beb52b037d28c1959fc9540aa23f046ef66d2756d3",
+              "validation_scores.jsonl": "1bf91286eab9334e7760040963d0d67b4051ab04d51528fd5561c74db6086b5d"
+            },
+            "case": "physical",
+            "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+            "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+            "portable_reader": {
+              "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+              "status": "passed",
+              "training_libraries_available": false,
+              "verified_test_scores": 806
+            },
+            "prediction_status_counts": {
+              "isolation_forest/insufficient_data": 1325,
+              "isolation_forest/scored": 403,
+              "seasonal_residual/insufficient_data": 1325,
+              "seasonal_residual/scored": 403
+            },
+            "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-4e9cdc909ed98df2de81d9e67ee63814a1ecf00b3ed82c7d60ee50f68a7e553e",
+            "requested_rows": 3024,
+            "role_status_counts": {
+              "gap/day_unqualified/excluded": 27,
+              "gap/no_declaration/excluded": 7,
+              "gap/ready_input/excluded": 62,
+              "test/day_unqualified/excluded": 48,
+              "test/insufficient_history/excluded": 4,
+              "test/no_declaration/excluded": 1273,
+              "test/ready_input/eligible": 403,
+              "train/day_unqualified/excluded": 279,
+              "train/insufficient_history/excluded": 630,
+              "train/no_declaration/excluded": 21,
+              "train/ready_input/eligible": 84,
+              "train/ready_input/excluded": 42,
+              "validation/day_unqualified/excluded": 47,
+              "validation/insufficient_history/excluded": 1,
+              "validation/no_declaration/excluded": 6,
+              "validation/ready_input/eligible": 90
+            },
+            "run_artifact_id": "anomaly-detector-run-sha256-b64288873c4f93973145db5550e7f73989759afdb7dbf68ab83884019fcae1c5"
+          }
+        ],
+        "processes": [
+          {
+            "cases": [
+              {
+                "artifact_files": {
+                  "manifest.sha256": "d58a240d444e845a4ed5377db2e4e70bcc829fce5c16f4af4851e4a771623e43",
+                  "membership.jsonl": "b64987764524aaf421f8e8d814aababca9b8a28686681aaeaab87d9569799a87",
+                  "model.json": "1eaabb9cd8a0a86f9a48374b56c2dff784d162d9d8bbe49332b521eaf5be98f1",
+                  "run_manifest.json": "a3c06298f1a0ff4ca7b1a28fc7c25d76188acc97e6f1416759bba1ab0065ce43",
+                  "test_scores.jsonl": "2d50535faaaca710b3e5e3d983ab452c88ec7366a3e4ef76fec9e5810d69dc4a",
+                  "validation_scores.jsonl": "128cbed770542aa9775f498c43a332801a199a65ee270fda21d957e7992ebd7b"
+                },
+                "case": "demand",
+                "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+                "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+                "portable_reader": {
+                  "detector_id": "anomaly-detector-sha256-e05203198741b23cf78495aa1eaf1de682d9f7465ff549b294acb39c2ada30af",
+                  "status": "passed",
+                  "training_libraries_available": false,
+                  "verified_test_scores": 818
+                },
+                "prediction_status_counts": {
+                  "isolation_forest/insufficient_data": 1319,
+                  "isolation_forest/scored": 409,
+                  "seasonal_residual/insufficient_data": 1319,
+                  "seasonal_residual/scored": 409
+                },
+                "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-41319d204e6e5152995f0907054e2557e5ba92d87ebac53996f1de2f06d7f52f",
+                "requested_rows": 3024,
+                "role_status_counts": {
+                  "gap/day_unqualified/excluded": 27,
+                  "gap/no_declaration/excluded": 7,
+                  "gap/ready_input/excluded": 62,
+                  "test/day_unqualified/excluded": 38,
+                  "test/insufficient_history/excluded": 4,
+                  "test/no_declaration/excluded": 1277,
+                  "test/ready_input/eligible": 409,
+                  "train/day_unqualified/excluded": 269,
+                  "train/insufficient_history/excluded": 638,
+                  "train/no_declaration/excluded": 21,
+                  "train/ready_input/eligible": 86,
+                  "train/ready_input/excluded": 42,
+                  "validation/day_unqualified/excluded": 52,
+                  "validation/no_declaration/excluded": 6,
+                  "validation/ready_input/eligible": 86
+                },
+                "run_artifact_id": "anomaly-detector-run-sha256-3da74a961fcc378dcbf74569a65e5b802f0087088a321be66defb6db8560c8a9"
+              }
+            ],
+            "elapsed_seconds": 131.616,
+            "evaluation_truth_available": false,
+            "fit_resources": [
+              {
+                "case": "demand",
+                "fits": [
+                  {
+                    "cpu_seconds": 1.55311936,
+                    "native_max_score_error": 4.860001290296623e-13,
+                    "peak_rss_bytes": 138756096,
+                    "wall_seconds": 2.88220204199024
+                  },
+                  {
+                    "cpu_seconds": 1.396184672,
+                    "native_max_score_error": 4.989342272665453e-13,
+                    "peak_rss_bytes": 144850944,
+                    "wall_seconds": 1.5512949999974808
+                  }
+                ]
+              }
+            ],
+            "model_quality": "not_evaluated",
+            "parent_bytes_unchanged": true,
+            "peak_rss_mib": 293.266,
+            "producer_imports_available": false,
+            "stage_timings": [
+              {
+                "case": "demand",
+                "cpu_seconds": 2.45,
+                "elapsed_seconds": 2.108,
+                "stage": "snapshot"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 12.506,
+                "elapsed_seconds": 12.344,
+                "stage": "curated"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 29.61,
+                "elapsed_seconds": 29.723,
+                "stage": "full_dq"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 58.461,
+                "elapsed_seconds": 58.976,
+                "stage": "qualified_features"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 89.476,
+                "elapsed_seconds": 95.105,
+                "stage": "detector_build"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 120.588,
+                "elapsed_seconds": 130.758,
+                "stage": "independent_verification"
+              },
+              {
+                "case": "demand",
+                "cpu_seconds": 120.597,
+                "elapsed_seconds": 131.558,
+                "stage": "portable_reader"
+              }
+            ]
+          },
+          {
+            "cases": [
+              {
+                "artifact_files": {
+                  "manifest.sha256": "6d93006da24f9870a9e0b8101d43b5064ad953bb61a941b30b87a9186f2c7e8a",
+                  "membership.jsonl": "1566ead9b7d1714b84e1cd4e5c881145193168eac4bb4e0e9594f4a314bb708b",
+                  "model.json": "4a43a42da350bfa857a42a8cc36d174a68f5028223d3db9707195e70b264a312",
+                  "run_manifest.json": "dc5d8c3e92fc8d527c07fdc4f07d0006a4931d43d2cf95ac8435db22608ff976",
+                  "test_scores.jsonl": "da7a11a47749a272107ec6beb52b037d28c1959fc9540aa23f046ef66d2756d3",
+                  "validation_scores.jsonl": "1bf91286eab9334e7760040963d0d67b4051ab04d51528fd5561c74db6086b5d"
+                },
+                "case": "physical",
+                "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+                "detector_runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+                "portable_reader": {
+                  "detector_id": "anomaly-detector-sha256-df4326080c20d177be8a64c02c867b23a1484fc1dc245e10eb94a6ca09fea64d",
+                  "status": "passed",
+                  "training_libraries_available": false,
+                  "verified_test_scores": 806
+                },
+                "prediction_status_counts": {
+                  "isolation_forest/insufficient_data": 1325,
+                  "isolation_forest/scored": 403,
+                  "seasonal_residual/insufficient_data": 1325,
+                  "seasonal_residual/scored": 403
+                },
+                "qualified_anomaly_input_id": "qualified-anomaly-inputs-sha256-4e9cdc909ed98df2de81d9e67ee63814a1ecf00b3ed82c7d60ee50f68a7e553e",
+                "requested_rows": 3024,
+                "role_status_counts": {
+                  "gap/day_unqualified/excluded": 27,
+                  "gap/no_declaration/excluded": 7,
+                  "gap/ready_input/excluded": 62,
+                  "test/day_unqualified/excluded": 48,
+                  "test/insufficient_history/excluded": 4,
+                  "test/no_declaration/excluded": 1273,
+                  "test/ready_input/eligible": 403,
+                  "train/day_unqualified/excluded": 279,
+                  "train/insufficient_history/excluded": 630,
+                  "train/no_declaration/excluded": 21,
+                  "train/ready_input/eligible": 84,
+                  "train/ready_input/excluded": 42,
+                  "validation/day_unqualified/excluded": 47,
+                  "validation/insufficient_history/excluded": 1,
+                  "validation/no_declaration/excluded": 6,
+                  "validation/ready_input/eligible": 90
+                },
+                "run_artifact_id": "anomaly-detector-run-sha256-b64288873c4f93973145db5550e7f73989759afdb7dbf68ab83884019fcae1c5"
+              }
+            ],
+            "elapsed_seconds": 135.823,
+            "evaluation_truth_available": false,
+            "fit_resources": [
+              {
+                "case": "physical",
+                "fits": [
+                  {
+                    "cpu_seconds": 1.58718064,
+                    "native_max_score_error": 4.939937348069634e-13,
+                    "peak_rss_bytes": 140181504,
+                    "wall_seconds": 3.0207340829947498
+                  },
+                  {
+                    "cpu_seconds": 1.34399928,
+                    "native_max_score_error": 4.98434626905464e-13,
+                    "peak_rss_bytes": 144375808,
+                    "wall_seconds": 1.6647099999972852
+                  }
+                ]
+              }
+            ],
+            "model_quality": "not_evaluated",
+            "parent_bytes_unchanged": true,
+            "peak_rss_mib": 316.906,
+            "producer_imports_available": false,
+            "stage_timings": [
+              {
+                "case": "physical",
+                "cpu_seconds": 2.361,
+                "elapsed_seconds": 2.083,
+                "stage": "snapshot"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 12.726,
+                "elapsed_seconds": 12.593,
+                "stage": "curated"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 30.278,
+                "elapsed_seconds": 30.478,
+                "stage": "full_dq"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 60.538,
+                "elapsed_seconds": 61.416,
+                "stage": "qualified_features"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 92.421,
+                "elapsed_seconds": 98.881,
+                "stage": "detector_build"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 123.486,
+                "elapsed_seconds": 134.826,
+                "stage": "independent_verification"
+              },
+              {
+                "case": "physical",
+                "cpu_seconds": 123.491,
+                "elapsed_seconds": 135.751,
+                "stage": "portable_reader"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "status": "passed"
+  },
+  "other_sessions_modified": false,
+  "pending_ai07": [
+    "frozen observation and episode evaluation with negative-case and unknown coverage denominators",
+    "larger partitioned training/development profiles across three source seeds and scenarios",
+    "validation-led detector configuration comparison and final portfolio protocol",
+    "anomaly-specific lifecycle, pinned batch inference and read-only publication/serving"
+  ],
+  "runtime": {
+    "code_files": {
+      "__init__.py": "81cbcbf1346da22eabdf9e130097e8c28dc72b5b05149c22fbfc4ecb83621287",
+      "cli.py": "613326c263e886a9458255428ed1e67bbea911d967b617f042fbb92273311133",
+      "codec.py": "0e35ae679c6556edd53e014f0851b4eabff6870c7355109b5b2ac55f5dc09b3c",
+      "contract.py": "3e083d40e2e32ecf3e3d3f1dc4fa356c50fd4f0b422355cb6b23b48933212300",
+      "engine.py": "01cf5b6504c545c1136e1325f9750ae9f56b0bc1c1579a5faa146d7cea17a46b",
+      "fit.py": "143a76cdb7fe13f5b3781e66ba49beaeb2dc13f739834fe38f92d6f542604765",
+      "protocol.py": "91f5bfc4b2235bdec93cb404fcb4a9dd277d8aa908ccecc732766e4d37dc7bbc",
+      "store.py": "45b48e7440b6bab168ec4030e21c99b70e206dd412404767368b88ac7c227de7",
+      "worker.py": "fcd30ed59cb526164e5690884168625a3a402f308e2dee91669f8f01b99ebf6e"
+    },
+    "contract_files": {
+      "model.schema.json": "4803c7700f747f7a131fb60d505635b973f11b177a973effb043b5554d5808b6",
+      "policy.schema.json": "14e7026a098b3ef78b22d0d5d5bcc5536a9cb4498b67c1dd0aa4d82e1c6f3689",
+      "prediction.schema.json": "3aacf05d305d9a0a997f65153db65699c62025b178ddc111eb976eac9c488e38",
+      "protocol.schema.json": "aaa222beae191604be2d782f1c1027a4b131854c5c308144ca25bd8682d8a367",
+      "run.schema.json": "ec5c769eb3cdd2e8311d57036fc5a45dc2035de2a188714dfaa984658ccbfb9e"
+    },
+    "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "python_version": "3.11.15"
+  },
+  "runtime_sha256": "8c6bc55db12cb404ccc347a887fb13bd9465db084c2c64059ecee5365cb7ceee",
+  "scope": "frozen temporal development detector mechanics and portable numeric forest; no detector qualification",
+  "shared_services_started": false,
+  "targeted_tests": {
+    "command": "python -m pytest -q tests/test_anomaly_detectors.py",
+    "native_parent_acceptance": "separate_fresh_process_gate_not_fake_unit_parent",
+    "passed": 37,
+    "seconds": 25.027
+  },
+  "unchanged_parent_runtimes": {
+    "day_qualification": "3a9109c2e252363c9d058a973885ef16af569ba74e1b0cefb7428acab9f00c3b",
+    "qualified_anomalies": "d5d88d93704f7c763a64203d55c68f6fdb5b3593fc8a1792fe013fa8ece7aae3"
+  }
+}

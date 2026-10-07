@@ -38,6 +38,446 @@
         "title": "AccessDecision",
         "type": "object"
       },
+      "AnomalyEvaluationDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "counts": {
+            "maxProperties": 32,
+            "patternProperties": {
+              "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              }
+            },
+            "title": "Counts",
+            "type": "object"
+          },
+          "detected_episodes_per_type": {
+            "maxProperties": 5,
+            "patternProperties": {
+              "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              }
+            },
+            "title": "Detected Episodes Per Type",
+            "type": "object"
+          },
+          "detector_id": {
+            "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",
+            "title": "Detector Id",
+            "type": "string"
+          },
+          "episodes_per_type": {
+            "maxProperties": 5,
+            "patternProperties": {
+              "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              }
+            },
+            "title": "Episodes Per Type",
+            "type": "object"
+          },
+          "evaluation_id": {
+            "pattern": "^anomaly-quality-sha256-[0-9a-f]{64}$",
+            "title": "Evaluation Id",
+            "type": "string"
+          },
+          "evidence_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Evidence Sha256",
+            "type": "string"
+          },
+          "family": {
+            "enum": [
+              "seasonal_residual",
+              "isolation_forest"
+            ],
+            "title": "Family",
+            "type": "string"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/CatalogFreshness"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "metric_verification": {
+            "const": "recomputed_from_saved_decisions_and_offline_truth",
+            "default": "recomputed_from_saved_decisions_and_offline_truth",
+            "title": "Metric Verification",
+            "type": "string"
+          },
+          "metrics": {
+            "$ref": "#/components/schemas/AnomalyMetrics"
+          },
+          "mlflow_run_id": {
+            "pattern": "^[0-9a-f]{32}$",
+            "title": "Mlflow Run Id",
+            "type": "string"
+          },
+          "model_artifact": {
+            "$ref": "#/components/schemas/Receipt"
+          },
+          "model_name": {
+            "const": "retailops-sales-anomaly",
+            "default": "retailops-sales-anomaly",
+            "title": "Model Name",
+            "type": "string"
+          },
+          "per_segment": {
+            "maxProperties": 4,
+            "patternProperties": {
+              "^(sale_completed|return_completed)[/:](PLN|EUR)$": {
+                "patternProperties": {
+                  "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+                    "maximum": 100000.0,
+                    "minimum": 0.0,
+                    "type": "integer"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "title": "Per Segment",
+            "type": "object"
+          },
+          "positive_observations_per_type": {
+            "maxProperties": 5,
+            "patternProperties": {
+              "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$": {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              }
+            },
+            "title": "Positive Observations Per Type",
+            "type": "object"
+          },
+          "qualification_scope": {
+            "default": "synthetic_ai_07_portfolio_v1",
+            "enum": [
+              "synthetic_ai_07_portfolio_v1",
+              "synthetic_ai_07_portfolio_v2",
+              "synthetic_ai_07_portfolio_v3",
+              "synthetic_ai_07_portfolio_v4"
+            ],
+            "title": "Qualification Scope",
+            "type": "string"
+          },
+          "quality_id": {
+            "pattern": "^anomaly-quality-sha256-[0-9a-f]{64}$",
+            "title": "Quality Id",
+            "type": "string"
+          },
+          "quality_policy": {
+            "$ref": "#/components/schemas/QualityPolicy"
+          },
+          "quality_status": {
+            "const": "passed",
+            "default": "passed",
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "registered_model_version": {
+            "pattern": "^[1-9][0-9]{0,9}$",
+            "title": "Registered Model Version",
+            "type": "string"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/AnomalyEvaluationScope"
+          },
+          "source_dataset_ids": {
+            "items": {
+              "pattern": "^source-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "maxItems": 6,
+            "minItems": 6,
+            "title": "Source Dataset Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "evaluation_id",
+          "quality_id",
+          "evidence_sha256",
+          "registered_model_version",
+          "mlflow_run_id",
+          "detector_id",
+          "family",
+          "scope",
+          "source_dataset_ids",
+          "generated_at",
+          "freshness",
+          "model_artifact",
+          "quality_policy",
+          "metrics",
+          "counts",
+          "episodes_per_type",
+          "detected_episodes_per_type",
+          "positive_observations_per_type",
+          "per_segment"
+        ],
+        "title": "AnomalyEvaluationDetail",
+        "type": "object"
+      },
+      "AnomalyEvaluationScope": {
+        "additionalProperties": false,
+        "properties": {
+          "channels": {
+            "items": {
+              "enum": [
+                "store",
+                "online",
+                "marketplace",
+                "wholesale"
+              ],
+              "type": "string"
+            },
+            "maxItems": 4,
+            "minItems": 1,
+            "title": "Channels",
+            "type": "array"
+          },
+          "product_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Product Ids",
+            "type": "array"
+          },
+          "selling_location_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Selling Location Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "product_ids",
+          "selling_location_ids",
+          "channels"
+        ],
+        "title": "AnomalyEvaluationScope",
+        "type": "object"
+      },
+      "AnomalyEvaluationSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "detector_id": {
+            "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",
+            "title": "Detector Id",
+            "type": "string"
+          },
+          "evaluation_id": {
+            "pattern": "^anomaly-quality-sha256-[0-9a-f]{64}$",
+            "title": "Evaluation Id",
+            "type": "string"
+          },
+          "evidence_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Evidence Sha256",
+            "type": "string"
+          },
+          "family": {
+            "enum": [
+              "seasonal_residual",
+              "isolation_forest"
+            ],
+            "title": "Family",
+            "type": "string"
+          },
+          "freshness": {
+            "$ref": "#/components/schemas/CatalogFreshness"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "metric_verification": {
+            "const": "recomputed_from_saved_decisions_and_offline_truth",
+            "default": "recomputed_from_saved_decisions_and_offline_truth",
+            "title": "Metric Verification",
+            "type": "string"
+          },
+          "mlflow_run_id": {
+            "pattern": "^[0-9a-f]{32}$",
+            "title": "Mlflow Run Id",
+            "type": "string"
+          },
+          "model_name": {
+            "const": "retailops-sales-anomaly",
+            "default": "retailops-sales-anomaly",
+            "title": "Model Name",
+            "type": "string"
+          },
+          "qualification_scope": {
+            "default": "synthetic_ai_07_portfolio_v1",
+            "enum": [
+              "synthetic_ai_07_portfolio_v1",
+              "synthetic_ai_07_portfolio_v2",
+              "synthetic_ai_07_portfolio_v3",
+              "synthetic_ai_07_portfolio_v4"
+            ],
+            "title": "Qualification Scope",
+            "type": "string"
+          },
+          "quality_id": {
+            "pattern": "^anomaly-quality-sha256-[0-9a-f]{64}$",
+            "title": "Quality Id",
+            "type": "string"
+          },
+          "quality_status": {
+            "const": "passed",
+            "default": "passed",
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "registered_model_version": {
+            "pattern": "^[1-9][0-9]{0,9}$",
+            "title": "Registered Model Version",
+            "type": "string"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/AnomalyEvaluationScope"
+          },
+          "source_dataset_ids": {
+            "items": {
+              "pattern": "^source-sha256-[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "maxItems": 6,
+            "minItems": 6,
+            "title": "Source Dataset Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "evaluation_id",
+          "quality_id",
+          "evidence_sha256",
+          "registered_model_version",
+          "mlflow_run_id",
+          "detector_id",
+          "family",
+          "scope",
+          "source_dataset_ids",
+          "generated_at",
+          "freshness"
+        ],
+        "title": "AnomalyEvaluationSummary",
+        "type": "object"
+      },
+      "AnomalyMetrics": {
+        "additionalProperties": false,
+        "properties": {
+          "episode_recall": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Episode Recall"
+          },
+          "evaluable_coverage": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluable Coverage"
+          },
+          "false_alerts_per_1000": {
+            "anyOf": [
+              {
+                "maximum": 1000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "False Alerts Per 1000"
+          },
+          "high_severity_precision": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "High Severity Precision"
+          },
+          "precision": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Precision"
+          },
+          "recall": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recall"
+          }
+        },
+        "required": [
+          "precision",
+          "recall",
+          "false_alerts_per_1000",
+          "high_severity_precision",
+          "episode_recall",
+          "evaluable_coverage"
+        ],
+        "title": "AnomalyMetrics",
+        "type": "object"
+      },
       "ApprovedModelRelease": {
         "additionalProperties": false,
         "properties": {
@@ -52,7 +492,7 @@
             "type": "string"
           },
           "release_id": {
-            "pattern": "^model-release-sha256-[0-9a-f]{64}$",
+            "pattern": "^(model-release|anomaly-release)-sha256-[0-9a-f]{64}$",
             "title": "Release Id",
             "type": "string"
           }
@@ -514,8 +954,11 @@
             "type": "string"
           },
           "model_name": {
-            "const": "retailops-demand-forecast",
             "default": "retailops-demand-forecast",
+            "enum": [
+              "retailops-demand-forecast",
+              "retailops-sales-anomaly"
+            ],
             "title": "Model Name",
             "type": "string"
           },
@@ -597,15 +1040,19 @@
             "type": "string"
           },
           "feature_schema_version": {
-            "const": "forecast-features-v1",
             "default": "forecast-features-v1",
+            "enum": [
+              "forecast-features-v1",
+              "qualified-anomaly-inputs-1.0.0"
+            ],
             "title": "Feature Schema Version",
             "type": "string"
           },
           "flavor": {
             "enum": [
               "forecast-json-v1",
-              "baseline-json-v1"
+              "baseline-json-v1",
+              "anomaly-json-v1"
             ],
             "title": "Flavor",
             "type": "string"
@@ -628,14 +1075,19 @@
             "enum": [
               "baseline",
               "random_forest",
-              "hist_gradient_boosting"
+              "hist_gradient_boosting",
+              "seasonal_residual",
+              "isolation_forest"
             ],
             "title": "Model Family",
             "type": "string"
           },
           "model_name": {
-            "const": "retailops-demand-forecast",
             "default": "retailops-demand-forecast",
+            "enum": [
+              "retailops-demand-forecast",
+              "retailops-sales-anomaly"
+            ],
             "title": "Model Name",
             "type": "string"
           },
@@ -1102,7 +1554,14 @@
           },
           "items": {
             "items": {
-              "$ref": "#/components/schemas/EvaluationSummary"
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/EvaluationSummary"
+                },
+                {
+                  "$ref": "#/components/schemas/AnomalyEvaluationSummary"
+                }
+              ]
             },
             "maxItems": 200,
             "title": "Items",
@@ -1423,6 +1882,60 @@
           "expected_result"
         ],
         "title": "EvidenceReference",
+        "type": "object"
+      },
+      "FactualFactor": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "known_available_stock",
+              "inventory_snapshot_age",
+              "supply_from_observed_sales",
+              "supply_from_verified_in_stock_sales",
+              "known_delivery_plan_within_horizon",
+              "known_overdue_order_quantity",
+              "history_had_inventory_constraints",
+              "history_inventory_coverage_missing",
+              "current_stockout",
+              "input_not_evaluable",
+              "stale_inventory"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "field": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Field",
+            "type": "string"
+          },
+          "interpretation": {
+            "const": "verified_PIT_fact_not_causal_attribution",
+            "default": "verified_PIT_fact_not_causal_attribution",
+            "title": "Interpretation",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "code",
+          "field",
+          "value"
+        ],
+        "title": "FactualFactor",
         "type": "object"
       },
       "ForecastCheckRequest": {
@@ -1893,7 +2406,7 @@
             "type": "array"
           },
           "pagination": {
-            "$ref": "#/components/schemas/Pagination"
+            "$ref": "#/components/schemas/retailops_ai__forecast_jobs__read_contracts__Pagination"
           },
           "schema_version": {
             "const": "1.1",
@@ -1985,7 +2498,11 @@
                 "knowledge:read",
                 "knowledge:index",
                 "model:decide",
-                "forecast:run"
+                "forecast:run",
+                "anomaly:read",
+                "anomaly:run",
+                "stockout:read",
+                "stockout:run"
               ],
               "type": "string"
             },
@@ -2031,6 +2548,16 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/ResourceScope"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stockout_scope": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StockoutResourceScope"
               },
               {
                 "type": "null"
@@ -2105,6 +2632,458 @@
           "commit_sha"
         ],
         "title": "IndexSource",
+        "type": "object"
+      },
+      "InventoryContext": {
+        "additionalProperties": false,
+        "properties": {
+          "on_hand": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "On Hand"
+          },
+          "status": {
+            "enum": [
+              "unavailable",
+              "potential_stockout",
+              "no_stockout_signal"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "stock_location_id": {
+            "anyOf": [
+              {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stock Location Id"
+          }
+        },
+        "required": [
+          "stock_location_id",
+          "on_hand",
+          "status"
+        ],
+        "title": "InventoryContext",
+        "type": "object"
+      },
+      "Item": {
+        "additionalProperties": false,
+        "properties": {
+          "alert": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert"
+          },
+          "alert_status": {
+            "enum": [
+              "open",
+              "no_alert",
+              "insufficient_data"
+            ],
+            "title": "Alert Status",
+            "type": "string"
+          },
+          "anomaly_id": {
+            "pattern": "^anomaly-sha256-[0-9a-f]{64}$",
+            "title": "Anomaly Id",
+            "type": "string"
+          },
+          "anomaly_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "sales_spike",
+                  "sales_drop",
+                  "residual_outlier",
+                  "return_spike",
+                  "stockout_censored_demand",
+                  "data_quality_suspicion"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Anomaly Type"
+          },
+          "as_of": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "As Of",
+            "type": "string"
+          },
+          "batch_id": {
+            "pattern": "^anomaly-batch-sha256-[0-9a-f]{64}$",
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "business_date": {
+            "format": "date",
+            "title": "Business Date",
+            "type": "string"
+          },
+          "channel": {
+            "enum": [
+              "store",
+              "online",
+              "marketplace",
+              "wholesale"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "curated_dataset_id": {
+            "pattern": "^curated-sha256-[0-9a-f]{64}$",
+            "title": "Curated Dataset Id",
+            "type": "string"
+          },
+          "currency": {
+            "enum": [
+              "PLN",
+              "EUR"
+            ],
+            "title": "Currency",
+            "type": "string"
+          },
+          "detected_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Detected At",
+            "type": "string"
+          },
+          "detector_id": {
+            "pattern": "^anomaly-detector-sha256-[0-9a-f]{64}$",
+            "title": "Detector Id",
+            "type": "string"
+          },
+          "detector_name": {
+            "const": "retailops-sales-anomaly",
+            "default": "retailops-sales-anomaly",
+            "title": "Detector Name",
+            "type": "string"
+          },
+          "detector_version": {
+            "pattern": "^[1-9][0-9]{0,9}$",
+            "title": "Detector Version",
+            "type": "string"
+          },
+          "event_type": {
+            "enum": [
+              "sale_completed",
+              "return_completed"
+            ],
+            "title": "Event Type",
+            "type": "string"
+          },
+          "expected_units": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Units"
+          },
+          "explanation_codes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Explanation Codes",
+            "type": "array"
+          },
+          "family": {
+            "enum": [
+              "seasonal_residual",
+              "isolation_forest"
+            ],
+            "title": "Family",
+            "type": "string"
+          },
+          "freshness_status": {
+            "enum": [
+              "current",
+              "stale",
+              "unknown"
+            ],
+            "title": "Freshness Status",
+            "type": "string"
+          },
+          "full_dq_replay_id": {
+            "pattern": "^full-dq-replay-sha256-[0-9a-f]{64}$",
+            "title": "Full Dq Replay Id",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "inference_run_id": {
+            "pattern": "^anomaly-batch-sha256-[0-9a-f]{64}$",
+            "title": "Inference Run Id",
+            "type": "string"
+          },
+          "input_status": {
+            "enum": [
+              "ready_input",
+              "insufficient_history",
+              "day_unqualified",
+              "no_declaration"
+            ],
+            "title": "Input Status",
+            "type": "string"
+          },
+          "inventory_context": {
+            "$ref": "#/components/schemas/InventoryContext"
+          },
+          "observed_units": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed Units"
+          },
+          "observed_window": {
+            "$ref": "#/components/schemas/Window"
+          },
+          "on_hand": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "On Hand"
+          },
+          "product_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "promotion_context": {
+            "$ref": "#/components/schemas/PromotionContext"
+          },
+          "promotion_offered": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Promotion Offered"
+          },
+          "qualified_anomaly_input_id": {
+            "pattern": "^qualified-anomaly-inputs-sha256-[0-9a-f]{64}$",
+            "title": "Qualified Anomaly Input Id",
+            "type": "string"
+          },
+          "quality_status": {
+            "const": "passed_at_publication",
+            "default": "passed_at_publication",
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "release_id": {
+            "pattern": "^anomaly-release-sha256-[0-9a-f]{64}$",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "residual_units": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Residual Units"
+          },
+          "role": {
+            "enum": [
+              "validation",
+              "final_test",
+              "batch"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "score_definition": {
+            "enum": [
+              "absolute_causal_standardized_residual",
+              "portable_isolation_forest_path_length"
+            ],
+            "title": "Score Definition",
+            "type": "string"
+          },
+          "scoring_origin": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Scoring Origin",
+            "type": "string"
+          },
+          "selling_location_id": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Selling Location Id",
+            "type": "string"
+          },
+          "severity": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "medium",
+                  "high"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Severity"
+          },
+          "signal_episode_id": {
+            "anyOf": [
+              {
+                "pattern": "^signal-episode-sha256-[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signal Episode Id"
+          },
+          "source_dataset_id": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "title": "Source Dataset Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "scored",
+              "insufficient_data"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "threshold": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Threshold"
+          },
+          "threshold_version": {
+            "const": "validation-alert-capacity-1.0.0",
+            "default": "validation-alert-capacity-1.0.0",
+            "title": "Threshold Version",
+            "type": "string"
+          },
+          "version": {
+            "const": "anomaly-portfolio-decision-1.0.0",
+            "default": "anomaly-portfolio-decision-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_type",
+          "product_id",
+          "selling_location_id",
+          "channel",
+          "currency",
+          "business_date",
+          "scoring_origin",
+          "detector_id",
+          "family",
+          "role",
+          "status",
+          "score",
+          "threshold",
+          "alert",
+          "severity",
+          "explanation_codes",
+          "observed_units",
+          "expected_units",
+          "residual_units",
+          "promotion_offered",
+          "on_hand",
+          "input_status",
+          "anomaly_id",
+          "batch_id",
+          "signal_episode_id",
+          "observed_window",
+          "detected_at",
+          "inference_run_id",
+          "inventory_context",
+          "promotion_context",
+          "detector_version",
+          "release_id",
+          "source_dataset_id",
+          "curated_dataset_id",
+          "qualified_anomaly_input_id",
+          "full_dq_replay_id",
+          "generated_at",
+          "as_of",
+          "freshness_status",
+          "anomaly_type",
+          "alert_status",
+          "score_definition"
+        ],
+        "title": "Item",
         "type": "object"
       },
       "KnowledgeHit": {
@@ -2791,48 +3770,107 @@
         "title": "ModelPage",
         "type": "object"
       },
-      "Pagination": {
+      "Page": {
         "additionalProperties": false,
         "properties": {
-          "limit": {
-            "maximum": 200.0,
-            "minimum": 1.0,
-            "title": "Limit",
-            "type": "integer"
-          },
-          "next_offset": {
-            "anyOf": [
-              {
-                "maximum": 2800.0,
-                "minimum": 0.0,
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
+          "data_status": {
+            "enum": [
+              "available",
+              "no_data"
             ],
-            "title": "Next Offset"
+            "title": "Data Status",
+            "type": "string"
           },
-          "offset": {
-            "maximum": 2800.0,
-            "minimum": 0.0,
-            "title": "Offset",
-            "type": "integer"
+          "episode_policy": {
+            "const": "consecutive_calendar_alerts_same_scope_direction_release_no_unknown_gap",
+            "default": "consecutive_calendar_alerts_same_scope_direction_release_no_unknown_gap",
+            "title": "Episode Policy",
+            "type": "string"
           },
-          "total": {
-            "maximum": 2800.0,
-            "minimum": 0.0,
-            "title": "Total",
-            "type": "integer"
+          "freshness_policy": {
+            "const": "scoring_origin_older_than_7_days_is_stale_unknown_remains_unknown",
+            "default": "scoring_origin_older_than_7_days_is_stale_unknown_remains_unknown",
+            "title": "Freshness Policy",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            },
+            "maxItems": 200,
+            "title": "Items",
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/retailops_ai__anomaly_portfolio__serving_contract__Pagination"
+          },
+          "selection": {
+            "enum": [
+              "latest_complete_batch",
+              "pinned_batch",
+              "anomaly_id"
+            ],
+            "title": "Selection",
+            "type": "string"
+          },
+          "version": {
+            "const": "anomaly-read-page-1.0.0",
+            "default": "anomaly-read-page-1.0.0",
+            "title": "Version",
+            "type": "string"
+          },
+          "view_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "View Sha256",
+            "type": "string"
           }
         },
         "required": [
-          "limit",
-          "offset",
-          "total",
-          "next_offset"
+          "items",
+          "pagination",
+          "generated_at",
+          "view_sha256",
+          "selection",
+          "data_status"
         ],
-        "title": "Pagination",
+        "title": "Page",
+        "type": "object"
+      },
+      "PhysicalScope": {
+        "additionalProperties": false,
+        "properties": {
+          "product_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Product Ids",
+            "type": "array"
+          },
+          "stock_location_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Stock Location Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "product_ids",
+          "stock_location_ids"
+        ],
+        "title": "PhysicalScope",
         "type": "object"
       },
       "PolicyMetadata": {
@@ -2949,6 +3987,41 @@
                 "type": "string"
               },
               {
+                "enum": [
+                  "anomaly-scope-denied",
+                  "anomaly-pipeline-denied",
+                  "anomaly-idempotency-conflict",
+                  "anomaly-read-budget",
+                  "anomaly-view-changed",
+                  "anomaly-not-found",
+                  "anomaly-output-unavailable"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "stockout-run-not-found",
+                  "stockout-run-denied",
+                  "stockout-risk-not-found",
+                  "stockout-scope-denied",
+                  "stockout-input-not-prepared",
+                  "stockout-input-origin-mismatch",
+                  "stockout-input-coverage-mismatch",
+                  "stockout-input-runtime-incompatible",
+                  "stockout-input-from-future",
+                  "stockout-model-not-approved",
+                  "stockout-model-decision-incomplete",
+                  "stockout-queue-full",
+                  "stockout-idempotency-conflict",
+                  "stockout-invalid-idempotency-key",
+                  "stockout-run-not-active",
+                  "stockout-database-not-ready",
+                  "stockout-view-changed",
+                  "stockout-read-budget"
+                ],
+                "type": "string"
+              },
+              {
                 "type": "null"
               }
             ],
@@ -3003,6 +4076,39 @@
           "correlation_id"
         ],
         "title": "Problem",
+        "type": "object"
+      },
+      "PromotionContext": {
+        "additionalProperties": false,
+        "properties": {
+          "offered": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Offered"
+          },
+          "planned_price": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Planned Price"
+          }
+        },
+        "required": [
+          "offered",
+          "planned_price"
+        ],
+        "title": "PromotionContext",
         "type": "object"
       },
       "Qualification": {
@@ -3210,6 +4316,167 @@
         "title": "Qualification",
         "type": "object"
       },
+      "QualityPolicy": {
+        "additionalProperties": false,
+        "properties": {
+          "maximum_false_alerts_per_1000": {
+            "maximum": 1000.0,
+            "minimum": 0.0,
+            "title": "Maximum False Alerts Per 1000",
+            "type": "number"
+          },
+          "minimum_clean_per_case": {
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Minimum Clean Per Case",
+            "type": "integer"
+          },
+          "minimum_episode_recall": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Minimum Episode Recall",
+            "type": "number"
+          },
+          "minimum_episode_recall_per_type": {
+            "default": 0.5,
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Minimum Episode Recall Per Type",
+            "type": "number"
+          },
+          "minimum_episodes_per_type": {
+            "default": 3,
+            "maximum": 100.0,
+            "minimum": 3.0,
+            "title": "Minimum Episodes Per Type",
+            "type": "integer"
+          },
+          "minimum_evaluable_coverage": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Minimum Evaluable Coverage",
+            "type": "number"
+          },
+          "minimum_high_severity_precision": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Minimum High Severity Precision",
+            "type": "number"
+          },
+          "minimum_positive_observations_per_type": {
+            "default": 3,
+            "maximum": 10000.0,
+            "minimum": 3.0,
+            "title": "Minimum Positive Observations Per Type",
+            "type": "integer"
+          },
+          "minimum_precision": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Minimum Precision",
+            "type": "number"
+          },
+          "minimum_recall": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Minimum Recall",
+            "type": "number"
+          },
+          "null_required_metric": {
+            "const": "blocks_qualification",
+            "default": "blocks_qualification",
+            "title": "Null Required Metric",
+            "type": "string"
+          },
+          "qualification_scope": {
+            "default": "synthetic_ai_07_portfolio_v1",
+            "enum": [
+              "synthetic_ai_07_portfolio_v1",
+              "synthetic_ai_07_portfolio_v2",
+              "synthetic_ai_07_portfolio_v3",
+              "synthetic_ai_07_portfolio_v4"
+            ],
+            "title": "Qualification Scope",
+            "type": "string"
+          },
+          "required_types": {
+            "default": [
+              "one_day_spike",
+              "multi_day_spike",
+              "sustained_drop",
+              "return_spike",
+              "inventory_censored_episode"
+            ],
+            "items": {
+              "enum": [
+                "one_day_spike",
+                "multi_day_spike",
+                "sustained_drop",
+                "return_spike",
+                "inventory_censored_episode"
+              ],
+              "type": "string"
+            },
+            "title": "Required Types",
+            "type": "array"
+          },
+          "segment_policy": {
+            "const": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+            "default": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+            "title": "Segment Policy",
+            "type": "string"
+          },
+          "source_scenarios": {
+            "default": [
+              "demand",
+              "physical"
+            ],
+            "items": {
+              "enum": [
+                "demand",
+                "physical"
+              ],
+              "type": "string"
+            },
+            "title": "Source Scenarios",
+            "type": "array"
+          },
+          "source_seeds": {
+            "default": [
+              42,
+              137,
+              2026
+            ],
+            "items": {
+              "enum": [
+                42,
+                137,
+                2026
+              ],
+              "type": "integer"
+            },
+            "title": "Source Seeds",
+            "type": "array"
+          },
+          "version": {
+            "const": "anomaly-portfolio-quality-1.0.0",
+            "default": "anomaly-portfolio-quality-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "minimum_precision",
+          "minimum_recall",
+          "maximum_false_alerts_per_1000",
+          "minimum_high_severity_precision",
+          "minimum_episode_recall",
+          "minimum_evaluable_coverage",
+          "minimum_clean_per_case"
+        ],
+        "title": "QualityPolicy",
+        "type": "object"
+      },
       "QueuePolicy": {
         "additionalProperties": false,
         "properties": {
@@ -3393,11 +4660,13 @@
             "items": {
               "enum": [
                 "store",
-                "online"
+                "online",
+                "marketplace",
+                "wholesale"
               ],
               "type": "string"
             },
-            "maxItems": 2,
+            "maxItems": 4,
             "minItems": 1,
             "title": "Channels",
             "type": "array"
@@ -3737,6 +5006,111 @@
         "title": "RunOutput",
         "type": "object"
       },
+      "RuntimeLineage": {
+        "additionalProperties": false,
+        "properties": {
+          "curated_dataset_id": {
+            "pattern": "^curated-sha256-[0-9a-f]{64}$",
+            "title": "Curated Dataset Id",
+            "type": "string"
+          },
+          "feature_set_id": {
+            "pattern": "^feature-partitions-sha256-[0-9a-f]{64}$",
+            "title": "Feature Set Id",
+            "type": "string"
+          },
+          "source_completeness_status": {
+            "enum": [
+              "complete",
+              "not_ready",
+              "unavailable"
+            ],
+            "title": "Source Completeness Status",
+            "type": "string"
+          },
+          "source_dataset_id": {
+            "pattern": "^source-sha256-[0-9a-f]{64}$",
+            "title": "Source Dataset Id",
+            "type": "string"
+          },
+          "source_watermark": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Watermark"
+          },
+          "upstream_bundle_id": {
+            "pattern": "^upstream-partitions-sha256-[0-9a-f]{64}$",
+            "title": "Upstream Bundle Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_dataset_id",
+          "curated_dataset_id",
+          "feature_set_id",
+          "upstream_bundle_id",
+          "source_watermark",
+          "source_completeness_status"
+        ],
+        "title": "RuntimeLineage",
+        "type": "object"
+      },
+      "RuntimeReleasePin": {
+        "additionalProperties": false,
+        "properties": {
+          "image_digest": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "title": "Image Digest",
+            "type": "string"
+          },
+          "model_name": {
+            "enum": [
+              "retailops-stockout-risk",
+              "retailops-stockout-risk-test-mechanics"
+            ],
+            "title": "Model Name",
+            "type": "string"
+          },
+          "model_version": {
+            "pattern": "^[1-9][0-9]{0,8}$",
+            "title": "Model Version",
+            "type": "string"
+          },
+          "policy_content_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Policy Content Sha256",
+            "type": "string"
+          },
+          "recipe_content_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Recipe Content Sha256",
+            "type": "string"
+          },
+          "release_id": {
+            "pattern": "^stockout-release-sha256-[0-9a-f]{64}$",
+            "title": "Release Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "model_name",
+          "model_version",
+          "release_id",
+          "image_digest",
+          "recipe_content_sha256",
+          "policy_content_sha256"
+        ],
+        "title": "RuntimeReleasePin",
+        "type": "object"
+      },
       "SourceLocation": {
         "additionalProperties": false,
         "properties": {
@@ -3777,6 +5151,720 @@
           "source_ref"
         ],
         "title": "SourceLocation",
+        "type": "object"
+      },
+      "StockoutAttempts": {
+        "additionalProperties": false,
+        "properties": {
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/StockoutJobRun"
+            },
+            "maxItems": 5,
+            "title": "Items",
+            "type": "array"
+          },
+          "run_id": {
+            "pattern": "^run-[0-9a-f]{32}$",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "version": {
+            "const": "stockout-job-attempts-1.0.0",
+            "default": "stockout-job-attempts-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "items",
+          "generated_at"
+        ],
+        "title": "StockoutAttempts",
+        "type": "object"
+      },
+      "StockoutInputRef": {
+        "additionalProperties": false,
+        "properties": {
+          "lineage": {
+            "$ref": "#/components/schemas/RuntimeLineage"
+          },
+          "request": {
+            "$ref": "#/components/schemas/StockoutRequest"
+          },
+          "request_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Request Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "request",
+          "request_sha256",
+          "lineage"
+        ],
+        "title": "StockoutInputRef",
+        "type": "object"
+      },
+      "StockoutJobModel": {
+        "additionalProperties": false,
+        "properties": {
+          "approval_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Approval Sha256",
+            "type": "string"
+          },
+          "approval_valid_until": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Approval Valid Until",
+            "type": "string"
+          },
+          "calibrator_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Calibrator Sha256",
+            "type": "string"
+          },
+          "model_id": {
+            "pattern": "^risk-model-sha256-[0-9a-f]{64}$",
+            "title": "Model Id",
+            "type": "string"
+          },
+          "policy_id": {
+            "pattern": "^stockout-scoring-policy-sha256-[0-9a-f]{64}$",
+            "title": "Policy Id",
+            "type": "string"
+          },
+          "release": {
+            "$ref": "#/components/schemas/RuntimeReleasePin"
+          }
+        },
+        "required": [
+          "release",
+          "model_id",
+          "calibrator_sha256",
+          "policy_id",
+          "approval_sha256",
+          "approval_valid_until"
+        ],
+        "title": "StockoutJobModel",
+        "type": "object"
+      },
+      "StockoutJobRun": {
+        "additionalProperties": false,
+        "properties": {
+          "attempt": {
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Attempt",
+            "type": "integer"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunError"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "input_ref": {
+            "$ref": "#/components/schemas/StockoutInputRef"
+          },
+          "output_id": {
+            "anyOf": [
+              {
+                "pattern": "^stockout-output-sha256-[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output Id"
+          },
+          "publication_status": {
+            "enum": [
+              "not_published",
+              "published"
+            ],
+            "title": "Publication Status",
+            "type": "string"
+          },
+          "requested_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Requested At",
+            "type": "string"
+          },
+          "requested_by": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Requested By",
+            "type": "string"
+          },
+          "resolved_model": {
+            "$ref": "#/components/schemas/StockoutJobModel"
+          },
+          "run_id": {
+            "pattern": "^run-[0-9a-f]{32}$",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "run_type": {
+            "const": "stockout_batch",
+            "default": "stockout_batch",
+            "title": "Run Type",
+            "type": "string"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "version": {
+            "const": "stockout-job-run-1.0.0",
+            "default": "stockout-job-run-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "status",
+          "attempt",
+          "requested_at",
+          "requested_by",
+          "started_at",
+          "completed_at",
+          "input_ref",
+          "resolved_model",
+          "output_id",
+          "publication_status",
+          "error"
+        ],
+        "title": "StockoutJobRun",
+        "type": "object"
+      },
+      "StockoutPriority": {
+        "additionalProperties": false,
+        "properties": {
+          "capacity_slots": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capacity Slots"
+          },
+          "eligible_in_universe": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eligible In Universe"
+          },
+          "other_scope_context": {
+            "enum": [
+              "visible_authorized",
+              "withheld"
+            ],
+            "title": "Other Scope Context",
+            "type": "string"
+          },
+          "rank_at_origin": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rank At Origin"
+          },
+          "selected_at_origin": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected At Origin"
+          },
+          "universe": {
+            "const": "complete_registered_profile_at_origin",
+            "default": "complete_registered_profile_at_origin",
+            "title": "Universe",
+            "type": "string"
+          },
+          "universe_id": {
+            "pattern": "^stockout-inputs-sha256-[0-9a-f]{64}$",
+            "title": "Universe Id",
+            "type": "string"
+          },
+          "version": {
+            "const": "stockout-origin-priority-1.0.0",
+            "default": "stockout-origin-priority-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "universe_id",
+          "selected_at_origin",
+          "rank_at_origin",
+          "eligible_in_universe",
+          "capacity_slots",
+          "other_scope_context"
+        ],
+        "title": "StockoutPriority",
+        "type": "object"
+      },
+      "StockoutRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "As Of",
+            "type": "string"
+          },
+          "horizon_days": {
+            "const": 7,
+            "default": 7,
+            "title": "Horizon Days",
+            "type": "integer"
+          },
+          "model_alias": {
+            "const": "champion",
+            "default": "champion",
+            "title": "Model Alias",
+            "type": "string"
+          },
+          "profile_id": {
+            "pattern": "^stockout-inputs-sha256-[0-9a-f]{64}$",
+            "title": "Profile Id",
+            "type": "string"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/PhysicalScope"
+          },
+          "version": {
+            "const": "stockout-batch-request-1.0.0",
+            "default": "stockout-batch-request-1.0.0",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profile_id",
+          "as_of",
+          "scope"
+        ],
+        "title": "StockoutRequest",
+        "type": "object"
+      },
+      "StockoutResourceScope": {
+        "additionalProperties": false,
+        "properties": {
+          "product_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Product Ids",
+            "type": "array"
+          },
+          "stock_location_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Stock Location Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "product_ids",
+          "stock_location_ids"
+        ],
+        "title": "StockoutResourceScope",
+        "type": "object"
+      },
+      "StockoutRisk": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "As Of",
+            "type": "string"
+          },
+          "calibrator_version": {
+            "pattern": "^stockout-calibrator-sha256-[0-9a-f]{64}$",
+            "title": "Calibrator Version",
+            "type": "string"
+          },
+          "feature_lineage_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Feature Lineage Sha256",
+            "type": "string"
+          },
+          "freshness_reason": {
+            "enum": [
+              "source_watermark_unavailable",
+              "origin_age_exceeded",
+              "within_policy",
+              "newer_run_unpublished"
+            ],
+            "title": "Freshness Reason",
+            "type": "string"
+          },
+          "freshness_status": {
+            "enum": [
+              "current",
+              "stale",
+              "unknown"
+            ],
+            "title": "Freshness Status",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "horizon_days": {
+            "const": 7,
+            "default": 7,
+            "title": "Horizon Days",
+            "type": "integer"
+          },
+          "inference_run_id": {
+            "pattern": "^run-[0-9a-f]{32}$",
+            "title": "Inference Run Id",
+            "type": "string"
+          },
+          "inventory_freshness_status": {
+            "enum": [
+              "current",
+              "stale",
+              "unknown"
+            ],
+            "title": "Inventory Freshness Status",
+            "type": "string"
+          },
+          "lineage": {
+            "$ref": "#/components/schemas/RuntimeLineage"
+          },
+          "max_origin_age_seconds": {
+            "const": 86400,
+            "default": 86400,
+            "title": "Max Origin Age Seconds",
+            "type": "integer"
+          },
+          "model_name": {
+            "enum": [
+              "retailops-stockout-risk",
+              "retailops-stockout-risk-test-mechanics"
+            ],
+            "title": "Model Name",
+            "type": "string"
+          },
+          "model_version": {
+            "pattern": "^[1-9][0-9]{0,8}$",
+            "title": "Model Version",
+            "type": "string"
+          },
+          "origin_age_seconds": {
+            "minimum": 0.0,
+            "title": "Origin Age Seconds",
+            "type": "number"
+          },
+          "output_age_seconds": {
+            "minimum": 0.0,
+            "title": "Output Age Seconds",
+            "type": "number"
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StockoutPriority"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "probability": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Probability"
+          },
+          "product_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "quality_status": {
+            "enum": [
+              "passed_at_publication",
+              "mechanics_only"
+            ],
+            "title": "Quality Status",
+            "type": "string"
+          },
+          "read_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Read At",
+            "type": "string"
+          },
+          "release_id": {
+            "pattern": "^stockout-release-sha256-[0-9a-f]{64}$",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "risk_band": {
+            "anyOf": [
+              {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high",
+                  "critical"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Risk Band"
+          },
+          "risk_id": {
+            "pattern": "^risk-sha256-[0-9a-f]{64}$",
+            "title": "Risk Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "scored",
+              "already_stockout",
+              "insufficient_data",
+              "stale_input"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "status_reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "already_stockout",
+                  "inventory_unknown",
+                  "stale_inventory_snapshot",
+                  "inactive_or_unknown_product",
+                  "inactive_or_unknown_assortment_routing",
+                  "insufficient_sales_history"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Reason"
+          },
+          "stock_location_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "title": "Stock Location Id",
+            "type": "string"
+          },
+          "threshold_version": {
+            "pattern": "^stockout-scoring-policy-sha256-[0-9a-f]{64}$",
+            "title": "Threshold Version",
+            "type": "string"
+          },
+          "top_factors": {
+            "items": {
+              "$ref": "#/components/schemas/FactualFactor"
+            },
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Top Factors",
+            "type": "array"
+          },
+          "upstream_lineage_sha256": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Upstream Lineage Sha256"
+          }
+        },
+        "required": [
+          "risk_id",
+          "product_id",
+          "stock_location_id",
+          "as_of",
+          "status",
+          "status_reason",
+          "probability",
+          "risk_band",
+          "threshold_version",
+          "calibrator_version",
+          "model_name",
+          "model_version",
+          "release_id",
+          "top_factors",
+          "inventory_freshness_status",
+          "freshness_status",
+          "lineage",
+          "upstream_lineage_sha256",
+          "feature_lineage_sha256",
+          "inference_run_id",
+          "generated_at",
+          "quality_status",
+          "read_at",
+          "origin_age_seconds",
+          "output_age_seconds",
+          "freshness_reason"
+        ],
+        "title": "StockoutRisk",
+        "type": "object"
+      },
+      "StockoutRiskPage": {
+        "additionalProperties": false,
+        "properties": {
+          "data_status": {
+            "enum": [
+              "available",
+              "no_data"
+            ],
+            "title": "Data Status",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/StockoutRisk"
+            },
+            "maxItems": 100,
+            "title": "Items",
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/retailops_ai__forecast_jobs__read_contracts__Pagination"
+          },
+          "selection": {
+            "enum": [
+              "latest_per_product_stock",
+              "origin",
+              "inference_run"
+            ],
+            "title": "Selection",
+            "type": "string"
+          },
+          "version": {
+            "const": "stockout-risk-page-1.0.0",
+            "default": "stockout-risk-page-1.0.0",
+            "title": "Version",
+            "type": "string"
+          },
+          "view_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "View Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items",
+          "pagination",
+          "generated_at",
+          "data_status",
+          "selection",
+          "view_sha256"
+        ],
+        "title": "StockoutRiskPage",
         "type": "object"
       },
       "V12ApprovedRelease": {
@@ -5043,7 +7131,7 @@
             "type": "array"
           },
           "pagination": {
-            "$ref": "#/components/schemas/Pagination"
+            "$ref": "#/components/schemas/retailops_ai__forecast_jobs__read_contracts__Pagination"
           },
           "selection": {
             "enum": [
@@ -5217,7 +7305,7 @@
             "type": "array"
           },
           "pagination": {
-            "$ref": "#/components/schemas/Pagination"
+            "$ref": "#/components/schemas/retailops_ai__forecast_jobs__read_contracts__Pagination"
           },
           "run_id": {
             "pattern": "^run-[0-9a-f]{32}$",
@@ -5836,6 +7924,101 @@
         ],
         "title": "VersionPage",
         "type": "object"
+      },
+      "Window": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ],
+        "title": "Window",
+        "type": "object"
+      },
+      "retailops_ai__anomaly_portfolio__serving_contract__Pagination": {
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "maximum": 200.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "limit",
+          "offset",
+          "total"
+        ],
+        "title": "Pagination",
+        "type": "object"
+      },
+      "retailops_ai__forecast_jobs__read_contracts__Pagination": {
+        "additionalProperties": false,
+        "properties": {
+          "limit": {
+            "maximum": 200.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "next_offset": {
+            "anyOf": [
+              {
+                "maximum": 2800.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Offset"
+          },
+          "offset": {
+            "maximum": 2800.0,
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "total": {
+            "maximum": 2800.0,
+            "minimum": 0.0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "limit",
+          "offset",
+          "total",
+          "next_offset"
+        ],
+        "title": "Pagination",
+        "type": "object"
       }
     },
     "securitySchemes": {
@@ -6085,6 +8268,519 @@
           }
         ],
         "summary": "Policy Metadata"
+      }
+    },
+    "/api/v1/anomalies": {
+      "get": {
+        "operationId": "anomalies_api_v1_anomalies_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "product_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "selling_location_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Selling Location Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "store",
+                    "online",
+                    "marketplace",
+                    "wholesale"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          },
+          {
+            "in": "query",
+            "name": "event_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "sale_completed",
+                    "return_completed"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Event Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "business_from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Business From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "business_to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Business To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^anomaly-batch-sha256-[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Batch Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "scored",
+                    "insufficient_data"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "severity",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "none",
+                    "medium",
+                    "high"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Severity"
+            }
+          },
+          {
+            "in": "query",
+            "name": "anomaly_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "sales_spike",
+                    "sales_drop",
+                    "residual_outlier",
+                    "return_spike",
+                    "stockout_censored_demand",
+                    "data_quality_suspicion"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Anomaly Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 10000,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "view_sha256",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "View Sha256"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Anomalies"
+      }
+    },
+    "/api/v1/anomalies/{anomaly_id}": {
+      "get": {
+        "operationId": "anomaly_api_v1_anomalies__anomaly_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "anomaly_id",
+            "required": true,
+            "schema": {
+              "pattern": "^anomaly-sha256-[0-9a-f]{64}$",
+              "title": "Anomaly Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Anomaly"
       }
     },
     "/api/v1/evaluations": {
@@ -6826,7 +9522,7 @@
             "name": "evaluation_id",
             "required": true,
             "schema": {
-              "pattern": "^forecast-quality-sha256-[0-9a-f]{64}$",
+              "pattern": "^(forecast|anomaly)-quality-sha256-[0-9a-f]{64}$",
               "title": "Evaluation Id",
               "type": "string"
             }
@@ -6891,7 +9587,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EvaluationDetail"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/EvaluationDetail"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AnomalyEvaluationDetail"
+                    }
+                  ],
+                  "title": "Response Evaluation Api V1 Evaluations  Evaluation Id  Get"
                 }
               }
             },
@@ -10601,6 +13305,718 @@
           }
         ],
         "summary": "Versions"
+      }
+    },
+    "/api/v1/stockout-risks": {
+      "get": {
+        "operationId": "list_risks_api_v1_stockout_risks_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockoutRiskPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "List Risks"
+      }
+    },
+    "/api/v1/stockout-risks/{risk_id}": {
+      "get": {
+        "operationId": "get_risk_api_v1_stockout_risks__risk_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "risk_id",
+            "required": true,
+            "schema": {
+              "pattern": "^risk-sha256-[0-9a-f]{64}$",
+              "title": "Risk Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockoutRisk"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Get Risk"
+      }
+    },
+    "/api/v1/stockout-runs": {
+      "post": {
+        "operationId": "submit_api_v1_stockout_runs_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "title": "Idempotency-Key",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockoutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockoutJobRun"
+                }
+              }
+            },
+            "description": "Successful Response",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Submit"
+      }
+    },
+    "/api/v1/stockout-runs/{run_id}": {
+      "get": {
+        "operationId": "get_run_api_v1_stockout_runs__run_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "pattern": "^run-[0-9a-f]{32}$",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockoutJobRun"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Get Run"
+      }
+    },
+    "/api/v1/stockout-runs/{run_id}/attempts": {
+      "get": {
+        "operationId": "attempts_api_v1_stockout_runs__run_id__attempts_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "pattern": "^run-[0-9a-f]{32}$",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockoutAttempts"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "405": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Method Not Allowed"
+          },
+          "408": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Timeout"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Request Entity Too Large"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "security": [
+          {
+            "apiBearer": []
+          }
+        ],
+        "summary": "Attempts"
       }
     }
   }

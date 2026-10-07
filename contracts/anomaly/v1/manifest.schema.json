@@ -1,0 +1,327 @@
+{
+  "$defs": {
+    "Descriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "content_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "detector_readiness": {
+          "const": "not_qualified",
+          "default": "not_qualified",
+          "title": "Detector Readiness",
+          "type": "string"
+        },
+        "evaluation_truth": {
+          "const": "excluded",
+          "default": "excluded",
+          "title": "Evaluation Truth",
+          "type": "string"
+        },
+        "implementation": {
+          "$ref": "#/$defs/Implementation"
+        },
+        "input_tables": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Input Tables",
+          "type": "array"
+        },
+        "model_feature_allowlist": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Model Feature Allowlist",
+          "type": "array"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "policy": {
+          "$ref": "#/$defs/Policy"
+        },
+        "policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "role": {
+          "const": "features",
+          "default": "features",
+          "title": "Role",
+          "type": "string"
+        },
+        "row_count": {
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Row Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "title": "Status Counts",
+          "type": "object"
+        }
+      },
+      "required": [
+        "parent",
+        "policy",
+        "policy_sha256",
+        "implementation",
+        "input_tables",
+        "model_feature_allowlist",
+        "row_count",
+        "content_sha256",
+        "status_counts"
+      ],
+      "title": "Descriptor",
+      "type": "object"
+    },
+    "Implementation": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "contract_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Contract Files",
+          "type": "object"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "input_byte_limit": {
+          "const": 134217728,
+          "title": "Input Byte Limit",
+          "type": "integer"
+        },
+        "input_row_limit": {
+          "const": 100000,
+          "title": "Input Row Limit",
+          "type": "integer"
+        },
+        "output_byte_limit": {
+          "const": 268435456,
+          "title": "Output Byte Limit",
+          "type": "integer"
+        },
+        "output_row_limit": {
+          "const": 100000,
+          "title": "Output Row Limit",
+          "type": "integer"
+        },
+        "python_version": {
+          "title": "Python Version",
+          "type": "string"
+        },
+        "version": {
+          "const": "anomaly-demand-inputs-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "code_files",
+        "code_sha256",
+        "contract_files",
+        "dependency_lock_sha256",
+        "python_version",
+        "input_row_limit",
+        "input_byte_limit",
+        "output_row_limit",
+        "output_byte_limit"
+      ],
+      "title": "Implementation",
+      "type": "object"
+    },
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "qualification_id": {
+          "title": "Qualification Id",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "curated_dataset_id",
+        "curated_descriptor_sha256",
+        "source_dataset_id",
+        "snapshot_id",
+        "qualification_id"
+      ],
+      "title": "Parent",
+      "type": "object"
+    },
+    "Policy": {
+      "additionalProperties": false,
+      "properties": {
+        "closed_policy": {
+          "const": "retain_without_residual_exclude_from_fit",
+          "default": "retain_without_residual_exclude_from_fit",
+          "title": "Closed Policy",
+          "type": "string"
+        },
+        "dq_policy": {
+          "const": "canonical_source_quality_only_raw_completeness_not_qualified",
+          "default": "canonical_source_quality_only_raw_completeness_not_qualified",
+          "title": "Dq Policy",
+          "type": "string"
+        },
+        "expected_policy": {
+          "const": "same_series_day_minus_7_known_before_window",
+          "default": "same_series_day_minus_7_known_before_window",
+          "title": "Expected Policy",
+          "type": "string"
+        },
+        "history_days": {
+          "const": 28,
+          "default": 28,
+          "title": "History Days",
+          "type": "integer"
+        },
+        "metric": {
+          "const": "observed_sales_units",
+          "default": "observed_sales_units",
+          "title": "Metric",
+          "type": "string"
+        },
+        "minimum_history_days": {
+          "const": 14,
+          "default": 14,
+          "title": "Minimum History Days",
+          "type": "integer"
+        },
+        "minimum_residuals": {
+          "const": 7,
+          "default": 7,
+          "title": "Minimum Residuals",
+          "type": "integer"
+        },
+        "promotion_policy": {
+          "const": "known_context_no_automatic_alert",
+          "default": "known_context_no_automatic_alert",
+          "title": "Promotion Policy",
+          "type": "string"
+        },
+        "scale_policy": {
+          "const": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+          "default": "max_1_pcs_1.4826_mad_prior_seasonal_residuals",
+          "title": "Scale Policy",
+          "type": "string"
+        },
+        "scoring_delay_hours": {
+          "default": 24,
+          "maximum": 168,
+          "minimum": 0,
+          "title": "Scoring Delay Hours",
+          "type": "integer"
+        },
+        "seasonal_lag_days": {
+          "const": 7,
+          "default": 7,
+          "title": "Seasonal Lag Days",
+          "type": "integer"
+        },
+        "version": {
+          "const": "anomaly-demand-inputs-1.0.0",
+          "default": "anomaly-demand-inputs-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "Policy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "anomaly_input_id": {
+      "pattern": "^anomaly-inputs-sha256-[0-9a-f]{64}$",
+      "title": "Anomaly Input Id",
+      "type": "string"
+    },
+    "descriptor": {
+      "$ref": "#/$defs/Descriptor"
+    },
+    "file_bytes": {
+      "maximum": 268435456,
+      "minimum": 1,
+      "title": "File Bytes",
+      "type": "integer"
+    },
+    "file_path": {
+      "const": "features.jsonl",
+      "default": "features.jsonl",
+      "title": "File Path",
+      "type": "string"
+    },
+    "file_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "File Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "anomaly_input_id",
+    "descriptor",
+    "file_bytes",
+    "file_sha256"
+  ],
+  "title": "Manifest",
+  "type": "object"
+}
