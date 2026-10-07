@@ -130,6 +130,7 @@ packages = ["src/retailops_ai"]
 "contracts/evaluation/v2" = "retailops_ai/tensorflow_challenger"
 "contracts/evaluation/v12" = "retailops_ai/evaluation_campaign/v12"
 "contracts/evaluation/v13" = "retailops_ai/evaluation_campaign/v13"
+"contracts/evaluation/v14" = "retailops_ai/evaluation_campaign/v14"
 "contracts/source_snapshot/v1_2" = "retailops_ai/source_snapshot/v1_2"
 
 [tool.uv]

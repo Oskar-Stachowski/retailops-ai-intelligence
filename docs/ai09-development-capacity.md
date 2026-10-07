@@ -1,5 +1,30 @@
 # Pomiar pełnego development AI 09
 
+[Prospektywna receptura 1.2](reference/ai09-development-capacity-v1.2.json)
+jest przygotowana do osobnego pomiaru na `16d34887`. Nie została uruchomiona.
+Wykorzystuje istniejącą ścieżkę AI 08 `source_cohort_batch_v2.run`, z indeksem
+identyfikatorów, cached walidacją immutable rekordów i zwalnianiem build state
+przed pełnym ponownym odczytem źródła. Zaktualizowane przypięcia zachowują
+strażniki drift; native ordinary/cached parity ma 16 zaliczonych testów,
+a trzy dodatkowe przypadki z 14 dniami planów forecast przechodzą na seedach
+42/137/2026, z identycznymi 58 tabelami, CSV, kontekstem, source ID i bramkami.
+
+Przed dispatch wymagane są zielony Required CI dokładnego producenta,
+jego chroniony merge do main i odbiór main. Ten pomiar jest wyłącznie ręczny;
+push nie uruchamia automatycznego ponowienia. Rozmiar canonical, daty, locks,
+8 GiB RSS/scratch, godzina wall, parent caps i wszystkie zakazy pozostają
+takie jak w 1.1. Receptura przypina drugi wynik `wall_limit`, a wcześniejszy
+plan 1.1 zachowuje pierwszą porażkę i plan 1.0. Oba stare plany pozostają
+bajt w bajt. 21 testów supervisora i kontroli scope jest zaliczonych.
+Wersja receptury 1.2 nie oznacza snapshotu anomalii 1.2: oczekiwany snapshot
+tego diagnostycznego świata nadal ma wersję **1.1.0**.
+[Odbiór połączeń](evidence/09-19-cached-development-capacity-preparation.json)
+ukończył wszystkie pięć rzeczywistych faz na świeżym kontrolnym `ai-load`
+45 × 2 × 1 × 1: source 2.7 ma 2800 wierszy i 58 tabel, snapshot/curated 1.1
+mają 2124 operacyjne wiersze, 43 tabele i 0 odrzuconych. `forecast_source`
+jest passed; modele, stockout i anomalie nie mają odbioru w tym małym świecie.
+Nie mierzono pełnego drzewa RSS ani nie wykonano canonical lub kampanii.
+
 [Plan 1.1](reference/ai09-development-capacity-v1.1.json) określa prawdziwe `ai-dev`:
 365 dni, 100 produktów, 5 sklepów, 3 lokalizacje zapasu i seed 42. Generator
 jest przypięty do `1de4627`, historia kończy się 2026-07-31, a znane plany mają
@@ -86,3 +111,9 @@ Core usprawnień CI z PR #34, main `89b64d2`, jest zintegrowany w tej gałęzi
 bez zmiany `src` lub locków i bez przepięcia producenta AI07.
 Przed chronionym merge tej publikacji wymagane są pełne CI dokładnego nowego
 head oraz [main po PR #34](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37628897194).
+
+Przed pierwszym dispatch przypięcie receptury zmieniono na source PR #103
+`16d34887`, zawierający poprawkę odczytu Kafka i wsparcie planned anomaly.
+Wynik tiny control w 09-19 pochodzi z poprzedniego `5bec26f` i pozostaje
+historycznym odbiorem połączeń. Regresja cohort/forecast plans nowego source
+ma 31 passed; pełne CI i odbiór jego main nadal są warunkiem dispatch.

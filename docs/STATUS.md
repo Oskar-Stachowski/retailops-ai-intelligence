@@ -21,6 +21,14 @@ z protected merge i zielonym Required CI dokładnych main.
 Wcześniejsze wpisy opisują historię.
 
 **2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**
+Runner generacji z PR #35 jest scalony jako `16a02ae` po pełnym Required CI
+17/17 success na `4238b2f`. CI dokładnego nowego main `37657724470` trwa.
+Source main `b7234899` ma pełny odbiór: 21 success i 4 przewidziane skipped.
+Eksporter PR #36 zaliczył 17/17 success na `eb796aa` i został skierowany na main;
+nowa integracja wymaga własnego odbioru. [Receipt publikacji](evidence/09-24-generation-publication.json)
+zachowuje również porażkę przydziału runnerów w poprzednim CI treningowym.
+AI 09 nadal wymaga projektowej kampanii i wyników końcowych.
+
 [PR #33](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/33)
 jest scalony jako `a128bb38` po pełnym zielonym CI jego head `be3b264`.
 [Required CI dokładnego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37635615858)
@@ -148,6 +156,13 @@ poprzedni odebrany pin oraz osobno identyfikuje nową implementację z `d81e78a`
 64 kontrole zgodności, w tym rzeczywisty transfer/reuse bundle, oraz wszystkie
 kontrole kontraktów przeszły. Nowy dokładny head wymaga własnego pełnego CI;
 projektowa kampania, treningi i końcowa ocena pozostają niewykonane.
+
+[Eksport końcowej oceny](ai09-final-export.md) dodaje format wyłącznie
+`final_evaluation`, wiązanie selection freeze i generacji oraz trwały receipt.
+[PR #36](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/36)
+na `cd6106a` zaliczył cały [Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37642451429):
+15/15 jobów success. Integracja z nowszym main i poprawką importera wymaga
+własnego CI. Rzeczywista kampania, treningi i final test pozostają niewykonane.
 
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.

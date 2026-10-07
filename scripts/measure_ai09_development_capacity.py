@@ -26,7 +26,7 @@ from typing import Any
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
-    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.1.json"
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.2.json"
 )
 
 
@@ -216,7 +216,7 @@ def producer_worker(args: argparse.Namespace, plan: dict[str, Any]) -> dict[str,
         }
         generation = configuration.DatasetGenerationConfig(**configuration_values)
         effective = configuration.resolve_generation_config(generation).parameters()
-        runner = importlib.import_module("data.inventory.run_source_dataset")
+        runner = importlib.import_module("data.inventory.source_cohort_batch_v2")
         result = runner.run(generation, raw)
         if result["status"] != "passed" or not result["facts_ready"]:
             raise ValueError("capacity_generation_facts_not_ready")
@@ -289,15 +289,26 @@ def require_remote() -> None:
 
 def validate_plan(plan: dict[str, Any]) -> None:
     """Do not let a smaller or final profile inherit this diagnostic's name."""
-    previous_path = PLAN_PATH.with_name("ai09-development-capacity.json")
+    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.1.json")
     previous = read(previous_path)
-    revision_keys = {"version", "budgets", "previous_attempt", "revision_reason"}
+    previous_result = read(
+        PLAN_PATH.parents[1] / "evidence/09-18-development-capacity-second-run.json"
+    )
+    revision_keys = {
+        "version",
+        "producer_commit",
+        "generation_entrypoint",
+        "previous_attempt",
+        "revision_reason",
+    }
     if {k: v for k, v in plan.items() if k not in revision_keys} != {
         k: v for k, v in previous.items() if k not in revision_keys
     }:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.1.0"
+        plan["version"] != "ai09-development-capacity-probe-1.2.0"
+        or plan["producer_commit"] != "16d34887b058b3dfb270af474f28242194a968ca"
+        or plan["generation_entrypoint"] != "data.inventory.source_cohort_batch_v2.run"
         or plan["scope"] != "isolated_resource_diagnostic_on_previously_exposed_development_dates"
         or plan["expected_snapshot_schema_version"] != "1.1.0"
         or plan["budgets"]
@@ -309,7 +320,15 @@ def validate_plan(plan: dict[str, Any]) -> None:
             "minimum_available_memory_bytes": 1024**3,
             "sample_seconds": 0.2,
         }
-        or plan["previous_attempt"]["plan_sha256"] != sha(previous_path)
+        or plan["previous_attempt"]
+        != {
+            "version": previous["version"],
+            "workflow_run": 37613368332,
+            "plan_sha256": sha(previous_path),
+            "resource_receipt_sha256": previous_result["resource_receipt_sha256"],
+            "reason": "wall_limit",
+            "previous_failure_preserved": True,
+        }
         or plan["generation"]
         != {
             "profile": "ai-dev",
