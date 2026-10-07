@@ -1,0 +1,90 @@
+{
+  "recorded_at": "2026-10-07T10:04:38.668699+00:00",
+  "scope": "controlled audit binding and previously exposed public-fixture regression; not project campaign acceptance",
+  "stage_status": "in_progress_not_ready",
+  "base_main_sha": "3329a8156312e1b709a2cfc90a2f565b274f49af",
+  "previous_export_publication": {
+    "pr": 30,
+    "head_sha": "9bb10f084e465131b0d4f06c5dea452a37fb2481",
+    "pr_ci_run": 37600029424,
+    "pr_ci_result": "completed_success_all14_jobs",
+    "merge_sha": "3329a8156312e1b709a2cfc90a2f565b274f49af",
+    "main_ci_run": 37604312440,
+    "main_ci_observed_result": "queued_at_recording",
+    "protection_bypassed": false
+  },
+  "runtime": {
+    "code_sha256": "5f5079339bd8edfad10626b8af0c97f33de374331169d6932b4529291276295c",
+    "python_modules": 499,
+    "dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "python_version": "3.11.15"
+  },
+  "native_checks": {
+    "export_and_journal": {
+      "passed": 68,
+      "wall_seconds": 13.62,
+      "scope": "controlled canonical-sized metadata declarations; mocked physical replay/build/verify in exporter tests"
+    },
+    "source_versions_and_physical": {
+      "passed": 125,
+      "wall_seconds": 507.98,
+      "scope": "complete affected regression on previously exposed public fixtures; includes actual verified producer-provenance extraction"
+    },
+    "ci_checks": {
+      "result": "passed",
+      "mypy_source_files": 609,
+      "includes": [
+        "lint and format",
+        "mypy",
+        "docs and runtime",
+        "all contracts",
+        "wheel and sdist",
+        "Compose config"
+      ]
+    },
+    "updated_docs_check": "passed",
+    "installed_wheel": "pending",
+    "gitleaks": "pending_final_receipt_scan"
+  },
+  "enforced_bindings": [
+    "reserve complete parent before metadata/hashes/source replay",
+    "pre-generation export-plan digest equals frozen execution recipe",
+    "completed same-protocol/source/reservation generation receipt and exact runtime",
+    "canonical development source dimensions/history and full resolved configuration digest",
+    "exact limits and temporal/features policy cannot be supplied after generation",
+    "verified snapshot supplies producer Git/clean/lock and exporter Git/lock",
+    "full physical replay/build/verify and final source/runtime guard before completion",
+    "durable private receipt no-replace and exact completed journal digest",
+    "ordinary failures measured wall; SIGKILL costs unknown and attempts never refunded"
+  ],
+  "retained_failures": [
+    {
+      "scope": "initial controlled test",
+      "reason": "stored symlink correctly rejected by lower-level OSError; public completion API now reports stable receipt_unavailable SnapshotError",
+      "initial_result": "1 failed32 passed9.82s",
+      "failed_log_retained": true
+    }
+  ],
+  "qualification": {
+    "canonical_ai_dev_run": false,
+    "canonical_ai_training_run": false,
+    "generation_runner_completed": false,
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "final_test_opened": false,
+    "holdout_freshness": false,
+    "resource_process_tree_measured": false,
+    "quality": false,
+    "promotion": false,
+    "stage_ready": false
+  },
+  "remaining": [
+    "audited production generation and curation runner",
+    "actual canonical development export and full source1.2 acceptance",
+    "measured canonical profiles and source/consumer capacity",
+    "fair training calibration and freeze",
+    "explicit final-only exporter and3-seed three-use-case campaign",
+    "segments uncertainty costs reports cards MLflow lifecycle",
+    "exact new-code and final main publication with complete CI"
+  ]
+}

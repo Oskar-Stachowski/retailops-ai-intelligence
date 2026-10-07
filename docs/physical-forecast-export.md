@@ -7,8 +7,10 @@ Nie inicjalizuje kampanii, nie trenuje modeli i nie otwiera końcowego portfolio
 ## Jedno źródło dla cech i etykiet
 
 `source_replay._open_verified_source_parent` jest wspólnym wewnętrznym rdzeniem
-legacy i nowych runnerów. Przed wejściem produkcyjny runner musi trwale zapisać
-pełną ekspozycję rodziców w swoim zamrożonym dzienniku. Rdzeń sprawdza deklarowane
+legacy i nowych runnerów. Publiczny runner
+`campaign_export.export_development_forecast` zapisuje pełną ekspozycję rodziców
+w zamrożonym dzienniku przed wejściem; [plan v12](prospective-evaluation-campaign.md)
+wiąże późniejszy wynik generacji z wcześniejszą polityką. Rdzeń sprawdza deklarowane
 limity i runtime przed pierwszym I/O, metadane i allowlisty, kopiuje całe rodzice
 do prywatnego katalogu, weryfikuje typed snapshot, curated oraz kompletną ponowną
 transformację. Obsługuje dispatch wersji źródeł 1.0/1.1/1.2 istniejącego importera.
@@ -80,7 +82,8 @@ wheel: 241.27 s / 168.48 MiB. To koszt całego
 replay/build/verify tego diagnostycznego procesu, bez pomiaru całego drzewa
 oraz bez kwalifikacji większego profilu. Wstępne pomiary i błędy są zachowane.
 
-Pozostają publiczne spięcie z audytem nowej kampanii, pełny pomiar ai-dev i
+Pozostają rzeczywisty runner generacji/curation, natywny pełny odbiór
+audytowanego eksportu development, pełny pomiar ai-dev i
 ai-training, five-role training/kalibracja, osobna końcowa rola, trzy seedy,
 segmenty/niepewność/koszty, trzy raporty i karty, MLflow/lifecycle i pełny odbiór
 main. Gotowe odbiory AI 07–08 są wykorzystywane bez ich ponownego otwierania.

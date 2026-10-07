@@ -69,7 +69,9 @@ katalogu. Każda rezerwacja jest opublikowana przed wejściem do ciała
 Sukces wymaga digestu zweryfikowanego wyniku i pomiaru czasu. Zakończony fit
 wymaga również peak RSS całego własnego drzewa procesów i rozmiaru artefaktu.
 Runner dostarcza te pomiary i rzeczywisty receipt; dziennik nie wymyśla kosztu
-z liczby rekordów. Awaria nie zwraca budżetu. SIGKILL pozostawia trwale
+z liczby rekordów. Zwykły wyjątek zapisuje zmierzony wall time; dostępne częściowe
+pomiary RSS/artefaktu są zachowane, a brakujące pozostają nieznane. Awaria nie
+zwraca budżetu. SIGKILL pozostawia trwale
 rozliczoną, nierozstrzygniętą rezerwację; jej koszt pozostaje nieznany.
 Nierozstrzygnięta próba blokuje ponowny start tej samej operacji i freeze.
 Kontrolowane rozliczenie jej jako failure nie zwraca zużytego slotu.
@@ -95,12 +97,48 @@ promocji. Zamknięcie wykonania wiąże raport, lecz flagi jakości, świeżośc
 i `stage_ready` nadal są false. Kwalifikację zapewniają osobne weryfikatory danych,
 oceny i lifecycle.
 
+## Audytowany eksport development
+
+[Receipt 09.14](evidence/09-14-audited-development-export.json) oddziela
+kontrolowane testy od niewykonanego jeszcze canonical przebiegu.
+
+Nowe [kontrakty v12](../contracts/evaluation/v12/campaign_development_export_plan.schema.json)
+zamrażają `CampaignDevelopmentExportPlan` przed generacją. Plan zawiera dokładne
+role, originy, cutoffs, features i limity, bez nieznanych jeszcze parent IDs.
+Jego digest musi być `execution_recipe_sha256` zaplanowanej operacji
+`source_read / development / all_parent_data`.
+
+`campaign_export.export_development_forecast` trwale rezerwuje tę operację przed
+odczytem metadanych, hashami i replayem. `CampaignGeneratedParentReceipt` musi
+być dokładnym dowodem zakończonej generacji tego samego protokołu, źródła,
+rezerwacji i runtime. Samo stworzenie obiektu receiptu nie potwierdza generacji.
+Digest pełnych resolved parameters musi odpowiadać zamrożonemu
+`generation_config_sha256`; profil, seed, rozmiary i historia muszą odpowiadać
+canonical `ai-dev`. Zmiana ról, polityki lub limitów jest odrzucana przed parent I/O.
+
+Ten sam zweryfikowany prywatny snapshot dostarcza Git commit/clean state/lock
+producenta oraz commit i lock eksportera. Commit i lock źródła muszą odpowiadać
+protokołowi; lock eksportera musi odpowiadać deklarowanemu plikowi zależności
+producenta. Dopiero potem builder może przeliczyć całą populację. Weryfikacja
+wyniku i końcowe guardy rodziców/runtime kończą się przed publikacją receiptu.
+Receipt jest fsync/no-replace w prywatnym `journal/receipts` (0700/0600), a jego
+digest i zmierzony wall/rozmiar artefaktu trafiają do zakończonej operacji.
+
+`validate_completed_export` sprawdza dziennik i dokładne bajty prywatnego
+receiptu. Nie czyta danych ani nie autoryzuje kolejnego odczytu/fitów. Wynik
+pozostaje dowodem kolejności i budżetu lokalnego współpracującego runnera;
+nie nadaje kwalifikacji globalnej ekspozycji, świeżości, zasobów ani jakości.
+Manifest fizycznego artefaktu nadal zachowuje wszystkie flagi false. Końcowy
+export/holdout wymaga odrębnego jawnego API po selection freeze.
+
 ## Pozostały rzeczywisty odbiór
 
 W tym przyroście nie inicjalizowano nowego dziennika projektu i nie wygenerowano
 nowych danych projektu. Testy używają jawnych, kontrolowanych metadanych.
 Przed uruchomieniem kampanii trzeba przygotować kompletne receptury i polityki,
-podłączyć audyt do [fizycznego eksportera](physical-forecast-export.md) i runnerów.
+dokończyć rzeczywisty runner generacji/curation oraz pozostałe audytowane runnery.
+Powiązanie development read z [fizycznym eksporterem](physical-forecast-export.md)
+jest zaimplementowane; nie wykonano jeszcze pełnego canonical przebiegu tego API.
 Eksporter odtwarza features i etykiety z tych samych prywatnych rodziców; jego
 odrębny odbiór diagnostyczny nie zastępuje pomiaru pełnego profilu i budżetów.
 Następnie wymagane są fair training/kalibracja, zamrożona ocena końcowa,

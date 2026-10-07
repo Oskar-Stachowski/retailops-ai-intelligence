@@ -25,6 +25,11 @@ a kontrola miejsca 2026-10-07 wykazała około 82 GiB wolnego, ponad rezerwę 50
 Te fakty usuwają wcześniejsze przeszkody, lecz nie zastępują odbioru większego
 profilu ani końcowej kampanii.
 
+Nowy reader kampanii wiąże plan eksportu v12 z zakończoną generacją i trwale
+rezerwuje pełny parent read przed I/O. Kontrolowane testy powiązań i wcześniejszy
+publiczny source-replay potwierdzają mechanizm; canonical przebieg tego API,
+runner generacji/curation i reszta kampanii nadal nie są odebrane.
+
 Do zamknięcia pozostają: pełny audytowany eksport rzeczywistych pięciu ról,
 integracja fitów i kalibracji, ocena RF/HGB/baseline/TensorFlow na trzech seedach,
 robustness/niepewność/koszty, wspólne raporty trzech zastosowań, decyzje lifecycle
