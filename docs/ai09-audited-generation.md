@@ -18,6 +18,12 @@ Szybka ścieżka zachowuje zwykły writer i reader; nie dodajemy drugiego identy
 odczytu po jej własnym zakończonym verifierze. Qualification, snapshot i curated
 zachowują swoje samodzielne kontrole.
 
+Publiczny `import_snapshot().summary()["destination"]` wskazuje katalog
+importu zawierający `snapshot/`, manifest importu i jego checksum. Curation
+otrzymuje ten katalog importu. Końcowa weryfikacja i wynik runnera wskazują
+natomiast jego podkatalog `snapshot/`, gdzie znajduje się raw manifest.
+Kontrole nie zmieniają kontraktu importera ani akceptowanych rodziców AI 07–08.
+
 Nowe źródła kampanii wymagają osobnego `exporter_lock_sha256`. Source 2.7/2.8
 wiąże dependency fingerprint plików API, podczas gdy snapshot exporter wiąże
 `data/requirements-parquet.txt`. Nie oczekujemy, aby source manifest zawierał
@@ -32,9 +38,11 @@ watermarks jest sprawdzana oddzielnie. Dodano dokładne współczesne schematy
 producenta jako nowe warianty. Producent wymaga osobnych plan-aware wariantów schematów i dopuszczenia tej
 kombinacji w ordinary source reader, przy zachowaniu niezależnego process replay.
 Source follow-up [PR #103](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/103)
-na `16d34887` jest opublikowany i wymaga własnego pełnego CI
-oraz publikacji na main. Zaliczył rzeczywiste eksporty demand/physical z plans,
-31 kontroli cohort/forecast plans, pełny lint/format i skonfigurowany mypy.
+jest scalony jako `b7234899`. Jego head i dokładny source main mają pełny odbiór:
+21 success oraz 4 przewidziane skipped; main CI `37651259188` jest zakończony.
+Kontrolny producer `16d34887` jest przodkiem tej zaakceptowanej integracji.
+Zaliczył rzeczywiste eksporty demand/physical z plans, 31 kontroli cohort/forecast
+plans, pełny lint/format i skonfigurowany mypy.
 Poprzedni exact source main `cbcac6eb` zakończył CI37629010997 pojedynczą
 porażką odczytu koordynatora Kafka; poprawka ogranicza ponawianie tego odczytu,
 zachowując wszystkie asercje trwałości. Porażka pozostaje w historii.
@@ -81,6 +89,16 @@ Nie zmieniono rezerwy ani procesów innych sesji. Osobny manual workflow
 planned-forecast source 2.7 i planned-physical-anomaly source 2.8, przechodzi
 wszystkie sześć faz i zachowuje pomiary/awarie. Nie inicjalizuje project journal,
 nie wykonuje fitów ani final test i nie kwalifikuje canonical.
+
+[Rzeczywisty run 37664228881](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37664228881)
+na `16a02ae` wykonał pięć z sześciu faz dla obu profili. Verify nie znalazł
+`snapshot_manifest.json`, ponieważ odczytywał katalog importu zamiast jego
+podkatalogu `snapshot/`. [Receipt 09.26](evidence/09-26-generation-snapshot-verification.json)
+zachowuje pełny koszt wszystkich faz, porażkę i hash artefaktu. Poprawka obu
+ścieżek ma 72 zaliczone kontrole generation/export/capacity, w tym rzeczywisty
+import publicznego smoke i pełny prywatny replay bez mockowania plików lub
+transformacji. To regresja naprawy; nowy native odbiór wszystkich sześciu faz
+na zaakceptowanym fixed main pozostaje wymagany przed pomiarem canonical.
 
 Pełna kampania nadal wymaga odbioru pełnych profili, final-only exporter,
 uczciwych fitów i kalibracji, freeze, trzech końcowych seedów i wszystkich

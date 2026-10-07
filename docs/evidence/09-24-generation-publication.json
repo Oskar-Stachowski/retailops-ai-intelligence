@@ -1,0 +1,65 @@
+{
+  "updated_at_utc": "2026-10-07T17:40:22.970538+00:00",
+  "stage_ready": false,
+  "ai07_ai08_remain_closed": true,
+  "source": {
+    "main": "b7234899769119c67f27a62867c1d2153dbd6a00",
+    "ci": 37651259188,
+    "jobs_read": 25,
+    "jobs_total": 25,
+    "success": 21,
+    "intentional_skipped": 4,
+    "required_result": "success"
+  },
+  "generation": {
+    "pr": 35,
+    "head": "4238b2fc9218410a53dbbe6b485109dae8757418",
+    "head_ci": 37650879421,
+    "all_jobs_success": 17,
+    "required_result": "success",
+    "protected_merge": "16a02aecbc4f9558e8222c02ad5a24d82745545b",
+    "exact_main_ci": 37657724470,
+    "exact_main_ci_pending": true
+  },
+  "final_export": {
+    "pr": 36,
+    "head": "eb796aa44c3a24f9bc31e86b8e10ef68f8fe8183",
+    "ci": 37652248438,
+    "all_jobs_success": 17,
+    "required_result": "success",
+    "new_base": "main",
+    "main_integration_ci_required": true
+  },
+  "fitting_retained_ci_failure": {
+    "head": "9b09660b9f9dbfc1c427199e9a1623d61e1ba0bd",
+    "ci": 37652743985,
+    "jobs_read": 17,
+    "jobs_total": 17,
+    "success": 12,
+    "failure": 5,
+    "required_result": "failure",
+    "nonstarted_jobs": [
+      112900689447,
+      112900689606,
+      112900689648,
+      112900689737
+    ],
+    "annotation": "The job was not started because it repeatedly failed to be acquired (5 attempts).",
+    "native_cpu_job": 112900689298,
+    "native_cpu_passed": 6,
+    "native_cpu_seconds": 101.69,
+    "execution_cost_for_nonstarted_jobs": null
+  },
+  "fitting_signature_integration": {
+    "head": "ab1229892d573a22be201f2757fba0aeb490ffaf",
+    "ci": 37659317202,
+    "full_ci_pending": true,
+    "native_signature_control_pending": true
+  },
+  "campaign": {
+    "journal_initialized": false,
+    "new_project_fits": 0,
+    "final_test_opened": false,
+    "ready": false
+  }
+}

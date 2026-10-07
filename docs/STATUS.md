@@ -14,6 +14,19 @@ Protected merge i Required CI obu main pozostają wymagane przed `ready`.
 Wcześniejsze wpisy opisują historię.
 
 **2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**
+Runner generacji z PR #35 jest scalony jako `16a02ae` po pełnym Required CI
+17/17 success na `4238b2f`. CI dokładnego main `37657724470` ma 17/17 success.
+Source main `b7234899` ma pełny odbiór: 21 success i 4 przewidziane skipped.
+Eksporter PR #36 jest scalony jako `b0e2de1` po 17/17 success na `f0fbbc9`;
+CI dokładnego nowego main `37667669693` trwa. [Receipt publikacji](evidence/09-24-generation-publication.json)
+zachowuje również porażkę przydziału runnerów w poprzednim CI treningowym.
+Native kontrola generacji `37664228881` zakończyła pięć faz dla obu profili;
+verify ujawnił błędną ścieżkę snapshotu. Poprawka ma 72 zaliczone testy,
+w tym pełny replay rzeczywiście zaimportowanego publicznego smoke.
+[Receipt 09.26](evidence/09-26-generation-snapshot-verification.json) zachowuje
+koszty porażki. Publikacja poprawki i nowy sześciufazowy odbiór są wymagane.
+AI 09 nadal wymaga projektowej kampanii i wyników końcowych.
+
 [PR #33](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/33)
 jest scalony jako `a128bb38` po pełnym zielonym CI jego head `be3b264`.
 [Required CI dokładnego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37635615858)
@@ -131,7 +144,8 @@ Największa niewiadoma to zasoby i czas canonical `ai-training`; kontrolne
 wewnątrz jednej zarezerwowanej próby, z pełnym replayem i osobnym lockiem
 eksportera. Kod i kontrolowane testy nie stanowią odbioru canonical kampanii.
 Lokalny native control został zatrzymany przez rezerwę RAM przed generation;
-manualny odbiór na izolowanym runnerze jest przygotowany i jeszcze nie ruszył.
+manualny odbiór na izolowanym runnerze ma zachowane pięć zaliczonych faz i
+porażkę verify opisaną w receipt 09.26. Pełne sześć faz nadal wymaga odbioru.
 
 [PR #35](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/35)
 na `d81e78a` zaliczył pełny
