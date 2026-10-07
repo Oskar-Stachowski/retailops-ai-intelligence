@@ -1,0 +1,93 @@
+{
+  "recorded_at_utc": "2026-10-07T13:57:14.222722+00:00",
+  "scope": "audited_real_generation_runner_preparation_and_controlled_regression_not_project_campaign",
+  "stage_ready": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "final_generation_started": false,
+  "final_test_opened": false,
+  "canonical_development_completed": false,
+  "canonical_training_completed": false,
+  "remote_native_control_dispatched": false,
+  "mechanism_regression": {
+    "passed": 85,
+    "seconds": 23.68,
+    "scope": "controlled metadata and real isolated synthetic process tests"
+  },
+  "retained_failures": [
+    {
+      "scope": "initial_test_expectation",
+      "result": "1 failed84 passed15.38s",
+      "reason": "final journal correctly reported phase mismatch; test expected selection wording",
+      "corrected": true
+    },
+    {
+      "scope": "local_tiny_cached_control",
+      "phase": "generation",
+      "reason": "preflight_reserve",
+      "phases_completed": 0
+    },
+    {
+      "scope": "local_tiny_planned_anomaly_control",
+      "phase": "generation",
+      "reason": "preflight_reserve",
+      "phases_completed": 0
+    },
+    {
+      "scope": "initial_planned_anomaly_wire_controls",
+      "failed": 3,
+      "passed": 9,
+      "reason": "producer checked-in anomaly schemas were pre-forecast; one strict date fixture needed JSON parsing",
+      "corrected": true
+    }
+  ],
+  "local_preflight": {
+    "available_memory_bytes": 1380122624,
+    "required_memory_bytes": 2147483648,
+    "reserve_lowered": false,
+    "foreign_sessions_mutated": false
+  },
+  "producer": {
+    "head": "5bec26f9cfb1daaa1ef12e7db05b0b05bf126521",
+    "head_ci": 37623701164,
+    "head_ci_result": "completed_success",
+    "protected_main_merge": "cbcac6eb0b3623b0564078b9dc12b381b519b995",
+    "exact_main_ci": 37629010997,
+    "exact_main_ci_state": "completed_failure",
+    "exact_main_ci_failure": "API integration committed-offset read after broker restart: NOT_COORDINATOR; 742 API tests passed",
+    "prepared_followup_head": "16d34887b058b3dfb270af474f28242194a968ca",
+    "followup_native_controls": "6 passed planned-anomaly/offset controls, 31 passed cohort/forecast-plan regression",
+    "followup_full_ci": "pending",
+    "followup_pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/103"
+  },
+  "remaining": [
+    "Native six-phase controls for source2.7/2.8 on isolated runner",
+    "Complete canonical development/training capacity and parent/role export",
+    "Actual project fits/calibration/freeze and final three-seed three-use-case evaluation",
+    "Robustness, segments, uncertainty, costs, MLflow lifecycle, cards and reports",
+    "Complete required CI and protected publication on exact main"
+  ],
+  "full_parent_regression": {
+    "passed": 240,
+    "seconds": 591.5,
+    "scope": "generation/export/journal and complete native inventory/anomaly import, curated, source versions and replay on exposed fixtures"
+  },
+  "final_runner_regression": {
+    "passed": 97,
+    "seconds": 21.48,
+    "scope": "runner/export/journal and planned-anomaly typed metadata controls"
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_source_files": 615,
+    "docs": "passed"
+  },
+  "package": {
+    "built": true,
+    "python_module_byte_parity": 503,
+    "v13_and_planned_anomaly_schemas_byte_parity": true
+  },
+  "producer_followup": "Source planned-anomaly schema variants plus independent process replay and bounded read-only Kafka coordinator inspection; source publication and complete CI remain required",
+  "updated_at_utc": "2026-10-07T14:35:08.978262+00:00"
+}

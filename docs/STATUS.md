@@ -65,6 +65,12 @@ Największa niewiadoma to zasoby i czas canonical `ai-training`; kontrolne
 | MLflow/lifecycle oraz trzy karty i raporty | 3–5 h |
 | Publikacja i odbiór dokładnego main z pełnym CI | 2–3 h |
 
+[Audytowany runner generacji](ai09-audited-generation.md) wykonuje sześć faz
+wewnątrz jednej zarezerwowanej próby, z pełnym replayem i osobnym lockiem
+eksportera. Kod i kontrolowane testy nie stanowią odbioru canonical kampanii.
+Lokalny native control został zatrzymany przez rezerwę RAM przed generation;
+manualny odbiór na izolowanym runnerze jest przygotowany i jeszcze nie ruszył.
+
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
 Świeży OCI/PostgreSQL 16/MLflow sprawdził komplet native publicznych rodziców,

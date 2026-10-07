@@ -39,6 +39,7 @@ class CampaignSourceRecipe(Contract):
     seed: Literal[42, 137, 2026]
     producer_commit: CommitSha
     producer_lock_sha256: Sha256
+    exporter_lock_sha256: Sha256 | None = None
     generation_config_sha256: Sha256
     profile: Literal["ai-dev", "ai-training"]
     history: DateWindow
