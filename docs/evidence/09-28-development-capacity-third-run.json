@@ -1,0 +1,102 @@
+{
+  "scope": "Failed actual third canonical ai-dev resource diagnostic on already exposed development dates; not a project campaign",
+  "updated_at_utc": "2026-10-07T20:22:53.598357+00:00",
+  "workflow_run": 37676033214,
+  "workflow_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37676033214",
+  "job": 112979664844,
+  "control_commit": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
+  "producer_commit": "16d34887b058b3dfb270af474f28242194a968ca",
+  "artifact_id": 11508853113,
+  "artifact_bytes": 2342,
+  "artifact_sha256": "01b5c9fd13771fd581359f63a5fdc4fb1e40ca71519fd1fed0fdf9a1392bbc41",
+  "resource_receipt_sha256": "b75dcf1cd2ea0dfff8262d33ee2651fe152fea37393675a40e0fec4d85f24a5d",
+  "artifact_plan_sha256": "f7ee6d2aef75786395509e5315924d7b0cd288ddf5f7efc195d54c27720ae9a8",
+  "generation_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "plan_sha256": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+  "recipe": "docs/reference/ai09-development-capacity-v1.2.json",
+  "generation": {
+    "days": 365,
+    "end_date": "2026-07-31",
+    "forecast_plan_days": 14,
+    "max_daily_rows": 182500,
+    "products": 100,
+    "profile": "ai-dev",
+    "seed": 42,
+    "start_date": "2025-08-01",
+    "stores": 5,
+    "warehouses": 3
+  },
+  "previous_runs": [
+    37611605538,
+    37613368332
+  ],
+  "previous_failures_and_plans_unchanged": true,
+  "implementation_path": "Existing AI08 source_cohort_batch_v2.run with indexed IDs/cached immutable validation, plus accepted source optimization",
+  "preconditions": {
+    "consumer_exact_main": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
+    "consumer_required_ci": 37667669693,
+    "consumer_jobs_read_and_total": 17,
+    "consumer_all_jobs_success": 17,
+    "source_accepted_main": "b7234899769119c67f27a62867c1d2153dbd6a00",
+    "source_required_ci": 37651259188,
+    "source_jobs_read_and_total": 25,
+    "source_success": 21,
+    "source_intentional_skips": 4,
+    "producer_ancestor_of_source_main": true
+  },
+  "actual_receipt": {
+    "budgets": {
+      "minimum_available_memory_bytes": 1073741824,
+      "minimum_free_disk_bytes": 6442450944,
+      "sample_seconds": 0.2,
+      "scratch_bytes": 8589934592,
+      "tree_rss_bytes": 8589934592,
+      "wall_seconds": 3600
+    },
+    "canonical_ai_training_qualified": false,
+    "completed_phases": 0,
+    "control_commit": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
+    "failed_outputs_retained": true,
+    "final_generation_attempted": false,
+    "final_test_opened": false,
+    "new_project_fits": 0,
+    "phases": [
+      {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": -9,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 7162466304,
+        "minimum_free_disk_bytes": 90830536704,
+        "phase": "generation",
+        "reason": "tree_rss_limit",
+        "sample_seconds": 0.2,
+        "sampled_peak_scratch_allocated_bytes": 8192,
+        "sampled_peak_scratch_logical_bytes": 6442,
+        "sampled_tree_peak_rss_bytes": 8592396288,
+        "sampled_worker_cpu_seconds": 1750.95,
+        "samples": 8624,
+        "status": "failed",
+        "wall_seconds": 1751.5388043960002
+      }
+    ],
+    "plan_sha256": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "producer_commit": "16d34887b058b3dfb270af474f28242194a968ca",
+    "project_journal_initialized": false,
+    "quality_qualified": false,
+    "reason": "tree_rss_limit",
+    "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+    "stage_ready": false,
+    "status": "failed",
+    "wall_seconds": 1751.742747054
+  },
+  "interpretation": {
+    "full_generation_completed": false,
+    "later_phases_started": false,
+    "completed_profile_peak_known": false,
+    "diagnostic_restarted": false,
+    "canonical_scope_reduced": false,
+    "campaign_budget_or_resource_reserve_reduced": false,
+    "planned_anomaly_source_2_8_qualified": false,
+    "next_step": "Inspect producer live allocations beyond already implemented AI08 memory reductions; any further diagnostic requires a separately frozen revision retaining all three failures. Full canonical development/final campaign remains unqualified."
+  }
+}

@@ -1,7 +1,14 @@
 # Pomiar pełnego development AI 09
 
 [Prospektywna receptura 1.2](reference/ai09-development-capacity-v1.2.json)
-jest przygotowana do osobnego pomiaru na `16d34887`. Nie została uruchomiona.
+została uruchomiona na `16d34887` z zaakceptowanego main `b0e2de16`.
+[Trzeci pełny pomiar](evidence/09-28-development-capacity-third-run.json),
+run `37676033214`, zakończył się `tree_rss_limit` po 1751.743 s.
+Generacja osiągnęła próbkowane 8592396288 B, ponad limit 8 GiB;
+kwalifikacja, eksport, import i curated nie rozpoczęły się. Minimalna dostępna
+pamięć wyniosła 7162466304 B. Supervisor zatrzymał wyłącznie własnego workera;
+nie wykonano retry, fitów ani final testu. Pełny koszt ukończonego profilu
+pozostaje nieznany. Plan, artefakt i dwie wcześniejsze porażki są zachowane.
 Wykorzystuje istniejącą ścieżkę AI 08 `source_cohort_batch_v2.run`, z indeksem
 identyfikatorów, cached walidacją immutable rekordów i zwalnianiem build state
 przed pełnym ponownym odczytem źródła. Zaktualizowane przypięcia zachowują
@@ -9,8 +16,10 @@ strażniki drift; native ordinary/cached parity ma 16 zaliczonych testów,
 a trzy dodatkowe przypadki z 14 dniami planów forecast przechodzą na seedach
 42/137/2026, z identycznymi 58 tabelami, CSV, kontekstem, source ID i bramkami.
 
-Przed dispatch wymagane są zielony Required CI dokładnego producenta,
-jego chroniony merge do main i odbiór main. Ten pomiar jest wyłącznie ręczny;
+Przed tym dispatch sprawdzono chronioną publikację producenta i pełny odbiór
+source main `b7234899` (25 odczytanych z 25 jobs, 21 success i 4 zamierzone
+skips) oraz AI main `b0e2de16` (17/17 success z required-result).
+Ten pomiar jest wyłącznie ręczny;
 push nie uruchamia automatycznego ponowienia. Rozmiar canonical, daty, locks,
 8 GiB RSS/scratch, godzina wall, parent caps i wszystkie zakazy pozostają
 takie jak w 1.1. Receptura przypina drugi wynik `wall_limit`, a wcześniejszy
@@ -104,8 +113,9 @@ Odbiór source PR #101 na `5bec26f9` zakończył się pełnym zielonym Required 
 [37623701164](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37623701164).
 Chroniony merge opublikował `cbcac6eb` na source `main`;
 [odbiór dokładnego main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37629010997)
-pozostaje w toku. Szybka receptura 1.2 jest przygotowana osobno i zachowuje
-obie wcześniejsze porażki. Jej publikacja oraz pełny pomiar nadal są wymagane.
+był w toku w chwili wcześniejszej publikacji. Późniejszy source main
+`b7234899` ma pełny odbiór, a receptura 1.2 i jej trzeci nieudany pomiar
+są opisane powyżej. Zielone CI komponentów nie kwalifikuje pełnego profilu.
 
 Core usprawnień CI z PR #34, main `89b64d2`, jest zintegrowany w tej gałęzi
 bez zmiany `src` lub locków i bez przepięcia producenta AI07.
@@ -116,4 +126,11 @@ Przed pierwszym dispatch przypięcie receptury zmieniono na source PR #103
 `16d34887`, zawierający poprawkę odczytu Kafka i wsparcie planned anomaly.
 Wynik tiny control w 09-19 pochodzi z poprzedniego `5bec26f` i pozostaje
 historycznym odbiorem połączeń. Regresja cohort/forecast plans nowego source
-ma 31 passed; pełne CI i odbiór jego main nadal są warunkiem dispatch.
+ma 31 passed; pełne CI i odbiór jego main sprawdzono przed dispatch.
+
+Ta próba już wykorzystuje ograniczenia pamięci wprowadzone przez AI08.
+Nie należy wykonywać ich ponownie ani uznawać pomiarów małego świata za
+dowód pełnej skali. Przed kolejną próbą trzeba zbadać pozostałe alokacje
+producenta i zamrozić osobną wersję diagnostyki, zachowując wszystkie porażki,
+canonical rozmiary, budżety kampanii i rezerwy. Ten cached forecast world
+nie kwalifikuje pełnego planned-anomaly source 2.8 ani final `ai-training`.

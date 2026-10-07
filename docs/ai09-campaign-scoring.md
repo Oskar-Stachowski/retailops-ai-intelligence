@@ -54,11 +54,16 @@ Head `e4d6371` ma pełny [Required CI 37664383535](https://github.com/Oskar-Stac
 17/17 success, łącznie z required-result. Rzeczywisty job CPU zaliczył
 7 testów w 144.78 s, w tym nową wspólną predykcję sześciu modeli po zapisaniu
 i świeżym odtworzeniu RF/HGB/TF. PR #39 integruje dodatkowo trening z PR #37
-oraz poprawkę snapshotu z PR #40 i jest skierowany na main. Nowy dokładny head
-tej integracji musi uzyskać własny pełny CI przed protected merge.
+oraz poprawkę snapshotu z PR #40. Dokładny head `8497908d` zaliczył własny
+[Required CI 37671721214](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37671721214),
+17/17 success z required-result. Protected merge PR39 opublikował całą
+integrację na main `5ed0544e`; PR37 i PR40 zostały automatycznie oznaczone
+merged. [CI dokładnego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37678417692)
+zakończyło się pełnym sukcesem: 17/17 zadań z required-result.
 
 Ten przyrost nie otwiera `development_evaluation` ani final testu. Nie dopasowuje
-kalibratora i nie wybiera zwycięzcy. Pozostają: zamrożona uczciwa selekcja na tune,
+kalibratora i nie wybiera zwycięzcy. Osobny [runner wyboru na Tune](ai09-campaign-selection.md)
+wymaga swojego odbioru; nie jest wynikiem projektu. Pozostają: pełna selekcja na tune,
 kalibracja na własnej roli, niezależna ocena po wyborze, pozostałe dwa zastosowania,
 pełne profile i trzy końcowe seedy, robustness/niepewność/koszty, decyzje lifecycle,
 trzy karty i raporty oraz protected merge i pełne CI końcowego main.

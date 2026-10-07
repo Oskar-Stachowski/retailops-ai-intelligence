@@ -61,6 +61,34 @@ def test_five_role_boundaries_cover_horizon_delay_and_keep_purged_days():
     assert plan.holdout_freshness == "not_asserted_requires_outcome_access_audit"
 
 
+def test_complete_runtime_manifest_keeps_a_bounded_read_and_publication_limit(
+    population, tmp_path, monkeypatch
+):
+    source, _, _ = population
+    root = partitions.prepare_partitions(source, policy(), tmp_path / "valid")
+    manifest = partitions.verify_partitions(source, root)
+    assert manifest.descriptor.runtime == partitions.runtime_pin()
+    raw = (root / "manifest.json").read_bytes()
+    assert len(raw) <= partitions.MAX_MANIFEST_BYTES
+    (root / "manifest.json").write_bytes(
+        raw + b" " * (partitions.MAX_MANIFEST_BYTES - len(raw) + 1)
+    )
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("oversized metadata must fail before feature I/O")
+
+    original = partitions.verify_feature_set
+    monkeypatch.setattr(partitions, "verify_feature_set", forbidden)
+    with pytest.raises(SnapshotError, match="metadata_size_limit"):
+        partitions.verify_partitions(source, root)
+    monkeypatch.setattr(partitions, "verify_feature_set", original)
+    monkeypatch.setattr(partitions, "MAX_MANIFEST_BYTES", len(raw) - 1)
+    rejected = tmp_path / "too-small"
+    with pytest.raises(SnapshotError, match="forecast_partition_manifest_budget"):
+        partitions.prepare_partitions(source, policy(), rejected)
+    assert list(rejected.iterdir()) == []
+
+
 @pytest.mark.parametrize(
     "mutation",
     [

@@ -9,6 +9,8 @@ from test_campaign_fit_data import fit_plan
 from test_campaign_fit_data import indexed as indexed
 from test_campaign_score_data import score_indexed as score_indexed
 from test_campaign_score_data import score_plan
+from test_campaign_tune_data import tune_plan
+from test_campaign_tune_worker import controlled_export
 from test_forecast_features import tables as tables
 from test_forecast_manifests import timeline as timeline
 from test_independent_forecast_partitions import population as population
@@ -18,6 +20,7 @@ from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.evaluation_campaign import campaign_fit_data as data
 from retailops_ai.evaluation_campaign import campaign_fit_worker as fitting
 from retailops_ai.evaluation_campaign import campaign_score_entry as scoring
+from retailops_ai.evaluation_campaign import campaign_tune_entry as tuning
 from retailops_ai.evaluation_campaign.campaign_fit import _bundle_inventory, _verify_bundle_content
 from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
 from retailops_ai.evaluation_campaign.campaign_generation import _environment
@@ -26,7 +29,9 @@ from retailops_ai.evaluation_campaign.campaign_generation_worker import read, wr
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
     FAMILIES,
     CampaignForecastRawPrediction,
+    CampaignForecastScoreReceipt,
 )
+from retailops_ai.evaluation_campaign.partitions import runtime_pin
 from retailops_ai.evaluation_campaign.physical_forecast import _index
 
 
@@ -34,11 +39,13 @@ def test_real_fresh_six_model_cpu_inference_preserves_every_controlled_role_key(
     indexed, score_indexed, tmp_path
 ):
     train_db = indexed[0]
-    score_db, _, manifest, population = score_indexed
+    score_db, dataset, manifest, population = score_indexed
     bundles, fits = {}, {}
-    export_binding = {"scope": "controlled_typed_records_not_canonical_or_project_campaign"}
-    export_digest = canonical_sha256(export_binding)
     initial = fit_plan()
+    exported = controlled_export(dataset, manifest, initial.source_recipe_sha256)
+    # Typed declarations bind the real controlled files, not a completed project journal.
+    export_binding = exported.model_dump(mode="json")
+    export_digest = exported.content_sha256()
     state = data.fit_encoding(train_db, initial)
     for index, family in enumerate(FAMILIES):
         plan = initial.model_copy(
@@ -69,7 +76,7 @@ def test_real_fresh_six_model_cpu_inference_preserves_every_controlled_role_key(
                 "export_receipt_sha256": export_digest,
                 "dataset_id": manifest.dataset_id,
                 "source_recipe_sha256": plan.source_recipe_sha256,
-                "runtime_code_sha256": "d" * 64,
+                "runtime_code_sha256": exported.runtime_code_sha256,
             },
         )
         for phase in ("fit", "reload"):
@@ -97,7 +104,7 @@ def test_real_fresh_six_model_cpu_inference_preserves_every_controlled_role_key(
             plan=plan,
             export_receipt_sha256=export_digest,
             dataset_id=manifest.dataset_id,
-            runtime_code_sha256="d" * 64,
+            runtime_code_sha256=exported.runtime_code_sha256,
             train_keys_sha256=matrices["train"]["keys_sha256"],
             early_stopping_keys_sha256=validation["keys_sha256"],
             train_eligible_rows=state.train_rows,
@@ -176,3 +183,96 @@ def test_real_fresh_six_model_cpu_inference_preserves_every_controlled_role_key(
         run.data.metrics["rows"] == population["rows"]
         and run.data.metrics["worker_peak_rss_bytes"] > 0
     )
+    files, size = _bundle_inventory(root / "bundle", plan.max_output_bytes)
+    score = CampaignForecastScoreReceipt(
+        protocol_sha256=exported.protocol_sha256,
+        operation_id="controlled-score",
+        reservation_id="campaign-operation-" + "4" * 32,
+        plan=plan,
+        export_receipt_sha256=export_digest,
+        fit_receipt_sha256={f: fits[f].content_sha256() for f in FAMILIES},
+        model_artifact_sha256={f: fits[f].model_artifact_sha256 for f in FAMILIES},
+        dataset_id=manifest.dataset_id,
+        runtime_code_sha256=exported.runtime_code_sha256,
+        **{
+            key: population[key]
+            for key in (
+                "rows",
+                "eligible_rows",
+                "keys_sha256",
+                "eligible_keys_sha256",
+                "role_population_sha256",
+            )
+        },
+        artifact_files=files,
+        artifact_sha256=canonical_sha256(files),
+        artifact_bytes=size,
+        worker_evidence={
+            "scope": "controlled_native_cpu_with_mocked_input_preparation",
+            "predict": result,
+        },
+    )
+    tune = tune_plan()
+    tune_root = tmp_path / "common-tune"
+    tune_root.mkdir(mode=0o700)
+    (tune_root / "tmp").mkdir(mode=0o700)
+    write(
+        tune_root / "request.json",
+        {
+            "dataset": str(dataset),
+            "plan": tune.model_dump(mode="json"),
+            "exported": export_binding,
+            "scores": {score.operation_id: score.model_dump(mode="json")},
+            "bundles": {score.operation_id: str(root / "bundle")},
+            "runtime": runtime_pin().model_dump(mode="json"),
+        },
+    )
+    measured = monitor(
+        [sys.executable, "-I", "-B", str(Path(tuning.__file__)), str(tune_root)],
+        root=tune_root,
+        log=tune_root / "select.log",
+        env=_environment(tune_root),
+        scratch=(tune_root,),
+        resources=tune.resources,
+        deadline=perf_counter() + tune.resources.wall_seconds,
+    )
+    assert measured["status"] == "passed", (
+        str(measured)
+        + "\n"
+        + (
+            (tune_root / "select.log").read_text()[-5000:]
+            if (tune_root / "select.log").exists()
+            else "preflight refused"
+        )
+    )
+    selected = read(tune_root / "select.json")
+    assert all(
+        selected[key] == population[key]
+        for key in (
+            "rows",
+            "eligible_rows",
+            "keys_sha256",
+            "eligible_keys_sha256",
+            "role_population_sha256",
+        )
+    )
+    assert selected["trial_count"] == selected["full_tune_label_passes"] == 1
+    assert (
+        selected["calibration_label_passes"] == selected["independent_or_final_label_passes"] == 0
+    )
+    assert selected["selection"]["status"] == "not_ready"
+    assert "insufficient_tune_rows" in selected["selection"]["reasons"]
+    assert selected["worker_seconds"] > 0 and selected["worker_peak_rss_bytes"] > 0
+    tune_run = MlflowClient(tracking_uri=(tune_root / "tracking").as_uri()).get_run(
+        selected["mlflow_run_id"]
+    )
+    assert tune_run.info.status == "FINISHED" and tune_run.data.params["role"] == "tune"
+    assert tune_run.data.params["calibration_fitted"] == "False"
+    assert tune_run.data.params["plan_sha256"] == tune.content_sha256()
+    assert tune_run.info.artifact_uri.startswith((tune_root / "tracking-artifacts").as_uri())
+    assert {
+        item.path
+        for item in MlflowClient(tracking_uri=(tune_root / "tracking").as_uri()).list_artifacts(
+            selected["mlflow_run_id"], "tune"
+        )
+    } == {"tune/plan.json", "tune/parents.json", "tune/metrics.json", "tune/selection.json"}
