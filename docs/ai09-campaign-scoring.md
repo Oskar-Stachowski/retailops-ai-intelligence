@@ -59,7 +59,7 @@ oraz poprawkę snapshotu z PR #40. Dokładny head `8497908d` zaliczył własny
 17/17 success z required-result. Protected merge PR39 opublikował całą
 integrację na main `5ed0544e`; PR37 i PR40 zostały automatycznie oznaczone
 merged. [CI dokładnego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37678417692)
-jest w toku i pozostaje warunkiem odbioru tej publikacji.
+zakończyło się pełnym sukcesem: 17/17 zadań z required-result.
 
 Ten przyrost nie otwiera `development_evaluation` ani final testu. Nie dopasowuje
 kalibratora i nie wybiera zwycięzcy. Osobny [runner wyboru na Tune](ai09-campaign-selection.md)

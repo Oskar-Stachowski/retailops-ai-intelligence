@@ -48,7 +48,8 @@ gate wersji pakietów. Required test CPU rozszerza rzeczywisty trening/reload
 i sześć prognoz o świeży proces Tune oraz MLflow, nadal na małych kontrolowanych
 danych i mocked przygotowaniu features. Pierwszy native head `d3ecc040`
 zaliczył sześć testów, lecz Tune worker zakończył się błędem importu backendu
-SQLite. Lokalny import potwierdza brak `FallbackAsyncAdaptedQueuePool`
+SQLite. Pełny przebieg tego headu zakończył się porażką: 15/17 zadań success,
+CPU oraz required-result failure. Lokalny import potwierdza brak `FallbackAsyncAdaptedQueuePool`
 w SQLAlchemy 2.1.1 używanym z MLflow 3.4. Runner korzysta teraz z tego samego
 prywatnego magazynu plikowego MLflow co fitting/scoring, z jawnie przypiętym
 katalogiem artefaktów. Environment lock i zakres ewaluacji pozostają zachowane.

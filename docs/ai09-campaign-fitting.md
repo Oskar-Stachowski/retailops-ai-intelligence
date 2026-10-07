@@ -74,7 +74,8 @@ eksporter PR #36 oraz poprawkę snapshotu z [receipt 09.26](evidence/09-26-gener
 40 testów generation/fit/data oraz Mypy 671 plików przeszły po integracji.
 Wspólna integracja PR39 `8497908d` zaliczyła własny Required CI 17/17
 success i została chronioną ścieżką scalona na main `5ed0544e`.
-PR37 został automatycznie oznaczony merged; CI dokładnego main jest w toku.
+PR37 został automatycznie oznaczony merged. CI dokładnego main zakończyło się
+pełnym sukcesem: 17/17 zadań, łącznie z required-result.
 
 [Evidence przygotowania](evidence/09-23-campaign-fitting-preparation.json)
 zachowuje wcześniejsze porażki kontroli i zakres dowodu. Projektowy journal
