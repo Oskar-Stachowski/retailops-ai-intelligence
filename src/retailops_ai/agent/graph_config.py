@@ -20,6 +20,7 @@ BOUND_MODULES = (
     "chat_config.py",
     "chat_contracts.py",
     "tools.py",
+    "native_forecast.py",
     "graph.py",
     "graph_traces.py",
     "graph_contracts.py",
@@ -42,7 +43,10 @@ def graph_code_checksum() -> str:
         | {
             "adapters/bedrock_chat.py": hashlib.sha256(
                 files("retailops_ai.adapters").joinpath("bedrock_chat.py").read_bytes()
-            ).hexdigest()
+            ).hexdigest(),
+            "adapters/forecast_v12_tool.py": hashlib.sha256(
+                files("retailops_ai.adapters").joinpath("forecast_v12_tool.py").read_bytes()
+            ).hexdigest(),
         }
     )
 

@@ -27,6 +27,7 @@ from retailops_ai.data_contracts.common import (
     Versioned,
 )
 from retailops_ai.data_contracts.identity import canonical_sha256
+from retailops_ai.data_contracts.tool import ToolResult
 
 
 class SuggestionPolicy(Versioned):
@@ -199,6 +200,7 @@ def candidates(tools: ToolSession, policy: SuggestionPolicy) -> tuple[Suggestion
                     other
                     for other in outputs
                     if isinstance(other, ForecastResult)
+                    and isinstance(other.result, ToolResult)
                     and other.result.status == "ok"
                     and other.result.items
                     and all(

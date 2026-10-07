@@ -5,6 +5,7 @@ from typing import Annotated, Generic, Literal, Self, TypeVar
 
 from pydantic import Field, TypeAdapter, model_validator
 
+from retailops_ai.agent.native_forecast import NativeForecastRead
 from retailops_ai.data_contracts.common import (
     Contract,
     DateWindow,
@@ -263,7 +264,7 @@ class ModelStatusResult(DataResult[ModelStatusItem]):
 class ForecastResult(Versioned):
     contract_type: Literal["agent_tool_result"]
     tool: Literal["get_demand_forecast"]
-    result: ToolResult
+    result: Annotated[ToolResult | NativeForecastRead, Field(discriminator="contract_type")]
     source_kind: Literal["fixture", "runtime"]
 
 

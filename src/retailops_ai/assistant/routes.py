@@ -103,6 +103,7 @@ class ReviewedPlanner:
         self.routes = {question_key(route.question): route.intent for route in profile.routes}
         self.catalog = SourceCatalog.model_validate_json(catalog.model_dump_json())
         self.channel, self.available_tools, self.clock = channel, available_tools, clock
+        self.max_forecast_rows = min(20, graph.config.chat.tool_policy.max_rows)
 
     async def prepare(self, query: AssistantQuery, principal: Principal) -> GraphRequest:
         if not authorized(principal, query) or self.channel not in principal.channels:
@@ -130,6 +131,19 @@ class ReviewedPlanner:
                 "start": query.scope.from_ - span,
                 "end": query.scope.from_ - timedelta(days=1),
             }
+        limit = 5
+        if intent in {"forecast", "recommendations"}:
+            # Native pages must contain the entire requested product/location/day
+            # grid. Reject oversized requests before admission rather than taking
+            # a truncated page or increasing the evaluated graph's row budget.
+            cells = (
+                len(query.scope.product_ids)
+                * len(query.scope.store_ids)
+                * ((query.scope.to - query.scope.from_).days + 1)
+            )
+            if cells > self.max_forecast_rows:
+                raise AssistantError(422)
+            limit = min(max(limit, cells), self.max_forecast_rows)
         try:
             request = GraphRequest.model_validate(
                 {
@@ -144,7 +158,7 @@ class ReviewedPlanner:
                     "as_of": as_of,
                     "window": {"start": query.scope.from_, "end": query.scope.to},
                     "comparison_window": comparison,
-                    "limit": 5,
+                    "limit": limit,
                 }
             )
             calls = required_calls(request)

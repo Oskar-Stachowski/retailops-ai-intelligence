@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 from pydantic import ValidationError
+from test_agent_graph import settings
 from test_assistant import CaptureStore, client, headers, setup
 
 from retailops_ai.agent.evidence import required_calls
@@ -28,8 +29,8 @@ PRODUCT = "22222222-2222-4222-8222-222222222222"
 STORE = "33333333-3333-4333-8333-333333333333"
 STOCK = "44444444-4444-4444-8444-444444444444"
 NOW = datetime(2026, 8, 23, tzinfo=UTC)
-GRAPH = load_graph_config(ROOT / "agent/graph.evaluate.fake.v1.json")
-PROFILE = load_question_routes(ROOT / "agent/question-routes.proposed.v1.json")
+GRAPH = load_graph_config(ROOT / "agent/graph.evaluate.fake.native-v12.v1.json")
+PROFILE = load_question_routes(ROOT / "agent/question-routes.native-v12.proposed.v1.json")
 
 
 def catalog():
@@ -108,7 +109,7 @@ def test_every_registered_question_preserves_source_scope_and_declared_intent(ro
         else NOW
     )
     assert request.scope.channel == "store" and request.as_of == expected_cutoff
-    assert request.limit == 5
+    assert request.limit == (7 if route.intent in {"forecast", "recommendations"} else 5)
     if route.intent == "sales_comparison":
         assert request.comparison_window.start == date(2026, 8, 9)
         assert request.comparison_window.end == date(2026, 8, 15)
@@ -205,6 +206,46 @@ def test_window_validation_rejects_unsupported_time_ranges(kind):
     assert caught.value.status == 422
 
 
+def test_complete_forecast_grid_uses_existing_row_budget_without_truncation():
+    value = query("forecast").model_dump(mode="json")
+    value["scope"].update({"from": "2026-08-23", "to": "2026-09-05"})
+    assert prepare(AssistantQuery.model_validate_json(json.dumps(value))).limit == 14
+    extra = "55555555-5555-4555-8555-555555555555"
+    value["scope"]["product_ids"].append(extra)
+    actor = replace(principal(), product_ids=principal().product_ids | {extra})
+    source = catalog().model_copy(
+        update={
+            "products": catalog().products
+            + (CatalogProduct(product_id=extra, available_at=NOW - timedelta(days=100)),)
+        }
+    )
+    with pytest.raises(AssistantError) as caught:
+        prepare(
+            AssistantQuery.model_validate_json(json.dumps(value)), actor, planner(catalog=source)
+        )
+    assert caught.value.status == 422
+
+
+def test_forecast_planner_respects_a_stricter_evaluated_tool_row_budget():
+    graph = settings(chat={"tool_policy": {"max_rows": 2}})
+    profile = PROFILE.model_copy(
+        update={
+            "graph_config_id": graph.config_id,
+            "routes": tuple(route for route in PROFILE.routes if route.intent == "forecast"),
+        }
+    )
+    instance = planner(profile=profile, graph=graph)
+    value = query("forecast").model_dump(mode="json")
+    value["scope"].update({"from": "2026-08-23", "to": "2026-08-24"})
+    assert (
+        prepare(AssistantQuery.model_validate_json(json.dumps(value)), instance=instance).limit == 2
+    )
+    value["scope"]["to"] = "2026-08-25"
+    with pytest.raises(AssistantError) as caught:
+        prepare(AssistantQuery.model_validate_json(json.dumps(value)), instance=instance)
+    assert caught.value.status == 422
+
+
 @pytest.mark.parametrize("kind", ["previous_period", "future_assignment", "ambiguous", "product"])
 def test_source_catalog_is_checked_at_as_of_for_both_periods_and_future_horizon(kind):
     value = catalog().model_dump(mode="json")
@@ -289,7 +330,7 @@ def test_registered_sales_question_reaches_http_graph_and_store_with_explicit_fa
     baseline = asyncio.run(
         original.prepare(AssistantQuery.model_validate_json(json.dumps(body)), actor)
     )
-    graph = load_graph_config(ROOT / "agent/graph.fake.v1.json")
+    graph = load_graph_config(ROOT / "agent/graph.fake.native-v12.v1.json")
     routes = QuestionRoutes(
         schema_version="1.0",
         profile="assistant-question-routes-v1",

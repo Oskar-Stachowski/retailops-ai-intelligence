@@ -10,13 +10,13 @@ biznesowe pozostają do podłączenia.
 ## Przebieg i kontrola offline
 
 ```bash
-uv run --locked retailops-ai agent-graph-check agent/graph.fake.v1.json
+uv run --locked retailops-ai agent-graph-check agent/graph.fake.native-v12.v1.json
 make contracts-check
 make agent-security-test
 ```
 
 CLI sprawdza konfigurację, kod/schematy, prompty i wersję LangGraph bez
-wykonania providera/narzędzi. [Manifest](../agent/graph.fake.v1.json) wiąże
+wykonania providera/narzędzi. [Manifest](../agent/graph.fake.native-v12.v1.json) wiąże
 `bounded-langgraph-v1`, politykę `typed-facts-v2`, kod granic wykonania,
 schematy, budżet, chat model, prompty v4 i przestrzeń wiedzy AI 11.
 Zmiana powiązanego składnika zmienia config ID i wymaga ponownej kontroli.

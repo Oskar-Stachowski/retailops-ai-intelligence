@@ -20,8 +20,8 @@ CountTokens używa modelu bazowego; Converse używa sprawdzonego profilu EU.
 [Dowód dostępności profili i CountTokens](evidence/12-bedrock-preflight.json).
 Nova Lite nie obsługuje wymaganego CountTokens i nie jest bieżącym wariantem.
 
-[Konfiguracja Haiku](../agent/graph.bedrock-smoke.v1.json) oraz
-[konfiguracja Sonnet](../agent/graph.sonnet-smoke.v1.json) używają tych samych
+[Konfiguracja Haiku](../agent/graph.bedrock-smoke.native-v12.v1.json) oraz
+[konfiguracja Sonnet](../agent/graph.sonnet-smoke.native-v12.v1.json) używają tych samych
 promptów, walidatorów, sześciu pytań i zamrożonych oracles. Sprawdzają sprzedaż,
 zapas, porównanie okresów, cytowaną dokumentację, odmowę zamówienia i cudzy
 scope. Ostatnie dwa przypadki kontroluje serwer bez modelu.
@@ -39,8 +39,8 @@ Nowy [test dokumentacji](evidence/12-bedrock-runs/sonnet-4-documents.json)
 Sonnet zaliczył 6/6 bez napraw. To odbiór sześciu przypadków z syntetycznymi
 źródłami; pełna kwalifikacja rzeczywistego modelu i retrieval pozostaje otwarta.
 
-Osobny [profil dokumentacji](../agent/document-smoke.v1.json) wybiera sześć
-oryginalnych pytań dokumentacji z golden v2. [Konfiguracja](../agent/graph.document-smoke.v1.json)
+Osobny [profil dokumentacji](../agent/document-smoke.native-v12.v1.json) wybiera sześć
+oryginalnych pytań dokumentacji z golden v2. [Konfiguracja](../agent/graph.document-smoke.native-v12.v1.json)
 używa Sonnet 4.6, identycznej polityki i limitów per run, z cap całego testu
 0,35 USD. [Propozycja bez AWS](evidence/12-document-smoke-proposal.json) jest
 zapisem przygotowania przed testem. Właściciel zatwierdził następnie limit
@@ -91,8 +91,8 @@ make bedrock-smoke BEDROCK_ARGS='--execute --max-cost-usd 0.15 --output .local/b
 ```
 
 Dla Sonnet użyć tego samego polecenia CLI z parametrami
-`--config agent/graph.sonnet-smoke.v1.json`,
-`--profile agent/sonnet-smoke.v1.json`, `--max-cost-usd 0.25` oraz nowym outputem.
+`--config agent/graph.sonnet-smoke.native-v12.v1.json`,
+`--profile agent/sonnet-smoke.native-v12.v1.json`, `--max-cost-usd 0.25` oraz nowym outputem.
 Pozostałe parametry są identyczne jak w celu `bedrock-smoke` w Makefile.
 
 Katalog `.local` musi istnieć. Raport ma 0600, nową nazwę i trwały checkpoint

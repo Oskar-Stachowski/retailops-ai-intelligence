@@ -10,7 +10,7 @@ otwarte zakresy; [odbiór](evidence/12-tools.md) podaje testy i granice.
 |---|---|---|
 | `get_sales_summary` | `sales:read` | Ścisły kontrakt i fixture; rzeczywisty approved snapshot/adapter po etapach danych/integracji. |
 | `get_inventory_status` | `inventory:read` | Ścisły kontrakt i fixture; rzeczywisty mapping i inventory po AI 06/10. |
-| `get_demand_forecast` | `forecast:read` | Istniejący kontrakt PredictionRecord i fixture; approved serving po AI 04/05/10. |
+| `get_demand_forecast` | `forecast:read` | Adapter [natywnego readera v12](agent-forecast-v12.md); pełny kontrakt publikacji, odczyt read-only i osobna kwalifikacja integracji runtime. Historyczny PredictionRecord/fixture zachowany. |
 | `get_stockout_risk` | `stockout:read` | Ścisły kontrakt i fixture; kalibrowany model po AI 08/10. |
 | `get_detected_anomalies` | `anomalies:read` | Ścisły kontrakt i fixture; detektor po AI 07/10. |
 | `get_live_operations` | `operations:read` | Ścisły kontrakt i fixture; typowany read model po AI 10. |
@@ -53,7 +53,9 @@ błędne powiązania nie trafiają do kolejnego kroku. Freshness danych jest
 liczona względem żądanego `as_of` i wersjonowanego limitu sekund; narzędzia
 użytkowe wymagają później polityk dopasowanych do ich rzeczywistych źródeł.
 Forecast ponownie stosuje istniejące kontrole request/lineage i odrzuca
-`stale/unknown`. Wynik `no_data` danych nowych narzędzi ma ref do sprawdzonego
+`stale/unknown`. [Natywny wynik v12](agent-forecast-v12.md) zachowuje publikację
+bez konwersji do ModelRecord; rozdziela 24 h wieku origin od 300 s wieku
+sprawdzonego widoku. Wynik `no_data` danych nowych narzędzi ma ref do sprawdzonego
 źródła i as-of; brak adaptera/source daje `unavailable`, a nie zerowe wartości.
 
 Wyszukiwanie otrzymuje jedną `IndexPin` rozwiązaną przez serwer na początku runu.

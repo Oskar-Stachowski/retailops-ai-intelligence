@@ -46,14 +46,14 @@ Bieżąca polityka to `typed-facts-v2`, prompty v4, a zestaw etykiet
 `agent-canonical-golden-v2`. Nazwy plików `.v1.json` określają format kontraktu.
 Konfiguracja, kod, prompty, wymagania, pin i golden mają nowe wiązania hash.
 
-[Profil testowy](../agent/graph.evaluate.fake.v1.json) ma sześć reguł ze
+[Profil testowy](../agent/graph.evaluate.fake.native-v12.v1.json) ma sześć reguł ze
 **syntetycznymi źródłami**. [Przegląd autorstwa etykiet](evidence/12-document-label-review.json)
 opisuje pytania, wymagania i dokumentację wykorzystaną do napisania fixtures.
 To nie są zacytowane oryginalne pliki repozytorium ani fakty z działającego
 środowiska. Nazwy statusów badają zachowanie kontraktu. Zestaw pozostaje
 `proposed`; nie deklarujemy niezależnej akceptacji człowieka.
 
-[Profil z właściwym indeksem AI 11](../agent/graph.fake.v1.json) ma pustą listę
+[Profil z właściwym indeksem AI 11](../agent/graph.fake.native-v12.v1.json) ma pustą listę
 reguł i odmawia odpowiedzi dokumentowych. Podłączenie rzeczywistych źródeł
 wymaga przeglądu konkretnych cytatów i nowej konfiguracji. Obsługa dowolnych
 parafraz pytań wymaga przyszłego planner/resolvera i osobnej ewaluacji;

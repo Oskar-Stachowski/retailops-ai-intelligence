@@ -9,7 +9,7 @@
       "read_only": true,
       "request_schema": "get_demand_forecast.request.v1.schema.json",
       "result_schema": "get_demand_forecast.result.v1.schema.json",
-      "runtime_adapter": "not_implemented_requires_upstream_stages",
+      "runtime_adapter": "native_v12_forecast_reader",
       "tool": "get_demand_forecast"
     },
     {

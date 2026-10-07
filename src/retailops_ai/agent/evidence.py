@@ -38,6 +38,7 @@ from retailops_ai.agent.tools import (
 )
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.data_contracts.prediction import PredictionRecord
+from retailops_ai.forecast_jobs.v12_read_contracts import V12ForecastItem
 
 POLICY_SPEC = {
     "version": "typed-facts-v2",
@@ -344,6 +345,16 @@ class EvidencePolicy:
                         f"forecast:{grain}:{item.key.forecast_origin}:{item.key.target_date}"
                     )
                     text = f"Reported forecast of observed sales={value} unit; {grain}; origin={item.key.forecast_origin}; target_date={item.key.target_date}; model={item.model.model_id}; release={item.release_id}."
+                elif isinstance(item, V12ForecastItem):
+                    forecast = item.prediction.candidate
+                    if forecast.mean is None:
+                        limitations.append(
+                            f"Native forecast has no reported mean; {grain}; target_date={item.target_date}; exclusion={item.prediction.exclusion_reason}. No zero is inferred."
+                        )
+                        continue
+                    value = number(forecast.mean)
+                    measurement = f"forecast:{grain}:{item.forecast_origin}:{item.target_date}"
+                    text = f"Reported forecast mean of observed sales={value} unit; {grain}; origin={item.forecast_origin}; target_date={item.target_date}; mean_source={item.prediction.metadata.mean_source}; quality=passed_at_publication; model={item.model_name}; version={item.model_version}; release={item.release_id}; prediction={item.prediction_id}; dataset={item.prediction_dataset_id}."
                 elif isinstance(item, RiskItem):
                     value = number(item.probability)
                     measurement = f"risk:{grain}:{item.window.start}:{item.window.end}"

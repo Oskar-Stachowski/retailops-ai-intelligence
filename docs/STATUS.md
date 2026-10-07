@@ -885,3 +885,16 @@ rozszerzeniu środowiska o LangGraph i doprecyzowują środowisko historycznych
 testowych release'ów prognoz. Lokalnie 569/569 wybranych testów oraz pełne
 `ci-checks` passed. Nowe manifesty `.resume.v2` wiążą bieżący kod; zdalne
 OCI/PostgreSQL/MLflow i TensorFlow wymagają wyniku dla aktualnego head PR32.
+
+**AI12 — natywny odczyt prognozy v12.** Dostępny jest read-only adapter do
+`PostgresV12ForecastReader`, bez konwersji publikacji do legacy ModelRecord.
+Zachowuje pełne candidate/baseline, identyfikatory i daty; wymaga całej siatki
+zakresu i rozdziela świeżość dziennego origin od wieku sprawdzonego widoku.
+Tygodniowa prognoza przechodzi HTTP/planner/graf/store na jawnych fixtures;
+nie przedłuża expiry ani nie tworzy historycznej sugestii replenishment.
+[Opis](agent-forecast-v12.md), [odbiór](evidence/12-native-forecast.md),
+[receipt](evidence/12-native-forecast.json): 630/630 testów, pełne `ci-checks`,
+fake golden 50/50 i 36/36 critical, wheel/checkout 534 pliki Python.
+Nowe kandydaty `.native-v12.v1` zachowują historyczne manifesty i etykiety.
+Kwalifikacja rzeczywistego runtime i końcowego zdalnego CI pozostaje otwarta;
+status nadal **in_progress**.

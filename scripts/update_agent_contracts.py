@@ -6,6 +6,7 @@ from copy import deepcopy
 from pathlib import Path
 
 from retailops_ai.agent.execution import READ_CAPABILITIES
+from retailops_ai.agent.native_forecast import NativeForecastRead
 from retailops_ai.agent.tools import INPUT, OUTPUT, REQUEST_MODELS, RESULT_MODELS, ToolPolicy
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -165,9 +166,13 @@ def artifacts() -> dict[str, object]:
                 "read_only": True,
                 "request_schema": f"{tool}.request.v1.schema.json",
                 "result_schema": f"{tool}.result.v1.schema.json",
-                "runtime_adapter": "pinned_postgres_knowledge"
-                if tool == "search_knowledge"
-                else "not_implemented_requires_upstream_stages",
+                "runtime_adapter": (
+                    "pinned_postgres_knowledge"
+                    if tool == "search_knowledge"
+                    else "native_v12_forecast_reader"
+                    if tool == "get_demand_forecast"
+                    else "not_implemented_requires_upstream_stages"
+                ),
             }
         )
     result["catalogue.json"] = {
@@ -183,6 +188,10 @@ def artifacts() -> dict[str, object]:
     result["tool-policy.v1.example.json"] = ToolPolicy(
         schema_version="1.0", profile="agent-tools-bounded-v1"
     ).model_dump(mode="json")
+    result["native-forecast-read.v1.schema.json"] = NativeForecastRead.model_json_schema() | {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "urn:retailops:agent:native-forecast-read:1.0",
+    }
     return result
 
 

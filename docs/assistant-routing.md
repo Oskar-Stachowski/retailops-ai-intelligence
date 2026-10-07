@@ -1,6 +1,6 @@
 # Wersjonowane pytania AI12
 
-[Profil proponowany](../agent/question-routes.proposed.v1.json) obejmuje 26 pytań:
+[Profil proponowany](../agent/question-routes.native-v12.proposed.v1.json) obejmuje 26 pytań:
 20 biznesowych w języku polskim i angielskim oraz 6 dokumentacyjnych z zachowanymi
 regułami dowodów. Obsługuje 12 intencji: sprzedaż, porównanie sprzedaży, zapas,
 prognozę, ryzyko, anomalie, operacje, modele, dokumentację, stan zweryfikowany,
@@ -34,6 +34,13 @@ dnia UTC oraz horyzontu 1–14 dni względem tego punktu odcięcia. Jest to zakr
 zapytania; dostępność opublikowanego wyniku musi potwierdzić adapter. Dane
 katalogowe dostępne po tym punkcie odcięcia nie są używane.
 
+Prognoza i sugestie otrzymują limit wystarczający dla całej siatki produkt ×
+sklep × dzień, domyślnie co najmniej 5, najwyżej dotychczasowy limit grafu 20
+i limit wierszy narzędzia, także jeśli ten jest zaostrzony poniżej 5.
+Większy zakres daje 422 przed admission. Tygodniowy zakres
+jednego produktu/sklepu ma limit 7; nie jest przycinany do pięciu dni.
+Pozostałe intencje zachowują limit 5.
+
 `reviewed_backend` łączy planer z istniejącym `GraphAssistant` i fabryką grafu.
 Nie tworzy klienta AWS. Identyfikator runtime wiąże profil pytań, graph config,
 code hash, katalog Source, kanał, środowisko, rodzaj źródeł i listę adapterów.
@@ -43,6 +50,8 @@ dowodów, trace store i trwały zapis pozostają kontrolowane przez istniejący 
 i Assistant API.
 
 Wznowienie nie rejestruje automatycznie rzeczywistych adapterów biznesowych.
+Adapter [natywnej prognozy v12](agent-forecast-v12.md) jest dostępny do jawnego
+podłączenia server-owned readera i kwalifikacji runtime.
 Ich kontrakty, świeżość, snapshot/model/release binding oraz fizyczne zakresy
 stockout muszą zostać sprawdzone przy integracji z AI10. Brakujący adapter jest
 przeszkodą, a nie pustym wynikiem lub zerową wartością.
@@ -56,6 +65,6 @@ make contracts-check
 ```
 
 Aktualny kandydat offline używa
-[nowego release](../agent/evaluation-release.fake.resume.v2.json). Historyczny
+[nowego release](../agent/evaluation-release.fake.native-v12.v1.json). Historyczny
 [release](../agent/evaluation-release.fake.v1.json) i wyniki Bedrock pozostają
 zachowane; ich kwalifikacja nie przechodzi automatycznie na nowy kod.

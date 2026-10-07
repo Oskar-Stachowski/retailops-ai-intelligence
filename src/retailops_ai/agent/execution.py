@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 from time import monotonic
 from typing import Literal, Protocol
 
+from retailops_ai.agent.native_forecast import NativeForecastRead
 from retailops_ai.agent.tools import (
     INPUT,
     OUTPUT,
@@ -338,6 +339,24 @@ class ToolSession:
         if isinstance(output, ForecastResult):
             if not isinstance(request, ToolRequest) or output.result.request != request:
                 raise ToolFailure("unavailable")
+            if isinstance(output.result, NativeForecastRead):
+                result = output.result
+                now = self.executor.clock()
+                if (
+                    output.source_kind != "runtime"
+                    or result.environment != self.executor.environment
+                    or result.page.generated_at > now
+                    or (now - result.page.generated_at).total_seconds()
+                    > self.executor.policy.freshness_seconds
+                ):
+                    raise ToolFailure("unavailable")
+                if any(
+                    row.approval_valid_until <= now
+                    or (now - row.forecast_origin).total_seconds()
+                    > result.page.freshness_policy.max_origin_age_seconds
+                    for row in result.items
+                ):
+                    raise ToolFailure("stale")
             if output.result.error is not None:
                 raise ToolFailure(output.result.error.code)
             if output.result.freshness_status in {"stale", "unknown"}:
