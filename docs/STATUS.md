@@ -878,3 +878,10 @@ Do READY nadal potrzeba rzeczywistych adapterów biznesowych/ML, obsługi
 przepływu sugestii AI12 → outbox/v2 → API/UI przez AI10, kwalifikacji Sonnet
 z rzeczywistymi danymi i przeglądu etykiet/konfiguracji. Wyniki historyczne
 nie potwierdzają nowego code hash.
+
+[Poprawki zgodności CI](evidence/12-ci-remediation.md) aktualizują osobny
+lockfile TensorFlow, weryfikują oba niezmienione modele anomaly przy jawnym
+rozszerzeniu środowiska o LangGraph i doprecyzowują środowisko historycznych
+testowych release'ów prognoz. Lokalnie 569/569 wybranych testów oraz pełne
+`ci-checks` passed. Nowe manifesty `.resume.v2` wiążą bieżący kod; zdalne
+OCI/PostgreSQL/MLflow i TensorFlow wymagają wyniku dla aktualnego head PR32.

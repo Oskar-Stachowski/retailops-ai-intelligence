@@ -61,7 +61,7 @@ make contracts-check
 uv run --locked retailops-ai agent-evaluate --provider fake \
   --config agent/graph.evaluate.fake.v1.json \
   --golden agent/golden.canonical.v1.json \
-  --release agent/evaluation-release.fake.resume.v1.json \
+  --release agent/evaluation-release.fake.resume.v2.json \
   --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock \
   --output /tmp/retailops-agent-evaluation.json
 ```
@@ -104,7 +104,7 @@ ani rzeczywistych sekcji AI 11. Osobny
 [profil ewaluacji](../agent/graph.evaluate.fake.v1.json) przypina ten fixture pin;
 [profil grafu](../agent/graph.fake.v1.json) nadal wskazuje użytkowy indeks AI 11.
 
-[Evaluation release](../agent/evaluation-release.fake.resume.v1.json) wiąże config ID
+[Evaluation release](../agent/evaluation-release.fake.resume.v2.json) wiąże config ID
 grafu (kod, tool/response schemas, prompty v4, model, retrieval, index, budżety
 i politykę), golden hash, kod Python całego pakietu (w tym ewaluator i jego
 zależności aplikacyjne/schemas) oraz dependency lock. Hash nie

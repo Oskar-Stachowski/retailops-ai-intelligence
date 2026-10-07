@@ -159,10 +159,10 @@ agent-security-test:
 	$(UV_RUN) pytest tests/test_assistant_routes.py tests/test_bedrock_access.py tests/test_agent_tools.py tests/test_agent_chat.py tests/test_agent_graph.py tests/test_document_evidence.py tests/test_agent_suggestions.py tests/test_agent_evaluation.py tests/test_assistant.py tests/test_document_runtime.py tests/test_bedrock_chat.py
 
 agent-evaluate:
-	$(UV_RUN) retailops-ai agent-evaluate --provider "$(PROVIDER)" --config agent/graph.evaluate.fake.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.resume.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock
+	$(UV_RUN) retailops-ai agent-evaluate --provider "$(PROVIDER)" --config agent/graph.evaluate.fake.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.resume.v2.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock
 
 bedrock-smoke:
-	$(UV_RUN) retailops-ai bedrock-smoke --config agent/graph.bedrock-smoke.v1.json --offline-config agent/graph.evaluate.fake.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.resume.v1.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock --profile agent/bedrock-smoke.resume.v1.json $(BEDROCK_ARGS)
+	$(UV_RUN) retailops-ai bedrock-smoke --config agent/graph.bedrock-smoke.v1.json --offline-config agent/graph.evaluate.fake.v1.json --golden agent/golden.canonical.v1.json --release agent/evaluation-release.fake.resume.v2.json --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock --profile agent/bedrock-smoke.resume.v2.json $(BEDROCK_ARGS)
 
 compose-up:
 	$(UV_RUN) python scripts/local_stack.py up

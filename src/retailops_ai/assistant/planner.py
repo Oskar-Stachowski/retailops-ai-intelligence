@@ -41,7 +41,10 @@ class DocumentPlanner:
         if query.scope.to > now.date():
             raise AssistantError(422)
         validate_source_scope(
-            query, self.catalog, self.channel, now,
+            query,
+            self.catalog,
+            self.channel,
+            now,
             (DateWindow(start=query.scope.from_, end=query.scope.to),),
         )
         return GraphRequest.model_validate(

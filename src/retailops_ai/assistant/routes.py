@@ -45,9 +45,7 @@ class QuestionRoute(Contract):
 class QuestionRoutes(Versioned):
     profile: Literal["assistant-question-routes-v1"]
     labels_state: Literal["proposed", "accepted"]
-    graph_config_id: Annotated[
-        str, Field(pattern=r"^agent-graph-config-sha256-[0-9a-f]{64}$")
-    ]
+    graph_config_id: Annotated[str, Field(pattern=r"^agent-graph-config-sha256-[0-9a-f]{64}$")]
     routes: tuple[QuestionRoute, ...] = Field(min_length=1, max_length=64)
 
     @model_validator(mode="after")
@@ -87,9 +85,7 @@ class ReviewedPlanner:
         profile = QuestionRoutes.model_validate_json(profile.model_dump_json())
         if profile.graph_config_id != graph.config_id:
             raise ValueError("question_routes_graph_mismatch")
-        if profile.labels_state != "accepted" and not (
-            environment == "test" and allow_proposed
-        ):
+        if profile.labels_state != "accepted" and not (environment == "test" and allow_proposed):
             raise ValueError("question_routes_require_review")
         if not available_tools <= set(READ_CAPABILITIES):
             raise ValueError("question_routes_unknown_tool")
@@ -186,8 +182,14 @@ def reviewed_backend(
     if source_kind == "fixture" and environment != "test":
         raise ValueError("fixture_assistant_requires_test_environment")
     planner = ReviewedPlanner(
-        profile, graph, catalog, channel, available_tools, environment,
-        allow_proposed=allow_proposed, clock=clock,
+        profile,
+        graph,
+        catalog,
+        channel,
+        available_tools,
+        environment,
+        allow_proposed=allow_proposed,
+        clock=clock,
     )
 
     def checked_runner() -> GraphRunner:
@@ -197,7 +199,10 @@ def reviewed_backend(
             or instance.executor.environment != environment
             or (
                 source_kind == "runtime"
-                and any(adapter.source_kind != "runtime" for adapter in instance.executor.adapters.values())
+                and any(
+                    adapter.source_kind != "runtime"
+                    for adapter in instance.executor.adapters.values()
+                )
             )
         ):
             raise AssistantError(503)
@@ -215,9 +220,13 @@ def reviewed_backend(
     }
     budget = graph.config.chat.budget
     return GraphAssistant(
-        graph.config_id, graph.config.chat.knowledge_index_id,
+        graph.config_id,
+        graph.config.chat.knowledge_index_id,
         graph.config.chat.tool_policy.request_deadline_seconds,
         budget.max_input_tokens + budget.max_output_tokens,
-        str(budget.pricing.max_run_cost), source_kind, planner.prepare, checked_runner,
+        str(budget.pricing.max_run_cost),
+        source_kind,
+        planner.prepare,
+        checked_runner,
         runtime_version="assistant-runtime-sha256-" + canonical_sha256(binding),
     )

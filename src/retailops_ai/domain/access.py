@@ -30,11 +30,19 @@ Channel = Literal["store", "online", "marketplace", "wholesale"]
 # stockout:read never grants access to a selling location by itself.
 DATA_CAPABILITIES: frozenset[Capability] = frozenset(
     {
-        "assistant:query", "forecast:read", "forecast:run", "anomaly:read",
-        "anomaly:run", "sales:read", "inventory:read", "anomalies:read",
-        "operations:read", "model:read",
+        "assistant:query",
+        "forecast:read",
+        "forecast:run",
+        "anomaly:read",
+        "anomaly:run",
+        "sales:read",
+        "inventory:read",
+        "anomalies:read",
+        "operations:read",
+        "model:read",
     }
 )
+
 
 @dataclass(frozen=True)
 class KnowledgeAccess:

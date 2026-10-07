@@ -41,9 +41,13 @@ def catalog():
         selling_locations=(STORE,),
         assignments=(
             ChannelAssignment(
-                assignment_key="fixture-assignment", version=1, selling_location_id=STORE,
-                channel="store", effective_from=date(2026, 1, 1),
-                effective_to=date(2027, 1, 1), available_at=NOW - timedelta(days=100),
+                assignment_key="fixture-assignment",
+                version=1,
+                selling_location_id=STORE,
+                channel="store",
+                effective_from=date(2026, 1, 1),
+                effective_to=date(2027, 1, 1),
+                available_at=NOW - timedelta(days=100),
             ),
         ),
     )
@@ -51,18 +55,26 @@ def catalog():
 
 def principal():
     return Principal(
-        "fixture-operator", frozenset({"operator"}),
+        "fixture-operator",
+        frozenset({"operator"}),
         frozenset({"assistant:query", *READ_CAPABILITIES.values()}),
-        frozenset({PRODUCT}), frozenset({STORE}), frozenset({"store"}),
+        frozenset({PRODUCT}),
+        frozenset({STORE}),
+        frozenset({"store"}),
         stockout=StockoutAccess(frozenset({PRODUCT}), frozenset({STOCK})),
     )
 
 
 def planner(**changes):
     args = dict(
-        profile=PROFILE, graph=GRAPH, catalog=catalog(), channel="store",
-        available_tools=frozenset(READ_CAPABILITIES), environment="test",
-        allow_proposed=True, clock=lambda: NOW,
+        profile=PROFILE,
+        graph=GRAPH,
+        catalog=catalog(),
+        channel="store",
+        available_tools=frozenset(READ_CAPABILITIES),
+        environment="test",
+        allow_proposed=True,
+        clock=lambda: NOW,
     )
     return ReviewedPlanner(**(args | changes))
 
@@ -92,7 +104,8 @@ def test_every_registered_question_preserves_source_scope_and_declared_intent(ro
     assert request.scope.selling_location_ids == [STORE]
     expected_cutoff = (
         datetime(2026, 8, 22, 23, 59, 59, tzinfo=UTC)
-        if route.intent in {"forecast", "risk", "recommendations"} else NOW
+        if route.intent in {"forecast", "risk", "recommendations"}
+        else NOW
     )
     assert request.scope.channel == "store" and request.as_of == expected_cutoff
     assert request.limit == 5
@@ -116,7 +129,9 @@ def test_presentation_normalization_does_not_change_intent():
 
 
 def test_writes_are_refused_without_any_tool_dependency():
-    request = prepare(query(question="Place an order"), instance=planner(available_tools=frozenset()))
+    request = prepare(
+        query(question="Place an order"), instance=planner(available_tools=frozenset())
+    )
     assert request.intent == "refuse" and required_calls(request) == ()
 
 
@@ -124,7 +139,9 @@ def test_writes_are_refused_without_any_tool_dependency():
 def test_missing_source_permission_is_denied_before_tool_admission(intent):
     value = query(intent)
     call = required_calls(prepare(value))[0]
-    actor = replace(principal(), capabilities=principal().capabilities - {READ_CAPABILITIES[call.tool]})
+    actor = replace(
+        principal(), capabilities=principal().capabilities - {READ_CAPABILITIES[call.tool]}
+    )
     with pytest.raises(AssistantError) as caught:
         prepare(value, actor)
     assert caught.value.status == 403
@@ -217,7 +234,9 @@ def test_proposed_labels_cannot_be_used_in_local_runtime():
 
 def test_duplicate_normalized_questions_and_unbound_document_routes_are_rejected():
     value = PROFILE.model_dump(mode="json")
-    value["routes"].append({"question": value["routes"][0]["question"].upper(), "intent": "inventory"})
+    value["routes"].append(
+        {"question": value["routes"][0]["question"].upper(), "intent": "inventory"}
+    )
     with pytest.raises(ValidationError, match="ambiguous_question_routes"):
         QuestionRoutes.model_validate_json(json.dumps(value))
     value = PROFILE.model_dump(mode="json")
@@ -239,26 +258,42 @@ def test_routes_are_bound_to_graph_and_reject_json_duplicate_keys(tmp_path):
 
 def test_native_stockout_grant_does_not_require_or_imply_a_selling_scope():
     grant = AccessGrant(
-        principal_id="native-stockout-reader", roles=["viewer"], capabilities=["stockout:read"],
-        scope=None, stockout_scope={"product_ids": [PRODUCT], "stock_location_ids": [STOCK]},
+        principal_id="native-stockout-reader",
+        roles=["viewer"],
+        capabilities=["stockout:read"],
+        scope=None,
+        stockout_scope={"product_ids": [PRODUCT], "stock_location_ids": [STOCK]},
     )
     assert grant.scope is None and "assistant:query" not in grant.capabilities
-    with pytest.raises(ValidationError, match="stockout_capability_requires_explicit_physical_scope"):
+    with pytest.raises(
+        ValidationError, match="stockout_capability_requires_explicit_physical_scope"
+    ):
         AccessGrant(
-            principal_id="assistant-operator", roles=["operator"],
+            principal_id="assistant-operator",
+            roles=["operator"],
             capabilities=["assistant:query", "stockout:read"],
-            scope={"product_ids": [PRODUCT], "selling_location_ids": [STORE], "channels": ["store"]},
+            scope={
+                "product_ids": [PRODUCT],
+                "selling_location_ids": [STORE],
+                "channels": ["store"],
+            },
         )
 
 
 @pytest.mark.parametrize("mode", ["answered", "unknown", "missing_adapter", "runner_drift"])
-def test_registered_sales_question_reaches_http_graph_and_store_with_explicit_failures(tmp_path, mode):
+def test_registered_sales_question_reaches_http_graph_and_store_with_explicit_failures(
+    tmp_path, mode
+):
     path, tokens, authority, body, original, providers = setup(tmp_path)
     actor = authority.authenticate(headers(tokens)["Authorization"])
-    baseline = asyncio.run(original.prepare(AssistantQuery.model_validate_json(json.dumps(body)), actor))
+    baseline = asyncio.run(
+        original.prepare(AssistantQuery.model_validate_json(json.dumps(body)), actor)
+    )
     graph = load_graph_config(ROOT / "agent/graph.fake.v1.json")
     routes = QuestionRoutes(
-        schema_version="1.0", profile="assistant-question-routes-v1", labels_state="proposed",
+        schema_version="1.0",
+        profile="assistant-question-routes-v1",
+        labels_state="proposed",
         graph_config_id=graph.config_id,
         routes=({"question": "What sales evidence is available?", "intent": "sales"},),
     )
@@ -266,8 +301,16 @@ def test_registered_sales_question_reaches_http_graph_and_store_with_explicit_fa
     if mode == "runner_drift":
         available |= {"get_inventory_status"}
     backend = reviewed_backend(
-        routes, graph, catalog(), "store", available, "test", "fixture", original.runner,
-        allow_proposed=True, clock=lambda: baseline.as_of,
+        routes,
+        graph,
+        catalog(),
+        "store",
+        available,
+        "test",
+        "fixture",
+        original.runner,
+        allow_proposed=True,
+        clock=lambda: baseline.as_of,
     )
     store = CaptureStore()
     body["question"] = "Unknown request" if mode == "unknown" else routes.routes[0].question
@@ -278,7 +321,9 @@ def test_registered_sales_question_reaches_http_graph_and_store_with_explicit_fa
             assert result.json()["outcome"] == "answered"
             assert result.json()["agent_config_version"] == backend.config_version
             assert result.json()["evidence"] and store.admissions == 1
-            run = http.get("/api/v1/assistant/runs/" + result.json()["trace_id"], headers=headers(tokens))
+            run = http.get(
+                "/api/v1/assistant/runs/" + result.json()["trace_id"], headers=headers(tokens)
+            )
             assert run.status_code == 200 and run.json()["status"] == "succeeded"
             assert run.json()["agent_config_version"] == backend.config_version
         elif mode == "runner_drift":

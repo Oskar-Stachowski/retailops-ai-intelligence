@@ -17,15 +17,15 @@ def main() -> int:
     args = parser.parse_args()
     config = load_graph_config(ROOT / "agent/graph.bedrock-smoke.v1.json")
     profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/bedrock-smoke.resume.v1.json").read_bytes()
+        (ROOT / "agent/bedrock-smoke.resume.v2.json").read_bytes()
     )
     comparison = load_graph_config(ROOT / "agent/graph.sonnet-smoke.v1.json")
     comparison_profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/sonnet-smoke.resume.v1.json").read_bytes()
+        (ROOT / "agent/sonnet-smoke.resume.v2.json").read_bytes()
     )
     documents = load_graph_config(ROOT / "agent/graph.document-smoke.v1.json")
     document_profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/document-smoke.resume.v1.json").read_bytes()
+        (ROOT / "agent/document-smoke.resume.v2.json").read_bytes()
     )
     artifacts = {
         "circuit-policy.v1.schema.json": CircuitPolicy.model_json_schema(),

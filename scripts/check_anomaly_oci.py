@@ -139,7 +139,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 ROOT / "docs/evidence/07-ready" / (kind + ".zip"), original, manifest[kind]
             )
             current = work / kind
-            refresh(original, current)
+            refresh(
+                original,
+                current,
+                training_lock=ROOT / "environments/anomaly/qualification.uv.lock",
+            )
             capsules[kind] = current
         mark("saved_models_frozen_evaluation_and_current_compatibility")
         if args.prepared_receipt is None:
