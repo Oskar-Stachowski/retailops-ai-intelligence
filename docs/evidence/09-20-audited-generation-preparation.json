@@ -97,5 +97,25 @@
     "passed": 155,
     "seconds": 17.35,
     "scope": "runner, wire, export, journal, capacity and required-CI contract after main a128bb38 integration"
+  },
+  "main_integration_followup": {
+    "integrated_main": "2dc0a5baa601704451d1c5f24d9cb43313cfa975",
+    "original_head_ci": {
+      "run": 37638548322,
+      "head": "d81e78acbaf3f2ca87f6f3f7c205e4629a494949",
+      "result": "completed_success",
+      "jobs_success": 15
+    },
+    "controlled_regression": {
+      "passed": 152,
+      "seconds": 26.47
+    },
+    "ruff": "passed",
+    "format_files": 1123,
+    "mypy_checked_sources": 532,
+    "exact_new_head_ci": "required_before_merge",
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "final_test_opened": false
   }
 }

@@ -17,7 +17,7 @@ Wcześniejsze wpisy opisują historię.
 [PR #33](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/33)
 jest scalony jako `a128bb38` po pełnym zielonym CI jego head `be3b264`.
 [Required CI dokładnego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37635615858)
-trwa. PR #34 zachował komplet bramek i zaliczył pełny odbiór swojego main
+jest zielony, z kompletem 15 wymaganych jobów. PR #34 zachował komplet bramek i zaliczył pełny odbiór swojego main
 `89b64d2`; AI 07–08 pozostają zamknięte.
 [PR #29](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/29)
 ma komplet 14 zielonych jobów dla `4a0a6b5` i został scalony jako `5216e31`.
@@ -129,6 +129,13 @@ wewnątrz jednej zarezerwowanej próby, z pełnym replayem i osobnym lockiem
 eksportera. Kod i kontrolowane testy nie stanowią odbioru canonical kampanii.
 Lokalny native control został zatrzymany przez rezerwę RAM przed generation;
 manualny odbiór na izolowanym runnerze jest przygotowany i jeszcze nie ruszył.
+
+[PR #35](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/35)
+na `d81e78a` zaliczył pełny
+[Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37638548322):
+15/15 jobów success. Przed chronionym merge zintegrowano nowszy main `2dc0a5b`,
+zachowując przyrosty AI 10. Nowy dokładny head wymaga własnego pełnego CI;
+projektowa kampania, treningi i końcowa ocena pozostają niewykonane.
 
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.
