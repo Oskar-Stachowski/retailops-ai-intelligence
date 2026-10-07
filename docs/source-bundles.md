@@ -6,9 +6,18 @@ commitu `1a1916630fa3ed6601a27fec5b5feaf480fc9b1b`; kod producenta jest przypię
 do `dee564ef98dd7c0324dd2c88d418dc544e7ecdd6`. Dokładne wersje i sumy kopii
 kontraktów zapisuje `src/retailops_ai/source_bundle/upstream.json`.
 Cały zatwierdzony importer ma osobną kopię `source_snapshot_native` i działa
-wyłącznie w świeżym procesie transferu. Oryginalne moduły `source_snapshot`
-pozostają identyczne z bazą v12; pełny pin kampanii jest nadal
-`8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011`.
+wyłącznie w świeżym procesie transferu. Moduły modelowe `source_snapshot`
+pochodzą z zaakceptowanego `main` AI 07/08
+(`18e771f9c2e89e91bf7afeb1744e0cd9112f50b5`) i obsługują również snapshot 1.2.
+Ich sumy mają osobny pin `ai_model_snapshot_importer_commit`; historia
+`legacy_snapshot_commit` opisuje wcześniejszą bazę integracji.
+Historyczny pin kampanii v12
+`8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011`
+pozostaje zapisany przy wcześniejszych dowodach. Pin bieżącej implementacji
+zaakceptowanego `main` to
+`cdbd3c1307bb8c3d07b2325f7166d2061ed4a017a4f20bf7f42e1e79b5039b35`;
+różnica obejmuje przyjęte zmiany importerów 1.2 i kodu współdzielonego.
+Kontrola transferu pilnuje bieżącego pinu i nie modyfikuje kampanii ani modelu.
 Kontrola typów sprawdza osobno dokładny namespace wykonania natywnej kopii.
 
 ## Instrukcja

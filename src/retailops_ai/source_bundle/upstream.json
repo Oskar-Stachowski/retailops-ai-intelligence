@@ -10,11 +10,11 @@
     "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
     "tools/source-bundle-verification/uv.lock": "7015f6289c038c8ab7f3e79c8857a316d4c3cfdf4442a6ae3472f19df6b8383b",
     "tools/source-bundle-verification/pyproject.toml": "0fe7b295f48bb4f4e8ebc629b633eab5ee44ab1213d0425f6b5d409e0fc895f5",
-    "src/retailops_ai/source_snapshot/importer.py": "cd61025000b5bffec68bbcbdf19db5d04a33537afc89e6fadeda6df9c7c612a0",
-    "src/retailops_ai/source_snapshot/inventory_projection.py": "c66da418866362eea8d856afa34195f16108dc5f4cbe725da250a43460a483ae",
-    "src/retailops_ai/source_snapshot/inventory_protocol.py": "f9d32a45212905e8840c611232b580d1a3991253b0fe1ba95033a1187646cf11",
-    "src/retailops_ai/source_snapshot/protocol.py": "34584dc93fb1f491ac255ee3a514135af4a0ee4b2d3cfca10b760115b6c061c6",
-    "src/retailops_ai/source_snapshot/tables.py": "332502d4f236e83dbd5326951be11042481cf998e78b9296437690f38e8feb79",
+    "src/retailops_ai/source_snapshot/importer.py": "461b50df97a9c4d218d3f3ea72f19961352725c85e4b1af1c61fa8bc614b7365",
+    "src/retailops_ai/source_snapshot/inventory_projection.py": "d089eb8ca66f4f7117a8ba425015ce903b67370bcf4ae2a989d8becb0c9d108d",
+    "src/retailops_ai/source_snapshot/inventory_protocol.py": "c36019bb1567cd49795dceb1e405df2e75ada55fdee505a24c529b961bb28e97",
+    "src/retailops_ai/source_snapshot/protocol.py": "e27fa3feeca9f05f2f24b96e737eaf87643f7ec5962e36d1607ffbbe66e0cc86",
+    "src/retailops_ai/source_snapshot/tables.py": "677f8aab2e5a188a57bbff9d46b48b9b68e38b7a5b73d1e05f0cfe563647421d",
     "contracts/source_snapshot/v1_2/anomaly_plan.schema.json": "26986401ce4bda6080940e9e4fdf491be8e44cbae28bc1a4a48b8865251d5cdb",
     "contracts/source_snapshot/v1_2/contract.json": "263dcf40912cc246d8861ea622000ea1e1be7e7a57e54e825e711576c963499c",
     "contracts/source_snapshot/v1_2/inventory_tables.schema.json": "00196e851cb149da78f253f3405d6d9a53dbe4547a6b9113148edca4fb4bcda7",
@@ -34,5 +34,7 @@
     "src/retailops_ai/source_snapshot_native/publish.py": "01c1e18a7c74991724e7429c4e91424a07caf680e2022b457da67da3b48d7b4e"
   },
   "legacy_snapshot_commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
-  "frozen_v12_campaign_pin_sha256": "8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011"
+  "frozen_v12_campaign_pin_sha256": "8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011",
+  "ai_model_snapshot_importer_commit": "18e771f9c2e89e91bf7afeb1744e0cd9112f50b5",
+  "accepted_main_campaign_pin_sha256": "cdbd3c1307bb8c3d07b2325f7166d2061ed4a017a4f20bf7f42e1e79b5039b35"
 }

@@ -16,6 +16,7 @@ def main() -> int:
         "source_contract_commit",
         "source_native_producer_commit",
         "ai_native_importer_commit",
+        "ai_model_snapshot_importer_commit",
     ):
         if not re.fullmatch(r"[0-9a-f]{40}", pin[name]):
             raise ValueError("immutable_owner_required")
@@ -25,8 +26,8 @@ def main() -> int:
     from retailops_ai.data_contracts.identity import canonical_sha256
     from retailops_ai.forecasting.functional_v12_campaign import campaign_code
 
-    if canonical_sha256(campaign_code()) != pin["frozen_v12_campaign_pin_sha256"]:
-        raise ValueError("frozen_v12_campaign_code_changed")
+    if canonical_sha256(campaign_code()) != pin["accepted_main_campaign_pin_sha256"]:
+        raise ValueError("accepted_main_campaign_code_changed")
     print("Source bundle wire, native importer/assets and isolated lock pins passed.")
     return 0
 

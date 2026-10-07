@@ -138,9 +138,14 @@ def test_real_download_verifies_full_fixture_and_reuses_immutable_import(tmp_pat
     assert len(requests) == 2 * (len(document["files"]) + 1)
     assert list(legacy.__path__) == legacy_paths
     assert campaign_code() == frozen
-    assert (
-        canonical_sha256(frozen)
-        == "8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011"
+    pin = json.loads(
+        (
+            Path(__file__).resolve().parents[1] / "src/retailops_ai/source_bundle/upstream.json"
+        ).read_bytes()
+    )
+    assert canonical_sha256(frozen) == pin["accepted_main_campaign_pin_sha256"]
+    assert pin["frozen_v12_campaign_pin_sha256"] == (
+        "8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011"
     )
 
 
