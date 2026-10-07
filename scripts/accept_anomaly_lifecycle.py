@@ -27,6 +27,7 @@ from retailops_ai.anomaly_portfolio.result_store import PostgresResults
 from retailops_ai.anomaly_portfolio.serving_contract import Query
 from retailops_ai.api.app import create_app
 from retailops_ai.config import load_settings
+from retailops_ai.intelligence_events.acceptance_export import export_committed_model_events
 from retailops_ai.intelligence_events.model_contracts import anomaly_event
 from retailops_ai.model_lifecycle.anomaly_evaluation_store import PostgresAnomalyEvaluations
 from retailops_ai.security.model_operator import model_operator, private_principal
@@ -676,6 +677,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                     "model_intelligence_outbox",
                 )
             }
+        census = export_committed_model_events(
+            engine,
+            tuple(anomaly_event(item) for item in items),
+            args.output / "native-outbox",
+            environment=settings.app_env,
+        )
         output = {
             "status": "passed",
             "checks": checks,
@@ -685,6 +692,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "aliases": registry.aliases(MODEL),
             "database_counts": counts,
             "batch_id": manifest["batch_id"],
+            "native_outbox_census_id": census.name,
+            "native_outbox_rows": len(items),
             "model_sha256": active.binding.qualification.model.sha256,
             "image_digest": args.image_digest,
             "qualification_scope": active.binding.qualification.qualification_scope,

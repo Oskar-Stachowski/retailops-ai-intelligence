@@ -115,3 +115,32 @@ z native schema i nie jest receipt kwalifikacji tego fixture. Stockout fixture
 ma namespace test-mechanics i `mechanics_only`. Nie wolno użyć tych przykładów
 do zamknięcia pełnej integracji trzech rzeczywistych modeli na 102 dniach.
 Zdalny odbiór nowego commitu wymaga własnych wyników CI przed ready/merge.
+
+## Zachowanie oryginalnych wyników do odbioru cross-repo
+
+Oba rzeczywiste acceptory (`accept_anomaly_lifecycle.py` i
+`check_stockout_final_acceptance.py`) zachowują przed cleanup pełny census
+native wyników w `native-outbox/<census_id>/`. Odczyt SQL używa jednej
+transakcji repeatable-read/read-only. Każdy event, oryginalny payload, grain
+key i ewentualny broker receipt muszą zgadzać się z pełnym opublikowanym
+batchem. Brakująca lub dodatkowa pozycja przerywa eksport. Receipt i JSONL
+są immutable, związane SHA-256; samo ich istnienie nie poświadcza jakości ML
+ani wysłania wiadomości do brokera.
+
+Jednodniowa kwalifikacja wykonawcza AI 08 z 5 października wygasła
+6 października. Osobny workflow `AI10 qualified stockout output` odtwarza
+siedem dokładnie przypiętych oryginalnych artefaktów i sprawdza sześć
+zakończonych ocen. Istniejący `qualify_stockout_final.py` rekonstruuje publiczne
+wejścia z pełnych rodziców i wykonuje zamrożony model, tworząc nową jednodniową
+kwalifikację. Nie zmienia starej kwalifikacji i nie trenuje, nie kalibruje oraz
+nie uruchamia ponownie ocen końcowych. Dalej wymagane są niezmienione bramki
+review, secret scan, testy modelu, rzeczywisty MLflow/PostgreSQL, cold worker
+i authenticated API. Raport zachowuje oryginalny pełny output i jego SHA-256.
+
+Workflow przekazuje ten output przypiętemu konsumentowi Source na tym samym
+runnerze. Konsument wymaga oryginalnego commitu/run ID, pełnego census i
+oryginalnych 40 payloadów; wysyła każdy event dwukrotnie przez rzeczywisty
+broker i sprawdza SQL checkpoints, deduplikację oraz wszystkie literalne ID
+przez authenticated TCP API. To odbiór przekazania plikowego committed outbox;
+nie jest jeszcze dowodem wysyłki z oryginalnej bazy AI ani widoku UI tych
+rzeczywistych wyników. Wynik wykonania tego nowego workflow nadal jest wymagany.

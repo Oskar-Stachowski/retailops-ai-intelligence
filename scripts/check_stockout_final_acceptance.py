@@ -25,6 +25,8 @@ from retailops_ai.api.app import create_app
 from retailops_ai.config import Settings
 from retailops_ai.data_contracts.identity import canonical_bytes
 from retailops_ai.domain.access import Principal
+from retailops_ai.intelligence_events.acceptance_export import export_committed_model_events
+from retailops_ai.intelligence_events.model_contracts import stockout_event
 from retailops_ai.migrations.runner import migrate
 from retailops_ai.security.local import LocalAccess, load_private_policy, token_fingerprint
 from retailops_ai.security.models import AccessPolicy
@@ -556,6 +558,13 @@ def main() -> int:
                 and all(r.model_name == MODEL for r in output.items),
                 "final_acceptance_complete_batch",
             )
+            census = export_committed_model_events(
+                engine,
+                tuple(stockout_event(item) for item in output.items),
+                args.output / "native-outbox",
+                environment="test",
+            )
+            private_json(args.output / "native-batch-output.json", output.model_dump(mode="json"))
             state = dict(
                 status="passed",
                 purpose="actual_final_model_on_isolated_disposable_runner",
@@ -570,6 +579,12 @@ def main() -> int:
                 rejected_version=v3,
                 batch_run_id=run_id,
                 output_id=output.output_id,
+                native_outbox_census_id=census.name,
+                native_outbox_rows=len(output.items),
+                native_batch_output_sha256=receipt(
+                    read_bytes(args.output, "native-batch-output.json")
+                ).sha256,
+                broker_delivery_attested=False,
                 smoke_rows=q.smoke_rows,
                 real_public_inputs=True,
                 real_mlflow=True,
