@@ -96,8 +96,11 @@ jest zielony; zwykły chroniony merge opublikował `cbcac6eb` na source `main`.
 [Required CI dokładnego source main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37629010997)
 zakończył się pojedynczą porażką testowego odczytu koordynatora Kafka;
 742 kontrole API zaliczono. [Source PR #103](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/103)
-na `16d34887` dodaje ograniczoną poprawkę tego odczytu i rzeczywistą obsługę
-source2.8 z known plans oraz wymaga pełnego CI i odbioru swojego main.
+na `a28101bf` dodaje ograniczoną poprawkę tego odczytu i rzeczywistą obsługę
+source2.8 z known plans. Zaliczył cały [Required CI](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37646475371):
+21 success i 4 przewidziane skipped; chroniony merge opublikował `b7234899`.
+[CI dokładnego Source main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37651259188)
+jeszcze trwa i pozostaje wymagany przed nowym pomiarem canonical.
 Pięć kontrolnych par daje −14.81% alokacji Python podczas kopii
 i −89.62% CPU projekcji dziennych snapshotów, z identycznymi wynikami.
 To pomiary komponentów; pełny RSS i koszt pipeline na nowym producencie nadal
@@ -148,6 +151,18 @@ projektowa kampania, treningi i końcowa ocena pozostają niewykonane.
 na `cd6106a` zaliczył cały [Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37642451429):
 15/15 jobów success. Integracja z nowszym main i poprawką importera wymaga
 własnego CI. Rzeczywista kampania, treningi i final test pozostają niewykonane.
+
+[Audytowany trening forecastingu](ai09-campaign-fitting.md) ma osobny plan v15
+i pełną populację wszystkich kwalifikujących się kluczy train/early_stopping,
+bez zmiany starych limitów. RF ma mean, HGB oddzielne mean/median, a TF
+kompaktowy Keras direct 14-horizon z train-only encoding i maskami.
+Rezerwacja poprzedza I/O, a receipt następuje po mierzonym fit i reload w
+świeżym procesie oraz sprawdzeniu wszystkich plików modelu. Zapis kosztów
+MLflow i trzy nowe rzeczywiste kontrole CPU należą do wymaganego odbioru.
+174 kontrole integracji i Mypy 669 plików przeszły. [Evidence](evidence/09-23-campaign-fitting-preparation.json)
+rozdziela ten odbiór komponentów od niewykonanych nowych treningów projektu.
+Scoring, kalibracja/wybór, pełne profile i końcowa ocena trzech zastosowań
+nadal pozostają do wykonania.
 
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
 Oba rzeczywiste modele v4 przechodzą 56/56 oryginalnych bramek jakości.

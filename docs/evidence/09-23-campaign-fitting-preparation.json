@@ -75,5 +75,22 @@
     "built": true,
     "module_byte_parity": 510,
     "v15_schema_byte_parity": 3
+  },
+  "post_main_integration": {
+    "parent_final_export_head": "eb796aa44c3a24f9bc31e86b8e10ef68f8fe8183",
+    "generation_head": "4238b2fc9218410a53dbbe6b485109dae8757418",
+    "tests_passed": 174,
+    "tests_seconds": 30.59,
+    "mypy_source_files": 669,
+    "ruff_and_format": "passed",
+    "source_bundle_contract": "passed",
+    "evaluation_schemas": "passed",
+    "source_protected_main": "b7234899769119c67f27a62867c1d2153dbd6a00",
+    "source_exact_main_ci": 37651259188,
+    "source_exact_main_ci_pending": true,
+    "package": {
+      "module_byte_parity": 549,
+      "v15_schema_byte_parity": 3
+    }
   }
 }
