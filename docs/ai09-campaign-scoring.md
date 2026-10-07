@@ -50,6 +50,13 @@ całą kontrolną rolę w świeżym procesie. Przygotowanie wejść tego testu k
 z kontrolowanego fixture, więc także jego sukces nie kwalifikuje canonical
 source preparation ani projektowej kampanii.
 
+Head `e4d6371` ma pełny [Required CI 37664383535](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37664383535):
+17/17 success, łącznie z required-result. Rzeczywisty job CPU zaliczył
+7 testów w 144.78 s, w tym nową wspólną predykcję sześciu modeli po zapisaniu
+i świeżym odtworzeniu RF/HGB/TF. PR #39 integruje dodatkowo trening z PR #37
+oraz poprawkę snapshotu z PR #40 i jest skierowany na main. Nowy dokładny head
+tej integracji musi uzyskać własny pełny CI przed protected merge.
+
 Ten przyrost nie otwiera `development_evaluation` ani final testu. Nie dopasowuje
 kalibratora i nie wybiera zwycięzcy. Pozostają: zamrożona uczciwa selekcja na tune,
 kalibracja na własnej roli, niezależna ocena po wyborze, pozostałe dwa zastosowania,
@@ -57,4 +64,4 @@ pełne profile i trzy końcowe seedy, robustness/niepewność/koszty, decyzje li
 trzy karty i raporty oraz protected merge i pełne CI końcowego main.
 
 [Evidence przygotowania](evidence/09-25-campaign-scoring-preparation.json)
-rozdziela zaliczone komponenty, oczekujący odbiór CPU i niewykonane wyniki projektu.
+rozdziela zaliczone komponenty i odbiór CPU od niewykonanych wyników projektu.

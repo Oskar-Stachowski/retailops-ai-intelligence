@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-10-07T18:04:45.078412+00:00",
+  "updated_at_utc": "2026-10-07T18:58:40.250678+00:00",
   "scope": "Audited raw development forecast scoring over all common keys; no calibration, qualification or project campaign result",
   "stage_ready": false,
   "project_journal_initialized": false,
@@ -54,11 +54,21 @@
     "tests_added": 1,
     "collection_passed": true,
     "required_command": "make tensorflow-check",
-    "execution_pending": true,
+    "execution_pending": false,
     "native_workers_started_locally": false,
     "scope": "real fitting and fresh six-model CPU scoring on controlled typed records; input preparation fixture is mocked",
     "canonical_profile": false,
-    "audited_project_fit": false
+    "audited_project_fit": false,
+    "head": "e4d6371c33f17931895ba83a412f01abda83599e",
+    "ci_run": 37664383535,
+    "job": 112940189177,
+    "passed": 7,
+    "seconds": 144.78,
+    "whole_suite_includes_new_common_scoring_test": true,
+    "full_required_ci_jobs_read": 17,
+    "full_required_ci_jobs_total": 17,
+    "full_required_ci_jobs_success": 17,
+    "required_result": "success"
   },
   "accepted_parent_signature_control": {
     "head": "ab1229892d573a22be201f2757fba0aeb490ffaf",
@@ -94,11 +104,28 @@
     }
   ],
   "remaining": [
-    "Exact new native common scoring CPU and complete required CI",
     "Canonical completed generation/export and full-profile capacity",
     "Frozen fair tuning/selection, calibration and independent development evaluation",
     "Anomaly/stockout adapters and policies from closed AI07/08",
     "Fresh final three-seed evaluation, robustness, uncertainty and full resource accounting",
     "Lifecycle decisions, three cards/reports and exact final-main publication/CI"
-  ]
+  ],
+  "consolidated_main_publication": {
+    "pr": 39,
+    "base": "main",
+    "integrates_fitting_pr": 37,
+    "integrates_snapshot_fix_pr": 40,
+    "new_exact_head_ci_pending": true,
+    "exact_main_ci_pending": true,
+    "purpose": "One protected integration includes all dependent code, preserving each historical component acceptance.",
+    "targeted_tests_passed": 74,
+    "targeted_tests_seconds": 84.91,
+    "mypy_source_files": 677,
+    "ruff_format_schemas_source_bundle_docs": "passed",
+    "package": {
+      "module_byte_parity": 557,
+      "v16_schema_byte_parity": 3,
+      "prior_evaluation_files_unchanged": 51
+    }
+  }
 }

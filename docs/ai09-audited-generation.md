@@ -97,8 +97,11 @@ podkatalogu `snapshot/`. [Receipt 09.26](evidence/09-26-generation-snapshot-veri
 zachowuje pełny koszt wszystkich faz, porażkę i hash artefaktu. Poprawka obu
 ścieżek ma 72 zaliczone kontrole generation/export/capacity, w tym rzeczywisty
 import publicznego smoke i pełny prywatny replay bez mockowania plików lub
-transformacji. To regresja naprawy; nowy native odbiór wszystkich sześciu faz
-na zaakceptowanym fixed main pozostaje wymagany przed pomiarem canonical.
+transformacji. Nowy [native run 37669667688](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37669667688)
+na poprawionym `e3bc68e` zaliczył wszystkie sześć faz dla obu profili.
+Receipt 09.26 zawiera także hash jego artefaktu, pełne koszty i zweryfikowane
+źródła. Jest to odbiór małych rzeczywistych danych. Publikacja tej implementacji
+i pełny CI zaakceptowanego main pozostają wymagane przed pomiarem canonical.
 
 Pełna kampania nadal wymaga odbioru pełnych profili, final-only exporter,
 uczciwych fitów i kalibracji, freeze, trzech końcowych seedów i wszystkich

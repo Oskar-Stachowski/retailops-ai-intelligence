@@ -24,7 +24,10 @@ Native kontrola generacji `37664228881` zakończyła pięć faz dla obu profili;
 verify ujawnił błędną ścieżkę snapshotu. Poprawka ma 72 zaliczone testy,
 w tym pełny replay rzeczywiście zaimportowanego publicznego smoke.
 [Receipt 09.26](evidence/09-26-generation-snapshot-verification.json) zachowuje
-koszty porażki. Publikacja poprawki i nowy sześciufazowy odbiór są wymagane.
+koszty porażki. Nowy native run `37669667688` na `e3bc68e` zaliczył wszystkie
+sześć faz dla obu profili. Scoring `e4d6371` ma pełne 17/17 success i 7 native
+testów CPU w 144.78 s. Wspólny PR #39 do main obejmuje także trening PR #37
+i poprawkę PR #40; nowy head integracji i jej main wymagają własnego pełnego CI.
 AI 09 nadal wymaga projektowej kampanii i wyników końcowych.
 
 [PR #33](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/33)
@@ -188,7 +191,8 @@ Audytowany runner rezerwuje próbę przed odczytem i zapisuje trwały receipt po
 świeżej predykcji, hashach i pełnej kontroli populacji. Komponenty przeszły
 166 testów integracji; późniejsze dodatkowe kontrole wymagają własnego zapisu
 w [evidence](evidence/09-25-campaign-scoring-preparation.json).
-Nowy rzeczywisty test wspólnej predykcji CPU czeka na odbiór. To surowe prognozy
+Nowy rzeczywisty test wspólnej predykcji CPU przeszedł; cały CI `37664383535`
+ma 17/17 success. To surowe prognozy
 i diagnostyka, bez kalibracji, wyboru modelu, niezależnego development_evaluation
 lub końcowego testu. Projektowe treningi i końcowe wyniki pozostają niewykonane.
 
