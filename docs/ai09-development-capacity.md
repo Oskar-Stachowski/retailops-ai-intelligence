@@ -74,3 +74,15 @@ przy dziennych snapshotach, z fallbackiem dla spóźnionych faktów.
 wyniki; alokacje Python podczas kopii maleją o 14.81%, CPU dziennych snapshotów
 o 89.62%. To oddzielne pomiary komponentów. Przed nowym pełnym pomiarem potrzebne
 są publikacja producenta, jego CI oraz osobny plan zachowujący obie porażki.
+
+Odbiór source PR #101 na `5bec26f9` zakończył się pełnym zielonym Required CI
+[37623701164](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37623701164).
+Chroniony merge opublikował `cbcac6eb` na source `main`;
+[odbiór dokładnego main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37629010997)
+pozostaje w toku. Szybka receptura 1.2 jest przygotowana osobno i zachowuje
+obie wcześniejsze porażki. Jej publikacja oraz pełny pomiar nadal są wymagane.
+
+Core usprawnień CI z PR #34, main `89b64d2`, jest zintegrowany w tej gałęzi
+bez zmiany `src` lub locków i bez przepięcia producenta AI07.
+Przed chronionym merge tej publikacji wymagane są pełne CI dokładnego nowego
+head oraz [main po PR #34](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37628897194).

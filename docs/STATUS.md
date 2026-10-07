@@ -71,10 +71,16 @@ Próbkowany peak własnego drzewa wyniósł 7679963136 B (7.15 GiB), poniżej 8 
 nie ukończono żadnej fazy. Obie porażki i ich koszty są zachowane. Następny
 pomiar wymaga osobnej receptury na zwalidowanym producencie.
 [Source PR #101](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/101)
-na `3be92bf` ogranicza kopie wejść i dzienny replay, z 456 zaliczonymi testami.
-Pięć kontrolnych par daje −14.81% alokacji Python podczas kopii i −89.62% CPU
-projekcji dziennych snapshotów, z identycznymi wynikami. To pomiary komponentów;
-pełny RSS i koszt pipeline na nowym producencie nadal wymagają odbioru.
+na `5bec26f9` ogranicza kopie wejść i dzienny replay. Zaliczył 456 testów
+regresji, osobne 16 kontroli parity kohort oraz 3 kontrole known plans na seedach
+42/137/2026. Pełny [Required CI dokładnego head](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37623701164)
+jest zielony; zwykły chroniony merge opublikował `cbcac6eb` na source `main`.
+[Required CI dokładnego source main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37629010997)
+jeszcze trwa. Pięć kontrolnych par daje −14.81% alokacji Python podczas kopii
+i −89.62% CPU projekcji dziennych snapshotów, z identycznymi wynikami.
+To pomiary komponentów; pełny RSS i koszt pipeline na nowym producencie nadal
+wymagają odbioru. Wykorzystanie istniejącej szybkiej ścieżki AI08 sprawdzono
+oddzielnie na małym native planned-forecast; nowy pomiar canonical nie ruszył.
 Nie rozpoczęto projektowej kampanii ani generacji finalnych danych. Prawdziwa wersja planned
 forecast to snapshot 1.1; kontrakt anomalii 1.2 pozostaje osobnym wymaganiem.
 
