@@ -95,6 +95,31 @@ def command(args: list[str], *, cwd: Path = ROOT, log: Path | None = None) -> st
     return result.stdout.strip()
 
 
+def original_database_binding(docker: str, base: list[str], project: str) -> str:
+    """Read the actual owned DB mapping, including after the required SIGKILL restart."""
+    container = command([*base, "ps", "-q", "db"])
+    require(bool(re.fullmatch(r"[0-9a-f]{12,64}", container)), "anomaly_original_database_required")
+    inspected = json.loads(command([docker, "inspect", container]))
+    require(len(inspected) == 1, "anomaly_original_database_required")
+    info = inspected[0]
+    labels = info["Config"]["Labels"]
+    require(
+        labels.get("com.docker.compose.project") == project
+        and labels.get("com.docker.compose.service") == "db"
+        and info["State"]["Running"] is True,
+        "anomaly_original_database_owner_required",
+    )
+    mappings = info["NetworkSettings"]["Ports"].get("5432/tcp") or []
+    require(
+        len(mappings) == 1
+        and mappings[0].get("HostIp") == "127.0.0.1"
+        and re.fullmatch(r"[0-9]{1,5}", mappings[0].get("HostPort", "")) is not None
+        and 0 < int(mappings[0]["HostPort"]) <= 65535,
+        "anomaly_original_database_loopback_required",
+    )
+    return "127.0.0.1:" + mappings[0]["HostPort"]
+
+
 def extract_capsule(path: Path, output: Path, expected: dict[str, Any]) -> None:
     raw = path.read_bytes()
     require(
@@ -153,7 +178,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         )
         # Only this fresh disposable project's DB gets an ephemeral loopback port.
         # The normal OCI acceptance and original Source producer keep their boundaries.
-        override.write_text(override.read_text() + '  db:\n    ports: ["127.0.0.1::5432"]\n')
+        override.write_text(
+            override.read_text()
+            + '  db:\n    ports: ["127.0.0.1::5432"]\n'
+            + "    networks: [ai_backend, ai10_delivery]\n"
+            + "networks:\n  ai10_delivery:\n    driver: bridge\n    internal: false\n"
+        )
     base = [
         docker,
         "compose",
@@ -186,6 +216,39 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             refresh(original, current)
             capsules[kind] = current
         mark("saved_models_frozen_evaluation_and_current_compatibility")
+        owned = True
+        command([*base, "build", "api", "mlflow"], log=work / "build.log")
+        image = command([docker, "image", "inspect", project + "-api:local", "--format", "{{.Id}}"])
+        require(
+            bool(re.fullmatch(r"sha256:[0-9a-f]{64}", image)),
+            "anomaly_oci_actual_built_image_digest",
+        )
+        command([*base, "up", "-d", "--wait", "db"], log=work / "database.log")
+        command([*base, "run", "--rm", "-T", "api-migrate"], log=work / "migrations.log")
+        command([*base, "run", "--rm", "-T", "mlflow-migrate"], log=work / "mlflow-migration.log")
+        command([*base, "up", "-d", "--wait", "api", "mlflow"], log=work / "services.log")
+        ready = json.loads(
+            command(
+                [
+                    *base,
+                    "exec",
+                    "-T",
+                    "api",
+                    "python",
+                    "-c",
+                    "import json,urllib.request; "
+                    "response=urllib.request.urlopen('http://127.0.0.1:8081/ready',timeout=2); "
+                    "print(json.dumps({'status':response.status}))",
+                ],
+                log=work / "api-readiness.log",
+            )
+        )
+        require(ready["status"] == 200, "anomaly_oci_migrated_api_readiness")
+        mark("migrated_api_service_ready_without_host_ports")
+        mark("actual_built_oci_pinned_pg16_mlflow_and_all_migrations")
+        if args.source_consumer_root is not None:
+            original_database_binding(docker, base, project)
+            mark("original_AI_database_loopback_preflight")
         if args.prepared_receipt is None:
             native_python = producer / "services/api/.venv/bin/python"
             require(native_python.is_file(), "anomaly_oci_producer_toolchain_required")
@@ -253,36 +316,6 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "anomaly_oci_native_public_parents",
         )
         mark("native_complete_public_source_snapshot_dq_coverage_features")
-        owned = True
-        command([*base, "build", "api", "mlflow"], log=work / "build.log")
-        image = command([docker, "image", "inspect", project + "-api:local", "--format", "{{.Id}}"])
-        require(
-            bool(re.fullmatch(r"sha256:[0-9a-f]{64}", image)),
-            "anomaly_oci_actual_built_image_digest",
-        )
-        command([*base, "up", "-d", "--wait", "db"], log=work / "database.log")
-        command([*base, "run", "--rm", "-T", "api-migrate"], log=work / "migrations.log")
-        command([*base, "run", "--rm", "-T", "mlflow-migrate"], log=work / "mlflow-migration.log")
-        command([*base, "up", "-d", "--wait", "api", "mlflow"], log=work / "services.log")
-        ready = json.loads(
-            command(
-                [
-                    *base,
-                    "exec",
-                    "-T",
-                    "api",
-                    "python",
-                    "-c",
-                    "import json,urllib.request; "
-                    "response=urllib.request.urlopen('http://127.0.0.1:8081/ready',timeout=2); "
-                    "print(json.dumps({'status':response.status}))",
-                ],
-                log=work / "api-readiness.log",
-            )
-        )
-        require(ready["status"] == 200, "anomaly_oci_migrated_api_readiness")
-        mark("migrated_api_service_ready_without_host_ports")
-        mark("actual_built_oci_pinned_pg16_mlflow_and_all_migrations")
         output = work / "acceptance"
         output.mkdir(mode=0o700)
         # Bind only public native inference artifacts; producer truth/facts are not mounted.
@@ -305,7 +338,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             for path in [*mounts, output]
         ]
         override.write_text(
-            override.read_text() + "  api-migrate:\n    volumes: " + json.dumps(bindings) + "\n"
+            override.read_text().replace(
+                "services:\n",
+                "services:\n  api-migrate:\n    volumes: " + json.dumps(bindings) + "\n",
+                1,
+            )
         )
         invocation = [
             *base,
@@ -368,12 +405,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             )
             report["workflow_run_id"] = int(os.environ["GITHUB_RUN_ID"])
             export_native_output(output, report, args.native_output)
+            args.native_export_created = True
             if args.source_consumer_root is not None:
-                binding = command([*base, "port", "db", "5432"])
-                require(
-                    bool(re.fullmatch(r"127\.0\.0\.1:[0-9]{1,5}", binding)),
-                    "anomaly_original_database_loopback_required",
-                )
+                binding = original_database_binding(docker, base, project)
                 values = dict(line.split("=", 1) for line in environment.read_text().splitlines())
                 url = (
                     f"postgresql+psycopg://ai_app:{values['AI_DB_PASSWORD']}@{binding}/retailops_ai"
@@ -422,12 +456,21 @@ def main() -> int:
     parser.add_argument("--source-consumer-root", type=Path)
     parser.add_argument("--report", type=Path, default=ROOT / "reports/ai07-oci-acceptance.json")
     args = parser.parse_args()
+    args.native_export_created = False
     try:
         print(json.dumps(run(args)), flush=True)
     except Exception as error:
         result = {"error": "anomaly_oci_acceptance_failed", "exception_type": type(error).__name__}
         if isinstance(error, ValueError) and re.fullmatch(r"[a-z0-9_]{1,120}", str(error)):
             result["check"] = str(error)
+        if args.native_export_created:
+            path = args.native_output / "acceptance.json"
+            receipt = json.loads(path.read_bytes())
+            receipt.update(
+                status="failed",
+                failure_category=result.get("check", "anomaly_oci_acceptance_failed"),
+            )
+            path.write_text(json.dumps(receipt, indent=2) + "\n")
         print(json.dumps(result), file=sys.stderr)
         return 2
     return 0

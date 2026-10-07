@@ -14,6 +14,20 @@ Nie przeniesiono jeszcze tego etapu na `origin/main`.
 
 ### Odebrane komponenty bieżącej integracji
 
+**Anomaly — oryginalny publisher jeszcze nieodebrany:** run `37608775665`,
+job `112750655905`, zaliczył pełne przygotowanie publicznego Source/DQ/features,
+oryginalny frozen model, lifecycle, atomowy batch 1232 wyników oraz SIGKILL
+i odtworzenie pełnego stanu. CLI zakończyło się kodem 2 podczas odczytu
+mapowania portu własnej bazy, przed callbackiem publishera. Zachowany export
+`passed` opisuje wyłącznie wcześniejsze native phases; [receipt całej próby](evidence/ai10-native-anomaly-original-sql-failure.json)
+ma jawny status failed i nie poświadcza publishera ani Source API/UI.
+Nowy runtime sprawdza rzeczywistą własność kontenera i pojedynczy loopback port
+przez inspect, przed kosztowną generacją Source i ponownie po SIGKILL.
+Jednorazowy overlay do odbioru dodaje własną sieć bridge do tej bazy; standardowy
+Compose pozostaje prywatny. Po późnym błędzie własny export otrzymuje failed,
+a cudzy ukończony export jest zachowany. Wszystkie 32 exporter/publisher/workflow
+guards passed. Pełny nowy odbiór anomalii jest nadal wymagany.
+
 **Integracja z nowszym main AI09:** merge zachowuje `3329a81`, wszystkie
 kontrakty i kod AI09 oraz wymagany osobny job TensorFlow. Żadna bramka AI10
 SQL/broker/replay nie została zastąpiona. Wszystkie 41 negatywnych kontroli

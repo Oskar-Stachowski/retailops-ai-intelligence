@@ -1,0 +1,165 @@
+{
+  "Source_component_CI": {
+    "path": "docs/evidence/ai10-source-components-ci.json",
+    "receipt_status": "passed",
+    "sha256": "ec099dfab3045cde1c2811fbc5be423d4d62c40c6a4fe98520cdf4c9ba6b6e8f"
+  },
+  "evidence_boundary": "Composition of separately executed bounded integration lanes on exact receipt commits; preserves each qualified model lineage, not a new common scientific qualification campaign.",
+  "fault_and_access_components": [
+    {
+      "path": "docs/ai10-checkpoint-ci-receipt.json",
+      "receipt_status": "ready_for_review",
+      "sha256": "dc0154fbcc2159288f25e5ea73f9e6133548a630aface812f87d5a85450fecb0"
+    },
+    {
+      "path": "docs/ai10-durable-observation-replay-ci-receipt.json",
+      "receipt_status": "passed",
+      "sha256": "4b30f11498fb5d222f9b779dfaaa71bdc2e8fe0985551b2da9aaf25d1035f2f1"
+    },
+    {
+      "path": "docs/ai10-observation-broker-ci-receipt.json",
+      "receipt_status": "passed",
+      "sha256": "67c08c8d63516b67fa6b4022830fc81ec0f8f7308a3abe77b3671bccaa40b69b"
+    },
+    {
+      "path": "docs/ai10-runtime-ci-receipt.json",
+      "receipt_status": "complete",
+      "sha256": "831a256391dd2b25485e65d4972a4a74492429ae101813bc5deb8bb29e2fde1b"
+    }
+  ],
+  "input_modes": {
+    "bounded_REST": {
+      "coherent_REST_SQL_snapshot": "snapshot_unsupported",
+      "complete_sales_grain": "unsupported_grain",
+      "default_limit": 50,
+      "maximum_limit": 100,
+      "read_mode": "bounded-live",
+      "receipt": {
+        "path": "docs/ai10-rest-ci-receipt.json",
+        "receipt_status": "ready_for_review",
+        "sha256": "4c6d78912717dcba0549111b254355a3882761047a66b9ccc923ff6ca33b4a85"
+      },
+      "status": "passed_component"
+    },
+    "immutable_snapshot": {
+      "broker_handoff_claimed": false,
+      "complete_native_sales_grain": true,
+      "receipt": {
+        "path": "docs/ai10-source-bundle-ci-receipt.json",
+        "receipt_status": "success",
+        "sha256": "0f3431514979b8ae09cac1875fbf618f69a81fa6a32adc29ec1c74a9249ef6b1"
+      },
+      "status": "passed_component",
+      "tables": 43
+    },
+    "stream": {
+      "actual_overlap_records": 3,
+      "capture_plus_overlap_equals_full_SQL_replay": true,
+      "fact_scope": "daily_demand_versions_only",
+      "final_ACK": [
+        0,
+        0,
+        4
+      ],
+      "final_facts": 3,
+      "final_receipts": 4,
+      "prefix_ACK": [
+        0,
+        0,
+        3
+      ],
+      "prefix_facts": 2,
+      "prefix_receipts": 3,
+      "protocol_input_scope": "explicit generated observation fixtures; original operational Source publisher, real same TLS/SCRAM broker and separate actual AI SQL receiver",
+      "quantity_after_correction": 7,
+      "quantity_before_correction": 4,
+      "receipt": {
+        "path": "docs/evidence/ai10-source-sql-handoff-accepted.json",
+        "receipt_status": "passed",
+        "sha256": "d623e9ba82a137f618b4f0ba89a87c956d6597891e3c11bb70bf964da22e281a"
+      },
+      "status": "passed"
+    }
+  },
+  "integration_runtime_status": "in_progress",
+  "native_models": {
+    "anomaly": {
+      "accepted_file_handoff_UI_pages": 25,
+      "accepted_file_handoff_rows": 1232,
+      "earlier_scope_receipt": {
+        "path": "docs/evidence/ai10-native-anomaly-accepted.json",
+        "receipt_status": "passed",
+        "sha256": "0a7080d7a161cf79a5b06b69dc79e85abf47244d1d617444a3b992840293dc7e"
+      },
+      "original_SQL_receipt": null,
+      "status": "pending_original_SQL_publisher"
+    },
+    "forecast_v12": {
+      "development_namespace": "retailops-demand-forecast-v12-development",
+      "expected_output_rows": 56,
+      "expected_series": 4,
+      "full_native_receipt": null,
+      "history_days": 102,
+      "horizon_days": 14,
+      "immutable_input_tables": 43,
+      "original_archive_receipt": {
+        "path": "docs/evidence/ai10-original-v12-recovered.json",
+        "receipt_status": "passed",
+        "sha256": "2ff03652ca983ac1e90259cadf28f27010828491f61cb0f7e53242c1b1bc3ee4"
+      },
+      "original_quality_reclassified": false,
+      "original_quality_status": "not_ready",
+      "owner_acceptance_sha256": "11cd0e1fdd10629543bcb66aaedb3bd9b7b7fc5b31473575b998d951c93f00d2",
+      "partial_failed_attempt": {
+        "path": "docs/evidence/ai10-v12-native-scratch-failure.json",
+        "receipt_status": "failed",
+        "sha256": "10599060cd3cfc7512e83437d223864cecc4dc147a7f72d48853112a90e255b1"
+      },
+      "status": "pending_full_native_runtime"
+    },
+    "stockout": {
+      "ACK_next_offsets": {
+        "0": 34,
+        "1": 46
+      },
+      "built_UI_rows": 40,
+      "literal_TCP_native_ids": 40,
+      "model_refits": 0,
+      "original_AI_SQL_publisher": true,
+      "payloads_unchanged": true,
+      "qualification_id": "stockout-qualification-serving-sha256-131dba942a20f026b74a1ba1c99fd5c9727b27e1d02c4d353f0954e2c12464e0",
+      "receipt": {
+        "path": "docs/evidence/ai10-native-stockout-original-sql-accepted.json",
+        "receipt_status": "passed",
+        "sha256": "853a621d089fe546398a67cabaa7db087b6a10c8677207b57406c1bf6478d974"
+      },
+      "source_duplicates": 40,
+      "source_projected": 40,
+      "status": "passed"
+    }
+  },
+  "production_deployed": false,
+  "publication": {
+    "AI_PR": 28,
+    "Source_PR": 100,
+    "receipt": null,
+    "status": "pending_protected_merge_and_required_main_CI"
+  },
+  "recorded_date": "2026-10-07",
+  "remaining": [
+    "anomaly_original_AI_SQL_publisher_receipt",
+    "full_original_v12_registry_SQL_publisher_API_UI_receipt",
+    "final_documentation_and_exact_head_required_CI",
+    "both_protected_main_merges_and_required_main_CI"
+  ],
+  "stage_status": "in_progress",
+  "suggestions": {
+    "receipt": {
+      "path": "docs/ai10-suggestion-ui-ci-receipt.json",
+      "receipt_status": "success",
+      "sha256": "4aa01d50ea4b67b71811f06b121b7f1bace08a28e1916fa8631676b9820f84d7"
+    },
+    "scope": "explicit contract/mechanics fixture with human approval; real recommendation producer belongs to AI12"
+  },
+  "version": "ai10-bounded-acceptance-1.0"
+}

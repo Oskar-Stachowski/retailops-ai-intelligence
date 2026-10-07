@@ -6,6 +6,11 @@ i [Source #100](https://github.com/Oskar-Stachowski/retailops-cloud-native-platf
 Status `ready` wymaga wszystkich dowodów niżej oraz chronionego merge i zielonego
 Required CI obu `origin/main`. Szczegóły starszych przyrostów zachowuje
 [historia](ai10-progress.md); wcześniejsze receipts nie są przepisywane.
+Pełne Required CI komponentów Source `cbbf711` zaliczyło wszystkie 30 jobów:
+[receipt](evidence/ai10-source-components-ci.json). Końcowe heady dokumentacji
+i oba opublikowane main wymagają własnego potwierdzenia.
+[Raport bounded odbioru](evidence/ai10-bounded-acceptance.json) wiąże SHA
+wszystkich receipts, sumy przed/po korekcie, offsety i jawne pending gates.
 
 ## Zakres i stan dowodów
 
