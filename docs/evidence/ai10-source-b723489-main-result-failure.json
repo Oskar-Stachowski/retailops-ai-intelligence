@@ -1,0 +1,26 @@
+{
+  "head_sha": "b7234899769119c67f27a62867c1d2153dbd6a00",
+  "intentional_skipped_gates": 4,
+  "not_yet_created_required_leaf": "api-gate / API Docker image build",
+  "observed_parent_result": {
+    "API_integration_leaf": "success",
+    "api_gate": "abandoned",
+    "data_gate": "success",
+    "docker_gate": "success",
+    "security_gate": "success"
+  },
+  "required_result": "failure",
+  "required_result_job_id": 112918426250,
+  "retry": {
+    "accepted_as_passed": false,
+    "guard_relaxed": false,
+    "operation": "rerun_failed_required_result_and_its_incomplete_dependencies",
+    "source_code_changed": false
+  },
+  "run_attempt": 1,
+  "scope": "Initial exact Source main Required CI attempt; completed leaf jobs do not substitute for a successful required-result",
+  "status": "failed",
+  "successful_leaf_jobs": 19,
+  "version": "ai10-source-main-required-result-failure-1.0",
+  "workflow_run_id": 37651259188
+}

@@ -151,6 +151,27 @@ jobs:
           make intelligence-delivery-bootstrap
           uv run --locked --project tools/intelligence-delivery python scripts/intelligence_outbox.py --help
           make integration-replay-test integration-failure-test
+      - name: Checkout exact Source existing-project overlay
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Oskar-Stachowski/retailops-cloud-native-platform
+          ref: ed87052cbe41ba2d537970655d88a4689f53ae19
+          path: .local/ai10-compose-source
+          persist-credentials: false
+      - name: Require both existing-project overlays and locked delivery image
+        run: |
+          uv run --frozen python scripts/check_ai10_compose_overlays.py --source-root .local/ai10-compose-source --report artifacts/ai10-compose-overlays.json
+          docker build --file Dockerfile.intelligence --tag "retailops-ai10-delivery:$GITHUB_SHA" .
+          docker run --rm --network none "retailops-ai10-delivery:$GITHUB_SHA" python -c 'import confluent_kafka; import retailops_ai; assert confluent_kafka.__version__ == "2.15.1"'
+          docker run --rm --network none "retailops-ai10-delivery:$GITHUB_SHA" python /ai/intelligence_outbox.py --help
+      - name: Preserve bounded overlay configuration proof
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai10-existing-project-overlays
+          path: artifacts/ai10-compose-overlays.json
+          if-no-files-found: error
+          retention-days: 30
   anomaly-oci:
     needs: [checks, secrets]
     runs-on: ubuntu-24.04

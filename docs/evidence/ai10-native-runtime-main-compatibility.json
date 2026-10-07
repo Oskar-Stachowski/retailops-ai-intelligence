@@ -1,0 +1,240 @@
+{
+  "AI_accepted_native_commit": "64a4c7156023da5750e5da92d465afa9205b4a1d",
+  "AI_controller_fix_commit": "adf8d1cac4b28b6034d114cba7cb3de5379cc1bb",
+  "AI_current_native_controller_commit": "22de5754d1317701b881ff6265604d82e822a882",
+  "AI_current_native_execution": "full_original_V12_passed_37665627162",
+  "AI_current_native_execution_receipt": {
+    "path": "docs/evidence/ai10-native-v12-22de575-accepted.json",
+    "sha256": "901dc8861fa95fb8a17f2e7ee8ec551c2733f5894e92dc1fd8faa4a9e94067ee",
+    "status": "passed"
+  },
+  "AI_current_unchanged_native_objects": [
+    {
+      "git_object_id": "f74b8a97abddfe30c44f4c0dcce51c1b64832187",
+      "path": "src/retailops_ai/api"
+    },
+    {
+      "git_object_id": "d46a8522b22fb58d0caef2b9f2e132e2fe793174",
+      "path": "src/retailops_ai/config.py"
+    },
+    {
+      "git_object_id": "0cee24396bb82c0239b92c0ab8a7c1b00dbf834d",
+      "path": "src/retailops_ai/curated"
+    },
+    {
+      "git_object_id": "8f619907a49064257b846ee11513f798d7bead7b",
+      "path": "src/retailops_ai/data_contracts"
+    },
+    {
+      "git_object_id": "b02a5666a2ead17e2cb8230b2618c1e16d28c7e4",
+      "path": "src/retailops_ai/domain"
+    },
+    {
+      "git_object_id": "669feccc170707ef8f3eab8608ee37b1485779d1",
+      "path": "src/retailops_ai/forecast_jobs"
+    },
+    {
+      "git_object_id": "9aca7d886d23bdad7602dcfb625207fd98763c37",
+      "path": "src/retailops_ai/forecasting"
+    },
+    {
+      "git_object_id": "f186386496cada4832e9a9c2652dcbf4a7c052f5",
+      "path": "src/retailops_ai/intelligence_events"
+    },
+    {
+      "git_object_id": "8b5ebf8f228e38a007c2365e6369af8104c222ee",
+      "path": "src/retailops_ai/migrations"
+    },
+    {
+      "git_object_id": "33d6c51090a55a45749ca44a92bba6767491c3d4",
+      "path": "src/retailops_ai/model_lifecycle"
+    },
+    {
+      "git_object_id": "59458d32116833c3aa66523691968e201dd973be",
+      "path": "src/retailops_ai/security"
+    },
+    {
+      "git_object_id": "089d5ee725cf14e8261c2b61271018df2d5ee596",
+      "path": "src/retailops_ai/anomaly_portfolio"
+    },
+    {
+      "git_object_id": "c6418bf8890dda0a00db78ea3af2112f30f55721",
+      "path": "src/retailops_ai/stockout_jobs"
+    },
+    {
+      "git_object_id": "5641c6b24cb2a11f1344e88043738186810741d9",
+      "path": "uv.lock"
+    },
+    {
+      "git_object_id": "108b9d4976aa89a1982cb4ecc0d656b00eabf9a5",
+      "path": "tools/intelligence-delivery"
+    },
+    {
+      "git_object_id": "3402c0ad5a47ec8e76db74dc3a13a927f80a6307",
+      "path": "scripts/check_ai10_v12_native.py"
+    },
+    {
+      "git_object_id": "0ac78cbf742bc71816c96d14a9389e31d7348381",
+      "path": "scripts/deliver_ai10_v12_native.py"
+    },
+    {
+      "git_object_id": "20ca23ea69f787559e66d006b40ab2bc162e209e",
+      "path": "scripts/check_stockout_final_acceptance.py"
+    },
+    {
+      "git_object_id": "30e05d29ad2f61ed27b5b6695d75a7099b97b200",
+      "path": "scripts/accept_anomaly_lifecycle.py"
+    },
+    {
+      "git_object_id": "11652bacd08c6e8dc2d1ffdd5d67d6023251c22f",
+      "path": "scripts/deliver_ai10_model_native.py"
+    },
+    {
+      "git_object_id": "8b1015f00c51a305fbc6e639f428557b7d0f5a68",
+      "path": "scripts/run_ai10_model_consumer.py"
+    }
+  ],
+  "AI_integrated_current_commit": "8400102f46a2739df7dd49a3e5d855d9254a036c",
+  "AI_new_upstream_change_scope": "AI09 final-only export, its contracts/tests and development-capacity preparation. Native model runtime, locked dependencies, consumer launchers and publishers listed above remain exact Git-object identical to live original V12 commit. This is compatibility evidence, not original full V12 acceptance.",
+  "AI_new_upstream_changed_paths": [
+    ".github/workflows/ai09-development-capacity.yml",
+    "contracts/evaluation/v14/campaign_final_export_plan.schema.json",
+    "contracts/evaluation/v14/campaign_final_export_receipt.schema.json",
+    "contracts/evaluation/v14/final_forecast_example.schema.json",
+    "contracts/evaluation/v14/final_forecast_manifest.schema.json",
+    "contracts/evaluation/v14/final_forecast_recipe.schema.json",
+    "docs/STATUS.md",
+    "docs/ai09-development-capacity.md",
+    "docs/ai09-final-export.md",
+    "docs/evidence/09-19-cached-development-capacity-preparation.json",
+    "docs/evidence/09-21-final-export-preparation.json",
+    "docs/evidence/09-24-generation-publication.json",
+    "docs/reference/ai09-development-capacity-v1.2.json",
+    "pyproject.toml",
+    "scripts/measure_ai09_development_capacity.py",
+    "scripts/update_evaluation_preparation_contracts.py",
+    "src/retailops_ai/evaluation_campaign/campaign_export.py",
+    "src/retailops_ai/evaluation_campaign/campaign_final_contract.py",
+    "src/retailops_ai/evaluation_campaign/campaign_final_export.py",
+    "src/retailops_ai/evaluation_campaign/final_forecast.py",
+    "tests/test_ai09_development_capacity.py",
+    "tests/test_campaign_final_export.py"
+  ],
+  "AI_new_upstream_main_commit": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
+  "AI_unchanged_objects": [
+    {
+      "git_object_id": "3baaaacce7c86109dfa5ddf6e584ee476417effa",
+      "path": "src/retailops_ai"
+    },
+    {
+      "git_object_id": "5641c6b24cb2a11f1344e88043738186810741d9",
+      "path": "uv.lock"
+    },
+    {
+      "git_object_id": "108b9d4976aa89a1982cb4ecc0d656b00eabf9a5",
+      "path": "tools/intelligence-delivery"
+    },
+    {
+      "git_object_id": "20ca23ea69f787559e66d006b40ab2bc162e209e",
+      "path": "scripts/check_stockout_final_acceptance.py"
+    },
+    {
+      "git_object_id": "bd94f22355453c8f474d58daa0fadea199705a8c",
+      "path": "scripts/check_anomaly_oci.py"
+    },
+    {
+      "git_object_id": "30e05d29ad2f61ed27b5b6695d75a7099b97b200",
+      "path": "scripts/accept_anomaly_lifecycle.py"
+    },
+    {
+      "git_object_id": "11652bacd08c6e8dc2d1ffdd5d67d6023251c22f",
+      "path": "scripts/deliver_ai10_model_native.py"
+    },
+    {
+      "git_object_id": "8b1015f00c51a305fbc6e639f428557b7d0f5a68",
+      "path": "scripts/run_ai10_model_consumer.py"
+    },
+    {
+      "git_object_id": "a2e59c7b5db358a5cf80b62528ed20e3d0fe2fdd",
+      "path": "docs/reference/ai10-native-output-consumer.json"
+    }
+  ],
+  "Source_accepted_model_consumer_commit": "cbbf7111f093b30026e12e1ef614403df6ed2d0e",
+  "Source_code_main_commit": "b7234899769119c67f27a62867c1d2153dbd6a00",
+  "Source_frozen_forecast_consumer_commit": "1a7f558d718ed3dddaed277c07ccfd7d023f34ce",
+  "Source_prior_full_code_main_commit": "467f9903fdeb1dbc146994f6133536b066819bb4",
+  "Source_unchanged_forecast_objects": [
+    {
+      "git_object_id": "f850996f361460fca2e2d9bb81b404de4deec3bf",
+      "path": "services/api/app"
+    },
+    {
+      "git_object_id": "6ee5395c1bf410c0674dfd0eceed60a8d5bb21dd",
+      "path": "services/api/alembic"
+    },
+    {
+      "git_object_id": "cb8f5392026843ac86635f7f41209c073f2d031d",
+      "path": "frontend"
+    },
+    {
+      "git_object_id": "7992ee15065db7a224d5787d2b55dd18a3a4d1f8",
+      "path": "services/api/tests/test_native_forecast_output_durability.py"
+    },
+    {
+      "git_object_id": "572b5844cf938583d6443135aff976c3e9876f3c",
+      "path": "services/api/tests/native_forecast_bundle.py"
+    },
+    {
+      "git_object_id": "f72c339a5e5fa2e6631176dd733db2136cab2d4b",
+      "path": "services/api/tests/native_forecast_browser.py"
+    }
+  ],
+  "Source_unchanged_model_objects": [
+    {
+      "git_object_id": "f850996f361460fca2e2d9bb81b404de4deec3bf",
+      "path": "services/api/app"
+    },
+    {
+      "git_object_id": "6ee5395c1bf410c0674dfd0eceed60a8d5bb21dd",
+      "path": "services/api/alembic"
+    },
+    {
+      "git_object_id": "cb8f5392026843ac86635f7f41209c073f2d031d",
+      "path": "frontend"
+    },
+    {
+      "git_object_id": "c432b6507c68dcbe115c5806e34779c08ad28584",
+      "path": "services/api/tests/native_model_delivery.py"
+    },
+    {
+      "git_object_id": "7c39d4b55c2acfe1bbb1e1b7f0fb16963ecabdc3",
+      "path": "services/api/tests/native_intelligence_bundle.py"
+    },
+    {
+      "git_object_id": "0b9a61008efc46b78ccb1a22187b9b989800d8f1",
+      "path": "services/api/tests/native_intelligence_browser.py"
+    },
+    {
+      "git_object_id": "21a79375b362f706c8faa03143a8f8db517bba6a",
+      "path": "services/api/tests/test_native_intelligence_output_durability.py"
+    }
+  ],
+  "Source_upstream_change_scope": "Accepted AI09 planned-anomaly data export/read/schema support, tests, bounded Kafka test helper and its documentation; native output API, migrations, frontend and model/forecast consumer objects above remain identical.",
+  "Source_upstream_changed_paths": [
+    "data/contracts/anomaly_snapshot.v1_2.forecast.schema.json",
+    "data/contracts/anomaly_source_dataset.v2_8.forecast.schema.json",
+    "data/export/inventory_snapshot.py",
+    "data/inventory/source_dataset_io.py",
+    "data/tests/test_planned_anomaly_snapshot.py",
+    "docs/STATUS.md",
+    "docs/evidence/ai/09/planned-anomaly-preparation.md",
+    "services/api/tests/test_realtime_durability.py",
+    "services/api/tests/test_realtime_offset_inspection.py"
+  ],
+  "model_refits": 0,
+  "original_quality_reclassified": false,
+  "scope": "Exact Git objects of actual runtime, migrations, UI and consumer checks; shared private-control function AST unchanged. This is compatibility evidence, not a new common model qualification or original v12 acceptance.",
+  "shared_private_control_reader_AST_sha256": "118dfc3e1d2aa87f5cf4bb9d3f48c9094c289bf7e618b2989fd941386253839f",
+  "status": "passed",
+  "version": "ai10-native-runtime-main-compatibility-1.4"
+}

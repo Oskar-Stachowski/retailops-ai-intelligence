@@ -1,0 +1,30 @@
+# Extend the owned AI project; never include Source services or its database.
+services:
+  api:
+    networks:
+      ai_backend: {}
+      ai_frontend: {}
+      intelligence_bus:
+        aliases: [retailops-ai]
+  intelligence-delivery:
+    profiles: [intelligence]
+    build:
+      context: .
+      dockerfile: Dockerfile.intelligence
+    image: ${COMPOSE_PROJECT_NAME:?use_owned_project}-intelligence:local
+    user: ${AI10_UID:?private_file_owner_required}:${AI10_GID:?private_file_group_required}
+    command: [python, /ai/intelligence_outbox.py, --env-file, /private/ai.env, --broker-config, /private/broker.json]
+    volumes:
+      - type: bind
+        source: ${AI10_PRIVATE:?private_configuration_required}
+        target: /private
+        read_only: true
+    networks: [ai_backend, intelligence_bus]
+    labels:
+      retailops.ai.build_project: ${COMPOSE_PROJECT_NAME:?use_owned_project}
+      retailops.ai.build_service: intelligence-delivery
+    restart: "no"
+networks:
+  intelligence_bus:
+    external: true
+    name: ${RETAILOPS_INTELLIGENCE_NETWORK:?source_owned_network_required}

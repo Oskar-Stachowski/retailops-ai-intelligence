@@ -1,0 +1,25 @@
+{
+  "current_head_required_CI": "pending_final_publication_head",
+  "execution_environment": "PYTHONPATH=src on exact integrated worktree with existing locked Python 3.11 environment; local Docker off",
+  "frozen_v12_campaign_pin_unchanged": true,
+  "integrated_commit": "ca51ffed079151ffdfffcbdf06608dab61fc0fd2",
+  "junit_sha256": "3ca0180778211b7b295ca28484ca3f4093f0d00cc78e36fe3a1b579b76d6b04d",
+  "model_refits": 0,
+  "original_quality_reclassified": false,
+  "scope": "Shared importer and source bundle compatibility plus v12 inference input and controller boundaries; not a new original model qualification or replacement for current-head Required CI",
+  "status": "passed_component",
+  "test_counts": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 74
+  },
+  "tests": [
+    "tests/test_source_bundle.py",
+    "tests/test_inventory_snapshot_import.py",
+    "tests/test_v12_inference_source.py",
+    "tests/test_ai10_v12_native_runner.py"
+  ],
+  "upstream_main_commit": "16a02aecbc4f9558e8222c02ad5a24d82745545b",
+  "version": "ai10-ai09-main-integration-1.0"
+}

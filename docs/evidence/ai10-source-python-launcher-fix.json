@@ -1,0 +1,31 @@
+{
+  "base_commit": "492569f7c4f0cf43272f42a4b6e15a4851c9410f",
+  "checked_files": [
+    {
+      "path": "scripts/check_ai10_v12_native.py",
+      "sha256": "b63ca02137088c81710bada6c28272fadd9a92ad0d0d0d9119b7e3232fb9292b"
+    },
+    {
+      "path": ".github/workflows/ai10-v12-native-output.yml",
+      "sha256": "a1b30d1b0bc6710b21db5f9439247549f32e37409c3aa758f0827a15e05f1b15"
+    },
+    {
+      "path": "tests/test_ai10_v12_native_runner.py",
+      "sha256": "9a0aebfca83f44658aaa4ba3faeeead1f77d11a3fced2e8683a9a45da6b2db09"
+    }
+  ],
+  "full_original_native_acceptance": "required_separate_new_full_execution",
+  "junit_sha256": "19ab0b8292eeaadb70607fcb8b7b59061adc9392e45b45f4712b65c068ed098b",
+  "model_refits": 0,
+  "original_quality_reclassified": false,
+  "regression": "Real symlinked venv child passes; resolving interpreter to base Python is rejected even when real pytest is available to both processes",
+  "scope": "Preserve Source venv interpreter entry point and verify its actual prefix and pytest before archive/scientific execution; no change to frozen models, original scientific gates, SQL publisher, or Source consumer",
+  "status": "passed_component",
+  "test_counts": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 55
+  },
+  "version": "ai10-source-python-launcher-fix-1.0"
+}
