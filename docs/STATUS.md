@@ -7,7 +7,7 @@ ma komplet 14 zielonych jobów dla `4a0a6b5` i został scalony jako `5216e31`.
 jest zielone, z kompletem 14 wymaganych jobów. [PR #30](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/30)
 ma także 14 zielonych jobów na `9bb10f0` i jest scalony jako `3329a81`;
 [CI dokładnego merge/main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37604312440)
-jest w toku. Nowy [eksporter fizyczny](physical-forecast-export.md)
+jest zielone, z kompletem 14 wymaganych jobów. Nowy [eksporter fizyczny](physical-forecast-export.md)
 odtwarza cechy i etykiety wszystkich pięciu ról z jednego prywatnego replayu.
 Jego kontrolny profil `ai-load` nie kwalifikuje pełnego `ai-training` ani kampanii.
 [Przyrost 09.12](evidence/09-12-prospective-campaign-journal.md) zachowuje historię
@@ -49,6 +49,13 @@ konserwatywnego rozliczenia brakującej historii przed nowymi eksperymentami.
 09.12 przygotowuje takie rozliczenie z przypiętych receiptów i wymaga jawnego
 powiązania go w nowym prospektywnym protokole; nie kwalifikuje świeżości danych.
 Nowe CI zachowuje wszystkie kontrole AI 07–08 oraz osobny wymagany job TensorFlow.
+
+[Pomiar pełnego development](ai09-development-capacity.md) ma przygotowany
+osobny runner oraz [kontrolny odbiór](evidence/09-15-development-capacity-preparation.json):
+14 testów supervisora, w tym rzeczywistych procesów i wszystkie pięć faz na małym `ai-load`.
+Próba canonical `ai-dev` oczekuje na osobne uruchomienie; nie rozpoczęto jeszcze
+projektowej kampanii ani generacji finalnych danych. Prawdziwa wersja planned
+forecast to snapshot 1.1; kontrakt anomalii 1.2 pozostaje osobnym wymaganiem.
 
 Szacunek zamknięcia na 2026-10-07: **24–40 godzin aktywnej pracy**, około
 **3–5 dni roboczych**; przy problemach pełnego profilu rezerwa **5–7 dni**.
