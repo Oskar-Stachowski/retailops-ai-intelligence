@@ -1,0 +1,81 @@
+{
+  "scope": "Audited per-horizon calibration after completed Tune; controlled component evidence, no project calibration or qualification",
+  "stage_ready": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "project_calibration_fitted": false,
+  "independent_project_evaluation_completed": false,
+  "final_test_opened": false,
+  "wire": "evaluation v18: plan, calibration, durable receipt; prior v1-v17 bytes retained",
+  "ordering": "reserve before parent/label reads; every Calibration raw score directly requires completed Tune; private fsync receipt before completion",
+  "selection": "median remains completed Tune choice, exact fit IDs and receipt/model digests matched for every frozen triplet once; no architecture reselection or refit",
+  "calibration": {
+    "method": "absolute selected-median residual, separate radius for each of14 horizons",
+    "nominal_coverage": 0.9,
+    "rank": "exact integer ceil((n+1)*0.9), unavailable rank is never clamped",
+    "minimum_eligible_per_horizon": 100,
+    "minimum_eligibility_coverage_per_horizon": 0.8,
+    "all_horizons_required": true,
+    "underpowered_or_missing_horizon": "whole calibrator not_ready; retain exclusions/counts, no global pooling",
+    "bounds": "max(0,median-radius),median+radius",
+    "temporal_coverage_guarantee_claimed": false,
+    "independent_coverage_evaluation_still_required": true,
+    "label_passes": "one full Calibration pass, zero Tune/independent/final passes",
+    "residual_storage": "bounded disk SQLite,4MiB cache,owned temp/scratch; no full residual population in RAM"
+  },
+  "component_tests": {
+    "data_first_pass": 31,
+    "data_first_seconds": 5.1,
+    "calibration_pre_ordering_extension_passed": 53,
+    "calibration_pre_ordering_extension_seconds": 22.14,
+    "integration_passed": 198,
+    "integration_seconds": 90.77,
+    "roles_and_prediction_files_real": true,
+    "audit_fit_and_scoring_workers_mocked": true,
+    "worker_control_tune_parent_is_declared_metadata": true,
+    "worker_control_package_version_gate_mocked": true,
+    "private_receipt_observed_before_journal_finish": true,
+    "completed_operation_can_have_not_ready_calibrator": true,
+    "failures_charge_attempt_and_retain_sampled_and_system_peak": true,
+    "not_canonical_or_project_evidence": true,
+    "post_mlflow_cost_change_worker_controls_passed": 10,
+    "post_mlflow_cost_change_worker_controls_seconds": 5.02
+  },
+  "native_cpu_control": {
+    "required_command": "make tensorflow-check",
+    "suite_tests_collected": 8,
+    "collection_seconds": 2.2,
+    "collection_only_locally": true,
+    "execution_pending": true,
+    "scope": "fresh real Calibration/MLflow worker on small real role files, declared controlled Tune metadata; no completed project campaign",
+    "expected_result": "operation successful but calibrator not_ready because each horizon needs100 eligible rows",
+    "private_tracking_artifacts_scope_checked": true
+  },
+  "static_checks": {
+    "mypy_source_files": 687,
+    "ruff": "passed",
+    "schemas": "passed",
+    "remaining_checks_pending": false,
+    "format_files": 1170,
+    "source_bundle_owner_guard": "passed",
+    "native_snapshot_types": "10 files passed",
+    "docs_links_required_ci": "passed"
+  },
+  "package_verification_pending": false,
+  "publication_pending": true,
+  "remaining": [
+    "Full canonical source generation/export and planned-anomaly capacity",
+    "Actual preregistered project fits, Tune selection and Calibration fitting",
+    "Independent development evaluation and anomaly/stockout adapters using closed07/08 policies",
+    "Selection freeze, fresh final three seeds/all uses/four scenarios and critical segments",
+    "Paired time/series uncertainty, costs, compatible lifecycle bundles and three cards/reports/runbooks",
+    "Protected publication and full exact-final-main Required CI"
+  ],
+  "package": {
+    "module_byte_parity": 567,
+    "v18_schema_byte_parity": 3,
+    "previous_evaluation_files_unchanged": 57,
+    "wheel_bytes": 1825967,
+    "wheel_sha256": "24d5772162ff09b9695c55e68e205a4e1a71a557c1e44ac2c6c768b4c67d98c2"
+  }
+}

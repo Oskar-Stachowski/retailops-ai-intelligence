@@ -8,6 +8,9 @@ from uuid import uuid4
 
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.evaluation_campaign import campaign_journal
+from retailops_ai.evaluation_campaign.campaign_calibration_contract import (
+    CampaignForecastCalibrationReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignCost,
     CampaignJournal,
@@ -151,7 +154,8 @@ def _store_receipt(
     | CampaignFinalExportReceipt
     | CampaignForecastFitReceipt
     | CampaignForecastScoreReceipt
-    | CampaignForecastTuneReceipt,
+    | CampaignForecastTuneReceipt
+    | CampaignForecastCalibrationReceipt,
 ) -> None:
     """Keep output evidence durable before completing the charged operation."""
     raw = canonical_bytes(receipt.model_dump(mode="json")) + b"\n"

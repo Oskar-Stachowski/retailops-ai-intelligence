@@ -4,6 +4,11 @@ import argparse
 import json
 from pathlib import Path
 
+from retailops_ai.evaluation_campaign.campaign_calibration_contract import (
+    CampaignForecastCalibration,
+    CampaignForecastCalibrationPlan,
+    CampaignForecastCalibrationReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignJournal,
     CampaignProtocol,
@@ -353,6 +358,23 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Campaign forecast Tune contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, calibration_model in (
+        ("campaign_forecast_calibration_plan", CampaignForecastCalibrationPlan),
+        ("campaign_forecast_calibration_receipt", CampaignForecastCalibrationReceipt),
+        ("campaign_forecast_calibration", CampaignForecastCalibration),
+    ):
+        schema = calibration_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:18.0.0"
+        path = ROOT / "contracts/evaluation/v18" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast Calibration contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
