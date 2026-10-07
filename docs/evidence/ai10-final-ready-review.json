@@ -210,8 +210,18 @@
       "path": "docs/evidence/ai10-existing-project-overlays.json",
       "receipt_status": "passed_component",
       "sha256": "d0784ccb31b1f4acf359a5925b2f9000db768c67aedc37162cb323b20dc64998"
+    },
+    {
+      "path": "docs/evidence/ai10-ai09-5ed-main-integration.json",
+      "receipt_status": "passed_component",
+      "sha256": "a84f3e3f47c41b7c4266e6fe70588b0a410e0a316a3497c0d65208c17d0be7a6"
     }
   ],
+  "later_AI09_main_integration": {
+    "path": "docs/evidence/ai10-ai09-5ed-main-integration.json",
+    "receipt_status": "passed_component",
+    "sha256": "a84f3e3f47c41b7c4266e6fe70588b0a410e0a316a3497c0d65208c17d0be7a6"
+  },
   "model_refits": 0,
   "native_counts": {
     "anomaly": 1232,

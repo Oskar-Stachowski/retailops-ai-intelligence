@@ -1,0 +1,156 @@
+{
+  "scope": "Complete-population forecast fitting mechanism; no project training or final campaign result",
+  "stage_ready": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "final_test_opened": false,
+  "wire": "evaluation v15, separate plan/encoding/fit receipt",
+  "population": "all eligible train and early_stopping keys, no sampling",
+  "legacy_limits_and_evaluation_schema_bytes_unchanged": 48,
+  "preprocessing_fitted_on": "train only",
+  "worker_phases": [
+    "prepare",
+    "fit",
+    "reload"
+  ],
+  "worker_environment": "existing pinned TensorFlow CPU lock; installed versions checked for all families",
+  "real_native_cpu_tests": {
+    "added": 3,
+    "families": [
+      "rf",
+      "hgb",
+      "tensorflow"
+    ],
+    "required_command": "make tensorflow-check",
+    "result_pending": false,
+    "local_processes_started": false,
+    "local_available_memory_bytes": 1331183616,
+    "required_limit_plus_reserve_bytes": 2147483648,
+    "canonical_profile": false,
+    "head": "9b09660b9f9dbfc1c427199e9a1623d61e1ba0bd",
+    "ci_run": 37652743985,
+    "job": 112900689298,
+    "total_native_cpu_tests_passed": 6,
+    "native_cpu_test_seconds": 101.69,
+    "full_ci_pending": false,
+    "scope": "real fitting, MLflow tracking and fresh reload over every controlled-array eligible key; not canonical source preparation or project fitting",
+    "full_ci_conclusion": "failure",
+    "full_ci_jobs_read": 17,
+    "full_ci_jobs_success": 12,
+    "full_ci_jobs_failed": 5,
+    "infrastructure_failure": "Four jobs were never acquired after five scheduling attempts; required-result was the fifth failure. No test steps started in those four jobs; cost unknown."
+  },
+  "component_validation": {
+    "integrated_regression_passed": 124,
+    "integrated_regression_seconds": 124.34,
+    "artifact_validation_and_data_controls_passed": 22,
+    "artifact_validation_and_data_controls_seconds": 11.24,
+    "audited_supervisor_mocked_explicitly": true,
+    "complete_project_fit_verified": false
+  },
+  "retained_failed_controls": [
+    {
+      "passed": 8,
+      "failed": 1,
+      "reason": "Changed value retained missing availability metadata in the negative control; corrected to a valid available typed value"
+    },
+    {
+      "passed": 18,
+      "failed": 4,
+      "reason": "Failure test incorrectly required the completed parent export receipt to disappear; corrected to reject only failed fit receipt"
+    },
+    {
+      "scope": "package command environment",
+      "reason": "Default build interpreter lacked hatchling; corrected with the existing owned locked build interpreter"
+    },
+    {
+      "scope": "package probe",
+      "reason": "Probe used an incorrect schema archive path; existing package destination is evaluation_campaign/v15"
+    }
+  ],
+  "remaining": [
+    "Canonical full-profile capacity and completed audited development generation/export",
+    "Frozen project fitting, common scoring, fair selection, calibration and policies",
+    "Fresh final three-seed evaluation for all three use cases",
+    "Robustness, uncertainty, full resource measurements, lifecycle and cards/reports",
+    "Protected publication and exact final-main full CI"
+  ],
+  "static_checks": {
+    "ruff": "passed",
+    "format": "passed",
+    "mypy_source_files": 623,
+    "evaluation_schemas": "passed",
+    "docs": "passed"
+  },
+  "package": {
+    "built": true,
+    "module_byte_parity": 510,
+    "v15_schema_byte_parity": 3
+  },
+  "post_main_integration": {
+    "parent_final_export_head": "eb796aa44c3a24f9bc31e86b8e10ef68f8fe8183",
+    "generation_head": "4238b2fc9218410a53dbbe6b485109dae8757418",
+    "tests_passed": 174,
+    "tests_seconds": 30.59,
+    "mypy_source_files": 669,
+    "ruff_and_format": "passed",
+    "source_bundle_contract": "passed",
+    "evaluation_schemas": "passed",
+    "source_protected_main": "b7234899769119c67f27a62867c1d2153dbd6a00",
+    "source_exact_main_ci": 37651259188,
+    "source_exact_main_ci_pending": false,
+    "package": {
+      "module_byte_parity": 549,
+      "v15_schema_byte_parity": 3
+    },
+    "source_exact_main_jobs_total": 25,
+    "source_exact_main_jobs_success": 21,
+    "source_exact_main_jobs_skipped": 4
+  },
+  "shared_scoring_inputs_preparation": {
+    "shared_train_and_inference_vectors": true,
+    "encoding_refitted": false,
+    "tensorflow_target_scale_restored": true,
+    "tensorflow_heads": [
+      "mean",
+      "median"
+    ],
+    "horizons": 14,
+    "keras_actual_signature_checked_before_framework_loading": true,
+    "tests_passed": 48,
+    "tests_seconds": 25.24,
+    "mypy_source_files": 671,
+    "package_module_byte_parity": 551,
+    "new_native_signature_control_pending": false,
+    "audited_scoring_runner_implemented": false,
+    "project_fit_or_final_metrics_produced": false
+  },
+  "updated_at_utc": "2026-10-07T18:47:21.306228+00:00",
+  "accepted_signature_control": {
+    "head": "ab1229892d573a22be201f2757fba0aeb490ffaf",
+    "ci": 37659317202,
+    "jobs_read": 17,
+    "jobs_total": 17,
+    "jobs_success": 17,
+    "required_result": "success",
+    "native_cpu_job": 112922884299,
+    "native_cpu_tests_passed": 6,
+    "native_cpu_seconds": 102.64,
+    "actual_corrupted_signature_rejected": true,
+    "project_fit": false,
+    "canonical_preparation": false
+  },
+  "publication_to_main": {
+    "pr": 37,
+    "base": "main",
+    "integrates_final_export_merge": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
+    "integrates_snapshot_path_fix": "e3bc68ef6f1fff9238fe6d07b3f6feacc5edf091",
+    "targeted_tests_passed": 40,
+    "targeted_tests_seconds": 37.37,
+    "mypy_source_files": 671,
+    "ruff_format_schemas_docs": "passed",
+    "new_exact_head_ci_pending": true,
+    "project_fit_completed": false,
+    "stage_ready": false
+  }
+}

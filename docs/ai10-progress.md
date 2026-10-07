@@ -12,9 +12,12 @@ bez errors/failures/skips. Potwierdzono wszystkie sześć etapów, atomowy rollb
 56 projekcji/duplikatów, dwie strony UI i revocation. Oryginalne quality `not_ready`
 oraz development namespace pozostają zachowane. Własne tymczasowe zasoby usunięto.
 
-[AI main CI](evidence/ai10-ai-b0-main-ci.json) ma 17/17,
+[Wcześniejszy AI main CI](evidence/ai10-ai-b0-main-ci.json) ma 17/17,
 [Source baseline](evidence/ai10-source-code-main-ci.json) 30/30,
-a [nowszy scoped Source main](evidence/ai10-source-b723489-main-ci.json) 21 success / 4 celowe skipped.
+a [wcześniejszy scoped Source main](evidence/ai10-source-b723489-main-ci.json) 21 success / 4 celowe skipped.
+[Nowszy AI09 main `5ed0544`](evidence/ai10-ai09-5ed-main-integration.json)
+dołączono bez zmiany 21 odebranych komponentów native AI10. Source PR #104
+scalono jako `39d5644` po 30/30 success; CI tego main stanowi osobną bramkę.
 Końcowe dokumenty publikuje [AI #38](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/38)
 i [Source #104](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/104).
 Normalne protected merges i Required CI dokładnych wynikowych main są bramką

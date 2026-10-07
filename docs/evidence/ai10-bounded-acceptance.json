@@ -9,6 +9,11 @@
     "receipt_status": "passed",
     "sha256": "656fa453726cac0368631b9c89722042d5b80ff089974cb45ddfcc303f12e4eb"
   },
+  "AI_final_upstream_integration": {
+    "path": "docs/evidence/ai10-ai09-5ed-main-integration.json",
+    "receipt_status": "passed_component",
+    "sha256": "a84f3e3f47c41b7c4266e6fe70588b0a410e0a316a3497c0d65208c17d0be7a6"
+  },
   "AI_integrated_head_CI": {
     "path": "docs/evidence/ai10-ai-integrated-head-ci.json",
     "receipt_status": "passed",
@@ -69,6 +74,7 @@
     "receipt_status": "passed",
     "sha256": "1a70d105084886668809e03307b7d1f32ae4ad5fb71cf7c1980f549f45b1664f"
   },
+  "baseline_reference_scope": "The AI_latest_main and Source_latest_main fields retain already accepted historical CI baselines. Actual final delivery is governed by PR38/PR104 and both resulting main checks, not by a future self-referential receipt.",
   "evidence_boundary": "Composition of separately executed bounded integration lanes on exact receipt commits; preserves each qualified model lineage, not a new common scientific qualification campaign.",
   "existing_project_overlay": {
     "path": "docs/evidence/ai10-existing-project-overlays.json",
@@ -308,7 +314,7 @@
     "receipt": {
       "path": "docs/evidence/ai10-final-ready-review.json",
       "receipt_status": "functional_acceptance_passed",
-      "sha256": "5e57922fc80c666beda94234b65985cca5e5cf570d2e6be1acff340aa16e78f5"
+      "sha256": "3149ae1fb62670fda3e716e43b2d2f22ac736b6e530311d7afa548d2254d11c2"
     },
     "status": "ready_record_governed_by_normal_protected_merges_and_exact_main_Required_CI"
   },

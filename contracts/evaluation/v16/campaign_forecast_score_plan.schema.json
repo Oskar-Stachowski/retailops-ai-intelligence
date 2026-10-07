@@ -1,0 +1,207 @@
+{
+  "$defs": {
+    "CampaignGenerationResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "max_log_bytes": {
+          "default": 16777216,
+          "maximum": 16777216,
+          "minimum": 1024,
+          "title": "Max Log Bytes",
+          "type": "integer"
+        },
+        "minimum_available_memory_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Available Memory Bytes",
+          "type": "integer"
+        },
+        "minimum_free_disk_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Free Disk Bytes",
+          "type": "integer"
+        },
+        "sample_seconds": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0.01,
+          "title": "Sample Seconds",
+          "type": "number"
+        },
+        "scratch_bytes": {
+          "maximum": 137438953472,
+          "minimum": 1024,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "tree_rss_bytes": {
+          "maximum": 68719476736,
+          "minimum": 1024,
+          "title": "Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "tree_rss_bytes",
+        "scratch_bytes",
+        "minimum_free_disk_bytes",
+        "minimum_available_memory_bytes"
+      ],
+      "title": "CampaignGenerationResources",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:campaign_forecast_score_plan:16.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "batch_windows": {
+      "default": 64,
+      "maximum": 256,
+      "minimum": 1,
+      "title": "Batch Windows",
+      "type": "integer"
+    },
+    "encoding": {
+      "const": "completed_fit_train_encoding_without_refit",
+      "default": "completed_fit_train_encoding_without_refit",
+      "title": "Encoding",
+      "type": "string"
+    },
+    "export_operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Export Operation Id",
+      "type": "string"
+    },
+    "final_test_accessed": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Accessed",
+      "type": "boolean"
+    },
+    "fit_operation_ids": {
+      "additionalProperties": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+        "type": "string"
+      },
+      "propertyNames": {
+        "enum": [
+          "rf",
+          "hgb",
+          "tensorflow"
+        ]
+      },
+      "title": "Fit Operation Ids",
+      "type": "object"
+    },
+    "interval_scope": {
+      "const": "raw_empirical_baselines_only_candidates_uncalibrated",
+      "default": "raw_empirical_baselines_only_candidates_uncalibrated",
+      "title": "Interval Scope",
+      "type": "string"
+    },
+    "max_index_bytes": {
+      "default": 4294967296,
+      "maximum": 8589934592,
+      "minimum": 4096,
+      "title": "Max Index Bytes",
+      "type": "integer"
+    },
+    "max_output_bytes": {
+      "default": 8589934592,
+      "maximum": 34359738368,
+      "minimum": 1024,
+      "title": "Max Output Bytes",
+      "type": "integer"
+    },
+    "max_rows": {
+      "default": 10000000,
+      "maximum": 10000000,
+      "minimum": 1,
+      "title": "Max Rows",
+      "type": "integer"
+    },
+    "model_order": {
+      "default": [
+        "history7",
+        "history28",
+        "weekday28",
+        "rf_mean",
+        "hgb",
+        "tensorflow"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "title": "Model Order",
+      "type": "array"
+    },
+    "population": {
+      "const": "all_role_keys_with_identical_eligibility_no_sampling",
+      "default": "all_role_keys_with_identical_eligibility_no_sampling",
+      "title": "Population",
+      "type": "string"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "resources": {
+      "$ref": "#/$defs/CampaignGenerationResources"
+    },
+    "role": {
+      "enum": [
+        "tune",
+        "calibration"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Recipe Sha256",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "version": {
+      "const": "ai09-campaign-raw-forecast-score-1.0.0",
+      "default": "ai09-campaign-raw-forecast-score-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "worker_environment_lock_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Worker Environment Lock Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_recipe_sha256",
+    "export_operation_id",
+    "fit_operation_ids",
+    "role",
+    "worker_environment_lock_sha256",
+    "resources"
+  ],
+  "title": "CampaignForecastScorePlan",
+  "type": "object"
+}

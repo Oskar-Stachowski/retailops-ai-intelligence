@@ -12,7 +12,10 @@ diagnostyka pozostają historią; nie zastępują tego pełnego receipt.
 Oryginalne kwalifikacje modeli i quality V12 `not_ready` zachowano. Forecast działa
 wyłącznie w owner-approved development namespace; nie ma refitów ani produkcyjnego
 wdrożenia. [Zgodność native runtime](evidence/ai10-native-runtime-main-compatibility.json)
-wiąże odebrane commity z aktualną integracją, bez twierdzenia że całe src jest identyczne.
+wiąże odebrane commity z integracją, bez twierdzenia że całe src jest identyczne.
+[Nowszy main AI09 `5ed0544`](evidence/ai10-ai09-5ed-main-integration.json)
+zachowuje wszystkie 21 native komponentów AI10; finalny zintegrowany head wymaga
+własnego pełnego Required CI.
 [AI main `b0e2de`](evidence/ai10-ai-b0-main-ci.json) ma 17/17 success,
 [Source baseline `467f990`](evidence/ai10-source-code-main-ci.json) 30/30,
 a [Source `b723489`](evidence/ai10-source-b723489-main-ci.json) 21 success / 4 celowe skipped.
