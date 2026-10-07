@@ -4,10 +4,20 @@
     "receipt_status": "passed",
     "sha256": "8a7d684cb00b3deebfc575e69f977ab8d5066c3734ab3c95102ac65cf329426a"
   },
+  "AI_controller_fix_CI": {
+    "path": "docs/evidence/ai10-v12-controller-fix-ci.json",
+    "receipt_status": "passed",
+    "sha256": "656fa453726cac0368631b9c89722042d5b80ff089974cb45ddfcc303f12e4eb"
+  },
   "AI_integrated_head_CI": {
     "path": "docs/evidence/ai10-ai-integrated-head-ci.json",
     "receipt_status": "passed",
     "sha256": "d9c97c6ba952720b6b26747ca2359726fdd97284f4946b82943e242356614aa4"
+  },
+  "AI_latest_main_integration": {
+    "path": "docs/evidence/ai10-ai09-main-integration.json",
+    "receipt_status": "passed_component",
+    "sha256": "2d4348dc5842065903657810e8939fdebb1d23397f363ba3bc770244f08be291"
   },
   "Source_code_main_CI": {
     "path": "docs/evidence/ai10-source-code-main-ci.json",
@@ -23,6 +33,16 @@
     "path": "docs/evidence/ai10-source-final-head-ci.json",
     "receipt_status": "passed",
     "sha256": "03e825e916f7e40f766db9955042ccd09c5468b384ebc25f79566a74ab1ad292"
+  },
+  "Source_latest_main_first_failed_attempt": {
+    "path": "docs/evidence/ai10-source-b723489-main-result-failure.json",
+    "receipt_status": "failed",
+    "sha256": "ff88f595350a8d1a01c9777527fd3a71d4f3a2b166503010567992a42f1d43b0"
+  },
+  "Source_latest_main_scoped_CI": {
+    "path": "docs/evidence/ai10-source-b723489-main-ci.json",
+    "receipt_status": "passed",
+    "sha256": "b5f145448b000261b40ed1d65f414d4cdd8b3c35aef6f613d0b2b019153742d6"
   },
   "accepted_main_compatibility": {
     "path": "docs/evidence/ai10-accepted-main-campaign-repin.json",
@@ -220,6 +240,11 @@
       "source_projected": 40,
       "status": "passed"
     }
+  },
+  "native_runtime_main_compatibility": {
+    "path": "docs/evidence/ai10-native-runtime-main-compatibility.json",
+    "receipt_status": "passed",
+    "sha256": "3cb253668f5d8c5e756690c1bc2c66190b35d512cadee5edd2867fc6c36b4c9c"
   },
   "production_deployed": false,
   "publication": {

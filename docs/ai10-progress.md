@@ -14,6 +14,16 @@ a [CI main Source](evidence/ai10-source-code-main-ci.json) 30/30 success.
 AI10 zachowuje upstream CI #34, AI09 #33 oraz wszystkie własne bramki
 SQL/broker/replay, outbox i pełny v12 backup/recovery.
 
+Nowszy [Source main `b723489`](evidence/ai10-source-b723489-main-ci.json)
+ma 21 success i 4 celowe skipped zgodnie z istniejącym wykrywaniem obszarów;
+[pierwsza awaria agregatora](evidence/ai10-source-b723489-main-result-failure.json)
+jest zachowana. AI09 `16a02ae` dołączono do gałęzi publikacji:
+[74 testy zgodności importera i granic V12](evidence/ai10-ai09-main-integration.json)
+przeszły bez błędów i pominięć. [21 identycznych obiektów native runtime](evidence/ai10-native-runtime-main-compatibility.json)
+wiąże ten kod z wykonanymi odbiorami; cały katalog src nie jest identyczny.
+[CI poprawki kontrolera `adf8d1c`](evidence/ai10-v12-controller-fix-ci.json)
+ma 17/17 success. CI końcowego head po integracji pozostaje wymagane.
+
 ### Odebrane komponenty bieżącej integracji
 
 **Powtórzony stockout i anomaly na `64a4c71`:** run `37636434765` ponownie
