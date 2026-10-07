@@ -1,0 +1,139 @@
+{
+  "$defs": {
+    "JsonValue": {},
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "forecast_source_status": {
+          "const": "passed",
+          "title": "Forecast Source Status",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "curated_descriptor_sha256",
+        "business_timezone",
+        "forecast_source_status"
+      ],
+      "title": "Parent",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:physical_source_spec:11.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "batch_rows": {
+      "default": 256,
+      "maximum": 8192,
+      "minimum": 1,
+      "title": "Batch Rows",
+      "type": "integer"
+    },
+    "curated_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Curated Manifest Sha256",
+      "type": "string"
+    },
+    "execution_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Execution Authorized",
+      "type": "boolean"
+    },
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "max_parent_bytes": {
+      "default": 2147483648,
+      "maximum": 2147483648,
+      "minimum": 1024,
+      "title": "Max Parent Bytes",
+      "type": "integer"
+    },
+    "max_parent_files": {
+      "default": 10000,
+      "maximum": 10000,
+      "minimum": 2,
+      "title": "Max Parent Files",
+      "type": "integer"
+    },
+    "max_rows_per_parent": {
+      "default": 20000000,
+      "maximum": 20000000,
+      "minimum": 1,
+      "title": "Max Rows Per Parent",
+      "type": "integer"
+    },
+    "parent": {
+      "$ref": "#/$defs/Parent"
+    },
+    "resource_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Resource Qualified",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "enum": [
+        "1.0.0",
+        "1.1.0",
+        "1.2.0"
+      ],
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Snapshot Manifest Sha256",
+      "type": "string"
+    },
+    "source_parameters": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Source Parameters",
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "parent",
+    "source_parameters",
+    "snapshot_manifest_sha256",
+    "curated_manifest_sha256"
+  ],
+  "title": "PhysicalSourceSpec",
+  "type": "object"
+}

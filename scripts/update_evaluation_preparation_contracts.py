@@ -28,6 +28,12 @@ from retailops_ai.evaluation_campaign.partition_contract import (
     ForecastPartitionPolicy,
     PartitionMembership,
 )
+from retailops_ai.evaluation_campaign.physical_contract import (
+    PhysicalForecastExample,
+    PhysicalForecastManifest,
+    PhysicalForecastRecipe,
+    PhysicalSourceSpec,
+)
 from retailops_ai.evaluation_campaign.preparation import default_plan
 from retailops_ai.evaluation_campaign.source_replay_contract import (
     ForecastSourceReplayProtocol,
@@ -195,6 +201,24 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Prospective campaign contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, physical_model in (
+        ("physical_source_spec", PhysicalSourceSpec),
+        ("physical_forecast_recipe", PhysicalForecastRecipe),
+        ("physical_forecast_example", PhysicalForecastExample),
+        ("physical_forecast_manifest", PhysicalForecastManifest),
+    ):
+        schema = physical_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:11.0.0"
+        path = ROOT / "contracts/evaluation/v11" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Physical forecast contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

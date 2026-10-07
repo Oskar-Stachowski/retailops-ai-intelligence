@@ -1,7 +1,8 @@
 **AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
 i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [odbiorze 09.11](evidence/09-11-main-integration.md). Dawne katalogi
-robocze AI 09 w `/private/tmp` wymagają odtworzenia historii, przed nowymi fitami.
+robocze AI 09 w `/private/tmp` nie istnieją; 09.12 zachowuje ich opublikowaną
+historię i deklaruje utracone budżety jako niedostępne. PR #29 jest już na main.
 
 **AI 08 jest READY.** [Końcowe zamknięcie](evidence/08-28-final-ready.md)
 i [trwały receipt](evidence/08-28-final-ready.json) zapisują odbiór obu main,
@@ -67,6 +68,9 @@ kampania nadal wymagają osobnego odbioru.
 [Pełne odtworzenie źródła forecast](forecast-source-replay.md) porównuje
 całe curated z typed snapshotem po pięciu rezerwacjach dostępu. Odbiór
 scoped etykiet i integracja z treningiem pozostają kolejnymi krokami.
+[Fizyczny eksport pięciu ról](physical-forecast-export.md) odtwarza pełną
+populację cech i kwalifikuje etykiety z tych samych prywatnych rodziców,
+z zachowaniem censored/closed/purged oraz jawnego zakresu diagnostycznego.
 [Wersje obserwacji](forecast-source-versions.md) zachowują osobny czas dowodu
 kompletności i nie przenoszą jakości ostatniej obserwacji wstecz.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,
