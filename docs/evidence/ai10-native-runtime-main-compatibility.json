@@ -1,6 +1,8 @@
 {
   "AI_accepted_native_commit": "64a4c7156023da5750e5da92d465afa9205b4a1d",
   "AI_controller_fix_commit": "adf8d1cac4b28b6034d114cba7cb3de5379cc1bb",
+  "AI_current_native_controller_commit": "22de5754d1317701b881ff6265604d82e822a882",
+  "AI_current_native_execution": "live_original_full_V12_pending",
   "AI_current_unchanged_native_objects": [
     {
       "git_object_id": "f74b8a97abddfe30c44f4c0dcce51c1b64832187",
@@ -63,7 +65,7 @@
       "path": "tools/intelligence-delivery"
     },
     {
-      "git_object_id": "bf4e843f1b737001efc77106cafd0fd776ac15b8",
+      "git_object_id": "3402c0ad5a47ec8e76db74dc3a13a927f80a6307",
       "path": "scripts/check_ai10_v12_native.py"
     },
     {
@@ -87,37 +89,33 @@
       "path": "scripts/run_ai10_model_consumer.py"
     }
   ],
-  "AI_integrated_current_commit": "ca51ffed079151ffdfffcbdf06608dab61fc0fd2",
-  "AI_new_upstream_change_scope": "AI09 audited generation, planned-anomaly inventory schema validation and shared campaign implementation pin. Entire src tree is not claimed unchanged. Frozen v12 scientific evidence and native runtime objects above remain unchanged; current shared importer compatibility must pass separately.",
+  "AI_integrated_current_commit": "8400102f46a2739df7dd49a3e5d855d9254a036c",
+  "AI_new_upstream_change_scope": "AI09 final-only export, its contracts/tests and development-capacity preparation. Native model runtime, locked dependencies, consumer launchers and publishers listed above remain exact Git-object identical to live original V12 commit. This is compatibility evidence, not original full V12 acceptance.",
   "AI_new_upstream_changed_paths": [
-    ".github/workflows/ai09-generation-control.yml",
-    "contracts/evaluation/v10/prospective_campaign_journal.schema.json",
-    "contracts/evaluation/v10/prospective_campaign_protocol.schema.json",
-    "contracts/evaluation/v13/campaign_generation_plan.schema.json",
-    "contracts/evaluation/v13/campaign_generation_resources.schema.json",
-    "contracts/source_snapshot/v1_2/forecast_snapshot_manifest.schema.json",
-    "contracts/source_snapshot/v1_2/forecast_source_manifest.schema.json",
+    ".github/workflows/ai09-development-capacity.yml",
+    "contracts/evaluation/v14/campaign_final_export_plan.schema.json",
+    "contracts/evaluation/v14/campaign_final_export_receipt.schema.json",
+    "contracts/evaluation/v14/final_forecast_example.schema.json",
+    "contracts/evaluation/v14/final_forecast_manifest.schema.json",
+    "contracts/evaluation/v14/final_forecast_recipe.schema.json",
     "docs/STATUS.md",
-    "docs/ai09-audited-generation.md",
-    "docs/evidence/09-20-audited-generation-preparation.json",
-    "docs/evidence/09-22-shared-importer-integration.json",
+    "docs/ai09-development-capacity.md",
+    "docs/ai09-final-export.md",
+    "docs/evidence/09-19-cached-development-capacity-preparation.json",
+    "docs/evidence/09-21-final-export-preparation.json",
+    "docs/evidence/09-24-generation-publication.json",
+    "docs/reference/ai09-development-capacity-v1.2.json",
     "pyproject.toml",
-    "scripts/check_ai09_generation.py",
-    "scripts/check_source_bundle_contract.py",
+    "scripts/measure_ai09_development_capacity.py",
     "scripts/update_evaluation_preparation_contracts.py",
-    "src/retailops_ai/evaluation_campaign/campaign_contract.py",
     "src/retailops_ai/evaluation_campaign/campaign_export.py",
-    "src/retailops_ai/evaluation_campaign/campaign_generation.py",
-    "src/retailops_ai/evaluation_campaign/campaign_generation_contract.py",
-    "src/retailops_ai/evaluation_campaign/campaign_generation_monitor.py",
-    "src/retailops_ai/evaluation_campaign/campaign_generation_worker.py",
-    "src/retailops_ai/source_bundle/upstream.json",
-    "src/retailops_ai/source_snapshot/inventory_protocol.py",
-    "tests/test_campaign_generation.py",
-    "tests/test_campaign_generation_wire.py",
-    "tests/test_source_bundle.py"
+    "src/retailops_ai/evaluation_campaign/campaign_final_contract.py",
+    "src/retailops_ai/evaluation_campaign/campaign_final_export.py",
+    "src/retailops_ai/evaluation_campaign/final_forecast.py",
+    "tests/test_ai09_development_capacity.py",
+    "tests/test_campaign_final_export.py"
   ],
-  "AI_new_upstream_main_commit": "16a02aecbc4f9558e8222c02ad5a24d82745545b",
+  "AI_new_upstream_main_commit": "b0e2de16d608e4d4f38431035a48a589cffc2fdd",
   "AI_unchanged_objects": [
     {
       "git_object_id": "3baaaacce7c86109dfa5ddf6e584ee476417effa",
@@ -233,5 +231,5 @@
   "scope": "Exact Git objects of actual runtime, migrations, UI and consumer checks; shared private-control function AST unchanged. This is compatibility evidence, not a new common model qualification or original v12 acceptance.",
   "shared_private_control_reader_AST_sha256": "118dfc3e1d2aa87f5cf4bb9d3f48c9094c289bf7e618b2989fd941386253839f",
   "status": "passed",
-  "version": "ai10-native-runtime-main-compatibility-1.2"
+  "version": "ai10-native-runtime-main-compatibility-1.3"
 }

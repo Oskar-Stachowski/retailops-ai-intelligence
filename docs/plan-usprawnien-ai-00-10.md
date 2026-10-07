@@ -873,6 +873,24 @@ kontrole; odbiór zdalny i chroniona publikacja pozostają wymagane.
    pozostającego native i pierwszego main CI. Gdy AI09 trwa dłużej, impact
    kalendarzowy całego projektu może wynieść 0 min. To szacunek, nie pomiar.
 
+7. **Sprawdzić rzeczywisty interpreter Source przed kosztownym odbiorem.**
+   Po `uv venv` i instalacji obu przypiętych requirements uruchomić
+   `preflight_source_python` na dokładnym consumer checkout. Użyć ścieżki
+   `.venv/bin/python`, rozwiązując tylko katalog checkout, i porównać
+   `sys.prefix` z oczekiwanym Source venv; wymagać importu `pytest`.
+   Nie rozwiązywać symlinku samego interpretera: prowadzi do bazowego Pythona
+   poza venv. Regresja musi wykonać rzeczywiste procesy dla obu wariantów,
+   także gdy pytest jest dostępny dla obu. Dopiero po tej kontroli wykonać
+   pełny archive/verifier, cold probes, registry, SQL publisher i Source API/UI.
+   **Impact całego AI00–10: 0 min w poprawnym przebiegu; warunkowo do 65 min**
+   przy uniknięciu jednej podobnej późnej awarii i AI10 na ścieżce krytycznej.
+   W runie `37653954039` Source install skończył się o 16:54:49 UTC, a późna
+   awaria o 17:59:28 UTC: różnica 64 min 39 s. To granica potencjalnego kosztu
+   przyszłej awarii, bez zaliczania już poniesionego kosztu jako oszczędności.
+   Nie sumować z punktami 1/5 ani P07; gdy AI09 trwa dłużej, impact całego
+   projektu może wynieść 0 min. Poprawka i 55 testów są lokalnie odebrane;
+   nowy pełny V12 oraz chroniona publikacja pozostają wymagane.
+
 Reuse wyników semantycznego verifiera wewnątrz procesu nie wdrożono i nie
 przypisano mu impactu. Original recovery już pobiera niezależne pliki równolegle;
 nie zaliczamy tej istniejącej właściwości jako nowego przyspieszenia.
