@@ -1,0 +1,75 @@
+{
+  "scope": "Preparation of frozen forecast configuration, common covariate-only inference, honest evaluation wires and streamed numerical gates; not an audited campaign runner",
+  "wire": "evaluation v19:4 new schemas, prior60 evaluation files and legacy quality_v2 bytes unchanged",
+  "stage_ready": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "project_independent_evaluation_completed": false,
+  "project_final_test_opened": false,
+  "actual_canonical_profile_qualified": false,
+  "configuration_binding": [
+    "all preregistered Tune and Calibration triplets exactly once with common role populations",
+    "complete fit/model/preprocessing/full receipt hashes and compatible source/runtime/lock",
+    "separate selected mean and median can use different trials",
+    "fixed14-horizon calibration without new fitting or architecture selection",
+    "metadata alone grants neither journal completion nor final access"
+  ],
+  "reference": "separately selected metric functionals with the interval baseline own median; not a joint distribution, no clipping",
+  "metrics": "fixed sufficient statistics, stable sums, sorted full keys, retained failures, underpowered samples and undefined zero ratios explicit; invalid streams cannot return results",
+  "tests": {
+    "integration_passed": 130,
+    "integration_seconds": 23.9,
+    "previous_extraction_checks_passed": 24,
+    "previous_extraction_seconds": 8.01,
+    "previous_suite_passed": 76,
+    "previous_suite_seconds": 8.52,
+    "pre_guard_extension_passed": 129,
+    "pre_guard_extension_seconds": 23.25,
+    "differential_gate_equations_checked": true,
+    "fake_models_and_declared_receipt_metadata_used": true,
+    "not_full_native_project_evidence": true
+  },
+  "static_checks": {
+    "ruff": "passed",
+    "format_files": 1181,
+    "mypy_source_files": 694,
+    "contracts": "passed",
+    "docs": "passed"
+  },
+  "package": {
+    "module_byte_parity": 573,
+    "v19_schema_byte_parity": 4,
+    "prior_evaluation_files_unchanged": 60,
+    "legacy_quality_v2_bytes_unchanged": true,
+    "wheel_bytes": 1844623,
+    "wheel_sha256": "e8ac11150bb202614af993bb2d525c9d18a0cc13175fe1159f8527d75de864fa"
+  },
+  "installed_wheel_probe": {
+    "imports_and_empty_not_ready_guard": "passed",
+    "schemas": 4,
+    "tensorflow_imported": false,
+    "mlflow_imported": false,
+    "project_or_canonical_workers_started": false
+  },
+  "retained_failed_controls": [
+    {
+      "kind": "strict mypy after adding reused-fit guards",
+      "errors": 2,
+      "cause": "local variable trial and family reused across validation loops; rename selected_trial and selected_family, no behavioral or policy change"
+    },
+    {
+      "kind": "test lint",
+      "cause": "deterministic Random numeric control triggered S311; use seeded NumPy numeric generator, no scanner exception"
+    }
+  ],
+  "publication_pending": true,
+  "remaining": [
+    "audited complete-role adapters for real development and final manifests",
+    "fresh isolated per-trial inference and bounded full population aggregation",
+    "durable result/cost receipts before operation completion and read-only verification",
+    "complete critical segment inventory and paired time/series block uncertainty",
+    "actual development fits/Tune/Calibration and independent evaluation for all3 uses",
+    "selection freeze and fresh final3 seeds/four scenarios/full canonical profiles",
+    "compatible lifecycle artifacts, three cards/reports/runbooks and full origin/main acceptance"
+  ]
+}

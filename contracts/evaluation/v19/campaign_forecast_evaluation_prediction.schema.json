@@ -1,0 +1,241 @@
+{
+  "$defs": {
+    "CampaignForecastReference": {
+      "additionalProperties": false,
+      "description": "Metric references can come from different baselines; retain the band's own center.",
+      "properties": {
+        "functionals": {
+          "const": "independently_selected_metric_references_not_joint_distribution",
+          "default": "independently_selected_metric_references_not_joint_distribution",
+          "title": "Functionals",
+          "type": "string"
+        },
+        "interval": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CentralInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "interval_center": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Interval Center"
+        },
+        "mean": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mean"
+        },
+        "median": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Median"
+        }
+      },
+      "required": [
+        "mean",
+        "median",
+        "interval",
+        "interval_center"
+      ],
+      "title": "CampaignForecastReference",
+      "type": "object"
+    },
+    "CentralInterval": {
+      "additionalProperties": false,
+      "properties": {
+        "lower": {
+          "minimum": 0,
+          "title": "Lower",
+          "type": "number"
+        },
+        "upper": {
+          "minimum": 0,
+          "title": "Upper",
+          "type": "number"
+        }
+      },
+      "required": [
+        "lower",
+        "upper"
+      ],
+      "title": "CentralInterval",
+      "type": "object"
+    },
+    "FunctionalForecast": {
+      "additionalProperties": false,
+      "properties": {
+        "interval": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CentralInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mean": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mean"
+        },
+        "median": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Median"
+        }
+      },
+      "required": [
+        "median",
+        "mean",
+        "interval"
+      ],
+      "title": "FunctionalForecast",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:campaign_forecast_evaluation_prediction:19.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "business_timezone": {
+      "const": "UTC",
+      "title": "Business Timezone",
+      "type": "string"
+    },
+    "candidate": {
+      "$ref": "#/$defs/FunctionalForecast"
+    },
+    "channel": {
+      "enum": [
+        "store",
+        "online"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "cutoff_policy": {
+      "const": "end_of_day_second_v1",
+      "title": "Cutoff Policy",
+      "type": "string"
+    },
+    "eligible": {
+      "title": "Eligible",
+      "type": "boolean"
+    },
+    "example_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Example Sha256",
+      "type": "string"
+    },
+    "exclusion_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Exclusion Reasons",
+      "type": "array"
+    },
+    "forecast_origin": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Forecast Origin",
+      "type": "string"
+    },
+    "frozen_configuration_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Frozen Configuration Sha256",
+      "type": "string"
+    },
+    "horizon_days": {
+      "maximum": 14,
+      "minimum": 1,
+      "title": "Horizon Days",
+      "type": "integer"
+    },
+    "product_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "reference": {
+      "$ref": "#/$defs/CampaignForecastReference"
+    },
+    "role": {
+      "enum": [
+        "development_evaluation",
+        "final_test"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "selling_location_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Selling Location Id",
+      "type": "string"
+    },
+    "target_date": {
+      "format": "date",
+      "title": "Target Date",
+      "type": "string"
+    }
+  },
+  "required": [
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "forecast_origin",
+    "business_timezone",
+    "cutoff_policy",
+    "target_date",
+    "horizon_days",
+    "role",
+    "example_sha256",
+    "frozen_configuration_sha256",
+    "eligible",
+    "exclusion_reasons",
+    "candidate",
+    "reference"
+  ],
+  "title": "CampaignForecastEvaluationPrediction",
+  "type": "object"
+}

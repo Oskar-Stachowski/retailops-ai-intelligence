@@ -14,6 +14,12 @@ from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignProtocol,
     SelectionFreeze,
 )
+from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
+    CampaignForecastEvaluationPlan,
+    CampaignForecastEvaluationPrediction,
+    CampaignForecastFrozenConfiguration,
+    CampaignForecastTrialPrediction,
+)
 from retailops_ai.evaluation_campaign.campaign_export_contract import (
     CampaignDevelopmentExportPlan,
     CampaignDevelopmentExportReceipt,
@@ -375,6 +381,24 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Campaign forecast Calibration contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, evaluation_model in (
+        ("frozen_forecast_configuration", CampaignForecastFrozenConfiguration),
+        ("campaign_forecast_evaluation_plan", CampaignForecastEvaluationPlan),
+        ("campaign_forecast_trial_prediction", CampaignForecastTrialPrediction),
+        ("campaign_forecast_evaluation_prediction", CampaignForecastEvaluationPrediction),
+    ):
+        schema = evaluation_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:19.0.0"
+        path = ROOT / "contracts/evaluation/v19" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast evaluation contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
