@@ -43,6 +43,14 @@ pre-integration regression passed 898 cases, with one AI10-only SQL drill
 explicitly skipped. Current `ci-checks`, types, contract pins, golden 50/50
 (36/36 critical), and direct wheel execution with sockets blocked all passed.
 
+The first emitter head `b91a15f` failed two remote persistence jobs during image
+startup, before SQL acceptance. Reproducing the API image's exact `COPY` inputs
+without Docker exposed a missing forced include for the new Source suggestion
+contracts. The image now copies that directory. A regression builds the wheel
+from the real Dockerfile inputs and checks every Python module, the suggestion
+contract and AI09 v14 files. Application code and published candidates retain
+their exact bytes; the corrected head requires its own Required CI.
+
 Open acceptance: independent question labels and native review policy, current
 Source/model publication, Source consumer/UI delivery, operational observations
 and AWS-backed LLM/RAG quality. No neighboring worktree, shared service, model
