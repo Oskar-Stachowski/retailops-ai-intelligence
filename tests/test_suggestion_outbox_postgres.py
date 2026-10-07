@@ -18,7 +18,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from test_assistant import headers, setup
 
 from retailops_ai.api.app import create_app
-from retailops_ai.assistant.contracts import PersistedSuggestion
+from retailops_ai.assistant.contracts import AssistantAnswer, AssistantRun, PersistedSuggestion
 from retailops_ai.config import Settings
 from retailops_ai.intelligence_events.suggestion_contracts import (
     RecommendationGenerated,
@@ -451,3 +451,167 @@ def test_outbox_rejects_mutation_premature_expiry_and_deletion(database, tmp_pat
             {"id": UUID(answer["trace_id"])},
         )
     assert stored(database[1], answer)["status"] == "pending"
+
+
+def test_full_capacity_rejects_new_event_but_keeps_identical_retry(database, tmp_path):
+    """Exercise the real SQL bound, without admission/load or broker claims.
+
+    Validated copies of one HTTP result create fixture origins through the
+    required running -> answer -> succeeded SQL transitions. All copied origins
+    and queued events are rolled back; database guards remain enabled.
+    """
+    from retailops_ai.intelligence_events.suggestion_outbox import CAPACITY, MAINTAIN, PURGE
+
+    answer = query(database, tmp_path, enabled=False)
+    trace = UUID(answer["trace_id"])
+    counts = text("""SELECT
+      (SELECT count(*) FROM ai.assistant_runs),
+      (SELECT count(*) FROM ai.assistant_answers),
+      (SELECT count(*) FROM ai.assistant_suggestions),
+      (SELECT count(*) FROM ai.assistant_suggestion_outbox)""")
+    with database[1].connect() as connection:
+        baseline = connection.execute(counts).one()
+        origin = (
+            connection.execute(
+                text("SELECT * FROM ai.assistant_runs WHERE trace_id=:id"), {"id": trace}
+            )
+            .mappings()
+            .one()
+        )
+        candidate = connection.scalar(
+            text("SELECT record FROM ai.assistant_suggestions WHERE trace_id=:id"),
+            {"id": trace},
+        )
+
+    async def acceptance():
+        engine = create_async_engine(database[0], hide_parameters=True)
+        try:
+            async with engine.connect() as connection:
+                transaction = await connection.begin()
+                try:
+                    await connection.execute(text(MAINTAIN), {"env": "test"})
+                    await connection.execute(text(PURGE), {"env": "test"})
+
+                    async def count():
+                        return await connection.scalar(
+                            text(
+                                "SELECT count(*) FROM ai.assistant_suggestion_outbox "
+                                "WHERE environment='test'"
+                            )
+                        )
+
+                    async def fixture_origin():
+                        new_trace = uuid4()
+                        new_answer = uuid5(new_trace, "answer")
+                        recommendation = uuid5(new_trace, candidate["candidate_id"])
+                        raw = dict(
+                            candidate,
+                            trace_id=str(new_trace),
+                            answer_id=str(new_answer),
+                            recommendation_id=str(recommendation),
+                        )
+                        suggestion = PersistedSuggestion.model_validate_json(json.dumps(raw))
+                        raw = dict(answer, trace_id=str(new_trace), answer_id=str(new_answer))
+                        raw["recommended_actions"] = [
+                            dict(action, recommendation_id=str(recommendation))
+                            for action in raw["recommended_actions"]
+                        ]
+                        copied_answer = AssistantAnswer.model_validate_json(json.dumps(raw))
+                        completed = AssistantRun.model_validate_json(
+                            json.dumps(
+                                dict(
+                                    origin["record"],
+                                    trace_id=str(new_trace),
+                                    answer_id=str(new_answer),
+                                )
+                            )
+                        )
+                        running = AssistantRun.model_validate_json(
+                            json.dumps(
+                                dict(
+                                    completed.model_dump(mode="json"),
+                                    status="running",
+                                    answer_id=None,
+                                    outcome=None,
+                                    completed_at=None,
+                                )
+                            )
+                        )
+                        await connection.execute(
+                            text("""INSERT INTO ai.assistant_runs
+                          (trace_id,correlation_id,environment,owner_id,scope,access_context,
+                           request_sha256,claim,requested_at,lease_until,retain_until,
+                           reserved_tokens,reserved_cost,status,record)
+                          SELECT :trace,:correlation,environment,owner_id,scope,access_context,
+                           request_sha256,:claim,requested_at,lease_until,retain_until,
+                           reserved_tokens,reserved_cost,'running',CAST(:record AS jsonb)
+                          FROM ai.assistant_runs WHERE trace_id=:original"""),
+                            dict(
+                                trace=new_trace,
+                                correlation=uuid4(),
+                                claim=uuid4(),
+                                original=trace,
+                                record=running.model_dump_json(),
+                            ),
+                        )
+                        await connection.execute(
+                            text("""INSERT INTO ai.assistant_answers
+                          (answer_id,trace_id,record) VALUES(:answer,:trace,CAST(:record AS jsonb))"""),
+                            dict(
+                                answer=new_answer,
+                                trace=new_trace,
+                                record=copied_answer.model_dump_json(),
+                            ),
+                        )
+                        await connection.execute(
+                            text("""INSERT INTO ai.assistant_suggestions
+                          (recommendation_id,answer_id,trace_id,expires_at,record)
+                          VALUES(:id,:answer,:trace,:expires,CAST(:record AS jsonb))"""),
+                            dict(
+                                id=recommendation,
+                                answer=new_answer,
+                                trace=new_trace,
+                                expires=suggestion.expires_at,
+                                record=suggestion.model_dump_json(),
+                            ),
+                        )
+                        await connection.execute(
+                            text("""UPDATE ai.assistant_runs SET
+                          status='succeeded',claim=NULL,record=CAST(:record AS jsonb)
+                          WHERE trace_id=:trace"""),
+                            dict(
+                                trace=new_trace,
+                                record=completed.model_dump_json(),
+                            ),
+                        )
+                        return suggestion
+
+                    initial = await count()
+                    assert initial < CAPACITY
+                    last = None
+                    for _ in range(CAPACITY - initial):
+                        last = await fixture_origin()
+                        assert (
+                            await enqueue_suggestions(connection, [last], environment="test") == 1
+                        )
+                    assert last is not None
+                    assert await count() == CAPACITY
+                    assert await enqueue_suggestions(connection, [last], environment="test") == 1
+                    assert await count() == CAPACITY
+                    with pytest.raises(ValueError, match="identity_collision"):
+                        async with connection.begin_nested():
+                            altered = last.model_copy(update={"summary": "Full-queue collision"})
+                            await enqueue_suggestions(connection, [altered], environment="test")
+                    with pytest.raises(DBAPIError, match="origin_or_capacity"):
+                        async with connection.begin_nested():
+                            overflow = await fixture_origin()
+                            await enqueue_suggestions(connection, [overflow], environment="test")
+                    assert await count() == CAPACITY
+                finally:
+                    await transaction.rollback()
+        finally:
+            await engine.dispose()
+
+    asyncio.run(acceptance())
+    with database[1].connect() as connection:
+        assert connection.execute(counts).one() == baseline

@@ -1142,3 +1142,20 @@ wymaga osobnego odbioru CI.
 Stan nadal **in_progress**, PR32 pozostaje draft. Faktyczne dostarczenie do
 Source/UI, odbiór natywnej polityki, etykiety oraz AWS/LLM pozostają otwarte.
 Nie uruchamiano brokera, AWS ani usług AI10 i nie zmieniano sąsiednich sesji.
+
+## 2026-10-07 — AI12: rzeczywisty limit outboxa
+
+Rozszerzony odbiór na prywatnym PostgreSQL przechodzi **20/20 przypadków**.
+Nowy test wypełnia outbox do 1000 rekordów, odrzuca rekord 1001, zachowuje
+idempotencję przy pełnej kolejce i blokuje konflikt treści pod tym samym ID.
+Wycofanie transakcji przywraca liczby rekordów wszystkich czterech tabel;
+nie wyłączano SQL guards. Jest to kwalifikacja limitu SQL, a nie HTTP load test.
+
+[Odbiór](evidence/12-suggestion-capacity.md) zachowuje historyczne receipts
+i przypięcia. Kod aplikacji, 95 opublikowanych plików agenta, kontrakty oraz
+locki pozostają identyczne. Head aplikacji `e671d73` zakończył
+[Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37676309071)
+**17/17 success**, w tym oba joby persistence. Lokalnie przeszły ci-checks,
+golden i kontrola sekretów; nowy head testów wymaga własnego zdalnego CI. Prywatny klaster jest
+zatrzymany. AI12 pozostaje **in_progress**, PR32 jest draft; zewnętrzne bramki
+Source/UI, etykiet/polityki, bieżących danych, obserwacji i AWS pozostają otwarte.
