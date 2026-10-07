@@ -1,0 +1,83 @@
+{
+  "scope": "Failed actual second canonical ai-dev resource diagnostic, not a project campaign attempt",
+  "workflow_run": 37613368332,
+  "workflow_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37613368332",
+  "control_commit": "d88d4a2b7615d826f61a8a2fb807f015d73e2b44",
+  "producer_commit": "1de462729012a1bad458a8da4ad317ec22dbc5b8",
+  "artifact_id": 11482135933,
+  "artifact_sha256": "2e85d4e2ee4c40e284216124ac68b7598ca34bfb3982497de042150c2a08ccde",
+  "resource_receipt_sha256": "2b27f6a751408c76c07c4c76392430d6ad0abf1852c0b5b4e5d0aafc6209befc",
+  "plan_sha256": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee",
+  "artifact_plan_sha256": "3cd1853fa6ac32363b06f19184358a8e48b0a1a759c737a1b1d5367afd8d61db",
+  "previous_run": 37611605538,
+  "previous_failure_preserved": true,
+  "generation": {
+    "days": 365,
+    "end_date": "2026-07-31",
+    "forecast_plan_days": 14,
+    "max_daily_rows": 182500,
+    "products": 100,
+    "profile": "ai-dev",
+    "seed": 42,
+    "start_date": "2025-08-01",
+    "stores": 5,
+    "warehouses": 3
+  },
+  "preflight": {
+    "available_memory": 15349645312,
+    "disk_free": 90837176320
+  },
+  "actual_receipt": {
+    "budgets": {
+      "minimum_available_memory_bytes": 1073741824,
+      "minimum_free_disk_bytes": 6442450944,
+      "sample_seconds": 0.2,
+      "scratch_bytes": 8589934592,
+      "tree_rss_bytes": 8589934592,
+      "wall_seconds": 3600
+    },
+    "canonical_ai_training_qualified": false,
+    "completed_phases": 0,
+    "control_commit": "d88d4a2b7615d826f61a8a2fb807f015d73e2b44",
+    "failed_outputs_retained": true,
+    "final_generation_attempted": false,
+    "final_test_opened": false,
+    "new_project_fits": 0,
+    "phases": [
+      {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": -9,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 8043921408,
+        "minimum_free_disk_bytes": 90829524992,
+        "phase": "generation",
+        "reason": "wall_limit",
+        "sample_seconds": 0.2,
+        "sampled_peak_scratch_allocated_bytes": 8192,
+        "sampled_peak_scratch_logical_bytes": 6513,
+        "sampled_tree_peak_rss_bytes": 7679963136,
+        "sampled_worker_cpu_seconds": 3599.5400000000004,
+        "samples": 17725,
+        "status": "failed",
+        "wall_seconds": 3600.374405463
+      }
+    ],
+    "plan_sha256": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee",
+    "producer_commit": "1de462729012a1bad458a8da4ad317ec22dbc5b8",
+    "project_journal_initialized": false,
+    "quality_qualified": false,
+    "reason": "wall_limit",
+    "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+    "stage_ready": false,
+    "status": "failed",
+    "wall_seconds": 3600.552000397
+  },
+  "interpretation": {
+    "full_generation_completed": false,
+    "later_phases_started": false,
+    "tree_rss_limit_exceeded": false,
+    "completed_profile_peak_known": false,
+    "automatic_retry_performed": false,
+    "next_step": "Measure a separate prospective revision on a validated optimized producer; retain both failed diagnostics and unchanged canonical dimensions, campaign budgets and quality gates."
+  }
+}

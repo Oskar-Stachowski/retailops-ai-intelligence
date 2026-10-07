@@ -1,0 +1,60 @@
+{
+  "version": "ai09-development-capacity-probe-1.1.0",
+  "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+  "producer_commit": "1de462729012a1bad458a8da4ad317ec22dbc5b8",
+  "producer_lock_sha256": "f55452e6f30020829f87d8c040440e7b589fd0f431e84c082aff87a9fe8b35f4",
+  "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+  "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "generation": {
+    "profile": "ai-dev",
+    "seed": 42,
+    "days": 365,
+    "products": 100,
+    "stores": 5,
+    "warehouses": 3,
+    "start_date": "2025-08-01",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 182500,
+    "forecast_plan_days": 14
+  },
+  "budgets": {
+    "tree_rss_bytes": 8589934592,
+    "scratch_bytes": 8589934592,
+    "wall_seconds": 3600,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "parent_limits": {
+    "max_bytes": 2147483648,
+    "max_files": 10000,
+    "max_rows": 20000000,
+    "batch_rows": 256
+  },
+  "expected_snapshot_schema_version": "1.1.0",
+  "snapshot": {
+    "include_truth": false,
+    "chunk_rows": 256,
+    "partition_by_day": false,
+    "required_use_cases": [
+      "forecast_source",
+      "inventory_source"
+    ]
+  },
+  "project_campaign_authorized": false,
+  "model_fit_authorized": false,
+  "final_generation_authorized": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "previous_attempt": {
+    "workflow_run": 37611605538,
+    "control_commit": "cef4f0816afe6fb3ce8504ed02f955973db1f85a",
+    "artifact_sha256": "b04e4f3042799edd773a1872c773f00560df5896b418e4cb0a8b99f326c54b57",
+    "resource_receipt_sha256": "43f442ede470bf1bbafc2164809d1d76c1651f34eef1b4931b247bdd109e5187",
+    "plan_sha256": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9",
+    "status": "failed_tree_rss_limit",
+    "wall_seconds": 127.87471243200002,
+    "completed_phases": 0
+  },
+  "revision_reason": "Separate prospective resource diagnostic:4GiB failed during generation; prior runner preflight available15532302336B supports8GiB tree plus1GiB reserve. Canonical dimensions, producer, dates, parent limits and all quality/campaign prohibitions unchanged.8GiB is an attempt ceiling, not measured complete-profile qualification."
+}
