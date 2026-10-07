@@ -1,0 +1,223 @@
+{
+  "aws_executed": false,
+  "candidate_family": "native-offline.v1",
+  "ci_checks": {
+    "compose_config_only": true,
+    "log_sha256": "d1d59e358a5f6f2507009bc666b5a616bee7b91399bb6e4ea1dce083c6390778",
+    "status": "passed"
+  },
+  "ci_collection": {
+    "cases": 4777,
+    "collection_only": true,
+    "every_test_exactly_once": true,
+    "files": 215,
+    "sha256": "30fcc9f78f18274c7a60b1a25594008277891b6aaced0cb1c45be430d747032f",
+    "shards": 4
+  },
+  "code_sha256": "a668aa296d831a8853f065e1192b1eaac8379c8287a4d80157ba865de2ad8b50",
+  "current_owner_regression": {
+    "log_sha256": "207bd2f3b1327c7e3c67f3c47e9aad0950119ad3f2aa564f5d56dc7e35b9f1c5",
+    "passed": 124
+  },
+  "evaluation_release_id": "agent-evaluation-release-sha256-49f336e0014812f0c481850217fd031517246fd48e39cd1d9de8a1934afd9f97",
+  "failure_dispositions": [
+    "Pre-merge Source tests hit sandbox loopback restrictions and pytest entrypoint imports; all 14 passed with python -m pytest and owned loopback access, then again in the current 124-case suite.",
+    "Private PostgreSQL inherited a non-UTC timezone; both owned databases use UTC and runtime readiness now rejects non-UTC sessions.",
+    "Offline SQL retrieval used a default configuration instead of the exact graph pin; it now uses the graph retrieval configuration.",
+    "Old test fixture parents were invalidated by the new main Source contract; they were regenerated and fully verified."
+  ],
+  "final_ci_contract_log_sha256": "739f9331c3436002fd9a5b169b7710322774c810abaf71302eaf2e19f0b053b3",
+  "graph_code_sha256": "eb2cdbbdc9c3571f4005de39247dd8f7b1a86510339a226dec68121305f9bef8",
+  "limitations": [
+    "Fake chat and fake vectors qualify integration mechanics, not LLM or semantic retrieval quality.",
+    "Expired July Source assignments reject present forecast/risk HTTP horizons; canonical SQL checks cover missing outputs only.",
+    "Positive current Source/model publication remains outside this fixture acceptance.",
+    "Actual consumer heartbeat, Kafka lag, AI10 delivery and AWS qualification remain open."
+  ],
+  "main": "16a02aecbc4f9558e8222c02ad5a24d82745545b",
+  "main_integration_commit": "67c9d4e",
+  "model_refits": 0,
+  "native_review_policy": "proposed_independent_acceptance_pending",
+  "neighbor_worktrees_modified": false,
+  "preservation": {
+    "canonical_golden_unchanged": true,
+    "locks_preserved": [
+      "uv.lock",
+      "environments/tensorflow/uv.lock",
+      "environments/anomaly/qualification.uv.lock",
+      "tools/intelligence-delivery/qualification.uv.lock",
+      "tools/intelligence-delivery/qualification.pyproject.toml"
+    ],
+    "published_agent_files": 71,
+    "published_base": "3d4fe92f79d9a6cc461f0b869705466f8858d7a5",
+    "shared_campaign_modules_exact_current_main": 83,
+    "source_owner_exact_current_main": true
+  },
+  "prior_pre_merge_regressions": [
+    {
+      "log_sha256": "703ecf86f588e7b9ee332a8ff948dc0c717df18b35679ee278a755dd8d812354",
+      "passed": 399,
+      "scope": "agent, graph and Assistant"
+    },
+    {
+      "log_sha256": "b24e744569d33a505932c24202a160825b9056436845fe3f3164be5a71ad0a73",
+      "passed": 158,
+      "scope": "forecast partition, outcome and journal"
+    },
+    {
+      "log_sha256": "d14c4cf31539d6a684e332159c72b4e23a90e5e532a58ca476a371bd6f217e86",
+      "passed": 248,
+      "scope": "native adapters and document runtime; 14 Source harness failures separately corrected"
+    }
+  ],
+  "prior_published_ci": {
+    "cause": "Complete installed-module pin exceeded the former 64 KiB partition envelope.",
+    "fix": "128 KiB finite envelope used by both preparation and verification; all module pins retained.",
+    "head": "3d4fe92f79d9a6cc461f0b869705466f8858d7a5",
+    "jobs_success": 15,
+    "jobs_total": 17,
+    "result": "failure",
+    "run": 37650594110
+  },
+  "question_labels": "proposed_independent_review_pending",
+  "recorded_date": "2026-10-07",
+  "remote_ci": "pending_new_published_head",
+  "secrets": {
+    "history": "passed",
+    "history_log_sha256": "0a40bd64f2b0e7ccbf8873bbc53af9152cc52ae3bc965524947feb1ed99b06c7",
+    "tree": "passed",
+    "tree_log_sha256": "c7775e50d2671178a8b0bbd5ed49e23158cfd0b6a34c683f0ef93bda3a54825b"
+  },
+  "shared_services_started": false,
+  "source_integration": {
+    "additional_packages": [
+      "certifi",
+      "charset-normalizer",
+      "distro",
+      "httpcore",
+      "httpx",
+      "jsonpatch",
+      "jsonpointer",
+      "langchain-core",
+      "langchain-protocol",
+      "langgraph",
+      "langgraph-checkpoint",
+      "langgraph-prebuilt",
+      "langgraph-sdk",
+      "langsmith",
+      "orjson",
+      "ormsgpack",
+      "requests",
+      "requests-toolbelt",
+      "sniffio",
+      "tenacity",
+      "uuid-utils",
+      "websockets",
+      "xxhash",
+      "zstandard"
+    ],
+    "existing_dependency_versions_unchanged": true,
+    "integration_campaign_pin_sha256": "9c9ec5212d640ad10e75e222300b48c0f97887861b6741357fdd443c382099f5",
+    "integration_dependency_lock_sha256": "a9eed66c2fe18a55cdcb639e8c3dcd74d2e3f66f1a4d45e64ba84a364c3b1933",
+    "owner_dependency_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "owner_main": "16a02aecbc4f9558e8222c02ad5a24d82745545b",
+    "owner_model_code_unchanged": true,
+    "owner_pin_sha256": "8420886f75c46c97d991f9f2c89a35ace4209ec14d0dedf06f69d7da7c860efc",
+    "scope": "Current assistant integration guard only; original model quality and owner acceptance are unchanged.",
+    "version": "ai12-source-bundle-integration-1.0"
+  },
+  "sql_http_acceptance": {
+    "application_code_sha256": "a668aa296d831a8853f065e1192b1eaac8379c8287a4d80157ba865de2ad8b50",
+    "authorized_trace_restart": "passed",
+    "aws_executed": false,
+    "canonical_forecast_and_stockout_sql": "missing_outputs_preserved",
+    "chat_provider": "fake",
+    "curated_dataset_id": "curated-sha256-7253251d1a4666819b6f25dadfb10530cf8ce1b71d4091593721b2fbad02967e",
+    "deadline_seconds": 45.0,
+    "embedding_provider": "fake",
+    "http_rejected_expired_source_horizons": [
+      "forecast",
+      "risk"
+    ],
+    "http_succeeded_intents": [
+      "sales",
+      "inventory",
+      "anomalies",
+      "operations",
+      "model",
+      "documentation"
+    ],
+    "index_generation_drift_rejected": true,
+    "native_and_knowledge_trace_revocation": "passed_after_policy_restart",
+    "native_read_adapters": 7,
+    "persisted_answers": 6,
+    "persisted_operations_review_suggestions": 1,
+    "positive_model_publication": "not_qualified_by_this_run",
+    "producer_write_denied": true,
+    "query_duration_seconds": [
+      0.4846336250047898,
+      0.42592766700545326,
+      0.0009109590027946979,
+      0.0011833750031655654,
+      0.399206874993979,
+      0.4115587910055183,
+      0.40105333300016355,
+      0.4417895420046989
+    ],
+    "semantic_quality": "not_evaluated_fake_vectors",
+    "source_dataset_id": "source-sha256-be2db97edbb94dfc52d220cdb49c8de7228027eda927a25d982524a875435a09",
+    "source_fixture": "full-raw-dq-v2/physical + day-coverage-v1/physical",
+    "status": "passed",
+    "tools": [
+      "get_demand_forecast",
+      "get_detected_anomalies",
+      "get_inventory_status",
+      "get_live_operations",
+      "get_model_status",
+      "get_sales_summary",
+      "get_stockout_risk",
+      "search_knowledge"
+    ],
+    "utc_readiness_rejection": true
+  },
+  "sql_log_sha256": "e7cfbf7a3d3da4cd0cf1edc50a2783cbba3272e6d711c22e18b9820da227823a",
+  "stage": "AI12",
+  "stage_status": "in_progress",
+  "status": "passed_local_integration_mechanics",
+  "version": "ai12-native-offline-acceptance-1.0",
+  "wheel": {
+    "network_blocked_runtime": {
+      "aws_executed": false,
+      "case_pass": {
+        "passed": 50,
+        "total": 50,
+        "value": 1.0
+      },
+      "code_sha256": "a668aa296d831a8853f065e1192b1eaac8379c8287a4d80157ba865de2ad8b50",
+      "critical_cases": {
+        "passed": 36,
+        "total": 36,
+        "value": 1.0
+      },
+      "native_tool_module_files": [
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/assistant/native_runtime.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/offline_policy_chat.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_inventory_tool.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_read_tools.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_stockout_tool.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_anomaly_tool.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_operations_tool.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_model_status_tool.py",
+        "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/adapters/native_assistant_tools.py"
+      ],
+      "network_connections_disallowed": true,
+      "package_file": "/private/tmp/retailops-ai12-resume/dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl/retailops_ai/__init__.py",
+      "producer_imports_available": false,
+      "provider": "fake",
+      "status": "passed"
+    },
+    "python_modules_equal_to_checkout": 590,
+    "runtime_locks_equal_to_checkout": 2,
+    "sha256": "e10249647f1fa1086030d5624684b98c5c21b3aa84fe1bff1f8c14a5ea425527"
+  }
+}

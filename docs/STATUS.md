@@ -1078,3 +1078,28 @@ niezmienione. Nie uruchamiano AWS, treningu, pełnego eksportu ani wspólnych
 usług. Stan nadal **in_progress**; PR32 pozostaje draft. Pełna kwalifikacja
 runtime/LLM, obserwacje heartbeat, natywna polityka sugestii i przekazanie
 AI10 oraz odbiór etykiet pytań pozostają otwarte.
+
+## 2026-10-07 — AI12: lokalna integracja bez AI10 i AWS
+
+Profil `assistant-native-offline-v1` podłącza osiem adapterów do API i trwałego
+store Assistant. Chat i wektory są jawnymi atrapami w `APP_ENV=test`; siedem
+adapterów danych wykonuje natywne odczyty. Konfiguracja wiąże zweryfikowane
+Source/Curated/DQ/coverage, graf, scope i aktywną generację indeksu. Readiness
+sprawdza oba połączenia SQL, UTC oraz dokładny pin indeksu. Uprawnienia natywnych
+źródeł i knowledge są zachowane także w trwałym trace.
+
+Main `16a02ae` scalono wyłącznie w `ai/12-resume`, zachowując nowe przypięcia
+właściciela Source z AI09. Poprzednie opublikowane rodziny kandydatów pozostają
+niezmienione; aktywna kwalifikacja używa `.native-offline.v1`. Nowa polityka
+review stockout zachowuje origin scoringu i osobny czas odczytu z TTL 300 s.
+Polityka oraz pakiet 26 pytań nadal są **proposed** i wymagają niezależnego odbioru.
+
+Poprzedni Required CI headu `3d4fe92` miał 15/17 zielonych jobów; shard prognoz
+przekroczył dawny limit 64 KiB kompletnego manifestu modułów. Limit przygotowania
+i weryfikacji zwiększono do 128 KiB, zachowując wszystkie przypięcia. Bieżący
+checkpoint wymaga własnego Required CI. Lokalny odbiór i ograniczenia opisują
+[dowody](evidence/12-native-offline.md) i [konfiguracja](assistant-native-offline.md).
+
+Stan AI12 pozostaje **in_progress**, PR32 jest draft. Pełne dane bieżące i dodatnia
+publikacja modeli, niezależne etykiety/polityka, runtime Sonnet/Titan, obserwacje
+operacyjne i przekazanie AI10 pozostają otwarte. Sąsiednich sesji nie zmieniano.

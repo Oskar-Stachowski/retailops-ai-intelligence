@@ -358,12 +358,41 @@ def test_all_eight_native_adapters_http_sql_persistence_revocation_and_index_dri
                 continue
             assert response.status_code == 200 and response.json() == trace
         # Backend checks the frozen active generation before serving any request.
+        # A raw pointer edit is itself rejected by the SQL lifecycle guard.
         with engine.begin() as conn:
-            conn.execute(
-                text(
-                    "UPDATE ai.rag_active_indexes SET generation=generation+1 WHERE environment='test' AND lane='offline_test'"
+            with pytest.raises(DBAPIError, match="rag_pointer_generation_mismatch"):
+                conn.execute(
+                    text(
+                        "UPDATE ai.rag_active_indexes SET generation=generation+1 WHERE environment='test' AND lane='offline_test'"
+                    )
                 )
-            )
+        assert asyncio.run(client.app.state.assistant_backend.check())
+        # Activate another fully validated test index through the audited writer.
+        next_embeddings = type(embedding_config).model_validate_json(
+            embedding_config.model_copy(
+                update={"dimension": 16 if embedding_config.dimension != 16 else 8}
+            ).model_dump_json()
+        )
+        next_candidate = build_index(candidate.chunks, next_embeddings)
+        store_candidate(engine, next_candidate)
+        qualify_index(
+            engine,
+            next_candidate.manifest.index_id,
+            "test",
+            "offline_test",
+            approval(next_candidate),
+            validate_candidate(next_candidate),
+        )
+        change = SwitchRequest.model_validate_json(
+            activation.model_copy(
+                update={
+                    "target_index_id": next_candidate.manifest.index_id,
+                    "expected_generation": pin.generation,
+                    "request_id": "rag-change-" + secrets.token_hex(16),
+                }
+            ).model_dump_json()
+        )
+        assert switch_index(engine, change).pin.generation == pin.generation + 1
         assert not asyncio.run(client.app.state.assistant_backend.check())
         assert client.get("/ready").status_code == 503
     report_path = os.getenv("AI12_NATIVE_REPORT")

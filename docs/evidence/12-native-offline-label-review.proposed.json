@@ -4,14 +4,14 @@
   "independent_review_complete": false,
   "production_quality_accepted": false,
   "aws_executed": false,
-  "code_sha256": "380aa49788d42ca02cc6526e507fbbbc4edf9b134b10e8b936d76e4b8da9c944",
+  "code_sha256": "a668aa296d831a8853f065e1192b1eaac8379c8287a4d80157ba865de2ad8b50",
   "graph_config_id": "agent-graph-config-sha256-f7c13ce649f01aabc3baf267f97d2a5a8882e0d41b982a68d8f590a50cf9ed30",
   "routes_file": "agent/question-routes.native-offline.proposed.v1.json",
   "review_scope": "Semantic relevance, truthful absence/freshness/provenance and human-only actions; approval must be independent of the scripted renderer.",
   "cases": [
     {
       "case_id": "native-review-1",
-      "question": "Jaka jest zaobserwowana sprzedaż w wybranym okresie?",
+      "question": "Jaka jest zaobserwowana sprzeda\u017c w wybranym okresie?",
       "intent": "sales",
       "review_state": "proposed",
       "criteria": [
@@ -31,7 +31,7 @@
     },
     {
       "case_id": "native-review-3",
-      "question": "Jak sprzedaż zmieniła się względem poprzedniego okresu?",
+      "question": "Jak sprzeda\u017c zmieni\u0142a si\u0119 wzgl\u0119dem poprzedniego okresu?",
       "intent": "sales_comparison",
       "review_state": "proposed",
       "criteria": [
@@ -51,7 +51,7 @@
     },
     {
       "case_id": "native-review-5",
-      "question": "Jaki jest stan zapasu dla wybranych produktów?",
+      "question": "Jaki jest stan zapasu dla wybranych produkt\u00f3w?",
       "intent": "inventory",
       "review_state": "proposed",
       "criteria": [
@@ -133,7 +133,7 @@
     },
     {
       "case_id": "native-review-13",
-      "question": "Jaka jest świeżość danych operacyjnych?",
+      "question": "Jaka jest \u015bwie\u017co\u015b\u0107 danych operacyjnych?",
       "intent": "operations",
       "review_state": "proposed",
       "criteria": [
@@ -175,7 +175,7 @@
     },
     {
       "case_id": "native-review-17",
-      "question": "Jakie dane sprzedaży, zapasu i anomalii wymagają przeglądu?",
+      "question": "Jakie dane sprzeda\u017cy, zapasu i anomalii wymagaj\u0105 przegl\u0105du?",
       "intent": "investigation",
       "review_state": "proposed",
       "criteria": [
@@ -195,7 +195,7 @@
     },
     {
       "case_id": "native-review-19",
-      "question": "Jakie działania wymagają przeglądu na podstawie prognozy i ryzyka?",
+      "question": "Jakie dzia\u0142ania wymagaj\u0105 przegl\u0105du na podstawie prognozy i ryzyka?",
       "intent": "recommendations",
       "review_state": "proposed",
       "criteria": [
@@ -215,7 +215,7 @@
     },
     {
       "case_id": "native-review-21",
-      "question": "Jak rozpocząć pracę lokalną nad pakietem AI?",
+      "question": "Jak rozpocz\u0105\u0107 prac\u0119 lokaln\u0105 nad pakietem AI?",
       "intent": "documentation",
       "review_state": "proposed",
       "criteria": [
@@ -225,7 +225,7 @@
     },
     {
       "case_id": "native-review-22",
-      "question": "Jakie kontrole należy uruchomić przed commitem AI?",
+      "question": "Jakie kontrole nale\u017cy uruchomi\u0107 przed commitem AI?",
       "intent": "documentation",
       "review_state": "proposed",
       "criteria": [
@@ -235,7 +235,7 @@
     },
     {
       "case_id": "native-review-23",
-      "question": "Które endpointy zwracają zweryfikowaną tożsamość i scope?",
+      "question": "Kt\u00f3re endpointy zwracaj\u0105 zweryfikowan\u0105 to\u017csamo\u015b\u0107 i scope?",
       "intent": "documentation",
       "review_state": "proposed",
       "criteria": [
@@ -245,7 +245,7 @@
     },
     {
       "case_id": "native-review-24",
-      "question": "Kiedy zmiana grantów lub revoke wymaga restartu procesu?",
+      "question": "Kiedy zmiana grant\u00f3w lub revoke wymaga restartu procesu?",
       "intent": "documentation",
       "review_state": "proposed",
       "criteria": [
@@ -265,7 +265,7 @@
     },
     {
       "case_id": "native-review-26",
-      "question": "Co sprawdzają health i ready serwisu AI?",
+      "question": "Co sprawdzaj\u0105 health i ready serwisu AI?",
       "intent": "documentation",
       "review_state": "proposed",
       "criteria": [
