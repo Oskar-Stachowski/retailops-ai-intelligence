@@ -1,5 +1,5 @@
 {
-  "config_id": "agent-chat-config-sha256-2fb9a296e5ea1f1af63c5d4dc68f71e2d273813a0542517ab3a2e3a1a33707f3",
+  "config_id": "agent-chat-config-sha256-158f56cdc7327b510bb083b33e0a0efcd9355662979f8aa96db6bb983092d6b4",
   "fixture_only": true,
   "graph_version": "pregraph-provider-v1",
   "knowledge_index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
@@ -38,5 +38,5 @@
   ],
   "response_schema_sha256": "5f5a8e14081a9ac0fa82cb86144bbf2326e3cfd93da4e1007480f3ccc992aa5a",
   "schema_version": "1.0",
-  "tool_schemas_sha256": "5cb37c9746a6e2d67a3555623bf961662d6063d010144e2d8825d4c5a1b7b18b"
+  "tool_schemas_sha256": "25a6515e715cfe4828e2c0a178fd1608499dabb30afa577d34ed54666cfb0c6c"
 }

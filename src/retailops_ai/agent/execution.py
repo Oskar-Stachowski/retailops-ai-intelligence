@@ -138,7 +138,14 @@ class ToolExecutor:
             check_scope(principal, default_scope, self.policy)
         if pin is not None:
             pin = IndexPin.model_validate_json(pin.model_dump_json())
-            if pin.environment != self.environment or pin.lane != "retrieval":
+            if pin.environment != self.environment or (
+                pin.lane != "retrieval"
+                and not (
+                    self.allow_fixtures
+                    and self.environment == "test"
+                    and pin.lane == "offline_test"
+                )
+            ):
                 raise ToolFailure("unavailable")
         return ToolSession(self, principal, default_scope, pin)
 
@@ -345,6 +352,8 @@ class ToolSession:
             if (
                 output.index_id != pin.manifest.index_id
                 or output.pin_generation != pin.generation
+                or output.provider != pin.manifest.embedding_config.provider
+                or (pin.lane == "offline_test" and output.source_kind != "fixture")
                 or len(output.items) > request.retrieval.top_k
                 or len({hit.chunk.chunk_id for hit in output.items}) != len(output.items)
                 or output.context_bytes != size

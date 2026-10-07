@@ -516,6 +516,15 @@
       "title": "Knowledge Index Id",
       "type": "string"
     },
+    "knowledge_mode": {
+      "default": "semantic_retrieval",
+      "enum": [
+        "semantic_retrieval",
+        "offline_test"
+      ],
+      "title": "Knowledge Mode",
+      "type": "string"
+    },
     "model": {
       "$ref": "#/$defs/ChatModelConfig"
     },

@@ -2759,7 +2759,10 @@
           "type": "integer"
         },
         "provider": {
-          "const": "bedrock",
+          "enum": [
+            "bedrock",
+            "fake"
+          ],
           "title": "Provider",
           "type": "string"
         },

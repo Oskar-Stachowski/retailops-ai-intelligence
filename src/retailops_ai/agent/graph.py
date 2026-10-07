@@ -64,6 +64,17 @@ class GraphRunner:
             or traces.policy != self.config.config.policy
         ):
             raise ValueError("graph_executor_or_trace_policy_mismatch")
+        if self.config.config.chat.knowledge_mode == "offline_test" and (
+            executor.environment != "test"
+            or not executor.allow_fixtures
+            or provider.source_kind != "fixture"
+            or pin is None
+            or pin.environment != "test"
+            or pin.lane != "offline_test"
+            or pin.manifest.embedding_config != self.config.config.chat.embeddings
+            or pin.manifest.index_id != self.config.config.chat.knowledge_index_id
+        ):
+            raise ValueError("offline_graph_requires_test_provider_executor_and_pin")
         self.executor = executor
         self.provider = provider
         self.traces = traces

@@ -17,6 +17,7 @@ from retailops_ai.agent.tools import (
     ModelStatusResult,
     NativeAnomalyItem,
     NativeOperationsItem,
+    NativeRiskItem,
     OperationsResult,
     RiskItem,
     RiskResult,
@@ -35,11 +36,20 @@ from retailops_ai.data_contracts.tool import ToolResult
 
 
 class SuggestionPolicy(Versioned):
-    policy_version: Literal["read-only-review-v1"] = "read-only-review-v1"
+    policy_version: Literal["read-only-review-v1", "read-only-review-native-v2"] = (
+        "read-only-review-v1"
+    )
+    native_stockout_review: bool = Field(default=False, exclude_if=lambda value: not value)
     minimum_stockout_probability: Annotated[float, Field(ge=0.8, le=1)] = 0.8
     operations_lag_seconds: Annotated[float, Field(ge=60, le=3600)] = 60.0
     lifetime_seconds: Annotated[int, Field(ge=1, le=300)] = 300
     max_candidates: Annotated[int, Field(ge=1, le=5)] = 5
+
+    @model_validator(mode="after")
+    def native_opt_in(self) -> Self:
+        if self.native_stockout_review != (self.policy_version == "read-only-review-native-v2"):
+            raise ValueError("native_review_requires_explicit_v2_policy")
+        return self
 
 
 class SuggestionCandidate(Contract):
@@ -56,9 +66,12 @@ class SuggestionCandidate(Contract):
     rationale: ShortText
     evidence_refs: list[EvidenceRef] = Field(min_length=1, max_length=8)
     model_release_refs: list[EvidenceRef] = Field(max_length=8)
-    policy_version: Literal["read-only-review-v1"]
+    policy_version: Literal["read-only-review-v1", "read-only-review-native-v2"]
     policy_sha256: Sha256
     source_as_of: UtcTime
+    evidence_observed_at: UtcTime | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
     expires_at: UtcTime
     freshness_status: Literal["current"]
     requires_human_review: TrueFlag
@@ -66,11 +79,18 @@ class SuggestionCandidate(Contract):
 
     @model_validator(mode="after")
     def identity(self) -> Self:
+        observed = self.evidence_observed_at
+        anchor = self.source_as_of if observed is None else observed
         if (
             self.candidate_id
             != "candidate-sha256-"
             + canonical_sha256(self.model_dump(mode="json", exclude={"candidate_id"}))
-            or not 0 < (self.expires_at - self.source_as_of).total_seconds() <= 300
+            or not 0 < (self.expires_at - anchor).total_seconds() <= 300
+            or (self.policy_version == "read-only-review-v1") != (observed is None)
+            or (
+                observed is not None
+                and not 0 <= (observed - self.source_as_of).total_seconds() <= 86400
+            )
         ):
             raise ValueError("suggestion_candidate_identity_or_expiry_mismatch")
         if len(set(self.evidence_refs)) != len(self.evidence_refs) or len(
@@ -108,10 +128,17 @@ def candidates(tools: ToolSession, policy: SuggestionPolicy) -> tuple[Suggestion
         refs: list[str],
         releases: list[str],
         timestamps: list[UtcTime],
+        observed: UtcTime | None = None,
     ) -> None:
         oldest = min(timestamps)
-        expires = oldest + timedelta(seconds=ttl)
-        if any(timestamp > now for timestamp in timestamps) or now >= expires:
+        anchor = oldest if observed is None else observed
+        expires = anchor + timedelta(seconds=ttl)
+        if (
+            any(timestamp > now for timestamp in timestamps)
+            or anchor > now
+            or not 0 <= (anchor - oldest).total_seconds() <= 86400
+            or now >= expires
+        ):
             return
         value = {
             "recommendation_type": kind,
@@ -132,6 +159,8 @@ def candidates(tools: ToolSession, policy: SuggestionPolicy) -> tuple[Suggestion
             "requires_human_review": True,
             "status": "proposed",
         }
+        if policy.policy_version == "read-only-review-native-v2":
+            value["evidence_observed_at"] = anchor.isoformat().replace("+00:00", "Z")
         # JSON conversion preserves strict wire validation of dates and lists.
         serialized = json.loads(json.dumps(value, default=str))
         serialized["candidate_id"] = "candidate-sha256-" + canonical_sha256(serialized)
@@ -209,6 +238,41 @@ def candidates(tools: ToolSession, policy: SuggestionPolicy) -> tuple[Suggestion
                 )
         elif isinstance(output, RiskResult) and output.status == "ok":
             for risk in output.items:
+                if isinstance(risk, NativeRiskItem):
+                    row, proof = risk.risk, output.native_view
+                    if (
+                        not policy.native_stockout_review
+                        or proof is None
+                        or not proof.complete
+                        or row.inventory_freshness_status != "current"
+                        or row.lineage.source_completeness_status != "complete"
+                        or row.lineage.source_watermark is None
+                        or row.freshness_status != "current"
+                        or row.freshness_reason != "within_policy"
+                        or row.origin_age_seconds > row.max_origin_age_seconds
+                        or row.status == "insufficient_data"
+                        or (
+                            row.status == "scored"
+                            and (
+                                row.probability is None
+                                or row.probability < policy.minimum_stockout_probability
+                            )
+                        )
+                    ):
+                        continue
+                    add(
+                        "review_replenishment",
+                        *grain(risk),
+                        row.stock_location_id,
+                        "Review the recorded stockout result with an operator before any replenishment decision.",
+                        "high",
+                        "The saved result meets the proposed review rule at its recorded origin; current stock and deployed model health are not established. No quantity or order is authorized.",
+                        [tool_result_ref(output)],
+                        [row.release_id],
+                        [row.as_of],
+                        observed=row.read_at,
+                    )
+                    continue
                 if not isinstance(risk, RiskItem):
                     # Native policy/calibration pins are factual evidence; the
                     # legacy replenishment rule also needs attested deployment.

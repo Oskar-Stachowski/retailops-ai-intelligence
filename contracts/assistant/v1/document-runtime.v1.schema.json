@@ -22,6 +22,15 @@
           "title": "Knowledge Index Id",
           "type": "string"
         },
+        "knowledge_mode": {
+          "default": "semantic_retrieval",
+          "enum": [
+            "semantic_retrieval",
+            "offline_test"
+          ],
+          "title": "Knowledge Mode",
+          "type": "string"
+        },
         "model": {
           "$ref": "#/$defs/ChatModelConfig"
         },
@@ -999,6 +1008,11 @@
           "title": "Minimum Stockout Probability",
           "type": "number"
         },
+        "native_stockout_review": {
+          "default": false,
+          "title": "Native Stockout Review",
+          "type": "boolean"
+        },
         "operations_lag_seconds": {
           "default": 60.0,
           "maximum": 3600,
@@ -1007,8 +1021,11 @@
           "type": "number"
         },
         "policy_version": {
-          "const": "read-only-review-v1",
           "default": "read-only-review-v1",
+          "enum": [
+            "read-only-review-v1",
+            "read-only-review-native-v2"
+          ],
           "title": "Policy Version",
           "type": "string"
         },

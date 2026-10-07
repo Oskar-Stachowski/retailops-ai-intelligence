@@ -4,8 +4,8 @@
   "status": "failed",
   "suggestions": [],
   "trace": {
-    "chat_config_id": "agent-chat-config-sha256-4a5b97cdf737a66452b862b55065a8e50cf9a2dca3ae622d97b8964726ce451e",
-    "config_id": "agent-graph-config-sha256-be7cccf6c8c3324fcca3eac087fcb0ad3e700eff912945ae32107cc847d7f88f",
+    "chat_config_id": "agent-chat-config-sha256-f877d85b3b657f7aa38c1d4f204db45df999d457e82267b673dd4e71655f9e60",
+    "config_id": "agent-graph-config-sha256-c0b9b0f38a1aa6e02f4dfea2602c264438524c15dc4c80924e47f5f97cc79ddf",
     "correlation_id": "correlation-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     "created_at": "2026-08-23T00:00:00Z",
     "error_code": "dependency_unavailable",

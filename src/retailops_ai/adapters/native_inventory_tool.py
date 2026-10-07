@@ -144,6 +144,14 @@ class NativeInventoryReader:
             ),
         )
 
+    @property
+    def source_dataset_id(self) -> str:
+        return str(self._binding["source_dataset_id"])
+
+    @property
+    def curated_dataset_id(self) -> str:
+        return str(self._binding["curated_dataset_id"])
+
     def read(self, request: InventoryRequest, principal: Principal) -> InventoryResult:
         request = InventoryRequest.model_validate_json(request.model_dump_json())
         actor = authorize(request, principal)

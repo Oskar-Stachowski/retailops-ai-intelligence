@@ -11,9 +11,9 @@ from retailops_ai.cli import main
 from retailops_ai.data_contracts.identity import canonical_sha256
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "agent/graph.evaluate.fake.native-tools.v1.json"
+CONFIG = ROOT / "agent/graph.evaluate.fake.native-offline.v1.json"
 GOLDEN = ROOT / "agent/golden.canonical.v1.json"
-RELEASE = ROOT / "agent/evaluation-release.fake.native-tools.v1.json"
+RELEASE = ROOT / "agent/evaluation-release.fake.native-offline.v1.json"
 RAG = ROOT / "knowledge/golden.semantic.v1.json"
 LOCK = ROOT / "uv.lock"
 

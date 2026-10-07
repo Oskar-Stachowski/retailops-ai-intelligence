@@ -13,6 +13,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from opentelemetry.trace import Tracer
 from prometheus_client import CONTENT_TYPE_LATEST
+from sqlalchemy import create_engine
 from starlette.exceptions import HTTPException
 from starlette.responses import JSONResponse, Response
 
@@ -117,6 +118,7 @@ def create_app(
         assistant_store = PostgresAssistantStore(engine, settings.app_env)
     assistant_service = None
     knowledge_engine = None
+    producer_engine = None
     if (
         knowledge_backend is None
         or index_administration is None
@@ -201,6 +203,42 @@ def create_app(
             authority,
             settings.app_env,
         )
+    if settings.assistant_native_offline_file is not None:
+        if (
+            assistant_backend is not None
+            or knowledge_engine is None
+            or settings.assistant_source_import is None
+            or settings.assistant_curated is None
+            or settings.assistant_replay is None
+            or settings.assistant_coverage is None
+            or settings.assistant_producer_database_url is None
+        ):
+            raise ValueError("ambiguous_or_missing_native_offline_dependencies")
+        from retailops_ai.assistant.native_runtime import native_offline_backend
+
+        producer_engine = create_engine(
+            settings.assistant_producer_database_url.get_secret_value(),
+            connect_args={"connect_timeout": 3},
+            pool_size=1,
+            max_overflow=0,
+            pool_timeout=3,
+            hide_parameters=True,
+        )
+        assistant_backend = native_offline_backend(
+            settings.assistant_native_offline_file,
+            settings.assistant_source_import,
+            settings.assistant_curated,
+            settings.assistant_replay,
+            settings.assistant_coverage,
+            knowledge_engine,
+            producer_engine,
+            authority,
+            settings.app_env,
+        )
+        dependencies = (
+            *dependencies,
+            Dependency("assistant_native_offline", assistant_backend.check),
+        )
     if assistant_backend is not None:
         if assistant_store is None:
             raise ValueError("assistant_requires_durable_store")
@@ -229,6 +267,8 @@ def create_app(
                 await engine.dispose()
             if knowledge_engine is not None:
                 knowledge_engine.dispose()
+            if producer_engine is not None:
+                producer_engine.dispose()
             logger.info(
                 "application_stopped", extra={"event_data": {"event": "application_stopped"}}
             )

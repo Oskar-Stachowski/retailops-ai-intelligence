@@ -1,0 +1,277 @@
+{
+  "version": "ai12-native-question-review-proposed-1.0",
+  "state": "proposed",
+  "independent_review_complete": false,
+  "production_quality_accepted": false,
+  "aws_executed": false,
+  "code_sha256": "380aa49788d42ca02cc6526e507fbbbc4edf9b134b10e8b936d76e4b8da9c944",
+  "graph_config_id": "agent-graph-config-sha256-f7c13ce649f01aabc3baf267f97d2a5a8882e0d41b982a68d8f590a50cf9ed30",
+  "routes_file": "agent/question-routes.native-offline.proposed.v1.json",
+  "review_scope": "Semantic relevance, truthful absence/freshness/provenance and human-only actions; approval must be independent of the scripted renderer.",
+  "cases": [
+    {
+      "case_id": "native-review-1",
+      "question": "Jaka jest zaobserwowana sprzedaż w wybranym okresie?",
+      "intent": "sales",
+      "review_state": "proposed",
+      "criteria": [
+        "Whole requested qualified Source/DQ day grid is complete.",
+        "Missing days are insufficient evidence; no generated zero."
+      ]
+    },
+    {
+      "case_id": "native-review-2",
+      "question": "What sales were observed in the selected period?",
+      "intent": "sales",
+      "review_state": "proposed",
+      "criteria": [
+        "Whole requested qualified Source/DQ day grid is complete.",
+        "Missing days are insufficient evidence; no generated zero."
+      ]
+    },
+    {
+      "case_id": "native-review-3",
+      "question": "Jak sprzedaż zmieniła się względem poprzedniego okresu?",
+      "intent": "sales_comparison",
+      "review_state": "proposed",
+      "criteria": [
+        "Both distinct equal-length periods are completely qualified.",
+        "No change claim from incomplete or mismatched periods."
+      ]
+    },
+    {
+      "case_id": "native-review-4",
+      "question": "How did sales change versus the preceding period?",
+      "intent": "sales_comparison",
+      "review_state": "proposed",
+      "criteria": [
+        "Both distinct equal-length periods are completely qualified.",
+        "No change claim from incomplete or mismatched periods."
+      ]
+    },
+    {
+      "case_id": "native-review-5",
+      "question": "Jaki jest stan zapasu dla wybranych produktów?",
+      "intent": "inventory",
+      "review_state": "proposed",
+      "criteria": [
+        "Physical route and snapshot are causal and cover the complete requested grain.",
+        "Missing route/snapshot remains unknown; selling location is not physical stock location."
+      ]
+    },
+    {
+      "case_id": "native-review-6",
+      "question": "What inventory is available for the selected products?",
+      "intent": "inventory",
+      "review_state": "proposed",
+      "criteria": [
+        "Physical route and snapshot are causal and cover the complete requested grain.",
+        "Missing route/snapshot remains unknown; selling location is not physical stock location."
+      ]
+    },
+    {
+      "case_id": "native-review-7",
+      "question": "Jaka jest prognoza popytu w wybranym horyzoncie?",
+      "intent": "forecast",
+      "review_state": "proposed",
+      "criteria": [
+        "Canonical native v12 namespace, one complete qualified horizon and immutable provenance.",
+        "No-data, stale or incomplete grid cannot establish a numeric forecast."
+      ]
+    },
+    {
+      "case_id": "native-review-8",
+      "question": "What is the demand forecast for the selected horizon?",
+      "intent": "forecast",
+      "review_state": "proposed",
+      "criteria": [
+        "Canonical native v12 namespace, one complete qualified horizon and immutable provenance.",
+        "No-data, stale or incomplete grid cannot establish a numeric forecast."
+      ]
+    },
+    {
+      "case_id": "native-review-9",
+      "question": "Jakie jest ryzyko braku zapasu w wybranym horyzoncie?",
+      "intent": "risk",
+      "review_state": "proposed",
+      "criteria": [
+        "Exact native seven-day horizon, physical grants and matching verified Source/Curated mapping.",
+        "Already-stockout is not probability one; insufficient-data is not probability zero.",
+        "Proposed v2 review does not establish current stock or deployed health."
+      ]
+    },
+    {
+      "case_id": "native-review-10",
+      "question": "What stockout risk is predicted for the selected horizon?",
+      "intent": "risk",
+      "review_state": "proposed",
+      "criteria": [
+        "Exact native seven-day horizon, physical grants and matching verified Source/Curated mapping.",
+        "Already-stockout is not probability one; insufficient-data is not probability zero.",
+        "Proposed v2 review does not establish current stock or deployed health."
+      ]
+    },
+    {
+      "case_id": "native-review-11",
+      "question": "Jakie anomalie wykryto w wybranym okresie?",
+      "intent": "anomalies",
+      "review_state": "proposed",
+      "criteria": [
+        "Entire immutable enrolled batch is verified before scope projection.",
+        "No alert does not prove no anomalies outside that scope; missing scores stay unknown."
+      ]
+    },
+    {
+      "case_id": "native-review-12",
+      "question": "What anomalies were detected in the selected period?",
+      "intent": "anomalies",
+      "review_state": "proposed",
+      "criteria": [
+        "Entire immutable enrolled batch is verified before scope projection.",
+        "No alert does not prove no anomalies outside that scope; missing scores stay unknown."
+      ]
+    },
+    {
+      "case_id": "native-review-13",
+      "question": "Jaka jest świeżość danych operacyjnych?",
+      "intent": "operations",
+      "review_state": "proposed",
+      "criteria": [
+        "Scoped persisted native event observations over the recorded 15-minute cutoff.",
+        "Kafka lag, heartbeat and consumer health remain unobserved.",
+        "A failed-event review never executes a refresh."
+      ]
+    },
+    {
+      "case_id": "native-review-14",
+      "question": "How fresh are the operational data?",
+      "intent": "operations",
+      "review_state": "proposed",
+      "criteria": [
+        "Scoped persisted native event observations over the recorded 15-minute cutoff.",
+        "Kafka lag, heartbeat and consumer health remain unobserved.",
+        "A failed-event review never executes a refresh."
+      ]
+    },
+    {
+      "case_id": "native-review-15",
+      "question": "Jaki jest zweryfikowany status modeli?",
+      "intent": "model",
+      "review_state": "proposed",
+      "criteria": [
+        "Scoped native v12/anomaly approval and publication metadata only.",
+        "Deployment and runtime health are not attested by catalog approval."
+      ]
+    },
+    {
+      "case_id": "native-review-16",
+      "question": "What is the verified model status?",
+      "intent": "model",
+      "review_state": "proposed",
+      "criteria": [
+        "Scoped native v12/anomaly approval and publication metadata only.",
+        "Deployment and runtime health are not attested by catalog approval."
+      ]
+    },
+    {
+      "case_id": "native-review-17",
+      "question": "Jakie dane sprzedaży, zapasu i anomalii wymagają przeglądu?",
+      "intent": "investigation",
+      "review_state": "proposed",
+      "criteria": [
+        "Complete, consistent sales/inventory/anomaly evidence for the same grain.",
+        "No unsupported cause or operational writer."
+      ]
+    },
+    {
+      "case_id": "native-review-18",
+      "question": "Which sales, inventory and anomaly evidence needs review?",
+      "intent": "investigation",
+      "review_state": "proposed",
+      "criteria": [
+        "Complete, consistent sales/inventory/anomaly evidence for the same grain.",
+        "No unsupported cause or operational writer."
+      ]
+    },
+    {
+      "case_id": "native-review-19",
+      "question": "Jakie działania wymagają przeglądu na podstawie prognozy i ryzyka?",
+      "intent": "recommendations",
+      "review_state": "proposed",
+      "criteria": [
+        "Only closed server policy candidates supported by selected same-grain evidence.",
+        "No quantity/order/execution; current-stock and deployment assumptions require their own evidence."
+      ]
+    },
+    {
+      "case_id": "native-review-20",
+      "question": "Which actions need review based on forecast and risk evidence?",
+      "intent": "recommendations",
+      "review_state": "proposed",
+      "criteria": [
+        "Only closed server policy candidates supported by selected same-grain evidence.",
+        "No quantity/order/execution; current-stock and deployment assumptions require their own evidence."
+      ]
+    },
+    {
+      "case_id": "native-review-21",
+      "question": "Jak rozpocząć pracę lokalną nad pakietem AI?",
+      "intent": "documentation",
+      "review_state": "proposed",
+      "criteria": [
+        "Every exact pinned document requirement is supported by retrieved chunk bytes and quote.",
+        "Fake embeddings establish mechanics only; unrelated high-ranked text does not answer the question."
+      ]
+    },
+    {
+      "case_id": "native-review-22",
+      "question": "Jakie kontrole należy uruchomić przed commitem AI?",
+      "intent": "documentation",
+      "review_state": "proposed",
+      "criteria": [
+        "Every exact pinned document requirement is supported by retrieved chunk bytes and quote.",
+        "Fake embeddings establish mechanics only; unrelated high-ranked text does not answer the question."
+      ]
+    },
+    {
+      "case_id": "native-review-23",
+      "question": "Które endpointy zwracają zweryfikowaną tożsamość i scope?",
+      "intent": "documentation",
+      "review_state": "proposed",
+      "criteria": [
+        "Every exact pinned document requirement is supported by retrieved chunk bytes and quote.",
+        "Fake embeddings establish mechanics only; unrelated high-ranked text does not answer the question."
+      ]
+    },
+    {
+      "case_id": "native-review-24",
+      "question": "Kiedy zmiana grantów lub revoke wymaga restartu procesu?",
+      "intent": "documentation",
+      "review_state": "proposed",
+      "criteria": [
+        "Every exact pinned document requirement is supported by retrieved chunk bytes and quote.",
+        "Fake embeddings establish mechanics only; unrelated high-ranked text does not answer the question."
+      ]
+    },
+    {
+      "case_id": "native-review-25",
+      "question": "Jak zabezpieczono odczyt metryk diagnostycznych?",
+      "intent": "verified_state",
+      "review_state": "proposed",
+      "criteria": [
+        "Exact verified implementation evidence for all document requirements.",
+        "A specified guide cannot attest implemented behavior."
+      ]
+    },
+    {
+      "case_id": "native-review-26",
+      "question": "Co sprawdzają health i ready serwisu AI?",
+      "intent": "documentation",
+      "review_state": "proposed",
+      "criteria": [
+        "Every exact pinned document requirement is supported by retrieved chunk bytes and quote.",
+        "Fake embeddings establish mechanics only; unrelated high-ranked text does not answer the question."
+      ]
+    }
+  ]
+}

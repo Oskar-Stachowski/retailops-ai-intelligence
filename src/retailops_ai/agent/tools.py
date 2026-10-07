@@ -1069,7 +1069,7 @@ class KnowledgeResult(Versioned):
     status: Literal["ok", "no_data"]
     index_id: IndexID
     pin_generation: Annotated[int, Field(ge=1)]
-    provider: Literal["bedrock"]
+    provider: Literal["bedrock", "fake"]
     retrieval_config_id: RetrievalConfigID
     content_trust: Literal["untrusted_reference"]
     items: list[KnowledgeHit] = Field(max_length=5)
@@ -1081,6 +1081,8 @@ class KnowledgeResult(Versioned):
     def outcome(self) -> Self:
         if (self.status == "ok") != bool(self.items):
             raise ValueError("knowledge_outcome_mismatch")
+        if self.provider == "fake" and self.source_kind != "fixture":
+            raise ValueError("fake_knowledge_requires_fixture_source")
         return self
 
 

@@ -413,7 +413,7 @@ def test_native_forecast_http_planning_graph_and_store(tmp_path, mode):
     now = asyncio.run(
         original.prepare(AssistantQuery.model_validate_json(json.dumps(body)), actor)
     ).as_of
-    graph = load_graph_config(ROOT / "agent/graph.fake.native-tools.v1.json")
+    graph = load_graph_config(ROOT / "agent/graph.fake.native-offline.v1.json")
     routes = QuestionRoutes(
         schema_version="1.0",
         profile="assistant-question-routes-v1",

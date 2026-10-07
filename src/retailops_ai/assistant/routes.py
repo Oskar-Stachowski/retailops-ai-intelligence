@@ -202,10 +202,13 @@ def reviewed_backend(
     *,
     allow_proposed: bool = False,
     clock: Callable[[], datetime] = lambda: datetime.now(UTC),
+    native_tools: frozenset[str] | None = None,
 ) -> GraphAssistant:
     """Bind a reviewed planner to existing server adapters, without creating SDK clients."""
     if source_kind == "fixture" and environment != "test":
         raise ValueError("fixture_assistant_requires_test_environment")
+    if native_tools is not None and not native_tools <= available_tools:
+        raise ValueError("native_tool_outside_assistant_catalog")
     planner = ReviewedPlanner(
         profile,
         graph,
@@ -222,6 +225,15 @@ def reviewed_backend(
         if (
             set(instance.executor.adapters) != available_tools
             or instance.executor.environment != environment
+            or (
+                native_tools is not None
+                and native_tools
+                != frozenset(
+                    key
+                    for key, adapter in instance.executor.adapters.items()
+                    if adapter.source_kind == "runtime"
+                )
+            )
             or (
                 source_kind == "runtime"
                 and any(
@@ -243,6 +255,8 @@ def reviewed_backend(
         "environment": environment,
         "source_kind": source_kind,
     }
+    if native_tools is not None:
+        binding["native_tools"] = sorted(native_tools)
     budget = graph.config.chat.budget
     return GraphAssistant(
         graph.config_id,
@@ -254,4 +268,5 @@ def reviewed_backend(
         planner.prepare,
         checked_runner,
         runtime_version="assistant-runtime-sha256-" + canonical_sha256(binding),
+        native_tools=native_tools,
     )

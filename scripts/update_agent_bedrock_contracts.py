@@ -15,17 +15,17 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    config = load_graph_config(ROOT / "agent/graph.bedrock-smoke.native-tools.v1.json")
+    config = load_graph_config(ROOT / "agent/graph.bedrock-smoke.native-offline.v1.json")
     profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/bedrock-smoke.native-tools.v1.json").read_bytes()
+        (ROOT / "agent/bedrock-smoke.native-offline.v1.json").read_bytes()
     )
-    comparison = load_graph_config(ROOT / "agent/graph.sonnet-smoke.native-tools.v1.json")
+    comparison = load_graph_config(ROOT / "agent/graph.sonnet-smoke.native-offline.v1.json")
     comparison_profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/sonnet-smoke.native-tools.v1.json").read_bytes()
+        (ROOT / "agent/sonnet-smoke.native-offline.v1.json").read_bytes()
     )
-    documents = load_graph_config(ROOT / "agent/graph.document-smoke.native-tools.v1.json")
+    documents = load_graph_config(ROOT / "agent/graph.document-smoke.native-offline.v1.json")
     document_profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/document-smoke.native-tools.v1.json").read_bytes()
+        (ROOT / "agent/document-smoke.native-offline.v1.json").read_bytes()
     )
     artifacts = {
         "circuit-policy.v1.schema.json": CircuitPolicy.model_json_schema(),

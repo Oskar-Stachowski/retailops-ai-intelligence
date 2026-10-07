@@ -28,7 +28,7 @@ from retailops_ai.cli import main
 from retailops_ai.data_contracts.identity import canonical_sha256
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "agent/graph.fake.native-tools.v1.json"
+CONFIG = ROOT / "agent/graph.fake.native-offline.v1.json"
 PRIVATE = "private-graph-secret-marker"
 
 

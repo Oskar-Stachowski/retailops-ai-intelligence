@@ -102,6 +102,22 @@ class QualifiedSalesReader:
             qualification_runtime_sha256=canonical_sha256(runtime().model_dump(mode="json")),
         )
 
+    @property
+    def source_dataset_id(self) -> str:
+        return self._binding["source_dataset_id"]
+
+    @property
+    def curated_dataset_id(self) -> str:
+        return self._binding["curated_dataset_id"]
+
+    @property
+    def full_dq_replay_id(self) -> str:
+        return self._binding["full_dq_replay_id"]
+
+    @property
+    def day_coverage_id(self) -> str:
+        return self._binding["day_coverage_id"]
+
     def read(self, request: SalesRequest, principal: Principal) -> SalesResult:
         request = SalesRequest.model_validate_json(request.model_dump_json())
         authorize(request, principal)

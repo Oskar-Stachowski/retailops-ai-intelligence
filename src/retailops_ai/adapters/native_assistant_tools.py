@@ -2,7 +2,6 @@
 
 from typing import Literal
 
-from retailops_ai.adapters.agent_tools import PinnedKnowledgeTool
 from retailops_ai.adapters.forecast_v12_tool import NativeForecastReader, NativeForecastTool
 from retailops_ai.adapters.native_anomaly_tool import NativeAnomalyReader, NativeAnomalyTool
 from retailops_ai.adapters.native_inventory_tool import InventoryReader, NativeInventoryTool
@@ -31,7 +30,7 @@ def native_assistant_tools(
     operations: NativeOperationsReader,
     forecast_catalog: NativeForecastCatalog,
     anomaly_catalog: NativeAnomalyCatalog,
-    knowledge: PinnedKnowledgeTool,
+    knowledge: ToolAdapter,
 ) -> dict[str, ToolAdapter]:
     return {
         "get_sales_summary": QualifiedSalesTool(sales, environment),

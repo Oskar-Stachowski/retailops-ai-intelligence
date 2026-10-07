@@ -124,6 +124,9 @@ class AgentChatConfig(Versioned):
     tool_schemas_sha256: Sha256
     response_schema_sha256: Sha256
     knowledge_index_id: IndexID
+    knowledge_mode: Literal["semantic_retrieval", "offline_test"] = Field(
+        default="semantic_retrieval", exclude_if=lambda value: value == "semantic_retrieval"
+    )
     embeddings: EmbeddingConfig
     retrieval: RetrievalConfig
     prompts: Annotated[tuple[PromptFile, ...], Field(min_length=6, max_length=6)]
@@ -139,8 +142,9 @@ class AgentChatConfig(Versioned):
             raise ValueError("prompt_bundle_incomplete_or_unordered")
         if (
             self.embeddings.provider != "bedrock"
-            or self.retrieval.diversification != "score-then-document-v1"
-        ):
+            if self.knowledge_mode == "semantic_retrieval"
+            else self.embeddings.provider != "fake" or self.model.provider != "fake"
+        ) or self.retrieval.diversification != "score-then-document-v1":
             raise ValueError("chat_requires_semantic_knowledge_binding")
         if self.model.max_output_tokens > self.budget.max_output_tokens:
             raise ValueError("single_call_output_exceeds_run_budget")

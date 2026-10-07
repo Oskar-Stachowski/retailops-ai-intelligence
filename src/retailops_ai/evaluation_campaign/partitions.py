@@ -41,7 +41,9 @@ from retailops_ai.source_snapshot.files import (
 from retailops_ai.source_snapshot.protocol import resource_bytes
 from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
 
-MAX_MANIFEST_BYTES = 64 * 1024
+# The complete installed-module pin grows with independent adapter packages.
+# Keep a bounded envelope while retaining every transitive module checksum.
+MAX_MANIFEST_BYTES = 128 * 1024
 MAX_MEMBERSHIP_BYTES = 4096
 KEY_FIELDS = tuple(ForecastKey.model_fields)
 

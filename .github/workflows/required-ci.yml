@@ -126,6 +126,8 @@ jobs:
       - run: make forecast-queue-smoke
       - name: Accept v12 registry, jobs, publication, metadata, backup and recovery
         run: make v12-backup-smoke
+      - name: Accept all eight native Assistant adapters with offline chat and isolated SQL
+        run: make native-offline-smoke
   persistence-forecast:
     needs: [checks, secrets]
     runs-on: ubuntu-24.04
