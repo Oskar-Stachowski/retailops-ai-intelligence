@@ -57,7 +57,10 @@
     "exact_main_ci_failure": "API integration committed-offset read after broker restart: NOT_COORDINATOR; 742 API tests passed",
     "prepared_followup_head": "16d34887b058b3dfb270af474f28242194a968ca",
     "followup_native_controls": "6 passed planned-anomaly/offset controls, 31 passed cohort/forecast-plan regression",
-    "followup_full_ci": "pending",
+    "followup_full_ci": {
+      "run": 37637743439,
+      "state": "queued_at_observation"
+    },
     "followup_pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/103"
   },
   "remaining": [
@@ -80,7 +83,7 @@
   "static_checks": {
     "ruff": "passed",
     "format": "passed",
-    "mypy_source_files": 615,
+    "mypy_source_files": 616,
     "docs": "passed"
   },
   "package": {
@@ -89,5 +92,10 @@
     "v13_and_planned_anomaly_schemas_byte_parity": true
   },
   "producer_followup": "Source planned-anomaly schema variants plus independent process replay and bounded read-only Kafka coordinator inspection; source publication and complete CI remain required",
-  "updated_at_utc": "2026-10-07T14:35:08.978262+00:00"
+  "updated_at_utc": "2026-10-07T14:38:07.214906+00:00",
+  "integrated_runner_capacity_regression": {
+    "passed": 155,
+    "seconds": 17.35,
+    "scope": "runner, wire, export, journal, capacity and required-CI contract after main a128bb38 integration"
+  }
 }

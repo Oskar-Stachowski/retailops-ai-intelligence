@@ -1,6 +1,11 @@
 # Aktualny status
 
 **2026-10-07: AI 09 jest in_progress / not_ready; integracja po zamknięciu AI 07–08 jest na main.**
+[PR #33](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/33)
+jest scalony jako `a128bb38` po pełnym zielonym CI jego head `be3b264`.
+[Required CI dokładnego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37635615858)
+trwa. PR #34 zachował komplet bramek i zaliczył pełny odbiór swojego main
+`89b64d2`; AI 07–08 pozostają zamknięte.
 [PR #29](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/29)
 ma komplet 14 zielonych jobów dla `4a0a6b5` i został scalony jako `5216e31`.
 [CI dokładnego merge/main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37592860960)
@@ -76,7 +81,11 @@ regresji, osobne 16 kontroli parity kohort oraz 3 kontrole known plans na seedac
 42/137/2026. Pełny [Required CI dokładnego head](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37623701164)
 jest zielony; zwykły chroniony merge opublikował `cbcac6eb` na source `main`.
 [Required CI dokładnego source main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37629010997)
-jeszcze trwa. Pięć kontrolnych par daje −14.81% alokacji Python podczas kopii
+zakończył się pojedynczą porażką testowego odczytu koordynatora Kafka;
+742 kontrole API zaliczono. [Source PR #103](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/103)
+na `16d34887` dodaje ograniczoną poprawkę tego odczytu i rzeczywistą obsługę
+source2.8 z known plans oraz wymaga pełnego CI i odbioru swojego main.
+Pięć kontrolnych par daje −14.81% alokacji Python podczas kopii
 i −89.62% CPU projekcji dziennych snapshotów, z identycznymi wynikami.
 To pomiary komponentów; pełny RSS i koszt pipeline na nowym producencie nadal
 wymagają odbioru. Wykorzystanie istniejącej szybkiej ścieżki AI08 sprawdzono
