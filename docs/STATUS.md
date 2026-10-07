@@ -134,7 +134,12 @@ manualny odbiór na izolowanym runnerze jest przygotowany i jeszcze nie ruszył.
 na `d81e78a` zaliczył pełny
 [Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37638548322):
 15/15 jobów success. Przed chronionym merge zintegrowano nowszy main `2dc0a5b`,
-zachowując przyrosty AI 10. Nowy dokładny head wymaga własnego pełnego CI;
+zachowując przyrosty AI 10. [CI integracji na `7ca2d56`](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37646472103)
+ujawnił nieaktualne przypięcie jednego wspólnego pliku importera.
+[Poprawka przypięcia](evidence/09-22-shared-importer-integration.json) zachowuje
+poprzedni odebrany pin oraz osobno identyfikuje nową implementację z `d81e78a`.
+64 kontrole zgodności, w tym rzeczywisty transfer/reuse bundle, oraz wszystkie
+kontrole kontraktów przeszły. Nowy dokładny head wymaga własnego pełnego CI;
 projektowa kampania, treningi i końcowa ocena pozostają niewykonane.
 
 **AI 07 — odbiór zaliczony, zakres `synthetic_ai_07_portfolio_v4`.**
