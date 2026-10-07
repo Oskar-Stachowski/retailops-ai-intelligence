@@ -54,3 +54,59 @@ condition = "AND"
 paths = ['(^|/)docs/evidence/08-27-accepted-model/approval[.]json$']
 regexTarget = "secret"
 regexes = ['^a18aa9669f671cc877f1681a25c13feb91917c465b4375c6fe9d309e7e0c1b11$', '^d9a458211ef331c15b570039435ea0f76b7f61b076aefd3d1bf40852983b6acd$']
+
+[[allowlists]]
+description = "Exact public AI10 content hashes/image tags and identified historical prose; verified identifiers, not credentials"
+condition = "AND"
+paths = ["(^|/)docs/ai10\\-approved\\-head\\-ci\\-receipt\\.json$"]
+regexTarget = "secret"
+regexes = ["^400d0685af483eb7a585311589144d69bbcf901f0c37264fce52ddddba45548c$"]
+
+[[allowlists]]
+description = "Exact public AI10 content hashes/image tags and identified historical prose; verified identifiers, not credentials"
+condition = "AND"
+paths = ["(^|/)docs/ai10\\-checkpoint\\-ci\\-receipt\\.json$"]
+regexTarget = "secret"
+regexes = ["^271ad966b32879dc4ef583b6bee1abf19ae0c1cf$", "^400d0685af483eb7a585311589144d69bbcf901f0c37264fce52ddddba45548c$"]
+
+[[allowlists]]
+description = "Exact public AI10 content hashes/image tags and identified historical prose; verified identifiers, not credentials"
+condition = "AND"
+paths = ["(^|/)docs/ai10\\-progress\\.md$"]
+regexTarget = "secret"
+regexes = ["^006e77dc22b0ceed05a77c1eca447cb34e29aa98$", "^Compose/Kubernetes$"]
+
+[[allowlists]]
+description = "Exact public AI10 content hashes/image tags and identified historical prose; verified identifiers, not credentials"
+condition = "AND"
+paths = ["(^|/)docs/ai10\\-rest\\-ci\\-receipt\\.json$"]
+regexTarget = "secret"
+regexes = ["^400d0685af483eb7a585311589144d69bbcf901f0c37264fce52ddddba45548c$"]
+
+[[allowlists]]
+description = "Exact public AI10 content hashes/image tags and identified historical prose; verified identifiers, not credentials"
+condition = "AND"
+paths = ["(^|/)docs/ai10\\-ui\\-ci\\-receipt\\.json$"]
+regexTarget = "secret"
+regexes = ["^3c44eb87d3619f06d49d01c06e2fc6b0715b13653eb43637e0e3fae6c6b5d710$", "^5fbd87da2dc5dec9256e2f53f0c85eda3a4ab1c83de9e7e12819e4d6acaf81a3$", "^929ba31c8a55edde4a3e35d89845a43cb6a0ec9b8ab63d688e6917a10abf80e6$", "^sha\\-44f7404010b55eba3d9bacd888d2dc7bb9797180$", "^sha\\-626c7eb54588fcd72c432dade3db2ca439f5f33f$", "^sha\\-cb0c79848247612bf71fb9ccf63a8ff3847b5ca1$"]
+
+[[allowlists]]
+description = "Exact SHA-256 of public successful gitleaks execution receipt in v12 failed-run evidence; not a credential"
+condition = "AND"
+paths = ['(^|/)docs/evidence/ai10-v12-native-database-failure[.]json$']
+regexTarget = "secret"
+regexes = ['^e9594b0766f992b500d06d77131c4d94463d2705e155b6e26b8f03713b66b7f2$']
+
+[[allowlists]]
+description = "Exact SHA-256 of public successful gitleaks execution receipt in v12 outbox-hook failed-run evidence; not a credential"
+condition = "AND"
+paths = ['(^|/)docs/evidence/ai10-v12-native-outbox-hook-failure[.]json$']
+regexTarget = "secret"
+regexes = ['^465d753757bd8d6a49bbd23a825c875b76b44592a33f6c40e0fa331ffc49bee9$']
+
+[[allowlists]]
+description = "Exact SHA-256 of the public successful whole-history scan receipt in accepted stockout evidence; not a credential"
+condition = "AND"
+paths = ['(^|/)docs/evidence/ai10-native-stockout-final-head-accepted[.]json$']
+regexTarget = "secret"
+regexes = ['^6c99d78521efcdb19dd746ae2bf06834629b1d6c34557702e52e6cdb335cc869$']

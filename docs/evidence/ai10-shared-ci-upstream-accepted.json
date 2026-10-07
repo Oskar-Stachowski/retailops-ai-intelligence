@@ -1,0 +1,136 @@
+{
+  "completed_at": "2026-10-07T13:27:12Z",
+  "created_at": "2026-10-07T12:37:26Z",
+  "event": "pull_request",
+  "head_sha": "02554284bc05df6d2687fe4142b3cbac0d1c3ac0",
+  "jobs": [
+    {
+      "completed_at": "2026-10-07T12:37:40Z",
+      "conclusion": "success",
+      "id": 112795410829,
+      "name": "secrets",
+      "started_at": "2026-10-07T12:37:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T12:38:27Z",
+      "conclusion": "success",
+      "id": 112795410891,
+      "name": "checks",
+      "started_at": "2026-10-07T12:37:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T12:50:10Z",
+      "conclusion": "success",
+      "id": 112795820231,
+      "name": "persistence-forecast",
+      "started_at": "2026-10-07T12:38:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T12:43:24Z",
+      "conclusion": "success",
+      "id": 112795820253,
+      "name": "TensorFlow CPU training, artifact and reload",
+      "started_at": "2026-10-07T12:42:21Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T12:56:39Z",
+      "conclusion": "success",
+      "id": 112795820380,
+      "name": "tests (0)",
+      "started_at": "2026-10-07T12:38:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T13:08:57Z",
+      "conclusion": "success",
+      "id": 112795820385,
+      "name": "tests (3)",
+      "started_at": "2026-10-07T12:45:09Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T12:59:04Z",
+      "conclusion": "success",
+      "id": 112795820396,
+      "name": "tests (1)",
+      "started_at": "2026-10-07T12:38:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T13:02:23Z",
+      "conclusion": "success",
+      "id": 112795820399,
+      "name": "tests (2)",
+      "started_at": "2026-10-07T12:38:31Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T13:27:01Z",
+      "conclusion": "success",
+      "id": 112795820402,
+      "name": "anomaly-oci",
+      "started_at": "2026-10-07T12:45:26Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T12:57:26Z",
+      "conclusion": "success",
+      "id": 112795820443,
+      "name": "persistence",
+      "started_at": "2026-10-07T12:42:25Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T12:46:03Z",
+      "conclusion": "success",
+      "id": 112795820478,
+      "name": "acceptance (ci-qualified-inputs)",
+      "started_at": "2026-10-07T12:38:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T12:50:34Z",
+      "conclusion": "success",
+      "id": 112795820491,
+      "name": "acceptance (ci-forecast)",
+      "started_at": "2026-10-07T12:41:15Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T12:57:12Z",
+      "conclusion": "success",
+      "id": 112795820509,
+      "name": "acceptance (ci-detectors)",
+      "started_at": "2026-10-07T12:43:22Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T12:56:23Z",
+      "conclusion": "success",
+      "id": 112795820530,
+      "name": "acceptance (ci-source-inputs)",
+      "started_at": "2026-10-07T12:43:27Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-07T13:27:12Z",
+      "conclusion": "success",
+      "id": 112816594924,
+      "name": "required-result",
+      "started_at": "2026-10-07T13:27:05Z",
+      "status": "completed"
+    }
+  ],
+  "repo": "Oskar-Stachowski/retailops-ai-intelligence",
+  "run_attempt": 1,
+  "scope": "all mandatory code component jobs executed successfully",
+  "status": "passed",
+  "total_jobs": 15,
+  "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37622329549",
+  "version": "ai10-exact-head-required-ci-1.0",
+  "workflow_run_id": 37622329549
+}

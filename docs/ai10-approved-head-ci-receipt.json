@@ -1,0 +1,367 @@
+{
+  "stage": "AI 10",
+  "increment": 4,
+  "status": "complete",
+  "whole_stage_status": "in_progress",
+  "updated_at": "2026-10-04T11:03:24Z",
+  "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+  "pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/88",
+  "draft": true,
+  "branch": "ai/10-approved-forecast-head",
+  "base": "ai/10-intelligence-checkpoints",
+  "source_commit": "ef8c29e4c90541671762504af071d9d97e9aeabb",
+  "source_tree": "3e9fa058831ab170eaa91acd790717a04f3bfdde",
+  "required_ci": {
+    "run_id": 37196137295,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37196137295",
+    "jobs": [
+      {
+        "id": 111418369561,
+        "name": "Required CI contract tests",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418369735,
+        "name": "Detect changed areas",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396341,
+        "name": "Repository diff hygiene",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396657,
+        "name": "data-gate / Synthetic data quality gate",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396678,
+        "name": "data-gate / AI 06 full cross-repo gate",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396686,
+        "name": "frontend-gate / Frontend tests and lint",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396694,
+        "name": "data-gate / AI 03 full cross-repo gate",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396762,
+        "name": "docker-gate / Validate Docker Compose config",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396774,
+        "name": "api-gate / API integration tests",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396803,
+        "name": "terraform-validation-gate / Terraform fmt, init and validate",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396815,
+        "name": "security-gate / Backend image vulnerability scan",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396816,
+        "name": "iac-security-gate / Checkov IaC security report",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396822,
+        "name": "iac-security-gate / TFLint IaC quality gate",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396827,
+        "name": "security-gate / Python dependency audit",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396847,
+        "name": "security-gate / Frontend image vulnerability scan",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396849,
+        "name": "security-gate / Secret scanning with Gitleaks",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396859,
+        "name": "security-gate / Frontend dependency audit",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396878,
+        "name": "security-gate / Filesystem vulnerability scan",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418396958,
+        "name": "kubernetes-gate / Kustomize, schema and policy gates",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418438018,
+        "name": "docker-gate / Build full stack and run smoke tests",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418451598,
+        "name": "frontend-gate / Build frontend application",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418513152,
+        "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418519589,
+        "name": "frontend-gate / Build frontend Docker image",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111418557492,
+        "name": "security-gate / Security evidence summary",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111421501111,
+        "name": "api-gate / API Docker image build",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 111421634936,
+        "name": "required-result",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "successful_jobs": 26,
+    "total_jobs": 26
+  },
+  "local": {
+    "passed": 104,
+    "new_head_tests": 44,
+    "cli_tests_from_ci_working_directory": 5,
+    "ruff_formatted_files": 242,
+    "mypy_modules": 22,
+    "bandit_high_severity_high_confidence": "passed",
+    "source_openapi": "passed",
+    "actual_owner_file_pin": "passed",
+    "docker_started": false
+  },
+  "real_drills": {
+    "status": "passed",
+    "head_tests_collected": 12,
+    "checkpoint_tests_expected": 23,
+    "require_broker_tests": true,
+    "broad_regression_cov_appends_drills": true,
+    "coverage_required_percent": 80,
+    "api_job_id": 111418396774,
+    "checkpoint_passed": 23,
+    "head_passed": 12,
+    "combined_passed": 35,
+    "duration_seconds": 45.91,
+    "skipped": 0
+  },
+  "owner_review_pin": {
+    "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+    "commit": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+    "path": "scripts/mlflow_v12_lifecycle.py",
+    "sha256": "167dc435ac1be4a2ae2b676724aedab42f88b9e4f2df86dfdfa866e858d74cfb",
+    "command": "review",
+    "authority": "trusted_private_operator_handoff",
+    "live_registry_validation_in_retailops": false
+  },
+  "trust_boundary": {
+    "authority": "trusted_private_operator_handoff",
+    "signed_receipt": false,
+    "live_mlflow_validation_in_retailops": false,
+    "max_review_age_seconds": 900,
+    "reader_grants_do_not_approve_model": true,
+    "activation_performed": false
+  },
+  "test_evidence_boundary": "Invented production-shaped payloads and owner review receipt; mechanics only, no real ML qualification or promotion.",
+  "remaining": [
+    "Automatic owner revocation handoff",
+    "Shared broker with separate AI/source DBs and auth",
+    "Full-grain input snapshot/replay capture",
+    "AI07/AI08 approved schemas and serving",
+    "Existing UI",
+    "102-day cross-repo E2E"
+  ],
+  "protected_sessions_mutated": false,
+  "merge_or_deploy_performed": false,
+  "prior_attempts": [
+    {
+      "source_commit": "480874ff7b4a1620969503883cc93dbacda61e4e",
+      "run_id": 37195857032,
+      "api_job_id": 111417466463,
+      "result": "23 passed, 1 failed in 38.15s",
+      "failure": "Test assertion expected detail; actual existing API error.message envelope and 429 byte-budget rejection were correct.",
+      "correction": "Assert the existing error envelope, add offline HTTP regression; runtime behavior unchanged."
+    }
+  ],
+  "merge_tree_proof": {
+    "pr": 88,
+    "head_commit": "ef8c29e4c90541671762504af071d9d97e9aeabb",
+    "base_commit": "c71dfea17348fee115e0fe8e38e4a42679ab165b",
+    "synthetic_merge_commit": "235625210f9450332bba87370020139139d06987",
+    "source_tree": "3e9fa058831ab170eaa91acd790717a04f3bfdde",
+    "synthetic_merge_tree": "3e9fa058831ab170eaa91acd790717a04f3bfdde",
+    "parents": [
+      "c71dfea17348fee115e0fe8e38e4a42679ab165b",
+      "ef8c29e4c90541671762504af071d9d97e9aeabb"
+    ]
+  },
+  "runtime_evidence": {
+    "compose": {
+      "status": "passed",
+      "job_id": 111418438018,
+      "artifact_id": 11301083082,
+      "zip_sha256": "9f82bd2cd2af0432a5461e26029eaa4e8928d51e346bf5819dee59db129ace2a",
+      "report_sha256": "8cfd85a5335d35cf7c1900aa271062114d7d944d1e2da18bda3e4ed7a95527b4",
+      "cleanup": "passed",
+      "database_head": "a10f0c7e0300",
+      "migration_action": "one initial fingerprinted additive expansion; both image versions retain full schema/data; no downgrade, restore or reseed",
+      "snapshot_excludes": [],
+      "snapshot_count": 3,
+      "preserved_nonempty_ai10_tables": {
+        "ai_forecast_results": {
+          "rows": 1,
+          "sha256": "37d993666f55eeb0c5088bc119cbc3115e09b4db7bf393c89cadd3965020502b"
+        },
+        "ai_intelligence_inbox": {
+          "rows": 1,
+          "sha256": "67fb5491c15fa460396f7f5b3caf2b16979576846a60f8d480144a07f57feed0"
+        },
+        "ai_intelligence_partitions": {
+          "rows": 1,
+          "sha256": "501fd86c5ff117e3ca922d2a6f9eebcfb8d8c29061525ba458aff384ecc43127"
+        },
+        "ai_intelligence_transport": {
+          "rows": 1,
+          "sha256": "3bde1f515496e3f9117193df361d96dfa1d4209aea2ba34fff51b0d59cb00f44"
+        }
+      },
+      "all_selected_snapshot_checksums_identical": true,
+      "fixture": "mechanics seeded rows; not a live snapshot/broker handoff or real model qualification"
+    },
+    "kubernetes": {
+      "status": "passed",
+      "job_id": 111418513152,
+      "artifact_id": 11300897425,
+      "zip_sha256": "4dd32c4d906e31b11657a2c52e9fc16239451887c1954e770abdf865297c81e7",
+      "report_sha256": "75fd0ba719ef6cc940c08ae9fad69a06c8472bcde24d09ed52d248fc9cd5280d",
+      "cleanup": "passed",
+      "database_head": "a10f0c7e0300",
+      "migration_action": "one initial fingerprinted additive expansion/seed; both image versions retain full schema/data; no downgrade/restore/reseed",
+      "snapshot_excludes": [
+        "realtime_consumer_state (restart timestamps/counters)"
+      ],
+      "snapshot_count": 6,
+      "preserved_nonempty_ai10_tables": {
+        "ai_forecast_results": {
+          "rows": 1,
+          "sha256": "43a53cbc48592bd07790fc66e1097ae2f29bf371e386b8840e4ee72f4afc2d8b"
+        },
+        "ai_intelligence_inbox": {
+          "rows": 1,
+          "sha256": "0efcfec4ba9a542877b21560d2a07b00a1e6060037210faf181e008baf72db98"
+        },
+        "ai_intelligence_partitions": {
+          "rows": 1,
+          "sha256": "909d3f623fd2f18be850df7713d826d53c667440383edf1b4054494f24f704e5"
+        },
+        "ai_intelligence_transport": {
+          "rows": 1,
+          "sha256": "ccd55d7c3f100cb512be3cb55ea26e4f569d8450ad6fb2590fab51aab075df9f"
+        }
+      },
+      "all_selected_snapshot_checksums_identical": true,
+      "fixture": "mechanics seeded rows; not a live snapshot/broker handoff or real model qualification"
+    },
+    "recovery": {
+      "status": "passed",
+      "cleanup": "passed",
+      "report_sha256": "831188a5ea5fce0199ee547d19b811078994b7e488cefb54ca3b0cc40e1d4724",
+      "ai10_table_rows": {
+        "ai_forecast_results": 0,
+        "ai_intelligence_inbox": 0,
+        "ai_intelligence_partitions": 0,
+        "ai_intelligence_transport": 0
+      },
+      "boundary": "Generic database recovery passed; AI10 rows are empty in this recovery fixture. Nonempty AI10 preservation is verified separately by release and Kubernetes drills."
+    }
+  },
+  "broad_regression": {
+    "broad_regression_passed": 898,
+    "broad_duration_seconds": 953.55,
+    "distinct_api_tests": 933,
+    "combined_coverage_percent": 87.09,
+    "coverage_required_percent": 80,
+    "skipped": 0,
+    "assessment_subset_passed": 21,
+    "assessment_subset_already_in_broad_regression": true
+  },
+  "api_log_evidence": [
+    "2026-10-04T10:41:53.2408170Z HEAD is now at 2356252 Merge ef8c29e4c90541671762504af071d9d97e9aeabb into c71dfea17348fee115e0fe8e38e4a42679ab165b",
+    "2026-10-04T10:42:23.1944899Z HEAD is now at 3a64b03 fix(ai10): preserve explicit source semantics and reject nested JSON",
+    "2026-10-04T10:42:37.4515736Z All checks passed!",
+    "2026-10-04T10:42:37.5089831Z 242 files already formatted",
+    "2026-10-04T10:42:42.4576766Z Success: no issues found in 22 source files",
+    "2026-10-04T10:42:43.9193371Z Source-read OpenAPI verified",
+    "2026-10-04T10:43:34.4622934Z 35 passed, 1 warning in 45.91s",
+    "2026-10-04T10:43:43.6811271Z 21 passed in 7.12s",
+    "2026-10-04T10:44:11.0146735Z Data contract status: passed",
+    "2026-10-04T10:44:11.0706084Z Scenario coverage status: passed",
+    "2026-10-04T11:00:08.2207249Z TOTAL                                                 4375    453    822    140    87%",
+    "2026-10-04T11:00:08.4686139Z Required test coverage of 80% reached. Total coverage: 87.09%",
+    "2026-10-04T11:00:08.4686951Z ================== 898 passed, 1 warning in 953.55s (0:15:53) =================="
+  ],
+  "preserved_contracts": {
+    "source_openapi_sha256": "400d0685af483eb7a585311589144d69bbcf901f0c37264fce52ddddba45548c",
+    "client_manifest_sha256": "d069bf2063d05a1e0ba1610600db99a74040c423055c2a6ef9283754d20a3812",
+    "ai_uv_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "new_migration": false
+  },
+  "runbook": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/ef8c29e4c90541671762504af071d9d97e9aeabb/docs/runbooks/intelligence-approved-head.md"
+}
