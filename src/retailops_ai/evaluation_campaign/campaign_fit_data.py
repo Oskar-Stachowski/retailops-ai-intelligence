@@ -6,7 +6,6 @@ import os
 import sqlite3
 import zlib
 from collections.abc import Iterator
-from datetime import timedelta
 from pathlib import Path
 from typing import Any, Literal
 
@@ -18,6 +17,13 @@ from retailops_ai.evaluation_campaign.campaign_fit_contract import (
     CampaignForecastEncoding,
     CampaignForecastFitPlan,
     CampaignNumericEncoding,
+)
+from retailops_ai.evaluation_campaign.campaign_forecast_inputs import (
+    tensorflow_vector,
+    tree_vector,
+)
+from retailops_ai.evaluation_campaign.campaign_forecast_inputs import (
+    transform as transform,
 )
 from retailops_ai.evaluation_campaign.partitions import membership_key
 from retailops_ai.evaluation_campaign.physical_contract import (
@@ -328,24 +334,6 @@ def fit_encoding(db: sqlite3.Connection, plan: CampaignForecastFitPlan) -> Campa
     )
 
 
-def transform(row: InputRow, encoding: CampaignForecastEncoding) -> tuple[float, ...]:
-    values = {v.name: v.value for v in row.values}
-    output: list[float] = []
-    for item in encoding.numeric:
-        value = values[item.name]
-        number = item.fill if value is None else float(value)
-        output.extend(((number - item.center) / item.spread, float(value is None)))
-    for category in encoding.categorical:
-        value = values[category.name]
-        output.extend(
-            (float(value is None), float(value is not None and value not in category.categories))
-        )
-        output.extend(float(value == known) for known in category.categories)
-    if not all(math.isfinite(v) for v in output):
-        raise SnapshotError("campaign_fit_nonfinite_transformed_value")
-    return tuple(output)
-
-
 def tree_matrices(
     db: sqlite3.Connection,
     role: str,
@@ -365,7 +353,7 @@ def tree_matrices(
     y = _memmap(output, role + "-y.npy", np.float64, (count,))
     keys = hashlib.sha256()
     for index, (key, row, example) in enumerate(rows(db, role)):
-        x[index] = (*transform(row, encoding), row.horizon_days / 14)
+        x[index] = tree_vector(row, encoding)
         y[index] = _label(example)
         keys.update(key + b"\n")
     x.flush()
@@ -412,22 +400,6 @@ def tensorflow_matrices(
                 ).fetchone()[0]
             )
         )
-        by_day = {p.business_date: p for p in history.points}
-        vector: list[float] = []
-        for offset in range(27, -1, -1):
-            point = by_day.get(history.forecast_origin.date() - timedelta(days=offset))
-            units = (
-                encoding.history_fill
-                if point is None or point.observed_units is None
-                else float(point.observed_units)
-            )
-            vector.extend(
-                (
-                    (units - encoding.history_center) / encoding.history_spread,
-                    float(point is None or point.observed_units is None),
-                    float(point is None),
-                )
-            )
         horizons = {}
         for feature, example, _ in records:
             row = InputRow.model_validate_json(zlib.decompress(feature))
@@ -437,19 +409,14 @@ def tensorflow_matrices(
             horizons[row.horizon_days] = (row, value)
         y[index] = 0
         mask[index] = 0
-        for horizon in range(1, 15):
-            if horizon not in horizons:
-                vector.extend((0.0,) * (len(encoding.output_columns) + 1))
-                continue
-            row, example = horizons[horizon]
-            vector.extend((*transform(row, encoding), horizon / 14))
+        x[index] = tensorflow_vector((row for row, _ in horizons.values()), history, encoding)
+        for horizon, (_, example) in horizons.items():
             if example.outcome is None:
                 raise SnapshotError("campaign_fit_window_outcome_missing")
             if example.outcome.eligible:
                 y[index, horizon - 1] = _label(example) / encoding.target_scale
                 mask[index, horizon - 1] = 1
                 eligible += 1
-        x[index] = vector
     expected = db.execute(
         "SELECT count(*) FROM examples WHERE role=? AND eligible=1", (role,)
     ).fetchone()[0]

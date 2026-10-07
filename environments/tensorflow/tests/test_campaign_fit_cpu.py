@@ -90,6 +90,26 @@ def test_real_complete_population_fit_supported_artifact_and_fresh_cpu_reload(
     else:
         assert fitted["epochs_run"] == 2 and fitted["visible_gpu_count"] == 0
         assert (root / "bundle/keras/MLmodel").is_file()
+        metadata_file = root / "bundle/keras/MLmodel"
+        original = metadata_file.read_bytes()
+        wrong = original.replace(str(state.tensorflow_width).encode(), b"99999")
+        assert wrong != original
+        metadata_file.write_bytes(wrong)
+        measured = monitor(
+            [sys.executable, "-I", "-B", str(Path(worker.__file__)), "reload", str(root)],
+            root=root,
+            log=root / "signature-reload.log",
+            env=_environment(root),
+            scratch=(root,),
+            resources=plan.resources,
+            deadline=perf_counter() + plan.resources.wall_seconds,
+        )
+        assert measured["status"] == "failed" and measured["reason"] == "worker_exit"
+        assert (
+            "campaign_forecast_keras_signature_mismatch"
+            in (root / "signature-reload.log").read_text()
+        )
+        metadata_file.write_bytes(original)
     name = "tensorflow" if family == "tensorflow" else "mean"
     prediction = np.load(root / (name + "-prediction.npy"), allow_pickle=False)
     assert np.isfinite(prediction).all() and (prediction >= 0).all()

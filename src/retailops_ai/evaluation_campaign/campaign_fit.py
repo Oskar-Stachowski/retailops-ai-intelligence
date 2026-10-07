@@ -259,6 +259,12 @@ def _verify_bundle_content(bundle: Path, receipt: CampaignForecastFitReceipt) ->
             raise SnapshotError("campaign_fit_rf_has_no_fitted_median")
     elif "keras/MLmodel" not in files or "keras/data/model.keras" not in files:
         raise SnapshotError("campaign_fit_keras_flavor_artifact_missing")
+    else:
+        from retailops_ai.evaluation_campaign.campaign_forecast_artifacts import (
+            verify_keras_signature,
+        )
+
+        verify_keras_signature(bundle, plan, encoding)
 
 
 def verify_campaign_forecast_bundle(

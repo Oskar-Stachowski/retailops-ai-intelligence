@@ -388,6 +388,15 @@ def reload(root: Path, plan: Any) -> dict[str, Any]:
     _versions(plan)
     validation = _arrays(root, "early_stopping", plan)
     if plan.family == "tensorflow":
+        from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastEncoding
+        from retailops_ai.evaluation_campaign.campaign_forecast_artifacts import (
+            verify_keras_signature,
+        )
+
+        encoding = CampaignForecastEncoding.model_validate_json(
+            read_bytes(root / "bundle", "encoding.json")
+        )
+        verify_keras_signature(root / "bundle", plan, encoding)
         tf = importlib.import_module("tensorflow")
         tf.config.set_visible_devices([], "GPU")
         tf.config.threading.set_inter_op_parallelism_threads(1)
