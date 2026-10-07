@@ -1,0 +1,941 @@
+{
+  "acceleration_plan_updates": {
+    "checks_only_critical_path_upper_bound_seconds": {
+      "pr": 293,
+      "push": 752,
+      "scope": "conditional bound if checks falls below persistence; sharding not implemented, runner concurrency and all other jobs unchanged"
+    },
+    "mandatory_early_broker_gate": "implemented; common CI-A impact 0–1h, not added twice",
+    "owner_migration_graph_integration": "instructions added, not implemented",
+    "pytest_durations_30": "implemented; 0h direct impact",
+    "pytest_sharding": "proposal only, not implemented"
+  },
+  "ai10_draft_prs_total": 15,
+  "base_branch": "ai/10-durable-observation-replay",
+  "base_commit": "571b174018937dad7b5b3b14ba44b4d6f4397c76",
+  "branch": "ai/10-observation-broker",
+  "ci_actual_broker_report": {
+    "actual_broker_ack_performed": true,
+    "broker": "redpandadata/redpanda:v25.3.6@sha256:ac152ec27adccf9482af2649d293f398eb03c860d7469fc49f86e30d870ea408",
+    "checks": [
+      "compaction_change_no_ack",
+      "foreign_group_topic_create_denied",
+      "reader_write_denied",
+      "second_owner_fencing",
+      "sigkill_after_commit_before_ack",
+      "sigkill_before_commit",
+      "sql_capture_overlap_ack_only_delivered",
+      "sql_connection_loss_no_ack",
+      "subscription_correction_dedup_quarantine_ack",
+      "topic_uuid_replacement_no_ack",
+      "untrusted_ca",
+      "wrong_password"
+    ],
+    "database": "postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+    "full_43_table_handoff": false,
+    "models_qualified": false,
+    "sasl": "SCRAM-SHA-256",
+    "source_authority": "explicit fixture; no operational Source emitter",
+    "source_live_capture_supported": false,
+    "status": "passed",
+    "tls_hostname_verified": true
+  },
+  "ci_artifacts_verified": [
+    {
+      "artifact_id": 11334628086,
+      "github_metadata": {
+        "archive_download_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11334628086/zip",
+        "created_at": "2026-10-05T09:00:23Z",
+        "digest": "sha256:e372ac7c4f853140b19b4e282c4faa348e2e95aa8869f9bd1dbb8ea81a236188",
+        "expired": false,
+        "expires_at": "2026-10-19T09:00:22Z",
+        "id": 11334628086,
+        "name": "ai10-observation-replay",
+        "size_in_bytes": 891,
+        "updated_at": "2026-10-05T09:00:23Z",
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11334628086",
+        "workflow_run": {
+          "head_branch": "ai/10-observation-broker",
+          "head_repository_id": 1391921598,
+          "head_sha": "b887b90e12036499870d0de455511f2cca4ba441",
+          "id": 37283423931,
+          "repository_id": 1391921598
+        }
+      },
+      "records": [
+        {
+          "bytes": 1844,
+          "entry": "ai10-observation-replay.json",
+          "local_file": "11334628086-0.json",
+          "sha256": "e5e583e030b330856f1dd3458873a8f42d4dbd53451082e2b088ca78e617a24e"
+        }
+      ],
+      "trigger": "pr",
+      "zip_sha256": "e372ac7c4f853140b19b4e282c4faa348e2e95aa8869f9bd1dbb8ea81a236188"
+    },
+    {
+      "artifact_id": 11333650831,
+      "github_metadata": {
+        "archive_download_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11333650831/zip",
+        "created_at": "2026-10-05T08:25:46Z",
+        "digest": "sha256:c66d8ce29e61ad609446495591c34d152d1a11712556305cf9b4700d3f6a87d0",
+        "expired": false,
+        "expires_at": "2026-10-19T08:25:45Z",
+        "id": 11333650831,
+        "name": "ai10-observation-broker",
+        "size_in_bytes": 1449,
+        "updated_at": "2026-10-05T08:25:46Z",
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11333650831",
+        "workflow_run": {
+          "head_branch": "ai/10-observation-broker",
+          "head_repository_id": 1391921598,
+          "head_sha": "b887b90e12036499870d0de455511f2cca4ba441",
+          "id": 37283423931,
+          "repository_id": 1391921598
+        }
+      },
+      "records": [
+        {
+          "bytes": 952,
+          "entry": "ai10-observation-broker.json",
+          "local_file": "11333650831-0.json",
+          "sha256": "c9e162111857489e04476c89405d6969699c2baa18fe3ee3cf6817e9e0c926e8"
+        },
+        {
+          "bytes": 1959,
+          "entry": "ai10-observation-broker-tests.xml",
+          "local_file": "11333650831-1.xml",
+          "sha256": "588a2f844c28b04a844d5969a6ce592c41a0e41eb95ee04ce8d103fd1e2b1f93"
+        }
+      ],
+      "trigger": "pr",
+      "zip_sha256": "c66d8ce29e61ad609446495591c34d152d1a11712556305cf9b4700d3f6a87d0"
+    },
+    {
+      "artifact_id": 11332214900,
+      "github_metadata": {
+        "archive_download_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11332214900/zip",
+        "created_at": "2026-10-05T08:25:41Z",
+        "digest": "sha256:b7a35a1fbfd6236f12cb591ca756860cdeee85c9006e041c77e5718975ad467c",
+        "expired": false,
+        "expires_at": "2026-10-19T08:25:40Z",
+        "id": 11332214900,
+        "name": "ai10-durable-observation-replay",
+        "size_in_bytes": 1911,
+        "updated_at": "2026-10-05T08:25:41Z",
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11332214900",
+        "workflow_run": {
+          "head_branch": "ai/10-observation-broker",
+          "head_repository_id": 1391921598,
+          "head_sha": "b887b90e12036499870d0de455511f2cca4ba441",
+          "id": 37283423931,
+          "repository_id": 1391921598
+        }
+      },
+      "records": [
+        {
+          "bytes": 870,
+          "entry": "ai10-durable-observation-replay.json",
+          "local_file": "11332214900-0.json",
+          "sha256": "2bdb619deeb19a584aebd365e19161ab377e0b0d23a544a0d8e21c417539e535"
+        },
+        {
+          "bytes": 5008,
+          "entry": "ai10-durable-observation-replay-tests.xml",
+          "local_file": "11332214900-1.xml",
+          "sha256": "dcbd44a49ef110066f764101c3e4bf14ef430a88b0432c4cf2a12a359e522b48"
+        }
+      ],
+      "trigger": "pr",
+      "zip_sha256": "b7a35a1fbfd6236f12cb591ca756860cdeee85c9006e041c77e5718975ad467c"
+    },
+    {
+      "artifact_id": 11335400975,
+      "github_metadata": {
+        "archive_download_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11335400975/zip",
+        "created_at": "2026-10-05T09:07:41Z",
+        "digest": "sha256:4558a6e1b47dce4f7410cc4e6f03e8bb1c5bb16b48101237fa78102627115b0f",
+        "expired": false,
+        "expires_at": "2026-10-19T09:07:40Z",
+        "id": 11335400975,
+        "name": "ai10-observation-replay",
+        "size_in_bytes": 891,
+        "updated_at": "2026-10-05T09:07:41Z",
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11335400975",
+        "workflow_run": {
+          "head_branch": "ai/10-observation-broker",
+          "head_repository_id": 1391921598,
+          "head_sha": "b887b90e12036499870d0de455511f2cca4ba441",
+          "id": 37283419605,
+          "repository_id": 1391921598
+        }
+      },
+      "records": [
+        {
+          "bytes": 1844,
+          "entry": "ai10-observation-replay.json",
+          "local_file": "11335400975-0.json",
+          "sha256": "e5e583e030b330856f1dd3458873a8f42d4dbd53451082e2b088ca78e617a24e"
+        }
+      ],
+      "trigger": "push",
+      "zip_sha256": "4558a6e1b47dce4f7410cc4e6f03e8bb1c5bb16b48101237fa78102627115b0f"
+    },
+    {
+      "artifact_id": 11333486174,
+      "github_metadata": {
+        "archive_download_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11333486174/zip",
+        "created_at": "2026-10-05T08:25:42Z",
+        "digest": "sha256:2111b04619590ca79cd48a5a7f644e2a67508d6165e5ee6629ccf0ee76e6c342",
+        "expired": false,
+        "expires_at": "2026-10-19T08:25:41Z",
+        "id": 11333486174,
+        "name": "ai10-observation-broker",
+        "size_in_bytes": 1450,
+        "updated_at": "2026-10-05T08:25:42Z",
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11333486174",
+        "workflow_run": {
+          "head_branch": "ai/10-observation-broker",
+          "head_repository_id": 1391921598,
+          "head_sha": "b887b90e12036499870d0de455511f2cca4ba441",
+          "id": 37283419605,
+          "repository_id": 1391921598
+        }
+      },
+      "records": [
+        {
+          "bytes": 952,
+          "entry": "ai10-observation-broker.json",
+          "local_file": "11333486174-0.json",
+          "sha256": "c9e162111857489e04476c89405d6969699c2baa18fe3ee3cf6817e9e0c926e8"
+        },
+        {
+          "bytes": 1959,
+          "entry": "ai10-observation-broker-tests.xml",
+          "local_file": "11333486174-1.xml",
+          "sha256": "76035146f727844ddac0e9ba8d1bca324e4038d52b0d8c9ea58691c411ccad03"
+        }
+      ],
+      "trigger": "push",
+      "zip_sha256": "2111b04619590ca79cd48a5a7f644e2a67508d6165e5ee6629ccf0ee76e6c342"
+    },
+    {
+      "artifact_id": 11332269687,
+      "github_metadata": {
+        "archive_download_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11332269687/zip",
+        "created_at": "2026-10-05T08:25:21Z",
+        "digest": "sha256:82abeefe3a2c6e6ec9e525aac49710c22bbb2e2c2d4d0a577122262d49631672",
+        "expired": false,
+        "expires_at": "2026-10-19T08:25:20Z",
+        "id": 11332269687,
+        "name": "ai10-durable-observation-replay",
+        "size_in_bytes": 1906,
+        "updated_at": "2026-10-05T08:25:21Z",
+        "url": "https://api.github.com/repos/Oskar-Stachowski/retailops-ai-intelligence/actions/artifacts/11332269687",
+        "workflow_run": {
+          "head_branch": "ai/10-observation-broker",
+          "head_repository_id": 1391921598,
+          "head_sha": "b887b90e12036499870d0de455511f2cca4ba441",
+          "id": 37283419605,
+          "repository_id": 1391921598
+        }
+      },
+      "records": [
+        {
+          "bytes": 870,
+          "entry": "ai10-durable-observation-replay.json",
+          "local_file": "11332269687-0.json",
+          "sha256": "2bdb619deeb19a584aebd365e19161ab377e0b0d23a544a0d8e21c417539e535"
+        },
+        {
+          "bytes": 5008,
+          "entry": "ai10-durable-observation-replay-tests.xml",
+          "local_file": "11332269687-1.xml",
+          "sha256": "747e57f4ab8f68e9b2617e812fb80cc7212d7cc5ea306e948d1ef6bc7c5f5faa"
+        }
+      ],
+      "trigger": "push",
+      "zip_sha256": "82abeefe3a2c6e6ec9e525aac49710c22bbb2e2c2d4d0a577122262d49631672"
+    }
+  ],
+  "ci_broker_report_sha256": "c9e162111857489e04476c89405d6969699c2baa18fe3ee3cf6817e9e0c926e8",
+  "ci_report_sha256": {
+    "ai10-durable-observation-replay": "2bdb619deeb19a584aebd365e19161ab377e0b0d23a544a0d8e21c417539e535",
+    "ai10-observation-broker": "c9e162111857489e04476c89405d6969699c2baa18fe3ee3cf6817e9e0c926e8",
+    "ai10-observation-replay": "e5e583e030b330856f1dd3458873a8f42d4dbd53451082e2b088ca78e617a24e"
+  },
+  "closed_at": "2026-10-05T09:18:38.160328+00:00",
+  "deployed": false,
+  "detached_wheel_smoke": {
+    "modules_loaded_from_wheel": [
+      "retailops_ai.source_replay.broker",
+      "retailops_ai.source_replay.store",
+      "retailops_ai.source_replay.wire"
+    ],
+    "optional_client_absent_from_core": true,
+    "scope": "isolated installed wheel; frozen dependency wheels explicitly appended, editable pth not processed; no SQL/broker operation",
+    "source_module_parity_sha256": {
+      "retailops_ai/source_replay/broker.py": "c1cf4d5e833a9d9220ea1798bebb35b6d5b749c656709b9dde6c1c0c822f173f",
+      "retailops_ai/source_replay/store.py": "060dd29c64212879482751c14f7aefc706c2c58648ab36d5d2a9a2d6d0b92e96",
+      "retailops_ai/source_replay/wire.py": "062abedcc99c827572a85170a9227e148e24c12df386487d4d2e980a6699f94d"
+    },
+    "status": "passed",
+    "wheel_sha256": "ed4fc208755982f571252c1ba9223381360bace7ea1f9d5d3079b61a42b86712"
+  },
+  "draft_pr": {
+    "draft": true,
+    "number": 26,
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/26"
+  },
+  "existing_ci_acceptance_preserved": {
+    "all_forecast_and_curated_checks": true,
+    "compose_configuration": true,
+    "compose_mlflow_lifecycle_queue_inputs_publish_read_catalog_evals": true,
+    "forecast_v12_acceptance_original_not_ready_and_three_accepted_deviations": true,
+    "frozen_contracts_and_byte_pins": true,
+    "frozen_core_dependency_identity": true,
+    "full_v12_coherent_backup_restore_recovery_and_owned_cleanup": true,
+    "mypy_core_and_native": true,
+    "package": true,
+    "real_pg_outbox": true,
+    "ruff_format": true
+  },
+  "head": "b887b90e12036499870d0de455511f2cca4ba441",
+  "implementation": {
+    "ack_only_after_sql_commit": true,
+    "actual_cluster_and_native_topic_identity_discovery": true,
+    "automatic_offset_commit": false,
+    "automatic_offset_store": false,
+    "automatic_topic_creation": false,
+    "core_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "delete_only_dense_topic": true,
+    "full_43_table_handoff": false,
+    "operational_source_producer_created": false,
+    "optional_client": "confluent-kafka==2.15.1",
+    "overlap_ack_only_delivered_next_offset": true,
+    "sasl": [
+      "SCRAM-SHA-256",
+      "SCRAM-SHA-512"
+    ],
+    "source_sql_capture": false,
+    "sql_epoch_fencing": true,
+    "sticky_stop_on_any_failure": true,
+    "tls_certificate_and_hostname_verification": true
+  },
+  "increment": 12,
+  "increment_status": "complete",
+  "junit_verified": {
+    "pr:ai10-durable-observation-replay": {
+      "errors": 0,
+      "failures": 0,
+      "seconds": 20.009,
+      "skipped": 0,
+      "tests": 30
+    },
+    "pr:ai10-observation-broker": {
+      "errors": 0,
+      "failures": 0,
+      "seconds": 19.992,
+      "skipped": 0,
+      "tests": 12
+    },
+    "push:ai10-durable-observation-replay": {
+      "errors": 0,
+      "failures": 0,
+      "seconds": 17.242,
+      "skipped": 0,
+      "tests": 30
+    },
+    "push:ai10-observation-broker": {
+      "errors": 0,
+      "failures": 0,
+      "seconds": 21.747,
+      "skipped": 0,
+      "tests": 12
+    }
+  },
+  "local_checks": {
+    "cli_help": "passed",
+    "docs_workflow_dependency_guards": "passed",
+    "format_files": 597,
+    "local_docker_started": false,
+    "mypy_files": 351,
+    "native_owner_mypy_files": 10,
+    "new_unit_tests": 47,
+    "real_broker_tests_pending_remote": 0,
+    "ruff": "passed",
+    "targeted_distinct_tests_passed": 165,
+    "workflow_guards": 32
+  },
+  "merged": false,
+  "model_owner_status_read_only": {
+    "AI07": {
+      "head": "eb15ac94398761ff2b2c10c4fe1a1073634d3b1e",
+      "status": "full local acceptance passed, pending_required_ci; publication awaits owner consent"
+    },
+    "AI08": {
+      "accepted_small_category_warnings": 3,
+      "actual_served_outputs": 40,
+      "attention_queue": 15,
+      "blocking_quality_checks": 0,
+      "head": "6fb5c7ae3b01e1e63deefe6acdc0fcdc4391068d",
+      "quality_checks_passed": 90,
+      "status": "all data/quality/lifecycle/cold worker/batch/scoped serving acceptance passed; formal PR14 exact-head CI, normal merge and merge CI pending"
+    },
+    "sessions_modified": false
+  },
+  "postgres_and_broker_tests": {
+    "actual_observation_postgres_passed": 30,
+    "actual_observation_postgres_pr_seconds": 20.01,
+    "actual_observation_postgres_push_seconds": 17.242,
+    "broker_failed": 0,
+    "broker_passed": 12,
+    "broker_pr_seconds": 19.99,
+    "broker_push_seconds": 21.75,
+    "broker_skipped": 0,
+    "counting": "PR/push and targeted subsets are not summed"
+  },
+  "pr_push_all_three_report_byte_parity": true,
+  "pr_push_broker_report_byte_parity": true,
+  "previous_attempts": [
+    {
+      "broker_failed": 3,
+      "broker_passed": 9,
+      "broker_seconds": 20.68,
+      "broker_teardown_errors": 1,
+      "cause": [
+        "producer fixture correction reused prior event ID; SQL correctly quarantined collision",
+        "SIGKILL fixture had no initial broker commit; correct recovery resumed at durable SQL next rather than forcing overlap"
+      ],
+      "fix": "only test fixture corrected: distinct transport event IDs and explicit initial broker offset 0; production code unchanged",
+      "head": "9202d820a6510a15b51a15a3e2b32e94200d7b99",
+      "pr_broker_job": 111675790192,
+      "pr_run_id": 37283176907,
+      "push_broker_job": 111675664406,
+      "push_run_id": 37283137876,
+      "tree": "7f46e8586a9c557bedf3a3a4a68b557f370ec5a5"
+    }
+  ],
+  "protected_checkouts": {
+    "ai07_ai08_sessions_touched": false,
+    "ai_main": {
+      "branch": "ai/11-completion",
+      "head": "abf3f69a6a78c444b5a8a910fef8b3b43ba047a9",
+      "tracked_changes": false
+    },
+    "local_docker_started": false,
+    "owned_ai10": {
+      "branch": "ai/10-observation-broker",
+      "head": "b887b90e12036499870d0de455511f2cca4ba441",
+      "tracked_changes": false
+    },
+    "owned_worktree_clean": true,
+    "source_files_edited": false,
+    "source_main": {
+      "branch": "ai/16a-infrastructure-contracts",
+      "head": "599735a5fd13328e05f6100a07f644f4676e1ced",
+      "tracked_changes": false
+    }
+  },
+  "pytest_durations_pr": [
+    {
+      "node_id": "tests/test_v12_queue.py::test_byte_budget_splits_further_without_losing_rows",
+      "phase": "call",
+      "seconds": 129.31
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_maximum_scope_uses_ten_bounded_parts",
+      "phase": "call",
+      "seconds": 80.97
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_split_full_rectangles_and_complete_worker_receipt",
+      "phase": "call",
+      "seconds": 36.23
+    },
+    {
+      "node_id": "tests/test_curated.py::test_concurrent_builds_publish_once",
+      "phase": "call",
+      "seconds": 36.01
+    },
+    {
+      "node_id": "tests/test_forecast_backtest.py::test_full_two_fold_training_source_rebuild_keys_immutable_rerun_and_forged_report[34]",
+      "phase": "call",
+      "seconds": 33.78
+    },
+    {
+      "node_id": "tests/test_curated.py::test_sigkill_leaves_only_hidden_private_staging_and_retry_succeeds",
+      "phase": "call",
+      "seconds": 29.77
+    },
+    {
+      "node_id": "tests/test_forecast_features.py::test_real_typed_pipeline_and_repeated_publication_are_immutable",
+      "phase": "setup",
+      "seconds": 23.95
+    },
+    {
+      "node_id": "tests/test_forecast_input_storage.py::test_verifier_uses_compressed_index_but_preserves_historical_input_contracts",
+      "phase": "setup",
+      "seconds": 22.79
+    },
+    {
+      "node_id": "tests/test_forecast_remediation_v2.py::test_immutable_remediation_parent_replay_and_rehashed_forgery[37]",
+      "phase": "call",
+      "seconds": 21.95
+    },
+    {
+      "node_id": "tests/test_forecast_quality.py::test_two_fold_quality_replay_immutable_parents_sparse_segments_and_rehashed_forgery[34]",
+      "phase": "call",
+      "seconds": 20.48
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_receipt_tamper_refused[wrong_profile]",
+      "phase": "call",
+      "seconds": 20.26
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_receipt_tamper_refused[scope]",
+      "phase": "call",
+      "seconds": 20.26
+    },
+    {
+      "node_id": "tests/test_forecast_remediation.py::test_immutable_remediation_parent_replay_and_rehashed_forgery[37]",
+      "phase": "call",
+      "seconds": 20.13
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_receipt_tamper_refused[rss]",
+      "phase": "call",
+      "seconds": 19.84
+    },
+    {
+      "node_id": "tests/test_observation_replay.py::test_native_smoke_snapshot_overlap_matches_full_replay_and_curated_as_of",
+      "phase": "call",
+      "seconds": 19.74
+    },
+    {
+      "node_id": "tests/test_forecast_models.py::test_train_only_pipelines_shared_keys_replay_and_rehashed_model_forgery",
+      "phase": "call",
+      "seconds": 18.61
+    },
+    {
+      "node_id": "tests/test_curated.py::test_complete_curated_preserves_source_versions_and_idempotence",
+      "phase": "call",
+      "seconds": 18.46
+    },
+    {
+      "node_id": "tests/test_forecast_calendar.py::test_real_curated_binding_determinism_and_transport_independence",
+      "phase": "setup",
+      "seconds": 17.62
+    },
+    {
+      "node_id": "tests/test_forecast_functional.py::test_two_fold_campaign_replays_without_refitting_and_retains_empty_segments[36]",
+      "phase": "call",
+      "seconds": 17.48
+    },
+    {
+      "node_id": "tests/test_curated.py::test_complete_curated_preserves_source_versions_and_idempotence",
+      "phase": "setup",
+      "seconds": 17.27
+    },
+    {
+      "node_id": "tests/test_curated.py::test_quarantine_retains_lineage_and_blocks_ready_publication",
+      "phase": "call",
+      "seconds": 17.11
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_single_series_over_byte_budget_is_refused",
+      "phase": "call",
+      "seconds": 17.01
+    },
+    {
+      "node_id": "tests/test_forecast_calendar.py::test_all_plan_horizons_use_one_origin_not_target_day",
+      "phase": "call",
+      "seconds": 16.65
+    },
+    {
+      "node_id": "tests/test_forecast_functional_v12_inputs.py::test_projection_exactly_matches_eight_tables_from_full_curated_and_requires_factory",
+      "phase": "setup",
+      "seconds": 16.18
+    },
+    {
+      "node_id": "tests/test_curated.py::test_truth_opt_in_keeps_truth_in_parent_import_and_outside_curated",
+      "phase": "call",
+      "seconds": 15.7
+    },
+    {
+      "node_id": "tests/test_forecast_features.py::test_corrupted_inputs_extra_files_and_cli_error_are_rejected",
+      "phase": "call",
+      "seconds": 15.61
+    },
+    {
+      "node_id": "tests/test_curated.py::test_semantic_config_changes_id_but_preserves_parent",
+      "phase": "call",
+      "seconds": 15.39
+    },
+    {
+      "node_id": "tests/test_curated.py::test_failure_before_publish_cleans_staging",
+      "phase": "call",
+      "seconds": 14.85
+    },
+    {
+      "node_id": "tests/test_curated.py::test_partitioning_preserves_logical_id",
+      "phase": "call",
+      "seconds": 14.09
+    },
+    {
+      "node_id": "tests/test_curated.py::test_empty_destination_is_not_overwritten",
+      "phase": "call",
+      "seconds": 13.96
+    }
+  ],
+  "pytest_durations_push": [
+    {
+      "node_id": "tests/test_v12_queue.py::test_byte_budget_splits_further_without_losing_rows",
+      "phase": "call",
+      "seconds": 165.57
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_maximum_scope_uses_ten_bounded_parts",
+      "phase": "call",
+      "seconds": 101.48
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_split_full_rectangles_and_complete_worker_receipt",
+      "phase": "call",
+      "seconds": 45.35
+    },
+    {
+      "node_id": "tests/test_curated.py::test_concurrent_builds_publish_once",
+      "phase": "call",
+      "seconds": 44.75
+    },
+    {
+      "node_id": "tests/test_forecast_backtest.py::test_full_two_fold_training_source_rebuild_keys_immutable_rerun_and_forged_report[34]",
+      "phase": "call",
+      "seconds": 41.17
+    },
+    {
+      "node_id": "tests/test_curated.py::test_sigkill_leaves_only_hidden_private_staging_and_retry_succeeds",
+      "phase": "call",
+      "seconds": 36.31
+    },
+    {
+      "node_id": "tests/test_forecast_input_storage.py::test_verifier_uses_compressed_index_but_preserves_historical_input_contracts",
+      "phase": "setup",
+      "seconds": 28.09
+    },
+    {
+      "node_id": "tests/test_forecast_features.py::test_real_typed_pipeline_and_repeated_publication_are_immutable",
+      "phase": "setup",
+      "seconds": 28.05
+    },
+    {
+      "node_id": "tests/test_forecast_quality.py::test_two_fold_quality_replay_immutable_parents_sparse_segments_and_rehashed_forgery[34]",
+      "phase": "call",
+      "seconds": 26.35
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_receipt_tamper_refused[wrong_profile]",
+      "phase": "call",
+      "seconds": 25.98
+    },
+    {
+      "node_id": "tests/test_forecast_remediation.py::test_immutable_remediation_parent_replay_and_rehashed_forgery[37]",
+      "phase": "call",
+      "seconds": 25.84
+    },
+    {
+      "node_id": "tests/test_forecast_remediation_v2.py::test_immutable_remediation_parent_replay_and_rehashed_forgery[37]",
+      "phase": "call",
+      "seconds": 25.83
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_receipt_tamper_refused[scope]",
+      "phase": "call",
+      "seconds": 25.77
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_receipt_tamper_refused[rss]",
+      "phase": "call",
+      "seconds": 25.71
+    },
+    {
+      "node_id": "tests/test_observation_replay.py::test_native_smoke_snapshot_overlap_matches_full_replay_and_curated_as_of",
+      "phase": "call",
+      "seconds": 22.66
+    },
+    {
+      "node_id": "tests/test_forecast_models.py::test_train_only_pipelines_shared_keys_replay_and_rehashed_model_forgery",
+      "phase": "call",
+      "seconds": 22.52
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_single_series_over_byte_budget_is_refused",
+      "phase": "call",
+      "seconds": 22.03
+    },
+    {
+      "node_id": "tests/test_forecast_functional.py::test_two_fold_campaign_replays_without_refitting_and_retains_empty_segments[36]",
+      "phase": "call",
+      "seconds": 21.31
+    },
+    {
+      "node_id": "tests/test_curated.py::test_quarantine_retains_lineage_and_blocks_ready_publication",
+      "phase": "call",
+      "seconds": 21.3
+    },
+    {
+      "node_id": "tests/test_curated.py::test_complete_curated_preserves_source_versions_and_idempotence",
+      "phase": "call",
+      "seconds": 21.24
+    },
+    {
+      "node_id": "tests/test_forecast_calendar.py::test_real_curated_binding_determinism_and_transport_independence",
+      "phase": "setup",
+      "seconds": 20.79
+    },
+    {
+      "node_id": "tests/test_forecast_features.py::test_corrupted_inputs_extra_files_and_cli_error_are_rejected",
+      "phase": "call",
+      "seconds": 19.71
+    },
+    {
+      "node_id": "tests/test_forecast_calendar.py::test_all_plan_horizons_use_one_origin_not_target_day",
+      "phase": "call",
+      "seconds": 19.29
+    },
+    {
+      "node_id": "tests/test_curated.py::test_complete_curated_preserves_source_versions_and_idempotence",
+      "phase": "setup",
+      "seconds": 19.06
+    },
+    {
+      "node_id": "tests/test_curated.py::test_truth_opt_in_keeps_truth_in_parent_import_and_outside_curated",
+      "phase": "call",
+      "seconds": 18.8
+    },
+    {
+      "node_id": "tests/test_forecast_functional_v12_inputs.py::test_projection_exactly_matches_eight_tables_from_full_curated_and_requires_factory",
+      "phase": "setup",
+      "seconds": 18.75
+    },
+    {
+      "node_id": "tests/test_curated.py::test_partitioning_preserves_logical_id",
+      "phase": "call",
+      "seconds": 17.6
+    },
+    {
+      "node_id": "tests/test_curated.py::test_failure_before_publish_cleans_staging",
+      "phase": "call",
+      "seconds": 17.45
+    },
+    {
+      "node_id": "tests/test_v12_queue.py::test_receipt_tamper_refused[prediction_hash]",
+      "phase": "call",
+      "seconds": 17.42
+    },
+    {
+      "node_id": "tests/test_curated.py::test_semantic_config_changes_id_but_preserves_parent",
+      "phase": "call",
+      "seconds": 17.41
+    }
+  ],
+  "remaining": [
+    "Operational Source producer / consistent Source SQL capture and complete 43-table trusted offset handoff",
+    "Final AI07 publication/CI and formal AI08 PR/main CI; integrate their approved qualified lifecycle/serving releases into AI10",
+    "Anomaly/model-stockout intelligence.v2 atomic Source projections and scoped API/UI",
+    "Actual 102-day forecast/anomaly/stockout temporal E2E"
+  ],
+  "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+  "required_ci": {
+    "aggregate": "success",
+    "checks": "success",
+    "final_head_manual_retry": false,
+    "observation_broker": "success",
+    "observation_replay": "success",
+    "persistence": "success",
+    "pr_conclusion": "success",
+    "pr_observation_broker_job": 111676780550,
+    "pr_run_id": 37283423931,
+    "pr_status": "completed",
+    "pr_successful_jobs": 6,
+    "push_conclusion": "success",
+    "push_observation_broker_job": 111676695866,
+    "push_run_id": 37283419605,
+    "push_status": "completed",
+    "push_successful_jobs": 6,
+    "runs": {
+      "pr": {
+        "attempt": 1,
+        "conclusion": "success",
+        "created_at": "2026-10-05T08:24:23Z",
+        "elapsed_seconds": 2170,
+        "event": "pull_request",
+        "head_sha": "b887b90e12036499870d0de455511f2cca4ba441",
+        "id": 37283423931,
+        "jobs": [
+          {
+            "completed_at": "2026-10-05T08:25:12Z",
+            "conclusion": "success",
+            "elapsed_seconds": 10,
+            "id": 111676780253,
+            "name": "secrets",
+            "started_at": "2026-10-05T08:25:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-05T08:25:49Z",
+            "conclusion": "success",
+            "elapsed_seconds": 47,
+            "id": 111676780550,
+            "name": "observation-broker",
+            "started_at": "2026-10-05T08:25:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-05T09:00:26Z",
+            "conclusion": "success",
+            "elapsed_seconds": 2124,
+            "id": 111676780586,
+            "name": "checks",
+            "started_at": "2026-10-05T08:25:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-05T08:55:33Z",
+            "conclusion": "success",
+            "elapsed_seconds": 1831,
+            "id": 111676780591,
+            "name": "persistence",
+            "started_at": "2026-10-05T08:25:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-05T08:25:45Z",
+            "conclusion": "success",
+            "elapsed_seconds": 43,
+            "id": 111676780667,
+            "name": "observation-replay",
+            "started_at": "2026-10-05T08:25:02Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-05T09:00:33Z",
+            "conclusion": "success",
+            "elapsed_seconds": 3,
+            "id": 111688822223,
+            "name": "required-result",
+            "started_at": "2026-10-05T09:00:30Z",
+            "status": "completed"
+          }
+        ],
+        "run_started_at": "2026-10-05T08:24:23Z",
+        "status": "completed",
+        "updated_at": "2026-10-05T09:00:33Z",
+        "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37283423931"
+      },
+      "push": {
+        "attempt": 1,
+        "conclusion": "success",
+        "created_at": "2026-10-05T08:24:20Z",
+        "elapsed_seconds": 2611,
+        "event": "push",
+        "head_sha": "b887b90e12036499870d0de455511f2cca4ba441",
+        "id": 37283419605,
+        "jobs": [
+          {
+            "completed_at": "2026-10-05T08:25:44Z",
+            "conclusion": "success",
+            "elapsed_seconds": 58,
+            "id": 111676695866,
+            "name": "observation-broker",
+            "started_at": "2026-10-05T08:24:46Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-05T08:24:55Z",
+            "conclusion": "success",
+            "elapsed_seconds": 8,
+            "id": 111676696230,
+            "name": "secrets",
+            "started_at": "2026-10-05T08:24:47Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-05T09:07:43Z",
+            "conclusion": "success",
+            "elapsed_seconds": 2577,
+            "id": 111676696312,
+            "name": "checks",
+            "started_at": "2026-10-05T08:24:46Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-05T08:55:11Z",
+            "conclusion": "success",
+            "elapsed_seconds": 1825,
+            "id": 111676696350,
+            "name": "persistence",
+            "started_at": "2026-10-05T08:24:46Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-05T08:25:23Z",
+            "conclusion": "success",
+            "elapsed_seconds": 37,
+            "id": 111676696450,
+            "name": "observation-replay",
+            "started_at": "2026-10-05T08:24:46Z",
+            "status": "completed"
+          },
+          {
+            "completed_at": "2026-10-05T09:07:51Z",
+            "conclusion": "success",
+            "elapsed_seconds": 4,
+            "id": 111691381912,
+            "name": "required-result",
+            "started_at": "2026-10-05T09:07:47Z",
+            "status": "completed"
+          }
+        ],
+        "run_started_at": "2026-10-05T08:24:20Z",
+        "status": "completed",
+        "updated_at": "2026-10-05T09:07:51Z",
+        "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37283419605"
+      }
+    },
+    "secrets": "success",
+    "status": "passed"
+  },
+  "status": "passed",
+  "technical_ci_merge": {
+    "parents": [
+      "571b174018937dad7b5b3b14ba44b4d6f4397c76",
+      "b887b90e12036499870d0de455511f2cca4ba441"
+    ],
+    "same_tree_as_final_head": true,
+    "sha": "d969987c217a5f63d6420e75dfb097d3cccd197a",
+    "tree": "71cb93905e788f5c03d902f7913c564cd4469755"
+  },
+  "test_counts": {
+    "actual_observation_broker_passed": 12,
+    "actual_observation_postgres_passed": 30,
+    "actual_outbox_passed": 1,
+    "distinct_executed_passed": 1969,
+    "new_distinct_tests": 64,
+    "nonduplicated": true,
+    "pr_broad_failed": 0,
+    "pr_broad_passed": 1926,
+    "pr_broad_seconds": 1828.85,
+    "pr_broad_skipped": 43,
+    "push_broad_failed": 0,
+    "push_broad_passed": 1926,
+    "push_broad_seconds": 2228.18,
+    "push_broad_skipped": 43,
+    "unexecuted_skips_in_required_scope": 0
+  },
+  "tree": "71cb93905e788f5c03d902f7913c564cd4469755",
+  "version": "ai10-observation-broker-receipt-1.0",
+  "whole_ai10_status": "in_progress"
+}

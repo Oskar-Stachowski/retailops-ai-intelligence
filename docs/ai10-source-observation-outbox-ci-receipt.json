@@ -1,0 +1,641 @@
+{
+  "actual_runtime_tests": {
+    "errors": 0,
+    "failed": 0,
+    "local_execution": false,
+    "new_case_junit_seconds": 15.955,
+    "passed": 12,
+    "required": 12,
+    "scope": "Source-owned operational publisher/outbox; explicit acceptance facts; native TLS broker reader, not operational full-snapshot capture or three-model E2E",
+    "skipped": 0,
+    "status": "passed_remote_ci",
+    "timing_scope": "Sum of new Source testcase JUnit durations; shared setup/teardown excluded; combined mandatory 58-case step is 88.48 seconds"
+  },
+  "ai10_draft_prs_total": 16,
+  "base_branch": "ai/10-suggestion-ui",
+  "base_commit": "25b76bc95d38d6d9ea4dbadd1e2710cdaaf462c1",
+  "branch": "ai/10-source-observation-outbox",
+  "closed_at_utc": "2026-10-05T10:38:11.490727+00:00",
+  "deployed": false,
+  "draft_pr": {
+    "base": "25b76bc95d38d6d9ea4dbadd1e2710cdaaf462c1",
+    "base_ref": "ai/10-suggestion-ui",
+    "draft": true,
+    "head": "767d34273440fd86306768e96edaf24afcc4bdac",
+    "head_ref": "ai/10-source-observation-outbox",
+    "html_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/98",
+    "merge_commit_sha": "fd0e2f38ac2effd2bafbde5efdfba3acdb79829d",
+    "merged": false,
+    "number": 98,
+    "state": "open",
+    "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/98"
+  },
+  "fingerprinted_additive_rollback": {
+    "head": "a10f0c7e0500",
+    "history_sha256": "40cc6abd2e70ccf903635c3b3a03d5fbd636ef10d854c489de5a1fba2151280f"
+  },
+  "head": "767d34273440fd86306768e96edaf24afcc4bdac",
+  "historical_migration_bytes_changed": false,
+  "implementation": {
+    "at_least_once_on_delivery_before_commit_crash": true,
+    "authority_topic_binding_unique_in_database": true,
+    "autocommit_without_active_caller_transaction_rejected": true,
+    "automatic_legacy_sales_or_generator_wiring": false,
+    "delivery_then_sql_completion": true,
+    "dense_nontransactional_delete_only_topic": true,
+    "dependencies_changed": false,
+    "full_43_table_handoff": false,
+    "native_observation_version_and_outbox_atomic_sql": true,
+    "publisher_sasl": [
+      "SCRAM-SHA-256",
+      "SCRAM-SHA-512"
+    ],
+    "publisher_tls_hostname_verified": true,
+    "serialized_authority_with_bounded_delivery": true,
+    "source_sql_capture": false,
+    "stable_event_id_and_canonical_bytes": true,
+    "topic_auto_creation": false
+  },
+  "increment": 13,
+  "increment_status": "complete",
+  "local_checks": {
+    "bandit_high_high": "passed",
+    "ci_contract_guard_tests_passed": 2,
+    "cli_help": "passed",
+    "focused_distinct_pytest_passed": 95,
+    "focused_latest_run_seconds": 1.93,
+    "full_offline_migration_sql": "passed",
+    "immutable_references": 202,
+    "local_docker_started": false,
+    "mypy_files_passed": 37,
+    "new_unit_tests_passed": 49,
+    "production_format_files": 259,
+    "real_runtime_tests_locally_skipped": 12,
+    "release_rollback_tests_passed": 25,
+    "ruff": "passed"
+  },
+  "merged": false,
+  "migration": "a10f0c7e0500",
+  "new_distinct_tests": 63,
+  "previous_attempts": [
+    {
+      "api_job": 111706587844,
+      "cause": "Test child serialized SecretStr username as Pydantic mask instead of actual SCRAM identity; native broker correctly rejected authentication",
+      "combined_early_passed": 51,
+      "failed": 1,
+      "fix": "test-only private configuration round trip preserves username/password; regression unit test added; production unchanged",
+      "head": "a885b2a28f53bcd44e066558915e5e06e9124090",
+      "run_id": 37292670658,
+      "seconds": 80.67,
+      "teardown_errors": 1,
+      "tree": "9d78a98dfbf7d302d3ca1e714260bd6844bf34c2"
+    },
+    {
+      "actual_source_runtime_passed": 12,
+      "api_job": 111709288514,
+      "early_durability_step": "success",
+      "global_failure": "diff hygiene: new blank line at EOF in test fixture",
+      "head": "2a759afc562dcef8d364b3ce067473876cc4e37d",
+      "receipt_scope": "step success only; final acceptance awaits new complete exact-head CI",
+      "run_id": 37293339664,
+      "subsequent_change": "EOF fixed; reviewed writer rejects autocommit without active transaction and applies caller SQL timeouts; actual rollback test extended",
+      "tree": "56ac25acfa3b154c6782fe0040cca76de1127a4e"
+    }
+  ],
+  "protected_checkouts": {
+    "ai07_ai08_sessions_touched": false,
+    "ai_root": {
+      "branch": "ai/11-completion",
+      "head": "abf3f69a6a78c444b5a8a910fef8b3b43ba047a9",
+      "read_only_verification": true,
+      "tracked_changes": ""
+    },
+    "local_docker_started": false,
+    "own_source_worktree": {
+      "branch": "ai/10-source-observation-outbox",
+      "head": "767d34273440fd86306768e96edaf24afcc4bdac",
+      "read_only_verification": true,
+      "tracked_changes": ""
+    },
+    "source_main_files_edited": false,
+    "source_root": {
+      "branch": "ai/16a-infrastructure-contracts",
+      "head": "599735a5fd13328e05f6100a07f644f4676e1ced",
+      "read_only_verification": true,
+      "tracked_changes": ""
+    }
+  },
+  "queue_observation": {
+    "at_utc": "2026-10-05T10:16:03Z",
+    "cause": "not established",
+    "final_run_created_utc": "2026-10-05T10:04:01Z",
+    "github_public_status": "Actions operational; no current global incident reported",
+    "github_public_status_url": "https://www.githubstatus.com/",
+    "intermediate_reader_reported_root_jobs_queued": 2,
+    "other_sessions_or_runs_modified": false,
+    "prior_own_runs_completed_cancelled": true,
+    "runner_work_started_by_utc": "2026-10-05T10:18:09Z",
+    "timing_note": "Earlier intermediate reader snapshot was delayed relative to actual runner execution; final timing uses completed GitHub job timestamps. First job started at 10:13:02 UTC, not the 10:18:09 UTC observation time. Delay cause not established.",
+    "verified_created_to_first_job_seconds": 541.0,
+    "verified_first_job_started_utc": "2026-10-05T10:13:02+00:00"
+  },
+  "remaining": [
+    "Operational integration into approved Source write path, consistent SQL capture of 43 tables and complete trusted snapshot/replay barrier",
+    "Approved qualified AI07/AI08 releases and migration integration",
+    "Anomaly/model-stockout intelligence.v2 projections and scoped API/UI",
+    "Actual 102-day three-model temporal E2E"
+  ],
+  "remote_api_regression": {
+    "broad_failed": 0,
+    "broad_passed": 1030,
+    "broad_seconds": 714.72,
+    "broad_skipped": 0,
+    "ci_contract_tests_counted_outside_api_total": true,
+    "coverage_percent": 87.66,
+    "distinct_api_passed": 1088,
+    "early_durability_errors": 0,
+    "early_durability_failed": 0,
+    "early_durability_passed": 58,
+    "early_durability_seconds": 88.48,
+    "early_durability_skipped": 0,
+    "fixed_origin_subset_passed": 21,
+    "fixed_origin_subset_seconds": 4.61,
+    "new_distinct_test_breakdown": {
+      "actual_runtime": 12,
+      "ci_contract": 2,
+      "unit": 49
+    },
+    "new_distinct_tests": 63,
+    "new_source_runtime_passed": 12,
+    "required_coverage_percent": 80,
+    "subset_or_previous_attempt_counts_added_to_distinct_total": false
+  },
+  "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+  "required_ci": {
+    "conclusion": "success",
+    "created_at": "2026-10-05T10:04:01Z",
+    "created_to_completed_seconds": 1882.0,
+    "created_to_first_job_seconds": 541.0,
+    "created_to_last_job_seconds": 1880.0,
+    "event": "pull_request",
+    "existing_required_gates_preserved": true,
+    "first_job_started_utc": "2026-10-05T10:13:02+00:00",
+    "head_sha": "767d34273440fd86306768e96edaf24afcc4bdac",
+    "id": 37294138449,
+    "job_execution_span_seconds": 1339.0,
+    "jobs": [
+      {
+        "completed_at": "2026-10-05T10:13:13Z",
+        "conclusion": "success",
+        "id": 111712197015,
+        "name": "Required CI contract tests",
+        "seconds": 11.0,
+        "started_at": "2026-10-05T10:13:02Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:15:28Z",
+        "conclusion": "success",
+        "id": 111712197363,
+        "name": "Detect changed areas",
+        "seconds": 5.0,
+        "started_at": "2026-10-05T10:15:23Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:16:08Z",
+        "conclusion": "success",
+        "id": 111715338807,
+        "name": "Repository diff hygiene",
+        "seconds": 4.0,
+        "started_at": "2026-10-05T10:16:04Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:34:35Z",
+        "conclusion": "success",
+        "id": 111715339740,
+        "name": "api-gate / API integration tests",
+        "seconds": 914.0,
+        "started_at": "2026-10-05T10:19:21Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:21:50Z",
+        "conclusion": "success",
+        "id": 111715339753,
+        "name": "data-gate / AI 03 full cross-repo gate",
+        "seconds": 344.0,
+        "started_at": "2026-10-05T10:16:06Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:19:27Z",
+        "conclusion": "success",
+        "id": 111715339845,
+        "name": "frontend-gate / Frontend tests and lint",
+        "seconds": 19.0,
+        "started_at": "2026-10-05T10:19:08Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:25:19Z",
+        "conclusion": "success",
+        "id": 111715339854,
+        "name": "data-gate / Synthetic data quality gate",
+        "seconds": 491.0,
+        "started_at": "2026-10-05T10:17:08Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:19:05Z",
+        "conclusion": "success",
+        "id": 111715339906,
+        "name": "frontend-gate / Personal forecast and suggestion UI with actual PostgreSQL and API",
+        "seconds": 101.0,
+        "started_at": "2026-10-05T10:17:24Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:21:08Z",
+        "conclusion": "success",
+        "id": 111715339944,
+        "name": "terraform-validation-gate / Terraform fmt, init and validate",
+        "seconds": 29.0,
+        "started_at": "2026-10-05T10:20:39Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:20:37Z",
+        "conclusion": "success",
+        "id": 111715340004,
+        "name": "docker-gate / Authenticated immutable native source bundle import",
+        "seconds": 301.0,
+        "started_at": "2026-10-05T10:15:36Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:19:19Z",
+        "conclusion": "success",
+        "id": 111715340022,
+        "name": "security-gate / Python dependency audit",
+        "seconds": 22.0,
+        "started_at": "2026-10-05T10:18:57Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:16:01Z",
+        "conclusion": "success",
+        "id": 111715340081,
+        "name": "iac-security-gate / TFLint IaC quality gate",
+        "seconds": 12.0,
+        "started_at": "2026-10-05T10:15:49Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:15:46Z",
+        "conclusion": "success",
+        "id": 111715340087,
+        "name": "docker-gate / Validate Docker Compose config",
+        "seconds": 15.0,
+        "started_at": "2026-10-05T10:15:31Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:17:06Z",
+        "conclusion": "success",
+        "id": 111715340137,
+        "name": "security-gate / Frontend dependency audit",
+        "seconds": 9.0,
+        "started_at": "2026-10-05T10:16:57Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:21:11Z",
+        "conclusion": "success",
+        "id": 111715340163,
+        "name": "security-gate / Secret scanning with Gitleaks",
+        "seconds": 11.0,
+        "started_at": "2026-10-05T10:21:00Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:21:26Z",
+        "conclusion": "success",
+        "id": 111715340196,
+        "name": "security-gate / Backend image vulnerability scan",
+        "seconds": 56.0,
+        "started_at": "2026-10-05T10:20:30Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:17:21Z",
+        "conclusion": "success",
+        "id": 111715340222,
+        "name": "security-gate / Filesystem vulnerability scan",
+        "seconds": 12.0,
+        "started_at": "2026-10-05T10:17:09Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:17:05Z",
+        "conclusion": "success",
+        "id": 111715340228,
+        "name": "docker-gate / Authenticated cross-repo intelligence runtime",
+        "seconds": 89.0,
+        "started_at": "2026-10-05T10:15:36Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:21:09Z",
+        "conclusion": "success",
+        "id": 111715340255,
+        "name": "security-gate / Frontend image vulnerability scan",
+        "seconds": 23.0,
+        "started_at": "2026-10-05T10:20:46Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:20:37Z",
+        "conclusion": "success",
+        "id": 111715340265,
+        "name": "kubernetes-gate / Kustomize, schema and policy gates",
+        "seconds": 44.0,
+        "started_at": "2026-10-05T10:19:53Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:20:10Z",
+        "conclusion": "success",
+        "id": 111715340301,
+        "name": "iac-security-gate / Checkov IaC security report",
+        "seconds": 41.0,
+        "started_at": "2026-10-05T10:19:29Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:27:50Z",
+        "conclusion": "success",
+        "id": 111715340466,
+        "name": "data-gate / AI 06 full cross-repo gate",
+        "seconds": 703.0,
+        "started_at": "2026-10-05T10:16:07Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:24:18Z",
+        "conclusion": "success",
+        "id": 111715446110,
+        "name": "docker-gate / Build full stack and run smoke tests",
+        "seconds": 487.0,
+        "started_at": "2026-10-05T10:16:11Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:20:27Z",
+        "conclusion": "success",
+        "id": 111716730689,
+        "name": "frontend-gate / Build frontend application",
+        "seconds": 13.0,
+        "started_at": "2026-10-05T10:20:14Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:22:10Z",
+        "conclusion": "success",
+        "id": 111717084115,
+        "name": "frontend-gate / Build frontend Docker image",
+        "seconds": 17.0,
+        "started_at": "2026-10-05T10:21:53Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:29:38Z",
+        "conclusion": "success",
+        "id": 111717139544,
+        "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+        "seconds": 507.0,
+        "started_at": "2026-10-05T10:21:11Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:23:49Z",
+        "conclusion": "success",
+        "id": 111717424618,
+        "name": "security-gate / Security evidence summary",
+        "seconds": 6.0,
+        "started_at": "2026-10-05T10:23:43Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:35:14Z",
+        "conclusion": "success",
+        "id": 111721953524,
+        "name": "api-gate / API Docker image build",
+        "seconds": 36.0,
+        "started_at": "2026-10-05T10:34:38Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-05T10:35:21Z",
+        "conclusion": "success",
+        "id": 111722177780,
+        "name": "required-result",
+        "seconds": 4.0,
+        "started_at": "2026-10-05T10:35:17Z",
+        "status": "completed"
+      }
+    ],
+    "jobs_failed": 0,
+    "jobs_passed": 29,
+    "jobs_skipped": 0,
+    "last_job_completed_utc": "2026-10-05T10:35:21+00:00",
+    "run_attempt": 1,
+    "run_id": 37294138449,
+    "run_started_at": "2026-10-05T10:04:01Z",
+    "source_push_policy": "Required CI triggers on PR and main push; no feature-branch push run expected",
+    "status": "completed",
+    "updated_at": "2026-10-05T10:35:23Z",
+    "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37294138449"
+  },
+  "status": "passed",
+  "technical_ci_merge": {
+    "parents": [
+      "25b76bc95d38d6d9ea4dbadd1e2710cdaaf462c1",
+      "767d34273440fd86306768e96edaf24afcc4bdac"
+    ],
+    "same_tree_as_final_head": true,
+    "sha": "fd0e2f38ac2effd2bafbde5efdfba3acdb79829d",
+    "tree": "0cecc9586debdce16c1eae0ba400baa06c4a07fb"
+  },
+  "tree": "0cecc9586debdce16c1eae0ba400baa06c4a07fb",
+  "upstream_observation_receiver": {
+    "commit": "b887b90e12036499870d0de455511f2cca4ba441",
+    "full_source_snapshot_handoff": false,
+    "path": "contracts/source_replay/v1/event.schema.json",
+    "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+    "sha256": "ce9962db5cf89bbf23c10e5848d1a37b2b012d59c0ed1220e56ab3604a1c2aaf",
+    "topic": "retailops.source-observations.v1"
+  },
+  "verified_evidence": {
+    "coverage_xml": {
+      "branch_rate": 0.7602,
+      "branches_covered": 786,
+      "branches_valid": 1034,
+      "bytes": 231511,
+      "line_rate": 0.8996,
+      "lines_covered": 4712,
+      "lines_valid": 5238,
+      "sha256": "937e4fc0d73d56288043babd01340a91c497f84bafadfbc8db08ba3795c34826"
+    },
+    "durability_junit": {
+      "bytes": 9376,
+      "errors": 0,
+      "failures": 0,
+      "new_source_call_seconds": 15.955,
+      "new_source_cases": 12,
+      "new_source_cases_metadata": [
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_actual_sql_outbox_publish_correction_and_duplicate",
+          "time": "2.825"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_failure_in_caller_transaction_rolls_back_fact_and_outbox",
+          "time": "0.137"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_concurrent_duplicate_writers_create_one_fact_and_one_event",
+          "time": "0.166"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_version_grain_and_availability_collisions_leave_no_partial_effect",
+          "time": "0.151"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_real_sql_disconnect_after_delivery_keeps_pending_and_replays_identical_event",
+          "time": "0.211"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_actual_sigkill_after_delivery_before_sql_commit",
+          "time": "0.486"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_outbox_corruption_stops_without_delivery",
+          "time": "0.298"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_broker_stream_binding_change_stops_before_delivery",
+          "time": "0.290"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_wrong_scram_credentials_keep_pending",
+          "time": "5.084"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_compaction_change_stops_before_delivery",
+          "time": "0.281"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_untrusted_ca_keeps_pending",
+          "time": "5.087"
+        },
+        {
+          "classname": "tests.test_source_observation_durability",
+          "name": "test_backup_restore_nonempty_source_history_and_pending_publication",
+          "time": "0.939"
+        }
+      ],
+      "seconds": 88.48,
+      "sha256": "ff6b0b2508fdb737fdbf55320b04c09e8dabaa1df9be9872bca86e9d352f0604",
+      "skipped": 0,
+      "tests": 58
+    },
+    "source_report": {
+      "bytes": 1135,
+      "report": {
+        "actual_source_sql_outbox_and_broker_publication": true,
+        "broker": "redpandadata/redpanda:v25.3.6@sha256:ac152ec27adccf9482af2649d293f398eb03c860d7469fc49f86e30d870ea408",
+        "checks": [
+          "actual_compaction_change_no_delivery",
+          "actual_sigkill_delivery_before_sql_commit",
+          "actual_sql_outbox_correction_duplicate_tls_delivery",
+          "atomic_caller_transaction_rollback",
+          "concurrent_sql_writers_one_effect",
+          "nonempty_source_backup_restore_pending_resume",
+          "outbox_corruption_no_delivery",
+          "sql_disconnect_after_delivery_identical_replay",
+          "sql_history_collision_guards",
+          "stream_binding_change_no_delivery",
+          "untrusted_ca_no_completed_sql_receipt",
+          "wrong_scram_no_completed_sql_receipt"
+        ],
+        "database": "postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+        "full_43_table_handoff": false,
+        "models_qualified": false,
+        "sasl": "SCRAM-SHA-256",
+        "source_authority": "explicit acceptance fixture; source-owned operational publisher executed",
+        "source_live_capture_supported": false,
+        "status": "passed",
+        "tls_hostname_verified": true
+      },
+      "sha256": "fd1e6b5dcf2037ab2c3429a5829bed92d314747001359a182a354da2a3f6d135"
+    },
+    "verified_artifacts": [
+      {
+        "head_sha": "767d34273440fd86306768e96edaf24afcc4bdac",
+        "id": 11340611395,
+        "name": "api-coverage-evidence",
+        "records": [
+          {
+            "bytes": 231511,
+            "entry": "coverage.xml",
+            "local_file": "11340611395-0.xml",
+            "sha256": "937e4fc0d73d56288043babd01340a91c497f84bafadfbc8db08ba3795c34826"
+          }
+        ],
+        "run_id": 37294138449,
+        "zip_sha256": "1d6240372b73961c7d0388089b0631626ea761bf220ac82b17254d76a409337c"
+      },
+      {
+        "head_sha": "767d34273440fd86306768e96edaf24afcc4bdac",
+        "id": 11339916591,
+        "name": "intelligence-suggestion-evidence",
+        "records": [
+          {
+            "bytes": 289,
+            "entry": "suggestion-contract.json",
+            "local_file": "11339916591-0.json",
+            "sha256": "6c785b10265c9400bda825fbcab8c1eabcd60cb73f9315768343c3e2303e780d"
+          },
+          {
+            "bytes": 9376,
+            "entry": "intelligence-durability.xml",
+            "local_file": "11339916591-1.xml",
+            "sha256": "ff6b0b2508fdb737fdbf55320b04c09e8dabaa1df9be9872bca86e9d352f0604"
+          },
+          {
+            "bytes": 1135,
+            "entry": "source-observation-outbox.json",
+            "local_file": "11339916591-2.json",
+            "sha256": "fd1e6b5dcf2037ab2c3429a5829bed92d314747001359a182a354da2a3f6d135"
+          }
+        ],
+        "run_id": 37294138449,
+        "zip_sha256": "2ed2911e64b987d8dd55f92d3c89b23b249f11254334ff9ff4035727b12ccc86"
+      }
+    ]
+  },
+  "version": "ai10-source-observation-outbox-receipt-1.0",
+  "whole_ai10_status": "in_progress"
+}

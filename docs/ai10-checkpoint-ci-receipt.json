@@ -1,0 +1,459 @@
+{
+  "version": "retailops-ai10-checkpoint-ci-receipt-1.0",
+  "recorded_at_utc": "2026-10-04T09:26:37.675097+00:00",
+  "ai10_stage_status": "in_progress",
+  "increment_status": "ready_for_review",
+  "source_repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+  "source_pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/87",
+  "source_branch": "ai/10-intelligence-checkpoints",
+  "source_base_sha": "a8fc7d6d28191b911efb98df3e0c68c63f07e38e",
+  "source_commit_sha": "c71dfea17348fee115e0fe8e38e4a42679ab165b",
+  "required_ci_run_id": 37190997576,
+  "required_ci_status": "success",
+  "local_validation": {
+    "new_boundary_tests_passed": 43,
+    "related_tests_passed": 22,
+    "skip_reason": "Docker daemon stopped; do not affect AI07/08 runtimes",
+    "rollback_guard_tests_passed": 10,
+    "ruff": "passed",
+    "mypy_modules": 18,
+    "source_read_openapi_check": "passed",
+    "real_checkpoint_drills_not_run_locally": 23,
+    "initial_docker_dependent_skips": 22
+  },
+  "transport_scope": {
+    "coverage": "since_explicit_partition_bootstrap",
+    "topic_cleanup": "delete-only",
+    "transactional_producers": "unsupported",
+    "delivery_offset_gaps": "fail-stop",
+    "snapshot_handoff": "unsupported",
+    "worker_liveness": "not_inferred_from_owner_record"
+  },
+  "ai_client_pin": "3a64b03ac707a7bc041bef4ad80e451c9ff8e49a",
+  "source_openapi_owner_commit": "271ad966b32879dc4ef583b6bee1abf19ae0c1cf",
+  "source_openapi_sha256": "400d0685af483eb7a585311589144d69bbcf901f0c37264fce52ddddba45548c",
+  "ml_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "v12_actual_environment_campaign_pin": "8f12dc3744880f1b2a68b4a009640dce4dcf543d8b3396c038bc175c7e3ee011",
+  "dependency_read_only_check": {
+    "recorded_at_utc": "2026-10-04T08:46:00Z",
+    "ai07_sha": "502c3bcd42a7f92b080c5bdb5067e9e3fd3e71e3",
+    "ai07_readiness": "not_qualified",
+    "ai08_sha": "b74fa9a4e728cdb732e6da8d393c80ed29829642",
+    "ai08_readiness": "not_ready",
+    "session_or_runtime_mutations": false
+  },
+  "migration_plan": {
+    "version": "retailops-additive-rollback-1.0",
+    "parent": {
+      "head": "6b0f1c2d3e4a",
+      "history_sha256": "6035f243880f33eeba1ccc872c8901d1686c1c6766a518f64b9f712ba8151c80"
+    },
+    "expanded": {
+      "head": "a10f0c7e0300",
+      "history_sha256": "6c3196c00ea64e17e8ea2fd9fb05eda164533d78c2f998766af5e7d8054e8daf"
+    },
+    "added_tables": [
+      "ai_forecast_results",
+      "ai_intelligence_inbox",
+      "ai_intelligence_partitions",
+      "ai_intelligence_transport"
+    ],
+    "reason": "AI10 adds isolated immutable projection, inbox, partition checkpoint and transport receipt tables. Existing migrations and tables are unchanged. Disposable drills migrate forward once before exercising both image versions and retain every expanded table, including seeded rows, during application rollback.",
+    "migration_files": {
+      "a10f0c7e0200_add_intelligence_forecasts.py": "93fcd18e752133f344cab9627adf55685260e44f3f670a30916dc997ccb4ce42",
+      "a10f0c7e0300_add_intelligence_checkpoints.py": "01dc3a90b1ff595f56bf2ece69853b1988bd2c0097f8acd3312dffa2ec2a7056"
+    }
+  },
+  "previous_attempts": [
+    {
+      "source_commit_sha": "37965121a103f85743ec731431802d14fa907a2d",
+      "run_id": 37189601697,
+      "status": "failure",
+      "api_job_id": 111398882639,
+      "api_passed": 850,
+      "api_failed": 22,
+      "failure": "broker_stream_identity_unavailable before any checkpoint processing",
+      "correction": "await DescribeCluster identity; verify checkpoint durability early and append its coverage to the full regression",
+      "ci_tree_identity": {
+        "sha": "5d5101ca0023488a49d5b4d6b1a37a8890565f2f",
+        "tree": "318274d38ccbade8b42bd4c95bd90f60909a621f",
+        "parents": [
+          "a8fc7d6d28191b911efb98df3e0c68c63f07e38e",
+          "37965121a103f85743ec731431802d14fa907a2d"
+        ],
+        "matches_branch_tree": true
+      },
+      "rollback_artifact_proofs": {
+        "compose": {
+          "job_id": 111398932226,
+          "status": "passed",
+          "artifact_id": 11297339912,
+          "artifact_zip_sha256": "6753e82438982c43a52e68cc2e05df3ca3fe5774a29adfea507b4e96f8b1e6b1",
+          "report_sha256": "f25a2710b4e0f2880dae738dbaedbbbdaa7a3dacdf0d2d1594150aa60a097156",
+          "report_project": "retailops-release-6c94de47f1a7",
+          "database_head": "a10f0c7e0300",
+          "migration_action": "one initial fingerprinted additive expansion; both image versions retain full schema/data; no downgrade, restore or reseed",
+          "harness_commit": "5d5101ca0023488a49d5b4d6b1a37a8890565f2f",
+          "seeded_projection": {
+            "forecast_results": 1,
+            "inbox_records": 1,
+            "partition_checkpoints": 1,
+            "transport_receipts": 1,
+            "fixture": "mechanics"
+          },
+          "preserved_rows": {
+            "ai_forecast_results": {
+              "rows": 1,
+              "sha256": "c87fc57c73a786424192d1e852d4c8fbd315709050cc3ca261e744c3ca694da4"
+            },
+            "ai_intelligence_inbox": {
+              "rows": 1,
+              "sha256": "694c6ddc54ba185850e7682cfa2dd06ddc25456c01d75c0c0f75a8d749d3b6d7"
+            },
+            "ai_intelligence_partitions": {
+              "rows": 1,
+              "sha256": "0b9b260888a53a1290f4ae32abcac4235e73fbb804f399d1de25a8b98969aa34"
+            },
+            "ai_intelligence_transport": {
+              "rows": 1,
+              "sha256": "f91bde8c9694e1d8ebafa2d9877bdb0946296809a76c3541f4b6d1fc839fa53f"
+            }
+          },
+          "checked_snapshot_count": 3,
+          "checkpoint_tables_excluded_from_comparison": false,
+          "cleanup": "passed"
+        },
+        "kubernetes": {
+          "job_id": 111398991323,
+          "status": "passed",
+          "artifact_id": 11298751015,
+          "artifact_zip_sha256": "5d2050bb9ed757103e67f94d60b0c1f460d320aa21d16ab2211547609af695d1",
+          "report_sha256": "d3c12186b9437d3db2a671ed4408208ae675a219f549dc01a96e17929a8b1f13",
+          "report_project": "retailops-k8s-6909124895",
+          "database_head": "a10f0c7e0300",
+          "migration_action": "one initial fingerprinted additive expansion/seed; both image versions retain full schema/data; no downgrade/restore/reseed",
+          "harness_commit": "5d5101ca0023488a49d5b4d6b1a37a8890565f2f",
+          "seeded_projection": {
+            "forecast_results": 1,
+            "inbox_records": 1,
+            "partition_checkpoints": 1,
+            "transport_receipts": 1,
+            "fixture": "mechanics"
+          },
+          "preserved_rows": {
+            "ai_forecast_results": {
+              "rows": 1,
+              "sha256": "6d8d8ccc23f4e9ada1346e268c19a4c7b640a61a3506d062207cac82a08cb983"
+            },
+            "ai_intelligence_inbox": {
+              "rows": 1,
+              "sha256": "2d7d416a91a2850e548d8977d2fb34f7db2e43b9f92b7af7956c3c0709417e41"
+            },
+            "ai_intelligence_partitions": {
+              "rows": 1,
+              "sha256": "4ecc5d9f223e9af8be2e2045a77d67f00401997f63bab2dc24689678f2c69ad2"
+            },
+            "ai_intelligence_transport": {
+              "rows": 1,
+              "sha256": "224ea6c8dbc651803271437a5d126481a028d47dba7a36f5c16acbec113a9b84"
+            }
+          },
+          "checked_snapshot_count": 6,
+          "checkpoint_tables_excluded_from_comparison": false,
+          "cleanup": "passed",
+          "existing_snapshot_excludes": [
+            "realtime_consumer_state (restart timestamps/counters)"
+          ]
+        }
+      }
+    },
+    {
+      "source_commit_sha": "caaaa81b6436a8b73a3dae2e3ded922bfa7d6825",
+      "run_id": 37190773785,
+      "status": "superseded_after_api_failure",
+      "api_job_id": 111402313346,
+      "checkpoint_drill_passed_before_failure": 2,
+      "checkpoint_drill_failed": 1,
+      "failure": "SIGKILL retained atomic DB commit but broker session expiry exceeded 45-second restart drill",
+      "correction": "fixed session.timeout.ms=10000 and heartbeat.interval.ms=3000; original test deadline unchanged"
+    }
+  ],
+  "real_checkpoint_drill": {
+    "job_id": 111403055416,
+    "step": "Verify atomic checkpoint durability before broad regression",
+    "status": "success",
+    "tests": 23,
+    "require_broker_tests": true,
+    "test_deadline_seconds": 45,
+    "source_commit_sha": "c71dfea17348fee115e0fe8e38e4a42679ab165b",
+    "full_ci_pending": false,
+    "seconds": 36.82
+  },
+  "ci_tree_identity": {
+    "sha": "a00d92f0965a08e480d24b7683054d489fdee8c1",
+    "tree": "96c2e0817938dafc0ee0c11b0ba80e2951a922d8",
+    "parents": [
+      "a8fc7d6d28191b911efb98df3e0c68c63f07e38e",
+      "c71dfea17348fee115e0fe8e38e4a42679ab165b"
+    ],
+    "matches_branch_tree": true
+  },
+  "rollback_artifact_proofs": {
+    "compose": {
+      "job_id": 111403090352,
+      "status": "passed",
+      "artifact_id": 11298953102,
+      "artifact_zip_sha256": "c34c092022ec2e337aabc19ec1f05a89f9fe2edd487e3b6c96f314d8344d69c6",
+      "report_sha256": "e013a74f6bbeb9193f6fbb9e20a2271af3e1264ec4fa397a5574383553ed8f8e",
+      "report_project": "retailops-release-ca1e68a659c2",
+      "database_head": "a10f0c7e0300",
+      "migration_action": "one initial fingerprinted additive expansion; both image versions retain full schema/data; no downgrade, restore or reseed",
+      "harness_commit": "a00d92f0965a08e480d24b7683054d489fdee8c1",
+      "seeded_projection": {
+        "forecast_results": 1,
+        "inbox_records": 1,
+        "partition_checkpoints": 1,
+        "transport_receipts": 1,
+        "fixture": "mechanics"
+      },
+      "preserved_rows": {
+        "ai_forecast_results": {
+          "rows": 1,
+          "sha256": "dbee3ef4eb19ff2dfc376fb6fdce84dda5f820c71362091b1345b5b0506f3821"
+        },
+        "ai_intelligence_inbox": {
+          "rows": 1,
+          "sha256": "775096370dff0436e33deb3c9864e94c9d49efb495378bdaa8654c48b05440a5"
+        },
+        "ai_intelligence_partitions": {
+          "rows": 1,
+          "sha256": "93e66a6e3c98711887b916d86a9a6564fbf5dcab295f2c42fb60f9fb3ee684f3"
+        },
+        "ai_intelligence_transport": {
+          "rows": 1,
+          "sha256": "4d2524fdc1737098394d1c510bf467ca0849bf953b26e2a925f28935e46bf004"
+        }
+      },
+      "checked_snapshot_count": 3,
+      "checkpoint_tables_excluded_from_comparison": false,
+      "cleanup": "passed"
+    },
+    "kubernetes": {
+      "job_id": 111403185811,
+      "status": "passed",
+      "artifact_id": 11299635089,
+      "artifact_zip_sha256": "e0bce85eb86d92e8bd4b501307a52aa673cd9514a017ff8fbd73dd68e34e7132",
+      "report_sha256": "25ce17417110ec952e4862967a7191955af37b911680b7a246b1d8f844589d45",
+      "report_project": "retailops-k8s-bbdc83856d",
+      "database_head": "a10f0c7e0300",
+      "migration_action": "one initial fingerprinted additive expansion/seed; both image versions retain full schema/data; no downgrade/restore/reseed",
+      "harness_commit": "a00d92f0965a08e480d24b7683054d489fdee8c1",
+      "seeded_projection": {
+        "forecast_results": 1,
+        "inbox_records": 1,
+        "partition_checkpoints": 1,
+        "transport_receipts": 1,
+        "fixture": "mechanics"
+      },
+      "preserved_rows": {
+        "ai_forecast_results": {
+          "rows": 1,
+          "sha256": "4afa74e8d4789d27e3c27f41690a21c5f59469cdb4ab5c244117c87839eb32ee"
+        },
+        "ai_intelligence_inbox": {
+          "rows": 1,
+          "sha256": "4cbdd5b93026f489b4beab859e85d8508865504d68a3a670067358854fe4717d"
+        },
+        "ai_intelligence_partitions": {
+          "rows": 1,
+          "sha256": "af02a726aaa27f8cede0ed1e83ab57051b283b0cfd958a50087077c32c4c323b"
+        },
+        "ai_intelligence_transport": {
+          "rows": 1,
+          "sha256": "ebca563000b18560cf32f6b50dbc7090352a0af518dac3f16403c07cb1c5ecd5"
+        }
+      },
+      "checked_snapshot_count": 6,
+      "checkpoint_tables_excluded_from_comparison": false,
+      "cleanup": "passed",
+      "existing_snapshot_excludes": [
+        "realtime_consumer_state (restart timestamps/counters)"
+      ]
+    }
+  },
+  "api_validation": {
+    "job_id": 111403055416,
+    "status": "success",
+    "main_regression_passed": 854,
+    "main_regression_seconds": 939.93,
+    "checkpoint_drills_passed": 23,
+    "checkpoint_drills_seconds": 36.82,
+    "total_distinct_tests_passed": 877,
+    "coverage_percent": 86.65,
+    "required_coverage_percent": 80,
+    "static_formatted_files": 238,
+    "mypy_modules": 18,
+    "source_read_openapi_check": "passed",
+    "existing_warning": "Starlette TestClient/httpx deprecation"
+  },
+  "required_ci_jobs": [
+    {
+      "id": 111403024864,
+      "name": "Detect changed areas",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403024975,
+      "name": "Required CI contract tests",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403054708,
+      "name": "Repository diff hygiene",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055230,
+      "name": "frontend-gate / Frontend tests and lint",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055240,
+      "name": "terraform-validation-gate / Terraform fmt, init and validate",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055293,
+      "name": "iac-security-gate / TFLint IaC quality gate",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055294,
+      "name": "docker-gate / Validate Docker Compose config",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055324,
+      "name": "iac-security-gate / Checkov IaC security report",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055349,
+      "name": "security-gate / Frontend image vulnerability scan",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055352,
+      "name": "security-gate / Filesystem vulnerability scan",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055358,
+      "name": "security-gate / Python dependency audit",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055372,
+      "name": "security-gate / Backend image vulnerability scan",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055374,
+      "name": "security-gate / Frontend dependency audit",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055389,
+      "name": "security-gate / Secret scanning with Gitleaks",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055391,
+      "name": "data-gate / AI 03 full cross-repo gate",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055407,
+      "name": "data-gate / Synthetic data quality gate",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055414,
+      "name": "data-gate / AI 06 full cross-repo gate",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055416,
+      "name": "api-gate / API integration tests",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403055437,
+      "name": "kubernetes-gate / Kustomize, schema and policy gates",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403090352,
+      "name": "docker-gate / Build full stack and run smoke tests",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403094586,
+      "name": "frontend-gate / Build frontend application",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403181774,
+      "name": "frontend-gate / Build frontend Docker image",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403185811,
+      "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111403234609,
+      "name": "security-gate / Security evidence summary",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111406031343,
+      "name": "api-gate / API Docker image build",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 111406133453,
+      "name": "required-result",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "required_ci_jobs_passed": 26,
+  "protected_sessions_mutated": false
+}

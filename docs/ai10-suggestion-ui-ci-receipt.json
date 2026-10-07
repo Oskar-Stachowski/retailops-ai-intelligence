@@ -1,0 +1,2539 @@
+{
+  "version": "ai10-suggestion-ui-ci-receipt-1.0",
+  "status": "success",
+  "increment_status": "complete",
+  "whole_ai10_status": "in_progress",
+  "updated_at": "2026-10-04T19:43:18.140594+00:00",
+  "repository": "Oskar-Stachowski/retailops-cloud-native-platform",
+  "head_commit": "25b76bc95d38d6d9ea4dbadd1e2710cdaaf462c1",
+  "branch": "ai/10-suggestion-ui",
+  "base_commit": "090c26307fd508899ad6ef24504c151875db820b",
+  "base_branch": "ai/10-suggestion-projection",
+  "head_tree": "3ebef8f4df2b5d6c43205e5b502c0b716af2266f",
+  "draft_pr": 93,
+  "pr_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/93",
+  "ci_run_id": 37227739990,
+  "ci_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37227739990",
+  "qualification": {
+    "suggestion_read_ui": true,
+    "actual_postgresql_api_chromium_ui_ci": true,
+    "fixture_only": true,
+    "fixture_transport_enabled_by_default": false,
+    "real_assistant_outbox": false,
+    "model_quality": false,
+    "source_capture_replay": false,
+    "production_https_or_identity": false,
+    "three_model_102_day_e2e": false
+  },
+  "local_checks": {
+    "frontend_passed": 49,
+    "frontend_failed": 0,
+    "frontend_skipped": 0,
+    "lint": "passed",
+    "build": "passed",
+    "ruff_format": "passed",
+    "mypy_ui_drill_files": 2,
+    "browser_rehearsal": {
+      "scope": "Actual local UI/API/auth; explicit file-backed projection double, no PostgreSQL proof.",
+      "status": "passed",
+      "browser": {
+        "status": "passed",
+        "anonymous": 401,
+        "forecast_capability": 401,
+        "foreign_scope": 403,
+        "user_id_override": 422,
+        "changed_view": 409,
+        "current_counts": [
+          50,
+          20
+        ],
+        "history_count": 72,
+        "short_expiry_database_evaluated": false,
+        "clock_skew_tested": true,
+        "assertions": [
+          "completed actual legacy dashboard response preserves connected AI panel and data",
+          "exact scoped payload, full evidence, escaped references, no execution controls, 50/20 pagination",
+          "72 scoped historical results retain original expired/future payloads with separate stale/unknown read freshness",
+          "no credential storage; demo switch and synthetic hidden event clear memory; completed in-flight read cannot restore a disconnected panel",
+          "running API re-reads personal suggestion policy; revocation removes results with no restart",
+          "new publication rejects old digest; actual short expiry clears page and evidence despite workstation clock skew; immutable detail remains stale"
+        ],
+        "projection_clock_kind": "explicit local projection double; no PostgreSQL"
+      },
+      "owned_servers_stopped": true,
+      "private_files_removed": true,
+      "test_duration_seconds": 11.8
+    }
+  },
+  "protected_checkouts": {
+    "ai_head": "abf3f69a6a78c444b5a8a910fef8b3b43ba047a9",
+    "ai_branch": "ai/11-completion",
+    "source_head": "599735a5fd13328e05f6100a07f644f4676e1ced",
+    "source_branch": "ai/16a-infrastructure-contracts",
+    "owner_sessions_modified": false,
+    "local_docker_started": false,
+    "merge": false,
+    "deploy": false,
+    "new_private_owner_code_transfer": false,
+    "tracked_files_unchanged": true,
+    "owned_worktree_clean": true,
+    "final_heads_and_branches_match_initial": true
+  },
+  "remaining": [
+    "source SQL capture and offset handoff with corrected-fact replay",
+    "qualified final anomaly and stockout model lifecycle and serving",
+    "real assistant outbox publication",
+    "102-day three-model temporal E2E"
+  ],
+  "prior_ci_attempts": [
+    {
+      "head_commit": "0c3eb3fdb42e9ddd03554cdde33fe1df24dd3405",
+      "run_id": 37227372186,
+      "failed_job_id": 111509742970,
+      "failed_job": "actual PostgreSQL/API/Chromium suggestion UI",
+      "forecast_test": "passed",
+      "suggestion_test": "failed at initial connected view",
+      "cause": "Independent legacy dashboard completion changed the unkeyed panel child position and remounted it, clearing connected state despite actual API 200 payload.",
+      "fix": "Preserve component identity with the same key in all three page states. Hold an actual dashboard response until after connection in the regression test.",
+      "fix_local_browser": "passed",
+      "artifact_id": 11312446295,
+      "artifact_zip_sha256": "8699efdd505ca5a3dc7d5a078a25bd39b7c36d444870955d57fecbfdb1183e22",
+      "full_acceptance": false,
+      "aggregate_conclusion": "cancelled after corrected head superseded it"
+    }
+  ],
+  "unchanged_backend_and_transport_from_base": true,
+  "actual_ui_report": {
+    "status": "passed",
+    "started_at": "2026-10-04T19:20:03.017404+00:00",
+    "source_commit": "c9950cb83c94f5b5a7e65d484da5592f9b565fb7",
+    "scope": "actual built frontend and PostgreSQL/API over loopback HTTP; invented forecast and operator fixtures; no model or deployment qualification",
+    "fixture": {
+      "active_rows": 70,
+      "history_rows": 77,
+      "foreign_rows": 7,
+      "model_qualification": false
+    },
+    "suggestion_fixture": {
+      "current_rows": 70,
+      "history_rows": 72,
+      "foreign_rows": 2,
+      "assistant_emitter": false,
+      "model_qualification": false
+    },
+    "browser": {
+      "status": "passed",
+      "anonymous": 401,
+      "foreign_scope": 403,
+      "user_id_override": 422,
+      "changed_view": 409,
+      "counts": [
+        50,
+        20
+      ],
+      "expected_results": 70,
+      "assertions": [
+        "actual scoped API payloads and 50/20 UI pagination",
+        "operator head replacement rejects old view; historical stale results remain explicit",
+        "no stored credentials; demo switch and disconnect cancel reads; live revocation removes results"
+      ]
+    },
+    "suggestion_browser": {
+      "status": "passed",
+      "anonymous": 401,
+      "forecast_capability": 401,
+      "foreign_scope": 403,
+      "user_id_override": 422,
+      "changed_view": 409,
+      "current_counts": [
+        50,
+        20
+      ],
+      "history_count": 72,
+      "short_expiry_database_evaluated": true,
+      "clock_skew_tested": true,
+      "assertions": [
+        "completed actual legacy dashboard response preserves connected AI panel and data",
+        "exact scoped payload, full evidence, escaped references, no execution controls, 50/20 pagination",
+        "72 scoped historical results retain original expired/future payloads with separate stale/unknown read freshness",
+        "no credential storage; demo switch and synthetic hidden event clear memory; completed in-flight read cannot restore a disconnected panel",
+        "running API re-reads personal suggestion policy; revocation removes results with no restart",
+        "new publication rejects old digest; actual short expiry clears page and evidence despite workstation clock skew; immutable detail remains stale"
+      ]
+    },
+    "screenshot_sha256": "35247528a56a548005729c4621dce39cec23d5695b41a28a397b79f86f61e9ed",
+    "suggestion_screenshot_sha256": "8f83e3d8606c7a8544301ad045260e868e9f2f0f514f210ca218ec4247a5ef1d",
+    "cleanup": {
+      "owned_servers_stopped": true,
+      "private_files_removed": true,
+      "database_lifecycle": "owned by CI service; no shared database cleanup"
+    },
+    "finished_at": "2026-10-04T19:20:26.100872+00:00"
+  },
+  "ci_merge": {
+    "commit": "c9950cb83c94f5b5a7e65d484da5592f9b565fb7",
+    "tree": "3ebef8f4df2b5d6c43205e5b502c0b716af2266f",
+    "parents": [
+      "090c26307fd508899ad6ef24504c151875db820b",
+      "25b76bc95d38d6d9ea4dbadd1e2710cdaaf462c1"
+    ],
+    "tree_matches_head": true
+  },
+  "actual_ui_job_id": 111510906864,
+  "owner_readonly_status": {
+    "ai07_detector_commit": "1ca82d8fbe6b67a74f27b9fd9af1e4eeabf51839",
+    "ai08_temporal_commit": "4faaf4b6c1997fda3a609645595165643bf302a9",
+    "ai08_status": "not ready; larger full profile, independent quality/calibration, new parent card and lifecycle/batch/read API outstanding",
+    "ai12_contract_commit": "a14b7899d9366c6ae555c0b6be4a8d027514ca91",
+    "session_interference": false
+  },
+  "ci_conclusion": "success",
+  "required_jobs_passed": 29,
+  "required_jobs_total": 29,
+  "ci_jobs": [
+    {
+      "id": 111510880023,
+      "name": "Required CI contract tests",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Test path detection matrix",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Require immutable build inputs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Preserve build input inventory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Validate GitHub Actions workflows",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111510880106,
+      "name": "Detect changed areas",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Resolve comparison refs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Detect required gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        }
+      ]
+    },
+    {
+      "id": 111510906436,
+      "name": "Repository diff hygiene",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Validate diff hygiene",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        }
+      ]
+    },
+    {
+      "id": 111510906781,
+      "name": "frontend-gate / Frontend tests and lint",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up Node.js CI toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Prepare frontend evidence directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run frontend tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run frontend lint",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Upload frontend quality evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Set up Node.js CI toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 111510906831,
+      "name": "api-gate / API integration tests",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Python CI toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Resolve pinned AI10 source client",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Checkout pinned AI10 source client for actual HTTP drill",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Require actual cross-repo HTTP and PostgreSQL test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Prepare evidence directories",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Prepare isolated facts worker",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Prepare pinned images for broker durability tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Run backend static quality gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Verify checkpoint, approved head and suggestion durability before broad regression",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Verify fixed-origin ML assessment contract",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Generate demo CSV dataset",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Validate data contracts and scenario coverage",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Run database migrations",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Seed demo data",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Run API tests with coverage",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Write API CI summary",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        },
+        {
+          "name": "Upload API coverage evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20
+        },
+        {
+          "name": "Upload pinned suggestion contract and real durability evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        },
+        {
+          "name": "Upload API security evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22
+        },
+        {
+          "name": "Upload API data evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23
+        },
+        {
+          "name": "Upload ML assessment test evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24
+        },
+        {
+          "name": "Post Checkout pinned AI10 source client for actual HTTP drill",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 45
+        },
+        {
+          "name": "Post Set up Python CI toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 46
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 47
+        },
+        {
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 48
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 49
+        }
+      ]
+    },
+    {
+      "id": 111510906864,
+      "name": "frontend-gate / Personal forecast and suggestion UI with actual PostgreSQL and API",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Python CI toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Set up locked frontend toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Check UI drill before runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Require actual scoped UI, lineage, paging and revocation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Upload bounded UI evidence without credentials",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Set up locked frontend toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Set up Python CI toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        }
+      ]
+    },
+    {
+      "id": 111510906910,
+      "name": "data-gate / AI 06 full cross-repo gate",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout producer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Checkout pinned independent consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up locked Python toolchains",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install dependencies outside the measured flow",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run both full smoke profiles twice",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Upload full cross-repo evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Set up locked Python toolchains",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Checkout pinned independent consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Checkout producer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 111510906919,
+      "name": "terraform-validation-gate / Terraform fmt, init and validate",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up Terraform",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Show Terraform version",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run local IaC scan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Verify state controls and drift classification without AWS",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Upload Terraform validation evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 111510906982,
+      "name": "data-gate / Synthetic data quality gate",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up Python for data gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run data readiness gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify Parquet, immutable snapshots and profile resource budgets",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Write data CI summary",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Upload data quality evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Set up Python for data gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 111510906992,
+      "name": "docker-gate / Validate Docker Compose config",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Validate Docker Compose config",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Validate Compose profiles",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify security scanner container",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload Compose config evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111510907001,
+      "name": "data-gate / AI 03 full cross-repo gate",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout producer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Checkout pinned independent consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up locked Python toolchains",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install dependencies outside the measured flow",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run both full smoke profiles twice",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Upload full cross-repo evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Set up locked Python toolchains",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Checkout pinned independent consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Checkout producer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 111510907028,
+      "name": "docker-gate / Authenticated cross-repo intelligence runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Resolve immutable intelligence runtime owner",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Checkout pinned AI outbox and isolated delivery lock",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Require actual authenticated transport and durable resume",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload intelligence runtime acceptance receipt",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Checkout pinned AI outbox and isolated delivery lock",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111510907079,
+      "name": "security-gate / Python dependency audit",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Prepare report directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Python dependency audit toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Python dependency audit report",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload Python dependency evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Set up Python dependency audit toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111510907090,
+      "name": "iac-security-gate / TFLint IaC quality gate",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up Terraform",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up TFLint",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Prepare IaC report directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Show tool versions",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Initialize TFLint plugins",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Run TFLint",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Upload TFLint report",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        }
+      ]
+    },
+    {
+      "id": 111510907095,
+      "name": "docker-gate / Authenticated immutable native source bundle import",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Resolve immutable native producer and typed client",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Checkout approved native source exporter",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Checkout pinned typed AI receiver and isolated lock",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Set up isolated CI source runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install immutable transfer toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Install separate minimal typed receiver",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Require native export, HTTP authorization and actual typed import",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Upload immutable native transfer receipt",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Post Install immutable transfer toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Post Set up isolated CI source runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Checkout pinned typed AI receiver and isolated lock",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Post Checkout approved native source exporter",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        }
+      ]
+    },
+    {
+      "id": 111510907116,
+      "name": "security-gate / Backend image vulnerability scan",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Prepare report directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Build backend image",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Trivy backend image scan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload backend image evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Trivy backend image scan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111510907121,
+      "name": "security-gate / Filesystem vulnerability scan",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Prepare report directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Trivy filesystem scan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Upload filesystem scan evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Trivy filesystem scan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    },
+    {
+      "id": 111510907127,
+      "name": "kubernetes-gate / Kustomize, schema and policy gates",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up kubectl with Kustomize",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Checkov",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Set up pinned Kubeconform and Conftest wrappers",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run Kubernetes render, schema and policy gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Upload Kubernetes policy evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Set up Checkov",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 111510907137,
+      "name": "security-gate / Secret scanning with Gitleaks",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Prepare report directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Secret scan with Gitleaks",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Capture Gitleaks evidence marker",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload secret scan evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111510907143,
+      "name": "security-gate / Frontend image vulnerability scan",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Prepare report directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Build frontend image",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Trivy frontend image scan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload frontend image evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Trivy frontend image scan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111510907179,
+      "name": "iac-security-gate / Checkov IaC security report",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up Python and Checkov",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Prepare IaC report directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run critical IaC guardrail checks",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run blocking Checkov scan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Run Checkov JSON report",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Upload Checkov reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Set up Python and Checkov",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    },
+    {
+      "id": 111510907191,
+      "name": "security-gate / Frontend dependency audit",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Prepare report directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Node.js dependency audit toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Frontend dependency audit report",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload frontend dependency evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Set up Node.js dependency audit toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111510962886,
+      "name": "docker-gate / Build full stack and run smoke tests",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Show Docker versions",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Python for explicit seed, recovery and rollback",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Set up browser test dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Install Chromium and system dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Fresh-build, start and smoke-test full stack",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Verify isolated database recovery",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Verify versioned update and application rollback",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Write Docker Compose CI summary",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Upload Compose smoke evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Set up browser test dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20
+        },
+        {
+          "name": "Post Set up Python for explicit seed, recovery and rollback",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23
+        }
+      ]
+    },
+    {
+      "id": 111510970626,
+      "name": "frontend-gate / Build frontend application",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up Node.js CI toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Prepare frontend evidence directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Build frontend application",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload frontend build evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Set up Node.js CI toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111511043581,
+      "name": "frontend-gate / Build frontend Docker image",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Prepare Docker evidence directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Build frontend Docker image",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Capture frontend image metadata",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload frontend image build evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111511080169,
+      "name": "security-gate / Security evidence summary",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Download security evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Write security summary",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Upload consolidated security evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Fail summary if any security job failed",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        }
+      ]
+    },
+    {
+      "id": 111511112364,
+      "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Set up kubectl",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install pinned kind",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Set up browser dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Install Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Exercise isolated Kubernetes runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Upload Kubernetes runtime evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Post Set up browser dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        }
+      ]
+    },
+    {
+      "id": 111514520586,
+      "name": "api-gate / API Docker image build",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Prepare API image evidence directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Build API Docker image",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Capture API image metadata",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload API image build evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 111514640333,
+      "name": "required-result",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Verify every required gate ran and passed",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        }
+      ]
+    }
+  ],
+  "ci_run": {
+    "id": 37227739990,
+    "name": "Required CI",
+    "status": "completed",
+    "conclusion": "success",
+    "run_number": 187,
+    "jobs_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37227739990/jobs",
+    "logs_url": "https://api.github.com/repos/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37227739990/logs",
+    "workflow_id": 277166825
+  },
+  "validation": {
+    "coverage": {
+      "combined_percent": 87.61,
+      "threshold_percent": 80,
+      "counts": {
+        "version": "7.16.2",
+        "timestamp": "1791142663565",
+        "lines-valid": "4923",
+        "lines-covered": "4428",
+        "line-rate": "0.8995",
+        "branches-valid": "960",
+        "branches-covered": "726",
+        "branch-rate": "0.7562",
+        "complexity": "0"
+      }
+    },
+    "durability": {
+      "passed": 46,
+      "suggestion_passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 76.89
+    },
+    "broad": {
+      "passed": 981,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 947.17
+    },
+    "unique_api_passed": 1027,
+    "assessment_already_in_broad": 21,
+    "deprecation_warning": {
+      "type": "StarletteDeprecationWarning",
+      "count_each_api_run": 1,
+      "detail": "Pinned FastAPI/Starlette TestClient httpx deprecation, unchanged dependency; no failed test."
+    },
+    "frontend": {
+      "entry": "test.txt",
+      "sha256": "1527d04698c8a97ff5ec78d6905fc63aaa68f5524178190cdb51e00413d9db37",
+      "passed": 49,
+      "failed": 0,
+      "skipped": 0
+    },
+    "actual_ui": {
+      "passed": 2,
+      "forecast_seconds": 3.3,
+      "suggestion_seconds": 12.4,
+      "total_seconds": 17.3
+    },
+    "rollback": {
+      "compose": "passed",
+      "kind": "passed",
+      "cleanup": "passed",
+      "tables_preserved": [
+        "ai_forecast_results",
+        "ai_intelligence_inbox",
+        "ai_intelligence_partitions",
+        "ai_intelligence_transport",
+        "ai_recommendation_results",
+        "ai_recommendation_inbox"
+      ],
+      "schema_preserved": true
+    },
+    "native_bundle": {
+      "status": "passed",
+      "tables": 43,
+      "rows": 31623,
+      "files": 100,
+      "bytes": 2177469,
+      "replay_handoff": false,
+      "cleanup": {
+        "owned_api_stopped": true,
+        "owned_source_fixture_removed": true,
+        "private_credentials_removed": true
+      }
+    },
+    "runtime": {
+      "status": "passed",
+      "cleanup": "passed",
+      "negative_authorization_checks": 16
+    },
+    "contract": {
+      "status": "passed",
+      "owner_commit": "a14b7899d9366c6ae555c0b6be4a8d027514ca91",
+      "event_adapter_status": "fixture_only",
+      "verification_mode": "ci_vendored_schema_sha256_and_envelope_only_owner_code_checked_locally",
+      "owner_code_verified_in_this_run": false,
+      "owner_code_published": false
+    }
+  },
+  "artifacts": [
+    {
+      "id": 11313486280,
+      "name": "api-coverage-evidence",
+      "zip_sha256": "ca5a21ada1ac05e095c59da85351036fae40ab1301fb20cfc525db561bf6f428",
+      "zip_bytes": 13807,
+      "records": [
+        {
+          "entry": "coverage.xml",
+          "local_file": "11313486280-0.xml",
+          "sha256": "5e3b11514aabb05b2fcd44b2ba13c56906ad2079654e27f7be2b124c6dacbf46",
+          "bytes": 217735
+        }
+      ]
+    },
+    {
+      "id": 11313222461,
+      "name": "intelligence-suggestion-evidence",
+      "zip_sha256": "b3f4d65e7ea5ddf81fe5a04a640246d8ed4ffdc0ac00b06a7b627891ff389e43",
+      "zip_bytes": 2065,
+      "records": [
+        {
+          "entry": "suggestion-contract.json",
+          "local_file": "11313222461-0.json",
+          "sha256": "6c785b10265c9400bda825fbcab8c1eabcd60cb73f9315768343c3e2303e780d",
+          "bytes": 289
+        },
+        {
+          "entry": "intelligence-durability.xml",
+          "local_file": "11313222461-1.xml",
+          "sha256": "1b5926fb9758f3d118dc27f5373a02bfc8bc3847782a7fa56c9826ac354a868d",
+          "bytes": 7679
+        }
+      ]
+    },
+    {
+      "id": 11312963138,
+      "name": "api-image-build-evidence",
+      "zip_sha256": "d50cd72bdfdec014caf6d9580bbfebf0261c1ff1a0f7f41d9b6e4c34bc9c27dc",
+      "zip_bytes": 2162,
+      "records": [
+        {
+          "entry": "api-image-inspect.json",
+          "local_file": "11312963138-0.json",
+          "sha256": "d3952cb2076aeeb6168281ffae3a73c612a35ae46fcaa91757aae547c6b0c434",
+          "bytes": 5025
+        }
+      ]
+    },
+    {
+      "id": 11312936022,
+      "name": "immutable-build-inputs",
+      "zip_sha256": "bebbc8595a1e4b55a0728cd6099627eb11110334cc2110b88356418521cbff9a",
+      "zip_bytes": 3626,
+      "records": [
+        {
+          "entry": "immutable-inputs.json",
+          "local_file": "11312936022-0.json",
+          "sha256": "46cc43ca86aa391d94d42920cb315f41fa9028ff6a9fd504d9c81bcf257716f4",
+          "bytes": 36871
+        }
+      ]
+    },
+    {
+      "id": 11312901696,
+      "name": "source-bundle-evidence",
+      "zip_sha256": "2009366430f0a6c4cca020eba8e47a71853abb693ff105e524e540dcdd26a330",
+      "zip_bytes": 2714,
+      "records": [
+        {
+          "entry": "report.json",
+          "local_file": "11312901696-0.json",
+          "sha256": "9e496a27aa051fc6d1cd0797bfd9c918b07fc1e66e95c4b66c3c0ac709c8ee3c",
+          "bytes": 7096
+        }
+      ]
+    },
+    {
+      "id": 11312787618,
+      "name": "kubernetes-runtime-evidence",
+      "zip_sha256": "3690500de51a71b0061c8932790496301a9b6d874ca0f44d21dfd0ae7dbe60a5",
+      "zip_bytes": 75207,
+      "records": [
+        {
+          "entry": "retailops-k8s-a07739ffa4/c9950cb83c94f5b5a7e65d484da5592f9b565fb7-api-build.json",
+          "local_file": "11312787618-0.json",
+          "sha256": "42fc47cb6f26cef11ab6657de6eb867b0826c95d3cc8c5b73b05e6d92de4efdc",
+          "bytes": 77527
+        },
+        {
+          "entry": "retailops-k8s-a07739ffa4/c9950cb83c94f5b5a7e65d484da5592f9b565fb7-frontend-build.json",
+          "local_file": "11312787618-1.json",
+          "sha256": "efe778ae9e49d3399c51785083df9f04b8c33bfce1201f916dd7b4b8b1205b4a",
+          "bytes": 32101
+        },
+        {
+          "entry": "retailops-k8s-a07739ffa4/cb0c79848247612bf71fb9ccf63a8ff3847b5ca1-api-build.json",
+          "local_file": "11312787618-2.json",
+          "sha256": "10852be70fdcb5e75480417cfc58cc96a9e40c937cb2cebd9404526333bdd365",
+          "bytes": 81538
+        },
+        {
+          "entry": "retailops-k8s-a07739ffa4/cb0c79848247612bf71fb9ccf63a8ff3847b5ca1-frontend-build.json",
+          "local_file": "11312787618-3.json",
+          "sha256": "9d9cc8ea81fe8bdeab2f7824160997a93dfb88e0dfc7ab94f5e133c65deaa108",
+          "bytes": 36663
+        },
+        {
+          "entry": "retailops-k8s-a07739ffa4/expected.json",
+          "local_file": "11312787618-6.json",
+          "sha256": "61b090af835510f9e0b4b9d4a69ea9a3cb978a917556ac4eaf17235f5f481b5c",
+          "bytes": 7064
+        },
+        {
+          "entry": "retailops-k8s-a07739ffa4/report.json",
+          "local_file": "11312787618-11.json",
+          "sha256": "d8d828af45eab8b858a717ebf2c60f9bbbe4a431e8da3a5125a03adfc97e757e",
+          "bytes": 53326
+        }
+      ]
+    },
+    {
+      "id": 11312591331,
+      "name": "intelligence-runtime-evidence",
+      "zip_sha256": "110f70ea722cfa93ccdc0b35e138b33df885a97381a8bae4c16c346a57677764",
+      "zip_bytes": 1647,
+      "records": [
+        {
+          "entry": "report.json",
+          "local_file": "11312591331-0.json",
+          "sha256": "bbd79108aea691cb7739bdd9f15bc1da7c22ef8ea16695d8f5d10ffbfd5b6938",
+          "bytes": 4878
+        }
+      ]
+    },
+    {
+      "id": 11312387679,
+      "name": "docker-compose-ci-evidence",
+      "zip_sha256": "b8b63b66944d2abcda53f6db4476c31644545132692eea2e7cd54eacc74a5ae2",
+      "zip_bytes": 81743,
+      "records": [
+        {
+          "entry": "docker/compose-persistence.json",
+          "local_file": "11312387679-1.json",
+          "sha256": "f00e0f0a397894e06395b2ed64ac555ae2ba6fd4d2a19ff42c11dd950539dc67",
+          "bytes": 228
+        },
+        {
+          "entry": "docker/isolated-runtime.json",
+          "local_file": "11312387679-7.json",
+          "sha256": "748731b9c7f6d504d428c94d9edc67b7a08e824264cbae91cd31b7cbb56759c9",
+          "bytes": 628
+        },
+        {
+          "entry": "observability/grafana-dashboards.json",
+          "local_file": "11312387679-9.json",
+          "sha256": "d5573c774b2f5df94b7935d005764e4949a0dfaee4eb4bb89d3c87d95cc8ff31",
+          "bytes": 2047
+        },
+        {
+          "entry": "observability/grafana-prometheus-datasource.json",
+          "local_file": "11312387679-10.json",
+          "sha256": "5b22e94a5c84354e3a151d3bd1117293be6b58ab374e25766b0ae3efad35175b",
+          "bytes": 414
+        },
+        {
+          "entry": "observability/incident-drill.json",
+          "local_file": "11312387679-11.json",
+          "sha256": "ed45c7f8bdc1c0afb7e92981ac11fbc9bacee2e81f96376c01fbf9204c693307",
+          "bytes": 7312
+        },
+        {
+          "entry": "observability/prometheus-rules.json",
+          "local_file": "11312387679-12.json",
+          "sha256": "f072333f648fc11383bd7599bfc2d454dc4c0ef066e9137d0f70ad5fa705480f",
+          "bytes": 14562
+        },
+        {
+          "entry": "observability/prometheus-targets.json",
+          "local_file": "11312387679-13.json",
+          "sha256": "2ab253276a845b136c6580ccab5a614094bfedc047b290dd29ed6e5008b6cb10",
+          "bytes": 1279
+        },
+        {
+          "entry": "e2e/playwright-junit.xml",
+          "local_file": "11312387679-14.xml",
+          "sha256": "d5f9770230c9d20601809aad8992515da46a13780ce2b2682ddca97a7f10edae",
+          "bytes": 1516
+        },
+        {
+          "entry": "db/recovery/retailops-recovery-6c09a686c3fb/report.json",
+          "local_file": "11312387679-16.json",
+          "sha256": "a54adb11cb755c59a3d6a8dd2bde932f0890e2fa674d3bc0486597c5d3f44cf5",
+          "bytes": 7533
+        },
+        {
+          "entry": "releases/retailops-release-fe8c2af99b62/44f7404010b55eba3d9bacd888d2dc7bb9797180-api-build.json",
+          "local_file": "11312387679-17.json",
+          "sha256": "754d85c45d62e181b2a32152f671074c5fc087f6f51d5be16ff2201bf0b9fc54",
+          "bytes": 77390
+        },
+        {
+          "entry": "releases/retailops-release-fe8c2af99b62/44f7404010b55eba3d9bacd888d2dc7bb9797180-frontend-build.json",
+          "local_file": "11312387679-18.json",
+          "sha256": "71b9f17e3dca1aa81be100de3e4c0e835cff36d013571599ad08f71ceb516927",
+          "bytes": 36697
+        },
+        {
+          "entry": "releases/retailops-release-fe8c2af99b62/c9950cb83c94f5b5a7e65d484da5592f9b565fb7-api-build.json",
+          "local_file": "11312387679-19.json",
+          "sha256": "87de9f1939eb0be5392a1e01aa28c96a36a79a69b154bb403ad03e45244e169b",
+          "bytes": 47563
+        },
+        {
+          "entry": "releases/retailops-release-fe8c2af99b62/c9950cb83c94f5b5a7e65d484da5592f9b565fb7-frontend-build.json",
+          "local_file": "11312387679-20.json",
+          "sha256": "0e53283d336412d37f7ee1aa1ac46b25a8c4a1a104114673969fa7abb18a201c",
+          "bytes": 29506
+        },
+        {
+          "entry": "releases/retailops-release-fe8c2af99b62/candidate-manifest.json",
+          "local_file": "11312387679-21.json",
+          "sha256": "e8c6418281df71c576c83be992527ee432ca22c88bba9c975f99072c64119d29",
+          "bytes": 4037
+        },
+        {
+          "entry": "releases/retailops-release-fe8c2af99b62/previous-manifest.json",
+          "local_file": "11312387679-23.json",
+          "sha256": "997c8e0a9aa47f64d5e4318ba559caa2c1e37cc99ecfa555fa30577516452084",
+          "bytes": 3584
+        },
+        {
+          "entry": "releases/retailops-release-fe8c2af99b62/report.json",
+          "local_file": "11312387679-24.json",
+          "sha256": "1fa46b8267768ced84ba2a20dd97f0424707b1c65d29b632d47f34a4f62755e7",
+          "bytes": 57496
+        }
+      ]
+    },
+    {
+      "id": 11312372105,
+      "name": "intelligence-ui-evidence",
+      "zip_sha256": "489dd27c8a610a1fbd978a1e246fd66a9d3af6938e2f5062cebd60b2b8e87511",
+      "zip_bytes": 980089,
+      "records": [
+        {
+          "entry": "report.json",
+          "local_file": "11312372105-2.json",
+          "sha256": "a54302972ebd6028c57821bff2711cbe7c052e19443d62f958572094aba7a705",
+          "bytes": 2577
+        }
+      ]
+    },
+    {
+      "id": 11312199782,
+      "name": "frontend-quality-evidence",
+      "zip_sha256": "0e7f658c5e6ae1b15005f28ead616dfbd89053d71bc1771d6f3b59ea89a5096a",
+      "zip_bytes": 2539,
+      "records": []
+    }
+  ],
+  "verified_zip_count": 10,
+  "draft_description_updated": true,
+  "total_ai10_drafts": 12,
+  "verification_notes": [
+    "Current CI proves Source fixture integration with actual PostgreSQL/API/built UI/Chromium; it does not run or publish private AI12 owner code.",
+    "The hidden-state handler is tested with a synthetic visibility event; real OS/browser background lifecycle is not independently qualified.",
+    "Current UI clears expired pages and detail using the API evaluation clock minus request time and a monotonic deadline.",
+    "21 separately reported ML assessment tests are already in the 981 broad tests and are not added twice.",
+    "An unchanged pinned Starlette TestClient deprecation warning appears once in each of the two API invocations; no tests failed/skipped.",
+    "Local rehearsal uses an explicit file-backed projection double; only the CI drill is actual PostgreSQL evidence."
+  ]
+}

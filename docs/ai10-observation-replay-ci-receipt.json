@@ -1,0 +1,908 @@
+{
+  "base_branch": "ai/10-source-bundle-client",
+  "base_commit": "3ae6ea7a5eff8355b14f1710fe00a34e05dac44f",
+  "branch": "ai/10-observation-replay",
+  "ci_artifacts_verified": [
+    {
+      "artifact_id": 11316151623,
+      "records": [
+        {
+          "bytes": 1844,
+          "entry": "ai10-observation-replay.json",
+          "local_file": "11316151623-0.json",
+          "sha256": "e5e583e030b330856f1dd3458873a8f42d4dbd53451082e2b088ca78e617a24e"
+        }
+      ],
+      "zip_sha256": "0c7ce04ee69a32aa234992dffed96f92c410302f669610a1aa221e4e4dcb177b"
+    },
+    {
+      "artifact_id": 11315598051,
+      "records": [
+        {
+          "bytes": 1844,
+          "entry": "ai10-observation-replay.json",
+          "local_file": "11315598051-0.json",
+          "sha256": "e5e583e030b330856f1dd3458873a8f42d4dbd53451082e2b088ca78e617a24e"
+        }
+      ],
+      "zip_sha256": "38b84cff6f656c92c2b29db54f35a608d7aa701f7e68151c8e02c9000a87fedc"
+    }
+  ],
+  "ci_checks": {
+    "compose_mlflow_and_model_lifecycle": "passed",
+    "documentation": "passed",
+    "forecast_queue_input_publication_read_catalog_evaluations": "passed",
+    "format_files": 585,
+    "frozen_owner_bytes_and_locks": "passed",
+    "generated_contracts": "passed",
+    "isolated_native_owner_typecheck_files": 10,
+    "mypy_source_files": 347,
+    "owned_resources_cleanup": "passed",
+    "package": "passed",
+    "real_postgres_outbox": "passed",
+    "ruff": "passed",
+    "secrets": "passed",
+    "source_snapshot_and_curated_regression": "passed",
+    "v12_coherent_backup_restore_and_recovery": "passed"
+  },
+  "ci_jobs": [
+    {
+      "conclusion": "success",
+      "id": 111530210309,
+      "logs_url": null,
+      "name": "checks",
+      "run_id": 37234285984,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify workflow contract before broad checks",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make bootstrap check",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Preserve bounded observation replay evidence",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "id": 111530210362,
+      "logs_url": null,
+      "name": "persistence",
+      "run_id": 37234285984,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make bootstrap compose-smoke",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make mlflow-store-smoke",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make model-lifecycle-smoke",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make lifecycle-store-smoke",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make forecast-queue-smoke",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make forecast-input-store-smoke",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make forecast-publication-smoke",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make forecast-read-smoke",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make model-catalog-smoke",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make evaluations-smoke",
+          "number": 13,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify AI10 forecast contracts and transactional outbox",
+          "number": 14,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Accept v12 registry, jobs, publication, metadata, backup and recovery",
+          "number": 15,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+          "number": 29,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 30,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 31,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "id": 111530210416,
+      "logs_url": null,
+      "name": "secrets",
+      "run_id": 37234285984,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "id": 111538355570,
+      "logs_url": null,
+      "name": "required-result",
+      "run_id": 37234285984,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require every gate",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 3,
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "ci_replay_report": {
+    "as_of": [
+      {
+        "observations": 0,
+        "origin": "2026-07-02T23:59:59.999999+00:00",
+        "units": 0
+      },
+      {
+        "observations": 799,
+        "origin": "2026-07-17T00:00:00+00:00",
+        "units": 5496
+      },
+      {
+        "observations": 1612,
+        "origin": "2026-08-02T00:00:00+00:00",
+        "units": 11047
+      }
+    ],
+    "broker_ack_performed": false,
+    "business_dedup_and_correction_equal": true,
+    "capture_id": "observation-capture-sha256-da8ab44e60f49ffd96b44fb92e0eaf528480a0c1a7439dc3b96de45e3b52b4d7",
+    "captured_native_versions": 806,
+    "captured_next_offsets": [
+      {
+        "next_offset": 260,
+        "partition": 0
+      },
+      {
+        "next_offset": 263,
+        "partition": 1
+      },
+      {
+        "next_offset": 283,
+        "partition": 2
+      }
+    ],
+    "curated_as_of_equal": true,
+    "final_capture_id": "observation-capture-sha256-e89053311dc23816ac2e1549a7c23f3d93578459ac33ecedfa1ad01c4b64d8e9",
+    "final_capture_sha256": "7c5f8c5656a81b70cd52c7f4dddedb279ba20d2f466ff4db8be3f26a6d3d0dc0",
+    "final_next_offsets": [
+      {
+        "next_offset": 550,
+        "partition": 0
+      },
+      {
+        "next_offset": 533,
+        "partition": 1
+      },
+      {
+        "next_offset": 531,
+        "partition": 2
+      }
+    ],
+    "full_43_table_handoff": false,
+    "native_versions": 1612,
+    "overlap_full_replay_equal": true,
+    "partitions": 3,
+    "scope": "offline daily_demand_versions receiver mechanics; transport and correction are explicit fixtures",
+    "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+    "source_live_capture_supported": false,
+    "source_snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+    "source_snapshot_version": "1.0.0",
+    "status": "passed",
+    "units_after_correction": 11050,
+    "units_before_correction": 11047
+  },
+  "ci_report_sha256": "e5e583e030b330856f1dd3458873a8f42d4dbd53451082e2b088ca78e617a24e",
+  "ci_runs": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-10-04T21:00:13Z",
+      "event": "pull_request",
+      "head_sha": "873116daf88a50c84cb4e7fe22c93a05907acb1a",
+      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37234285984",
+      "id": 37234285984,
+      "name": "Required CI",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-10-04T21:00:11Z",
+      "event": "push",
+      "head_sha": "873116daf88a50c84cb4e7fe22c93a05907acb1a",
+      "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37234283136",
+      "id": 37234283136,
+      "name": "Required CI",
+      "status": "completed"
+    }
+  ],
+  "ci_tests": {
+    "broad_failed": 0,
+    "broad_passed": 1841,
+    "broad_seconds": 2154.72,
+    "broad_skipped": 1,
+    "counts_not_added_across_pr_push_or_repeated_subsets": true,
+    "fully_unexecuted_skips": 0,
+    "integration_subset_included_in_broad": true,
+    "integration_subset_passed": 66,
+    "integration_subset_seconds": 33.57,
+    "new_receiver_tests_in_broad": 53,
+    "only_broad_skip_is_outbox_then_executed_by_mandatory_persistence": true,
+    "push_broad_passed": 1841,
+    "push_broad_seconds": 2261.21,
+    "real_postgres_outbox_passed": 1,
+    "real_postgres_outbox_seconds": 11.78,
+    "unique_tests_passed": 1842,
+    "workflow_guards_early_passed": 24,
+    "workflow_guards_early_seconds": 0.2
+  },
+  "contracts": {
+    "contracts/source_replay/v1/capture.schema.json": "732c5d20e03b4fe9f95910947e89d621e222f5a6cfa6d4a7003e14f2b854b4a1",
+    "contracts/source_replay/v1/event.schema.json": "ce9962db5cf89bbf23c10e5848d1a37b2b012d59c0ed1220e56ab3604a1c2aaf"
+  },
+  "deployment_performed": false,
+  "draft_pr": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/23",
+  "drafts_ai10_ready_for_review": 13,
+  "evidence": {
+    "final-checks-excerpt": {
+      "path": "/private/tmp/retailops-ai10-observation-replay-final-checks-excerpt.txt",
+      "sha256": "447e3aed90afbe426ce479f0e36f669a450b40c48c381282beb52b8f09589818"
+    },
+    "final-persistence-excerpt": {
+      "path": "/private/tmp/retailops-ai10-observation-replay-final-persistence-excerpt.txt",
+      "sha256": "8d756901951e34d4dbce74863bc6bb8da834831bbc02c28ac23e98070ec14f17"
+    },
+    "junit": {
+      "path": "/private/tmp/retailops-ai10-observation-replay-tests.xml",
+      "sha256": "5baf9961ea736f0918dbacc2f94f197570407e220081536f8ab876be48a5a149"
+    },
+    "native12_report": {
+      "path": "/private/tmp/retailops-ai10-observation-replay-native12-report.json",
+      "sha256": "389d50854b419c63e09deda32d3f8385b72ab6facaf17817d6e7d7e104cd3361"
+    },
+    "offline_report": {
+      "path": "/private/tmp/retailops-ai10-observation-replay-local-final-report.json",
+      "sha256": "e5e583e030b330856f1dd3458873a8f42d4dbd53451082e2b088ca78e617a24e"
+    },
+    "prior_failed_ci_excerpt": {
+      "path": "/private/tmp/retailops-ai10-observation-replay-prior-failed-ci-excerpt.txt",
+      "sha256": "f7157d8085578a309f7d85c8e7af1787c920d878e077e4381f026a2a6d641b88"
+    }
+  },
+  "head_commit": "873116daf88a50c84cb4e7fe22c93a05907acb1a",
+  "head_tree": "68ee4f2bd82a29295753e118180926dabe6a9452",
+  "increment": "tenth: bounded native observation replay receiver",
+  "increment_complete": true,
+  "local_checks": {
+    "documentation_links": "passed",
+    "format": "passed",
+    "mypy_modules": 347,
+    "native_owner_copy_checks": "passed",
+    "native_typecheck_modules": 10,
+    "new_tests_failed": 0,
+    "new_tests_passed": 53,
+    "new_tests_seconds": 15.45,
+    "new_tests_skipped": 0,
+    "receiver_schemas": "passed",
+    "ruff": "passed",
+    "wheel_build": "passed",
+    "workflow_contract_seconds": 0.25,
+    "workflow_contract_tests_passed": 24
+  },
+  "local_docker_used": false,
+  "merge_performed": false,
+  "native12_local_report": {
+    "broker_ack_performed": false,
+    "captured_versions": 806,
+    "full_capture_sha256": "27b729d3065fa53671425ea2982184f24ba66fd4f16ed709fd53e69d686973af",
+    "native_versions": 1612,
+    "overlap_full_replay_equal": true,
+    "quantity_total": 5569,
+    "scope": "local approved native SourceSnapshot 1.2 bytes and single-table offline receiver, fixture transport only",
+    "source_dataset_id": "source-sha256-eb1486b90c0aa5557dee54a9773c6dbc689ee89441c6d2d587c71e7a0551e763",
+    "source_live_capture_supported": false,
+    "source_snapshot_id": "snapshot-sha256-896a434e1150647c750ee4e780788091e3c3f6923b0268f9b498af5153874276",
+    "source_snapshot_manifest_sha256": "ef311d0d0796a461de8cf90c77bfa6e50de2563370db9812ce4ee5a56a2682da",
+    "source_snapshot_version": "1.2.0",
+    "status": "passed",
+    "verified_tables": 43,
+    "verified_total_rows": 31623
+  },
+  "observed_owner_status": {
+    "ai07_head": "1ca82d8fbe6b67a74f27b9fd9af1e4eeabf51839",
+    "ai08_head": "8010adf113b8f0ca76f07c58321cfa40b1ba65c0",
+    "ai08_owner_status": "not ready: independent quality/calibration, thresholds/capacity, final campaign and lifecycle/batch/read still open",
+    "observed_read_only": true
+  },
+  "offline_report": {
+    "as_of": [
+      {
+        "observations": 0,
+        "origin": "2026-07-02T23:59:59.999999+00:00",
+        "units": 0
+      },
+      {
+        "observations": 799,
+        "origin": "2026-07-17T00:00:00+00:00",
+        "units": 5496
+      },
+      {
+        "observations": 1612,
+        "origin": "2026-08-02T00:00:00+00:00",
+        "units": 11047
+      }
+    ],
+    "broker_ack_performed": false,
+    "business_dedup_and_correction_equal": true,
+    "capture_id": "observation-capture-sha256-da8ab44e60f49ffd96b44fb92e0eaf528480a0c1a7439dc3b96de45e3b52b4d7",
+    "captured_native_versions": 806,
+    "captured_next_offsets": [
+      {
+        "next_offset": 260,
+        "partition": 0
+      },
+      {
+        "next_offset": 263,
+        "partition": 1
+      },
+      {
+        "next_offset": 283,
+        "partition": 2
+      }
+    ],
+    "curated_as_of_equal": true,
+    "final_capture_id": "observation-capture-sha256-e89053311dc23816ac2e1549a7c23f3d93578459ac33ecedfa1ad01c4b64d8e9",
+    "final_capture_sha256": "7c5f8c5656a81b70cd52c7f4dddedb279ba20d2f466ff4db8be3f26a6d3d0dc0",
+    "final_next_offsets": [
+      {
+        "next_offset": 550,
+        "partition": 0
+      },
+      {
+        "next_offset": 533,
+        "partition": 1
+      },
+      {
+        "next_offset": 531,
+        "partition": 2
+      }
+    ],
+    "full_43_table_handoff": false,
+    "native_versions": 1612,
+    "overlap_full_replay_equal": true,
+    "partitions": 3,
+    "scope": "offline daily_demand_versions receiver mechanics; transport and correction are explicit fixtures",
+    "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+    "source_live_capture_supported": false,
+    "source_snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+    "source_snapshot_version": "1.0.0",
+    "status": "passed",
+    "units_after_correction": 11050,
+    "units_before_correction": 11047
+  },
+  "pr_push_local_report_byte_parity": true,
+  "prior_attempts": [
+    {
+      "cause": "Proactive review found that internally coherent capture could omit an empty partition. Restore now requires caller trusted topology and rejects partition-count mismatch.",
+      "head_commit": "34040095c0c7dfe3b6e8528b8846e2d19e6aa8cc",
+      "run_id": 37231463688,
+      "state": "superseded by final head"
+    },
+    {
+      "broad_failed": 1,
+      "broad_passed": 1840,
+      "broad_seconds": 2226.61,
+      "broad_skipped": 1,
+      "cause": "Workflow bypass test mutated last step, which became artifact upload; make bootstrap check was not actually bypassed.",
+      "checks": "failure",
+      "checks_job_id": 111522553646,
+      "fix": "Locate the actual broad-check command; execute all workflow-contract tests before broad regression.",
+      "fixture_mechanics_tests_passed": 53,
+      "full_acceptance": false,
+      "head_commit": "b674f73c752f760449e69879168e58c09e128867",
+      "integration_replay_passed": 66,
+      "persistence": "success",
+      "postgres_outbox_passed": 1,
+      "regression_fix_local_seconds": 0.25,
+      "regression_fix_local_tests_passed": 24,
+      "run_id": 37231663426,
+      "secrets": "success"
+    }
+  ],
+  "private_owner_archive_published": false,
+  "protected_checkouts": {
+    "ai": {
+      "branch": "ai/11-completion",
+      "head": "abf3f69a6a78c444b5a8a910fef8b3b43ba047a9"
+    },
+    "ai07_ai08_sessions_touched": false,
+    "main_heads_and_branches_unchanged": true,
+    "owned_worktree_clean": true,
+    "source": {
+      "branch": "ai/16a-infrastructure-contracts",
+      "head": "599735a5fd13328e05f6100a07f644f4676e1ced"
+    },
+    "tracked_files_unchanged": true
+  },
+  "push_ci_jobs": [
+    {
+      "conclusion": "success",
+      "id": 111530200905,
+      "logs_url": null,
+      "name": "persistence",
+      "run_id": 37234283136,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make bootstrap compose-smoke",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make mlflow-store-smoke",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make model-lifecycle-smoke",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make lifecycle-store-smoke",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make forecast-queue-smoke",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make forecast-input-store-smoke",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make forecast-publication-smoke",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make forecast-read-smoke",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make model-catalog-smoke",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make evaluations-smoke",
+          "number": 13,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify AI10 forecast contracts and transactional outbox",
+          "number": 14,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Accept v12 registry, jobs, publication, metadata, backup and recovery",
+          "number": 15,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+          "number": 29,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 30,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 31,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "id": 111530200996,
+      "logs_url": null,
+      "name": "secrets",
+      "run_id": 37234283136,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "id": 111530201013,
+      "logs_url": null,
+      "name": "checks",
+      "run_id": 37234283136,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify workflow contract before broad checks",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run make bootstrap check",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Preserve bounded observation replay evidence",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+          "number": 11,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "conclusion": "success",
+      "id": 111538856077,
+      "logs_url": null,
+      "name": "required-result",
+      "run_id": 37234283136,
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require every gate",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 3,
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "qualification": {
+    "anomaly_and_model_stockout_projection_api_ui_complete": false,
+    "bounded_receiver_mechanics": true,
+    "durable_ai_replay_checkpoint": false,
+    "full_43_table_handoff": false,
+    "ml_or_deployment_qualification": false,
+    "native_bundle_replay_handoff": false,
+    "new_protocol_actual_broker_test": false,
+    "offline_native_fixture_only": true,
+    "protocol_status": "proposed; no Source producer/topic",
+    "source_live_sql_capture": false
+  },
+  "remaining": [
+    "Source consistent SQL capture and complete table scope with trusted offset handoff",
+    "AI durable fact-version replay, checkpoint/raw quarantine/fencing and ACK after database commit",
+    "qualified final AI07 and AI08 model lifecycle and serving",
+    "AI anomaly and model stockout outputs through intelligence.v2, atomic Source projectors and scoped API/UI",
+    "102-day actual forecast/anomaly/stockout temporal E2E"
+  ],
+  "required_ci": {
+    "conclusion": "success",
+    "early_workflow_contract_gate": "success",
+    "expected_head": "873116daf88a50c84cb4e7fe22c93a05907acb1a",
+    "pr_jobs_passed": 4,
+    "push_jobs_passed": 4,
+    "push_run_id": 37234283136,
+    "run_id": 37234285984,
+    "status": "completed",
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37234285984"
+  },
+  "scope_correction": {
+    "ai10_suggestions_acceptance": "explicit valid fixture; completed in increments eight and nine",
+    "canonical_plan_path": "docs/plans/ai/etapy/10-integracja-retailops.md",
+    "canonical_plan_source_commit": "25b76bc95d38d6d9ea4dbadd1e2710cdaaf462c1",
+    "real_assistant_outbox_owner_stage": "AI12",
+    "real_assistant_outbox_required_to_complete_ai10": false,
+    "supersedes_prior_progress_remaining_entries_listing_AI12_emitter_as_AI10_blocker": true
+  },
+  "status": "success",
+  "technical_ci_merge": {
+    "parents": [
+      "3ae6ea7a5eff8355b14f1710fe00a34e05dac44f",
+      "873116daf88a50c84cb4e7fe22c93a05907acb1a"
+    ],
+    "same_tree_as_final_head": true,
+    "sha": "507a7499c15434b756c0294c1317400180a30ff6",
+    "tree": "68ee4f2bd82a29295753e118180926dabe6a9452"
+  },
+  "technical_ci_merge_previous_head": {
+    "parents": [
+      "3ae6ea7a5eff8355b14f1710fe00a34e05dac44f",
+      "b674f73c752f760449e69879168e58c09e128867"
+    ],
+    "same_tree_as_final_head": true,
+    "sha": "d2d2af0fa248137a7e0a467be1fee31fc9f7256d",
+    "tree": "b7ff72a039d63aab4c7b0f4130207140e7238d14"
+  },
+  "version": "ai10-observation-replay-receipt-1.0",
+  "whole_ai10_status": "in_progress"
+}
