@@ -50,9 +50,14 @@ def main() -> int:
     from retailops_ai.data_contracts.identity import canonical_sha256
     from retailops_ai.forecasting.functional_v12_campaign import campaign_code
 
-    expected_campaign = (
-        integration[1] if integration is not None else pin["accepted_main_campaign_pin_sha256"]
+    shared = pin.get(
+        "shared_campaign_implementation_pin_sha256", pin["accepted_main_campaign_pin_sha256"]
     )
+    if "shared_campaign_implementation_commit" in pin and not re.fullmatch(
+        r"[0-9a-f]{40}", pin["shared_campaign_implementation_commit"]
+    ):
+        raise ValueError("immutable_shared_campaign_owner_required")
+    expected_campaign = integration[1] if integration is not None else shared
     if canonical_sha256(campaign_code()) != expected_campaign:
         raise ValueError("accepted_main_campaign_code_changed")
     print("Source bundle wire, native importer/assets and isolated lock pins passed.")

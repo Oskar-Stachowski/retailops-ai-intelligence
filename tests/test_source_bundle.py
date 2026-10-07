@@ -147,7 +147,11 @@ def test_real_download_verifies_full_fixture_and_reuses_immutable_import(tmp_pat
 
     integration = integration_bindings()
     expected = (
-        integration[1] if integration is not None else pin["accepted_main_campaign_pin_sha256"]
+        integration[1]
+        if integration is not None
+        else pin.get(
+            "shared_campaign_implementation_pin_sha256", pin["accepted_main_campaign_pin_sha256"]
+        )
     )
     assert canonical_sha256(frozen) == expected
     assert pin["frozen_v12_campaign_pin_sha256"] == (

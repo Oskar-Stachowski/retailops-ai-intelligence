@@ -1,0 +1,64 @@
+{
+  "$id": "urn:retailops:evaluation:campaign_generation_resources:13.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cpu_threads": {
+      "const": 1,
+      "default": 1,
+      "title": "Cpu Threads",
+      "type": "integer"
+    },
+    "max_log_bytes": {
+      "default": 16777216,
+      "maximum": 16777216,
+      "minimum": 1024,
+      "title": "Max Log Bytes",
+      "type": "integer"
+    },
+    "minimum_available_memory_bytes": {
+      "minimum": 1024,
+      "title": "Minimum Available Memory Bytes",
+      "type": "integer"
+    },
+    "minimum_free_disk_bytes": {
+      "minimum": 1024,
+      "title": "Minimum Free Disk Bytes",
+      "type": "integer"
+    },
+    "sample_seconds": {
+      "default": 0.2,
+      "maximum": 1,
+      "minimum": 0.01,
+      "title": "Sample Seconds",
+      "type": "number"
+    },
+    "scratch_bytes": {
+      "maximum": 137438953472,
+      "minimum": 1024,
+      "title": "Scratch Bytes",
+      "type": "integer"
+    },
+    "tree_rss_bytes": {
+      "maximum": 68719476736,
+      "minimum": 1024,
+      "title": "Tree Rss Bytes",
+      "type": "integer"
+    },
+    "wall_seconds": {
+      "maximum": 86400,
+      "minimum": 1,
+      "title": "Wall Seconds",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "wall_seconds",
+    "tree_rss_bytes",
+    "scratch_bytes",
+    "minimum_free_disk_bytes",
+    "minimum_available_memory_bytes"
+  ],
+  "title": "CampaignGenerationResources",
+  "type": "object"
+}
