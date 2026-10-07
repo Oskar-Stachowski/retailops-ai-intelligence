@@ -54,7 +54,23 @@ to pozwala zaplanować próbę 8 GiB z dodatkową rezerwą 1 GiB. Wymagany prefl
 i bieżące limity nadal działają. To nowy limit diagnostyczny, którego nie
 uznajemy za zmierzony koszt ukończonego profilu. Kod producenta, pełny rozmiar
 danych, historia, parent limits i zakazy fitów/final generation pozostają
-przypięte; 1.1 wymaga własnego wyniku. Pierwsza porażka pozostaje odrębnym
+przypięte. Pierwsza porażka pozostaje odrębnym
 runem i nie jest nadpisywana.
 Receptura 1.1 ma 17 zaliczonych testów supervisora i kontroli scope; obejmują
 odrzucenie zmiany parent limits, rezerwy pamięci oraz skrótu wcześniejszego planu.
+
+[Drugi pełny pomiar](evidence/09-18-development-capacity-second-run.json),
+run `37613368332` na `d88d4a2`, zakończył się `wall_limit` po 3600.552 s.
+Próbkowany peak własnego drzewa wyniósł 7679963136 B, poniżej limitu 8 GiB;
+próbkowane CPU workera miało dolną granicę 3599.54 s. Generacja nie ukończyła
+źródła; wszystkie późniejsze fazy pozostają nieuruchomione. Minimalna dostępna
+pamięć wyniosła 8043921408 B. Artefakt i plan tej porażki są zachowane osobno.
+Nie oznacza to, że ukończony profil mieści się w 8 GiB lub ma znany koszt.
+
+[Source PR #101](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/101)
+proponuje ograniczenie kopii wejść commerce i jednokrotne stosowanie ruchów
+przy dziennych snapshotach, z fallbackiem dla spóźnionych faktów.
+456 native testów przechodzi. Pięć kontrolnych native par zachowuje kompletne
+wyniki; alokacje Python podczas kopii maleją o 14.81%, CPU dziennych snapshotów
+o 89.62%. To oddzielne pomiary komponentów. Przed nowym pełnym pomiarem potrzebne
+są publikacja producenta, jego CI oraz osobny plan zachowujący obie porażki.

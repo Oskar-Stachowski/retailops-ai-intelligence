@@ -36,8 +36,12 @@ runner generacji/curation i reszta kampanii nadal nie są odebrane.
 Po integracji [optymalizacji](evidence/ai09-performance.md) jest 272 native passed
 oraz 198 testów wheela w dwóch częściach, z identycznymi bajtami 499 modułów
 i schematów v12 w wheelu oraz kodzie źródłowym. Mniejszy RSS i CPU kanonicznego JSON nie są dowodem szybszego
-całego eksportu: kontrolna para wall ma wzrost 3.37%. Końcowy head readera
-i optymalizacji wymaga własnego pełnego Required CI oraz odbioru main.
+całego eksportu: kontrolna para wall ma wzrost 3.37%. Reader i optymalizacje
+mają pełne 14 zielonych jobów [PR #31](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/31)
+na `db3aeb8` i są scalone jako `e1f864c`.
+[CI dokładnego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37615123521)
+jest zielone, z kompletem 14 wymaganych jobów na `e1f864c`.
+To odbiór komponentów; pełna kampania nadal jest wymagana.
 
 Do zamknięcia pozostają: pełny audytowany eksport rzeczywistych pięciu ról,
 integracja fitów i kalibracji, ocena RF/HGB/baseline/TensorFlow na trzech seedach,
@@ -60,14 +64,24 @@ większego prospektywnego budżetu albo ograniczenie pamięci producenta.
 [Osobna receptura 1.1](reference/ai09-development-capacity-v1.1.json) planuje
 próbę 8 GiB na podstawie zmierzonej dostępnej pamięci runnera, zachowując
 pierwszy plan i porażkę oraz wszystkie stare limity i wymagania jakości.
-Jej wynik jest jeszcze wymagany.
+Jej [wynik](evidence/09-18-development-capacity-second-run.json),
+[run 37613368332](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37613368332)
+na `d88d4a2`, zakończył się `wall_limit` po 3600.552 s podczas generacji.
+Próbkowany peak własnego drzewa wyniósł 7679963136 B (7.15 GiB), poniżej 8 GiB;
+nie ukończono żadnej fazy. Obie porażki i ich koszty są zachowane. Następny
+pomiar wymaga osobnej receptury na zwalidowanym producencie.
+[Source PR #101](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/101)
+na `3be92bf` ogranicza kopie wejść i dzienny replay, z 456 zaliczonymi testami.
+Pięć kontrolnych par daje −14.81% alokacji Python podczas kopii i −89.62% CPU
+projekcji dziennych snapshotów, z identycznymi wynikami. To pomiary komponentów;
+pełny RSS i koszt pipeline na nowym producencie nadal wymagają odbioru.
 Nie rozpoczęto projektowej kampanii ani generacji finalnych danych. Prawdziwa wersja planned
 forecast to snapshot 1.1; kontrakt anomalii 1.2 pozostaje osobnym wymaganiem.
 
 Szacunek zamknięcia na 2026-10-07: poprzednia lista prac to **24–40 godzin
-aktywnej pracy**. Po zmierzonym przekroczeniu 4 GiB podczas pełnego development
+aktywnej pracy**. Po przekroczeniu 4 GiB i osobnym limicie godziny podczas development
 planuj **5–7 dni roboczych**, z **3–5 dniami** jako wariantem optymistycznym,
-jeżeli osobny odbiór większego budżetu szybko zakończy się sukcesem.
+jeżeli odbiór zoptymalizowanego producenta szybko zakończy się sukcesem.
 To szacunek implementacji i odbiorów; zakończony pełny profil i kampania
 nadal nie mają zmierzonego całkowitego kosztu.
 Największa niewiadoma to zasoby i czas canonical `ai-training`; kontrolne
