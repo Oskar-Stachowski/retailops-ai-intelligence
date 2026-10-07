@@ -37,6 +37,56 @@ Kompletne native ziarno sprzedaży, wersje i availability dostarcza wersjonowany
 immutable bundle. Bounded REST zachowuje swoje rzeczywiste ograniczenia;
 `require_full_sales_grain()` zwraca `unsupported_grain`.
 
+## Własność danych i granice zapisu
+
+```mermaid
+flowchart LR
+  subgraph Source[RetailOps — własny SQL i istniejący frontend]
+    OPS[Operacyjne fakty i wersje]
+    SNAP[Niezmienny bundle 43 tabel]
+    REST[Bounded REST]
+    SO[Source observation outbox]
+    SC[Checkpoint consumer]
+    READ[SQL wyników i inbox]
+    API[Read API ze scope principal]
+    UI[Forecasts / Anomalies / Recommendations]
+    OPS --> SNAP
+    OPS --> REST
+    OPS --> SO
+    SC -->|jeden commit: wynik / raw receipt / checkpoint| READ
+    READ --> API --> UI
+  end
+  subgraph AI[RetailOps AI — osobny SQL i registry]
+    IMP[Zweryfikowany import i features]
+    ML[Oryginalne frozen modele]
+    AO[Wynik i outbox w jednym commit]
+    PUB[Oryginalny SQL publisher]
+    LIVE[Ograniczony klient REST]
+    OBS[SQL faktów / raw receipts / checkpoint]
+    IMP --> ML --> AO --> PUB
+  end
+  subgraph Broker[Broker — osobne topic i grupy]
+    IN[retailops.source-observations.v1]
+    OUT[retailops.intelligence.v2]
+  end
+  SNAP --> IMP
+  REST --> LIVE
+  SO -->|ACK przed SQL delivery receipt| IN
+  IN --> OBS
+  OBS -->|ACK po SQL commit| IN
+  PUB -->|ACK przed SQL delivery receipt| OUT
+  OUT --> SC
+  SC -->|ACK po SQL commit| OUT
+```
+
+Repozytorium Source jest właścicielem faktów operacyjnych, eksportów,
+read models i interfejsu. AI jest właścicielem importów, kwalifikacji,
+registry, obliczeń i własnego outbox. Workery używają oddzielnych baz i grantów;
+API nie zapisuje modelowych wyników. Broker przenosi eventy i pozycje transportu,
+a SQL rozstrzyga trwałość i deduplikację. Ścieżka obserwacji zachowuje osobny
+bounded zakres `daily_demand_versions`; nie stanowi dowodu kwalifikacji ML
+ani streamu wszystkich 43 tabel. HTTP/broker credentials pozostają poza Git.
+
 ## Odtworzenie krok po kroku
 
 1. Przypnij oba commity i schema/registry SHA. Używaj własnych baz, grup brokera,

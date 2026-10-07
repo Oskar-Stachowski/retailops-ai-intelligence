@@ -1,11 +1,13 @@
 # AI 10 — pierwszy przyrost integracji wyników
 
-Status: **implementacja w toku; AI 10 nie jest ready**. Pierwotny przyrost
+Status całego etapu i bieżące dowody podaje [odbiór AI10](ai10-acceptance.md).
+Poniżej zachowano zakres i procedurę pierwszego przyrostu. Pierwotny przyrost
 opisany poniżej wdrożył forecast v2 i atomowy outbox. Aktualna integracja
 dodaje [native anomaly i stockout](intelligence-models-v2.md), osobne read API
 oraz widoki istniejącego frontendu RetailOps. Sugestie mają jawny kontrakt
-fixture. Pełny capture/snapshot/replay i odbiór temporalny trzech modeli
-pozostają wymagane. Nie zmieniono sesji ani worktree AI 07/08.
+fixture. Aktualny Source → AI SQL/ACK handoff, native API/UI i pozostałe
+warunki zamknięcia mają osobne receipts w bieżącym odbiorze.
+Oceny „nadal otwarte” niżej dotyczą pierwszego historycznego przyrostu.
 
 ## Granice kontraktu
 
