@@ -979,3 +979,16 @@ Nowe kandydaty `.native-sources.v1` zachowują wcześniejsze manifesty i etykiet
 Scalono opublikowany `main/89b64d23` bez zmiany drzewa aplikacji.
 Wcześniejszy head `35dae7e` ma pełny Required CI **15/15 success**;
 nowy przyrost wymaga osobnego odbioru. Status nadal **in_progress**.
+
+**AI12 — natywny stan zapasu.** Read-only adapter weryfikuje Source i Curated,
+odbudowuje parent oraz zachowuje fizyczne snapshoty i natywne trasy sprzedaż →
+magazyn. Wymaga osobnego grantu fizycznego, pełnego scope i rzeczywistego czasu
+pomiaru. Brak lub nieaktualność jednego punktu wstrzymuje cały scope; wspólny
+zapas nie jest sumowany między sklepami. [Opis](agent-native-inventory.md),
+[odbiór](evidence/12-native-inventory.md): 61/61 testów adaptera, 704 unikalne
+przypadki z końcowym wynikiem passed, pełne `ci-checks`, golden 50/50 i zgodność
+538 modułów Python wheel/checkout. Plan CI obejmuje 4241 testów dokładnie raz.
+Main `a128bb38` scalono bez zmiany kodu aplikacji i locków. Nowe kandydaty
+`.native-inventory.v1` zachowują wcześniejsze manifesty i etykiety. Head
+sprzedażowy `8e4e0b1` zakończył Required CI **15/15 success**; przyrost inventory
+wymaga osobnego zdalnego odbioru. Status nadal **in_progress**.
