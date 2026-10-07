@@ -37,6 +37,10 @@
       "scope": "package_command_resolution",
       "reason": "uv absent from shell PATH; corrected using existing workspace tool binary",
       "corrected_build": "passed"
+    },
+    {
+      "scope": "post_main_integration_test_command",
+      "reason": "Requested a nonexistent test filename; no tests ran; corrected file inventory then 93 passed"
     }
   ],
   "integrated_regression": {
@@ -104,6 +108,17 @@
     "source_integrated_ci_success": 21,
     "source_integrated_ci_intentional_skips": 4,
     "new_exact_final_export_ci_required": true,
-    "main_publication_complete": false
+    "main_publication_complete": false,
+    "source_protected_merge_commit": "b7234899769119c67f27a62867c1d2153dbd6a00",
+    "source_exact_main_ci": 37651259188,
+    "source_exact_main_ci_pending": true,
+    "post_main_integration_validation": {
+      "tests_passed": 93,
+      "tests_seconds": 64.7,
+      "mypy_source_files": 665,
+      "ruff_and_format": "passed",
+      "source_bundle_contract": "passed",
+      "evaluation_schemas": "passed"
+    }
   }
 }
