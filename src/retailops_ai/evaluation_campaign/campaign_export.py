@@ -19,6 +19,7 @@ from retailops_ai.evaluation_campaign.campaign_export_contract import (
     CampaignDevelopmentExportReceipt,
     CampaignGeneratedParentReceipt,
 )
+from retailops_ai.evaluation_campaign.campaign_final_contract import CampaignFinalExportReceipt
 from retailops_ai.evaluation_campaign.physical_forecast import (
     _build_physical_forecast,
     _physical_bytes,
@@ -141,7 +142,10 @@ def _producer_values(
 
 
 def _store_receipt(
-    root: Path, receipt: CampaignDevelopmentExportReceipt | CampaignGeneratedParentReceipt
+    root: Path,
+    receipt: CampaignDevelopmentExportReceipt
+    | CampaignGeneratedParentReceipt
+    | CampaignFinalExportReceipt,
 ) -> None:
     """Keep output evidence durable before completing the charged operation."""
     raw = canonical_bytes(receipt.model_dump(mode="json")) + b"\n"

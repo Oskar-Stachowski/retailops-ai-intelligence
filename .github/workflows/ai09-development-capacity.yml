@@ -1,12 +1,6 @@
 name: AI09 canonical development capacity diagnostic
 
 on:
-  push:
-    branches: ["work/ai09-source-capacity"]
-    paths:
-      - ".github/workflows/ai09-development-capacity.yml"
-      - "scripts/measure_ai09_development_capacity.py"
-      - "docs/reference/ai09-development-capacity*.json"
   workflow_dispatch:
 
 permissions:
@@ -37,7 +31,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: 1de462729012a1bad458a8da4ad317ec22dbc5b8
+          ref: 16d34887b058b3dfb270af474f28242194a968ca
           persist-credentials: false
           path: source
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0

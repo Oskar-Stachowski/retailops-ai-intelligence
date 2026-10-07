@@ -1,0 +1,372 @@
+{
+  "$defs": {
+    "DemandVersion": {
+      "additionalProperties": false,
+      "description": "An explicitly declared curated version; a seal does not prove source truth.",
+      "properties": {
+        "business_date": {
+          "format": "date",
+          "title": "Business Date",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "curated_available_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Curated Available At"
+        },
+        "observation_status": {
+          "enum": [
+            "observed_positive",
+            "observed_zero",
+            "closed",
+            "missing"
+          ],
+          "title": "Observation Status",
+          "type": "string"
+        },
+        "observed_units": {
+          "anyOf": [
+            {
+              "maximum": 9223372036854775807,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed Units"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "quality_status": {
+          "enum": [
+            "valid",
+            "quarantined",
+            "incomplete"
+          ],
+          "title": "Quality Status",
+          "type": "string"
+        },
+        "record_id": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Record Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "source_data_complete": {
+          "title": "Source Data Complete",
+          "type": "boolean"
+        },
+        "source_record_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Record Sha256",
+          "type": "string"
+        },
+        "version": {
+          "maximum": 9223372036854775807,
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "business_date",
+        "record_id",
+        "source_record_sha256",
+        "version",
+        "curated_available_at",
+        "observed_units",
+        "observation_status",
+        "source_data_complete",
+        "quality_status"
+      ],
+      "title": "DemandVersion",
+      "type": "object"
+    },
+    "FinalForecastOutcome": {
+      "additionalProperties": false,
+      "properties": {
+        "eligible": {
+          "title": "Eligible",
+          "type": "boolean"
+        },
+        "feature_row_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Feature Row Sha256",
+          "type": "string"
+        },
+        "label": {
+          "$ref": "#/$defs/FinalRoleLabel"
+        },
+        "reasons": {
+          "items": {
+            "enum": [
+              "insufficient_history",
+              "stale_history",
+              "unknown_calendar",
+              "closed_target",
+              "censored_label"
+            ],
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        }
+      },
+      "required": [
+        "label",
+        "feature_row_sha256",
+        "eligible",
+        "reasons"
+      ],
+      "title": "FinalForecastOutcome",
+      "type": "object"
+    },
+    "FinalRoleLabel": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "cutoff_policy": {
+          "const": "end_of_day_second_v1",
+          "title": "Cutoff Policy",
+          "type": "string"
+        },
+        "forecast_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Forecast Origin",
+          "type": "string"
+        },
+        "horizon_days": {
+          "maximum": 14,
+          "minimum": 1,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "knowledge_cutoff": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Knowledge Cutoff",
+          "type": "string"
+        },
+        "label_delay_days": {
+          "maximum": 30,
+          "minimum": 1,
+          "title": "Label Delay Days",
+          "type": "integer"
+        },
+        "maturity_not_before": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Maturity Not Before",
+          "type": "string"
+        },
+        "observed_sales_units": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed Sales Units"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "missing_or_unavailable",
+                "incomplete_source",
+                "not_mature"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        },
+        "role": {
+          "const": "final_evaluation",
+          "default": "final_evaluation",
+          "title": "Role",
+          "type": "string"
+        },
+        "selected_version": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DemandVersion"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "eligible",
+            "censored"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "target_date": {
+          "format": "date",
+          "title": "Target Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "forecast_origin",
+        "business_timezone",
+        "cutoff_policy",
+        "target_date",
+        "horizon_days",
+        "knowledge_cutoff",
+        "label_delay_days",
+        "maturity_not_before",
+        "status",
+        "observed_sales_units",
+        "selected_version",
+        "reason"
+      ],
+      "title": "FinalRoleLabel",
+      "type": "object"
+    },
+    "ForecastKey": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "cutoff_policy": {
+          "const": "end_of_day_second_v1",
+          "title": "Cutoff Policy",
+          "type": "string"
+        },
+        "forecast_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Forecast Origin",
+          "type": "string"
+        },
+        "horizon_days": {
+          "maximum": 14,
+          "minimum": 1,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "target_date": {
+          "format": "date",
+          "title": "Target Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "forecast_origin",
+        "business_timezone",
+        "cutoff_policy",
+        "target_date",
+        "horizon_days"
+      ],
+      "title": "ForecastKey",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:final_forecast_example:14.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "key": {
+      "$ref": "#/$defs/ForecastKey"
+    },
+    "outcome": {
+      "$ref": "#/$defs/FinalForecastOutcome"
+    }
+  },
+  "required": [
+    "key",
+    "outcome"
+  ],
+  "title": "FinalForecastExample",
+  "type": "object"
+}
