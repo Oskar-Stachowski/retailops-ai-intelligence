@@ -17,6 +17,7 @@ from retailops_ai.agent.tools import (
     DataScope,
     ForecastResult,
     InventoryItem,
+    InventoryResult,
     KnowledgeRequest,
     KnowledgeResult,
     ModelStatusItem,
@@ -373,6 +374,33 @@ class ToolSession:
                 or evidence.environment != self.executor.environment
             ):
                 raise ToolFailure("unavailable")
+        if isinstance(output, InventoryResult) and output.source_kind == "runtime":
+            native_view = output.native_view
+            physical_scope = self.principal.stockout
+            if (
+                native_view is None
+                or native_view.request != request
+                or native_view.environment != self.executor.environment
+            ):
+                raise ToolFailure("unavailable")
+            if physical_scope is None or any(
+                point.product_id not in physical_scope.product_ids
+                or (
+                    point.route is not None
+                    and point.route.stock_location_id not in physical_scope.stock_location_ids
+                )
+                for point in native_view.points
+            ):
+                raise ToolFailure("unauthorized")
+            if native_view.complete and any(
+                point.snapshot is None
+                or (request.as_of - point.snapshot.snapshot_at).total_seconds()
+                > self.executor.policy.freshness_seconds
+                or (self.executor.clock() - point.snapshot.snapshot_at).total_seconds()
+                > self.executor.policy.freshness_seconds
+                for point in native_view.points
+            ):
+                raise ToolFailure("stale")
         if output.error is not None:
             raise ToolFailure(output.error.code)
         if output.as_of is None or output.as_of > request.as_of:

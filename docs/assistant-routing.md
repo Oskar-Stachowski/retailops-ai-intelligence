@@ -69,6 +69,12 @@ make contracts-check
 ```
 
 Aktualny kandydat offline używa
-[nowego release](../agent/evaluation-release.fake.native-sources.v1.json). Historyczny
+[nowego release](../agent/evaluation-release.fake.native-inventory.v1.json). Historyczny
 [release](../agent/evaluation-release.fake.v1.json) i wyniki Bedrock pozostają
 zachowane; ich kwalifikacja nie przechodzi automatycznie na nowy kod.
+
+Odczyt inventory wymaga pełnego scope sprzedaży oraz osobnego fizycznego grantu
+dla każdego produktu i magazynu rozwiązanego przez natywną trasę. Planner
+sprawdza pełną liczbę serii przed admission. Brak lub nieaktualność któregokolwiek
+snapshotu wstrzymuje cały scope. [Adapter inventory](agent-native-inventory.md)
+zachowuje rzeczywisty czas pomiaru i nie sumuje wspólnego zapasu między sklepami.

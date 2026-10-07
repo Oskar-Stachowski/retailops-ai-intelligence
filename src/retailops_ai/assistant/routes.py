@@ -132,6 +132,11 @@ class ReviewedPlanner:
                 "end": query.scope.from_ - timedelta(days=1),
             }
         limit = 5
+        if intent == "inventory":
+            series = len(query.scope.product_ids) * len(query.scope.store_ids)
+            if series > self.max_forecast_rows:
+                raise AssistantError(422)
+            limit = min(max(limit, series), self.max_forecast_rows)
         if intent in {"sales", "sales_comparison", "investigation"}:
             series = len(query.scope.product_ids) * len(query.scope.store_ids)
             days = (query.scope.to - query.scope.from_).days + 1
@@ -172,7 +177,7 @@ class ReviewedPlanner:
             raise AssistantError(422) from None
         if any(READ_CAPABILITIES[call.tool] not in principal.capabilities for call in calls):
             raise AssistantError(403)
-        if any(call.tool == "get_stockout_risk" for call in calls):
+        if any(call.tool in {"get_stockout_risk", "get_inventory_status"} for call in calls):
             physical = principal.stockout
             if physical is None or not set(request.scope.product_ids) <= physical.product_ids:
                 raise AssistantError(403)

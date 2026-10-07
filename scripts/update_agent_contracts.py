@@ -12,6 +12,7 @@ from retailops_ai.agent.tools import (
     OUTPUT,
     REQUEST_MODELS,
     RESULT_MODELS,
+    NativeInventoryEvidence,
     QualifiedSalesEvidence,
     ToolPolicy,
 )
@@ -180,6 +181,8 @@ def artifacts() -> dict[str, object]:
                     if tool == "get_demand_forecast"
                     else "verified_source_curated_raw_dq_day_sales"
                     if tool == "get_sales_summary"
+                    else "verified_source_curated_physical_inventory"
+                    if tool == "get_inventory_status"
                     else "not_implemented_requires_upstream_stages"
                 ),
             }
@@ -206,6 +209,13 @@ def artifacts() -> dict[str, object]:
         | {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "$id": "urn:retailops:agent:qualified-sales-evidence:1.0",
+        }
+    )
+    result["native-inventory-evidence.v1.schema.json"] = (
+        NativeInventoryEvidence.model_json_schema()
+        | {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "urn:retailops:agent:native-inventory-evidence:1.0",
         }
     )
     return result

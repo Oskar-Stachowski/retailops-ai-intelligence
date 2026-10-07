@@ -28,7 +28,7 @@ from retailops_ai.knowledge.chunks import MarkdownChunk
 from retailops_ai.pipelines.retrieval import context_size
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "agent/graph.evaluate.fake.native-sources.v1.json"
+CONFIG = ROOT / "agent/graph.evaluate.fake.native-inventory.v1.json"
 SUITE = AgentGoldenSet.model_validate_json((ROOT / "agent/golden.canonical.v1.json").read_bytes())
 
 
@@ -278,7 +278,7 @@ def test_empty_policy_fails_closed_and_callers_cannot_supply_rules():
     result, provider = run_case(case(1), config=config)
     assert result.answer.outcome == "insufficient_evidence" and provider.calls == 1
     assert not load_graph_config(
-        ROOT / "agent/graph.fake.native-sources.v1.json"
+        ROOT / "agent/graph.fake.native-inventory.v1.json"
     ).config.policy.document_rules
     request = json.loads(case(1).request_json)
     request["document_rules"] = load_graph_config(CONFIG).config.policy.model_dump(mode="json")[

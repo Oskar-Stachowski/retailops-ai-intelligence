@@ -50,6 +50,9 @@ def graph_code_checksum() -> str:
             "adapters/qualified_sales_tool.py": hashlib.sha256(
                 files("retailops_ai.adapters").joinpath("qualified_sales_tool.py").read_bytes()
             ).hexdigest(),
+            "adapters/native_inventory_tool.py": hashlib.sha256(
+                files("retailops_ai.adapters").joinpath("native_inventory_tool.py").read_bytes()
+            ).hexdigest(),
         }
     )
 

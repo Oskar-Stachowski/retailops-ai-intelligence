@@ -1,6 +1,6 @@
 """Closed, typed read-only catalogue. Arguments never carry identity or provider URLs."""
 
-from datetime import timedelta
+from datetime import date, timedelta
 from typing import Annotated, Generic, Literal, Self, TypeVar
 
 from pydantic import Field, TypeAdapter, model_validator
@@ -367,8 +367,220 @@ class SalesResult(DataResult[SalesItem]):
         return self
 
 
+class NativeInventoryRoute(Contract):
+    route_id: Symbol
+    version: Annotated[int, Field(ge=1)]
+    selling_location_id: Symbol
+    stock_location_id: Symbol
+    channel: Literal["store", "online"]
+    effective_from: date
+    effective_to: date
+    available_at: UtcTime
+    curated_available_at: UtcTime
+    source_record_sha256: Sha256
+
+    @model_validator(mode="after")
+    def causal_route(self) -> Self:
+        if (
+            self.effective_from >= self.effective_to
+            or self.available_at > self.curated_available_at
+        ):
+            raise ValueError("native_inventory_route_invalid")
+        return self
+
+    @property
+    def mapping_ref(self) -> str:
+        return "inventory-route-sha256-" + canonical_sha256(self.model_dump(mode="json"))
+
+
+class NativeInventorySnapshot(Contract):
+    snapshot_id: Symbol
+    product_id: Symbol
+    stock_location_id: Symbol
+    business_date: date
+    period_from_at: UtcTime
+    period_to_at: UtcTime
+    is_full_business_day: bool
+    snapshot_at: UtcTime
+    as_of_time: UtcTime
+    unit_of_measure: Literal["pcs"]
+    on_hand: Annotated[int, Field(ge=0)] | None
+    reserved_qty: Annotated[int, Field(ge=0)] | None
+    available_qty: Annotated[int, Field(ge=0)] | None
+    status: Literal["known", "not_available"]
+    source_available_at: UtcTime | None
+    curated_available_at: UtcTime | None
+    source_record_sha256: Sha256
+
+    @model_validator(mode="after")
+    def causal_snapshot(self) -> Self:
+        if (
+            self.snapshot_at != self.as_of_time
+            or self.snapshot_at != self.period_to_at - timedelta(microseconds=1)
+            or not self.period_from_at <= self.snapshot_at < self.period_to_at
+            or self.business_date != self.period_from_at.date()
+        ):
+            raise ValueError("native_inventory_snapshot_time_mismatch")
+        quantities = (self.on_hand, self.reserved_qty, self.available_qty)
+        if self.status == "not_available":
+            if any(
+                v is not None
+                for v in (*quantities, self.source_available_at, self.curated_available_at)
+            ):
+                raise ValueError("native_inventory_unknown_snapshot_has_values")
+        elif (
+            self.on_hand is None
+            or self.reserved_qty is None
+            or self.available_qty is None
+            or self.reserved_qty > self.on_hand
+            or self.available_qty != self.on_hand - self.reserved_qty
+            or self.source_available_at is None
+            or self.curated_available_at is None
+            or not self.source_available_at <= self.snapshot_at <= self.curated_available_at
+            or any(v is not None and int(float(v)) != v for v in quantities)
+        ):
+            raise ValueError("native_inventory_snapshot_quantity_or_availability_mismatch")
+        return self
+
+
+class NativeInventoryPoint(SellingKey):
+    route: NativeInventoryRoute | None
+    snapshot: NativeInventorySnapshot | None
+    status: Literal["known", "missing_route", "missing_snapshot", "not_available", "stale"]
+
+
+class NativeInventoryEvidence(Contract):
+    evidence_version: Literal["verified-inventory-snapshots-v1"] = "verified-inventory-snapshots-v1"
+    environment: Literal["local", "test"]
+    request: InventoryRequest
+    source_dataset_id: SourceID
+    source_descriptor_sha256: Sha256
+    curated_dataset_id: CuratedID
+    curated_descriptor_sha256: Sha256
+    qualification_runtime_sha256: Sha256
+    max_snapshot_age_seconds: Literal[300] = 300
+    points: tuple[NativeInventoryPoint, ...] = Field(min_length=1, max_length=50)
+
+    @model_validator(mode="after")
+    def exact_scope(self) -> Self:
+        scope = self.request.scope
+        if (
+            scope is None
+            or len(scope.product_ids) * len(scope.selling_location_ids) > self.request.limit
+            or self.source_dataset_id != "source-sha256-" + self.source_descriptor_sha256
+            or self.curated_dataset_id != "curated-sha256-" + self.curated_descriptor_sha256
+        ):
+            raise ValueError("native_inventory_scope_or_parent_binding_mismatch")
+        expected = {
+            (p, s, scope.channel) for p in scope.product_ids for s in scope.selling_location_ids
+        }
+        actual = [(p.product_id, p.selling_location_id, p.channel) for p in self.points]
+        if len(set(actual)) != len(actual) or set(actual) != expected:
+            raise ValueError("native_inventory_partial_duplicate_or_extra_scope")
+        for point in self.points:
+            route, snapshot = point.route, point.snapshot
+            if route is None:
+                state = "missing_route"
+                if snapshot is not None:
+                    raise ValueError("native_inventory_snapshot_without_route")
+            else:
+                if (
+                    route.selling_location_id != point.selling_location_id
+                    or route.channel != point.channel
+                    or route.curated_available_at > self.request.as_of
+                    or not route.effective_from <= self.request.as_of.date() < route.effective_to
+                ):
+                    raise ValueError("native_inventory_noncausal_or_mismatched_route")
+                state = "missing_snapshot"
+                if snapshot is not None:
+                    if (
+                        snapshot.product_id != point.product_id
+                        or snapshot.stock_location_id != route.stock_location_id
+                        or snapshot.snapshot_at > self.request.as_of
+                        or (
+                            snapshot.curated_available_at is not None
+                            and snapshot.curated_available_at > self.request.as_of
+                        )
+                    ):
+                        raise ValueError("native_inventory_noncausal_or_mismatched_snapshot")
+                    state = (
+                        "not_available"
+                        if snapshot.status != "known"
+                        else "stale"
+                        if (self.request.as_of - snapshot.snapshot_at).total_seconds()
+                        > self.max_snapshot_age_seconds
+                        else "known"
+                    )
+            if point.status != state:
+                raise ValueError("native_inventory_point_status_mismatch")
+        return self
+
+    @property
+    def complete(self) -> bool:
+        return all(p.status == "known" for p in self.points)
+
+    @property
+    def view_ref(self) -> str:
+        return "inventory-view-sha256-" + canonical_sha256(self.model_dump(mode="json"))
+
+    @property
+    def as_of(self) -> UtcTime:
+        return (
+            min(p.snapshot.snapshot_at for p in self.points if p.snapshot is not None)
+            if self.complete
+            else self.request.as_of
+        )
+
+    def inventory_items(self) -> list[InventoryItem]:
+        if not self.complete:
+            return []
+        items = []
+        for point in self.points:
+            route, snapshot = point.route, point.snapshot
+            if (
+                route is None
+                or snapshot is None
+                or snapshot.on_hand is None
+                or snapshot.reserved_qty is None
+                or snapshot.available_qty is None
+            ):
+                raise ValueError("native_inventory_complete_point_missing")
+            items.append(
+                InventoryItem(
+                    product_id=point.product_id,
+                    selling_location_id=point.selling_location_id,
+                    channel=point.channel,
+                    stock_location_id=route.stock_location_id,
+                    mapping_ref=route.mapping_ref,
+                    physical_units=float(snapshot.on_hand),
+                    reserved_units=float(snapshot.reserved_qty),
+                    available_units=float(snapshot.available_qty),
+                    unit_of_measure="unit",
+                )
+            )
+        return items
+
+
 class InventoryResult(DataResult[InventoryItem]):
     tool: Literal["get_inventory_status"]
+    native_view: NativeInventoryEvidence | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
+
+    @model_validator(mode="after")
+    def native_outcome(self) -> Self:
+        evidence = self.native_view
+        if evidence is not None and (
+            self.source_kind != "runtime"
+            or self.as_of != evidence.as_of
+            or self.source_ref != evidence.view_ref
+            or self.items != evidence.inventory_items()
+            or self.status != ("ok" if evidence.complete else "no_data")
+            or self.freshness_status != ("current" if evidence.complete else "missing")
+            or self.error is not None
+        ):
+            raise ValueError("native_inventory_result_binding_mismatch")
+        return self
 
 
 class RiskResult(DataResult[RiskItem]):

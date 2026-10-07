@@ -183,7 +183,9 @@ def candidates(tools: ToolSession, policy: SuggestionPolicy) -> tuple[Suggestion
                 inventories = [
                     (other, row)
                     for other in outputs
-                    if isinstance(other, InventoryResult) and other.status == "ok"
+                    if isinstance(other, InventoryResult)
+                    and other.status == "ok"
+                    and other.native_view is None
                     for row in other.items
                     if grain(row) == grain(risk)
                 ]

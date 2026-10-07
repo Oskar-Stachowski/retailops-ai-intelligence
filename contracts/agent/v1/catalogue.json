@@ -25,7 +25,7 @@
       "read_only": true,
       "request_schema": "get_inventory_status.request.v1.schema.json",
       "result_schema": "get_inventory_status.result.v1.schema.json",
-      "runtime_adapter": "not_implemented_requires_upstream_stages",
+      "runtime_adapter": "verified_source_curated_physical_inventory",
       "tool": "get_inventory_status"
     },
     {

@@ -27,6 +27,7 @@ from retailops_ai.agent.tools import (
     AnomalyItem,
     ForecastResult,
     InventoryItem,
+    InventoryResult,
     KnowledgeResult,
     ModelStatusItem,
     OperationsItem,
@@ -309,6 +310,15 @@ class EvidencePolicy:
                 continue
             status = output.result.status if isinstance(output, ForecastResult) else output.status
             if status != "ok":
+                if isinstance(output, InventoryResult) and output.native_view is not None:
+                    inventory_states = sorted(
+                        {p.status for p in output.native_view.points if p.status != "known"}
+                    )
+                    limitations.append(
+                        "The entire inventory scope is withheld because some physical snapshots or routes are unavailable: "
+                        + ", ".join(inventory_states)
+                        + ". No zero, partial scope or older current stock is inferred."
+                    )
                 if isinstance(output, SalesResult) and output.qualified_days is not None:
                     states = sorted(
                         {p.status for p in output.qualified_days.points if p.status != "qualified"}
@@ -343,6 +353,16 @@ class EvidencePolicy:
                     value = number(item.available_units)
                     measurement = f"inventory:{grain}:{item.stock_location_id}"
                     text = f"Available inventory={value} unit; physical={number(item.physical_units)} unit; reserved={number(item.reserved_units)} unit; {grain}; stock_location={item.stock_location_id}; mapping={item.mapping_ref}; as_of={as_of}."
+                    if isinstance(output, InventoryResult) and output.native_view is not None:
+                        point = next(
+                            p
+                            for p in output.native_view.points
+                            if (p.product_id, p.selling_location_id, p.channel)
+                            == (item.product_id, item.selling_location_id, item.channel)
+                        )
+                        if point.snapshot is None:
+                            raise InvalidEvidence("native_inventory_snapshot_missing")
+                        text += f" Native physical snapshot={point.snapshot.snapshot_id}; snapshot_at={point.snapshot.snapshot_at}; source_unit=pcs. Physical quantities are shared by all selling scopes mapped to this stock location and are not additive across those scopes."
                 elif isinstance(item, PredictionRecord):
                     if item.quality_status != "passed":
                         limitations.append(
