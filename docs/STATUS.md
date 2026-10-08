@@ -1239,3 +1239,32 @@ locki pozostają identyczne. Head aplikacji `e671d73` zakończył
 golden i kontrola sekretów; nowy head testów wymaga własnego zdalnego CI. Prywatny klaster jest
 zatrzymany. AI12 pozostaje **in_progress**, PR32 jest draft; zewnętrzne bramki
 Source/UI, etykiet/polityki, bieżących danych, obserwacji i AWS pozostają otwarte.
+
+## 2026-10-08 — AI12: przygotowanie natywnego Sonnet przed płatnymi testami
+
+Runtime Bedrock składa **8/8 adapterów**, pin AI11, ograniczony chat i osobny
+budżet query embeddings. Source/Curated/DQ/coverage, UTC, revision i aktywny
+indeks są sprawdzane przed utworzeniem klienta modelu. Proponowane trasy oraz
+nieodebrany transport native-v2 pozostają blokowane. Main `bc50733` scalono
+tylko w gałęzi AI12; nowa rodzina `.prepaid.v2` zachowuje opublikowaną v1.
+
+Przeszły ci-checks, 49 testów runtime oraz golden wheel **50/50** bez sieci.
+Poprzedni checkpoint niezmienionego Assistant ma 728 testów bezpieczeństwa i
+21 przypadków SQL. Rzeczywiste wektory Titan odtworzono bez AWS: 44 przypadki
+retrieval, 39 spełniających wymagania indywidualne, **9/9 krytycznych** i
+zaliczone progi zbiorcze. Trzy z sześciu pytań dokumentacji mają komplet dowodów;
+pozostałe zachowują insufficient_evidence.
+
+Draft PR32 uruchamia osobny E2E bez AWS przez oryginalny emiter, broker,
+konsumenta Source, SQL/API i zbudowany UI Chromium; LLM i obserwacja sprzedaży
+są jawnie testowe. Aktualny wynik podają checki PR32. Przygotowano pięć
+propozycji płatnego Sonnet dla 41 naturalnych przypadków, kompletny pakiet
+przeglądu 50 pytań/26 tras oraz osobny kandydat natywnego runtime.
+Nie znaleziono niezależnego odbioru etykiet; status proposed pozostaje prawdziwy.
+
+Płatne wywołania: **0**. Wykonano sześć bezpłatnych odczytów dostępu/profili;
+sam CI nie używa AWS. Nowy koszt kampanii jest propozycją, bez zgody; historyczny
+budżet pozostaje zachowany. [Checkpoint](evidence/12-prepaid-checkpoint.md) i
+[instrukcja wznowienia](ai12-paid-qualification.md) zawierają dowody i bramki.
+AI12 pozostaje **in_progress**, PR32 draft. Własny PostgreSQL zatrzymano,
+a oryginalne checkouty i usługi sąsiednich sesji pozostają nietknięte.
