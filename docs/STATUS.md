@@ -13,14 +13,19 @@ pełny protokół i receptura wiążą oddzielne źródła treningu i oceny w wo
 trwałym artefakcie oraz publicznym verifierze. Starsze guardy i 81 wcześniejszych
 plików JSON kontraktów zachowano. Zaliczone 14 nowych kontroli, 146 regresji
 i dwa przebiegi z zainstalowanej paczki używają małych eksponowanych fixture
-oraz kontrolnych modeli. Pełne dane, rzeczywiste evaluatory anomaly/stockout,
-polityka wymaganych segmentów i evidence wszystkich wariantów pozostają otwarte.
+oraz kontrolnych modeli. Pełne dane, rzeczywiste evaluatory anomaly/stockout
+i evidence wszystkich wariantów pozostają otwarte.
 [Przyrost 09.43](evidence/09-43-portfolio-selection-evidence.json) sprawdza przed
 publicznym dostępem do final wszystkie dziewięć ocen development, ich artefakty
 i wspólne wybrane komponenty. Zaliczył 17 nowych kontroli, 118 regresji,
 32 kontrole generacji oraz trzy kontrole z zainstalowanego wheela. Dotychczasowy
 hash freeze i 84 pliki JSON kontraktów zachowano. To odbiór granicy na jawnych
 kontrolach; nie zastępuje rzeczywistej naukowej kampanii.
+[Przyrost 09.44](evidence/09-44-required-group-policy.json) przypina wymagane
+grupy do wszystkich 12 receptur przed wynikami i wiąże politykę z publicznym
+forecast evaluator, workerem, receiptem v27 i verifierem. Zachowuje całą
+diagnostykę i blokadę przy niedostatecznej próbie krytycznej. Kontrolny odbiór
+nie potwierdza efektów pełnych scenariuszy ani projektowego final.
 [PR #48](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/48)
 scala Source annotations, pełny context bundle i ocenę wszystkich surowych prób
 na main `a59b2667` po 17/17 success dokładnego head `456dbfaf`.
@@ -40,7 +45,7 @@ ponieważ jego kod jest już przodkiem zaakceptowanego main z PR48.
 [Piąta próba pełnego ai-dev](evidence/09-38-development-capacity-fifth-run.json),
 run `37731200719`, zakończyła się limitem RSS 8 GiB po 1836.06 s;
 zero z pięciu faz ukończono. Zachowano artefakt, metadane stosów i wszystkie
-wcześniejsze koszty. Nie uruchomiono kolejnej próby ani nie zmniejszono profilu.
+wcześniejsze koszty. Nie zmniejszono profilu.
 Pełny planowany Source i ai-training pozostają niezakwalifikowane.
 [Receptura 1.5](reference/ai09-development-capacity-v1.5.json) i
 [receipt 09.39](evidence/09-39-event-release-capacity-preparation.json)
@@ -60,14 +65,15 @@ po zaakceptowanej aktualizacji main; pozostałe 1049 testów tego kroku przeszł
 Poprawka testowa `fe9d404d` zachowuje oba oryginalne golden IDs i komplet
 hashów 58 tabel oraz sprawdza bieżący fingerprint zależności. Wszystkie 17
 testów zmienionego modułu przeszło. Produkcja i aktualizacje zależności pozostają
-zachowane. Wynikowy main wymaga własnego pełnego CI przed odbiorem.
+zachowane.
 [Source CI pierwszego head](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37743193615)
 jest zachowanym nieudanym runem;
 [CI poprawki](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37752460842)
 zakończyło się 21 success i czterema deklarowanymi scoped skips. PR107 został
 scalony chronioną ścieżką jako Source main `3d13a4dd`;
 [CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37759748828)
-trwa. Nie nadajemy mu jeszcze pełnego odbioru. [PR #50](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/50)
+zakończyło się pełnym inventory: 21 success i cztery deklarowane scoped skips,
+wraz z required-result. [PR #50](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/50)
 scalono chronioną ścieżką jako `f0088e08` po pełnym 17/17 success dokładnego
 head `daf8d605` i zaakceptowanego base `bc507330`.
 [CI tego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37743593906)
@@ -82,13 +88,16 @@ scala pełne portfolio jako main `656d7ddc`, po pełnym 17/17 success dokładneg
 head `67324ab0` i zaakceptowanego base `ab77bb1d`.
 [CI tego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37755648727)
 zakończyło się pełnym 17/17 success wraz z required-result.
-Adapter forecastu opublikowano jako
-[PR #53](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/53),
-head `b80e5e9d`; jego
-[Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37756816065)
-trwa. Adapter i kontrolę 09.43 przygotowano do wspólnego przyrostu na main;
-chronione scalenie oraz pełny CI nowego head i wynikowego main pozostają wymagane.
-Nie uruchomiono próby 1.5; nie zmniejszono danych ani nie zwiększono limitów.
+Adapter forecastu i kontrola 09.43 zostały wspólnie scalone przez
+[PR #54](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/54)
+jako main `ba377b58`, po pełnym 17/17 success dokładnego head `fa4ccd6f`
+i zaakceptowanego base `656d7ddc`.
+[CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37768482642)
+jest jeszcze w toku. Osobny PR53 zachowano do tego odbioru.
+[Próba 1.5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37765329151)
+została uruchomiona raz na osobnym runnerze, na niezmiennym AI `656d7ddc`
+i oryginalnym Source `ab4d5690`, po pełnym odbiorze CI i ancestry.
+Pomiar nadal trwa; nie zmniejszono danych ani nie zwiększono limitów.
 Projektowy journal nie został zainicjalizowany, nowe projektowe fity wynoszą zero,
 a świeży final test pozostaje zamknięty. Do zamknięcia pozostają pełna kampania
 trzech zastosowań, pokrycie scenariuszy/seedów, raporty i lifecycle oraz odbiór main.

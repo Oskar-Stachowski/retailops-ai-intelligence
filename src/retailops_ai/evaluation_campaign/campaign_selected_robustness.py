@@ -10,7 +10,11 @@ from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
     CampaignForecastEvaluationPrediction,
 )
 from retailops_ai.evaluation_campaign.campaign_evaluation_metrics import EvaluationSegment
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import CampaignPortfolioProtocol
 from retailops_ai.evaluation_campaign.campaign_raw_context import context_record
+from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
+    CampaignPortfolioRequiredGroupPolicy,
+)
 from retailops_ai.evaluation_campaign.campaign_segment_contract import (
     CampaignForecastKeyContext,
     CampaignForecastSegmentCensus,
@@ -37,6 +41,8 @@ class SelectedRobustness:
         policy: CampaignForecastUncertaintyPolicy,
         *,
         retained_median_baseline: bool,
+        required_group_policy: CampaignPortfolioRequiredGroupPolicy | None = None,
+        portfolio_protocol: CampaignPortfolioProtocol | None = None,
     ) -> None:
         self.receipt, self.census = context_record(record, plan, population)
         self.policy = CampaignForecastUncertaintyPolicy.model_validate_json(
@@ -51,6 +57,16 @@ class SelectedRobustness:
         self.root, self.bundle, self.plan = root, context_bundle, plan
         self.stream_census = SegmentCensus(self.census.scope, self.census.policy)
         self.groups = {(p.dimension, p.value): p for p in self.census.populations}
+        if (required_group_policy is None) != (portfolio_protocol is None):
+            raise SnapshotError("campaign_selected_robustness_required_policy_pair")
+        self.required_group_policy = required_group_policy
+        self.required_groups = frozenset(self.groups)
+        if required_group_policy is not None and portfolio_protocol is not None:
+            self.required_groups = required_group_policy.groups_for(
+                portfolio_protocol, plan, self.census
+            )
+            if self.receipt.protocol_sha256 != portfolio_protocol.content_sha256():
+                raise SnapshotError("campaign_selected_robustness_required_protocol_mismatch")
         self.metrics = {
             key: EvaluationSegment(
                 key[0],
@@ -204,15 +220,28 @@ class SelectedRobustness:
             self._seal()
             self._indexes()
             self.complete = True
-            return {
+            report = {
                 "context_receipt_sha256": self.receipt.content_sha256(),
                 "context_census_sha256": self.census.content_sha256(),
                 "context_trace_sha256": self.census.context_trace_sha256,
                 "uncertainty_policy_sha256": self.policy.content_sha256(),
                 "all_declared_groups_consumed": True,
-                "quality_qualified": all(r["comparison"]["status"] == "passed" for r in results),
+                "quality_qualified": all(
+                    r["comparison"]["status"] == "passed"
+                    for r in results
+                    if (r["dimension"], r["value"]) in self.required_groups
+                ),
                 "groups": results,
             }
+            if self.required_group_policy is not None:
+                report.update(
+                    required_group_policy_sha256=self.required_group_policy.content_sha256(),
+                    required_groups=[
+                        {"dimension": dimension, "value": value}
+                        for dimension, value in sorted(self.required_groups)
+                    ],
+                )
+            return report
         except Exception:
             self.failed = True
             raise

@@ -1,0 +1,181 @@
+{
+  "observed_at_utc": "2026-10-08T11:24:44.122103+00:00",
+  "scope": "Explicit required-critical group ownership frozen before Source results; real metric streams/SQLite/bootstrap and public worker/artifact verifier on small exposed controls with declared Source/model parents. No actual Project or fresh final holdout qualification.",
+  "implementation": {
+    "wire_directory": "v27",
+    "new_schemas": 2,
+    "required_policy_version": "ai09-portfolio-required-groups-1.0.0",
+    "full_12_source_recipe_inventory_required": true,
+    "every_final_seed_full_critical_coverage_without_pooling": true,
+    "global_all_horizons_catalog_categories_and_channels_required_per_source": true,
+    "original_scenario_owner_bindings_preserved": true,
+    "required_policy_sha256_frozen_in_original_protocol_selection_policy_sha256": true,
+    "all_census_groups_counts_metrics_validity_uncertainty_preserved": true,
+    "critical_underpowered_sample_blocks_qualification": true,
+    "old_quality_thresholds_and_uncertainty_equations_unchanged": true,
+    "no_policy_or_outcomes_in_model_inference": true,
+    "public_runner_worker_receipt_and_verifier_bound": true,
+    "development_portfolio_binding_preserved": true,
+    "core_final_source_phase_seed_and_scenario_plan_bound": true,
+    "old_evaluation_json_files_byte_unchanged": 84,
+    "policy_module_sha256": "f75ae416665a040e8237cd1581d6a3473c7e403f0b8f1d23cd64f667e44393ae",
+    "native_scenario_effects_qualified": false,
+    "unknown_category_encoding_qualified": false
+  },
+  "verification": {
+    "core_required_group_controls": {
+      "passed": 31,
+      "seconds": 157.59,
+      "includes_nine_final_seed_variant_core_checks": true,
+      "includes_otherwise_passing_metrics_blocked_by_empty_preregistered_cold_start": true
+    },
+    "public_development_controls": {
+      "passed": 8,
+      "scope": "Three variants, pre-worker rejection, sidecar tamper and inference denial; first 7 passed together, corrected inference error-message assertion then passed individually.",
+      "first_combined_batch": {
+        "passed": 28,
+        "failed": 1,
+        "seconds": 50.76
+      },
+      "corrected_inference_negative": {
+        "passed": 1,
+        "seconds": 3.08
+      }
+    },
+    "broad_evaluation_configuration_worker_portfolio_selection_final_export_regression": {
+      "passed": 134,
+      "seconds": 391.67
+    },
+    "installed_wheel_controls": {
+      "passed": 5,
+      "seconds": 38.6,
+      "actual_installed_imports_verified": true,
+      "new_schema_presence_checked": 2,
+      "scope": "Small exposed controlled parents/models; real installed public worker/verifier and final metric core, no Project/native scenario/final holdout qualification"
+    },
+    "mypy_source_files": 718,
+    "contracts_check": "passed",
+    "ruff_changed_files": "passed",
+    "documentation_check": "passed",
+    "git_diff_check": "passed",
+    "ruff_repository": "passed",
+    "format_files": 1224,
+    "mypy_scope": "Repository configured full check;718 source files passed"
+  },
+  "wheel": {
+    "wheel": ".local/ai09-required-groups-state/wheel-dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 2041465,
+    "sha256": "a6caa07546bdc2a01b9dc4284d0e08a5fec95b211bfd1fa9869ceda1dac80d72",
+    "python_modules_byte_equal": 597,
+    "source_json_byte_equal": 36,
+    "force_included_files_byte_equal": 180,
+    "force_included_json_byte_equal": 177,
+    "all_packaged_json_byte_equal": 213,
+    "old_evaluation_json_byte_unchanged": 84,
+    "private_cache_or_tests_included": false
+  },
+  "publication_at_observation": [
+    {
+      "repo": "retailops-ai-intelligence",
+      "main": "ba377b58c6b3a8cc4d7891acb3dfecfbcbedfe41",
+      "pr": {
+        "number": 54,
+        "state": "closed",
+        "merged": true,
+        "head": "fa4ccd6fb4021785bb368100c68e87e132f991f9",
+        "base": "656d7ddcb6de9d4032533238fc9e170780ddbe6a",
+        "merge_commit": "ba377b58c6b3a8cc4d7891acb3dfecfbcbedfe41",
+        "mergeable": null,
+        "mergeable_state": "unknown"
+      },
+      "ci": [
+        {
+          "head": "ba377b58c6b3a8cc4d7891acb3dfecfbcbedfe41",
+          "id": 37768482642,
+          "status": "in_progress",
+          "conclusion": null,
+          "jobs_read": 16,
+          "jobs_total": 16,
+          "counts": {
+            "success": 7,
+            "in_progress": 9
+          }
+        },
+        {
+          "head": "fa4ccd6fb4021785bb368100c68e87e132f991f9",
+          "id": 37762025000,
+          "status": "completed",
+          "conclusion": "success",
+          "jobs_read": 17,
+          "jobs_total": 17,
+          "counts": {
+            "success": 17
+          }
+        }
+      ]
+    },
+    {
+      "repo": "retailops-cloud-native-platform",
+      "main": "3d13a4dd4a9ff51c1ab43659d53f0eb4cd3422db",
+      "pr": {
+        "number": 107,
+        "state": "closed",
+        "merged": true,
+        "head": "fe9d404dabebf8e54b8023a0ba44e5e101331721",
+        "base": "cd5a9dbb0967cd92b77385b8f3a799b5485207f9",
+        "merge_commit": "3d13a4dd4a9ff51c1ab43659d53f0eb4cd3422db",
+        "mergeable": null,
+        "mergeable_state": "unknown"
+      },
+      "ci": [
+        {
+          "head": "3d13a4dd4a9ff51c1ab43659d53f0eb4cd3422db",
+          "id": 37759748828,
+          "status": "completed",
+          "conclusion": "success",
+          "jobs_read": 25,
+          "jobs_total": 25,
+          "counts": {
+            "success": 21,
+            "skipped": 4
+          }
+        },
+        {
+          "head": "fe9d404dabebf8e54b8023a0ba44e5e101331721",
+          "id": 37752460842,
+          "status": "completed",
+          "conclusion": "success",
+          "jobs_read": 25,
+          "jobs_total": 25,
+          "counts": {
+            "success": 21,
+            "skipped": 4
+          }
+        }
+      ]
+    }
+  ],
+  "capacity_1_5": {
+    "id": 37765329151,
+    "head": "656d7ddcb6de9d4032533238fc9e170780ddbe6a",
+    "status": "in_progress",
+    "conclusion": null,
+    "single_dispatch": true,
+    "automatic_retry": false,
+    "previous_five_failures_and_costs_preserved": true,
+    "scope": "Already-exposed ordinary Source2.7/snapshot1.1 full ai-dev diagnostic only; no Project fits, fresh final access or full planned Source2.8 qualification"
+  },
+  "stage_ready": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "actual_public_final_evaluation_qualified": false,
+  "remaining": [
+    "Full ai-dev and ai-training native generation/capacity/replay qualification for all variants.",
+    "Typed actual anomaly and stockout Project evaluators using closed07/08 contracts.",
+    "Actual native cold-start/missing/late/unknown-category/lead-time/intermittent/scenario-effect coverage and preregistered aggregation weights.",
+    "Exposure audit and original fresh final windows before Project initialization.",
+    "Full fair development training/calibration/freeze and all-three-use final42-137-2026 campaign, costs/uncertainty/MLflow/lifecycle/cards/reports.",
+    "Protected publication and whole exact resulting-main RequiredCI."
+  ]
+}

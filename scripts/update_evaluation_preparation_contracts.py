@@ -57,9 +57,13 @@ from retailops_ai.evaluation_campaign.campaign_portfolio_contract import (
 from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract import (
     CampaignPortfolioForecastEvaluationBinding,
 )
+from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
+    CampaignPortfolioRequiredGroupPolicy,
+)
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
     CampaignForecastPortfolioEvaluationReceipt,
     CampaignForecastPortfolioRobustEvaluationReceipt,
+    CampaignForecastRequiredGroupEvaluationReceipt,
     CampaignForecastRobustEvaluationReceipt,
 )
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
@@ -552,6 +556,25 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Campaign portfolio forecast evaluation contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, required_model in (
+        ("portfolio_required_group_policy", CampaignPortfolioRequiredGroupPolicy),
+        (
+            "forecast_required_group_evaluation_receipt",
+            CampaignForecastRequiredGroupEvaluationReceipt,
+        ),
+    ):
+        schema = required_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:27.0.0"
+        path = ROOT / "contracts/evaluation/v27" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign required-group contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

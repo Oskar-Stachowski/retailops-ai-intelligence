@@ -155,6 +155,12 @@ export/holdout wymaga odrębnego jawnego API po selection freeze.
 
 ## Pozostały rzeczywisty odbiór
 
+[Polityka segmentów pełnego portfolio](ai09-full-scenario-portfolio.md)
+wiąże wymagane grupy z oryginalnymi recepturami przed generacją i wynikami.
+Każdy końcowy seed zachowuje osobną ocenę i własnych właścicieli grup;
+diagnostyka pozostaje pełna, a niedostateczna próba krytyczna blokuje kwalifikację.
+Zapis polityki nie nadaje uprawnień do final i nie dowodzi wykonania scenariuszy.
+
 W tym przyroście nie inicjalizowano nowego dziennika projektu i nie wygenerowano
 nowych danych projektu. Testy używają jawnych, kontrolowanych metadanych.
 Przed uruchomieniem kampanii trzeba przygotować kompletne receptury i polityki,

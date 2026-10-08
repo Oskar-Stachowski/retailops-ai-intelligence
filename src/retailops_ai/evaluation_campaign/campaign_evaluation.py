@@ -74,9 +74,13 @@ from retailops_ai.evaluation_campaign.campaign_raw_context import (
     context_record,
     validate_raw_context_metrics,
 )
+from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
+    CampaignPortfolioRequiredGroupPolicy,
+)
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
     CampaignForecastPortfolioEvaluationReceipt,
     CampaignForecastPortfolioRobustEvaluationReceipt,
+    CampaignForecastRequiredGroupEvaluationReceipt,
     CampaignForecastRobustEvaluationReceipt,
     ForecastEvaluationReceipt,
     is_robust_evaluation,
@@ -400,6 +404,7 @@ def evaluate_campaign_forecast(
     raw_context_bundle: Path | None = None,
     raw_context_receipt: CampaignContextBundleReceipt | None = None,
     uncertainty_policy: CampaignForecastUncertaintyPolicy | None = None,
+    required_group_policy: CampaignPortfolioRequiredGroupPolicy | None = None,
 ) -> tuple[Path, ForecastEvaluationReceipt]:
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, operation_id)
@@ -453,6 +458,18 @@ def evaluate_campaign_forecast(
             else None
         )
         raw_context = None
+        if required_group_policy is not None:
+            required_group_policy = CampaignPortfolioRequiredGroupPolicy.model_validate_json(
+                required_group_policy.model_dump_json()
+            )
+            if (
+                not isinstance(ledger.protocol, CampaignPortfolioProtocol)
+                or uncertainty_policy is None
+            ):
+                raise SnapshotError(
+                    "campaign_evaluation_required_group_portfolio_robustness_required"
+                )
+            required_group_policy.bind(ledger.protocol)
         if (raw_context_bundle is None) != (raw_context_receipt is None):
             raise SnapshotError("campaign_evaluation_raw_context_pair_required")
         if uncertainty_policy is not None:
@@ -512,6 +529,9 @@ def evaluate_campaign_forecast(
         write(bundle / "configuration.json", configuration.model_dump(mode="json"))
         if portfolio_binding is not None:
             write(bundle / "portfolio.json", portfolio_binding.model_dump(mode="json"))
+        if required_group_policy is not None:
+            write(bundle / "required-groups.json", required_group_policy.model_dump(mode="json"))
+            write(bundle / "portfolio-protocol.json", ledger.protocol.model_dump(mode="json"))
         write(
             bundle / "parents.json",
             {
@@ -693,6 +713,14 @@ def evaluate_campaign_forecast(
                 "bundle": str(bundle),
                 **(
                     {
+                        "required_group_policy": required_group_policy.model_dump(mode="json"),
+                        "portfolio_protocol": ledger.protocol.model_dump(mode="json"),
+                    }
+                    if required_group_policy is not None
+                    else {}
+                ),
+                **(
+                    {
                         "raw_context": raw_context,
                         "raw_context_bundle": str(raw_context_bundle.absolute()),
                         "uncertainty_policy": uncertainty_policy.model_dump(mode="json"),
@@ -758,7 +786,9 @@ def evaluate_campaign_forecast(
         if uncertainty_policy is not None and raw_context is not None:
             context_parent, census = context_record(raw_context, plan, population)
             robust_model = (
-                CampaignForecastPortfolioRobustEvaluationReceipt
+                CampaignForecastRequiredGroupEvaluationReceipt
+                if required_group_policy is not None
+                else CampaignForecastPortfolioRobustEvaluationReceipt
                 if portfolio_binding is not None
                 else CampaignForecastRobustEvaluationReceipt
             )
@@ -770,6 +800,16 @@ def evaluate_campaign_forecast(
                         "context_census_sha256": census.content_sha256(),
                         "context_trace_sha256": census.context_trace_sha256,
                         "uncertainty_policy": uncertainty_policy.model_dump(mode="json"),
+                        **(
+                            {
+                                "required_group_policy": required_group_policy.model_dump(
+                                    mode="json"
+                                ),
+                                "portfolio_protocol": ledger.protocol.model_dump(mode="json"),
+                            }
+                            if required_group_policy is not None
+                            else {}
+                        ),
                     }
                 )
             )
@@ -826,12 +866,26 @@ def _verify_bundle(bundle: Path, receipt: ForecastEvaluationReceipt) -> None:
     files, size = _bundle_inventory(bundle, receipt.plan.max_output_bytes)
     if files != receipt.artifact_files or size != receipt.artifact_bytes:
         raise SnapshotError("campaign_evaluation_artifact_checksum_mismatch")
-    if isinstance(
-        receipt,
-        (
-            CampaignForecastPortfolioEvaluationReceipt,
-            CampaignForecastPortfolioRobustEvaluationReceipt,
-        ),
+    if isinstance(receipt, CampaignForecastRequiredGroupEvaluationReceipt):
+        required = CampaignPortfolioRequiredGroupPolicy.model_validate_json(
+            read_bytes(bundle, "required-groups.json", MAX_PARENT_METADATA_BYTES)
+        )
+        protocol = CampaignPortfolioProtocol.model_validate_json(
+            read_bytes(bundle, "portfolio-protocol.json", MAX_PARENT_METADATA_BYTES)
+        )
+        if required != receipt.required_group_policy or protocol != receipt.portfolio_protocol:
+            raise SnapshotError("campaign_evaluation_artifact_required_group_binding_mismatch")
+        required.bind(protocol)
+    if (
+        isinstance(
+            receipt,
+            (
+                CampaignForecastPortfolioEvaluationReceipt,
+                CampaignForecastPortfolioRobustEvaluationReceipt,
+            ),
+        )
+        or isinstance(receipt, CampaignForecastRequiredGroupEvaluationReceipt)
+        and receipt.portfolio_binding is not None
     ):
         binding = CampaignPortfolioForecastEvaluationBinding.model_validate_json(
             read_bytes(bundle, "portfolio.json", MAX_PARENT_METADATA_BYTES)
@@ -969,6 +1023,12 @@ def _verify_bundle(bundle: Path, receipt: ForecastEvaluationReceipt) -> None:
             {key: getattr(receipt, key) for key in POPULATION},
             receipt.uncertainty_policy,
             retained_median_baseline=median_choice.score_operation_id is None,
+            required_group_policy=receipt.required_group_policy
+            if isinstance(receipt, CampaignForecastRequiredGroupEvaluationReceipt)
+            else None,
+            portfolio_protocol=receipt.portfolio_protocol
+            if isinstance(receipt, CampaignForecastRequiredGroupEvaluationReceipt)
+            else None,
         )
         if (
             metrics.get("quality_qualified") is not qualified
@@ -1059,6 +1119,11 @@ def validate_completed_evaluation(journal: Path, receipt: ForecastEvaluationRece
     receipt = parse_forecast_evaluation_receipt(canonical_bytes(receipt.model_dump(mode="json")))
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, receipt.operation_id)
+    if isinstance(receipt, CampaignForecastRequiredGroupEvaluationReceipt) and (
+        not isinstance(ledger.protocol, CampaignPortfolioProtocol)
+        or receipt.portfolio_protocol != ledger.protocol
+    ):
+        raise SnapshotError("campaign_evaluation_required_group_journal_mismatch")
     if isinstance(
         receipt,
         (

@@ -9,7 +9,11 @@ from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
     CampaignForecastEvaluationPlan,
 )
 from retailops_ai.evaluation_campaign.campaign_evaluation_gates import assess_frozen_metrics
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import CampaignPortfolioProtocol
 from retailops_ai.evaluation_campaign.campaign_raw_context import _metrics, context_record
+from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
+    CampaignPortfolioRequiredGroupPolicy,
+)
 from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
     CampaignForecastUncertaintyPolicy,
     CampaignForecastUncertaintyReport,
@@ -30,6 +34,8 @@ def validate_selected_robustness(
     policy: CampaignForecastUncertaintyPolicy,
     *,
     retained_median_baseline: bool,
+    required_group_policy: CampaignPortfolioRequiredGroupPolicy | None = None,
+    portfolio_protocol: CampaignPortfolioProtocol | None = None,
 ) -> bool:
     """No original outcome read and no permission from a completeness header.
 
@@ -45,6 +51,20 @@ def validate_selected_robustness(
         "uncertainty_policy_sha256": policy.content_sha256(),
         "all_declared_groups_consumed": True,
     }
+    required_groups = frozenset((p.dimension, p.value) for p in census.populations)
+    if (required_group_policy is None) != (portfolio_protocol is None):
+        raise SnapshotError("campaign_robustness_required_policy_pair")
+    if required_group_policy is not None and portfolio_protocol is not None:
+        required_groups = required_group_policy.groups_for(portfolio_protocol, plan, census)
+        if receipt.protocol_sha256 != portfolio_protocol.content_sha256():
+            raise SnapshotError("campaign_robustness_required_protocol_mismatch")
+        bindings.update(
+            required_group_policy_sha256=required_group_policy.content_sha256(),
+            required_groups=[
+                {"dimension": dimension, "value": value}
+                for dimension, value in sorted(required_groups)
+            ],
+        )
     groups = report.get("groups")
     if (
         policy.content_sha256() != plan.uncertainty_policy_sha256
@@ -96,7 +116,8 @@ def validate_selected_robustness(
         }
         if canonical_bytes(comparison) != canonical_bytes(assessed):
             raise SnapshotError("campaign_robustness_group_gate_mismatch")
-        qualified = bool(qualified and comparison["status"] == "passed")
+        if (expected.dimension, expected.value) in required_groups:
+            qualified = bool(qualified and comparison["status"] == "passed")
         paired = CampaignForecastUncertaintyReport.model_validate_json(
             canonical_bytes(group["uncertainty"])
         )

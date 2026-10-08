@@ -102,10 +102,41 @@ journal i prywatnych plików, lecz jawnie zastępują naukową weryfikację fore
 Produkcja nadal używa jej istniejącego typed parsera/publicznego verifiera.
 Pełne typed evaluatory anomaly/stockout i ich rzeczywista kwalifikacja są otwarte.
 
+[Przyrost 09.44](evidence/09-44-required-group-policy.json) dodaje jawną
+[politykę v27](../contracts/evaluation/v27/portfolio_required_group_policy.schema.json).
+Jej digest jest zamrożony jako `selection_policy_sha256` protokołu przed
+generacją i wynikami. Każde z 12 źródeł ma własny uporządkowany, jednoznaczny
+zestaw wymaganych grup, przypięty do oryginalnej receptury. Globalna ocena,
+wszystkie 14 horyzontów, katalog kategorii i oba kanały są wymagane na każdym
+źródle. Ordinary musi ocenić normal i promotion, demand — demand shock,
+a physical — inventory constraint. Komplet pozostałych krytycznych grup musi
+mieć zadeklarowanych właścicieli osobno dla development i każdego końcowego
+seeda. Liczebności zaobserwowane po wynikach nie wybierają właściciela.
+
+Niektóre grupy opisują strukturalnie nieznane wejścia, np. brak kategorii
+czy nieznany lead time. Zachowują wszystkie liczebności, metryki, statusy
+i niepewność, także przy zerowej próbie. Nie muszą wystąpić w każdym źródle.
+Zero/intermittent sales, cold start, brakująca i spóźniona historia, znane
+poziomy zapasu i lead time oraz planowane anomalie pozostają obowiązkowe
+w pełnym portfolio. Niedostateczna próba wymaganej grupy nadal blokuje
+kwalifikację; nie zmieniono progów jakości ani sposobu liczenia niepewności.
+
+Publiczny evaluator, finalize worker i niezależny verifier stosują tę samą
+zamrożoną politykę. Nowy receipt zapisuje pełny protokół i politykę oraz wymaga
+`required-groups.json` i `portfolio-protocol.json` w prywatnym artefakcie.
+Development zachowuje także istniejący `portfolio.json`. Polityka nie trafia
+do procesu inferencji. Starsze receipty i 84 pliki kontraktów pozostają
+niezmienione i zachowują wcześniejsze ścisłe reguły.
+
+Kontrole 09.44 używają rzeczywistych strumieni metryk, plików, SQLite i bootstrapu
+na małych jawnych danych, ale kontrolnych rodziców Source i modeli. To odbiór
+mechanizmu. Nie potwierdza wykonania natywnych interwencji, zachowania encodera
+przy nieznanych kategoriach, pełnego canonical profilu ani projektowego final.
+
 Do rzeczywistego wykonania pozostają odbiór pełnej pojemności, kompletne
 produkcyjne receptury i budżety, rzeczywiste evaluatory anomaly/stockout,
-jawna polityka krytycznych segmentów oraz pełny wybór na evidence wszystkich
-wariantów. Wagi wymagają prerejestracji, aby powtarzające się normalne klucze
+kwalifikacja rzeczywistego pokrycia segmentów oraz pełny wybór na evidence
+wszystkich wariantów. Wagi wymagają prerejestracji, aby powtarzające się normalne klucze
 nie były liczone wielokrotnie. Przed inicjalizacją Project trzeba zweryfikować
 nieeksponowane końcowe okna. Samo zamknięcie lokalnego dziennika nadal nie
 nadaje jakości, świeżości ani statusu AI 09 ready.
