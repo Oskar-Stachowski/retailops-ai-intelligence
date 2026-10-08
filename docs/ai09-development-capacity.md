@@ -1,5 +1,33 @@
 # Pomiar pełnego development AI 09
 
+[Prospektywna receptura 1.4](reference/ai09-development-capacity-v1.4.json)
+zastępuje natywny timer dumpujący stosy ograniczoną obserwacją ramek przez
+`sys._current_frames()` w osobnym wątku własnego workera. Odczytuje wyłącznie
+nazwę pliku, funkcję i numer linii. Referencje do ramek są zwalniane przed
+zapisem logu; nie odczytuje lokalnych wartości, globali, argumentów ani linii
+kodu. Co 120 s może zapisać najwyżej 64 wątki po 64 ramki, do 64 KiB;
+skrócenie głębokości, liczby wątków, nazw lub bajtów jest jawne. Zatrzymanie
+ustawia event i łączy wątek z limitem 5 s. Błąd obserwacji lub brak zakończenia
+wątku uniemożliwia zaliczenie fazy. RSS/CPU, scratch i istniejący limit logu
+16 MiB obejmują diagnostykę. Obserwacja może być opóźniona, gdy kod natywny
+nie zwalnia GIL; nie jest profilem alokacji, ciągłym stosem ani natywnym
+backtrace awarii. Tę ograniczoną przydatność odczytu ramek opisuje także
+[dokumentacja Python 3.11](https://docs.python.org/3.11/library/sys.html#sys._current_frames).
+
+[Kontrole 1.4](evidence/09-33-development-capacity-safe-trace-preparation.json)
+mają 47 passed w 1.81 s. Obejmują rzeczywisty okresowy zapis i anulowanie,
+zmieniające się obiekty kodu i wątki, głęboki stos, zwolnienie payloadu po
+zakończeniu ramki, granice bajtów i unicode, awarie obserwacji oraz zachowanie
+łańcucha wszystkich czterech porażek. To małe kontrole stdlib, bez generacji
+Source, fitów i final test. Kontrole Linux nowego dokładnego head, pełne
+Required CI, chroniona publikacja i odbiór main są nadal wymagane przed
+odrębnym ręcznym dispatch. **Próba pełna 1.4 nie została uruchomiona.**
+Producent, locks, canonical, daty, limity i rezerwy są identyczne z 1.3;
+bajty receptur 1.0–1.3 pozostają zachowane. Hipoteza o przyczynie poprzedniego
+SIGSEGV pozostaje niepotwierdzona. Zmiana obserwatora nie dowodzi zmniejszenia
+pamięci ani ukończenia pełnego profilu.
+
+
 [Prospektywna receptura 1.3](reference/ai09-development-capacity-v1.3.json)
 przypina source `51827823`: cached ścieżka kopiuje tylko wejścia commerce,
 których używa symulator, przez istniejącą funkcję `source_bridge._copy_commerce_inputs`.
