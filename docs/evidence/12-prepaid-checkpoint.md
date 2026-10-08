@@ -33,6 +33,12 @@ poprawiono. Required CI `37739332433` zatrzymał się na agent-evaluate po zmian
 main. Zachowano opublikowaną rodzinę `.prepaid.v1` i utworzono `.prepaid.v2`.
 Historycznych failures, budżetów ani receipts nie nadpisano.
 
+Próba `37740120403` potwierdziła projekcję i logiczną deduplikację. Jej test
+błędnie porównał SHA payloadu z fingerprintem Source zawierającym key, headers
+i timestamp. Poprawiony odbiór odczytuje oba rzeczywiste rekordy brokera,
+porównuje ich wartości z oryginalnymi bajtami outboxa, a osobno weryfikuje
+pełne fingerprinty zapisane przez Source. Nie osłabiono jego kontroli integralności.
+
 Płatne wywołania tego przygotowania: **0**. Wykonano sześć bezpłatnych odczytów
 dostępu i profili modeli, bez zmian uprawnień lub subskrypcji;
 [receipt](12-prepaid-controlplane.json) zachowuje wynik. CI nie otrzymuje

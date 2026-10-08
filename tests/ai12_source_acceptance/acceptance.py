@@ -21,6 +21,9 @@ from uuid import uuid4
 
 import psycopg
 from app.main import app
+from app.services.intelligence_checkpoint import TransportRecord
+from app.services.intelligence_contract import TOPIC
+from confluent_kafka import Consumer, TopicPartition
 from fastapi.testclient import TestClient
 from psycopg import sql
 from test_intelligence_checkpoint_durability import checkpoint, receipts, run
@@ -78,6 +81,37 @@ def ready(url, process):
         except (urllib.error.URLError, TimeoutError):
             time.sleep(0.1)
     raise AssertionError("owned server readiness timeout")
+
+
+def original_broker_record(context, receipt):
+    reader = Consumer(
+        {
+            "bootstrap.servers": context.bootstrap,
+            "group.id": "ai12-wire-proof-" + secrets.token_hex(12),
+            "enable.auto.commit": False,
+            "enable.auto.offset.store": False,
+        }
+    )
+    try:
+        reader.assign([TopicPartition(TOPIC, receipt[0], receipt[1])])
+        deadline = time.monotonic() + 15
+        while time.monotonic() < deadline:
+            message = reader.poll(0.2)
+            if message is None:
+                continue
+            assert message.error() is None, "owned broker wire read failed"
+            assert (message.partition(), message.offset()) == receipt[:2]
+            return TransportRecord(
+                partition=message.partition(),
+                offset=message.offset(),
+                value=message.value(),
+                key=message.key(),
+                headers=tuple(message.headers() or ()),
+                timestamp_ms=message.timestamp()[1],
+            )
+        raise AssertionError("owned broker wire read timeout")
+    finally:
+        reader.close()
 
 
 def test_original_ai12_emitter_source_consumer_api_and_built_ui(context, tmp_path, monkeypatch):
@@ -182,8 +216,12 @@ def test_original_ai12_emitter_source_consumer_api_and_built_ui(context, tmp_pat
         first = receipts(context)[0]
         duplicate_offset = produce(context, wire, partition=first[0])
         run(context, bootstrap=False)
-        assert [r[2] for r in receipts(context)] == ["projected", "duplicate"]
-        assert all(r[3] == hashlib.sha256(wire).hexdigest() for r in receipts(context))
+        source_receipts = receipts(context)
+        assert [r[2] for r in source_receipts] == ["projected", "duplicate"]
+        for receipt in source_receipts:
+            record = original_broker_record(context, receipt)
+            assert record.value == wire
+            assert record.fingerprint() == receipt[3]
         assert (
             checkpoint(context, first[0])[1] == positions(context)[first[0]] == duplicate_offset + 1
         )
@@ -302,6 +340,7 @@ def test_original_ai12_emitter_source_consumer_api_and_built_ui(context, tmp_pat
             exact_original_payload=True,
             exact_wire_sha256=hashlib.sha256(wire).hexdigest(),
             source_atomic_receipts=["projected", "duplicate"],
+            source_transport_fingerprints=[r[3] for r in source_receipts],
             one_business_row=True,
             source_api_anonymous=401,
             source_api_foreign_scope=403,
