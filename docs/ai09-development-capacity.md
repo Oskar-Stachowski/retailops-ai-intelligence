@@ -1,5 +1,15 @@
 # Pomiar pełnego development AI 09
 
+[Prospektywna receptura 1.9](reference/ai09-development-capacity-v1.9.json)
+przypina Source `a7b850a0` i hash jego audytu indeksów. [Przygotowanie 09.54](evidence/09-54-ledger-query-capacity-preparation.json)
+zapisuje 274 kontrole Source, 106 AI, 22 z paczki i rzeczywiste małe pary.
+W workerze planned 1.1.2 korzysta z jawnego przekazania własnych tabel do writera.
+Kontrola zmienionego dowodu audytu odrzuca uruchomienie przed utworzeniem output
+i startem workera. Limit 12 GiB, pełne wymiary i pozostałe budżety pozostają
+zachowane; wynik 1.8 i wszystkie wcześniejsze porażki są przypięte. Nie uruchomiono
+1.9. Dispatch wymaga pełnego CI head i wynikowych main obu repozytoriów.
+
+
 [Receptura 1.8](reference/ai09-development-capacity-v1.8.json) ma na polecenie
 użytkownika limit RSS drzewa **12 GiB** (12 884 901 888 B) i rezerwę 1 GiB.
 PR60 scalono normalnie jako `4ce8a3cf`; pełne CI dokładnego head i tego main
