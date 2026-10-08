@@ -1,0 +1,86 @@
+{
+  "scope": "Prospective capacity1.4 bounded Python-frame observation controls after actual fourth failure; no full1.4 attempt dispatched",
+  "updated_at_utc": "2026-10-08T02:22:52.628410+00:00",
+  "recipe": "docs/reference/ai09-development-capacity-v1.4.json",
+  "recipe_sha256": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+  "producer_commit": "5182782321e9aca15f28c467071e92f268aafb85",
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "canonical_attempt_dispatched": false,
+  "project_generation_started": false,
+  "final_generation_started": false,
+  "final_test_opened": false,
+  "full_profile_qualified": false,
+  "stage_ready": false,
+  "previous_four_failed_runs": [
+    37611605538,
+    37613368332,
+    37676033214,
+    37714051649
+  ],
+  "prior_plan_bytes_unchanged": {
+    "docs/reference/ai09-development-capacity.json": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9",
+    "docs/reference/ai09-development-capacity-v1.1.json": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee",
+    "docs/reference/ai09-development-capacity-v1.2.json": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "docs/reference/ai09-development-capacity-v1.3.json": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d"
+  },
+  "source_producer_locks_canonical_dimensions_dates_budgets_reserves_parent_caps_unchanged": true,
+  "diagnostic_watchdog_root_cause_confirmed": false,
+  "observation": {
+    "implementation": "sys._current_frames in own Python thread; owned frame/code references released before log IO; no native timer stack dump",
+    "worker_phase": "generation",
+    "interval_seconds": 120,
+    "maximum_threads": 64,
+    "maximum_frames_per_thread": 64,
+    "maximum_snapshot_bytes": 65536,
+    "maximum_filename_characters": 256,
+    "maximum_function_characters": 96,
+    "join_timeout_seconds": 5,
+    "observer_thread_excluded_from_snapshot": true,
+    "truncation_explicit": true,
+    "locals_globals_arguments_source_lines_or_payload_reprs_read": false,
+    "error_payload_retained": false,
+    "frame_references_retained_between_snapshots": false,
+    "may_miss_or_delay_during_native_GIL_held_work": true,
+    "allocation_or_continuous_stack_or_native_crash_measurement_claimed": false,
+    "observer_resources_in_worker_tree_and_existing_log_scratch_caps": true,
+    "observer_error_or_join_timeout_prevents_successful_phase_receipt": true
+  },
+  "controls": {
+    "passed": 47,
+    "seconds": 1.81,
+    "stdlib_isolated_owned_processes_and_threads_only": true,
+    "actual_periodic_output_cancel_and_no_locals": true,
+    "actual_code_metadata_churn_and_thread_lifetimes": true,
+    "actual_deep_frame_weakref_payload_released_after_snapshot": true,
+    "encoded_bytes_depth_threads_and_unicode_metadata_truncation_explicit": true,
+    "observer_failure_and_join_timeout_rejected": true,
+    "all_four_plan_and_failure_chain_retained": true,
+    "short_intervals_and_small_snapshot_limits_controls_only_frozen_full_plan_rejects": true,
+    "mypy_source_files": 706,
+    "ruff": "passed",
+    "canonical_or_project_workers_started": false,
+    "earlier_passed_controls": [
+      {
+        "passed": 39,
+        "seconds": 1.75
+      },
+      {
+        "passed": 44,
+        "seconds": 1.82
+      }
+    ],
+    "linux_exact_new_head_required_ci_pending": true,
+    "local_platform": "macOS",
+    "local_runtime": "CPython3.11.15",
+    "old_native_watchdog_crash_reproduced": false
+  },
+  "publication_pending": true,
+  "dispatch_requirements": [
+    "Full exact new head Required CI including required-result and isolated Linux observer controls",
+    "Protected merge and complete exact AI main acceptance; predecessor PR44 must have full acceptance",
+    "Fresh exact Source main/producer CI and immutable recipe/workflow/producer ancestry parity",
+    "Distinct manual owned-runner attempt with unchanged resource preflight and all4 prior failures retained; no silent retry or scope shrinking"
+  ],
+  "not_completed_profile_or_project_scientific_evidence": true
+}
