@@ -14,6 +14,7 @@ from retailops_ai.assistant.contracts import (
     AssistantRun,
     PersistedSuggestion,
 )
+from retailops_ai.assistant.native_bedrock import NativeRuntimeConfig
 from retailops_ai.assistant.native_runtime import NativeOfflineConfig
 from retailops_ai.assistant.routes import QuestionRoutes
 from retailops_ai.assistant.runtime import DocumentRuntimeConfig
@@ -37,6 +38,7 @@ def main() -> int:
         "admission-policy": AdmissionPolicy,
         "document-runtime": DocumentRuntimeConfig,
         "native-offline-runtime": NativeOfflineConfig,
+        "native-bedrock-runtime": NativeRuntimeConfig,
         "question-routes": QuestionRoutes,
     }
     artifacts: dict[str, object] = {}

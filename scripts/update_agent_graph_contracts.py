@@ -21,7 +21,7 @@ CONTRACTS = ROOT / "contracts/agent/v1"
 
 
 def artifacts() -> dict[str, object]:
-    resolved = load_graph_config(ROOT / "agent/graph.fake.suggestion-outbox.v1.json")
+    resolved = load_graph_config(ROOT / "agent/graph.fake.prepaid.v1.json")
     request = GraphRequest.model_validate_json(
         json.dumps(
             {

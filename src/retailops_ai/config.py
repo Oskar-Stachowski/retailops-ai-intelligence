@@ -47,6 +47,9 @@ class Settings(BaseSettings):
     assistant_native_offline_file: Path | None = Field(
         default=None, validation_alias="ASSISTANT_NATIVE_OFFLINE_FILE", exclude=True, repr=False
     )
+    assistant_native_runtime_file: Path | None = Field(
+        default=None, validation_alias="ASSISTANT_NATIVE_RUNTIME_FILE", exclude=True, repr=False
+    )
     assistant_curated: Path | None = Field(
         default=None, validation_alias="ASSISTANT_CURATED", exclude=True, repr=False
     )
@@ -99,7 +102,20 @@ class Settings(BaseSettings):
         runtime = (
             self.assistant_runtime_file is not None
             or self.assistant_native_offline_file is not None
+            or self.assistant_native_runtime_file is not None
         )
+        if (
+            sum(
+                path is not None
+                for path in (
+                    self.assistant_runtime_file,
+                    self.assistant_native_offline_file,
+                    self.assistant_native_runtime_file,
+                )
+            )
+            > 1
+        ):
+            raise ValueError("ambiguous_assistant_runtime_configuration")
         if runtime != (self.assistant_source_import is not None):
             raise ValueError("assistant_runtime_requires_source_import")
         native_inputs = (
@@ -117,6 +133,13 @@ class Settings(BaseSettings):
                 or any(value is None for value in native_inputs)
             ):
                 raise ValueError("native_offline_requires_isolated_test_dependencies")
+        elif self.assistant_native_runtime_file is not None:
+            if (
+                self.database_url is None
+                or not self.rag_bedrock_enabled
+                or any(value is None for value in native_inputs)
+            ):
+                raise ValueError("native_runtime_requires_database_bedrock_and_native_inputs")
         elif any(value is not None for value in native_inputs):
             raise ValueError("native_offline_configuration_required")
         if self.assistant_runtime_file is not None and (
@@ -144,6 +167,7 @@ class Settings(BaseSettings):
         "assistant_runtime_file",
         "assistant_source_import",
         "assistant_native_offline_file",
+        "assistant_native_runtime_file",
         "assistant_curated",
         "assistant_replay",
         "assistant_coverage",

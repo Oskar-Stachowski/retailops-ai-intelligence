@@ -149,6 +149,8 @@ def create_app(
         or stockout_administration is None
         or stockout_reader is None
         or settings.assistant_runtime_file is not None
+        or settings.assistant_native_offline_file is not None
+        or settings.assistant_native_runtime_file is not None
     ) and settings.database_url is not None:
         knowledge_engine = index_engine(settings)
     if knowledge_backend is None and knowledge_engine is not None:
@@ -216,7 +218,10 @@ def create_app(
             authority,
             settings.app_env,
         )
-    if settings.assistant_native_offline_file is not None:
+    native_config_path = (
+        settings.assistant_native_offline_file or settings.assistant_native_runtime_file
+    )
+    if native_config_path is not None:
         if (
             assistant_backend is not None
             or knowledge_engine is None
@@ -227,6 +232,7 @@ def create_app(
             or settings.assistant_producer_database_url is None
         ):
             raise ValueError("ambiguous_or_missing_native_offline_dependencies")
+        from retailops_ai.assistant.native_bedrock import native_bedrock_backend
         from retailops_ai.assistant.native_runtime import native_offline_backend
 
         producer_engine = create_engine(
@@ -237,8 +243,13 @@ def create_app(
             pool_timeout=3,
             hide_parameters=True,
         )
-        assistant_backend = native_offline_backend(
-            settings.assistant_native_offline_file,
+        native_factory = (
+            native_offline_backend
+            if settings.assistant_native_offline_file is not None
+            else native_bedrock_backend
+        )
+        assistant_backend = native_factory(
+            native_config_path,
             settings.assistant_source_import,
             settings.assistant_curated,
             settings.assistant_replay,
@@ -255,7 +266,12 @@ def create_app(
             raise ValueError("suggestion_transport_requires_source_accepted_v1_policy")
         dependencies = (
             *dependencies,
-            Dependency("assistant_native_offline", assistant_backend.check),
+            Dependency(
+                "assistant_native_offline"
+                if settings.assistant_native_offline_file is not None
+                else "assistant_native_runtime",
+                assistant_backend.check,
+            ),
         )
     if assistant_backend is not None:
         if assistant_store is None:
