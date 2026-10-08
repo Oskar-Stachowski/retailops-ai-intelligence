@@ -33,7 +33,8 @@ Producent został następnie scalony przez chroniony
 head `6bc96e2f` ma zakończony Required CI `37692294899`, 25 odczytanych z 25
 jobs, 21 success, cztery zamierzone scoped skips i required-result success.
 Merge `5c05445e` jest na Source/main; jego dokładny odbiór `37698252427`
-pozostaje w toku. Przypięcie producenta `51827823` w recepturze nie zmienia się.
+przeszedł: 25 odczytanych z 25 jobs, 21 success, cztery zamierzone scoped
+skips oraz required-result success. Przypięcie producenta `51827823` w recepturze nie zmienia się.
 Pierwszy head diagnostyki `cf092d5e`, CI `37690635892`, zakończył się failure
 z 15/17 success przez dotychczasowy limit manifestu 64 KiB. Zachowano
 21 failed, 962 passed, 54 errors, 30 skipped i koszt 1483.69 s tego sharda.
@@ -178,3 +179,11 @@ dowód pełnej skali. Przed kolejną próbą trzeba zbadać pozostałe alokacje
 producenta i zamrozić osobną wersję diagnostyki, zachowując wszystkie porażki,
 canonical rozmiary, budżety kampanii i rezerwy. Ten cached forecast world
 nie kwalifikuje pełnego planned-anomaly source 2.8 ani final `ai-training`.
+
+Poprawiony head diagnostyki `0ac90bd0` ma zakończony pełny Required CI
+`37698835119`, 17/17 success. Kalibracja i wybór Tune są już na AI/main
+`78d853a6`, którego dokładny pełny odbiór pozostaje w toku. PR #43 diagnostyki
+wymaga jeszcze chronionej publikacji na main i odbioru dokładnego merge przed
+ręcznym dispatch. Source/main jest już w pełni zaakceptowany; przypięcie
+producenta receptury, wszystkie stare plany, trzy porażki, limity i rezerwy
+pozostają bez zmian. Pełna próba 1.3 nadal nie została uruchomiona.

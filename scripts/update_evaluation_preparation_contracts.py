@@ -20,6 +20,10 @@ from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
     CampaignForecastFrozenConfiguration,
     CampaignForecastTrialPrediction,
 )
+from retailops_ai.evaluation_campaign.campaign_evaluation_receipt import (
+    CampaignForecastEvaluationReceipt,
+    CampaignForecastEvaluationRecipe,
+)
 from retailops_ai.evaluation_campaign.campaign_export_contract import (
     CampaignDevelopmentExportPlan,
     CampaignDevelopmentExportReceipt,
@@ -399,6 +403,22 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Campaign forecast evaluation contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, execution_model in (
+        ("campaign_forecast_evaluation_recipe", CampaignForecastEvaluationRecipe),
+        ("campaign_forecast_evaluation_receipt", CampaignForecastEvaluationReceipt),
+    ):
+        schema = execution_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:20.0.0"
+        path = ROOT / "contracts/evaluation/v20" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast evaluation execution contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

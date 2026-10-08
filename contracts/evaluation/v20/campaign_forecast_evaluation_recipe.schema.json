@@ -1,0 +1,348 @@
+{
+  "$defs": {
+    "CampaignForecastQualityPolicy": {
+      "additionalProperties": false,
+      "description": "The same numerical gates as v2, with an explicit campaign evaluation scope.",
+      "properties": {
+        "evaluation_use": {
+          "const": "independent_and_final_after_frozen_selection_no_reselection",
+          "default": "independent_and_final_after_frozen_selection_no_reselection",
+          "title": "Evaluation Use",
+          "type": "string"
+        },
+        "interval_objective": {
+          "const": "central_interval_score_no_regression_against_baseline",
+          "default": "central_interval_score_no_regression_against_baseline",
+          "title": "Interval Objective",
+          "type": "string"
+        },
+        "legacy_width_ratio_threshold": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Legacy Width Ratio Threshold",
+          "type": "number"
+        },
+        "maximum_absolute_normalized_mean_bias": {
+          "default": 0.1,
+          "maximum": 0.1,
+          "minimum": 0.1,
+          "title": "Maximum Absolute Normalized Mean Bias",
+          "type": "number"
+        },
+        "maximum_segment_mae_regression": {
+          "default": 0.1,
+          "maximum": 0.1,
+          "minimum": 0.1,
+          "title": "Maximum Segment Mae Regression",
+          "type": "number"
+        },
+        "minimum_calibration_rows_per_horizon": {
+          "const": 100,
+          "default": 100,
+          "title": "Minimum Calibration Rows Per Horizon",
+          "type": "integer"
+        },
+        "minimum_eligibility_coverage": {
+          "default": 0.8,
+          "maximum": 0.8,
+          "minimum": 0.8,
+          "title": "Minimum Eligibility Coverage",
+          "type": "number"
+        },
+        "minimum_empirical_coverage": {
+          "default": 0.8,
+          "maximum": 0.8,
+          "minimum": 0.8,
+          "title": "Minimum Empirical Coverage",
+          "type": "number"
+        },
+        "minimum_global_rows": {
+          "const": 100,
+          "default": 100,
+          "title": "Minimum Global Rows",
+          "type": "integer"
+        },
+        "minimum_prediction_coverage": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 1.0,
+          "title": "Minimum Prediction Coverage",
+          "type": "number"
+        },
+        "minimum_relative_mae_improvement": {
+          "default": 0.05,
+          "maximum": 0.05,
+          "minimum": 0.05,
+          "title": "Minimum Relative Mae Improvement",
+          "type": "number"
+        },
+        "minimum_segment_rows": {
+          "const": 30,
+          "default": 30,
+          "title": "Minimum Segment Rows",
+          "type": "integer"
+        },
+        "nominal_coverage": {
+          "default": 0.9,
+          "maximum": 0.9,
+          "minimum": 0.9,
+          "title": "Nominal Coverage",
+          "type": "number"
+        },
+        "reference_functionals": {
+          "const": "separate_tune_choices_not_a_joint_distribution",
+          "default": "separate_tune_choices_not_a_joint_distribution",
+          "title": "Reference Functionals",
+          "type": "string"
+        },
+        "version": {
+          "const": "ai09-campaign-forecast-quality-1.0.0",
+          "default": "ai09-campaign-forecast-quality-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "zero_actuals": {
+          "const": "absolute_errors_and_false_positive_units_no_ratio_gate",
+          "default": "absolute_errors_and_false_positive_units_no_ratio_gate",
+          "title": "Zero Actuals",
+          "type": "string"
+        }
+      },
+      "title": "CampaignForecastQualityPolicy",
+      "type": "object"
+    },
+    "CampaignGenerationResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "max_log_bytes": {
+          "default": 16777216,
+          "maximum": 16777216,
+          "minimum": 1024,
+          "title": "Max Log Bytes",
+          "type": "integer"
+        },
+        "minimum_available_memory_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Available Memory Bytes",
+          "type": "integer"
+        },
+        "minimum_free_disk_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Free Disk Bytes",
+          "type": "integer"
+        },
+        "sample_seconds": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0.01,
+          "title": "Sample Seconds",
+          "type": "number"
+        },
+        "scratch_bytes": {
+          "maximum": 137438953472,
+          "minimum": 1024,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "tree_rss_bytes": {
+          "maximum": 68719476736,
+          "minimum": 1024,
+          "title": "Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "tree_rss_bytes",
+        "scratch_bytes",
+        "minimum_free_disk_bytes",
+        "minimum_available_memory_bytes"
+      ],
+      "title": "CampaignGenerationResources",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:campaign_forecast_evaluation_recipe:20.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Preregister identities of parent operations, never the unknown result hashes.\n\nEmbedding a configuration's result hash here would create a cycle through\nthe protocol hash stored in its fit/selection/calibration receipts.\nThe separately resolved v19 worker plan pins those results after completion.",
+  "properties": {
+    "architecture_reselected": {
+      "const": false,
+      "default": false,
+      "title": "Architecture Reselected",
+      "type": "boolean"
+    },
+    "batch_windows": {
+      "default": 64,
+      "maximum": 256,
+      "minimum": 1,
+      "title": "Batch Windows",
+      "type": "integer"
+    },
+    "calibration_operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Calibration Operation Id",
+      "type": "string"
+    },
+    "export_operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Export Operation Id",
+      "type": "string"
+    },
+    "max_index_bytes": {
+      "default": 4294967296,
+      "maximum": 8589934592,
+      "minimum": 4096,
+      "title": "Max Index Bytes",
+      "type": "integer"
+    },
+    "max_output_bytes": {
+      "default": 8589934592,
+      "maximum": 34359738368,
+      "minimum": 1024,
+      "title": "Max Output Bytes",
+      "type": "integer"
+    },
+    "max_rows": {
+      "default": 10000000,
+      "maximum": 100000000,
+      "minimum": 1,
+      "title": "Max Rows",
+      "type": "integer"
+    },
+    "phase": {
+      "enum": [
+        "development",
+        "final"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "population": {
+      "const": "every_role_key_every_frozen_trial_no_sampling",
+      "default": "every_role_key_every_frozen_trial_no_sampling",
+      "title": "Population",
+      "type": "string"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "quality_policy": {
+      "$ref": "#/$defs/CampaignForecastQualityPolicy",
+      "default": {
+        "evaluation_use": "independent_and_final_after_frozen_selection_no_reselection",
+        "interval_objective": "central_interval_score_no_regression_against_baseline",
+        "legacy_width_ratio_threshold": 2.0,
+        "maximum_absolute_normalized_mean_bias": 0.1,
+        "maximum_segment_mae_regression": 0.1,
+        "minimum_calibration_rows_per_horizon": 100,
+        "minimum_eligibility_coverage": 0.8,
+        "minimum_empirical_coverage": 0.8,
+        "minimum_global_rows": 100,
+        "minimum_prediction_coverage": 1.0,
+        "minimum_relative_mae_improvement": 0.05,
+        "minimum_segment_rows": 30,
+        "nominal_coverage": 0.9,
+        "reference_functionals": "separate_tune_choices_not_a_joint_distribution",
+        "version": "ai09-campaign-forecast-quality-1.0.0",
+        "zero_actuals": "absolute_errors_and_false_positive_units_no_ratio_gate"
+      }
+    },
+    "resources": {
+      "$ref": "#/$defs/CampaignGenerationResources"
+    },
+    "role": {
+      "enum": [
+        "development_evaluation",
+        "final_test"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "segment_policy_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Segment Policy Sha256",
+      "type": "string"
+    },
+    "source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Recipe Sha256",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "training_or_preprocessing_refitted": {
+      "const": false,
+      "default": false,
+      "title": "Training Or Preprocessing Refitted",
+      "type": "boolean"
+    },
+    "tune_operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Tune Operation Id",
+      "type": "string"
+    },
+    "tune_score_operation_ids": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+        "type": "string"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Tune Score Operation Ids",
+      "type": "array"
+    },
+    "uncertainty_policy_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Uncertainty Policy Sha256",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-campaign-forecast-evaluation-recipe-1.0.0",
+      "default": "ai09-campaign-forecast-evaluation-recipe-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "worker_environment_lock_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Worker Environment Lock Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "phase",
+    "role",
+    "source_recipe_sha256",
+    "export_operation_id",
+    "tune_operation_id",
+    "calibration_operation_id",
+    "tune_score_operation_ids",
+    "segment_policy_sha256",
+    "uncertainty_policy_sha256",
+    "worker_environment_lock_sha256",
+    "resources"
+  ],
+  "title": "CampaignForecastEvaluationRecipe",
+  "type": "object"
+}

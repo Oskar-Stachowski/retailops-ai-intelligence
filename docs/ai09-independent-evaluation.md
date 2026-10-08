@@ -64,10 +64,10 @@ niezależną oraz końcową ocenę po zamrożeniu. Dotychczasowy evaluator v2 i
 wcześniejsze schematy pozostają bajtowo bez zmian. Testy różnicowe porównują
 obie implementacje na tych samych parach.
 
-To przygotowanie komponentów. Pozostają audytowane wywołanie adaptera pełnych
-plików development/final, integracja fresh workerów i supervised runner z pomiarem całego własnego
-drzewa, complete segment inventory, block uncertainty, rzeczywista kampania
-wszystkich trzech zastosowań, lifecycle i końcowy odbiór main. Projektowy journal
+To przygotowanie komponentów. Publiczny runner opisany poniżej łączy pełne
+pliki roli, świeże procesy i pomiar własnego drzewa. Pozostają complete segment
+inventory, block uncertainty, rzeczywista kampania wszystkich trzech zastosowań,
+lifecycle i końcowy odbiór main. Projektowy journal
 nie jest zainicjalizowany, nowe projektowe fity wynoszą zero, final test pozostaje
 zamknięty, a AI 09 nadal jest `not_ready`.
 
@@ -102,6 +102,59 @@ Kontrole używają deklarowanych rodziców i fake modeli; SDK MLflow jest osobno
 mockowany. Dwa rzeczywiste świeże procesy core wykonały końcową agregację
 kontrolnych development/final i zapisały własny czas/CPU/peak RSS. Nie jest to
 native odbiór TF inference ani pomiar całego drzewa publicznego supervisora.
-Mypy dla 697 plików, Ruff i format 1187 plików przeszły. Nadal wymagane są
-publiczna rezerwacja przed parent/label I/O, dowody ukończonych rodziców,
-prywatne trwałe receipty kosztów i wyników oraz weryfikacja ich publikacji.
+Mypy dla 697 plików, Ruff i format 1187 plików przeszły. Ten wcześniejszy
+odbiór faz nie obejmował publicznej rezerwacji, dowodów ukończonych rodziców
+ani trwałej publikacji wyniku; nowe kontrole tych elementów są opisane poniżej.
+
+Publiczny `evaluate_campaign_forecast` rezerwuje operację przed weryfikacją
+plików rodziców i etykiet. Sprawdza ukończone export, wszystkie fity, wszystkie
+score na Tune/Calibration, wybór Tune i kalibrację wraz z prywatnymi receiptami.
+Następnie uruchamia osobne świeże procesy przygotowania, predykcji każdej próby,
+konsumpcji i końcowej agregacji. Predykcja otrzymuje wyłącznie indeks covariates
+i zamrożone rodzice; nie otrzymuje actuals ani ścieżki całego datasetu. Każda
+próba zachowuje wszystkie klucze, metryki, trace hash i koszty. Tylko bieżący
+surowy indeks predykcji jest usuwany po sprawdzonej, trwałej konsumpcji.
+
+Nowe kontrakty [v20](../contracts/evaluation/v20/campaign_forecast_evaluation_recipe.schema.json)
+oddzielają prospektywną recepturę od rozwiązanego planu v19. Receptura zamraża
+identyfikatory operacji rodziców, pełny inwentarz prób, polityki i zasoby przed
+wynikami. Dopiero po ukończeniu rodziców plan wiąże faktyczne hashe konfiguracji
+i receiptów. Zapobiega to cyklowi: protocol hash → configuration result hash →
+fit/calibration receipts → protocol hash. Kontrola używa rzeczywistego journalu
+z protokołem zamrożonym przed zadeklarowanymi wynikami; wcześniejsze v1–v19
+pozostają bajtowo bez zmian.
+
+Receipt v20 przypina recepturę, plan, konfigurację, wszystkie artefakty,
+populację i koszty. Jest zapisywany prywatnie i trwale przed zakończeniem
+operacji w journalu. Awaria dowolnej fazy lub publikacji zachowuje budżet,
+znany peak i znany rozmiar artefaktu. Ponowna próba nie refunduje budżetu.
+Read-only verifier odczytuje opublikowany bundle i receipt, bez ponownego
+otwierania pierwotnych etykiet. Tożsamości selection components dla modeli
+i preprocessingu są hashami pełnego kompatybilnego inwentarza wybranych
+funkcjonałów, w tym faktycznych model hashes; nie oznaczają pojedynczego pliku
+wag dla złożonej prognozy mean/median.
+
+Dostęp final evaluation wymaga dowodów ukończonej niezależnej oceny development
+wszystkich trzech zastosowań, zgodnych pakietów i pełnych segmentów oraz
+niepewności. Sama deklaracja `selection_frozen` nie wystarcza. Obecny forecast
+component ma jawnie nieukończone critical segments i block uncertainty, więc
+nie może autoryzować końcowej oceny projektu. Integracja tego dowodu przed
+final generation/export, pełni evaluatorzy pozostałych zastosowań i kompletna
+ocena jakości nadal wymagają implementacji przed zainicjalizowaniem kampanii.
+
+Najnowszy odbiór ma 176 passed w 118.81 s, z realnym kontrolnym journalem,
+ukończonymi prywatnymi receiptami zadeklarowanych rodziców i fake modelami.
+Weryfikatory ukończenia Tune/Cal/Fit/Score są rzeczywiste; zawartość model
+bundles w tej kontroli jest mockowana. Dwa świeże core procesy i mały wcześniej
+eksponowany eksport source wchodzą w tę integrację. Mypy dla 699 plików, Ruff,
+format 1190 plików i schematy przeszły. Wheel zawiera 578 zgodnych modułów,
+cztery schematy v19 i dwa v20; 64 wcześniejsze pliki evaluation i quality_v2
+pozostają bez zmian. Rzeczywiście zainstalowany wheel importuje runner bez
+TensorFlow/MLflow.
+
+Osobna kontrola native CPU dodaje świeżą predykcję niezależnej roli do
+istniejącego odbioru RF/HGB/TF, ponownie używając jego rzeczywistych fitów.
+Nie wykonuje dodatkowego treningu. Odbiór tej nowej ścieżki jest jeszcze
+**pending w Required CI**; nie uruchomiono lokalnych fitów ani nowej kampanii.
+Przygotowanie i metadane kalibracji w tej kontroli są deklarowane, więc nawet
+po jej zaliczeniu nie będzie to pełna kampania lub uprawnienie final test.

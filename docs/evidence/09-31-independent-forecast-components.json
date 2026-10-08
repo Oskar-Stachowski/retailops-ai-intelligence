@@ -1,6 +1,6 @@
 {
-  "scope": "Frozen forecast components, complete-role/separate-label adapter and internal phase controls; public audited runner and actual campaign incomplete",
-  "wire": "evaluation v19:4 new schemas, prior60 evaluation files and legacy quality_v2 bytes unchanged",
+  "scope": "Frozen forecast components, full-role public audited runner and local durable-publication controls; critical segments, uncertainty, actual campaign and main acceptance incomplete",
+  "wire": "evaluation v19:4 schemas and v20:2 new schemas; prior64 evaluation files and legacy quality_v2 bytes unchanged",
   "stage_ready": false,
   "project_journal_initialized": false,
   "new_project_fits": 0,
@@ -56,10 +56,11 @@
   ],
   "publication_pending": true,
   "remaining": [
-    "public supervised prepare phase: prove reservation, completed export, frozen configuration and source binding before calling the complete-role adapter",
-    "fresh isolated per-trial inference and bounded full population aggregation",
-    "durable result/cost receipts before operation completion and read-only verification",
+    "publish exact current public runner head and accept full Required CI, including new native independent prediction control",
     "complete critical segment inventory and paired time/series block uncertainty",
+    "implement typed independent evaluators and complete selection proof for anomaly and stockout using closed07/08 policies",
+    "enforce completed three-use selection proof before final generation/export as well as final evaluation",
+    "qualify full canonical capacity and planned-anomaly producer without reducing dimensions, budgets or reserves",
     "actual development fits/Tune/Calibration and independent evaluation for all3 uses",
     "selection freeze and fresh final3 seeds/four scenarios/full canonical profiles",
     "compatible lifecycle artifacts, three cards/reports/runbooks and full origin/main acceptance"
@@ -209,5 +210,111 @@
       }
     ],
     "publication_pending": true
+  },
+  "public_audited_runner": {
+    "recipe_frozen_before_unknown_result_hashes": true,
+    "prospective_parent_operation_ids_resolved_to_v19_plan_after_completion": true,
+    "protocol_result_hash_cycle_removed_without_changing_prior_schemas": true,
+    "reservation_before_parent_and_label_file_io": true,
+    "completed_export_fit_tune_calibration_and_all_score_receipts_checked": true,
+    "full_model_bundle_content_verification_mocked_in_local_control": true,
+    "sequential_fresh_process_phases": [
+      "prepare",
+      "predict",
+      "consume",
+      "finalize"
+    ],
+    "prediction_request_has_no_actual_index_or_dataset_path": true,
+    "all_role_keys_and_all_frozen_trials_required": true,
+    "durable_metrics_and_traces_before_removing_only_current_raw_prediction_index": true,
+    "private_durable_receipt_before_completed_journal_event": true,
+    "failure_costs_peak_and_known_artifact_size_retained": true,
+    "no_budget_refund_or_silent_retry": true,
+    "read_only_verifier_does_not_open_original_outcomes": true,
+    "metadata_only_selection_and_current_partial_forecast_component_block_final_evaluation": true,
+    "completed_three_use_proof_before_final_generation_export_implemented": false,
+    "critical_segment_inventory_complete": false,
+    "block_uncertainty_complete": false,
+    "quality_qualified": false,
+    "stage_ready": false,
+    "tests": {
+      "integration_passed": 176,
+      "integration_seconds": 118.81,
+      "declared_parents_and_fake_models": true,
+      "real_journal_and_parent_completion_verifiers": true,
+      "actual_fresh_core_aggregation_processes": 2,
+      "not_project_or_canonical_qualification": true
+    },
+    "static_checks": {
+      "mypy_files": 699,
+      "ruff": "passed",
+      "format_files": 1190,
+      "schemas": "passed"
+    },
+    "package": {
+      "wheel_bytes": 1874115,
+      "wheel_sha256": "2b1ef8ae2b9c899ebf7029c624ee168b566651ddda51700fe9bfad338b009c38",
+      "module_byte_parity": 578,
+      "v19_schema_byte_parity": 4,
+      "v20_schema_byte_parity": 2,
+      "prior_tracked_evaluation_files_unchanged": 64,
+      "legacy_quality_v2_bytes_unchanged": true,
+      "installed_probe": {
+        "actual_installed_wheel_import": true,
+        "tensorflow_imported": false,
+        "mlflow_imported": false,
+        "recipe_version": "ai09-campaign-forecast-evaluation-recipe-1.0.0",
+        "receipt_version": "ai09-campaign-forecast-evaluation-receipt-1.0.0"
+      },
+      "project_or_canonical_workers_started": false
+    },
+    "native_cpu_independent_prediction": {
+      "new_control_pending_required_ci": true,
+      "reuses_actual_three_family_fit_bundles": true,
+      "additional_fit_count": 0,
+      "declared_control_preparation_and_calibration_metadata": true,
+      "local_native_fits_run": false,
+      "not_project_or_final_access_proof": true
+    },
+    "retained_failed_controls": [
+      {
+        "kind": "initial public runner integration",
+        "passed": 6,
+        "failed": 5,
+        "seconds": 19.21,
+        "cause": "Test dispatch used rows instead of features; completion spy incorrectly required successful receipt for failed operations; instance model_fields deprecated",
+        "corrected": true
+      },
+      {
+        "kind": "second public runner integration",
+        "passed": 9,
+        "failed": 2,
+        "seconds": 19.7,
+        "cause": "Public verifier expected rows while composite EvaluationSegment uses total_rows; corrected global/horizon field binding",
+        "corrected": true
+      },
+      {
+        "kind": "pre-extension public controls",
+        "passed": 11,
+        "seconds": 19.66,
+        "additional_publication_peak_and_selection_controls_added_afterward": true
+      },
+      {
+        "kind": "initial typing",
+        "errors": 3,
+        "cause": "InputRow import, strict family literal annotation and baseline trace non-null check",
+        "corrected": true
+      },
+      {
+        "kind": "contract script typing",
+        "errors": 2,
+        "cause": "Separate model variable needed for new v20 schema-generation loop",
+        "corrected": true
+      }
+    ],
+    "publication_pending": true,
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "project_final_test_opened": false
   }
 }

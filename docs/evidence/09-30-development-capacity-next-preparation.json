@@ -136,5 +136,29 @@
     "exact_main_acceptance_pending": true,
     "recipe_producer_pin_unchanged": true,
     "canonical_attempt_dispatched": false
+  },
+  "source_exact_main_acceptance": {
+    "main": "5c05445e8105c378107099785bae7355388ed7e7",
+    "required_ci": 37698252427,
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_read_and_total": 25,
+    "success": 21,
+    "intended_scoped_skips": 4,
+    "required_result": "success",
+    "recipe_producer_pin_unchanged": "5182782321e9aca15f28c467071e92f268aafb85",
+    "canonical_attempt_dispatched": false
+  },
+  "corrected_capacity_head_full_required_ci": {
+    "head": "0ac90bd0ee6f6ceb55f191f3b0baddc0ff418627",
+    "required_ci": 37698835119,
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_read_and_total": 17,
+    "success": 17,
+    "required_result": "success",
+    "protected_publication_pending": true,
+    "exact_implementation_main_acceptance_pending": true,
+    "canonical_attempt_dispatched": false
   }
 }
