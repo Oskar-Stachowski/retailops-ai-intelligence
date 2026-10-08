@@ -65,6 +65,9 @@ trwałe wyniki, bezpieczny odczyt i wspólne admission; [odbiór](evidence/12-as
 HTTP, rzeczywisty RAG i Bedrock; [odbiór](evidence/12-document-runtime.md).
 [Chat Bedrock](agent-bedrock.md) opisuje adapter, kontrolę dostępu i tokenów,
 europejskie profile oraz limit kosztu; [bieżący odbiór](evidence/12-document-runtime.md).
+[Natywny runtime Bedrock](assistant-native-bedrock.md) składa osiem adapterów,
+a [punkt wznowienia AI12](ai12-paid-qualification.md) opisuje przygotowaną
+kampanię i warunki przed płatnymi wywołaniami.
 [Kontrakty danych/run/tool](data-contracts.md) i [ich odbiór](evidence/01-contracts.md)
 opisują wersje, lineage i walidację offline.
 [Integracja wyników AI 10](intelligence-integration-v2.md) opisuje pierwszy przyrost

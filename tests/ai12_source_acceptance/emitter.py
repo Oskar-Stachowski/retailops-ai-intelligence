@@ -56,7 +56,7 @@ def provision(private):
 def emit(private):
     config = json.loads((private / "connections.json").read_bytes())
     path, tokens, authority, body, backend, _ = setup(private, intent="operations")
-    graph = load_graph_config(ROOT / "agent/graph.fake.prepaid.v1.json")
+    graph = load_graph_config(ROOT / "agent/graph.fake.prepaid.v2.json")
     producer = create_engine(config["source_read"], hide_parameters=True)
     ai = create_engine(config["ai"], hide_parameters=True)
     adapter = NativeOperationsTool(PostgresNativeOperationsReader(producer, "test"), "test")
@@ -133,7 +133,7 @@ def verify(private):
                 .mappings()
                 .one()
             )
-            assert row["status"] == "sent"
+            assert row["status"] == "delivered"
             assert bytes(row["wire_bytes"]) == (private / "event.json").read_bytes()
     finally:
         engine.dispose()

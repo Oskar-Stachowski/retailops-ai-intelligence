@@ -45,7 +45,7 @@ allowed in the emitter helper. Local shared Docker and Compose are not started.
 
 ## Stop before paid tests
 
-The current `.prepaid.v1` graph, release and smoke candidates preserve earlier
+The current `.prepaid.v2` graph, release and smoke candidates preserve earlier
 published families. The `bedrock-smoke` command prepares a proposal by default;
 paid calls require `--execute`, an exact cost cap and a new private durable output.
 The Haiku/Sonnet fixture smoke and document smoke are separate from native
@@ -58,3 +58,6 @@ accepted retrieval labels do not accept this different Assistant set. After
 review, create a separately identified accepted route/configuration artifact;
 do not edit historical receipts or label a fixture as human approval. New paid
 inference and embeddings remain withheld until the user resumes that work.
+
+[The paid qualification runbook](ai12-paid-qualification.md) binds the prepared
+proposals, review packet, separate native campaign and remaining evidence gaps.
