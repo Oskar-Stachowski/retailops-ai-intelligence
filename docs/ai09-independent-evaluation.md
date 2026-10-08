@@ -259,7 +259,9 @@ przed niezmienioną projekcją AI08. Routing pochodzi z rzeczywistego źródła,
 zapas z origin-known available quantity, a lead time z ówczesnej oferty dostawcy.
 Brakujący deklarowany route nie może przesunąć znanego zapasu do grupy unknown.
 Cache obejmuje tylko jeden rzeczywisty punkt product/stock/origin, ponownie
-użyty przez horyzonty; nie jest cache'em global latest. Limity parent, indeksu,
+użyty przez horyzonty oraz jeden niezmieniony `FactIndex` AI08 dla fizycznej
+serii. Zachowuje wszystkie wersje do jawnego bound pełnego rodzica, a następnie
+klipuje je ponownie przy każdym origin; nie jest cache'em global latest. Limity parent, indeksu,
 wierszy i bajtów pojedynczego odczytu są jawne, bez mniejszej populacji po błędzie.
 
 `RawTrialCriticalSegments` zachowuje bounded statystyki wszystkich sześciu
@@ -279,3 +281,15 @@ uncertainty do publicznego workera i wersjonowanego receipt oraz rzeczywiste
 oceny anomaly/stockout i pełna kampania. Żaden nowy typ nie autoryzuje final
 testu, jakości lub promocji. Najnowsze wyniki kontroli i publikacji są w
 [evidence 09-31](evidence/09-31-independent-forecast-components.json).
+
+Zestaw metryk, uncertainty, census i rzeczywistego odczytu publicznych fixture
+ma 138 passed w 97.65 s. Po ponownym użyciu zamkniętego `FactIndex` AI08
+73 kontrole źródła i census przeszły w 96.23 s. Mypy dla 706 plików, Ruff,
+format 1201 plików, schematy i kontrola dokumentacji przeszły. Wheel ma 585
+zgodnych modułów i 15 schematów v19–v22. Wszystkie 66 wcześniejszych plików
+evaluation v1–v20 i 28 plików zamkniętych projekcji/storage/preparation AI08
+pozostają bajtowo bez zmian. Faktycznie zainstalowany wheel zaimportował nowe
+komponenty i schemat v22 oraz zwrócił 56 pustych grup kontrolnych, bez importu
+TensorFlow/MLflow lub uruchomienia source/model workera. Integracja z pełnym
+zaakceptowanym main `0990905b` zmieniła tylko ancestry, bez zmiany drzewa.
+Nowa publikacja i jej dokładne pełne CI pozostają wymagane.

@@ -153,6 +153,10 @@ class CampaignContextStoragePolicy(Contract):
     projection: Literal["closed_ai08_origin_pit_feature_point_unchanged"] = (
         "closed_ai08_origin_pit_feature_point_unchanged"
     )
+    series_index: Literal["closed_ai08_fact_index_one_physical_series_clip_again_per_origin"] = (
+        "closed_ai08_fact_index_one_physical_series_clip_again_per_origin"
+    )
+    maximum_cached_physical_series: Literal[1] = 1
     audited_source_read_proved_by_this_policy: FalseFlag = False
     final_access_authorized: FalseFlag = False
     promotion_allowed: FalseFlag = False

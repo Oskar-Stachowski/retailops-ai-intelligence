@@ -10,13 +10,13 @@ import hashlib
 import sqlite3
 import tempfile
 from contextlib import ExitStack
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Self
 
 from retailops_ai.curated.builder import iter_rows, verify_curated
 from retailops_ai.curated.contract import Digest, columns_for, decoded, encoded
-from retailops_ai.data_contracts.common import utc_time
+from retailops_ai.data_contracts.common import end_of_day, utc_time
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.evaluation_campaign.campaign_segment_contract import (
     CampaignContextStoragePolicy,
@@ -38,6 +38,7 @@ from retailops_ai.source_snapshot.protocol import Limits
 from retailops_ai.stockout.feature_contract import FeaturePoint
 from retailops_ai.stockout.features import FEATURE_TABLES, effective, latest
 from retailops_ai.stockout_history.projection import feature_point
+from retailops_ai.stockout_preparation.index import FactIndex
 from retailops_ai.stockout_storage.store import keys
 
 
@@ -70,6 +71,9 @@ class CampaignContextFacts:
         }
         self._point_key: tuple[str, str, datetime] | None = None
         self._point: FeaturePoint | None = None
+        self._series_key: tuple[str, str] | None = None
+        self._series_index: FactIndex | None = None
+        self._series_through: datetime | None = None
 
     def __enter__(self) -> Self:
         if self._used:
@@ -99,6 +103,7 @@ class CampaignContextFacts:
             self._stack.close()
             self._db = None
             self._point = self._point_key = None
+            self._series_key = self._series_index = self._series_through = None
 
     def _budget(self) -> None:
         size = sum(p.stat().st_size for p in self.path.parent.iterdir() if p.is_file())
@@ -385,8 +390,29 @@ class CampaignContextFacts:
             key = feature.product_id, route.stock_location_id, feature.forecast_origin
             if self._point_key != key:
                 self._point = self._point_key = None
+                if (
+                    self._series_key != key[:2]
+                    or self._series_through is None
+                    or key[2] > self._series_through
+                ):
+                    # The AI08 algorithm retains all versions through the bound
+                    # and clips them again at every earlier origin. This bound
+                    # comes from the complete sealed parent, never an outcome.
+                    self._series_key = self._series_index = self._series_through = None
+                    through = max(
+                        key[2],
+                        end_of_day(
+                            date.fromisoformat(
+                                self.document["descriptor"]["source_parameters"]["end_date"]
+                            )
+                        ),
+                    )
+                    self._series_index = FactIndex(self.known(key[0], key[1], through))
+                    self._series_key, self._series_through = key[:2], through
+                if self._series_index is None:
+                    raise SnapshotError("campaign_context_facts_causal_series_index_missing")
                 self._point = feature_point(
-                    self.known(*key), product=key[0], stock=key[1], as_of=key[2]
+                    self._series_index.known(*key), product=key[0], stock=key[1], as_of=key[2]
                 )
                 self._point_key = key
                 self.stats["origin_point_projections"] += 1

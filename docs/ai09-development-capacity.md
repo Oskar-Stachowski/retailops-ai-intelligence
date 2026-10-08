@@ -22,12 +22,35 @@ pełne wymiary i daty canonical, budżety RSS/scratch/czasu, rezerwy i parent ca
 Nowa próba została uruchomiona 2026-10-08 po chronionej publikacji producenta
 i diagnostyki oraz pełnym odbiorze ich dokładnych head/main.
 [Run 37714051649](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37714051649)
-działa na osobnym runnerze z AI/main `0990905b`; pełny Required CI tego main
+wykonano na osobnym runnerze z AI/main `0990905b`; pełny Required CI tego main
 `37711535728` ma 17/17 success. Source/main `5c05445e` ma 25 odczytanych
 z 25 jobs, 21 success i cztery zamierzone scoped skips. Producent `51827823`
 pozostaje przypięty i ma pełny odbiór attempt2: 30/30 success. Sprawdzono
 jego ancestry oraz dokładne bajty receptury i workflow na zaakceptowanym main.
-Wynik pomiaru pozostaje w toku; profile i AI09 nadal nie mają kwalifikacji.
+[Czwarty pełny pomiar](evidence/09-32-development-capacity-fourth-run.json)
+zakończył się `worker_exit`, `exit_code: -11` (`SIGSEGV`), po 883.575 s;
+generacja trwała 882.775 s i nie ukończyła żadnej z pięciu faz. Próbkowany
+peak drzewa wyniósł 7562665984 B, poniżej limitu 8 GiB; próbkowane CPU miało
+dolną granicę 847.72 s. Ten wynik nie dowodzi przekroczenia RSS i nie jest
+kosztem ukończonego profilu. Minimalna dostępna pamięć miała 8177016832 B.
+Artefakt 11523680984 zawiera plan, receipt i log; brak ukończonego worker receipt.
+Zachowano wszystkie cztery porażki i koszty. Nie wykonano retry ani fitów,
+nie otwarto final test; profile i AI09 nadal nie mają kwalifikacji.
+
+Log urywa się podczas okresowego dumpu po `price_resolver.py:60`, z niedokończonym
+prefiksem `File`. Przyczyna awarii pozostaje niepotwierdzona: nie ma core ani
+natywnego backtrace. Podobne awarie diagnostyki opisują zgłoszenia
+[CPython 116008](https://github.com/python/cpython/issues/116008)
+(3.11.4, sygnał SIGUSR1) i
+[CPython 158200](https://github.com/python/cpython/issues/158200)
+(timer, pydebug main/3.16). Dotyczą innych wyzwalaczy lub wersji i są tylko
+podstawą hipotezy, że awarię mógł wywołać watchdog obserwacji.
+[Przypięty CPython 3.11.15](https://github.com/python/cpython/blob/v3.11.15/Modules/faulthandler.c)
+używa natywnego watchdogu do odczytu stosów. Przed odrębną kolejną próbą
+potrzebna jest kontrola bezpieczniejszej, ograniczonej obserwacji Pythonowych
+ramek i nowa prospektywna receptura, zachowująca plany 1.0–1.3, pełny scope,
+budżety, rezerwy i wszystkie porażki. Samo usunięcie diagnostyki nie dowodzi
+spadku RSS, ukończenia źródła ani kwalifikacji pełnych profili.
 Pierwszy Required CI producenta `37683555355` zakończył się cancelled:
 28/30 success, Docker cancelled i required-result failure. Instalacja Chromium
 przekroczyła 35 minut przed rozpoczęciem testów aplikacji; data quality przeszło.
@@ -48,8 +71,8 @@ z 15/17 success przez dotychczasowy limit manifestu 64 KiB. Zachowano
 Nowa gałąź zawiera poprawkę bounded metadata cap 128 KiB oraz diagnostykę
 przerwanego backupu z kalibracji `b2e12a5d` i zaakceptowany main `92c2a3cd`.
 48 testów diagnostyki, przerwania i limitu manifestu przeszło w 2.27 s;
-Mypy dla 688 plików przeszło. Nowy dokładny head wymaga pełnego CI,
-chronionego merge i odbioru AI/main przed dispatch. Pełna próba 1.3 została następnie uruchomiona po pełnym odbiorze dokładnego
+Mypy dla 688 plików przeszło. Poprawiony head przeszedł pełne CI, chroniony merge i odbiór AI/main.
+Pełna próba 1.3 została następnie uruchomiona po pełnym odbiorze dokładnego
 head `a93893b8`, chronionym merge PR43 i odbiorze main `0990905b`. Poprzednie
 plany, limity i porażki pozostają zachowane.
 
@@ -188,16 +211,12 @@ producenta i zamrozić osobną wersję diagnostyki, zachowując wszystkie poraż
 canonical rozmiary, budżety kampanii i rezerwy. Ten cached forecast world
 nie kwalifikuje pełnego planned-anomaly source 2.8 ani final `ai-training`.
 
-Poprawiony head diagnostyki `0ac90bd0` ma zakończony pełny Required CI
-`37698835119`, 17/17 success. Kalibracja i wybór Tune są już na AI/main
-`78d853a6`, którego dokładny pełny odbiór `37702954342` przeszedł 17/17. PR #43 diagnostyki
-wymaga jeszcze chronionej publikacji na main i odbioru dokładnego merge przed
-ręcznym dispatch. Source/main jest już w pełni zaakceptowany; przypięcie
-producenta receptury, wszystkie stare plany, trzy porażki, limity i rezerwy
-pozostają bez zmian. Pełna próba 1.3 nadal nie została uruchomiona.
-
-PR #43 ma teraz base main. Własna gałąź została połączona z zaakceptowanym
-`78d853a6` jako `a93893b8`, bez zmiany któregokolwiek pliku w porównaniu
-z odebranym `0ac90bd0`. Required CI `37707162141` tego exact head jest w toku. Nadal wymagane są
-chroniony merge i odbiór dokładnego main. Pełna próba 1.3 nie została
-jeszcze uruchomiona.
+Poprawiony head diagnostyki `0ac90bd0` ma zakończony Required CI
+`37698835119`, 17/17 success. Po integracji zaakceptowanego main `78d853a6`
+nowy head `a93893b8` miał identyczne drzewo plików i pełny odbiór
+`37707162141`, 17/17 success. Chroniony merge PR #43 opublikował `0990905b`;
+jego odbiór `37711535728` przeszedł 17/17 przed ręcznym dispatch.
+Te wcześniejsze warunki publikacji są spełnione. Terminalny wynik próby 1.3
+jest opisany powyżej i w 09-32. Pozostaje potrzeba korekty diagnostyki oraz
+rzeczywistej kwalifikacji pełnego źródła, snapshotu i curated; zielone CI
+komponentów nie zastępuje tych wyników.

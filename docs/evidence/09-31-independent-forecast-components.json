@@ -60,7 +60,7 @@
     "Implement source-derived complete context bundle with verified preregistered scenario plan and full role join",
     "Connect all raw critical metrics before prediction-index deletion and paired uncertainty to public worker and typed receipt",
     "Implement actual typed independent anomaly/stockout evaluators using closed07/08 policies",
-    "Observe full canonical1.3 measurement and qualify full planned-anomaly producer/training profile without reducing scope",
+    "Correct and control prospective capacity diagnostics after fourth failure; qualify full planned-anomaly producer/training profile without reducing scope",
     "Actual all3 development fits/Tune/Calibration/independent evaluation, selection freeze, freshfinal42/137/2026/four scenarios",
     "Full costs, compatible lifecycle packages, three cards/reports/runbooks, all origin/main and final full CI"
   ],
@@ -513,7 +513,7 @@
     "every_version_and_original_order_retained": true,
     "complete_parent_files_and_complete_private_index_rechecked": true,
     "known_route_cannot_be_declared_unknown": true,
-    "cache": "one actual product/stock/origin point reused across horizons; no global latest",
+    "cache": "one closed AI08 FactIndex for a physical series, all versions through sealed-parent bound clipped again at every origin; one actual origin point reused across horizons",
     "all_six_raw_model_forecasts_retained_in_each_group": true,
     "raw_rf_median_remains_undefined": true,
     "raw_learned_intervals_calibrated": false,
@@ -568,6 +568,57 @@
         "errors": 1,
         "cause": "Typed empty selection list needed explicit tuple/dict annotation; corrected"
       }
-    ]
+    ],
+    "post_closed_ai08_series_index_controls": {
+      "passed": 73,
+      "seconds": 96.23,
+      "covers": "all public1.1/1.2 fixture SQL keys, actual origin projection, earlier-origin clipping, one-point horizon reuse, source/index mutations, missing known route, resource failures and complete census"
+    },
+    "package": {
+      "wheel_bytes": 1913507,
+      "wheel_sha256": "41fdef5681b799dba258db32cd4eacd801bc7fd31fb97ca32792e448a887efb5",
+      "module_byte_parity": 585,
+      "schema_byte_parity": {
+        "v19": 4,
+        "v20": 2,
+        "v21": 2,
+        "v22": 7
+      },
+      "prior_evaluation_files_v1_v20_unchanged": 66,
+      "closed_ai08_files_unchanged": 28,
+      "project_workers_started": false,
+      "project_fits": 0,
+      "project_final_access": false
+    },
+    "installed_wheel_probe": {
+      "installed_package_import": true,
+      "empty_control_segments": 56,
+      "v22_storage_schema_loaded": true,
+      "closed_ai08_series_index_policy": "closed_ai08_fact_index_one_physical_series_clip_again_per_origin",
+      "tensorflow_imported": false,
+      "mlflow_imported": false,
+      "source_or_project_workers_started": false,
+      "project_final_accessed": false,
+      "quality_qualified": false,
+      "stage_ready": false
+    },
+    "accepted_main_integration": {
+      "main": "0990905b84a4b263b6eb01b09b784067ec14f23b",
+      "required_ci": 37711535728,
+      "jobs_read_total_success": 17,
+      "merge_commit": "c6ae241624b1c8e87717858311ea6546964e6cd0",
+      "tree_changed_by_merge": false
+    }
+  },
+  "latest_full_capacity_observation": {
+    "run": 37714051649,
+    "conclusion": "failure",
+    "reason": "worker_exit",
+    "exit_code": -11,
+    "completed_phases": 0,
+    "evidence": "docs/evidence/09-32-development-capacity-fourth-run.json",
+    "full_profile_qualified": false,
+    "project_fits": 0,
+    "final_opened": false
   }
 }

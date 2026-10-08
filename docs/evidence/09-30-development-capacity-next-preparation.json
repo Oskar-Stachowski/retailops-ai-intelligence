@@ -1,5 +1,5 @@
 {
-  "scope": "Frozen full canonical capacity1.3 dispatched after protected publication and full exact AI/Source main acceptance; actual result pending",
+  "scope": "Frozen full canonical capacity1.3 dispatched after protected publication and full exact AI/Source main acceptance; terminal fourth failure preserved in09-32",
   "recipe": "docs/reference/ai09-development-capacity-v1.3.json",
   "producer_commit": "5182782321e9aca15f28c467071e92f268aafb85",
   "project_journal_initialized": false,
@@ -192,7 +192,6 @@
     "job": 113106353535,
     "head": "0990905b84a4b263b6eb01b09b784067ec14f23b",
     "requested_at_utc": "2026-10-08T01:39:57Z",
-    "status_at_observation": "in_progress",
     "scope": "full canonical ai-dev365days100products5sellingpairs3stocklocations seed42; no model fits or project campaign",
     "full_profile_qualified": false,
     "ai_main_ci": 37711535728,
@@ -210,6 +209,14 @@
     "frozen_producer_ancestry_in_accepted_source_main_verified": true,
     "previous_three_failed_plans_and_costs_retained": true,
     "silent_retry": false,
-    "local_canonical_workers_started": false
+    "local_canonical_workers_started": false,
+    "status_at_dispatch_observation": "in_progress",
+    "latest_status": "completed",
+    "latest_conclusion": "failure",
+    "completed_phases": 0,
+    "reason": "worker_exit",
+    "exit_code": -11,
+    "terminal_evidence": "docs/evidence/09-32-development-capacity-fourth-run.json",
+    "all_four_failed_attempts_and_costs_retained": true
   }
 }
