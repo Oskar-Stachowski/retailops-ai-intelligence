@@ -91,7 +91,18 @@
       "source_generation": false,
       "fresh_final_read": false
     },
-    "documentation_links_and_required_ci_contract": "passed"
+    "documentation_links_and_required_ci_contract": "passed",
+    "post_main_ce8_integration": {
+      "passed": 64,
+      "deselected": 65,
+      "seconds": 9.33,
+      "scope": "capacity47 controls, final numeric shape6, public context boundary4 and inference payload7"
+    },
+    "redacted_secret_scan": {
+      "commits": 3,
+      "bytes_scanned": 180894,
+      "leaks": 0
+    }
   },
   "earlier_failed_controls": [
     {
