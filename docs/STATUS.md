@@ -6,8 +6,15 @@
 ordinary/demand/physical, jeden dziennik i wspólny freeze. Brak wariantu,
 nierówny budżet, mniejszy profil, niepełna ocena development lub pominięty
 końcowy seed blokują właściwą operację. Zaliczone kontrole protokołu/dziennika
-i native bindings nie oznaczają wykonania kampanii. Adaptery oceny między
-wariantami oraz rzeczywiste evaluatory anomaly/stockout nadal pozostają otwarte.
+i native bindings nie oznaczają wykonania kampanii.
+[Przyrost 09.42](evidence/09-42-portfolio-forecast-evaluation.json) podłącza
+publiczny forecast development evaluator do wszystkich trzech wariantów:
+pełny protokół i receptura wiążą oddzielne źródła treningu i oceny w workerze,
+trwałym artefakcie oraz publicznym verifierze. Starsze guardy i 81 wcześniejszych
+plików JSON kontraktów zachowano. Zaliczone 14 nowych kontroli, 146 regresji
+i dwa przebiegi z zainstalowanej paczki używają małych eksponowanych fixture
+oraz kontrolnych modeli. Pełne dane, rzeczywiste evaluatory anomaly/stockout,
+polityka wymaganych segmentów i evidence wszystkich wariantów pozostają otwarte.
 [PR #48](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/48)
 scala Source annotations, pełny context bundle i ocenę wszystkich surowych prób
 na main `a59b2667` po 17/17 success dokładnego head `456dbfaf`.
@@ -41,9 +48,16 @@ tego backendu według przypiętego producenta. Zachowuje komplet 58 tabel,
 pełne scenariusze i zwykły niezależny replay. Dla już odsłoniętych kontroli
 trzech seedów zaliczono 21 różnych kontroli Source w opisanych osobnych runach
 oraz 76 testów AI; 6 istniejących warunkowych fixture annotations jest skipped.
-Source PR107 integruje przyrost jako head `345a7cf3` z nowszym main;
-ten head i nowe AI head/main wymagają własnego pełnego CI przed odbiorem.
-[Source CI nowego head](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37743193615)
+Source PR107 integruje przyrost z nowszym main. Pierwszy head `345a7cf3` ma
+nieudany pełny CI: dwa testy historycznych IDs pomijały dawny hash zależności
+po zaakceptowanej aktualizacji main; pozostałe 1049 testów tego kroku przeszło.
+Poprawka testowa `fe9d404d` zachowuje oba oryginalne golden IDs i komplet
+hashów 58 tabel oraz sprawdza bieżący fingerprint zależności. Wszystkie 17
+testów zmienionego modułu przeszło. Produkcja i aktualizacje zależności pozostają
+zachowane. Nowy head i wynikowy main wymagają własnego pełnego CI przed odbiorem.
+[Source CI pierwszego head](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37743193615)
+jest zachowanym nieudanym runem;
+[CI poprawki](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37752460842)
 trwa. [PR #50](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/50)
 scalono chronioną ścieżką jako `f0088e08` po pełnym 17/17 success dokładnego
 head `daf8d605` i zaakceptowanego base `bc507330`.
@@ -53,7 +67,13 @@ zakończyło się pełnym 17/17 success. Publikacja receptury nie oznacza jej wy
 scala wybór pinned cached Source 2.8 jako main `ab77bb1d`, po pełnym 17/17
 success head `201ea8ed` i zaakceptowanego base `f0088e08`.
 [CI nowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37749318501)
-trwa i wymaga odrębnego odbioru.
+zakończyło się pełnym 17/17 success.
+[PR #52](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/52)
+scala pełne portfolio jako main `656d7ddc`, po pełnym 17/17 success dokładnego
+head `67324ab0` i zaakceptowanego base `ab77bb1d`.
+[CI tego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37755648727)
+trwa i wymaga odrębnego odbioru. Nowy adapter jest przygotowany na osobnej
+gałęzi; jego publikacja i dokładny head/main CI pozostają do odbioru.
 Nie uruchomiono próby 1.5; nie zmniejszono danych ani nie zwiększono limitów.
 Projektowy journal nie został zainicjalizowany, nowe projektowe fity wynoszą zero,
 a świeży final test pozostaje zamknięty. Do zamknięcia pozostają pełna kampania

@@ -147,6 +147,15 @@ class _CampaignForecastEvaluationFields(Contract):
     promotion_allowed: FalseFlag = False
     stage_ready: FalseFlag = False
 
+    def _development_source_matches(self) -> bool:
+        return (
+            self.configuration.development_source_recipe_sha256 == self.plan.source_recipe_sha256
+            and self.configuration.development_dataset_id == self.dataset_id
+        )
+
+    def _additional_artifacts(self) -> set[str]:
+        return set()
+
     @model_validator(mode="after")
     def complete(self) -> Self:
         final = self.plan.phase == "final"
@@ -159,6 +168,7 @@ class _CampaignForecastEvaluationFields(Contract):
             "metrics.json",
             "predictions.jsonl",
             *(trial_metrics_name(i) for i in range(len(self.configuration.trials))),
+            *self._additional_artifacts(),
         }
         if (
             self.recipe.resolve(self.configuration) != self.plan
@@ -169,11 +179,7 @@ class _CampaignForecastEvaluationFields(Contract):
             != self.plan.worker_environment_lock_sha256
             or self.configuration.quality_policy_sha256 != self.plan.quality_policy.content_sha256()
             or not final
-            and (
-                self.configuration.development_source_recipe_sha256
-                != self.plan.source_recipe_sha256
-                or self.configuration.development_dataset_id != self.dataset_id
-            )
+            and not self._development_source_matches()
             or final != self.dataset_id.startswith("ai09-final-forecast-")
             or final != (self.selection_sha256 is not None)
             or final != self.final_test_accessed

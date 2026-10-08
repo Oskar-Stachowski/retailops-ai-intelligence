@@ -5,6 +5,7 @@ TensorFlow acceptance. Recipe freezing precedes creation of result receipts.
 """
 
 import copy
+import shutil
 from types import SimpleNamespace
 
 import pytest
@@ -27,7 +28,7 @@ from retailops_ai.evaluation_campaign import campaign_evaluation_data as data
 from retailops_ai.evaluation_campaign import campaign_evaluation_worker as worker
 from retailops_ai.evaluation_campaign import campaign_journal as journal
 from retailops_ai.evaluation_campaign.campaign_calibration import validate_completed_calibration
-from retailops_ai.evaluation_campaign.campaign_contract import CampaignCost, CampaignProtocol
+from retailops_ai.evaluation_campaign.campaign_contract import CampaignCost
 from retailops_ai.evaluation_campaign.campaign_evaluation_configuration import (
     bind_forecast_configuration,
 )
@@ -68,6 +69,21 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
     dataset, manifest = stored_control
     root = tmp_path / "evaluation-journal"
     document = protocol_document(root)
+    mode = getattr(request, "param", "") or ""
+    portfolio = mode.startswith("portfolio-")
+    if portfolio:
+        from test_campaign_portfolio import document as portfolio_document
+
+        document = portfolio_document(root)
+        # Full preregistered metadata with exposed tiny fixture bodies only.
+        # This control does not claim native scenario effects or qualification.
+        renames = {
+            "development-42-ordinary-generate": "development-42-generate",
+            "development-42-ordinary-read": "controlled-export",
+        }
+        for item in document["operations"]:
+            item["operation_id"] = renames.get(item["operation_id"], item["operation_id"])
+            item["prerequisites"] = [renames.get(p, p) for p in item["prerequisites"]]
     source = canonical_sha256(document["sources"][0])
     runtime = document["runtime"]["code_sha256"]
     old_tune, old_calibration, old_tune_scores, old_scores, old_fits = declared_parents()
@@ -79,12 +95,55 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
             ),
         }
     )
+    evaluation_dataset, evaluation_manifest, evaluation_exported = dataset, manifest, exported
+    evaluation_source = source
+    evaluation_generation = "development-42-generate"
+    if portfolio and not mode.startswith("portfolio-ordinary"):
+        variant = mode.split("-")[1]
+        declared = next(
+            s
+            for s in document["sources"]
+            if s["phase"] == "development" and s["variant"] == variant
+        )
+        evaluation_source = canonical_sha256(declared)
+        evaluation_generation = f"development-42-{variant}-generate"
+        evaluation_dataset = tmp_path / "declared-variant-fixture"
+        shutil.copytree(dataset, evaluation_dataset)
+        descriptor = manifest.descriptor.model_copy(
+            update={
+                "logical_curated_sha256": canonical_sha256(["declared-control-variant", variant])
+            }
+        )
+        evaluation_manifest = type(manifest).model_validate_json(
+            canonical_bytes(
+                manifest.model_dump(mode="json")
+                | {
+                    "descriptor": descriptor.model_dump(mode="json"),
+                    "dataset_id": "ai09-physical-forecast-sha256-"
+                    + canonical_sha256(descriptor.model_dump(mode="json")),
+                }
+            )
+        )
+        (evaluation_dataset / "manifest.json").write_bytes(
+            canonical_bytes(evaluation_manifest.model_dump(mode="json")) + b"\n"
+        )
+        evaluation_exported = controlled_export(
+            evaluation_dataset, evaluation_manifest, evaluation_source
+        )
+        evaluation_exported = evaluation_exported.model_copy(
+            update={
+                "operation_id": f"development-42-{variant}-read",
+                "plan": evaluation_exported.plan.model_copy(
+                    update={"generation_operation_id": evaluation_generation}
+                ),
+            }
+        )
     document["use_case_quality_policy_sha256"]["forecast"] = (
         old_tune.plan.forecast_quality_policy_sha256
     )
     document["selection_policy_sha256"] = old_tune.plan.campaign_selection_policy_sha256
     context_recipe = uncertainty_policy = None
-    if getattr(request, "param", None) == "robust":
+    if mode == "robust" or mode.endswith("-robust"):
         from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
             CampaignContextBundleRecipe,
         )
@@ -112,9 +171,9 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
         context_recipe = CampaignContextBundleRecipe(
             phase="development",
             role="development_evaluation",
-            source_recipe_sha256=source,
-            generation_operation_id="development-42-generate",
-            export_operation_id=exported.operation_id,
+            source_recipe_sha256=evaluation_source,
+            generation_operation_id=evaluation_generation,
+            export_operation_id=evaluation_exported.operation_id,
             segment_policy=segment_policy,
             resources=evaluation_recipe().resources,
         )
@@ -137,8 +196,8 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
         update={"source_recipe_sha256": source, "export_operation_id": exported.operation_id}
     )
     recipe = evaluation_recipe(
-        source_recipe_sha256=source,
-        export_operation_id=exported.operation_id,
+        source_recipe_sha256=evaluation_source,
+        export_operation_id=evaluation_exported.operation_id,
         segment_policy_sha256=document["segment_policy_sha256"],
         uncertainty_policy_sha256=document["uncertainty_policy_sha256"],
     )
@@ -175,7 +234,8 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
             "source_read",
             "all_parent_data",
             context_recipe,
-            ["development-42-generate", exported.operation_id],
+            [evaluation_generation, evaluation_exported.operation_id],
+            source_recipe_sha256=evaluation_source,
         )
     for key, plan in plans.items():
         operation(
@@ -222,10 +282,50 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
         "model_score",
         "development_evaluation",
         recipe,
-        [exported.operation_id, old_tune.operation_id, old_calibration.operation_id]
+        [evaluation_exported.operation_id, old_tune.operation_id, old_calibration.operation_id]
         + (["declared-context"] if context_recipe is not None else []),
+        source_recipe_sha256=evaluation_source,
     )
+    if portfolio:
+        for item in document["operations"]:
+            if item["phase"] != "development":
+                continue
+            if item["use_case"] == "forecast":
+                if item["role"] != "development_evaluation":
+                    continue
+                if item["source_recipe_sha256"] == evaluation_source:
+                    continue
+                own_read = (
+                    "controlled-export"
+                    if item["source_recipe_sha256"] == source
+                    else item["prerequisites"][0]
+                )
+                other_recipe = recipe.model_copy(
+                    update={
+                        "source_recipe_sha256": item["source_recipe_sha256"],
+                        "export_operation_id": own_read,
+                    }
+                )
+                item = dict(
+                    item,
+                    execution_recipe_sha256=other_recipe.content_sha256(),
+                    prerequisites=[own_read, old_tune.operation_id, old_calibration.operation_id],
+                )
+            elif item["operation_id"] in {"development-42-generate", exported.operation_id}:
+                continue
+            if item["operation_id"] == evaluation_exported.operation_id:
+                item = dict(item, execution_recipe_sha256=evaluation_exported.plan.content_sha256())
+            operations.append(item)
     operations += [o for o in document["operations"] if o["phase"] == "final"]
+    if portfolio:
+        ordered, done = [], set()
+        while operations:
+            ready = next((o for o in operations if set(o["prerequisites"]) <= done), None)
+            assert ready is not None, "declared portfolio fixture must remain topological"
+            ordered.append(ready)
+            done.add(ready["operation_id"])
+            operations.remove(ready)
+        operations = ordered
     document["operations"] = operations
     document["maximum_new_attempts"] = sum(o.get("maximum_attempts", 1) for o in operations)
     document["maximum_new_fit_attempts"] = sum(
@@ -233,7 +333,9 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
         for o in operations
         if o["action"] in ("model_fit", "calibrator_fit")
     )
-    protocol = CampaignProtocol.model_validate_json(canonical_bytes(document))
+    from retailops_ai.evaluation_campaign.campaign_portfolio_contract import parse_campaign_protocol
+
+    protocol = parse_campaign_protocol(canonical_bytes(document))
     journal.initialize(root, protocol)
     frozen_protocol_bytes = (root / "journal.json").read_bytes()
     event = journal.reserve(root, "development-42-generate")
@@ -321,6 +423,18 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
         feature_schema_sha256=canonical_sha256(InputRow.model_json_schema()),
         quality_policy=recipe.quality_policy,
     )
+    training_exported = exported
+    if evaluation_source != source:
+        event = journal.reserve(root, evaluation_generation)
+        journal.finish(
+            root,
+            str(event.reservation_id),
+            result="completed",
+            evidence_sha256=canonical_sha256("declared-variant-generation-not-native"),
+            cost=CampaignCost(wall_seconds=0.01),
+        )
+        exported = complete(evaluation_exported)
+        dataset, manifest = evaluation_dataset, evaluation_manifest
     tune_bundle, calibration_bundle = tmp_path / "tune", tmp_path / "calibration"
     tune_bundle.mkdir(mode=0o700)
     calibration_bundle.mkdir(mode=0o700)
@@ -424,6 +538,7 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
         "dataset": dataset,
         "recipe": recipe,
         "exported": exported,
+        "training_exported": training_exported,
         "configuration": frozen,
         "tune": tune,
         "calibration": calibration,

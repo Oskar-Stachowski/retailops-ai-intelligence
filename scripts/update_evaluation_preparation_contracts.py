@@ -54,7 +54,12 @@ from retailops_ai.evaluation_campaign.campaign_portfolio_contract import (
     CampaignPortfolioProtocol,
     PortfolioSourceRecipe,
 )
+from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract import (
+    CampaignPortfolioForecastEvaluationBinding,
+)
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CampaignForecastPortfolioEvaluationReceipt,
+    CampaignForecastPortfolioRobustEvaluationReceipt,
     CampaignForecastRobustEvaluationReceipt,
 )
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
@@ -527,6 +532,26 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Campaign full scenario portfolio contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, portfolio_evaluation_model in (
+        ("portfolio_forecast_evaluation_binding", CampaignPortfolioForecastEvaluationBinding),
+        ("portfolio_forecast_evaluation_receipt", CampaignForecastPortfolioEvaluationReceipt),
+        (
+            "portfolio_forecast_robust_evaluation_receipt",
+            CampaignForecastPortfolioRobustEvaluationReceipt,
+        ),
+    ):
+        schema = portfolio_evaluation_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:26.0.0"
+        path = ROOT / "contracts/evaluation/v26" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign portfolio forecast evaluation contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

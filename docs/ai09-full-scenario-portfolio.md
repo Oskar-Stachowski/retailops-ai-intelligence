@@ -53,10 +53,35 @@ na pełnych metadanych, z jawnymi kontrolnymi IDs i wcześniej eksponowanymi
 oknami. Nie generuje datasetów ani nie kwalifikuje aktywności serii, efektów
 fizycznych, zasobów lub świeżości final.
 
+[Przyrost 09.42](evidence/09-42-portfolio-forecast-evaluation.json) podłącza
+publiczny evaluator forecast do wariantów development. Nowe receipt v26
+zapisują pełny, wcześniej zamrożony protokół, oryginalną recepturę operacji oraz
+osobne dataset IDs treningu i oceny. Źródło treningu musi odpowiadać deklaracji
+`training_source_recipe_sha256["forecast"]`. Własny zakończony export ocenianego
+wariantu jest wymagany przed odczytem jego danych. Inny wariant wymaga innego
+dataset ID; ponowna ocena tego samego źródła zachowuje jego ID.
+
+Wszystkie wcześniej zamrożone próby korzystają ze swoich oryginalnych modeli,
+encodingów i kalibracji. Ich ponowny fit lub wybór architektury podczas oceny
+jest zabroniony. Powiązanie wariantu sprawdzają runner, core consume/finalize,
+receipt i publiczny verifier. Jest zapisane w obowiązkowym `portfolio.json`
+z checksum; proces inferencji nadal otrzymuje wyłącznie dozwolone dane wejściowe.
+Dotychczasowe receipt i evaluator bazowego v10 zachowują wymóg tego samego
+źródła development i dataset ID. Dotychczasowa ścieżka final pozostaje związana
+z trwałym freeze i niezależnym development evidence.
+
+Zaliczono 14 nowych kontroli oraz 146 testów regresji. Publiczne przebiegi dla
+ordinary/demand/physical obejmują wszystkie klucze małych, już eksponowanych
+kontroli i wszystkie zadeklarowane próby. Również pełne raporty segmentów
+i niepewności zachowują odrzucenie przy niedostatecznej próbie. Dwa przebiegi
+przeszły z rzeczywiście zainstalowanej paczki. Rodzice Source i modele są w tych
+testach jawnie kontrolne; nie dowodzą efektów pełnego scenariusza ani wyników
+projektowej kampanii.
+
 Do rzeczywistego wykonania pozostają odbiór pełnej pojemności, kompletne
-produkcyjne receptury i budżety oraz adaptery oceny modeli między wariantami.
-Dotychczasowy evaluator development wymaga tego samego dataset ID co frozen
-configuration; ten guard nie został osłabiony. Potrzebne są także rzeczywiste
-evaluatory anomaly/stockout, jawna polityka krytycznych segmentów i weryfikacja
-nieeksponowanych końcowych okien przed inicjalizacją Project. Samo zamknięcie
-lokalnego dziennika nadal nie nadaje jakości, świeżości ani statusu AI 09 ready.
+produkcyjne receptury i budżety, rzeczywiste evaluatory anomaly/stockout,
+jawna polityka krytycznych segmentów oraz pełny wybór na evidence wszystkich
+wariantów. Wagi wymagają prerejestracji, aby powtarzające się normalne klucze
+nie były liczone wielokrotnie. Przed inicjalizacją Project trzeba zweryfikować
+nieeksponowane końcowe okna. Samo zamknięcie lokalnego dziennika nadal nie
+nadaje jakości, świeżości ani statusu AI 09 ready.
