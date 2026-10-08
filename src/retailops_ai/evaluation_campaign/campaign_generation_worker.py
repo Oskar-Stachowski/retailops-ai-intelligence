@@ -35,6 +35,24 @@ def write(path: Path, value: dict[str, Any]) -> None:
         os.fsync(stream.fileno())
 
 
+def planned_backend(source: Path) -> tuple[Any, dict[str, Any]]:
+    """Use the reviewed producer revision's cache when present, retaining old pins.
+
+    The public wrapper has already checked the complete clean producer commit,
+    and producer() verifies its fingerprint/dependencies before calling this.
+    The addon is included by Source's ordinary anomaly-module fingerprint glob.
+    Both backends publish the same unchanged Source2.8 contracts and validators.
+    """
+    addon = source / "data/anomalies/source_cohort.py"
+    if addon.is_symlink() or (addon.exists() and not addon.is_file()):
+        raise ValueError("campaign_generation_invalid_planned_backend")
+    if addon.is_file():
+        process = importlib.import_module("data.anomalies.source_cohort")
+        return process, process.implementation()
+    process = importlib.import_module("data.anomalies.source_process")
+    return process, {"version": "ordinary_planned_source_2_8", "cached_execution": False}
+
+
 def producer(phase: str, source: Path, root: Path, request: dict[str, Any]) -> dict[str, Any]:
     sys.path.insert(0, str(source))
     plan, recipe = request["plan"], request["source"]
@@ -80,7 +98,7 @@ def producer(phase: str, source: Path, root: Path, request: dict[str, Any]) -> d
             manifest = read(directory / "dataset_manifest.v2.json")
         else:
             ordinary = importlib.import_module("data.inventory.run_source_dataset")
-            process = importlib.import_module("data.anomalies.source_process")
+            process, backend = planned_backend(source)
             config = ordinary.default_inventory_config(generation)
             tables, context = process.build_tables(generation, plan["scenario_plan"], config)
             directory = io.write_source_dataset(
@@ -101,7 +119,13 @@ def producer(phase: str, source: Path, root: Path, request: dict[str, Any]) -> d
             or not manifest["facts_ready"]
         ):
             raise ValueError("campaign_generation_source_provenance_mismatch")
-        return {"directory": str(directory), "source_dataset_id": manifest["dataset_id"]}
+        value: dict[str, Any] = {
+            "directory": str(directory),
+            "source_dataset_id": manifest["dataset_id"],
+        }
+        if plan["entrypoint"] == "planned_anomaly":
+            value["producer_execution"] = backend
+        return value
     generated = read(root / "generation.json")
     if phase == "qualification":
         qualification = importlib.import_module("data.inventory.qualification_io")
