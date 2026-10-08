@@ -1,0 +1,129 @@
+{
+  "scope": "Internal frozen-plan/public-Source-manifest binding and Source-derived evaluation annotations; no public audited context bundle or Project qualification",
+  "updated_at_utc": "2026-10-08T03:05:50.010696+00:00",
+  "source_plan_schema_and_closed_AI07_AI08_code_unchanged": true,
+  "source_schema_versions": [
+    "2.7.0",
+    "2.8.0"
+  ],
+  "snapshot_versions": [
+    "1.1.0",
+    "1.2.0"
+  ],
+  "supported_source_plan_contracts": [
+    "business-anomaly-plan-1.0.0",
+    "business-physical-anomaly-plan-1.0.0"
+  ],
+  "binding": [
+    "actual public Source/snapshot IDs",
+    "data seed",
+    "exact requested/resolved parameters",
+    "generation/source scope recipeSHA",
+    "public no-truth snapshot/source-ready metadata",
+    "closed reviewed schema SHA",
+    "native sorted plan identity SHA"
+  ],
+  "caller_requires_completed_generation_and_whole_source_reservation": true,
+  "typed_snapshot_or_plan_grants_no_access_permission": true,
+  "source_generation_or_preregistration_timing_proved_by_component": false,
+  "private_effects_artifact_opened_by_component": false,
+  "private_fixture_plan_recovered_only_as_previously_exposed_control": true,
+  "actual_private_effects_used_for_labels_or_model_inputs": false,
+  "features_changed_or_scenario_labels_used_as_inputs": false,
+  "annotations": {
+    "target_date_and_grain_bound": true,
+    "forecast_origin_and_horizon_retained": true,
+    "known_promotion_requires_origin_known_offer": true,
+    "demand_injection_overrides_known_promotion_label": true,
+    "inventory_censored_episode": "inventory_constraint",
+    "return_spike": "separate anomaly axis; known offer may still be promotion",
+    "clean_control": "only explicit clean control",
+    "physical_effect_independence_claimed": false,
+    "source_windows_not_expanded_into_daily_row_list": true,
+    "maximum_windows": 200,
+    "maximum_window_days": 730
+  },
+  "controls": {
+    "passed": 39,
+    "skipped": 6,
+    "seconds": 4.07,
+    "skips": "planned-window cases for unplanned1.1 only",
+    "actual_public_frozen_fixtures_verified_without_source_regeneration": true,
+    "features_and_scope_dataset_recipe_metadata_declared_in_controls": true,
+    "plan_recovered_from_existing_exposed_fixture_not_project_preregistration": true,
+    "checks": [
+      "all declared demand/physical injection types",
+      "exact inclusive start/end dates and adjacent exclusion",
+      "grain mismatch",
+      "14-day target separated from origin",
+      "clean controls",
+      "origin-known offer only",
+      "Source/snapshot/recipe/seed mismatches",
+      "wrong parameters/private/not-ready parent",
+      "plan/schema/seed/scope hash mismatch",
+      "native array sorting and caller mutation isolation"
+    ],
+    "mypy_source_files": 707,
+    "ruff": "passed",
+    "retained_typing_failure": {
+      "errors": 1,
+      "cause": "Feature values are an ordered tuple, not a mapping; corrected known-offer lookup before source tests"
+    },
+    "previous_source_controls": {
+      "passed": 39,
+      "skipped": 6,
+      "seconds": 4.26,
+      "fixture_boundary_helper_corrected_afterward": true
+    },
+    "integration": {
+      "passed": 86,
+      "skipped": 6,
+      "seconds": 4.34,
+      "includes": "Source plan binding, complete census and all raw segment metrics"
+    },
+    "format_files": 1203
+  },
+  "full_scenario_portfolio_per_seed_proved": false,
+  "public_source_context_bundle_implemented": false,
+  "critical_and_uncertainty_public_worker_receipt_integration_complete": false,
+  "all3_project_evaluators_completed": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "final_generation_attempted": false,
+  "project_final_read": false,
+  "full_canonical_profiles_qualified": false,
+  "stage_ready": false,
+  "publication_pending": true,
+  "remaining": [
+    "Complete source-derived full context artifact and audited complete role join",
+    "Verify actual preregistered plans/program cover all4 scenarios and critical anomaly groups on each seed; do not use a single plan kind as full portfolio proof",
+    "Public all-raw critical/paired uncertainty evidence before index deletion and actual anomaly/stockout independent evaluators",
+    "Full canonical qualification, all3 project campaign/final3 seeds/costs/lifecycle/cards/runbooks/origin main/fullCI"
+  ],
+  "package": {
+    "wheel_bytes": 1915982,
+    "wheel_sha256": "ea5c8e69fb0d73a0ada5a860c854555c30adee8e80937e9ee924d161f6e39770",
+    "module_byte_parity": 586,
+    "schema_byte_parity": {
+      "v19": 4,
+      "v20": 2,
+      "v21": 2,
+      "v22": 7
+    },
+    "prior_contract_files_checked": 60,
+    "cache_or_local_files_in_wheel": false,
+    "prior_contract_files_v1_v20_unchanged": 66,
+    "closed_AI08_files_unchanged": 16,
+    "all_closed_stockout_files_unchanged": 129
+  },
+  "installed_wheel_probe": {
+    "installed_package_import": true,
+    "closed_source_plan_schemas_loaded": 2,
+    "tensorflow_imported": false,
+    "mlflow_imported": false,
+    "source_workers_started": false,
+    "project_fits": 0,
+    "project_final_accessed": false,
+    "full_scientific_campaign_proved": false
+  }
+}

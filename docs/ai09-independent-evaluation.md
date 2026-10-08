@@ -293,3 +293,36 @@ komponenty i schemat v22 oraz zwrócił 56 pustych grup kontrolnych, bez importu
 TensorFlow/MLflow lub uruchomienia source/model workera. Integracja z pełnym
 zaakceptowanym main `0990905b` zmieniła tylko ancestry, bez zmiany drzewa.
 Nowa publikacja i jej dokładne pełne CI pozostają wymagane.
+
+
+`SourceAnnotations` wiąże plan z publicznym, zweryfikowanym snapshotem,
+Source ID, snapshot ID, seedem, requested/resolved parameters i deklaracją
+zamrożonej receptury generacji. Używa niezmienionych schematów Source 1.2.
+Normalizuje kolejność injections/controls według ID tak jak producent i wymaga
+zgodnego plan/schema SHA z rzeczywistym manifestem Source 2.8. Obsługuje oba
+zamknięte rodzaje planu: demand oraz physical. Okna są ograniczone, unikalne
+i nie zachodzą na siebie w grain; etykieta dotyczy target date, z zachowaniem
+originu i horyzontu. Znana promocja pochodzi z origin-known input; sam control
+promotion lub przyszły efekt nie tworzy dostępnej promocji. Interwencja demand
+ma pierwszeństwo przed tą etykietą, a physical inventory ma własny segment.
+Return spike pozostaje osobną osią anomaly. Nie deklaruje niezależności efektów
+fizycznych, nie otwiera prywatnego Source artifactu effects i nie zmienia features.
+
+Komponent wymaga od wywołującego dowodu ukończonej generacji i rezerwacji całego
+odczytu Source. Sam obiekt Snapshot, generation plan albo metadata nie dowodzą
+uprawnienia, czasu prerejestracji czy kwalifikacji canonical. 39 kontroli mają
+rzeczywiste publiczne fixture 1.1/1.2 i kontrolowane features. Plan odzyskano
+z wcześniej eksponowanego prywatnego fixture tylko do porównania jego hash;
+nie jest to dowód prerejestracji projektu. Sześć pominięć dotyczy wyłącznie
+braku planu anomalii w 1.1. Nie wykonano Source generacji, fitów ani final read
+projektu. [Evidence 09-34](evidence/09-34-source-annotation-binding.json) opisuje
+zakres kontroli. Nadal wymagane są publiczny, audytowany context bundle,
+pełny role join i pokrycie wszystkich wymaganych scenariuszy na każdym seedzie.
+Pojedynczy rodzaj planu nie jest dowodem całego portfolio scenariuszy.
+
+Pakiet tego komponentu ma 586 zgodnych modułów i 15 schematów v19–v22.
+66 wcześniejszych kontraktów v1–v20 i 129 plików zamkniętych komponentów stockout
+pozostają zgodne z bazą. Import faktycznie zainstalowanego wheel i obu
+zamkniętych schematów Source plan przeszedł bez importu TensorFlow/MLflow
+lub uruchomienia workera. Publikacja nowego dokładnego head i pełny odbiór CI
+są nadal wymagane przed użyciem w audytowanym context bundle.
