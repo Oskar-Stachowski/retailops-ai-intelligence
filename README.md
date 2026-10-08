@@ -2,6 +2,8 @@
 
 **AI 09: in_progress / not_ready — integracja po gotowych AI 07–08.**
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
+[Natywna weryfikacja kwalifikacji](docs/ai09-native-selection-verification.md)
+blokuje dostęp do final na podstawie samych deklaracji jakości anomaly/stockout.
 [Przygotowanie diagnostyki 1.9](docs/evidence/09-54-ledger-query-capacity-preparation.json)
 przypina audytowane indeksy Source przy 12 GiB i pełnym profilu. 106 kontroli
 AI oraz 22 z paczki przeszły; uruchomienie wymaga pełnego CI obu repozytoriów.

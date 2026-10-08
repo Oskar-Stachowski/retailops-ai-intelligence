@@ -45,6 +45,10 @@ wskazanymi przez konfigurację pakowania.
 
 ## Pozostała integracja
 
+[Bramka kwalifikacji AI 09](ai09-native-selection-verification.md) odrzuca
+receipts anomaly/stockout bez pełnej natywnej weryfikacji Project. Sam scorer
+i poprawne hashe artefaktów nie otwierają projektowych danych final.
+
 Przed projektową kampanią należy powiązać iterator z odtwarzalnym, kompletnym
 publicznym feature parentem, zarejestrowaną operacją dziennika, pełnym portfolio
 źródeł oraz trwałym artefaktem i niezależnym verifierem. Ocena musi użyć

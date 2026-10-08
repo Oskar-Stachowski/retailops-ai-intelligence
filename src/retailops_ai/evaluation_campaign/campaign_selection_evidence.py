@@ -198,4 +198,19 @@ def _verify_receipt(
             or size != value.get("artifact_bytes")
         ):
             raise SnapshotError("campaign_evaluation_other_use_selection_artifact_mismatch")
+        _verify_other_use_evaluation(bundle, journal=journal, receipt=value)
     return forecast
+
+
+def _verify_other_use_evaluation(bundle: Path, *, journal: Path, receipt: dict[str, Any]) -> None:
+    """Keep final access closed until native Project verification is implemented.
+
+    Matching receipt/artifact hashes establish integrity, not model quality.
+    AI 07/08 evaluators have their own Source, role and freeze contracts; they
+    cannot qualify an AI 09 development population by renaming its receipt.
+    The Project boundary needs typed native replay, complete critical groups,
+    paired uncertainty and parent/source bindings before admitting either use.
+    """
+    raise SnapshotError(
+        "campaign_evaluation_" + str(receipt["use_case"]) + "_native_verification_unavailable"
+    )

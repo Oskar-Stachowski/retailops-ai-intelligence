@@ -1,8 +1,10 @@
 """Real durable journal/artifact guards with declared scientific receipt doubles.
 
 These controls do not qualify model quality, full Source data or Project fits.
-Forecast parsing/scientific verification is substituted explicitly; production
-uses the existing typed parser/verifier. Other-use artifact checks are real.
+Scientific verification is substituted explicitly in ordering controls; production
+uses typed forecast verification and keeps native other-use qualification closed.
+All three uses' artifact checks are real. Separate controls exercise that closed
+production boundary without substituting native scientific verification.
 """
 
 from copy import deepcopy
@@ -21,7 +23,14 @@ from retailops_ai.evaluation_campaign.campaign_portfolio_contract import parse_c
 from retailops_ai.source_snapshot.files import SnapshotError
 
 
-def controlled_freeze(tmp_path, monkeypatch, *, change=None, portfolio=True):
+def controlled_freeze(
+    tmp_path,
+    monkeypatch,
+    *,
+    change=None,
+    portfolio=True,
+    native_proof_double=True,
+):
     root = tmp_path / "journal"
     value = document(root) if portfolio else protocol_document(root)
     if not portfolio:
@@ -158,6 +167,14 @@ def controlled_freeze(tmp_path, monkeypatch, *, change=None, portfolio=True):
     monkeypatch.setattr(
         campaign_evaluation, "verify_campaign_forecast_evaluation", scientific_control
     )
+    if native_proof_double:
+
+        def declared_native_control(bundle, *, journal, receipt):
+            assert journal == root
+            assert receipt["use_case"] in {"anomaly", "stockout"}
+            assert bundle in bundles.values()
+
+        monkeypatch.setattr(verifier, "_verify_other_use_evaluation", declared_native_control)
     if not portfolio:
         bundles = {case: bundles[case] for case in selected}
     return root, bundles, records, frozen, calls
@@ -242,3 +259,57 @@ def test_legacy_three_bundle_boundary_and_original_digest_unchanged(tmp_path, mo
     assert set(bundles) == {"forecast", "anomaly", "stockout"}
     assert digest == canonical_sha256(frozen.model_dump(mode="json"))
     assert calls == ["development-evaluate-forecast"]
+
+
+@pytest.mark.parametrize("use_case", ["anomaly", "stockout"])
+@pytest.mark.parametrize("portfolio", [False, True])
+def test_matching_hashes_and_declared_quality_cannot_authorize_final_source_access(
+    tmp_path, monkeypatch, use_case, portfolio
+):
+    root, bundles, records, frozen, _ = controlled_freeze(
+        tmp_path,
+        monkeypatch,
+        portfolio=portfolio,
+        native_proof_double=False,
+    )
+    before = (root / "journal.json").read_bytes()
+    # Every claimed receipt, artifact, cost, prerequisite and freeze is consistent.
+    # No native metric evaluation has happened, so even this complete-looking
+    # declaration must fail at the production scientific admission boundary.
+    selected = next(b for b in frozen.bundles if b.use_case == use_case)
+    ledger = campaign_journal.inspect(root)
+    completed = next(
+        e
+        for e in ledger.events
+        if e.kind == "finished" and e.evidence_sha256 == selected.selection_evidence_sha256
+    )
+    operation = next(
+        o for o in ledger.protocol.operations if o.operation_id == completed.operation_id
+    )
+    receipt, stored = records[operation.operation_id]
+    files, size = _bundle_inventory(bundles[use_case], 4096)
+    assert receipt["artifact_files"] == files
+    assert receipt["artifact_sha256"] == canonical_sha256(files)
+    assert receipt["artifact_bytes"] == size
+    assert receipt["quality_qualified"] is True
+    with pytest.raises(
+        SnapshotError, match="campaign_evaluation_" + use_case + "_native_verification_unavailable"
+    ):
+        verifier._verify_receipt(
+            root, bundles[use_case], ledger, operation, completed, selected, stored.read_bytes()
+        )
+    assert (root / "journal.json").read_bytes() == before
+    assert not campaign_journal.inspect(root).stage_ready
+
+
+@pytest.mark.parametrize("portfolio", [False, True])
+def test_production_three_use_selection_stays_closed_without_native_proofs(
+    tmp_path, monkeypatch, portfolio
+):
+    root, bundles, _, _, _ = controlled_freeze(
+        tmp_path, monkeypatch, portfolio=portfolio, native_proof_double=False
+    )
+    before = (root / "journal.json").read_bytes()
+    with pytest.raises(SnapshotError, match="anomaly_native_verification_unavailable"):
+        verifier.verify_completed_campaign_selection(root, bundles)
+    assert (root / "journal.json").read_bytes() == before

@@ -1,6 +1,12 @@
 # Aktualny status
 
 **2026-10-08 — AI 09: in_progress / not_ready.**
+[Audyt kwalifikacji trzech zastosowań](ai09-native-selection-verification.md)
+zamyka lukę między integralnością plików a dowodem jakości anomaly/stockout.
+Poprawne hashe i zadeklarowane flagi nie otwierają final: do czasu pełnej
+natywnej weryfikacji Project bramka jawnie odrzuca te dwa receipts.
+Typowana weryfikacja forecast i zamknięte odbiory AI 07–08 pozostają zachowane.
+
 [Przygotowanie 09.54](evidence/09-54-ledger-query-capacity-preparation.json) i
 [receptura 1.9](reference/ai09-development-capacity-v1.9.json) przypinają Source
 `a7b850a0` z audytu indeksów zapytań, okresów fizycznych i jednostek produktów.
