@@ -1,6 +1,16 @@
 # Aktualny status
 
 **2026-10-09 — AI 09: in_progress / not_ready.**
+[Pełna projekcja dni anomaly](ai09-native-anomaly-days.md) odtwarza wszystkie
+serie i okres reklamacji z całego publicznego parenta, przez natywne reguły.
+Poprawiono awarię deklaracji serii bez sprzedaży, bez tworzenia pustej kohorty
+reklamacji. [09.60](evidence/09-60-native-full-day-projection.json) zapisuje
+96 kontroli z dotychczasową kwalifikacją dnia oraz końcowy odbiór retencji:
+48 kontroli i 48 z paczki, bez pominięć. Pomocnicze indeksy wejściowe są
+zwalniane po zachowaniu wszystkich dni. Pełne CI i publikacja są nadal
+wymagane; projekcja nie zastępuje kwalifikacji raw-DQ, causal Point census
+ani pełnej kampanii.
+
 [Pełny publiczny parent anomaly](ai09-native-anomaly-parent.md) wykonuje
 rzeczywisty replay całego snapshotu i curated, indeksuje wszystkie sales
 i return claims oraz zachowuje natywne globalne UUID i klucze biznesowe.

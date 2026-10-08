@@ -1,0 +1,132 @@
+{
+  "version": "ai09-native-full-day-projection-evidence-1.0.0",
+  "recorded_at_utc": "2026-10-08T22:58:18.147713+00:00",
+  "base_revision": "b1003b16ca0e804aaf5dba0fc5bdf0082872a114",
+  "scope": "complete_native_day_projection_on_exposed_public_sources_not_full_Project_qualification",
+  "implementation": "retailops_ai.evaluation_campaign.campaign_anomaly_days",
+  "native_kernel": "retailops_ai.day_qualification.projection.declarations",
+  "native_controls": {
+    "tests": 48,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 79.462,
+    "junit_sha256": "b56e00407fb51d2cdea98681530dd5136f220e6327798dd2517bb27dda634dfa"
+  },
+  "installed_controls": {
+    "tests": 48,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 77.279,
+    "junit_sha256": "e4c295bb3512c5888b46f07fb5d492694031e1c06aff9d5e7994f242d5913815"
+  },
+  "native_day_regressions_and_initial_adapter_controls": {
+    "tests": 96,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 363.21,
+    "junit_sha256": "01852487d7de654cd25d2c8d4771c3501a68edb5c908c9c6c75da221db210a06",
+    "scope": "48 day-adapter and zero-series controls plus 48 existing native day-qualification regressions before the subsequent disk-retention optimization"
+  },
+  "preserved_first_control": {
+    "tests": 45,
+    "failures": 22,
+    "errors": 15,
+    "skipped": 0,
+    "seconds": 62.886,
+    "junit_sha256": "9dc25528a2fef599be965ddc55e4b5f49b94f9b55c60af1898efdee2de85c811",
+    "reason": "Ordinary zero-sale series exposed an existing native defaultdict/max-empty purchase-cohort failure; the new adapter incorrectly used an object-only JSON decoder for its private series array.",
+    "correction": "Native observations read grouped.get without creating an empty purchase cohort; private series arrays use JSON array decoding and separate typed variable names. Three open/closed/missing zero-series regression controls added."
+  },
+  "preserved_first_static_control": {
+    "configured_mypy_files": 723,
+    "errors": 2,
+    "reason": "One variable reused for encoded bytes and decoded series tuple; distinct variable names now pass all723 configured files."
+  },
+  "native_projection_fix": {
+    "path": "src/retailops_ai/day_qualification/projection.py",
+    "before_sha256": "67eeac68ec2ef2fdb60510d018d6dca9bde82352bd10b13c6410798da9502859",
+    "after_sha256": "b856b9a166940ec0fea8d5762736e16cf76c2e0d76175bf8dad2004952ec18ac",
+    "previously_valid_purchase_cohort_calculations_unchanged": true,
+    "contracts_and_limits_unchanged": true,
+    "existing_publisher_day_coverage_and_qualification_regressions_passed": true
+  },
+  "control_coverage": [
+    "Every row of all five public tables independently digested after complete Source/snapshot/curated verification; complete inventory1.1,demand1.2,physical1.2 populations.",
+    "All independent series,all sales observations,all required purchase IDs and full native return tails; exact complete native Days,ordering,global extent and JSONL hash.",
+    "Wrong parent-plan/event hashes,missing or extra expected days,index/series-count/whole-series row/byte budget failures reject without shortened output.",
+    "Missing grain remains absent; closed/unavailable/incomplete zero-sale observations never supply known zero; no fabricated return cohort for a series without purchases.",
+    "Private row,resealed row,grain and deletion changes reject completion; receipt lifetime,single-use,body-error,parent lifetime and owned scratch cleanup.",
+    "Only the full days table remains after construction; FULL auto-vacuum leaves no free pages; entire day population and hash are rechecked after removing temporary input indexes.",
+    "Allocated files,dirty main/helper pages and rollback journals checked before and after batch commits and temporary-index removal."
+  ],
+  "package": {
+    "wheel_bytes": 2065938,
+    "wheel_sha256": "7c6511d52e9800b033338ea96c791b83fefc6e015db86cae9a604fd7fd9903e5",
+    "byte_parity": {
+      "python": 602,
+      "json": 213
+    },
+    "private_files_absent": true,
+    "installed_verifier_origin_verified": true
+  },
+  "installed_module_sha256": {
+    "retailops_ai.evaluation_campaign.campaign_anomaly_days": "7404540555eaad16dd2b69601002e650f9039f11e4943e9543619165c0a92401",
+    "retailops_ai.day_qualification.projection": "b856b9a166940ec0fea8d5762736e16cf76c2e0d76175bf8dad2004952ec18ac"
+  },
+  "static_controls": {
+    "configured_mypy_files": 723,
+    "ruff": "passed",
+    "format_files": 1242,
+    "docs_and_required_ci_contract": "passed",
+    "diff_hygiene": "passed"
+  },
+  "native_limits": {
+    "days_per_complete_series": 10000,
+    "ids_per_day_list": 4096,
+    "unchanged": true
+  },
+  "retention_policy": "retain_every_projected_day_release_only_complete_temporary_source_and_series_indexes_after_full_hash_verification",
+  "unchanged_frozen_files_sha256": {
+    "src/retailops_ai/full_raw_dq/contract.py": "1de90f812e1c61a1cc3dea175e70cb1c2edf048c197b5a4a394738b6238ce9f6",
+    "src/retailops_ai/full_raw_dq/replay.py": "a2da2e0f933290eac4ecb02936e8489b49b10c62d74391ba69de8644e5b72b4a",
+    "src/retailops_ai/full_raw_dq/source.py": "716dc3591abd4e7032800c9630e32f726e5b05dfee5a2981f724f07690158190",
+    "src/retailops_ai/day_qualification/gate.py": "155e6c435c455e88a17c86b126ac1bc495a23f80019de8138c06c45fbce77de7",
+    "src/retailops_ai/qualified_anomalies/features.py": "3322efae405f77b1e1deb2a3ae081aa76684c8691d7d85adaebc3683e61980e0",
+    "docs/reference/ai09-development-capacity.json": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9",
+    "docs/reference/ai09-development-capacity-v1.1.json": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee",
+    "docs/reference/ai09-development-capacity-v1.2.json": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "docs/reference/ai09-development-capacity-v1.3.json": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d",
+    "docs/reference/ai09-development-capacity-v1.4.json": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+    "docs/reference/ai09-development-capacity-v1.5.json": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "docs/reference/ai09-development-capacity-v1.6.json": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "docs/reference/ai09-development-capacity-v1.7.json": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+    "docs/reference/ai09-development-capacity-v1.8.json": "e219af373fab4ddcfcd077b17c26e3fe56399e2d1010b659e5798745143b55c3",
+    "docs/reference/ai09-development-capacity-v1.9.json": "07ee91c51bbd9f5300aac002ce7873f6bbdd4c22a0018a00baf1c25a4ec297f6",
+    "docs/evidence/09-53-development-capacity-eighth-run.json": "95039e3f5a3b927cee5e7598b771ec4b03f2b89d2b35a25c70a3f50fd8dd3443",
+    "docs/evidence/09-54-ledger-query-capacity-preparation.json": "cfdd19ea75ed656dc65a000eb47800fd8dd9158a488b3f2f69514f14c323029a",
+    "docs/evidence/09-55-native-selection-verification-guard.json": "c981d8ef77abe948841e34d2109b508e30c185abc03b7115f4d6bb880bbe392c",
+    "docs/evidence/09-56-native-anomaly-evaluation.json": "d693debe6da3732ff0d45c170748b4fff92bc7b7a6484968965074f8e04294b5",
+    "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587"
+  },
+  "public_parent_final_verification_required": true,
+  "producer_closure_policy_verified": false,
+  "source_generation_ancestry_verified": false,
+  "audited_read_authorization_proven": false,
+  "business_event_day_completeness": "not_qualified",
+  "causal_raw_dq_gate_complete": false,
+  "day_and_point_adapter_complete": false,
+  "offline_truth_adapter_complete": false,
+  "full_real_population_capacity_proven": false,
+  "publication": "local_prepared_not_yet_published",
+  "full_ci_accepted": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_training_qualified": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "remaining_scope": "Actual generation ancestry and source-read journal bindings,producer closure policy,disk raw-DQ day gate with global unattributed quarantine,causal Point census,ordinary/demand/physical offline truth,artifact/cost bindings,critical groups and paired uncertainty; native stockout integration and full original12sources/3uses/actual TensorFlow forecasting/MLflow/lifecycle/cards/reports/head+mainCI."
+}

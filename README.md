@@ -2,6 +2,9 @@
 
 **AI 09: in_progress / not_ready — integracja po gotowych AI 07–08.**
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
+[Pełna projekcja dni anomaly](docs/ai09-native-anomaly-days.md) zachowuje
+wszystkie serie i okres reklamacji na dysku. Kwalifikacja raw-DQ w historycznej
+chwili, cechy i pełna kampania pozostają wymagane.
 [Pełny publiczny parent anomaly](docs/ai09-native-anomaly-parent.md) odtwarza
 Source i curated, indeksuje wszystkie fakty na dysku i zachowuje natywny wire.
 42 kontrole i 42 kontrole z paczki przeszły; kwalifikacja dnia, Point census
