@@ -1,0 +1,585 @@
+{
+  "$defs": {
+    "CampaignForecastUncertaintyPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "assumptions": {
+          "default": [
+            "time_blocks_approximate_weak_dependence_no_stationarity_guarantee",
+            "series_clusters_assume_between_cluster_independence",
+            "methods_are_separate_sensitivity_reports_not_joint_multiway_inference"
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "const": "time_blocks_approximate_weak_dependence_no_stationarity_guarantee",
+              "type": "string"
+            },
+            {
+              "const": "series_clusters_assume_between_cluster_independence",
+              "type": "string"
+            },
+            {
+              "const": "methods_are_separate_sensitivity_reports_not_joint_multiway_inference",
+              "type": "string"
+            }
+          ],
+          "title": "Assumptions",
+          "type": "array"
+        },
+        "confidence_level": {
+          "default": 0.95,
+          "maximum": 0.99,
+          "minimum": 0.8,
+          "title": "Confidence Level",
+          "type": "number"
+        },
+        "final_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Access Authorized",
+          "type": "boolean"
+        },
+        "independent_row_resampling": {
+          "const": false,
+          "default": false,
+          "title": "Independent Row Resampling",
+          "type": "boolean"
+        },
+        "max_cluster_cells": {
+          "default": 100000,
+          "maximum": 1000000,
+          "minimum": 2,
+          "title": "Max Cluster Cells",
+          "type": "integer"
+        },
+        "max_index_bytes": {
+          "default": 1073741824,
+          "maximum": 8589934592,
+          "minimum": 4096,
+          "title": "Max Index Bytes",
+          "type": "integer"
+        },
+        "max_resampled_cluster_visits": {
+          "default": 10000000,
+          "maximum": 100000000,
+          "minimum": 398,
+          "title": "Max Resampled Cluster Visits",
+          "type": "integer"
+        },
+        "max_rows": {
+          "default": 10000000,
+          "maximum": 100000000,
+          "minimum": 1,
+          "title": "Max Rows",
+          "type": "integer"
+        },
+        "methods": {
+          "default": [
+            "time_block",
+            "series_cluster"
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": "time_block",
+              "type": "string"
+            },
+            {
+              "const": "series_cluster",
+              "type": "string"
+            }
+          ],
+          "title": "Methods",
+          "type": "array"
+        },
+        "minimum_eligible_series_clusters": {
+          "default": 30,
+          "maximum": 10000,
+          "minimum": 2,
+          "title": "Minimum Eligible Series Clusters",
+          "type": "integer"
+        },
+        "minimum_eligible_time_blocks": {
+          "default": 8,
+          "maximum": 1000,
+          "minimum": 2,
+          "title": "Minimum Eligible Time Blocks",
+          "type": "integer"
+        },
+        "nominal_coverage_guaranteed": {
+          "const": false,
+          "default": false,
+          "title": "Nominal Coverage Guaranteed",
+          "type": "boolean"
+        },
+        "nominal_interval_coverage": {
+          "default": 0.9,
+          "maximum": 0.9,
+          "minimum": 0.9,
+          "title": "Nominal Interval Coverage",
+          "type": "number"
+        },
+        "pairing": {
+          "const": "same_cluster_multiplicities_for_candidate_reference_and_actual",
+          "default": "same_cluster_multiplicities_for_candidate_reference_and_actual",
+          "title": "Pairing",
+          "type": "string"
+        },
+        "partial_boundary_blocks": {
+          "const": "retain_full_membership_never_drop_rows",
+          "default": "retain_full_membership_never_drop_rows",
+          "title": "Partial Boundary Blocks",
+          "type": "string"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "quantile_method": {
+          "const": "linear_percentile",
+          "default": "linear_percentile",
+          "title": "Quantile Method",
+          "type": "string"
+        },
+        "random_generator": {
+          "const": "numpy_PCG64",
+          "default": "numpy_PCG64",
+          "title": "Random Generator",
+          "type": "string"
+        },
+        "resamples": {
+          "default": 999,
+          "maximum": 9999,
+          "minimum": 199,
+          "title": "Resamples",
+          "type": "integer"
+        },
+        "resampling_seed": {
+          "default": 137,
+          "maximum": 4294967295,
+          "minimum": 0,
+          "title": "Resampling Seed",
+          "type": "integer"
+        },
+        "series_clusters": {
+          "const": "whole_product_selling_location_channel_all_origins_and_horizons",
+          "default": "whole_product_selling_location_channel_all_origins_and_horizons",
+          "title": "Series Clusters",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "time_basis": {
+          "const": "forecast_origin_utc_calendar_day",
+          "default": "forecast_origin_utc_calendar_day",
+          "title": "Time Basis",
+          "type": "string"
+        },
+        "time_block_anchor": {
+          "default": "2000-01-03",
+          "format": "date",
+          "title": "Time Block Anchor",
+          "type": "string"
+        },
+        "time_block_days": {
+          "default": 28,
+          "maximum": 365,
+          "minimum": 14,
+          "title": "Time Block Days",
+          "type": "integer"
+        },
+        "time_blocks": {
+          "const": "fixed_disjoint_calendar_blocks_all_series_jointly",
+          "default": "fixed_disjoint_calendar_blocks_all_series_jointly",
+          "title": "Time Blocks",
+          "type": "string"
+        },
+        "version": {
+          "const": "ai09-paired-cluster-uncertainty-1.0.0",
+          "default": "ai09-paired-cluster-uncertainty-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "CampaignForecastUncertaintyPolicy",
+      "type": "object"
+    },
+    "CampaignPairedConfidenceMetric": {
+      "additionalProperties": false,
+      "properties": {
+        "invalid_replicates": {
+          "minimum": 0,
+          "title": "Invalid Replicates",
+          "type": "integer"
+        },
+        "lower": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lower"
+        },
+        "point_delta": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Point Delta"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "evaluated",
+            "not_evaluable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "upper": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Upper"
+        },
+        "valid_replicates": {
+          "minimum": 0,
+          "title": "Valid Replicates",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "status",
+        "point_delta",
+        "lower",
+        "upper",
+        "valid_replicates",
+        "invalid_replicates",
+        "reasons"
+      ],
+      "title": "CampaignPairedConfidenceMetric",
+      "type": "object"
+    },
+    "CampaignPairedMethodReport": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_units": {
+          "minimum": 0,
+          "title": "Actual Units",
+          "type": "integer"
+        },
+        "cluster_inventory_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Cluster Inventory Sha256",
+          "type": "string"
+        },
+        "clusters": {
+          "minimum": 0,
+          "title": "Clusters",
+          "type": "integer"
+        },
+        "derived_resampling_seed": {
+          "maximum": 340282366920938463463374607431768211455,
+          "minimum": 0,
+          "title": "Derived Resampling Seed",
+          "type": "integer"
+        },
+        "eligible_clusters": {
+          "minimum": 0,
+          "title": "Eligible Clusters",
+          "type": "integer"
+        },
+        "eligible_rows": {
+          "minimum": 0,
+          "title": "Eligible Rows",
+          "type": "integer"
+        },
+        "method": {
+          "enum": [
+            "time_block",
+            "series_cluster"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "metrics": {
+          "additionalProperties": {
+            "$ref": "#/$defs/CampaignPairedConfidenceMetric"
+          },
+          "propertyNames": {
+            "enum": [
+              "median_mae_delta",
+              "median_wape_delta",
+              "relative_median_mae_change",
+              "mean_mse_delta",
+              "normalized_mean_bias_delta",
+              "interval_score_delta",
+              "interval_coverage_delta"
+            ]
+          },
+          "title": "Metrics",
+          "type": "object"
+        },
+        "resamples_executed": {
+          "minimum": 0,
+          "title": "Resamples Executed",
+          "type": "integer"
+        },
+        "resampling_trace_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Resampling Trace Sha256",
+          "type": "string"
+        },
+        "rows": {
+          "minimum": 0,
+          "title": "Rows",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "evaluated",
+            "not_evaluable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "clusters",
+        "eligible_clusters",
+        "rows",
+        "eligible_rows",
+        "actual_units",
+        "cluster_inventory_sha256",
+        "derived_resampling_seed",
+        "resampling_trace_sha256",
+        "resamples_executed",
+        "status",
+        "metrics"
+      ],
+      "title": "CampaignPairedMethodReport",
+      "type": "object"
+    },
+    "CampaignUncertaintyScope": {
+      "additionalProperties": false,
+      "properties": {
+        "data_seed": {
+          "enum": [
+            42,
+            137,
+            2026
+          ],
+          "title": "Data Seed",
+          "type": "integer"
+        },
+        "dataset_id": {
+          "pattern": "^ai09-(physical|final)-forecast-sha256-[0-9a-f]{64}$",
+          "title": "Dataset Id",
+          "type": "string"
+        },
+        "dimension": {
+          "enum": [
+            "global",
+            "horizon",
+            "category",
+            "channel",
+            "volume",
+            "scenario",
+            "history",
+            "availability",
+            "inventory",
+            "lead_time",
+            "intermittency"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "frozen_configuration_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Frozen Configuration Sha256",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "development_evaluation",
+            "final_test"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "scenario": {
+          "enum": [
+            "normal",
+            "promotion",
+            "demand_shock",
+            "inventory_constraint",
+            "all"
+          ],
+          "title": "Scenario",
+          "type": "string"
+        },
+        "source_recipe_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Recipe Sha256",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "data_seed",
+        "role",
+        "dataset_id",
+        "source_recipe_sha256",
+        "frozen_configuration_sha256",
+        "scenario",
+        "dimension",
+        "value"
+      ],
+      "title": "CampaignUncertaintyScope",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:campaign_forecast_uncertainty_report:21.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "all_scope_keys_consumed": {
+      "const": true,
+      "default": true,
+      "title": "All Scope Keys Consumed",
+      "type": "boolean"
+    },
+    "eligible_keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Eligible Keys Sha256",
+      "type": "string"
+    },
+    "eligible_rows": {
+      "minimum": 0,
+      "title": "Eligible Rows",
+      "type": "integer"
+    },
+    "final_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Access Authorized",
+      "type": "boolean"
+    },
+    "independent_rows_or_seeds_pooled": {
+      "const": false,
+      "default": false,
+      "title": "Independent Rows Or Seeds Pooled",
+      "type": "boolean"
+    },
+    "keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Keys Sha256",
+      "type": "string"
+    },
+    "methods": {
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/CampaignPairedMethodReport"
+        },
+        {
+          "$ref": "#/$defs/CampaignPairedMethodReport"
+        }
+      ],
+      "title": "Methods",
+      "type": "array"
+    },
+    "paired_input_trace_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Paired Input Trace Sha256",
+      "type": "string"
+    },
+    "policy": {
+      "$ref": "#/$defs/CampaignForecastUncertaintyPolicy"
+    },
+    "policy_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "rows": {
+      "minimum": 0,
+      "title": "Rows",
+      "type": "integer"
+    },
+    "scope": {
+      "$ref": "#/$defs/CampaignUncertaintyScope"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "version": {
+      "const": "ai09-paired-cluster-uncertainty-report-1.0.0",
+      "default": "ai09-paired-cluster-uncertainty-report-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "scope",
+    "policy",
+    "policy_sha256",
+    "rows",
+    "eligible_rows",
+    "keys_sha256",
+    "eligible_keys_sha256",
+    "paired_input_trace_sha256",
+    "methods"
+  ],
+  "title": "CampaignForecastUncertaintyReport",
+  "type": "object"
+}

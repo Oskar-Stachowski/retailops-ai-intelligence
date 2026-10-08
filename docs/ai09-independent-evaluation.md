@@ -156,8 +156,9 @@ Osobna kontrola native CPU dodaje świeżą predykcję niezależnej roli do
 istniejącego odbioru RF/HGB/TF, ponownie używając jego rzeczywistych fitów.
 Nie wykonuje dodatkowego treningu. Odbiór tej ścieżki na head `b41d1f26`, native CPU job `113081286526`
 w Required CI `37706155765`, zaliczył cały zestaw: **8 passed w 147.23 s**.
-Pełny Required CI tego head nadal jest w toku. Nie uruchomiono lokalnych
-fitów ani nowej kampanii.
+Pełny Required CI tego head zakończył się sukcesem: 17 odczytanych z 17 jobs,
+wszystkie success wraz z required-result. Nie uruchomiono lokalnych fitów
+ani nowej kampanii.
 Przygotowanie i metadane kalibracji w tej kontroli są deklarowane, więc nawet
 po jej zaliczeniu nie będzie to pełna kampania lub uprawnienie final test.
 
@@ -178,11 +179,64 @@ mają 3 passed w 6.58 s i nie zmieniają journalu ani nie wykonują nowej fazy.
 Testy sukcesu starej publikacji final mają jawnie mocked quality proof
 (wraz z wcześniej mockowanym replay), aby osobno sprawdzać kolejność,
 trwałość i awarie wyjścia. Nie są pełnym dowodem końcowego dostępu projektu.
-Mypy dla 700 plików, Ruff i format 1191 plików przeszły. Zmiana jest lokalna
-do czasu ukończenia bieżącego pełnego CI `b41d1f26`; live head nie jest ponawiany.
+Mypy dla 700 plików, Ruff i format 1191 plików przeszły. Zmiana pozostaje lokalna.
+Po pełnym odbiorze `b41d1f26` kolejną publikację poprzedzi integracja aktualnej
+zaakceptowanej bazy; nie ponowiono żadnego live head ani pełnego profilu.
 
 Wheel wspólnej kontroli ma 579 modułów i sześć zgodnych schematów v19/v20;
 64 wcześniejsze pliki evaluation i quality_v2 są niezmienione. Zainstalowany
 pakiet importuje generation jako pierwszy bez cyklu i potwierdza użycie
 tego samego verifiera przez wszystkie trzy publiczne granice final.
 Nie importuje TensorFlow/MLflow ani nie uruchamia kampanii.
+
+`PairedForecastUncertainty` jest osobnym kontrolowanym komponentem statystycznym.
+Nie jest jeszcze podłączony do faz pełnej kampanii. Kontrakty
+[v21](../contracts/evaluation/v21/campaign_forecast_uncertainty_policy.schema.json)
+przypinają dwie oddzielne analizy wrażliwości: pełne rozłączne bloki dni origin
+(domyślnie 28 dni, stała kotwica 2000-01-03, wszystkie serie razem) oraz całe
+serie product/location/channel (wszystkie originy i horyzonty razem).
+Nie jest to wspólny bootstrap wielowymiarowy ani gwarancja nominalnego pokrycia.
+W każdym losowaniu candidate, reference i actual używają tych samych grup
+i krotności. Seed danych nie jest seedem losowania; zakres, metoda i zamrożona
+polityka określają osobny seed PCG64 oraz hash wszystkich losowań.
+
+Prywatny SQLite zachowuje wystarczające statystyki grup i stabilne rozwinięcia
+sum. Nie ma listy wszystkich etykiet lub residuals w RAM. Nierówne liczebności
+grup zmieniają mianowniki każdej próby; nie uśredniamy samych metryk grup.
+Wymagane są zewnętrzne liczebności i hashe pełnego segmentu, więc ucięty
+strumień nie daje raportu. Limit wierszy, komórek, pliku indeksu i łącznej
+liczby odwiedzin grup jest jawny; publiczny worker nadal musi objąć ten
+komponent pomiarem całego drzewa RSS/scratch/czasu.
+
+Częściowe bloki graniczne i grupy zawierające tylko wykluczenia pozostają
+w populacji. Brak predykcji, zerowy mianownik i niewystarczająca liczba grup
+są jawne. Jeżeli jakiekolwiek losowanie ma nieokreśloną metrykę, raport
+zachowuje liczbę takich prób i estymatę punktową, lecz nie publikuje
+przedziału liczonego tylko z pozostałych prób. Domyślnie wymagane jest osiem
+kwalifikujących się bloków czasu i 30 serii; mniejsze minima w kontrolach
+nie zmieniają polityki pełnego projektu.
+
+Zasada wspólnego losowania odpowiada opisanemu w
+[dokumentacji SciPy paired bootstrap](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html).
+Konieczność uwzględniania zależności czasowej omawia przegląd autorów
+[Bootstrap Technology and Applications](https://www.stat.cmu.edu/technometrics/90-00/vol-34-04/v3404378.pdf).
+Nasze stałe rozłączne bloki są jawnym wyborem polityki, nie implementacją
+opisanego w tym artykule moving-block bootstrap. Założenia o słabej zależności
+czasu oraz niezależności między seriami są oddzielnie zapisane i wymagają
+ostrożnej interpretacji; dwie analizy nie dowodzą ich spełnienia.
+
+Kontrole porównują statystyki na dysku z bezpośrednim losowaniem całych grup
+i równaniami siedmiu metryk na małych jawnych danych. Sprawdzają też pełne
+klucze, nierówne grupy, braki, wszystkie zera, wykluczone grupy, limity,
+determinism, prywatny indeks oraz rozdzielenie seedów i ról. Nowy komponent
+nie otwiera projektowego final testu i nie kwalifikuje AI 09. Pozostają
+źródłowy kontekst pełnych segmentów, konsumpcja wszystkich surowych prób przed
+usunięciem ich indeksów, podłączenie raportu do publicznego workera i receipt,
+oceny pozostałych zastosowań oraz pełna kampania i lifecycle. Wcześniejsze
+receipty v20 nadal jawnie oznaczają block uncertainty jako nieukończone.
+32 kontrole nowego komponentu wraz z istniejącymi kontrolami metryk i
+konfiguracji mają 74 passed w 1.19 s. Mypy dla 702 plików, Ruff, format
+1194 plików, schematy i kontrola dokumentacji przeszły. Wheel zawiera
+581 zgodnych modułów oraz osiem schematów v19/v20/v21; 66 wcześniejszych
+plików evaluation i oba pliki quality_v2 pozostają bez zmian. Zainstalowany
+wheel zwrócił jawnie nieokreśloną pustą ocenę, bez importu TensorFlow/MLflow.

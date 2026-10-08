@@ -1,6 +1,6 @@
 {
-  "scope": "Frozen forecast components, full-role public audited runner and local durable-publication controls; critical segments, uncertainty, actual campaign and main acceptance incomplete",
-  "wire": "evaluation v19:4 schemas and v20:2 new schemas; prior64 evaluation files and legacy quality_v2 bytes unchanged",
+  "scope": "Frozen forecast components, full-role public audited runner, shared final guards and standalone paired cluster diagnostics; full critical segments, integrated uncertainty, actual campaign and main acceptance incomplete",
+  "wire": "evaluation v19:4 schemas, v20:2 execution schemas, v21:2 standalone uncertainty schemas; prior66 evaluation files and legacy quality_v2 bytes unchanged",
   "stage_ready": false,
   "project_journal_initialized": false,
   "new_project_fits": 0,
@@ -280,7 +280,7 @@
       "passed": 8,
       "seconds": 147.23,
       "logs_inspected": true,
-      "whole_required_ci_accepted": false
+      "whole_required_ci_accepted": true
     },
     "retained_failed_controls": [
       {
@@ -326,7 +326,18 @@
       "head": "b41d1f261cabc8c0947301d650a44e755cc4c95a",
       "pr": 44,
       "required_ci": 37706155765,
-      "whole_required_ci_accepted": false
+      "whole_required_ci_accepted": true,
+      "exact_head_acceptance": {
+        "workflow_run": 37706155765,
+        "head": "b41d1f261cabc8c0947301d650a44e755cc4c95a",
+        "status": "completed",
+        "conclusion": "success",
+        "jobs_read": 17,
+        "jobs_total": 17,
+        "success": 17,
+        "required_result": "success",
+        "main_publication_pending": true
+      }
     }
   },
   "shared_final_access_proof": {
@@ -377,6 +388,92 @@
         "mlflow_imported": false
       },
       "project_or_canonical_workers_started": false
+    }
+  },
+  "paired_cluster_uncertainty_component": {
+    "status": "local controlled component; not connected to complete campaign worker or receipt",
+    "contract_version": "ai09-paired-cluster-uncertainty-1.0.0",
+    "report_version": "ai09-paired-cluster-uncertainty-report-1.0.0",
+    "methods": [
+      "fixed disjoint calendar origin blocks, all series jointly, default28days anchor2000-01-03",
+      "whole product/selling_location/channel clusters, all origins and horizons"
+    ],
+    "methods_are_separate_sensitivity_reports_not_joint_multiway_inference": true,
+    "paired_candidate_reference_actual_cluster_multiplicities": true,
+    "resampling": "preregistered PCG64 seed derived from exact scope/method/policy, default999 replicates and linear percentile95% intervals; data seed kept separate",
+    "default_minimum_eligible_clusters": {
+      "time_block": 8,
+      "series_cluster": 30
+    },
+    "partial_boundary_and_excluded_only_clusters_retained": true,
+    "undefined_replicates": "explicit valid/invalid counts; any undefined replicate blocks that interval, no conditional dropping",
+    "storage": "private0600 exclusive disposable SQLite sufficient statistics with stable float expansions, Python integer actual totals and no retained row/residual list",
+    "complete_external_census_required": "rows,eligible_rows,sorted_keys_sha256,eligible_keys_sha256",
+    "bounds": [
+      "rows",
+      "combined_cluster_cells",
+      "SQLite index bytes including schema",
+      "total resampled cluster visits"
+    ],
+    "scientific_controls_passed": 32,
+    "combined_uncertainty_metrics_configuration_passed": 74,
+    "combined_seconds": 1.19,
+    "brute_paired_cluster_equations_compared": true,
+    "controlled_rows_not_project_evidence": true,
+    "mypy_source_files": 702,
+    "previous_combined_controls_passed": 73,
+    "previous_combined_seconds": 1.2,
+    "previous_initial_new_controls_passed": 29,
+    "previous_initial_new_seconds": 1.14,
+    "retained_validation_command_error": {
+      "exit_code": 4,
+      "tests_run": 0,
+      "cause": "requested nonexistent test_campaign_evaluation_functionals.py; corrected to existing configuration/metrics test inventory"
+    },
+    "assumptions": [
+      "time blocks approximate weak dependence without stationarity or nominal coverage guarantee",
+      "series clusters require between-cluster independence",
+      "separate diagnostics do not prove either assumption"
+    ],
+    "nominal_coverage_guaranteed": false,
+    "integrated_complete_critical_segment_inventory": false,
+    "all_raw_trial_critical_metrics_consumed_before_index_deletion": false,
+    "public_worker_and_v20_receipt_uncertainty_complete": false,
+    "final_access_authorized": false,
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "project_final_test_opened": false,
+    "stage_ready": false,
+    "publication_pending": true,
+    "static_checks": {
+      "mypy_files": 702,
+      "ruff": "passed",
+      "format_files": 1194,
+      "schemas": "passed",
+      "docs": "passed",
+      "diff": "passed"
+    },
+    "package": {
+      "wheel_bytes": 1888658,
+      "wheel_sha256": "57d0e15763e1837a2ff1062794b1815dddbc9f277fce119cfaa32ba01e085820",
+      "module_byte_parity": 581,
+      "schema_byte_parity": {
+        "v19": 4,
+        "v20": 2,
+        "v21": 2
+      },
+      "prior_tracked_evaluation_files_unchanged": 66,
+      "legacy_quality_v2_files_unchanged": 2,
+      "project_or_canonical_workers_started": false,
+      "installed_probe": {
+        "actual_installed_wheel_import": true,
+        "empty_scope_not_evaluable": true,
+        "final_access_and_stage_ready_false": true,
+        "tensorflow_imported": false,
+        "mlflow_imported": false,
+        "numpy_imported_before_resampling": true,
+        "project_or_canonical_workers_started": false
+      }
     }
   }
 }
