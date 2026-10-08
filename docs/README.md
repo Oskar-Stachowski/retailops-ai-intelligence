@@ -7,6 +7,10 @@ z rezerwą 1 GiB i zachowaniem pełnego profilu oraz wszystkich siedmiu porażek
 Nowy pomiar nie został jeszcze uruchomiony.
 [Pełne portfolio scenariuszy v25](ai09-full-scenario-portfolio.md) rejestruje
 12 pełnych źródeł w jednym dzienniku. Nie zastępuje odbioru danych i modeli.
+[Natywny scoring anomaly w partiach](ai09-native-anomaly-campaign.md) zachowuje
+pełny census i sześciodniową historię oraz niezależnie odtwarza każdą partię.
+Ma 36 zaliczonych kontroli i regresji; pełna integracja z dziennikiem, prawdą,
+grupami i oceną niepewności pozostaje otwarta.
 [Ocena forecastu między wariantami 09.42](evidence/09-42-portfolio-forecast-evaluation.json)
 zachowuje wspólne modele i kalibrację, wiążąc osobno źródło treningu i oceny.
 Kontrole publicznych workerów, trwałych raportów i zainstalowanej paczki
