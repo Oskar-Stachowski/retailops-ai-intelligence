@@ -173,7 +173,7 @@ def test_system_peak_rejects_phase_even_if_sample_missed_it(
             else original_sha(p)
         ),
     )
-    monkeypatch.setattr(psutil, "virtual_memory", lambda: SimpleNamespace(available=10 * 1024**3))
+    monkeypatch.setattr(psutil, "virtual_memory", lambda: SimpleNamespace(available=16 * 1024**3))
     monkeypatch.setattr(probe.shutil, "disk_usage", lambda p: SimpleNamespace(free=32 * 1024**3))
     calls = []
 
@@ -205,6 +205,61 @@ def test_resource_revision_cannot_change_parent_caps_or_erase_previous_failure(c
         plan["previous_attempt"]["plan_sha256"] = "0" * 64
     with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
         probe.validate_plan(plan)
+
+
+@pytest.mark.parametrize("tree_gib", [8, 13, 16])
+def test_only_the_authorized_twelve_gib_tree_budget_is_accepted(tree_gib: int) -> None:
+    plan = probe.read(probe.PLAN_PATH)
+    plan["budgets"]["tree_rss_bytes"] = tree_gib * 1024**3
+    with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
+        probe.validate_plan(plan)
+
+
+@pytest.mark.parametrize("available,starts", [(13 * 1024**3 - 1, False), (13 * 1024**3, True)])
+def test_twelve_gib_preflight_preserves_one_gib_reserve_before_starting_a_worker(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, available: int, starts: bool
+) -> None:
+    # Exercise the real preflight and receipt path with an isolated controlled
+    # worker boundary, without allocating GiB or generating any source data.
+    source, output = tmp_path / "source", tmp_path / "output"
+    source.mkdir()
+    plan = probe.read(probe.PLAN_PATH)
+    monkeypatch.setattr(probe, "require_remote", lambda: None)
+    monkeypatch.setattr(probe, "clean_pin", lambda *a: None)
+    monkeypatch.setattr(probe, "git", lambda *a: "a" * 40)
+    original_sha = probe.sha
+    monkeypatch.setattr(
+        probe,
+        "sha",
+        lambda p: (
+            plan["consumer_lock_sha256"]
+            if p.name == "uv.lock"
+            else plan["exporter_lock_sha256"]
+            if p.name == "requirements-parquet.txt"
+            else original_sha(p)
+        ),
+    )
+    monkeypatch.setattr(psutil, "virtual_memory", lambda: SimpleNamespace(available=available))
+    monkeypatch.setattr(probe.shutil, "disk_usage", lambda p: SimpleNamespace(free=32 * 1024**3))
+    calls = []
+
+    def controlled_worker(command: list[str], **kwargs: object) -> dict:
+        calls.append(kwargs)
+        return {"status": "failed", "reason": "controlled_worker_stop"}
+
+    monkeypatch.setattr(probe, "monitor", controlled_worker)
+    with pytest.raises(SystemExit) as stopped:
+        probe.run(SimpleNamespace(source=source, output=output))
+    assert stopped.value.code == 1
+    receipt = probe.read(output / "resource.json")
+    assert len(calls) == int(starts)
+    assert receipt["reason"] == ("controlled_worker_stop" if starts else "preflight_memory")
+    assert receipt["budgets"]["tree_rss_bytes"] == 12 * 1024**3
+    assert receipt["budgets"]["minimum_available_memory_bytes"] == 1024**3
+    assert receipt["completed_phases"] == receipt["new_project_fits"] == 0
+    assert receipt["final_test_opened"] is receipt["project_journal_initialized"] is False
+    if starts:
+        assert calls[0]["budgets"] == plan["budgets"]
 
 
 @pytest.mark.parametrize(
@@ -241,9 +296,10 @@ def test_stack_observation_cannot_change_scope_or_claim_allocation_measurement(c
         probe.validate_plan(plan)
 
 
-def test_all_six_prior_plan_bytes_and_failure_chain_are_retained() -> None:
+def test_all_seven_prior_actual_plan_bytes_and_failure_chain_are_retained() -> None:
     path = probe.PLAN_PATH
     for version, run_id in (
+        ("1.7", 37807749014),
         ("1.5", 37765329151),
         ("1.4", 37731200719),
         ("1.3", 37714051649),
@@ -501,7 +557,7 @@ def test_unicode_code_metadata_truncation_is_explicit_and_encoded_bytes_are_boun
 
 
 @pytest.mark.parametrize("change", ["signal", "reason", "cost", "peak", "completed"])
-def test_fifth_failed_cost_and_rss_stop_cannot_be_rewritten(change) -> None:
+def test_previous_failed_cost_and_rss_stop_cannot_be_rewritten(change) -> None:
     plan = probe.read(probe.PLAN_PATH)
     if change == "signal":
         plan["previous_attempt"]["exit_code"] = -11

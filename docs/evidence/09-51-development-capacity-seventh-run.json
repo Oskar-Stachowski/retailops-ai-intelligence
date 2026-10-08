@@ -1,0 +1,169 @@
+{
+  "scope": "Actual seventh canonical development capacity result after accepted audit; not scientific qualification",
+  "recorded_at_utc": "2026-10-08T16:49:29.580041+00:00",
+  "workflow_run": 37807749014,
+  "workflow_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014",
+  "workflow_status": "completed",
+  "workflow_conclusion": "failure",
+  "workflow_attempt": 1,
+  "immutable_dispatch_ref": "capacity/ai09-development-1.7-89d6c8f22412",
+  "control_commit": "89d6c8f2241293d6ea186e75fa4bb60cd097add8",
+  "producer_commit": "4dacf0403add494f74e4b4f22497f6206de753d9",
+  "recipe": "docs/reference/ai09-development-capacity-v1.7.json",
+  "plan_sha256": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+  "runner_code_sha256": "98fd659ad42b34d3ec53307e4da80f9f411d6ea119ab9485204d29fd577f13bd",
+  "artifact_id": 11565735250,
+  "artifact_bytes": 4305,
+  "artifact_sha256": "57315609a11c0b83e7dc17da7208ab188912169f43ebce48d00d72716ccf5036",
+  "resource_receipt_sha256": "1b817299df3b8c2d50adf30e270a9fb203de7e324492af9f62d2dd20244d9b2f",
+  "artifact_plan_sha256": "eb3a3793acfacf476547374830d0e6b97b5a61fc67be543879aef587c67eb00c",
+  "artifact_files": [
+    {
+      "bytes": 4097,
+      "name": "plan.json",
+      "sha256": "eb3a3793acfacf476547374830d0e6b97b5a61fc67be543879aef587c67eb00c"
+    },
+    {
+      "bytes": 1387,
+      "name": "resource.json",
+      "sha256": "1b817299df3b8c2d50adf30e270a9fb203de7e324492af9f62d2dd20244d9b2f"
+    },
+    {
+      "bytes": 29641,
+      "name": "generation.log",
+      "sha256": "f217d698ba176a882c39a65b4375cb6a02b14993a97350e8bc1131a90c4cfc71"
+    }
+  ],
+  "resource_receipt": {
+    "budgets": {
+      "minimum_available_memory_bytes": 1073741824,
+      "minimum_free_disk_bytes": 6442450944,
+      "sample_seconds": 0.2,
+      "scratch_bytes": 8589934592,
+      "tree_rss_bytes": 8589934592,
+      "wall_seconds": 3600
+    },
+    "canonical_ai_training_qualified": false,
+    "completed_phases": 0,
+    "control_commit": "89d6c8f2241293d6ea186e75fa4bb60cd097add8",
+    "failed_outputs_retained": true,
+    "final_generation_attempted": false,
+    "final_test_opened": false,
+    "new_project_fits": 0,
+    "phases": [
+      {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": -9,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 7116341248,
+        "minimum_free_disk_bytes": 90822635520,
+        "phase": "generation",
+        "reason": "tree_rss_limit",
+        "sample_seconds": 0.2,
+        "sampled_peak_scratch_allocated_bytes": 49152,
+        "sampled_peak_scratch_logical_bytes": 37834,
+        "sampled_tree_peak_rss_bytes": 8635432960,
+        "sampled_worker_cpu_seconds": 1701.93,
+        "samples": 8379,
+        "status": "failed",
+        "wall_seconds": 1702.6242746130001
+      }
+    ],
+    "plan_sha256": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+    "producer_commit": "4dacf0403add494f74e4b4f22497f6206de753d9",
+    "project_journal_initialized": false,
+    "quality_qualified": false,
+    "reason": "tree_rss_limit",
+    "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+    "stage_ready": false,
+    "status": "failed",
+    "wall_seconds": 1702.786909508
+  },
+  "generation": {
+    "days": 365,
+    "end_date": "2026-07-31",
+    "forecast_plan_days": 14,
+    "max_daily_rows": 182500,
+    "products": 100,
+    "profile": "ai-dev",
+    "seed": 42,
+    "start_date": "2025-08-01",
+    "stores": 5,
+    "warehouses": 3
+  },
+  "budgets": {
+    "minimum_available_memory_bytes": 1073741824,
+    "minimum_free_disk_bytes": 6442450944,
+    "sample_seconds": 0.2,
+    "scratch_bytes": 8589934592,
+    "tree_rss_bytes": 8589934592,
+    "wall_seconds": 3600
+  },
+  "artifact_download": {
+    "authenticated_github_digest_verified": true,
+    "cross_host_authentication_headers_removed": true,
+    "original_recipe_bytes_unchanged": true,
+    "exact_recipe_and_runtime_verified": true
+  },
+  "audit_and_dispatch_receipt": "docs/evidence/09-50-audit-acceptance-capacity-seventh-start.json",
+  "previous_actual_attempt_receipt": "docs/evidence/09-45-development-capacity-sixth-run.json",
+  "unexecuted_1_6_preparation_preserved": true,
+  "all_six_previous_failure_costs_preserved": true,
+  "automatic_retry": false,
+  "new_project_fits": 0,
+  "project_journal_initialized": false,
+  "fresh_final_reads": 0,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "foreign_sessions_disturbed": false,
+  "measurement_limits": "Sampled supervisor-plus-worker RSS; worker-tree CPU lower bound excludes supervisor and unsampled children. Frame locations do not prove allocation ownership or cause.",
+  "scientific_scope_remaining": "All twelve full ordinary/demand/physical sources, all three uses and development/fresh final seeds, real TensorFlow/baselines, independently verified robustness and paired uncertainty, complete costs, MLflow/lifecycle and full final main CI remain required.",
+  "trace_observation": {
+    "bounded_snapshots": 14,
+    "truncated_snapshots": 0,
+    "last_observed_stack": [
+      {
+        "file": "data/inventory/contract.py",
+        "function": "utc_timestamp",
+        "line": 32
+      },
+      {
+        "file": "data/inventory/ledger.py",
+        "function": "validate_movement",
+        "line": 138
+      },
+      {
+        "file": "data/inventory/ledger.py",
+        "function": "from_payload",
+        "line": 216
+      },
+      {
+        "file": "data/inventory/simulation_reconciliation.py",
+        "function": "reconcile_simulation",
+        "line": 36
+      },
+      {
+        "file": "data/inventory/source_reconciliation.py",
+        "function": "reconcile_source_commerce",
+        "line": 44
+      },
+      {
+        "file": "data/inventory/source_cohort_batch_v2.py",
+        "function": "simulate_source_commerce_fast",
+        "line": 280
+      },
+      {
+        "file": "data/inventory/source_cohort_batch_v2.py",
+        "function": "build_source_dataset_fast",
+        "line": 319
+      },
+      {
+        "file": "data/inventory/source_cohort_batch_v2.py",
+        "function": "run",
+        "line": 378
+      }
+    ],
+    "scope": "Sampled execution locations only. The last sample includes InventoryLedger.from_payload within independent reconcile_simulation/reconcile_source_commerce. It does not prove allocation ownership, a continuous peak or the exact kill-time stack."
+  },
+  "next_measurement_condition": "No unchanged or automatic canonical retry. First isolate allocation and retention during independent reconciliation on exposed controls, preserve every validator and compare complete native outputs, then accept safe changes and exact head/main CI before any separately frozen next recipe."
+}

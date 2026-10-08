@@ -1,0 +1,377 @@
+{
+  "recorded_at_utc": "2026-10-08T16:28:28.969731+00:00",
+  "scope": "Completed pre-canonical audit acceptance and actual seventh development capacity dispatch; resource outcome recorded separately when available",
+  "audit_receipts": [
+    "docs/evidence/09-46-development-capacity-audit.json",
+    "docs/evidence/09-47-capacity-audit-owner-repin.json",
+    "docs/evidence/09-49-projection-retention-capacity-preparation.json"
+  ],
+  "normal_protected_merges": {
+    "source_pr": 109,
+    "source_main": "c04ca9545e1698de5f9201f5067bafb6769df226",
+    "ai_pr": 58,
+    "ai_main": "89d6c8f2241293d6ea186e75fa4bb60cd097add8"
+  },
+  "exact_head_CI": {
+    "source": {
+      "head": "4dacf0403add494f74e4b4f22497f6206de753d9",
+      "workflow_run": 37794631231,
+      "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37794631231",
+      "total": 25,
+      "counts": {
+        "success": 21,
+        "skipped": 4
+      },
+      "job_names": [
+        "Detect changed areas",
+        "Repository diff hygiene",
+        "Required CI contract tests",
+        "api-gate / API Docker image build",
+        "api-gate / API integration tests",
+        "data-gate / AI 03 full cross-repo gate",
+        "data-gate / AI 06 full cross-repo gate",
+        "data-gate / AI 07 full sales and returns offline replay",
+        "data-gate / Synthetic data quality gate",
+        "docker-gate / Authenticated cross-repo intelligence runtime",
+        "docker-gate / Authenticated immutable native source bundle import",
+        "docker-gate / Build full stack and run smoke tests",
+        "docker-gate / Validate Docker Compose config",
+        "frontend-gate",
+        "iac-security-gate",
+        "kubernetes-gate",
+        "required-result",
+        "security-gate / Backend image vulnerability scan",
+        "security-gate / Filesystem vulnerability scan",
+        "security-gate / Frontend dependency audit",
+        "security-gate / Frontend image vulnerability scan",
+        "security-gate / Python dependency audit",
+        "security-gate / Secret scanning with Gitleaks",
+        "security-gate / Security evidence summary",
+        "terraform-validation-gate"
+      ],
+      "all_jobs_completed": true,
+      "required_result_passed": true
+    },
+    "ai": {
+      "head": "bcd26bc7f25d26593398788206bf8b5115cbad65",
+      "workflow_run": 37795331154,
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37795331154",
+      "total": 17,
+      "counts": {
+        "success": 17
+      },
+      "job_names": [
+        "TensorFlow CPU training, artifact and reload",
+        "acceptance (ci-detectors)",
+        "acceptance (ci-forecast)",
+        "acceptance (ci-qualified-inputs)",
+        "acceptance (ci-source-inputs)",
+        "anomaly-oci",
+        "checks",
+        "observation-broker",
+        "observation-replay",
+        "persistence",
+        "persistence-forecast",
+        "required-result",
+        "secrets",
+        "tests (0)",
+        "tests (1)",
+        "tests (2)",
+        "tests (3)"
+      ],
+      "all_jobs_completed": true,
+      "required_result_passed": true
+    }
+  },
+  "exact_resulting_main_CI": {
+    "source": {
+      "head": "c04ca9545e1698de5f9201f5067bafb6769df226",
+      "workflow_run": 37798616664,
+      "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37798616664",
+      "total": 25,
+      "counts": {
+        "success": 21,
+        "skipped": 4
+      },
+      "job_names": [
+        "Detect changed areas",
+        "Repository diff hygiene",
+        "Required CI contract tests",
+        "api-gate / API Docker image build",
+        "api-gate / API integration tests",
+        "data-gate / AI 03 full cross-repo gate",
+        "data-gate / AI 06 full cross-repo gate",
+        "data-gate / AI 07 full sales and returns offline replay",
+        "data-gate / Synthetic data quality gate",
+        "docker-gate / Authenticated cross-repo intelligence runtime",
+        "docker-gate / Authenticated immutable native source bundle import",
+        "docker-gate / Build full stack and run smoke tests",
+        "docker-gate / Validate Docker Compose config",
+        "frontend-gate",
+        "iac-security-gate",
+        "kubernetes-gate",
+        "required-result",
+        "security-gate / Backend image vulnerability scan",
+        "security-gate / Filesystem vulnerability scan",
+        "security-gate / Frontend dependency audit",
+        "security-gate / Frontend image vulnerability scan",
+        "security-gate / Python dependency audit",
+        "security-gate / Secret scanning with Gitleaks",
+        "security-gate / Security evidence summary",
+        "terraform-validation-gate"
+      ],
+      "all_jobs_completed": true,
+      "required_result_passed": true
+    },
+    "ai": {
+      "head": "89d6c8f2241293d6ea186e75fa4bb60cd097add8",
+      "workflow_run": 37801318271,
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37801318271",
+      "total": 17,
+      "counts": {
+        "success": 17
+      },
+      "job_names": [
+        "TensorFlow CPU training, artifact and reload",
+        "acceptance (ci-detectors)",
+        "acceptance (ci-forecast)",
+        "acceptance (ci-qualified-inputs)",
+        "acceptance (ci-source-inputs)",
+        "anomaly-oci",
+        "checks",
+        "observation-broker",
+        "observation-replay",
+        "persistence",
+        "persistence-forecast",
+        "required-result",
+        "secrets",
+        "tests (0)",
+        "tests (1)",
+        "tests (2)",
+        "tests (3)"
+      ],
+      "all_jobs_completed": true,
+      "required_result_passed": true
+    }
+  },
+  "additional_audited_AI_CI": {
+    "audit_exact_ci": {
+      "head": "2cb1a12fc89ede2bb76cc08c4ecdc28a5e5325e1",
+      "workflow_run": 37783729850,
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37783729850",
+      "total": 17,
+      "counts": {
+        "success": 17
+      },
+      "job_names": [
+        "TensorFlow CPU training, artifact and reload",
+        "acceptance (ci-detectors)",
+        "acceptance (ci-forecast)",
+        "acceptance (ci-qualified-inputs)",
+        "acceptance (ci-source-inputs)",
+        "anomaly-oci",
+        "checks",
+        "observation-broker",
+        "observation-replay",
+        "persistence",
+        "persistence-forecast",
+        "required-result",
+        "secrets",
+        "tests (0)",
+        "tests (1)",
+        "tests (2)",
+        "tests (3)"
+      ],
+      "all_jobs_completed": true,
+      "required_result_passed": true
+    },
+    "combined_exact_ci": {
+      "head": "256e8717433c6bf1b41379c5f7dc946bf3bed383",
+      "workflow_run": 37786403891,
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37786403891",
+      "total": 17,
+      "counts": {
+        "success": 17
+      },
+      "job_names": [
+        "TensorFlow CPU training, artifact and reload",
+        "acceptance (ci-detectors)",
+        "acceptance (ci-forecast)",
+        "acceptance (ci-qualified-inputs)",
+        "acceptance (ci-source-inputs)",
+        "anomaly-oci",
+        "checks",
+        "observation-broker",
+        "observation-replay",
+        "persistence",
+        "persistence-forecast",
+        "required-result",
+        "secrets",
+        "tests (0)",
+        "tests (1)",
+        "tests (2)",
+        "tests (3)"
+      ],
+      "all_jobs_completed": true,
+      "required_result_passed": true
+    },
+    "predecessor_ci": {
+      "head": "77d44618590c56d27b2feb21c615988cbb62b39a",
+      "workflow_run": 37792339080,
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37792339080",
+      "total": 17,
+      "counts": {
+        "success": 17
+      },
+      "job_names": [
+        "TensorFlow CPU training, artifact and reload",
+        "acceptance (ci-detectors)",
+        "acceptance (ci-forecast)",
+        "acceptance (ci-qualified-inputs)",
+        "acceptance (ci-source-inputs)",
+        "anomaly-oci",
+        "checks",
+        "observation-broker",
+        "observation-replay",
+        "persistence",
+        "persistence-forecast",
+        "required-result",
+        "secrets",
+        "tests (0)",
+        "tests (1)",
+        "tests (2)",
+        "tests (3)"
+      ],
+      "all_jobs_completed": true,
+      "required_result_passed": true
+    }
+  },
+  "source_tree_proof": {
+    "producer_head": "4dacf0403add494f74e4b4f22497f6206de753d9",
+    "resulting_main": "c04ca9545e1698de5f9201f5067bafb6769df226",
+    "trees_identical": true,
+    "tree": "f3d0230ad64a7e7256325221a896510526244939",
+    "producer_ancestor_of_main": true,
+    "foreign_refs_and_FETCH_HEAD_unchanged": true
+  },
+  "ai_tree_proof": {
+    "published_head": "bcd26bc7f25d26593398788206bf8b5115cbad65",
+    "resulting_main": "89d6c8f2241293d6ea186e75fa4bb60cd097add8",
+    "head_ancestor_of_main": true,
+    "trees_identical": true,
+    "tree": "d42f3390f88b433230d3ae30da6c42adf38ad905",
+    "foreign_refs_and_FETCH_HEAD_unchanged": true
+  },
+  "recipe": "docs/reference/ai09-development-capacity-v1.7.json",
+  "recipe_sha256": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+  "producer_commit": "4dacf0403add494f74e4b4f22497f6206de753d9",
+  "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+  "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+  "frozen_remote_files_verified_against_local": {
+    "docs/reference/ai09-development-capacity.json": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9",
+    "docs/reference/ai09-development-capacity-v1.1.json": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee",
+    "docs/reference/ai09-development-capacity-v1.2.json": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "docs/reference/ai09-development-capacity-v1.3.json": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d",
+    "docs/reference/ai09-development-capacity-v1.4.json": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+    "docs/reference/ai09-development-capacity-v1.5.json": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "docs/reference/ai09-development-capacity-v1.6.json": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "docs/reference/ai09-development-capacity-v1.7.json": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+    "docs/evidence/09-32-development-capacity-fourth-run.json": "bc9781029444d48fa86020c768f206cad571a33a6711cdfd66aa22dec5177ee8",
+    "docs/evidence/09-45-development-capacity-sixth-run.json": "45f230c6ac3f95082952b12ea1e349bd7f851f7afa42e83d33baf984a1966ec5",
+    "docs/evidence/09-46-development-capacity-audit.json": "a0fff4da1ad9b1d79e33a4d77ab8716f1f955de47a294838ef6850045d271f42",
+    "docs/evidence/09-47-capacity-audit-owner-repin.json": "5a7999c42ce9797b4c596781f9d46399e38c8e191df87307bcc300cef1d91f0c",
+    "docs/evidence/09-48-audited-capacity-preparation.json": "8bbaac6c6a2a703103b89c87dd574aecfd166f2634c221e82b2be0f998f125b3",
+    "docs/evidence/09-49-projection-retention-capacity-preparation.json": "420a260bfc765871c34ae09581bc28d2a281d21e803e6c865c49d57ee23d5f00",
+    "src/retailops_ai/evaluation_campaign/campaign_generation_worker.py": "b02ab232d6bf04fd065c26a8460d8f1dd7e56524348f225688018f6ef3a94bb7",
+    ".github/workflows/ai09-development-capacity.yml": "f9aa167a8eb31f00f0138faec5c2ebaa2fd64d08d552ebe4b43a170537cc318f",
+    "scripts/measure_ai09_development_capacity.py": "98fd659ad42b34d3ec53307e4da80f9f411d6ea119ab9485204d29fd577f13bd",
+    "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587"
+  },
+  "actual_attempt": {
+    "workflow_run": 37807749014,
+    "workflow_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014",
+    "workflow_event": "workflow_dispatch",
+    "run_attempt": 1,
+    "head": "89d6c8f2241293d6ea186e75fa4bb60cd097add8",
+    "immutable_dispatch_ref": "capacity/ai09-development-1.7-89d6c8f22412",
+    "created_at_utc": "2026-10-08T16:18:27Z",
+    "requested_at_utc": "2026-10-08T16:18:26.271452+00:00",
+    "status_at_recording": "in_progress",
+    "conclusion_at_recording": null,
+    "single_manual_dispatch": true,
+    "automatic_retry": false
+  },
+  "generation": {
+    "profile": "ai-dev",
+    "seed": 42,
+    "days": 365,
+    "products": 100,
+    "stores": 5,
+    "warehouses": 3,
+    "start_date": "2025-08-01",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 182500,
+    "forecast_plan_days": 14
+  },
+  "budgets": {
+    "tree_rss_bytes": 8589934592,
+    "scratch_bytes": 8589934592,
+    "wall_seconds": 3600,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "parent_limits": {
+    "max_bytes": 2147483648,
+    "max_files": 10000,
+    "max_rows": 20000000,
+    "batch_rows": 256
+  },
+  "previous_attempt": {
+    "version": "ai09-development-capacity-probe-1.5.0",
+    "workflow_run": 37765329151,
+    "plan_sha256": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "resource_receipt_sha256": "e2028ed087a3c1bf2dc7697c9e94816a21111747a03f0e9e8926c0259900ead4",
+    "reason": "tree_rss_limit",
+    "exit_code": -9,
+    "completed_phases": 0,
+    "wall_seconds": 2967.7483137940003,
+    "sampled_tree_peak_rss_bytes": 8596701184,
+    "previous_failure_preserved": true
+  },
+  "previous_failed_runs": [
+    37611605538,
+    37613368332,
+    37676033214,
+    37714051649,
+    37731200719,
+    37765329151
+  ],
+  "previous_preparation": {
+    "version": "ai09-development-capacity-probe-1.6.0",
+    "recipe": "docs/reference/ai09-development-capacity-v1.6.json",
+    "recipe_sha256": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "evidence": "docs/evidence/09-48-audited-capacity-preparation.json",
+    "evidence_sha256": "8bbaac6c6a2a703103b89c87dd574aecfd166f2634c221e82b2be0f998f125b3",
+    "workflow_dispatched": false,
+    "superseded_before_execution": true
+  },
+  "capacity_1_6_dispatched": false,
+  "resource_outcome_available_at_recording": false,
+  "measured_costs_at_recording": null,
+  "completed_phases_at_recording": null,
+  "new_project_fits": 0,
+  "project_journal_initialized": false,
+  "fresh_final_reads": 0,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "full_scientific_scope_remaining": [
+    "Full ai-dev and ai-training preparation/qualification across all 12 ordinary/demand/physical sources",
+    "Actual development fits and fair baseline/RF/HGB/TensorFlow selection with data and initialization seeds",
+    "Real anomaly and stockout campaign evaluators, calibration, frozen thresholds and critical groups",
+    "Fresh final42/137/2026 after the exposure boundary, with no retuning",
+    "Paired time/series uncertainty and all five model costs",
+    "MLflow, model cards, compatible lifecycle decisions, CPU reload/runtime and final acceptance"
+  ]
+}

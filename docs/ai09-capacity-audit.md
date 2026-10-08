@@ -1,11 +1,24 @@
 # AI 09: audyt przed kolejnym canonical
 
+[Receptura 1.8](reference/ai09-development-capacity-v1.8.json) podnosi, na wyraźne
+polecenie użytkownika, wyłącznie limit RSS drzewa z 8 do **12 GiB**
+(12 884 901 888 B). [Dowód przygotowania 09.52](evidence/09-52-twelve-gib-capacity-preparation.json)
+zapisuje 114 zaliczonych kontroli, zachowane bajty receptur 1.0–1.7 oraz wszystkie
+siedem rzeczywistych porażek. Runner wymaga przed startem co najmniej **13 GiB
+dostępnej pamięci**, zachowując rezerwę 1 GiB także podczas wykonania.
+Pełny profil, 3600 s, scratch 8 GiB, rezerwa dysku, parent caps, Source i walidacja
+pozostają takie same. 1.8 jest przygotowana, ale nieuruchomiona; przed pomiarem
+wymagane są pełne CI dokładnego head i wynikowego main. Zaliczenie większego
+budżetu nie dowodzi spełnienia poprzedniego limitu 8 GiB ani jakości modeli.
+
 [Szósta próba](evidence/09-45-development-capacity-sixth-run.json) zakończyła
-się przekroczeniem 8 GiB RSS po 2967.75 s, z zero ukończonych faz. Przed kolejną
-próbą audytujemy pełną ścieżkę: generation, qualification, export, import, curation.
+się przekroczeniem 8 GiB RSS po 2967.75 s, z zero ukończonych faz. Przed
+siódmą próbą przeprowadzono audyt pełnej ścieżki: generation, qualification,
+export, import, curation.
 Oryginalne wymiary, seedy, daty, limity, locks, walidacja, sześć porażek i ich
-koszty pozostają zachowane. Kolejny canonical wymaga odbioru wszystkich poprawek
-i całego Required CI dokładnych head oraz wynikowych main w obu repozytoriach.
+koszty pozostają zachowane. Wszystkie poprawki i pełne Required CI dokładnych
+head oraz wynikowych main obu repozytoriów odebrano przed pojedynczym dispatch 1.7;
+[receipt 09.50](evidence/09-50-audit-acceptance-capacity-seventh-start.json) zapisuje ten odbiór.
 
 Source redukuje kopie i retencję wejść oraz symulatora, indeksuje zwroty,
 przyjęcia i koszyki, ogranicza cache, serializuje i sprawdza porcje danych,
@@ -31,7 +44,7 @@ Finalna ścieżka AI zaliczyła 149 kontroli transportu, samodzielnej weryfikacj
 kuracji, truth isolation i watermarków; dodatkowe 88 kontroli obejmuje worker,
 starsze backendy, frozen wire, nadzór zasobów i rzeczywiste plany zapytań SQLite.
 Mypy, Ruff i format są obowiązkowe. Paczka instalacyjna i native kontrola pięciu
-faz również wymagają odbioru dla końcowego head.
+faz zostały odebrane dla końcowego head.
 
 Mała para native zaliczyła 5/5 faz przed i po zmianach, z identycznymi hashami
 58 tabel Source oraz 43 tabel eksportu/importu/curated. Trzy małe pary build
@@ -47,7 +60,7 @@ zachowuje poprzednią deklarację, oryginalną kopię `source_snapshot_native`,
 historyczne piny i wszystkie kontrole integralności. Z 425 wcześniejszych JSON
 424 zachowują dokładne bajty; zmienia się wyłącznie bieżąca deklaracja właściciela.
 Cały `make contracts-check` oraz 90 testów z drzewa i 90 z nowej paczki przeszły.
-Odbiór pełnego CI obu repozytoriów pozostaje wymagany przed kolejnym canonical.
+Pełne CI obu repozytoriów odebrano przed wykonaniem siódmej próby.
 Końcowe trzy pary build dają CPU −16.78% i peak alokacji Python −5.18%, przy
 retained Python +0.69% i RSS procesu +2.51%. Pełnego spadku RSS nie potwierdzamy.
 Końcowy Source zaliczył 64 kontrole po ostatnim zmniejszeniu retencji, a końcowa
@@ -70,6 +83,28 @@ To dodatkowe porównanie względem pierwszego audytu, a nie pełnego canonical.
 AI zaliczył 95 kontroli, 41 z nowej paczki, Mypy 718 plików, Ruff/format
 1226 plików i cały odbiór kontraktów. Zweryfikowano identyczność 597 modułów
 w paczce. Nowa receptura 1.7 zachowuje nieuruchomioną 1.6 oraz wszystkie sześć
-rzeczywistych porażek. Pełne CI head i wynikowych main obu repozytoriów pozostaje
-warunkiem wykonania diagnostyki. Pierwszy audyt jest już scalony: Source PR108,
+rzeczywistych porażek. Pełne CI head i wynikowych main obu repozytoriów
+przeszło przed wykonaniem diagnostyki. Pierwszy audyt jest już scalony: Source PR108,
 AI PR56–57. Żaden z tych odbiorów nie kwalifikuje jeszcze pełnej kampanii.
+
+Końcowe poprawki są na Source main `c04ca954` i AI main `89d6c8f2`. Dokładne
+head PR109/PR58 oraz oba wynikowe main mają pełne zaakceptowane CI: Source
+21 success i cztery deklarowane scoped skips, AI 17/17 success.
+[Dowód odbioru 09.50](evidence/09-50-audit-acceptance-capacity-seventh-start.json)
+zawiera inventory zadań, referencje i sumy plików sprawdzonych przed pojedynczym
+dispatch siódmej próby [37807749014](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014).
+1.6 pozostaje nieuruchomiona; wszystkie wcześniejsze koszty są zachowane.
+Odbiór kodu i start runnera nie są wynikiem zasobów ani kwalifikacją modeli.
+
+[Wynik siódmej próby 09.51](evidence/09-51-development-capacity-seventh-run.json) wiąże odebrany i zweryfikowany artefakt [run 37807749014](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014).
+Pomiar zakończył się `tree_rss_limit`, z 0/5 ukończonych faz. Cały przebieg trwał 1702.79 s;
+próbkowany peak drzewa wyniósł 8635432960 B, a dolna granica CPU workera 1701.93 s.
+Pełna pojemność pozostaje niepotwierdzona. Zachowano koszt porażki; nie wykonano automatycznego retry.
+Pełny profil 365 × 100 × 5 × 3, limity, rezerwy i wcześniejsze koszty zachowano.
+Nowe projektowe fity i odczyty świeżego final wynoszą zero; AI 09 pozostaje `not_ready`.
+
+Ostatni z 14 ograniczonych zapisów stosu obejmuje `InventoryLedger.from_payload`
+podczas niezależnej `reconcile_simulation` / `reconcile_source_commerce`.
+To lokalizacja wykonywania, nie dowód właściciela alokacji ani dokładny stos chwili
+zatrzymania. Przed kolejnym canonical trzeba zmierzyć tę część na odsłoniętych
+kontrolach, zachować wszystkie walidatory i odebrać ewentualne poprawki oraz pełne CI.

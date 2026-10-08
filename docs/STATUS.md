@@ -1,20 +1,41 @@
 # Aktualny status
 
 **2026-10-08 — AI 09: in_progress / not_ready.**
+[Receptura 1.8](reference/ai09-development-capacity-v1.8.json) podnosi, na wyraźne
+polecenie użytkownika, wyłącznie limit RSS drzewa z 8 do **12 GiB**
+(12 884 901 888 B). [Dowód przygotowania 09.52](evidence/09-52-twelve-gib-capacity-preparation.json)
+zapisuje 114 zaliczonych kontroli, zachowane bajty receptur 1.0–1.7 oraz wszystkie
+siedem rzeczywistych porażek. Runner wymaga przed startem co najmniej **13 GiB
+dostępnej pamięci**, zachowując rezerwę 1 GiB także podczas wykonania.
+Pełny profil, 3600 s, scratch 8 GiB, rezerwa dysku, parent caps, Source i walidacja
+pozostają takie same. 1.8 jest przygotowana, ale nieuruchomiona; przed pomiarem
+wymagane są pełne CI dokładnego head i wynikowego main. Zaliczenie większego
+budżetu nie dowodzi spełnienia poprzedniego limitu 8 GiB ani jakości modeli.
+
 [Audyt przed kolejnym canonical](ai09-capacity-audit.md) wprowadza bezpieczne
 poprawki pamięci i kosztu we wszystkich pięciu fazach. Pełny profil, limity,
 wszystkie wcześniejsze porażki i dotychczasowe bramki pozostają zachowane.
-Nowy pomiar wymaga zakończenia odbioru dokładnych commitów i main obu repo.
+Audyt przeszedł pełne CI dokładnych head i wynikowych main obu repozytoriów.
 [Dalszy audyt retencji](evidence/09-49-projection-retention-capacity-preparation.json)
 zwalnia pierwotne dane sprzedaży po rekonsyliacji, przed projekcją. Source zaliczył
 trzy kontrole czasu życia i 67 regresji, a AI 95 kontroli oraz 41 z paczki.
-Małe pomiary potwierdzają identyczność danych i niższą pamięć; pełna pojemność
-pozostaje do zmierzenia. [Receptura 1.7](reference/ai09-development-capacity-v1.7.json)
+Małe pomiary potwierdzają identyczność danych i niższą pamięć; wynik pełnego
+pomiaru opisano poniżej. [Receptura 1.7](reference/ai09-development-capacity-v1.7.json)
 przypina Source `4dacf040` z PR109 i zachowuje pełne wymiary oraz limity.
 1.6 nie została uruchomiona i pozostaje niezmiennym zapisem przygotowania;
-łańcuch wykonanych prób nadal kończy się szóstą porażką 1.5. Pierwszy audyt jest
-na obu main (Source PR108 oraz AI PR56–57). Dalsza poprawka wymaga pełnego
-odbioru dokładnych head i wynikowych main przed dispatch. Kampania pozostaje otwarta.
+wszystkie sześć wcześniejszych porażek pozostaje zapisanych. Końcowy audyt jest
+na Source main `c04ca954` (PR109) i AI main `89d6c8f2` (PR58), po pełnym
+odbiorze head i main: Source 21 success + 4 scoped skips, AI 17/17 success.
+[Dowód odbioru i startu 09.50](evidence/09-50-audit-acceptance-capacity-seventh-start.json)
+zapisuje pojedynczą siódmą próbę [37807749014](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014)
+na niezmiennej referencji 1.7, z pełnym profilem i limitami.
+[Wynik siódmej próby 09.51](evidence/09-51-development-capacity-seventh-run.json) wiąże odebrany i zweryfikowany artefakt [run 37807749014](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014).
+Pomiar zakończył się `tree_rss_limit`, z 0/5 ukończonych faz. Cały przebieg trwał 1702.79 s;
+próbkowany peak drzewa wyniósł 8635432960 B, a dolna granica CPU workera 1701.93 s.
+Pełna pojemność pozostaje niepotwierdzona. Zachowano koszt porażki; nie wykonano automatycznego retry.
+Pełny profil 365 × 100 × 5 × 3, limity, rezerwy i wcześniejsze koszty zachowano.
+Nowe projektowe fity i odczyty świeżego final wynoszą zero; AI 09 pozostaje `not_ready`.
+Pełna kampania naukowa pozostaje otwarta.
 [Przyrost 09.41](evidence/09-41-full-scenario-portfolio.json) dodaje
 [pełne portfolio v25](ai09-full-scenario-portfolio.md): 12 pełnych źródeł
 ordinary/demand/physical, jeden dziennik i wspólny freeze. Brak wariantu,
@@ -116,8 +137,8 @@ i oryginalnym Source `ab4d5690`, po pełnym odbiorze CI i ancestry.
 Pomiar zakończył się szóstą porażką `tree_rss_limit`, po 2967.75 s,
 z peak drzewa 8596701184 B i zero ukończonych faz.
 [Receipt 09.45](evidence/09-45-development-capacity-sixth-run.json) zachowuje
-artefakt i koszt; przed następnym canonical wymagany jest pełny audyt pięciu
-faz, bezpieczne poprawki, zgodność danych i odbiór CI w obu repozytoriach.
+artefakt i koszt. Wymagany po tej porażce audyt pięciu faz, bezpieczne poprawki,
+zgodność danych i pełny odbiór CI obu repozytoriów zakończono przed próbą 1.7.
 Nie zmniejszono danych ani nie zwiększono limitów.
 Projektowy journal nie został zainicjalizowany, nowe projektowe fity wynoszą zero,
 a świeży final test pozostaje zamknięty. Do zamknięcia pozostają pełna kampania
