@@ -379,14 +379,10 @@ def _verify_contents(bundle: Path, receipt: CampaignContextBundleReceipt) -> Non
         raise SnapshotError("campaign_context_bundle_census_digest_mismatch")
 
 
-def verify_campaign_context_bundle(
-    bundle: Path,
-    *,
-    journal: Path,
-    receipt: CampaignContextBundleReceipt,
-    selection_bundles: dict[str, Path] | None = None,
+def validate_completed_context(
+    journal: Path, receipt: CampaignContextBundleReceipt
 ) -> CampaignContextBundleReceipt:
-    """A typed header alone is insufficient; verify durable completion and every row."""
+    """Validate durable completion only; this grants no new Source or final access."""
     receipt = CampaignContextBundleReceipt.model_validate_json(receipt.model_dump_json())
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, receipt.operation_id)
@@ -418,6 +414,20 @@ def verify_campaign_context_bundle(
         raw = stream.read(MAX_RECEIPT_BYTES + 1)
     if raw != canonical_bytes(receipt.model_dump(mode="json")) + b"\n":
         raise SnapshotError("campaign_context_bundle_stored_receipt_mismatch")
+    return receipt
+
+
+def verify_campaign_context_bundle(
+    bundle: Path,
+    *,
+    journal: Path,
+    receipt: CampaignContextBundleReceipt,
+    selection_bundles: dict[str, Path] | None = None,
+) -> CampaignContextBundleReceipt:
+    """A typed header alone is insufficient; verify durable completion and every row."""
+    receipt = validate_completed_context(journal, receipt)
+    ledger = campaign_journal.inspect(journal)
+    operation = _operation(ledger, receipt.operation_id)
     if receipt.recipe.phase == "final":
         selection, _ = verify_completed_campaign_selection(journal, selection_bundles or {})
         if selection != receipt.selection_sha256:

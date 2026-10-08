@@ -428,6 +428,98 @@ def test_preregistered_recipe_has_no_result_hash_cycle_and_resolves_all_bound_tr
     assert recipe.content_sha256() != resolved.content_sha256()
 
 
+def unregistered_context_receipt(control):
+    """Valid controlled metadata, with no completed Source context operation."""
+    from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
+        FILES,
+        CampaignContextBundleReceipt,
+        CampaignContextBundleRecipe,
+    )
+    from retailops_ai.evaluation_campaign.campaign_segment_contract import (
+        CampaignForecastContextScope,
+        CampaignForecastSegmentPolicy,
+    )
+
+    exported = control["exported"]
+    parent = exported.recipe.source.parent
+    policy = CampaignForecastSegmentPolicy(category_inventory=("c1", "c2"))
+    recipe = CampaignContextBundleRecipe(
+        phase="development",
+        role="development_evaluation",
+        source_recipe_sha256=control["recipe"].source_recipe_sha256,
+        generation_operation_id="development-42-generate",
+        export_operation_id=exported.operation_id,
+        segment_policy=policy,
+        resources=control["recipe"].resources,
+    )
+    scope = CampaignForecastContextScope(
+        data_seed=42,
+        role=recipe.role,
+        dataset_id=exported.dataset_id,
+        source_recipe_sha256=recipe.source_recipe_sha256,
+        source_dataset_id=parent.source_dataset_id,
+        curated_dataset_id=parent.curated_dataset_id,
+        snapshot_id=parent.snapshot_id,
+        source_scenario_plan_sha256=None,
+        segment_policy_sha256=policy.content_sha256(),
+    )
+    hashes = {name: "0" * 64 for name in FILES}
+    return CampaignContextBundleReceipt(
+        protocol_sha256=control["protocol"].content_sha256(),
+        operation_id="unregistered-context",
+        reservation_id="campaign-operation-" + "0" * 32,
+        recipe=recipe,
+        generated_parent_receipt_sha256="0" * 64,
+        generation_plan_sha256="0" * 64,
+        export_receipt_sha256=exported.content_sha256(),
+        runtime_code_sha256=exported.runtime_code_sha256,
+        scope=scope,
+        rows=1,
+        eligible_rows=0,
+        keys_sha256="0" * 64,
+        eligible_keys_sha256="0" * 64,
+        role_population_sha256="0" * 64,
+        context_trace_sha256="0" * 64,
+        census_sha256="0" * 64,
+        snapshot_inventory_sha256="0" * 64,
+        curated_inventory_sha256="0" * 64,
+        logical_curated_sha256="0" * 64,
+        selection_sha256=None,
+        artifact_sha256=canonical_sha256(hashes),
+        artifact_bytes=1,
+        artifact_files=hashes,
+        worker_evidence={"controlled_metadata_only": True},
+        complete_export_role_file_passes=6,
+    )
+
+
+@pytest.mark.parametrize("case", ["missing-bundle", "missing-receipt", "unregistered", "overlap"])
+def test_raw_context_parent_is_reserved_and_rejected_before_context_or_role_io(
+    control, tmp_path, monkeypatch, case
+):
+    def forbidden(*args, **kwargs):
+        raise AssertionError("invalid context must fail before any context or role read")
+
+    monkeypatch.setattr(runner, "verify_campaign_context_bundle", forbidden)
+    changes = {
+        "raw_context_bundle": tmp_path / "absent-context",
+        "raw_context_receipt": unregistered_context_receipt(control),
+    }
+    reason = "raw_context_parent_mismatch"
+    if case.startswith("missing-"):
+        changes["raw_context_bundle" if case == "missing-bundle" else "raw_context_receipt"] = None
+        reason = "raw_context_pair_required"
+    elif case == "overlap":
+        changes["raw_context_bundle"] = control["output_root"]
+        reason = "output_overlaps_raw_context"
+    with pytest.raises(SnapshotError, match=reason):
+        execute(control, **changes)
+    assert not {"prepare", "predict", "consume", "finalize"} & set(control["calls"])
+    completion = journal.inspect(control["root"]).events[-1]
+    assert completion.kind == "finished" and completion.result == "failed"
+    assert completion.cost.wall_seconds > 0
+
+
 def test_reserved_all_trial_evaluation_is_durable_before_finish_and_readonly_verification(
     control, monkeypatch
 ):
