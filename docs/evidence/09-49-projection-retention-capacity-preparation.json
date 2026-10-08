@@ -1,0 +1,261 @@
+{
+  "recorded_at_utc": "2026-10-08T14:46:33.569757+00:00",
+  "scope": "Final pre-canonical projection retention correction and prospective capacity 1.7; local controls only",
+  "ai_code_commit": "aaafb180eecea615794491f8a969137837aa01c1",
+  "ai_base_main": "77d44618590c56d27b2feb21c615988cbb62b39a",
+  "source_producer_commit": "4dacf0403add494f74e4b4f22497f6206de753d9",
+  "source_pr": 109,
+  "source_head_required_ci": 37794631231,
+  "source_head_ci_pending_at_recording": true,
+  "source_base_main": "649d34ec5808aa61f5ce942086527e240f66de3b",
+  "source_base_main_required_ci": 37787824952,
+  "source_base_main_ci_accepted": true,
+  "source_evidence_path": "docs/evidence/ml/ai09-projection-retention.json",
+  "source_evidence_sha256": "e337b0120affceb9c6137d8e6f098de8f1693cc6adbf4dc740b9ae961e493093",
+  "source_controls": {
+    "native": {
+      "passed": 67,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 462.462,
+      "junit_sha256": "d029ceeba236161dd0256c715522a2882f2c7041f70f6939fa2c8956b08b908b"
+    },
+    "lifetime": {
+      "passed": 3,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 6.564,
+      "junit_sha256": "e98370732ddb3a0fc731ff3f0ea248b13a51dae0bfcb0e8b24a89faa8e903f45"
+    }
+  },
+  "source_implementations": {
+    "ordinary": {
+      "version": "inventory-source-cached-ledger-2.2.1",
+      "code_sha256": "187f3ca7d3e06b8e682cf190380ff4d11917033518709a4a0273a4e6d2b0cbb8",
+      "upstream_sha256": {
+        "source_cohort_batch.py": "7459292242696e6e1ea35ab2ea8171b31acab044d879f67168d379941c8dee84",
+        "ledger.py": "4effb9cdd18b4eb18f5f1a0b60cb0fab7f467262a961d9a4baf6fa6c2d1e8e09",
+        "source_bridge.py": "f1030980fa2cfd297ee1ec5e62434cd1fa56480cf59f7a605783b1ff7e25f61d",
+        "run_source_dataset.py": "3c3194a6d197ced1e6c19e93268ef5bac97ae8c01073b05f17e67d9d0027d6bf",
+        "simulator.py": "7b10a76f7a4ea93b40557d402a3f6cd5a6400e939e78c3ffa64dadc4b531dcd7",
+        "source_commerce.py": "c53fefae30abfdf5c48d744cc0c903db449edbc970be3523e8a008dbd0ad7991"
+      },
+      "optimization": "cached_immutable_records_queue_events_borrowed_requests_and_early_release",
+      "rng_and_chronological_process": "unchanged",
+      "source_validation": "ordinary_source_2_7_writer_and_reader_all_gates"
+    },
+    "planned": {
+      "version": "planned-source-cached-execution-1.1.1",
+      "code_sha256": "ef52c904f09be477422d10e0663bfb38b4a9d5aab9dc1f630f57212a500a589b",
+      "upstream_sha256": {
+        "inventory/source_cohort_batch_v2.py": "187f3ca7d3e06b8e682cf190380ff4d11917033518709a4a0273a4e6d2b0cbb8",
+        "inventory/source_bridge.py": "f1030980fa2cfd297ee1ec5e62434cd1fa56480cf59f7a605783b1ff7e25f61d",
+        "inventory/run_source_dataset.py": "3c3194a6d197ced1e6c19e93268ef5bac97ae8c01073b05f17e67d9d0027d6bf",
+        "anomalies/physical_process.py": "e8290df0c179b2796c339c0ee3268369b0fd67687c52f8355e23202cd38de93c",
+        "anomalies/source_process.py": "f1b9eb27af85ba05de487e93c6efc374a571ead1198f48bba65c940e30e132ba",
+        "anomalies/candidate_io.py": "80bd7af07e107d46b114fdeac3e1e54dca2cf3353648e88fffbfd7805e2ad7e1"
+      },
+      "rng_physical_rules_and_scenario_interventions": "unchanged",
+      "source_validation": "ordinary_source_2_8_writer_reader_and_independent_plan_replay"
+    }
+  },
+  "source_clean_provenance": {
+    "code_sha256": "553a456abfb6a45d22f2359f3b0efb5e6a696dd078ffc2e598f252b9003219ea",
+    "git_commit": "4dacf0403add494f74e4b4f22497f6206de753d9",
+    "code_state": "clean",
+    "dependency_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02"
+  },
+  "paired_tiny_build": {
+    "scope": "Three fresh paired processes of checked-in tiny native build; not canonical or full profile",
+    "baseline_commit": "a164cc6a03b43213b2b1adb3b63d81f4ad54f3b6",
+    "candidate_code_commit": "5ed6592d66049467e519973a2492e2a3578c3826",
+    "harness_sha256": "da4a4353a4f578c7efcc3c0a392044dfb4138de78012fc7b79d428df049a627d",
+    "source_58_tables_and_context_identical": true,
+    "raw": {
+      "baseline": [
+        {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.5904050000244752,
+          "cpu_seconds": 1.5246169999999999,
+          "peak_python_bytes": 7825877,
+          "retained_python_bytes": 4535726,
+          "process_peak_rss_bytes": 83247104,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        },
+        {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.5064772499899846,
+          "cpu_seconds": 1.5002440000000001,
+          "peak_python_bytes": 7821948,
+          "retained_python_bytes": 4531840,
+          "process_peak_rss_bytes": 83755008,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        },
+        {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.5242109159880783,
+          "cpu_seconds": 1.516278,
+          "peak_python_bytes": 7825958,
+          "retained_python_bytes": 4535854,
+          "process_peak_rss_bytes": 81526784,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        }
+      ],
+      "candidate": [
+        {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.4960758330125827,
+          "cpu_seconds": 1.491242,
+          "peak_python_bytes": 6534457,
+          "retained_python_bytes": 4535942,
+          "process_peak_rss_bytes": 80936960,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        },
+        {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.5254041250154842,
+          "cpu_seconds": 1.518396,
+          "peak_python_bytes": 6534975,
+          "retained_python_bytes": 4533955,
+          "process_peak_rss_bytes": 71811072,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        },
+        {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.4881239579990506,
+          "cpu_seconds": 1.485313,
+          "peak_python_bytes": 6534916,
+          "retained_python_bytes": 4531389,
+          "process_peak_rss_bytes": 76513280,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        }
+      ]
+    },
+    "medians": {
+      "wall_seconds": {
+        "baseline": 1.5242109159880783,
+        "candidate": 1.4960758330125827,
+        "change_percent": -1.845878590710448
+      },
+      "cpu_seconds": {
+        "baseline": 1.516278,
+        "candidate": 1.491242,
+        "change_percent": -1.651148404184466
+      },
+      "peak_python_bytes": {
+        "baseline": 7825877,
+        "candidate": 6534916,
+        "change_percent": -16.49605533028439
+      },
+      "retained_python_bytes": {
+        "baseline": 4535726,
+        "candidate": 4533955,
+        "change_percent": -0.039045568449236345
+      },
+      "process_peak_rss_bytes": {
+        "baseline": 83247104,
+        "candidate": 76513280,
+        "change_percent": -8.088958866364893
+      }
+    }
+  },
+  "ai_controls": {
+    "ai": {
+      "passed": 95,
+      "seconds": 33.718,
+      "junit_sha256": "e3b535bbd6653f38c075c55d1f4cf990071ba07119f858d47a115a158dd95dcb"
+    },
+    "installed": {
+      "passed": 41,
+      "seconds": 28.731,
+      "junit_sha256": "acc5e7f0faf39a43742913a3053df8f7647d4a3215066fe522090bcc9cd2c543"
+    }
+  },
+  "static_controls": {
+    "mypy_files": 718,
+    "ruff": "passed",
+    "format_files": 1226,
+    "complete_contracts_check": "passed"
+  },
+  "installed_package": {
+    "wheel_sha256": "cf4a8e11748dee6fc9b2576dba054a6a7dec379949cde9cd5e3de35e028a4373",
+    "wheel_bytes": 2042157,
+    "python_modules_identical": 597,
+    "changed_worker_loaded_from_installed_package": true,
+    "private_or_test_files_in_wheel": false
+  },
+  "recipe": "docs/reference/ai09-development-capacity-v1.7.json",
+  "recipe_sha256": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+  "previous_preparation": {
+    "version": "ai09-development-capacity-probe-1.6.0",
+    "recipe": "docs/reference/ai09-development-capacity-v1.6.json",
+    "recipe_sha256": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "evidence": "docs/evidence/09-48-audited-capacity-preparation.json",
+    "evidence_sha256": "8bbaac6c6a2a703103b89c87dd574aecfd166f2634c221e82b2be0f998f125b3",
+    "workflow_dispatched": false,
+    "superseded_before_execution": true
+  },
+  "prior_recipe_bytes_unchanged": {
+    "docs/reference/ai09-development-capacity-v1.2.json": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "docs/reference/ai09-development-capacity-v1.3.json": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d",
+    "docs/reference/ai09-development-capacity-v1.4.json": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+    "docs/reference/ai09-development-capacity-v1.5.json": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "docs/reference/ai09-development-capacity-v1.6.json": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "docs/reference/ai09-development-capacity.json": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9",
+    "docs/reference/ai09-development-capacity-v1.1.json": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee"
+  },
+  "previous_attempt": {
+    "version": "ai09-development-capacity-probe-1.5.0",
+    "workflow_run": 37765329151,
+    "plan_sha256": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "resource_receipt_sha256": "e2028ed087a3c1bf2dc7697c9e94816a21111747a03f0e9e8926c0259900ead4",
+    "reason": "tree_rss_limit",
+    "exit_code": -9,
+    "completed_phases": 0,
+    "wall_seconds": 2967.7483137940003,
+    "sampled_tree_peak_rss_bytes": 8596701184,
+    "previous_failure_preserved": true
+  },
+  "previous_failed_runs": [
+    37611605538,
+    37613368332,
+    37676033214,
+    37714051649,
+    37731200719,
+    37765329151
+  ],
+  "unchanged": [
+    "full development generation dimensions and dates",
+    "all resource, reserve and parent limits",
+    "producer dependencies from accepted Source update 4805834",
+    "consumer and exporter locks",
+    "all Source validation and independent planned replay",
+    "snapshot schema and required use cases",
+    "bounded frame observer and every failed attempt/cost"
+  ],
+  "initial_audit_evidence": [
+    "docs/evidence/09-46-development-capacity-audit.json",
+    "docs/evidence/09-47-capacity-audit-owner-repin.json",
+    "docs/evidence/09-48-audited-capacity-preparation.json"
+  ],
+  "capacity_1_6_dispatched": false,
+  "capacity_1_7_dispatched": false,
+  "complete_exact_head_and_resulting_main_ci_required_before_dispatch": true,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "project_journal_initialized": false,
+  "quality_qualified": false,
+  "stage_ready": false
+}

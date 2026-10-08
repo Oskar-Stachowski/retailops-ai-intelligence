@@ -5,10 +5,16 @@
 poprawki pamięci i kosztu we wszystkich pięciu fazach. Pełny profil, limity,
 wszystkie wcześniejsze porażki i dotychczasowe bramki pozostają zachowane.
 Nowy pomiar wymaga zakończenia odbioru dokładnych commitów i main obu repo.
-[Przygotowanie 1.6](evidence/09-48-audited-capacity-preparation.json) wiąże
-pełny audyt, aktualny pin zależności Source, 50 kontroli supervisora i sześć
-historycznych porażek. Pomiar nie został uruchomiony; odbiór audytu i publikacji
-diagnostyki nadal poprzedza dispatch. Pełny zakres kampanii pozostaje otwarty.
+[Dalszy audyt retencji](evidence/09-49-projection-retention-capacity-preparation.json)
+zwalnia pierwotne dane sprzedaży po rekonsyliacji, przed projekcją. Source zaliczył
+trzy kontrole czasu życia i 67 regresji, a AI 95 kontroli oraz 41 z paczki.
+Małe pomiary potwierdzają identyczność danych i niższą pamięć; pełna pojemność
+pozostaje do zmierzenia. [Receptura 1.7](reference/ai09-development-capacity-v1.7.json)
+przypina Source `4dacf040` z PR109 i zachowuje pełne wymiary oraz limity.
+1.6 nie została uruchomiona i pozostaje niezmiennym zapisem przygotowania;
+łańcuch wykonanych prób nadal kończy się szóstą porażką 1.5. Pierwszy audyt jest
+na obu main (Source PR108 oraz AI PR56–57). Dalsza poprawka wymaga pełnego
+odbioru dokładnych head i wynikowych main przed dispatch. Kampania pozostaje otwarta.
 [Przyrost 09.41](evidence/09-41-full-scenario-portfolio.json) dodaje
 [pełne portfolio v25](ai09-full-scenario-portfolio.md): 12 pełnych źródeł
 ordinary/demand/physical, jeden dziennik i wspólny freeze. Brak wariantu,
