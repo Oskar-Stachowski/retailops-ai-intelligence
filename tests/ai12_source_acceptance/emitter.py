@@ -37,10 +37,9 @@ def provision(private):
     config = json.loads((private / "connections.json").read_bytes())
     with psycopg.connect(config["admin"], autocommit=True) as conn:
         conn.execute(
-            sql.SQL("CREATE ROLE ai_app LOGIN PASSWORD {} SET timezone TO 'UTC'").format(
-                sql.Literal(config["password"])
-            )
+            sql.SQL("CREATE ROLE ai_app LOGIN PASSWORD {}").format(sql.Literal(config["password"]))
         )
+        conn.execute("ALTER ROLE ai_app SET timezone TO 'UTC'")
         conn.execute("CREATE DATABASE retailops_ai OWNER ai_app")
     admin = psycopg.conninfo.conninfo_to_dict(config["admin"])
     admin["dbname"] = "retailops_ai"

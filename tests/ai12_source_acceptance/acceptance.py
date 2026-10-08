@@ -124,10 +124,11 @@ def test_original_ai12_emitter_source_consumer_api_and_built_ui(context, tmp_pat
         source_conn = psycopg.conninfo.conninfo_to_dict(context.db)
         with psycopg.connect(context.db, autocommit=True) as conn:
             conn.execute(
-                sql.SQL("CREATE ROLE ai12_observer LOGIN PASSWORD {} SET timezone TO 'UTC'").format(
+                sql.SQL("CREATE ROLE ai12_observer LOGIN PASSWORD {}").format(
                     sql.Literal(read_password)
                 )
             )
+            conn.execute("ALTER ROLE ai12_observer SET timezone TO 'UTC'")
             conn.execute("GRANT USAGE ON SCHEMA public TO ai12_observer")
             conn.execute("GRANT SELECT ON realtime_event_log TO ai12_observer")
             conn.execute(
