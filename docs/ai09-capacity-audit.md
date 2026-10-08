@@ -1,15 +1,18 @@
 # AI 09: audyt przed kolejnym canonical
 
-[Receptura 1.8](reference/ai09-development-capacity-v1.8.json) podnosi, na wyraźne
-polecenie użytkownika, wyłącznie limit RSS drzewa z 8 do **12 GiB**
-(12 884 901 888 B). [Dowód przygotowania 09.52](evidence/09-52-twelve-gib-capacity-preparation.json)
-zapisuje 114 zaliczonych kontroli, zachowane bajty receptur 1.0–1.7 oraz wszystkie
-siedem rzeczywistych porażek. Runner wymaga przed startem co najmniej **13 GiB
-dostępnej pamięci**, zachowując rezerwę 1 GiB także podczas wykonania.
-Pełny profil, 3600 s, scratch 8 GiB, rezerwa dysku, parent caps, Source i walidacja
-pozostają takie same. 1.8 jest przygotowana, ale nieuruchomiona; przed pomiarem
-wymagane są pełne CI dokładnego head i wynikowego main. Zaliczenie większego
-budżetu nie dowodzi spełnienia poprzedniego limitu 8 GiB ani jakości modeli.
+[Receptura 1.8](reference/ai09-development-capacity-v1.8.json) ma na polecenie
+użytkownika limit RSS drzewa **12 GiB** (12 884 901 888 B) i rezerwę 1 GiB.
+PR60 scalono normalnie jako `4ce8a3cf`; pełne CI dokładnego head i tego main
+zakończyły się **17/17 success**, przed pojedynczym uruchomieniem pomiaru.
+[Wynik ósmej próby 09.53](evidence/09-53-development-capacity-eighth-run.json)
+wiąże zweryfikowany artefakt [run 37824794411](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37824794411): **`wall_limit`**,
+0/5 ukończonych faz, 3600.58 s.
+Próbkowany peak drzewa wyniósł 9066307584 B, a dolna granica CPU workera 3599.61 s.
+Profil 365 × 100 × 5 × 3, Source, walidacja i pozostałe budżety zachowano.
+Zachowano siedem wcześniejszych porażek, receptury 1.0–1.7 i nieuruchomioną 1.6.
+Nie wykonano automatycznego retry. Wynik nie kwalifikuje pełnego ai-training,
+modeli ani poprzedniego limitu 8 GiB. Nowe projektowe fity i odczyty świeżego
+final wynoszą zero; AI 09 pozostaje `not_ready`.
 
 [Szósta próba](evidence/09-45-development-capacity-sixth-run.json) zakończyła
 się przekroczeniem 8 GiB RSS po 2967.75 s, z zero ukończonych faz. Przed
