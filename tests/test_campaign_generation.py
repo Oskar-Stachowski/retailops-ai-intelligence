@@ -9,7 +9,7 @@ from time import perf_counter
 import psutil
 import pytest
 from pydantic import ValidationError
-from test_ai09_campaign_journal import protocol_document
+from test_ai09_campaign_journal import development, protocol_document, selection
 from test_forecast_source_replay import physical_parents as physical_parents
 from test_physical_forecast import source as declared_source
 
@@ -241,6 +241,41 @@ def test_final_generation_is_blocked_before_freeze_without_io(tmp_path, monkeypa
         run(case)
     assert not journal.inspect(case[0]).events
     assert not list(case[1].iterdir())
+
+
+@pytest.mark.parametrize("complete_paths", [False, True])
+def test_metadata_freeze_cannot_start_final_producer_without_completed_use_receipts(
+    tmp_path, monkeypatch, complete_paths
+):
+    case = campaign(tmp_path, final=True)
+    root, output, operation_id, plan = case
+    development(root)
+    journal.freeze_selection(root, selection(root))
+    monkeypatch.setattr(runner, "_producer_pin", lambda *args: pytest.fail("final producer opened"))
+    monkeypatch.setattr(runner, "monitor", lambda *args, **kwargs: pytest.fail("worker started"))
+    bundles = (
+        {use: output for use in ("forecast", "anomaly", "stockout")} if complete_paths else None
+    )
+    reason = (
+        "no_completed_use_evaluation"
+        if complete_paths
+        else "requires_completed_three_use_selection"
+    )
+    with pytest.raises(SnapshotError, match=reason):
+        runner.generate_campaign_parent(
+            Path("/never-read-producer"),
+            Path(sys.executable),
+            output,
+            journal=root,
+            operation_id=operation_id,
+            plan=plan,
+            selection_bundles=bundles,
+        )
+    event = journal.inspect(root).events[-1]
+    assert event.result == "failed" and event.cost.wall_seconds > 0
+    assert event.cost.peak_process_tree_rss_bytes is None
+    assert not list(output.iterdir())
+    assert not (root / "receipts" / (str(event.reservation_id) + ".json")).exists()
 
 
 @pytest.mark.parametrize("operation", ["unknown", "development-fit", "development-42-read"])

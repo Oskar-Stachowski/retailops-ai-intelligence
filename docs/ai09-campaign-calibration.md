@@ -96,6 +96,6 @@ Poprawiony `b2e12a5d` zaliczył cały Required CI `37698266045`: 17 odczytanych
 z 17 jobs, wszystkie success wraz z required-result. Chroniony PR #42 został
 scalony do `78d853a6`; zawiera także wybór Tune z PR #41. Native persistence
 i TensorFlow CPU przeszły na tym dokładnym head. Odbiór dokładnego nowego
-AI/main `37702954342` jest jeszcze w toku: 15 success i działający anomaly-oci;
-required-result pojawi się po zakończeniu zależności. Poprzednie porażki i ich
+AI/main `37702954342` jest zakończony: 17 odczytanych z 17 jobs, wszystkie
+success wraz z required-result. Poprzednie porażki i ich
 koszty pozostają zachowane. To odbiór komponentów, bez nowej kampanii projektu.

@@ -160,5 +160,19 @@
     "protected_publication_pending": true,
     "exact_implementation_main_acceptance_pending": true,
     "canonical_attempt_dispatched": false
+  },
+  "current_main_integration": {
+    "pr": 43,
+    "base": "main",
+    "local_head": "a93893b848f8950b7e586a016d89bc6df3569c95",
+    "accepted_main": "78d853a67433ddbb58ef919027e219fee5a2f3b9",
+    "main_required_ci": 37702954342,
+    "main_jobs_read_total_success": 17,
+    "tree_identical_to_tested_0ac": true,
+    "new_exact_head_full_required_ci_pending": true,
+    "canonical_attempt_dispatched": false,
+    "published": true,
+    "required_ci": 37707162141,
+    "whole_required_ci_accepted": false
   }
 }

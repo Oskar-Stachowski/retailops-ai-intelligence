@@ -182,8 +182,14 @@ nie kwalifikuje pełnego planned-anomaly source 2.8 ani final `ai-training`.
 
 Poprawiony head diagnostyki `0ac90bd0` ma zakończony pełny Required CI
 `37698835119`, 17/17 success. Kalibracja i wybór Tune są już na AI/main
-`78d853a6`, którego dokładny pełny odbiór pozostaje w toku. PR #43 diagnostyki
+`78d853a6`, którego dokładny pełny odbiór `37702954342` przeszedł 17/17. PR #43 diagnostyki
 wymaga jeszcze chronionej publikacji na main i odbioru dokładnego merge przed
 ręcznym dispatch. Source/main jest już w pełni zaakceptowany; przypięcie
 producenta receptury, wszystkie stare plany, trzy porażki, limity i rezerwy
 pozostają bez zmian. Pełna próba 1.3 nadal nie została uruchomiona.
+
+PR #43 ma teraz base main. Własna gałąź została połączona z zaakceptowanym
+`78d853a6` jako `a93893b8`, bez zmiany któregokolwiek pliku w porównaniu
+z odebranym `0ac90bd0`. Required CI `37707162141` tego exact head jest w toku. Nadal wymagane są
+chroniony merge i odbiór dokładnego main. Pełna próba 1.3 nie została
+jeszcze uruchomiona.

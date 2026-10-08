@@ -609,3 +609,44 @@ def test_completed_forecast_component_without_full_robustness_still_blocks_final
             control["calibration"],
             {use: bundle for use in ("forecast", "anomaly", "stockout")},
         )
+
+
+@pytest.mark.parametrize(
+    "change,reason",
+    [
+        ("missing", "receipt_unavailable"),
+        ("malformed", "receipt_invalid"),
+        ("permissions", "private_selection_receipt_required"),
+    ],
+)
+def test_completed_selection_rejects_unavailable_or_invalid_private_receipt_without_role_io(
+    control, change, reason
+):
+    bundle, receipt = execute(control)
+    selection = declared_selection(control["root"])
+    fields = selection.model_dump(mode="json")
+    fields["bundles"][0] |= receipt.selection_components.model_dump(mode="json") | {
+        "selection_evidence_sha256": receipt.content_sha256(),
+    }
+    selection = type(selection).model_validate_json(canonical_bytes(fields))
+    journal.freeze_selection(control["root"], selection)
+    stored = control["root"] / "receipts" / (receipt.reservation_id + ".json")
+    if change == "missing":
+        stored.unlink()
+    elif change == "malformed":
+        stored.write_bytes(b"{invalid-json\n")
+    else:
+        stored.chmod(0o644)
+    before = journal.inspect(control["root"]).head_sha256
+    calls = list(control["calls"])
+    with pytest.raises(SnapshotError, match=reason):
+        runner._selection(
+            control["root"],
+            journal.inspect(control["root"]),
+            SimpleNamespace(selection_sha256=canonical_sha256(selection.model_dump(mode="json"))),
+            control["configuration"],
+            control["calibration"],
+            {use: bundle for use in ("forecast", "anomaly", "stockout")},
+        )
+    assert journal.inspect(control["root"]).head_sha256 == before
+    assert control["calls"] == calls

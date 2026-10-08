@@ -65,3 +65,15 @@ Projektowy journal nie jest zainicjalizowany, liczba nowych fitów wynosi zero,
 final generation/test pozostają nieotwarte. Trzy zastosowania, trzy końcowe
 seedy, fair trening/kalibracja/freeze, robustness/segmenty/niepewność/koszty,
 MLflow/lifecycle, karty/raporty oraz pełne CI/main pozostają warunkami AI09 ready.
+
+Przed publiczną generacją lub eksportem końcowych danych wymagane są teraz
+również `selection_bundles` dla forecast, anomaly i stockout. Wspólny
+`verify_completed_campaign_selection` sprawdza trwałe dowody ukończonej
+niezależnej oceny development, zgodność zamrożonych rodziców, segmentów
+i niepewności oraz artefakty. Jest wykonywany wewnątrz rezerwacji, przed
+producer inspection lub otwarciem końcowego source/curated. Generic journal
+freeze sam audytuje kolejność i nie zastępuje tych dowodów. Brak dowodu
+kończy zarezerwowaną próbę porażką bez dostępu do końcowych danych.
+Aktualny forecast component z nieukończonymi segmentami/niepewnością nie może
+autoryzować takiego dostępu. [Evidence kontroli](evidence/09-31-independent-forecast-components.json)
+oddziela rzeczywisty verifier od jawnie mockowanych kontroli publikacji.

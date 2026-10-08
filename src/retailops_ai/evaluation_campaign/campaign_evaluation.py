@@ -64,6 +64,9 @@ from retailops_ai.evaluation_campaign.campaign_score_contract import (
     FAMILIES,
     CampaignForecastScoreReceipt,
 )
+from retailops_ai.evaluation_campaign.campaign_selection_evidence import (
+    verify_completed_campaign_selection,
+)
 from retailops_ai.evaluation_campaign.campaign_tune import verify_campaign_forecast_selection
 from retailops_ai.evaluation_campaign.campaign_tune_contract import CampaignForecastTuneReceipt
 from retailops_ai.evaluation_campaign.development_contract import MODELS
@@ -259,88 +262,17 @@ def _selection(
     calibration: CampaignForecastCalibrationReceipt,
     bundles: dict[str, Path],
 ) -> str:
-    """The metadata freeze alone cannot authorize a fresh final evaluation."""
-    event = next((e for e in ledger.events if e.kind == "selection_frozen"), None)
-    if (
-        event is None
-        or event.selection is None
-        or set(bundles) != {"forecast", "anomaly", "stockout"}
-    ):
-        raise SnapshotError("campaign_evaluation_requires_completed_three_use_selection")
-    digest = canonical_sha256(event.selection.model_dump(mode="json"))
+    """Verify the same development evidence required by generation and export."""
+    digest, receipt = verify_completed_campaign_selection(journal, bundles)
     if exported.selection_sha256 != digest:
         raise SnapshotError("campaign_evaluation_final_selection_binding_mismatch")
-    operations = {o.operation_id: o for o in ledger.protocol.operations}
-    for selected in event.selection.bundles:
-        completed = next(
-            (
-                e
-                for e in ledger.events
-                if e.kind == "finished"
-                and e.result == "completed"
-                and e.evidence_sha256 == selected.selection_evidence_sha256
-                and e.sequence < event.sequence
-            ),
-            None,
-        )
-        operation = operations.get(str(completed.operation_id)) if completed else None
-        if (
-            completed is None
-            or operation is None
-            or (
-                operation.phase != "development"
-                or operation.action != "model_score"
-                or operation.role != "development_evaluation"
-                or operation.use_case != selected.use_case
-            )
-        ):
-            raise SnapshotError("campaign_evaluation_selection_has_no_completed_use_evaluation")
-        with regular_file(journal, "receipts/" + str(completed.reservation_id) + ".json") as stream:
-            if stat.S_IMODE(os.fstat(stream.fileno()).st_mode) != 0o600:
-                raise SnapshotError("campaign_evaluation_private_selection_receipt_required")
-            raw = stream.read(MAX_RECEIPT_BYTES + 1)
-        value = json.loads(raw)
-        if (
-            raw != canonical_bytes(value) + b"\n"
-            or canonical_sha256(value) != selected.selection_evidence_sha256
-            or value.get("operation_id") != operation.operation_id
-            or value.get("reservation_id") != completed.reservation_id
-            or value.get("use_case") != selected.use_case
-            or value.get("protocol_sha256") != ledger.protocol_sha256
-            or value.get("runtime_code_sha256") != ledger.protocol.runtime.code_sha256
-            or value.get("critical_segment_inventory_complete") is not True
-            or value.get("block_uncertainty_complete") is not True
-            or value.get("final_test_accessed") is not False
-            or value.get("selection_components")
-            != selected.model_dump(mode="json", exclude={"use_case", "selection_evidence_sha256"})
-            or completed.cost is None
-            or completed.cost.artifact_bytes != value.get("artifact_bytes")
-        ):
-            raise SnapshotError("campaign_evaluation_selection_receipt_incomplete_or_mismatched")
-        if selected.use_case == "forecast":
-            receipt = CampaignForecastEvaluationReceipt.model_validate_json(raw)
-            if (
-                receipt.configuration != configuration
-                or receipt.selection_components != selection_components(configuration, calibration)
-            ):
-                raise SnapshotError("campaign_evaluation_selected_forecast_configuration_mismatch")
-            _verify_bundle(bundles[selected.use_case], receipt)
-        else:
-            files, size = _bundle_inventory(bundles[selected.use_case], plan_maximum(value))
-            if (
-                files != value.get("artifact_files")
-                or canonical_sha256(files) != value.get("artifact_sha256")
-                or size != value.get("artifact_bytes")
-            ):
-                raise SnapshotError("campaign_evaluation_other_use_selection_artifact_mismatch")
+    if (
+        receipt.configuration != configuration
+        or receipt.protocol_sha256 != ledger.protocol_sha256
+        or receipt.selection_components != selection_components(configuration, calibration)
+    ):
+        raise SnapshotError("campaign_evaluation_selected_forecast_configuration_mismatch")
     return digest
-
-
-def plan_maximum(receipt: dict[str, Any]) -> int:
-    maximum = receipt.get("plan", {}).get("max_output_bytes")
-    if type(maximum) is not int or not 1024 <= maximum <= 32 * 1024**3:
-        raise SnapshotError("campaign_evaluation_selection_artifact_budget_missing")
-    return maximum
 
 
 def _phase(

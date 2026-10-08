@@ -138,9 +138,9 @@ Dostęp final evaluation wymaga dowodów ukończonej niezależnej oceny developm
 wszystkich trzech zastosowań, zgodnych pakietów i pełnych segmentów oraz
 niepewności. Sama deklaracja `selection_frozen` nie wystarcza. Obecny forecast
 component ma jawnie nieukończone critical segments i block uncertainty, więc
-nie może autoryzować końcowej oceny projektu. Integracja tego dowodu przed
-final generation/export, pełni evaluatorzy pozostałych zastosowań i kompletna
-ocena jakości nadal wymagają implementacji przed zainicjalizowaniem kampanii.
+nie może autoryzować końcowej oceny projektu. Wspólny verifier tego dowodu jest teraz wywoływany również przed final
+generation/export. Pełni evaluatorzy pozostałych zastosowań i kompletna ocena
+jakości nadal wymagają implementacji przed zainicjalizowaniem kampanii.
 
 Najnowszy odbiór ma 176 passed w 118.81 s, z realnym kontrolnym journalem,
 ukończonymi prywatnymi receiptami zadeklarowanych rodziców i fake modelami.
@@ -154,7 +154,35 @@ TensorFlow/MLflow.
 
 Osobna kontrola native CPU dodaje świeżą predykcję niezależnej roli do
 istniejącego odbioru RF/HGB/TF, ponownie używając jego rzeczywistych fitów.
-Nie wykonuje dodatkowego treningu. Odbiór tej nowej ścieżki jest jeszcze
-**pending w Required CI**; nie uruchomiono lokalnych fitów ani nowej kampanii.
+Nie wykonuje dodatkowego treningu. Odbiór tej ścieżki na head `b41d1f26`, native CPU job `113081286526`
+w Required CI `37706155765`, zaliczył cały zestaw: **8 passed w 147.23 s**.
+Pełny Required CI tego head nadal jest w toku. Nie uruchomiono lokalnych
+fitów ani nowej kampanii.
 Przygotowanie i metadane kalibracji w tej kontroli są deklarowane, więc nawet
 po jej zaliczeniu nie będzie to pełna kampania lub uprawnienie final test.
+
+`campaign_selection_evidence.verify_completed_campaign_selection` jest wspólną
+kontrolą przed publiczną final generation, final export i final evaluation.
+Wymaga wcześniejszych ukończonych ocen development wszystkich trzech zastosowań,
+pełnej roli, zamrożonej receptury i źródła, prywatnych canonical receiptów,
+zgodnych selection components, zmierzonych kosztów oraz opublikowanych bundles.
+Sprawdza typowany forecast receipt i jego bundle; wersjonowane receipty
+i artefakty anomaly/stockout nadal wymagają swoich pełnych evaluatorów.
+Nie otwiera pierwotnych etykiet. Sama metadata freeze lub trzy ścieżki
+bez dowodów nie uruchomią source workera ani nie otworzą końcowego rodzica.
+
+Regresja generation/final-export/evaluation/worker ma 78 passed w 113.31 s.
+Sześć nowych kontroli blokuje brakujący dowód przed producer/parent I/O.
+Dodatkowe trzy przypadki brakującego, malformed lub nieprywatnego receipt
+mają 3 passed w 6.58 s i nie zmieniają journalu ani nie wykonują nowej fazy.
+Testy sukcesu starej publikacji final mają jawnie mocked quality proof
+(wraz z wcześniej mockowanym replay), aby osobno sprawdzać kolejność,
+trwałość i awarie wyjścia. Nie są pełnym dowodem końcowego dostępu projektu.
+Mypy dla 700 plików, Ruff i format 1191 plików przeszły. Zmiana jest lokalna
+do czasu ukończenia bieżącego pełnego CI `b41d1f26`; live head nie jest ponawiany.
+
+Wheel wspólnej kontroli ma 579 modułów i sześć zgodnych schematów v19/v20;
+64 wcześniejsze pliki evaluation i quality_v2 są niezmienione. Zainstalowany
+pakiet importuje generation jako pierwszy bez cyklu i potwierdza użycie
+tego samego verifiera przez wszystkie trzy publiczne granice final.
+Nie importuje TensorFlow/MLflow ani nie uruchamia kampanii.

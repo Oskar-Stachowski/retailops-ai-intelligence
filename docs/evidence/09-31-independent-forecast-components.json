@@ -59,7 +59,6 @@
     "publish exact current public runner head and accept full Required CI, including new native independent prediction control",
     "complete critical segment inventory and paired time/series block uncertainty",
     "implement typed independent evaluators and complete selection proof for anomaly and stockout using closed07/08 policies",
-    "enforce completed three-use selection proof before final generation/export as well as final evaluation",
     "qualify full canonical capacity and planned-anomaly producer without reducing dimensions, budgets or reserves",
     "actual development fits/Tune/Calibration and independent evaluation for all3 uses",
     "selection freeze and fresh final3 seeds/four scenarios/full canonical profiles",
@@ -232,7 +231,7 @@
     "no_budget_refund_or_silent_retry": true,
     "read_only_verifier_does_not_open_original_outcomes": true,
     "metadata_only_selection_and_current_partial_forecast_component_block_final_evaluation": true,
-    "completed_three_use_proof_before_final_generation_export_implemented": false,
+    "completed_three_use_proof_before_final_generation_export_implemented": true,
     "critical_segment_inventory_complete": false,
     "block_uncertainty_complete": false,
     "quality_qualified": false,
@@ -269,12 +268,19 @@
       "project_or_canonical_workers_started": false
     },
     "native_cpu_independent_prediction": {
-      "new_control_pending_required_ci": true,
+      "new_control_pending_required_ci": false,
       "reuses_actual_three_family_fit_bundles": true,
       "additional_fit_count": 0,
       "declared_control_preparation_and_calibration_metadata": true,
       "local_native_fits_run": false,
-      "not_project_or_final_access_proof": true
+      "not_project_or_final_access_proof": true,
+      "workflow_run": 37706155765,
+      "head": "b41d1f261cabc8c0947301d650a44e755cc4c95a",
+      "job": 113081286526,
+      "passed": 8,
+      "seconds": 147.23,
+      "logs_inspected": true,
+      "whole_required_ci_accepted": false
     },
     "retained_failed_controls": [
       {
@@ -315,6 +321,62 @@
     "publication_pending": true,
     "project_journal_initialized": false,
     "new_project_fits": 0,
-    "project_final_test_opened": false
+    "project_final_test_opened": false,
+    "publication": {
+      "head": "b41d1f261cabc8c0947301d650a44e755cc4c95a",
+      "pr": 44,
+      "required_ci": 37706155765,
+      "whole_required_ci_accepted": false
+    }
+  },
+  "shared_final_access_proof": {
+    "public_boundaries": [
+      "source_generate final",
+      "source_read final",
+      "model_score final_evaluation"
+    ],
+    "reservation_before_receipt_proof_and_parent_io": true,
+    "metadata_only_freeze_and_three_paths_without_completed_evaluations_rejected": true,
+    "completed_development_all3_uses_private_canonical_receipts_required": true,
+    "recipe_phase_role_source_protocol_runtime_selection_component_and_cost_bindings_checked": true,
+    "forecast_typed_receipt_and_bundle_verification_required": true,
+    "other_use_versioned_receipt_and_full_artifact_inventory_required": true,
+    "actual_complete_anomaly_stockout_evaluators_implemented": false,
+    "proof_reads_no_original_outcomes": true,
+    "critical_segments_and_uncertainty_still_incomplete": true,
+    "stage_ready": false,
+    "tests": {
+      "regression_passed": 78,
+      "seconds": 113.31,
+      "new_pre_source_io_negative_controls": 6,
+      "private_receipt_negative_controls_passed": 3,
+      "private_receipt_controls_seconds": 6.58,
+      "pipeline_publication_quality_proof_mocked_explicitly": true,
+      "no_project_or_canonical_execution": true
+    },
+    "static_checks": {
+      "mypy_files": 700,
+      "ruff": "passed",
+      "format_files": 1191
+    },
+    "new_local_head_publication_pending": true,
+    "live_b41_head_not_restarted": true,
+    "package": {
+      "wheel_bytes": 1875865,
+      "wheel_sha256": "bc969b66dc3dd29bfe80a08f092b628623088d6bd2361434da97ff51ee1f3b3b",
+      "module_byte_parity": 579,
+      "v19_schema_byte_parity": 4,
+      "v20_schema_byte_parity": 2,
+      "prior_tracked_evaluation_files_unchanged": 64,
+      "legacy_quality_v2_bytes_unchanged": true,
+      "installed_probe": {
+        "actual_installed_wheel_import": true,
+        "generation_first_import_order_passed": true,
+        "all_public_final_boundaries_use_shared_verifier": true,
+        "tensorflow_imported": false,
+        "mlflow_imported": false
+      },
+      "project_or_canonical_workers_started": false
+    }
   }
 }

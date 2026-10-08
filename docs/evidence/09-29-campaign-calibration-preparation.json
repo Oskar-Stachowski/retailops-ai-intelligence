@@ -222,12 +222,14 @@
     "required_result": "success",
     "protected_merge": "78d853a67433ddbb58ef919027e219fee5a2f3b9",
     "exact_main_required_ci": 37702954342,
-    "exact_main_acceptance_pending": true,
+    "exact_main_acceptance_pending": false,
     "last_main_observation": {
-      "read": 16,
-      "total": 16,
-      "success": 15,
-      "live_job": "anomaly-oci"
+      "status": "completed",
+      "conclusion": "success",
+      "read": 17,
+      "total": 17,
+      "success": 17,
+      "required_result": "success"
     },
     "selection_pr41_included_and_closed": true,
     "component_acceptance_does_not_qualify_project": true,
