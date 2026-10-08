@@ -49,6 +49,11 @@ from retailops_ai.evaluation_campaign.campaign_generation_contract import (
     CampaignGenerationPlan,
     CampaignGenerationResources,
 )
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import (
+    CampaignPortfolioJournal,
+    CampaignPortfolioProtocol,
+    PortfolioSourceRecipe,
+)
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
     CampaignForecastRobustEvaluationReceipt,
 )
@@ -509,6 +514,23 @@ def main() -> int:
     else:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(raw)
+    for name, portfolio_model in (
+        ("full_scenario_portfolio_source_recipe", PortfolioSourceRecipe),
+        ("full_scenario_portfolio_protocol", CampaignPortfolioProtocol),
+        ("full_scenario_portfolio_journal", CampaignPortfolioJournal),
+    ):
+        schema = portfolio_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:25.0.0"
+        path = ROOT / "contracts/evaluation/v25" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign full scenario portfolio contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
     print("Evaluation preparation contract snapshots checked.")
     return 0
 

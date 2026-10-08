@@ -8,6 +8,10 @@ from retailops_ai.data_contracts.common import Contract, Sha256
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.evaluation_campaign.campaign_contract import CampaignSourceRecipe
 from retailops_ai.evaluation_campaign.campaign_export_contract import CampaignParentBudget
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import (
+    PortfolioSourceRecipe,
+    bind_portfolio_generation,
+)
 
 
 class CampaignGenerationResources(Contract):
@@ -76,6 +80,8 @@ class CampaignGenerationPlan(Contract):
             )
         ):
             raise ValueError("campaign_generation_frozen_source_configuration_mismatch")
+        if isinstance(source, PortfolioSourceRecipe):
+            bind_portfolio_generation(self, source)
 
     def content_sha256(self) -> str:
         return canonical_sha256(self.model_dump(mode="json"))
