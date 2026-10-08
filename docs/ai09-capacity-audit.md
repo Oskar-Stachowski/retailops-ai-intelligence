@@ -41,6 +41,13 @@ uwzględniamy także koszt utrzymania indeksów, a pomiar pełnego profilu pozos
 rozstrzygający. Limity Source i transportu nie są podnoszone na podstawie prognoz.
 
 Source 2.7/2.8, snapshot 1.1/1.2 i wcześniejsze kontrakty JSON są zachowane.
+Pierwszy Required CI tego audytu wykrył nieaktualną sumę kontrolną modelowego
+importera w deklaracji właściciela. [Aktualizacja pinu](evidence/09-47-capacity-audit-owner-repin.json)
+zachowuje poprzednią deklarację, oryginalną kopię `source_snapshot_native`,
+historyczne piny i wszystkie kontrole integralności. Z 425 wcześniejszych JSON
+424 zachowują dokładne bajty; zmienia się wyłącznie bieżąca deklaracja właściciela.
+Cały `make contracts-check` oraz 90 testów z drzewa i 90 z nowej paczki przeszły.
+Odbiór pełnego CI obu repozytoriów pozostaje wymagany przed kolejnym canonical.
 Końcowe trzy pary build dają CPU −16.78% i peak alokacji Python −5.18%, przy
 retained Python +0.69% i RSS procesu +2.51%. Pełnego spadku RSS nie potwierdzamy.
 Końcowy Source zaliczył 64 kontrole po ostatnim zmniejszeniu retencji, a końcowa
