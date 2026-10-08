@@ -12,7 +12,15 @@ def contract_openapi(
         path: spec
         for path, spec in result["paths"].items()
         if path.startswith("/api/v1/") == access
-        and (not access or path.startswith("/api/v1/assistant/") == assistant)
+        and (
+            not access
+            or (
+                path.startswith("/api/v1/assistant/")
+                or path == "/api/v1/recommendations"
+                or path.startswith("/api/v1/recommendations/")
+            )
+            == assistant
+        )
     }
     result["paths"] = paths
     components = result.get("components", {})

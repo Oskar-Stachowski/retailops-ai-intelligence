@@ -56,7 +56,7 @@ def provision(private):
 def emit(private):
     config = json.loads((private / "connections.json").read_bytes())
     path, tokens, authority, body, backend, _ = setup(private, intent="operations")
-    graph = load_graph_config(ROOT / "agent/graph.fake.prepaid.v2.json")
+    graph = load_graph_config(ROOT / "agent/graph.fake.prepaid.v3.json")
     producer = create_engine(config["source_read"], hide_parameters=True)
     ai = create_engine(config["ai"], hide_parameters=True)
     adapter = NativeOperationsTool(PostgresNativeOperationsReader(producer, "test"), "test")
@@ -93,6 +93,24 @@ def emit(private):
                 answer["recommended_actions"][0]["action"]
                 == "Ask an operator to review scoped failed event processing."
             )
+            identity = answer["recommended_actions"][0]["recommendation_id"]
+            model_calls_before_reads = provider.calls
+            detail = client.get("/api/v1/recommendations/" + identity, headers=headers(tokens))
+            assert detail.status_code == 200, "persisted AI recommendation read failed"
+            page = client.get("/api/v1/recommendations", headers=headers(tokens))
+            assert page.status_code == 200 and page.json() == {
+                "items": [detail.json()],
+                "next_offset": None,
+            }
+            assert detail.json()["requires_human_review"] is True
+            assert detail.json()["status"] == "proposed"
+            assert (
+                client.get(
+                    "/api/v1/recommendations/" + identity, headers=headers(tokens, "foreign")
+                ).status_code
+                == 404
+            )
+            assert provider.calls == model_calls_before_reads, "read invoked model work"
             with ai.connect() as conn:
                 row = (
                     conn.execute(

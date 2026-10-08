@@ -59,7 +59,7 @@ golden i wersjonowany fixture release; [odbiór](evidence/12-evaluation.md).
 [Dowody dokumentowe](agent-document-evidence.md) opisują powiązanie pytania
 z wymaganymi informacjami, cytatami i odmową przy brakach;
 [odbiór](evidence/12-document-evidence.md).
-[Assistant API i persistence](assistant-api.md) opisują queries/runs,
+[Assistant API i persistence](assistant-api.md) opisują queries/runs/recommendations,
 trwałe wyniki, bezpieczny odczyt i wspólne admission; [odbiór](evidence/12-assistant.md).
 [Runtime dokumentacyjny](assistant-document-runtime.md) łączy planner, źródło AI 03,
 HTTP, rzeczywisty RAG i Bedrock; [odbiór](evidence/12-document-runtime.md).
@@ -321,3 +321,5 @@ ograniczenia; nie jest listą zakończonych zadań ani deklaracją wdrożenia.
 - [AI10: authenticated observation broker input](observation-broker.md).
 - [AI12: pełny katalog natywnych adapterów odczytu](agent-native-tools.md).
 - [AI12: odbiór adapterów i granice kwalifikacji](evidence/12-native-tools.md).
+
+[Audyt wymagań AI12 bez AWS](ai12-unpaid-requirements.md) mapuje plan do implementacji, dowodów i warunków płatnej kwalifikacji.

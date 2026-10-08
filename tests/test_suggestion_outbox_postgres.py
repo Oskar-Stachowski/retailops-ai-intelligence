@@ -124,9 +124,33 @@ def drain_test_queue(database):
     # This is the explicitly provisioned, private acceptance database only.
     while deliver_suggestion_one(database[1], Producer(), environment="test"):
         pass
+    with database[1].connect() as connection:
+        previous = set(
+            connection.scalars(
+                text("SELECT trace_id FROM ai.assistant_runs WHERE environment='test'")
+            )
+        )
+    try:
+        yield
+    finally:
+        # Independent cases must not spend each other's unchanged admission window.
+        # Delete only this case's runs in the owned test database; outbox copies survive.
+        with database[1].begin() as connection:
+            current = set(
+                connection.scalars(
+                    text("SELECT trace_id FROM ai.assistant_runs WHERE environment='test'")
+                )
+            )
+            for identity in current - previous:
+                connection.execute(
+                    text("DELETE FROM ai.assistant_runs WHERE trace_id=:id AND environment='test'"),
+                    {"id": identity},
+                )
 
 
-def query(database, tmp_path, *, enabled=True, lifetime=300, expected_status=200):
+def query(
+    database, tmp_path, *, enabled=True, lifetime=300, expected_status=200, include_context=False
+):
     from retailops_ai.agent.graph_config import load_graph_config, resolve_graph_config
 
     def configured(path):
@@ -161,7 +185,7 @@ def query(database, tmp_path, *, enabled=True, lifetime=300, expected_status=200
     ) as client:
         response = client.post("/api/v1/assistant/queries", headers=headers(tokens), json=body)
         assert response.status_code == expected_status, response.text
-        return response.json()
+        return (response.json(), settings, tokens) if include_context else response.json()
 
 
 def stored(engine, answer):
@@ -174,6 +198,195 @@ def stored(engine, answer):
             .mappings()
             .one()
         )
+
+
+def test_recommendation_reads_return_persisted_item_without_writes_or_inference(
+    database, tmp_path, monkeypatch
+):
+    import boto3
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("recommendation read constructed an AWS client")
+
+    monkeypatch.setattr(boto3, "client", forbidden)
+    monkeypatch.setattr(boto3.session.Session, "client", forbidden)
+    answer, settings, tokens = query(database, tmp_path, include_context=True)
+    identity = answer["recommended_actions"][0]["recommendation_id"]
+    with database[1].connect() as connection:
+        record = connection.scalar(
+            text("SELECT record FROM ai.assistant_suggestions WHERE recommendation_id=:id"),
+            {"id": UUID(identity)},
+        )
+        before = connection.execute(
+            text("SELECT recommendation_id,status,wire_sha256 FROM ai.assistant_suggestion_outbox")
+        ).all()
+    from retailops_ai.adapters.assistant_store import PostgresAssistantStore
+
+    statements = []
+    original = PostgresAssistantStore._read_recommendations
+
+    async def observed(self, *args, **kwargs):
+        def capture(connection, cursor, statement, parameters, context, executemany):
+            statements.append(statement.lstrip().split()[0].upper())
+
+        event.listen(self.engine.sync_engine, "before_cursor_execute", capture)
+        try:
+            return await original(self, *args, **kwargs)
+        finally:
+            event.remove(self.engine.sync_engine, "before_cursor_execute", capture)
+
+    monkeypatch.setattr(PostgresAssistantStore, "_read_recommendations", observed)
+    with TestClient(create_app(settings), base_url="http://127.0.0.1") as client:
+        for _ in range(2):
+            detail = client.get("/api/v1/recommendations/" + identity, headers=headers(tokens))
+            assert detail.status_code == 200 and detail.json() == record
+            page = client.get("/api/v1/recommendations", headers=headers(tokens))
+            assert page.status_code == 200
+            assert page.json() == {"items": [record], "next_offset": None}
+        assert (
+            client.get(
+                "/api/v1/recommendations/" + identity, headers=headers(tokens, "foreign")
+            ).status_code
+            == 404
+        )
+        assert client.get("/api/v1/recommendations", headers=headers(tokens, "foreign")).json() == {
+            "items": [],
+            "next_offset": None,
+        }
+        assert (
+            client.get(
+                "/api/v1/recommendations/" + identity, headers=headers(tokens, "admin")
+            ).json()
+            == record
+        )
+        for name in ("viewer", "plain-admin"):
+            assert (
+                client.get("/api/v1/recommendations", headers=headers(tokens, name)).status_code
+                == 403
+            )
+        assert client.get("/api/v1/recommendations").status_code == 401
+        assert (
+            client.get(
+                "/api/v1/recommendations/" + str(uuid4()), headers=headers(tokens)
+            ).status_code
+            == 404
+        )
+    assert set(statements) == {"SET", "SELECT"}
+    with database[1].connect() as connection:
+        assert (
+            connection.execute(
+                text(
+                    "SELECT recommendation_id,status,wire_sha256 FROM ai.assistant_suggestion_outbox"
+                )
+            ).all()
+            == before
+        )
+
+
+def test_recommendation_pagination_rejects_unbounded_ambiguous_and_writer_parameters(
+    database, tmp_path
+):
+    answer, settings, tokens = query(database, tmp_path, include_context=True)
+    identity = answer["recommended_actions"][0]["recommendation_id"]
+    with TestClient(create_app(settings), base_url="http://127.0.0.1") as client:
+        assert (
+            len(
+                client.get("/api/v1/recommendations?limit=1", headers=headers(tokens)).json()[
+                    "items"
+                ]
+            )
+            == 1
+        )
+        assert client.get(
+            "/api/v1/recommendations?limit=1&offset=1", headers=headers(tokens)
+        ).json() == {"items": [], "next_offset": None}
+        for parameters in (
+            "limit=0",
+            "limit=101",
+            "offset=-1",
+            "offset=501",
+            "limit=1&limit=2",
+            "offset=0&offset=1",
+            "owner_id=foreign",
+            "execute=true",
+            "status=accepted",
+        ):
+            assert (
+                client.get(
+                    "/api/v1/recommendations?" + parameters, headers=headers(tokens)
+                ).status_code
+                == 422
+            )
+        assert (
+            client.get(
+                "/api/v1/recommendations/" + identity + "?execute=true", headers=headers(tokens)
+            ).status_code
+            == 422
+        )
+        for method in ("post", "put", "patch", "delete"):
+            assert (
+                client.request(
+                    method.upper(),
+                    "/api/v1/recommendations/" + identity,
+                    headers=headers(tokens),
+                    json={},
+                ).status_code
+                == 405
+            )
+
+
+def test_recommendation_reads_recheck_current_scope_capabilities_and_credentials(
+    database, tmp_path
+):
+    answer, settings, tokens = query(database, tmp_path, include_context=True)
+    identity = answer["recommended_actions"][0]["recommendation_id"]
+    path = settings.api_auth_file
+    original = json.loads(path.read_bytes())
+    owner = next(g for g in original["grants"] if g["principal_id"].startswith("owner-"))
+    for field in ("product_ids", "selling_location_ids", "channels", "operations:read"):
+        changed = json.loads(json.dumps(original))
+        grant = next(g for g in changed["grants"] if g["principal_id"] == owner["principal_id"])
+        if field == "operations:read":
+            grant["capabilities"].remove(field)
+        else:
+            grant["scope"][field] = [str(uuid4())] if field != "channels" else ["online"]
+        path.write_text(json.dumps(changed))
+        with TestClient(create_app(settings), base_url="http://127.0.0.1") as client:
+            assert (
+                client.get(
+                    "/api/v1/recommendations/" + identity, headers=headers(tokens)
+                ).status_code
+                == 404
+            )
+            assert client.get("/api/v1/recommendations", headers=headers(tokens)).json() == {
+                "items": [],
+                "next_offset": None,
+            }
+    changed = json.loads(json.dumps(original))
+    next(c for c in changed["credentials"] if c["principal_id"] == owner["principal_id"])[
+        "revoked"
+    ] = True
+    path.write_text(json.dumps(changed))
+    with TestClient(create_app(settings), base_url="http://127.0.0.1") as client:
+        assert client.get("/api/v1/recommendations", headers=headers(tokens)).status_code == 401
+
+
+def test_expired_recommendation_is_hidden_even_from_audit_reader(database, tmp_path):
+    answer, settings, tokens = query(database, tmp_path, lifetime=2, include_context=True)
+    identity = answer["recommended_actions"][0]["recommendation_id"]
+    time.sleep(2.1)
+    with TestClient(create_app(settings), base_url="http://127.0.0.1") as client:
+        for name in ("owner", "admin"):
+            assert (
+                client.get(
+                    "/api/v1/recommendations/" + identity, headers=headers(tokens, name)
+                ).status_code
+                == 404
+            )
+        assert client.get("/api/v1/recommendations", headers=headers(tokens)).json() == {
+            "items": [],
+            "next_offset": None,
+        }
 
 
 def test_api_completion_atomically_enqueues_compatible_event(database, tmp_path):

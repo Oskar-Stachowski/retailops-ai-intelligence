@@ -1,14 +1,26 @@
 """AI-owned PostgreSQL transactions; shared admission, expiring leases and fenced completion."""
 
 import json
-from datetime import timedelta
+from datetime import UTC, datetime, timedelta
 from uuid import UUID
 
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine
 
-from retailops_ai.assistant.contracts import AssistantAnswer, AssistantRun, PersistedSuggestion
-from retailops_ai.assistant.service import AdmissionPolicy, AssistantError, RunLease, readable
+from retailops_ai.assistant.contracts import (
+    AssistantAnswer,
+    AssistantRun,
+    PersistedSuggestion,
+    RecommendationPage,
+)
+from retailops_ai.assistant.service import (
+    AdmissionPolicy,
+    AssistantError,
+    RunLease,
+    readable,
+    recommendation_readable,
+    recommendation_reader,
+)
 from retailops_ai.domain.access import Principal
 from retailops_ai.security.models import KnowledgeResourceScope
 
@@ -273,3 +285,85 @@ class PostgresAssistantStore:
             ):
                 return None
             return run_record(row["record"])
+
+    async def _read_recommendations(
+        self, principal: Principal, recommendation_id: UUID | None = None
+    ) -> list[PersistedSuggestion]:
+        if not recommendation_reader(principal):
+            raise AssistantError(403)
+        audit = "admin" in principal.roles and "assistant:audit" in principal.capabilities
+        async with self.engine.begin() as connection:
+            # Reading suggestions must not run retention cleanup or enqueue anything.
+            await connection.execute(text("SET TRANSACTION READ ONLY"))
+            await boundary(connection)
+            rows = (
+                (
+                    await connection.execute(
+                        text("""SELECT s.record,s.expires_at,s.recommendation_id,s.trace_id,s.answer_id,
+                        r.owner_id,r.scope,r.access_context
+                    FROM ai.assistant_suggestions s JOIN ai.assistant_runs r USING(trace_id)
+                    WHERE r.environment=:env AND r.status='succeeded'
+                        AND r.retain_until > statement_timestamp()
+                        AND s.expires_at > statement_timestamp()
+                        AND (:audit OR r.owner_id=:owner)
+                        AND (CAST(:id AS uuid) IS NULL OR s.recommendation_id=CAST(:id AS uuid))
+                    ORDER BY s.record->>'created_at' DESC,s.recommendation_id
+                    LIMIT 501"""),
+                        {
+                            "env": self.environment,
+                            "owner": principal.principal_id,
+                            "audit": audit,
+                            "id": recommendation_id,
+                        },
+                    )
+                )
+                .mappings()
+                .all()
+            )
+        # Admission retains at most 100 runs, each with at most five candidates.
+        if len(rows) > 500:
+            raise AssistantError(503)
+        items = []
+        now = datetime.now(UTC)
+        for row in rows:
+            item = PersistedSuggestion.model_validate_json(json.dumps(row["record"]))
+            if (
+                item.recommendation_id != row["recommendation_id"]
+                or item.trace_id != row["trace_id"]
+                or item.answer_id != row["answer_id"]
+                or item.expires_at != row["expires_at"]
+            ):
+                raise AssistantError(503)
+            access = row["access_context"]
+            knowledge = (
+                KnowledgeResourceScope.model_validate_json(json.dumps(access["knowledge_scope"]))
+                if access["knowledge_scope"]
+                else None
+            )
+            if item.expires_at > now and recommendation_readable(
+                principal,
+                item,
+                row["owner_id"],
+                json.dumps(row["scope"]),
+                access["required_capabilities"],
+                knowledge,
+            ):
+                items.append(item)
+        return items
+
+    async def recommendations(
+        self, principal: Principal, *, limit: int = 50, offset: int = 0
+    ) -> RecommendationPage:
+        if not 1 <= limit <= 100 or not 0 <= offset <= 500:
+            raise ValueError("recommendation_page_outside_budget")
+        items = await self._read_recommendations(principal)
+        end = offset + limit
+        return RecommendationPage(
+            items=items[offset:end], next_offset=end if end < len(items) else None
+        )
+
+    async def recommendation(
+        self, recommendation_id: UUID, principal: Principal
+    ) -> PersistedSuggestion | None:
+        items = await self._read_recommendations(principal, recommendation_id)
+        return items[0] if items else None

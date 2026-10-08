@@ -1,11 +1,11 @@
 # Assistant API i trwałe wyniki
 
-**AI 12 · zakres lokalny, bez AI 10.** [Kontrakty](../contracts/assistant/v1/assistant.openapi.json)
-oraz [odbiór](evidence/12-assistant.md). HTTP jest wykonane i sprawdzone z grafem
-na fixtures oraz z rzeczywistą bazą PostgreSQL. Opcjonalny
-[runtime dokumentacyjny](assistant-document-runtime.md) podłącza standardowe `serve`
-do plannera, importu AI 03, rzeczywistego RAG i Bedrock. Bez konfiguracji runtime
-autoryzowane query zwraca 503. Pełne AI 12 ma dalsze bramki.
+[Kontrakty](../contracts/assistant/v1/assistant.openapi.json) obejmują queries,
+safe runs i chronione odczyty utrwalonych rekomendacji. HTTP działa z grafem
+na fixtures oraz rzeczywistym PostgreSQL. [Runtime natywny](assistant-native-bedrock.md)
+podłącza osiem adapterów i rzeczywisty indeks AI11; jego kwalifikacja LLM
+pozostaje zatrzymana. Bez runtime autoryzowane query zwraca 503, ale odczyty
+już zapisanych wyników nadal korzystają z trwałego store.
 
 ## Żądanie i odpowiedź
 
@@ -34,7 +34,8 @@ recommended_actions, confidence, freshness, citations, limitations,
 agent_config_version, index_id i created_at. Nie zawiera wewnętrznego `kind`.
 Akcje mają trwałe recommendation UUID i wymagają przeglądu człowieka.
 Te same candidate/trace tworzą tę samą identity UUIDv5; nowy HTTP request jest
-nowym runem. Brak publicznego execute, publikowania eventów lub zapisu RetailOps.
+nowym runem. Publiczne API udostępnia odczyt. Publikację trwałej sugestii kontroluje
+serwerowy [outbox](assistant-suggestion-outbox.md); nie nadaje prawa do zapisu workflow RetailOps.
 
 401/403 oznacza tożsamość/uprawnienia; 422 schema/zakres; 424 wymaganą zależność
 danych; 429 admission lub wyczerpany budżet; 502 niewalidowalny output;
@@ -55,6 +56,27 @@ Administrator wymaga osobnego `assistant:audit`; sama rola admin lub
 `access:admin` nie daje tego prawa ani prawa do query. Policy rotation nadal
 wymaga restartu wszystkich procesów, zgodnie z [lokalnym auth](access-control.md).
 
+## Odczyt rekomendacji
+
+`GET /api/v1/recommendations` zwraca `{items, next_offset}`. Domyślny limit wynosi
+50, maksymalny 100; offset ma zakres 0–500. Paginacja następuje po kontroli
+uprawnień i nie liczy cudzych lub niedostępnych rekordów. Powtórzone i nieznane
+parametry dają 422. `GET /api/v1/recommendations/{recommendation_id}` zwraca
+pełny immutable [persisted item](../contracts/assistant/v1/suggestion.v1.schema.json).
+
+Operator wymaga `assistant:query`, własności runu, całego pierwotnego zakresu,
+zachowanych praw narzędzi/RAG oraz osobnego fizycznego grantu, gdy sugestia
+wskazuje magazyn. Administrator wymaga `assistant:audit`. Brak, cudzy wpis,
+cofnięte prawa i wygaśnięcie dają jednakowe 404; lista je pomija. Wygaśnięcie
+obowiązuje także administratora. Odczyt nie oznacza ponownej kwalifikacji danych
+ani bieżącego wdrożenia zapisanej wersji modelu.
+
+Zapytania używają transakcji SQL `READ ONLY`, timeoutu 2 s i ograniczonej liczby
+rekordów. Nie uruchamiają cleanup, modelu, enqueue ani publikacji. Immutable
+`status=proposed` i `requires_human_review=true` pozostają zapisane bez zmiany.
+Aktualną realizację lub zmianę źródła/model release ocenia się ponownie przez
+nowy run i dotychczasowy workflow człowieka; API nie wykonuje rekomendacji.
+
 ## Zapis i admission
 
 Migracja `0009_assistant` tworzy w odrębnej bazie AI `assistant_runs`,
@@ -64,7 +86,8 @@ Migracja `0010_assistant_token_budget` dostosowuje limit SQL do 19 000 tokenów
 Run ma właściciela, scope, wymagane prawa, hash requestu, HTTP correlation UUID
 i claim. Pytanie/payloady narzędzi nie trafiają do trace. Odpowiedź i pełny
 review candidate są chronionymi danymi własnymi AI; nie są rekordem workflow
-ani rekomendacją opublikowaną przez AI 10.
+ani potwierdzeniem delivery w Source. Włączenie outboxa dodaje atomowy zapis
+eventu; osobny worker wymaga rzeczywistego ACK i deduplikacji Source.
 
 Admission zapisuje running przed grafem. Jedna transakcja zapisuje odpowiedź,
 kandydatów i terminalny trace. FK, constraints i kontrola przejść blokują
@@ -109,8 +132,8 @@ sprawdza rzeczywisty HTTP/PG, równoległe admission, token/cost debit,
 fault injection, SIGKILL API i zachowanie trzech wyników po restarcie bazy.
 Fixtures mierzą te mechanizmy; nie potwierdzają jakości LLM lub danych ML.
 
-Gotowy [adapter Bedrock](agent-bedrock.md) ma circuit breaker i ograniczony
-smoke CLI oraz opcjonalne podłączenie do runtime dokumentacyjnego. Dalsze
-zakresy: więcej ocenionych pytań i planner języka naturalnego, adaptery danych
-biznesowych/ML, kwalifikacja modelu i retrieval na pełnym golden oraz
-AI 10 outbox/v2/read API/UI. Sugestie nie są jeszcze wystawione w read API ML.
+[Runtime Bedrock](assistant-native-bedrock.md), natywne adaptery i ścieżka
+sugestia → outbox/v2 → Source API/UI są zaimplementowane. Osobny test bez AWS
+sprawdza mechanikę integracji przy jawnym fixture LLM i obserwacji testowej.
+[Punkt wznowienia](ai12-paid-qualification.md) opisuje niezależny przegląd etykiet,
+bieżące piny źródeł/modeli i przyszłą kwalifikację realnego Sonnet/Titan.

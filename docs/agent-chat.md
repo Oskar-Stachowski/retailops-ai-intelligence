@@ -9,7 +9,7 @@ nie jest odbiorem rzeczywistego chat Bedrock ani zamknięciem AI 12.
 
 ## Konfiguracja i uruchomienie kontroli
 
-[agent/chat.fake.native-v12.v1.json](../agent/chat.fake.native-v12.v1.json) jest konfiguracją maszynową.
+[agent/chat.fake.prepaid.v3.json](../agent/chat.fake.prepaid.v3.json) jest konfiguracją maszynową.
 Wskazuje model `scripted-chat-v1` w regionie `offline`, parametry generacji,
 budżet i syntetyczne stawki zerowe. Przypina zatwierdzony indeks AI 11,
 konfigurację Titan V2 i retrieval, checksum schematów narzędzi/odpowiedzi
@@ -18,7 +18,7 @@ refusal i examples. Embeddings w tej konfiguracji opisują przestrzeń wiedzy;
 samo sprawdzenie konfiguracji nie wywołuje AWS ani retrieval.
 
 ```bash
-uv run --locked retailops-ai agent-config-check agent/chat.fake.native-v12.v1.json
+uv run --locked retailops-ai agent-config-check agent/chat.fake.prepaid.v3.json
 make contracts-check
 uv run --locked pytest tests/test_agent_chat.py tests/test_agent_tools.py
 ```

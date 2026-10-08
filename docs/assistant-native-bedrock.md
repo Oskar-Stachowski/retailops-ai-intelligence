@@ -45,7 +45,7 @@ allowed in the emitter helper. Local shared Docker and Compose are not started.
 
 ## Stop before paid tests
 
-The current `.prepaid.v2` graph, release and smoke candidates preserve earlier
+The current `.prepaid.v3` graph, release and smoke candidates preserve earlier
 published families. The `bedrock-smoke` command prepares a proposal by default;
 paid calls require `--execute`, an exact cost cap and a new private durable output.
 The Haiku/Sonnet fixture smoke and document smoke are separate from native

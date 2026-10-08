@@ -182,3 +182,8 @@ class PersistedSuggestion(SuggestionCandidate):
         if str(self.store_id) != self.selling_location_id or self.created_at >= self.expires_at:
             raise ValueError("persisted_candidate_scope_or_expiry")
         return self
+
+
+class RecommendationPage(Contract):
+    items: list[PersistedSuggestion] = Field(max_length=100)
+    next_offset: int | None = Field(ge=0, le=500)

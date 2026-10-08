@@ -1,6 +1,6 @@
 # Wersjonowane pytania AI12
 
-[Profil proponowany](../agent/question-routes.native-v12.proposed.v1.json) obejmuje 26 pytań:
+[Profil proponowany](../agent/question-routes.native-bedrock.proposed.v3.json) obejmuje 26 pytań:
 20 biznesowych w języku polskim i angielskim oraz 6 dokumentacyjnych z zachowanymi
 regułami dowodów. Obsługuje 12 intencji: sprzedaż, porównanie sprzedaży, zapas,
 prognozę, ryzyko, anomalie, operacje, modele, dokumentację, stan zweryfikowany,
@@ -51,14 +51,11 @@ Fixtures nie mogą być przedstawiane jako źródła runtime. Budżety, walidacj
 dowodów, trace store i trwały zapis pozostają kontrolowane przez istniejący graf
 i Assistant API.
 
-Wznowienie nie rejestruje automatycznie rzeczywistych adapterów biznesowych.
-Adapter [natywnej prognozy v12](agent-forecast-v12.md) jest dostępny do jawnego
-podłączenia server-owned readera i kwalifikacji runtime.
-Adapter [sprzedaży z kwalifikowanych dni](agent-qualified-sales.md) odczytuje
-zweryfikowane rodzice Source/Curated/Raw DQ i zachowuje dzienne dowody.
-Ich kontrakty, świeżość, snapshot/model/release binding oraz fizyczne zakresy
-stockout muszą zostać sprawdzone przy integracji z AI10. Brakujący adapter jest
-przeszkodą, a nie pustym wynikiem lub zerową wartością.
+[Natywny runtime Bedrock](assistant-native-bedrock.md) składa wszystkie osiem
+adapterów; [wariant offline](assistant-native-offline.md) sprawdza ich połączenie
+z trwałym API bez AWS. Bieżące trasy pozostają proponowane i wymagają niezależnego
+przeglądu. Brakujące lub nieaktualne źródło nadal daje kontrolowany błąd;
+nie jest zastępowane pustym wynikiem ani zerową wartością.
 
 Walidacja offline:
 
@@ -69,7 +66,7 @@ make contracts-check
 ```
 
 Aktualny kandydat offline używa
-[nowego release](../agent/evaluation-release.fake.native-tools.v1.json). Historyczny
+[nowego release](../agent/evaluation-release.fake.prepaid.v3.json). Historyczny
 [release](../agent/evaluation-release.fake.v1.json) i wyniki Bedrock pozostają
 zachowane; ich kwalifikacja nie przechodzi automatycznie na nowy kod.
 

@@ -1271,3 +1271,26 @@ budżet pozostaje zachowany. [Checkpoint](evidence/12-prepaid-checkpoint.md) i
 [instrukcja wznowienia](ai12-paid-qualification.md) zawierają dowody i bramki.
 AI12 pozostaje **in_progress**, PR32 draft. Własny PostgreSQL zatrzymano,
 a oryginalne checkouty i usługi sąsiednich sesji pozostają nietknięte.
+
+
+## 2026-10-08 — AI12: odczyty rekomendacji i aktualizacja przygotowania
+
+Uzupełniono wymagane `GET /api/v1/recommendations` oraz detail UUID. Odczyty
+zwracają pełny immutable item, filtrują przed paginacją, sprawdzają właściciela,
+aktualne prawa narzędzi/RAG i fizyczny magazyn oraz ukrywają expiry także przed
+audit adminem. Transakcje SQL są `READ ONLY`; odczyt nie uruchamia LLM ani outboxa.
+Cztery nowe rzeczywiste SQL/HTTP testy i osobna kontrola cofnięcia grantów
+sprawdzają te granice. E2E Source sprawdza teraz także odczyt po stronie AI.
+
+Nowa rodzina `.prepaid.v3` zachowuje opublikowane v1/v2. Pełne wymagania
+planu mapuje [audyt bez AWS](ai12-unpaid-requirements.md); instrukcje używają
+bieżących konfiguracji, a dokumentacyjny runtime v1 jest oznaczony historycznie.
+[Preflight RAG](evidence/12-prepaid-native-preflight-v3.json) dodaje proponowane
+równoważne źródła instrukcji startu w istniejącym indeksie AI11. Pokrycie rośnie
+z 3/6 do 4/6 przy identycznym top-5, wymaganiach i statusach. Brak instrukcji
+precommit oraz verified metrics evidence pozostaje jawny; etykiety/supports
+wymagają niezależnego przeglądu. Aktualną kwalifikację CI podaje draft PR32.
+
+Nowe wywołania AWS podczas tego przyrostu: **0**, nowy koszt AWS: **0**.
+Płatne propozycje pozostają `not_run`, budżet nie jest zatwierdzony. AI12
+pozostaje **in_progress** do kwalifikacji LLM i niezależnego odbioru etykiet.

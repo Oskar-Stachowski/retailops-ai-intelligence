@@ -334,6 +334,7 @@ def test_original_ai12_emitter_source_consumer_api_and_built_ui(context, tmp_pat
             source_observation="invented_sales_event_in_actual_Source_SQL_SELECT_only",
             source_transport="accepted_v1_fixture_transport_opt_in",
             actual_assistant_api=True,
+            actual_ai_recommendation_reads=True,
             actual_ai_sql_outbox=True,
             actual_locked_publisher=True,
             actual_broker=True,

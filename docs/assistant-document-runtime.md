@@ -1,8 +1,12 @@
 # Asystent pytań o dokumentację
 
-AI 12 ma opcjonalne podłączenie standardowego API do rzeczywistego RAG i
-Bedrock. To ograniczony profil dokumentacyjny. [Odbiór](evidence/12-document-runtime.md)
-podaje wynik testu oraz pozostałe bramki AI 12.
+Ten dokument zachowuje historyczny profil `document-runtime.v1` i jego
+[odbiór](evidence/12-document-runtime.md). Profil jest przypięty do wcześniejszego
+kodu; nie przechodzi ładowania w bieżącej wersji aplikacji. Opisane niżej kwoty,
+trasy i migracja `0010` dotyczą tamtej próby. Bieżący serwis wymaga migracji
+`0028_ai12_suggestion_outbox`. Nowe przygotowanie używa [runtime natywnego](assistant-native-bedrock.md)
+i [punktu wznowienia przed płatną kwalifikacją](ai12-paid-qualification.md);
+nie należy przenosić historycznego wyniku na nową konfigurację.
 
 ## Obsługiwane pytania
 

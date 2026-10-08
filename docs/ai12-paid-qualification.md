@@ -1,10 +1,11 @@
 # AI12 — punkt wznowienia przed płatną kwalifikacją
 
 Przygotowanie nie uruchamia inference ani embeddings. Bieżący plan to
-[kampania v2](evidence/12-prepaid-test-plan-v2.json), a pełne etykiety i oracles
-znajdują się w [pakiecie przeglądu v2](evidence/12-prepaid-label-review-packet-v2.json).
-Wcześniejsza opublikowana rodzina `.prepaid.v1` pozostaje niezmieniona.
-Rodzina `.prepaid.v2` uwzględnia main `bc50733`; zmiana kodu po jej publikacji
+[kampania v3](evidence/12-prepaid-test-plan-v3.json), a pełne etykiety i oracles
+znajdują się w [pakiecie przeglądu v3](evidence/12-prepaid-label-review-packet-v3.json).
+Opublikowane rodziny `.prepaid.v1` i `.prepaid.v2` pozostają niezmienione.
+Rodzina `.prepaid.v3` dodaje chronione odczyty rekomendacji i proponowane
+równoważne źródła instrukcji startu w niezmienionym indeksie AI11; zmiana kodu po jej publikacji
 wymaga kolejnego identyfikatora konfiguracji i osobnego odbioru.
 
 ## Co można odtworzyć bez AWS
@@ -29,11 +30,11 @@ Przykład odtworzenia pierwszej propozycji, nadal bez AWS:
 
 ```sh
 uv run --locked --extra snapshot --extra forecast retailops-ai bedrock-smoke \
-  --config agent/graph.sonnet-qualification.prepaid.v2.json \
-  --profile agent/sonnet-qualification-1.prepaid.v2.json \
-  --offline-config agent/graph.evaluate.fake.prepaid.v2.json \
+  --config agent/graph.sonnet-qualification.prepaid.v3.json \
+  --profile agent/sonnet-qualification-1.prepaid.v3.json \
+  --offline-config agent/graph.evaluate.fake.prepaid.v3.json \
   --golden agent/golden.canonical.v1.json \
-  --release agent/evaluation-release.fake.prepaid.v2.json \
+  --release agent/evaluation-release.fake.prepaid.v3.json \
   --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock
 ```
 
@@ -57,15 +58,17 @@ Nie są odbiorem natywnych danych ani rzeczywistego RAG.
    fixture nie upoważnia do odczytu bieżących okresów; funkcjonalny odbiór AI10
    z development v12 nie jest promocją do canonical ani odbiorem jakości.
 4. Usunąć braki dowodów dokumentowych albo przyjąć niezależnie oceniony wynik
-   `insufficient_evidence`. Odtworzone sześć pytań daje pełne pokrycie trzech.
-   Dwa pytania instrukcyjne nie znajdują wymaganych fragmentów w top-5;
+   `insufficient_evidence`. Odtworzone sześć pytań daje pełne pokrycie czterech po dodaniu proponowanych
+   równoważnych źródeł instrukcji startu. Ranking top-5, wymagania i statusy
+   pozostają niezmienione. Pytanie o kontrole przed commitem nadal nie znajduje
+   wymaganych fragmentów w top-5;
    pytanie o zweryfikowane zabezpieczenie metryk nie ma odpowiedniego dowodu.
    Nie podnosić statusu `implemented` do `verified` ani osłabiać wymagań cytatów.
 5. Jeśli potrzebny jest transport native-v2, uzyskać jego osobny odbiór po
    stronie Source. Bieżący E2E używa przyjętego v1 z jawnym fixture opt-in.
    Nie deklarować nieobserwowanego heartbeat ani Kafka lag.
 
-[Natywny kandydat v2](../agent/native-bedrock-runtime.prepaid.proposed.v2.json)
+[Natywny kandydat v3](../agent/native-bedrock-runtime.prepaid.proposed.v3.json)
 przechodzi schema, lecz runtime celowo odrzuca jego proponowane trasy.
 Zawiera osiem adapterów, rzeczywisty pin AI11 i osobny proponowany cap chatu
 3,00 USD oraz rezerwę query embeddings 0,005 USD. Jest konfiguracją do

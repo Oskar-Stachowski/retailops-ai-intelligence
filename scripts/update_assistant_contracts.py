@@ -13,6 +13,7 @@ from retailops_ai.assistant.contracts import (
     AssistantQuery,
     AssistantRun,
     PersistedSuggestion,
+    RecommendationPage,
 )
 from retailops_ai.assistant.native_bedrock import NativeRuntimeConfig
 from retailops_ai.assistant.native_runtime import NativeOfflineConfig
@@ -35,6 +36,7 @@ def main() -> int:
         "answer": AssistantAnswer,
         "run": AssistantRun,
         "suggestion": PersistedSuggestion,
+        "recommendation-page": RecommendationPage,
         "admission-policy": AdmissionPolicy,
         "document-runtime": DocumentRuntimeConfig,
         "native-offline-runtime": NativeOfflineConfig,

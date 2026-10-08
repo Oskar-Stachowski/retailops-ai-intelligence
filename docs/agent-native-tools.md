@@ -107,11 +107,13 @@ read grant also removes access to a persisted trace. Native stockout remains
 excluded from the legacy replenishment suggestion join; a recorded approval
 does not supply its required deployment attestation.
 
-The new active candidate family is `.native-tools.v1`. Published inventory,
+The new active candidate family is `.prepaid.v3`. Published inventory,
 sales and forecast candidate families, model artifacts, canonical golden labels
 and earlier evidence remain unchanged. Question routes remain proposed, pending
 review. [Acceptance receipt](evidence/12-native-tools.md) distinguishes adapter
-mechanics and offline fake-chat checks from actual PostgreSQL/Producer/LLM
-runtime acceptance. **AI12 remains `in_progress`.** Production bindings, scoped
-heartbeat/Kafka observations, native suggestion policy/AI10 delivery, accepted
-question labels and budgeted real Sonnet/Titan acceptance remain open.
+mechanics and offline fake-chat checks from real LLM qualification. Actual
+PostgreSQL/native HTTP and the accepted v1 AI12 outbox-to-Source API/UI path have
+separate [unpaid acceptance](assistant-native-bedrock.md). **AI12 remains
+`in_progress`.** Current production bindings, independent question-label review
+and real Sonnet/Titan qualification remain open. Native-v2 transport and broader
+heartbeat/Kafka observations require separate evidence if those extensions are selected.

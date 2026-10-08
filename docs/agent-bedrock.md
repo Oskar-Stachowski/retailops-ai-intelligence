@@ -1,9 +1,9 @@
 # Chat Bedrock i ograniczony test
 
 AI 12 ma adapter Converse, kontrolę dostępu konta i zweryfikowane europejskie
-profile Haiku 4.5 oraz Sonnet 4.6. [Bieżący wynik i koszt](evidence/12-document-runtime.md)
-odnoszą się do rzeczywistych wywołań modelu i RAG. Standardowe Assistant API
-ma opcjonalny runtime dokumentacyjny; sam test CLI nie uruchamia serwisu.
+profile Haiku 4.5 oraz Sonnet 4.6. [Historyczny wynik i koszt](evidence/12-document-runtime.md)
+odnoszą się do rzeczywistych wywołań modelu i RAG. Bieżące Assistant API
+ma [runtime ośmiu natywnych adapterów](assistant-native-bedrock.md); sam test CLI nie uruchamia serwisu.
 
 ## Modele i zakres
 
@@ -20,8 +20,8 @@ CountTokens używa modelu bazowego; Converse używa sprawdzonego profilu EU.
 [Dowód dostępności profili i CountTokens](evidence/12-bedrock-preflight.json).
 Nova Lite nie obsługuje wymaganego CountTokens i nie jest bieżącym wariantem.
 
-[Konfiguracja Haiku](../agent/graph.bedrock-smoke.native-v12.v1.json) oraz
-[konfiguracja Sonnet](../agent/graph.sonnet-smoke.native-v12.v1.json) używają tych samych
+[Bieżąca konfiguracja Haiku](../agent/graph.bedrock-smoke.prepaid.v3.json) oraz
+[konfiguracja Sonnet](../agent/graph.sonnet-smoke.prepaid.v3.json) używają tych samych
 promptów, walidatorów, sześciu pytań i zamrożonych oracles. Sprawdzają sprzedaż,
 zapas, porównanie okresów, cytowaną dokumentację, odmowę zamówienia i cudzy
 scope. Ostatnie dwa przypadki kontroluje serwer bez modelu.
@@ -35,7 +35,7 @@ mieszany zaliczył 5/6 dla wcześniejszych etykiet.
 [Poprawka dokumentacji](agent-document-evidence.md) ma osobny odbiór offline
 i rzeczywisty test; zachowuje historyczną ocenę modelu. Haiku pozostaje
 profilem porównawczym; nie jest modelem zakwalifikowanym do runtime.
-Nowy [test dokumentacji](evidence/12-bedrock-runs/sonnet-4-documents.json)
+Historyczny [test dokumentacji](evidence/12-bedrock-runs/sonnet-4-documents.json)
 Sonnet zaliczył 6/6 bez napraw. To odbiór sześciu przypadków z syntetycznymi
 źródłami; pełna kwalifikacja rzeczywistego modelu i retrieval pozostaje otwarta.
 
@@ -80,26 +80,25 @@ SmokeBudget łączy sesje jednego procesu. [Rejestr kosztów](evidence/12-bedroc
 kolejnym procesem trzeba odjąć je od zatwierdzonego limitu łącznego; samo CLI nie zapewnia limitu między
 procesami. Przerwane wykonanie bez końcowego kosztu zachowuje pełny cap próby.
 
-## Uruchomienie
+## Uruchomienie bez AWS
 
-`make bedrock-smoke` sprawdza pełny offline golden i wiązania release, a potem
-pokazuje `not_run`, bez klienta AWS. Jawny test Haiku po sprawdzeniu pozostałego
-budżetu:
+`make bedrock-smoke` sprawdza pełny offline golden i wiązania bieżącego
+release `.prepaid.v3`, a potem pokazuje `not_run`, bez klienta AWS:
 
 ```sh
-make bedrock-smoke BEDROCK_ARGS='--execute --max-cost-usd 0.15 --output .local/bedrock-haiku-next.json'
+make bedrock-smoke
 ```
 
-Dla Sonnet użyć tego samego polecenia CLI z parametrami
-`--config agent/graph.sonnet-smoke.native-v12.v1.json`,
-`--profile agent/sonnet-smoke.native-v12-main.v1.json`, `--max-cost-usd 0.25` oraz nowym outputem.
-Pozostałe parametry są identyczne jak w celu `bedrock-smoke` w Makefile.
+[Punkt wznowienia](ai12-paid-qualification.md) zawiera pięć propozycji kampanii
+Sonnet, osobny natywny runtime i pełny pakiet przeglądu etykiet. Opublikowane
+konfiguracje i wyniki wcześniejszych rodzin pozostają niezmienione. Historyczne
+wyniki powyżej nie kwalifikują nowego application checksum. Nowe caps są
+proponowane; użytkownik zatrzymał pracę przed płatnymi wywołaniami.
 
-Katalog `.local` musi istnieć. Raport ma 0600, nową nazwę i trwały checkpoint
-przed AWS. Istniejącego raportu nie nadpisujemy. `execution_started` po przerwaniu
-nie dowodzi sukcesu ani nie zeruje kosztu. Błąd zależności/deadline/budżetu
-zatrzymuje następne przypadki. Konsola pokazuje tylko podsumowanie.
-Poświadczenia pochodzą z AWS default chain lub `--aws-profile`.
+Przyszłe wykonanie wymaga jawnego `--execute`, sprawdzonego budżetu, bieżących
+pinów oraz nowego prywatnego outputu. CLI tworzy trwały checkpoint przed AWS;
+przerwana próba zachowuje rezerwację. Warunki i parametry znajdują się w
+runbooku wznowienia. Obecny zakres nie wykonuje inference ani nowych embeddings.
 
 Odczytowe uprawnienia preflight obejmują `bedrock:GetUseCaseForModelAccess`,
 `bedrock:GetFoundationModelAvailability` i `bedrock:GetInferenceProfile`.

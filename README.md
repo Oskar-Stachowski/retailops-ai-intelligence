@@ -37,8 +37,10 @@ atomową aktywację i rollback. Aktualny odbiór i granice opisuje
 [status](docs/STATUS.md). [AI 12 jest rozpoczęty](docs/agent-tools.md): typowany
 katalog narzędzi, uprawnienia, budżet, adapter wiedzy, ograniczony graf i
 kanoniczne odpowiedzi. [Reguły sugestii i golden](docs/agent-evaluation.md)
-obejmują 50 przypadków offline. Rzeczywiste narzędzia biznesowe, Bedrock chat
-i Assistant API pozostają do realizacji.
+obejmują 50 przypadków offline. Osiem natywnych adapterów, trwałe Assistant API,
+odczyty rekomendacji i runtime Bedrock są zaimplementowane. Osobny E2E sprawdza
+sugestię przez broker do Source API/UI bez AWS. [Punkt wznowienia AI12](docs/ai12-paid-qualification.md)
+wiąże bieżące konfiguracje, niezależny przegląd etykiet oraz zatrzymaną płatną kwalifikację.
 [Uprawnienia API](docs/access-control.md).
 [Kontrakty i walidacja offline](docs/data-contracts.md).
 [Uruchomienie stosu](docs/local-stack.md) i [HTTP](docs/http-service.md).

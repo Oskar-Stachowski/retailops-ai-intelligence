@@ -89,7 +89,7 @@ def setup(tmp_path, *, intent="sales", capabilities=None, provider_options=None,
     path.write_text(json.dumps(raw))
     path.chmod(0o600)
     authority = LocalAccess(AccessPolicy.model_validate_json(json.dumps(raw)))
-    config = load_graph_config(ROOT / "agent/graph.fake.prepaid.v2.json")
+    config = load_graph_config(ROOT / "agent/graph.fake.prepaid.v3.json")
     question = "What evidence is available?"
     body = {
         "question": question,
@@ -220,6 +220,85 @@ def client(path, backend=None, store=None):
 
 def headers(tokens, name="owner"):
     return {"Authorization": "Bearer " + tokens[name]}
+
+
+def test_recommendation_physical_and_knowledge_grants_are_checked_again(tmp_path):
+    from retailops_ai.agent.suggestions import SuggestionCandidate
+    from retailops_ai.assistant.contracts import PersistedSuggestion
+    from retailops_ai.assistant.service import recommendation_readable
+    from retailops_ai.data_contracts.identity import canonical_sha256
+    from retailops_ai.domain.access import StockoutAccess
+
+    _, tokens, authority, body, backend, _ = setup(tmp_path, intent="operations")
+    principal = authority.authenticate("Bearer " + tokens["owner"])
+    store = CaptureStore()
+    asyncio.run(
+        AssistantService(backend, store, "test").query(
+            AssistantQuery.model_validate_json(json.dumps(body)),
+            principal,
+            "Bearer " + tokens["owner"],
+        )
+    )
+    original = next(iter(store.suggestions.values()))
+    candidate = original.model_dump(mode="json", include=set(SuggestionCandidate.model_fields))
+    candidate["stock_location_id"] = "warehouse-01"
+    candidate["candidate_id"] = "candidate-sha256-" + canonical_sha256(
+        {key: value for key, value in candidate.items() if key != "candidate_id"}
+    )
+    item = PersistedSuggestion.model_validate_json(
+        json.dumps(original.model_dump(mode="json") | candidate)
+    )
+    lease = store.entries[item.trace_id][0]
+    principal = replace(
+        principal,
+        capabilities=principal.capabilities | {"stockout:read", "knowledge:read"},
+        stockout=StockoutAccess(frozenset({PRODUCT}), frozenset({"warehouse-01"})),
+        knowledge=KnowledgeAccess(
+            "test",
+            frozenset({"Oskar-Stachowski/retailops-ai-intelligence"}),
+            frozenset({"project_internal"}),
+            frozenset({"implemented"}),
+        ),
+    )
+    knowledge = KnowledgeResourceScope.model_validate_json(
+        json.dumps(
+            {
+                "environment": "test",
+                "repositories": sorted(principal.knowledge.repositories),
+                "access_classes": ["project_internal"],
+                "document_statuses": ["implemented"],
+            }
+        )
+    )
+
+    def visible(actor):
+        return recommendation_readable(
+            actor,
+            item,
+            lease.owner_id,
+            lease.scope_json,
+            ["operations:read", "knowledge:read"],
+            knowledge,
+        )
+
+    assert visible(principal)
+    for revoked in (
+        replace(principal, stockout=None),
+        replace(principal, capabilities=principal.capabilities - {"stockout:read"}),
+        replace(
+            principal, stockout=StockoutAccess(frozenset({PRODUCT}), frozenset({"other-warehouse"}))
+        ),
+        replace(
+            principal,
+            stockout=StockoutAccess(frozenset({"other-product"}), frozenset({"warehouse-01"})),
+        ),
+        replace(principal, knowledge=None),
+        replace(
+            principal,
+            knowledge=replace(principal.knowledge, document_statuses=frozenset({"specified"})),
+        ),
+    ):
+        assert not visible(revoked)
 
 
 def test_http_runs_actual_graph_and_persists_response_and_safe_metadata(tmp_path):

@@ -13,7 +13,7 @@ verified at startup and reused by the stockout adapter. The runtime checks the
 AI schema, pgvector version, UTC database sessions, active index pin and the Producer read dependency
 before a run. A changed index generation makes readiness fail and prevents a
 new answer. The original published candidate families remain immutable; current
-checks use `.native-offline.v1`.
+checks use `.prepaid.v3`.
 
 Set these private settings together:
 

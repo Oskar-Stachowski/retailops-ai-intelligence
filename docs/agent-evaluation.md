@@ -1,8 +1,8 @@
 # Sugestie i ewaluacja odpowiedzi AI 12
 
-Ten zakres działa lokalnie bez AI 10. Graf kwalifikuje kandydatów do przeglądu
-przez człowieka i przechodzi wersjonowany zestaw 50 przypadków. Nie publikuje
-sugestii do RetailOps. [Status](STATUS.md), [graf](agent-graph.md),
+Graf kwalifikuje kandydatów do przeglądu przez człowieka i przechodzi
+wersjonowany zestaw 50 przypadków offline. Trwały zapis i publikację do Source
+sprawdza osobny [E2E bez AWS](assistant-suggestion-outbox.md). [Status](STATUS.md), [graf](agent-graph.md),
 [odbiór](evidence/12-evaluation.md).
 
 ## Reguły sugestii
@@ -43,8 +43,9 @@ lub dopisanie ilości kończy się kontrolowaną naprawą/błędem.
 
 [SuggestionCandidate](../contracts/agent/v1/suggestion-candidate.v1.schema.json)
 jest lokalnym kandydatem. [Assistant API](assistant-api.md) dodaje
-answer/trace/config binding i trwały zapis w AI. Outbox pozostaje AI 10. Obecne GraphResult
-nie oznacza, że sugestia jest utrwalona, zaakceptowana lub widoczna w UI.
+answer/trace/config binding i trwały zapis w AI oraz chronione odczyty rekomendacji.
+[Outbox AI12](assistant-suggestion-outbox.md) zapisuje event atomowo z odpowiedzią.
+Sam GraphResult nadal nie dowodzi utrwalenia, delivery ani zatwierdzenia sugestii.
 Nie ma uprawnienia do wykonania zamówienia, odświeżenia źródła ani workflow.
 
 ## Kontrola offline
@@ -59,9 +60,9 @@ make contracts-check
 
 ```bash
 uv run --locked retailops-ai agent-evaluate --provider fake \
-  --config agent/graph.evaluate.fake.native-v12.v1.json \
+  --config agent/graph.evaluate.fake.prepaid.v3.json \
   --golden agent/golden.canonical.v1.json \
-  --release agent/evaluation-release.fake.native-v12-main.v1.json \
+  --release agent/evaluation-release.fake.prepaid.v3.json \
   --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock \
   --output /tmp/retailops-agent-evaluation.json
 ```
@@ -101,10 +102,10 @@ Dokumenty i pin w tym zestawie są **syntetycznymi metadanymi**. Nazwy statusów
 sprawdzają mechanikę cytowania/statusów, a pin przechodzi ścisły kontrakt w
 środowisku test. Nie aktywujemy go w bazie i nie mierzymy embeddings, rankingu
 ani rzeczywistych sekcji AI 11. Osobny
-[profil ewaluacji](../agent/graph.evaluate.fake.native-v12.v1.json) przypina ten fixture pin;
-[profil grafu](../agent/graph.fake.native-v12.v1.json) nadal wskazuje użytkowy indeks AI 11.
+[profil ewaluacji](../agent/graph.evaluate.fake.prepaid.v3.json) przypina ten fixture pin;
+[profil grafu](../agent/graph.fake.prepaid.v3.json) nadal wskazuje użytkowy indeks AI 11.
 
-[Evaluation release](../agent/evaluation-release.fake.native-v12-main.v1.json) wiąże config ID
+[Evaluation release](../agent/evaluation-release.fake.prepaid.v3.json) wiąże config ID
 grafu (kod, tool/response schemas, prompty v4, model, retrieval, index, budżety
 i politykę), golden hash, kod Python całego pakietu (w tym ewaluator i jego
 zależności aplikacyjne/schemas) oraz dependency lock. Hash nie
@@ -134,8 +135,9 @@ przypadków, zero zbędnych wywołań, p95 ≤ 5000 ms i koszt syntetyczny 0 USD
 
 Gotowy [adapter Bedrock](agent-bedrock.md) oraz circuit breaker mają osobny
 odbiór transportu oraz [wynik rzeczywistych prób](evidence/12-bedrock-real.md).
-[Runtime dokumentacyjny](assistant-document-runtime.md) ma dwie trasy pytań,
-resolver source AI 03 oraz realny RAG/chat. Kolejne kroki to rozszerzenie
-plannera i adaptery źródeł biznesowych. Pełne AI 12 wymaga rzeczywistych
-narzędzi, golden dla realnego modelu/retrieval oraz ścieżki sugestia → outbox/v2
-→ RetailOps read API/UI z AI 10.
+[Historyczny runtime dokumentacyjny](assistant-document-runtime.md) sprawdzał dwie
+trasy. Bieżący [runtime natywny](assistant-native-bedrock.md) składa osiem adapterów
+z rzeczywistym indeksem AI11; proponowane trasy wymagają niezależnego przeglądu.
+Zaliczenie fixture golden nie kwalifikuje modelu ani rzeczywistego retrieval.
+[Punkt wznowienia](ai12-paid-qualification.md) rozdziela pełną kampanię CLI na
+fixtures od przyszłego odbioru natywnego Assistant na bieżących źródłach.

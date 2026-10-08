@@ -21,6 +21,7 @@ from retailops_ai.assistant.contracts import (
     AssistantQuery,
     AssistantRun,
     PersistedSuggestion,
+    RecommendationPage,
     TraceNode,
     TraceUsage,
 )
@@ -80,6 +81,12 @@ class AssistantStore(Protocol):
         suggestions: list[PersistedSuggestion],
     ) -> None: ...
     async def get(self, trace_id: UUID, principal: Principal) -> AssistantRun | None: ...
+    async def recommendations(
+        self, principal: Principal, *, limit: int = 50, offset: int = 0
+    ) -> RecommendationPage: ...
+    async def recommendation(
+        self, recommendation_id: UUID, principal: Principal
+    ) -> PersistedSuggestion | None: ...
 
 
 class AssistantBackend(Protocol):
@@ -204,6 +211,39 @@ def readable(
         and set(scope.product_ids) <= principal.product_ids
         and set(scope.selling_location_ids) <= principal.selling_location_ids
         and scope.channel in principal.channels
+    )
+
+
+def recommendation_reader(principal: Principal) -> bool:
+    return ("operator" in principal.roles and "assistant:query" in principal.capabilities) or (
+        "admin" in principal.roles and "assistant:audit" in principal.capabilities
+    )
+
+
+def recommendation_readable(
+    principal: Principal,
+    item: PersistedSuggestion,
+    owner: str,
+    scope_json: str,
+    required_capabilities: list[Capability],
+    knowledge_scope: KnowledgeResourceScope | None,
+) -> bool:
+    if not readable(principal, owner, scope_json, required_capabilities, knowledge_scope):
+        return False
+    if "admin" in principal.roles and "assistant:audit" in principal.capabilities:
+        return True
+    from retailops_ai.domain.access import can_read_stockout
+
+    return (
+        item.product_id in principal.product_ids
+        and item.selling_location_id in principal.selling_location_ids
+        and item.channel in principal.channels
+        and (
+            item.stock_location_id is None
+            or can_read_stockout(
+                principal, products={item.product_id}, stock_locations={item.stock_location_id}
+            )
+        )
     )
 
 

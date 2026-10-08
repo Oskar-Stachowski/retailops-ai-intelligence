@@ -44,3 +44,14 @@ The [local acceptance](evidence/12-suggestion-outbox.md) uses real private
 PostgreSQL and explicitly scripted callbacks. No broker, AI10 process or AWS
 service was started. Required CI runs this acceptance beside native Assistant
 SQL and preserves both safe receipts. AI12 remains in progress.
+
+## Current unpaid Source acceptance
+
+[The isolated CI workflow](../.github/workflows/ai12-source-prepaid.yml) goes beyond
+the earlier scripted-callback receipt: it runs the actual emitter and locked
+publisher, Redpanda, pinned original Source consumer, authenticated Source API
+and built UI in Chromium. Identical retry bytes produce one business row.
+The emitter also reads its persisted recommendation through the AI API and
+checks that another operator receives 404. AWS clients are forbidden. The LLM
+and Source event are explicit test fixtures, so this proves integration rather
+than model quality or live operational health.

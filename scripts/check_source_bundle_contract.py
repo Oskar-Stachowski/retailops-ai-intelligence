@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def integration_bindings() -> tuple[Path, str] | None:
     """Bind this assistant integration without rewriting its immutable AI10 owner pin."""
-    path = ROOT / "agent/source-bundle.prepaid.v2.json"
+    path = ROOT / "agent/source-bundle.prepaid.v3.json"
     if not path.exists():
         return None
     integration = json.loads(path.read_bytes())
