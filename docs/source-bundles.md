@@ -1,14 +1,20 @@
 # AI10 — pobranie i import niezmiennego eksportu Source
 
-Status całego AI10: `in_progress`. Interfejs przesyła gotowy eksport Source
+Status całego AI10: [ready — pełny odbiór integracji](ai10-acceptance.md).
+Interfejs przesyła gotowy eksport Source
 Snapshot 1.0/1.1/1.2. Importer obsługujący natywny 1.2 pochodzi z zatwierdzonego
 commitu `1a1916630fa3ed6601a27fec5b5feaf480fc9b1b`; kod producenta jest przypięty
 do `dee564ef98dd7c0324dd2c88d418dc544e7ecdd6`. Dokładne wersje i sumy kopii
 kontraktów zapisuje `src/retailops_ai/source_bundle/upstream.json`.
 Cały zatwierdzony importer ma osobną kopię `source_snapshot_native` i działa
 wyłącznie w świeżym procesie transferu. Moduły modelowe `source_snapshot`
-pochodzą z zaakceptowanego `main` AI 07/08
-(`18e771f9c2e89e91bf7afeb1744e0cd9112f50b5`) i obsługują również snapshot 1.2.
+obsługują również snapshot 1.2. Ich historyczna baza to zaakceptowany `main`
+AI 07/08 (`18e771f9c2e89e91bf7afeb1744e0cd9112f50b5`). Bieżąca optymalizacja
+AI09 indeksuje historię planów dostawy i ma osobny niezmienny pin implementacji
+`e5ebd48aec9aadf2ba390eeec3334c94b9aa7641`; jej odbiór CI jest wymagany
+przed kolejnym canonical. [Dowód aktualizacji pinu](evidence/09-47-capacity-audit-owner-repin.json)
+zachowuje poprzednie sumy i commity. Osobna kopia transferowa
+`source_snapshot_native` pozostaje przypięta do oryginalnego właściciela.
 Ich sumy mają osobny pin `ai_model_snapshot_importer_commit`; historia
 `legacy_snapshot_commit` opisuje wcześniejszą bazę integracji.
 Historyczny pin kampanii v12
@@ -19,7 +25,10 @@ zaakceptowanego `main` `e1f864c33678f2bed65b550e7676c21a21934e35` to
 Poprzedni pin `cdbd3c1307bb8c3d07b2325f7166d2061ed4a017a4f20bf7f42e1e79b5039b35`
 jest zachowany jako historia. Zmiana bieżącego pinu obejmuje zaakceptowane
 optymalizacje AI09 w `data_contracts/identity.py` i `forecasting/features_store.py`.
-Moduły importera, główny lock, oryginalny wheel i historyczny pin v12 zachowano.
+Główny lock, oryginalny wheel i historyczny pin v12 zachowano.
+Aktualny pin współdzielonego kodu uwzględnia także bieżące optymalizacje modelowego
+importera i curated; wcześniejsze piny pozostają historią. Kontrola nadal wymaga
+dokładnych sum wszystkich przypiętych plików oraz całej współdzielonej implementacji.
 Kontrola transferu pilnuje bieżącego pinu i nie modyfikuje kampanii ani modelu.
 Kontrola typów sprawdza osobno dokładny namespace wykonania natywnej kopii.
 
@@ -86,5 +95,5 @@ Mały eksport jest fixture odbioru protokołu, nie kwalifikacją modelu ML.
 
 Ten przyrost nie eksportuje operacyjnej bazy SQL, nie ustala granicy
 snapshot/offset, nie implementuje replay i nie zmienia istniejącego kontraktu
-capabilities bounded REST. `replay_handoff` pozostaje `false`. Odbiór wszystkich
-trzech modeli i UI E2E wymaga dalszych prac AI10.
+capabilities bounded REST. `replay_handoff` pozostaje `false`. Pełny odbiór wszystkich
+trzech modeli i UI E2E opisuje aktualna [akceptacja AI10](ai10-acceptance.md).

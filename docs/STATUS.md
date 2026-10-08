@@ -1,6 +1,14 @@
 # Aktualny status
 
 **2026-10-08 — AI 09: in_progress / not_ready.**
+[Audyt przed kolejnym canonical](ai09-capacity-audit.md) wprowadza bezpieczne
+poprawki pamięci i kosztu we wszystkich pięciu fazach. Pełny profil, limity,
+wszystkie wcześniejsze porażki i dotychczasowe bramki pozostają zachowane.
+Nowy pomiar wymaga zakończenia odbioru dokładnych commitów i main obu repo.
+[Przygotowanie 1.6](evidence/09-48-audited-capacity-preparation.json) wiąże
+pełny audyt, aktualny pin zależności Source, 50 kontroli supervisora i sześć
+historycznych porażek. Pomiar nie został uruchomiony; odbiór audytu i publikacji
+diagnostyki nadal poprzedza dispatch. Pełny zakres kampanii pozostaje otwarty.
 [Przyrost 09.41](evidence/09-41-full-scenario-portfolio.json) dodaje
 [pełne portfolio v25](ai09-full-scenario-portfolio.md): 12 pełnych źródeł
 ordinary/demand/physical, jeden dziennik i wspólny freeze. Brak wariantu,
@@ -93,11 +101,18 @@ Adapter forecastu i kontrola 09.43 zostały wspólnie scalone przez
 jako main `ba377b58`, po pełnym 17/17 success dokładnego head `fa4ccd6f`
 i zaakceptowanego base `656d7ddc`.
 [CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37768482642)
-jest jeszcze w toku. Osobny PR53 zachowano do tego odbioru.
+zakończył się pełnym 17/17 success. PR53 został włączony przez PR54.
+PR55 został normalnie scalony jako `fe830799`, po pełnym 17/17 success
+dokładnego head i base; jego wynikowy main wymaga własnego pełnego CI.
 [Próba 1.5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37765329151)
 została uruchomiona raz na osobnym runnerze, na niezmiennym AI `656d7ddc`
 i oryginalnym Source `ab4d5690`, po pełnym odbiorze CI i ancestry.
-Pomiar nadal trwa; nie zmniejszono danych ani nie zwiększono limitów.
+Pomiar zakończył się szóstą porażką `tree_rss_limit`, po 2967.75 s,
+z peak drzewa 8596701184 B i zero ukończonych faz.
+[Receipt 09.45](evidence/09-45-development-capacity-sixth-run.json) zachowuje
+artefakt i koszt; przed następnym canonical wymagany jest pełny audyt pięciu
+faz, bezpieczne poprawki, zgodność danych i odbiór CI w obu repozytoriach.
+Nie zmniejszono danych ani nie zwiększono limitów.
 Projektowy journal nie został zainicjalizowany, nowe projektowe fity wynoszą zero,
 a świeży final test pozostaje zamknięty. Do zamknięcia pozostają pełna kampania
 trzech zastosowań, pokrycie scenariuszy/seedów, raporty i lifecycle oraz odbiór main.

@@ -1,0 +1,61 @@
+{
+  "version": "ai09-capacity-audit-owner-repin-1.0",
+  "implementation_commit": "e5ebd48aec9aadf2ba390eeec3334c94b9aa7641",
+  "previous_pin_file_sha256": "8420886f75c46c97d991f9f2c89a35ace4209ec14d0dedf06f69d7da7c860efc",
+  "previous_ai_model_snapshot_importer_commit": "d81e78acbaf3f2ca87f6f3f7c205e4629a494949",
+  "previous_shared_campaign_implementation_commit": "d81e78acbaf3f2ca87f6f3f7c205e4629a494949",
+  "previous_shared_campaign_implementation_pin_sha256": "6d2219bf2f004f1dc3a9fd2a18454632ad52375b34e45f75a9abb49ab5793303",
+  "current_shared_campaign_implementation_pin_sha256": "008b9d6cbcbb73c50687299bf6b59c28991ed536f3f92d19c6646fe0f9b88fbc",
+  "changed_model_importer_files": {
+    "src/retailops_ai/source_snapshot/inventory_projection.py": {
+      "previous_sha256": "d089eb8ca66f4f7117a8ba425015ce903b67370bcf4ae2a989d8becb0c9d108d",
+      "current_sha256": "dd47fbb68a20d516cdd6ba1cdd0612234b162eb7a6a1d9a7b54a9521550e14dd"
+    }
+  },
+  "frozen_native_namespace_changed": false,
+  "historical_scientific_evidence_replaced": false,
+  "first_required_ci": {
+    "run_id": 37781914879,
+    "conclusion": "failure",
+    "reason": "stale_model_importer_owner_checksum",
+    "new_canonical_dispatched": false
+  },
+  "source_tree_controls": {
+    "passed": 90,
+    "seconds": 11.735,
+    "junit_sha256": "7d15b09a5ecdb4b096714b29cb44d51f3c9afd42652766a49f23c944f84e4382"
+  },
+  "installed_package_controls": {
+    "passed": 90,
+    "seconds": 11.448,
+    "junit_sha256": "ffcc190d4f8c35271c33a5e9e5a5725a9a40a4733d87a8c94f693ca6cf6f3271"
+  },
+  "all_contracts_check": {
+    "result": "passed",
+    "target": "make contracts-check",
+    "log_sha256": "e22bbc12a9d5c99b3723296c3512eaf5aebaeadba381ae3944200312e59930a7",
+    "guard_weakened": false
+  },
+  "installed_package": {
+    "wheel_sha256": "e48f0735997c70e2cc9a85f9bd19936a51bc4944b4956993133ef3a6be35678b",
+    "wheel_bytes": 2042144,
+    "python_modules_byte_identical": 597,
+    "source_jsons_byte_identical": 36,
+    "forced_files_byte_identical": 180,
+    "forced_jsons_byte_identical": 177,
+    "no_private_cache_or_tests": true,
+    "historical_jsons_byte_identical": 424,
+    "current_owner_metadata_updated": [
+      "src/retailops_ai/source_bundle/upstream.json"
+    ]
+  },
+  "installed_runtime_origin_and_owner_checks": {
+    "result": "passed",
+    "all_modules_loaded_from_owned_installed_package": true,
+    "frozen_native_namespace_and_current_model_checksum_verified": true,
+    "shared_campaign_code_pin_verified": true
+  },
+  "current_owner_pin_file_sha256": "de3dacc9901dbaf6715e9fa163b5a55033b041ea917c7b9f3579e2d7e760fa62",
+  "whole_remote_ci_accepted": false,
+  "next_canonical_authorized_by_audit_gate": false
+}

@@ -1,0 +1,388 @@
+{
+  "scope": "Comprehensive five-phase capacity audit; safe optimizations and small native proof; not canonical or scientific qualification",
+  "source_local_head": "4991b005cb1dfe8d8aa0eaf24e1793dc764fdb57",
+  "source_versions": [
+    "inventory-source-cached-ledger-2.2.0",
+    "planned-source-cached-execution-1.1.0"
+  ],
+  "source_controls": {
+    "broad_affected_suite": {
+      "passed": 323,
+      "seconds": 638.99,
+      "scope": "before last two retention refinements"
+    },
+    "final_native_suite": {
+      "passed": 64,
+      "seconds": 423.42
+    },
+    "mypy_files": 43,
+    "ruff_format_files": 158
+  },
+  "consumer_controls": {
+    "final_native_import_curated": {
+      "passed": 149,
+      "seconds": 353.66
+    },
+    "worker_wire_budget_sql_indexes": {
+      "passed": 88,
+      "seconds": 55.79
+    },
+    "mypy_files": 718,
+    "formatted_files": 1225,
+    "installed_wheel_tests": {
+      "passed": 18,
+      "seconds": 13.26
+    }
+  },
+  "final_tiny_five_phase_control": {
+    "fixture": {
+      "profile": "ai-load",
+      "days": 45,
+      "products": 2,
+      "pairs": 1,
+      "stock_locations": 1,
+      "seed": 42,
+      "forecast_plan_days": 14,
+      "max_daily_rows": 90
+    },
+    "scope": "final already exposed tiny control, not canonical",
+    "completed_phases": {
+      "baseline": 5,
+      "candidate": 5
+    },
+    "resources": {
+      "generation": {
+        "baseline": {
+          "wall_seconds": 1.433101375005208,
+          "cpu_seconds": 1.244198,
+          "process_peak_rss_bytes": 81625088,
+          "rss_scope": "individual macOS child process peak; not canonical runner tree"
+        },
+        "candidate": {
+          "wall_seconds": 1.134823000000324,
+          "cpu_seconds": 1.0569169999999999,
+          "process_peak_rss_bytes": 81690624,
+          "rss_scope": "individual macOS child process peak; not canonical runner tree"
+        }
+      },
+      "qualification": {
+        "baseline": {
+          "wall_seconds": 0.7995687500224449,
+          "cpu_seconds": 0.7564949999999999,
+          "process_peak_rss_bytes": 82477056,
+          "rss_scope": "individual macOS child process peak; not canonical runner tree"
+        },
+        "candidate": {
+          "wall_seconds": 0.6904599170084111,
+          "cpu_seconds": 0.654026,
+          "process_peak_rss_bytes": 83673088,
+          "rss_scope": "individual macOS child process peak; not canonical runner tree"
+        }
+      },
+      "export": {
+        "baseline": {
+          "wall_seconds": 1.084414332988672,
+          "cpu_seconds": 1.008527,
+          "process_peak_rss_bytes": 91160576,
+          "rss_scope": "individual macOS child process peak; not canonical runner tree"
+        },
+        "candidate": {
+          "wall_seconds": 1.0469132080033887,
+          "cpu_seconds": 0.9910779999999999,
+          "process_peak_rss_bytes": 94961664,
+          "rss_scope": "individual macOS child process peak; not canonical runner tree"
+        }
+      },
+      "import": {
+        "baseline": {
+          "wall_seconds": 0.8170460830151569,
+          "cpu_seconds": 0.790713,
+          "process_peak_rss_bytes": 70991872,
+          "rss_scope": "individual macOS child process peak; not canonical runner tree"
+        },
+        "candidate": {
+          "wall_seconds": 0.8097987500077579,
+          "cpu_seconds": 0.787671,
+          "process_peak_rss_bytes": 70926336,
+          "rss_scope": "individual macOS child process peak; not canonical runner tree"
+        }
+      },
+      "curation": {
+        "baseline": {
+          "wall_seconds": 2.5086514999857172,
+          "cpu_seconds": 2.399733,
+          "process_peak_rss_bytes": 71368704,
+          "rss_scope": "individual macOS child process peak; not canonical runner tree"
+        },
+        "candidate": {
+          "wall_seconds": 2.6222481669974513,
+          "cpu_seconds": 2.516204,
+          "process_peak_rss_bytes": 69533696,
+          "rss_scope": "individual macOS child process peak; not canonical runner tree"
+        }
+      }
+    },
+    "identical_tables": {
+      "generation": 58,
+      "export": 43,
+      "import": 43,
+      "curation": 43
+    },
+    "all_logical_content_ranges_and_curated_rejections_equal": true
+  },
+  "final_tiny_build_three_pairs": {
+    "scope": "Final three fresh interpreter pairs; already exposed seed710001 10d8products2pairs2stocks; exact all58 native tables/context; not canonical",
+    "measurement": "tracemalloc whole tiny build; process RSS high-water includes imports; wall time local only",
+    "pairs": [
+      {
+        "baseline": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.8739032499725,
+          "cpu_seconds": 1.8679909999999997,
+          "peak_python_bytes": 8249988,
+          "retained_python_bytes": 4501410,
+          "process_peak_rss_bytes": 86114304,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        },
+        "candidate": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.7736394999956246,
+          "cpu_seconds": 1.5834160000000002,
+          "peak_python_bytes": 7822407,
+          "retained_python_bytes": 4532253,
+          "process_peak_rss_bytes": 85032960,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        }
+      },
+      {
+        "baseline": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.9633127910201438,
+          "cpu_seconds": 1.915441,
+          "peak_python_bytes": 8250237,
+          "retained_python_bytes": 4502525,
+          "process_peak_rss_bytes": 82952192,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        },
+        "candidate": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.4806647500081453,
+          "cpu_seconds": 1.479607,
+          "peak_python_bytes": 7825418,
+          "retained_python_bytes": 4535331,
+          "process_peak_rss_bytes": 85901312,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        }
+      },
+      {
+        "baseline": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.8343068750109524,
+          "cpu_seconds": 1.8317549999999998,
+          "peak_python_bytes": 8249986,
+          "retained_python_bytes": 4500304,
+          "process_peak_rss_bytes": 82411520,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        },
+        "candidate": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 1.591744583012769,
+          "cpu_seconds": 1.554596,
+          "peak_python_bytes": 7822489,
+          "retained_python_bytes": 4532460,
+          "process_peak_rss_bytes": 80166912,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        }
+      }
+    ],
+    "medians": {
+      "peak_python_bytes": {
+        "baseline": 8249988,
+        "candidate": 7822489,
+        "change_fraction": -0.05181813597789475
+      },
+      "retained_python_bytes": {
+        "baseline": 4501410,
+        "candidate": 4532460,
+        "change_fraction": 0.006897838677214473
+      },
+      "process_peak_rss_bytes": {
+        "baseline": 82952192,
+        "candidate": 85032960,
+        "change_fraction": 0.025083942326683786
+      },
+      "wall_seconds": {
+        "baseline": 1.8739032499725,
+        "candidate": 1.591744583012769,
+        "change_fraction": -0.1505726973705135
+      },
+      "cpu_seconds": {
+        "baseline": 1.8679909999999997,
+        "candidate": 1.554596,
+        "change_fraction": -0.1677711509316692
+      }
+    }
+  },
+  "previous_tiny_build_three_pairs": {
+    "scope": "Three fresh interpreter pairs on already exposed 10d/8product/2pair/2stock seed710001 fixture; all native58 tables and context; no Project fits or new final data",
+    "measurement": "Python allocation peak across complete tiny build; process high-water RSS includes interpreter/imports; local concurrent tests can affect wall time",
+    "pairs": [
+      {
+        "baseline": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 3.3721042499819305,
+          "cpu_seconds": 3.240071,
+          "peak_python_bytes": 8250041,
+          "retained_python_bytes": 4498973,
+          "process_peak_rss_bytes": 85770240,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        },
+        "candidate": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 3.5990215000056196,
+          "cpu_seconds": 2.9797190000000002,
+          "peak_python_bytes": 8078388,
+          "retained_python_bytes": 4539155,
+          "process_peak_rss_bytes": 75956224,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        }
+      },
+      {
+        "baseline": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 4.249945457995636,
+          "cpu_seconds": 3.6213660000000005,
+          "peak_python_bytes": 8250448,
+          "retained_python_bytes": 4501381,
+          "process_peak_rss_bytes": 76267520,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        },
+        "candidate": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 3.4224963749875315,
+          "cpu_seconds": 2.882655,
+          "peak_python_bytes": 8074862,
+          "retained_python_bytes": 4535569,
+          "process_peak_rss_bytes": 73482240,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        }
+      },
+      {
+        "baseline": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 3.614482625009259,
+          "cpu_seconds": 3.317621,
+          "peak_python_bytes": 8250633,
+          "retained_python_bytes": 4500775,
+          "process_peak_rss_bytes": 79888384,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        },
+        "candidate": {
+          "fixture": "existing_710001_10d_8p_2pairs_2stock_2026-09-30",
+          "measurement": "whole tiny native Source build; not full canonical capacity",
+          "wall_seconds": 2.5898067920061294,
+          "cpu_seconds": 2.5137959999999997,
+          "peak_python_bytes": 8076061,
+          "retained_python_bytes": 4536828,
+          "process_peak_rss_bytes": 83066880,
+          "tables_sha256": "7c78cca97da9c7c10ebf20e026ebf1d9e1976847d6cba01eb2e25b1df4f51f54",
+          "context_sha256": "2f15a3575dfce6ae85c237cfde261352eaa51a29060b4236b8a2b4a549f5819b"
+        }
+      }
+    ],
+    "medians": {
+      "peak_python_bytes": {
+        "baseline": 8250448,
+        "candidate": 8076061,
+        "change_fraction": -0.02113667039656513
+      },
+      "retained_python_bytes": {
+        "baseline": 4500775,
+        "candidate": 4536828,
+        "change_fraction": 0.008010398209197305
+      },
+      "process_peak_rss_bytes": {
+        "baseline": 79888384,
+        "candidate": 75956224,
+        "change_fraction": -0.04922067268252666
+      },
+      "wall_seconds": {
+        "baseline": 3.614482625009259,
+        "candidate": 3.4224963749875315,
+        "change_fraction": -0.05311583148673621
+      },
+      "cpu_seconds": {
+        "baseline": 3.317621,
+        "candidate": 2.882655,
+        "change_fraction": -0.13110780285029536
+      }
+    }
+  },
+  "wheel": {
+    "wheel_bytes": 2041744,
+    "wheel_sha256": "7706c4a9431f9d0070d1aae7914b137dc37625e45b428d6b1b771c5b4d8f8d05",
+    "python_modules_byte_identical": 597,
+    "source_jsons_byte_identical": 36,
+    "forced_files_byte_identical": 180,
+    "forced_jsons_byte_identical": 177,
+    "no_private_cache_or_tests": true,
+    "initial_verifier_error": "force-include directories interpreted as files; corrected by expanding their actual contents; original wheel retained"
+  },
+  "actual_installed_native": {
+    "actual_module_paths_verified": true,
+    "native_import_and_curation": "passed",
+    "table_count": 43,
+    "all_logical_tables_equal_source_tree": true,
+    "scientific_qualification": false
+  },
+  "unchanged_full_profile_and_limits": true,
+  "all_prior_canonical_failures_preserved": true,
+  "next_canonical_requires_whole_head_and_resulting_main_ci_both_repositories": true,
+  "next_canonical_dispatched": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "stage_ready": false,
+  "closed_ai07_ai08_reopened": false,
+  "foreign_sessions_disturbed": false,
+  "exploratory_attempts_preserved": [
+    "initial source298 controls:278 pass and20 pin errors due numeric filename missed by pin updater",
+    "source40 exploratory controls:31 pass and9 code fingerprint/pin failures because source edited during the exploratory run; not final proof",
+    "wheel metadata verifier initially treated forced directories as files; corrected expansion verified original wheel"
+  ],
+  "release_status": "local controls verified; both protected publication and whole CI required",
+  "source_publication": {
+    "pull": 108,
+    "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/108",
+    "head": "a164cc6a03b43213b2b1adb3b63d81f4ad54f3b6",
+    "base": "3d13a4dd4a9ff51c1ab43659d53f0eb4cd3422db",
+    "tested_tree_preserved_on_main_integration": true,
+    "whole_ci_status": "pending;not accepted"
+  },
+  "old_json_byte_parity": {
+    "base": "e01909bf6302ecb63a8b6caae91d745a7aa44bc7",
+    "old_json_files_unchanged": 425
+  }
+}

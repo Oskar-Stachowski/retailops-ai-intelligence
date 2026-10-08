@@ -63,9 +63,10 @@ class RowDigest:
 
     def add(self, row: dict[str, Any]) -> None:
         record = {key: canonical_cell(row[key]) for key in self.columns}
-        if len(canonical_json(record)) > 64 * 1024:
+        raw = canonical_json(record)
+        if len(raw) > 64 * 1024:
             raise SnapshotError("canonical_record_size_limit")
-        self.connection.execute("INSERT INTO records VALUES (?)", (canonical_json(record),))
+        self.connection.execute("INSERT INTO records VALUES (?)", (raw,))
         if self.grain:
             if any(record[key] is None for key in self.grain):
                 raise SnapshotError("missing_grain_value")

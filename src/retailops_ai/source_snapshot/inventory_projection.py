@@ -86,6 +86,9 @@ class Facts:
         self.db.execute(
             "CREATE TABLE movements (stamp TEXT, sequence INTEGER, product TEXT, stock TEXT, known TEXT, row BLOB, UNIQUE(stamp,sequence))"
         )
+        self.db.execute(
+            "CREATE INDEX delivery_plan_order ON facts(json_extract(row,'$.replenishment_order_id'),json_extract(row,'$.version')) WHERE name='delivery_plan_versions'"
+        )
         self.db.execute("CREATE INDEX position ON movements(product,stock,stamp,sequence)")
         self.db.execute(
             "CREATE INDEX movement_reference ON movements(json_extract(row,'$.movement_type'),json_extract(row,'$.source_reference'))"
