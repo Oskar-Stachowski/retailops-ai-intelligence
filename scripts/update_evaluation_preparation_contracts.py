@@ -49,6 +49,9 @@ from retailops_ai.evaluation_campaign.campaign_generation_contract import (
     CampaignGenerationPlan,
     CampaignGenerationResources,
 )
+from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CampaignForecastRobustEvaluationReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
     CampaignForecastRawPrediction,
     CampaignForecastScorePlan,
@@ -493,6 +496,19 @@ def main() -> int:
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(raw)
+    name = "campaign_forecast_robust_evaluation_receipt"
+    schema = CampaignForecastRobustEvaluationReceipt.model_json_schema()
+    schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+    schema["$id"] = f"urn:retailops:evaluation:{name}:24.0.0"
+    path = ROOT / "contracts/evaluation/v24" / (name + ".schema.json")
+    raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    if args.check:
+        if not path.is_file() or path.read_text() != raw:
+            print("Campaign complete forecast robustness contract differs: " + name)
+            return 1
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(raw)
     print("Evaluation preparation contract snapshots checked.")
     return 0
 

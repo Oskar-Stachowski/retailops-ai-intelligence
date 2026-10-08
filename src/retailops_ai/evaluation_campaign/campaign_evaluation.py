@@ -70,6 +70,14 @@ from retailops_ai.evaluation_campaign.campaign_raw_context import (
     context_record,
     validate_raw_context_metrics,
 )
+from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CampaignForecastRobustEvaluationReceipt,
+    ForecastEvaluationReceipt,
+    parse_forecast_evaluation_receipt,
+)
+from retailops_ai.evaluation_campaign.campaign_robust_validation import (
+    validate_selected_robustness,
+)
 from retailops_ai.evaluation_campaign.campaign_score import validate_completed_score
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
     FAMILIES,
@@ -80,6 +88,9 @@ from retailops_ai.evaluation_campaign.campaign_selection_evidence import (
 )
 from retailops_ai.evaluation_campaign.campaign_tune import verify_campaign_forecast_selection
 from retailops_ai.evaluation_campaign.campaign_tune_contract import CampaignForecastTuneReceipt
+from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
+    CampaignForecastUncertaintyPolicy,
+)
 from retailops_ai.evaluation_campaign.development_contract import MODELS
 from retailops_ai.evaluation_campaign.partitions import membership_key
 from retailops_ai.forecasting.features_contract import InputRow
@@ -362,7 +373,8 @@ def evaluate_campaign_forecast(
     selection_bundles: dict[str, Path] | None = None,
     raw_context_bundle: Path | None = None,
     raw_context_receipt: CampaignContextBundleReceipt | None = None,
-) -> tuple[Path, CampaignForecastEvaluationReceipt]:
+    uncertainty_policy: CampaignForecastUncertaintyPolicy | None = None,
+) -> tuple[Path, ForecastEvaluationReceipt]:
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, operation_id)
     started = perf_counter()
@@ -415,6 +427,18 @@ def evaluate_campaign_forecast(
         raw_context = None
         if (raw_context_bundle is None) != (raw_context_receipt is None):
             raise SnapshotError("campaign_evaluation_raw_context_pair_required")
+        if uncertainty_policy is not None:
+            uncertainty_policy = CampaignForecastUncertaintyPolicy.model_validate_json(
+                uncertainty_policy.model_dump_json()
+            )
+            if (
+                raw_context_bundle is None
+                or raw_context_receipt is None
+                or uncertainty_policy.content_sha256() != plan.uncertainty_policy_sha256
+                or uncertainty_policy.nominal_interval_coverage
+                != plan.quality_policy.nominal_coverage
+            ):
+                raise SnapshotError("campaign_evaluation_robustness_frozen_context_policy_required")
         if raw_context_bundle is not None and raw_context_receipt is not None:
             if output_root.resolve().is_relative_to(
                 raw_context_bundle.resolve()
@@ -472,6 +496,11 @@ def evaluate_campaign_forecast(
                     key: value.model_dump(mode="json") for key, value in scores.items()
                 },
                 **({"raw_context": raw_context} if raw_context is not None else {}),
+                **(
+                    {"uncertainty_policy": uncertainty_policy.model_dump(mode="json")}
+                    if uncertainty_policy is not None
+                    else {}
+                ),
             },
         )
         prepared_root = root / "prepare"
@@ -624,6 +653,15 @@ def evaluate_campaign_forecast(
                 "actuals": str(actuals),
                 "projection": str(projection),
                 "bundle": str(bundle),
+                **(
+                    {
+                        "raw_context": raw_context,
+                        "raw_context_bundle": str(raw_context_bundle.absolute()),
+                        "uncertainty_policy": uncertainty_policy.model_dump(mode="json"),
+                    }
+                    if uncertainty_policy is not None and raw_context_bundle is not None
+                    else {}
+                ),
             },
             sys.executable,
             plan,
@@ -637,6 +675,8 @@ def evaluate_campaign_forecast(
             or finalized.get("actual_index_passes") != 1
             or finalized.get("all_frozen_trials_compared") is not True
             or finalized.get("architecture_reselected") is not False
+            or uncertainty_policy is not None
+            and finalized.get("selected_robustness_complete") is not True
         ):
             raise SnapshotError("campaign_evaluation_final_composition_scope_mismatch")
         files, size = _bundle_inventory(bundle, plan.max_output_bytes)
@@ -648,7 +688,7 @@ def evaluate_campaign_forecast(
         if not isinstance(baseline, str):
             raise SnapshotError("campaign_evaluation_baseline_trace_missing")
         metrics = read(bundle / "metrics.json")
-        receipt = CampaignForecastEvaluationReceipt(
+        receipt_fields = dict(
             protocol_sha256=ledger.protocol_sha256,
             operation_id=operation_id,
             reservation_id=str(handle.reservation.reservation_id),
@@ -673,6 +713,25 @@ def evaluate_campaign_forecast(
             block_uncertainty_complete=metrics["block_uncertainty_complete"],
             quality_qualified=metrics["quality_qualified"],
         )
+        receipt_fields = TypeAdapter(dict[str, Any]).dump_python(receipt_fields, mode="json")
+        receipt: ForecastEvaluationReceipt
+        if uncertainty_policy is not None and raw_context is not None:
+            context_parent, census = context_record(raw_context, plan, population)
+            receipt = CampaignForecastRobustEvaluationReceipt.model_validate_json(
+                canonical_bytes(
+                    receipt_fields
+                    | {
+                        "context_receipt_sha256": context_parent.content_sha256(),
+                        "context_census_sha256": census.content_sha256(),
+                        "context_trace_sha256": census.context_trace_sha256,
+                        "uncertainty_policy": uncertainty_policy.model_dump(mode="json"),
+                    }
+                )
+            )
+        else:
+            receipt = CampaignForecastEvaluationReceipt.model_validate_json(
+                canonical_bytes(receipt_fields)
+            )
         _verify_bundle(bundle, receipt)
         fsync_tree(root)
         if (
@@ -714,7 +773,7 @@ def _segments(metrics: dict[str, Any], rows: int, eligible: int, *, raw: bool) -
         raise SnapshotError("campaign_evaluation_metrics_complete_population_mismatch")
 
 
-def _verify_bundle(bundle: Path, receipt: CampaignForecastEvaluationReceipt) -> None:
+def _verify_bundle(bundle: Path, receipt: ForecastEvaluationReceipt) -> None:
     configuration_sha256 = receipt.configuration.content_sha256()
     files, size = _bundle_inventory(bundle, receipt.plan.max_output_bytes)
     if files != receipt.artifact_files or size != receipt.artifact_bytes:
@@ -797,26 +856,77 @@ def _verify_bundle(bundle: Path, receipt: CampaignForecastEvaluationReceipt) -> 
     ):
         raise SnapshotError("campaign_evaluation_artifact_population_mismatch")
     metrics = read(bundle / "metrics.json")
-    # Full robustness needs a complete versioned segment and uncertainty report.
-    # The current worker emits only this explicit component scope; no receipt can
-    # turn it into qualification by changing a flag.
+    robust = isinstance(receipt, CampaignForecastRobustEvaluationReceipt)
+    expected_scope = (
+        "complete_key_frozen_selected_critical_segments_and_paired_uncertainty"
+        if robust
+        else "complete_key_global_horizon_component_pending_critical_segments_and_uncertainty"
+    )
     if (
-        metrics.get("scope")
-        != "complete_key_global_horizon_component_pending_critical_segments_and_uncertainty"
+        metrics.get("scope") != expected_scope
         or metrics.get("role") != receipt.plan.role
         or metrics.get("final_test_accessed") != receipt.final_test_accessed
+        or metrics.get("stage_ready") is not False
         or any(
-            metrics.get(key) is not False or getattr(receipt, key) is not False
-            for key in (
-                "critical_segment_inventory_complete",
-                "block_uncertainty_complete",
-                "quality_qualified",
-                "stage_ready",
-            )
+            metrics.get(key) is not robust or getattr(receipt, key) is not robust
+            for key in ("critical_segment_inventory_complete", "block_uncertainty_complete")
+        )
+        or ("selected_robustness" in metrics) != robust
+        or ("uncertainty_policy" in parents) != robust
+        or not robust
+        and (
+            metrics.get("quality_qualified") is not False or receipt.quality_qualified is not False
         )
     ):
         raise SnapshotError("campaign_evaluation_metrics_scope_or_qualification_mismatch")
     _segments(metrics, receipt.rows, receipt.eligible_rows, raw=False)
+    if isinstance(receipt, CampaignForecastRobustEvaluationReceipt):
+        if raw_context is None or raw_census is None:
+            raise SnapshotError("campaign_evaluation_robustness_context_missing")
+        context_parent, _ = context_record(
+            raw_context, receipt.plan, {key: getattr(receipt, key) for key in POPULATION}
+        )
+        if (
+            CampaignForecastUncertaintyPolicy.model_validate_json(
+                canonical_bytes(parents["uncertainty_policy"])
+            )
+            != receipt.uncertainty_policy
+            or receipt.context_receipt_sha256 != context_parent.content_sha256()
+            or receipt.context_census_sha256 != raw_census.content_sha256()
+            or receipt.context_trace_sha256 != raw_census.context_trace_sha256
+            or not isinstance(metrics["selected_robustness"], dict)
+        ):
+            raise SnapshotError("campaign_evaluation_robustness_binding_mismatch")
+        median_choice = frozen.calibration.selection.median
+        if median_choice is None:
+            raise SnapshotError("campaign_evaluation_frozen_reference_missing")
+        qualified = validate_selected_robustness(
+            metrics["selected_robustness"],
+            raw_context,
+            receipt.plan,
+            {key: getattr(receipt, key) for key in POPULATION},
+            receipt.uncertainty_policy,
+            retained_median_baseline=median_choice.score_operation_id is None,
+        )
+        if (
+            metrics.get("quality_qualified") is not qualified
+            or receipt.quality_qualified is not qualified
+        ):
+            raise SnapshotError("campaign_evaluation_robustness_quality_mismatch")
+        comparisons = {
+            (group["dimension"], group["value"]): group["comparison"]
+            for group in metrics["selected_robustness"]["groups"]
+        }
+        for segment in metrics["segments"]:
+            identity = (
+                ("global", "all")
+                if segment["horizon"] == "all"
+                else ("horizon", segment["horizon"])
+            )
+            if canonical_bytes(
+                {key: value for key, value in segment.items() if key != "horizon"}
+            ) != canonical_bytes(comparisons[identity]):
+                raise SnapshotError("campaign_evaluation_robustness_horizon_mismatch")
     for index, trial in enumerate(receipt.configuration.trials):
         result = read(bundle / trial_metrics_name(index))
         if (
@@ -883,12 +993,8 @@ def _verify_bundle(bundle: Path, receipt: CampaignForecastEvaluationReceipt) -> 
         raise SnapshotError("campaign_evaluation_prediction_complete_population_mismatch")
 
 
-def validate_completed_evaluation(
-    journal: Path, receipt: CampaignForecastEvaluationReceipt
-) -> None:
-    receipt = CampaignForecastEvaluationReceipt.model_validate_json(
-        canonical_bytes(receipt.model_dump(mode="json"))
-    )
+def validate_completed_evaluation(journal: Path, receipt: ForecastEvaluationReceipt) -> None:
+    receipt = parse_forecast_evaluation_receipt(canonical_bytes(receipt.model_dump(mode="json")))
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, receipt.operation_id)
     completion = next(
@@ -934,7 +1040,7 @@ def validate_completed_evaluation(
 
 
 def verify_campaign_forecast_evaluation(
-    bundle: Path, *, journal: Path, receipt: CampaignForecastEvaluationReceipt
+    bundle: Path, *, journal: Path, receipt: ForecastEvaluationReceipt
 ) -> None:
     """Verify committed predictions and metadata without reading original outcomes."""
     validate_completed_evaluation(journal, receipt)
