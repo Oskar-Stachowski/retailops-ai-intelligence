@@ -1,7 +1,118 @@
 # Pomiar pełnego development AI 09
 
+[Prospektywna receptura 1.4](reference/ai09-development-capacity-v1.4.json)
+zastępuje natywny timer dumpujący stosy ograniczoną obserwacją ramek przez
+`sys._current_frames()` w osobnym wątku własnego workera. Odczytuje wyłącznie
+nazwę pliku, funkcję i numer linii. Referencje do ramek są zwalniane przed
+zapisem logu; nie odczytuje lokalnych wartości, globali, argumentów ani linii
+kodu. Co 120 s może zapisać najwyżej 64 wątki po 64 ramki, do 64 KiB;
+skrócenie głębokości, liczby wątków, nazw lub bajtów jest jawne. Zatrzymanie
+ustawia event i łączy wątek z limitem 5 s. Błąd obserwacji lub brak zakończenia
+wątku uniemożliwia zaliczenie fazy. RSS/CPU, scratch i istniejący limit logu
+16 MiB obejmują diagnostykę. Obserwacja może być opóźniona, gdy kod natywny
+nie zwalnia GIL; nie jest profilem alokacji, ciągłym stosem ani natywnym
+backtrace awarii. Tę ograniczoną przydatność odczytu ramek opisuje także
+[dokumentacja Python 3.11](https://docs.python.org/3.11/library/sys.html#sys._current_frames).
+
+[Kontrole 1.4](evidence/09-33-development-capacity-safe-trace-preparation.json)
+mają 47 passed w 1.81 s. Obejmują rzeczywisty okresowy zapis i anulowanie,
+zmieniające się obiekty kodu i wątki, głęboki stos, zwolnienie payloadu po
+zakończeniu ramki, granice bajtów i unicode, awarie obserwacji oraz zachowanie
+łańcucha wszystkich czterech porażek. To małe kontrole stdlib, bez generacji
+Source, fitów i final test. Kontrole Linux nowego dokładnego head, pełne
+Required CI, chroniona publikacja i odbiór main są nadal wymagane przed
+odrębnym ręcznym dispatch. **Próba pełna 1.4 nie została uruchomiona.**
+Producent, locks, canonical, daty, limity i rezerwy są identyczne z 1.3;
+bajty receptur 1.0–1.3 pozostają zachowane. Hipoteza o przyczynie poprzedniego
+SIGSEGV pozostaje niepotwierdzona. Zmiana obserwatora nie dowodzi zmniejszenia
+pamięci ani ukończenia pełnego profilu.
+
+
+[Prospektywna receptura 1.3](reference/ai09-development-capacity-v1.3.json)
+przypina source `51827823`: cached ścieżka kopiuje tylko wejścia commerce,
+których używa symulator, przez istniejącą funkcję `source_bridge._copy_commerce_inputs`.
+Nie powtarza wdrożonych zmian AI08 dotyczących indeksów, cache i zwalniania build
+state. Kontrolne native parity ma 23 passed; zmierzony spadek alokacji samej kopii
+wynosi 11.87%, bez deklaracji poprawy całego RSS lub kwalifikacji pełnego profilu.
+
+Worker generacji tej nowej próby zapisuje co 120 s stos własnych wątków,
+bez lokalnych wartości. Obserwacja pomaga wskazać wykonywaną funkcję, ale nie jest
+pomiarami alokacji ani ciągłym profilem pamięci. Zatrzymuje się także przy wyjątku;
+log nadal obejmuje istniejący limit 16 MiB i cały scratch oraz zasoby workera.
+28 testów supervisora, scope i obserwacji stosu przeszło w 1.27 s. Jeden kontrolny
+proces rzeczywiście zapisuje okresowe stosy i sprawdza ich anulowanie oraz brak
+lokalnych wartości w logu. Krótki interwał tego testu nie jest akceptowany przez
+zamrożony plan pełnej próby. [Evidence](evidence/09-30-development-capacity-next-preparation.json)
+opisuje zakres tych kontroli.
+
+Receptura zachowuje bajty 1.0/1.1/1.2 i łańcuch wszystkich trzech porażek,
+pełne wymiary i daty canonical, budżety RSS/scratch/czasu, rezerwy i parent caps.
+Nowa próba została uruchomiona 2026-10-08 po chronionej publikacji producenta
+i diagnostyki oraz pełnym odbiorze ich dokładnych head/main.
+[Run 37714051649](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37714051649)
+wykonano na osobnym runnerze z AI/main `0990905b`; pełny Required CI tego main
+`37711535728` ma 17/17 success. Source/main `5c05445e` ma 25 odczytanych
+z 25 jobs, 21 success i cztery zamierzone scoped skips. Producent `51827823`
+pozostaje przypięty i ma pełny odbiór attempt2: 30/30 success. Sprawdzono
+jego ancestry oraz dokładne bajty receptury i workflow na zaakceptowanym main.
+[Czwarty pełny pomiar](evidence/09-32-development-capacity-fourth-run.json)
+zakończył się `worker_exit`, `exit_code: -11` (`SIGSEGV`), po 883.575 s;
+generacja trwała 882.775 s i nie ukończyła żadnej z pięciu faz. Próbkowany
+peak drzewa wyniósł 7562665984 B, poniżej limitu 8 GiB; próbkowane CPU miało
+dolną granicę 847.72 s. Ten wynik nie dowodzi przekroczenia RSS i nie jest
+kosztem ukończonego profilu. Minimalna dostępna pamięć miała 8177016832 B.
+Artefakt 11523680984 zawiera plan, receipt i log; brak ukończonego worker receipt.
+Zachowano wszystkie cztery porażki i koszty. Nie wykonano retry ani fitów,
+nie otwarto final test; profile i AI09 nadal nie mają kwalifikacji.
+
+Log urywa się podczas okresowego dumpu po `price_resolver.py:60`, z niedokończonym
+prefiksem `File`. Przyczyna awarii pozostaje niepotwierdzona: nie ma core ani
+natywnego backtrace. Podobne awarie diagnostyki opisują zgłoszenia
+[CPython 116008](https://github.com/python/cpython/issues/116008)
+(3.11.4, sygnał SIGUSR1) i
+[CPython 158200](https://github.com/python/cpython/issues/158200)
+(timer, pydebug main/3.16). Dotyczą innych wyzwalaczy lub wersji i są tylko
+podstawą hipotezy, że awarię mógł wywołać watchdog obserwacji.
+[Przypięty CPython 3.11.15](https://github.com/python/cpython/blob/v3.11.15/Modules/faulthandler.c)
+używa natywnego watchdogu do odczytu stosów. Przed odrębną kolejną próbą
+potrzebna jest kontrola bezpieczniejszej, ograniczonej obserwacji Pythonowych
+ramek i nowa prospektywna receptura, zachowująca plany 1.0–1.3, pełny scope,
+budżety, rezerwy i wszystkie porażki. Samo usunięcie diagnostyki nie dowodzi
+spadku RSS, ukończenia źródła ani kwalifikacji pełnych profili.
+Pierwszy Required CI producenta `37683555355` zakończył się cancelled:
+28/30 success, Docker cancelled i required-result failure. Instalacja Chromium
+przekroczyła 35 minut przed rozpoczęciem testów aplikacji; data quality przeszło.
+Oryginalny wynik jest zachowany, ponowiono tylko niezaliczone zadania CI.
+Nie ponowiono canonical ani żadnej projektowej generacji. W tamtej obserwacji source main
+`39d56447` miał pełny odbiór 30/30 success. AI07/08 pozostają zamknięte.
+
+Producent został następnie scalony przez chroniony
+[Source PR #105](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/105):
+head `6bc96e2f` ma zakończony Required CI `37692294899`, 25 odczytanych z 25
+jobs, 21 success, cztery zamierzone scoped skips i required-result success.
+Merge `5c05445e` jest na Source/main; jego dokładny odbiór `37698252427`
+przeszedł: 25 odczytanych z 25 jobs, 21 success, cztery zamierzone scoped
+skips oraz required-result success. Przypięcie producenta `51827823` w recepturze nie zmienia się.
+Pierwszy head diagnostyki `cf092d5e`, CI `37690635892`, zakończył się failure
+z 15/17 success przez dotychczasowy limit manifestu 64 KiB. Zachowano
+21 failed, 962 passed, 54 errors, 30 skipped i koszt 1483.69 s tego sharda.
+Nowa gałąź zawiera poprawkę bounded metadata cap 128 KiB oraz diagnostykę
+przerwanego backupu z kalibracji `b2e12a5d` i zaakceptowany main `92c2a3cd`.
+48 testów diagnostyki, przerwania i limitu manifestu przeszło w 2.27 s;
+Mypy dla 688 plików przeszło. Poprawiony head przeszedł pełne CI, chroniony merge i odbiór AI/main.
+Pełna próba 1.3 została następnie uruchomiona po pełnym odbiorze dokładnego
+head `a93893b8`, chronionym merge PR43 i odbiorze main `0990905b`. Poprzednie
+plany, limity i porażki pozostają zachowane.
+
 [Prospektywna receptura 1.2](reference/ai09-development-capacity-v1.2.json)
-jest przygotowana do osobnego pomiaru na `16d34887`. Nie została uruchomiona.
+została uruchomiona na `16d34887` z zaakceptowanego main `b0e2de16`.
+[Trzeci pełny pomiar](evidence/09-28-development-capacity-third-run.json),
+run `37676033214`, zakończył się `tree_rss_limit` po 1751.743 s.
+Generacja osiągnęła próbkowane 8592396288 B, ponad limit 8 GiB;
+kwalifikacja, eksport, import i curated nie rozpoczęły się. Minimalna dostępna
+pamięć wyniosła 7162466304 B. Supervisor zatrzymał wyłącznie własnego workera;
+nie wykonano retry, fitów ani final testu. Pełny koszt ukończonego profilu
+pozostaje nieznany. Plan, artefakt i dwie wcześniejsze porażki są zachowane.
 Wykorzystuje istniejącą ścieżkę AI 08 `source_cohort_batch_v2.run`, z indeksem
 identyfikatorów, cached walidacją immutable rekordów i zwalnianiem build state
 przed pełnym ponownym odczytem źródła. Zaktualizowane przypięcia zachowują
@@ -9,8 +120,10 @@ strażniki drift; native ordinary/cached parity ma 16 zaliczonych testów,
 a trzy dodatkowe przypadki z 14 dniami planów forecast przechodzą na seedach
 42/137/2026, z identycznymi 58 tabelami, CSV, kontekstem, source ID i bramkami.
 
-Przed dispatch wymagane są zielony Required CI dokładnego producenta,
-jego chroniony merge do main i odbiór main. Ten pomiar jest wyłącznie ręczny;
+Przed tym dispatch sprawdzono chronioną publikację producenta i pełny odbiór
+source main `b7234899` (25 odczytanych z 25 jobs, 21 success i 4 zamierzone
+skips) oraz AI main `b0e2de16` (17/17 success z required-result).
+Ten pomiar jest wyłącznie ręczny;
 push nie uruchamia automatycznego ponowienia. Rozmiar canonical, daty, locks,
 8 GiB RSS/scratch, godzina wall, parent caps i wszystkie zakazy pozostają
 takie jak w 1.1. Receptura przypina drugi wynik `wall_limit`, a wcześniejszy
@@ -104,8 +217,9 @@ Odbiór source PR #101 na `5bec26f9` zakończył się pełnym zielonym Required 
 [37623701164](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37623701164).
 Chroniony merge opublikował `cbcac6eb` na source `main`;
 [odbiór dokładnego main](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37629010997)
-pozostaje w toku. Szybka receptura 1.2 jest przygotowana osobno i zachowuje
-obie wcześniejsze porażki. Jej publikacja oraz pełny pomiar nadal są wymagane.
+był w toku w chwili wcześniejszej publikacji. Późniejszy source main
+`b7234899` ma pełny odbiór, a receptura 1.2 i jej trzeci nieudany pomiar
+są opisane powyżej. Zielone CI komponentów nie kwalifikuje pełnego profilu.
 
 Core usprawnień CI z PR #34, main `89b64d2`, jest zintegrowany w tej gałęzi
 bez zmiany `src` lub locków i bez przepięcia producenta AI07.
@@ -116,4 +230,21 @@ Przed pierwszym dispatch przypięcie receptury zmieniono na source PR #103
 `16d34887`, zawierający poprawkę odczytu Kafka i wsparcie planned anomaly.
 Wynik tiny control w 09-19 pochodzi z poprzedniego `5bec26f` i pozostaje
 historycznym odbiorem połączeń. Regresja cohort/forecast plans nowego source
-ma 31 passed; pełne CI i odbiór jego main nadal są warunkiem dispatch.
+ma 31 passed; pełne CI i odbiór jego main sprawdzono przed dispatch.
+
+Ta próba już wykorzystuje ograniczenia pamięci wprowadzone przez AI08.
+Nie należy wykonywać ich ponownie ani uznawać pomiarów małego świata za
+dowód pełnej skali. Przed kolejną próbą trzeba zbadać pozostałe alokacje
+producenta i zamrozić osobną wersję diagnostyki, zachowując wszystkie porażki,
+canonical rozmiary, budżety kampanii i rezerwy. Ten cached forecast world
+nie kwalifikuje pełnego planned-anomaly source 2.8 ani final `ai-training`.
+
+Poprawiony head diagnostyki `0ac90bd0` ma zakończony Required CI
+`37698835119`, 17/17 success. Po integracji zaakceptowanego main `78d853a6`
+nowy head `a93893b8` miał identyczne drzewo plików i pełny odbiór
+`37707162141`, 17/17 success. Chroniony merge PR #43 opublikował `0990905b`;
+jego odbiór `37711535728` przeszedł 17/17 przed ręcznym dispatch.
+Te wcześniejsze warunki publikacji są spełnione. Terminalny wynik próby 1.3
+jest opisany powyżej i w 09-32. Pozostaje potrzeba korekty diagnostyki oraz
+rzeczywistej kwalifikacji pełnego źródła, snapshotu i curated; zielone CI
+komponentów nie zastępuje tych wyników.

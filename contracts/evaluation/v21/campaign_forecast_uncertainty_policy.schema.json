@@ -1,0 +1,215 @@
+{
+  "$id": "urn:retailops:evaluation:campaign_forecast_uncertainty_policy:21.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assumptions": {
+      "default": [
+        "time_blocks_approximate_weak_dependence_no_stationarity_guarantee",
+        "series_clusters_assume_between_cluster_independence",
+        "methods_are_separate_sensitivity_reports_not_joint_multiway_inference"
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "prefixItems": [
+        {
+          "const": "time_blocks_approximate_weak_dependence_no_stationarity_guarantee",
+          "type": "string"
+        },
+        {
+          "const": "series_clusters_assume_between_cluster_independence",
+          "type": "string"
+        },
+        {
+          "const": "methods_are_separate_sensitivity_reports_not_joint_multiway_inference",
+          "type": "string"
+        }
+      ],
+      "title": "Assumptions",
+      "type": "array"
+    },
+    "confidence_level": {
+      "default": 0.95,
+      "maximum": 0.99,
+      "minimum": 0.8,
+      "title": "Confidence Level",
+      "type": "number"
+    },
+    "final_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Access Authorized",
+      "type": "boolean"
+    },
+    "independent_row_resampling": {
+      "const": false,
+      "default": false,
+      "title": "Independent Row Resampling",
+      "type": "boolean"
+    },
+    "max_cluster_cells": {
+      "default": 100000,
+      "maximum": 1000000,
+      "minimum": 2,
+      "title": "Max Cluster Cells",
+      "type": "integer"
+    },
+    "max_index_bytes": {
+      "default": 1073741824,
+      "maximum": 8589934592,
+      "minimum": 4096,
+      "title": "Max Index Bytes",
+      "type": "integer"
+    },
+    "max_resampled_cluster_visits": {
+      "default": 10000000,
+      "maximum": 100000000,
+      "minimum": 398,
+      "title": "Max Resampled Cluster Visits",
+      "type": "integer"
+    },
+    "max_rows": {
+      "default": 10000000,
+      "maximum": 100000000,
+      "minimum": 1,
+      "title": "Max Rows",
+      "type": "integer"
+    },
+    "methods": {
+      "default": [
+        "time_block",
+        "series_cluster"
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "const": "time_block",
+          "type": "string"
+        },
+        {
+          "const": "series_cluster",
+          "type": "string"
+        }
+      ],
+      "title": "Methods",
+      "type": "array"
+    },
+    "minimum_eligible_series_clusters": {
+      "default": 30,
+      "maximum": 10000,
+      "minimum": 2,
+      "title": "Minimum Eligible Series Clusters",
+      "type": "integer"
+    },
+    "minimum_eligible_time_blocks": {
+      "default": 8,
+      "maximum": 1000,
+      "minimum": 2,
+      "title": "Minimum Eligible Time Blocks",
+      "type": "integer"
+    },
+    "nominal_coverage_guaranteed": {
+      "const": false,
+      "default": false,
+      "title": "Nominal Coverage Guaranteed",
+      "type": "boolean"
+    },
+    "nominal_interval_coverage": {
+      "default": 0.9,
+      "maximum": 0.9,
+      "minimum": 0.9,
+      "title": "Nominal Interval Coverage",
+      "type": "number"
+    },
+    "pairing": {
+      "const": "same_cluster_multiplicities_for_candidate_reference_and_actual",
+      "default": "same_cluster_multiplicities_for_candidate_reference_and_actual",
+      "title": "Pairing",
+      "type": "string"
+    },
+    "partial_boundary_blocks": {
+      "const": "retain_full_membership_never_drop_rows",
+      "default": "retain_full_membership_never_drop_rows",
+      "title": "Partial Boundary Blocks",
+      "type": "string"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "quantile_method": {
+      "const": "linear_percentile",
+      "default": "linear_percentile",
+      "title": "Quantile Method",
+      "type": "string"
+    },
+    "random_generator": {
+      "const": "numpy_PCG64",
+      "default": "numpy_PCG64",
+      "title": "Random Generator",
+      "type": "string"
+    },
+    "resamples": {
+      "default": 999,
+      "maximum": 9999,
+      "minimum": 199,
+      "title": "Resamples",
+      "type": "integer"
+    },
+    "resampling_seed": {
+      "default": 137,
+      "maximum": 4294967295,
+      "minimum": 0,
+      "title": "Resampling Seed",
+      "type": "integer"
+    },
+    "series_clusters": {
+      "const": "whole_product_selling_location_channel_all_origins_and_horizons",
+      "default": "whole_product_selling_location_channel_all_origins_and_horizons",
+      "title": "Series Clusters",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "time_basis": {
+      "const": "forecast_origin_utc_calendar_day",
+      "default": "forecast_origin_utc_calendar_day",
+      "title": "Time Basis",
+      "type": "string"
+    },
+    "time_block_anchor": {
+      "default": "2000-01-03",
+      "format": "date",
+      "title": "Time Block Anchor",
+      "type": "string"
+    },
+    "time_block_days": {
+      "default": 28,
+      "maximum": 365,
+      "minimum": 14,
+      "title": "Time Block Days",
+      "type": "integer"
+    },
+    "time_blocks": {
+      "const": "fixed_disjoint_calendar_blocks_all_series_jointly",
+      "default": "fixed_disjoint_calendar_blocks_all_series_jointly",
+      "title": "Time Blocks",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-paired-cluster-uncertainty-1.0.0",
+      "default": "ai09-paired-cluster-uncertainty-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "title": "CampaignForecastUncertaintyPolicy",
+  "type": "object"
+}

@@ -4,10 +4,25 @@ import argparse
 import json
 from pathlib import Path
 
+from retailops_ai.evaluation_campaign.campaign_calibration_contract import (
+    CampaignForecastCalibration,
+    CampaignForecastCalibrationPlan,
+    CampaignForecastCalibrationReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignJournal,
     CampaignProtocol,
     SelectionFreeze,
+)
+from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
+    CampaignForecastEvaluationPlan,
+    CampaignForecastEvaluationPrediction,
+    CampaignForecastFrozenConfiguration,
+    CampaignForecastTrialPrediction,
+)
+from retailops_ai.evaluation_campaign.campaign_evaluation_receipt import (
+    CampaignForecastEvaluationReceipt,
+    CampaignForecastEvaluationRecipe,
 )
 from retailops_ai.evaluation_campaign.campaign_export_contract import (
     CampaignDevelopmentExportPlan,
@@ -21,9 +36,37 @@ from retailops_ai.evaluation_campaign.campaign_final_contract import (
     FinalForecastManifest,
     FinalForecastRecipe,
 )
+from retailops_ai.evaluation_campaign.campaign_fit_contract import (
+    CampaignForecastEncoding,
+    CampaignForecastFitPlan,
+    CampaignForecastFitReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_generation_contract import (
     CampaignGenerationPlan,
     CampaignGenerationResources,
+)
+from retailops_ai.evaluation_campaign.campaign_score_contract import (
+    CampaignForecastRawPrediction,
+    CampaignForecastScorePlan,
+    CampaignForecastScoreReceipt,
+)
+from retailops_ai.evaluation_campaign.campaign_segment_contract import (
+    CampaignContextStoragePolicy,
+    CampaignForecastContextScope,
+    CampaignForecastKeyContext,
+    CampaignForecastSegmentCensus,
+    CampaignForecastSegmentPolicy,
+    CampaignOriginRoute,
+    CampaignSourceKeyAnnotation,
+)
+from retailops_ai.evaluation_campaign.campaign_tune_contract import (
+    CampaignForecastTunePlan,
+    CampaignForecastTuneReceipt,
+    CampaignForecastTuneSelection,
+)
+from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
+    CampaignForecastUncertaintyPolicy,
+    CampaignForecastUncertaintyReport,
 )
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
 from retailops_ai.evaluation_campaign.label_contract import (
@@ -287,6 +330,145 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Campaign final export contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, fit_model in (
+        ("campaign_forecast_fit_plan", CampaignForecastFitPlan),
+        ("campaign_forecast_fit_receipt", CampaignForecastFitReceipt),
+        ("campaign_forecast_encoding", CampaignForecastEncoding),
+    ):
+        schema = fit_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:15.0.0"
+        path = ROOT / "contracts/evaluation/v15" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast fit contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, score_model in (
+        ("campaign_forecast_score_plan", CampaignForecastScorePlan),
+        ("campaign_forecast_score_receipt", CampaignForecastScoreReceipt),
+        ("campaign_forecast_raw_prediction", CampaignForecastRawPrediction),
+    ):
+        schema = score_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:16.0.0"
+        path = ROOT / "contracts/evaluation/v16" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast score contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, tune_model in (
+        ("campaign_forecast_tune_plan", CampaignForecastTunePlan),
+        ("campaign_forecast_tune_receipt", CampaignForecastTuneReceipt),
+        ("campaign_forecast_tune_selection", CampaignForecastTuneSelection),
+    ):
+        schema = tune_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:17.0.0"
+        path = ROOT / "contracts/evaluation/v17" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast Tune contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, calibration_model in (
+        ("campaign_forecast_calibration_plan", CampaignForecastCalibrationPlan),
+        ("campaign_forecast_calibration_receipt", CampaignForecastCalibrationReceipt),
+        ("campaign_forecast_calibration", CampaignForecastCalibration),
+    ):
+        schema = calibration_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:18.0.0"
+        path = ROOT / "contracts/evaluation/v18" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast Calibration contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, evaluation_model in (
+        ("frozen_forecast_configuration", CampaignForecastFrozenConfiguration),
+        ("campaign_forecast_evaluation_plan", CampaignForecastEvaluationPlan),
+        ("campaign_forecast_trial_prediction", CampaignForecastTrialPrediction),
+        ("campaign_forecast_evaluation_prediction", CampaignForecastEvaluationPrediction),
+    ):
+        schema = evaluation_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:19.0.0"
+        path = ROOT / "contracts/evaluation/v19" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast evaluation contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, execution_model in (
+        ("campaign_forecast_evaluation_recipe", CampaignForecastEvaluationRecipe),
+        ("campaign_forecast_evaluation_receipt", CampaignForecastEvaluationReceipt),
+    ):
+        schema = execution_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:20.0.0"
+        path = ROOT / "contracts/evaluation/v20" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast evaluation execution contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, uncertainty_model in (
+        ("campaign_forecast_uncertainty_policy", CampaignForecastUncertaintyPolicy),
+        ("campaign_forecast_uncertainty_report", CampaignForecastUncertaintyReport),
+    ):
+        schema = uncertainty_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:21.0.0"
+        path = ROOT / "contracts/evaluation/v21" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast uncertainty contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, context_model in (
+        ("campaign_context_storage_policy", CampaignContextStoragePolicy),
+        ("campaign_forecast_context_scope", CampaignForecastContextScope),
+        ("campaign_forecast_key_context", CampaignForecastKeyContext),
+        ("campaign_forecast_segment_census", CampaignForecastSegmentCensus),
+        ("campaign_forecast_segment_policy", CampaignForecastSegmentPolicy),
+        ("campaign_origin_route", CampaignOriginRoute),
+        ("campaign_source_key_annotation", CampaignSourceKeyAnnotation),
+    ):
+        schema = context_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:22.0.0"
+        path = ROOT / "contracts/evaluation/v22" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast source context contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

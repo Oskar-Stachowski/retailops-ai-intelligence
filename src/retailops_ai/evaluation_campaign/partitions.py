@@ -41,8 +41,8 @@ from retailops_ai.source_snapshot.files import (
 from retailops_ai.source_snapshot.protocol import resource_bytes
 from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
 
-# The complete installed-module pin grows with independent adapter packages.
-# Keep a bounded envelope while retaining every transitive module checksum.
+# The complete installed-module pin has outgrown 64 KiB. Keep every module
+# binding and a bounded metadata read; this is separate from campaign resources.
 MAX_MANIFEST_BYTES = 128 * 1024
 MAX_MEMBERSHIP_BYTES = 4096
 KEY_FIELDS = tuple(ForecastKey.model_fields)

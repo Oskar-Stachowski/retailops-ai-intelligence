@@ -4,6 +4,8 @@
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja
 i końcowy odbiór trzech zastosowań pozostają otwarte.
+[Wspólne prognozy development](docs/ai09-campaign-scoring.md) zachowują pełne
+klucze sześciu modeli; kalibracja i końcowa kwalifikacja nadal są wymagane.
 
 **AI 07: kompletny odbiór kwalifikacji `synthetic_ai_07_portfolio_v4`.**
 [Końcowy odbiór](docs/evidence/07-completion.md) i
@@ -14,11 +16,13 @@ oraz zielony Required CI dokładnych HEAD i merge commitów obu repozytoriów.
 **AI 08 jest READY.** [Końcowy raport](docs/evidence/08-28-final-ready.md) obejmuje
 kwalifikowany model, rzeczywisty lifecycle/batch/API oraz zielone CI obu main.
 
-**AI 10: końcowa integracja w toku.**
-[Bieżący odbiór i instrukcja krok po kroku](docs/ai10-acceptance.md) obejmują
-snapshot/REST/stream, real SQL/ACK i wyniki trzech ścieżek ML w RetailOps API/UI.
-Oryginalne publishery SQL stockout i anomaly są odebrane; pełny v12 jest w odbiorze.
-Publikacja na obu `origin/main` pozostaje warunkiem zamknięcia.
+**AI 10: READY — pełny odbiór integracji.**
+[Instrukcja krok po kroku](docs/ai10-acceptance.md) i
+[raport bounded](docs/evidence/ai10-bounded-acceptance.json) wiążą snapshot/REST/stream,
+real SQL/ACK oraz oryginalne 40 stockout, 1232 anomaly i 56 forecast w RetailOps API/UI.
+Pełny V12 ma 273 testy granic i rzeczywisty Source E2E, bez failures/errors/skips.
+V12 zachowuje quality `not_ready` i zaakceptowany development namespace.
+Końcowe dowody i status są objęte chronionymi PR #38/#104 oraz Required CI obu main.
 
 **Status: AI 04 — finalna v12, `ready` z zaakceptowanymi odstępstwami jakościowymi.**
 [Decyzja i zakres odbioru](docs/evidence/04-v12-acceptance.md) obowiązują po

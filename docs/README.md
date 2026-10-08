@@ -101,6 +101,10 @@ scoped etykiet i integracja z treningiem pozostają kolejnymi krokami.
 [Fizyczny eksport pięciu ról](physical-forecast-export.md) odtwarza pełną
 populację cech i kwalifikuje etykiety z tych samych prywatnych rodziców,
 z zachowaniem censored/closed/purged oraz jawnego zakresu diagnostycznego.
+[Audytowany trening RF/HGB/TF](ai09-campaign-fitting.md) zachowuje wszystkie
+kwalifikujące się klucze, preprocessing wyuczony wyłącznie na train, osobne
+procesy fit/reload oraz nieodwracalnie rozliczone próby. Odbiór rzeczywistych
+workerów i projektowa kampania nadal są wymagane.
 [Wersje obserwacji](forecast-source-versions.md) zachowują osobny czas dowodu
 kompletności i nie przenoszą jakości ostatniej obserwacji wstecz.
 [Handoff źródła 03.3](source-snapshot-handoff.md) opisuje samowystarczalny fixture,

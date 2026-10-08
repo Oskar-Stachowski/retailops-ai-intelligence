@@ -116,6 +116,10 @@ def run(case, tmp_path, **changes):
         operation_id=changes.pop("operation_id", "final-42-read"),
         plan=changes.pop("plan", plan),
         generated=changes.pop("generated", generated),
+        selection_bundles=changes.pop(
+            "selection_bundles",
+            {use: tmp_path / use for use in ("forecast", "anomaly", "stockout")},
+        ),
     )
 
 
@@ -130,6 +134,27 @@ def test_final_before_freeze_does_not_read_or_consume_final_attempt(tmp_path, mo
     with pytest.raises((ValidationError, SnapshotError), match="phase_mismatch"):
         run(case, tmp_path)
     assert journal.inspect(case[0]).head_sha256 == before
+
+
+@pytest.mark.parametrize("bundles", [None, {}, {"forecast": "missing"}])
+def test_metadata_freeze_cannot_open_final_parent_without_completed_three_use_proof(
+    tmp_path, monkeypatch, bundles
+):
+    case = setup_campaign(tmp_path)
+    monkeypatch.setattr(exporter, "_open_verified_source_parent", forbidden)
+    with pytest.raises(SnapshotError, match="requires_completed_three_use_selection"):
+        run(case, tmp_path, selection_bundles=bundles)
+    event = journal.inspect(case[0]).events[-1]
+    assert event.result == "failed" and event.cost.wall_seconds > 0
+    assert not (tmp_path / "output").exists()
+
+
+def test_metadata_freeze_with_three_paths_still_cannot_open_final_parent(tmp_path, monkeypatch):
+    case = setup_campaign(tmp_path)
+    monkeypatch.setattr(exporter, "_open_verified_source_parent", forbidden)
+    with pytest.raises(SnapshotError, match="no_completed_use_evaluation"):
+        run(case, tmp_path)
+    assert journal.inspect(case[0]).events[-1].result == "failed"
 
 
 @pytest.mark.parametrize(
@@ -215,8 +240,22 @@ def mocked_pipeline(monkeypatch, case, *, failure=None):
         ),
     )
 
+    checked_selection = []
+
+    def controlled_selection_proof(journal_path, bundles):
+        # This pipeline test isolates publication/exit behavior. The actual
+        # development receipt verifier has separate unmocked negative controls.
+        assert journal_path == root and journal.inspect(root).events[-1].kind == "reserved"
+        assert set(bundles) == {"forecast", "anomaly", "stockout"}
+        checked_selection.append(True)
+        event = next(e for e in journal.inspect(root).events if e.kind == "selection_frozen")
+        return canonical_sha256(event.selection.model_dump(mode="json")), None
+
+    monkeypatch.setattr(exporter, "verify_completed_campaign_selection", controlled_selection_proof)
+
     @contextmanager
     def open_parent(*args, **kwargs):
+        assert checked_selection == [True], "proof must precede parent I/O"
         assert journal.inspect(root).events[-1].kind == "reserved"
         assert any(e.kind == "selection_frozen" for e in journal.inspect(root).events)
         if failure == "open":

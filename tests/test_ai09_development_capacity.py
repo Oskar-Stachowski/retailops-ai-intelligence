@@ -1,9 +1,13 @@
 """Real isolated process costs and failure containment; no canonical data generation."""
 
 import copy
+import gc
+import io
 import os
 import sys
+import threading
 import time
+import weakref
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -204,7 +208,7 @@ def test_resource_revision_cannot_change_parent_caps_or_erase_previous_failure(c
 
 
 @pytest.mark.parametrize("change", ["producer", "entrypoint", "failure_digest", "failure_flag"])
-def test_cached_revision_preserves_exact_producer_and_both_failed_attempts(change: str) -> None:
+def test_cached_revision_preserves_exact_producer_and_prior_failed_attempts(change: str) -> None:
     plan = probe.read(probe.PLAN_PATH)
     if change == "producer":
         plan["producer_commit"] = "1" * 40
@@ -214,5 +218,275 @@ def test_cached_revision_preserves_exact_producer_and_both_failed_attempts(chang
         plan["previous_attempt"]["resource_receipt_sha256"] = "0" * 64
     else:
         plan["previous_attempt"]["previous_failure_preserved"] = False
+    with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
+        probe.validate_plan(plan)
+
+
+@pytest.mark.parametrize("change", ["interval", "phase", "locals", "classification"])
+def test_stack_observation_cannot_change_scope_or_claim_allocation_measurement(change: str) -> None:
+    plan = probe.read(probe.PLAN_PATH)
+    if change == "interval":
+        plan["worker_stack_observation"]["interval_seconds"] = 1
+    elif change == "phase":
+        plan["worker_stack_observation"]["phases"] = ["import"]
+    elif change == "locals":
+        plan["worker_stack_observation"]["locals_dumped"] = True
+    else:
+        plan["worker_stack_observation"]["periodic_observation_not_allocation_measurement"] = False
+    with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
+        probe.validate_plan(plan)
+
+
+def test_all_four_prior_plan_bytes_and_failure_chain_are_retained() -> None:
+    path = probe.PLAN_PATH
+    for version, run_id in (
+        ("1.3", 37714051649),
+        ("1.2", 37676033214),
+        ("1.1", 37613368332),
+        ("1.0", 37611605538),
+    ):
+        current = probe.read(path)
+        previous = path.with_name(
+            "ai09-development-capacity.json"
+            if version == "1.0"
+            else "ai09-development-capacity-v" + version + ".json"
+        )
+        assert current["previous_attempt"]["plan_sha256"] == probe.sha(previous)
+        assert current["previous_attempt"]["workflow_run"] == run_id
+        if version == "1.0":
+            assert current["previous_attempt"]["status"] == "failed_tree_rss_limit"
+            assert current["previous_attempt"]["completed_phases"] == 0
+            assert current["previous_attempt"]["wall_seconds"] > 0
+        else:
+            assert current["previous_attempt"]["previous_failure_preserved"] is True
+        path = previous
+
+
+def test_actual_periodic_generation_stack_is_bounded_and_cancelled_without_locals(
+    tmp_path: Path,
+) -> None:
+    # Shortened timing applies only to this isolated stdlib control; the frozen
+    # full-profile plan above rejects this value and always requires120 seconds.
+    program = """
+import sys,time
+from types import SimpleNamespace
+sys.path.insert(0, ROOT)
+from scripts import measure_ai09_development_capacity as probe
+def controlled_generation(args,plan):
+    local_value = 'CONTROL_LOCAL_VALUE_MUST_NOT_APPEAR'
+    time.sleep(0.11)
+    return {'length':len(local_value)}
+probe.producer_worker = controlled_generation
+plan = probe.read(probe.PLAN_PATH)
+plan['worker_stack_observation']['interval_seconds'] = 0.025
+probe.observed_worker(SimpleNamespace(worker='generation'),plan)
+print('CONTROL_COMPLETED',flush=True)
+time.sleep(0.08)
+""".replace("ROOT", repr(str(probe.PLAN_PATH.parents[2])))
+    result = run(tmp_path, program)
+    assert result["status"] == "passed"
+    log = (tmp_path / "worker.log").read_text()
+    before, after = log.split("CONTROL_COMPLETED", 1)
+    assert "AI09_PYTHON_STACK_SNAPSHOT" in before and "controlled_generation" in before
+    assert "CONTROL_LOCAL_VALUE_MUST_NOT_APPEAR" not in log
+    assert "AI09_PYTHON_STACK_SNAPSHOT" not in after and len(log.encode()) < 16384
+
+
+def test_stack_timer_is_cancelled_before_propagating_generation_failure(monkeypatch) -> None:
+    calls = []
+    monkeypatch.setattr(probe.StackObserver, "start", lambda *a, **k: calls.append("start"))
+    monkeypatch.setattr(probe.StackObserver, "stop", lambda *a: calls.append("cancel"))
+
+    def failed(*args):
+        raise ValueError("controlled_generation_failure")
+
+    monkeypatch.setattr(probe, "producer_worker", failed)
+    with pytest.raises(ValueError, match="controlled_generation_failure"):
+        probe.observed_worker(SimpleNamespace(worker="generation"), probe.read(probe.PLAN_PATH))
+    assert calls == ["start", "cancel"]
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("implementation", "native_watchdog"),
+        ("maximum_threads", 65),
+        ("maximum_frames_per_thread", 65),
+        ("maximum_snapshot_bytes", 65537),
+        ("maximum_filename_characters", 257),
+        ("maximum_function_characters", 97),
+        ("join_timeout_seconds", 6),
+        ("may_be_delayed_without_GIL", False),
+        ("truncation_explicit", False),
+    ],
+)
+def test_python_observation_caps_and_limitations_are_frozen(field, value) -> None:
+    plan = probe.read(probe.PLAN_PATH)
+    plan["worker_stack_observation"][field] = value
+    with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
+        probe.validate_plan(plan)
+
+
+def test_actual_python_observer_handles_churning_code_and_threads_without_locals(tmp_path) -> None:
+    program = """
+import sys, threading, time, types
+sys.path.insert(0, ROOT)
+from scripts import measure_ai09_development_capacity as probe
+def template():
+    local_value = 'DYNAMIC_LOCAL_VALUE_MUST_NOT_APPEAR'
+    return len(local_value)
+stop = threading.Event()
+def churn():
+    while not stop.is_set():
+        for _ in range(100):
+            function = types.FunctionType(template.__code__.replace(), {})
+            function()
+            function = None
+policy = probe.read(probe.PLAN_PATH)['worker_stack_observation']
+policy['interval_seconds'] = 0.002
+observer = probe.StackObserver(policy, sys.stderr)
+worker = threading.Thread(target=churn)
+worker.start()
+observer.start()
+try:
+    for _ in range(12):
+        temporary = threading.Thread(target=lambda: time.sleep(0.002))
+        temporary.start()
+        temporary.join()
+finally:
+    stop.set()
+    worker.join()
+    observer.stop()
+assert observer.snapshots > 1
+print('CONTROL_COMPLETED', flush=True)
+time.sleep(0.03)
+""".replace("ROOT", repr(str(probe.PLAN_PATH.parents[2])))
+    result = run(tmp_path, program)
+    assert result["status"] == "passed"
+    before, after = (tmp_path / "worker.log").read_text().split("CONTROL_COMPLETED", 1)
+    assert before.count("AI09_PYTHON_STACK_SNAPSHOT") > 1
+    assert "churn" in before and '"truncated":false' in before
+    assert "DYNAMIC_LOCAL_VALUE_MUST_NOT_APPEAR" not in before
+    assert "AI09_PYTHON_STACK_SNAPSHOT" not in after
+
+
+def test_frame_depth_and_bytes_truncation_explicit_and_payload_references_released() -> None:
+    ready, release = threading.Event(), threading.Event()
+    references = []
+
+    class Payload:
+        pass
+
+    def nested(depth):
+        if depth:
+            nested(depth - 1)
+        else:
+            local_payload = Payload()
+            references.append(weakref.ref(local_payload))
+            ready.set()
+            release.wait(timeout=5)
+
+    worker = threading.Thread(target=nested, args=(80,))
+    worker.start()
+    try:
+        assert ready.wait(timeout=2)
+        policy = probe.read(probe.PLAN_PATH)["worker_stack_observation"]
+        observer = probe.StackObserver(policy, io.StringIO())
+        snapshot = observer._snapshot()
+        assert '"truncated":true' in snapshot
+        assert 0 < snapshot.count('"function":"nested"') <= 64
+        assert len(snapshot.encode()) <= 65536
+        small = dict(policy, maximum_snapshot_bytes=512)
+        short = probe.StackObserver(small, io.StringIO())._snapshot()
+        assert len(short.encode()) <= 512 and '"truncated":true' in short
+    finally:
+        release.set()
+        worker.join(timeout=2)
+    assert not worker.is_alive()
+    gc.collect()
+    assert references[0]() is None
+
+
+def test_observer_errors_cannot_return_successful_worker_result(monkeypatch) -> None:
+    class BrokenStream(io.StringIO):
+        def write(self, value):
+            raise OSError("ARBITRARY_ERROR_PAYLOAD_MUST_NOT_APPEAR")
+
+    monkeypatch.setattr(probe.sys, "stderr", BrokenStream())
+    policy = probe.read(probe.PLAN_PATH)
+    policy["worker_stack_observation"]["interval_seconds"] = 0.001
+
+    def wait_for_observation(*args):
+        time.sleep(0.02)
+        return {"status": "passed"}
+
+    monkeypatch.setattr(probe, "producer_worker", wait_for_observation)
+    with pytest.raises(ValueError, match="capacity_stack_observation_failure_OSError"):
+        probe.observed_worker(SimpleNamespace(worker="generation"), policy)
+
+
+def test_successful_worker_reports_observer_shutdown_and_cost_metadata(monkeypatch) -> None:
+    monkeypatch.setattr(probe.sys, "stderr", io.StringIO())
+    policy = probe.read(probe.PLAN_PATH)
+    policy["worker_stack_observation"]["interval_seconds"] = 0.001
+    monkeypatch.setattr(
+        probe, "producer_worker", lambda *a: time.sleep(0.02) or {"status": "passed"}
+    )
+    result = probe.observed_worker(SimpleNamespace(worker="generation"), policy)
+    assert result["worker_stack_observation"]["snapshots"] > 1
+    assert result["worker_stack_observation"]["cancelled_and_joined"] is True
+    assert result["worker_stack_observation"]["not_continuous_or_allocation_measurement"] is True
+    assert not any(t.name == "ai09-stack-observer" for t in threading.enumerate())
+
+
+def test_observer_thread_cap_is_explicit_and_only_emits_owned_thread_frames(monkeypatch) -> None:
+    frame = sys._getframe()
+    monkeypatch.setattr(probe.sys, "_current_frames", lambda: {i: frame for i in range(65)})
+    policy = probe.read(probe.PLAN_PATH)["worker_stack_observation"]
+    snapshot = probe.StackObserver(policy, io.StringIO())._snapshot()
+    # Controlled identifiers exercise the cap; no foreign process is inspected.
+    assert snapshot.count('"thread":') <= 64
+    assert '"threads_seen":65' in snapshot and '"truncated":true' in snapshot
+    assert len(snapshot.encode()) <= 65536
+
+
+def test_observer_join_timeout_cannot_return_success(monkeypatch) -> None:
+    observer = probe.StackObserver(
+        probe.read(probe.PLAN_PATH)["worker_stack_observation"], io.StringIO()
+    )
+    monkeypatch.setattr(observer.thread, "join", lambda **k: None)
+    monkeypatch.setattr(observer.thread, "is_alive", lambda: True)
+    with pytest.raises(ValueError, match="capacity_stack_observer_join_timeout"):
+        observer.stop()
+    assert observer.done.is_set()
+
+
+def test_unicode_code_metadata_truncation_is_explicit_and_encoded_bytes_are_bounded(
+    monkeypatch,
+) -> None:
+    frames = {
+        0: SimpleNamespace(
+            f_code=SimpleNamespace(co_filename="ą" * 300, co_name="ź" * 150),
+            f_lineno=42,
+            f_back=None,
+        )
+    }
+    monkeypatch.setattr(probe.sys, "_current_frames", lambda: frames)
+    policy = probe.read(probe.PLAN_PATH)["worker_stack_observation"]
+    snapshot = probe.StackObserver(policy, io.StringIO())._snapshot()
+    assert '"truncated":true' in snapshot and len(snapshot.encode()) <= 65536
+    assert snapshot.count("\\u0105") == 256 and snapshot.count("\\u017a") == 96
+    assert frames == {}
+
+
+@pytest.mark.parametrize("change", ["signal", "reason", "cause_confirmed"])
+def test_fourth_failure_signal_and_uncertainty_cannot_be_rewritten(change) -> None:
+    plan = probe.read(probe.PLAN_PATH)
+    if change == "signal":
+        plan["previous_attempt"]["exit_code"] = -9
+    elif change == "reason":
+        plan["previous_attempt"]["reason"] = "tree_rss_limit"
+    else:
+        plan["previous_attempt"]["root_cause_confirmed"] = True
     with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
         probe.validate_plan(plan)

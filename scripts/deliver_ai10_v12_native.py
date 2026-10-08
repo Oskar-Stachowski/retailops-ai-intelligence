@@ -19,6 +19,30 @@ from retailops_ai.intelligence_events.kafka import ConfluentEventProducer
 from retailops_ai.intelligence_events.outbox import EventProducer, deliver_one
 
 
+def failure_summary(error: Exception) -> dict[str, str]:
+    """Expose fixed delivery guards, without database messages or private controls."""
+    allowed = {
+        "ai10_v12_delivery_private_control_required",
+        "ai10_v12_delivery_control_byte_limit",
+        "ai10_v12_delivery_control_invalid",
+        "ai10_v12_delivery_owned_runner_required",
+        "ai10_v12_delivery_exact_owned_context",
+        "ai10_v12_delivery_original_database_owner",
+        "ai10_v12_delivery_complete_original_pending_census",
+        "ai10_v12_delivery_real_broker_ack_required",
+        "intelligence_outbox_environment",
+        "intelligence_outbox_stored_binding",
+        "intelligence_outbox_delivery_unconfirmed",
+        "intelligence_outbox_delivery_position_invalid",
+    }
+    category = str(error) if isinstance(error, ValueError | RuntimeError) else ""
+    return {
+        "status": "failed",
+        "category": category if category in allowed else "ai10_v12_original_outbox_delivery",
+        "exception_type": type(error).__name__,
+    }
+
+
 def private(path: Path) -> dict[str, Any]:
     fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
     with os.fdopen(fd, "rb") as stream:
@@ -134,8 +158,8 @@ def main() -> int:
             )
         )
         return 0
-    except Exception:
-        print('{"status":"failed","category":"ai10_v12_original_outbox_delivery"}')
+    except Exception as error:
+        print(json.dumps(failure_summary(error)))
         return 1
     finally:
         if engine is not None:

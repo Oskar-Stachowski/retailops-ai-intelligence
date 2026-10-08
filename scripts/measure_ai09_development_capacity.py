@@ -19,14 +19,16 @@ import signal
 import stat
 import subprocess
 import sys
+import threading
 import time
 from datetime import UTC, date, datetime
 from pathlib import Path
-from typing import Any
+from types import FrameType
+from typing import Any, TextIO
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
-    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.2.json"
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.4.json"
 )
 
 
@@ -289,10 +291,10 @@ def require_remote() -> None:
 
 def validate_plan(plan: dict[str, Any]) -> None:
     """Do not let a smaller or final profile inherit this diagnostic's name."""
-    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.1.json")
+    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.3.json")
     previous = read(previous_path)
     previous_result = read(
-        PLAN_PATH.parents[1] / "evidence/09-18-development-capacity-second-run.json"
+        PLAN_PATH.parents[1] / "evidence/09-32-development-capacity-fourth-run.json"
     )
     revision_keys = {
         "version",
@@ -300,14 +302,32 @@ def validate_plan(plan: dict[str, Any]) -> None:
         "generation_entrypoint",
         "previous_attempt",
         "revision_reason",
+        "worker_stack_observation",
     }
     if {k: v for k, v in plan.items() if k not in revision_keys} != {
         k: v for k, v in previous.items() if k not in revision_keys
     }:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.2.0"
-        or plan["producer_commit"] != "16d34887b058b3dfb270af474f28242194a968ca"
+        plan["version"] != "ai09-development-capacity-probe-1.4.0"
+        or plan["producer_commit"] != "5182782321e9aca15f28c467071e92f268aafb85"
+        or plan["worker_stack_observation"]
+        != {
+            "phases": ["generation"],
+            "interval_seconds": 120,
+            "repeat": True,
+            "locals_dumped": False,
+            "periodic_observation_not_allocation_measurement": True,
+            "implementation": "python_current_frames_owned_references_no_native_watchdog",
+            "maximum_threads": 64,
+            "maximum_frames_per_thread": 64,
+            "maximum_snapshot_bytes": 65536,
+            "maximum_filename_characters": 256,
+            "maximum_function_characters": 96,
+            "join_timeout_seconds": 5,
+            "may_be_delayed_without_GIL": True,
+            "truncation_explicit": True,
+        }
         or plan["generation_entrypoint"] != "data.inventory.source_cohort_batch_v2.run"
         or plan["scope"] != "isolated_resource_diagnostic_on_previously_exposed_development_dates"
         or plan["expected_snapshot_schema_version"] != "1.1.0"
@@ -323,10 +343,12 @@ def validate_plan(plan: dict[str, Any]) -> None:
         or plan["previous_attempt"]
         != {
             "version": previous["version"],
-            "workflow_run": 37613368332,
+            "workflow_run": 37714051649,
             "plan_sha256": sha(previous_path),
             "resource_receipt_sha256": previous_result["resource_receipt_sha256"],
-            "reason": "wall_limit",
+            "reason": "worker_exit",
+            "exit_code": -11,
+            "root_cause_confirmed": False,
             "previous_failure_preserved": True,
         }
         or plan["generation"]
@@ -500,6 +522,149 @@ def run(args: argparse.Namespace) -> None:  # noqa: PLR0915 - ordered probe evid
         raise SystemExit(1)
 
 
+class StackObserver:
+    """Own Python frame references briefly; release them before bounded log IO.
+
+    The observer needs the GIL and can miss or delay observations during native
+    work. It is neither a native-crash handler nor an allocation/continuous-stack
+    profiler. The independent supervisor still enforces every resource budget.
+    """
+
+    def __init__(self, policy: dict[str, Any], stream: TextIO) -> None:
+        self.policy, self.stream = dict(policy), stream
+        self.done = threading.Event()
+        self.thread = threading.Thread(target=self._run, name="ai09-stack-observer", daemon=True)
+        self.failed: str | None = None
+        self.snapshots = self.maximum_bytes = self.truncated_snapshots = 0
+
+    def _snapshot(self) -> str:
+        frames = sys._current_frames()
+        frame: FrameType | None = None
+        emitted = 0
+        truncated = False
+        lines = ["AI09_PYTHON_STACK_SNAPSHOT\n"]
+        size = len(lines[0].encode())
+        # Reserve enough room for the explicit count/truncation footer.
+        available = self.policy["maximum_snapshot_bytes"] - 256
+        try:
+            identifiers = sorted(k for k in frames if k != threading.get_ident())
+            for identifier in identifiers[: self.policy["maximum_threads"]]:
+                header = json.dumps({"thread": identifier}, separators=(",", ":")) + "\n"
+                if size + len(header.encode()) > available:
+                    truncated = True
+                    break
+                lines.append(header)
+                size += len(header.encode())
+                emitted += 1
+                frame = frames[identifier]
+                depth = 0
+                while frame is not None and depth < self.policy["maximum_frames_per_thread"]:
+                    # No source lines, arguments, locals, globals or reprs.
+                    filename, function = frame.f_code.co_filename, frame.f_code.co_name
+                    truncated |= (
+                        len(filename) > self.policy["maximum_filename_characters"]
+                        or len(function) > self.policy["maximum_function_characters"]
+                    )
+                    line = (
+                        json.dumps(
+                            {
+                                "file": filename[: self.policy["maximum_filename_characters"]],
+                                "line": frame.f_lineno,
+                                "function": function[: self.policy["maximum_function_characters"]],
+                            },
+                            separators=(",", ":"),
+                            ensure_ascii=True,
+                        )
+                        + "\n"
+                    )
+                    if size + len(line.encode()) > available:
+                        truncated = True
+                        break
+                    lines.append(line)
+                    size += len(line.encode())
+                    frame, depth = frame.f_back, depth + 1
+                truncated |= frame is not None
+                if size >= available or (
+                    frame is not None and depth < self.policy["maximum_frames_per_thread"]
+                ):
+                    break
+            truncated |= emitted != len(identifiers)
+            lines.append(
+                json.dumps(
+                    {
+                        "threads_seen": len(identifiers),
+                        "threads_emitted": emitted,
+                        "truncated": truncated,
+                    },
+                    separators=(",", ":"),
+                )
+                + "\n"
+            )
+        finally:
+            frame = None
+            frames.clear()
+        snapshot = "".join(lines)
+        length = len(snapshot.encode())
+        if length > self.policy["maximum_snapshot_bytes"]:
+            raise ValueError("capacity_stack_snapshot_resource_limit")
+        self.maximum_bytes = max(self.maximum_bytes, length)
+        self.truncated_snapshots += int(truncated)
+        return snapshot
+
+    def _run(self) -> None:
+        try:
+            while not self.done.wait(self.policy["interval_seconds"]):
+                snapshot = self._snapshot()
+                # Frame references have been released before potentially blocking IO.
+                self.stream.write(snapshot)
+                self.stream.flush()
+                self.snapshots += 1
+        except Exception as error:
+            # Keep only the exception class, never arbitrary payload/locals.
+            self.failed = type(error).__name__[:96]
+            self.done.set()
+
+    def start(self) -> None:
+        self.thread.start()
+
+    def stop(self) -> None:
+        self.done.set()
+        self.thread.join(timeout=self.policy["join_timeout_seconds"])
+        if self.thread.is_alive():
+            raise ValueError("capacity_stack_observer_join_timeout")
+        if self.failed is not None:
+            raise ValueError("capacity_stack_observation_failure_" + self.failed)
+
+
+def observed_worker(args: argparse.Namespace, plan: dict[str, Any]) -> dict[str, Any]:
+    """Observe only our generation worker stack; no locals or foreign process signals."""
+    observer = (
+        StackObserver(plan["worker_stack_observation"], sys.stderr)
+        if args.worker in plan["worker_stack_observation"]["phases"]
+        else None
+    )
+    if observer is not None:
+        observer.start()
+    try:
+        result = (
+            producer_worker(args, plan)
+            if args.worker in PHASES[:3]
+            else consumer_worker(args, plan)
+        )
+    finally:
+        if observer is not None:
+            observer.stop()
+    if observer is not None:
+        result["worker_stack_observation"] = {
+            "snapshots": observer.snapshots,
+            "maximum_snapshot_bytes": observer.maximum_bytes,
+            "truncated_snapshots": observer.truncated_snapshots,
+            "not_continuous_or_allocation_measurement": True,
+            "cancelled_and_joined": True,
+        }
+    return result
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
@@ -510,11 +675,7 @@ def main() -> None:
         require_remote()
         plan = read(PLAN_PATH)
         validate_plan(plan)
-        result = (
-            producer_worker(args, plan)
-            if args.worker in PHASES[:3]
-            else consumer_worker(args, plan)
-        )
+        result = observed_worker(args, plan)
         peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         result["worker_peak_self_rss_bytes"] = int(
             peak if sys.platform == "darwin" else peak * 1024

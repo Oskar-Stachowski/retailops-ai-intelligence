@@ -1,0 +1,19 @@
+FROM python:3.11.15-slim@sha256:90744cff8f32887f075c47d747a173ff333e9e98801667af93c357fa9f5e28ff AS build
+RUN pip install --no-cache-dir uv==0.12.19
+ENV UV_PROJECT_ENVIRONMENT=/opt/venv
+WORKDIR /ai
+COPY pyproject.toml uv.lock README.md ./
+COPY src ./src
+COPY contracts ./contracts
+COPY environments/tensorflow/uv.lock ./environments/tensorflow/uv.lock
+COPY tools/intelligence-delivery ./tools/intelligence-delivery
+COPY scripts/intelligence_outbox.py ./scripts/intelligence_outbox.py
+RUN uv sync --directory tools/intelligence-delivery --locked --no-dev --no-editable
+
+FROM python:3.11.15-slim@sha256:90744cff8f32887f075c47d747a173ff333e9e98801667af93c357fa9f5e28ff
+COPY --from=build /opt/venv /opt/venv
+COPY --from=build /ai/scripts/intelligence_outbox.py /ai/intelligence_outbox.py
+ENV PATH=/opt/venv/bin:$PATH PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /ai
+USER 10001:10001
+CMD ["python", "/ai/intelligence_outbox.py", "--env-file", "/private/ai.env", "--broker-config", "/private/broker.json"]

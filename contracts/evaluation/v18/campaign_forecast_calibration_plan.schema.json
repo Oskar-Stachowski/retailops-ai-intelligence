@@ -1,0 +1,227 @@
+{
+  "$defs": {
+    "CampaignGenerationResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "max_log_bytes": {
+          "default": 16777216,
+          "maximum": 16777216,
+          "minimum": 1024,
+          "title": "Max Log Bytes",
+          "type": "integer"
+        },
+        "minimum_available_memory_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Available Memory Bytes",
+          "type": "integer"
+        },
+        "minimum_free_disk_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Free Disk Bytes",
+          "type": "integer"
+        },
+        "sample_seconds": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0.01,
+          "title": "Sample Seconds",
+          "type": "number"
+        },
+        "scratch_bytes": {
+          "maximum": 137438953472,
+          "minimum": 1024,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "tree_rss_bytes": {
+          "maximum": 68719476736,
+          "minimum": 1024,
+          "title": "Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "tree_rss_bytes",
+        "scratch_bytes",
+        "minimum_free_disk_bytes",
+        "minimum_available_memory_bytes"
+      ],
+      "title": "CampaignGenerationResources",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:campaign_forecast_calibration_plan:18.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "center": {
+      "const": "completed_tune_median_choice_no_architecture_reselection",
+      "default": "completed_tune_median_choice_no_architecture_reselection",
+      "title": "Center",
+      "type": "string"
+    },
+    "export_operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Export Operation Id",
+      "type": "string"
+    },
+    "final_test_accessed": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Accessed",
+      "type": "boolean"
+    },
+    "forecast_quality_policy_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Forecast Quality Policy Sha256",
+      "type": "string"
+    },
+    "independent_evaluation_accessed": {
+      "const": false,
+      "default": false,
+      "title": "Independent Evaluation Accessed",
+      "type": "boolean"
+    },
+    "interval_bounds": {
+      "const": "max_zero_median_minus_radius_and_median_plus_radius",
+      "default": "max_zero_median_minus_radius_and_median_plus_radius",
+      "title": "Interval Bounds",
+      "type": "string"
+    },
+    "max_index_bytes": {
+      "default": 2147483648,
+      "maximum": 8589934592,
+      "minimum": 4096,
+      "title": "Max Index Bytes",
+      "type": "integer"
+    },
+    "max_output_bytes": {
+      "default": 16777216,
+      "maximum": 33554432,
+      "minimum": 1024,
+      "title": "Max Output Bytes",
+      "type": "integer"
+    },
+    "max_rows": {
+      "default": 10000000,
+      "maximum": 10000000,
+      "minimum": 1,
+      "title": "Max Rows",
+      "type": "integer"
+    },
+    "method": {
+      "const": "per_horizon_absolute_median_residual_split_conformal",
+      "default": "per_horizon_absolute_median_residual_split_conformal",
+      "title": "Method",
+      "type": "string"
+    },
+    "minimum_eligibility_coverage_per_horizon": {
+      "default": 0.8,
+      "maximum": 0.8,
+      "minimum": 0.8,
+      "title": "Minimum Eligibility Coverage Per Horizon",
+      "type": "number"
+    },
+    "minimum_eligible_rows_per_horizon": {
+      "const": 100,
+      "default": 100,
+      "title": "Minimum Eligible Rows Per Horizon",
+      "type": "integer"
+    },
+    "nominal_coverage": {
+      "default": 0.9,
+      "maximum": 0.9,
+      "minimum": 0.9,
+      "title": "Nominal Coverage",
+      "type": "number"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "resources": {
+      "$ref": "#/$defs/CampaignGenerationResources"
+    },
+    "role": {
+      "const": "calibration",
+      "default": "calibration",
+      "title": "Role",
+      "type": "string"
+    },
+    "score_operation_ids": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+        "type": "string"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Score Operation Ids",
+      "type": "array"
+    },
+    "source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Recipe Sha256",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "temporal_coverage_guarantee_claimed": {
+      "const": false,
+      "default": false,
+      "title": "Temporal Coverage Guarantee Claimed",
+      "type": "boolean"
+    },
+    "training_or_preprocessing_refitted": {
+      "const": false,
+      "default": false,
+      "title": "Training Or Preprocessing Refitted",
+      "type": "boolean"
+    },
+    "tune_operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Tune Operation Id",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-campaign-forecast-calibration-1.0.0",
+      "default": "ai09-campaign-forecast-calibration-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "worker_environment_lock_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Worker Environment Lock Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_recipe_sha256",
+    "export_operation_id",
+    "tune_operation_id",
+    "score_operation_ids",
+    "forecast_quality_policy_sha256",
+    "worker_environment_lock_sha256",
+    "resources"
+  ],
+  "title": "CampaignForecastCalibrationPlan",
+  "type": "object"
+}

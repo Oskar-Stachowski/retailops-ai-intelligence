@@ -1,5 +1,6 @@
 """Ordering and failure tests use controlled metadata, not a project campaign."""
 
+import json
 import os
 import sys
 from pathlib import Path
@@ -8,20 +9,23 @@ from time import perf_counter
 import psutil
 import pytest
 from pydantic import ValidationError
-from test_ai09_campaign_journal import protocol_document
+from test_ai09_campaign_journal import development, protocol_document, selection
+from test_forecast_source_replay import physical_parents as physical_parents
 from test_physical_forecast import source as declared_source
 
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.evaluation_campaign import campaign_generation as runner
 from retailops_ai.evaluation_campaign import campaign_journal as journal
+from retailops_ai.evaluation_campaign import partitions
 from retailops_ai.evaluation_campaign.campaign_contract import CampaignProtocol
 from retailops_ai.evaluation_campaign.campaign_generation_contract import (
     CampaignGenerationPlan,
     CampaignGenerationResources,
 )
 from retailops_ai.evaluation_campaign.campaign_generation_monitor import monitor
-from retailops_ai.evaluation_campaign.campaign_generation_worker import write
-from retailops_ai.source_snapshot.files import SnapshotError
+from retailops_ai.evaluation_campaign.campaign_generation_worker import consumer, write
+from retailops_ai.evaluation_campaign.physical_contract import PhysicalSourceSpec
+from retailops_ai.source_snapshot.files import SnapshotError, file_hash
 
 
 def resources(**changes):
@@ -124,6 +128,8 @@ def fake_phases(monkeypatch, case, *, failure=None):
         if name in {"import", "curation"}:
             destination = directory / name
             destination.mkdir(mode=0o700)
+            if name == "import":
+                (destination / "snapshot").mkdir(mode=0o700)
             value["destination"] = str(destination)
         if name == "verify":
             value["source"] = spec.model_dump(mode="json")
@@ -131,23 +137,27 @@ def fake_phases(monkeypatch, case, *, failure=None):
         return {"status": "passed", "wall_seconds": 0.1, "sampled_tree_peak_rss_bytes": 8192}
 
     monkeypatch.setattr(runner, "monitor", phase)
-    monkeypatch.setattr(
-        runner,
-        "file_hash",
-        lambda root, name: (
+
+    def imported_hash(root, name):
+        if name.startswith("snapshot"):
+            assert root.name == "snapshot" and root.parent.name == "import"
+            assert root.is_dir(), "the public import destination wraps a snapshot directory"
+        return (
             1,
             spec.snapshot_manifest_sha256
             if name.startswith("snapshot")
             else spec.curated_manifest_sha256,
-        ),
-    )
+        )
+
+    monkeypatch.setattr(runner, "file_hash", imported_hash)
     return phases
 
 
 def test_completion_requires_all_six_phases_and_durable_verified_receipt(tmp_path, monkeypatch):
     case = campaign(tmp_path)
     phases = fake_phases(monkeypatch, case)
-    _, _, receipt = run(case)
+    snapshot, _, receipt = run(case)
+    assert snapshot.name == "snapshot" and snapshot.parent.name == "import"
     assert phases == list(runner.PHASES)
     runner.validate_completed_generation(case[0], receipt)
     finish = journal.inspect(case[0]).events[-1]
@@ -158,6 +168,43 @@ def test_completion_requires_all_six_phases_and_durable_verified_receipt(tmp_pat
     assert stored.stat().st_mode & 0o777 == 0o600
     with pytest.raises(ValidationError, match="budget_exhausted"):
         run(case)
+
+
+def test_verify_replays_snapshot_inside_public_import_envelope(physical_parents, tmp_path):
+    """Real public smoke import and complete replay; no new campaign or final data."""
+    snapshot, curated = physical_parents
+    metadata = json.loads((snapshot / "snapshot_manifest.json").read_bytes())
+    write(tmp_path / "import.json", {"destination": str(snapshot.parent)})
+    write(tmp_path / "curation.json", {"destination": str(curated)})
+    assert not (snapshot.parent / "snapshot_manifest.json").exists()
+    request = {
+        "plan": {
+            "parent_budget": {
+                name: PhysicalSourceSpec.model_fields[name].default
+                for name in (
+                    "max_parent_bytes",
+                    "max_parent_files",
+                    "max_rows_per_parent",
+                    "batch_rows",
+                )
+            },
+            "snapshot_schema_version": metadata["schema_version"],
+            "resolved_parameters": metadata["source"]["descriptor"]["resolved_parameters"],
+            "exporter_lock_sha256": metadata["exporter"]["dependency_sha256"],
+        },
+        "source": {
+            "producer_commit": metadata["source"]["provenance"]["git_commit"],
+            "producer_lock_sha256": metadata["source"]["provenance"]["dependency_sha256"],
+        },
+        "runtime": partitions.runtime_pin().model_dump(mode="json"),
+    }
+    result = consumer("verify", tmp_path, request)
+    spec = PhysicalSourceSpec.model_validate(result["source"])
+    assert spec.parent.snapshot_id == metadata["snapshot_id"]
+    assert spec.snapshot_manifest_sha256 == file_hash(snapshot, "snapshot_manifest.json")[1]
+    assert spec.curated_manifest_sha256 == file_hash(curated, "curated_manifest.json")[1]
+    assert set(result["verified_inventories"]) == {"snapshot", "curated", "logical_curated"}
+    assert all(len(digest) == 64 for digest in result["verified_inventories"].values())
 
 
 @pytest.mark.parametrize("phase", runner.PHASES)
@@ -194,6 +241,41 @@ def test_final_generation_is_blocked_before_freeze_without_io(tmp_path, monkeypa
         run(case)
     assert not journal.inspect(case[0]).events
     assert not list(case[1].iterdir())
+
+
+@pytest.mark.parametrize("complete_paths", [False, True])
+def test_metadata_freeze_cannot_start_final_producer_without_completed_use_receipts(
+    tmp_path, monkeypatch, complete_paths
+):
+    case = campaign(tmp_path, final=True)
+    root, output, operation_id, plan = case
+    development(root)
+    journal.freeze_selection(root, selection(root))
+    monkeypatch.setattr(runner, "_producer_pin", lambda *args: pytest.fail("final producer opened"))
+    monkeypatch.setattr(runner, "monitor", lambda *args, **kwargs: pytest.fail("worker started"))
+    bundles = (
+        {use: output for use in ("forecast", "anomaly", "stockout")} if complete_paths else None
+    )
+    reason = (
+        "no_completed_use_evaluation"
+        if complete_paths
+        else "requires_completed_three_use_selection"
+    )
+    with pytest.raises(SnapshotError, match=reason):
+        runner.generate_campaign_parent(
+            Path("/never-read-producer"),
+            Path(sys.executable),
+            output,
+            journal=root,
+            operation_id=operation_id,
+            plan=plan,
+            selection_bundles=bundles,
+        )
+    event = journal.inspect(root).events[-1]
+    assert event.result == "failed" and event.cost.wall_seconds > 0
+    assert event.cost.peak_process_tree_rss_bytes is None
+    assert not list(output.iterdir())
+    assert not (root / "receipts" / (str(event.reservation_id) + ".json")).exists()
 
 
 @pytest.mark.parametrize("operation", ["unknown", "development-fit", "development-42-read"])

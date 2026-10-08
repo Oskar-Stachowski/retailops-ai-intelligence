@@ -21,6 +21,9 @@ from retailops_ai.evaluation_campaign.campaign_export_contract import CampaignGe
 from retailops_ai.evaluation_campaign.campaign_generation_contract import CampaignGenerationPlan
 from retailops_ai.evaluation_campaign.campaign_generation_monitor import monitor, scratch_bytes
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+from retailops_ai.evaluation_campaign.campaign_selection_evidence import (
+    verify_completed_campaign_selection,
+)
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
     checked_directory,
@@ -94,6 +97,7 @@ def generate_campaign_parent(
     journal: Path,
     operation_id: str,
     plan: CampaignGenerationPlan,
+    selection_bundles: dict[str, Path] | None = None,
 ) -> tuple[Path, Path, CampaignGeneratedParentReceipt]:
     ledger = campaign_journal.inspect(journal)
     operation = next(
@@ -102,12 +106,15 @@ def generate_campaign_parent(
     if operation is None or operation.action != "source_generate":
         raise SnapshotError("campaign_generation_requires_source_generate_operation")
     started = perf_counter()
-    # In particular, reserve() enforces selection freeze before final generation.
+    # Reserve checks ordering; completed development evidence is also required
+    # before final producer inspection or any source worker can start.
     with campaign_journal.audited_operation(journal, operation_id) as handle:
         plan = CampaignGenerationPlan.model_validate_json(
             canonical_bytes(plan.model_dump(mode="json"))
         )
         source = _source(ledger, operation_id, plan)
+        if operation.phase == "final":
+            verify_completed_campaign_selection(journal, selection_bundles or {})
         _producer_pin(producer, source.producer_commit)
         checked_directory(output_root)
         root = output_root / str(handle.reservation.reservation_id)
@@ -156,7 +163,7 @@ def generate_campaign_parent(
             source=verified["source"],
             runtime=ledger.protocol.runtime,
         )
-        snapshot = Path(read(root / "import.json")["destination"])
+        snapshot = Path(read(root / "import.json")["destination"]) / "snapshot"
         curated = Path(read(root / "curation.json")["destination"])
         if (
             receipt.source.schema_version != plan.snapshot_schema_version

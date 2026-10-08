@@ -1,0 +1,79 @@
+{
+  "$id": "urn:retailops:evaluation:campaign_forecast_context_scope:22.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "curated_dataset_id": {
+      "pattern": "^curated-sha256-[0-9a-f]{64}$",
+      "title": "Curated Dataset Id",
+      "type": "string"
+    },
+    "data_seed": {
+      "enum": [
+        42,
+        137,
+        2026
+      ],
+      "title": "Data Seed",
+      "type": "integer"
+    },
+    "dataset_id": {
+      "pattern": "^ai09-(physical|final)-forecast-sha256-[0-9a-f]{64}$",
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "role": {
+      "enum": [
+        "development_evaluation",
+        "final_test"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "segment_policy_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Segment Policy Sha256",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Recipe Sha256",
+      "type": "string"
+    },
+    "source_scenario_plan_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Source Scenario Plan Sha256"
+    }
+  },
+  "required": [
+    "data_seed",
+    "role",
+    "dataset_id",
+    "source_recipe_sha256",
+    "source_dataset_id",
+    "curated_dataset_id",
+    "snapshot_id",
+    "source_scenario_plan_sha256",
+    "segment_policy_sha256"
+  ],
+  "title": "CampaignForecastContextScope",
+  "type": "object"
+}

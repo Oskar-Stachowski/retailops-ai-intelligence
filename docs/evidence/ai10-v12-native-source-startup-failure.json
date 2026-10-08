@@ -1,0 +1,192 @@
+{
+  "Source_API_UI_attested": false,
+  "ai_commit": "adf8d1cac4b28b6034d114cba7cb3de5379cc1bb",
+  "artifact": {
+    "id": 11500813738,
+    "size_bytes": 128570,
+    "zip_sha256": "813a2551897c61972130a6c2267466d85abe9bf58e54b232ea2ccf26685e53aa"
+  },
+  "boundary_tests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 270
+  },
+  "cleanup": {
+    "original_S3_preserved": true,
+    "own_handoff_objects_removed": 6,
+    "own_unique_secret_removed": true
+  },
+  "diagnosis": {
+    "controller_resolved_interpreter_symlink": true,
+    "diagnostic_uses_unresolved_venv_entry_point": true,
+    "exact_failed_child_stderr_available": false,
+    "local_real_subprocess_reproduction": {
+      "resolved_interpreter_fastapi_available": false,
+      "resolved_interpreter_pytest_available": false,
+      "venv_path_fastapi_available": true,
+      "venv_path_pytest_available": true
+    }
+  },
+  "evidence_boundary": "All five original AI qualification, review, registry and atomic publication stages passed and preserve 56 original forecast/event bytes. Source child exited before producing JUnit; its raw stderr was not retained, so its exact runtime message is not asserted. The controller resolved the venv interpreter symlink to base Python. A separate real-subprocess regression reproduces the lost venv prefix and missing dependencies; this is a confirmed launcher defect, not full original Source acceptance.",
+  "file_sha256": [
+    {
+      "path": "acceptance-proofs/recovered-byte-census.json",
+      "sha256": "7013de11dba1d87c2e3286b8e8f7ec4d4a69afe4802166071e2f512019fbe1af"
+    },
+    {
+      "path": "acceptance-proofs/secrets.json",
+      "sha256": "03ad7c95004f8e08e81cd475b4df78af883e82de91f09e5a8171a85bf0275f85"
+    },
+    {
+      "path": "acceptance-proofs/tests.xml",
+      "sha256": "b61b43b1f00c1ac5996058cae670ce67b8098b92e5f0776a7bcf2f2d71a1e501"
+    },
+    {
+      "path": "accepted-v12/acceptance.json",
+      "sha256": "a2f81406711381aec02bc886ae256dd5355c30f7fa54d57c17206047d71dc611"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/inputs.json",
+      "sha256": "c3e50961097d77798a674637ad0c37da5f0e33894a9ed549f59f82903dcaf413"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/qualification.json",
+      "sha256": "c970621db9cec23826691fae62d08ec8318a406bf653cd8e38f0f3d329a9959d"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/release.json",
+      "sha256": "b50a9c2a80fe8940b5b2081a069472938abd56f70120909b66da396be8345f1d"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/reports/features.json",
+      "sha256": "94cf135b2dc2e07b95976278256e2537983e052a8023310232cdecc605b71355"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/reports/freshness_drift_compatibility.json",
+      "sha256": "797a66184ac8f963f58013a53493558c559dd09812208b6914d58d850eb091a8"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/reports/model_card.json",
+      "sha256": "4b6b186eb703edde487ab8963fa98ae272737ec8d52acb0467995270aead3261"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/reports/pit.json",
+      "sha256": "7acdecc6df30ff75024d0e6aae19e942b14da56670e5411d883e92c47c5873d7"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/reports/protocol.json",
+      "sha256": "81742ffe139f81ac1de71fad3c1b7b4b483199fbd1fe60d1120653c80d88c6b4"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/reports/resources.json",
+      "sha256": "f5ce4efbe9423163c54860d6cb9c4697df7af78bcb59abc77a0ee564abbd4d74"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/reports/security_license.json",
+      "sha256": "bacf93c1eec4dbaff9ae39770468e1fafdf7282c1e63dadb4625fc8091c5a340"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/reports/segments.json",
+      "sha256": "0d0386188a9650f027419f08410d1946e7b11a81cc8ac4ec0fa472209f0cabe9"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/reports/signature.json",
+      "sha256": "a8a34772d4fd98c8b969e63420b252a54c5f26b5772ffdc6d3130aaccecdaab9"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/reports/source.json",
+      "sha256": "698dabbffc98da9330badd4591fb76838fbddc4de5b8849d65173c06e061a803"
+    },
+    {
+      "path": "accepted-v12/approved-release/v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db/smoke.json",
+      "sha256": "f487e59c2fafab52ba759beb55f4efd5de286b62d6fc756d6ec50f6c25421347"
+    },
+    {
+      "path": "accepted-v12/development-acceptance.json",
+      "sha256": "29a5fbbe7ccd2f73bbe05d2f9d03a163859a56ba8b65c3b423197638947c63a9"
+    },
+    {
+      "path": "accepted-v12/events.jsonl",
+      "sha256": "c25194cff314ff6f937db392b66c22273d0831e18ced07e8f77c209785226454"
+    },
+    {
+      "path": "accepted-v12/frozen-recipe.json",
+      "sha256": "d14f3167aa0d6945d12750ce9d762e7c8bb6178e1045137d74a81201103e42e6"
+    },
+    {
+      "path": "accepted-v12/native-computation.json",
+      "sha256": "9554920851a084f4658d037b7ecba9950527cb10003eda57e6abac27441cacde"
+    },
+    {
+      "path": "accepted-v12/native-publication.json",
+      "sha256": "0c78d605e8f1b31d3dfd994d9d4c992174e2c5b670f7ea310402f7d206c695eb"
+    },
+    {
+      "path": "accepted-v12/native-run.json",
+      "sha256": "8f35087d5994cd935b68d434c405ad18c3432c4c976b3de1880b3232e2fb6f60"
+    },
+    {
+      "path": "accepted-v12/owner-review.json",
+      "sha256": "704e9c42bb6c0230e164ddc20806d5c12753aa7192db64d8975df96521109a6d"
+    }
+  ],
+  "job_id": 112904205288,
+  "original_SQL_publisher_attested": false,
+  "reports": {
+    "acceptance": {
+      "actual_HTTP_auth_scope_idempotency": true,
+      "actual_complete_mlflow_http_import_files": 664,
+      "actual_original_full_semantic_verifier": true,
+      "approval_id": "v12-inference-release-sha256-79a79ee4b0a584dc432f185558c338eedc56320111d15dc0bf23c81c398d88db",
+      "atomic_outbox_failure_rollback": true,
+      "commit": "adf8d1cac4b28b6034d114cba7cb3de5379cc1bb",
+      "events_sha256": "c25194cff314ff6f937db392b66c22273d0831e18ced07e8f77c209785226454",
+      "exception_type": "ValueError",
+      "failed_stage": "original_sql_delivery_complete_Source_API_and_built_browser",
+      "failure_category": "ai10_v12_original_source_consumer_failed",
+      "forecast_plan_days": 14,
+      "history_days": 102,
+      "image_digest": "sha256:a3340ffec6c061d23e14a9c1d73726d6e12e6c26ac3e20aa138cac9e0b6a2626",
+      "mlflow_archive_storage": "shared_inodes_of_owned_disposable_recovered_scratch_not_independent_backup",
+      "model_refits": 0,
+      "native_publication_sha256": "0c78d605e8f1b31d3dfd994d9d4c992174e2c5b670f7ea310402f7d206c695eb",
+      "original_AI_database_publisher_attested": false,
+      "original_manifest_sha256": "29bf6837ca2cb7504213168743239b037041f375763bc8f01ae28c1f6d09b26e",
+      "original_quality_reclassified": false,
+      "original_quality_status": "not_ready",
+      "original_run_id": "functional-v12-run-sha256-345a725d435a477374292cb9483350fb5c50c8ba87d06668c727e0a9f964fb6b",
+      "owned_containers_and_anonymous_volumes_removed": true,
+      "production_deployed": false,
+      "profile_id": "batch-profile-sha256-380e3f746c1006e3c3cc5fd5a8e21106c5c3cf5b4cd3e9c02e5f6010ce8d70e7",
+      "publication_id": "v12-forecasts-sha256-896dc826314d7220a7675b1ee5ba80fb131c394e77228260be48936c90ed827a",
+      "qualification_id": "v12-qualification-sha256-b8d5a771c987f7d9215b1f42e613b07df0243a6d36099ed27dce8e9342b3a501",
+      "real_frozen_cold_worker": true,
+      "real_postgres": true,
+      "rows": 56,
+      "run_id": "run-2da0f0bc570bcda76a04e7c361e68535",
+      "snapshot_id": "snapshot-sha256-624b9bce2add89ab1e68681308bb7f27abab7b2cff62bd838c546badfb4d070a",
+      "source_API_UI_attested": false,
+      "source_dataset_id": "source-sha256-b4b75aa40d1524781c28616fecb4a9e537e84768db2b83fbd9606fd6e493692f",
+      "source_failure_details": {
+        "delivery_failure_categories": [],
+        "failed_tests": [],
+        "junit_status": "missing"
+      },
+      "source_failure_tests": [],
+      "stages": [
+        "full_original_qualification_and_two_frozen_cold_predictions",
+        "ten_actual_review_gates_and_full_original_approval",
+        "real_owned_pg16_mlflow_and_full_original_http_import",
+        "real_development_registration_promotion_and_preload_before_intake",
+        "actual_authenticated_intake_cold_worker_atomic_publication_and_outbox"
+      ],
+      "status": "failed",
+      "workflow_run_id": 37653954039
+    }
+  },
+  "source_commit": "1a7f558d718ed3dddaed277c07ccfd7d023f34ce",
+  "status": "failed",
+  "version": "ai10-original-v12-source-startup-failure-1.0",
+  "workflow_run_id": 37653954039
+}

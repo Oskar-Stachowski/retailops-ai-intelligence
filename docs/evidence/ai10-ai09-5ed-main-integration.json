@@ -1,0 +1,164 @@
+{
+  "AI09_upstream_PR": 39,
+  "AI09_upstream_changed_paths": [
+    "README.md",
+    "contracts/evaluation/v15/campaign_forecast_encoding.schema.json",
+    "contracts/evaluation/v15/campaign_forecast_fit_plan.schema.json",
+    "contracts/evaluation/v15/campaign_forecast_fit_receipt.schema.json",
+    "contracts/evaluation/v16/campaign_forecast_raw_prediction.schema.json",
+    "contracts/evaluation/v16/campaign_forecast_score_plan.schema.json",
+    "contracts/evaluation/v16/campaign_forecast_score_receipt.schema.json",
+    "docs/README.md",
+    "docs/STATUS.md",
+    "docs/ai09-audited-generation.md",
+    "docs/ai09-campaign-fitting.md",
+    "docs/ai09-campaign-scoring.md",
+    "docs/evidence/09-23-campaign-fitting-preparation.json",
+    "docs/evidence/09-25-campaign-scoring-preparation.json",
+    "docs/evidence/09-26-generation-snapshot-verification.json",
+    "environments/tensorflow/tests/test_campaign_fit_cpu.py",
+    "environments/tensorflow/tests/test_campaign_score_cpu.py",
+    "pyproject.toml",
+    "scripts/update_evaluation_preparation_contracts.py",
+    "src/retailops_ai/evaluation_campaign/campaign_export.py",
+    "src/retailops_ai/evaluation_campaign/campaign_fit.py",
+    "src/retailops_ai/evaluation_campaign/campaign_fit_contract.py",
+    "src/retailops_ai/evaluation_campaign/campaign_fit_data.py",
+    "src/retailops_ai/evaluation_campaign/campaign_fit_worker.py",
+    "src/retailops_ai/evaluation_campaign/campaign_forecast_artifacts.py",
+    "src/retailops_ai/evaluation_campaign/campaign_forecast_inputs.py",
+    "src/retailops_ai/evaluation_campaign/campaign_generation.py",
+    "src/retailops_ai/evaluation_campaign/campaign_generation_worker.py",
+    "src/retailops_ai/evaluation_campaign/campaign_score.py",
+    "src/retailops_ai/evaluation_campaign/campaign_score_contract.py",
+    "src/retailops_ai/evaluation_campaign/campaign_score_data.py",
+    "src/retailops_ai/evaluation_campaign/campaign_score_entry.py",
+    "src/retailops_ai/evaluation_campaign/campaign_score_metrics.py",
+    "src/retailops_ai/evaluation_campaign/campaign_score_worker.py",
+    "tests/test_campaign_fit.py",
+    "tests/test_campaign_fit_data.py",
+    "tests/test_campaign_forecast_artifacts.py",
+    "tests/test_campaign_forecast_inputs.py",
+    "tests/test_campaign_generation.py",
+    "tests/test_campaign_score.py",
+    "tests/test_campaign_score_data.py",
+    "tests/test_campaign_score_worker.py"
+  ],
+  "AI09_upstream_changed_paths_count": 42,
+  "AI09_upstream_main": "5ed0544ef5f7d4ee34300a4f770171389664cff7",
+  "AI10_pre_integration_head": "b1658259dce711cbf12af7208d4d3cd05f0eea23",
+  "AI_native_runtime_object_count": 21,
+  "AI_native_runtime_objects": [
+    {
+      "git_object_id": "f74b8a97abddfe30c44f4c0dcce51c1b64832187",
+      "path": "src/retailops_ai/api"
+    },
+    {
+      "git_object_id": "d46a8522b22fb58d0caef2b9f2e132e2fe793174",
+      "path": "src/retailops_ai/config.py"
+    },
+    {
+      "git_object_id": "0cee24396bb82c0239b92c0ab8a7c1b00dbf834d",
+      "path": "src/retailops_ai/curated"
+    },
+    {
+      "git_object_id": "8f619907a49064257b846ee11513f798d7bead7b",
+      "path": "src/retailops_ai/data_contracts"
+    },
+    {
+      "git_object_id": "b02a5666a2ead17e2cb8230b2618c1e16d28c7e4",
+      "path": "src/retailops_ai/domain"
+    },
+    {
+      "git_object_id": "669feccc170707ef8f3eab8608ee37b1485779d1",
+      "path": "src/retailops_ai/forecast_jobs"
+    },
+    {
+      "git_object_id": "9aca7d886d23bdad7602dcfb625207fd98763c37",
+      "path": "src/retailops_ai/forecasting"
+    },
+    {
+      "git_object_id": "f186386496cada4832e9a9c2652dcbf4a7c052f5",
+      "path": "src/retailops_ai/intelligence_events"
+    },
+    {
+      "git_object_id": "8b5ebf8f228e38a007c2365e6369af8104c222ee",
+      "path": "src/retailops_ai/migrations"
+    },
+    {
+      "git_object_id": "33d6c51090a55a45749ca44a92bba6767491c3d4",
+      "path": "src/retailops_ai/model_lifecycle"
+    },
+    {
+      "git_object_id": "59458d32116833c3aa66523691968e201dd973be",
+      "path": "src/retailops_ai/security"
+    },
+    {
+      "git_object_id": "089d5ee725cf14e8261c2b61271018df2d5ee596",
+      "path": "src/retailops_ai/anomaly_portfolio"
+    },
+    {
+      "git_object_id": "c6418bf8890dda0a00db78ea3af2112f30f55721",
+      "path": "src/retailops_ai/stockout_jobs"
+    },
+    {
+      "git_object_id": "5641c6b24cb2a11f1344e88043738186810741d9",
+      "path": "uv.lock"
+    },
+    {
+      "git_object_id": "108b9d4976aa89a1982cb4ecc0d656b00eabf9a5",
+      "path": "tools/intelligence-delivery"
+    },
+    {
+      "git_object_id": "3402c0ad5a47ec8e76db74dc3a13a927f80a6307",
+      "path": "scripts/check_ai10_v12_native.py"
+    },
+    {
+      "git_object_id": "0ac78cbf742bc71816c96d14a9389e31d7348381",
+      "path": "scripts/deliver_ai10_v12_native.py"
+    },
+    {
+      "git_object_id": "20ca23ea69f787559e66d006b40ab2bc162e209e",
+      "path": "scripts/check_stockout_final_acceptance.py"
+    },
+    {
+      "git_object_id": "30e05d29ad2f61ed27b5b6695d75a7099b97b200",
+      "path": "scripts/accept_anomaly_lifecycle.py"
+    },
+    {
+      "git_object_id": "11652bacd08c6e8dc2d1ffdd5d67d6023251c22f",
+      "path": "scripts/deliver_ai10_model_native.py"
+    },
+    {
+      "git_object_id": "8b1015f00c51a305fbc6e639f428557b7d0f5a68",
+      "path": "scripts/run_ai10_model_consumer.py"
+    }
+  ],
+  "Source_final_PR_Required_CI": {
+    "head_sha": "ed87052cbe41ba2d537970655d88a4689f53ae19",
+    "jobs_success": 30,
+    "run_id": 37677312492,
+    "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37677312492"
+  },
+  "Source_final_main": "39d56447a941a879187f9c406299f3ee67ae4ce0",
+  "Source_final_merged_PR": 104,
+  "delivery_gate": {
+    "AI_PR": 38,
+    "both_actual_resulting_main_Required_CI_required": true,
+    "future_CI_claimed_as_executed": false,
+    "integrated_exact_head_Required_CI_required": true,
+    "method": "normal_protected_merge"
+  },
+  "development_namespace": "retailops-demand-forecast-v12-development",
+  "native_acceptance_counts": {
+    "anomaly": 1232,
+    "forecast": 56,
+    "stockout": 40
+  },
+  "original_V12_quality": "not_ready",
+  "original_native_acceptance_reused_by_exact_object_identity": true,
+  "production_deployed": false,
+  "scope": "exact native runtime objects preserved after integrating the later AI09 main; this component does not substitute for the final integrated PR and resulting main Required CI",
+  "status": "passed_component",
+  "version": "ai10-ai09-5ed-main-integration-1.0"
+}

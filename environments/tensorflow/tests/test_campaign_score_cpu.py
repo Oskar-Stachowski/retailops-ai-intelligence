@@ -1,0 +1,419 @@
+"""Real three-family fits and fresh common scoring on controlled typed records only."""
+
+import sys
+from contextlib import closing
+from pathlib import Path
+from time import perf_counter
+
+from mlflow.tracking import MlflowClient
+from test_campaign_fit_data import fit_plan
+from test_campaign_fit_data import indexed as indexed
+from test_campaign_score_data import score_indexed as score_indexed
+from test_campaign_score_data import score_plan
+from test_campaign_tune_data import tune_plan
+from test_campaign_tune_worker import controlled_export
+from test_forecast_features import tables as tables
+from test_forecast_manifests import timeline as timeline
+from test_independent_forecast_partitions import population as population
+from test_physical_forecast import stored_control as stored_control
+
+from retailops_ai.data_contracts.identity import canonical_sha256
+from retailops_ai.evaluation_campaign import campaign_evaluation_data as evaluation_data
+from retailops_ai.evaluation_campaign import campaign_evaluation_entry as evaluation
+from retailops_ai.evaluation_campaign import campaign_fit_data as data
+from retailops_ai.evaluation_campaign import campaign_fit_worker as fitting
+from retailops_ai.evaluation_campaign import campaign_score_data as scoring_data
+from retailops_ai.evaluation_campaign import campaign_score_entry as scoring
+from retailops_ai.evaluation_campaign import campaign_tune_entry as tuning
+from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
+    CampaignForecastEvaluationPlan,
+    CampaignForecastTrialBinding,
+    CampaignForecastTrialPrediction,
+)
+from retailops_ai.evaluation_campaign.campaign_fit import _bundle_inventory, _verify_bundle_content
+from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
+from retailops_ai.evaluation_campaign.campaign_generation import _environment
+from retailops_ai.evaluation_campaign.campaign_generation_monitor import monitor
+from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+from retailops_ai.evaluation_campaign.campaign_score_contract import (
+    FAMILIES,
+    CampaignForecastRawPrediction,
+    CampaignForecastScoreReceipt,
+)
+from retailops_ai.evaluation_campaign.partitions import runtime_pin
+from retailops_ai.evaluation_campaign.physical_forecast import _index
+from retailops_ai.source_snapshot.files import file_hash
+
+
+def test_real_fresh_six_model_cpu_inference_preserves_every_controlled_role_key(
+    indexed, score_indexed, tmp_path, monkeypatch
+):
+    train_db = indexed[0]
+    score_db, dataset, manifest, population = score_indexed
+    bundles, fits = {}, {}
+    initial = fit_plan()
+    exported = controlled_export(dataset, manifest, initial.source_recipe_sha256)
+    # Typed declarations bind the real controlled files, not a completed project journal.
+    export_binding = exported.model_dump(mode="json")
+    export_digest = exported.content_sha256()
+    state = data.fit_encoding(train_db, initial)
+    for index, family in enumerate(FAMILIES):
+        plan = initial.model_copy(
+            update={
+                "family": family,
+                "epochs": 2,
+                "rf": initial.rf.model_copy(update={"n_estimators": 4, "max_depth": 3}),
+                "hgb": initial.hgb.model_copy(update={"max_iter": 3, "min_samples_leaf": 1}),
+            }
+        )
+        root = tmp_path / ("common-fit-" + family)
+        root.mkdir(mode=0o700)
+        for name in ("tmp", "bundle", "arrays"):
+            (root / name).mkdir(mode=0o700)
+        factory = data.tensorflow_matrices if family == "tensorflow" else data.tree_matrices
+        matrices = {
+            role: factory(train_db, role, state, plan, root / "arrays") for role in data.ROLES
+        }
+        write(root / "request.json", {"plan": plan.model_dump(mode="json")})
+        write(
+            root / "prepare.json", {"encoding_sha256": state.content_sha256(), "matrices": matrices}
+        )
+        write(root / "bundle/encoding.json", state.model_dump(mode="json"))
+        write(root / "bundle/plan.json", plan.model_dump(mode="json"))
+        write(
+            root / "bundle/binding.json",
+            {
+                "export_receipt_sha256": export_digest,
+                "dataset_id": manifest.dataset_id,
+                "source_recipe_sha256": plan.source_recipe_sha256,
+                "runtime_code_sha256": exported.runtime_code_sha256,
+            },
+        )
+        for phase in ("fit", "reload"):
+            measured = monitor(
+                [sys.executable, "-I", "-B", str(Path(fitting.__file__)), phase, str(root)],
+                root=root,
+                log=root / (phase + ".log"),
+                env=_environment(root),
+                scratch=(root,),
+                resources=plan.resources,
+                deadline=perf_counter() + plan.resources.wall_seconds,
+            )
+            assert measured["status"] == "passed", (
+                measured,
+                (root / (phase + ".log")).read_text()[-5000:]
+                if (root / (phase + ".log")).exists()
+                else "preflight refused",
+            )
+        files, size = _bundle_inventory(root / "bundle", plan.max_artifact_bytes)
+        validation = matrices["early_stopping"]
+        receipt = CampaignForecastFitReceipt(
+            protocol_sha256="b" * 64,
+            operation_id="controlled-fit-" + family,
+            reservation_id="campaign-operation-" + format(index + 1, "032x"),
+            plan=plan,
+            export_receipt_sha256=export_digest,
+            dataset_id=manifest.dataset_id,
+            runtime_code_sha256=exported.runtime_code_sha256,
+            train_keys_sha256=matrices["train"]["keys_sha256"],
+            early_stopping_keys_sha256=validation["keys_sha256"],
+            train_eligible_rows=state.train_rows,
+            early_stopping_eligible_rows=validation.get("eligible_rows", validation.get("rows")),
+            encoding_sha256=state.content_sha256(),
+            model_artifact_sha256=canonical_sha256(files),
+            model_artifact_bytes=size,
+            artifact_files=files,
+            worker_evidence={
+                "scope": "controlled_native_fit",
+                "fit": read(root / "fit.json"),
+                "reload": read(root / "reload.json"),
+            },
+        )
+        _verify_bundle_content(root / "bundle", receipt)
+        bundles[family], fits[family] = root / "bundle", receipt
+    root = tmp_path / "common-score"
+    root.mkdir(mode=0o700)
+    (root / "tmp").mkdir(mode=0o700)
+    with _index(root / "score.sqlite", score_plan().max_index_bytes) as target:
+        score_db.backup(target)
+    write(root / "prepare.json", population)
+    plan = score_plan()
+    write(
+        root / "request.json",
+        {
+            "plan": plan.model_dump(mode="json"),
+            "bundles": {f: str(bundles[f]) for f in FAMILIES},
+            "fits": {f: fits[f].model_dump(mode="json") for f in FAMILIES},
+            "exported": export_binding,
+        },
+    )
+    measured = monitor(
+        [sys.executable, "-I", "-B", str(Path(scoring.__file__)), "predict", str(root)],
+        root=root,
+        log=root / "predict.log",
+        env=_environment(root),
+        scratch=(root,),
+        resources=plan.resources,
+        deadline=perf_counter() + plan.resources.wall_seconds,
+    )
+    assert measured["status"] == "passed", (
+        measured,
+        (root / "predict.log").read_text()[-5000:]
+        if (root / "predict.log").exists()
+        else "preflight refused",
+    )
+    result = read(root / "predict.json")
+    assert result["all_models_share_all_role_keys"]
+    assert all(
+        result[k] == population[k]
+        for k in ("rows", "eligible_rows", "keys_sha256", "eligible_keys_sha256")
+    )
+    predictions = [
+        CampaignForecastRawPrediction.model_validate_json(line)
+        for line in (root / "bundle/predictions.jsonl").read_bytes().splitlines()
+    ]
+    assert len(predictions) == population["rows"]
+    assert sum(p.eligible for p in predictions) == population["eligible_rows"]
+    assert all(p.values[3].median is None for p in predictions)
+    assert all(
+        p.values[5].mean is not None and p.values[5].median is not None
+        for p in predictions
+        if p.eligible
+    )
+    metrics = read(root / "bundle/metrics.json")["segments"][0]
+    assert (
+        metrics["rows"] == population["rows"]
+        and metrics["eligible_rows"] == population["eligible_rows"]
+    )
+    assert metrics["models"]["tensorflow"]["mean"]["complete"]
+    assert not metrics["models"]["rf_mean"]["median"]["complete"]
+    run = MlflowClient(tracking_uri=(root / "tracking").as_uri()).get_run(result["mlflow_run_id"])
+    assert run.info.status == "FINISHED" and run.data.params["plan_sha256"] == plan.content_sha256()
+    assert (
+        run.data.metrics["rows"] == population["rows"]
+        and run.data.metrics["worker_peak_rss_bytes"] > 0
+    )
+    files, size = _bundle_inventory(root / "bundle", plan.max_output_bytes)
+    score = CampaignForecastScoreReceipt(
+        protocol_sha256=exported.protocol_sha256,
+        operation_id="controlled-score",
+        reservation_id="campaign-operation-" + "4" * 32,
+        plan=plan,
+        export_receipt_sha256=export_digest,
+        fit_receipt_sha256={f: fits[f].content_sha256() for f in FAMILIES},
+        model_artifact_sha256={f: fits[f].model_artifact_sha256 for f in FAMILIES},
+        dataset_id=manifest.dataset_id,
+        runtime_code_sha256=exported.runtime_code_sha256,
+        **{
+            key: population[key]
+            for key in (
+                "rows",
+                "eligible_rows",
+                "keys_sha256",
+                "eligible_keys_sha256",
+                "role_population_sha256",
+            )
+        },
+        artifact_files=files,
+        artifact_sha256=canonical_sha256(files),
+        artifact_bytes=size,
+        worker_evidence={
+            "scope": "controlled_native_cpu_with_mocked_input_preparation",
+            "predict": result,
+        },
+    )
+    tune = tune_plan()
+    tune_root = tmp_path / "common-tune"
+    tune_root.mkdir(mode=0o700)
+    (tune_root / "tmp").mkdir(mode=0o700)
+    write(
+        tune_root / "request.json",
+        {
+            "dataset": str(dataset),
+            "plan": tune.model_dump(mode="json"),
+            "exported": export_binding,
+            "scores": {score.operation_id: score.model_dump(mode="json")},
+            "bundles": {score.operation_id: str(root / "bundle")},
+            "runtime": runtime_pin().model_dump(mode="json"),
+        },
+    )
+    measured = monitor(
+        [sys.executable, "-I", "-B", str(Path(tuning.__file__)), str(tune_root)],
+        root=tune_root,
+        log=tune_root / "select.log",
+        env=_environment(tune_root),
+        scratch=(tune_root,),
+        resources=tune.resources,
+        deadline=perf_counter() + tune.resources.wall_seconds,
+    )
+    assert measured["status"] == "passed", (
+        str(measured)
+        + "\n"
+        + (
+            (tune_root / "select.log").read_text()[-5000:]
+            if (tune_root / "select.log").exists()
+            else "preflight refused"
+        )
+    )
+    selected = read(tune_root / "select.json")
+    assert all(
+        selected[key] == population[key]
+        for key in (
+            "rows",
+            "eligible_rows",
+            "keys_sha256",
+            "eligible_keys_sha256",
+            "role_population_sha256",
+        )
+    )
+    assert selected["trial_count"] == selected["full_tune_label_passes"] == 1
+    assert (
+        selected["calibration_label_passes"] == selected["independent_or_final_label_passes"] == 0
+    )
+    assert selected["selection"]["status"] == "not_ready"
+    assert "insufficient_tune_rows" in selected["selection"]["reasons"]
+    assert selected["worker_seconds"] > 0 and selected["worker_peak_rss_bytes"] > 0
+    tune_run = MlflowClient(tracking_uri=(tune_root / "tracking").as_uri()).get_run(
+        selected["mlflow_run_id"]
+    )
+    assert tune_run.info.status == "FINISHED" and tune_run.data.params["role"] == "tune"
+    assert tune_run.data.params["calibration_fitted"] == "False"
+    assert tune_run.data.params["plan_sha256"] == tune.content_sha256()
+    assert tune_run.info.artifact_uri.startswith((tune_root / "tracking-artifacts").as_uri())
+    assert {
+        item.path
+        for item in MlflowClient(tracking_uri=(tune_root / "tracking").as_uri()).list_artifacts(
+            selected["mlflow_run_id"], "tune"
+        )
+    } == {"tune/plan.json", "tune/parents.json", "tune/metrics.json", "tune/selection.json"}
+    # Reuse these actual fitted bundles, without another model fit. Preparation
+    # still uses declared typed control inputs; this is native prediction
+    # acceptance, not journal completion, fitted calibration or final permission.
+    evaluation_root = tmp_path / "independent-native-prediction"
+    evaluation_root.mkdir(mode=0o700)
+    (evaluation_root / "tmp").mkdir(mode=0o700)
+    configuration_sha256 = canonical_sha256(
+        {
+            "scope": "controlled_native_independent_inference_not_selection_authorization",
+            "fits": {f: fits[f].content_sha256() for f in FAMILIES},
+        }
+    )
+    evaluation_plan = CampaignForecastEvaluationPlan(
+        phase="development",
+        role="development_evaluation",
+        source_recipe_sha256=initial.source_recipe_sha256,
+        export_operation_id=exported.operation_id,
+        frozen_configuration_sha256=configuration_sha256,
+        segment_policy_sha256=canonical_sha256("declared-segment-control"),
+        uncertainty_policy_sha256=canonical_sha256("declared-uncertainty-control"),
+        worker_environment_lock_sha256=initial.worker_environment_lock_sha256,
+        resources=initial.resources,
+    )
+    monkeypatch.setattr(evaluation_data, "input_models", scoring_data.input_models)
+    with (
+        closing(
+            _index(evaluation_root / "inputs.sqlite", evaluation_plan.max_index_bytes)
+        ) as covariates,
+        closing(
+            _index(evaluation_root / "actuals.sqlite", evaluation_plan.max_index_bytes)
+        ) as actuals,
+    ):
+        independent_population = evaluation_data.index_role(
+            covariates, actuals, dataset, manifest, evaluation_plan
+        )
+    independent_population["inputs_sha256"] = file_hash(evaluation_root, "inputs.sqlite")[1]
+    overhead = (evaluation_root / "actuals.sqlite").stat().st_size
+    (evaluation_root / "actuals.sqlite").unlink()
+    trial = CampaignForecastTrialBinding(
+        tune_score_operation_id=score.operation_id,
+        calibration_score_operation_id="declared-unevaluated-calibration-control",
+        tune_score_receipt_sha256=score.content_sha256(),
+        calibration_score_receipt_sha256=canonical_sha256(
+            "declared-calibration-metadata-no-access-proof"
+        ),
+        fit_operation_ids={f: fits[f].operation_id for f in FAMILIES},
+        fit_receipt_sha256={f: fits[f].content_sha256() for f in FAMILIES},
+        model_artifact_sha256={f: fits[f].model_artifact_sha256 for f in FAMILIES},
+        encoding_sha256={f: fits[f].encoding_sha256 for f in FAMILIES},
+    )
+    write(
+        evaluation_root / "request.json",
+        {
+            "plan": evaluation_plan.model_dump(mode="json"),
+            "runtime": runtime_pin().model_dump(mode="json"),
+            "population": independent_population,
+            "inputs": str(evaluation_root / "inputs.sqlite"),
+            "index_overhead_bytes": overhead,
+            "frozen_configuration_sha256": configuration_sha256,
+            "trial": trial.model_dump(mode="json"),
+            "fits": {f: fits[f].model_dump(mode="json") for f in FAMILIES},
+            "bundles": {f: str(bundles[f]) for f in FAMILIES},
+        },
+    )
+    measured = monitor(
+        [
+            sys.executable,
+            "-I",
+            "-B",
+            str(Path(evaluation.__file__)),
+            "predict",
+            str(evaluation_root),
+        ],
+        root=evaluation_root,
+        log=evaluation_root / "predict.log",
+        env=_environment(evaluation_root),
+        scratch=(evaluation_root,),
+        resources=evaluation_plan.resources,
+        deadline=perf_counter() + evaluation_plan.resources.wall_seconds,
+    )
+    assert measured["status"] == "passed", (
+        measured,
+        (evaluation_root / "predict.log").read_text()[-5000:]
+        if (evaluation_root / "predict.log").exists()
+        else "preflight refused",
+    )
+    independent = read(evaluation_root / "predict.json")
+    assert independent["actual_index_passes"] == 0
+    assert independent["all_models_share_all_role_keys"]
+    assert all(
+        independent[key] == independent_population[key]
+        for key in (
+            "rows",
+            "eligible_rows",
+            "keys_sha256",
+            "eligible_keys_sha256",
+            "role_population_sha256",
+        )
+    )
+    assert (
+        independent["prediction_index_sha256"]
+        == file_hash(evaluation_root, "predictions.sqlite")[1]
+    )
+    with closing(
+        __import__("sqlite3").connect(evaluation_root / "predictions.sqlite")
+    ) as predictions:
+        decoded = [
+            CampaignForecastTrialPrediction.model_validate_json(__import__("zlib").decompress(body))
+            for (body,) in predictions.execute("SELECT body FROM predictions ORDER BY key")
+        ]
+    assert len(decoded) == independent_population["rows"]
+    assert all(row.role == "development_evaluation" for row in decoded)
+    assert all(
+        row.values[5].mean is not None and row.values[5].median is not None
+        for row in decoded
+        if row.eligible
+    )
+    evaluation_run = MlflowClient(tracking_uri=(evaluation_root / "tracking").as_uri()).get_run(
+        independent["mlflow_run_id"]
+    )
+    assert evaluation_run.info.status == "FINISHED"
+    assert evaluation_run.info.artifact_uri.startswith(
+        (evaluation_root / "tracking-artifacts").as_uri()
+    )
+    assert evaluation_run.data.params["frozen_configuration_sha256"] == configuration_sha256
+    assert all(
+        evaluation_run.data.params["fit_receipt_sha256_" + f] == fits[f].content_sha256()
+        for f in FAMILIES
+    )
+    assert evaluation_run.data.metrics["actual_index_passes"] == 0
+    assert evaluation_run.data.metrics["fresh_process_cold_load_seconds"] > 0
