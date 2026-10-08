@@ -27,7 +27,7 @@ DOCUMENT_QUESTION = "What does the synthetic scope fixture say?"
 
 def offline_config(candidate, catalog, sales):
     """Test-owned fake vectors and proposed route labels; never an owner acceptance."""
-    graph = load_graph_config(ROOT / "agent/graph.evaluate.fake.prepaid.v3.json").config
+    graph = load_graph_config(ROOT / "agent/graph.evaluate.fake.prepaid.v4.json").config
     raw = graph.model_dump(mode="json")
     raw["chat"]["embeddings"] = candidate.manifest.embedding_config.model_dump(mode="json")
     raw["chat"]["knowledge_mode"] = "offline_test"
@@ -53,7 +53,7 @@ def offline_config(candidate, catalog, sales):
         )
     ]
     graph = AgentGraphConfig.model_validate_json(json.dumps(raw))
-    routes = json.loads((ROOT / "agent/question-routes.prepaid.proposed.v3.json").read_bytes())
+    routes = json.loads((ROOT / "agent/question-routes.prepaid.proposed.v4.json").read_bytes())
     routes["routes"] = [
         r for r in routes["routes"] if r["intent"] not in {"documentation", "verified_state"}
     ] + [dict(question=DOCUMENT_QUESTION, intent="documentation")]
@@ -123,7 +123,7 @@ def test_offline_configuration_cannot_select_aws_or_retrieval(runtime_config, fi
     raw = runtime_config.model_dump(mode="json")
     if field == "embedding":
         raw["graph"]["chat"]["embeddings"] = json.loads(
-            (ROOT / "agent/graph.evaluate.fake.prepaid.v3.json").read_bytes()
+            (ROOT / "agent/graph.evaluate.fake.prepaid.v4.json").read_bytes()
         )["chat"]["embeddings"]
     elif field == "chat":
         raw["graph"]["chat"]["model"]["provider"] = "bedrock"

@@ -46,21 +46,21 @@ Bieżąca polityka to `typed-facts-v2`, prompty v4, a zestaw etykiet
 `agent-canonical-golden-v2`. Nazwy plików `.v1.json` określają format kontraktu.
 Konfiguracja, kod, prompty, wymagania, pin i golden mają nowe wiązania hash.
 
-[Profil testowy](../agent/graph.evaluate.fake.prepaid.v3.json) ma sześć reguł ze
+[Profil testowy](../agent/graph.evaluate.fake.prepaid.v4.json) ma sześć reguł ze
 **syntetycznymi źródłami**. [Przegląd autorstwa etykiet](evidence/12-document-label-review.json)
 opisuje pytania, wymagania i dokumentację wykorzystaną do napisania fixtures.
 To nie są zacytowane oryginalne pliki repozytorium ani fakty z działającego
 środowiska. Nazwy statusów badają zachowanie kontraktu. Zestaw pozostaje
 `proposed`; nie deklarujemy niezależnej akceptacji człowieka.
 
-[Profil z właściwym indeksem AI 11](../agent/graph.fake.prepaid.v3.json) ma pustą listę
+[Profil z właściwym indeksem AI 11](../agent/graph.fake.prepaid.v4.json) ma pustą listę
 reguł i odmawia odpowiedzi dokumentowych. Podłączenie rzeczywistych źródeł
 wymaga przeglądu konkretnych cytatów i nowej konfiguracji. Obsługa dowolnych
 parafraz pytań wymaga przyszłego planner/resolvera i osobnej ewaluacji;
 obecne testy nie potwierdzają tej zdolności ani pełnego zamknięcia AI 12.
 
 Bieżący natywny runtime ma osobne reguły dla rzeczywistych fragmentów indeksu
-AI11. [Preflight v3](evidence/12-prepaid-native-preflight-v3.json) zachowuje
+AI11. [Preflight v4](evidence/12-prepaid-native-preflight-v4.json) zachowuje
 ranking, wymagania i statusy oraz jawnie oznacza proponowane równoważne źródła
 instrukcji startu. Synthetic fixture reguły powyżej nadal testują mechanikę
 walidacji, a nie jakość rzeczywistego retrieval.

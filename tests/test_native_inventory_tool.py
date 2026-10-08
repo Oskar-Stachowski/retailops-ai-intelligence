@@ -727,8 +727,8 @@ def test_verified_fixture_reaches_http_reviewed_planner_graph_and_stored_trace(
 
     monkeypatch.setattr(LocalAccess, "authenticate", frozen_authenticate)
     root = Path(__file__).parents[1]
-    graph = load_graph_config(root / "agent/graph.evaluate.fake.prepaid.v3.json")
-    routes = load_question_routes(root / "agent/question-routes.prepaid.proposed.v3.json")
+    graph = load_graph_config(root / "agent/graph.evaluate.fake.prepaid.v4.json")
+    routes = load_question_routes(root / "agent/question-routes.prepaid.proposed.v4.json")
     body["question"] = next(r.question for r in routes.routes if r.intent == "inventory")
     body["scope"].update(
         product_ids=value.scope.product_ids,

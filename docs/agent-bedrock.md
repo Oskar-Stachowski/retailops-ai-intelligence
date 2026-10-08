@@ -20,8 +20,8 @@ CountTokens używa modelu bazowego; Converse używa sprawdzonego profilu EU.
 [Dowód dostępności profili i CountTokens](evidence/12-bedrock-preflight.json).
 Nova Lite nie obsługuje wymaganego CountTokens i nie jest bieżącym wariantem.
 
-[Bieżąca konfiguracja Haiku](../agent/graph.bedrock-smoke.prepaid.v3.json) oraz
-[konfiguracja Sonnet](../agent/graph.sonnet-smoke.prepaid.v3.json) używają tych samych
+[Bieżąca konfiguracja Haiku](../agent/graph.bedrock-smoke.prepaid.v4.json) oraz
+[konfiguracja Sonnet](../agent/graph.sonnet-smoke.prepaid.v4.json) używają tych samych
 promptów, walidatorów, sześciu pytań i zamrożonych oracles. Sprawdzają sprzedaż,
 zapas, porównanie okresów, cytowaną dokumentację, odmowę zamówienia i cudzy
 scope. Ostatnie dwa przypadki kontroluje serwer bez modelu.
@@ -83,7 +83,7 @@ procesami. Przerwane wykonanie bez końcowego kosztu zachowuje pełny cap próby
 ## Uruchomienie bez AWS
 
 `make bedrock-smoke` sprawdza pełny offline golden i wiązania bieżącego
-release `.prepaid.v3`, a potem pokazuje `not_run`, bez klienta AWS:
+release `.prepaid.v4`, a potem pokazuje `not_run`, bez klienta AWS:
 
 ```sh
 make bedrock-smoke

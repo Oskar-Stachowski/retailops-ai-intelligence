@@ -1321,3 +1321,14 @@ wymagają niezależnego przeglądu. Aktualną kwalifikację CI podaje draft PR32
 Nowe wywołania AWS podczas tego przyrostu: **0**, nowy koszt AWS: **0**.
 Płatne propozycje pozostają `not_run`, budżet nie jest zatwierdzony. AI12
 pozostaje **in_progress** do kwalifikacji LLM i niezależnego odbioru etykiet.
+
+
+## 2026-10-08 — AI12: przypięcie opublikowanego main
+
+CI pierwszego checkpointu v3 poprawnie odrzucił merge tree z późniejszym main,
+ponieważ zmiana `campaign_generation_worker.py` AI09 zmieniła application hash.
+Scalono opublikowany `ab77bb1` wyłącznie do worktree AI12; oryginalne checkouty
+pozostają nietknięte. Nowa rodzina `.prepaid.v4` zachowuje v1/v2/v3 i wiąże nowy
+kod oraz integration campaign pin. Adaptery, odczyty rekomendacji, graf i ranking
+AI11 nie zmieniły się. Pełną kwalifikację bieżącego HEAD podają checki i artefakty
+PR32. Propozycje LLM pozostają `not_run`, etykiety proposed; nowe AWS calls i koszty: 0.

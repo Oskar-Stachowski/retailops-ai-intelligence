@@ -1,0 +1,41 @@
+{
+  "application_code_sha256": "cd8be5dcbd2faec52f20c320f706ab015bf3c04ce92126a4c122bfb7fb210bc1",
+  "assistant_graph_tools_and_retrieval_unchanged": true,
+  "aws_sdk_calls": 0,
+  "ci_checks": "passed",
+  "current_native_SQL_acceptance": "awaiting_current_head_CI",
+  "human_approval": false,
+  "integrated_main": "ab77bb1da52bcbff0c95cd797a6a173708697e73",
+  "labels_state": "proposed",
+  "new_aws_cost_usd": "0",
+  "previous_local_SQL_runtime_receipt": "docs/evidence/12-prepaid-v3-local-acceptance.json",
+  "schema_version": "1.0",
+  "sonnet_proposals": {
+    "approved_for_paid_execution": false,
+    "batches": 5,
+    "natural_cases": 41,
+    "status": "not_run"
+  },
+  "source_workflow_same_Assisstant_implementation": {
+    "run_id": 37751470619,
+    "status": "success",
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37751470619"
+  },
+  "status": "passed_local_bindings_and_wheel",
+  "wheel": {
+    "aws_executed": false,
+    "case_pass": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "code_sha256": "cd8be5dcbd2faec52f20c320f706ab015bf3c04ce92126a4c122bfb7fb210bc1",
+    "critical_cases": {
+      "passed": 36,
+      "total": 36,
+      "value": 1.0
+    },
+    "network_connections_disallowed": true,
+    "status": "passed"
+  }
+}

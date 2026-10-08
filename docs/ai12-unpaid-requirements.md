@@ -13,11 +13,11 @@ wstrzymane. Dotychczasowych kosztów i historycznych dowodów nie zeruje się.
 | Wymaganie | Dostępna implementacja i kontrola bez AWS | Granica odbioru |
 | --- | --- | --- |
 | 1. Tożsamość, scope i osiem narzędzi | [Katalog natywny](agent-native-tools.md), zamknięte schematy, server-owned scope, osobne fizyczne granty, limit wierszy/czasu i SELECT-only Source. Testy narzędzi, HTTP i rzeczywisty PostgreSQL. | Bieżące produkcyjne źródła i namespace modeli wymagają osobnej weryfikacji przed naturalnym LLM; brak danych nie jest uzupełniany fixtures. |
-| 2. Provider, modele, prompty i konfiguracja | [Bedrock transport](agent-bedrock.md), lazy klient, ścisłe model/profile/region, wersjonowane prompty i hashe, scripted timeout/throttle/JSON/citation/forbidden-tool controls. | Stare rzeczywiste próby zachowują swój kod i zakres; nie kwalifikują `.prepaid.v3`. |
+| 2. Provider, modele, prompty i konfiguracja | [Bedrock transport](agent-bedrock.md), lazy klient, ścisłe model/profile/region, wersjonowane prompty i hashe, scripted timeout/throttle/JSON/citation/forbidden-tool controls. | Stare rzeczywiste próby zachowują swój kod i zakres; nie kwalifikują `.prepaid.v4`. |
 | 3. Ograniczony graf i trace | [Graf](agent-graph.md): auth, plan, narzędzia/retrieval, evidence, synthesis, walidacja i trwałe wyniki; jedna extra round i jedna repair. Durable SQL admission, deadline i bezpieczny trace. | Brak ogólnej historii rozmów jest jawnym zakresem MVP. |
 | 4. Wierność danych i sugestie człowieka | Typed numerical facts, wzór różnicy i oba okresy, literalne cytaty/statusy, conflict/stale/missing controls, deterministyczna polityka. [API rekomendacji](assistant-api.md) zwraca tylko uprawnione, niewygasłe immutable wpisy. | Odczyt historycznego model release nie potwierdza bieżącego wdrożenia. Polityka nie wylicza zamawianej ilości. |
 | 5. API, błędy i izolacja klasycznego ML | Queries, owner/admin safe runs, lista/detail rekomendacji, wspólne problem-details; 424/429/502/503/504 i kontrolowane insufficient/refused. [OpenAPI](../contracts/assistant/v1/assistant.openapi.json). | Awaria Assistant nie zmienia health ani istniejących odczytów ML. |
-| 6. Golden i miary | Zamrożone 50 przypadków, 36 krytycznych, argumenty i liczba narzędzi, schemat, liczby/groundedness/cytaty/odmowy/akcje, latency/token/cost. [Pakiet przeglądu v3](evidence/12-prepaid-label-review-packet-v3.json). | Etykiety 50/26 i nowe równoważne dokumentowe supports pozostają proposed; brak niezależnego odbioru człowieka. |
+| 6. Golden i miary | Zamrożone 50 przypadków, 36 krytycznych, argumenty i liczba narzędzi, schemat, liczby/groundedness/cytaty/odmowy/akcje, latency/token/cost. [Pakiet przeglądu v4](evidence/12-prepaid-label-review-packet-v3.json). | Etykiety 50/26 i nowe równoważne dokumentowe supports pozostają proposed; brak niezależnego odbioru człowieka. |
 | 7. Bounded rzeczywisty Bedrock | [Plan v3](evidence/12-prepaid-test-plan-v3.json), pięć osobnych propozycji `not_run`, piny modeli/cennika, zatrzymanie przed `--execute`, oddzielny kandydat natywnego runtime i rezerwa embeddings. | Płatna kwalifikacja jest wyłączona zgodnie z poleceniem użytkownika. Nowy budżet nie jest zatwierdzony. |
 
 ## Krytyczne kontrole
@@ -33,20 +33,22 @@ wstrzymane. Dotychczasowych kosztów i historycznych dowodów nie zeruje się.
 | Fałszywe liczby, cytaty i znaczenie | Kanoniczne typed facts i literalne źródła, negatywne golden; bounded repair albo kontrolowany błąd. |
 | Retry, circuit, cache i bezpieczne logi | Counted transport/retry tests, brak retry dla auth/schema; scoped retrieval/cache checks. Pełne prywatne payloady i CoT nie są trace. Brak response cache pozostaje dopuszczonym zakresem MVP. |
 
-[Bieżący odbiór lokalny](evidence/12-prepaid-v3-local-acceptance.json) wiąże
+[Odbiór lokalny kodu v3](evidence/12-prepaid-v3-local-acceptance.json) wiąże
 25 rzeczywistych SQL/HTTP testów, 136 testów runtime oraz wheel golden
-50/50 i krytyczne 36/36 z aktualnym application checksum. CI dokładnego HEAD
-i jego artefakty są widoczne w draft PR32.
+50/50 i krytyczne 36/36 z application checksum v3. Rodzina v4 integruje późniejszy kod
+`main/ab77bb1` bez zmian w adapterach, API i retrieval. [Lokalny odbiór przypięć v4](evidence/12-prepaid-v4-local-acceptance.json)
+sprawdza nowy release i wheel przy zablokowanej sieci. Aktualną rewizję SQL
+kwalifikują CI dokładnego HEAD i jego artefakty w draft PR32.
 
 ## Artefakty i punkt zatrzymania
 
-Jedno [evaluation release v3](../agent/evaluation-release.fake.prepaid.v3.json)
+Jedno [evaluation release v4](../agent/evaluation-release.fake.prepaid.v4.json)
 wiąże kod, graf, konfigurację, prompty/schematy, golden i dependency lock.
-Osobny [kandydat natywny](../agent/native-bedrock-runtime.prepaid.proposed.v3.json)
+Osobny [kandydat natywny](../agent/native-bedrock-runtime.prepaid.proposed.v4.json)
 wiąże Source/Curated/DQ/coverage i kwalifikowany indeks AI11. Runtime celowo
 odrzuca proponowane trasy. Opublikowane rodziny v1/v2 nie są nadpisywane.
 
-[Preflight dokumentowy v3](evidence/12-prepaid-native-preflight-v3.json) odtwarza
+[Preflight dokumentowy v4](evidence/12-prepaid-native-preflight-v4.json) odtwarza
 te same wyniki top-5 z istniejących Titan vectors. Proponowane równoważne
 instrukcje startu zwiększają kompletne pokrycie z 3/6 do 4/6; nie zmieniają
 pytań, wymagań, rankingu ani statusów źródeł. Nadal brakuje instrukcji kontroli

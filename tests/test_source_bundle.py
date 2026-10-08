@@ -171,7 +171,7 @@ def test_assistant_integration_preserves_and_verifies_both_lock_histories(
         "original_lock": "environments/anomaly/qualification.uv.lock",
         "current_lock": "uv.lock",
     }
-    for relative in [*paths.values(), "agent/source-bundle.prepaid.v3.json"]:
+    for relative in [*paths.values(), "agent/source-bundle.prepaid.v4.json"]:
         destination = tmp_path / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_bytes((root / relative).read_bytes())
