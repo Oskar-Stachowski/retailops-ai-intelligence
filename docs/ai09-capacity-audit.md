@@ -1,5 +1,14 @@
 # AI 09: audyt przed kolejnym canonical
 
+[Audyt zapytań i przygotowanie 09.54](evidence/09-54-ledger-query-capacity-preparation.json)
+podłącza Source `a7b850a0` z indeksami zweryfikowanych ksiąg, okresów fizycznych
+i jednostek oraz niezależnymi koszykami dziennego verifiera. Małe kontrolne
+procesy zachowują wszystkie porównane hashe; zapis obejmuje również wzrost
+pamięci indeksów i wcześniejsze pomiary. 274 kontrole Source, 106 AI i 22
+z paczki przeszły. [Receptura 1.9](reference/ai09-development-capacity-v1.9.json)
+przypina ten audyt, pełny profil i 12 GiB. Pozostaje nieuruchomiona do pełnego
+odbioru dokładnych head i wynikowych main obu repozytoriów.
+
 [Receptura 1.8](reference/ai09-development-capacity-v1.8.json) ma na polecenie
 użytkownika limit RSS drzewa **12 GiB** (12 884 901 888 B) i rezerwę 1 GiB.
 PR60 scalono normalnie jako `4ce8a3cf`; pełne CI dokładnego head i tego main
@@ -41,7 +50,8 @@ Po stronie AI wprowadzone są:
 - Ponowne użycie już zakodowanych bajtów w kanonicznym hashu i indeksie curated,
   bez ponownej serializacji tej samej wartości oraz bez zmiany content SHA.
 - Jawne przejęcie świeżych tabel przez writer tylko dla przypiętej implementacji
-  `planned-source-cached-execution-1.1.0` i `1.1.1`. Starsi producenci zachowują swoje API.
+  `planned-source-cached-execution-1.1.0`, `1.1.1` i audytowanej `1.1.2`.
+  Starsi producenci zachowują swoje API.
 
 Finalna ścieżka AI zaliczyła 149 kontroli transportu, samodzielnej weryfikacji,
 kuracji, truth isolation i watermarków; dodatkowe 88 kontroli obejmuje worker,

@@ -1,6 +1,16 @@
 # Aktualny status
 
 **2026-10-08 — AI 09: in_progress / not_ready.**
+[Przygotowanie 09.54](evidence/09-54-ledger-query-capacity-preparation.json) i
+[receptura 1.9](reference/ai09-development-capacity-v1.9.json) przypinają Source
+`a7b850a0` z audytu indeksów zapytań, okresów fizycznych i jednostek produktów.
+Niezależny verifier buduje własne koszyki dzienne. Source zaliczył 274 kontrole;
+AI 106 i 22 z zainstalowanego wheela. Małe pary zachowują wszystkie porównane
+hashe i mierzą także dodatkową pamięć indeksów. Receptura zachowuje 12 GiB,
+pełne wymiary, pozostałe budżety i wszystkie osiem poprzednich porażek.
+Nie została uruchomiona; wymaga pełnego odbioru dokładnych head i wynikowych
+main obu repozytoriów. Nie kwalifikuje pełnego profilu ani modeli.
+
 [Receptura 1.8](reference/ai09-development-capacity-v1.8.json) ma na polecenie
 użytkownika limit RSS drzewa **12 GiB** (12 884 901 888 B) i rezerwę 1 GiB.
 PR60 scalono normalnie jako `4ce8a3cf`; pełne CI dokładnego head i tego main

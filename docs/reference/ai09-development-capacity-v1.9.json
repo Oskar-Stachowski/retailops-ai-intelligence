@@ -1,0 +1,96 @@
+{
+  "version": "ai09-development-capacity-probe-1.9.0",
+  "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+  "producer_commit": "a7b850a06f4f4ad0fa9dcb0e17602b5c105f591c",
+  "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+  "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+  "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "generation": {
+    "profile": "ai-dev",
+    "seed": 42,
+    "days": 365,
+    "products": 100,
+    "stores": 5,
+    "warehouses": 3,
+    "start_date": "2025-08-01",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 182500,
+    "forecast_plan_days": 14
+  },
+  "budgets": {
+    "tree_rss_bytes": 12884901888,
+    "scratch_bytes": 8589934592,
+    "wall_seconds": 3600,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "parent_limits": {
+    "max_bytes": 2147483648,
+    "max_files": 10000,
+    "max_rows": 20000000,
+    "batch_rows": 256
+  },
+  "expected_snapshot_schema_version": "1.1.0",
+  "snapshot": {
+    "include_truth": false,
+    "chunk_rows": 256,
+    "partition_by_day": false,
+    "required_use_cases": [
+      "forecast_source",
+      "inventory_source"
+    ]
+  },
+  "project_campaign_authorized": false,
+  "model_fit_authorized": false,
+  "final_generation_authorized": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "previous_attempt": {
+    "version": "ai09-development-capacity-probe-1.8.0",
+    "workflow_run": 37824794411,
+    "plan_sha256": "e219af373fab4ddcfcd077b17c26e3fe56399e2d1010b659e5798745143b55c3",
+    "resource_receipt_sha256": "a214361acaa245e1118fc8715af602ed21393305e6bef585f2bbdda7ec04b41a",
+    "reason": "wall_limit",
+    "exit_code": -9,
+    "completed_phases": 0,
+    "wall_seconds": 3600.57873507,
+    "sampled_tree_peak_rss_bytes": 9066307584,
+    "previous_failure_preserved": true
+  },
+  "revision_reason": "Actual eighth attempt1.8 reached the3600s aggregate wall limit at sampled tree RSS9066307584B under the user-authorized12GiB budget, with zero completed phases. Reviewed SourcePR110 indexes validated balance queries, physical periods, stockout movement groups and product units, while independent daily verification uses separate coalesced buckets.274 native controls and fresh paired local controls retain every compared native table/context/balance/physical/snapshot hash; these small controls are not canonical qualification. Pin the exact reviewed Sourcea7b850a and audit receipt. Preserve actual1.8 costs/artifact and all earlier failures, immutable recipes1.0\u20131.8 and unexecuted1.6. Keep the complete365x100x5x3 development profile, dates, seed, all five phases, dependencies, parent limits, snapshot semantics,12GiB tree RSS,8GiB scratch,3600s wall,1GiB available-memory reserve and6GiB disk reserve. Require complete exact head and resulting-main CI in both repositories before one separately frozen diagnostic. No unchanged/automatic retry, Project campaign, fits or final generation are authorized.",
+  "generation_entrypoint": "data.inventory.source_cohort_batch_v2.run",
+  "worker_stack_observation": {
+    "phases": [
+      "generation"
+    ],
+    "interval_seconds": 120,
+    "repeat": true,
+    "locals_dumped": false,
+    "periodic_observation_not_allocation_measurement": true,
+    "implementation": "python_current_frames_owned_references_no_native_watchdog",
+    "maximum_threads": 64,
+    "maximum_frames_per_thread": 64,
+    "maximum_snapshot_bytes": 65536,
+    "join_timeout_seconds": 5,
+    "may_be_delayed_without_GIL": true,
+    "truncation_explicit": true,
+    "maximum_filename_characters": 256,
+    "maximum_function_characters": 96
+  },
+  "previous_preparation": {
+    "version": "ai09-development-capacity-probe-1.6.0",
+    "recipe": "docs/reference/ai09-development-capacity-v1.6.json",
+    "recipe_sha256": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "evidence": "docs/evidence/09-48-audited-capacity-preparation.json",
+    "evidence_sha256": "8bbaac6c6a2a703103b89c87dd574aecfd166f2634c221e82b2be0f998f125b3",
+    "workflow_dispatched": false,
+    "superseded_before_execution": true
+  },
+  "producer_audit": {
+    "evidence": "docs/evidence/ml/ai09-ledger-query-index.json",
+    "evidence_sha256": "fde90ac9ac6d09e7786f35e4093f19a4cca5f0a508c8af298041f2f98fc7910b",
+    "ordinary_implementation": "inventory-source-cached-ledger-2.2.2",
+    "planned_implementation": "planned-source-cached-execution-1.1.2"
+  }
+}

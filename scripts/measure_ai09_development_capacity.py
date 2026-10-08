@@ -28,7 +28,7 @@ from typing import Any, TextIO
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
-    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.8.json"
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.9.json"
 )
 
 
@@ -291,10 +291,10 @@ def require_remote() -> None:
 
 def validate_plan(plan: dict[str, Any]) -> None:
     """Do not let a smaller or final profile inherit this diagnostic's name."""
-    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.7.json")
+    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.8.json")
     previous = read(previous_path)
     previous_result = read(
-        PLAN_PATH.parents[1] / "evidence/09-51-development-capacity-seventh-run.json"
+        PLAN_PATH.parents[1] / "evidence/09-53-development-capacity-eighth-run.json"
     )
     revision_keys = {
         "version",
@@ -303,6 +303,7 @@ def validate_plan(plan: dict[str, Any]) -> None:
         "generation_entrypoint",
         "previous_attempt",
         "previous_preparation",
+        "producer_audit",
         "budgets",
         "revision_reason",
         "worker_stack_observation",
@@ -312,11 +313,18 @@ def validate_plan(plan: dict[str, Any]) -> None:
     }:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.8.0"
-        or sha(previous_path) != "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668"
-        or sha(PLAN_PATH.parents[1] / "evidence/09-51-development-capacity-seventh-run.json")
-        != "387ddc47d324992f89a5e51b46bc006eebb4f67dd4c62fffc4c2974a950d4436"
-        or plan["producer_commit"] != "4dacf0403add494f74e4b4f22497f6206de753d9"
+        plan["version"] != "ai09-development-capacity-probe-1.9.0"
+        or sha(previous_path) != "e219af373fab4ddcfcd077b17c26e3fe56399e2d1010b659e5798745143b55c3"
+        or sha(PLAN_PATH.parents[1] / "evidence/09-53-development-capacity-eighth-run.json")
+        != "95039e3f5a3b927cee5e7598b771ec4b03f2b89d2b35a25c70a3f50fd8dd3443"
+        or plan["producer_commit"] != "a7b850a06f4f4ad0fa9dcb0e17602b5c105f591c"
+        or plan.get("producer_audit")
+        != {
+            "evidence": "docs/evidence/ml/ai09-ledger-query-index.json",
+            "evidence_sha256": "fde90ac9ac6d09e7786f35e4093f19a4cca5f0a508c8af298041f2f98fc7910b",
+            "ordinary_implementation": "inventory-source-cached-ledger-2.2.2",
+            "planned_implementation": "planned-source-cached-execution-1.1.2",
+        }
         or plan["producer_lock_sha256"]
         != "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02"
         or plan.get("previous_preparation")
@@ -365,10 +373,10 @@ def validate_plan(plan: dict[str, Any]) -> None:
         or plan["previous_attempt"]
         != {
             "version": previous["version"],
-            "workflow_run": 37807749014,
+            "workflow_run": 37824794411,
             "plan_sha256": sha(previous_path),
             "resource_receipt_sha256": previous_result["resource_receipt_sha256"],
-            "reason": "tree_rss_limit",
+            "reason": "wall_limit",
             "exit_code": -9,
             "completed_phases": 0,
             "wall_seconds": previous_result["resource_receipt"]["wall_seconds"],
@@ -423,6 +431,11 @@ def run(args: argparse.Namespace) -> None:  # noqa: PLR0915 - ordered probe evid
     if any(p.is_symlink() for p in (source, output, *source.parents, *output.parents)):
         raise ValueError("capacity_no_symlink_paths")
     clean_pin(source, plan["producer_commit"])
+    if (
+        sha(source / plan["producer_audit"]["evidence"])
+        != plan["producer_audit"]["evidence_sha256"]
+    ):
+        raise ValueError("capacity_producer_audit_mismatch")
     control = PLAN_PATH.parents[2]
     head = git(control, "rev-parse", "HEAD")
     clean_pin(control, head)

@@ -138,6 +138,26 @@ def test_probe_cannot_authorize_fits_or_project_campaign() -> None:
             probe.validate_plan(changed)
 
 
+def test_modified_producer_audit_stops_before_output_or_worker(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source, output = tmp_path / "source", tmp_path / "output"
+    plan = probe.read(probe.PLAN_PATH)
+    audit = source / plan["producer_audit"]["evidence"]
+    audit.parent.mkdir(parents=True)
+    audit.write_text('{"tampered":true}\n')
+    monkeypatch.setattr(probe, "require_remote", lambda: None)
+    monkeypatch.setattr(probe, "clean_pin", lambda *a: None)
+
+    def forbidden(*args: object, **kwargs: object) -> None:
+        pytest.fail("a mismatched audit reached the worker")
+
+    monkeypatch.setattr(probe, "monitor", forbidden)
+    with pytest.raises(ValueError, match="capacity_producer_audit_mismatch"):
+        probe.run(SimpleNamespace(source=source, output=output))
+    assert not output.exists()
+
+
 def test_diagnostic_receipt_is_private_and_never_overwritten(tmp_path: Path) -> None:
     path = tmp_path / "receipt.json"
     probe.write(path, {"failed": True})
@@ -170,6 +190,8 @@ def test_system_peak_rejects_phase_even_if_sample_missed_it(
             if p.name == "uv.lock"
             else plan["exporter_lock_sha256"]
             if p.name == "requirements-parquet.txt"
+            else plan["producer_audit"]["evidence_sha256"]
+            if p == source / plan["producer_audit"]["evidence"]
             else original_sha(p)
         ),
     )
@@ -194,13 +216,17 @@ def test_system_peak_rejects_phase_even_if_sample_missed_it(
     assert receipt["project_journal_initialized"] is False
 
 
-@pytest.mark.parametrize("change", ["parent_limit", "budget", "prior_digest"])
+@pytest.mark.parametrize("change", ["parent_limit", "budget", "prior_digest", "producer", "audit"])
 def test_resource_revision_cannot_change_parent_caps_or_erase_previous_failure(change: str) -> None:
     plan = probe.read(probe.PLAN_PATH)
     if change == "parent_limit":
         plan["parent_limits"]["max_bytes"] *= 2
     elif change == "budget":
         plan["budgets"]["minimum_available_memory_bytes"] = 1
+    elif change == "producer":
+        plan["producer_commit"] = "0" * 40
+    elif change == "audit":
+        plan["producer_audit"]["evidence_sha256"] = "0" * 64
     else:
         plan["previous_attempt"]["plan_sha256"] = "0" * 64
     with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
@@ -236,6 +262,8 @@ def test_twelve_gib_preflight_preserves_one_gib_reserve_before_starting_a_worker
             if p.name == "uv.lock"
             else plan["exporter_lock_sha256"]
             if p.name == "requirements-parquet.txt"
+            else plan["producer_audit"]["evidence_sha256"]
+            if p == source / plan["producer_audit"]["evidence"]
             else original_sha(p)
         ),
     )
@@ -296,9 +324,10 @@ def test_stack_observation_cannot_change_scope_or_claim_allocation_measurement(c
         probe.validate_plan(plan)
 
 
-def test_all_seven_prior_actual_plan_bytes_and_failure_chain_are_retained() -> None:
+def test_all_eight_prior_actual_plan_bytes_and_failure_chain_are_retained() -> None:
     path = probe.PLAN_PATH
     for version, run_id in (
+        ("1.8", 37824794411),
         ("1.7", 37807749014),
         ("1.5", 37765329151),
         ("1.4", 37731200719),
