@@ -23,8 +23,12 @@ Assistant HTTP, natywny odczyt Source SQL, atomowy outbox, publisher z osobnym
 lockiem, broker, konsumenta Source, SQL/API i zbudowany UI w Chromium.
 LLM jest jawną atrapą, obserwacja sprzedaży jest wymyślona. Test obejmuje
 oryginalne bajty, deduplikację, scope, read-only i cofnięcie dostępu.
-Aktualny wynik i bezpieczne receipts podają checki PR32.
-Przygotowanie testu i uruchomienie joba nie dowodzą jego zaliczenia.
+[Rzeczywisty run 37740983436](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37740983436)
+na headzie `ea4a6a5b` zakończył się **success**. [Receipt](12-prepaid-source-acceptance.json)
+wiąże oryginalny checkout merge, pin Source, digest pobranego artefaktu,
+dokładne SHA oraz pełny wynik Chromium. [Zrzut UI](12-prepaid-source-ui.png)
+sprawdzono wizualnie; nie zawiera credential. Required CI pozostaje odrębnym
+odbiorem całego repozytorium; aktualny wynik podają checki PR32.
 
 Próba zdalna `37738941272` wykryła błąd SQL tworzenia roli z `SET`.
 Próba `37739332430` po poprawce opublikowała zdarzenie przez właściwy publisher,

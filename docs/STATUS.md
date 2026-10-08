@@ -1257,7 +1257,10 @@ pozostałe zachowują insufficient_evidence.
 
 Draft PR32 uruchamia osobny E2E bez AWS przez oryginalny emiter, broker,
 konsumenta Source, SQL/API i zbudowany UI Chromium; LLM i obserwacja sprzedaży
-są jawnie testowe. Aktualny wynik podają checki PR32. Przygotowano pięć
+są jawnie testowe. [Run 37740983436](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37740983436)
+przeszedł w całości; [receipt](evidence/12-prepaid-source-acceptance.json) i
+[sprawdzony zrzut UI](evidence/12-prepaid-source-ui.png) zachowują dowód.
+Aktualny odbiór całego Required CI podają checki PR32. Przygotowano pięć
 propozycji płatnego Sonnet dla 41 naturalnych przypadków, kompletny pakiet
 przeglądu 50 pytań/26 tras oraz osobny kandydat natywnego runtime.
 Nie znaleziono niezależnego odbioru etykiet; status proposed pozostaje prawdziwy.
