@@ -1,0 +1,106 @@
+{
+  "scope": "Actual fifth full ai-dev capacity diagnostic on previously exposed development dates; not Project scientific qualification",
+  "updated_at_utc": "2026-10-08T05:53:49.480217+00:00",
+  "workflow_run": 37731200719,
+  "workflow_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37731200719",
+  "job": 113160471148,
+  "workflow_status": "completed",
+  "workflow_conclusion": "failure",
+  "control_commit": "ce81b8d5a3968481583eeafaf123056a7c7f5996",
+  "producer_commit": "5182782321e9aca15f28c467071e92f268aafb85",
+  "artifact_id": 11531230158,
+  "artifact_bytes": 3699,
+  "artifact_sha256": "25288f210be9f64ba63599d019d6b324a9904cbc2a1262270aa38712c17c3d59",
+  "resource_receipt_sha256": "28ec7def328b10a1329bfbf6caf6e23abc5924fff388340576fa38e888caa538",
+  "artifact_plan_sha256": "fecca01df49b24f8c4d53b7e95613659df0115fbbc8de0d93a26ece704725c08",
+  "generation_log_sha256": "de48bb2ba4188decc36fea1f9da7562ab1615624a514565908fce14c1e5d6c8c",
+  "plan_sha256": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+  "recipe": "docs/reference/ai09-development-capacity-v1.4.json",
+  "generation": {
+    "days": 365,
+    "end_date": "2026-07-31",
+    "forecast_plan_days": 14,
+    "max_daily_rows": 182500,
+    "products": 100,
+    "profile": "ai-dev",
+    "seed": 42,
+    "start_date": "2025-08-01",
+    "stores": 5,
+    "warehouses": 3
+  },
+  "budgets": {
+    "minimum_available_memory_bytes": 1073741824,
+    "minimum_free_disk_bytes": 6442450944,
+    "sample_seconds": 0.2,
+    "scratch_bytes": 8589934592,
+    "tree_rss_bytes": 8589934592,
+    "wall_seconds": 3600
+  },
+  "expected_snapshot_schema_version": "1.1.0",
+  "previous_runs": [
+    37611605538,
+    37613368332,
+    37676033214,
+    37714051649
+  ],
+  "all_five_attempts_and_previous_plan_bytes_and_costs_retained": true,
+  "result": {
+    "budgets": {
+      "minimum_available_memory_bytes": 1073741824,
+      "minimum_free_disk_bytes": 6442450944,
+      "sample_seconds": 0.2,
+      "scratch_bytes": 8589934592,
+      "tree_rss_bytes": 8589934592,
+      "wall_seconds": 3600
+    },
+    "canonical_ai_training_qualified": false,
+    "completed_phases": 0,
+    "control_commit": "ce81b8d5a3968481583eeafaf123056a7c7f5996",
+    "failed_outputs_retained": true,
+    "final_generation_attempted": false,
+    "final_test_opened": false,
+    "new_project_fits": 0,
+    "phases": [
+      {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": -9,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 7148916736,
+        "minimum_free_disk_bytes": 90824626176,
+        "phase": "generation",
+        "reason": "tree_rss_limit",
+        "sample_seconds": 0.2,
+        "sampled_peak_scratch_allocated_bytes": 45056,
+        "sampled_peak_scratch_logical_bytes": 37004,
+        "sampled_tree_peak_rss_bytes": 8590368768,
+        "sampled_worker_cpu_seconds": 1835.5,
+        "samples": 9083,
+        "status": "failed",
+        "wall_seconds": 1835.853620984
+      }
+    ],
+    "plan_sha256": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+    "producer_commit": "5182782321e9aca15f28c467071e92f268aafb85",
+    "project_journal_initialized": false,
+    "quality_qualified": false,
+    "reason": "tree_rss_limit",
+    "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+    "stage_ready": false,
+    "status": "failed",
+    "wall_seconds": 1836.0621024959999
+  },
+  "stack_observations": {
+    "shape": "Python file,line,function metadata only; no frame locals",
+    "seen_during": [
+      "demand_report",
+      "reorder_history",
+      "replenishment_contract_validation",
+      "inventory_simulator"
+    ],
+    "not_allocation_profile": true,
+    "rss_cause_object_inventory_not_proved": true,
+    "previous_sigsegv_root_cause_still_unconfirmed": true
+  },
+  "next_attempt_dispatched": false,
+  "next_required_work": "Measure and reduce actual generator working set while preserving full canonical dimensions/contract/closed AI08 changes; planned Source2.8 and full training remain unqualified."
+}

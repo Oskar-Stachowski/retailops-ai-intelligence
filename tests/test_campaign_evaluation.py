@@ -64,7 +64,7 @@ def evaluation_recipe(frozen=None, **changes):
 
 
 @pytest.fixture
-def control(stored_control, population, timeline, tmp_path, monkeypatch):
+def control(stored_control, population, timeline, tmp_path, monkeypatch, request):
     dataset, manifest = stored_control
     root = tmp_path / "evaluation-journal"
     document = protocol_document(root)
@@ -83,6 +83,41 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch):
         old_tune.plan.forecast_quality_policy_sha256
     )
     document["selection_policy_sha256"] = old_tune.plan.campaign_selection_policy_sha256
+    context_recipe = uncertainty_policy = None
+    if getattr(request, "param", None) == "robust":
+        from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
+            CampaignContextBundleRecipe,
+        )
+        from retailops_ai.evaluation_campaign.campaign_segment_contract import (
+            CampaignForecastSegmentPolicy,
+        )
+        from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
+            CampaignForecastUncertaintyPolicy,
+        )
+
+        categories = tuple(
+            sorted(
+                {
+                    value.value
+                    for row in population[1]
+                    for value in row.values
+                    if value.name == "category_id" and value.value is not None
+                }
+            )
+        )
+        segment_policy = CampaignForecastSegmentPolicy(category_inventory=categories)
+        uncertainty_policy = CampaignForecastUncertaintyPolicy()
+        document["segment_policy_sha256"] = segment_policy.content_sha256()
+        document["uncertainty_policy_sha256"] = uncertainty_policy.content_sha256()
+        context_recipe = CampaignContextBundleRecipe(
+            phase="development",
+            role="development_evaluation",
+            source_recipe_sha256=source,
+            generation_operation_id="development-42-generate",
+            export_operation_id=exported.operation_id,
+            segment_policy=segment_policy,
+            resources=evaluation_recipe().resources,
+        )
     plans = {
         key: fit.plan.model_copy(
             update={"source_recipe_sha256": source, "export_operation_id": exported.operation_id}
@@ -134,6 +169,14 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch):
         exported.plan,
         ["development-42-generate"],
     )
+    if context_recipe is not None:
+        operation(
+            "declared-context",
+            "source_read",
+            "all_parent_data",
+            context_recipe,
+            ["development-42-generate", exported.operation_id],
+        )
     for key, plan in plans.items():
         operation(
             key,
@@ -179,7 +222,8 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch):
         "model_score",
         "development_evaluation",
         recipe,
-        [exported.operation_id, old_tune.operation_id, old_calibration.operation_id],
+        [exported.operation_id, old_tune.operation_id, old_calibration.operation_id]
+        + (["declared-context"] if context_recipe is not None else []),
     )
     operations += [o for o in document["operations"] if o["phase"] == "final"]
     document["operations"] = operations
@@ -355,6 +399,9 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch):
         request = read(folder / "request.json")
         if phase == "predict":
             assert "actuals" not in request and "dataset" not in request
+            assert not {"raw_context", "raw_context_bundle", "uncertainty_policy"}.intersection(
+                request
+            )
             assert command[0].endswith("declared-tf-worker")
         result = getattr(worker, phase)(folder, request, recipe.resolve(frozen))
         write(
@@ -387,6 +434,8 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch):
         "output_root": output,
         "worker_python": tmp_path / "declared-tf-worker",
         "calls": calls,
+        "context_recipe": context_recipe,
+        "uncertainty_policy": uncertainty_policy,
     }
 
 

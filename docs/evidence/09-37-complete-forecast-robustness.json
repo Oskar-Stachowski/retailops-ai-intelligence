@@ -1,0 +1,131 @@
+{
+  "evidence_version": "ai09-complete-selected-forecast-robustness-1.0.0",
+  "stage": "AI09",
+  "recorded_at_utc": "2026-10-08T05:53:49.480217+00:00",
+  "status": "implemented_component_controls_passed_publication_and_full_canonical_campaign_pending",
+  "original_eight_DoD_and_all_three_uses_unchanged": true,
+  "implemented": [
+    "Public optional frozen uncertainty policy plus actual audited context prerequisite, never forwarded to inference",
+    "One selected actual/context pass joins calibrated mean/median/interval and frozen functional references to every predefined census group",
+    "All declared populations, including empty/excluded, retain numerical gates and paired time-block and whole-series reports",
+    "Combined SQLite byte cap includes preparation/projection and all cluster indexes, with whole process supervision preserved",
+    "v24 concrete receipt2 pins context receipt/census/trace and full frozen uncertainty policy; prior v20 receipt1 scope stays incomplete",
+    "Bundle verifier recomputes aggregate numerical gates and pairs their point deltas with full method/population/scope/seed bindings",
+    "Final selection verifier requires quality_qualified true plus both complete flags, durable context completion and full bundle verification"
+  ],
+  "qualification_semantics": {
+    "complete_flags_are_not_promotion_or_stage_ready": true,
+    "underpowered_and_empty_groups_retained": true,
+    "zero_denominators_remain_undefined": true,
+    "bootstrap_reports_do_not_assert_nominal_coverage_or_joint_multiway_independence": true,
+    "model_or_preprocessing_refitted": false
+  },
+  "validation": {
+    "initial_existing_evaluator_worker_configuration_uncertainty": {
+      "passed": 97,
+      "seconds": 47.4
+    },
+    "new_control_setup_failures_preserved": [
+      {
+        "errors": 2,
+        "seconds": 0.75,
+        "reason": "missing imported stored fixture aliases in new test module"
+      },
+      {
+        "errors": 2,
+        "seconds": 4.27,
+        "reason": "test fixture tried exclusive write of already created census file"
+      }
+    ],
+    "first_new_integration": {
+      "passed": 13,
+      "failed": 1,
+      "seconds": 32.65,
+      "reason": "test incorrectly expected entire mutable journal bytes unchanged; corrected to unchanged frozen protocol/hash"
+    },
+    "combined_new_and_existing_evaluator_generation_final_export": {
+      "passed": 77,
+      "seconds": 161.19
+    },
+    "last_resource_seal_and_underpowered_selection_controls": {
+      "passed": 11,
+      "deselected": 6,
+      "seconds": 26.37
+    },
+    "counts_are_separate_overlapping_runs_not_unique_sum": true,
+    "native_source_selected_probe": {
+      "actual_index_passes": 1,
+      "component_control_not_full_canonical_campaign": true,
+      "eligible_rows": 0,
+      "existing_projection_sha256": "7342b9169e60a3f79a942e8b768cd6d11049139d602232951a00fab03f2ba7ce",
+      "full_role_label_file_passes": 1,
+      "groups": 63,
+      "methods_per_group": 2,
+      "metrics_sha256": "4870bb9e6aff72c4d61e81ab66884617ac0452e340b53e159b48828d6225ba6a",
+      "models_fitted": 0,
+      "new_full_role_label_file_passes_this_resume": 0,
+      "prepared_indexes_reused_after_request_fix": true,
+      "project_final_access": false,
+      "quality_qualified": false,
+      "rows": 645,
+      "seconds": 0.9790142079873476,
+      "source_bundle_unchanged": true,
+      "source_generation": false,
+      "stage_ready": false
+    },
+    "native_probe_failed_request_before_finalizer": {
+      "reason": "private controlled request lacked runtime",
+      "prepared_role_file_parses": 1,
+      "elapsed_cost_unknown_not_zero": true,
+      "prepared_indexes_reused_for_corrected_request": true
+    },
+    "schema_check": "passed",
+    "mypy_source_files": 715,
+    "ruff": "passed",
+    "format_files": 1214,
+    "wheel": {
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 1950068,
+      "sha256": "9456923be26436956c714f4011a78e4619f08420301353aa298f759cb11e6d04",
+      "module_byte_parity": 594,
+      "evaluation_schema_byte_parity": 75,
+      "private_files_in_wheel": false,
+      "prior_wire_and_closed_stockout_unchanged": true
+    },
+    "actual_installed_probe": {
+      "actual_installed_public_import": true,
+      "v24_schema_loaded": true,
+      "public_policy_parameter_verified": true,
+      "tensorflow_imported": false,
+      "mlflow_imported": false,
+      "source_generation": false,
+      "models_fitted": 0,
+      "project_final_access": false
+    },
+    "all_77_prior_wire_and_129_closed_stockout_files_unchanged": true
+  },
+  "project": {
+    "journal_initialized": false,
+    "new_project_fits": 0,
+    "fresh_final_generation": false,
+    "fresh_final_reads": 0,
+    "stage_ready": false,
+    "full_canonical_profiles_qualified": false
+  },
+  "publication": {
+    "accepted_parent_pr48_head": "456dbfafbf0a6a57b4364845aa31cee46b684c3f",
+    "parent_head_ci": 37731053228,
+    "parent_head_jobs_read_total_success": 17,
+    "parent_protected_merge": "a59b2667d61e979f01985947cdb0a7bba719c8c7",
+    "parent_exact_main_ci": 37734313726,
+    "parent_main_ci_pending": true,
+    "new_exact_head_required_ci_and_main_acceptance_pending": true
+  },
+  "remaining": [
+    "Actual full planned canonical Source/scenario coverage per seed",
+    "Typed independent anomaly and stockout evaluations using closed policies",
+    "Full Project development/Tune/Calibration/frozen evaluation and fresh final42/137/2026",
+    "Per-seed/pooled comparisons, all trial costs, MLflow and three cards/reports/lifecycle/runbooks",
+    "Protected publication and full required exact-head/main CI"
+  ]
+}

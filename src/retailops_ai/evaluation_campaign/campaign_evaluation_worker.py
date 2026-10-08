@@ -43,6 +43,10 @@ from retailops_ai.evaluation_campaign.campaign_generation_worker import read, wr
 from retailops_ai.evaluation_campaign.campaign_raw_context import RawContextPass
 from retailops_ai.evaluation_campaign.campaign_score_contract import FAMILIES
 from retailops_ai.evaluation_campaign.campaign_score_worker import load_models
+from retailops_ai.evaluation_campaign.campaign_selected_robustness import SelectedRobustness
+from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
+    CampaignForecastUncertaintyPolicy,
+)
 from retailops_ai.evaluation_campaign.development_contract import MODELS
 from retailops_ai.evaluation_campaign.partitions import membership_key, runtime_pin
 from retailops_ai.evaluation_campaign.physical_contract import PhysicalForecastManifest
@@ -447,7 +451,7 @@ def consume(
             (Path(request["inputs"]), actual_path, Path(request["projection"]), prediction_path),
             plan,
         )
-    metrics = {
+    metrics: dict[str, Any] = {
         "trial_tune_score_operation_id": trial.tune_score_operation_id,
         "role": plan.role,
         "rows": rows,
@@ -513,6 +517,22 @@ def finalize(
     ):
         raise SnapshotError("campaign_evaluation_prepared_actual_checksum_mismatch")
     bundle = Path(request["bundle"])
+    robustness = None
+    if "uncertainty_policy" in request:
+        if "raw_context" not in request or "raw_context_bundle" not in request:
+            raise SnapshotError("campaign_evaluation_robustness_context_required")
+        robustness = SelectedRobustness(
+            root.parent,
+            Path(request["raw_context_bundle"]),
+            request["raw_context"],
+            plan,
+            request["population"],
+            CampaignForecastUncertaintyPolicy.model_validate_json(
+                canonical_bytes(request["uncertainty_policy"])
+            ),
+            retained_median_baseline=selection.median.score_operation_id is None,
+        )
+    robust_result = None
     keys, eligible_keys = hashlib.sha256(), hashlib.sha256()
     rows = eligible = output_bytes = 0
     descriptor = os.open(
@@ -522,6 +542,7 @@ def finalize(
         os.fdopen(descriptor, "wb") as stream,
         closing(_readonly(Path(request["projection"]))) as projection,
         closing(_readonly(actual_path)) as actuals,
+        robustness if robustness is not None else nullcontext(),
     ):
         if [
             item[0] for item in projection.execute("SELECT trial FROM consumed ORDER BY rowid")
@@ -577,6 +598,8 @@ def finalize(
                 raise SnapshotError("campaign_evaluation_selected_key_or_role_mismatch")
             for horizon in ("0", str(row.horizon_days)):
                 segments[horizon].add(row, actual.actual)
+            if robustness is not None:
+                robustness.add(row, actual.actual)
             raw = canonical_bytes(row.model_dump(mode="json")) + b"\n"
             output_bytes += len(raw)
             if output_bytes > plan.max_output_bytes:
@@ -589,13 +612,15 @@ def finalize(
                 eligible_keys.update(key + b"\n")
         stream.flush()
         os.fsync(stream.fileno())
+        if robustness is not None:
+            robust_result = robustness.finish()
     expected = request["population"]
     _checksum(actual_path, expected["actuals_sha256"])
     if (rows, eligible, keys.hexdigest(), eligible_keys.hexdigest()) != tuple(
         expected[k] for k in POPULATION[:4]
     ):
         raise SnapshotError("campaign_evaluation_composite_population_mismatch")
-    metrics = {
+    metrics: dict[str, Any] = {
         "role": plan.role,
         "scope": "complete_key_global_horizon_component_pending_critical_segments_and_uncertainty",
         "critical_segment_inventory_complete": False,
@@ -608,12 +633,21 @@ def finalize(
             for h, segment in segments.items()
         ],
     }
+    if robust_result is not None:
+        metrics.update(
+            scope="complete_key_frozen_selected_critical_segments_and_paired_uncertainty",
+            critical_segment_inventory_complete=True,
+            block_uncertainty_complete=True,
+            quality_qualified=robust_result["quality_qualified"],
+            selected_robustness=robust_result,
+        )
     write(bundle / "metrics.json", metrics)
     return {
         **{k: expected[k] for k in POPULATION},
         "actual_index_passes": 1,
         "all_frozen_trials_compared": True,
         "architecture_reselected": False,
+        **({"selected_robustness_complete": True} if robust_result is not None else {}),
     }
 
 

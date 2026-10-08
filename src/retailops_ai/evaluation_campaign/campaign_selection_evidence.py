@@ -13,10 +13,11 @@ from typing import Any
 
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.evaluation_campaign import campaign_journal
-from retailops_ai.evaluation_campaign.campaign_evaluation_receipt import (
-    CampaignForecastEvaluationReceipt,
-)
 from retailops_ai.evaluation_campaign.campaign_export import MAX_RECEIPT_BYTES
+from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    ForecastEvaluationReceipt,
+    parse_forecast_evaluation_receipt,
+)
 from retailops_ai.source_snapshot.files import SnapshotError, regular_file
 
 
@@ -29,7 +30,7 @@ def _maximum(receipt: dict[str, Any]) -> int:
 
 def verify_completed_campaign_selection(
     journal: Path, bundles: dict[str, Path]
-) -> tuple[str, CampaignForecastEvaluationReceipt]:
+) -> tuple[str, ForecastEvaluationReceipt]:
     ledger = campaign_journal.inspect(journal)
     event = next((e for e in ledger.events if e.kind == "selection_frozen"), None)
     if (
@@ -97,6 +98,7 @@ def verify_completed_campaign_selection(
             or canonical_sha256(recipe) != operation.execution_recipe_sha256
             or value.get("critical_segment_inventory_complete") is not True
             or value.get("block_uncertainty_complete") is not True
+            or value.get("quality_qualified") is not True
             or value.get("final_test_accessed") is not False
             or value.get("selection_components")
             != selected.model_dump(mode="json", exclude={"use_case", "selection_evidence_sha256"})
@@ -106,16 +108,16 @@ def verify_completed_campaign_selection(
         ):
             raise SnapshotError("campaign_evaluation_selection_receipt_incomplete_or_mismatched")
         if selected.use_case == "forecast":
-            forecast = CampaignForecastEvaluationReceipt.model_validate_json(raw)
+            forecast = parse_forecast_evaluation_receipt(raw)
             # Import only at verification time: the evaluator imports final
             # export/generation, which use this shared boundary verifier.
             from retailops_ai.evaluation_campaign.campaign_evaluation import (
-                _verify_bundle,
-                validate_completed_evaluation,
+                verify_campaign_forecast_evaluation,
             )
 
-            validate_completed_evaluation(journal, forecast)
-            _verify_bundle(bundles[selected.use_case], forecast)
+            verify_campaign_forecast_evaluation(
+                bundles[selected.use_case], journal=journal, receipt=forecast
+            )
         else:
             expected_version = "ai09-campaign-" + selected.use_case + "-evaluation-receipt-1.0.0"
             if value.get("version") != expected_version:

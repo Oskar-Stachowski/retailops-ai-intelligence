@@ -424,3 +424,50 @@ bez zmian. Mypy712 plików, Ruff, format1210 plików, schematy i dokumentacja
 przeszły. Kolekcja zmienionych modułów testowych zawiera129 unikalnych kontroli;
 opisane wykonania częściowo się pokrywają i ich liczby nie sumują się.
 Dokładny head, pełne CI i chroniona publikacja na main pozostają wymagane.
+
+W przyroście 09.37 publiczny evaluator przyjmuje również rzeczywistą,
+zamrożoną `uncertainty_policy`. Jej hash i nominal coverage muszą odpowiadać
+prerejestrowanej recepturze, a pełny context bundle musi mieć zakończoną
+operację będącą prerequisite oceny. Polityka ani kontekst nie trafiają do
+workera predykcji. W fazie finalize ten sam jeden odczyt indeksu actuals
+łączy ostateczne, skalibrowane mean/median/interval i zamrożone referencje
+z każdym kluczem pełnego strumienia kontekstu.
+
+Każda zadeklarowana grupa zachowuje liczebności, hashe, porównanie funkcjonalne
+i oddzielne raporty resamplingu bloków czasu oraz całych serii. Puste grupy,
+wykluczenia, za mało klastrów, brakujące predykcje i nieokreślone mianowniki
+pozostają jawne. Żadnej grupy nie usuwa się dla zmieszczenia w budżecie:
+wspólny limit SQLite obejmuje przygotowane wejścia, actuals, projection i wszystkie
+indeksy klastrów. Nadzorca zachowuje RSS całego drzewa, scratch i czas fazy.
+Te analizy wrażliwości nie gwarantują nominalnego pokrycia ani niezależności
+obu osi; ich zakres i ograniczenia pozostają przypięte do zamrożonej polityki.
+
+Nowy receipt `ai09-campaign-forecast-evaluation-receipt-2.0.0` w v24 wymaga
+pełnego kontekstu, jego census/trace oraz polityki niepewności. Kompletność obu
+inwentarzy jest true dopiero po całym przebiegu i weryfikacji artefaktu.
+Verifier odtwarza numerical gates z agregatów, sprawdza wszystkie grupy,
+obie metody, scope, seeds i zgodność punktowych delt z porównaniami.
+`quality_qualified` wynika z wymaganych bramek; `promotion_allowed` i `stage_ready`
+pozostają false. Receipt v20/1 nadal ma dawny niekompletny zakres i nie może
+zostać podniesiony zmianą flag. Wspólny strażnik przed final dodatkowo wymaga
+`quality_qualified=true` oraz trwałego context completion i pełnego bundle.
+
+Kontrola publicznego API używa zadeklarowanych parent/model/monitor controls,
+zamrożonych przed utworzeniem receiptów. Niezależna kontrola finalize ponownie
+wykorzystała wcześniej odczytane Source1.2 i gotowy kontrolny projection:
+645 kluczy, wszystkie 63 grupy, obie metody na grupę, jeden actual-index pass,
+bez zmiany źródłowego bundle, generacji ani fitów. Eligible rows nadal wynosi zero;
+pełny inwentarz raportów nie stanowi kwalifikacji jakości. Nie powtórzono parsowania
+roli przy poprawce brakującego runtime w prywatnym żądaniu; koszt pierwszej
+nieudanej kontroli zachowano z nieznanym czasem, a nie zerem.
+
+97 wcześniejszych testów przeszło w 47.40 s; kombinacja nowej ścieżki i kontroli
+evaluation/generation/final-export ma 77 passed w 161.19 s, a późniejsze kontrole
+resource/seal/underpowered selection 11 passed w 26.37 s. Te liczby zawierają
+powtarzające się testy. Mypy 715 plików, Ruff, format i schema snapshots przeszły;
+wheel ma identyczne bajty 594 modułów i 75 schematów evaluation, w tym v24.
+Faktycznie zainstalowany package importuje publiczny evaluator i v24 bez
+TensorFlow/MLflow. Szczegóły, porażki kontrolne i dalszy zakres zachowuje
+[evidence 09.37](evidence/09-37-complete-forecast-robustness.json).
+Pełna kampania canonical, anomaly/stockout, final 42/137/2026 oraz MLflow/cards/
+lifecycle nadal pozostają wymagane. Nowy head i wynikowy main wymagają własnego CI.
