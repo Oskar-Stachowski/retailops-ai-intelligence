@@ -1,0 +1,127 @@
+{
+  "updated_at_utc": "2026-10-08T06:39:52.120164+00:00",
+  "scope": "Prospective full canonical capacity1.5 on new queue-owned event producer; component controls and publication preparation only",
+  "recipe": "docs/reference/ai09-development-capacity-v1.5.json",
+  "recipe_sha256": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+  "producer_commit": "ab4d569081c1a427449717e14ef22249b490ee81",
+  "producer_pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/107",
+  "producer_evidence_path": "docs/evidence/ml/ai09-queue-event-memory.json",
+  "producer_evidence_sha256": "cfb59be1cf1574c6475da2e5e916d870c7c864b9804449fc7ac99fde83dcad8d",
+  "producer_implementation": {
+    "version": "inventory-source-cached-ledger-2.1.0",
+    "code_sha256": "b5716935d97b722fcd704d2dd3bb1984a3e1d2cddca595ad3ec124cb13bd5394",
+    "upstream_sha256": {
+      "source_cohort_batch.py": "3e3ecafba7298d343a8c9624617bdc6461e0925d5a446aeab9d011acc3909e00",
+      "ledger.py": "3e50ac30d3732789680461d96d5855f01619d0978de56e774d11565df884565f",
+      "source_bridge.py": "f1030980fa2cfd297ee1ec5e62434cd1fa56480cf59f7a605783b1ff7e25f61d",
+      "run_source_dataset.py": "3c3194a6d197ced1e6c19e93268ef5bac97ae8c01073b05f17e67d9d0027d6bf",
+      "simulator.py": "f387f5a374f3cc452d16fcf1f8b64919e29087275da33b95f81e594ea03c2fa1",
+      "source_commerce.py": "9322d5240b1762db498929febed872bd207bd683ec3b1785cc0a0674f43e09c7"
+    },
+    "optimization": "cached_immutable_records_and_queue_owned_scenario_events",
+    "rng_and_chronological_process": "unchanged",
+    "source_validation": "ordinary_source_2_7_writer_and_reader_all_gates"
+  },
+  "producer_controls": {
+    "passed": 33,
+    "seconds": 72.31,
+    "all58_tables_csv_context_quality_parity": true,
+    "complete_heap_and_physical_output_parity": true,
+    "events_released_during_execution": true,
+    "malformed_events_rejected_before_release": true,
+    "original_inputs_unchanged": true
+  },
+  "producer_component_measurements": {
+    "scope": "Native allocation component control on the already exposed test_source_cohort_batch.parity_sample; not full-profile resource qualification",
+    "pairs": 3,
+    "initial_typed_events": 416,
+    "retained_before": 416,
+    "retained_after": 0,
+    "allocation_peak_reduction_fraction": 0.15497019870414108,
+    "whole_generator_rss_or_cpu_improvement_proved": false
+  },
+  "prior_plan_bytes_unchanged": {
+    "docs/reference/ai09-development-capacity.json": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9",
+    "docs/reference/ai09-development-capacity-v1.1.json": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee",
+    "docs/reference/ai09-development-capacity-v1.2.json": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "docs/reference/ai09-development-capacity-v1.3.json": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d",
+    "docs/reference/ai09-development-capacity-v1.4.json": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c"
+  },
+  "previous_failed_runs": [
+    37611605538,
+    37613368332,
+    37676033214,
+    37714051649,
+    37731200719
+  ],
+  "all_five_attempts_and_failed_costs_retained": true,
+  "last_failure": {
+    "version": "ai09-development-capacity-probe-1.4.0",
+    "workflow_run": 37731200719,
+    "plan_sha256": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+    "resource_receipt_sha256": "28ec7def328b10a1329bfbf6caf6e23abc5924fff388340576fa38e888caa538",
+    "reason": "tree_rss_limit",
+    "exit_code": -9,
+    "completed_phases": 0,
+    "wall_seconds": 1836.0621024959999,
+    "sampled_tree_peak_rss_bytes": 8590368768,
+    "previous_failure_preserved": true
+  },
+  "unchanged_full_dimensions_dates_locks_resources_reserves_parent_caps_observer": true,
+  "closed_AI07_AI08_reopened": false,
+  "capacity_controls": {
+    "passed": 49,
+    "seconds": 1.72,
+    "runtime": "CPython3.11.15/macOS",
+    "command": "PYTHONPATH=src python -m pytest -q tests/test_ai09_development_capacity.py",
+    "real_owned_process_and_thread_failure_containment": true,
+    "no_full_generation_or_models_or_fresh_final": true
+  },
+  "producer_identity_preflight": {
+    "dependency_hash_definition": "Source fingerprint canonical hash of its complete dependency-file inventory",
+    "producer_lock_sha256": "f55452e6f30020829f87d8c040440e7b589fd0f431e84c082aff87a9fe8b35f4",
+    "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+    "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "clean_exact_source_revision_verified": true
+  },
+  "retained_preparation_control_failure": "Initial preflight incorrectly compared the composite producer dependency hash with the single requirements.txt hash. Inspected Source fingerprint and corrected the preflight. No generation/model/final action was launched; preparation elapsed cost unknown, not zero.",
+  "accepted_parent_AI_main": {
+    "head": "a59b2667d61e979f01985947cdb0a7bba719c8c7",
+    "run": 37734313726,
+    "whole_inventory_success": 17,
+    "required_result": "success"
+  },
+  "source_required_ci": {
+    "run": 37738083497,
+    "head": "ab4d569081c1a427449717e14ef22249b490ee81",
+    "status": "in_progress",
+    "whole_acceptance": false
+  },
+  "new_AI_head_and_exact_main_required_ci_pending": true,
+  "new_capacity_attempt_dispatched": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "full_profile_qualified": false,
+  "stage_ready": false,
+  "dispatch_requirements": [
+    "Accepted exact Source producer/head Required CI and whole current Source main with matching scoped inventory and ancestry",
+    "Exact new AI head Required CI, protected merge and full exact-main Required CI",
+    "Fresh producer/consumer locks, frozen recipe/workflow and upstream pins parity",
+    "Single distinct manual isolated runner attempt; preserve all five failures and original full dimensions/caps/reserves"
+  ],
+  "remaining_original_scope": [
+    "Planned Source2.8 and complete ai-training qualification",
+    "Audited Project full-data development fits/selection/calibration/evaluation for all three uses",
+    "Complete frozen scenario and critical segment coverage before final",
+    "Untouched final data seeds42/137/2026 and all original robustness/cost evidence",
+    "MLflow/lifecycle/cards/reports/runbooks and final whole-main acceptance"
+  ],
+  "quality_checks": {
+    "mypy_script": "passed",
+    "ruff": "passed",
+    "format": "2files passed",
+    "repository_docs_links_and_required_ci": "passed",
+    "git_diff_check": "passed"
+  }
+}

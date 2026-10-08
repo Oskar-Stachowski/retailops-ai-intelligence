@@ -237,9 +237,10 @@ def test_stack_observation_cannot_change_scope_or_claim_allocation_measurement(c
         probe.validate_plan(plan)
 
 
-def test_all_four_prior_plan_bytes_and_failure_chain_are_retained() -> None:
+def test_all_five_prior_plan_bytes_and_failure_chain_are_retained() -> None:
     path = probe.PLAN_PATH
     for version, run_id in (
+        ("1.4", 37731200719),
         ("1.3", 37714051649),
         ("1.2", 37676033214),
         ("1.1", 37613368332),
@@ -479,14 +480,18 @@ def test_unicode_code_metadata_truncation_is_explicit_and_encoded_bytes_are_boun
     assert frames == {}
 
 
-@pytest.mark.parametrize("change", ["signal", "reason", "cause_confirmed"])
-def test_fourth_failure_signal_and_uncertainty_cannot_be_rewritten(change) -> None:
+@pytest.mark.parametrize("change", ["signal", "reason", "cost", "peak", "completed"])
+def test_fifth_failed_cost_and_rss_stop_cannot_be_rewritten(change) -> None:
     plan = probe.read(probe.PLAN_PATH)
     if change == "signal":
-        plan["previous_attempt"]["exit_code"] = -9
+        plan["previous_attempt"]["exit_code"] = -11
     elif change == "reason":
-        plan["previous_attempt"]["reason"] = "tree_rss_limit"
+        plan["previous_attempt"]["reason"] = "worker_exit"
+    elif change == "cost":
+        plan["previous_attempt"]["wall_seconds"] = 0
+    elif change == "peak":
+        plan["previous_attempt"]["sampled_tree_peak_rss_bytes"] = 0
     else:
-        plan["previous_attempt"]["root_cause_confirmed"] = True
+        plan["previous_attempt"]["completed_phases"] = 1
     with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
         probe.validate_plan(plan)
