@@ -4,6 +4,8 @@
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja
 i końcowy odbiór trzech zastosowań pozostają otwarte.
+[Pełne portfolio](docs/ai09-full-scenario-portfolio.md) wiąże wszystkie warianty
+i wymaga ich zweryfikowanych wyników development przed dostępem do final.
 [Wspólne prognozy development](docs/ai09-campaign-scoring.md) zachowują pełne
 klucze sześciu modeli; kalibracja i końcowa kwalifikacja nadal są wymagane.
 

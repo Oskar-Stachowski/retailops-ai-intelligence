@@ -78,6 +78,30 @@ przeszły z rzeczywiście zainstalowanej paczki. Rodzice Source i modele są w t
 testach jawnie kontrolne; nie dowodzą efektów pełnego scenariusza ani wyników
 projektowej kampanii.
 
+[Przyrost 09.43](evidence/09-43-portfolio-selection-evidence.json) rozszerza
+wspólną kontrolę przed dostępem do final. Samo ukończenie operacji w dzienniku
+nie wystarcza: sprawdzane są prywatne receipty i rzeczywiste artefakty każdej
+zadeklarowanej oceny development, także wariantów innych niż trzy receipty
+wskazane bezpośrednio przez wybór. Wszystkie warianty muszą dotyczyć tych samych
+wybranych komponentów, a forecast również tej samej zamrożonej konfiguracji.
+
+Mapa `development_selection_bundles` zawiera trzy wybrane aliasy `forecast`,
+`anomaly`, `stockout` oraz ścieżkę artefaktu pod każdym zadeklarowanym operation ID
+oceny development. Dla standardowego portfolio są to łącznie 12 kluczy.
+Brak dowodu, słaby wynik, inne komponenty, uszkodzenie artefaktu lub kilka
+udanych zakończeń jednej operacji blokują final. Osobny powtórzony pomiar wymaga
+własnej prerejestrowanej operacji; nie wybieramy najlepszego zakończenia po wynikach.
+Nieudane próby i ich koszty pozostają w dzienniku.
+
+Dotychczasowy digest wyboru pozostaje niezmieniony: zawarty w nim
+`development_journal_head_sha256` wiąże już całą wcześniejszą historię i hashe
+dowodów. Nie dodano wersji wire. Bazowy v10 nadal przyjmuje trzy aliasy.
+Zaliczono 17 kontroli nowej granicy, 118 regresji, 32 kontrole generacji i trzy
+kontrole z zainstalowanej paczki. Nowe kontrole używają prawdziwego trwałego
+journal i prywatnych plików, lecz jawnie zastępują naukową weryfikację forecastu.
+Produkcja nadal używa jej istniejącego typed parsera/publicznego verifiera.
+Pełne typed evaluatory anomaly/stockout i ich rzeczywista kwalifikacja są otwarte.
+
 Do rzeczywistego wykonania pozostają odbiór pełnej pojemności, kompletne
 produkcyjne receptury i budżety, rzeczywiste evaluatory anomaly/stockout,
 jawna polityka krytycznych segmentów oraz pełny wybór na evidence wszystkich
