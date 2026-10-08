@@ -17,6 +17,9 @@ from pathlib import Path
 from typing import Any, get_args
 
 from retailops_ai.data_contracts.identity import canonical_bytes
+from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
+    CampaignContextBundleRecipe,
+)
 from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
     CampaignForecastEvaluationPlan,
     EvaluationRole,
@@ -49,6 +52,7 @@ from retailops_ai.source_snapshot.files import SnapshotError, regular_file
 
 REASONS = frozenset(get_args(EligibilityReason))
 Manifest = PhysicalForecastManifest | FinalForecastManifest
+RoleIndexPlan = CampaignForecastEvaluationPlan | CampaignContextBundleRecipe
 
 
 @dataclass(frozen=True)
@@ -81,15 +85,13 @@ class EvaluationActual:
     actual: int | None
 
 
-def _plan(plan: CampaignForecastEvaluationPlan) -> CampaignForecastEvaluationPlan:
-    return CampaignForecastEvaluationPlan.model_validate_json(
-        canonical_bytes(plan.model_dump(mode="json"))
-    )
+def _plan(plan: RoleIndexPlan) -> RoleIndexPlan:
+    if type(plan) not in (CampaignForecastEvaluationPlan, CampaignContextBundleRecipe):
+        raise SnapshotError("campaign_evaluation_unknown_role_index_plan")
+    return type(plan).model_validate_json(canonical_bytes(plan.model_dump(mode="json")))
 
 
-def _scope(
-    manifest: Manifest, plan: CampaignForecastEvaluationPlan
-) -> tuple[str, int, PhysicalRoleFile]:
+def _scope(manifest: Manifest, plan: RoleIndexPlan) -> tuple[str, int, PhysicalRoleFile]:
     manifest = type(manifest).model_validate_json(canonical_bytes(manifest.model_dump(mode="json")))
     if isinstance(manifest, PhysicalForecastManifest) and plan.role == "development_evaluation":
         recipe = manifest.descriptor.recipe
@@ -135,7 +137,7 @@ def index_role(
     outcomes: sqlite3.Connection,
     dataset: Path,
     manifest: Manifest,
-    plan: CampaignForecastEvaluationPlan,
+    plan: RoleIndexPlan,
 ) -> dict[str, Any]:
     """No permission grant: call only inside the supervised, reserved prepare worker."""
     plan = _plan(plan)
@@ -278,7 +280,7 @@ def index_role(
     return result
 
 
-def _metadata(db: sqlite3.Connection, plan: CampaignForecastEvaluationPlan) -> dict[str, Any]:
+def _metadata(db: sqlite3.Connection, plan: RoleIndexPlan) -> dict[str, Any]:
     if any(name not in {"main", "temp"} for _, name, _ in db.execute("PRAGMA database_list")):
         raise SnapshotError("campaign_evaluation_separate_actual_index_required")
     records = db.execute("SELECT body FROM evaluation_metadata LIMIT 2").fetchall()
@@ -294,9 +296,7 @@ def _metadata(db: sqlite3.Connection, plan: CampaignForecastEvaluationPlan) -> d
     return value
 
 
-def windows(
-    db: sqlite3.Connection, plan: CampaignForecastEvaluationPlan
-) -> Iterator[EvaluationWindow]:
+def windows(db: sqlite3.Connection, plan: RoleIndexPlan) -> Iterator[EvaluationWindow]:
     plan = _plan(plan)
     expected = _metadata(db, plan)
     count = 0
@@ -339,18 +339,14 @@ def windows(
         raise SnapshotError("campaign_evaluation_inference_population_mismatch")
 
 
-def batches(
-    db: sqlite3.Connection, plan: CampaignForecastEvaluationPlan
-) -> Iterator[list[EvaluationWindow]]:
+def batches(db: sqlite3.Connection, plan: RoleIndexPlan) -> Iterator[list[EvaluationWindow]]:
     plan = _plan(plan)
     iterator = windows(db, plan)
     while batch := list(islice(iterator, plan.batch_windows)):
         yield batch
 
 
-def actuals(
-    outcomes: sqlite3.Connection, plan: CampaignForecastEvaluationPlan
-) -> Iterator[EvaluationActual]:
+def actuals(outcomes: sqlite3.Connection, plan: RoleIndexPlan) -> Iterator[EvaluationActual]:
     """Aggregation only; never hand this connection or its path to an inference worker."""
     plan = _plan(plan)
     expected = _metadata(outcomes, plan)

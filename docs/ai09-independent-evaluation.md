@@ -326,3 +326,51 @@ pozostają zgodne z bazą. Import faktycznie zainstalowanego wheel i obu
 zamkniętych schematów Source plan przeszedł bez importu TensorFlow/MLflow
 lub uruchomienia workera. Publikacja nowego dokładnego head i pełny odbiór CI
 są nadal wymagane przed użyciem w audytowanym context bundle.
+
+Nowy [v23](../contracts/evaluation/v23/campaign_context_bundle_recipe.schema.json)
+dodaje pełny Source context bundle i jego publiczny runner. Receptura zamraża
+operacje generacji/eksportu, politykę segmentów i limity przed poznaniem wynikowych
+IDs. Runner rezerwuje cały odczyt Source przed metadata lub workerem, wymaga
+trwałego ukończenia obu rodziców i zgodnej receptury generacji. Dla final najpierw
+sprawdza rzeczywiste evidence wszystkich trzech zastosowań; sam nagłówek freeze
+nie wystarcza. Oddzielny worker pod nadzorem sprawdza pełny snapshot/curated,
+odtwarza transformację, sprawdza producenta/lock/runtime i wiąże plan z publicznym
+Source. Nie otwiera prywatnego artifactu effects.
+
+Kontekst pochodzi z rzeczywistych features/history oraz niezmienionej projekcji
+AI08. Łączy każdy klucz ocenianej roli, także wykluczony. Bounded SQLite sortuje
+klucze kanonicznie przed census; logiczna kolejność horyzontów w window nie jest
+porządkiem leksykograficznym tych kluczy. Bundle zachowuje contexts, pełny census,
+scope, population i seale rodziców. Końcowa kontrola obejmuje także wszystkie
+nieużywane pliki oryginalnego eksportu. Indeksy inputs/actuals/context są prywatne
+i po sukcesie usuwane; actuals nie trafiają do context rows. Output nie może
+obejmować rodziców ani znajdować się wewnątrz nich. Awaria pozostawia obciążoną
+operację i koszt, bez zaakceptowanego receipt lub automatycznego retry.
+
+Koszt odczytu jest jawny: pełny walidator eksportu parsuje jego pliki ról
+(jeden final albo sześć development), a indeks parsuje ocenianą rolę ponownie.
+Nowy receipt zapisuje zatem dwa parsowania ocenianej roli. Instrumentacja native
+kontroli potwierdza oba odczyty. Wcześniejsze v19/v20 nadal mają własną niezmienioną
+semantykę jednego odczytu w swoim prepare; nowy kontekst jest osobną operacją
+whole-parent. Sam typed receipt nie dowodzi ukończenia: verifier wymaga zgodnego
+trwałego eventu, stored receipt, wszystkich artifactów i ponownie pełnego census
+z każdego context row oraz ukończonych rodziców.
+
+117 kontroli nowego odczytu i dotychczasowego data/worker/runner forecast przeszło
+w 214.81 s; dalsze 14 kontroli granic/odmowy final przeszło w 5.21 s. Native
+kontrole korzystają z wcześniej eksponowanych Source demand/physical 1.2,
+z dwoma kontrolnymi originami i wszystkimi 14 horyzontami. Odzyskanie ich planu
+z dawnego prywatnego fixture jest wyłącznie kontrolą istniejącego hash, nie
+dowodem czasu prerejestracji projektu. Pozytywnego publicznego runnera na pełnym
+canonical Source jeszcze nie wykonano. Nie ma nowych Source generacji, Project
+fitów ani świeżego final read. 75 wcześniejszych wire oraz wszystkie 129 plików
+zamkniętych komponentów stockout pozostają bez zmian. Szczegóły i wcześniejsze
+nieudane kontrole zachowano w [evidence 09-35](evidence/09-35-source-context-bundle.json).
+Pozostają pełna kwalifikacja canonical, publiczne raw critical/uncertainty
+receipty, rzeczywiste anomaly/stockout i kompletna kampania z lifecycle.
+
+Wheel zawiera 590 zgodnych modułów i 17 schematów v19–v23. Faktycznie
+zainstalowany pakiet zaimportował publiczny context runner, oba schematy v23
+i nowy reviewed role plan bez TensorFlow/MLflow, Source workera lub Project
+fitów/final read. Mypy dla 711 plików, Ruff i format 1208 plików przeszły.
+Nowy dokładny head oraz pełne CI/publikacja na main nadal pozostają wymagane.
