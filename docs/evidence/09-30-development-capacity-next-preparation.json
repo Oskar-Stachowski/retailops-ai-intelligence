@@ -1,10 +1,10 @@
 {
-  "scope": "Prospective capacity recipe1.3 preparation, no actual canonical attempt dispatched",
+  "scope": "Frozen full canonical capacity1.3 dispatched after protected publication and full exact AI/Source main acceptance; actual result pending",
   "recipe": "docs/reference/ai09-development-capacity-v1.3.json",
   "producer_commit": "5182782321e9aca15f28c467071e92f268aafb85",
   "project_journal_initialized": false,
   "new_project_fits": 0,
-  "canonical_attempt_dispatched": false,
+  "canonical_attempt_dispatched": true,
   "project_generation_started": false,
   "final_generation_started": false,
   "final_test_opened": false,
@@ -69,9 +69,16 @@
     "measured_application_cost": "not applicable: application test steps skipped; installation wall cost retained, RSS/CPU not measured",
     "result_preserved_before_failed_jobs_retry": true,
     "retry_scope": "failed CI infrastructure jobs only, no canonical/project generation retry",
-    "retry_acceptance_pending": true,
+    "retry_acceptance_pending": false,
     "retry_run_attempt": 2,
-    "retry_docker_job": 113026894497
+    "retry_docker_job": 113026894497,
+    "retry_final_acceptance": {
+      "run": 37683555355,
+      "attempt": 2,
+      "jobs_read_total_success": 30,
+      "required_result": "success",
+      "initial_cancelled_result_and_installation_cost_retained": true
+    }
   },
   "source_current_main_acceptance": {
     "main": "39d56447a941a879187f9c406299f3ee67ae4ce0",
@@ -79,7 +86,8 @@
     "jobs_read_and_total": 30,
     "success": 30,
     "required_result": "success",
-    "closed_AI07_AI08_reopened": false
+    "closed_AI07_AI08_reopened": false,
+    "observation_is_historical": true
   },
   "dispatch_requirements": [
     "Exact producer Required CI completed with all required successes; protected merge and exact Source main acceptance",
@@ -133,7 +141,7 @@
     "required_result": "success",
     "protected_merge": "5c05445e8105c378107099785bae7355388ed7e7",
     "exact_main_required_ci": 37698252427,
-    "exact_main_acceptance_pending": true,
+    "exact_main_acceptance_pending": false,
     "recipe_producer_pin_unchanged": true,
     "canonical_attempt_dispatched": false
   },
@@ -159,20 +167,49 @@
     "required_result": "success",
     "protected_publication_pending": true,
     "exact_implementation_main_acceptance_pending": true,
-    "canonical_attempt_dispatched": false
+    "canonical_attempt_dispatched": false,
+    "observation_is_historical": true
   },
   "current_main_integration": {
     "pr": 43,
     "base": "main",
     "local_head": "a93893b848f8950b7e586a016d89bc6df3569c95",
-    "accepted_main": "78d853a67433ddbb58ef919027e219fee5a2f3b9",
-    "main_required_ci": 37702954342,
+    "accepted_main": "0990905b84a4b263b6eb01b09b784067ec14f23b",
+    "main_required_ci": 37711535728,
     "main_jobs_read_total_success": 17,
     "tree_identical_to_tested_0ac": true,
-    "new_exact_head_full_required_ci_pending": true,
-    "canonical_attempt_dispatched": false,
+    "new_exact_head_full_required_ci_pending": false,
+    "canonical_attempt_dispatched": true,
     "published": true,
     "required_ci": 37707162141,
-    "whole_required_ci_accepted": false
+    "whole_required_ci_accepted": true,
+    "accepted_predecessor_main": "78d853a67433ddbb58ef919027e219fee5a2f3b9",
+    "protected_merge": "0990905b84a4b263b6eb01b09b784067ec14f23b",
+    "protected_merge_exact_tested_head": "a93893b848f8950b7e586a016d89bc6df3569c95"
+  },
+  "capacity_1_3_actual_dispatch": {
+    "run": 37714051649,
+    "job": 113106353535,
+    "head": "0990905b84a4b263b6eb01b09b784067ec14f23b",
+    "requested_at_utc": "2026-10-08T01:39:57Z",
+    "status_at_observation": "in_progress",
+    "scope": "full canonical ai-dev365days100products5sellingpairs3stocklocations seed42; no model fits or project campaign",
+    "full_profile_qualified": false,
+    "ai_main_ci": 37711535728,
+    "ai_main_jobs_read_total_success": 17,
+    "source_main": "5c05445e8105c378107099785bae7355388ed7e7",
+    "source_main_ci": 37698252427,
+    "source_main_jobs_read_total": 25,
+    "source_main_success": 21,
+    "source_main_intended_scoped_skips": 4,
+    "producer_exact_ci": 37683555355,
+    "producer_ci_attempt": 2,
+    "producer_jobs_read_total_success": 30,
+    "recipe_pin": "5182782321e9aca15f28c467071e92f268aafb85",
+    "frozen_recipe_and_workflow_bytes_verified_on_exact_accepted_main": true,
+    "frozen_producer_ancestry_in_accepted_source_main_verified": true,
+    "previous_three_failed_plans_and_costs_retained": true,
+    "silent_retry": false,
+    "local_canonical_workers_started": false
   }
 }

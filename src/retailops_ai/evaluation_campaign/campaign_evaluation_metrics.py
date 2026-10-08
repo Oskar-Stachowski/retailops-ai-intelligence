@@ -28,6 +28,7 @@ DIMENSIONS = (
     "inventory",
     "lead_time",
     "intermittency",
+    "anomaly",
 )
 
 

@@ -240,3 +240,42 @@ konfiguracji mają 74 passed w 1.19 s. Mypy dla 702 plików, Ruff, format
 581 zgodnych modułów oraz osiem schematów v19/v20/v21; 66 wcześniejszych
 plików evaluation i oba pliki quality_v2 pozostają bez zmian. Zainstalowany
 wheel zwrócił jawnie nieokreśloną pustą ocenę, bez importu TensorFlow/MLflow.
+
+Nowe kontrakty [v22](../contracts/evaluation/v22/campaign_forecast_segment_census.schema.json)
+obejmują pełny inwentarz kontekstu: global, 14 horyzontów, wszystkie kategorie
+zweryfikowanego katalogu, kanały, wolumen, cztery scenariusze, historię,
+dostępność danych, zapas, lead time, intermittency i zaplanowane anomalie.
+Puste grupy oraz wykluczone klucze pozostają w raporcie. Dostępność ma osobne
+nakładające się flagi; pozostałe osie są partycjami i mają wspólne liczebności,
+powody wykluczeń oraz hashe pełnych i kwalifikujących się kluczy. Wymagany
+zewnętrzny census blokuje ucięcie strumienia, zmianę scope lub kategorii.
+
+`CampaignContextFacts` ma osobny prospektywny storage policy AI09 dla curated
+1.1/1.2. Nie zmienia zamkniętych wire, limitów lub kodu AI08. Sprawdza pełnego
+rodzica, indeksuje wszystkie wersje jedenastu istniejących tabel AI08 na
+prywatnym SQLite i ponownie sprawdza cały indeks oraz wszystkie pliki rodzica,
+w tym nieużywane tabele. Query zachowuje oryginalną kolejność i klipuje wiedzę
+przed niezmienioną projekcją AI08. Routing pochodzi z rzeczywistego źródła,
+zapas z origin-known available quantity, a lead time z ówczesnej oferty dostawcy.
+Brakujący deklarowany route nie może przesunąć znanego zapasu do grupy unknown.
+Cache obejmuje tylko jeden rzeczywisty punkt product/stock/origin, ponownie
+użyty przez horyzonty; nie jest cache'em global latest. Limity parent, indeksu,
+wierszy i bajtów pojedynczego odczytu są jawne, bez mniejszej populacji po błędzie.
+
+`RawTrialCriticalSegments` zachowuje bounded statystyki wszystkich sześciu
+prognoz w każdej wymaganej grupie. Wymaga dokładnego join klucza, example hash,
+eligibility i exclusion reasons z kontekstem oraz całego census i context trace.
+RF nadal ma wyuczony mean, bez udawanej mediany; surowe learned intervals nie
+są przedstawiane jako skalibrowane. Matematyczne kontrole porównują wszystkie
+mierzalne wyniki z równaniami na jawnych wierszach. Oś anomaly dodano także do
+komponentu metryk i prospektywnego v21 przed jego pierwszą publikacją; wire
+v1–v20 i zamknięte komponenty AI08 pozostają niezmienione.
+
+To nadal komponenty przygotowania. Scope kontrolny i annotation są deklarowane:
+nie dowodzą audytowanego odczytu projektu ani źródłowego planu scenariuszy.
+Pozostają trwały pełny context bundle ze zweryfikowanego rodzica i planu,
+podłączenie wszystkich raw trial segments przed usunięciem indeksów, podłączenie
+uncertainty do publicznego workera i wersjonowanego receipt oraz rzeczywiste
+oceny anomaly/stockout i pełna kampania. Żaden nowy typ nie autoryzuje final
+testu, jakości lub promocji. Najnowsze wyniki kontroli i publikacji są w
+[evidence 09-31](evidence/09-31-independent-forecast-components.json).

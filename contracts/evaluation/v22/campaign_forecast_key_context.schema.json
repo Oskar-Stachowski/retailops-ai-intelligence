@@ -1,0 +1,400 @@
+{
+  "$defs": {
+    "CampaignSourceKeyAnnotation": {
+      "additionalProperties": false,
+      "properties": {
+        "anomaly": {
+          "enum": [
+            "unannotated",
+            "clean_control",
+            "one_day_spike",
+            "multi_day_spike",
+            "sustained_drop",
+            "return_spike",
+            "inventory_censored_episode"
+          ],
+          "title": "Anomaly",
+          "type": "string"
+        },
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "context_scope_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Context Scope Sha256",
+          "type": "string"
+        },
+        "cutoff_policy": {
+          "const": "end_of_day_second_v1",
+          "title": "Cutoff Policy",
+          "type": "string"
+        },
+        "data_class": {
+          "const": "evaluation_annotation_never_model_input",
+          "default": "evaluation_annotation_never_model_input",
+          "title": "Data Class",
+          "type": "string"
+        },
+        "effect_independence_claimed": {
+          "const": false,
+          "default": false,
+          "title": "Effect Independence Claimed",
+          "type": "boolean"
+        },
+        "forecast_origin": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Forecast Origin",
+          "type": "string"
+        },
+        "horizon_days": {
+          "maximum": 14,
+          "minimum": 1,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "product_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "scenario": {
+          "enum": [
+            "normal",
+            "promotion",
+            "demand_shock",
+            "inventory_constraint"
+          ],
+          "title": "Scenario",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "source_scenario_plan_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Scenario Plan Sha256"
+        },
+        "target_date": {
+          "format": "date",
+          "title": "Target Date",
+          "type": "string"
+        }
+      },
+      "required": [
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "forecast_origin",
+        "business_timezone",
+        "cutoff_policy",
+        "target_date",
+        "horizon_days",
+        "context_scope_sha256",
+        "source_scenario_plan_sha256",
+        "scenario",
+        "anomaly"
+      ],
+      "title": "CampaignSourceKeyAnnotation",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:campaign_forecast_key_context:22.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "annotation": {
+      "$ref": "#/$defs/CampaignSourceKeyAnnotation"
+    },
+    "audited_source_read_proved_by_this_row": {
+      "const": false,
+      "default": false,
+      "title": "Audited Source Read Proved By This Row",
+      "type": "boolean"
+    },
+    "availability": {
+      "items": {
+        "enum": [
+          "complete",
+          "missing_history",
+          "late_history",
+          "missing_known_plan",
+          "other_missing_input"
+        ],
+        "type": "string"
+      },
+      "maxItems": 4,
+      "minItems": 1,
+      "title": "Availability",
+      "type": "array"
+    },
+    "business_timezone": {
+      "const": "UTC",
+      "title": "Business Timezone",
+      "type": "string"
+    },
+    "category": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Category"
+    },
+    "channel": {
+      "enum": [
+        "store",
+        "online"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "context_scope_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Context Scope Sha256",
+      "type": "string"
+    },
+    "cutoff_policy": {
+      "const": "end_of_day_second_v1",
+      "title": "Cutoff Policy",
+      "type": "string"
+    },
+    "data_class": {
+      "const": "evaluation_context_never_model_input",
+      "default": "evaluation_context_never_model_input",
+      "title": "Data Class",
+      "type": "string"
+    },
+    "eligible": {
+      "title": "Eligible",
+      "type": "boolean"
+    },
+    "example_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Example Sha256",
+      "type": "string"
+    },
+    "exclusion_reasons": {
+      "items": {
+        "enum": [
+          "insufficient_history",
+          "stale_history",
+          "unknown_calendar",
+          "closed_target",
+          "censored_label"
+        ],
+        "type": "string"
+      },
+      "title": "Exclusion Reasons",
+      "type": "array"
+    },
+    "feature_row_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Feature Row Sha256",
+      "type": "string"
+    },
+    "final_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Access Authorized",
+      "type": "boolean"
+    },
+    "forecast_origin": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Forecast Origin",
+      "type": "string"
+    },
+    "history_context_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "History Context Sha256",
+      "type": "string"
+    },
+    "history_state": {
+      "enum": [
+        "cold_start",
+        "insufficient_known_history",
+        "established"
+      ],
+      "title": "History State",
+      "type": "string"
+    },
+    "horizon_days": {
+      "maximum": 14,
+      "minimum": 1,
+      "title": "Horizon Days",
+      "type": "integer"
+    },
+    "intermittency": {
+      "enum": [
+        "all_zero_known_open_history",
+        "intermittent_known_open_history",
+        "positive_on_all_known_open_days",
+        "incomplete_history",
+        "no_known_open_days"
+      ],
+      "title": "Intermittency",
+      "type": "string"
+    },
+    "inventory_state": {
+      "enum": [
+        "known_positive",
+        "known_zero",
+        "stale",
+        "unknown"
+      ],
+      "title": "Inventory State",
+      "type": "string"
+    },
+    "origin_available_qty": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Origin Available Qty"
+    },
+    "origin_inventory_feature_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Origin Inventory Feature Sha256"
+    },
+    "origin_quoted_lead_time_days": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Origin Quoted Lead Time Days"
+    },
+    "origin_rolling_28_mean": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Origin Rolling 28 Mean"
+    },
+    "origin_route_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Origin Route Sha256"
+    },
+    "origin_snapshot_age_hours": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Origin Snapshot Age Hours"
+    },
+    "product_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "role": {
+      "enum": [
+        "development_evaluation",
+        "final_test"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "selling_location_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Selling Location Id",
+      "type": "string"
+    },
+    "target_date": {
+      "format": "date",
+      "title": "Target Date",
+      "type": "string"
+    }
+  },
+  "required": [
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "forecast_origin",
+    "business_timezone",
+    "cutoff_policy",
+    "target_date",
+    "horizon_days",
+    "context_scope_sha256",
+    "role",
+    "example_sha256",
+    "feature_row_sha256",
+    "history_context_sha256",
+    "origin_inventory_feature_sha256",
+    "origin_route_sha256",
+    "eligible",
+    "exclusion_reasons",
+    "category",
+    "origin_rolling_28_mean",
+    "history_state",
+    "availability",
+    "inventory_state",
+    "origin_available_qty",
+    "origin_snapshot_age_hours",
+    "origin_quoted_lead_time_days",
+    "intermittency",
+    "annotation"
+  ],
+  "title": "CampaignForecastKeyContext",
+  "type": "object"
+}

@@ -107,6 +107,7 @@ class CampaignUncertaintyScope(Contract):
         "inventory",
         "lead_time",
         "intermittency",
+        "anomaly",
     ]
     value: Annotated[str, Field(min_length=1, max_length=256)]
 

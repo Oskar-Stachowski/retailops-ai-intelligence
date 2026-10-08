@@ -1,6 +1,6 @@
 {
-  "scope": "Frozen forecast components, full-role public audited runner, shared final guards and standalone paired cluster diagnostics; full critical segments, integrated uncertainty, actual campaign and main acceptance incomplete",
-  "wire": "evaluation v19:4 schemas, v20:2 execution schemas, v21:2 standalone uncertainty schemas; prior66 evaluation files and legacy quality_v2 bytes unchanged",
+  "scope": "Full-role public audited forecast runner, shared final guards, paired cluster diagnostics, complete declared critical-population census and sealed1.1/1.2 disk context components; public source-context/critical/uncertainty integration, all3 project uses and lifecycle remain incomplete",
+  "wire": "evaluation v19:4, v20:2, v21:2 prospective paired schemas including anomaly, v22:7 source-context schemas; prior66 evaluation files v1-v20 and closed AI08 bytes unchanged",
   "stage_ready": false,
   "project_journal_initialized": false,
   "new_project_fits": 0,
@@ -56,13 +56,13 @@
   ],
   "publication_pending": true,
   "remaining": [
-    "publish exact current public runner head and accept full Required CI, including new native independent prediction control",
-    "complete critical segment inventory and paired time/series block uncertainty",
-    "implement typed independent evaluators and complete selection proof for anomaly and stockout using closed07/08 policies",
-    "qualify full canonical capacity and planned-anomaly producer without reducing dimensions, budgets or reserves",
-    "actual development fits/Tune/Calibration and independent evaluation for all3 uses",
-    "selection freeze and fresh final3 seeds/four scenarios/full canonical profiles",
-    "compatible lifecycle artifacts, three cards/reports/runbooks and full origin/main acceptance"
+    "Publish current v21/v22/shared-guard/source-context exact head after accepted main integration and full required CI",
+    "Implement source-derived complete context bundle with verified preregistered scenario plan and full role join",
+    "Connect all raw critical metrics before prediction-index deletion and paired uncertainty to public worker and typed receipt",
+    "Implement actual typed independent anomaly/stockout evaluators using closed07/08 policies",
+    "Observe full canonical1.3 measurement and qualify full planned-anomaly producer/training profile without reducing scope",
+    "Actual all3 development fits/Tune/Calibration/independent evaluation, selection freeze, freshfinal42/137/2026/four scenarios",
+    "Full costs, compatible lifecycle packages, three cards/reports/runbooks, all origin/main and final full CI"
   ],
   "previous_component_package": {
     "module_byte_parity": 573,
@@ -475,5 +475,99 @@
         "project_or_canonical_workers_started": false
       }
     }
+  },
+  "full_context_preparation": {
+    "required_dimensions": [
+      "global",
+      "horizon",
+      "category",
+      "channel",
+      "volume",
+      "scenario",
+      "history",
+      "availability",
+      "inventory",
+      "lead_time",
+      "intermittency",
+      "anomaly"
+    ],
+    "required_populations": "55 plus complete verified source category count; empty and excluded groups retained",
+    "availability_overlaps_not_partition": true,
+    "other_axes_and_exclusion_counts_partition_global_population": true,
+    "mandatory_external_complete_keys_eligible_keys_counts_and_context_trace": true,
+    "source_context_storage_policy": "ai09-source-context-disk-facts-1.0.0",
+    "curated_versions": [
+      "1.1.0",
+      "1.2.0"
+    ],
+    "actual_public_frozen_source_fixtures": [
+      "inventory-v1_1.zip",
+      "anomaly-v1_2.zip demand/public",
+      "anomaly-v1_2.zip physical/public"
+    ],
+    "source_recreated": false,
+    "private_truth_read": false,
+    "all_fixture_origin_sql_queries_match_closed_ai08_fact_index": true,
+    "origin_route_and_inventory_point_derive_from_actual_source": true,
+    "closed_ai08_projection_reused_unchanged": true,
+    "every_version_and_original_order_retained": true,
+    "complete_parent_files_and_complete_private_index_rechecked": true,
+    "known_route_cannot_be_declared_unknown": true,
+    "cache": "one actual product/stock/origin point reused across horizons; no global latest",
+    "all_six_raw_model_forecasts_retained_in_each_group": true,
+    "raw_rf_median_remains_undefined": true,
+    "raw_learned_intervals_calibrated": false,
+    "raw_metrics_require_exact_complete_context_census_and_trace": true,
+    "combined_controls_passed": 138,
+    "combined_controls_seconds": 97.65,
+    "earlier_controls_passed": 131,
+    "earlier_controls_seconds": 84.71,
+    "mypy_source_files": 706,
+    "ruff": "passed",
+    "format_files": 1201,
+    "scenarios_and_evaluation_scope_metadata_declared_in_controls": true,
+    "public_audited_context_bundle_implemented": false,
+    "source_plan_annotation_verifier_implemented": false,
+    "raw_segment_metrics_integrated_into_public_consume": false,
+    "paired_uncertainty_integrated_into_public_worker_receipt": false,
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "project_final_test_opened": false,
+    "stage_ready": false,
+    "publication_pending": true,
+    "retained_failed_controls": [
+      {
+        "kind": "census scope test",
+        "passed": 33,
+        "failed": 1,
+        "warnings": 12,
+        "seconds": 0.8,
+        "cause": "Test changed only context scope and violated nested annotation binding before intended stream check; corrected both bindings and class model_fields access"
+      },
+      {
+        "kind": "source fixture setup",
+        "errors": 30,
+        "seconds": 1.0,
+        "cause": "New fixture used generated root without required data/generated suffix; corrected fixture path, no guard relaxation"
+      },
+      {
+        "kind": "source-origin test",
+        "passed": 27,
+        "failed": 3,
+        "seconds": 209.09,
+        "cause": "Fixture used source microsecond cutoff rather than exact forecasting end-of-day second; corrected controlled input cutoff and channel"
+      },
+      {
+        "kind": "raw forecast fixture",
+        "failed": 9,
+        "seconds": 0.49,
+        "cause": "Control incorrectly gave RF a learned median; corrected to preserve original mean-only contract"
+      },
+      {
+        "kind": "strict mypy",
+        "errors": 1,
+        "cause": "Typed empty selection list needed explicit tuple/dict annotation; corrected"
+      }
+    ]
   }
 }

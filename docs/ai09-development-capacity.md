@@ -19,14 +19,21 @@ opisuje zakres tych kontroli.
 
 Receptura zachowuje bajty 1.0/1.1/1.2 i łańcuch wszystkich trzech porażek,
 pełne wymiary i daty canonical, budżety RSS/scratch/czasu, rezerwy i parent caps.
-Nie została uruchomiona. Wymaga chronionej publikacji producenta, pełnego odbioru
-jego dokładnego head/main oraz publikacji i pełnego CI tej diagnostyki.
+Nowa próba została uruchomiona 2026-10-08 po chronionej publikacji producenta
+i diagnostyki oraz pełnym odbiorze ich dokładnych head/main.
+[Run 37714051649](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37714051649)
+działa na osobnym runnerze z AI/main `0990905b`; pełny Required CI tego main
+`37711535728` ma 17/17 success. Source/main `5c05445e` ma 25 odczytanych
+z 25 jobs, 21 success i cztery zamierzone scoped skips. Producent `51827823`
+pozostaje przypięty i ma pełny odbiór attempt2: 30/30 success. Sprawdzono
+jego ancestry oraz dokładne bajty receptury i workflow na zaakceptowanym main.
+Wynik pomiaru pozostaje w toku; profile i AI09 nadal nie mają kwalifikacji.
 Pierwszy Required CI producenta `37683555355` zakończył się cancelled:
 28/30 success, Docker cancelled i required-result failure. Instalacja Chromium
 przekroczyła 35 minut przed rozpoczęciem testów aplikacji; data quality przeszło.
 Oryginalny wynik jest zachowany, ponowiono tylko niezaliczone zadania CI.
-Nie ponowiono canonical ani żadnej projektowej generacji. Aktualny source main
-`39d56447` ma pełny odbiór 30/30 success. AI07/08 pozostają zamknięte.
+Nie ponowiono canonical ani żadnej projektowej generacji. W tamtej obserwacji source main
+`39d56447` miał pełny odbiór 30/30 success. AI07/08 pozostają zamknięte.
 
 Producent został następnie scalony przez chroniony
 [Source PR #105](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/105):
@@ -42,8 +49,9 @@ Nowa gałąź zawiera poprawkę bounded metadata cap 128 KiB oraz diagnostykę
 przerwanego backupu z kalibracji `b2e12a5d` i zaakceptowany main `92c2a3cd`.
 48 testów diagnostyki, przerwania i limitu manifestu przeszło w 2.27 s;
 Mypy dla 688 plików przeszło. Nowy dokładny head wymaga pełnego CI,
-chronionego merge i odbioru AI/main przed dispatch. Pełna próba 1.3 nadal
-nie została uruchomiona, a poprzednie plany, limity i porażki są zachowane.
+chronionego merge i odbioru AI/main przed dispatch. Pełna próba 1.3 została następnie uruchomiona po pełnym odbiorze dokładnego
+head `a93893b8`, chronionym merge PR43 i odbiorze main `0990905b`. Poprzednie
+plany, limity i porażki pozostają zachowane.
 
 [Prospektywna receptura 1.2](reference/ai09-development-capacity-v1.2.json)
 została uruchomiona na `16d34887` z zaakceptowanego main `b0e2de16`.

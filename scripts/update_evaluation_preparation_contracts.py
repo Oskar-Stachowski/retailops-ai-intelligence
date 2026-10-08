@@ -50,6 +50,15 @@ from retailops_ai.evaluation_campaign.campaign_score_contract import (
     CampaignForecastScorePlan,
     CampaignForecastScoreReceipt,
 )
+from retailops_ai.evaluation_campaign.campaign_segment_contract import (
+    CampaignContextStoragePolicy,
+    CampaignForecastContextScope,
+    CampaignForecastKeyContext,
+    CampaignForecastSegmentCensus,
+    CampaignForecastSegmentPolicy,
+    CampaignOriginRoute,
+    CampaignSourceKeyAnnotation,
+)
 from retailops_ai.evaluation_campaign.campaign_tune_contract import (
     CampaignForecastTunePlan,
     CampaignForecastTuneReceipt,
@@ -439,6 +448,27 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Campaign forecast uncertainty contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, context_model in (
+        ("campaign_context_storage_policy", CampaignContextStoragePolicy),
+        ("campaign_forecast_context_scope", CampaignForecastContextScope),
+        ("campaign_forecast_key_context", CampaignForecastKeyContext),
+        ("campaign_forecast_segment_census", CampaignForecastSegmentCensus),
+        ("campaign_forecast_segment_policy", CampaignForecastSegmentPolicy),
+        ("campaign_origin_route", CampaignOriginRoute),
+        ("campaign_source_key_annotation", CampaignSourceKeyAnnotation),
+    ):
+        schema = context_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:22.0.0"
+        path = ROOT / "contracts/evaluation/v22" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign forecast source context contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
