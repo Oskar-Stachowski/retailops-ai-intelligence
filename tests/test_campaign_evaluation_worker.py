@@ -241,7 +241,10 @@ def test_fresh_core_aggregation_process_without_tensorflow_or_mlflow(controlled)
     assert result["worker_seconds"] > 0 and result["worker_peak_rss_bytes"] > 0
 
 
-@pytest.mark.parametrize("field", ["actuals", "dataset", "exported", "outcomes", "unknown"])
+@pytest.mark.parametrize(
+    "field",
+    ["actuals", "dataset", "exported", "outcomes", "unknown", "raw_context", "raw_context_bundle"],
+)
 def test_inference_rejects_unexpected_payload_before_model_or_label_io(
     monkeypatch, tmp_path, field
 ):

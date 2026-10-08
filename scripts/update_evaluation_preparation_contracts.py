@@ -9,6 +9,10 @@ from retailops_ai.evaluation_campaign.campaign_calibration_contract import (
     CampaignForecastCalibrationPlan,
     CampaignForecastCalibrationReceipt,
 )
+from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
+    CampaignContextBundleReceipt,
+    CampaignContextBundleRecipe,
+)
 from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignJournal,
     CampaignProtocol,
@@ -44,6 +48,9 @@ from retailops_ai.evaluation_campaign.campaign_fit_contract import (
 from retailops_ai.evaluation_campaign.campaign_generation_contract import (
     CampaignGenerationPlan,
     CampaignGenerationResources,
+)
+from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CampaignForecastRobustEvaluationReceipt,
 )
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
     CampaignForecastRawPrediction,
@@ -473,6 +480,35 @@ def main() -> int:
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(raw)
+    for name, context_bundle_model in (
+        ("campaign_context_bundle_recipe", CampaignContextBundleRecipe),
+        ("campaign_context_bundle_receipt", CampaignContextBundleReceipt),
+    ):
+        schema = context_bundle_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:23.0.0"
+        path = ROOT / "contracts/evaluation/v23" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign source context bundle contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    name = "campaign_forecast_robust_evaluation_receipt"
+    schema = CampaignForecastRobustEvaluationReceipt.model_json_schema()
+    schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+    schema["$id"] = f"urn:retailops:evaluation:{name}:24.0.0"
+    path = ROOT / "contracts/evaluation/v24" / (name + ".schema.json")
+    raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    if args.check:
+        if not path.is_file() or path.read_text() != raw:
+            print("Campaign complete forecast robustness contract differs: " + name)
+            return 1
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(raw)
     print("Evaluation preparation contract snapshots checked.")
     return 0
 

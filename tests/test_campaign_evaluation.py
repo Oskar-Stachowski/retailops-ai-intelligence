@@ -64,7 +64,7 @@ def evaluation_recipe(frozen=None, **changes):
 
 
 @pytest.fixture
-def control(stored_control, population, timeline, tmp_path, monkeypatch):
+def control(stored_control, population, timeline, tmp_path, monkeypatch, request):
     dataset, manifest = stored_control
     root = tmp_path / "evaluation-journal"
     document = protocol_document(root)
@@ -83,6 +83,41 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch):
         old_tune.plan.forecast_quality_policy_sha256
     )
     document["selection_policy_sha256"] = old_tune.plan.campaign_selection_policy_sha256
+    context_recipe = uncertainty_policy = None
+    if getattr(request, "param", None) == "robust":
+        from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
+            CampaignContextBundleRecipe,
+        )
+        from retailops_ai.evaluation_campaign.campaign_segment_contract import (
+            CampaignForecastSegmentPolicy,
+        )
+        from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
+            CampaignForecastUncertaintyPolicy,
+        )
+
+        categories = tuple(
+            sorted(
+                {
+                    value.value
+                    for row in population[1]
+                    for value in row.values
+                    if value.name == "category_id" and value.value is not None
+                }
+            )
+        )
+        segment_policy = CampaignForecastSegmentPolicy(category_inventory=categories)
+        uncertainty_policy = CampaignForecastUncertaintyPolicy()
+        document["segment_policy_sha256"] = segment_policy.content_sha256()
+        document["uncertainty_policy_sha256"] = uncertainty_policy.content_sha256()
+        context_recipe = CampaignContextBundleRecipe(
+            phase="development",
+            role="development_evaluation",
+            source_recipe_sha256=source,
+            generation_operation_id="development-42-generate",
+            export_operation_id=exported.operation_id,
+            segment_policy=segment_policy,
+            resources=evaluation_recipe().resources,
+        )
     plans = {
         key: fit.plan.model_copy(
             update={"source_recipe_sha256": source, "export_operation_id": exported.operation_id}
@@ -134,6 +169,14 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch):
         exported.plan,
         ["development-42-generate"],
     )
+    if context_recipe is not None:
+        operation(
+            "declared-context",
+            "source_read",
+            "all_parent_data",
+            context_recipe,
+            ["development-42-generate", exported.operation_id],
+        )
     for key, plan in plans.items():
         operation(
             key,
@@ -179,7 +222,8 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch):
         "model_score",
         "development_evaluation",
         recipe,
-        [exported.operation_id, old_tune.operation_id, old_calibration.operation_id],
+        [exported.operation_id, old_tune.operation_id, old_calibration.operation_id]
+        + (["declared-context"] if context_recipe is not None else []),
     )
     operations += [o for o in document["operations"] if o["phase"] == "final"]
     document["operations"] = operations
@@ -355,6 +399,9 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch):
         request = read(folder / "request.json")
         if phase == "predict":
             assert "actuals" not in request and "dataset" not in request
+            assert not {"raw_context", "raw_context_bundle", "uncertainty_policy"}.intersection(
+                request
+            )
             assert command[0].endswith("declared-tf-worker")
         result = getattr(worker, phase)(folder, request, recipe.resolve(frozen))
         write(
@@ -387,6 +434,8 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch):
         "output_root": output,
         "worker_python": tmp_path / "declared-tf-worker",
         "calls": calls,
+        "context_recipe": context_recipe,
+        "uncertainty_policy": uncertainty_policy,
     }
 
 
@@ -426,6 +475,98 @@ def test_preregistered_recipe_has_no_result_hash_cycle_and_resolves_all_bound_tr
     resolved = recipe.resolve(control["configuration"])
     assert resolved.frozen_configuration_sha256 == control["configuration"].content_sha256()
     assert recipe.content_sha256() != resolved.content_sha256()
+
+
+def unregistered_context_receipt(control):
+    """Valid controlled metadata, with no completed Source context operation."""
+    from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
+        FILES,
+        CampaignContextBundleReceipt,
+        CampaignContextBundleRecipe,
+    )
+    from retailops_ai.evaluation_campaign.campaign_segment_contract import (
+        CampaignForecastContextScope,
+        CampaignForecastSegmentPolicy,
+    )
+
+    exported = control["exported"]
+    parent = exported.recipe.source.parent
+    policy = CampaignForecastSegmentPolicy(category_inventory=("c1", "c2"))
+    recipe = CampaignContextBundleRecipe(
+        phase="development",
+        role="development_evaluation",
+        source_recipe_sha256=control["recipe"].source_recipe_sha256,
+        generation_operation_id="development-42-generate",
+        export_operation_id=exported.operation_id,
+        segment_policy=policy,
+        resources=control["recipe"].resources,
+    )
+    scope = CampaignForecastContextScope(
+        data_seed=42,
+        role=recipe.role,
+        dataset_id=exported.dataset_id,
+        source_recipe_sha256=recipe.source_recipe_sha256,
+        source_dataset_id=parent.source_dataset_id,
+        curated_dataset_id=parent.curated_dataset_id,
+        snapshot_id=parent.snapshot_id,
+        source_scenario_plan_sha256=None,
+        segment_policy_sha256=policy.content_sha256(),
+    )
+    hashes = {name: "0" * 64 for name in FILES}
+    return CampaignContextBundleReceipt(
+        protocol_sha256=control["protocol"].content_sha256(),
+        operation_id="unregistered-context",
+        reservation_id="campaign-operation-" + "0" * 32,
+        recipe=recipe,
+        generated_parent_receipt_sha256="0" * 64,
+        generation_plan_sha256="0" * 64,
+        export_receipt_sha256=exported.content_sha256(),
+        runtime_code_sha256=exported.runtime_code_sha256,
+        scope=scope,
+        rows=1,
+        eligible_rows=0,
+        keys_sha256="0" * 64,
+        eligible_keys_sha256="0" * 64,
+        role_population_sha256="0" * 64,
+        context_trace_sha256="0" * 64,
+        census_sha256="0" * 64,
+        snapshot_inventory_sha256="0" * 64,
+        curated_inventory_sha256="0" * 64,
+        logical_curated_sha256="0" * 64,
+        selection_sha256=None,
+        artifact_sha256=canonical_sha256(hashes),
+        artifact_bytes=1,
+        artifact_files=hashes,
+        worker_evidence={"controlled_metadata_only": True},
+        complete_export_role_file_passes=6,
+    )
+
+
+@pytest.mark.parametrize("case", ["missing-bundle", "missing-receipt", "unregistered", "overlap"])
+def test_raw_context_parent_is_reserved_and_rejected_before_context_or_role_io(
+    control, tmp_path, monkeypatch, case
+):
+    def forbidden(*args, **kwargs):
+        raise AssertionError("invalid context must fail before any context or role read")
+
+    monkeypatch.setattr(runner, "verify_campaign_context_bundle", forbidden)
+    changes = {
+        "raw_context_bundle": tmp_path / "absent-context",
+        "raw_context_receipt": unregistered_context_receipt(control),
+    }
+    reason = "raw_context_parent_mismatch"
+    if case.startswith("missing-"):
+        changes["raw_context_bundle" if case == "missing-bundle" else "raw_context_receipt"] = None
+        reason = "raw_context_pair_required"
+    elif case == "overlap":
+        changes["raw_context_bundle"] = control["output_root"]
+        reason = "output_overlaps_raw_context"
+    with pytest.raises(SnapshotError, match=reason):
+        execute(control, **changes)
+    assert not {"prepare", "predict", "consume", "finalize"} & set(control["calls"])
+    completion = journal.inspect(control["root"]).events[-1]
+    assert completion.kind == "finished" and completion.result == "failed"
+    assert completion.cost.wall_seconds > 0
 
 
 def test_reserved_all_trial_evaluation_is_durable_before_finish_and_readonly_verification(

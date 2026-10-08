@@ -1,5 +1,9 @@
 **AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
 i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
+[kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
+[Pełna próba ai-dev 09.38](evidence/09-38-development-capacity-fifth-run.json)
+zakończyła się limitem pamięci; rzeczywista pełna kampania pozostaje do wykonania.
+Wcześniejsze przyrosty są zapisane w
 [odbiorze 09.11](evidence/09-11-main-integration.md). Dawne katalogi
 robocze AI 09 w `/private/tmp` nie istnieją; 09.12 zachowuje ich opublikowaną
 historię i deklaruje utracone budżety jako niedostępne. PR #29 jest już na main.

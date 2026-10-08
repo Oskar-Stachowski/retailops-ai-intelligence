@@ -108,10 +108,7 @@ class CampaignForecastEvaluationRecipe(Contract):
         return CampaignForecastEvaluationPlan.model_validate_json(canonical_bytes(fields))
 
 
-class CampaignForecastEvaluationReceipt(Contract):
-    version: Literal["ai09-campaign-forecast-evaluation-receipt-1.0.0"] = (
-        "ai09-campaign-forecast-evaluation-receipt-1.0.0"
-    )
+class _CampaignForecastEvaluationFields(Contract):
     use_case: Literal["forecast"] = "forecast"
     protocol_sha256: Sha256
     operation_id: Symbol
@@ -202,3 +199,9 @@ class CampaignForecastEvaluationReceipt(Contract):
         value = self.model_dump(mode="json")
         type(self).model_validate_json(canonical_bytes(value))
         return canonical_sha256(value)
+
+
+class CampaignForecastEvaluationReceipt(_CampaignForecastEvaluationFields):
+    version: Literal["ai09-campaign-forecast-evaluation-receipt-1.0.0"] = (
+        "ai09-campaign-forecast-evaluation-receipt-1.0.0"
+    )

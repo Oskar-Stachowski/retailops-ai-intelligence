@@ -1,0 +1,137 @@
+{
+  "evidence_version": "ai09-raw-source-context-consumption-1.0.0",
+  "stage": "AI09",
+  "recorded_at_utc": "2026-10-08T04:57:58.761838+00:00",
+  "status": "implemented_component_controls_passed_publication_and_full_canonical_campaign_pending",
+  "original_eight_DoD_and_all_three_use_cases_unchanged": true,
+  "implemented": [
+    "public optional context parent requires frozen operation prerequisite, durable completion, matching export/Source/runtime/selection/role/policy",
+    "full context census matched against independently prepared evaluation population before inference",
+    "context supplied only to core consume after model exit; inference rejects context payloads",
+    "every raw trial, all six models, every declared group including empty/excluded rows retained before raw prediction index deletion",
+    "canonical bounded streaming row join; full census replay and file seals before/after read",
+    "artifact parents retain typed context receipt and census; verifier checks all trial inventories and metric shape/counts/finite values/undefined denominators",
+    "missing context, missing receipt, unregistered context or overlapping output fail under an audited reserved operation before context/role worker",
+    "metadata-only durable completion helper grants no new Source/final access"
+  ],
+  "control_scope": {
+    "native_sources": "previously exposed repository demand and physical Source1.2,30days/8products/3sellingpairs/2stocklocations/seed42",
+    "native_origins": "2026-07-03..04,all14 horizons",
+    "native_complete_role_joins": true,
+    "native_eligible_rows": 0,
+    "native_forecasts": "two declared controlled trials, not fitted Project models",
+    "native_metric_qualification": false,
+    "eligible_equations": "existing direct raw collector uses three declared contexts, two eligible actuals0/4 and one exclusion; final shape controls cover finite values, missing fields, empty groups and denominator handling",
+    "public_positive_full_canonical_campaign_exercised": false,
+    "private_source_effects_read": false,
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "project_final_generation_or_read": false
+  },
+  "validation": {
+    "combined_initial_after_exclusion_scope_fix": {
+      "passed": 115,
+      "failed": 2,
+      "seconds": 276.96,
+      "failure_reason": "tests expected SnapshotError for altered context scope, but strict Pydantic correctly rejected it with ValidationError; corrected exception expectation without weakening production validation"
+    },
+    "corrected_native_scope_attacks": {
+      "passed": 2,
+      "deselected": 28,
+      "seconds": 88.42
+    },
+    "public_context_boundary_and_inference_payload_controls": {
+      "passed": 11,
+      "deselected": 35,
+      "seconds": 7.76
+    },
+    "final_metric_shape_controls": {
+      "passed": 6,
+      "deselected": 30,
+      "seconds": 0.67
+    },
+    "final_native_positive_after_metric_shape_update": {
+      "passed": 2,
+      "deselected": 34,
+      "seconds": 89.53,
+      "proof_retained_privately": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-raw-context/.local/ai09-raw-context-state/native-control-proof"
+    },
+    "counts_are_separate_runs_with_overlap_not_a_sum_of_unique_tests": true,
+    "all_prior_evaluation_wire_files_unchanged": 77,
+    "closed_stockout_source_and_wire_files_unchanged": 129,
+    "mypy_source_files": 712,
+    "schema_snapshot_check": "passed",
+    "ruff": "passed",
+    "format_check": {
+      "passed": true,
+      "files": 1210,
+      "scope": "whole project"
+    },
+    "wheel": {
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 1937060,
+      "sha256": "a7c0da8ed970ddc00b609d91aae424da89ced6f2418daef38adda13dea05b4e6",
+      "module_byte_parity": 591,
+      "v19_v23_schemas": 17,
+      "private_files_in_wheel": false,
+      "earlier_proof_scope_corrections": [
+        "initial assertion incorrectly counted all67 evaluator schemas instead of the v19-v23 subset",
+        "second attempt treated force-include directories as individual file mappings; inspected actual mapping and verified all17 files byte-for-byte"
+      ]
+    },
+    "exact_head_required_ci_and_main_publication": "pending",
+    "current_affected_collection_unique_tests": 129,
+    "installed_probe": {
+      "installed_path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-raw-context/.local/ai09-raw-context-state/installed-wheel",
+      "actual_public_evaluator_and_context_helpers_imported": true,
+      "public_context_parameters_verified": true,
+      "tensorflow_imported": false,
+      "mlflow_imported": false,
+      "project_fits": 0,
+      "source_generation": false,
+      "fresh_final_read": false
+    },
+    "documentation_links_and_required_ci_contract": "passed",
+    "post_main_ce8_integration": {
+      "passed": 64,
+      "deselected": 65,
+      "seconds": 9.33,
+      "scope": "capacity47 controls, final numeric shape6, public context boundary4 and inference payload7"
+    },
+    "redacted_secret_scan": {
+      "commits": 3,
+      "bytes_scanned": 180894,
+      "leaks": 0
+    }
+  },
+  "earlier_failed_controls": [
+    {
+      "passed": 0,
+      "failed": 1,
+      "seconds": 45.85,
+      "cause": "test incorrectly assumed eligible native rows; actual short Source fixtures have none; corrected to retain exclusions and null metrics"
+    },
+    {
+      "passed": 7,
+      "failed": 4,
+      "seconds": 8.26,
+      "cause": "test counted legitimate readonly Tune/Cal/fit parent verification as context/role IO; corrected to assert no prepare/predict/consume/finalize"
+    },
+    {
+      "scope": "saved-native-report revalidation probe",
+      "result": "no retained pytest289 files after normal pytest temporary cleanup; no proof claimed; final two positive controls rerun in an owned persistent private basetemp"
+    }
+  ],
+  "remaining": [
+    "full canonical Source capacity and planned-scenario qualification",
+    "selected calibrated critical segments and paired time/series uncertainty public receipt",
+    "typed independent anomaly and stockout evaluators",
+    "full prospective fair development and fresh final campaign42/137/2026,all four scenarios and all critical groups",
+    "costs/MLflow/model cards/runbooks/lifecycle decisions,all changes on main and complete whole current CI"
+  ],
+  "critical_segment_inventory_complete": false,
+  "block_uncertainty_complete": false,
+  "quality_qualified": false,
+  "promotion_allowed": false,
+  "stage_ready": false
+}

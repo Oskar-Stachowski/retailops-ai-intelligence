@@ -1,0 +1,110 @@
+{
+  "evidence_version": "ai09-source-context-bundle-preparation-1.0.0",
+  "stage": "AI09",
+  "status": "implemented_component_controls_passed_publication_and_full_canonical_campaign_pending",
+  "original_eight_DoD_and_all_three_use_cases_unchanged": true,
+  "wire": "v23; new context recipe and receipt; prior75 wire files unchanged",
+  "implemented": [
+    "durable whole-source read reservation before parent metadata/worker I/O",
+    "completed generation plan/receipt and completed export binding against frozen protocol",
+    "actual all-three-use independent selection proof before final context worker",
+    "isolated supervised worker; declared wall/RSS/scratch/reserve/log limits; failure cost retained",
+    "complete Source snapshot/curated private replay, producer/lock/runtime and original/private end seals",
+    "preregistered source plan hash against public Source2.8 metadata; no private effects artifact",
+    "complete exported feature/history/role join, separate disposable actual index",
+    "closed AI08 FactIndex/point projection unchanged; full category inventory",
+    "every role key including excluded keys; disk sort by canonical key before census",
+    "bounded canonical contexts.jsonl plus full census/scope/parent/source/population artifacts",
+    "durable journal receipt plus full row/artifact/census verification; standalone header insufficient",
+    "distinct output/parent paths; no mutation of Source parents"
+  ],
+  "control_scope": {
+    "native_sources": "already exposed demand and physical Source1.2 repository fixtures, 30 days,8 products,3 selling pairs,2 stock locations,seed42",
+    "role_shape": "two exposed-control final-wire origins2026-07-03..04,all14 horizons; not fresh Project final",
+    "private_fixture_plan_recovery": "previously exposed control metadata only; effects never supplied; not Project preregistration timing proof",
+    "public_positive_full_canonical_runner_exercised": false,
+    "public_ordering_and_failure_controls": "controlled completed metadata, real isolated worker failure, wrong parents/recipes/operations/output overlap; final header-only freeze rejected before worker",
+    "project_journal_initialized": false,
+    "new_project_fits": 0,
+    "project_final_generation_or_read": false,
+    "source_generator_launched": false
+  },
+  "checks": {
+    "initial": {
+      "passed": 1,
+      "failed": 10,
+      "fixture_errors": 18,
+      "seconds": 56.98,
+      "reason": "JSON-mode structures incorrectly sent to strict Python-mode validators; dates/tuples rejected; corrected to model_validate_json without weakening wire"
+    },
+    "mechanical_followup": {
+      "collection_errors": 1,
+      "seconds": 0.67,
+      "reason": "conditional class expression lost parentheses in mechanical change; corrected before source execution"
+    },
+    "first_corrected": {
+      "passed": 29,
+      "seconds": 89.93
+    },
+    "cost_audit_corrected": {
+      "passed": 29,
+      "seconds": 90.27,
+      "selected_role_label_parsing_passes": 2,
+      "complete_export_role_file_passes": "1 final or6 development; independently instrumented native final reads"
+    },
+    "combined": {
+      "passed": 117,
+      "seconds": 214.81,
+      "files": [
+        "test_campaign_context_bundle.py",
+        "test_campaign_evaluation_data.py",
+        "test_campaign_evaluation.py",
+        "test_campaign_evaluation_worker.py"
+      ]
+    },
+    "latest_boundary_and_final_guard": {
+      "passed": 14,
+      "deselected": 23,
+      "seconds": 5.21
+    },
+    "mypy_files": 711,
+    "prior_wire_files_unchanged": 75,
+    "closed_stockout_prefix_files_unchanged": 129,
+    "full_package_proof_pending": false,
+    "exact_head_whole_CI_pending": true,
+    "package": {
+      "wheel": ".local/ai09-context-bundle-state/wheel-dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 1933098,
+      "sha256": "2fe25bdcbb86f1ba5a2eb4ed555df341c15c6552ca66c572b19bc472623d3b44",
+      "module_byte_parity": 590,
+      "v19_v23_schema_byte_parity": 17,
+      "private_cache_not_in_wheel": true
+    },
+    "installed_probe": {
+      "actual_installed_package_import": true,
+      "v23_schemas_loaded": 2,
+      "reviewed_role_plan_round_trip": true,
+      "tensorflow_or_mlflow_imported": false,
+      "source_generator_or_project_fit_or_final_read": false
+    },
+    "ruff_format_files": 1208,
+    "new_context_controls_collected": 37,
+    "unexecuted_collection_command": {
+      "tests_run": 0,
+      "reason": "one guessed runner test path did not exist; corrected to existing test_campaign_evaluation.py before117-test run"
+    }
+  },
+  "remaining": [
+    "actual public context on successfully qualified full canonical Source",
+    "consume all raw trial critical metrics and paired uncertainty in public model worker/typed receipt",
+    "typed actual anomaly and stockout evaluators with closed07/08 policies",
+    "fair full development fits/Tune/Calibration/all-three frozen independent selection",
+    "fresh full final42/137/2026/four scenarios/critical coverage and costs",
+    "all-three lifecycle/cards/reports/runbooks/origin-main/exact-main whole CI"
+  ],
+  "scientific_campaign_complete": false,
+  "full_canonical_profiles_qualified": false,
+  "quality_qualified": false,
+  "promotion_allowed": false,
+  "stage_ready": false
+}

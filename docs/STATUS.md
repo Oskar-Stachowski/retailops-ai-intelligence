@@ -1,5 +1,26 @@
 # Aktualny status
 
+**2026-10-08 — AI 09: in_progress / not_ready.**
+[PR #48](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/48)
+scala Source annotations, pełny context bundle i ocenę wszystkich surowych prób
+na main `a59b2667` po 17/17 success dokładnego head `456dbfaf`.
+[CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37734313726)
+pozostaje do zakończenia. Wcześniejszy main `ce81b8d5` ma 17/17 success.
+[Przyrost 09.37](evidence/09-37-complete-forecast-robustness.json) podłącza
+pełne segmenty wybranego, skalibrowanego forecastu i dwie analizy niepewności
+do publicznego evaluatora oraz receipt v24. Zaliczono kontrole komponentów;
+nowy dokładny head i jego publikacja/CI nadal wymagają odbioru.
+
+[Piąta próba pełnego ai-dev](evidence/09-38-development-capacity-fifth-run.json),
+run `37731200719`, zakończyła się limitem RSS 8 GiB po 1836.06 s;
+zero z pięciu faz ukończono. Zachowano artefakt, metadane stosów i wszystkie
+wcześniejsze koszty. Nie uruchomiono kolejnej próby ani nie zmniejszono profilu.
+Pełny planowany Source i ai-training pozostają niezakwalifikowane.
+Projektowy journal nie został zainicjalizowany, nowe projektowe fity wynoszą zero,
+a świeży final test pozostaje zamknięty. Do zamknięcia pozostają pełna kampania
+trzech zastosowań, pokrycie scenariuszy/seedów, raporty i lifecycle oraz odbiór main.
+AI 07–08 i wcześniejsze etapy pozostają READY i zamknięte.
+
 **2026-10-07 — AI 10: READY, pełny odbiór integracji.**
 [Końcowy raport](evidence/ai10-bounded-acceptance.json) oraz
 [mapa wszystkich siedmiu wymagań](evidence/ai10-final-ready-review.json) wiążą
