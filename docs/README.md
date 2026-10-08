@@ -1,12 +1,25 @@
 **AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
 i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
-[Przygotowanie 12 GiB 09.52](evidence/09-52-twelve-gib-capacity-preparation.json)
-podnosi wyłącznie limit RAM nowej receptury 1.8 na polecenie użytkownika,
-z rezerwą 1 GiB i zachowaniem pełnego profilu oraz wszystkich siedmiu porażek.
-Nowy pomiar nie został jeszcze uruchomiony.
+[Receptura 1.8](reference/ai09-development-capacity-v1.8.json) ma na polecenie
+użytkownika limit RSS drzewa **12 GiB** (12 884 901 888 B) i rezerwę 1 GiB.
+PR60 scalono normalnie jako `4ce8a3cf`; pełne CI dokładnego head i tego main
+zakończyły się **17/17 success**, przed pojedynczym uruchomieniem pomiaru.
+[Wynik ósmej próby 09.53](evidence/09-53-development-capacity-eighth-run.json)
+wiąże zweryfikowany artefakt [run 37824794411](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37824794411): **`wall_limit`**,
+0/5 ukończonych faz, 3600.58 s.
+Próbkowany peak drzewa wyniósł 9066307584 B, a dolna granica CPU workera 3599.61 s.
+Profil 365 × 100 × 5 × 3, Source, walidacja i pozostałe budżety zachowano.
+Zachowano siedem wcześniejszych porażek, receptury 1.0–1.7 i nieuruchomioną 1.6.
+Nie wykonano automatycznego retry. Wynik nie kwalifikuje pełnego ai-training,
+modeli ani poprzedniego limitu 8 GiB. Nowe projektowe fity i odczyty świeżego
+final wynoszą zero; AI 09 pozostaje `not_ready`.
 [Pełne portfolio scenariuszy v25](ai09-full-scenario-portfolio.md) rejestruje
 12 pełnych źródeł w jednym dzienniku. Nie zastępuje odbioru danych i modeli.
+[Natywny scoring anomaly w partiach](ai09-native-anomaly-campaign.md) zachowuje
+pełny census i sześciodniową historię oraz niezależnie odtwarza każdą partię.
+Ma 36 zaliczonych kontroli i regresji; pełna integracja z dziennikiem, prawdą,
+grupami i oceną niepewności pozostaje otwarta.
 [Ocena forecastu między wariantami 09.42](evidence/09-42-portfolio-forecast-evaluation.json)
 zachowuje wspólne modele i kalibrację, wiążąc osobno źródło treningu i oceny.
 Kontrole publicznych workerów, trwałych raportów i zainstalowanej paczki
