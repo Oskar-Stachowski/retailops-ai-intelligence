@@ -25,7 +25,7 @@ Po stronie AI wprowadzone są:
 - Ponowne użycie już zakodowanych bajtów w kanonicznym hashu i indeksie curated,
   bez ponownej serializacji tej samej wartości oraz bez zmiany content SHA.
 - Jawne przejęcie świeżych tabel przez writer tylko dla przypiętej implementacji
-  `planned-source-cached-execution-1.1.0`. Starsi producenci zachowują swoje API.
+  `planned-source-cached-execution-1.1.0` i `1.1.1`. Starsi producenci zachowują swoje API.
 
 Finalna ścieżka AI zaliczyła 149 kontroli transportu, samodzielnej weryfikacji,
 kuracji, truth isolation i watermarków; dodatkowe 88 kontroli obejmuje worker,
@@ -57,3 +57,19 @@ Nie wykonano nowych projektowych fitów, inicjalizacji dziennika ani odczytów
 świeżego final testu. AI 09 pozostaje `in_progress / not_ready`; AI 07–08 oraz
 wcześniejsze etapy pozostają READY i zamknięte. Otwarte sesje użytkownika
 nie są zatrzymywane ani modyfikowane.
+
+Dodatkowa kontrola przed pomiarem wykryła zachowany pierwotny kandydat sprzedaży
+podczas drugiej projekcji. Source `2.2.1` / planned `1.1.1` zwalnia go po pełnej
+niezależnej rekonsyliacji, pozostawiając cztery publikowane prywatne tabele.
+[Dowód 09.49](evidence/09-49-projection-retention-capacity-preparation.json)
+zawiera trzy kontrole czasu życia i 67 regresji native. Trzy świeże pary procesów
+z zapisanym kodem zachowują wszystkie 58 tabel i context; mediany małego build
+to Python peak −16.50%, RSS −8.09%, CPU −1.65% i retained Python −0.04%.
+To dodatkowe porównanie względem pierwszego audytu, a nie pełnego canonical.
+
+AI zaliczył 95 kontroli, 41 z nowej paczki, Mypy 718 plików, Ruff/format
+1226 plików i cały odbiór kontraktów. Zweryfikowano identyczność 597 modułów
+w paczce. Nowa receptura 1.7 zachowuje nieuruchomioną 1.6 oraz wszystkie sześć
+rzeczywistych porażek. Pełne CI head i wynikowych main obu repozytoriów pozostaje
+warunkiem wykonania diagnostyki. Pierwszy audyt jest już scalony: Source PR108,
+AI PR56–57. Żaden z tych odbiorów nie kwalifikuje jeszcze pełnej kampanii.

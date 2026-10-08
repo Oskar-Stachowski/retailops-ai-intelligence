@@ -268,6 +268,21 @@ def test_all_six_prior_plan_bytes_and_failure_chain_are_retained() -> None:
         path = previous
 
 
+@pytest.mark.parametrize("change", ["missing", "dispatched", "digest", "fake_attempt"])
+def test_unexecuted_preparation_cannot_be_erased_or_reported_as_an_attempt(change: str) -> None:
+    plan = probe.read(probe.PLAN_PATH)
+    if change == "missing":
+        del plan["previous_preparation"]
+    elif change == "dispatched":
+        plan["previous_preparation"]["workflow_dispatched"] = True
+    elif change == "digest":
+        plan["previous_preparation"]["recipe_sha256"] = "0" * 64
+    else:
+        plan["previous_attempt"] = plan["previous_preparation"]
+    with pytest.raises(ValueError, match="frozen_diagnostic_scope"):
+        probe.validate_plan(plan)
+
+
 def test_actual_periodic_generation_stack_is_bounded_and_cancelled_without_locals(
     tmp_path: Path,
 ) -> None:

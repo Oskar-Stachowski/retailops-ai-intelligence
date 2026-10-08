@@ -28,7 +28,7 @@ from typing import Any, TextIO
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
-    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.6.json"
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.7.json"
 )
 
 
@@ -302,6 +302,7 @@ def validate_plan(plan: dict[str, Any]) -> None:
         "producer_lock_sha256",
         "generation_entrypoint",
         "previous_attempt",
+        "previous_preparation",
         "revision_reason",
         "worker_stack_observation",
     }
@@ -310,10 +311,24 @@ def validate_plan(plan: dict[str, Any]) -> None:
     }:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.6.0"
-        or plan["producer_commit"] != "a164cc6a03b43213b2b1adb3b63d81f4ad54f3b6"
+        plan["version"] != "ai09-development-capacity-probe-1.7.0"
+        or plan["producer_commit"] != "4dacf0403add494f74e4b4f22497f6206de753d9"
         or plan["producer_lock_sha256"]
         != "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02"
+        or plan.get("previous_preparation")
+        != {
+            "version": "ai09-development-capacity-probe-1.6.0",
+            "recipe": "docs/reference/ai09-development-capacity-v1.6.json",
+            "recipe_sha256": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+            "evidence": "docs/evidence/09-48-audited-capacity-preparation.json",
+            "evidence_sha256": "8bbaac6c6a2a703103b89c87dd574aecfd166f2634c221e82b2be0f998f125b3",
+            "workflow_dispatched": False,
+            "superseded_before_execution": True,
+        }
+        or sha(PLAN_PATH.with_name("ai09-development-capacity-v1.6.json"))
+        != "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956"
+        or sha(PLAN_PATH.parents[1] / "evidence/09-48-audited-capacity-preparation.json")
+        != "8bbaac6c6a2a703103b89c87dd574aecfd166f2634c221e82b2be0f998f125b3"
         or plan["worker_stack_observation"]
         != {
             "phases": ["generation"],
