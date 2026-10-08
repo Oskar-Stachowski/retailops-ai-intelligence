@@ -1,0 +1,150 @@
+{
+  "$defs": {
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:full_scenario_portfolio_source_recipe:25.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Original full profile plus an exact separate original plan binding.",
+  "properties": {
+    "evaluation_origins": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DateWindow"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "exporter_lock_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Exporter Lock Sha256",
+      "type": "string"
+    },
+    "generation_config_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Generation Config Sha256",
+      "type": "string"
+    },
+    "history": {
+      "$ref": "#/$defs/DateWindow"
+    },
+    "label_delay_days": {
+      "default": 1,
+      "maximum": 30,
+      "minimum": 1,
+      "title": "Label Delay Days",
+      "type": "integer"
+    },
+    "phase": {
+      "enum": [
+        "development",
+        "final"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "producer_commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "title": "Producer Commit",
+      "type": "string"
+    },
+    "producer_lock_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Producer Lock Sha256",
+      "type": "string"
+    },
+    "products": {
+      "minimum": 1,
+      "title": "Products",
+      "type": "integer"
+    },
+    "profile": {
+      "enum": [
+        "ai-dev",
+        "ai-training"
+      ],
+      "title": "Profile",
+      "type": "string"
+    },
+    "scenario_plan_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Scenario Plan Sha256"
+    },
+    "seed": {
+      "enum": [
+        42,
+        137,
+        2026
+      ],
+      "title": "Seed",
+      "type": "integer"
+    },
+    "selling_pairs": {
+      "minimum": 1,
+      "title": "Selling Pairs",
+      "type": "integer"
+    },
+    "stock_locations": {
+      "minimum": 1,
+      "title": "Stock Locations",
+      "type": "integer"
+    },
+    "variant": {
+      "enum": [
+        "ordinary",
+        "demand",
+        "physical"
+      ],
+      "title": "Variant",
+      "type": "string"
+    }
+  },
+  "required": [
+    "phase",
+    "seed",
+    "producer_commit",
+    "producer_lock_sha256",
+    "exporter_lock_sha256",
+    "generation_config_sha256",
+    "profile",
+    "history",
+    "products",
+    "selling_pairs",
+    "stock_locations",
+    "variant",
+    "scenario_plan_sha256"
+  ],
+  "title": "PortfolioSourceRecipe",
+  "type": "object"
+}

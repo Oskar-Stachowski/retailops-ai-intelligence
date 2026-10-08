@@ -1,0 +1,375 @@
+{
+  "observed_at_utc": "2026-10-08T08:13:02.012467+00:00",
+  "scope": "Full canonical scenario portfolio protocol and durable public journal/generation bindings; control metadata only, not executed Project campaign",
+  "base_protocol_wire": "ai09-prospective-campaign-1.0.0/v10 unchanged",
+  "extension_wire": "ai09-full-scenario-portfolio-1.0.0/v25",
+  "full_source_inventory": {
+    "development_seed": 42,
+    "final_seeds": [
+      42,
+      137,
+      2026
+    ],
+    "variants_per_seed": [
+      "ordinary",
+      "demand",
+      "physical"
+    ],
+    "sources_total": 12,
+    "development_dimensions_per_source": [
+      365,
+      100,
+      5,
+      3
+    ],
+    "final_dimensions_per_source": [
+      730,
+      200,
+      10,
+      4
+    ],
+    "full_profile_dimensions_not_reduced": true,
+    "one_journal_and_one_global_selection_freeze": true,
+    "one_generation_slot_per_source": true,
+    "no_new_budget_from_failure": true
+  },
+  "policy_guards": [
+    "Same producer/exporter locks across all12 sources",
+    "Same base config across variants of each phase/seed",
+    "Exact original plan kind/hash before public generation runner; physical requires inventory cap rather than only return spike",
+    "All3 use-case training-source bindings restricted to development",
+    "Only declared same-use-case development artifacts can cross source variants; each own parent still requires own generation/read",
+    "Original equal RF/HGB/TF trial/init budgets and maximum attempt inventory",
+    "Every planned fit must have an attempt before selection freeze; failures and costs remain",
+    "All3 independent development uses on all3 variants before global freeze",
+    "All3 final uses on all9 final sources before close",
+    "Unresolved reservations, invalid paths, changed runtime and history reset remain blocked"
+  ],
+  "consumer_controls": {
+    "command": "PYTHONPATH=src python -m pytest -q tests/test_campaign_portfolio.py tests/test_ai09_campaign_journal.py tests/test_campaign_generation.py tests/test_campaign_generation_wire.py",
+    "passed": 90,
+    "seconds": 45.1,
+    "new_portfolio_controls": 23,
+    "additional_physical_inventory_marker_control": {
+      "passed": 3,
+      "deselected": 20,
+      "seconds": 0.8,
+      "command": "pytest -q tests/test_campaign_portfolio.py -k actual_generation_binding"
+    },
+    "controlled_metadata_only": true,
+    "initial_run": {
+      "passed": 56,
+      "failed": 21,
+      "seconds": 40.01,
+      "reason": "New fixture used native dict validation for ISO date strings under existing strict DateWindow; changed only the fixture to JSON validation/typed DateWindow. Existing suites passed."
+    },
+    "initial_typecheck": "Two literal-key get() annotations and direct invocation of decorated inherited replay failed mypy. Added typed lookup helper and shared unchanged event replay method; four changed modules now pass."
+  },
+  "native_metadata_bindings": {
+    "scope": "Full-size metadata and schema-valid native control plans only; previously exposed date windows and explicit synthetic control IDs. No physical source membership/effect or final freshness qualification.",
+    "producer_commit": "345a7cf3f8f38e1090917b636a6567605ef15f78",
+    "producer_clean": true,
+    "producer_dependency_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+    "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+    "controls": [
+      {
+        "phase": "development",
+        "seed": 42,
+        "variant": "ordinary",
+        "full_dimensions": [
+          365,
+          100,
+          5,
+          3
+        ],
+        "recipe_sha256": "41a39736f460814c25bb81fd1004d825a53704a64563fce533a1f1a838de3460",
+        "generation_plan_sha256": "cc442f69da6827d5c855ad79856882ff8470dc4b8dc00d510b9121fb1583dc58",
+        "original_plan_contract": null,
+        "scenario_plan_sha256": null,
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "development",
+        "seed": 42,
+        "variant": "demand",
+        "full_dimensions": [
+          365,
+          100,
+          5,
+          3
+        ],
+        "recipe_sha256": "6f14d66a49bdac4e26ce5aaabffb9518b93009e7f9fb3b62a0d1345b55613632",
+        "generation_plan_sha256": "14eb0d5f68e237287c90d6a89a256ddd7c9246ae48c762374cc1e97292481060",
+        "original_plan_contract": "business-anomaly-plan-1.0.0",
+        "scenario_plan_sha256": "9d0db8563091cd77d12a5932527030733417bbc9d16cb5d28e66d7f092b4b5b6",
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "development",
+        "seed": 42,
+        "variant": "physical",
+        "full_dimensions": [
+          365,
+          100,
+          5,
+          3
+        ],
+        "recipe_sha256": "ba8b9d7b5a773abd8816659dd1c975c05e34f61bc44082a523611b0282a132a2",
+        "generation_plan_sha256": "d9e5a6ceb13b6d6c6cdbbf97c5d4d8ede48057c7f24db1812ca474cf2f289da8",
+        "original_plan_contract": "business-physical-anomaly-plan-1.0.0",
+        "scenario_plan_sha256": "f67d7b8bdd3252729bd1c36bfd075fd92848af5f6f473ecff7e8a463011db1bd",
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "final",
+        "seed": 42,
+        "variant": "ordinary",
+        "full_dimensions": [
+          730,
+          200,
+          10,
+          4
+        ],
+        "recipe_sha256": "621156ecad9738fa4fccd0d71fcf0966ea69a024e9df533612f3d12313b910f4",
+        "generation_plan_sha256": "5ca735f6817aa2c9cce900ca7404239ae09957ad7b50be1dbfac1d6ddbf6d2dc",
+        "original_plan_contract": null,
+        "scenario_plan_sha256": null,
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "final",
+        "seed": 42,
+        "variant": "demand",
+        "full_dimensions": [
+          730,
+          200,
+          10,
+          4
+        ],
+        "recipe_sha256": "1be7fbdaa0f307eec9f1ce667057573cc9b40e31764a4c11c71bc8f75eb11f1a",
+        "generation_plan_sha256": "3bd60973a97044639b35c984d1b680848807da06c5ad03c7ce45f703f7722d30",
+        "original_plan_contract": "business-anomaly-plan-1.0.0",
+        "scenario_plan_sha256": "61d8a3dea76af04ae69b6461371eef790881b6ee46e253a2ef1e3c112a429182",
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "final",
+        "seed": 42,
+        "variant": "physical",
+        "full_dimensions": [
+          730,
+          200,
+          10,
+          4
+        ],
+        "recipe_sha256": "5fac5907d61b93116403a0e3b93f209283f26c07070c2e27d6d8a868c8a7a8e3",
+        "generation_plan_sha256": "77c1e50d0c4fef48023d6c61452786bd0afb6b72eb42e5d8d9d5db0eb7789528",
+        "original_plan_contract": "business-physical-anomaly-plan-1.0.0",
+        "scenario_plan_sha256": "668a306c167147e5b13919b25b5e0f460131107020bc7405142a15c9b15c5a53",
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "final",
+        "seed": 137,
+        "variant": "ordinary",
+        "full_dimensions": [
+          730,
+          200,
+          10,
+          4
+        ],
+        "recipe_sha256": "af92d5a296a7e7630b23375913345e87e2dd012236b415909a2f5494a65ae6c1",
+        "generation_plan_sha256": "cbd647bce295ab5ead3125976759886c98373afa136f8ecdfa9a405367b51da2",
+        "original_plan_contract": null,
+        "scenario_plan_sha256": null,
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "final",
+        "seed": 137,
+        "variant": "demand",
+        "full_dimensions": [
+          730,
+          200,
+          10,
+          4
+        ],
+        "recipe_sha256": "b285c26ea656ff53bccd4559414a2c18a6c808842ca1440b31d6816e1ac02fab",
+        "generation_plan_sha256": "6d3f497fc6dad3fa8a227108a807920b07516a05708cc6e7486cd84bd8f182e8",
+        "original_plan_contract": "business-anomaly-plan-1.0.0",
+        "scenario_plan_sha256": "00e795a883353368377b361ea26e7ae9b5379060aed400f1f1e6258f62d63257",
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "final",
+        "seed": 137,
+        "variant": "physical",
+        "full_dimensions": [
+          730,
+          200,
+          10,
+          4
+        ],
+        "recipe_sha256": "d7919075a1df175b50f36173a8bed6f8c24cdf360580ee300e30b3918bcac78d",
+        "generation_plan_sha256": "cf6f064f3b41cb13bd9292865408cad0f49a9286d1e5d764821527724af8c551",
+        "original_plan_contract": "business-physical-anomaly-plan-1.0.0",
+        "scenario_plan_sha256": "4f960b5ffc8ebdd65db901b23fa78aa9ed14333e1e367d70fc81aa316768a833",
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "final",
+        "seed": 2026,
+        "variant": "ordinary",
+        "full_dimensions": [
+          730,
+          200,
+          10,
+          4
+        ],
+        "recipe_sha256": "0f22c0d44ab33cc7127d004a529a9cfd53d381cecf743d35888aa3178782bbcc",
+        "generation_plan_sha256": "24110284944c0d95907c7959549dd9cf7e6d9e26ea645f1da9785be1aa55466d",
+        "original_plan_contract": null,
+        "scenario_plan_sha256": null,
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "final",
+        "seed": 2026,
+        "variant": "demand",
+        "full_dimensions": [
+          730,
+          200,
+          10,
+          4
+        ],
+        "recipe_sha256": "eb5a42bb84630e03d90e40c6f3a3f1a682a205369b9feb776a921922bbec890e",
+        "generation_plan_sha256": "9fca020c33577e3be4e4f7042e5ea07bc4335ce68ed292d52830632f88e1f13c",
+        "original_plan_contract": "business-anomaly-plan-1.0.0",
+        "scenario_plan_sha256": "60244116485e1e07a1cff2c51da9188dcf92e0c02348903b923894facb97c182",
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      },
+      {
+        "phase": "final",
+        "seed": 2026,
+        "variant": "physical",
+        "full_dimensions": [
+          730,
+          200,
+          10,
+          4
+        ],
+        "recipe_sha256": "44e4f2c56948456b296b620d3dc5ee9e78fa7e3d687a33fd5f6ea015cdc70a5c",
+        "generation_plan_sha256": "a8168bbff5a114c836d118f7ca78304f5c0fbdb688234c04e10ef02ba725a7e6",
+        "original_plan_contract": "business-physical-anomaly-plan-1.0.0",
+        "scenario_plan_sha256": "7c75774615966592bad27a06ade2f5ff848f55558fe8802cea36d47ce1cd3dbc",
+        "native_source_contract_validation": true,
+        "public_generation_plan_bind": true
+      }
+    ],
+    "retained_initial_control_failure": "The ordinary example factory rejected full-size metadata at its existing5000-grain budget before build_dataset. Inspected the factory; kept its budget and code unchanged. Constructed native schema-only control plans instead. No dataset generation was performed.",
+    "generation_called": false,
+    "source_membership_or_effect_qualified": false,
+    "project_journal_initialized": false,
+    "model_fits": 0,
+    "fresh_final_reads": 0,
+    "full_profile_qualified": false,
+    "stage_ready": false
+  },
+  "old_wire_verification": {
+    "old_evaluation_schema_files": 75,
+    "all_exact_bytes_unchanged": true,
+    "aggregate_sha256": "f01136add93decf4d8c2c17005b11574e000f52778454a8d05f787e16aacfd77"
+  },
+  "package_verification": {
+    "sha256": "4018cd910687b72ba3c2264fd7d62071e2c31af19e8d0640197c79e4e5bdfc77",
+    "bytes": 1975291,
+    "python_modules": 595,
+    "packaged_schema_files": 178,
+    "new_v25_schema_files": 3,
+    "all_schema_and_changed_module_bytes_match_declared_sources": true,
+    "private_state_or_cache_included": false
+  },
+  "installed_wheel_control": {
+    "scope": "Installed public wheel metadata and own private empty control journal only; no dataset generation/fitting/final access",
+    "installed_contract_module_from_wheel": true,
+    "public_initialize_inspect_roundtrip": true,
+    "full_sources_retained": 12,
+    "one_journal_and_one_freeze": true,
+    "explicit_portfolio_version_retained": true,
+    "project_journal_initialized": false,
+    "generation_called": false,
+    "model_fits": 0,
+    "fresh_final_reads": 0,
+    "stage_ready": false
+  },
+  "quality_checks": {
+    "mypy_four_changed_modules": "passed",
+    "ruff": "passed",
+    "contract_snapshots": "passed;75 old schemas exact bytes unchanged and3 new v25 schemas checked",
+    "full_new_head_CI": "not yet performed",
+    "mypy_full_src": "585 source files passed",
+    "repository_docs_links_and_required_ci": "passed",
+    "ruff_format": "6 changed files passed",
+    "git_diff_check": "passed"
+  },
+  "publication_observation": {
+    "AI_main": "f0088e08ea54651a23e097bbf562caab882e6e6f",
+    "AI_main_run": 37743593906,
+    "AI_main_status": "in_progress",
+    "AI51_head": "201ea8ed23d286cf9974442753a1ac34413ceef7",
+    "AI51_run": 37744238960,
+    "AI51_status": "in_progress",
+    "Source_main": "cd5a9dbb0967cd92b77385b8f3a799b5485207f9",
+    "Source107_head": "345a7cf3f8f38e1090917b636a6567605ef15f78",
+    "Source107_run": 37743193615,
+    "Source107_status": "in_progress"
+  },
+  "existing_capacity_1_5_unchanged": {
+    "recipe_sha256": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "dispatched": false,
+    "scope": "Source2.7/snapshot1.1 diagnostic only; not complete portfolio qualification"
+  },
+  "closed_AI07_AI08_reopened": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "full_profile_qualified": false,
+  "stage_ready": false,
+  "remaining": [
+    "Whole exact head/main CI and original frozen capacity dispatch preflight",
+    "Successful full canonical generation/qualification including all planned variants and ai-training",
+    "Complete actual production operation recipes/budgets and untouched final windows",
+    "Cross-variant forecast evaluation adapter: existing development evaluator same-dataset guard retained",
+    "Actual Project anomaly/stockout evaluator integration",
+    "Predeclared required critical versus diagnostic segment coverage policy and complete versioned robustness scenarios",
+    "Real fair fitting/calibration/global selection and full final3seeds",
+    "Paired uncertainty/all costs/MLflow/artifacts/cards/reports/lifecycle and final main/docs acceptance"
+  ],
+  "accepted_parent_AI_main": {
+    "head": "f0088e08ea54651a23e097bbf562caab882e6e6f",
+    "run": 37743593906,
+    "whole17_success": true,
+    "required_result": "success"
+  },
+  "planned_generation_publication": {
+    "pr": 51,
+    "head": "201ea8ed23d286cf9974442753a1ac34413ceef7",
+    "head_run": 37744238960,
+    "whole17_success": true,
+    "protected_merge": "ab77bb1da52bcbff0c95cd797a6a173708697e73",
+    "new_main_run": 37749318501,
+    "new_main_status": "in_progress",
+    "new_main_whole_acceptance": false
+  }
+}

@@ -20,6 +20,10 @@ from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignProtocol,
     SelectionFreeze,
 )
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import (
+    parse_campaign_journal,
+    parse_campaign_protocol,
+)
 from retailops_ai.evaluation_campaign.partitions import runtime_pin
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
@@ -62,7 +66,7 @@ def _read(root: Path) -> CampaignJournal:
         raw = stream.read(MAX_JOURNAL_BYTES + 1)
     if len(raw) > MAX_JOURNAL_BYTES:
         raise SnapshotError("campaign_journal_size_limit")
-    ledger = CampaignJournal.model_validate_json(canonical_bytes(decode_json(raw)))
+    ledger = parse_campaign_journal(canonical_bytes(decode_json(raw)))
     if ledger.protocol.journal_path != str(root.absolute()):
         raise SnapshotError("campaign_journal_location_mismatch")
     if raw != canonical_bytes(ledger.model_dump(mode="json")) + b"\n":
@@ -102,13 +106,19 @@ def _runtime(ledger: CampaignJournal) -> None:
 
 
 def initialize(root: Path, protocol: CampaignProtocol) -> CampaignJournal:
-    protocol = CampaignProtocol.model_validate_json(
-        canonical_bytes(protocol.model_dump(mode="json"))
-    )
+    protocol = parse_campaign_protocol(canonical_bytes(protocol.model_dump(mode="json")))
     if protocol.journal_path != str(root.absolute()):
         raise SnapshotError("campaign_journal_location_mismatch")
     digest = protocol.content_sha256()
-    proposed = CampaignJournal(protocol=protocol, protocol_sha256=digest, head_sha256=digest)
+    proposed = parse_campaign_journal(
+        canonical_bytes(
+            {
+                "protocol": protocol.model_dump(mode="json"),
+                "protocol_sha256": digest,
+                "head_sha256": digest,
+            }
+        )
+    )
     _runtime(proposed)
     checked_directory(root.parent)
     try:
@@ -148,7 +158,7 @@ def _append(root: Path, ledger: CampaignJournal, **values: Any) -> CampaignJourn
         ],
         "head_sha256": canonical_sha256(event.model_dump(mode="json")),
     }
-    next_ledger = CampaignJournal.model_validate_json(canonical_bytes(document))
+    next_ledger = parse_campaign_journal(canonical_bytes(document))
     _publish(root, next_ledger)
     return next_ledger
 
