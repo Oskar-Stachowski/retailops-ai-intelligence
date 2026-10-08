@@ -5,6 +5,10 @@
 poprawki pamięci i kosztu we wszystkich pięciu fazach. Pełny profil, limity,
 wszystkie wcześniejsze porażki i dotychczasowe bramki pozostają zachowane.
 Nowy pomiar wymaga zakończenia odbioru dokładnych commitów i main obu repo.
+[Przygotowanie 1.6](evidence/09-48-audited-capacity-preparation.json) wiąże
+pełny audyt, aktualny pin zależności Source, 50 kontroli supervisora i sześć
+historycznych porażek. Pomiar nie został uruchomiony; odbiór audytu i publikacji
+diagnostyki nadal poprzedza dispatch. Pełny zakres kampanii pozostaje otwarty.
 [Przyrost 09.41](evidence/09-41-full-scenario-portfolio.json) dodaje
 [pełne portfolio v25](ai09-full-scenario-portfolio.md): 12 pełnych źródeł
 ordinary/demand/physical, jeden dziennik i wspólny freeze. Brak wariantu,

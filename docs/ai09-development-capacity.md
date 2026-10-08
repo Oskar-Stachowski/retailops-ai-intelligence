@@ -1,5 +1,25 @@
 # Pomiar pełnego development AI 09
 
+Przygotowana [receptura 1.6](reference/ai09-development-capacity-v1.6.json)
+przypina Source `a164cc6a` po [audycie pięciu faz](ai09-capacity-audit.md).
+[Dowód przygotowania](evidence/09-48-audited-capacity-preparation.json) zachowuje
+sześć poprzednich receptur i porażek, pełne wymiary i daty, limity, rezerwy,
+locki konsumenta/eksportera oraz bezpieczny obserwator stosu. Source 2.2 ogranicza
+retencję i kopiowanie, koszt wyszukiwania oraz alokacje przy walidacji i zapisie;
+AI korzysta z odebranych lokalnie indeksów i ponownego użycia serializacji.
+50 kontroli supervisora przeszło, w tym odmowa obcego producenta lub pinu zależności,
+zmiany profilu, limitów i historii porażek oraz ograniczanie własnych procesów.
+
+Pin zależności producenta zmienia się jawnie z `f55452e6` na `ea389b45`:
+nowy Source zawiera wcześniejszą aktualizację `4805834` z jego `main`.
+Pełny diff i obie sumy są zapisane w dowodzie; to pomiar nowej implementacji
+i środowiska. Starsze receptury zachowują własne zależności. Aktualizacja nie
+zmienia limitów ani wymaganych danych. 1.6 nie została uruchomiona: wymagane są
+pełne CI audytu i jego wynikowych main w obu repozytoriach oraz osobny odbiór
+publikacji diagnostyki przed pojedynczym ręcznym dispatch.
+
+Poniżej zachowano opis wykonanej próby 1.5 i poprzednich pomiarów.
+
 [Receptura 1.5](reference/ai09-development-capacity-v1.5.json) przypina Source
 `ab4d5690` z [PR #107](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/107).
 Cached simulator po pełnej walidacji i inicjalizacji kolejki zwalnia dodatkowe

@@ -1,0 +1,118 @@
+{
+  "recorded_at_utc": "2026-10-08T13:33:44.321736+00:00",
+  "scope": "Prospective capacity 1.6 after the comprehensive audit; preparation and small process controls only",
+  "recipe": "docs/reference/ai09-development-capacity-v1.6.json",
+  "recipe_sha256": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+  "producer_commit": "a164cc6a03b43213b2b1adb3b63d81f4ad54f3b6",
+  "producer_implementation": {
+    "version": "inventory-source-cached-ledger-2.2.0",
+    "code_sha256": "958d93170487c030c6eb1579ce256ed03331f6a2bcdae5272754069559122c05",
+    "upstream_sha256": {
+      "source_cohort_batch.py": "7459292242696e6e1ea35ab2ea8171b31acab044d879f67168d379941c8dee84",
+      "ledger.py": "4effb9cdd18b4eb18f5f1a0b60cb0fab7f467262a961d9a4baf6fa6c2d1e8e09",
+      "source_bridge.py": "f1030980fa2cfd297ee1ec5e62434cd1fa56480cf59f7a605783b1ff7e25f61d",
+      "run_source_dataset.py": "3c3194a6d197ced1e6c19e93268ef5bac97ae8c01073b05f17e67d9d0027d6bf",
+      "simulator.py": "7b10a76f7a4ea93b40557d402a3f6cd5a6400e939e78c3ffa64dadc4b531dcd7",
+      "source_commerce.py": "c53fefae30abfdf5c48d744cc0c903db449edbc970be3523e8a008dbd0ad7991"
+    },
+    "optimization": "cached_immutable_records_queue_events_borrowed_requests_and_early_release",
+    "rng_and_chronological_process": "unchanged",
+    "source_validation": "ordinary_source_2_7_writer_and_reader_all_gates"
+  },
+  "producer_clean_provenance": {
+    "code_sha256": "705d05230bf500fab5688c816e3a24c0a5f884e1addd8480d815fa1afa4b240b",
+    "git_commit": "a164cc6a03b43213b2b1adb3b63d81f4ad54f3b6",
+    "code_state": "clean",
+    "dependency_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02"
+  },
+  "producer_dependency_revision": {
+    "previous_producer_lock_sha256": "f55452e6f30020829f87d8c040440e7b589fd0f431e84c082aff87a9fe8b35f4",
+    "current_producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+    "previous_dependency_files": {
+      "services/api/requirements.txt": "cb92c29105f31f95b5406ed0992ab2dce30b37a8c22f2a8c7c037065b4e21110",
+      "services/api/requirements-dev.txt": "e8f7e6f546631ecdfea7c2b5783d68a1e1df45047e0f3c8e638bb58f0bbeed63"
+    },
+    "current_dependency_files": {
+      "services/api/requirements.txt": "24388535a0929b7e39d44d539e3248fd1e8d60f695500427e525687266899b41",
+      "services/api/requirements-dev.txt": "6c6bd6cdd71d1e0e6a4beb53b620e24dff09936679beb0e2677a21956a22562c"
+    },
+    "source_dependency_commit": "4805834a9daa3e77211dd6055211f091bcea5eeb",
+    "actual_dependency_diff": "diff --git a/services/api/requirements-dev.txt b/services/api/requirements-dev.txt\nindex fce8a22..78c5e58 100644\n--- a/services/api/requirements-dev.txt\n+++ b/services/api/requirements-dev.txt\n@@ -6,4 +6,4 @@ mypy==1.20.2\n pre-commit==4.6.2\n pytest==9.1.1\n pytest-cov==6.3.0\n-ruff==0.16.9\n+ruff==0.16.10\ndiff --git a/services/api/requirements.txt b/services/api/requirements.txt\nindex cd37e90..c8bb8d2 100644\n--- a/services/api/requirements.txt\n+++ b/services/api/requirements.txt\n@@ -1,17 +1,17 @@\n-fastapi==0.141.1\n+fastapi==0.142.2\n uvicorn==0.54.0\n pydantic==2.13.5\n \n confluent-kafka==2.15.1\n-jsonschema==4.25.1\n+jsonschema==4.26.0\n joblib==1.6.0\n psycopg[binary]==3.3.6\n prometheus-client==0.26.0\n scikit-learn==1.9.1\n-SQLAlchemy==2.1.0\n+SQLAlchemy==2.1.2\n alembic==1.20.0\n \n-opentelemetry-api==1.44.0\n-opentelemetry-sdk==1.44.0\n-opentelemetry-exporter-otlp-proto-http==1.44.0\n-opentelemetry-instrumentation-fastapi==0.65b0\n+opentelemetry-api==1.45.0\n+opentelemetry-sdk==1.45.0\n+opentelemetry-exporter-otlp-proto-http==1.45.0\n+opentelemetry-instrumentation-fastapi==0.66b0\n",
+    "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+    "initial_preflight_result": "failed: old 1.5 composite producer hash differed from the already merged Source dependency update; no diagnostic or scientific work launched",
+    "original_recipes_preserved": true
+  },
+  "prior_recipe_bytes_unchanged": {
+    "docs/reference/ai09-development-capacity-v1.1.json": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee",
+    "docs/reference/ai09-development-capacity-v1.2.json": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "docs/reference/ai09-development-capacity-v1.3.json": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d",
+    "docs/reference/ai09-development-capacity-v1.4.json": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+    "docs/reference/ai09-development-capacity-v1.5.json": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "docs/reference/ai09-development-capacity.json": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9"
+  },
+  "previous_failed_runs": [
+    37611605538,
+    37613368332,
+    37676033214,
+    37714051649,
+    37731200719,
+    37765329151
+  ],
+  "previous_attempt": {
+    "version": "ai09-development-capacity-probe-1.5.0",
+    "workflow_run": 37765329151,
+    "plan_sha256": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "resource_receipt_sha256": "e2028ed087a3c1bf2dc7697c9e94816a21111747a03f0e9e8926c0259900ead4",
+    "reason": "tree_rss_limit",
+    "exit_code": -9,
+    "completed_phases": 0,
+    "wall_seconds": 2967.7483137940003,
+    "sampled_tree_peak_rss_bytes": 8596701184,
+    "previous_failure_preserved": true
+  },
+  "unchanged_from_1_5": [
+    "full generation dimensions and dates",
+    "consumer and exporter locks",
+    "RSS and scratch limits",
+    "wall limit and resource reserves",
+    "all parent limits",
+    "generation entrypoint",
+    "bounded frame observer",
+    "snapshot schema and all required use cases",
+    "no model fits, Project campaign or fresh final access"
+  ],
+  "capacity_controls": {
+    "passed": 50,
+    "seconds": 1.521,
+    "junit_sha256": "c93d057fca64887b40e9fb4f7afbdaa6640191daf13e4d80eb846128af19ce07",
+    "actual_owned_process_and_thread_containment": true
+  },
+  "audited_consumer_commit": "2cb1a12fc89ede2bb76cc08c4ecdc28a5e5325e1",
+  "audit_evidence": [
+    "docs/evidence/09-46-development-capacity-audit.json",
+    "docs/evidence/09-47-capacity-audit-owner-repin.json"
+  ],
+  "complete_audit_head_and_resulting_main_CI_pending": true,
+  "diagnostic_publication_and_whole_CI_pending": true,
+  "new_capacity_attempt_dispatched": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "project_journal_initialized": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "dispatch_requirements": [
+    "Complete exact audited Source and AI head CI, protected merges and exact resulting-main CI",
+    "Complete exact diagnostic head CI, protected merge and exact resulting-main CI",
+    "Fresh clean immutable producer, dependencies, recipe/workflow and complete six-failure history",
+    "One distinct manual isolated runner dispatch with recorded intent; no automatic retry"
+  ],
+  "original_remaining_scope": [
+    "Full canonical ai-dev and ai-training capacity and qualification",
+    "All 12 Source recipes and three use cases",
+    "Actual development fits, selection, calibration and critical scenario evaluation",
+    "Fresh final seeds 42,137,2026 with unchanged original complete scope",
+    "Paired uncertainty and all five costs",
+    "MLflow, model cards, lifecycle decisions, runtime, final whole-main acceptance and documentation"
+  ]
+}

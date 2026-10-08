@@ -28,7 +28,7 @@ from typing import Any, TextIO
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
-    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.5.json"
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.6.json"
 )
 
 
@@ -291,14 +291,15 @@ def require_remote() -> None:
 
 def validate_plan(plan: dict[str, Any]) -> None:
     """Do not let a smaller or final profile inherit this diagnostic's name."""
-    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.4.json")
+    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.5.json")
     previous = read(previous_path)
     previous_result = read(
-        PLAN_PATH.parents[1] / "evidence/09-38-development-capacity-fifth-run.json"
+        PLAN_PATH.parents[1] / "evidence/09-45-development-capacity-sixth-run.json"
     )
     revision_keys = {
         "version",
         "producer_commit",
+        "producer_lock_sha256",
         "generation_entrypoint",
         "previous_attempt",
         "revision_reason",
@@ -309,8 +310,10 @@ def validate_plan(plan: dict[str, Any]) -> None:
     }:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.5.0"
-        or plan["producer_commit"] != "ab4d569081c1a427449717e14ef22249b490ee81"
+        plan["version"] != "ai09-development-capacity-probe-1.6.0"
+        or plan["producer_commit"] != "a164cc6a03b43213b2b1adb3b63d81f4ad54f3b6"
+        or plan["producer_lock_sha256"]
+        != "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02"
         or plan["worker_stack_observation"]
         != {
             "phases": ["generation"],
@@ -343,14 +346,14 @@ def validate_plan(plan: dict[str, Any]) -> None:
         or plan["previous_attempt"]
         != {
             "version": previous["version"],
-            "workflow_run": 37731200719,
+            "workflow_run": 37765329151,
             "plan_sha256": sha(previous_path),
             "resource_receipt_sha256": previous_result["resource_receipt_sha256"],
             "reason": "tree_rss_limit",
             "exit_code": -9,
             "completed_phases": 0,
-            "wall_seconds": previous_result["result"]["wall_seconds"],
-            "sampled_tree_peak_rss_bytes": previous_result["result"]["phases"][0][
+            "wall_seconds": previous_result["resource_receipt"]["wall_seconds"],
+            "sampled_tree_peak_rss_bytes": previous_result["resource_receipt"]["phases"][0][
                 "sampled_tree_peak_rss_bytes"
             ],
             "previous_failure_preserved": True,

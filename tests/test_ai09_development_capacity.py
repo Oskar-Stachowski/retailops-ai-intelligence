@@ -207,11 +207,15 @@ def test_resource_revision_cannot_change_parent_caps_or_erase_previous_failure(c
         probe.validate_plan(plan)
 
 
-@pytest.mark.parametrize("change", ["producer", "entrypoint", "failure_digest", "failure_flag"])
+@pytest.mark.parametrize(
+    "change", ["producer", "producer_lock", "entrypoint", "failure_digest", "failure_flag"]
+)
 def test_cached_revision_preserves_exact_producer_and_prior_failed_attempts(change: str) -> None:
     plan = probe.read(probe.PLAN_PATH)
     if change == "producer":
         plan["producer_commit"] = "1" * 40
+    elif change == "producer_lock":
+        plan["producer_lock_sha256"] = "0" * 64
     elif change == "entrypoint":
         plan["generation_entrypoint"] = "data.inventory.run_source_dataset.run"
     elif change == "failure_digest":
@@ -237,9 +241,10 @@ def test_stack_observation_cannot_change_scope_or_claim_allocation_measurement(c
         probe.validate_plan(plan)
 
 
-def test_all_five_prior_plan_bytes_and_failure_chain_are_retained() -> None:
+def test_all_six_prior_plan_bytes_and_failure_chain_are_retained() -> None:
     path = probe.PLAN_PATH
     for version, run_id in (
+        ("1.5", 37765329151),
         ("1.4", 37731200719),
         ("1.3", 37714051649),
         ("1.2", 37676033214),
