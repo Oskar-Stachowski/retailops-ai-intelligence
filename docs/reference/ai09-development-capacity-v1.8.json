@@ -1,0 +1,90 @@
+{
+  "version": "ai09-development-capacity-probe-1.8.0",
+  "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+  "producer_commit": "4dacf0403add494f74e4b4f22497f6206de753d9",
+  "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+  "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+  "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "generation": {
+    "profile": "ai-dev",
+    "seed": 42,
+    "days": 365,
+    "products": 100,
+    "stores": 5,
+    "warehouses": 3,
+    "start_date": "2025-08-01",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 182500,
+    "forecast_plan_days": 14
+  },
+  "budgets": {
+    "tree_rss_bytes": 12884901888,
+    "scratch_bytes": 8589934592,
+    "wall_seconds": 3600,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "parent_limits": {
+    "max_bytes": 2147483648,
+    "max_files": 10000,
+    "max_rows": 20000000,
+    "batch_rows": 256
+  },
+  "expected_snapshot_schema_version": "1.1.0",
+  "snapshot": {
+    "include_truth": false,
+    "chunk_rows": 256,
+    "partition_by_day": false,
+    "required_use_cases": [
+      "forecast_source",
+      "inventory_source"
+    ]
+  },
+  "project_campaign_authorized": false,
+  "model_fit_authorized": false,
+  "final_generation_authorized": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "previous_attempt": {
+    "version": "ai09-development-capacity-probe-1.7.0",
+    "workflow_run": 37807749014,
+    "plan_sha256": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+    "resource_receipt_sha256": "1b817299df3b8c2d50adf30e270a9fb203de7e324492af9f62d2dd20244d9b2f",
+    "reason": "tree_rss_limit",
+    "exit_code": -9,
+    "completed_phases": 0,
+    "wall_seconds": 1702.786909508,
+    "sampled_tree_peak_rss_bytes": 8635432960,
+    "previous_failure_preserved": true
+  },
+  "revision_reason": "Explicit user instruction on 2026-10-08 authorizes increasing only the diagnostic tree RSS budget from 8 GiB to 12 GiB on the existing isolated ubuntu-24.04 runner. The actual seventh attempt 1.7 stopped at tree_rss_limit after 1702.786909508 seconds, with zero completed phases; preserve its authenticated artifact, all seven actual failure costs, unexecuted preparation 1.6 and exact recipe bytes 1.0 through 1.7. Keep the accepted five-phase audit and pinned Source 4dacf040 implementation and dependencies unchanged. Keep the full 365 x 100 x 5 x 3 exposed development profile, dates, seed, snapshot, 8 GiB scratch, 3600 s aggregate wall, 1 GiB available-memory reserve, 6 GiB free-disk reserve, parent caps, validation and bounded frame observer. Runtime preflight must have at least the 12 GiB tree budget plus the 1 GiB available-memory reserve; no fits, Project campaign or final generation are authorized. Require complete exact head and resulting-main CI before one separately frozen manual diagnostic; no automatic or unchanged retry. Passing a larger resource budget is not evidence of meeting the historical 8 GiB budget or scientific qualification.",
+  "generation_entrypoint": "data.inventory.source_cohort_batch_v2.run",
+  "worker_stack_observation": {
+    "phases": [
+      "generation"
+    ],
+    "interval_seconds": 120,
+    "repeat": true,
+    "locals_dumped": false,
+    "periodic_observation_not_allocation_measurement": true,
+    "implementation": "python_current_frames_owned_references_no_native_watchdog",
+    "maximum_threads": 64,
+    "maximum_frames_per_thread": 64,
+    "maximum_snapshot_bytes": 65536,
+    "join_timeout_seconds": 5,
+    "may_be_delayed_without_GIL": true,
+    "truncation_explicit": true,
+    "maximum_filename_characters": 256,
+    "maximum_function_characters": 96
+  },
+  "previous_preparation": {
+    "version": "ai09-development-capacity-probe-1.6.0",
+    "recipe": "docs/reference/ai09-development-capacity-v1.6.json",
+    "recipe_sha256": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "evidence": "docs/evidence/09-48-audited-capacity-preparation.json",
+    "evidence_sha256": "8bbaac6c6a2a703103b89c87dd574aecfd166f2634c221e82b2be0f998f125b3",
+    "workflow_dispatched": false,
+    "superseded_before_execution": true
+  }
+}

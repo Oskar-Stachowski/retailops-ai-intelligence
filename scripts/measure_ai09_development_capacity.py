@@ -28,7 +28,7 @@ from typing import Any, TextIO
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
-    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.7.json"
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.8.json"
 )
 
 
@@ -291,10 +291,10 @@ def require_remote() -> None:
 
 def validate_plan(plan: dict[str, Any]) -> None:
     """Do not let a smaller or final profile inherit this diagnostic's name."""
-    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.5.json")
+    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.7.json")
     previous = read(previous_path)
     previous_result = read(
-        PLAN_PATH.parents[1] / "evidence/09-45-development-capacity-sixth-run.json"
+        PLAN_PATH.parents[1] / "evidence/09-51-development-capacity-seventh-run.json"
     )
     revision_keys = {
         "version",
@@ -303,6 +303,7 @@ def validate_plan(plan: dict[str, Any]) -> None:
         "generation_entrypoint",
         "previous_attempt",
         "previous_preparation",
+        "budgets",
         "revision_reason",
         "worker_stack_observation",
     }
@@ -311,7 +312,10 @@ def validate_plan(plan: dict[str, Any]) -> None:
     }:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.7.0"
+        plan["version"] != "ai09-development-capacity-probe-1.8.0"
+        or sha(previous_path) != "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668"
+        or sha(PLAN_PATH.parents[1] / "evidence/09-51-development-capacity-seventh-run.json")
+        != "387ddc47d324992f89a5e51b46bc006eebb4f67dd4c62fffc4c2974a950d4436"
         or plan["producer_commit"] != "4dacf0403add494f74e4b4f22497f6206de753d9"
         or plan["producer_lock_sha256"]
         != "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02"
@@ -351,7 +355,7 @@ def validate_plan(plan: dict[str, Any]) -> None:
         or plan["expected_snapshot_schema_version"] != "1.1.0"
         or plan["budgets"]
         != {
-            "tree_rss_bytes": 8 * 1024**3,
+            "tree_rss_bytes": 12 * 1024**3,
             "scratch_bytes": 8 * 1024**3,
             "wall_seconds": 3600,
             "minimum_free_disk_bytes": 6 * 1024**3,
@@ -361,7 +365,7 @@ def validate_plan(plan: dict[str, Any]) -> None:
         or plan["previous_attempt"]
         != {
             "version": previous["version"],
-            "workflow_run": 37765329151,
+            "workflow_run": 37807749014,
             "plan_sha256": sha(previous_path),
             "resource_receipt_sha256": previous_result["resource_receipt_sha256"],
             "reason": "tree_rss_limit",

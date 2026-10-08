@@ -1,6 +1,10 @@
 **AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
 i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
+[Przygotowanie 12 GiB 09.52](evidence/09-52-twelve-gib-capacity-preparation.json)
+podnosi wyłącznie limit RAM nowej receptury 1.8 na polecenie użytkownika,
+z rezerwą 1 GiB i zachowaniem pełnego profilu oraz wszystkich siedmiu porażek.
+Nowy pomiar nie został jeszcze uruchomiony.
 [Pełne portfolio scenariuszy v25](ai09-full-scenario-portfolio.md) rejestruje
 12 pełnych źródeł w jednym dzienniku. Nie zastępuje odbioru danych i modeli.
 [Ocena forecastu między wariantami 09.42](evidence/09-42-portfolio-forecast-evaluation.json)

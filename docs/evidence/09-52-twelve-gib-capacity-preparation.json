@@ -1,0 +1,123 @@
+{
+  "scope": "Explicitly authorized increase of isolated development diagnostic tree RSS budget only; prospective preparation, not measured capacity",
+  "recorded_at_utc": "2026-10-08T17:01:09.922083+00:00",
+  "user_instruction": "podnie\u015b limit do 12 GiB",
+  "recipe": "docs/reference/ai09-development-capacity-v1.8.json",
+  "recipe_sha256": "e219af373fab4ddcfcd077b17c26e3fe56399e2d1010b659e5798745143b55c3",
+  "budget_change": {
+    "field": "budgets.tree_rss_bytes",
+    "previous_bytes": 8589934592,
+    "authorized_bytes": 12884901888,
+    "previous_GiB": 8,
+    "authorized_GiB": 12
+  },
+  "runtime_preflight": {
+    "minimum_available_memory_bytes": 13958643712,
+    "reserve_bytes": 1073741824,
+    "insufficient_memory_starts_no_worker": true,
+    "available_memory_reserve_enforced_throughout": true
+  },
+  "runner": "ubuntu-24.04",
+  "producer_commit": "4dacf0403add494f74e4b4f22497f6206de753d9",
+  "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+  "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+  "generation": {
+    "profile": "ai-dev",
+    "seed": 42,
+    "days": 365,
+    "products": 100,
+    "stores": 5,
+    "warehouses": 3,
+    "start_date": "2025-08-01",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 182500,
+    "forecast_plan_days": 14
+  },
+  "budgets": {
+    "tree_rss_bytes": 12884901888,
+    "scratch_bytes": 8589934592,
+    "wall_seconds": 3600,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "parent_limits": {
+    "max_bytes": 2147483648,
+    "max_files": 10000,
+    "max_rows": 20000000,
+    "batch_rows": 256
+  },
+  "all_other_scope_limits_and_validation_unchanged": true,
+  "source_implementation_unchanged_since_accepted_audit": true,
+  "previous_attempt": {
+    "version": "ai09-development-capacity-probe-1.7.0",
+    "workflow_run": 37807749014,
+    "plan_sha256": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+    "resource_receipt_sha256": "1b817299df3b8c2d50adf30e270a9fb203de7e324492af9f62d2dd20244d9b2f",
+    "reason": "tree_rss_limit",
+    "exit_code": -9,
+    "completed_phases": 0,
+    "wall_seconds": 1702.786909508,
+    "sampled_tree_peak_rss_bytes": 8635432960,
+    "previous_failure_preserved": true
+  },
+  "seventh_actual_result": "docs/evidence/09-51-development-capacity-seventh-run.json",
+  "all_seven_actual_failure_costs_preserved": true,
+  "unexecuted_1_6_preserved": true,
+  "frozen_previous_recipe_bytes": [
+    {
+      "path": "docs/reference/ai09-development-capacity.json",
+      "sha256": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9"
+    },
+    {
+      "path": "docs/reference/ai09-development-capacity-v1.1.json",
+      "sha256": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee"
+    },
+    {
+      "path": "docs/reference/ai09-development-capacity-v1.2.json",
+      "sha256": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca"
+    },
+    {
+      "path": "docs/reference/ai09-development-capacity-v1.3.json",
+      "sha256": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d"
+    },
+    {
+      "path": "docs/reference/ai09-development-capacity-v1.4.json",
+      "sha256": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c"
+    },
+    {
+      "path": "docs/reference/ai09-development-capacity-v1.5.json",
+      "sha256": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9"
+    },
+    {
+      "path": "docs/reference/ai09-development-capacity-v1.6.json",
+      "sha256": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956"
+    },
+    {
+      "path": "docs/reference/ai09-development-capacity-v1.7.json",
+      "sha256": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668"
+    }
+  ],
+  "validation": {
+    "native_supervisor_and_workflow_contract_controls": {
+      "passed": 114,
+      "seconds": 2.266,
+      "junit_sha256": "b57a67f60d1431fcb632b365d75d6c4e3ccc6045766c1e68ddb7197dec23a00e",
+      "scope": "Controlled processes and real supervisory preflight/receipt logic; no canonical Source generation or model fit"
+    },
+    "ruff": "passed",
+    "format_files": 1226,
+    "mypy": "passed (718 source files)"
+  },
+  "whole_exact_head_and_resulting_main_CI_required": true,
+  "workflow_dispatched": false,
+  "automatic_retry": false,
+  "new_project_fits": 0,
+  "project_journal_initialized": false,
+  "fresh_final_reads": 0,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "foreign_sessions_disturbed": false,
+  "qualification_limit": "Any subsequent passed12 GiB diagnostic would demonstrate capacity under12 GiB only, not compliance with the historical8 GiB budget or completion of scientific AI09."
+}

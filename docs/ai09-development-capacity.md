@@ -1,5 +1,18 @@
 # Pomiar pełnego development AI 09
 
+[Receptura 1.8](reference/ai09-development-capacity-v1.8.json) podnosi, na wyraźne
+polecenie użytkownika, wyłącznie limit RSS drzewa z 8 do **12 GiB**
+(12 884 901 888 B). [Dowód przygotowania 09.52](evidence/09-52-twelve-gib-capacity-preparation.json)
+zapisuje 114 zaliczonych kontroli, zachowane bajty receptur 1.0–1.7 oraz wszystkie
+siedem rzeczywistych porażek. Runner wymaga przed startem co najmniej **13 GiB
+dostępnej pamięci**, zachowując rezerwę 1 GiB także podczas wykonania.
+Pełny profil, 3600 s, scratch 8 GiB, rezerwa dysku, parent caps, Source i walidacja
+pozostają takie same. 1.8 jest przygotowana, ale nieuruchomiona; przed pomiarem
+wymagane są pełne CI dokładnego head i wynikowego main. Zaliczenie większego
+budżetu nie dowodzi spełnienia poprzedniego limitu 8 GiB ani jakości modeli.
+
+Poniżej zachowano odbiór audytu i wynik receptury 1.7 z limitem 8 GiB.
+
 [Receptura 1.7](reference/ai09-development-capacity-v1.7.json) przypina Source
 `4dacf040` z [PR109](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/109).
 [Dowód przygotowania 09.49](evidence/09-49-projection-retention-capacity-preparation.json)
