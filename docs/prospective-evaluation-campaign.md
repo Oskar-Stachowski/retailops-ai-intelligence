@@ -9,6 +9,12 @@ Nie stanowi odbioru rzeczywistych danych, treningu portfolio ani final testu.
 o trzy pełne warianty ordinary/demand/physical dla development i każdego final
 seeda, w jednym dzienniku i jednym wspólnym freeze. Dotychczasowy v10 i jego
 schemy zachowano. Poniższy opis czterech źródeł dotyczy wersji bazowej.
+Publiczny forecast evaluator używa [powiązania v26](ai09-full-scenario-portfolio.md)
+do oceny wariantów development przy zachowaniu wspólnych zamrożonych modeli.
+Kontrole komponentu nie kwalifikują pełnych danych ani kampanii projektu.
+[Wspólna kontrola final](ai09-full-scenario-portfolio.md) wymaga również
+zweryfikowanych dowodów każdej oceny development i tych samych zamrożonych
+komponentów we wszystkich wariantach; komplet samych zakończeń nie wystarcza.
 
 ## Historia poprzednich eksperymentów
 

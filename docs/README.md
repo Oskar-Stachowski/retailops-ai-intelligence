@@ -3,6 +3,10 @@ i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
 [Pełne portfolio scenariuszy v25](ai09-full-scenario-portfolio.md) rejestruje
 12 pełnych źródeł w jednym dzienniku. Nie zastępuje odbioru danych i modeli.
+[Ocena forecastu między wariantami 09.42](evidence/09-42-portfolio-forecast-evaluation.json)
+zachowuje wspólne modele i kalibrację, wiążąc osobno źródło treningu i oceny.
+Kontrole publicznych workerów, trwałych raportów i zainstalowanej paczki
+przechodzą; pełna projektowa kampania pozostaje do wykonania.
 [Przyrost 09.40](evidence/09-40-planned-source-cache-integration.json) zachowuje
 oryginalne planowane anomalie przy użyciu istniejących cache; 21 różnych native
 kontroli Source i 76 testów integracji AI przechodzi na już odsłoniętych fixture.

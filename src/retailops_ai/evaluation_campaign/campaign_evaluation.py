@@ -66,13 +66,20 @@ from retailops_ai.evaluation_campaign.campaign_fit_contract import (
 from retailops_ai.evaluation_campaign.campaign_generation import _environment
 from retailops_ai.evaluation_campaign.campaign_generation_monitor import monitor, scratch_bytes
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import CampaignPortfolioProtocol
+from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract import (
+    CampaignPortfolioForecastEvaluationBinding,
+)
 from retailops_ai.evaluation_campaign.campaign_raw_context import (
     context_record,
     validate_raw_context_metrics,
 )
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CampaignForecastPortfolioEvaluationReceipt,
+    CampaignForecastPortfolioRobustEvaluationReceipt,
     CampaignForecastRobustEvaluationReceipt,
     ForecastEvaluationReceipt,
+    is_robust_evaluation,
     parse_forecast_evaluation_receipt,
 )
 from retailops_ai.evaluation_campaign.campaign_robust_validation import (
@@ -186,8 +193,25 @@ def _binding(
     tune: CampaignForecastTuneReceipt,
     calibration: CampaignForecastCalibrationReceipt,
     fits: dict[str, CampaignForecastFitReceipt],
-) -> None:
+) -> CampaignPortfolioForecastEvaluationBinding | None:
     prerequisites = {plan.export_operation_id}
+    portfolio_binding = None
+    if isinstance(ledger.protocol, CampaignPortfolioProtocol):
+        if (
+            configuration.development_source_recipe_sha256
+            != ledger.protocol.training_source_recipe_sha256["forecast"]
+        ):
+            raise SnapshotError("campaign_evaluation_portfolio_training_source_mismatch")
+        if plan.phase == "development":
+            portfolio_binding = CampaignPortfolioForecastEvaluationBinding(
+                protocol=ledger.protocol,
+                operation_id=operation.operation_id,
+                recipe=recipe,
+                training_dataset_id=configuration.development_dataset_id,
+                evaluation_dataset_id=exported.dataset_id,
+            )
+            if not portfolio_binding.matches(configuration, plan):
+                raise SnapshotError("campaign_evaluation_portfolio_source_binding_mismatch")
     if plan.phase == "development":
         prerequisites |= {configuration.tune_operation_id, configuration.calibration_operation_id}
     if (
@@ -212,6 +236,7 @@ def _binding(
         or not prerequisites <= set(operation.prerequisites)
         or isinstance(exported, CampaignFinalExportReceipt) != (plan.phase == "final")
         or plan.phase == "development"
+        and portfolio_binding is None
         and (
             exported.dataset_id != configuration.development_dataset_id
             or plan.source_recipe_sha256 != configuration.development_source_recipe_sha256
@@ -232,6 +257,7 @@ def _binding(
         or parent.source_recipe_sha256 != plan.source_recipe_sha256
     ):
         raise SnapshotError("campaign_evaluation_export_operation_mismatch")
+    return portfolio_binding
 
 
 def _parents(
@@ -401,7 +427,9 @@ def evaluate_campaign_forecast(
             )
             for key, value in fits.items()
         }
-        _binding(ledger, operation, plan, recipe, exported, configuration, tune, calibration, fits)
+        portfolio_binding = _binding(
+            ledger, operation, plan, recipe, exported, configuration, tune, calibration, fits
+        )
         if isinstance(exported, CampaignFinalExportReceipt):
             validate_completed_final_export(journal, exported)
         else:
@@ -482,6 +510,8 @@ def evaluate_campaign_forecast(
         write(bundle / "plan.json", plan.model_dump(mode="json"))
         write(bundle / "recipe.json", recipe.model_dump(mode="json"))
         write(bundle / "configuration.json", configuration.model_dump(mode="json"))
+        if portfolio_binding is not None:
+            write(bundle / "portfolio.json", portfolio_binding.model_dump(mode="json"))
         write(
             bundle / "parents.json",
             {
@@ -508,6 +538,14 @@ def evaluate_campaign_forecast(
         common = {
             "plan": plan.model_dump(mode="json"),
             "runtime": ledger.protocol.runtime.model_dump(mode="json"),
+        }
+        evaluated_configuration = {
+            "configuration": configuration.model_dump(mode="json"),
+            **(
+                {"portfolio_binding": portfolio_binding.model_dump(mode="json")}
+                if portfolio_binding is not None
+                else {}
+            ),
         }
         phases: list[dict[str, Any]] = []
         peak: int | None = None
@@ -600,8 +638,8 @@ def evaluate_campaign_forecast(
                 trial_root,
                 root,
                 common
+                | evaluated_configuration
                 | {
-                    "configuration": configuration.model_dump(mode="json"),
                     "population": population,
                     "trial": trial.model_dump(mode="json"),
                     "predicted": predicted,
@@ -647,8 +685,8 @@ def evaluate_campaign_forecast(
             final_root,
             root,
             common
+            | evaluated_configuration
             | {
-                "configuration": configuration.model_dump(mode="json"),
                 "population": population,
                 "actuals": str(actuals),
                 "projection": str(projection),
@@ -714,10 +752,17 @@ def evaluate_campaign_forecast(
             quality_qualified=metrics["quality_qualified"],
         )
         receipt_fields = TypeAdapter(dict[str, Any]).dump_python(receipt_fields, mode="json")
+        if portfolio_binding is not None:
+            receipt_fields["portfolio_binding"] = portfolio_binding.model_dump(mode="json")
         receipt: ForecastEvaluationReceipt
         if uncertainty_policy is not None and raw_context is not None:
             context_parent, census = context_record(raw_context, plan, population)
-            receipt = CampaignForecastRobustEvaluationReceipt.model_validate_json(
+            robust_model = (
+                CampaignForecastPortfolioRobustEvaluationReceipt
+                if portfolio_binding is not None
+                else CampaignForecastRobustEvaluationReceipt
+            )
+            receipt = robust_model.model_validate_json(
                 canonical_bytes(
                     receipt_fields
                     | {
@@ -729,9 +774,12 @@ def evaluate_campaign_forecast(
                 )
             )
         else:
-            receipt = CampaignForecastEvaluationReceipt.model_validate_json(
-                canonical_bytes(receipt_fields)
+            component_model = (
+                CampaignForecastPortfolioEvaluationReceipt
+                if portfolio_binding is not None
+                else CampaignForecastEvaluationReceipt
             )
+            receipt = component_model.model_validate_json(canonical_bytes(receipt_fields))
         _verify_bundle(bundle, receipt)
         fsync_tree(root)
         if (
@@ -778,6 +826,20 @@ def _verify_bundle(bundle: Path, receipt: ForecastEvaluationReceipt) -> None:
     files, size = _bundle_inventory(bundle, receipt.plan.max_output_bytes)
     if files != receipt.artifact_files or size != receipt.artifact_bytes:
         raise SnapshotError("campaign_evaluation_artifact_checksum_mismatch")
+    if isinstance(
+        receipt,
+        (
+            CampaignForecastPortfolioEvaluationReceipt,
+            CampaignForecastPortfolioRobustEvaluationReceipt,
+        ),
+    ):
+        binding = CampaignPortfolioForecastEvaluationBinding.model_validate_json(
+            read_bytes(bundle, "portfolio.json", MAX_PARENT_METADATA_BYTES)
+        )
+        if binding != receipt.portfolio_binding or not binding.matches(
+            receipt.configuration, receipt.plan
+        ):
+            raise SnapshotError("campaign_evaluation_artifact_portfolio_binding_mismatch")
     if (
         CampaignForecastEvaluationPlan.model_validate_json(read_bytes(bundle, "plan.json"))
         != receipt.plan
@@ -856,7 +918,7 @@ def _verify_bundle(bundle: Path, receipt: ForecastEvaluationReceipt) -> None:
     ):
         raise SnapshotError("campaign_evaluation_artifact_population_mismatch")
     metrics = read(bundle / "metrics.json")
-    robust = isinstance(receipt, CampaignForecastRobustEvaluationReceipt)
+    robust = is_robust_evaluation(receipt)
     expected_scope = (
         "complete_key_frozen_selected_critical_segments_and_paired_uncertainty"
         if robust
@@ -880,7 +942,7 @@ def _verify_bundle(bundle: Path, receipt: ForecastEvaluationReceipt) -> None:
     ):
         raise SnapshotError("campaign_evaluation_metrics_scope_or_qualification_mismatch")
     _segments(metrics, receipt.rows, receipt.eligible_rows, raw=False)
-    if isinstance(receipt, CampaignForecastRobustEvaluationReceipt):
+    if is_robust_evaluation(receipt):
         if raw_context is None or raw_census is None:
             raise SnapshotError("campaign_evaluation_robustness_context_missing")
         context_parent, _ = context_record(
@@ -997,6 +1059,17 @@ def validate_completed_evaluation(journal: Path, receipt: ForecastEvaluationRece
     receipt = parse_forecast_evaluation_receipt(canonical_bytes(receipt.model_dump(mode="json")))
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, receipt.operation_id)
+    if isinstance(
+        receipt,
+        (
+            CampaignForecastPortfolioEvaluationReceipt,
+            CampaignForecastPortfolioRobustEvaluationReceipt,
+        ),
+    ) and (
+        not isinstance(ledger.protocol, CampaignPortfolioProtocol)
+        or receipt.portfolio_binding.protocol != ledger.protocol
+    ):
+        raise SnapshotError("campaign_evaluation_portfolio_journal_mismatch")
     completion = next(
         (
             e

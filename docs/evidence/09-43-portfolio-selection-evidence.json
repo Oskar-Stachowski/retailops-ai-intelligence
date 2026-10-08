@@ -1,0 +1,158 @@
+{
+  "observed_at_utc": "2026-10-08T10:07:50.096764+00:00",
+  "scope": "Shared final-access verifier checks every declared full-portfolio development evaluation against the same frozen selected components and Forecast configuration. Control evidence uses actual private durable journal/artifacts and explicit scientific Forecast doubles; it does not prove full Source effects or model quality.",
+  "implementation": {
+    "all_development_model_score_operations_required": true,
+    "selected_use_case_aliases_plus_operation_id_bundle_keys": true,
+    "one_completed_evaluation_per_declared_operation_required": true,
+    "failed_attempts_and_costs_preserved": true,
+    "all_private_canonical_receipt_digests_and_recipe_runtime_source_cost_bindings_checked": true,
+    "same_selected_components_all_variants": true,
+    "same_frozen_forecast_configuration_all_variants": true,
+    "existing_typed_forecast_parser_and_public_artifact_verifier_used": true,
+    "existing_anomaly_stockout_inventory_verifier_preserved": true,
+    "typed_anomaly_stockout_project_evaluators_complete": false,
+    "shared_boundary_before_public_final_generation_export_evaluation": true,
+    "selection_digest_and_wire_unchanged": true,
+    "all_variant_evidence_bound_by_existing_development_journal_head": true,
+    "old_evaluation_json_files_byte_unchanged": 84,
+    "sha256": "273513d9f22ddd3f3464d3546363a5d77d9225d6f268a7ce689649de537de3f2"
+  },
+  "verification": {
+    "durable_selection_boundary_controls": {
+      "passed": 17,
+      "seconds": 51.06,
+      "scientific_forecast_parsing_and_verification_substituted": true,
+      "real_other_use_artifact_inventory": true
+    },
+    "affected_evaluation_final_export_portfolio_journal_regression": {
+      "passed": 118,
+      "seconds": 176.85
+    },
+    "generation_and_wire_regression": {
+      "passed": 32,
+      "seconds": 29.84
+    },
+    "installed_wheel_boundary_controls": {
+      "passed": 3,
+      "seconds": 10.44,
+      "actual_import_verified": true,
+      "proof_scope": "Installed-wheel durable selection guard controls, explicit Forecast scientific doubles; no full Source/model/Project qualification."
+    },
+    "mypy_source_files": 586,
+    "ruff_changed_files": "passed",
+    "initial_validation_corrections": [
+      "First pytest collection used the older shared editable package and failed before tests; explicit PYTHONPATH=src selected this owned checkout.",
+      "Mypy found reused optional selection loop variable; renamed variant_selection, final586-source check passes."
+    ],
+    "contracts_check": "passed",
+    "documentation_and_required_ci_contract": "passed",
+    "git_diff_check": "passed",
+    "format_changed_files": 2
+  },
+  "wheel": {
+    "wheel": ".local/ai09-portfolio-selection-state/wheel-dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 2018863,
+    "sha256": "702e10372358f3579c7848b75dc80f079ea66db19d55041156a2004040c4fffe",
+    "python_modules_byte_equal": 596,
+    "source_json_byte_equal": 36,
+    "force_included_json_byte_equal": 175,
+    "all_json_byte_equal": 211,
+    "private_cache_or_tests_included": false
+  },
+  "publication_at_observation": [
+    {
+      "repo": "retailops-ai-intelligence",
+      "main": "656d7ddcb6de9d4032533238fc9e170780ddbe6a",
+      "pr": {
+        "number": 53,
+        "state": "open",
+        "merged": false,
+        "head": "b80e5e9df1d91bc5acacff00175b69b7c650ca2d",
+        "base": "656d7ddcb6de9d4032533238fc9e170780ddbe6a",
+        "merge_commit": "904d495aec616cab6ff8a8c1ebe399ee34829c7a",
+        "mergeable": true,
+        "mergeable_state": "blocked"
+      },
+      "ci": [
+        {
+          "head": "656d7ddcb6de9d4032533238fc9e170780ddbe6a",
+          "id": 37755648727,
+          "status": "completed",
+          "conclusion": "success",
+          "jobs_read": 17,
+          "jobs_total": 17,
+          "counts": {
+            "success": 17
+          }
+        },
+        {
+          "head": "b80e5e9df1d91bc5acacff00175b69b7c650ca2d",
+          "id": 37756816065,
+          "status": "in_progress",
+          "conclusion": null,
+          "jobs_read": 16,
+          "jobs_total": 16,
+          "counts": {
+            "success": 15,
+            "in_progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "repo": "retailops-cloud-native-platform",
+      "main": "3d13a4dd4a9ff51c1ab43659d53f0eb4cd3422db",
+      "pr": {
+        "number": 107,
+        "state": "closed",
+        "merged": true,
+        "head": "fe9d404dabebf8e54b8023a0ba44e5e101331721",
+        "base": "cd5a9dbb0967cd92b77385b8f3a799b5485207f9",
+        "merge_commit": "3d13a4dd4a9ff51c1ab43659d53f0eb4cd3422db",
+        "mergeable": null,
+        "mergeable_state": "unknown"
+      },
+      "ci": [
+        {
+          "head": "3d13a4dd4a9ff51c1ab43659d53f0eb4cd3422db",
+          "id": 37759748828,
+          "status": "in_progress",
+          "conclusion": null,
+          "jobs_read": 23,
+          "jobs_total": 23,
+          "counts": {
+            "success": 17,
+            "in_progress": 2,
+            "skipped": 4
+          }
+        },
+        {
+          "head": "fe9d404dabebf8e54b8023a0ba44e5e101331721",
+          "id": 37752460842,
+          "status": "completed",
+          "conclusion": "success",
+          "jobs_read": 25,
+          "jobs_total": 25,
+          "counts": {
+            "success": 21,
+            "skipped": 4
+          }
+        }
+      ]
+    }
+  ],
+  "stage_ready": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "capacity_1_5_dispatched": false,
+  "remaining": [
+    "Full ai-dev/ai-training native generation, capacity and independent replay qualification.",
+    "Actual typed anomaly/stockout Project evaluation using closed07/08 contracts.",
+    "Preregister required-critical versus diagnostic segments, complete native cold-start/missing/late/unknown-category/lead-time coverage and aggregation ownership/weights.",
+    "Audit exposures and preregister actual fresh final windows before Project initialization.",
+    "Actual all3-use development/freeze/final42-137-2026 campaign, all-trial costs, MLflow, reports/cards and lifecycle.",
+    "Protected consolidation and whole exact resulting-main CI; this receipt is not a ready certificate."
+  ]
+}

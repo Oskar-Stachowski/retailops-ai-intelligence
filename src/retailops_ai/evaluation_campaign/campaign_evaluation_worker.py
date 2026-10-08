@@ -40,6 +40,9 @@ from retailops_ai.evaluation_campaign.campaign_final_contract import (
 from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
 from retailops_ai.evaluation_campaign.campaign_forecast_inference import infer_functionals
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract import (
+    CampaignPortfolioForecastEvaluationBinding,
+)
 from retailops_ai.evaluation_campaign.campaign_raw_context import RawContextPass
 from retailops_ai.evaluation_campaign.campaign_score_contract import FAMILIES
 from retailops_ai.evaluation_campaign.campaign_score_worker import load_models
@@ -136,13 +139,22 @@ def _configuration(
     configuration = CampaignForecastFrozenConfiguration.model_validate_json(
         canonical_bytes(request["configuration"])
     )
+    binding_raw = request.get("portfolio_binding")
+    binding = (
+        CampaignPortfolioForecastEvaluationBinding.model_validate_json(canonical_bytes(binding_raw))
+        if binding_raw is not None
+        else None
+    )
     if (
         configuration.content_sha256() != plan.frozen_configuration_sha256
         or configuration.quality_policy_sha256 != plan.quality_policy.content_sha256()
         or configuration.worker_environment_lock_sha256 != plan.worker_environment_lock_sha256
         or configuration.runtime_code_sha256 != request["runtime"]["code_sha256"]
         or plan.phase == "development"
+        and binding is None
         and configuration.development_source_recipe_sha256 != plan.source_recipe_sha256
+        or binding is not None
+        and not binding.matches(configuration, plan)
     ):
         raise SnapshotError("campaign_evaluation_frozen_configuration_plan_mismatch")
     return configuration

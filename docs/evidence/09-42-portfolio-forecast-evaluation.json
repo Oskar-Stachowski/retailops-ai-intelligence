@@ -1,0 +1,391 @@
+{
+  "observed_at_utc": "2026-10-08T09:22:04.989557+00:00",
+  "scope": "Versioned public forecast development evaluation across all three preregistered full-canonical source variants, verified on tiny previously exposed fixtures with declared source bodies and controlled models. No native full scenario effects, Project fits or final reads are qualified.",
+  "implementation": {
+    "binding_version": "ai09-portfolio-forecast-evaluation-binding-1.0.0",
+    "wire_directory": "contracts/evaluation/v26",
+    "new_schemas": 3,
+    "full_protocol_and_frozen_execution_recipe_bound": true,
+    "declared_forecast_training_source_required": true,
+    "evaluation_requires_own_completed_export": true,
+    "same_source_requires_same_dataset_id": true,
+    "different_source_requires_distinct_dataset_id": true,
+    "common_all_trial_artifacts_and_train_only_preprocessing_reused": true,
+    "binding_excluded_from_model_inference_request": true,
+    "binding_required_by_core_consume_and_finalize": true,
+    "portfolio_json_required_in_durable_inventory": true,
+    "public_verifier_checks_actual_journal_protocol": true,
+    "legacy_same_development_source_and_dataset_guards_retained": true,
+    "native_final_path_and_selection_guards_unchanged": true,
+    "anomaly_stockout_project_evaluators_added": false,
+    "sha256": {
+      "campaign_portfolio_evaluation_contract.py": "b23c6bc927688a49d74adf57b1ddafa1a24ca0bdf866f711fe465b5f80f9176f",
+      "campaign_evaluation.py": "d676b2a8e42e015a9b96a2f3bef22d4e65548a6f3315836c10df920dd95a9618",
+      "campaign_evaluation_worker.py": "89c694b363f8d7e670ab0183a86f85b34c370ce955f9e452219bd60da1057047",
+      "campaign_evaluation_receipt.py": "dec67bbb8d553f2283bf15ee2a972b6ddf7f22f9f83ec83f34d8ac18f419cfe8",
+      "campaign_robust_receipt.py": "29d514618f9b102ab303d6c089327e0f8411cd43264a4839a757849587a7d7d1",
+      "campaign_export.py": "38c9b54220e4e7776fdb550e994dad594d146bcc26f840629618fd7db90c01ae"
+    }
+  },
+  "verification": {
+    "new_component_controls": {
+      "command": "python -m pytest -q tests/test_campaign_portfolio_evaluation.py --tb=short",
+      "passed": 14,
+      "failed": 0,
+      "seconds": 44.42,
+      "positive_public_component_variants": [
+        "ordinary",
+        "demand",
+        "physical"
+      ],
+      "positive_public_robust_variants": [
+        "ordinary",
+        "demand",
+        "physical"
+      ],
+      "negatives": [
+        "undeclared training source",
+        "same dataset identity across distinct variants",
+        "foreign evaluation source",
+        "changed frozen recipe",
+        "changed quality policy",
+        "missing or mismatching worker binding",
+        "unknown portfolio version",
+        "portfolio metadata in inference request",
+        "tampered durable portfolio artifact",
+        "portfolio receipt relabelled as legacy version"
+      ],
+      "all_group_reports_and_underpowered_rejection_retained": true
+    },
+    "legacy_affected_regression": {
+      "command": "python -m pytest -q tests/test_campaign_evaluation.py tests/test_campaign_evaluation_worker.py tests/test_campaign_evaluation_configuration.py tests/test_campaign_robust_forecast.py tests/test_campaign_evaluation_data.py tests/test_campaign_evaluation_metrics.py --tb=short",
+      "passed": 146,
+      "failed": 0,
+      "seconds": 393.77
+    },
+    "installed_wheel_public_component_and_robust_controls": {
+      "package_path": "/Users/oskarstachowski/.codex/worktrees/retailops-ai09-portfolio-forecast-evaluation/.local/ai09-portfolio-evaluation-state/installed/retailops_ai/__init__.py",
+      "installed_package_import_verified": true,
+      "v26_schema_bytes_verified": 3,
+      "exit_code": 0,
+      "seconds": 38.993834583001444,
+      "results": [
+        {
+          "nodeid": "tests/test_campaign_portfolio_evaluation.py::test_public_portfolio_keeps_training_parents_and_evaluates_every_variant_key[portfolio-demand]",
+          "when": "call",
+          "outcome": "passed"
+        },
+        {
+          "nodeid": "tests/test_campaign_portfolio_evaluation.py::test_robust_portfolio_retains_all_groups_uncertainty_and_underpowered_rejection[portfolio-physical-robust]",
+          "when": "call",
+          "outcome": "passed"
+        }
+      ],
+      "scope": "Installed wheel public runner, SQLite roles, core consumption and public receipt verifier on declared tiny exposed fixtures with controlled model calls; no native full scenario generation or Project fits/final reads."
+    },
+    "mypy_source_files": 586,
+    "ruff_changed_files": "passed",
+    "format_changed_files": 9,
+    "contracts_check": "passed",
+    "old_evaluation_json_files_byte_unchanged": 81,
+    "git_diff_check": "passed"
+  },
+  "wheel": {
+    "wheel": ".local/ai09-portfolio-evaluation-state/wheel-dist/retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 2018279,
+    "sha256": "77462f8b0a4eea5ba630897c3a6a6a7a5ac545f46c26237349d18d1b796c288d",
+    "python_modules_byte_equal": 596,
+    "schema_files_byte_equal": 150,
+    "private_cache_or_tests_in_package": false,
+    "v26_schemas": 3,
+    "force_included_json_files_byte_equal": 175,
+    "source_packaged_json_files_byte_equal": 36,
+    "total_packaged_json_files": 211
+  },
+  "publication_at_observation": {
+    "ai_main": {
+      "observed_at_utc": "2026-10-08T09:19:59.648674+00:00",
+      "main": "656d7ddcb6de9d4032533238fc9e170780ddbe6a",
+      "required_ci": {
+        "id": 37755648727,
+        "head_sha": "656d7ddcb6de9d4032533238fc9e170780ddbe6a",
+        "status": "in_progress",
+        "conclusion": null,
+        "read_jobs": 16,
+        "total_jobs": 16,
+        "counts": {
+          "success": 4,
+          "in_progress": 12
+        },
+        "jobs": [
+          {
+            "name": "checks",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "secrets",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "anomaly-oci",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "observation-broker",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "tests (2)",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "persistence",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "TensorFlow CPU training, artifact and reload",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "tests (1)",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "tests (3)",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "acceptance (ci-source-inputs)",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "persistence-forecast",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "acceptance (ci-forecast)",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "acceptance (ci-qualified-inputs)",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "observation-replay",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "acceptance (ci-detectors)",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "tests (0)",
+            "status": "in_progress",
+            "conclusion": null
+          }
+        ]
+      },
+      "pr52_normal_protected_merge_confirmed": true
+    },
+    "portfolio52": {
+      "head": "67324ab029a57f439b3f07655cc0b7ac93b8e4a0",
+      "exact_head_ci": 37749936916,
+      "exact_head_success": 17,
+      "accepted_previous_main": "ab77bb1da52bcbff0c95cd797a6a173708697e73",
+      "previous_main_ci": 37749318501,
+      "previous_main_success": 17,
+      "normal_protected_merge": "656d7ddcb6de9d4032533238fc9e170780ddbe6a",
+      "resulting_main_ci_accepted": false,
+      "resulting_tree_equals_tested_parent": true
+    },
+    "source": {
+      "observed_at_utc": "2026-10-08T09:20:04.477811+00:00",
+      "main": "cd5a9dbb0967cd92b77385b8f3a799b5485207f9",
+      "pr107": {
+        "head": "fe9d404dabebf8e54b8023a0ba44e5e101331721",
+        "state": "open",
+        "merged": false,
+        "required_ci": {
+          "id": 37752460842,
+          "head_sha": "fe9d404dabebf8e54b8023a0ba44e5e101331721",
+          "status": "in_progress",
+          "conclusion": null,
+          "read_jobs": 24,
+          "total_jobs": 24,
+          "counts": {
+            "success": 19,
+            "in_progress": 1,
+            "skipped": 4
+          },
+          "jobs": [
+            {
+              "name": "Detect changed areas",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Required CI contract tests",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Repository diff hygiene",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "security-gate / Frontend dependency audit",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "data-gate / AI 06 full cross-repo gate",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "security-gate / Python dependency audit",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "docker-gate / Authenticated cross-repo intelligence runtime",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "data-gate / AI 07 full sales and returns offline replay",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "security-gate / Secret scanning with Gitleaks",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "data-gate / AI 03 full cross-repo gate",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "docker-gate / Validate Docker Compose config",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "security-gate / Filesystem vulnerability scan",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "data-gate / Synthetic data quality gate",
+              "status": "in_progress",
+              "conclusion": null
+            },
+            {
+              "name": "api-gate / API integration tests",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "security-gate / Backend image vulnerability scan",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "security-gate / Frontend image vulnerability scan",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "terraform-validation-gate",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "docker-gate / Authenticated immutable native source bundle import",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "iac-security-gate",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "kubernetes-gate",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "frontend-gate",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "docker-gate / Build full stack and run smoke tests",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "security-gate / Security evidence summary",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "api-gate / API Docker image build",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      }
+    },
+    "source_previous_failed_run": {
+      "run": 37743193615,
+      "head": "345a7cf3f8f38e1090917b636a6567605ef15f78",
+      "failed_day_coverage_identity_tests": 2,
+      "other_pytests_passed": 1049,
+      "cause": "Historical golden comparison omitted the original dependency fingerprint after accepted main dependency updates",
+      "test_only_correction_head": "fe9d404dabebf8e54b8023a0ba44e5e101331721",
+      "original_golden_ids_and_all_58_table_hashes_retained": true,
+      "affected_module_passed": 17,
+      "affected_module_seconds": 213.14
+    },
+    "new_adapter": "Prepared on an owned branch; no successful unpublished exact-head or resulting-main CI claimed."
+  },
+  "frozen_capacity_1_5_dispatched": false,
+  "all_five_capacity_failure_costs_retained": true,
+  "closed_AI07_AI08_reopened": false,
+  "full_canonical_profiles_qualified": false,
+  "actual_full_scenario_effects_proved": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "stage_ready": false,
+  "remaining": [
+    "Full canonical ordinary/planned Source2.8 and ai-training resource qualification",
+    "Complete preregistered actual campaign recipes, exposure audit and full scenario interventions",
+    "Actual typed anomaly and stockout Project evaluators",
+    "Preregistered required-critical versus diagnostic segments and complete per-variant development qualification",
+    "Full cross-variant development evidence selection and preregistered weights without duplicating normal keys",
+    "Full fair RF/HGB/TensorFlow/baseline development campaign, untouched final seeds42/137/2026, paired uncertainty, costs and lifecycle",
+    "Normal protected publication and whole latest exact-head/resulting-main Required CI"
+  ]
+}
