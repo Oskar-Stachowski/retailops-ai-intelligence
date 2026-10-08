@@ -1,6 +1,14 @@
 # Aktualny status
 
 **2026-10-09 — AI 09: in_progress / not_ready.**
+[Pełne historyczne cechy anomaly](ai09-native-anomaly-features.md) odtwarzają
+wszystkie zadeklarowane dni przez natywne funkcje, z 28 dniami historii.
+Pełny kontekst pozostaje zweryfikowany na dysku, a jedna grupa trafia do
+natywnego doboru wersji. [09.63](evidence/09-63-native-anomaly-feature-preparation.json) zachowuje
+dwie początkowe awarie własnego limitu oraz poprawkę zapisu pełnych Point.
+Kontrole poprawionej wersji trwają; pełne CI i publikacja
+pozostają wymagane. Integracja prawdy offline i całej kampanii jest otwarta.
+
 [Bramka dnia raw-DQ na dysku](ai09-native-anomaly-day-gate.md) łączy pełne
 indeksy dni i zaakceptowanych faktów z niezmienionym `DayGate.point`.
 Odtwarza globalną nieprzypisaną kwarantannę od rzeczywistej chwili odbioru.
@@ -61,9 +69,11 @@ pełne wymiary, pozostałe budżety i wszystkie osiem poprzednich porażek.
 wiąże pełne CI head i wynikowych main: Source PR110 `a412a912` (21 success
 i 4 zadeklarowane scoped skips), AI PR62 `1f2d4f69` (17/17 success).
 Jedna próba [37853501527](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37853501527)
-wystartowała na niezmiennej referencji z limitem 12 GiB; wynik pozostaje
-w toku. Nie uruchomiono treningów, dziennika Project ani świeżego final.
-Start diagnostyki nie kwalifikuje pełnego profilu ani modeli.
+zakończyła się `wall_limit`, bez ukończenia pierwszej fazy.
+[Wynik 09.62](evidence/09-62-development-capacity-ninth-run.json) zapisuje
+3600.53 s, RSS drzewa 9061416960 B i dolną granicę CPU workera 3599.51 s.
+Nie uruchomiono treningów, dziennika Project ani świeżego final.
+Pełna pojemność i kwalifikacja modeli nadal nie są potwierdzone.
 
 [Receptura 1.8](reference/ai09-development-capacity-v1.8.json) ma na polecenie
 użytkownika limit RSS drzewa **12 GiB** (12 884 901 888 B) i rezerwę 1 GiB.
