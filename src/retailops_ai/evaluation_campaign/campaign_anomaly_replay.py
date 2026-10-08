@@ -76,6 +76,10 @@ class CampaignAnomalyReplayResourceError(RuntimeError):
     """Resource exhaustion fails the operation, never becomes a quarantined event."""
 
 
+class CampaignAnomalyReplayStateError(RuntimeError):
+    """Private-state corruption is fatal, never an operational quarantine."""
+
+
 def _capture(value: Row, version: str) -> Delivery | Progress:
     if value.get("contract_version") != version:
         raise SnapshotError("campaign_anomaly_replay_capture_version")
@@ -163,6 +167,17 @@ class CampaignAnomalyDiskReplay:
         self._calls = 0
         self._pending_records = 0
         self._trace = hashlib.sha256()
+        self._outputs = {
+            name: hashlib.sha256()
+            for name in (
+                "receipts",
+                "facts",
+                "revisions",
+                "progress",
+                "quarantine",
+                "quarantine_captures",
+            )
+        }
         self.maximum_index_bytes = self.maximum_group_rows = self.maximum_group_bytes = 0
 
     def __enter__(self) -> Self:
@@ -183,14 +198,14 @@ class CampaignAnomalyDiskReplay:
             self._database.execute("PRAGMA mmap_size=0")
             self._database.executescript(
                 "CREATE TABLE event_hashes(identifier TEXT PRIMARY KEY,digest TEXT NOT NULL);"
-                "CREATE TABLE receipts(sequence INTEGER PRIMARY KEY,identifier TEXT UNIQUE,payload BLOB);"
+                "CREATE TABLE receipts(sequence INTEGER PRIMARY KEY,identifier TEXT UNIQUE,payload BLOB,digest TEXT);"
                 "CREATE TABLE facts(sequence INTEGER PRIMARY KEY,event_type TEXT,business_id TEXT,"
-                "grain BLOB,available_at TEXT,payload BLOB,UNIQUE(event_type,business_id));"
+                "grain BLOB,available_at TEXT,payload BLOB,digest TEXT,UNIQUE(event_type,business_id));"
                 "CREATE INDEX fact_grain ON facts(grain,sequence);"
-                "CREATE TABLE revisions(sequence INTEGER PRIMARY KEY,grain BLOB,payload BLOB);"
+                "CREATE TABLE revisions(sequence INTEGER PRIMARY KEY,grain BLOB,payload BLOB,digest TEXT);"
                 "CREATE INDEX revision_grain ON revisions(grain,sequence);"
-                "CREATE TABLE progress(sequence INTEGER PRIMARY KEY,payload BLOB);"
-                "CREATE TABLE quarantine(sequence INTEGER PRIMARY KEY,payload BLOB);"
+                "CREATE TABLE progress(sequence INTEGER PRIMARY KEY,payload BLOB,digest TEXT);"
+                "CREATE TABLE quarantine(sequence INTEGER PRIMARY KEY,payload BLOB,digest TEXT,capture BLOB,capture_digest TEXT);"
             )
             self._kernel = Replay(_MatchedParent(self.parent, self._matched))
             self._kernel.events = _EventHashes(self._database)
@@ -205,6 +220,8 @@ class CampaignAnomalyDiskReplay:
         try:
             if args[0] is None and not self._complete:
                 raise SnapshotError("campaign_anomaly_replay_capture_not_finished")
+            if args[0] is None:
+                self.verify_outputs()
         finally:
             self.close()
 
@@ -242,32 +259,50 @@ class CampaignAnomalyDiskReplay:
         if size > self.plan.max_index_bytes:
             raise CampaignAnomalyReplayResourceError("campaign_anomaly_replay_index_budget")
 
+    @staticmethod
+    def _checked(raw: bytes, digest: str) -> Row:
+        if hashlib.sha256(raw).hexdigest() != digest:
+            raise CampaignAnomalyReplayStateError("campaign_anomaly_replay_private_row_changed")
+        try:
+            value = decode_json(raw)
+            if canonical_json(value) != raw:
+                raise ValueError("not canonical")
+        except ValueError:
+            raise CampaignAnomalyReplayStateError(
+                "campaign_anomaly_replay_private_row_invalid"
+            ) from None
+        return value
+
+    def _record(self, table: str, raw: bytes) -> str:
+        self._outputs[table].update(raw + b"\n")
+        return hashlib.sha256(raw).hexdigest()
+
     def _matched(self, key: Key, fact: Row) -> None:
         database = self._db()
         grain = tuple(fact[k] for k in GRAIN)
         raw_grain = canonical_json(grain)
         rows: list[Row] = []
         size = 0
-        for (raw,) in database.execute(
-            "SELECT payload FROM facts WHERE grain=? ORDER BY sequence", (raw_grain,)
+        for raw, digest in database.execute(
+            "SELECT payload,digest FROM facts WHERE grain=? ORDER BY sequence", (raw_grain,)
         ):
             size += len(raw)
             if len(rows) + 1 > self.plan.max_group_rows or size > self.plan.max_group_bytes:
                 raise CampaignAnomalyReplayResourceError(
                     "campaign_anomaly_replay_native_group_budget"
                 )
-            rows.append(decode_json(raw))
+            rows.append(self._checked(raw, digest))
         self.maximum_group_rows = max(self.maximum_group_rows, len(rows))
         self.maximum_group_bytes = max(self.maximum_group_bytes, size)
         self._kernel.groups.clear()
         self._kernel.groups[grain] = rows
         self._kernel.latest.clear()
         previous = database.execute(
-            "SELECT payload FROM revisions WHERE grain=? ORDER BY sequence DESC LIMIT 1",
+            "SELECT payload,digest FROM revisions WHERE grain=? ORDER BY sequence DESC LIMIT 1",
             (raw_grain,),
         ).fetchone()
         if previous is not None:
-            self._kernel.latest[grain] = decode_json(previous[0])
+            self._kernel.latest[grain] = self._checked(previous[0], previous[1])
         self._kernel.business = (
             {key}
             if database.execute(
@@ -288,15 +323,16 @@ class CampaignAnomalyDiskReplay:
             if self._pending_records == 0:
                 database.execute("BEGIN")
             prior = database.execute(
-                "SELECT payload FROM receipts WHERE identifier=?", (record.record_id,)
+                "SELECT payload,digest FROM receipts WHERE identifier=?", (record.record_id,)
             ).fetchone()
             if prior is not None:
-                receipt = decode_json(prior[0])
+                receipt = self._checked(prior[0], prior[1])
             else:
                 receipt = self._consume_new(record)
+                raw = canonical_json(receipt)
                 database.execute(
-                    "INSERT INTO receipts(identifier,payload) VALUES(?,?)",
-                    (record.record_id, canonical_json(receipt)),
+                    "INSERT INTO receipts(identifier,payload,digest) VALUES(?,?,?)",
+                    (record.record_id, raw, self._record("receipts", raw)),
                 )
             self._budget()
             self._pending_records += 1
@@ -337,7 +373,11 @@ class CampaignAnomalyDiskReplay:
                 "after_offset": record.after_offset,
                 "scope": record.scope,
             }
-            database.execute("INSERT INTO progress(payload) VALUES(?)", (canonical_json(progress),))
+            raw = canonical_json(progress)
+            database.execute(
+                "INSERT INTO progress(payload,digest) VALUES(?,?)",
+                (raw, self._record("progress", raw)),
+            )
             action, reason = "progress", "declared_parent_stream_frontier"
         else:
             if record.offset != kernel.next_offset:
@@ -353,24 +393,39 @@ class CampaignAnomalyDiskReplay:
                 self.maximum_group_bytes = max(self.maximum_group_bytes, size)
             kernel.next_offset += 1
             for fact in kernel.facts:
+                raw = canonical_json(fact)
                 database.execute(
-                    "INSERT INTO facts(event_type,business_id,grain,available_at,payload) VALUES(?,?,?,?,?)",
+                    "INSERT INTO facts(event_type,business_id,grain,available_at,payload,digest) VALUES(?,?,?,?,?,?)",
                     (
                         fact["event_type"],
                         fact["business_id"],
                         canonical_json(tuple(fact[k] for k in GRAIN)),
                         fact["available_at"],
-                        canonical_json(fact),
+                        raw,
+                        self._record("facts", raw),
                     ),
                 )
             for revision in kernel.revisions:
+                raw = canonical_json(revision)
                 database.execute(
-                    "INSERT INTO revisions(grain,payload) VALUES(?,?)",
-                    (canonical_json(tuple(revision[k] for k in GRAIN)), canonical_json(revision)),
+                    "INSERT INTO revisions(grain,payload,digest) VALUES(?,?,?)",
+                    (
+                        canonical_json(tuple(revision[k] for k in GRAIN)),
+                        raw,
+                        self._record("revisions", raw),
+                    ),
                 )
             for row in kernel.quarantine:
+                raw = canonical_json(row)
+                capture = canonical_json(record.model_dump(mode="json"))
                 database.execute(
-                    "INSERT INTO quarantine(payload) VALUES(?)", (canonical_json(row),)
+                    "INSERT INTO quarantine(payload,digest,capture,capture_digest) VALUES(?,?,?,?)",
+                    (
+                        raw,
+                        self._record("quarantine", raw),
+                        capture,
+                        self._record("quarantine_captures", capture),
+                    ),
                 )
         kernel.last_received = record.received_at
         return {"raw_ref": record.record_id, "action": action, "reason": reason}
@@ -387,6 +442,7 @@ class CampaignAnomalyDiskReplay:
             raise SnapshotError("campaign_anomaly_replay_capture_extent_or_hash")
         try:
             self._budget()
+            self.verify_outputs()
             database.commit()
             self._pending_records = 0
             self._budget()
@@ -420,6 +476,7 @@ class CampaignAnomalyDiskReplay:
             "maximum_index_bytes": self.maximum_index_bytes,
             "maximum_native_group_rows": self.maximum_group_rows,
             "maximum_native_group_bytes": self.maximum_group_bytes,
+            "output_sha256": {name: trace.hexdigest() for name, trace in self._outputs.items()},
             "source_parent_verified": False,
             "business_event_day_completeness": "not_qualified",
             "transport_durability_proven": False,
@@ -434,26 +491,122 @@ class CampaignAnomalyDiskReplay:
         if table not in {"receipts", "facts", "revisions", "progress", "quarantine"}:
             raise SnapshotError("campaign_anomaly_replay_output_table_invalid")
         queries = {
-            "receipts": "SELECT payload FROM receipts ORDER BY sequence",
-            "facts": "SELECT payload FROM facts ORDER BY sequence",
-            "revisions": "SELECT payload FROM revisions ORDER BY sequence",
-            "progress": "SELECT payload FROM progress ORDER BY sequence",
-            "quarantine": "SELECT payload FROM quarantine ORDER BY sequence",
+            "receipts": "SELECT payload,digest FROM receipts ORDER BY sequence",
+            "facts": "SELECT payload,digest FROM facts ORDER BY sequence",
+            "revisions": "SELECT payload,digest FROM revisions ORDER BY sequence",
+            "progress": "SELECT payload,digest FROM progress ORDER BY sequence",
+            "quarantine": "SELECT payload,digest FROM quarantine ORDER BY sequence",
         }
-        for (raw,) in database.execute(queries[table]):
+        for raw, digest in database.execute(queries[table]):
             self._db(outputs=True)
-            yield decode_json(raw)
+            yield self._checked(raw, digest)
+
+    def verify_outputs(self) -> None:
+        """Recheck every append-only output against the actual consume-time trace."""
+        database = self._db()
+        hashes = {name: hashlib.sha256() for name in self._outputs}
+        try:
+            for table in ("receipts", "facts", "revisions", "progress", "quarantine"):
+                queries = {
+                    "receipts": "SELECT identifier,payload,digest FROM receipts ORDER BY sequence",
+                    "facts": "SELECT event_type,business_id,grain,available_at,payload,digest FROM facts ORDER BY sequence",
+                    "revisions": "SELECT grain,payload,digest FROM revisions ORDER BY sequence",
+                    "progress": "SELECT payload,digest FROM progress ORDER BY sequence",
+                    "quarantine": "SELECT capture,capture_digest,payload,digest FROM quarantine ORDER BY sequence",
+                }
+                for *header, raw, digest in database.execute(queries[table]):
+                    value = self._checked(raw, digest)
+                    if table == "receipts" and header[0] != value["raw_ref"]:
+                        raise ValueError("receipt key")
+                    if table == "facts" and header != [
+                        value["event_type"],
+                        value["business_id"],
+                        canonical_json(tuple(value[k] for k in GRAIN)),
+                        value["available_at"],
+                    ]:
+                        raise ValueError("fact key")
+                    if table == "revisions" and header[0] != canonical_json(
+                        tuple(value[k] for k in GRAIN)
+                    ):
+                        raise ValueError("revision key")
+                    if table == "quarantine":
+                        self._quarantine_capture(value, header[0], header[1])
+                        hashes["quarantine_captures"].update(header[0] + b"\n")
+                    hashes[table].update(raw + b"\n")
+            if any(
+                hashes[name].hexdigest() != trace.hexdigest()
+                for name, trace in self._outputs.items()
+            ):
+                raise ValueError("output trace")
+        except (ValueError, TypeError, KeyError, ArithmeticError):
+            self._failed = True
+            raise CampaignAnomalyReplayStateError(
+                "campaign_anomaly_replay_private_output_changed"
+            ) from None
+        except CampaignAnomalyReplayStateError:
+            self._failed = True
+            raise
+
+    def _quarantine_capture(self, row: Row, raw: bytes, digest: str) -> Row:
+        value = self._checked(raw, digest)
+        try:
+            record = _capture(value, self.plan.capture_version)
+            if not isinstance(record, Delivery) or any(
+                row[key] != expected
+                for key, expected in {
+                    "raw_ref": record.record_id,
+                    "topic": record.topic,
+                    "partition": record.partition,
+                    "offset": record.offset,
+                    "received_at": record.received_at,
+                    "body_sha256": hashlib.sha256(record.body_utf8.encode()).hexdigest(),
+                }.items()
+            ):
+                raise ValueError("capture binding")
+        except (ValueError, TypeError, KeyError):
+            raise CampaignAnomalyReplayStateError(
+                "campaign_anomaly_replay_private_capture_changed"
+            ) from None
+        return value
+
+    def quarantined_captures(self) -> Iterator[tuple[Row, Row]]:
+        for raw, digest, capture, capture_digest in self._db(outputs=True).execute(
+            "SELECT payload,digest,capture,capture_digest FROM quarantine ORDER BY sequence"
+        ):
+            self._db(outputs=True)
+            row = self._checked(raw, digest)
+            yield row, self._quarantine_capture(row, capture, capture_digest)
+
+    def fact(self, event_type: str, business_id: str) -> Row | None:
+        row = (
+            self._db(outputs=True)
+            .execute(
+                "SELECT event_type,business_id,grain,available_at,payload,digest FROM facts WHERE event_type=? AND business_id=?",
+                (event_type, business_id),
+            )
+            .fetchone()
+        )
+        if row is None:
+            return None
+        value = self._checked(row[4], row[5])
+        if list(row[:4]) != [
+            value["event_type"],
+            value["business_id"],
+            canonical_json(tuple(value[k] for k in GRAIN)),
+            value["available_at"],
+        ]:
+            raise CampaignAnomalyReplayStateError(
+                "campaign_anomaly_replay_private_fact_key_changed"
+            )
+        return value
 
     def accepted_fact(self, event_type: str, business_id: str, as_of: str) -> Row | None:
-        database = self._db(outputs=True)
+        self._db(outputs=True)
         try:
             cutoff = stamp(as_of)
         except ValueError:
             raise SnapshotError("campaign_anomaly_replay_utc_cutoff_required") from None
         if cutoff.utcoffset() != timedelta(0):
             raise SnapshotError("campaign_anomaly_replay_utc_cutoff_required")
-        row = database.execute(
-            "SELECT available_at,payload FROM facts WHERE event_type=? AND business_id=?",
-            (event_type, business_id),
-        ).fetchone()
-        return decode_json(row[1]) if row is not None and stamp(row[0]) <= cutoff else None
+        value = self.fact(event_type, business_id)
+        return value if value is not None and stamp(value["available_at"]) <= cutoff else None

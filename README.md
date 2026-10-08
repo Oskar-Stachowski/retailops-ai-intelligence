@@ -2,6 +2,9 @@
 
 **AI 09: in_progress / not_ready — integracja po gotowych AI 07–08.**
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
+[Bramka dnia raw-DQ na dysku](docs/ai09-native-anomaly-day-gate.md) używa
+natywnych reguł dostępności i globalnej kwarantanny przy pełnych indeksach.
+Powiązanie z kampanią, cechy i prawda offline pozostają wymagane.
 [Pełna projekcja dni anomaly](docs/ai09-native-anomaly-days.md) zachowuje
 wszystkie serie i okres reklamacji na dysku. Kwalifikacja raw-DQ w historycznej
 chwili, cechy i pełna kampania pozostają wymagane.

@@ -77,6 +77,15 @@ class _ParentRows(Mapping[Key, Row]):
             yield str(row[0]), str(row[1])
 
     def __getitem__(self, key: Key) -> Row:
+        # Match dict membership used by the native quarantine classifier:
+        # unhashable wire keys raise TypeError; other unsupported keys miss.
+        hash(key)
+        if (
+            not isinstance(key, tuple)
+            or len(key) != 2
+            or not all(isinstance(part, str) for part in key)
+        ):
+            raise KeyError(key)
         queries = {
             "event": "SELECT event,event_sha256 FROM parents WHERE event_type=? AND business_id=?",
             "fact": "SELECT fact,fact_sha256 FROM parents WHERE event_type=? AND business_id=?",
@@ -111,6 +120,9 @@ class _ParentIDs(Mapping[str, Key]):
             yield str(identifier)
 
     def __getitem__(self, identifier: str) -> Key:
+        hash(identifier)
+        if not isinstance(identifier, str):
+            raise KeyError(identifier)
         row = (
             self.owner._db()
             .execute(

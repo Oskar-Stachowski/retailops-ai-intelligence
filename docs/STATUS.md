@@ -1,6 +1,15 @@
 # Aktualny status
 
 **2026-10-09 — AI 09: in_progress / not_ready.**
+[Bramka dnia raw-DQ na dysku](ai09-native-anomaly-day-gate.md) łączy pełne
+indeksy dni i zaakceptowanych faktów z niezmienionym `DayGate.point`.
+Odtwarza globalną nieprzypisaną kwarantannę od rzeczywistej chwili odbioru.
+Replay zachowuje odrzucone capture i sprawdza wyniki wobec hashy liczonych
+podczas przetwarzania. [09.61](evidence/09-61-native-disk-day-gate.json)
+zapisuje 60 kontroli, 60 z paczki i 43 regresje replay, bez pominięć.
+Pełne CI i publikacja pozostają wymagane; cechy, prawda offline
+i pełna kwalifikacja kampanii są nadal otwarte.
+
 [Pełna projekcja dni anomaly](ai09-native-anomaly-days.md) odtwarza wszystkie
 serie i okres reklamacji z całego publicznego parenta, przez natywne reguły.
 Poprawiono awarię deklaracji serii bez sprzedaży, bez tworzenia pustej kohorty
