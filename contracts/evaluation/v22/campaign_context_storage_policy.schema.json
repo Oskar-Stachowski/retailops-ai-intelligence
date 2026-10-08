@@ -1,0 +1,139 @@
+{
+  "$id": "urn:retailops:evaluation:campaign_context_storage_policy:22.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Prospective AI09 limits; the closed AI08 storage wire is unchanged.",
+  "properties": {
+    "audited_source_read_proved_by_this_policy": {
+      "const": false,
+      "default": false,
+      "title": "Audited Source Read Proved By This Policy",
+      "type": "boolean"
+    },
+    "batch_rows": {
+      "default": 256,
+      "maximum": 512,
+      "minimum": 1,
+      "title": "Batch Rows",
+      "type": "integer"
+    },
+    "cache_kib": {
+      "const": 8192,
+      "default": 8192,
+      "title": "Cache Kib",
+      "type": "integer"
+    },
+    "final_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Access Authorized",
+      "type": "boolean"
+    },
+    "max_index_bytes": {
+      "default": 2147483648,
+      "maximum": 17179869184,
+      "minimum": 4096,
+      "title": "Max Index Bytes",
+      "type": "integer"
+    },
+    "max_parent_bytes": {
+      "default": 2147483648,
+      "maximum": 68719476736,
+      "minimum": 1,
+      "title": "Max Parent Bytes",
+      "type": "integer"
+    },
+    "max_parent_files": {
+      "default": 10000,
+      "maximum": 100000,
+      "minimum": 1,
+      "title": "Max Parent Files",
+      "type": "integer"
+    },
+    "max_parent_rows": {
+      "default": 20000000,
+      "maximum": 100000000,
+      "minimum": 1,
+      "title": "Max Parent Rows",
+      "type": "integer"
+    },
+    "max_selected_bytes": {
+      "default": 67108864,
+      "maximum": 536870912,
+      "minimum": 1,
+      "title": "Max Selected Bytes",
+      "type": "integer"
+    },
+    "max_selected_rows": {
+      "default": 100000,
+      "maximum": 1000000,
+      "minimum": 1,
+      "title": "Max Selected Rows",
+      "type": "integer"
+    },
+    "maximum_cached_physical_series": {
+      "const": 1,
+      "default": 1,
+      "title": "Maximum Cached Physical Series",
+      "type": "integer"
+    },
+    "projection": {
+      "const": "closed_ai08_origin_pit_feature_point_unchanged",
+      "default": "closed_ai08_origin_pit_feature_point_unchanged",
+      "title": "Projection",
+      "type": "string"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "retention": {
+      "const": "private_disposable_all_versions_original_order",
+      "default": "private_disposable_all_versions_original_order",
+      "title": "Retention",
+      "type": "string"
+    },
+    "series_index": {
+      "const": "closed_ai08_fact_index_one_physical_series_clip_again_per_origin",
+      "default": "closed_ai08_fact_index_one_physical_series_clip_again_per_origin",
+      "title": "Series Index",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "supported_curated_versions": {
+      "default": [
+        "1.1.0",
+        "1.2.0"
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "const": "1.1.0",
+          "type": "string"
+        },
+        {
+          "const": "1.2.0",
+          "type": "string"
+        }
+      ],
+      "title": "Supported Curated Versions",
+      "type": "array"
+    },
+    "version": {
+      "const": "ai09-source-context-disk-facts-1.0.0",
+      "default": "ai09-source-context-disk-facts-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "title": "CampaignContextStoragePolicy",
+  "type": "object"
+}

@@ -1,0 +1,142 @@
+{
+  "scope": "Failed actual fourth canonical ai-dev resource diagnostic on already exposed development dates; not a project campaign",
+  "updated_at_utc": "2026-10-08T02:13:55.744703+00:00",
+  "workflow_run": 37714051649,
+  "workflow_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37714051649",
+  "job": 113106353535,
+  "workflow_status": "completed",
+  "workflow_conclusion": "failure",
+  "control_commit": "0990905b84a4b263b6eb01b09b784067ec14f23b",
+  "producer_commit": "5182782321e9aca15f28c467071e92f268aafb85",
+  "artifact_id": 11523680984,
+  "artifact_bytes": 3169,
+  "artifact_sha256": "82e64d2c9cd5cac27aef6a535a357d71d47a45923d5f3151003b9941dd7c679d",
+  "resource_receipt_sha256": "e8510d8d615645bfd7ac80b1bef3e3b15b2bde77d3602e5d3e92859cb43a5ac4",
+  "artifact_plan_sha256": "97db034b58737b2a6b7668df592f4356e88d8ce019d09f95094c5c4276ced49f",
+  "generation_log_sha256": "b4f987f081afcfe1a642afb952d3a4d788adf062574ca0716747974f0253a292",
+  "plan_sha256": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d",
+  "recipe": "docs/reference/ai09-development-capacity-v1.3.json",
+  "generation": {
+    "days": 365,
+    "end_date": "2026-07-31",
+    "forecast_plan_days": 14,
+    "max_daily_rows": 182500,
+    "products": 100,
+    "profile": "ai-dev",
+    "seed": 42,
+    "start_date": "2025-08-01",
+    "stores": 5,
+    "warehouses": 3
+  },
+  "locks": {
+    "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+    "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+    "producer_lock_sha256": "f55452e6f30020829f87d8c040440e7b589fd0f431e84c082aff87a9fe8b35f4"
+  },
+  "runner_code_sha256": "9af1103c2c6673d4bf287a0c075b531b3c6710b4ea9bd3cb912268cf1312b62c",
+  "expected_snapshot_schema_version": "1.1.0",
+  "previous_runs": [
+    37611605538,
+    37613368332,
+    37676033214
+  ],
+  "all_four_failed_attempts_and_previous_frozen_plan_bytes_retained": true,
+  "preconditions": {
+    "consumer_exact_main": "0990905b84a4b263b6eb01b09b784067ec14f23b",
+    "consumer_required_ci": 37711535728,
+    "consumer_jobs_read_total_success": 17,
+    "source_accepted_main": "5c05445e8105c378107099785bae7355388ed7e7",
+    "source_required_ci": 37698252427,
+    "source_jobs_read_total": 25,
+    "source_success": 21,
+    "source_intended_scoped_skips": 4,
+    "producer_exact_ci": 37683555355,
+    "producer_ci_attempt": 2,
+    "producer_jobs_read_total_success": 30,
+    "producer_ancestor_of_source_main": true,
+    "recipe_and_workflow_bytes_verified_on_accepted_main": true
+  },
+  "actual_receipt": {
+    "budgets": {
+      "minimum_available_memory_bytes": 1073741824,
+      "minimum_free_disk_bytes": 6442450944,
+      "sample_seconds": 0.2,
+      "scratch_bytes": 8589934592,
+      "tree_rss_bytes": 8589934592,
+      "wall_seconds": 3600
+    },
+    "canonical_ai_training_qualified": false,
+    "completed_phases": 0,
+    "control_commit": "0990905b84a4b263b6eb01b09b784067ec14f23b",
+    "failed_outputs_retained": true,
+    "final_generation_attempted": false,
+    "final_test_opened": false,
+    "new_project_fits": 0,
+    "phases": [
+      {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": -11,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 8177016832,
+        "minimum_free_disk_bytes": 82566385664,
+        "phase": "generation",
+        "reason": "worker_exit",
+        "sample_seconds": 0.2,
+        "sampled_peak_scratch_allocated_bytes": 20480,
+        "sampled_peak_scratch_logical_bytes": 17404,
+        "sampled_tree_peak_rss_bytes": 7562665984,
+        "sampled_worker_cpu_seconds": 847.7199999999999,
+        "samples": 4339,
+        "status": "failed",
+        "wall_seconds": 882.775263504
+      }
+    ],
+    "plan_sha256": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d",
+    "producer_commit": "5182782321e9aca15f28c467071e92f268aafb85",
+    "project_journal_initialized": false,
+    "quality_qualified": false,
+    "reason": "worker_exit",
+    "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+    "stage_ready": false,
+    "status": "failed",
+    "wall_seconds": 883.575073117
+  },
+  "interpretation": {
+    "exit_signal": "SIGSEGV",
+    "confirmed_reason": "worker_exit: exit_code -11",
+    "root_cause_confirmed": false,
+    "full_generation_completed": false,
+    "later_phases_started": false,
+    "sampled_RSS_below_frozen_limit": true,
+    "sampled_RSS_not_continuous_peak": true,
+    "system_worker_peak_missing_because_worker_did_not_return": true,
+    "completed_profile_peak_or_full_cost_known": false,
+    "log_observation": "The last periodic stack dump shows price_resolver.py line60 <listcomp>, then ends with an incomplete File prefix. Previous snapshots show return reconciliation, commerce input copying, returns and replenishment. This is not an allocation profile or proof of the crashing Source function.",
+    "diagnostic_watchdog_failure_is_hypothesis_only": true,
+    "hypothesis_basis": [
+      {
+        "url": "https://github.com/python/cpython/issues/116008",
+        "scope": "Reported busy multi-threaded CPython3.11.4/Linux SIGUSR1 faulthandler failure while writing File; a different trigger and patch level from this watchdog run"
+      },
+      {
+        "url": "https://github.com/python/cpython/issues/158200",
+        "scope": "Reported timer watchdog/code metadata race on pydebug CPython main/3.16/Linux; not demonstrated here on uv CPython3.11.15"
+      },
+      {
+        "url": "https://github.com/python/cpython/issues/140815",
+        "scope": "Reported timer stack-use-after-return on CPython main; linked3.13/3.14 backports do not prove applicability to this run"
+      },
+      {
+        "url": "https://github.com/python/cpython/blob/v3.11.15/Modules/faulthandler.c",
+        "scope": "The pinned3.11.15 timer watchdog calls _Py_DumpTracebackThreads outside Python-level GIL-protected frame inspection"
+      }
+    ],
+    "core_or_native_crash_backtrace_available": false,
+    "diagnostic_restarted": false,
+    "canonical_scope_reduced": false,
+    "campaign_budget_or_resource_reserve_reduced": false,
+    "closed_AI07_AI08_reopened": false,
+    "planned_anomaly_source_2_8_qualified": false,
+    "next_step": "Review and control safer bounded periodic frame observation in a separately frozen prospective revision retaining all four failures. Require full exact head/main CI before any distinct full diagnostic; continue sealed context and all3 evaluator integration without Project fits or final access."
+  }
+}

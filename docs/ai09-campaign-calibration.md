@@ -83,7 +83,7 @@ credentials. Przyczyna awarii bazy nie jest jeszcze potwierdzona.
 kontrola OS rzeczywiście zabiła wyłącznie nowy własny proces, z mocked
 operacjami bazy. To nie jest native PostgreSQL acceptance. Mypy dla 688
 plików, Ruff i format przeszły. Nie uruchamiano lokalnie Dockera.
-Poprawiony head nadal wymaga pełnego CI przed scaleniem.
+To był wcześniejszy stan przed pełnym odbiorem `b2e12a5d`.
 
 Journal projektu nadal nie jest zainicjalizowany, nowe projektowe fity wynoszą
 zero, projektowa kalibracja nie jest wykonana i final test pozostaje zamknięty.
@@ -91,3 +91,11 @@ Do AI 09 ready pozostają pełne profile, projektowy wybór i kalibracja,
 niezależna ocena trzech zastosowań, końcowe seedy 42/137/2026, scenariusze,
 segmenty, niepewność i koszty, lifecycle, trzy karty/raporty/runbooki oraz
 chroniona publikacja wszystkich zmian i pełne CI końcowego main.
+
+Poprawiony `b2e12a5d` zaliczył cały Required CI `37698266045`: 17 odczytanych
+z 17 jobs, wszystkie success wraz z required-result. Chroniony PR #42 został
+scalony do `78d853a6`; zawiera także wybór Tune z PR #41. Native persistence
+i TensorFlow CPU przeszły na tym dokładnym head. Odbiór dokładnego nowego
+AI/main `37702954342` jest zakończony: 17 odczytanych z 17 jobs, wszystkie
+success wraz z required-result. Poprzednie porażki i ich
+koszty pozostają zachowane. To odbiór komponentów, bez nowej kampanii projektu.

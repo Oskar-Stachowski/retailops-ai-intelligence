@@ -1,0 +1,421 @@
+{
+  "$defs": {
+    "CampaignForecastContextScope": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "data_seed": {
+          "enum": [
+            42,
+            137,
+            2026
+          ],
+          "title": "Data Seed",
+          "type": "integer"
+        },
+        "dataset_id": {
+          "pattern": "^ai09-(physical|final)-forecast-sha256-[0-9a-f]{64}$",
+          "title": "Dataset Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "development_evaluation",
+            "final_test"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "segment_policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Segment Policy Sha256",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "source_recipe_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Recipe Sha256",
+          "type": "string"
+        },
+        "source_scenario_plan_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Scenario Plan Sha256"
+        }
+      },
+      "required": [
+        "data_seed",
+        "role",
+        "dataset_id",
+        "source_recipe_sha256",
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "source_scenario_plan_sha256",
+        "segment_policy_sha256"
+      ],
+      "title": "CampaignForecastContextScope",
+      "type": "object"
+    },
+    "CampaignForecastSegmentPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "availability_membership": {
+          "const": "independent_boolean_strata_overlap_not_a_partition",
+          "default": "independent_boolean_strata_overlap_not_a_partition",
+          "title": "Availability Membership",
+          "type": "string"
+        },
+        "categories": {
+          "const": "complete_verified_source_catalog_not_selected_from_outcomes",
+          "default": "complete_verified_source_catalog_not_selected_from_outcomes",
+          "title": "Categories",
+          "type": "string"
+        },
+        "category_inventory": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 256,
+          "minItems": 1,
+          "title": "Category Inventory",
+          "type": "array"
+        },
+        "final_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Access Authorized",
+          "type": "boolean"
+        },
+        "intermittency_basis": {
+          "const": "known_open_history_days_missing_or_closed_are_not_sales_zeros",
+          "default": "known_open_history_days_missing_or_closed_are_not_sales_zeros",
+          "title": "Intermittency Basis",
+          "type": "string"
+        },
+        "inventory_basis": {
+          "const": "origin_known_unreserved_available_quantity_not_future_stock",
+          "default": "origin_known_unreserved_available_quantity_not_future_stock",
+          "title": "Inventory Basis",
+          "type": "string"
+        },
+        "late_observation_hours": {
+          "default": 24,
+          "maximum": 168,
+          "minimum": 1,
+          "title": "Late Observation Hours",
+          "type": "integer"
+        },
+        "lead_time_basis": {
+          "const": "origin_known_supplier_quote_not_realized_delivery_or_truth",
+          "default": "origin_known_supplier_quote_not_realized_delivery_or_truth",
+          "title": "Lead Time Basis",
+          "type": "string"
+        },
+        "lead_time_boundaries": {
+          "default": [
+            2,
+            7
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": 2,
+              "type": "integer"
+            },
+            {
+              "const": 7,
+              "type": "integer"
+            }
+          ],
+          "title": "Lead Time Boundaries",
+          "type": "array"
+        },
+        "max_rows": {
+          "default": 10000000,
+          "maximum": 100000000,
+          "minimum": 1,
+          "title": "Max Rows",
+          "type": "integer"
+        },
+        "max_segments": {
+          "default": 512,
+          "maximum": 4096,
+          "minimum": 60,
+          "title": "Max Segments",
+          "type": "integer"
+        },
+        "maximum_inventory_snapshot_age_hours": {
+          "const": 24,
+          "default": 24,
+          "title": "Maximum Inventory Snapshot Age Hours",
+          "type": "integer"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "scenario_basis": {
+          "const": "source_bound_preregistered_annotation_never_actual_target",
+          "default": "source_bound_preregistered_annotation_never_actual_target",
+          "title": "Scenario Basis",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "version": {
+          "const": "ai09-complete-forecast-segments-1.0.0",
+          "default": "ai09-complete-forecast-segments-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "volume_basis": {
+          "const": "origin_known_rolling_28_mean_not_target_outcome",
+          "default": "origin_known_rolling_28_mean_not_target_outcome",
+          "title": "Volume Basis",
+          "type": "string"
+        },
+        "volume_boundaries": {
+          "default": [
+            0,
+            5,
+            20
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "const": 0,
+              "type": "integer"
+            },
+            {
+              "const": 5,
+              "type": "integer"
+            },
+            {
+              "const": 20,
+              "type": "integer"
+            }
+          ],
+          "title": "Volume Boundaries",
+          "type": "array"
+        }
+      },
+      "required": [
+        "category_inventory"
+      ],
+      "title": "CampaignForecastSegmentPolicy",
+      "type": "object"
+    },
+    "CampaignSegmentPopulation": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            "global",
+            "horizon",
+            "category",
+            "channel",
+            "volume",
+            "scenario",
+            "history",
+            "availability",
+            "inventory",
+            "lead_time",
+            "intermittency",
+            "anomaly"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "eligible_keys_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Eligible Keys Sha256",
+          "type": "string"
+        },
+        "eligible_rows": {
+          "minimum": 0,
+          "title": "Eligible Rows",
+          "type": "integer"
+        },
+        "exclusion_reasons": {
+          "additionalProperties": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "propertyNames": {
+            "enum": [
+              "insufficient_history",
+              "stale_history",
+              "unknown_calendar",
+              "closed_target",
+              "censored_label"
+            ]
+          },
+          "title": "Exclusion Reasons",
+          "type": "object"
+        },
+        "keys_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Keys Sha256",
+          "type": "string"
+        },
+        "rows": {
+          "minimum": 0,
+          "title": "Rows",
+          "type": "integer"
+        },
+        "value": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "dimension",
+        "value",
+        "rows",
+        "eligible_rows",
+        "exclusion_reasons",
+        "keys_sha256",
+        "eligible_keys_sha256"
+      ],
+      "title": "CampaignSegmentPopulation",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:campaign_forecast_segment_census:22.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "audited_source_read_proved_by_this_document": {
+      "const": false,
+      "default": false,
+      "title": "Audited Source Read Proved By This Document",
+      "type": "boolean"
+    },
+    "complete_declared_context_census": {
+      "const": true,
+      "default": true,
+      "title": "Complete Declared Context Census",
+      "type": "boolean"
+    },
+    "context_trace_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Context Trace Sha256",
+      "type": "string"
+    },
+    "eligible_keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Eligible Keys Sha256",
+      "type": "string"
+    },
+    "eligible_rows": {
+      "minimum": 0,
+      "title": "Eligible Rows",
+      "type": "integer"
+    },
+    "final_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Access Authorized",
+      "type": "boolean"
+    },
+    "keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Keys Sha256",
+      "type": "string"
+    },
+    "metric_gates_evaluated": {
+      "const": false,
+      "default": false,
+      "title": "Metric Gates Evaluated",
+      "type": "boolean"
+    },
+    "policy": {
+      "$ref": "#/$defs/CampaignForecastSegmentPolicy"
+    },
+    "populations": {
+      "items": {
+        "$ref": "#/$defs/CampaignSegmentPopulation"
+      },
+      "maxItems": 4096,
+      "minItems": 1,
+      "title": "Populations",
+      "type": "array"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "rows": {
+      "minimum": 0,
+      "title": "Rows",
+      "type": "integer"
+    },
+    "scope": {
+      "$ref": "#/$defs/CampaignForecastContextScope"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "version": {
+      "const": "ai09-complete-forecast-segment-census-1.0.0",
+      "default": "ai09-complete-forecast-segment-census-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "scope",
+    "policy",
+    "rows",
+    "eligible_rows",
+    "keys_sha256",
+    "eligible_keys_sha256",
+    "context_trace_sha256",
+    "populations"
+  ],
+  "title": "CampaignForecastSegmentCensus",
+  "type": "object"
+}

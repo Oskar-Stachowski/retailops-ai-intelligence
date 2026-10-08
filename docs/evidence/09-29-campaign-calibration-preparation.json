@@ -68,7 +68,7 @@
     "docs_links_required_ci": "passed"
   },
   "package_verification_pending": false,
-  "publication_pending": true,
+  "publication_pending": false,
   "remaining": [
     "Full canonical source generation/export and planned-anomaly capacity",
     "Actual preregistered project fits, Tune selection and Calibration fitting",
@@ -210,5 +210,29 @@
     "original_failure_retained": true,
     "backup_control_root_cause_unconfirmed": true,
     "updated_child_control_full_ci_required": true
+  },
+  "protected_publication": {
+    "pr": 42,
+    "tested_head": "b2e12a5d437699f069f7fa7e88598ae447c53fd8",
+    "required_ci": 37698266045,
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_read_and_total": 17,
+    "success": 17,
+    "required_result": "success",
+    "protected_merge": "78d853a67433ddbb58ef919027e219fee5a2f3b9",
+    "exact_main_required_ci": 37702954342,
+    "exact_main_acceptance_pending": false,
+    "last_main_observation": {
+      "status": "completed",
+      "conclusion": "success",
+      "read": 17,
+      "total": 17,
+      "success": 17,
+      "required_result": "success"
+    },
+    "selection_pr41_included_and_closed": true,
+    "component_acceptance_does_not_qualify_project": true,
+    "old_failures_and_costs_retained": true
   }
 }

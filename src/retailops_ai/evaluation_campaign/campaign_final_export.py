@@ -24,6 +24,9 @@ from retailops_ai.evaluation_campaign.campaign_final_contract import (
     CampaignFinalExportReceipt,
 )
 from retailops_ai.evaluation_campaign.campaign_generation import validate_completed_generation
+from retailops_ai.evaluation_campaign.campaign_selection_evidence import (
+    verify_completed_campaign_selection,
+)
 from retailops_ai.evaluation_campaign.final_forecast import (
     _build_final_forecast,
     verify_final_forecast,
@@ -175,6 +178,7 @@ def export_final_forecast(
     operation_id: str,
     plan: CampaignFinalExportPlan,
     generated: CampaignGeneratedParentReceipt,
+    selection_bundles: dict[str, Path] | None = None,
 ) -> tuple[Path, CampaignFinalExportReceipt]:
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, operation_id)
@@ -191,6 +195,9 @@ def export_final_forecast(
             validate_completed_generation(journal, generated)
         except OSError:
             raise SnapshotError("final_export_generation_receipt_unavailable") from None
+        digest, _ = verify_completed_campaign_selection(journal, selection_bundles or {})
+        if digest != _selection(ledger):
+            raise SnapshotError("final_export_completed_selection_binding_mismatch")
         recipe = plan.bind(generated.source)
         with _open_verified_source_parent(
             snapshot,

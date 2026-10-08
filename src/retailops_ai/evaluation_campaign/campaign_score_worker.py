@@ -13,8 +13,6 @@ from pathlib import Path
 from time import perf_counter
 from typing import Any
 
-import numpy as np
-
 from retailops_ai.data_contracts.common import ForecastKey
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.evaluation_campaign.campaign_fit import _verify_bundle_content
@@ -24,10 +22,13 @@ from retailops_ai.evaluation_campaign.campaign_fit_contract import (
     Family,
 )
 from retailops_ai.evaluation_campaign.campaign_fit_worker import _versions
-from retailops_ai.evaluation_campaign.campaign_forecast_inputs import (
-    tensorflow_functionals,
-    tensorflow_vector,
-    tree_vector,
+from retailops_ai.evaluation_campaign.campaign_forecast_inference import (
+    EMPTY as EMPTY,
+)
+from retailops_ai.evaluation_campaign.campaign_forecast_inference import (
+    InferenceRecord,
+    InferenceWindow,
+    infer_functionals,
 )
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
@@ -44,14 +45,10 @@ from retailops_ai.evaluation_campaign.physical_contract import (
 )
 from retailops_ai.evaluation_campaign.physical_forecast import _index
 from retailops_ai.evaluation_campaign.physical_versions import check_index
-from retailops_ai.forecasting.functional_recipe import empirical_baselines
 from retailops_ai.forecasting.manifests import verify_feature_set
 from retailops_ai.forecasting.model_contract import LearnedEstimator
 from retailops_ai.forecasting.model_trees import TreePredictor
-from retailops_ai.forecasting.quality_v2_contract import CentralInterval, FunctionalForecast
 from retailops_ai.source_snapshot.files import SnapshotError, file_hash, read_bytes
-
-EMPTY = FunctionalForecast(mean=None, median=None, interval=None)
 
 
 def prepare(root: Path, request: dict[str, Any], plan: CampaignForecastScorePlan) -> dict[str, Any]:
@@ -131,90 +128,33 @@ def load_models(
 def predict_batch(
     batch: list[Window], encodings: dict[Family, CampaignForecastEncoding], models: dict[str, Any]
 ) -> list[CampaignForecastRawPrediction]:
-    eligible = [
-        (key, row)
-        for records, _ in batch
-        for key, row, example in records
-        if example.outcome is not None and example.outcome.eligible
-    ]
-    learned: dict[str, dict[bytes, float]] = {}
-    for family in FAMILIES[:2]:
-        heads = ("mean",) if family == "rf" else ("mean", "median")
-        if eligible:
-            matrix = np.asarray(
-                [tree_vector(row, encodings[family]) for _, row in eligible], dtype=np.float64
-            )
-            for head in heads:
-                values = np.asarray(models[family + ":" + head].matrix(matrix), dtype=np.float64)
-                if (
-                    values.shape != (len(eligible),)
-                    or not np.isfinite(values).all()
-                    or (values < 0).any()
-                ):
-                    raise SnapshotError("campaign_score_invalid_tree_output")
-                learned[family + ":" + head] = {
-                    key: float(value) for (key, _), value in zip(eligible, values, strict=True)
-                }
-    active = [
-        (i, records, history)
-        for i, (records, history) in enumerate(batch)
-        if any(
-            example.outcome is not None and example.outcome.eligible for _, _, example in records
-        )
-    ]
-    tensorflow: dict[int, tuple[FunctionalForecast, ...]] = {}
-    if active:
-        with np.errstate(over="ignore", invalid="ignore"):
-            matrix = np.asarray(
-                [
-                    tensorflow_vector(
-                        (row for _, row, _ in records), history, encodings["tensorflow"]
-                    )
-                    for _, records, history in active
-                ],
-                dtype=np.float32,
-            )
-        if not np.isfinite(matrix).all():
-            raise SnapshotError("campaign_score_nonfinite_tensorflow_inputs")
-        values = np.asarray(models["tensorflow"](matrix, training=False), dtype=np.float32)
-        if values.shape != (len(active), 14, 2):
-            raise SnapshotError("campaign_score_invalid_tensorflow_output")
-        tensorflow = {
-            i: tensorflow_functionals(value, encodings["tensorflow"])
-            for (i, _, _), value in zip(active, values, strict=True)
-        }
-    predictions = []
-    for index, (records, history) in enumerate(batch):
-        for key, row, example in records:
+    inputs = []
+    for records, history in batch:
+        for _, _, example in records:
             if example.outcome is None:
+                raise SnapshotError("campaign_score_role_outcome_missing")
+            if example.membership.role not in ("tune", "calibration"):
+                raise SnapshotError("campaign_score_prediction_requires_tune_or_calibration")
+        inputs.append(
+            InferenceWindow(
+                tuple(
+                    InferenceRecord(key, row, example.outcome.eligible)
+                    for key, row, example in records
+                    if example.outcome is not None
+                ),
+                history,
+            )
+        )
+    functionals = infer_functionals(inputs, encodings, models)
+    predictions = []
+    for records, _ in batch:
+        for key, row, example in records:
+            outcome = example.outcome
+            if outcome is None:
                 raise SnapshotError("campaign_score_role_outcome_missing")
             role = example.membership.role
             if role not in ("tune", "calibration"):
                 raise SnapshotError("campaign_score_prediction_requires_tune_or_calibration")
-            outcome = example.outcome
-            forecasts = [EMPTY] * 6
-            if outcome.eligible:
-                points, bands = empirical_baselines(row, history)
-                baseline = []
-                for name in ("history7", "history28", "weekday28"):
-                    band = bands[name]
-                    baseline.append(
-                        FunctionalForecast(
-                            mean=points[name + ":mean"],
-                            median=points[name + ":median"],
-                            interval=CentralInterval(lower=band[0], upper=band[1])
-                            if band is not None
-                            else None,
-                        )
-                    )
-                forecasts[:3] = baseline
-                forecasts[3] = FunctionalForecast(
-                    mean=learned["rf:mean"][key], median=None, interval=None
-                )
-                forecasts[4] = FunctionalForecast(
-                    mean=learned["hgb:mean"][key], median=learned["hgb:median"][key], interval=None
-                )
-                forecasts[5] = tensorflow[index][row.horizon_days - 1]
             predictions.append(
                 CampaignForecastRawPrediction(
                     **row.model_dump(include=set(ForecastKey.model_fields)),
@@ -222,7 +162,7 @@ def predict_batch(
                     example_sha256=canonical_sha256(example.model_dump(mode="json")),
                     eligible=outcome.eligible,
                     exclusion_reasons=outcome.reasons,
-                    values=tuple(forecasts),
+                    values=functionals[key],
                 )
             )
     return predictions

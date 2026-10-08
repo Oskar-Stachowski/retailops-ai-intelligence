@@ -1,0 +1,120 @@
+{
+  "$id": "urn:retailops:evaluation:campaign_source_key_annotation:22.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "anomaly": {
+      "enum": [
+        "unannotated",
+        "clean_control",
+        "one_day_spike",
+        "multi_day_spike",
+        "sustained_drop",
+        "return_spike",
+        "inventory_censored_episode"
+      ],
+      "title": "Anomaly",
+      "type": "string"
+    },
+    "business_timezone": {
+      "const": "UTC",
+      "title": "Business Timezone",
+      "type": "string"
+    },
+    "channel": {
+      "enum": [
+        "store",
+        "online"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "context_scope_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Context Scope Sha256",
+      "type": "string"
+    },
+    "cutoff_policy": {
+      "const": "end_of_day_second_v1",
+      "title": "Cutoff Policy",
+      "type": "string"
+    },
+    "data_class": {
+      "const": "evaluation_annotation_never_model_input",
+      "default": "evaluation_annotation_never_model_input",
+      "title": "Data Class",
+      "type": "string"
+    },
+    "effect_independence_claimed": {
+      "const": false,
+      "default": false,
+      "title": "Effect Independence Claimed",
+      "type": "boolean"
+    },
+    "forecast_origin": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Forecast Origin",
+      "type": "string"
+    },
+    "horizon_days": {
+      "maximum": 14,
+      "minimum": 1,
+      "title": "Horizon Days",
+      "type": "integer"
+    },
+    "product_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "scenario": {
+      "enum": [
+        "normal",
+        "promotion",
+        "demand_shock",
+        "inventory_constraint"
+      ],
+      "title": "Scenario",
+      "type": "string"
+    },
+    "selling_location_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Selling Location Id",
+      "type": "string"
+    },
+    "source_scenario_plan_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Source Scenario Plan Sha256"
+    },
+    "target_date": {
+      "format": "date",
+      "title": "Target Date",
+      "type": "string"
+    }
+  },
+  "required": [
+    "product_id",
+    "selling_location_id",
+    "channel",
+    "forecast_origin",
+    "business_timezone",
+    "cutoff_policy",
+    "target_date",
+    "horizon_days",
+    "context_scope_sha256",
+    "source_scenario_plan_sha256",
+    "scenario",
+    "anomaly"
+  ],
+  "title": "CampaignSourceKeyAnnotation",
+  "type": "object"
+}

@@ -1,0 +1,160 @@
+{
+  "$id": "urn:retailops:evaluation:campaign_forecast_segment_policy:22.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "availability_membership": {
+      "const": "independent_boolean_strata_overlap_not_a_partition",
+      "default": "independent_boolean_strata_overlap_not_a_partition",
+      "title": "Availability Membership",
+      "type": "string"
+    },
+    "categories": {
+      "const": "complete_verified_source_catalog_not_selected_from_outcomes",
+      "default": "complete_verified_source_catalog_not_selected_from_outcomes",
+      "title": "Categories",
+      "type": "string"
+    },
+    "category_inventory": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+        "type": "string"
+      },
+      "maxItems": 256,
+      "minItems": 1,
+      "title": "Category Inventory",
+      "type": "array"
+    },
+    "final_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Access Authorized",
+      "type": "boolean"
+    },
+    "intermittency_basis": {
+      "const": "known_open_history_days_missing_or_closed_are_not_sales_zeros",
+      "default": "known_open_history_days_missing_or_closed_are_not_sales_zeros",
+      "title": "Intermittency Basis",
+      "type": "string"
+    },
+    "inventory_basis": {
+      "const": "origin_known_unreserved_available_quantity_not_future_stock",
+      "default": "origin_known_unreserved_available_quantity_not_future_stock",
+      "title": "Inventory Basis",
+      "type": "string"
+    },
+    "late_observation_hours": {
+      "default": 24,
+      "maximum": 168,
+      "minimum": 1,
+      "title": "Late Observation Hours",
+      "type": "integer"
+    },
+    "lead_time_basis": {
+      "const": "origin_known_supplier_quote_not_realized_delivery_or_truth",
+      "default": "origin_known_supplier_quote_not_realized_delivery_or_truth",
+      "title": "Lead Time Basis",
+      "type": "string"
+    },
+    "lead_time_boundaries": {
+      "default": [
+        2,
+        7
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "const": 2,
+          "type": "integer"
+        },
+        {
+          "const": 7,
+          "type": "integer"
+        }
+      ],
+      "title": "Lead Time Boundaries",
+      "type": "array"
+    },
+    "max_rows": {
+      "default": 10000000,
+      "maximum": 100000000,
+      "minimum": 1,
+      "title": "Max Rows",
+      "type": "integer"
+    },
+    "max_segments": {
+      "default": 512,
+      "maximum": 4096,
+      "minimum": 60,
+      "title": "Max Segments",
+      "type": "integer"
+    },
+    "maximum_inventory_snapshot_age_hours": {
+      "const": 24,
+      "default": 24,
+      "title": "Maximum Inventory Snapshot Age Hours",
+      "type": "integer"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "scenario_basis": {
+      "const": "source_bound_preregistered_annotation_never_actual_target",
+      "default": "source_bound_preregistered_annotation_never_actual_target",
+      "title": "Scenario Basis",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "version": {
+      "const": "ai09-complete-forecast-segments-1.0.0",
+      "default": "ai09-complete-forecast-segments-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "volume_basis": {
+      "const": "origin_known_rolling_28_mean_not_target_outcome",
+      "default": "origin_known_rolling_28_mean_not_target_outcome",
+      "title": "Volume Basis",
+      "type": "string"
+    },
+    "volume_boundaries": {
+      "default": [
+        0,
+        5,
+        20
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "prefixItems": [
+        {
+          "const": 0,
+          "type": "integer"
+        },
+        {
+          "const": 5,
+          "type": "integer"
+        },
+        {
+          "const": 20,
+          "type": "integer"
+        }
+      ],
+      "title": "Volume Boundaries",
+      "type": "array"
+    }
+  },
+  "required": [
+    "category_inventory"
+  ],
+  "title": "CampaignForecastSegmentPolicy",
+  "type": "object"
+}

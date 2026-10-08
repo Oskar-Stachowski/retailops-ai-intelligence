@@ -1,0 +1,583 @@
+{
+  "$defs": {
+    "CampaignForecastCalibration": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration_fitted": {
+          "title": "Calibration Fitted",
+          "type": "boolean"
+        },
+        "calibration_score_operation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Calibration Score Operation Id",
+          "type": "string"
+        },
+        "center": {
+          "$ref": "#/$defs/CampaignForecastChoice"
+        },
+        "eligible_rows": {
+          "minimum": 0,
+          "title": "Eligible Rows",
+          "type": "integer"
+        },
+        "final_test_accessed": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Accessed",
+          "type": "boolean"
+        },
+        "horizons": {
+          "items": {
+            "$ref": "#/$defs/CampaignForecastHorizonCalibration"
+          },
+          "maxItems": 14,
+          "minItems": 14,
+          "title": "Horizons",
+          "type": "array"
+        },
+        "independent_evaluation_accessed": {
+          "const": false,
+          "default": false,
+          "title": "Independent Evaluation Accessed",
+          "type": "boolean"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "quality_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Quality Qualified",
+          "type": "boolean"
+        },
+        "rows": {
+          "minimum": 1,
+          "title": "Rows",
+          "type": "integer"
+        },
+        "selection": {
+          "$ref": "#/$defs/CampaignForecastTuneSelection"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "fitted_for_independent_evaluation",
+            "not_ready"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "temporal_coverage_guarantee_claimed": {
+          "const": false,
+          "default": false,
+          "title": "Temporal Coverage Guarantee Claimed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "selection",
+        "center",
+        "calibration_score_operation_id",
+        "rows",
+        "eligible_rows",
+        "horizons",
+        "calibration_fitted"
+      ],
+      "title": "CampaignForecastCalibration",
+      "type": "object"
+    },
+    "CampaignForecastChoice": {
+      "additionalProperties": false,
+      "properties": {
+        "fit_operation_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fit Operation Id"
+        },
+        "model": {
+          "enum": [
+            "history7",
+            "history28",
+            "weekday28",
+            "rf_mean",
+            "hgb",
+            "tensorflow"
+          ],
+          "title": "Model",
+          "type": "string"
+        },
+        "model_artifact_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Artifact Sha256"
+        },
+        "score_operation_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score Operation Id"
+        }
+      },
+      "required": [
+        "model"
+      ],
+      "title": "CampaignForecastChoice",
+      "type": "object"
+    },
+    "CampaignForecastHorizonCalibration": {
+      "additionalProperties": false,
+      "properties": {
+        "eligible_rows": {
+          "minimum": 0,
+          "title": "Eligible Rows",
+          "type": "integer"
+        },
+        "horizon_days": {
+          "maximum": 14,
+          "minimum": 1,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "quantile_rank": {
+          "minimum": 1,
+          "title": "Quantile Rank",
+          "type": "integer"
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Radius"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "rows": {
+          "minimum": 0,
+          "title": "Rows",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "horizon_days",
+        "rows",
+        "eligible_rows",
+        "quantile_rank",
+        "radius",
+        "reasons"
+      ],
+      "title": "CampaignForecastHorizonCalibration",
+      "type": "object"
+    },
+    "CampaignForecastTrialBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration_score_operation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Calibration Score Operation Id",
+          "type": "string"
+        },
+        "calibration_score_receipt_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Calibration Score Receipt Sha256",
+          "type": "string"
+        },
+        "encoding_sha256": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "propertyNames": {
+            "enum": [
+              "rf",
+              "hgb",
+              "tensorflow"
+            ]
+          },
+          "title": "Encoding Sha256",
+          "type": "object"
+        },
+        "fit_operation_ids": {
+          "additionalProperties": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "propertyNames": {
+            "enum": [
+              "rf",
+              "hgb",
+              "tensorflow"
+            ]
+          },
+          "title": "Fit Operation Ids",
+          "type": "object"
+        },
+        "fit_receipt_sha256": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "propertyNames": {
+            "enum": [
+              "rf",
+              "hgb",
+              "tensorflow"
+            ]
+          },
+          "title": "Fit Receipt Sha256",
+          "type": "object"
+        },
+        "model_artifact_sha256": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "propertyNames": {
+            "enum": [
+              "rf",
+              "hgb",
+              "tensorflow"
+            ]
+          },
+          "title": "Model Artifact Sha256",
+          "type": "object"
+        },
+        "tune_score_operation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Tune Score Operation Id",
+          "type": "string"
+        },
+        "tune_score_receipt_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Tune Score Receipt Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tune_score_operation_id",
+        "calibration_score_operation_id",
+        "tune_score_receipt_sha256",
+        "calibration_score_receipt_sha256",
+        "fit_operation_ids",
+        "fit_receipt_sha256",
+        "model_artifact_sha256",
+        "encoding_sha256"
+      ],
+      "title": "CampaignForecastTrialBinding",
+      "type": "object"
+    },
+    "CampaignForecastTuneSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_interval": {
+          "anyOf": [
+            {
+              "enum": [
+                "history7",
+                "history28",
+                "weekday28"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Baseline Interval"
+        },
+        "baseline_mean": {
+          "anyOf": [
+            {
+              "enum": [
+                "history7",
+                "history28",
+                "weekday28"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Baseline Mean"
+        },
+        "baseline_median": {
+          "anyOf": [
+            {
+              "enum": [
+                "history7",
+                "history28",
+                "weekday28"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Baseline Median"
+        },
+        "calibration_fitted": {
+          "const": false,
+          "default": false,
+          "title": "Calibration Fitted",
+          "type": "boolean"
+        },
+        "candidate_interval_center": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CampaignForecastChoice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eligible_rows": {
+          "minimum": 0,
+          "title": "Eligible Rows",
+          "type": "integer"
+        },
+        "final_test_accessed": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Accessed",
+          "type": "boolean"
+        },
+        "independent_evaluation_accessed": {
+          "const": false,
+          "default": false,
+          "title": "Independent Evaluation Accessed",
+          "type": "boolean"
+        },
+        "mean": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CampaignForecastChoice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "median": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CampaignForecastChoice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quality_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Quality Qualified",
+          "type": "boolean"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "rows": {
+          "minimum": 1,
+          "title": "Rows",
+          "type": "integer"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "selected_for_independent_evaluation",
+            "not_ready"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "rows",
+        "eligible_rows",
+        "baseline_mean",
+        "baseline_median",
+        "baseline_interval",
+        "mean",
+        "median",
+        "candidate_interval_center",
+        "reasons"
+      ],
+      "title": "CampaignForecastTuneSelection",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:frozen_forecast_configuration:19.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "calibration": {
+      "$ref": "#/$defs/CampaignForecastCalibration"
+    },
+    "calibration_operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Calibration Operation Id",
+      "type": "string"
+    },
+    "calibration_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Calibration Receipt Sha256",
+      "type": "string"
+    },
+    "development_dataset_id": {
+      "pattern": "^ai09-physical-forecast-sha256-[0-9a-f]{64}$",
+      "title": "Development Dataset Id",
+      "type": "string"
+    },
+    "development_source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Development Source Recipe Sha256",
+      "type": "string"
+    },
+    "feature_schema_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Feature Schema Sha256",
+      "type": "string"
+    },
+    "final_access_authorized_by_this_document": {
+      "const": false,
+      "default": false,
+      "title": "Final Access Authorized By This Document",
+      "type": "boolean"
+    },
+    "journal_completion_proved_by_this_document": {
+      "const": false,
+      "default": false,
+      "title": "Journal Completion Proved By This Document",
+      "type": "boolean"
+    },
+    "protocol_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Protocol Sha256",
+      "type": "string"
+    },
+    "quality_policy_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Quality Policy Sha256",
+      "type": "string"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "runtime_code_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Runtime Code Sha256",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "trials": {
+      "items": {
+        "$ref": "#/$defs/CampaignForecastTrialBinding"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Trials",
+      "type": "array"
+    },
+    "tune_operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Tune Operation Id",
+      "type": "string"
+    },
+    "tune_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Tune Receipt Sha256",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-frozen-forecast-configuration-1.0.0",
+      "default": "ai09-frozen-forecast-configuration-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "worker_environment_lock_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Worker Environment Lock Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "protocol_sha256",
+    "development_source_recipe_sha256",
+    "development_dataset_id",
+    "runtime_code_sha256",
+    "worker_environment_lock_sha256",
+    "feature_schema_sha256",
+    "tune_operation_id",
+    "tune_receipt_sha256",
+    "calibration_operation_id",
+    "calibration_receipt_sha256",
+    "quality_policy_sha256",
+    "calibration",
+    "trials"
+  ],
+  "title": "CampaignForecastFrozenConfiguration",
+  "type": "object"
+}
