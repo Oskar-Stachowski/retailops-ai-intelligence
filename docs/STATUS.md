@@ -9,8 +9,13 @@ zakończyło się pełnym 17/17 success wraz z required-result; inventory odpowi
 wcześniejszemu main `ce81b8d5`, także 17/17 success.
 [Przyrost 09.37](evidence/09-37-complete-forecast-robustness.json) podłącza
 pełne segmenty wybranego, skalibrowanego forecastu i dwie analizy niepewności
-do publicznego evaluatora oraz receipt v24. Zaliczono kontrole komponentów;
-nowy dokładny head i jego publikacja/CI nadal wymagają odbioru.
+do publicznego evaluatora oraz receipt v24.
+[PR #49](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/49)
+został chronioną ścieżką scalony jako main `bc507330` po pełnym 17/17 success
+dokładnego head `f57f4c56` oraz zaakceptowanym poprzednim main `a59b2667`.
+[CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37739064548)
+trwa; nie jest jeszcze odbiorem tego nowego commita. Starszy PR46 zamknięto,
+ponieważ jego kod jest już przodkiem zaakceptowanego main z PR48.
 
 [Piąta próba pełnego ai-dev](evidence/09-38-development-capacity-fifth-run.json),
 run `37731200719`, zakończyła się limitem RSS 8 GiB po 1836.06 s;

@@ -123,5 +123,14 @@
     "format": "2files passed",
     "repository_docs_links_and_required_ci": "passed",
     "git_diff_check": "passed"
+  },
+  "forecast_robustness_publication": {
+    "pr": 49,
+    "exact_head": "f57f4c56c009d4d46834c5ed0d7ed41858fb5c17",
+    "exact_head_required_ci": 37735397993,
+    "whole17_success": true,
+    "protected_merge": "bc5073306ffceb2104c0daeb36405b14f1505dfb",
+    "resulting_main_run": 37739064548,
+    "resulting_main_acceptance": "pending; actual run confirmed in_progress"
   }
 }
