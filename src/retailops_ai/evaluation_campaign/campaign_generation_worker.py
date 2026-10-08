@@ -101,6 +101,11 @@ def producer(phase: str, source: Path, root: Path, request: dict[str, Any]) -> d
             process, backend = planned_backend(source)
             config = ordinary.default_inventory_config(generation)
             tables, context = process.build_tables(generation, plan["scenario_plan"], config)
+            write_options = (
+                {"consume_input": True}
+                if backend["version"] == "planned-source-cached-execution-1.1.0"
+                else {}
+            )
             directory = io.write_source_dataset(
                 tables,
                 context,
@@ -108,6 +113,7 @@ def producer(phase: str, source: Path, root: Path, request: dict[str, Any]) -> d
                 config,
                 root / "raw",
                 scenario_plan=plan["scenario_plan"],
+                **write_options,
             )
             del tables, context
             _, manifest = io.read_source_dataset(directory)

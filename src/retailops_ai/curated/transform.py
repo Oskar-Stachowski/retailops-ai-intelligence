@@ -52,7 +52,10 @@ class Index:
             "CREATE TABLE intervals (kind TEXT, product TEXT, location TEXT, channel TEXT, legacy TEXT, start TEXT, end TEXT, available TEXT, version INTEGER, body BLOB)"
         )
         self.db.execute(
-            "CREATE INDEX interval_lookup ON intervals(kind,location,channel,start,end,available)"
+            "CREATE INDEX interval_lookup ON intervals(kind,location,channel,product,start,end,available)"
+        )
+        self.db.execute(
+            "CREATE INDEX legacy_assignment_lookup ON intervals(legacy,channel,start,end,available) WHERE kind='channel_assignments'"
         )
         self.db.execute(
             "CREATE INDEX sale_reference_lookup ON records(json_extract(CAST(body AS TEXT),'$.sale_id')) WHERE kind='sale_price_references'"
@@ -65,13 +68,14 @@ class Index:
 
     def add(self, table: str, raw: dict[str, Any]) -> None:
         row = normalize(raw)
+        body = encoded(row)
         self.db.execute(
             "INSERT INTO records VALUES (?,?,?)",
             (
                 table,
                 row.get("id")
                 or canonical_json([cell(row[k]) for k in self.specs[table]["grain"]]).decode(),
-                encoded(row),
+                body,
             ),
         )
         if table in {"channel_assignments", "fulfillment_routes", "assortment"}:
@@ -87,7 +91,7 @@ class Index:
                     cell(row["effective_to"]),
                     cell(row["available_at"]),
                     row["version"],
-                    encoded(row),
+                    body,
                 ),
             )
 

@@ -32,7 +32,12 @@ artefakt, koszt oraz niepotwierdzoną przyczynę SIGSEGV starszej próby 1.3.
 [run 37765329151](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37765329151),
 na niezmiennym AI `656d7ddc` i oryginalnym Source `ab4d5690`, po świeżym pełnym
 odbiorze dokładnych CI obu repozytoriów, ancestry i niezmienionych receptur/locków.
-Pomiar nadal trwa na osobnym runnerze; nie wykonujemy automatycznego retry.
+Próba zakończyła się `tree_rss_limit`: 2967.75 s, peak drzewa 8596701184 B,
+zero ukończonych faz. [Szósta porażka](evidence/09-45-development-capacity-sixth-run.json)
+zachowuje uwierzytelniony i zweryfikowany artefakt, pełny koszt, niezmienione
+parametry oraz ograniczenia obserwacji stosów. Przed kolejnym canonical trwa
+szczegółowy audyt wszystkich pięciu faz i odbiór bezpiecznych optymalizacji.
+Nie wykonujemy automatycznego retry ani zmiany profilu lub limitów.
 Plan nie uprawnia do projektowych fitów ani final testu.
 Pomiar nadal dotyczy Source 2.7/snapshot 1.1; planowany Source 2.8,
 pełny ai-training i kampania wszystkich trzech zastosowań wymagają osobnego

@@ -2,6 +2,8 @@
 
 **AI 09: in_progress / not_ready — integracja po gotowych AI 07–08.**
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
+[Audyt pamięci i czasu](docs/ai09-capacity-audit.md) obejmuje wszystkie pięć
+faz przygotowania danych przed kolejnym canonical; zachowuje pełne dane i limity.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja
 i końcowy odbiór trzech zastosowań pozostają otwarte.
 [Pełne portfolio](docs/ai09-full-scenario-portfolio.md) wiąże wszystkie warianty
