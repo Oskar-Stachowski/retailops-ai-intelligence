@@ -28,7 +28,7 @@ from typing import Any, TextIO
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
-    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.4.json"
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.5.json"
 )
 
 
@@ -291,10 +291,10 @@ def require_remote() -> None:
 
 def validate_plan(plan: dict[str, Any]) -> None:
     """Do not let a smaller or final profile inherit this diagnostic's name."""
-    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.3.json")
+    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.4.json")
     previous = read(previous_path)
     previous_result = read(
-        PLAN_PATH.parents[1] / "evidence/09-32-development-capacity-fourth-run.json"
+        PLAN_PATH.parents[1] / "evidence/09-38-development-capacity-fifth-run.json"
     )
     revision_keys = {
         "version",
@@ -309,8 +309,8 @@ def validate_plan(plan: dict[str, Any]) -> None:
     }:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.4.0"
-        or plan["producer_commit"] != "5182782321e9aca15f28c467071e92f268aafb85"
+        plan["version"] != "ai09-development-capacity-probe-1.5.0"
+        or plan["producer_commit"] != "ab4d569081c1a427449717e14ef22249b490ee81"
         or plan["worker_stack_observation"]
         != {
             "phases": ["generation"],
@@ -343,12 +343,16 @@ def validate_plan(plan: dict[str, Any]) -> None:
         or plan["previous_attempt"]
         != {
             "version": previous["version"],
-            "workflow_run": 37714051649,
+            "workflow_run": 37731200719,
             "plan_sha256": sha(previous_path),
             "resource_receipt_sha256": previous_result["resource_receipt_sha256"],
-            "reason": "worker_exit",
-            "exit_code": -11,
-            "root_cause_confirmed": False,
+            "reason": "tree_rss_limit",
+            "exit_code": -9,
+            "completed_phases": 0,
+            "wall_seconds": previous_result["result"]["wall_seconds"],
+            "sampled_tree_peak_rss_bytes": previous_result["result"]["phases"][0][
+                "sampled_tree_peak_rss_bytes"
+            ],
             "previous_failure_preserved": True,
         }
         or plan["generation"]

@@ -1,0 +1,81 @@
+{
+  "version": "ai09-development-capacity-probe-1.5.0",
+  "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+  "producer_commit": "ab4d569081c1a427449717e14ef22249b490ee81",
+  "producer_lock_sha256": "f55452e6f30020829f87d8c040440e7b589fd0f431e84c082aff87a9fe8b35f4",
+  "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+  "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "generation": {
+    "profile": "ai-dev",
+    "seed": 42,
+    "days": 365,
+    "products": 100,
+    "stores": 5,
+    "warehouses": 3,
+    "start_date": "2025-08-01",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 182500,
+    "forecast_plan_days": 14
+  },
+  "budgets": {
+    "tree_rss_bytes": 8589934592,
+    "scratch_bytes": 8589934592,
+    "wall_seconds": 3600,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "parent_limits": {
+    "max_bytes": 2147483648,
+    "max_files": 10000,
+    "max_rows": 20000000,
+    "batch_rows": 256
+  },
+  "expected_snapshot_schema_version": "1.1.0",
+  "snapshot": {
+    "include_truth": false,
+    "chunk_rows": 256,
+    "partition_by_day": false,
+    "required_use_cases": [
+      "forecast_source",
+      "inventory_source"
+    ]
+  },
+  "project_campaign_authorized": false,
+  "model_fit_authorized": false,
+  "final_generation_authorized": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "previous_attempt": {
+    "version": "ai09-development-capacity-probe-1.4.0",
+    "workflow_run": 37731200719,
+    "plan_sha256": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+    "resource_receipt_sha256": "28ec7def328b10a1329bfbf6caf6e23abc5924fff388340576fa38e888caa538",
+    "reason": "tree_rss_limit",
+    "exit_code": -9,
+    "completed_phases": 0,
+    "wall_seconds": 1836.0621024959999,
+    "sampled_tree_peak_rss_bytes": 8590368768,
+    "previous_failure_preserved": true
+  },
+  "revision_reason": "Pin cached Source2.1 typed scenario event retention fix from Source107. Every original event is validated and retained in the same heap until execution; full caller-owned scenario and all outputs remain intact. Existing tiny native parity/weakref controls and allocation measurements are component evidence only, not full-profile RSS or CPU qualification. Preserve immutable1.0-1.4 plans, all five failed attempts/costs, unchanged full canonical dimensions/dates, locks, resource/reserve/parent caps, safe stack observer and campaign prohibitions. Require accepted exact Source producer/head/main and AI head/main Required CI before a distinct manual owned-runner attempt; no automatic retry.",
+  "generation_entrypoint": "data.inventory.source_cohort_batch_v2.run",
+  "worker_stack_observation": {
+    "phases": [
+      "generation"
+    ],
+    "interval_seconds": 120,
+    "repeat": true,
+    "locals_dumped": false,
+    "periodic_observation_not_allocation_measurement": true,
+    "implementation": "python_current_frames_owned_references_no_native_watchdog",
+    "maximum_threads": 64,
+    "maximum_frames_per_thread": 64,
+    "maximum_snapshot_bytes": 65536,
+    "join_timeout_seconds": 5,
+    "may_be_delayed_without_GIL": true,
+    "truncation_explicit": true,
+    "maximum_filename_characters": 256,
+    "maximum_function_characters": 96
+  }
+}

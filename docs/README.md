@@ -1,8 +1,15 @@
 **AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
 i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
+[Przyrost 09.40](evidence/09-40-planned-source-cache-integration.json) zachowuje
+oryginalne planowane anomalie przy użyciu istniejących cache; 21 różnych native
+kontroli Source i 76 testów integracji AI przechodzi na już odsłoniętych fixture.
+Pełna pojemność, nowy head/main CI, kampania trzech zastosowań i final nadal są otwarte.
 [Pełna próba ai-dev 09.38](evidence/09-38-development-capacity-fifth-run.json)
 zakończyła się limitem pamięci; rzeczywista pełna kampania pozostaje do wykonania.
+[Receptura 1.5](reference/ai09-development-capacity-v1.5.json) przygotowuje
+osobny pomiar producenta zwalniającego przetworzone zdarzenia. Nie została
+uruchomiona; zachowuje pełne rozmiary, limity i pięć poprzednich porażek.
 Wcześniejsze przyrosty są zapisane w
 [odbiorze 09.11](evidence/09-11-main-integration.md). Dawne katalogi
 robocze AI 09 w `/private/tmp` nie istnieją; 09.12 zachowuje ich opublikowaną

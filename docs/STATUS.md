@@ -5,17 +5,44 @@
 scala Source annotations, pełny context bundle i ocenę wszystkich surowych prób
 na main `a59b2667` po 17/17 success dokładnego head `456dbfaf`.
 [CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37734313726)
-pozostaje do zakończenia. Wcześniejszy main `ce81b8d5` ma 17/17 success.
+zakończyło się pełnym 17/17 success wraz z required-result; inventory odpowiada
+wcześniejszemu main `ce81b8d5`, także 17/17 success.
 [Przyrost 09.37](evidence/09-37-complete-forecast-robustness.json) podłącza
 pełne segmenty wybranego, skalibrowanego forecastu i dwie analizy niepewności
-do publicznego evaluatora oraz receipt v24. Zaliczono kontrole komponentów;
-nowy dokładny head i jego publikacja/CI nadal wymagają odbioru.
+do publicznego evaluatora oraz receipt v24.
+[PR #49](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/49)
+został chronioną ścieżką scalony jako main `bc507330` po pełnym 17/17 success
+dokładnego head `f57f4c56` oraz zaakceptowanym poprzednim main `a59b2667`.
+[CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37739064548)
+zakończyło się pełnym 17/17 success wraz z required-result. Starszy PR46 zamknięto,
+ponieważ jego kod jest już przodkiem zaakceptowanego main z PR48.
 
 [Piąta próba pełnego ai-dev](evidence/09-38-development-capacity-fifth-run.json),
 run `37731200719`, zakończyła się limitem RSS 8 GiB po 1836.06 s;
 zero z pięciu faz ukończono. Zachowano artefakt, metadane stosów i wszystkie
 wcześniejsze koszty. Nie uruchomiono kolejnej próby ani nie zmniejszono profilu.
 Pełny planowany Source i ai-training pozostają niezakwalifikowane.
+[Receptura 1.5](reference/ai09-development-capacity-v1.5.json) i
+[receipt 09.39](evidence/09-39-event-release-capacity-preparation.json)
+przygotowują odrębny pomiar na Source `ab4d5690`, który zwalnia typowane
+zdarzenia po ich przetworzeniu. Pierwotny Source head `ab4d5690` ma 33 zaliczone
+native kontrole i pełny scoped Required CI: 21 success i 4 deklarowane skips.
+Aktualny Source main `cd5a9dbb` również ma 21 success i 4 scoped skips.
+[Przyrost 09.40](evidence/09-40-planned-source-cache-integration.json) dodaje
+cached execution oryginalnych planów demand i physical Source 2.8 oraz wybór
+tego backendu według przypiętego producenta. Zachowuje komplet 58 tabel,
+pełne scenariusze i zwykły niezależny replay. Dla już odsłoniętych kontroli
+trzech seedów zaliczono 21 różnych kontroli Source w opisanych osobnych runach
+oraz 76 testów AI; 6 istniejących warunkowych fixture annotations jest skipped.
+Source PR107 integruje przyrost jako head `345a7cf3` z nowszym main;
+ten head i nowe AI head/main wymagają własnego pełnego CI przed odbiorem.
+[Source CI nowego head](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37743193615)
+trwa. [PR #50](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/50)
+scalono chronioną ścieżką jako `f0088e08` po pełnym 17/17 success dokładnego
+head `daf8d605` i zaakceptowanego base `bc507330`.
+[CI tego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37743593906)
+jest w kolejce; publikacja receptury nie oznacza jej wykonania ani odbioru tego main.
+Nie uruchomiono próby 1.5; nie zmniejszono danych ani nie zwiększono limitów.
 Projektowy journal nie został zainicjalizowany, nowe projektowe fity wynoszą zero,
 a świeży final test pozostaje zamknięty. Do zamknięcia pozostają pełna kampania
 trzech zastosowań, pokrycie scenariuszy/seedów, raporty i lifecycle oraz odbiór main.

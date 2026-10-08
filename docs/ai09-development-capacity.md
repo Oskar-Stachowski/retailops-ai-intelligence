@@ -1,5 +1,40 @@
 # Pomiar pełnego development AI 09
 
+[Receptura 1.5](reference/ai09-development-capacity-v1.5.json) przypina Source
+`ab4d5690` z [PR #107](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/107).
+Cached simulator po pełnej walidacji i inicjalizacji kolejki zwalnia dodatkowe
+referencje do typowanych list scenariusza. Każde zdarzenie nadal pozostaje
+w kolejce do wykonania; pełny scenariusz rodzica i wszystkie wyniki są zachowane.
+33 native testy oraz trzy pary kontroli alokacji potwierdzają zgodność
+58 tabel/CSV, zwalnianie obiektów podczas wykonania i brak mutacji wejść.
+Spadek peak alokacji Python małego komponentu o 15.50% nie dowodzi zmniejszenia
+pełnego RSS ani czasu całego generatora. [Receipt przygotowania](evidence/09-39-event-release-capacity-preparation.json)
+wiąże exact producer, recepturę, niezmienione limity i pięć wcześniejszych prób.
+
+[Przyrost 09.40](evidence/09-40-planned-source-cache-integration.json) dodaje
+osobną ścieżkę cached execution planów demand/physical Source 2.8. Na trzech
+już odsłoniętych seedach zachowuje komplet danych, wszystkie 38 kontroli jakości,
+pełny fizyczny scenariusz i niezależny ordinary replay. Zamrożona receptura 1.5
+nadal przypina wcześniejszy commit `ab4d5690`; nie zmieniono jej scope ani locks.
+PR50 publikuje ją na main `f0088e08` po pełnym head CI. Nowy whole-main CI
+i Source PR107 head `345a7cf3` nadal wymagają odbioru przed dispatch.
+
+Pełna próba 1.4 została wykonana i zakończyła się `tree_rss_limit` po 1836.06 s,
+z peak drzewa 8590368768 B i zero ukończonych faz.
+[Wynik 09.38](evidence/09-38-development-capacity-fifth-run.json) zachowuje
+artefakt, koszt oraz niepotwierdzoną przyczynę SIGSEGV starszej próby 1.3.
+1.5 zachowuje bajty receptur 1.0–1.4, cały łańcuch pięciu porażek, wymiary
+365 × 100 × 5 × 3, daty, 14 dni planów, locks, RSS/scratch po 8 GiB,
+3600 s, rezerwy i parent caps. Zachowuje też bezpieczny obserwator ramek 1.4.
+**Próba 1.5 nie została uruchomiona.** Wymaga pełnego Required CI dokładnego
+Source head/main oraz AI head/main, sprawdzenia ancestry i ręcznego dispatch
+na osobnym runnerze. Plan nie uprawnia do projektowych fitów ani final testu.
+Pomiar nadal dotyczy Source 2.7/snapshot 1.1; planowany Source 2.8,
+pełny ai-training i kampania wszystkich trzech zastosowań wymagają osobnego
+odbioru. AI07/08 pozostają zamknięte.
+
+Poniżej zachowano historię wcześniejszych przygotowań i pomiarów.
+
 [Prospektywna receptura 1.4](reference/ai09-development-capacity-v1.4.json)
 zastępuje natywny timer dumpujący stosy ograniczoną obserwacją ramek przez
 `sys._current_frames()` w osobnym wątku własnego workera. Odczytuje wyłącznie
@@ -21,7 +56,8 @@ zakończeniu ramki, granice bajtów i unicode, awarie obserwacji oraz zachowanie
 łańcucha wszystkich czterech porażek. To małe kontrole stdlib, bez generacji
 Source, fitów i final test. Kontrole Linux nowego dokładnego head, pełne
 Required CI, chroniona publikacja i odbiór main są nadal wymagane przed
-odrębnym ręcznym dispatch. **Próba pełna 1.4 nie została uruchomiona.**
+odrębnym ręcznym dispatch. Na etapie tych kontroli próba 1.4 jeszcze nie była
+uruchomiona; jej późniejszy rzeczywisty wynik opisuje receipt 09.38 powyżej.
 Producent, locks, canonical, daty, limity i rezerwy są identyczne z 1.3;
 bajty receptur 1.0–1.3 pozostają zachowane. Hipoteza o przyczynie poprzedniego
 SIGSEGV pozostaje niepotwierdzona. Zmiana obserwatora nie dowodzi zmniejszenia
