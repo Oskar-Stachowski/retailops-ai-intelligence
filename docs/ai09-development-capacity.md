@@ -24,9 +24,21 @@ po pełnym CI dokładnych head, standardowych scaleniach i pełnym CI wynikowych
 main obu repozytoriów. [Dowód 09.50](evidence/09-50-audit-acceptance-capacity-seventh-start.json)
 wiąże Source `4dacf040`, AI `89d6c8f2`, niezmienną referencję i dokładne bajty
 receptur, skryptu, workflow oraz locków. Zachowano pełny profil 365 × 100 × 5 × 3,
-limity i sześć wcześniejszych porażek. Wynik zasobów tego przebiegu wymaga
-osobnego odbioru artefaktu; sam dispatch nie potwierdza pojemności ani jakości.
-Nie wykonuje się automatycznego retry.
+limity i sześć wcześniejszych porażek.
+[Wynik siódmej próby 09.51](evidence/09-51-development-capacity-seventh-run.json) wiąże odebrany i zweryfikowany artefakt [run 37807749014](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014).
+Pomiar zakończył się `tree_rss_limit`, z 0/5 ukończonych faz. Cały przebieg trwał 1702.79 s;
+próbkowany peak drzewa wyniósł 8635432960 B, a dolna granica CPU workera 1701.93 s.
+Pełna pojemność pozostaje niepotwierdzona. Zachowano koszt porażki; nie wykonano automatycznego retry.
+Pełny profil 365 × 100 × 5 × 3, limity, rezerwy i wcześniejsze koszty zachowano.
+Nowe projektowe fity i odczyty świeżego final wynoszą zero; AI 09 pozostaje `not_ready`.
+
+| Faza | Wynik | Czas (s) | RSS drzewa (B) | CPU dolna granica (s) | Scratch zaalokowany (B) |
+|---|---|---:|---:|---:|---:|
+| generation | tree_rss_limit | 1702.62 | 8635432960 | 1701.93 | 49152 |
+
+Próbkowane RSS nie jest ciągłym maksimum. CPU nie obejmuje supervisora ani
+niezaobserwowanych dzieci. Nieukończonej próby nie porównuje się jako kosztu
+ukończonego profilu. Lokalizacje ramek nie dowodzą przyczyny alokacji.
 
 Poniżej zachowano opis wykonanej próby 1.5 i poprzednich pomiarów.
 
@@ -65,8 +77,8 @@ odbiorze dokładnych CI obu repozytoriów, ancestry i niezmienionych receptur/lo
 Próba zakończyła się `tree_rss_limit`: 2967.75 s, peak drzewa 8596701184 B,
 zero ukończonych faz. [Szósta porażka](evidence/09-45-development-capacity-sixth-run.json)
 zachowuje uwierzytelniony i zweryfikowany artefakt, pełny koszt, niezmienione
-parametry oraz ograniczenia obserwacji stosów. Przed kolejnym canonical trwa
-szczegółowy audyt wszystkich pięciu faz i odbiór bezpiecznych optymalizacji.
+parametry oraz ograniczenia obserwacji stosów. Wymagany po tej porażce audyt
+pięciu faz i odbiór bezpiecznych optymalizacji zakończono przed próbą 1.7.
 Nie wykonujemy automatycznego retry ani zmiany profilu lub limitów.
 Plan nie uprawnia do projektowych fitów ani final testu.
 Pomiar nadal dotyczy Source 2.7/snapshot 1.1; planowany Source 2.8,
@@ -324,3 +336,9 @@ Te wcześniejsze warunki publikacji są spełnione. Terminalny wynik próby 1.3
 jest opisany powyżej i w 09-32. Pozostaje potrzeba korekty diagnostyki oraz
 rzeczywistej kwalifikacji pełnego źródła, snapshotu i curated; zielone CI
 komponentów nie zastępuje tych wyników.
+
+Ostatni z 14 ograniczonych zapisów stosu obejmuje `InventoryLedger.from_payload`
+podczas niezależnej `reconcile_simulation` / `reconcile_source_commerce`.
+To lokalizacja wykonywania, nie dowód właściciela alokacji ani dokładny stos chwili
+zatrzymania. Przed kolejnym canonical trzeba zmierzyć tę część na odsłoniętych
+kontrolach, zachować wszystkie walidatory i odebrać ewentualne poprawki oraz pełne CI.

@@ -20,6 +20,8 @@ raz po pełnym odbiorze obu repozytoriów: [run 37807749014](https://github.com/
 [Dowód 09.50](evidence/09-50-audit-acceptance-capacity-seventh-start.json) wiąże
 commity, pełne CI, profil i niezmienione limity. 1.6 pozostaje zachowana i nieuruchomiona;
 1.5 została wykonana i stanowi szóstą porażkę. Pełna kampania nadal jest otwarta.
+[Wynik 09.51](evidence/09-51-development-capacity-seventh-run.json) zachowuje
+rzeczywisty artefakt i koszty siódmej próby: `tree_rss_limit`, 0/5 ukończonych faz.
 Wcześniejsze przyrosty są zapisane w
 [odbiorze 09.11](evidence/09-11-main-integration.md). Dawne katalogi
 robocze AI 09 w `/private/tmp` nie istnieją; 09.12 zachowuje ich opublikowaną
