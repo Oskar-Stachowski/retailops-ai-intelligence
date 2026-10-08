@@ -10,8 +10,12 @@ from retailops_ai.evaluation_campaign.campaign_evaluation_receipt import (
     CampaignForecastEvaluationReceipt,
     _CampaignForecastEvaluationFields,
 )
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import CampaignPortfolioProtocol
 from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract import (
     CampaignPortfolioForecastEvaluationBinding,
+)
+from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
+    CampaignPortfolioRequiredGroupPolicy,
 )
 from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
     CampaignForecastUncertaintyPolicy,
@@ -80,15 +84,65 @@ class CampaignForecastPortfolioRobustEvaluationReceipt(
     )
 
 
+class CampaignForecastRequiredGroupEvaluationReceipt(_CampaignForecastRobustEvaluationFields):
+    version: Literal["ai09-campaign-forecast-required-group-evaluation-receipt-1.0.0"] = (
+        "ai09-campaign-forecast-required-group-evaluation-receipt-1.0.0"
+    )
+    portfolio_protocol: CampaignPortfolioProtocol
+    required_group_policy: CampaignPortfolioRequiredGroupPolicy
+    portfolio_binding: CampaignPortfolioForecastEvaluationBinding | None = None
+
+    def _development_source_matches(self) -> bool:
+        return (
+            self.portfolio_binding is not None
+            and self.portfolio_binding.matches(self.configuration, self.plan)
+            and self.portfolio_binding.protocol == self.portfolio_protocol
+            and self.portfolio_binding.evaluation_dataset_id == self.dataset_id
+            and self.portfolio_binding.operation_id == self.operation_id
+            and self.portfolio_binding.recipe == self.recipe
+        )
+
+    def _additional_artifacts(self) -> set[str]:
+        return {"required-groups.json", "portfolio-protocol.json"} | (
+            {"portfolio.json"} if self.portfolio_binding is not None else set()
+        )
+
+    @model_validator(mode="after")
+    def frozen_required_groups(self) -> Self:
+        self.required_group_policy.bind(self.portfolio_protocol)
+        source = next(
+            (
+                s
+                for s in self.portfolio_protocol.sources
+                if s.content_sha256() == self.plan.source_recipe_sha256
+            ),
+            None,
+        )
+        if (
+            self.protocol_sha256 != self.portfolio_protocol.content_sha256()
+            or self.runtime_code_sha256 != self.portfolio_protocol.runtime.code_sha256
+            or self.configuration.development_source_recipe_sha256
+            != self.portfolio_protocol.training_source_recipe_sha256["forecast"]
+            or (self.plan.phase == "development") != (self.portfolio_binding is not None)
+            or source is None
+            or source.phase != self.plan.phase
+        ):
+            raise ValueError("campaign_required_group_receipt_protocol_or_phase_mismatch")
+        return self
+
+
 ForecastEvaluationReceipt = (
     CampaignForecastEvaluationReceipt
     | CampaignForecastRobustEvaluationReceipt
     | CampaignForecastPortfolioEvaluationReceipt
     | CampaignForecastPortfolioRobustEvaluationReceipt
+    | CampaignForecastRequiredGroupEvaluationReceipt
 )
 
 ForecastRobustEvaluationReceipt = (
-    CampaignForecastRobustEvaluationReceipt | CampaignForecastPortfolioRobustEvaluationReceipt
+    CampaignForecastRobustEvaluationReceipt
+    | CampaignForecastPortfolioRobustEvaluationReceipt
+    | CampaignForecastRequiredGroupEvaluationReceipt
 )
 
 
@@ -97,7 +151,11 @@ def is_robust_evaluation(
 ) -> TypeGuard[ForecastRobustEvaluationReceipt]:
     return isinstance(
         receipt,
-        (CampaignForecastRobustEvaluationReceipt, CampaignForecastPortfolioRobustEvaluationReceipt),
+        (
+            CampaignForecastRobustEvaluationReceipt,
+            CampaignForecastPortfolioRobustEvaluationReceipt,
+            CampaignForecastRequiredGroupEvaluationReceipt,
+        ),
     )
 
 
@@ -114,4 +172,6 @@ def parse_forecast_evaluation_receipt(raw: bytes) -> ForecastEvaluationReceipt:
         return CampaignForecastPortfolioEvaluationReceipt.model_validate_json(raw)
     if value.get("version") == "ai09-campaign-portfolio-forecast-robust-evaluation-receipt-1.0.0":
         return CampaignForecastPortfolioRobustEvaluationReceipt.model_validate_json(raw)
+    if value.get("version") == "ai09-campaign-forecast-required-group-evaluation-receipt-1.0.0":
+        return CampaignForecastRequiredGroupEvaluationReceipt.model_validate_json(raw)
     raise SnapshotError("campaign_evaluation_receipt_version_invalid")

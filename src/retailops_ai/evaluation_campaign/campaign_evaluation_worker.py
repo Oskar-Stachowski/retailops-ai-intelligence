@@ -40,10 +40,14 @@ from retailops_ai.evaluation_campaign.campaign_final_contract import (
 from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
 from retailops_ai.evaluation_campaign.campaign_forecast_inference import infer_functionals
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import CampaignPortfolioProtocol
 from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract import (
     CampaignPortfolioForecastEvaluationBinding,
 )
 from retailops_ai.evaluation_campaign.campaign_raw_context import RawContextPass
+from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
+    CampaignPortfolioRequiredGroupPolicy,
+)
 from retailops_ai.evaluation_campaign.campaign_score_contract import FAMILIES
 from retailops_ai.evaluation_campaign.campaign_score_worker import load_models
 from retailops_ai.evaluation_campaign.campaign_selected_robustness import SelectedRobustness
@@ -504,6 +508,24 @@ def finalize(
     root: Path, request: dict[str, Any], plan: CampaignForecastEvaluationPlan
 ) -> dict[str, Any]:
     configuration = _configuration(request, plan)
+    required_group_policy = None
+    portfolio_protocol = None
+    if ("required_group_policy" in request) != ("portfolio_protocol" in request):
+        raise SnapshotError("campaign_evaluation_required_group_policy_pair")
+    if "required_group_policy" in request:
+        required_group_policy = CampaignPortfolioRequiredGroupPolicy.model_validate_json(
+            canonical_bytes(request["required_group_policy"])
+        )
+        portfolio_protocol = CampaignPortfolioProtocol.model_validate_json(
+            canonical_bytes(request["portfolio_protocol"])
+        )
+        required_group_policy.bind(portfolio_protocol)
+        if (
+            portfolio_protocol.content_sha256() != configuration.protocol_sha256
+            or portfolio_protocol.runtime.code_sha256 != configuration.runtime_code_sha256
+            or "uncertainty_policy" not in request
+        ):
+            raise SnapshotError("campaign_evaluation_required_group_configuration_mismatch")
     configuration_sha256 = plan.frozen_configuration_sha256
     selection = configuration.calibration.selection
     if (
@@ -543,6 +565,8 @@ def finalize(
                 canonical_bytes(request["uncertainty_policy"])
             ),
             retained_median_baseline=selection.median.score_operation_id is None,
+            required_group_policy=required_group_policy,
+            portfolio_protocol=portfolio_protocol,
         )
     robust_result = None
     keys, eligible_keys = hashlib.sha256(), hashlib.sha256()

@@ -143,6 +143,7 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
     )
     document["selection_policy_sha256"] = old_tune.plan.campaign_selection_policy_sha256
     context_recipe = uncertainty_policy = None
+    required_group_policy = None
     if mode == "robust" or mode.endswith("-robust"):
         from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
             CampaignContextBundleRecipe,
@@ -177,6 +178,13 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
             segment_policy=segment_policy,
             resources=evaluation_recipe().resources,
         )
+        if "-required-" in mode:
+            from test_campaign_required_groups import preregistration
+
+            _, required_group_policy = preregistration(
+                root, base_document=document, segment_policy=segment_policy
+            )
+            document["selection_policy_sha256"] = required_group_policy.content_sha256()
     plans = {
         key: fit.plan.model_copy(
             update={"source_recipe_sha256": source, "export_operation_id": exported.operation_id}
@@ -190,7 +198,11 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
         for score in (*old_tune_scores, *old_scores)
     }
     tune_plan = old_tune.plan.model_copy(
-        update={"source_recipe_sha256": source, "export_operation_id": exported.operation_id}
+        update={
+            "source_recipe_sha256": source,
+            "export_operation_id": exported.operation_id,
+            "campaign_selection_policy_sha256": document["selection_policy_sha256"],
+        }
     )
     calibration_plan = old_calibration.plan.model_copy(
         update={"source_recipe_sha256": source, "export_operation_id": exported.operation_id}
@@ -551,6 +563,7 @@ def control(stored_control, population, timeline, tmp_path, monkeypatch, request
         "calls": calls,
         "context_recipe": context_recipe,
         "uncertainty_policy": uncertainty_policy,
+        "required_group_policy": required_group_policy,
     }
 
 

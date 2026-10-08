@@ -55,7 +55,17 @@ def declared_context(control, tmp_path, monkeypatch):
     )
     template = unregistered_context_receipt(control)
     scope = template.scope.model_copy(
-        update={"segment_policy_sha256": recipe.segment_policy.content_sha256()}
+        update={
+            "segment_policy_sha256": recipe.segment_policy.content_sha256(),
+            "source_scenario_plan_sha256": next(
+                (
+                    getattr(s, "scenario_plan_sha256", None)
+                    for s in control["protocol"].sources
+                    if s.content_sha256() == recipe.source_recipe_sha256
+                ),
+                None,
+            ),
+        }
     )
     contexts = []
     with closing(worker._readonly(prep / "inputs.sqlite")) as db:
@@ -64,7 +74,7 @@ def declared_context(control, tmp_path, monkeypatch):
                 annotation = CampaignSourceKeyAnnotation(
                     **record.row.model_dump(include=set(ForecastKey.model_fields)),
                     context_scope_sha256=scope.content_sha256(),
-                    source_scenario_plan_sha256=None,
+                    source_scenario_plan_sha256=scope.source_scenario_plan_sha256,
                     scenario="normal",
                     anomaly="unannotated",
                 )

@@ -16,8 +16,10 @@ osobną ścieżkę cached execution planów demand/physical Source 2.8. Na trzec
 już odsłoniętych seedach zachowuje komplet danych, wszystkie 38 kontroli jakości,
 pełny fizyczny scenariusz i niezależny ordinary replay. Zamrożona receptura 1.5
 nadal przypina wcześniejszy commit `ab4d5690`; nie zmieniono jej scope ani locks.
-PR50 publikuje ją na main `f0088e08` po pełnym head CI. Nowy whole-main CI
-i Source PR107 head `345a7cf3` nadal wymagają odbioru przed dispatch.
+PR50 publikuje ją na main `f0088e08` po pełnym head CI. Source PR107 został
+scalony jako `3d13a4dd` po poprawce testowej `fe9d404d`; dokładny head i wynikowy
+main mają pełne 25-job inventory: 21 success i cztery deklarowane scoped skips.
+Nieudany CI wcześniejszego head `345a7cf3` pozostaje zachowany.
 
 Pełna próba 1.4 została wykonana i zakończyła się `tree_rss_limit` po 1836.06 s,
 z peak drzewa 8590368768 B i zero ukończonych faz.
@@ -26,9 +28,12 @@ artefakt, koszt oraz niepotwierdzoną przyczynę SIGSEGV starszej próby 1.3.
 1.5 zachowuje bajty receptur 1.0–1.4, cały łańcuch pięciu porażek, wymiary
 365 × 100 × 5 × 3, daty, 14 dni planów, locks, RSS/scratch po 8 GiB,
 3600 s, rezerwy i parent caps. Zachowuje też bezpieczny obserwator ramek 1.4.
-**Próba 1.5 nie została uruchomiona.** Wymaga pełnego Required CI dokładnego
-Source head/main oraz AI head/main, sprawdzenia ancestry i ręcznego dispatch
-na osobnym runnerze. Plan nie uprawnia do projektowych fitów ani final testu.
+**Próba 1.5 została uruchomiona raz** jako
+[run 37765329151](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37765329151),
+na niezmiennym AI `656d7ddc` i oryginalnym Source `ab4d5690`, po świeżym pełnym
+odbiorze dokładnych CI obu repozytoriów, ancestry i niezmienionych receptur/locków.
+Pomiar nadal trwa na osobnym runnerze; nie wykonujemy automatycznego retry.
+Plan nie uprawnia do projektowych fitów ani final testu.
 Pomiar nadal dotyczy Source 2.7/snapshot 1.1; planowany Source 2.8,
 pełny ai-training i kampania wszystkich trzech zastosowań wymagają osobnego
 odbioru. AI07/08 pozostają zamknięte.
