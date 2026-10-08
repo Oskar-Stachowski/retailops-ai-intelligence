@@ -11,6 +11,14 @@ Spadek peak alokacji Python małego komponentu o 15.50% nie dowodzi zmniejszenia
 pełnego RSS ani czasu całego generatora. [Receipt przygotowania](evidence/09-39-event-release-capacity-preparation.json)
 wiąże exact producer, recepturę, niezmienione limity i pięć wcześniejszych prób.
 
+[Przyrost 09.40](evidence/09-40-planned-source-cache-integration.json) dodaje
+osobną ścieżkę cached execution planów demand/physical Source 2.8. Na trzech
+już odsłoniętych seedach zachowuje komplet danych, wszystkie 38 kontroli jakości,
+pełny fizyczny scenariusz i niezależny ordinary replay. Zamrożona receptura 1.5
+nadal przypina wcześniejszy commit `ab4d5690`; nie zmieniono jej scope ani locks.
+PR50 publikuje ją na main `f0088e08` po pełnym head CI. Nowy whole-main CI
+i Source PR107 head `345a7cf3` nadal wymagają odbioru przed dispatch.
+
 Pełna próba 1.4 została wykonana i zakończyła się `tree_rss_limit` po 1836.06 s,
 z peak drzewa 8590368768 B i zero ukończonych faz.
 [Wynik 09.38](evidence/09-38-development-capacity-fifth-run.json) zachowuje
