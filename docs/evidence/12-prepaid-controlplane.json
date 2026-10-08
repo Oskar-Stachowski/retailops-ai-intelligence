@@ -1,0 +1,65 @@
+{
+  "allowed_operations": [
+    "GetFoundationModelAvailability",
+    "GetInferenceProfile",
+    "GetUseCaseForModelAccess"
+  ],
+  "checked_at": "2026-10-08T06:33:12.827213+00:00",
+  "control_operations_attempted": [
+    "GetFoundationModelAvailability",
+    "GetUseCaseForModelAccess",
+    "GetInferenceProfile",
+    "GetFoundationModelAvailability",
+    "GetUseCaseForModelAccess",
+    "GetInferenceProfile"
+  ],
+  "embedding_operations": 0,
+  "inference_operations": 0,
+  "models": [
+    {
+      "access": {
+        "availability": {
+          "agreement": "AVAILABLE",
+          "authorization": "AUTHORIZED",
+          "entitlement": "AVAILABLE",
+          "region": "AVAILABLE"
+        },
+        "reason": null,
+        "status": "passed",
+        "use_case_form_present": true
+      },
+      "model": "anthropic.claude-haiku-4-5-20251001-v1:0",
+      "verified_destination_regions": [
+        "eu-central-1",
+        "eu-north-1",
+        "eu-south-1",
+        "eu-south-2",
+        "eu-west-1",
+        "eu-west-3"
+      ]
+    },
+    {
+      "access": {
+        "availability": {
+          "agreement": "AVAILABLE",
+          "authorization": "AUTHORIZED",
+          "entitlement": "AVAILABLE",
+          "region": "AVAILABLE"
+        },
+        "reason": null,
+        "status": "passed",
+        "use_case_form_present": true
+      },
+      "model": "anthropic.claude-sonnet-4-6",
+      "verified_destination_regions": [
+        "eu-central-1",
+        "eu-north-1",
+        "eu-south-1",
+        "eu-south-2",
+        "eu-west-1",
+        "eu-west-3"
+      ]
+    }
+  ],
+  "paid_operations_permitted": false
+}

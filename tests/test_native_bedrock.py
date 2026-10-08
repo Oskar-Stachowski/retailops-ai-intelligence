@@ -17,6 +17,7 @@ from test_native_offline import settings_args
 from retailops_ai.agent.graph_contracts import GraphRequest
 from retailops_ai.assistant.native_bedrock import (
     NativeBedrockAssistant,
+    NativeLazyBedrock,
     NativeRuntimeConfig,
     load_native_runtime,
 )
@@ -164,3 +165,51 @@ def test_native_settings_keep_configuration_private():
     )
     assert "private-native" not in str(value)
     assert "assistant_native_runtime_file" not in value.model_dump()
+
+
+@pytest.mark.parametrize("intent", ["operations", "documentation"])
+def test_native_count_bound_and_generation_use_identical_wire(native_config, intent):
+    from retailops_ai.agent.chat import ChatRequest
+
+    references = {
+        "content_trust": "untrusted_reference",
+        "tool_results": [{"retained_business_evidence": "native persisted facts"}],
+        "citation_candidates": [{"source_ref": "reviewed"}, {"source_ref": "unrelated"}],
+        "data_freshness": {"unchanged": True},
+        "server_evidence_policy": {
+            "request": {"intent": intent},
+            "facts": [{"evidence": {"source_ref": "reviewed", "claim": "exact quote"}}],
+        },
+    }
+    request = ChatRequest(
+        "config", "synthesize", "answer", (), "question", (), json.dumps(references), 1500
+    )
+    seen = []
+
+    class Transport:
+        def input_token_bound(self, value):
+            seen.append(value)
+            return 200
+
+        async def count_input_tokens(self, value):
+            seen.append(value)
+            return 100
+
+        async def generate(self, value):
+            seen.append(value)
+            return "scripted reply, no SDK"
+
+    provider = NativeLazyBedrock(native_config)
+    provider.provider = Transport()
+    assert provider.input_token_bound(request) == 200
+    assert asyncio.run(provider.count_input_tokens(request)) == 100
+    assert asyncio.run(provider.generate(request)) == "scripted reply, no SDK"
+    assert seen[0] == seen[1] == seen[2]
+    if intent == "operations":
+        assert all(value is request for value in seen)
+    else:
+        projected = json.loads(seen[0].references_json)
+        assert "tool_results" not in projected
+        assert projected["server_evidence_policy"] == references["server_evidence_policy"]
+        assert projected["citation_candidates"] == [{"source_ref": "reviewed"}]
+    assert json.loads(request.references_json) == references

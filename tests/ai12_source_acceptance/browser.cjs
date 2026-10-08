@@ -10,7 +10,7 @@ const { chromium, expect } = require(path.join(process.env.AI12_SOURCE_ROOT, "fr
   const browser = await chromium.launch({ headless: true });
   try {
     const page = await browser.newPage();
-    await page.goto("http://127.0.0.1:4173/recommendations");
+    await page.goto((process.env.AI12_FRONTEND_URL || "http://127.0.0.1:4173") + "/recommendations");
     const panel = page.getByRole("region", { name: "AI suggestions", exact: true });
     await panel.getByLabel("Personal suggestion read credential").fill(secret);
     await panel.getByRole("button", { name: "Connect AI suggestions" }).click();
