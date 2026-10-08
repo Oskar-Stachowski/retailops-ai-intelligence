@@ -372,9 +372,17 @@ def test_recommendation_reads_recheck_current_scope_capabilities_and_credentials
 
 
 def test_expired_recommendation_is_hidden_even_from_audit_reader(database, tmp_path):
-    answer, settings, tokens = query(database, tmp_path, lifetime=2, include_context=True)
+    # Leave time for real admission/completion on a CPU-constrained runner.
+    # The assertion still crosses the actual persisted expiry in PostgreSQL.
+    answer, settings, tokens = query(database, tmp_path, lifetime=30, include_context=True)
     identity = answer["recommended_actions"][0]["recommendation_id"]
-    time.sleep(2.1)
+    from datetime import UTC, datetime
+
+    with TestClient(create_app(settings), base_url="http://127.0.0.1") as client:
+        current = client.get("/api/v1/recommendations/" + identity, headers=headers(tokens))
+        assert current.status_code == 200
+        expires = PersistedSuggestion.model_validate_json(current.text).expires_at
+    time.sleep(max(0, (expires - datetime.now(UTC)).total_seconds()) + 0.2)
     with TestClient(create_app(settings), base_url="http://127.0.0.1") as client:
         for name in ("owner", "admin"):
             assert (
