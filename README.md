@@ -2,16 +2,23 @@
 
 **AI 09: in_progress / not_ready — integracja po gotowych AI 07–08.**
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
+[Pełny publiczny parent anomaly](docs/ai09-native-anomaly-parent.md) odtwarza
+Source i curated, indeksuje wszystkie fakty na dysku i zachowuje natywny wire.
+42 kontrole i 42 kontrole z paczki przeszły; kwalifikacja dnia, Point census
+i offline truth pozostają wymagane.
 [Replay capture anomaly](docs/ai09-native-anomaly-replay.md) przechowuje
 globalny stan na dysku i odtwarza oryginalne reguły zdarzeń oraz agregacji.
-Pełny publiczny adapter Source i kwalifikacja dnia pozostają wymagane.
+Pełne powiązanie z kampanią i kwalifikacja dnia pozostają wymagane.
 [Natywna weryfikacja kwalifikacji](docs/ai09-native-selection-verification.md)
 blokuje dostęp do final na podstawie samych deklaracji jakości anomaly/stockout.
 [Natywna ocena anomaly](docs/ai09-native-anomaly-evaluation.md) liczy rzeczywiste
 metryki i odtwarza score; pełne powiązanie z kampanią pozostaje otwarte.
 [Przygotowanie diagnostyki 1.9](docs/evidence/09-54-ledger-query-capacity-preparation.json)
 przypina audytowane indeksy Source przy 12 GiB i pełnym profilu. 106 kontroli
-AI oraz 22 z paczki przeszły; uruchomienie wymaga pełnego CI obu repozytoriów.
+AI oraz 22 z paczki przeszły. Po pełnym odbiorze head i wynikowych main obu
+repozytoriów uruchomiono jedną diagnostykę
+[1.9](docs/evidence/09-59-query-capacity-acceptance-start.json), bez treningów
+i odczytu świeżego final; wynik pozostaje w toku.
 [Audyt pamięci i czasu](docs/ai09-capacity-audit.md) obejmuje wszystkie pięć
 faz przygotowania danych przed kolejnym canonical; zachowuje pełne dane i limity.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja

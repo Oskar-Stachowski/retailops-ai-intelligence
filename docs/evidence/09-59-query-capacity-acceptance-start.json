@@ -1,0 +1,429 @@
+{
+  "version": "ai09-query-capacity-acceptance-start-1.0.0",
+  "recorded_at_utc": "2026-10-08T22:34:51.234752+00:00",
+  "scope": "single_full_development_resource_diagnostic_start_not_terminal_qualification",
+  "ai_acceptance": {
+    "head": {
+      "sha": "13f5c318af4b3fa0ada945a2d4f482ab5dcdedf9",
+      "run": 37842211928,
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37842211928",
+      "whole_acceptance": true,
+      "jobs": [
+        {
+          "name": "checks",
+          "conclusion": "success"
+        },
+        {
+          "name": "secrets",
+          "conclusion": "success"
+        },
+        {
+          "name": "anomaly-oci",
+          "conclusion": "success"
+        },
+        {
+          "name": "observation-broker",
+          "conclusion": "success"
+        },
+        {
+          "name": "persistence-forecast",
+          "conclusion": "success"
+        },
+        {
+          "name": "TensorFlow CPU training, artifact and reload",
+          "conclusion": "success"
+        },
+        {
+          "name": "persistence",
+          "conclusion": "success"
+        },
+        {
+          "name": "observation-replay",
+          "conclusion": "success"
+        },
+        {
+          "name": "acceptance (ci-source-inputs)",
+          "conclusion": "success"
+        },
+        {
+          "name": "acceptance (ci-detectors)",
+          "conclusion": "success"
+        },
+        {
+          "name": "tests (3)",
+          "conclusion": "success"
+        },
+        {
+          "name": "acceptance (ci-forecast)",
+          "conclusion": "success"
+        },
+        {
+          "name": "tests (1)",
+          "conclusion": "success"
+        },
+        {
+          "name": "acceptance (ci-qualified-inputs)",
+          "conclusion": "success"
+        },
+        {
+          "name": "tests (2)",
+          "conclusion": "success"
+        },
+        {
+          "name": "tests (0)",
+          "conclusion": "success"
+        },
+        {
+          "name": "required-result",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "main": {
+      "sha": "1f2d4f698376e673098c204f77795418ff1e0372",
+      "run": 37848309204,
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37848309204",
+      "whole_acceptance": true,
+      "jobs": [
+        {
+          "name": "secrets",
+          "conclusion": "success"
+        },
+        {
+          "name": "checks",
+          "conclusion": "success"
+        },
+        {
+          "name": "anomaly-oci",
+          "conclusion": "success"
+        },
+        {
+          "name": "persistence-forecast",
+          "conclusion": "success"
+        },
+        {
+          "name": "persistence",
+          "conclusion": "success"
+        },
+        {
+          "name": "observation-replay",
+          "conclusion": "success"
+        },
+        {
+          "name": "TensorFlow CPU training, artifact and reload",
+          "conclusion": "success"
+        },
+        {
+          "name": "tests (3)",
+          "conclusion": "success"
+        },
+        {
+          "name": "acceptance (ci-source-inputs)",
+          "conclusion": "success"
+        },
+        {
+          "name": "tests (2)",
+          "conclusion": "success"
+        },
+        {
+          "name": "acceptance (ci-qualified-inputs)",
+          "conclusion": "success"
+        },
+        {
+          "name": "tests (1)",
+          "conclusion": "success"
+        },
+        {
+          "name": "observation-broker",
+          "conclusion": "success"
+        },
+        {
+          "name": "acceptance (ci-detectors)",
+          "conclusion": "success"
+        },
+        {
+          "name": "acceptance (ci-forecast)",
+          "conclusion": "success"
+        },
+        {
+          "name": "tests (0)",
+          "conclusion": "success"
+        },
+        {
+          "name": "required-result",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "pull_request": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/62",
+    "merge_sha": "1f2d4f698376e673098c204f77795418ff1e0372"
+  },
+  "source_acceptance": {
+    "head": {
+      "sha": "a7b850a06f4f4ad0fa9dcb0e17602b5c105f591c",
+      "run": 37839126376,
+      "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37839126376",
+      "whole_acceptance": true,
+      "jobs": [
+        {
+          "name": "Required CI contract tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Detect changed areas",
+          "conclusion": "success"
+        },
+        {
+          "name": "Repository diff hygiene",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Validate Docker Compose config",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Authenticated immutable native source bundle import",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Authenticated cross-repo intelligence runtime",
+          "conclusion": "success"
+        },
+        {
+          "name": "iac-security-gate",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "kubernetes-gate",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "api-gate / API integration tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / Synthetic data quality gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 07 full sales and returns offline replay",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 06 full cross-repo gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Filesystem vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 03 full cross-repo gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Python dependency audit",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Secret scanning with Gitleaks",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Backend image vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Frontend image vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Frontend dependency audit",
+          "conclusion": "success"
+        },
+        {
+          "name": "terraform-validation-gate",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "frontend-gate",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "docker-gate / Build full stack and run smoke tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Security evidence summary",
+          "conclusion": "success"
+        },
+        {
+          "name": "api-gate / API Docker image build",
+          "conclusion": "success"
+        },
+        {
+          "name": "required-result",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "main": {
+      "sha": "a412a9127231849690d9417c55ead45f4064c5be",
+      "run": 37845357948,
+      "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37845357948",
+      "whole_acceptance": true,
+      "jobs": [
+        {
+          "name": "Required CI contract tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Detect changed areas",
+          "conclusion": "success"
+        },
+        {
+          "name": "Repository diff hygiene",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Validate Docker Compose config",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 03 full cross-repo gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Authenticated cross-repo intelligence runtime",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Authenticated immutable native source bundle import",
+          "conclusion": "success"
+        },
+        {
+          "name": "api-gate / API integration tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 07 full sales and returns offline replay",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 06 full cross-repo gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / Synthetic data quality gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Frontend image vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Python dependency audit",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Secret scanning with Gitleaks",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Filesystem vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Frontend dependency audit",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Backend image vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "iac-security-gate",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "kubernetes-gate",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "frontend-gate",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "terraform-validation-gate",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "docker-gate / Build full stack and run smoke tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Security evidence summary",
+          "conclusion": "success"
+        },
+        {
+          "name": "api-gate / API Docker image build",
+          "conclusion": "success"
+        },
+        {
+          "name": "required-result",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "pull_request": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/110",
+    "merge_sha": "a412a9127231849690d9417c55ead45f4064c5be"
+  },
+  "immutable_dispatch_ref": "capacity/ai09-development-1.9-1f2d4f698376",
+  "head": "1f2d4f698376e673098c204f77795418ff1e0372",
+  "producer": "a7b850a06f4f4ad0fa9dcb0e17602b5c105f591c",
+  "recipe": "docs/reference/ai09-development-capacity-v1.9.json",
+  "recipe_sha256": "07ee91c51bbd9f5300aac002ce7873f6bbdd4c22a0018a00baf1c25a4ec297f6",
+  "tree_rss_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "full_profile": {
+    "days": 365,
+    "products": 100,
+    "stores": 5,
+    "warehouses": 3,
+    "seed": 42,
+    "start_date": "2025-08-01",
+    "end_date": "2026-07-31"
+  },
+  "actual_run": {
+    "id": 37853501527,
+    "html_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37853501527",
+    "head_sha": "1f2d4f698376e673098c204f77795418ff1e0372",
+    "head_branch": "capacity/ai09-development-1.9-1f2d4f698376",
+    "event": "workflow_dispatch",
+    "run_attempt": 1,
+    "status": "in_progress",
+    "conclusion": null,
+    "created_at": "2026-10-08T22:26:39Z"
+  },
+  "observed_at_utc": "2026-10-08T22:34:35.605013+00:00",
+  "single_distinct_manual_attempt": true,
+  "automatic_retry": false,
+  "terminal_artifact_verified": false,
+  "completed_phases": null,
+  "costs": "pending_terminal_resource_receipt",
+  "previous_actual_failure": {
+    "run": 37824794411,
+    "reason": "wall_limit",
+    "completed_phases": 0,
+    "wall_seconds": 3600.57873507,
+    "sampled_tree_peak_rss_bytes": 9066307584
+  },
+  "all_eight_failures_preserved": true,
+  "unexecuted_recipe_1_6_preserved": true,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_training_qualified": false,
+  "quality_qualified": false,
+  "stage_ready": false
+}

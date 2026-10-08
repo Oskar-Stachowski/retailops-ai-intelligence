@@ -1,11 +1,21 @@
 # Aktualny status
 
-**2026-10-08 — AI 09: in_progress / not_ready.**
+**2026-10-09 — AI 09: in_progress / not_ready.**
+[Pełny publiczny parent anomaly](ai09-native-anomaly-parent.md) wykonuje
+rzeczywisty replay całego snapshotu i curated, indeksuje wszystkie sales
+i return claims oraz zachowuje natywne globalne UUID i klucze biznesowe.
+Przywraca dokładną skalę kwot z typu Arrow przed generowaniem wire i UUID.
+42 kontrole na publicznych fixture 1.1/1.2 i 42 kontrole z paczki przeszły;
+[09.58](evidence/09-58-native-anomaly-public-parent.json) zachowuje także
+12 początkowych błędów i ich poprawki. Pełne CI i publikacja pozostają
+wymagane. Adapter nie zastępuje kwalifikacji
+dnia, Point census, truth, rzeczywistego dziennika ani jakości modeli.
+
 [Replay capture anomaly](ai09-native-anomaly-replay.md) przenosi globalne
 receipts, tożsamość zdarzeń, fakty i rewizje na dysk, zachowując natywny
 kernel zdarzeń AI 07. W pamięci zostaje jedna ograniczona grupa agregacji.
-Do pełnej kampanii nadal potrzebne są zweryfikowane publiczne parenty
-Source, kwalifikacja dni, Point census i offline truth. Lokalny odbiór
+Do pełnej kampanii nadal potrzebne są powiązanie publicznych parentów
+z dziennikiem, kwalifikacja dni, Point census i offline truth. Lokalny odbiór
 opisuje [09.57](evidence/09-57-native-anomaly-disk-replay.json);
 194 kontroli z regresjami i 43 z paczki przeszły bez pominięć. Publikacja
 i pełne CI są nadal wymagane.
@@ -28,8 +38,13 @@ Niezależny verifier buduje własne koszyki dzienne. Source zaliczył 274 kontro
 AI 106 i 22 z zainstalowanego wheela. Małe pary zachowują wszystkie porównane
 hashe i mierzą także dodatkową pamięć indeksów. Receptura zachowuje 12 GiB,
 pełne wymiary, pozostałe budżety i wszystkie osiem poprzednich porażek.
-Nie została uruchomiona; wymaga pełnego odbioru dokładnych head i wynikowych
-main obu repozytoriów. Nie kwalifikuje pełnego profilu ani modeli.
+[Odbiór i start 09.59](evidence/09-59-query-capacity-acceptance-start.json)
+wiąże pełne CI head i wynikowych main: Source PR110 `a412a912` (21 success
+i 4 zadeklarowane scoped skips), AI PR62 `1f2d4f69` (17/17 success).
+Jedna próba [37853501527](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37853501527)
+wystartowała na niezmiennej referencji z limitem 12 GiB; wynik pozostaje
+w toku. Nie uruchomiono treningów, dziennika Project ani świeżego final.
+Start diagnostyki nie kwalifikuje pełnego profilu ani modeli.
 
 [Receptura 1.8](reference/ai09-development-capacity-v1.8.json) ma na polecenie
 użytkownika limit RSS drzewa **12 GiB** (12 884 901 888 B) i rezerwę 1 GiB.
