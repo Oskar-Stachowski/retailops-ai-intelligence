@@ -1,5 +1,6 @@
 """A new prospective campaign's ordering and budget, not quality or freshness proof."""
 
+from collections.abc import Callable
 from datetime import timedelta
 from typing import Annotated, Literal, Self
 
@@ -145,16 +146,7 @@ class CampaignProtocol(Contract):
 
     @model_validator(mode="after")
     def freeze_scope(self) -> Self:
-        if self.legacy_sha256 != self.legacy.content_sha256():
-            raise ValueError("campaign_legacy_binding_mismatch")
-        if self.runtime.code_sha256 != canonical_sha256(self.runtime.code_files):
-            raise ValueError("campaign_runtime_identity_mismatch")
-        if set(self.use_case_quality_policy_sha256) != set(USE_CASES):
-            raise ValueError("campaign_requires_three_quality_policies")
-        if set(self.seed_weights) != {str(s) for s in self.data_seeds} or set(
-            self.scenario_weights
-        ) != set(SCENARIOS):
-            raise ValueError("campaign_complete_seed_and_scenario_weights_required")
+        self._frozen_policies()
         development = [s for s in self.sources if s.phase == "development"]
         finals = [s for s in self.sources if s.phase == "final"]
         if len(development) != 1 or tuple(s.seed for s in finals) != self.data_seeds:
@@ -170,6 +162,25 @@ class CampaignProtocol(Contract):
             for s in finals
         ):
             raise ValueError("campaign_final_origins_overlap_development_exposure")
+        self._frozen_operations()
+        return self
+
+    def _frozen_policies(self) -> None:
+        if self.legacy_sha256 != self.legacy.content_sha256():
+            raise ValueError("campaign_legacy_binding_mismatch")
+        if self.runtime.code_sha256 != canonical_sha256(self.runtime.code_files):
+            raise ValueError("campaign_runtime_identity_mismatch")
+        if set(self.use_case_quality_policy_sha256) != set(USE_CASES):
+            raise ValueError("campaign_requires_three_quality_policies")
+        if set(self.seed_weights) != {str(s) for s in self.data_seeds} or set(
+            self.scenario_weights
+        ) != set(SCENARIOS):
+            raise ValueError("campaign_complete_seed_and_scenario_weights_required")
+
+    def _frozen_operations(
+        self,
+        cross_source: Callable[[CampaignOperationPlan, CampaignOperationPlan], bool] | None = None,
+    ) -> None:
         sources = {s.content_sha256(): s for s in self.sources}
         plans: dict[str, CampaignOperationPlan] = {}
         for operation in self.operations:
@@ -182,7 +193,10 @@ class CampaignProtocol(Contract):
                 raise ValueError("campaign_prerequisites_require_topological_order")
             if any(
                 plans[p].phase != operation.phase
-                or plans[p].source_recipe_sha256 != operation.source_recipe_sha256
+                or (
+                    plans[p].source_recipe_sha256 != operation.source_recipe_sha256
+                    and (cross_source is None or not cross_source(operation, plans[p]))
+                )
                 for p in operation.prerequisites
             ):
                 raise ValueError("campaign_prerequisite_source_scope_mismatch")
@@ -232,7 +246,6 @@ class CampaignProtocol(Contract):
             values != forecast_budgets["rf"] for values in forecast_budgets.values()
         ):
             raise ValueError("campaign_forecast_families_require_equal_trial_and_seed_budgets")
-        return self
 
     def content_sha256(self) -> str:
         document = self.model_dump(mode="json")
@@ -340,6 +353,9 @@ class CampaignJournal(Contract):
 
     @model_validator(mode="after")
     def replay(self) -> Self:
+        return self._replay_events()
+
+    def _replay_events(self) -> Self:
         if self.protocol_sha256 != self.protocol.content_sha256():
             raise ValueError("campaign_protocol_identity_mismatch")
         head = self.protocol_sha256

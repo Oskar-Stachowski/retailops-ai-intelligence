@@ -5,6 +5,11 @@ AI 07 i AI 08 są zamknięte. AI 09 przygotowuje wspólną końcową ocenę i po
 obejmuje rozliczenie zachowanej historii oraz trwały dziennik kolejnej kampanii.
 Nie stanowi odbioru rzeczywistych danych, treningu portfolio ani final testu.
 
+[Pełne portfolio v25](ai09-full-scenario-portfolio.md) rozszerza zamrożony zakres
+o trzy pełne warianty ordinary/demand/physical dla development i każdego final
+seeda, w jednym dzienniku i jednym wspólnym freeze. Dotychczasowy v10 i jego
+schemy zachowano. Poniższy opis czterech źródeł dotyczy wersji bazowej.
+
 ## Historia poprzednich eksperymentów
 
 Prywatne katalogi poprzedniej kampanii w `/private/tmp` nie istnieją. Moduł
