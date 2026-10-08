@@ -45,6 +45,10 @@ wskazanymi przez konfigurację pakowania.
 
 ## Pozostała integracja
 
+[Natywna ocena census](ai09-native-anomaly-evaluation.md) odtwarza zapisane
+score i liczy rzeczywiste metryki observation/episode. Nadal wymaga
+projektowych parentów, dziennika, grup i niepewności przed kwalifikacją.
+
 [Bramka kwalifikacji AI 09](ai09-native-selection-verification.md) odrzuca
 receipts anomaly/stockout bez pełnej natywnej weryfikacji Project. Sam scorer
 i poprawne hashe artefaktów nie otwierają projektowych danych final.

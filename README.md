@@ -4,6 +4,8 @@
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
 [Natywna weryfikacja kwalifikacji](docs/ai09-native-selection-verification.md)
 blokuje dostęp do final na podstawie samych deklaracji jakości anomaly/stockout.
+[Natywna ocena anomaly](docs/ai09-native-anomaly-evaluation.md) liczy rzeczywiste
+metryki i odtwarza score; pełne powiązanie z kampanią pozostaje otwarte.
 [Przygotowanie diagnostyki 1.9](docs/evidence/09-54-ledger-query-capacity-preparation.json)
 przypina audytowane indeksy Source przy 12 GiB i pełnym profilu. 106 kontroli
 AI oraz 22 z paczki przeszły; uruchomienie wymaga pełnego CI obu repozytoriów.

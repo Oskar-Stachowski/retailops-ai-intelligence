@@ -1,6 +1,11 @@
 # Aktualny status
 
 **2026-10-08 — AI 09: in_progress / not_ready.**
+[Natywna ocena anomaly](ai09-native-anomaly-evaluation.md) podłącza pełny zadany
+census do replay modelu i metryk observation/episode. 81 kontroli i 25 z
+zainstalowanej paczki przeszło lokalnie. Projektowa integracja i kwalifikacja
+całości nadal pozostają otwarte; poprawka czeka na publikację i pełne CI.
+
 [Audyt kwalifikacji trzech zastosowań](ai09-native-selection-verification.md)
 zamyka lukę między integralnością plików a dowodem jakości anomaly/stockout.
 Poprawne hashe i zadeklarowane flagi nie otwierają final: do czasu pełnej

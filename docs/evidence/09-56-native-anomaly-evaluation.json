@@ -1,0 +1,91 @@
+{
+  "version": "ai09-native-anomaly-census-evaluation-evidence-1.0.0",
+  "recorded_at_utc": "2026-10-08T21:19:47.934278+00:00",
+  "scope": "native_numerical_evaluation_on_exposed_control_inputs_not_full_Project_qualification",
+  "base_revision": "9ec8b05ed20ba39dee029cbb8c46546af3eecd6a",
+  "implementation": "retailops_ai.evaluation_campaign.campaign_anomaly_evaluation",
+  "native_implementations": [
+    "anomaly_evaluation.verification.verify_scores",
+    "anomaly_evaluation.evaluator.evaluate"
+  ],
+  "native_controls": {
+    "tests": 81,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 55.7,
+    "junit_sha256": "7601bac45f5abefb90957167628a5f87030909a64427c1c1b9ab7e4a5d2b96a0"
+  },
+  "new_controls": 25,
+  "first_successful_control": {
+    "tests": 55,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 4.386,
+    "junit_sha256": "8d1534b7fa5c2651b9df63b5df9bef9dc433034b882c98482effe2a6a27380a1"
+  },
+  "installed_controls": {
+    "tests": 25,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 2.91,
+    "junit_sha256": "1aa9d9e5aaa8ce825ef358a4072495bb7ddf104b18c88d0432e2be5c10445914"
+  },
+  "control_coverage": [
+    "Actual saved baseline/forest score replay and unchanged native observation/episode reports.",
+    "Repeated alerts, no early lead, one-day late tolerance, false alerts/1000 and evidence delay retained.",
+    "No-positive, missing features, unknown and immature truth preserve native null metrics and denominators.",
+    "Complete ordered census, native role/clock/family, source/model/truth/scenario bindings and pre-consumption budget rejection.",
+    "Resealed wrong score, numerical input, metrics and result-plan cannot bypass independently supplied frozen parents and native replay.",
+    "Later parent failure never returns a completed partial evaluation.",
+    "10408 declared missing decisions retained across2 replay batches; not full Source capacity evidence.",
+    "Legacy/full portfolio production selection remains closed without complete native Project proofs."
+  ],
+  "package": {
+    "wheel_bytes": 2048519,
+    "wheel_sha256": "f1f394d5fa1492264ef1bf2dc7046fa2aeceaa74d44e4de6d5c622a10a9f229e",
+    "byte_parity": {
+      "python": 599,
+      "json": 213
+    },
+    "private_files_absent": true,
+    "installed_verifier_origin_verified": true
+  },
+  "static_controls": {
+    "configured_mypy_files": 720,
+    "ruff": "passed",
+    "format_files": 1232,
+    "docs_and_required_ci_contract": "passed",
+    "diff_hygiene": "passed"
+  },
+  "native_evaluation_maximum_rows": 1000000,
+  "native_replay_batch_rows": 8192,
+  "full_real_population_capacity_proven": false,
+  "source_parent_verification_complete": false,
+  "critical_segment_inventory_complete": false,
+  "block_uncertainty_complete": false,
+  "publication": "local_prepared_not_yet_published",
+  "full_ci_accepted": false,
+  "unchanged_frozen_files_sha256": {
+    "docs/reference/ai09-development-capacity.json": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9",
+    "docs/reference/ai09-development-capacity-v1.1.json": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee",
+    "docs/reference/ai09-development-capacity-v1.2.json": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "docs/reference/ai09-development-capacity-v1.3.json": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d",
+    "docs/reference/ai09-development-capacity-v1.4.json": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+    "docs/reference/ai09-development-capacity-v1.5.json": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "docs/reference/ai09-development-capacity-v1.6.json": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "docs/reference/ai09-development-capacity-v1.7.json": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+    "docs/reference/ai09-development-capacity-v1.8.json": "e219af373fab4ddcfcd077b17c26e3fe56399e2d1010b659e5798745143b55c3",
+    "docs/reference/ai09-development-capacity-v1.9.json": "07ee91c51bbd9f5300aac002ce7873f6bbdd4c22a0018a00baf1c25a4ec297f6",
+    "docs/evidence/09-53-development-capacity-eighth-run.json": "95039e3f5a3b927cee5e7598b771ec4b03f2b89d2b35a25c70a3f50fd8dd3443",
+    "docs/evidence/09-54-ledger-query-capacity-preparation.json": "cfdd19ea75ed656dc65a000eb47800fd8dd9158a488b3f2f69514f14c323029a",
+    "docs/evidence/09-55-native-selection-verification-guard.json": "c981d8ef77abe948841e34d2109b508e30c185abc03b7115f4d6bb880bbe392c",
+    "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587"
+  },
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_training_qualified": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "remaining_scope": "Full native public feature/truth Source parents, journal/artifact/cost bindings, required groups/paired uncertainty; stockout Project evaluator; original8DoD/full12sources/actualTF forecasting/MLflow/lifecycle/cards/reports/full head+mainCI."
+}
