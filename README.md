@@ -2,6 +2,9 @@
 
 **AI 09: in_progress / not_ready — integracja po gotowych AI 07–08.**
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
+[Replay capture anomaly](docs/ai09-native-anomaly-replay.md) przechowuje
+globalny stan na dysku i odtwarza oryginalne reguły zdarzeń oraz agregacji.
+Pełny publiczny adapter Source i kwalifikacja dnia pozostają wymagane.
 [Natywna weryfikacja kwalifikacji](docs/ai09-native-selection-verification.md)
 blokuje dostęp do final na podstawie samych deklaracji jakości anomaly/stockout.
 [Natywna ocena anomaly](docs/ai09-native-anomaly-evaluation.md) liczy rzeczywiste

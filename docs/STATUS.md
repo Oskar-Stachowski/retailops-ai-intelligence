@@ -1,6 +1,15 @@
 # Aktualny status
 
 **2026-10-08 — AI 09: in_progress / not_ready.**
+[Replay capture anomaly](ai09-native-anomaly-replay.md) przenosi globalne
+receipts, tożsamość zdarzeń, fakty i rewizje na dysk, zachowując natywny
+kernel zdarzeń AI 07. W pamięci zostaje jedna ograniczona grupa agregacji.
+Do pełnej kampanii nadal potrzebne są zweryfikowane publiczne parenty
+Source, kwalifikacja dni, Point census i offline truth. Lokalny odbiór
+opisuje [09.57](evidence/09-57-native-anomaly-disk-replay.json);
+194 kontroli z regresjami i 43 z paczki przeszły bez pominięć. Publikacja
+i pełne CI są nadal wymagane.
+
 [Natywna ocena anomaly](ai09-native-anomaly-evaluation.md) podłącza pełny zadany
 census do replay modelu i metryk observation/episode. 81 kontroli i 25 z
 zainstalowanej paczki przeszło lokalnie. Projektowa integracja i kwalifikacja
