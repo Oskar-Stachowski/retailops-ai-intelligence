@@ -32,7 +32,7 @@ def native_config():
     source = catalog()
     raw = runtime_config(source).model_dump(mode="json")
     raw["runtime_version"] = "assistant-native-bedrock-v1"
-    routes = json.loads((ROOT / "agent/question-routes.prepaid.proposed.v4.json").read_bytes())
+    routes = json.loads((ROOT / "agent/question-routes.prepaid.proposed.v5.json").read_bytes())
     # Test-owned accepted route, never an acceptance of the published proposals.
     routes.update(labels_state="accepted", graph_config_id=raw["graph"]["code_sha256"])
     routes["graph_config_id"] = runtime_config(source).graph.config_id()

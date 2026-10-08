@@ -56,7 +56,7 @@ def provision(private):
 def emit(private):
     config = json.loads((private / "connections.json").read_bytes())
     path, tokens, authority, body, backend, _ = setup(private, intent="operations")
-    graph = load_graph_config(ROOT / "agent/graph.fake.prepaid.v4.json")
+    graph = load_graph_config(ROOT / "agent/graph.fake.prepaid.v5.json")
     producer = create_engine(config["source_read"], hide_parameters=True)
     ai = create_engine(config["ai"], hide_parameters=True)
     adapter = NativeOperationsTool(PostgresNativeOperationsReader(producer, "test"), "test")

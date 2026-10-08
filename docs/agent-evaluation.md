@@ -60,9 +60,9 @@ make contracts-check
 
 ```bash
 uv run --locked retailops-ai agent-evaluate --provider fake \
-  --config agent/graph.evaluate.fake.prepaid.v4.json \
+  --config agent/graph.evaluate.fake.prepaid.v5.json \
   --golden agent/golden.canonical.v1.json \
-  --release agent/evaluation-release.fake.prepaid.v4.json \
+  --release agent/evaluation-release.fake.prepaid.v5.json \
   --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock \
   --output /tmp/retailops-agent-evaluation.json
 ```
@@ -102,10 +102,10 @@ Dokumenty i pin w tym zestawie są **syntetycznymi metadanymi**. Nazwy statusów
 sprawdzają mechanikę cytowania/statusów, a pin przechodzi ścisły kontrakt w
 środowisku test. Nie aktywujemy go w bazie i nie mierzymy embeddings, rankingu
 ani rzeczywistych sekcji AI 11. Osobny
-[profil ewaluacji](../agent/graph.evaluate.fake.prepaid.v4.json) przypina ten fixture pin;
-[profil grafu](../agent/graph.fake.prepaid.v4.json) nadal wskazuje użytkowy indeks AI 11.
+[profil ewaluacji](../agent/graph.evaluate.fake.prepaid.v5.json) przypina ten fixture pin;
+[profil grafu](../agent/graph.fake.prepaid.v5.json) nadal wskazuje użytkowy indeks AI 11.
 
-[Evaluation release](../agent/evaluation-release.fake.prepaid.v4.json) wiąże config ID
+[Evaluation release](../agent/evaluation-release.fake.prepaid.v5.json) wiąże config ID
 grafu (kod, tool/response schemas, prompty v4, model, retrieval, index, budżety
 i politykę), golden hash, kod Python całego pakietu (w tym ewaluator i jego
 zależności aplikacyjne/schemas) oraz dependency lock. Hash nie

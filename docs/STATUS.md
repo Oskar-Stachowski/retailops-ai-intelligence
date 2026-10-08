@@ -1344,3 +1344,17 @@ pozostają nietknięte. Nowa rodzina `.prepaid.v4` zachowuje v1/v2/v3 i wiąże 
 kod oraz integration campaign pin. Adaptery, odczyty rekomendacji, graf i ranking
 AI11 nie zmieniły się. Pełną kwalifikację bieżącego HEAD podają checki i artefakty
 PR32. Propozycje LLM pozostają `not_run`, etykiety proposed; nowe AWS calls i koszty: 0.
+
+
+### AI12 — przypięcie opublikowanego AI09 portfolio (v5)
+
+Nowa rodzina `.prepaid.v5` integruje wyłącznie opublikowany main `656d7dd`
+(PR52 AI09 portfolio). CI HEAD `7170b37` wykrył inną sumę kodu w merge tree
+`17691465`; rzeczywisty Source/UI E2E tego HEAD przeszedł. Piny v1–v4 i ich
+dowody pozostają zachowane. Adaptery, recommendation read API, graf, źródła
+AI11 i ranking nie zmieniły się. Naprawa flaky testu expiry używa 30s lifetime
+w testowym profilu, sprawdza żywy wpis i jego rzeczywiste wygaśnięcie; limity
+produkcyjne pozostają bez zmian. Nowe SDK/inference/embedding calls i koszty
+AWS wynoszą 0. Odbiór pełnego CI dokładnej opublikowanej rewizji pozostaje
+w PR32; etap nadal `in_progress`, etykiety 50/26 nadal proposed bez odbioru
+człowieka, a przygotowane płatne propozycje pozostają `not_run`.

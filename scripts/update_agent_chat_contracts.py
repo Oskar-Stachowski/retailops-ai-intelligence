@@ -14,7 +14,7 @@ CONTRACTS = ROOT / "contracts/agent/v1"
 
 
 def artifacts() -> dict[str, object]:
-    resolved = load_chat_config(ROOT / "agent/chat.fake.prepaid.v4.json")
+    resolved = load_chat_config(ROOT / "agent/chat.fake.prepaid.v5.json")
     config = resolved.config
     plan = PlanDraft(kind="tool_plan", tools=[])
     answer = AnswerDraft.model_validate_json(

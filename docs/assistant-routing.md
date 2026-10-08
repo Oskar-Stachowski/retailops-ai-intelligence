@@ -66,7 +66,7 @@ make contracts-check
 ```
 
 Aktualny kandydat offline używa
-[nowego release](../agent/evaluation-release.fake.prepaid.v4.json). Historyczny
+[nowego release](../agent/evaluation-release.fake.prepaid.v5.json). Historyczny
 [release](../agent/evaluation-release.fake.v1.json) i wyniki Bedrock pozostają
 zachowane; ich kwalifikacja nie przechodzi automatycznie na nowy kod.
 

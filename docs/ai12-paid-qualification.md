@@ -1,10 +1,10 @@
 # AI12 — punkt wznowienia przed płatną kwalifikacją
 
 Przygotowanie nie uruchamia inference ani embeddings. Bieżący plan to
-[kampania v4](evidence/12-prepaid-test-plan-v3.json), a pełne etykiety i oracles
-znajdują się w [pakiecie przeglądu v4](evidence/12-prepaid-label-review-packet-v3.json).
-Opublikowane rodziny `.prepaid.v1`–`.prepaid.v3` pozostają niezmienione.
-Rodzina `.prepaid.v4` uwzględnia opublikowany main `ab77bb1`, zachowując
+[kampania v5](evidence/12-prepaid-test-plan-v5.json), a pełne etykiety i oracles
+znajdują się w [pakiecie przeglądu v5](evidence/12-prepaid-label-review-packet-v5.json).
+Opublikowane rodziny `.prepaid.v1`–`.prepaid.v4` pozostają niezmienione.
+Rodzina `.prepaid.v5` uwzględnia opublikowany main `656d7dd`, zachowując
 chronione odczyty rekomendacji i proponowane równoważne źródła instrukcji startu
 z v3 w niezmienionym indeksie AI11; zmiana kodu po jej publikacji
 wymaga kolejnego identyfikatora konfiguracji i osobnego odbioru.
@@ -31,11 +31,11 @@ Przykład odtworzenia pierwszej propozycji, nadal bez AWS:
 
 ```sh
 uv run --locked --extra snapshot --extra forecast retailops-ai bedrock-smoke \
-  --config agent/graph.sonnet-qualification.prepaid.v4.json \
-  --profile agent/sonnet-qualification-1.prepaid.v4.json \
-  --offline-config agent/graph.evaluate.fake.prepaid.v4.json \
+  --config agent/graph.sonnet-qualification.prepaid.v5.json \
+  --profile agent/sonnet-qualification-1.prepaid.v5.json \
+  --offline-config agent/graph.evaluate.fake.prepaid.v5.json \
   --golden agent/golden.canonical.v1.json \
-  --release agent/evaluation-release.fake.prepaid.v4.json \
+  --release agent/evaluation-release.fake.prepaid.v5.json \
   --rag-golden knowledge/golden.semantic.v1.json --lock uv.lock
 ```
 
@@ -69,7 +69,7 @@ Nie są odbiorem natywnych danych ani rzeczywistego RAG.
    stronie Source. Bieżący E2E używa przyjętego v1 z jawnym fixture opt-in.
    Nie deklarować nieobserwowanego heartbeat ani Kafka lag.
 
-[Natywny kandydat v4](../agent/native-bedrock-runtime.prepaid.proposed.v4.json)
+[Natywny kandydat v5](../agent/native-bedrock-runtime.prepaid.proposed.v5.json)
 przechodzi schema, lecz runtime celowo odrzuca jego proponowane trasy.
 Zawiera osiem adapterów, rzeczywisty pin AI11 i osobny proponowany cap chatu
 3,00 USD oraz rezerwę query embeddings 0,005 USD. Jest konfiguracją do

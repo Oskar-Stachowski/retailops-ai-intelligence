@@ -107,7 +107,7 @@ read grant also removes access to a persisted trace. Native stockout remains
 excluded from the legacy replenishment suggestion join; a recorded approval
 does not supply its required deployment attestation.
 
-The new active candidate family is `.prepaid.v4`. Published inventory,
+The new active candidate family is `.prepaid.v5`. Published inventory,
 sales and forecast candidate families, model artifacts, canonical golden labels
 and earlier evidence remain unchanged. Question routes remain proposed, pending
 review. [Acceptance receipt](evidence/12-native-tools.md) distinguishes adapter

@@ -1,0 +1,37 @@
+{
+  "application_code_sha256": "f80187a0385ed3ea8616f0bf32e4fb245f3160c19b35f5296accc4f186f46cae",
+  "assistant_graph_tools_and_retrieval_unchanged": true,
+  "aws_sdk_calls": 0,
+  "ci_checks": "passed",
+  "current_native_SQL_acceptance": "awaiting_current_head_CI",
+  "gitleaks": "no_leaks_found",
+  "human_approval": false,
+  "integrated_main": "656d7ddcb6de9d4032533238fc9e170780ddbe6a",
+  "labels_state": "proposed",
+  "new_aws_cost_usd": "0",
+  "previous_local_SQL_runtime_receipt": "docs/evidence/12-prepaid-v3-local-acceptance.json",
+  "schema_version": "1.0",
+  "sonnet_proposals": {
+    "approved_for_paid_execution": false,
+    "batches": 5,
+    "natural_cases": 41,
+    "status": "not_run"
+  },
+  "status": "passed_local_bindings_and_wheel",
+  "wheel": {
+    "aws_executed": false,
+    "case_pass": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "code_sha256": "f80187a0385ed3ea8616f0bf32e4fb245f3160c19b35f5296accc4f186f46cae",
+    "critical_cases": {
+      "passed": 36,
+      "total": 36,
+      "value": 1.0
+    },
+    "network_connections_disallowed": true,
+    "status": "passed"
+  }
+}

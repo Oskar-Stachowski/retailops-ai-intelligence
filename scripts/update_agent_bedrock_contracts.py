@@ -15,17 +15,17 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    config = load_graph_config(ROOT / "agent/graph.bedrock-smoke.prepaid.v4.json")
+    config = load_graph_config(ROOT / "agent/graph.bedrock-smoke.prepaid.v5.json")
     profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/bedrock-smoke.prepaid.v4.json").read_bytes()
+        (ROOT / "agent/bedrock-smoke.prepaid.v5.json").read_bytes()
     )
-    comparison = load_graph_config(ROOT / "agent/graph.sonnet-smoke.prepaid.v4.json")
+    comparison = load_graph_config(ROOT / "agent/graph.sonnet-smoke.prepaid.v5.json")
     comparison_profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/sonnet-smoke.prepaid.v4.json").read_bytes()
+        (ROOT / "agent/sonnet-smoke.prepaid.v5.json").read_bytes()
     )
-    documents = load_graph_config(ROOT / "agent/graph.document-smoke.prepaid.v4.json")
+    documents = load_graph_config(ROOT / "agent/graph.document-smoke.prepaid.v5.json")
     document_profile = BedrockSmokeProfile.model_validate_json(
-        (ROOT / "agent/document-smoke.prepaid.v4.json").read_bytes()
+        (ROOT / "agent/document-smoke.prepaid.v5.json").read_bytes()
     )
     artifacts = {
         "circuit-policy.v1.schema.json": CircuitPolicy.model_json_schema(),
