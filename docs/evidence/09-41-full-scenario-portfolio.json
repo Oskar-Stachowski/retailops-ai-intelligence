@@ -355,5 +355,21 @@
     "Predeclared required critical versus diagnostic segment coverage policy and complete versioned robustness scenarios",
     "Real fair fitting/calibration/global selection and full final3seeds",
     "Paired uncertainty/all costs/MLflow/artifacts/cards/reports/lifecycle and final main/docs acceptance"
-  ]
+  ],
+  "accepted_parent_AI_main": {
+    "head": "f0088e08ea54651a23e097bbf562caab882e6e6f",
+    "run": 37743593906,
+    "whole17_success": true,
+    "required_result": "success"
+  },
+  "planned_generation_publication": {
+    "pr": 51,
+    "head": "201ea8ed23d286cf9974442753a1ac34413ceef7",
+    "head_run": 37744238960,
+    "whole17_success": true,
+    "protected_merge": "ab77bb1da52bcbff0c95cd797a6a173708697e73",
+    "new_main_run": 37749318501,
+    "new_main_status": "in_progress",
+    "new_main_whole_acceptance": false
+  }
 }

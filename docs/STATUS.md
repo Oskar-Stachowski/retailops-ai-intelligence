@@ -48,7 +48,12 @@ trwa. [PR #50](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pul
 scalono chronioną ścieżką jako `f0088e08` po pełnym 17/17 success dokładnego
 head `daf8d605` i zaakceptowanego base `bc507330`.
 [CI tego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37743593906)
-trwa; publikacja receptury nie oznacza jej wykonania ani odbioru tego main.
+zakończyło się pełnym 17/17 success. Publikacja receptury nie oznacza jej wykonania.
+[PR #51](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/51)
+scala wybór pinned cached Source 2.8 jako main `ab77bb1d`, po pełnym 17/17
+success head `201ea8ed` i zaakceptowanego base `f0088e08`.
+[CI nowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37749318501)
+trwa i wymaga odrębnego odbioru.
 Nie uruchomiono próby 1.5; nie zmniejszono danych ani nie zwiększono limitów.
 Projektowy journal nie został zainicjalizowany, nowe projektowe fity wynoszą zero,
 a świeży final test pozostaje zamknięty. Do zamknięcia pozostają pełna kampania
