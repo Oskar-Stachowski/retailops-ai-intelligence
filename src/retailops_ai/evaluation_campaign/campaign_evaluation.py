@@ -19,6 +19,13 @@ from retailops_ai.evaluation_campaign.campaign_calibration import (
 from retailops_ai.evaluation_campaign.campaign_calibration_contract import (
     CampaignForecastCalibrationReceipt,
 )
+from retailops_ai.evaluation_campaign.campaign_context_bundle import (
+    validate_completed_context,
+    verify_campaign_context_bundle,
+)
+from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
+    CampaignContextBundleReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignCost,
     CampaignJournal,
@@ -59,6 +66,10 @@ from retailops_ai.evaluation_campaign.campaign_fit_contract import (
 from retailops_ai.evaluation_campaign.campaign_generation import _environment
 from retailops_ai.evaluation_campaign.campaign_generation_monitor import monitor, scratch_bytes
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+from retailops_ai.evaluation_campaign.campaign_raw_context import (
+    context_record,
+    validate_raw_context_metrics,
+)
 from retailops_ai.evaluation_campaign.campaign_score import validate_completed_score
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
     FAMILIES,
@@ -349,6 +360,8 @@ def evaluate_campaign_forecast(
     calibration: CampaignForecastCalibrationReceipt,
     fits: dict[str, CampaignForecastFitReceipt],
     selection_bundles: dict[str, Path] | None = None,
+    raw_context_bundle: Path | None = None,
+    raw_context_receipt: CampaignContextBundleReceipt | None = None,
 ) -> tuple[Path, CampaignForecastEvaluationReceipt]:
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, operation_id)
@@ -399,6 +412,41 @@ def evaluate_campaign_forecast(
             if isinstance(exported, CampaignFinalExportReceipt)
             else None
         )
+        raw_context = None
+        if (raw_context_bundle is None) != (raw_context_receipt is None):
+            raise SnapshotError("campaign_evaluation_raw_context_pair_required")
+        if raw_context_bundle is not None and raw_context_receipt is not None:
+            if output_root.resolve().is_relative_to(
+                raw_context_bundle.resolve()
+            ) or raw_context_bundle.resolve().is_relative_to(output_root.resolve()):
+                raise SnapshotError("campaign_evaluation_output_overlaps_raw_context")
+            raw_context_receipt = CampaignContextBundleReceipt.model_validate_json(
+                raw_context_receipt.model_dump_json()
+            )
+            if (
+                raw_context_receipt.operation_id not in operation.prerequisites
+                or raw_context_receipt.protocol_sha256 != ledger.protocol_sha256
+                or raw_context_receipt.export_receipt_sha256 != exported.content_sha256()
+                or raw_context_receipt.scope.dataset_id != exported.dataset_id
+                or raw_context_receipt.runtime_code_sha256 != ledger.protocol.runtime.code_sha256
+                or raw_context_receipt.selection_sha256 != selection
+            ):
+                raise SnapshotError("campaign_evaluation_raw_context_parent_mismatch")
+            verify_campaign_context_bundle(
+                raw_context_bundle,
+                journal=journal,
+                receipt=raw_context_receipt,
+                selection_bundles=selection_bundles,
+            )
+            raw_context = {
+                "receipt": raw_context_receipt.model_dump(mode="json"),
+                "census": read(raw_context_bundle / "census.json"),
+            }
+            context_record(
+                raw_context,
+                plan,
+                {key: getattr(raw_context_receipt, key) for key in POPULATION},
+            )
         checked_directory(output_root)
         if stat.S_IMODE(output_root.stat().st_mode) != 0o700:
             raise SnapshotError("campaign_evaluation_private_output_directory_required")
@@ -423,6 +471,7 @@ def evaluate_campaign_forecast(
                 "calibration_scores": {
                     key: value.model_dump(mode="json") for key, value in scores.items()
                 },
+                **({"raw_context": raw_context} if raw_context is not None else {}),
             },
         )
         prepared_root = root / "prepare"
@@ -451,6 +500,8 @@ def evaluate_campaign_forecast(
         )
         if population.get("full_role_label_file_passes") != 1:
             raise SnapshotError("campaign_evaluation_preparation_role_pass_mismatch")
+        if raw_context is not None:
+            context_record(raw_context, plan, population)
         write(
             bundle / "population.json",
             {
@@ -529,6 +580,14 @@ def evaluate_campaign_forecast(
                     "actuals": str(actuals),
                     "projection": str(projection),
                     "metrics_output": str(bundle / trial_metrics_name(index)),
+                    **(
+                        {
+                            "raw_context": raw_context,
+                            "raw_context_bundle": str(raw_context_bundle.absolute()),
+                        }
+                        if raw_context is not None and raw_context_bundle is not None
+                        else {}
+                    ),
                 },
                 sys.executable,
                 plan,
@@ -544,6 +603,8 @@ def evaluate_campaign_forecast(
                 or consumed["prediction_trace_sha256"] != predicted["prediction_trace_sha256"]
                 or consumed["baseline_trace_sha256"] != baseline
                 or consumed["metrics_sha256"] != file_hash(bundle, trial_metrics_name(index))[1]
+                or raw_context is not None
+                and consumed.get("raw_critical_segments_complete") is not True
             ):
                 raise SnapshotError("campaign_evaluation_consumed_trial_evidence_mismatch")
             fsync_tree(bundle / "trials")
@@ -675,6 +736,24 @@ def _verify_bundle(bundle: Path, receipt: CampaignForecastEvaluationReceipt) -> 
         if receipt.plan.phase == "final"
         else CampaignDevelopmentExportReceipt
     ).model_validate_json(canonical_bytes(parents["exported"]))
+    raw_context = parents.get("raw_context")
+    raw_census = None
+    if raw_context is not None:
+        if not isinstance(raw_context, dict):
+            raise SnapshotError("campaign_evaluation_raw_context_record_invalid")
+        context_parent, raw_census = context_record(
+            raw_context,
+            receipt.plan,
+            {key: getattr(receipt, key) for key in POPULATION},
+        )
+        if (
+            context_parent.protocol_sha256 != receipt.protocol_sha256
+            or context_parent.export_receipt_sha256 != receipt.export_receipt_sha256
+            or context_parent.scope.dataset_id != receipt.dataset_id
+            or context_parent.runtime_code_sha256 != receipt.runtime_code_sha256
+            or context_parent.selection_sha256 != receipt.selection_sha256
+        ):
+            raise SnapshotError("campaign_evaluation_raw_context_parent_mismatch")
     tune = CampaignForecastTuneReceipt.model_validate_json(canonical_bytes(parents["tune"]))
     calibration = CampaignForecastCalibrationReceipt.model_validate_json(
         canonical_bytes(parents["calibration"])
@@ -759,6 +838,15 @@ def _verify_bundle(bundle: Path, receipt: CampaignForecastEvaluationReceipt) -> 
         ):
             raise SnapshotError("campaign_evaluation_trial_metrics_binding_mismatch")
         _segments(result, receipt.rows, receipt.eligible_rows, raw=True)
+        if ("raw_critical_segments" in result) != (raw_census is not None):
+            raise SnapshotError("campaign_evaluation_raw_critical_report_missing_or_unbound")
+        if raw_census is not None:
+            report = result["raw_critical_segments"]
+            if not isinstance(report, dict):
+                raise SnapshotError("campaign_evaluation_raw_critical_report_invalid")
+            validate_raw_context_metrics(
+                report, raw_census, receipt.plan, trial.tune_score_operation_id
+            )
     keys, eligible_keys = hashlib.sha256(), hashlib.sha256()
     previous = None
     rows = eligible = 0
@@ -851,3 +939,15 @@ def verify_campaign_forecast_evaluation(
     """Verify committed predictions and metadata without reading original outcomes."""
     validate_completed_evaluation(journal, receipt)
     _verify_bundle(bundle, receipt)
+    parents = json.loads(read_bytes(bundle, "parents.json", MAX_PARENT_METADATA_BYTES))
+    if "raw_context" in parents:
+        context_parent, _ = context_record(
+            parents["raw_context"],
+            receipt.plan,
+            {key: getattr(receipt, key) for key in POPULATION},
+        )
+        ledger = campaign_journal.inspect(journal)
+        operation = _operation(ledger, receipt.operation_id)
+        if context_parent.operation_id not in operation.prerequisites:
+            raise SnapshotError("campaign_evaluation_raw_context_prerequisite_missing")
+        validate_completed_context(journal, context_parent)

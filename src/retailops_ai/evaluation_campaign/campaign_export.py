@@ -11,6 +11,9 @@ from retailops_ai.evaluation_campaign import campaign_journal
 from retailops_ai.evaluation_campaign.campaign_calibration_contract import (
     CampaignForecastCalibrationReceipt,
 )
+from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
+    CampaignContextBundleReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignCost,
     CampaignJournal,
@@ -159,7 +162,8 @@ def _store_receipt(
     | CampaignForecastScoreReceipt
     | CampaignForecastTuneReceipt
     | CampaignForecastCalibrationReceipt
-    | CampaignForecastEvaluationReceipt,
+    | CampaignForecastEvaluationReceipt
+    | CampaignContextBundleReceipt,
 ) -> None:
     """Keep output evidence durable before completing the charged operation."""
     raw = canonical_bytes(receipt.model_dump(mode="json")) + b"\n"

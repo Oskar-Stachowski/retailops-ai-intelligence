@@ -9,6 +9,10 @@ from retailops_ai.evaluation_campaign.campaign_calibration_contract import (
     CampaignForecastCalibrationPlan,
     CampaignForecastCalibrationReceipt,
 )
+from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
+    CampaignContextBundleReceipt,
+    CampaignContextBundleRecipe,
+)
 from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignJournal,
     CampaignProtocol,
@@ -469,6 +473,22 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Campaign forecast source context contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, context_bundle_model in (
+        ("campaign_context_bundle_recipe", CampaignContextBundleRecipe),
+        ("campaign_context_bundle_receipt", CampaignContextBundleReceipt),
+    ):
+        schema = context_bundle_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:23.0.0"
+        path = ROOT / "contracts/evaluation/v23" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign source context bundle contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

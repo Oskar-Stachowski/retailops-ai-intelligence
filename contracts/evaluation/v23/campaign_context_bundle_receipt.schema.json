@@ -1,0 +1,813 @@
+{
+  "$defs": {
+    "CampaignContextBundleRecipe": {
+      "additionalProperties": false,
+      "description": "Freeze parent operations and policy before generated identities exist.",
+      "properties": {
+        "batch_windows": {
+          "default": 64,
+          "maximum": 256,
+          "minimum": 1,
+          "title": "Batch Windows",
+          "type": "integer"
+        },
+        "export_operation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Export Operation Id",
+          "type": "string"
+        },
+        "exposure": {
+          "const": "whole_source_parents_and_complete_role_no_sampling",
+          "default": "whole_source_parents_and_complete_role_no_sampling",
+          "title": "Exposure",
+          "type": "string"
+        },
+        "final_access_authorized_by_this_document": {
+          "const": false,
+          "default": false,
+          "title": "Final Access Authorized By This Document",
+          "type": "boolean"
+        },
+        "generation_operation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Generation Operation Id",
+          "type": "string"
+        },
+        "max_index_bytes": {
+          "default": 4294967296,
+          "maximum": 8589934592,
+          "minimum": 4096,
+          "title": "Max Index Bytes",
+          "type": "integer"
+        },
+        "max_output_bytes": {
+          "default": 8589934592,
+          "maximum": 34359738368,
+          "minimum": 1024,
+          "title": "Max Output Bytes",
+          "type": "integer"
+        },
+        "max_record_bytes": {
+          "default": 32768,
+          "maximum": 65536,
+          "minimum": 4096,
+          "title": "Max Record Bytes",
+          "type": "integer"
+        },
+        "max_rows": {
+          "default": 10000000,
+          "maximum": 100000000,
+          "minimum": 1,
+          "title": "Max Rows",
+          "type": "integer"
+        },
+        "phase": {
+          "enum": [
+            "development",
+            "final"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "private_source_effects_read": {
+          "const": false,
+          "default": false,
+          "title": "Private Source Effects Read",
+          "type": "boolean"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "resources": {
+          "$ref": "#/$defs/CampaignGenerationResources"
+        },
+        "role": {
+          "enum": [
+            "development_evaluation",
+            "final_test"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "segment_policy": {
+          "$ref": "#/$defs/CampaignForecastSegmentPolicy"
+        },
+        "source_recipe_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Recipe Sha256",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "storage_policy": {
+          "$ref": "#/$defs/CampaignContextStoragePolicy",
+          "default": {
+            "audited_source_read_proved_by_this_policy": false,
+            "batch_rows": 256,
+            "cache_kib": 8192,
+            "final_access_authorized": false,
+            "max_index_bytes": 2147483648,
+            "max_parent_bytes": 2147483648,
+            "max_parent_files": 10000,
+            "max_parent_rows": 20000000,
+            "max_selected_bytes": 67108864,
+            "max_selected_rows": 100000,
+            "maximum_cached_physical_series": 1,
+            "projection": "closed_ai08_origin_pit_feature_point_unchanged",
+            "promotion_allowed": false,
+            "retention": "private_disposable_all_versions_original_order",
+            "series_index": "closed_ai08_fact_index_one_physical_series_clip_again_per_origin",
+            "stage_ready": false,
+            "supported_curated_versions": [
+              "1.1.0",
+              "1.2.0"
+            ],
+            "version": "ai09-source-context-disk-facts-1.0.0"
+          }
+        },
+        "training_or_preprocessing_refitted": {
+          "const": false,
+          "default": false,
+          "title": "Training Or Preprocessing Refitted",
+          "type": "boolean"
+        },
+        "version": {
+          "const": "ai09-source-context-bundle-recipe-1.0.0",
+          "default": "ai09-source-context-bundle-recipe-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "phase",
+        "role",
+        "source_recipe_sha256",
+        "generation_operation_id",
+        "export_operation_id",
+        "segment_policy",
+        "resources"
+      ],
+      "title": "CampaignContextBundleRecipe",
+      "type": "object"
+    },
+    "CampaignContextStoragePolicy": {
+      "additionalProperties": false,
+      "description": "Prospective AI09 limits; the closed AI08 storage wire is unchanged.",
+      "properties": {
+        "audited_source_read_proved_by_this_policy": {
+          "const": false,
+          "default": false,
+          "title": "Audited Source Read Proved By This Policy",
+          "type": "boolean"
+        },
+        "batch_rows": {
+          "default": 256,
+          "maximum": 512,
+          "minimum": 1,
+          "title": "Batch Rows",
+          "type": "integer"
+        },
+        "cache_kib": {
+          "const": 8192,
+          "default": 8192,
+          "title": "Cache Kib",
+          "type": "integer"
+        },
+        "final_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Access Authorized",
+          "type": "boolean"
+        },
+        "max_index_bytes": {
+          "default": 2147483648,
+          "maximum": 17179869184,
+          "minimum": 4096,
+          "title": "Max Index Bytes",
+          "type": "integer"
+        },
+        "max_parent_bytes": {
+          "default": 2147483648,
+          "maximum": 68719476736,
+          "minimum": 1,
+          "title": "Max Parent Bytes",
+          "type": "integer"
+        },
+        "max_parent_files": {
+          "default": 10000,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Max Parent Files",
+          "type": "integer"
+        },
+        "max_parent_rows": {
+          "default": 20000000,
+          "maximum": 100000000,
+          "minimum": 1,
+          "title": "Max Parent Rows",
+          "type": "integer"
+        },
+        "max_selected_bytes": {
+          "default": 67108864,
+          "maximum": 536870912,
+          "minimum": 1,
+          "title": "Max Selected Bytes",
+          "type": "integer"
+        },
+        "max_selected_rows": {
+          "default": 100000,
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Max Selected Rows",
+          "type": "integer"
+        },
+        "maximum_cached_physical_series": {
+          "const": 1,
+          "default": 1,
+          "title": "Maximum Cached Physical Series",
+          "type": "integer"
+        },
+        "projection": {
+          "const": "closed_ai08_origin_pit_feature_point_unchanged",
+          "default": "closed_ai08_origin_pit_feature_point_unchanged",
+          "title": "Projection",
+          "type": "string"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "retention": {
+          "const": "private_disposable_all_versions_original_order",
+          "default": "private_disposable_all_versions_original_order",
+          "title": "Retention",
+          "type": "string"
+        },
+        "series_index": {
+          "const": "closed_ai08_fact_index_one_physical_series_clip_again_per_origin",
+          "default": "closed_ai08_fact_index_one_physical_series_clip_again_per_origin",
+          "title": "Series Index",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "supported_curated_versions": {
+          "default": [
+            "1.1.0",
+            "1.2.0"
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": "1.1.0",
+              "type": "string"
+            },
+            {
+              "const": "1.2.0",
+              "type": "string"
+            }
+          ],
+          "title": "Supported Curated Versions",
+          "type": "array"
+        },
+        "version": {
+          "const": "ai09-source-context-disk-facts-1.0.0",
+          "default": "ai09-source-context-disk-facts-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "CampaignContextStoragePolicy",
+      "type": "object"
+    },
+    "CampaignForecastContextScope": {
+      "additionalProperties": false,
+      "properties": {
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "data_seed": {
+          "enum": [
+            42,
+            137,
+            2026
+          ],
+          "title": "Data Seed",
+          "type": "integer"
+        },
+        "dataset_id": {
+          "pattern": "^ai09-(physical|final)-forecast-sha256-[0-9a-f]{64}$",
+          "title": "Dataset Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "development_evaluation",
+            "final_test"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "segment_policy_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Segment Policy Sha256",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        },
+        "source_recipe_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Recipe Sha256",
+          "type": "string"
+        },
+        "source_scenario_plan_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Scenario Plan Sha256"
+        }
+      },
+      "required": [
+        "data_seed",
+        "role",
+        "dataset_id",
+        "source_recipe_sha256",
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "source_scenario_plan_sha256",
+        "segment_policy_sha256"
+      ],
+      "title": "CampaignForecastContextScope",
+      "type": "object"
+    },
+    "CampaignForecastSegmentPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "availability_membership": {
+          "const": "independent_boolean_strata_overlap_not_a_partition",
+          "default": "independent_boolean_strata_overlap_not_a_partition",
+          "title": "Availability Membership",
+          "type": "string"
+        },
+        "categories": {
+          "const": "complete_verified_source_catalog_not_selected_from_outcomes",
+          "default": "complete_verified_source_catalog_not_selected_from_outcomes",
+          "title": "Categories",
+          "type": "string"
+        },
+        "category_inventory": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 256,
+          "minItems": 1,
+          "title": "Category Inventory",
+          "type": "array"
+        },
+        "final_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Access Authorized",
+          "type": "boolean"
+        },
+        "intermittency_basis": {
+          "const": "known_open_history_days_missing_or_closed_are_not_sales_zeros",
+          "default": "known_open_history_days_missing_or_closed_are_not_sales_zeros",
+          "title": "Intermittency Basis",
+          "type": "string"
+        },
+        "inventory_basis": {
+          "const": "origin_known_unreserved_available_quantity_not_future_stock",
+          "default": "origin_known_unreserved_available_quantity_not_future_stock",
+          "title": "Inventory Basis",
+          "type": "string"
+        },
+        "late_observation_hours": {
+          "default": 24,
+          "maximum": 168,
+          "minimum": 1,
+          "title": "Late Observation Hours",
+          "type": "integer"
+        },
+        "lead_time_basis": {
+          "const": "origin_known_supplier_quote_not_realized_delivery_or_truth",
+          "default": "origin_known_supplier_quote_not_realized_delivery_or_truth",
+          "title": "Lead Time Basis",
+          "type": "string"
+        },
+        "lead_time_boundaries": {
+          "default": [
+            2,
+            7
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": 2,
+              "type": "integer"
+            },
+            {
+              "const": 7,
+              "type": "integer"
+            }
+          ],
+          "title": "Lead Time Boundaries",
+          "type": "array"
+        },
+        "max_rows": {
+          "default": 10000000,
+          "maximum": 100000000,
+          "minimum": 1,
+          "title": "Max Rows",
+          "type": "integer"
+        },
+        "max_segments": {
+          "default": 512,
+          "maximum": 4096,
+          "minimum": 60,
+          "title": "Max Segments",
+          "type": "integer"
+        },
+        "maximum_inventory_snapshot_age_hours": {
+          "const": 24,
+          "default": 24,
+          "title": "Maximum Inventory Snapshot Age Hours",
+          "type": "integer"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "scenario_basis": {
+          "const": "source_bound_preregistered_annotation_never_actual_target",
+          "default": "source_bound_preregistered_annotation_never_actual_target",
+          "title": "Scenario Basis",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "version": {
+          "const": "ai09-complete-forecast-segments-1.0.0",
+          "default": "ai09-complete-forecast-segments-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "volume_basis": {
+          "const": "origin_known_rolling_28_mean_not_target_outcome",
+          "default": "origin_known_rolling_28_mean_not_target_outcome",
+          "title": "Volume Basis",
+          "type": "string"
+        },
+        "volume_boundaries": {
+          "default": [
+            0,
+            5,
+            20
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "const": 0,
+              "type": "integer"
+            },
+            {
+              "const": 5,
+              "type": "integer"
+            },
+            {
+              "const": 20,
+              "type": "integer"
+            }
+          ],
+          "title": "Volume Boundaries",
+          "type": "array"
+        }
+      },
+      "required": [
+        "category_inventory"
+      ],
+      "title": "CampaignForecastSegmentPolicy",
+      "type": "object"
+    },
+    "CampaignGenerationResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "max_log_bytes": {
+          "default": 16777216,
+          "maximum": 16777216,
+          "minimum": 1024,
+          "title": "Max Log Bytes",
+          "type": "integer"
+        },
+        "minimum_available_memory_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Available Memory Bytes",
+          "type": "integer"
+        },
+        "minimum_free_disk_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Free Disk Bytes",
+          "type": "integer"
+        },
+        "sample_seconds": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0.01,
+          "title": "Sample Seconds",
+          "type": "number"
+        },
+        "scratch_bytes": {
+          "maximum": 137438953472,
+          "minimum": 1024,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "tree_rss_bytes": {
+          "maximum": 68719476736,
+          "minimum": 1024,
+          "title": "Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "tree_rss_bytes",
+        "scratch_bytes",
+        "minimum_free_disk_bytes",
+        "minimum_available_memory_bytes"
+      ],
+      "title": "CampaignGenerationResources",
+      "type": "object"
+    },
+    "JsonValue": {}
+  },
+  "$id": "urn:retailops:evaluation:campaign_context_bundle_receipt:23.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Completion requires the matching durable journal event and sealed bundle.",
+  "properties": {
+    "actuals_in_context_rows": {
+      "const": false,
+      "default": false,
+      "title": "Actuals In Context Rows",
+      "type": "boolean"
+    },
+    "artifact_bytes": {
+      "minimum": 1,
+      "title": "Artifact Bytes",
+      "type": "integer"
+    },
+    "artifact_files": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Artifact Files",
+      "type": "object"
+    },
+    "artifact_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Artifact Sha256",
+      "type": "string"
+    },
+    "census_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Census Sha256",
+      "type": "string"
+    },
+    "complete_export_role_file_passes": {
+      "maximum": 6,
+      "minimum": 1,
+      "title": "Complete Export Role File Passes",
+      "type": "integer"
+    },
+    "context_trace_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Context Trace Sha256",
+      "type": "string"
+    },
+    "curated_inventory_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Curated Inventory Sha256",
+      "type": "string"
+    },
+    "eligible_keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Eligible Keys Sha256",
+      "type": "string"
+    },
+    "eligible_rows": {
+      "minimum": 0,
+      "title": "Eligible Rows",
+      "type": "integer"
+    },
+    "export_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Export Receipt Sha256",
+      "type": "string"
+    },
+    "final_access_authorized_by_this_document": {
+      "const": false,
+      "default": false,
+      "title": "Final Access Authorized By This Document",
+      "type": "boolean"
+    },
+    "full_role_label_file_passes": {
+      "const": 2,
+      "default": 2,
+      "title": "Full Role Label File Passes",
+      "type": "integer"
+    },
+    "generated_parent_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Generated Parent Receipt Sha256",
+      "type": "string"
+    },
+    "generation_plan_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Generation Plan Sha256",
+      "type": "string"
+    },
+    "keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Keys Sha256",
+      "type": "string"
+    },
+    "logical_curated_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Logical Curated Sha256",
+      "type": "string"
+    },
+    "operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Operation Id",
+      "type": "string"
+    },
+    "private_source_effects_read": {
+      "const": false,
+      "default": false,
+      "title": "Private Source Effects Read",
+      "type": "boolean"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "protocol_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Protocol Sha256",
+      "type": "string"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "recipe": {
+      "$ref": "#/$defs/CampaignContextBundleRecipe"
+    },
+    "reservation_id": {
+      "pattern": "^campaign-operation-[0-9a-f]{32}$",
+      "title": "Reservation Id",
+      "type": "string"
+    },
+    "role_population_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Role Population Sha256",
+      "type": "string"
+    },
+    "rows": {
+      "minimum": 1,
+      "title": "Rows",
+      "type": "integer"
+    },
+    "runtime_code_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Runtime Code Sha256",
+      "type": "string"
+    },
+    "scope": {
+      "$ref": "#/$defs/CampaignForecastContextScope"
+    },
+    "selection_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Selection Sha256"
+    },
+    "snapshot_inventory_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Snapshot Inventory Sha256",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "version": {
+      "const": "ai09-source-context-bundle-receipt-1.0.0",
+      "default": "ai09-source-context-bundle-receipt-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "worker_evidence": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Worker Evidence",
+      "type": "object"
+    }
+  },
+  "required": [
+    "protocol_sha256",
+    "operation_id",
+    "reservation_id",
+    "recipe",
+    "generated_parent_receipt_sha256",
+    "generation_plan_sha256",
+    "export_receipt_sha256",
+    "runtime_code_sha256",
+    "scope",
+    "rows",
+    "eligible_rows",
+    "keys_sha256",
+    "eligible_keys_sha256",
+    "role_population_sha256",
+    "context_trace_sha256",
+    "census_sha256",
+    "snapshot_inventory_sha256",
+    "curated_inventory_sha256",
+    "logical_curated_sha256",
+    "selection_sha256",
+    "artifact_sha256",
+    "artifact_bytes",
+    "artifact_files",
+    "worker_evidence",
+    "complete_export_role_file_passes"
+  ],
+  "title": "CampaignContextBundleReceipt",
+  "type": "object"
+}

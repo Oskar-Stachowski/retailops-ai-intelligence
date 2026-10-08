@@ -40,6 +40,7 @@ from retailops_ai.evaluation_campaign.campaign_final_contract import (
 from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
 from retailops_ai.evaluation_campaign.campaign_forecast_inference import infer_functionals
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+from retailops_ai.evaluation_campaign.campaign_raw_context import RawContextPass
 from retailops_ai.evaluation_campaign.campaign_score_contract import FAMILIES
 from retailops_ai.evaluation_campaign.campaign_score_worker import load_models
 from retailops_ai.evaluation_campaign.development_contract import MODELS
@@ -296,10 +297,25 @@ def consume(
         raise SnapshotError("campaign_evaluation_prepared_actual_checksum_mismatch")
     prediction_path = root / "predictions.sqlite"
     _checksum(prediction_path, request["predicted"]["prediction_index_sha256"])
+    if ("raw_context" in request) != ("raw_context_bundle" in request):
+        raise SnapshotError("campaign_evaluation_raw_context_pair_required")
+    raw_context = (
+        RawContextPass(
+            Path(request["raw_context_bundle"]),
+            request["raw_context"],
+            plan,
+            request["population"],
+            trial.tune_score_operation_id,
+        )
+        if "raw_context" in request
+        else None
+    )
+    critical_metrics = None
     with (
         closing(_readonly(root / "predictions.sqlite")) as predicted,
         closing(_readonly(actual_path)) as actuals,
         closing(_index(Path(request["projection"]), plan.max_index_bytes)) as projection,
+        raw_context if raw_context is not None else nullcontext(),
     ):
         if first:
             projection.execute(
@@ -335,6 +351,8 @@ def consume(
                 or row.eligible != actual.eligible
             ):
                 raise SnapshotError("campaign_evaluation_trial_actual_binding_mismatch")
+            if raw_context is not None:
+                raw_context.add(row, actual.actual)
             identity = canonical_bytes(
                 row.model_dump(mode="json", exclude={"values", "trial_tune_score_operation_id"})
             )
@@ -419,6 +437,8 @@ def consume(
             raise SnapshotError("campaign_evaluation_consumed_trace_or_population_mismatch")
         _checksum(actual_path, expected["actuals_sha256"])
         _checksum(prediction_path, request["predicted"]["prediction_index_sha256"])
+        if raw_context is not None:
+            critical_metrics = raw_context.finish()
         projection.execute(
             "INSERT INTO consumed VALUES(?,?)", (trial.tune_score_operation_id, digest.hexdigest())
         )
@@ -449,6 +469,8 @@ def consume(
             for h, n in counts.items()
         ],
     }
+    if critical_metrics is not None:
+        metrics["raw_critical_segments"] = critical_metrics
     path = Path(request["metrics_output"])
     write(path, metrics)
     return {
@@ -458,6 +480,7 @@ def consume(
         "metrics_sha256": file_hash(path.parent, path.name)[1],
         "actual_index_passes": 1,
         "selected_heads_written": True,
+        **({"raw_critical_segments_complete": True} if raw_context is not None else {}),
     }
 
 

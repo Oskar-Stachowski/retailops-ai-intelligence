@@ -293,3 +293,134 @@ komponenty i schemat v22 oraz zwrócił 56 pustych grup kontrolnych, bez importu
 TensorFlow/MLflow lub uruchomienia source/model workera. Integracja z pełnym
 zaakceptowanym main `0990905b` zmieniła tylko ancestry, bez zmiany drzewa.
 Nowa publikacja i jej dokładne pełne CI pozostają wymagane.
+
+
+`SourceAnnotations` wiąże plan z publicznym, zweryfikowanym snapshotem,
+Source ID, snapshot ID, seedem, requested/resolved parameters i deklaracją
+zamrożonej receptury generacji. Używa niezmienionych schematów Source 1.2.
+Normalizuje kolejność injections/controls według ID tak jak producent i wymaga
+zgodnego plan/schema SHA z rzeczywistym manifestem Source 2.8. Obsługuje oba
+zamknięte rodzaje planu: demand oraz physical. Okna są ograniczone, unikalne
+i nie zachodzą na siebie w grain; etykieta dotyczy target date, z zachowaniem
+originu i horyzontu. Znana promocja pochodzi z origin-known input; sam control
+promotion lub przyszły efekt nie tworzy dostępnej promocji. Interwencja demand
+ma pierwszeństwo przed tą etykietą, a physical inventory ma własny segment.
+Return spike pozostaje osobną osią anomaly. Nie deklaruje niezależności efektów
+fizycznych, nie otwiera prywatnego Source artifactu effects i nie zmienia features.
+
+Komponent wymaga od wywołującego dowodu ukończonej generacji i rezerwacji całego
+odczytu Source. Sam obiekt Snapshot, generation plan albo metadata nie dowodzą
+uprawnienia, czasu prerejestracji czy kwalifikacji canonical. 39 kontroli mają
+rzeczywiste publiczne fixture 1.1/1.2 i kontrolowane features. Plan odzyskano
+z wcześniej eksponowanego prywatnego fixture tylko do porównania jego hash;
+nie jest to dowód prerejestracji projektu. Sześć pominięć dotyczy wyłącznie
+braku planu anomalii w 1.1. Nie wykonano Source generacji, fitów ani final read
+projektu. [Evidence 09-34](evidence/09-34-source-annotation-binding.json) opisuje
+zakres kontroli. Nadal wymagane są publiczny, audytowany context bundle,
+pełny role join i pokrycie wszystkich wymaganych scenariuszy na każdym seedzie.
+Pojedynczy rodzaj planu nie jest dowodem całego portfolio scenariuszy.
+
+Pakiet tego komponentu ma 586 zgodnych modułów i 15 schematów v19–v22.
+66 wcześniejszych kontraktów v1–v20 i 129 plików zamkniętych komponentów stockout
+pozostają zgodne z bazą. Import faktycznie zainstalowanego wheel i obu
+zamkniętych schematów Source plan przeszedł bez importu TensorFlow/MLflow
+lub uruchomienia workera. Publikacja nowego dokładnego head i pełny odbiór CI
+są nadal wymagane przed użyciem w audytowanym context bundle.
+
+Nowy [v23](../contracts/evaluation/v23/campaign_context_bundle_recipe.schema.json)
+dodaje pełny Source context bundle i jego publiczny runner. Receptura zamraża
+operacje generacji/eksportu, politykę segmentów i limity przed poznaniem wynikowych
+IDs. Runner rezerwuje cały odczyt Source przed metadata lub workerem, wymaga
+trwałego ukończenia obu rodziców i zgodnej receptury generacji. Dla final najpierw
+sprawdza rzeczywiste evidence wszystkich trzech zastosowań; sam nagłówek freeze
+nie wystarcza. Oddzielny worker pod nadzorem sprawdza pełny snapshot/curated,
+odtwarza transformację, sprawdza producenta/lock/runtime i wiąże plan z publicznym
+Source. Nie otwiera prywatnego artifactu effects.
+
+Kontekst pochodzi z rzeczywistych features/history oraz niezmienionej projekcji
+AI08. Łączy każdy klucz ocenianej roli, także wykluczony. Bounded SQLite sortuje
+klucze kanonicznie przed census; logiczna kolejność horyzontów w window nie jest
+porządkiem leksykograficznym tych kluczy. Bundle zachowuje contexts, pełny census,
+scope, population i seale rodziców. Końcowa kontrola obejmuje także wszystkie
+nieużywane pliki oryginalnego eksportu. Indeksy inputs/actuals/context są prywatne
+i po sukcesie usuwane; actuals nie trafiają do context rows. Output nie może
+obejmować rodziców ani znajdować się wewnątrz nich. Awaria pozostawia obciążoną
+operację i koszt, bez zaakceptowanego receipt lub automatycznego retry.
+
+Koszt odczytu jest jawny: pełny walidator eksportu parsuje jego pliki ról
+(jeden final albo sześć development), a indeks parsuje ocenianą rolę ponownie.
+Nowy receipt zapisuje zatem dwa parsowania ocenianej roli. Instrumentacja native
+kontroli potwierdza oba odczyty. Wcześniejsze v19/v20 nadal mają własną niezmienioną
+semantykę jednego odczytu w swoim prepare; nowy kontekst jest osobną operacją
+whole-parent. Sam typed receipt nie dowodzi ukończenia: verifier wymaga zgodnego
+trwałego eventu, stored receipt, wszystkich artifactów i ponownie pełnego census
+z każdego context row oraz ukończonych rodziców.
+
+117 kontroli nowego odczytu i dotychczasowego data/worker/runner forecast przeszło
+w 214.81 s; dalsze 14 kontroli granic/odmowy final przeszło w 5.21 s. Native
+kontrole korzystają z wcześniej eksponowanych Source demand/physical 1.2,
+z dwoma kontrolnymi originami i wszystkimi 14 horyzontami. Odzyskanie ich planu
+z dawnego prywatnego fixture jest wyłącznie kontrolą istniejącego hash, nie
+dowodem czasu prerejestracji projektu. Pozytywnego publicznego runnera na pełnym
+canonical Source jeszcze nie wykonano. Nie ma nowych Source generacji, Project
+fitów ani świeżego final read. 75 wcześniejszych wire oraz wszystkie 129 plików
+zamkniętych komponentów stockout pozostają bez zmian. Szczegóły i wcześniejsze
+nieudane kontrole zachowano w [evidence 09-35](evidence/09-35-source-context-bundle.json).
+Pozostają pełna kwalifikacja canonical, publiczne raw critical/uncertainty
+receipty, rzeczywiste anomaly/stockout i kompletna kampania z lifecycle.
+
+Wheel zawiera 590 zgodnych modułów i 17 schematów v19–v23. Faktycznie
+zainstalowany pakiet zaimportował publiczny context runner, oba schematy v23
+i nowy reviewed role plan bez TensorFlow/MLflow, Source workera lub Project
+fitów/final read. Mypy dla 711 plików, Ruff i format 1208 plików przeszły.
+Nowy dokładny head oraz pełne CI/publikacja na main nadal pozostają wymagane.
+
+Publiczny evaluator forecast przyjmuje teraz opcjonalny, ukończony Source context
+bundle do zebrania surowych metryk każdej zamrożonej próby przed usunięciem jej
+indeksu predykcji. Operacja kontekstu musi być prerekwizytem zamrożonym w protokole;
+sam nagłówek receipt nie wystarcza. Runner sprawdza trwałe ukończenie, pełny bundle,
+eksport, Source, runtime, selection, rolę i politykę segmentów. Po prepare porównuje
+pełne liczby oraz hashe kluczy/populacji z niezależnie utworzonym indeksem.
+
+Kontekst i census trafiają wyłącznie do core consume, po zakończeniu procesu modelu.
+Predict nadal odrzuca payload kontekstu i nie otrzymuje datasetu ani actuals.
+Consume łączy kanonicznie posortowany context z każdym raw prediction i actual,
+weryfikuje example/eligibility/exclusions, ponownie odtwarza pełny census i sprawdza
+seale plików po odczycie. Brak, duplikat, inna kolejność lub zmieniony scope
+przerywa operację. Wszystkie sześć modeli i wszystkie deklarowane segmenty,
+w tym puste i wykluczone, pozostają w `trials/trial-NNN.json`. Usunięcie surowego
+indeksu następuje dopiero po potwierdzonym raporcie consume i fsync artifactu.
+
+`parents.json` zachowuje receipt i pełny census kontekstu. Verifier wymaga zgodnego
+raportu każdej próby, kompletu modeli/grup, poprawnych counts i skończonych metryk.
+Metryki bez obserwacji lub poprawnego mianownika pozostają `null`; wartości zero
+nie mogą zastąpić nieokreślonego wyniku. Odczyt ukończonego receipt kontekstu jest
+kontrolą lineage wcześniejszego obliczenia i nie przyznaje nowego dostępu Source
+lub final. Output evaluatora nie może obejmować ani zmieniać wejściowego bundle.
+
+Kontrole używają wcześniej eksponowanych Source1.2 demand/physical, wszystkich
+kluczy dwóch originów i 14 horyzontów oraz dwóch zadeklarowanych prób z kontrolnymi
+forecastami. Krótkie fixture nie zapewniają historii i dojrzałych etykiet dla
+tego zakresu: eligible rows wynosi zero. Te kontrole dowodzą pełnego join i
+zachowania wykluczeń, a nie kwalifikacji jakości. Równania z eligible rows oraz
+odmowę brakujących/nieskończonych metryk sprawdzają osobne jawne kontrole.
+Pozytywnej publicznej kampanii na pełnym canonical Source jeszcze nie wykonano.
+Nowe kontrole granicy API potwierdzają rezerwację i koszt odmowy przed Source
+context lub role workerem. Szczegóły, także nieudanych kontroli, zapisano w
+[evidence 09-36](evidence/09-36-raw-context-consumption.json).
+
+Wire v1–v23 i zamknięte komponenty AI08 pozostają bez zmian. Nowe dane są
+opcjonalnymi artifactami diagnostycznymi w istniejącym receipt v20; jego
+`critical_segment_inventory_complete`, `block_uncertainty_complete`,
+`quality_qualified` i `stage_ready` nadal są false. Pełne segmenty wybranego,
+skalibrowanego forecastu, paired uncertainty, rzeczywiste anomaly/stockout,
+kwalifikacja canonical i kompletna kampania/lifecycle nadal wymagają wykonania.
+
+Zaktualizowany wheel zawiera 591 zgodnych modułów i 17 schematów v19–v23.
+Faktycznie zainstalowany pakiet importuje publiczny evaluator z parametrami
+kontekstu i nowe helpery bez TensorFlow/MLflow, generacji Source lub Project fitów.
+77 istniejących plików wire i 129 plików źródeł/wire stockout pozostają byte-for-byte
+bez zmian. Mypy712 plików, Ruff, format1210 plików, schematy i dokumentacja
+przeszły. Kolekcja zmienionych modułów testowych zawiera129 unikalnych kontroli;
+opisane wykonania częściowo się pokrywają i ich liczby nie sumują się.
+Dokładny head, pełne CI i chroniona publikacja na main pozostają wymagane.
