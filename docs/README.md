@@ -10,13 +10,15 @@ przechodzą; pełna projektowa kampania pozostaje do wykonania.
 [Przyrost 09.40](evidence/09-40-planned-source-cache-integration.json) zachowuje
 oryginalne planowane anomalie przy użyciu istniejących cache; 21 różnych native
 kontroli Source i 76 testów integracji AI przechodzi na już odsłoniętych fixture.
-Pełna pojemność, nowy head/main CI, kampania trzech zastosowań i final nadal są otwarte.
+Pełna pojemność, kampania trzech zastosowań i final nadal są otwarte.
 [Szósta próba ai-dev 09.45](evidence/09-45-development-capacity-sixth-run.json)
 zakończyła się limitem pamięci 8 GiB. [Audyt pięciu faz](ai09-capacity-audit.md)
 i [poprawka retencji 09.49](evidence/09-49-projection-retention-capacity-preparation.json)
 zachowują pełny profil, walidację oraz wszystkie wcześniejsze koszty.
-[Receptura 1.7](reference/ai09-development-capacity-v1.7.json) przygotowuje kolejny
-pomiar po odbiorze obu repozytoriów. 1.6 pozostaje zachowana i nieuruchomiona;
+[Receptura 1.7](reference/ai09-development-capacity-v1.7.json) została uruchomiona
+raz po pełnym odbiorze obu repozytoriów: [run 37807749014](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014).
+[Dowód 09.50](evidence/09-50-audit-acceptance-capacity-seventh-start.json) wiąże
+commity, pełne CI, profil i niezmienione limity. 1.6 pozostaje zachowana i nieuruchomiona;
 1.5 została wykonana i stanowi szóstą porażkę. Pełna kampania nadal jest otwarta.
 Wcześniejsze przyrosty są zapisane w
 [odbiorze 09.11](evidence/09-11-main-integration.md). Dawne katalogi

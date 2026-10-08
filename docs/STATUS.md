@@ -4,7 +4,7 @@
 [Audyt przed kolejnym canonical](ai09-capacity-audit.md) wprowadza bezpieczne
 poprawki pamięci i kosztu we wszystkich pięciu fazach. Pełny profil, limity,
 wszystkie wcześniejsze porażki i dotychczasowe bramki pozostają zachowane.
-Nowy pomiar wymaga zakończenia odbioru dokładnych commitów i main obu repo.
+Audyt przeszedł pełne CI dokładnych head i wynikowych main obu repozytoriów.
 [Dalszy audyt retencji](evidence/09-49-projection-retention-capacity-preparation.json)
 zwalnia pierwotne dane sprzedaży po rekonsyliacji, przed projekcją. Source zaliczył
 trzy kontrole czasu życia i 67 regresji, a AI 95 kontroli oraz 41 z paczki.
@@ -12,9 +12,13 @@ Małe pomiary potwierdzają identyczność danych i niższą pamięć; pełna po
 pozostaje do zmierzenia. [Receptura 1.7](reference/ai09-development-capacity-v1.7.json)
 przypina Source `4dacf040` z PR109 i zachowuje pełne wymiary oraz limity.
 1.6 nie została uruchomiona i pozostaje niezmiennym zapisem przygotowania;
-łańcuch wykonanych prób nadal kończy się szóstą porażką 1.5. Pierwszy audyt jest
-na obu main (Source PR108 oraz AI PR56–57). Dalsza poprawka wymaga pełnego
-odbioru dokładnych head i wynikowych main przed dispatch. Kampania pozostaje otwarta.
+wszystkie sześć wcześniejszych porażek pozostaje zapisanych. Końcowy audyt jest
+na Source main `c04ca954` (PR109) i AI main `89d6c8f2` (PR58), po pełnym
+odbiorze head i main: Source 21 success + 4 scoped skips, AI 17/17 success.
+[Dowód odbioru i startu 09.50](evidence/09-50-audit-acceptance-capacity-seventh-start.json)
+zapisuje pojedynczą siódmą próbę [37807749014](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014)
+na niezmiennej referencji 1.7, z pełnym profilem i limitami. Wynik zasobów wymaga
+odbioru artefaktu tego przebiegu. Pełna kampania naukowa pozostaje otwarta.
 [Przyrost 09.41](evidence/09-41-full-scenario-portfolio.json) dodaje
 [pełne portfolio v25](ai09-full-scenario-portfolio.md): 12 pełnych źródeł
 ordinary/demand/physical, jeden dziennik i wspólny freeze. Brak wariantu,

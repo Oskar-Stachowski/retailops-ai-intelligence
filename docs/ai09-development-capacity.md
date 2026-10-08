@@ -19,9 +19,14 @@ Pin zależności producenta `ea389b45` pochodzi z wcześniejszej aktualizacji So
 zachowuje pełny diff względem starszego `f55452e6`. To pomiar nowej implementacji
 i środowiska; nie przypisujemy całej zmiany kosztu wyłącznie kodowi.
 
-1.7 nie została uruchomiona. Najpierw wymagane są pełne CI dokładnych Source
-i AI head, chronione scalenia oraz CI wynikowych main. Potem może nastąpić jeden
-odrębny ręczny dispatch na izolowanym runnerze, bez automatycznego retry.
+**1.7 została uruchomiona raz**, jako [run 37807749014](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014),
+po pełnym CI dokładnych head, standardowych scaleniach i pełnym CI wynikowych
+main obu repozytoriów. [Dowód 09.50](evidence/09-50-audit-acceptance-capacity-seventh-start.json)
+wiąże Source `4dacf040`, AI `89d6c8f2`, niezmienną referencję i dokładne bajty
+receptur, skryptu, workflow oraz locków. Zachowano pełny profil 365 × 100 × 5 × 3,
+limity i sześć wcześniejszych porażek. Wynik zasobów tego przebiegu wymaga
+osobnego odbioru artefaktu; sam dispatch nie potwierdza pojemności ani jakości.
+Nie wykonuje się automatycznego retry.
 
 Poniżej zachowano opis wykonanej próby 1.5 i poprzednich pomiarów.
 

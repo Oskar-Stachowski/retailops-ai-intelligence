@@ -73,3 +73,12 @@ w paczce. Nowa receptura 1.7 zachowuje nieuruchomioną 1.6 oraz wszystkie sześ�
 rzeczywistych porażek. Pełne CI head i wynikowych main obu repozytoriów pozostaje
 warunkiem wykonania diagnostyki. Pierwszy audyt jest już scalony: Source PR108,
 AI PR56–57. Żaden z tych odbiorów nie kwalifikuje jeszcze pełnej kampanii.
+
+Końcowe poprawki są na Source main `c04ca954` i AI main `89d6c8f2`. Dokładne
+head PR109/PR58 oraz oba wynikowe main mają pełne zaakceptowane CI: Source
+21 success i cztery deklarowane scoped skips, AI 17/17 success.
+[Dowód odbioru 09.50](evidence/09-50-audit-acceptance-capacity-seventh-start.json)
+zawiera inventory zadań, referencje i sumy plików sprawdzonych przed pojedynczym
+dispatch siódmej próby [37807749014](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37807749014).
+1.6 pozostaje nieuruchomiona; wszystkie wcześniejsze koszty są zachowane.
+Odbiór kodu i start runnera nie są wynikiem zasobów ani kwalifikacją modeli.
