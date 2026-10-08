@@ -1,0 +1,140 @@
+{
+  "scope": "Prospective capacity recipe1.3 preparation, no actual canonical attempt dispatched",
+  "recipe": "docs/reference/ai09-development-capacity-v1.3.json",
+  "producer_commit": "5182782321e9aca15f28c467071e92f268aafb85",
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "canonical_attempt_dispatched": false,
+  "project_generation_started": false,
+  "final_generation_started": false,
+  "final_test_opened": false,
+  "full_profile_qualified": false,
+  "stage_ready": false,
+  "previous_three_failed_attempts_and_plan_bytes_retained": true,
+  "canonical_dimensions_dates_budgets_reserves_parent_caps_unchanged": true,
+  "stack_observation": {
+    "owned_generation_worker_only": true,
+    "interval_seconds": 120,
+    "all_own_threads": true,
+    "locals_dumped": false,
+    "allocation_measurement_claimed": false,
+    "cancelled_on_success_and_exception": true,
+    "existing_log_and_scratch_caps_apply": true
+  },
+  "component_tests": {
+    "passed": 28,
+    "seconds": 1.27,
+    "actual_isolated_periodic_trace_and_cancellation_checked": true,
+    "short_timing_control_not_valid_canonical_plan": true,
+    "mypy_source_files": 687,
+    "ruff": "passed",
+    "docs_required_ci_contract": "passed",
+    "retained_failed_controls": [
+      {
+        "kind": "collection error",
+        "seconds": 0.09,
+        "cause": "direct pytest launcher lacked repository root on sys.path for scripts import; use python -m pytest, no product change",
+        "canonical_or_project_workers_started": false
+      },
+      {
+        "passed": 26,
+        "failed": 1,
+        "seconds": 1.34,
+        "cause": "chain test assumed newer previous_failure_preserved field on immutable1.1 metadata; assert its original explicit failed status, count and cost instead; old plan bytes retained"
+      }
+    ]
+  },
+  "source_copy_component_measurement": {
+    "native_parity_passed": 23,
+    "native_seconds": 37.03,
+    "copy_peak_python_allocations_before": 916576,
+    "after": 807816,
+    "reduction_percent": 11.8659,
+    "not_whole_RSS_or_full_profile_proof": true,
+    "existing_AI08_memory_changes_preserved": true
+  },
+  "source_ci_first_attempt": {
+    "run": 37683555355,
+    "head": "5182782321e9aca15f28c467071e92f268aafb85",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "jobs_read_and_total": 30,
+    "success": 28,
+    "docker_job": 113009018233,
+    "docker_result": "cancelled after35min Chromium installation; application tests not started",
+    "data_quality_job": 113007147245,
+    "data_quality_result": "success",
+    "required_result": "failure",
+    "measured_application_cost": "not applicable: application test steps skipped; installation wall cost retained, RSS/CPU not measured",
+    "result_preserved_before_failed_jobs_retry": true,
+    "retry_scope": "failed CI infrastructure jobs only, no canonical/project generation retry",
+    "retry_acceptance_pending": true,
+    "retry_run_attempt": 2,
+    "retry_docker_job": 113026894497
+  },
+  "source_current_main_acceptance": {
+    "main": "39d56447a941a879187f9c406299f3ee67ae4ce0",
+    "required_ci": 37683339158,
+    "jobs_read_and_total": 30,
+    "success": 30,
+    "required_result": "success",
+    "closed_AI07_AI08_reopened": false
+  },
+  "dispatch_requirements": [
+    "Exact producer Required CI completed with all required successes; protected merge and exact Source main acceptance",
+    "This recipe/implementation protected publication and full exact AI main acceptance",
+    "Fresh isolated owned runner output with existing resource preflight, no silent retry or shrinking canonical profile"
+  ],
+  "first_capacity_head_full_required_ci": {
+    "run": 37690635892,
+    "head": "cf092d5ef7cf3f704dee3c9f17d7a589abecf3aa",
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs_read_and_total": 17,
+    "success": 15,
+    "failed": [
+      "tests (0)",
+      "required-result"
+    ],
+    "failed_job": 113031474652,
+    "test_results": {
+      "passed": 962,
+      "failed": 21,
+      "errors": 54,
+      "skipped": 30,
+      "seconds": 1483.69
+    },
+    "cause": "Old64KiB partition manifest metadata bound; complete inventory already exceeded this cap",
+    "original_result_preserved": true
+  },
+  "corrected_base_integration": {
+    "calibration_head": "b2e12a5d437699f069f7fa7e88598ae447c53fd8",
+    "main": "92c2a3cd91294250b8a8110c1330600ab494285f",
+    "main_required_ci": 37689831146,
+    "main_jobs_read_and_total": 17,
+    "main_success": 17,
+    "manifest_metadata_cap_bytes": 131072,
+    "complete_module_hash_inventory_retained": true,
+    "interrupted_backup_safe_child_diagnostics_included": true,
+    "post_integration_tests_passed": 48,
+    "post_integration_seconds": 2.27,
+    "mypy_source_files": 688,
+    "all_canonical_dimensions_and_limits_and_old_plan_bytes_unchanged": true,
+    "updated_exact_head_full_ci_required": true
+  },
+  "producer_protected_publication": {
+    "pr": 105,
+    "head": "6bc96e2f68eff777f4e45a26084ef65e144e482a",
+    "required_ci": 37692294899,
+    "jobs_read_and_total": 25,
+    "success": 21,
+    "expected_scoped_skips": 4,
+    "required_result": "success",
+    "protected_merge": "5c05445e8105c378107099785bae7355388ed7e7",
+    "exact_main_required_ci": 37698252427,
+    "exact_main_acceptance_pending": true,
+    "recipe_producer_pin_unchanged": true,
+    "canonical_attempt_dispatched": false
+  }
+}

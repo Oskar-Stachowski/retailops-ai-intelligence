@@ -1,5 +1,49 @@
 # Pomiar pełnego development AI 09
 
+[Prospektywna receptura 1.3](reference/ai09-development-capacity-v1.3.json)
+przypina source `51827823`: cached ścieżka kopiuje tylko wejścia commerce,
+których używa symulator, przez istniejącą funkcję `source_bridge._copy_commerce_inputs`.
+Nie powtarza wdrożonych zmian AI08 dotyczących indeksów, cache i zwalniania build
+state. Kontrolne native parity ma 23 passed; zmierzony spadek alokacji samej kopii
+wynosi 11.87%, bez deklaracji poprawy całego RSS lub kwalifikacji pełnego profilu.
+
+Worker generacji tej nowej próby zapisuje co 120 s stos własnych wątków,
+bez lokalnych wartości. Obserwacja pomaga wskazać wykonywaną funkcję, ale nie jest
+pomiarami alokacji ani ciągłym profilem pamięci. Zatrzymuje się także przy wyjątku;
+log nadal obejmuje istniejący limit 16 MiB i cały scratch oraz zasoby workera.
+28 testów supervisora, scope i obserwacji stosu przeszło w 1.27 s. Jeden kontrolny
+proces rzeczywiście zapisuje okresowe stosy i sprawdza ich anulowanie oraz brak
+lokalnych wartości w logu. Krótki interwał tego testu nie jest akceptowany przez
+zamrożony plan pełnej próby. [Evidence](evidence/09-30-development-capacity-next-preparation.json)
+opisuje zakres tych kontroli.
+
+Receptura zachowuje bajty 1.0/1.1/1.2 i łańcuch wszystkich trzech porażek,
+pełne wymiary i daty canonical, budżety RSS/scratch/czasu, rezerwy i parent caps.
+Nie została uruchomiona. Wymaga chronionej publikacji producenta, pełnego odbioru
+jego dokładnego head/main oraz publikacji i pełnego CI tej diagnostyki.
+Pierwszy Required CI producenta `37683555355` zakończył się cancelled:
+28/30 success, Docker cancelled i required-result failure. Instalacja Chromium
+przekroczyła 35 minut przed rozpoczęciem testów aplikacji; data quality przeszło.
+Oryginalny wynik jest zachowany, ponowiono tylko niezaliczone zadania CI.
+Nie ponowiono canonical ani żadnej projektowej generacji. Aktualny source main
+`39d56447` ma pełny odbiór 30/30 success. AI07/08 pozostają zamknięte.
+
+Producent został następnie scalony przez chroniony
+[Source PR #105](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/105):
+head `6bc96e2f` ma zakończony Required CI `37692294899`, 25 odczytanych z 25
+jobs, 21 success, cztery zamierzone scoped skips i required-result success.
+Merge `5c05445e` jest na Source/main; jego dokładny odbiór `37698252427`
+pozostaje w toku. Przypięcie producenta `51827823` w recepturze nie zmienia się.
+Pierwszy head diagnostyki `cf092d5e`, CI `37690635892`, zakończył się failure
+z 15/17 success przez dotychczasowy limit manifestu 64 KiB. Zachowano
+21 failed, 962 passed, 54 errors, 30 skipped i koszt 1483.69 s tego sharda.
+Nowa gałąź zawiera poprawkę bounded metadata cap 128 KiB oraz diagnostykę
+przerwanego backupu z kalibracji `b2e12a5d` i zaakceptowany main `92c2a3cd`.
+48 testów diagnostyki, przerwania i limitu manifestu przeszło w 2.27 s;
+Mypy dla 688 plików przeszło. Nowy dokładny head wymaga pełnego CI,
+chronionego merge i odbioru AI/main przed dispatch. Pełna próba 1.3 nadal
+nie została uruchomiona, a poprzednie plany, limity i porażki są zachowane.
+
 [Prospektywna receptura 1.2](reference/ai09-development-capacity-v1.2.json)
 została uruchomiona na `16d34887` z zaakceptowanego main `b0e2de16`.
 [Trzeci pełny pomiar](evidence/09-28-development-capacity-third-run.json),
