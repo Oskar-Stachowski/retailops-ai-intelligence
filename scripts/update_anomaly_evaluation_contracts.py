@@ -4,15 +4,27 @@ import argparse
 import json
 from pathlib import Path
 
-from retailops_ai.anomaly_evaluation.contract import EvaluationPolicy, OrdinaryTruth, Truth
+from retailops_ai.anomaly_evaluation.contract import (
+    EvaluationPolicy,
+    OrdinaryTruth,
+    PairedTruth,
+    Truth,
+)
 from retailops_ai.evaluation_campaign.campaign_anomaly_evaluation import (
     CampaignOrdinaryAnomalyCensusEvaluation,
     CampaignOrdinaryAnomalyCensusPlan,
+    CampaignPairedAnomalyCensusEvaluation,
+    CampaignPairedAnomalyCensusPlan,
 )
 from retailops_ai.evaluation_campaign.campaign_anomaly_truth_contract import (
     CampaignOrdinaryTruthPlan,
     CampaignOrdinaryTruthReceipt,
     OrdinarySourceVerification,
+)
+from retailops_ai.evaluation_campaign.campaign_paired_truth_contract import (
+    CampaignPairedTruthPlan,
+    CampaignPairedTruthReceipt,
+    PairedSourceVerification,
 )
 
 ROOT = Path(__file__).resolve().parents[1] / "src/retailops_ai/anomaly_evaluation/contracts"
@@ -31,6 +43,12 @@ def main() -> int:
         ("ordinary-truth-receipt.v1", CampaignOrdinaryTruthReceipt),
         ("ordinary-census-plan.v1", CampaignOrdinaryAnomalyCensusPlan),
         ("ordinary-census-evaluation.v1", CampaignOrdinaryAnomalyCensusEvaluation),
+        ("paired-truth.v1", PairedTruth),
+        ("paired-source-verification.v1", PairedSourceVerification),
+        ("paired-truth-plan.v1", CampaignPairedTruthPlan),
+        ("paired-truth-receipt.v1", CampaignPairedTruthReceipt),
+        ("paired-census-plan.v1", CampaignPairedAnomalyCensusPlan),
+        ("paired-census-evaluation.v1", CampaignPairedAnomalyCensusEvaluation),
     ):
         raw = (
             json.dumps(

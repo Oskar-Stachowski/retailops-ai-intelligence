@@ -67,6 +67,7 @@ def test_changed_shared_basket_is_unknown_for_every_member(tmp_path):
     ("table", "clock"),
     [
         ("daily_demand_observations", "business_date"),
+        ("daily_price_observations", "business_date"),
         ("inventory_returns", "returned_at"),
         ("inventory_ledger", "occurred_at"),
         ("inventory_physical_daily_balances", "business_date"),
@@ -139,6 +140,34 @@ def test_all_columns_participate_in_equality_not_just_quantities(tmp_path):
     planned["daily_demand_observations"][0]["new_producer_field"] = "changed"
     result = compare(tmp_path, ordinary, planned)
     assert result["unknown_from_by_product"] == {"product-a": "2026-05-24"}
+
+
+@pytest.mark.parametrize("field", ["quantity", "gross_revenue", "available_at"])
+def test_realized_price_observations_are_product_outcomes_not_fixed_price_policy(tmp_path, field):
+    ordinary, planned = tables(), tables()
+    row = {
+        "product_id": "product-b",
+        "business_date": "2026-07-10",
+        "available_at": "2026-07-11T02:00:00Z",
+        "quantity": 3,
+        "gross_revenue": "29.97",
+        "realized_unit_price": "9.99",
+    }
+    ordinary["daily_price_observations"] = [row]
+    planned["daily_price_observations"] = [
+        {
+            **row,
+            field: {"quantity": 1, "gross_revenue": "9.99", "available_at": "2026-07-12T02:00:00Z"}[
+                field
+            ],
+        }
+    ]
+    result = compare(tmp_path, ordinary, planned)
+    assert result["unknown_from_by_product"] == {"product-b": "2026-07-10"}
+    assert result["changed_table_memberships"]["daily_price_observations"] == {
+        "ordinary_only_memberships": 1,
+        "planned_only_memberships": 1,
+    }
 
 
 @pytest.mark.parametrize("table", ["delivery_plan_versions", "inventory_supplier_samples"])

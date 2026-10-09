@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any
 
 POLICY = {
-    "version": "anomaly-paired-source-comparison-1.0.0",
+    "version": "anomaly-paired-source-comparison-1.0.1",
     "population": "all_58_native_tables_all_rows_all_columns_both_parents",
     "comparison": "canonical_row_multiset_with_shared_order_product_joins",
     "clean": "native_complete_days_strictly_before_first_product_difference_or_intervention",
@@ -31,7 +31,7 @@ POLICY = {
 # simulation parameters and public policies must match in full, including dates.
 INVARIANT_TABLES = frozenset(
     "assortment business_calendar catalog_categories category_calendar channel_assignments "
-    "daily_demand_exclusions daily_price_observations fulfillment_routes "
+    "daily_demand_exclusions fulfillment_routes "
     "inventory_fulfillment_routes inventory_products inventory_reorder_rules "
     "inventory_route_versions inventory_scope inventory_selling_locations "
     "inventory_stock_locations price_history price_plans product_catalog "
@@ -40,7 +40,8 @@ INVARIANT_TABLES = frozenset(
     "store_simulation_parameters stores suppliers warehouses".split()
 )
 PRODUCT_TABLES = frozenset(
-    "daily_demand_observations daily_demand_truth daily_demand_versions daily_return_cohorts "
+    "daily_demand_observations daily_demand_truth daily_demand_versions daily_price_observations "
+    "daily_return_cohorts "
     "inventory_daily_snapshots inventory_demand_arrivals inventory_demand_outcomes "
     "inventory_history_coverage inventory_ledger inventory_lost_sales_impacts "
     "inventory_physical_daily_balances inventory_returns inventory_sales "

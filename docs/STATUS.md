@@ -1,5 +1,32 @@
 # Aktualny status
 
+**2026-10-10 — AI 09: pełny odczyt pary Source i trwały odbiór prawdy.**
+[09.94](evidence/09-94-paired-truth-native-verification.json) dodaje wykonawcę
+dwóch natywnych odczytów, wspólny zmierzony koszt, dowód obu zakończonych
+generacji oraz osobne kontrakty prawdy i pełnej ewaluacji. Final wymaga
+weryfikacji zakończonego wyboru wszystkich trzech zastosowań. Nieznane etykiety
+pozostają w populacji i pokryciu, a pozytywy ograniczone zapasem nie znikają.
+**146 testów źródłowych i te same 146 z paczki** przeszły bez pominięć;
+pełny Mypy objął 764 pliki, 635 modułów i 15 schematów w paczce mają identyczne
+bajty. Stare schematy pozostały bez zmian.
+
+Rzeczywista kontrola 30 dni × 8 produktów × 3 pary sprzedaży × 2 miejsca
+zapasu odtworzyła kompletne pary ordinary/demand oraz ordinary/physical
+na czystym kodzie producenta. Przeszła w **54.69 s**, przy próbkowanym peak
+RSS **174.2 MiB** i zachowanej rezerwie RAM 1 GiB. Pierwsza próba wykryła,
+że `daily_price_observations` zawiera wyniki sprzedaży; reguła 1.0.1 porównuje
+je jako wyniki produktu i przesuwa granicę clean przy każdej różnicy.
+Nieudana próba i jej koszt pozostają zapisane. To kontrola funkcjonalna,
+nie wynik pełnej skali ani kampanii Project.
+
+Source PR 114 przeszedł **21 kontroli i 4 deklarowane pominięcia ścieżek**
+po zwykłym ponowieniu nieudanych jobs; natywny data quality gate zaliczył
+1160 testów. PR scalono do `d2363a5c`; CI wynikowego main `38000892591`
+nadal trwa. Pin konsumenta pozostaje bez zmian. Pełny lokalny CI i odbiór
+PR/main tego przyrostu AI są nadal wymagane, podobnie jak transfer ordinary
+do triali, rzeczywiste dane 25/50, modele i końcowe bramki. Canonical wyłączony,
+limit **12 GiB** zachowany; AI 09 `not_ready`.
+
 **2026-10-10 — AI 09: porównanie par Source przed nadaniem clean labels.**
 [09.93](evidence/09-93-paired-source-comparison.json) dodaje porównanie
 wszystkich wierszy i kolumn 58 tabel, także wspólnych koszyków, zwrotów

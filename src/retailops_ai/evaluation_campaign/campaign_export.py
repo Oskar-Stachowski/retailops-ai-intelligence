@@ -34,6 +34,9 @@ from retailops_ai.evaluation_campaign.campaign_export_contract import (
 )
 from retailops_ai.evaluation_campaign.campaign_final_contract import CampaignFinalExportReceipt
 from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
+from retailops_ai.evaluation_campaign.campaign_paired_truth_contract import (
+    CampaignPairedTruthReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
     CampaignForecastPortfolioEvaluationReceipt,
     CampaignForecastPortfolioRobustEvaluationReceipt,
@@ -174,6 +177,7 @@ def _store_receipt(
     receipt: CampaignDevelopmentExportReceipt
     | CampaignAnomalyFitReceipt
     | CampaignOrdinaryTruthReceipt
+    | CampaignPairedTruthReceipt
     | NativeDevelopmentPlanningReceipt
     | ReusedDevelopmentParentReceipt
     | CampaignGeneratedParentReceipt

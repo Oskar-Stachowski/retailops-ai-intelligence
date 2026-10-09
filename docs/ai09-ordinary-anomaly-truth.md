@@ -88,10 +88,50 @@ Nieudane albo niekompletne ładowanie nie może utworzyć dowodu ani wznowić
 porównania z częściową bazą. **36 testów** przeszło ze źródeł i te same
 36 z zainstalowanej paczki; 632 moduły Python mają identyczne bajty.
 
-To komponent obliczeniowy, który sam nie otwiera Source i nie uprawnia
-do odczytu Project. Nadal potrzebne są: niezależny pełny replay obu rodziców
-pod przypiętym producer/runtime, wersjonowane pozytywne epizody i ich
-dojrzałość, trwała rezerwacja obu odczytów oraz powiązany receipt kampanii.
-Reguła może obniżyć udokumentowane pokrycie; bramki pokrycia nie zostały
-złagodzone. Stan małych kontroli zasobów zapisuje 09.93; pełny lokalny CI,
-Required CI oraz publikacja tego przyrostu na main pozostają otwarte.
+Sam komponent porównania nie uprawnia do odczytu Source. Kolejny przyrost,
+[09.94](evidence/09-94-paired-truth-native-verification.json), dodaje
+`read_campaign_paired_truth`: jeden zamrożony plan jawnie obejmuje **dwa pełne
+odczyty natywne**. Obie generacje muszą mieć zakończone, zapisane receipts
+w tym samym protokole przed rezerwacją. Jedna operacja zapisuje rzeczywisty
+łączny koszt obu odczytów, porównania i publikacji; nie tworzy fikcyjnych
+oddzielnych pomiarów. Niepowodzenie zużywa próbę i zachowuje koszt.
+
+Worker sprawdza tożsamości, parametry, czysty kod producenta i przypięte
+zależności. Oryginalny reader odtwarza wszystkie 58 tabel, raporty i efekty
+scenariusza. Zwykły zbiór jest zwalniany przed pełnym odczytem planowanego.
+Po porównaniu worker ponownie sprawdza pliki obu źródeł i pochodzenie kodu.
+`PairedSourceVerification` wiąże oba manifesty, raporty, inwentarze tabel,
+plan scenariusza, regułę porównania oraz dokładne okna i epizody.
+
+Pozytywne epizody wynikają z odtworzonych efektów natywnego scenariusza.
+Zachowujemy także wzrost popytu ograniczony zapasem, nawet gdy nie zmienił
+sprzedaży. Wyniki detektorów nie wybierają etykiet. Kompletność, waluta
+i dojrzałość są sprawdzane dla właściwego okna każdego epizodu oraz jego
+pierwszego dnia; zegar końca całej historii nie zastępuje tych dat.
+
+Oddzielne `PairedTruth`, plan i wynik pełnej ewaluacji zachowują dowody obu
+rodziców. Starszy plan nie przyjmuje nowej prawdy po samym przeliczeniu hasha.
+Obserwacje z nieznaną prawdą pozostają w pełnej ocenianej populacji i pokryciu;
+całkowity brak rozpoznanych etykiet daje nieokreślone metryki. Starsze schematy
+`Truth` i `OrdinaryTruth` zachowują dotychczasowe bajty.
+
+Trwały bundle pary zawiera `truth.json`, `verification.json`, `comparison.json`
+i `plan.json`. Publikacja wymaga weryfikacji zawartości, fsync i prywatnego
+receiptu powiązanego z dziennikiem. Final nadal wymaga odtworzenia zakończonego
+wyboru wszystkich trzech zastosowań przed dostępem do źródeł.
+
+Mała kontrola natywna obejmuje 30 dni, 8 produktów, 3 pary sprzedaży i 2 miejsca
+zapasu, ze wspólnym ordinary oraz wariantami demand i physical. Pierwsza próba
+wykryła błędne potraktowanie `daily_price_observations` jako stałej polityki:
+tabela zawiera również rzeczywiste ilości, przychody i dostępność. Reguła
+porównania **1.0.1** traktuje ją jako wynik produktu, porównuje wszystkie pola
+i uwzględnia różnice w granicy clean. Ceny planowane i parametry nadal muszą
+być identyczne. Obie pełne pary przeszły ponowną próbę na czystym producencie.
+Pierwszy błąd oraz jego koszt pozostają w evidence.
+
+Reguła może obniżyć udokumentowane pokrycie; bramki pokrycia pozostają pełne.
+Dowód małej kontroli nie zastępuje skali 25/50, próby kontrprzykładu 128 dni
+ani kwalifikacji modelu. Transfer ordinary z zewnętrznego dziennika bootstrap
+do rzeczywistych triali, pełne dane, modele i końcowy odbiór są nadal wymagane.
+Stan pełnego lokalnego CI, Required CI i publikacji opisują bieżący STATUS
+oraz 09.94. Canonical jest wyłączony, limit wynosi 12 GiB; AI 09 `not_ready`.

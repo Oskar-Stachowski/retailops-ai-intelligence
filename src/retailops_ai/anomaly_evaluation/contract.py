@@ -145,8 +145,43 @@ class OrdinaryTruth(Contract):
         return self
 
 
+class PairedTruth(Truth):
+    """Native primary episodes and conservative clean labels from two verified parents."""
+
+    version: Literal["anomaly-paired-business-truth-1.0.0"] = "anomaly-paired-business-truth-1.0.0"  # type: ignore[assignment]
+    ordinary_source_dataset_id: SourceID
+    source_verification_sha256: Sha256
+    ordinary_generation_receipt_sha256: Sha256
+    source_generation_receipt_sha256: Sha256
+    comparison_policy_sha256: Sha256
+    clean_basis: Literal["native_complete_pair_before_first_product_difference_or_intervention"] = (
+        "native_complete_pair_before_first_product_difference_or_intervention"
+    )
+    # All-unknown is a valid, explicitly unevaluable result, never invented clean
+    # evidence. The original v1 Truth minimum and schema remain unchanged.
+    complete_windows: tuple[TruthWindow, ...] = Field(max_length=10000)
+
+    @model_validator(mode="after")
+    def pair(self) -> Self:
+        from retailops_ai.anomaly_evaluation.paired_source_comparison import POLICY
+        from retailops_ai.data_contracts.identity import canonical_sha256
+
+        if (
+            self.ordinary_source_dataset_id == self.source_dataset_id
+            or self.comparison_policy_sha256 != canonical_sha256(POLICY)
+        ):
+            raise ValueError("anomaly_paired_truth_parent_or_policy_binding")
+        return self
+
+
 def validate_truth(truth: Truth | OrdinaryTruth) -> Truth | OrdinaryTruth:
-    cls = OrdinaryTruth if isinstance(truth, OrdinaryTruth) else Truth
+    cls = (
+        PairedTruth
+        if isinstance(truth, PairedTruth)
+        else OrdinaryTruth
+        if isinstance(truth, OrdinaryTruth)
+        else Truth
+    )
     return cls.model_validate_json(truth.model_dump_json())
 
 
