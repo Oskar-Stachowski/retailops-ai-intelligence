@@ -19,6 +19,12 @@ poniżej 13 GiB dostępnej pamięci. Nowej diagnostyki nie uruchomiono;
 pełny odbiór dokładnych head i wynikowych main obu repozytoriów jest wymagany.
 
 **2026-10-09 — AI 09: in_progress / not_ready.**
+[Pełny trening numeryczny anomaly](ai09-native-anomaly-full-fit.md) ma osobną
+wersję polityki/modelu, macierz na dysku i pełne progi walidacyjne.
+Kontrola 10017 wierszy wykorzystuje cały strumień i odtwarza zapisany las.
+Dotychczasowe kontrakty zachowują swoje limity. Powiązanie Point z membership,
+dziennikiem i modelem Project pozostaje otwarte; pełny CI i publikacja są wymagane.
+
 [Audyt podziału CI](evidence/09-67-ci-census-balance.json) zachowuje anulowany
 przebieg PR #63: 14 jobs przeszło, dwa shardy przekroczyły 45 minut, a agregator
 zgłosił błąd. Shard 3 ukończył cały pytest, ale jego anulowany job nie jest

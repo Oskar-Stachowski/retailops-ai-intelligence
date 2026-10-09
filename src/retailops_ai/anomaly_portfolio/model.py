@@ -7,6 +7,7 @@ from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
+from retailops_ai.anomaly_detectors.census_contract import CensusFitPolicy, CensusGroup
 from retailops_ai.anomaly_detectors.codec import baseline_score, forest_scores
 from retailops_ai.anomaly_detectors.contract import DetectorID, Family, FitPolicy, Group
 from retailops_ai.anomaly_detectors.protocol import Scope, Window, scoring_origin, series_key
@@ -107,10 +108,22 @@ class CountRateDescriptor(MultiscaleDescriptor):
         return self
 
 
+class CensusCountRateDescriptor(CountRateDescriptor):
+    """Full-count numerical artifacts use a separate version from AI07 models."""
+
+    version: Literal["anomaly-portfolio-model-4.0.0"] = "anomaly-portfolio-model-4.0.0"  # type: ignore[assignment]
+    # A full disk projection must not advertise the legacy bounded artifact ID.
+    qualified_anomaly_input_id: None = None  # type: ignore[assignment]
+    feature_population: Literal["complete_declared_point_census"] = "complete_declared_point_census"
+    policy: CensusFitPolicy
+    groups: tuple[CensusGroup, ...] = Field(min_length=1, max_length=4)
+
+
 class Model(Contract):
     detector_id: DetectorID
     descriptor: Annotated[
-        CountRateDescriptor | MultiscaleDescriptor | Descriptor, Field(discriminator="version")
+        CensusCountRateDescriptor | CountRateDescriptor | MultiscaleDescriptor | Descriptor,
+        Field(discriminator="version"),
     ]
 
     @model_validator(mode="after")

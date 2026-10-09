@@ -35,6 +35,9 @@ przypina poprawki CPU Source, zachowuje 12 GiB i cały profil oraz zalicza
 [Odczyt census anomaly](docs/evidence/09-66-native-anomaly-census-access.json)
 łączy pełne cechy ze scorerem i sprawdza globalny indeks deduplikacji;
 82 kontrole natywne i 82 z końcowej paczki przeszły.
+[Pełny trening numeryczny anomaly](docs/ai09-native-anomaly-full-fit.md)
+zachowuje wszystkie zadeklarowane wiersze, mediany train i rzeczywisty fit
+lasu, także powyżej wcześniejszego limitu 10000. Integracja Project jest otwarta.
 [Korekta podziału CI](docs/evidence/09-67-ci-census-balance.json) zachowuje
 pełną kolekcję testów i zapisuje częściowe czasy przed przerwaniem procesu.
 PR #63 wymaga ponownego pełnego odbioru po przekroczeniu czasu dwóch shardów.

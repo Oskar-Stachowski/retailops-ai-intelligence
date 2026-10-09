@@ -32,6 +32,13 @@ def main(root: Path) -> None:
         or not np.isfinite(probes).all()
     ):
         raise SnapshotError("anomaly_training_matrix_budget_or_shape")
+    forest, receipt = fit_forest(x, probes, policy)
+    (root / "forest.json").write_bytes(canonical_json(forest.model_dump(mode="json")))
+    (root / "resources.json").write_text(json.dumps(receipt.model_dump(mode="json")))
+
+
+def fit_forest(x: np.ndarray, probes: np.ndarray, policy: FitPolicy) -> tuple[Forest, Resources]:
+    """Shared native fit/export math; callers enforce their versioned input budgets."""
     started = time.monotonic()
     fitted = IsolationForest(
         n_estimators=policy.n_estimators,
@@ -105,8 +112,7 @@ def main(root: Path) -> None:
         peak_rss_bytes=rss,
         native_max_score_error=error,
     )
-    (root / "forest.json").write_bytes(canonical_json(forest.model_dump(mode="json")))
-    (root / "resources.json").write_text(json.dumps(receipt.model_dump(mode="json")))
+    return forest, receipt
 
 
 if __name__ == "__main__":
