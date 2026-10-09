@@ -115,6 +115,22 @@ pozostawiło heartbeat po 60,11 i 120,22 s, ale nie obejrzano wtedy logów
 nowego kontrolera w UI. Ta bramka pozostaje otwarta; nie powtarzamy
 niezmienionego przebiegu tylko z powodu utraconego okna obserwacji.
 
+Poprawka kolejnego wznowienia zachowuje też wcześniejsze archiwa faz.
+Poprzednia implementacja przenosiła wyniki i koszty, lecz nie archiwa, więc
+kolejny `bundle_prefix` nie miał pełnej zawartości. Kopiowanie, weryfikacja
+natywnego powiązania i fsync odbywają się teraz wewnątrz nadzorowanego procesu
+odtwarzania i zużywają jego budżet. Kontroler przenosi gotowy prywatny katalog
+atomowo, bez drugiego niezmierzonego skanowania payloadów. Sprawdza tożsamość
+plików przy przekazaniu własnego workera; późniejszy bundle ponownie sprawdza
+pełne hashe i powiązania. Oryginalne archiwa pozostają zachowane.
+
+224 kontrole przeszły, w tym dwa wznowienia, suma wcześniejszych kosztów oraz
+odmowa przy zmianie, braku i symlinku archiwum. Rozszerzona mała kontrola
+Actions ma wykonać dwa niezależne upload/pobrania, zachować koszt pierwszego
+wznowienia i dopiero potem dokończyć eksport/import/curation. Jej rzeczywisty
+wynik pozostaje do odebrania. Nie zamyka to rozliczenia nieudanych prób ani
+wznowienia pomiędzy oddzielnymi przebiegami Actions.
+
 **1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
 `dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
 Pozostały odbiór chronionych head/main konsumenta, powiązanie dowodu live

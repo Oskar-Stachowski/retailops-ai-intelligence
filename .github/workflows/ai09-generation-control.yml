@@ -86,7 +86,7 @@ jobs:
         run: |
           consumer/.venv/bin/python consumer/scripts/check_ai09_checkpoint_control.py \
             --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" --operation observe
-      - name: Verify downloaded artifact and resume export import and curation
+      - name: Restore the prefix and preserve inherited archives for another pause
         if: inputs.mode == 'checkpoint_resume'
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -95,6 +95,26 @@ jobs:
           consumer/.venv/bin/python consumer/scripts/check_ai09_checkpoint_control.py \
             --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" \
             --operation resume --artifact-id "$CHECKPOINT_ARTIFACT_ID"
+      - name: Upload the resumed prefix including its first resume cost
+        if: inputs.mode == 'checkpoint_resume'
+        id: checkpoint_second_prefix_upload
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-checkpoint-control-${{ github.sha }}-${{ github.run_id }}-prefix-second
+          path: control/second-prefix-artifact/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Restore a second time and complete native export import and curation
+        if: inputs.mode == 'checkpoint_resume'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CHECKPOINT_ARTIFACT_ID: ${{ steps.checkpoint_second_prefix_upload.outputs.artifact-id }}
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_checkpoint_control.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" \
+            --operation resume --second --artifact-id "$CHECKPOINT_ARTIFACT_ID"
       - name: Preserve completed and failed phase evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -112,6 +132,14 @@ jobs:
             control/resumed/events/*.json
             control/resumed/resume-receipts/*.json
             control/resumed/checkpoints/
+            control/second/*.json
+            control/second/*.log
+            control/second/*/*.json
+            control/second/*/*.jsonl
+            control/second/*/*.log
+            control/second/resumed/events/*.json
+            control/second/resumed/resume-receipts/*.json
+            control/second/resumed/checkpoints/
           if-no-files-found: warn
           retention-days: 90
           overwrite: false

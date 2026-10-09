@@ -7,6 +7,8 @@ be silently replaced by a previously uploaded successful prefix.
 
 from __future__ import annotations
 
+import hashlib
+import stat
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -14,8 +16,146 @@ from typing import Any
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.evaluation_campaign import preparation_checkpoint as checkpoints
 from retailops_ai.evaluation_campaign import preparation_execution as execution
-from retailops_ai.source_snapshot.files import checked_directory, read_json
+from retailops_ai.source_snapshot.files import checked_directory, read_json, regular_file
 from retailops_ai.source_snapshot.publish import fsync_tree, publish_noreplace
+
+
+def retain_prefix_archives(previous: Path, output: Path) -> dict[str, Any]:
+    """Copy and verify inherited archives inside the caller's guarded restore worker."""
+    state = execution.inspect(previous)
+    count = state["completed_phases"]
+    if (
+        state["status"] != "prepared"
+        or not 1 <= count < len(checkpoints.PHASES)
+        or len(state["events"]) != count * 4
+        or not output.is_absolute()
+        or ".." in output.parts
+        or output.exists()
+    ):
+        raise ValueError("preparation_resume_archive_retention_input")
+    checked_directory(output.parent)
+    bindings = {}
+    files = {}
+    copied = 0
+    with tempfile.TemporaryDirectory(prefix=".retained-prefix-", dir=output.parent) as temporary:
+        staging = Path(temporary)
+        for phase in checkpoints.PHASES[:count]:
+            binding = read_json(previous, phase + ".checkpoint.json")
+            identifier = binding["checkpoint_id"]
+            if (
+                not isinstance(identifier, str)
+                or not identifier.startswith("functional-checkpoint-sha256-")
+                or not checkpoints._digest(identifier.removeprefix("functional-checkpoint-sha256-"))
+            ):
+                raise ValueError("preparation_resume_archive_identifier")
+            source = previous / "checkpoints" / phase / identifier
+            destination = staging / phase / identifier
+            destination.parent.mkdir(mode=0o700)
+            destination.mkdir(mode=0o700)
+            for name in ("checkpoint_manifest.json", "payload.tar.gz"):
+                digest, size = hashlib.sha256(), 0
+                target = destination / name
+                with regular_file(source, name) as stream, target.open("xb") as saved:
+                    while chunk := stream.read(1024**2):
+                        size += len(chunk)
+                        copied += len(chunk)
+                        if copied > 4 * 1024**3:
+                            raise ValueError("preparation_resume_archive_retention_budget")
+                        digest.update(chunk)
+                        saved.write(chunk)
+                target.chmod(0o600)
+                info = target.stat()
+                files[target.relative_to(staging).as_posix()] = {
+                    "size_bytes": size,
+                    "sha256": digest.hexdigest(),
+                    "device": info.st_dev,
+                    "inode": info.st_ino,
+                    "mtime_ns": info.st_mtime_ns,
+                }
+            # Check the actual copied bytes against the independent native binding.
+            checkpoints.verify_stage(destination, expected=binding)
+            bindings[phase] = canonical_sha256(binding)
+        fsync_tree(staging)
+        publish_noreplace(staging, output)
+    return {
+        "version": "ai09-retained-prefix-archives-1.0.0",
+        "directory": str(output),
+        "identity_sha256": canonical_sha256(state["identity"]),
+        "events_sha256": canonical_sha256(state["events"]),
+        "bindings_sha256": bindings,
+        "files": files,
+        "verified_in_guarded_restore_worker": True,
+    }
+
+
+def retained_archive_handoff(
+    receipt: dict[str, Any], previous: Path, state: dict[str, Any]
+) -> Path:
+    """Check the owned worker handoff without a second unmetered archive scan.
+
+    The receipt comes from the successful guarded worker, not an external input.
+    File identities detect accidental changes before an atomic same-filesystem move.
+    Later bundling still checks complete payload hashes and native bindings.
+    """
+    count = state["completed_phases"]
+    bindings = {
+        phase: read_json(previous, phase + ".checkpoint.json")
+        for phase in checkpoints.PHASES[:count]
+    }
+    if (
+        receipt.get("version") != "ai09-retained-prefix-archives-1.0.0"
+        or receipt.get("verified_in_guarded_restore_worker") is not True
+        or receipt.get("identity_sha256") != canonical_sha256(state["identity"])
+        or receipt.get("events_sha256") != canonical_sha256(state["events"])
+        or receipt.get("bindings_sha256")
+        != {phase: canonical_sha256(binding) for phase, binding in bindings.items()}
+    ):
+        raise ValueError("preparation_resume_archive_handoff_binding")
+    root = Path(receipt["directory"])
+    if not root.is_absolute() or ".." in root.parts:
+        raise ValueError("preparation_resume_archive_handoff_path")
+    checked_directory(root)
+    expected = {
+        phase + "/" + binding["checkpoint_id"] + "/" + name
+        for phase, binding in bindings.items()
+        for name in ("checkpoint_manifest.json", "payload.tar.gz")
+    }
+    if set(receipt["files"]) != expected:
+        raise ValueError("preparation_resume_archive_handoff_inventory")
+    actual = set()
+    expected_directories = {
+        relative
+        for phase, binding in bindings.items()
+        for relative in (phase, phase + "/" + binding["checkpoint_id"])
+    }
+    if stat.S_IMODE(root.stat().st_mode) != 0o700:
+        raise ValueError("preparation_resume_archive_handoff_private_directory")
+    for path in root.rglob("*"):
+        info = path.lstat()
+        if stat.S_ISDIR(info.st_mode):
+            if (
+                path.relative_to(root).as_posix() not in expected_directories
+                or stat.S_IMODE(info.st_mode) != 0o700
+            ):
+                raise ValueError("preparation_resume_archive_handoff_inventory")
+            continue
+        name = path.relative_to(root).as_posix()
+        if not stat.S_ISREG(info.st_mode) or name not in expected:
+            raise ValueError("preparation_resume_archive_handoff_inventory")
+        ref = receipt["files"][name]
+        if (
+            not checkpoints._digest(ref.get("sha256"))
+            or info.st_size != ref.get("size_bytes")
+            or info.st_dev != ref.get("device")
+            or info.st_ino != ref.get("inode")
+            or info.st_mtime_ns != ref.get("mtime_ns")
+            or stat.S_IMODE(info.st_mode) != 0o600
+        ):
+            raise ValueError("preparation_resume_retained_archive_changed")
+        actual.add(name)
+    if actual != expected:
+        raise ValueError("preparation_resume_archive_handoff_inventory")
+    return root
 
 
 def measured_cost(measurement: dict[str, Any]) -> tuple[float, float]:
@@ -42,6 +182,7 @@ def resume_prefix(
     transport_receipt: dict[str, Any],
     transport_measurement: dict[str, Any],
     restore_measurement: dict[str, Any],
+    retained_archives: dict[str, Any],
 ) -> dict[str, Any]:
     """Caller supplies independently trusted transport proof and guarded restore result."""
     state = execution.inspect(previous)
@@ -68,6 +209,13 @@ def resume_prefix(
     if not output.is_absolute() or output.exists() or ".." in output.parts:
         raise ValueError("preparation_resume_fresh_absolute_output_required")
     checked_directory(output.parent)
+    retained = retained_archive_handoff(retained_archives, previous, state)
+    if (
+        retained == previous
+        or previous.is_relative_to(retained)
+        or retained.is_relative_to(previous)
+    ):
+        raise ValueError("preparation_resume_original_archives_must_be_preserved")
     receipt = {
         "version": "ai09-verified-prefix-resume-1.0.0",
         "original_events_sha256": expected_event_sha256,
@@ -76,6 +224,8 @@ def resume_prefix(
         "transport_measurement": transport_measurement,
         "restore_measurement": restore_measurement,
         "restored": restored,
+        "retained_archives": retained_archives,
+        "checkpoint_storage_directory": str(output / "checkpoints"),
         "source_regenerated": False,
         "project_journal_initialized": False,
         "final_test_authorized": False,
@@ -135,5 +285,8 @@ def resume_prefix(
         ):
             raise ValueError("preparation_resume_cost_not_preserved")
         fsync_tree(staging)
+        # Archive copying and verification have already been charged to restore.
+        # Only transfer the owned durable directory; original archives stay intact.
+        publish_noreplace(retained, staging / "checkpoints")
         publish_noreplace(staging, output)
     return receipt

@@ -16,7 +16,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 PHASES = ("generation", "qualification", "export", "import", "curation")
-VERSION = "ai09-artifact-prefix-resume-control-1.0.0"
+VERSION = "ai09-artifact-prefix-resume-control-1.1.0"
 
 
 def probe_module() -> Any:
@@ -105,7 +105,7 @@ def prepare_prefix(source: Path, output: Path, producer_python: Path) -> None:
     )
 
 
-def retrieve_worker(output: Path, artifact_id: int) -> None:
+def retrieve_worker(output: Path, artifact_id: int, *, second: bool = False) -> None:
     controller = consumer()
     import ai09_checkpoint_transport as transport
 
@@ -117,7 +117,7 @@ def retrieve_worker(output: Path, artifact_id: int) -> None:
         artifact_id=artifact_id,
         run_id=run_id,
         head=head,
-        name=f"ai09-checkpoint-control-{head}-{run_id}-prefix",
+        name=f"ai09-checkpoint-control-{head}-{run_id}-prefix" + ("-second" if second else ""),
         identity=identity,
         output=output / "download",
         token=os.environ.get("GITHUB_TOKEN"),
@@ -130,6 +130,8 @@ def restore_worker(output: Path) -> None:
     controller = consumer()
     import ai09_checkpoint_transport as transport
 
+    from retailops_ai.evaluation_campaign import preparation_resume
+
     probe = probe_module()
     identity = probe.read(output / "expected-identity.json")
     prefix = output / "download/prefix"
@@ -141,17 +143,26 @@ def restore_worker(output: Path) -> None:
     restored = controller.checkpoints.restore_chain(
         bindings, output / "restored", identity=identity
     )
-    controller.execution.write_once(output / "restored.json", {"phases": restored})
+    retained = preparation_resume.retain_prefix_archives(prefix, output / "retained-checkpoints")
+    controller.execution.write_once(
+        output / "restored.json", {"phases": restored, "retained_archives": retained}
+    )
 
 
 def retrieve_and_resume(
-    source: Path, output: Path, producer_python: Path, artifact_id: int
+    source: Path, output: Path, producer_python: Path, artifact_id: int, *, second: bool = False
 ) -> None:
     controller, probe = consumer(), probe_module()
     from retailops_ai.evaluation_campaign import preparation_resume
 
-    validate_control(output / "cold")
-    cold = controller.execution.inspect(output / "cold")
+    control_root = output
+    previous = output / ("resumed" if second else "cold")
+    validate_control(previous)
+    cold = controller.execution.inspect(previous)
+    if second:
+        output = control_root / "second"
+        output.mkdir(mode=0o700)
+        controller.execution.write_once(output / "expected-identity.json", cold["identity"])
     started = time.perf_counter()
     measurements = {}
     for operation in ("retrieve-worker", "restore-worker"):
@@ -172,6 +183,7 @@ def retrieve_and_resume(
                 operation,
                 "--artifact-id",
                 str(artifact_id),
+                *(["--second"] if second and operation == "retrieve-worker" else []),
             ],
             cwd=ROOT,
             env=environment,
@@ -195,17 +207,43 @@ def retrieve_and_resume(
         transport_receipt=transport_receipt,
         transport_measurement=measurements["retrieve-worker"],
         restore_measurement=measurements["restore-worker"],
+        retained_archives=probe.read(output / "restored.json")["retained_archives"],
     )
     # Preserve original inputs elsewhere; their old paths cannot satisfy the resumed workers.
     moved = {}
-    for name in ("raw", "qualification"):
-        original = output / "cold" / name
-        retained = output / ("cold-" + name + "-retained")
+    originals = (
+        [(control_root / "restored", control_root / "first-restored-retained")]
+        if second
+        else [
+            (output / "cold" / name, output / ("cold-" + name + "-retained"))
+            for name in ("raw", "qualification")
+        ]
+    )
+    for original, retained in originals:
         if retained.exists() or not original.is_dir():
             raise ValueError("checkpoint_control_original_input_relocation")
         original.rename(retained)
         moved[str(original)] = str(retained)
     controller.execution.write_once(output / "retained-original-paths.json", moved)
+    if not second:
+        import ai09_checkpoint_transport as transport
+
+        paused = controller.finalize(resumed)
+        if paused["status"] != "prepared" or paused["completed_phases"] != 2:
+            raise ValueError("checkpoint_control_first_resume_not_paused")
+        transport.bundle_prefix(resumed, output / "second-prefix-artifact")
+        controller.execution.write_once(
+            output / "first-resume.json",
+            {
+                "status": "prepared",
+                "completed_phases": 2,
+                "transport_measurement": measurements["retrieve-worker"],
+                "restore_measurement": measurements["restore-worker"],
+                "charged_wall_seconds": paused["charged_wall_seconds"],
+                "resume_count": 1,
+            },
+        )
+        return
     try:
         for name in PHASES[2:]:
             phase(source, resumed, name, producer_python)
@@ -213,8 +251,13 @@ def retrieve_and_resume(
         result = controller.finalize(resumed)
     if result["status"] != "complete" or result["completed_phases"] != 5:
         raise ValueError("checkpoint_control_resumed_preparation_incomplete")
+    original_cold = controller.execution.inspect(control_root / "cold")
+    first_resume = probe.read(control_root / "first-resume.json")
+    moved.update(probe.read(control_root / "retained-original-paths.json"))
+    if len(result["cost_adjustments"]) != 2:
+        raise ValueError("checkpoint_control_lost_prior_resume_cost")
     controller.execution.write_once(
-        output / "checkpoint-summary.json",
+        control_root / "checkpoint-summary.json",
         {
             "version": VERSION,
             "control_commit": cold["identity"]["consumer_commit"],
@@ -222,11 +265,14 @@ def retrieve_and_resume(
             "status": "passed",
             "completed_phases": 5,
             "source_generation_processes": 1,
+            "resume_count": 2,
             "original_source_paths_unavailable_during_resumed_work": all(
                 not Path(p).exists() for p in moved
             ),
-            "original_inputs_retained": True,
-            "cold_prefix_charged_wall_seconds": cold["charged_wall_seconds"],
+            "original_inputs_retained": all(Path(p).is_dir() for p in moved.values()),
+            "cold_prefix_charged_wall_seconds": original_cold["charged_wall_seconds"],
+            "first_resume": first_resume,
+            "cost_adjustments": result["cost_adjustments"],
             "transport_measurement": measurements["retrieve-worker"],
             "restore_measurement": measurements["restore-worker"],
             "total_charged_wall_seconds": result["charged_wall_seconds"],
@@ -296,9 +342,12 @@ def main() -> None:
     )
     parser.add_argument("--phase", choices=PHASES)
     parser.add_argument("--artifact-id", type=int)
+    parser.add_argument("--second", action="store_true")
     args = parser.parse_args()
     probe = probe_module()
     probe.require_remote()
+    if args.second and args.operation not in {"resume", "retrieve-worker"}:
+        parser.error("second round applies only to artifact retrieval and resume")
     if args.operation in {"native", "seal"}:
         validate_control(args.output)
         if args.phase is None:
@@ -322,11 +371,12 @@ def main() -> None:
             args.output,
             args.producer_python or args.source / ".venv/bin/python",
             args.artifact_id,
+            second=args.second,
         )
     elif args.operation == "retrieve-worker":
         if args.artifact_id is None:
             parser.error("explicit artifact id required")
-        retrieve_worker(args.output, args.artifact_id)
+        retrieve_worker(args.output, args.artifact_id, second=args.second)
     elif args.operation == "restore-worker":
         restore_worker(args.output)
     else:

@@ -146,13 +146,14 @@ def restored_prefix(tmp_path):
         "event_sha256": manifest["event_sha256"],
         "identity_sha256": canonical_sha256(identity),
     }
-    return original, identity, downloaded, restored, receipt
+    retained = resume.retain_prefix_archives(downloaded, tmp_path / "retained-checkpoints")
+    return original, identity, downloaded, restored, receipt, retained
 
 
 def test_downloaded_checkpoint_prefix_resumes_with_original_cost_plus_transport_and_restore(
     tmp_path,
 ):
-    original, identity, downloaded, restored, receipt = restored_prefix(tmp_path)
+    original, identity, downloaded, restored, receipt, retained = restored_prefix(tmp_path)
     output = tmp_path / "resumed"
     resume.resume_prefix(
         downloaded,
@@ -163,6 +164,7 @@ def test_downloaded_checkpoint_prefix_resumes_with_original_cost_plus_transport_
         transport_receipt=receipt,
         transport_measurement=measurement(seconds=2),
         restore_measurement=measurement(seconds=3),
+        retained_archives=retained,
     )
     before, after = execution.inspect(original), execution.inspect(output)
     assert after["events"] == before["events"]
@@ -201,7 +203,7 @@ def test_downloaded_checkpoint_prefix_resumes_with_original_cost_plus_transport_
     ["unknown_cpu", "failed", "budget", "identity", "history", "transport", "result_rewrite"],
 )
 def test_resume_rejects_untrusted_history_unknown_cost_and_changed_results(tmp_path, damage):
-    _, identity, downloaded, restored, receipt = restored_prefix(tmp_path)
+    _, identity, downloaded, restored, receipt, retained = restored_prefix(tmp_path)
     cost = measurement(seconds=2)
     expected = receipt["event_sha256"]
     if damage == "unknown_cpu":
@@ -228,12 +230,13 @@ def test_resume_rejects_untrusted_history_unknown_cost_and_changed_results(tmp_p
             transport_receipt=receipt,
             transport_measurement=cost,
             restore_measurement=measurement(),
+            retained_archives=retained,
         )
     assert not (tmp_path / "resumed").exists()
 
 
 def test_resume_cost_receipt_cannot_be_removed_or_budget_reset_after_publication(tmp_path):
-    _, identity, downloaded, restored, receipt = restored_prefix(tmp_path)
+    _, identity, downloaded, restored, receipt, retained = restored_prefix(tmp_path)
     output = tmp_path / "resumed"
     resume.resume_prefix(
         downloaded,
@@ -244,6 +247,7 @@ def test_resume_cost_receipt_cannot_be_removed_or_budget_reset_after_publication
         transport_receipt=receipt,
         transport_measurement=measurement(),
         restore_measurement=measurement(),
+        retained_archives=retained,
     )
     path = next((output / "resume-receipts").glob("*.json"))
     data = json.loads(path.read_bytes())
@@ -251,6 +255,91 @@ def test_resume_cost_receipt_cannot_be_removed_or_budget_reset_after_publication
     path.write_text(json.dumps(data))
     with pytest.raises(ValueError, match="resume_cost_receipt_mismatch"):
         execution.inspect(output)
+
+
+def test_two_resumes_keep_original_archives_all_receipts_and_cumulative_cost(tmp_path):
+    original, identity, previous, restored, receipt, retained = restored_prefix(tmp_path)
+    before = execution.inspect(original)
+    for number in (1, 2):
+        output = tmp_path / f"resumed-{number}"
+        resume.resume_prefix(
+            previous,
+            output,
+            identity=identity,
+            expected_event_sha256=receipt["event_sha256"],
+            restored=restored,
+            transport_receipt=receipt,
+            transport_measurement=measurement(seconds=2),
+            restore_measurement=measurement(seconds=3),
+            retained_archives=retained,
+        )
+        after = execution.inspect(output)
+        assert after["events"] == before["events"]
+        assert len(after["cost_adjustments"]) == number
+        assert after["charged_wall_seconds"] == before["charged_wall_seconds"] + 5 * number
+        assert after["remaining_wall_seconds"] == before["remaining_wall_seconds"] - 5 * number
+        assert after["worker_cpu_seconds_lower_bound"] == pytest.approx(
+            before["worker_cpu_seconds_lower_bound"] + 0.2 * number
+        )
+        assert not Path(retained["directory"]).exists()  # Atomic transfer, no second copy.
+        for path in (output / "checkpoints").rglob("*"):
+            relative = path.relative_to(output)
+            if path.is_file():
+                assert path.read_bytes() == (original / relative).read_bytes()
+                assert stat.S_IMODE(path.stat().st_mode) == 0o600
+            else:
+                assert stat.S_IMODE(path.stat().st_mode) == 0o700
+        # The first resumed session must itself produce a complete portable prefix.
+        bundle = tmp_path / f"bundle-{number}"
+        manifest = transport.bundle_prefix(output, bundle)
+        archive = tmp_path / f"download-{number}.zip"
+        digest = zip_bundle(bundle, archive)
+        previous = tmp_path / f"downloaded-{number}"
+        transport.import_zip(
+            archive, previous, expected_digest=digest, identity=identity, maximum=1024**2
+        )
+        receipt = {**receipt, "event_sha256": manifest["event_sha256"]}
+        bindings = []
+        for phase in checkpoints.PHASES[:2]:
+            binding = json.loads((previous / (phase + ".checkpoint.json")).read_bytes())
+            bindings.append((previous / "checkpoints" / phase / binding["checkpoint_id"], binding))
+        restored = checkpoints.restore_chain(
+            bindings, tmp_path / f"restored-{number}", identity=identity
+        )
+        retained = resume.retain_prefix_archives(previous, tmp_path / f"retained-{number}")
+
+
+@pytest.mark.parametrize("damage", ["changed", "missing", "extra", "symlink", "identity"])
+def test_changed_retained_archive_cannot_publish_resumed_session(tmp_path, damage):
+    original, identity, previous, restored, receipt, retained = restored_prefix(tmp_path)
+    root = Path(retained["directory"])
+    payload = next(root.rglob("payload.tar.gz"))
+    original_bytes = payload.read_bytes()
+    if damage == "changed":
+        payload.write_bytes(original_bytes + b"changed after guarded verification")
+    elif damage == "missing":
+        payload.unlink()
+    elif damage == "extra":
+        (root / "unexpected").mkdir()
+    elif damage == "symlink":
+        payload.unlink()
+        payload.symlink_to(original / "checkpoints" / payload.relative_to(root))
+    else:
+        retained["identity_sha256"] = "e" * 64
+    with pytest.raises(ValueError, match="(archive_handoff|retained_archive)"):
+        resume.resume_prefix(
+            previous,
+            tmp_path / "resumed",
+            identity=identity,
+            expected_event_sha256=receipt["event_sha256"],
+            restored=restored,
+            transport_receipt=receipt,
+            transport_measurement=measurement(),
+            restore_measurement=measurement(),
+            retained_archives=retained,
+        )
+    assert not (tmp_path / "resumed").exists()
+    assert (original / "checkpoints" / payload.relative_to(root)).read_bytes() == original_bytes
 
 
 @pytest.mark.parametrize(
