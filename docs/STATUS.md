@@ -26,8 +26,11 @@ rezerwy dysku oraz 165 z końcowej zainstalowanej paczki. Kontrola 10020
 wierszy używa całego treningu; trzy publiczne warianty zachowują pełne liczniki.
 Model Project, dziennik, prawda offline i pełna kwalifikacja są nadal otwarte.
 PR #63 zaliczył cały Required CI dokładnego HEAD i jest scalony do
-`12484dee4db4b044e61460bac14f1612321900a8`; wynikowy main wymaga ukończenia
-swojego pełnego odbioru. Nowe zmiany 09.65/09.66/09.68/09.69 czekają na
+`12484dee4db4b044e61460bac14f1612321900a8`; wynikowy main również zaliczył
+wszystkie 17 jobs. [Poprawka pakowania 09.70](ai09-package-boundary.md) usuwa prywatne pliki z sdist
+po rzeczywistej awarii lokalnego buildu. 5058 testów przeszło; 49 pominięto
+z opisanymi warunkami integracji, TensorFlow nie został osiągnięty.
+Nowe zmiany 09.65/09.66/09.68/09.69/09.70 czekają na
 własny pełny CI i publikację.
 
 **2026-10-09 — AI 09: in_progress / not_ready.**
