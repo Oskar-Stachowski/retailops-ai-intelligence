@@ -4,8 +4,10 @@ import copy
 import hashlib
 import io
 import json
+import os
 import shutil
 import stat
+import subprocess
 import sys
 import zipfile
 from pathlib import Path
@@ -380,6 +382,51 @@ def test_cross_run_workflow_preserves_a_failed_job_and_uploads_its_final_history
     recovery = next(s for s in steps if "--operation recover" in s.get("run", ""))
     assert recovery["if"] == "inputs.mode == 'checkpoint_recovery'"
     assert all("inputs." not in line for line in recovery["run"].splitlines())
+
+
+def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editable_install():
+    root = Path(__file__).resolve().parents[1]
+    workflow = yaml.safe_load((root / ".github/workflows/ai09-generation-control.yml").read_text())
+    options = workflow[True]["workflow_dispatch"]["inputs"]["mode"]["options"]
+    assert set(options) == {
+        "generation",
+        "live_progress",
+        "census_memory",
+        "checkpoint_resume",
+        "checkpoint_failure",
+        "checkpoint_interruption",
+        "checkpoint_recovery",
+    }
+    steps = workflow["jobs"]["control"]["steps"]
+    source = next(s for s in steps if s.get("with", {}).get("path") == "source")
+    producer = next(s for s in steps if s.get("name") == "Install pinned producer dependencies")
+    assert source["if"] == producer["if"] == "inputs.mode != 'census_memory'"
+    consumer = next(s for s in steps if s.get("name") == "Install locked consumer dependencies")
+    assert consumer["env"]["CONTROL_MODE"] == "${{ inputs.mode }}"
+    assert 'if [[ "$CONTROL_MODE" == checkpoint_* ]]; then' in consumer["run"]
+    assert "--locked --extra snapshot --extra forecast --no-install-project" in consumer["run"]
+    # Execute the setup's branching without installation: each native mode keeps
+    # its dependency selection, and only preparation omits the local project.
+    for mode in options:
+        commands = subprocess.run(
+            ["/bin/bash", "-eu", "-c", 'uv() { printf "%s\\n" "$*"; }\n' + consumer["run"]],
+            env={**os.environ, "CONTROL_MODE": mode},
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        ).stdout.splitlines()
+        expected = "sync --directory consumer --locked --extra snapshot --extra forecast"
+        if mode.startswith("checkpoint_"):
+            expected += " --no-install-project"
+        assert commands == [expected]
+    canonical = yaml.safe_load(
+        (root / ".github/workflows/ai09-development-capacity.yml").read_text()
+    )
+    install = next(
+        s for s in canonical["jobs"]["measure"]["steps"] if "uv sync" in s.get("run", "")
+    )
+    assert "--locked --extra snapshot --extra forecast --no-install-project" in install["run"]
 
 
 @pytest.mark.parametrize("phases", [1, 2, 3, 4])

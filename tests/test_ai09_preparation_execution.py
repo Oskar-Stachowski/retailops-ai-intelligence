@@ -261,6 +261,12 @@ def test_runtime_pin_changes_with_real_code_and_package_metadata(tmp_path, monke
     assert changed["packages"][0]["version"] == "2"
     assert changed["code_sha256"] == first["code_sha256"]
     assert worker.digest(changed) != worker.digest(first)
+    # Even an unchanged version is rejected when its installed RECORD changes.
+    distribution.read_text = lambda name: "different-actual-record-metadata"
+    changed_record = worker.runtime(tmp_path, producer=True)
+    assert changed_record["packages"][0]["version"] == "2"
+    assert changed_record["code_sha256"] == changed["code_sha256"]
+    assert worker.digest(changed_record) != worker.digest(changed)
 
 
 def test_actions_uploads_each_phase_before_starting_the_next_and_retains_terminal_costs():

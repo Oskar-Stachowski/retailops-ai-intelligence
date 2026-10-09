@@ -1,0 +1,182 @@
+{
+  "acceptance": {
+    "full_required_ci": "pending",
+    "main": "pending"
+  },
+  "code_sha256": {
+    "src/retailops_ai/anomaly_detectors/census_fit.py": "e2bd885b42d0d9aa146abbcae29f65d052f3824d675834236abc736ce2fb22ce",
+    "src/retailops_ai/anomaly_detectors/census_worker.py": "a96543972e8b1ce9475c2f2ecaa937619eab70ba7215eacc4bf6c22be26caae2",
+    "src/retailops_ai/anomaly_detectors/worker.py": "4f04f8c9cc4e25f75ce657d28b5b6f7603561588e728bd08fa7b8a5723a724e6",
+    "src/retailops_ai/anomaly_detectors/worker_resources.py": "00d868eabb2579b6b1702a891218246e832ea80ea20a499f49e7567cadd8c50f"
+  },
+  "failed_required_ci": {
+    "both_artifacts_verified_and_retained": true,
+    "conclusion": "failure",
+    "head": "684ae43c5ab6c96fcf63eb5de5edef9da4569de4",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 113812697545,
+        "name": "checks"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812697781,
+        "name": "secrets"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977004,
+        "name": "persistence"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977042,
+        "name": "anomaly-oci"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977068,
+        "name": "observation-replay"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977078,
+        "name": "acceptance (ci-forecast)"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977125,
+        "name": "acceptance (ci-source-inputs)"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977135,
+        "name": "persistence-forecast"
+      },
+      {
+        "conclusion": "failure",
+        "id": 113812977143,
+        "name": "tests (2)"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977163,
+        "name": "tests (3)"
+      },
+      {
+        "conclusion": "failure",
+        "id": 113812977167,
+        "name": "tests (0)"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977226,
+        "name": "observation-broker"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977240,
+        "name": "acceptance (ci-qualified-inputs)"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977249,
+        "name": "tests (1)"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977279,
+        "name": "TensorFlow CPU training, artifact and reload"
+      },
+      {
+        "conclusion": "success",
+        "id": 113812977382,
+        "name": "acceptance (ci-detectors)"
+      },
+      {
+        "conclusion": "failure",
+        "id": 113831462261,
+        "name": "required-result"
+      }
+    ],
+    "original_measurements_not_overwritten": true,
+    "run": 37928364289,
+    "shard0": {
+      "artifact_id": 11616578775,
+      "artifact_sha256": "3a951115a534c61c9da64474da7c6a1fc3fb14bb91483b9904b1420c76ff3953",
+      "errors": 0,
+      "failures": 2,
+      "reason": "anomaly_census_fit_final_resource_budget",
+      "skipped": 1,
+      "tests": 1063
+    },
+    "shard2": {
+      "artifact_id": 11617273980,
+      "artifact_sha256": "23e073ac2e8e2847470da965d91ba912ece34535f73ec7fffe9beb1cb815b6e0",
+      "errors": 25,
+      "failures": 0,
+      "reason": "anomaly_fit_final_resource_budget in shared fixture",
+      "skipped": 30,
+      "tests": 1318
+    }
+  },
+  "fresh_final_reads": 0,
+  "limits": "Linux VmHWM reports current executable image; live supervisor measures worker RSS separately, census also includes caller. Full exact head/main CI remains required.",
+  "linux_control": {
+    "artifact_id": 11618406563,
+    "artifact_sha256": "5ff29664427802a6fb06a0c2f9ea1789d54ad221dae3f08ce91b8d54d34c3f55",
+    "conclusion": "success",
+    "failed": [],
+    "github_digest_verified": true,
+    "head": "ae1c92939cf6d0d30549997301a9e7a10c3e2845",
+    "local_private_copy": true,
+    "memory_regressions": {
+      "test_native_fit_with_retained_parent_keeps_unchanged_budget[census]": {
+        "cpu_seconds": 2.7348196419999997,
+        "native_max_score_error": 4.85500528668581e-13,
+        "peak_rss_bytes": 832569344.0,
+        "wall_seconds": 2.5837965050000093
+      },
+      "test_native_fit_with_retained_parent_keeps_unchanged_budget[legacy]": {
+        "cpu_seconds": 1.15,
+        "native_max_score_error": 4.85500528668581e-13,
+        "peak_rss_bytes": 144330752.0,
+        "wall_seconds": 1.2075967789999993
+      },
+      "test_real_exec_does_not_add_launcher_memory_to_current_worker": {
+        "current_image_peak": 18300928.0,
+        "lifetime_peak": 283668480.0
+      }
+    },
+    "run": 37934821281,
+    "suite": {
+      "errors": "0",
+      "failures": "0",
+      "hostname": "runnervmmprz5",
+      "name": "pytest",
+      "skipped": "0",
+      "tests": "97",
+      "time": "257.973",
+      "timestamp": "2026-10-09T13:09:24.828329+00:00"
+    }
+  },
+  "local_control": {
+    "linux_skipped": 3,
+    "mypy_files": 4,
+    "passed": 91,
+    "seconds": 21.92
+  },
+  "new_project_fits": 0,
+  "recorded_at_utc": "2026-10-09T13:15:59.551468+00:00",
+  "resource_contracts_unchanged": {
+    "canonical_tree_rss_bytes": 12884901888,
+    "census_tree_rss_bytes": 1073741824,
+    "census_wall_and_cpu_seconds": 300,
+    "legacy_wall_and_cpu_seconds": 60,
+    "legacy_worker_rss_bytes": 536870912
+  },
+  "scope": "Native worker resource correction and complete small regression controls; not full CI or Project qualification",
+  "stage_ready": false,
+  "version": "ai09-native-worker-memory-evidence-1.0.0"
+}

@@ -75,6 +75,18 @@ Inspekcja środowiska ma osobny pomiar preflight, poza budżetem przygotowania,
 ale wewnątrz limitu całego joba. Wersje pakietów i ich metadata RECORD są
 przypięte; nie jest to ponowny pełny audyt wszystkich zainstalowanych plików.
 
+[Dowód 09.82](evidence/09-82-cross-run-runtime-rejection.json) zachowuje dwie
+celowe awarie po rzeczywistym eksporcie i dwie późniejsze odmowy wznowienia.
+Ścisła tożsamość wykryła różnicę RECORD lokalnego pakietu przy identycznym
+kodzie i pozostałych zależnościach. Tryby checkpointów i przyszły canonical
+instalują teraz zależności z `--locked --no-install-project`; kontroler
+ładuje kod z dokładnego checkoutu, którego pełna mapa nadal jest hashowana.
+Pozostałe tryby małego workflow zachowują instalację pakietu.
+Nie normalizujemy ani nie pomijamy wpisów RECORD zainstalowanych zależności.
+317 kontroli komponentów i regresji przeszło; nowy setup wymaga własnej
+rzeczywistej kontroli między runnerami. Wcześniejsze awarie, ich koszty,
+nieznany koszt przerwania oraz osobne pomiary nieudanych pobrań są zachowane.
+
 Workflow przekazuje każdą zakończoną lub nieudaną fazę do osobnego artefaktu
 przed przejściem dalej, zachowując checkpoint, niezależne powiązanie workera,
 dziennik, logi i koszty. Retencja wynosi 90 dni i wymaga późniejszego odbioru

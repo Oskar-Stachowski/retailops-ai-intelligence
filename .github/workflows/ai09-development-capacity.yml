@@ -41,7 +41,9 @@ jobs:
           enable-cache: false
       - name: Install locked consumer and pinned producer requirements
         run: |
-          uv sync --directory control --locked --extra snapshot --extra forecast
+          # The controller loads the exact checkout and hashes its complete code.
+          # Keep installer-local editable metadata outside the runtime identity.
+          uv sync --directory control --locked --extra snapshot --extra forecast --no-install-project
           uv venv --python 3.11.15 source/.venv
           uv pip install --python source/.venv/bin/python \
             -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt

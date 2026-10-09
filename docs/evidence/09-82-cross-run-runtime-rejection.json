@@ -1,0 +1,503 @@
+{
+  "actual_cross_run_recovery_verified": false,
+  "attempts": [
+    {
+      "actual_native_export_before_failure_verified": true,
+      "all_original_and_recovery_artifact_zip_digests_verified": true,
+      "consumer_code_python_platform_and_all_other_packages_equal": true,
+      "entire_producer_runtime_equal": true,
+      "identity_difference": {
+        "retailops-ai-intelligence": {
+          "original": {
+            "name": "retailops-ai-intelligence",
+            "record_sha256": "260c3305c316d6542da6fe9efe100cca7cdd3a25d6362097ad3fdd69d8375537",
+            "version": "0.1.0.dev0"
+          },
+          "recovery": {
+            "name": "retailops-ai-intelligence",
+            "record_sha256": "cfae878a6be9bdf66e35415ffa8db64cbffde6bb27b0c9e47f0bce41285c97f4",
+            "version": "0.1.0.dev0"
+          }
+        }
+      },
+      "intentional_original_failure_verified": true,
+      "mode": "failure",
+      "native_recovery_not_started": true,
+      "no_new_prefix_published": true,
+      "original_artifacts": [
+        {
+          "digest": "sha256:920ab587a0d522681aeebfcde54ccad8cc01a6d282efea43ca1f7056bbeb4246",
+          "id": 11624607940,
+          "name": "ai09-checkpoint-control-004208d0c2fb4aa4176757c8e396c620dcba782b-37948096140-prefix",
+          "size_in_bytes": 248865
+        },
+        {
+          "digest": "sha256:df77e2857baeb717cbc0f7ab340fec5763ec74fb7b2a5cd979097e3b010e6852",
+          "id": 11624382934,
+          "name": "ai09-preparation-attempt-004208d0c2fb4aa4176757c8e396c620dcba782b-37948096140-1",
+          "size_in_bytes": 2055
+        },
+        {
+          "digest": "sha256:d09c0116b250fe666a239dbccd431d61f4798617b552a7d49d488ecd5c9b0f62",
+          "id": 11624053342,
+          "name": "ai09-generation-control-004208d0c2fb4aa4176757c8e396c620dcba782b-37948096140",
+          "size_in_bytes": 145159
+        }
+      ],
+      "original_cold_prefix_seconds": 5.846801759999991,
+      "original_conclusion": "failure",
+      "original_job": 113879523673,
+      "original_run": 37948096140,
+      "original_terminal_settlement": {
+        "charged_wall_seconds": 2.288956696000014,
+        "known_suffix_wall_seconds": 2.288956696000014,
+        "reservation_is_not_measured_cost": false,
+        "reserved_unknown_wall_seconds": 0.0,
+        "suffix_events_retained": 2,
+        "unmeasured_cpu_cost_present": false,
+        "unmeasured_wall_cost_present": false,
+        "worker_cpu_seconds_lower_bound": 1.96
+      },
+      "recovery_artifacts": [
+        {
+          "digest": "sha256:cdaa4049640f0a3e4cd94c3e12cf4fb72cae61aaffdd997306cd362ec473bebd",
+          "id": 11624739562,
+          "name": "ai09-generation-control-004208d0c2fb4aa4176757c8e396c620dcba782b-37948901587",
+          "size_in_bytes": 59831
+        }
+      ],
+      "recovery_conclusion": "failure",
+      "recovery_job": 113882270240,
+      "recovery_preflight": {
+        "not_zero_or_included_in_worker_cost": true,
+        "producer_inspection_measurement": {
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "exit_code": 0,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "minimum_available_memory_bytes": 15388299264,
+          "minimum_free_disk_bytes": 91206991872,
+          "reason": null,
+          "sample_seconds": 0.2,
+          "sampled_peak_scratch_allocated_bytes": 40960,
+          "sampled_peak_scratch_logical_bytes": 37687,
+          "sampled_tree_peak_rss_bytes": 52228096,
+          "sampled_worker_cpu_seconds": 0.11,
+          "samples": 2,
+          "status": "passed",
+          "wall_seconds": 0.20826568799999734
+        },
+        "scope": "preflight_setup_outside_preparation_budget_inside_job_deadline",
+        "wall_seconds": 0.2837589280000046
+      },
+      "recovery_retrieval": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 15359377408,
+        "minimum_free_disk_bytes": 91206553600,
+        "reason": "worker_exit",
+        "sample_seconds": 0.2,
+        "sampled_peak_scratch_allocated_bytes": 450560,
+        "sampled_peak_scratch_logical_bytes": 413829,
+        "sampled_tree_peak_rss_bytes": 83726336,
+        "sampled_worker_cpu_seconds": 0.19999999999999998,
+        "samples": 4,
+        "status": "failed",
+        "wall_seconds": 0.6165507420000012
+      },
+      "recovery_run": 37948901587,
+      "recovery_run_attempt": 1,
+      "rejection": "preparation_transport_native_history_or_inventory_mismatch"
+    },
+    {
+      "actual_native_export_before_failure_verified": true,
+      "all_original_and_recovery_artifact_zip_digests_verified": true,
+      "consumer_code_python_platform_and_all_other_packages_equal": true,
+      "entire_producer_runtime_equal": true,
+      "identity_difference": {
+        "retailops-ai-intelligence": {
+          "original": {
+            "name": "retailops-ai-intelligence",
+            "record_sha256": "9551f9a12ba0058f5ec6f78a4431f7e8b4774ca6d7d8b9c0609aea40eb7d0377",
+            "version": "0.1.0.dev0"
+          },
+          "recovery": {
+            "name": "retailops-ai-intelligence",
+            "record_sha256": "1726e4f85d891e249fd271a7b9da23e58c5e149eb9deb9b2d478b770c6eb9297",
+            "version": "0.1.0.dev0"
+          }
+        }
+      },
+      "intentional_original_failure_verified": true,
+      "mode": "interruption",
+      "native_recovery_not_started": true,
+      "no_new_prefix_published": true,
+      "original_artifacts": [
+        {
+          "digest": "sha256:d3f5df38821bfeb0820b781a8f5e188f329e3932dd937caa178a0855d9aa368d",
+          "id": 11624039056,
+          "name": "ai09-checkpoint-control-004208d0c2fb4aa4176757c8e396c620dcba782b-37948103074-prefix",
+          "size_in_bytes": 248862
+        },
+        {
+          "digest": "sha256:67e994b3b119cd1fa8f7a0821b816918c9ab651cbc895a52fdae9e4480f04e37",
+          "id": 11623659213,
+          "name": "ai09-generation-control-004208d0c2fb4aa4176757c8e396c620dcba782b-37948103074",
+          "size_in_bytes": 144116
+        },
+        {
+          "digest": "sha256:1f65732c375a78ae74775422768a9912ba5e443be36823204049c496f2089a39",
+          "id": 11623524238,
+          "name": "ai09-preparation-attempt-004208d0c2fb4aa4176757c8e396c620dcba782b-37948103074-1",
+          "size_in_bytes": 1913
+        }
+      ],
+      "original_cold_prefix_seconds": 5.7976562099999995,
+      "original_conclusion": "failure",
+      "original_job": 113879547711,
+      "original_run": 37948103074,
+      "original_terminal_settlement": {
+        "charged_wall_seconds": 32.0,
+        "known_suffix_wall_seconds": 0.0,
+        "reservation_is_not_measured_cost": true,
+        "reserved_unknown_wall_seconds": 32.0,
+        "suffix_events_retained": 1,
+        "unmeasured_cpu_cost_present": true,
+        "unmeasured_wall_cost_present": true,
+        "worker_cpu_seconds_lower_bound": 0.0
+      },
+      "recovery_artifacts": [
+        {
+          "digest": "sha256:ac9cf8bc18ea881100418f97fdabead864d3ea74e0411d43b598418d464dfdcf",
+          "id": 11624254157,
+          "name": "ai09-generation-control-004208d0c2fb4aa4176757c8e396c620dcba782b-37948907819",
+          "size_in_bytes": 59836
+        }
+      ],
+      "recovery_conclusion": "failure",
+      "recovery_job": 113882293120,
+      "recovery_preflight": {
+        "not_zero_or_included_in_worker_cost": true,
+        "producer_inspection_measurement": {
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "exit_code": 0,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "minimum_available_memory_bytes": 15476121600,
+          "minimum_free_disk_bytes": 91207004160,
+          "reason": null,
+          "sample_seconds": 0.2,
+          "sampled_peak_scratch_allocated_bytes": 40960,
+          "sampled_peak_scratch_logical_bytes": 37687,
+          "sampled_tree_peak_rss_bytes": 52019200,
+          "sampled_worker_cpu_seconds": 0.08,
+          "samples": 2,
+          "status": "passed",
+          "wall_seconds": 0.20660266199999455
+        },
+        "scope": "preflight_setup_outside_preparation_budget_inside_job_deadline",
+        "wall_seconds": 0.2623999929999883
+      },
+      "recovery_retrieval": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 15468109824,
+        "minimum_free_disk_bytes": 91206578176,
+        "reason": "worker_exit",
+        "sample_seconds": 0.2,
+        "sampled_peak_scratch_allocated_bytes": 450560,
+        "sampled_peak_scratch_logical_bytes": 413831,
+        "sampled_tree_peak_rss_bytes": 84160512,
+        "sampled_worker_cpu_seconds": 0.16,
+        "samples": 8,
+        "status": "failed",
+        "wall_seconds": 1.4269372880000049
+      },
+      "recovery_run": 37948907819,
+      "recovery_run_attempt": 1,
+      "rejection": "preparation_transport_native_history_or_inventory_mismatch"
+    }
+  ],
+  "canonical_diagnostic_dispatched": false,
+  "code_sha256": {
+    ".github/workflows/ai09-development-capacity.yml": "d2f35274ade16b6ea92bee68cf2f4b400882efd3eeac509373f869c338f27543",
+    ".github/workflows/ai09-generation-control.yml": "c866b7825b76e7e19a44a04c6cf298f7ae5637cafdf5c8172801d47533be779f",
+    "scripts/ai09_preparation_worker.py": "20e4ee4946d4d572b803f8aa897ddded2ab24ca5fe91fb4cde9f428d0d4022cc",
+    "tests/test_ai09_checkpoint_transport.py": "5e929ee2ef7ac49ee8776068750a975e3c673124444de1a0654a5459b5aaf2cf",
+    "tests/test_ai09_preparation_execution.py": "cabd542796f98ef617287e9bc9bfbbafb84ac87b52b851c0b0b18529da888a64"
+  },
+  "control_profile": {
+    "days": 10,
+    "products": 8,
+    "stores": 2,
+    "tree_rss_bytes": 1073741824,
+    "wall_seconds": 600,
+    "warehouses": 1
+  },
+  "correction": {
+    "all_seven_modes_preserved_after_main_integration": true,
+    "canonical_setup_uses_the_same_no_install_project_option": true,
+    "checkpoint_modes_install_locked_dependencies_without_project": true,
+    "exact_runtime_identity_checks_unchanged": true,
+    "full_current_code_map_still_hashed": true,
+    "likely_editable_metadata_cause": "uv records local cache timestamps in uv_cache.json; observed directly in local installed RECORD/cache. Remote saved evidence has only RECORD digests, so its differing row is not independently identified. The correction removes this unneeded editable installation entirely.",
+    "native_phase_checkpoints_and_budgets_unchanged": true,
+    "no_RECORD_entries_ignored_or_normalized": true,
+    "other_control_modes_keep_their_installed_project": true,
+    "remote_correction_verified": false,
+    "uv_reference": "https://docs.astral.sh/uv/concepts/cache/"
+  },
+  "current_phased_live_UI_proof_verified": false,
+  "fresh_final_reads": 0,
+  "integrated_pr64_full_ci": [
+    {
+      "conclusion": "success",
+      "event": "pull_request",
+      "head_sha": "0096663085aa369592cf9593ac59eb8e52725f6c",
+      "jobs": [
+        {
+          "conclusion": "success",
+          "id": 113837309921,
+          "name": "secrets"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837310179,
+          "name": "checks"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716694,
+          "name": "persistence-forecast"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716721,
+          "name": "persistence"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716741,
+          "name": "anomaly-oci"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716742,
+          "name": "acceptance (ci-forecast)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716748,
+          "name": "acceptance (ci-source-inputs)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716784,
+          "name": "observation-broker"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716786,
+          "name": "tests (3)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716789,
+          "name": "tests (0)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716790,
+          "name": "tests (2)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716791,
+          "name": "observation-replay"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716793,
+          "name": "acceptance (ci-qualified-inputs)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716826,
+          "name": "TensorFlow CPU training, artifact and reload"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837716835,
+          "name": "acceptance (ci-detectors)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113837717154,
+          "name": "tests (1)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113860577843,
+          "name": "required-result"
+        }
+      ],
+      "run": 37935771590,
+      "status": "completed",
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37935771590"
+    },
+    {
+      "conclusion": "success",
+      "event": "push",
+      "head_sha": "20aae22c00e8cf9e6b1b5ff6b11e706b59d5f46e",
+      "jobs": [
+        {
+          "conclusion": "success",
+          "id": 113861843856,
+          "name": "secrets"
+        },
+        {
+          "conclusion": "success",
+          "id": 113861844012,
+          "name": "checks"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279332,
+          "name": "anomaly-oci"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279500,
+          "name": "persistence"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279504,
+          "name": "observation-replay"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279526,
+          "name": "acceptance (ci-qualified-inputs)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279527,
+          "name": "tests (3)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279545,
+          "name": "observation-broker"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279558,
+          "name": "acceptance (ci-source-inputs)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279570,
+          "name": "tests (2)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279576,
+          "name": "tests (1)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279600,
+          "name": "acceptance (ci-detectors)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279602,
+          "name": "acceptance (ci-forecast)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279631,
+          "name": "tests (0)"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279644,
+          "name": "TensorFlow CPU training, artifact and reload"
+        },
+        {
+          "conclusion": "success",
+          "id": 113862279791,
+          "name": "persistence-forecast"
+        },
+        {
+          "conclusion": "success",
+          "id": 113882623630,
+          "name": "required-result"
+        }
+      ],
+      "run": 37942975115,
+      "status": "completed",
+      "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37942975115"
+    }
+  ],
+  "local_download_failures_retained": {
+    "attempts": 2,
+    "reason": "OS trust store not injected in standalone Python collector",
+    "resolution": "native OS trust store enabled; TLS verification retained; no remote jobs retried"
+  },
+  "main_12gib_confirmation": {
+    "budgets": {
+      "minimum_available_memory_bytes": 1073741824,
+      "minimum_free_disk_bytes": 6442450944,
+      "sample_seconds": 0.2,
+      "scratch_bytes": 8589934592,
+      "tree_rss_bytes": 12884901888,
+      "wall_seconds": 3600
+    },
+    "main": "20aae22c00e8cf9e6b1b5ff6b11e706b59d5f46e",
+    "recipe": "docs/reference/ai09-development-capacity-v1.9.json",
+    "recipe_sha256": "07ee91c51bbd9f5300aac002ce7873f6bbdd4c22a0018a00baf1c25a4ec297f6",
+    "verified_at_utc": "2026-10-09T15:08:21.616741+00:00"
+  },
+  "new_project_fits": 0,
+  "project_journal_initialized": false,
+  "recorded_at_utc": "2026-10-09T15:18:18.602523+00:00",
+  "remaining": [
+    "actual separate-run recovery using corrected setup and independent runtime identity",
+    "current phased Actions live UI proof",
+    "representative25/50profiles and frozen trial protocol",
+    "representative data-to-report control",
+    "full exact head and resulting-main acceptance for this increment"
+  ],
+  "scope": "actual tiny failed originals and failed recovery attempts; setup correction locally checked but not yet remotely verified",
+  "stage_ready": false,
+  "tested_remote_head": "004208d0c2fb4aa4176757c8e396c620dcba782b",
+  "validation": {
+    "component_and_regression": [
+      {
+        "errors": 0,
+        "failures": 0,
+        "junit_sha256": "07e4e6eb12e3988f3862bbc03c9b02eb4968e75995807acd9a2d4432fbbfdde0",
+        "seconds": 15.002,
+        "skipped": 0,
+        "tests": 125
+      },
+      {
+        "errors": 0,
+        "failures": 0,
+        "junit_sha256": "186aca93556bdeda41f9fa75a3b5507cecf128eeecab4d5376f3de98136693b3",
+        "seconds": 4.367,
+        "skipped": 0,
+        "tests": 192
+      }
+    ],
+    "final_shell_test_after_absolute_bash_path": {
+      "passed": 1,
+      "seconds": 0.16
+    },
+    "ruff": "passed",
+    "total_passed": 317
+  },
+  "version": "ai09-cross-run-runtime-rejection-and-setup-correction-1.0.0"
+}
