@@ -9,6 +9,7 @@ import numpy as np
 import sklearn  # type: ignore[import-untyped]
 
 from retailops_ai.anomaly_detectors.census_contract import CensusFitPolicy
+from retailops_ai.anomaly_detectors.census_resources import worker_peak_rss_bytes
 from retailops_ai.anomaly_detectors.worker import fit_forest
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
@@ -66,7 +67,7 @@ def main(root: Path) -> None:
     receipt = receipt.model_copy(
         update={
             "cpu_seconds": usage.ru_utime + usage.ru_stime,
-            "peak_rss_bytes": usage.ru_maxrss * (1 if sys.platform == "darwin" else 1024),
+            "peak_rss_bytes": worker_peak_rss_bytes(),
         }
     )
     (root / "resources.json").write_bytes(canonical_json(receipt.model_dump(mode="json")))
