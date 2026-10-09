@@ -26,5 +26,5 @@ def worker_peak_rss_bytes() -> int:
         or not matches[0][1].isdigit()
         or int(matches[0][1]) <= 0
     ):
-        raise SnapshotError("anomaly_census_worker_peak_memory_unavailable")
+        raise SnapshotError("anomaly_worker_peak_memory_unavailable")
     return int(matches[0][1]) * 1024

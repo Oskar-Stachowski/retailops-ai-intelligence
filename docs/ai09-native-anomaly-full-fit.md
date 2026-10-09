@@ -3,7 +3,7 @@
 Przygotowano korektę pomiaru RSS workera na Linuksie. `getrusage()` zachowuje
 statystyki sprzed `execve`, więc wynik dziecka może zawierać pamięć procesu
 uruchamiającego. Dodanie jej do osobnego szczytu rodzica zawyża sumę.
-Worker census odczytuje teraz `VmHWM` bieżącego obrazu procesu; brak lub
+Worker census oraz wcześniejszy worker numeryczny odczytują teraz `VmHWM` bieżącego obrazu procesu; brak lub
 niejednoznaczny odczyt blokuje wynik. Monitor nadal mierzy całe żywe drzewo,
 a końcowy limit nadal obejmuje sumę szczytu rodzica i właściwego workera.
 Limit 1 GiB i rezerwy treningu oraz limit canonical 12 GiB pozostają bez zmian.
@@ -11,10 +11,13 @@ Przekroczenie końcowego budżetu zachowuje w błędzie wartości pomiaru.
 
 Semantykę opisują [Linux getrusage](https://www.man7.org/linux/man-pages/man2/getrusage.2.html)
 i [dokumentacja proc](https://www.kernel.org/doc/html/latest/filesystems/proc.html).
-Lokalnie przeszły 84 kontrole; dwie rzeczywiste regresje Linux zostały pominięte
+Lokalnie przeszło 91 kontroli obu workerów i oceny anomaly; trzy rzeczywiste
+regresje Linux zostały pominięte
 na macOS i wymagają odbioru na Linuksie. Tryb `census_memory` istniejącego małego
 workflow wykonuje kontrolę fork/exec, prawdziwy fit z 600 MiB danych rodzica,
-pełne testy census i trzy istniejące publiczne rodziny Source.
+pełne testy census i trzy istniejące publiczne rodziny Source. Obejmuje również wcześniejszy
+fit oraz ocenę anomaly, której wspólny fixture zgłosił 25 błędów w shardzie 2.
+Pełny run PR64 zakończył się niepowodzeniem; dwa shardy wymagają poprawki.
 Nie uruchamia generatora, Project ani final. Zdalny wynik jest jeszcze nieznany.
 
 [Pełna kontrola lokalna 09.75](evidence/09-75-full-fit-local-validation.json)

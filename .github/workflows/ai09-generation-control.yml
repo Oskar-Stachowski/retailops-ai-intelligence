@@ -72,6 +72,8 @@ jobs:
           .venv/bin/python -m pytest -q -rA \
             tests/test_anomaly_census_resources.py \
             tests/test_anomaly_census_fit.py \
+            tests/test_anomaly_detectors.py \
+            tests/test_campaign_anomaly_evaluation.py \
             tests/test_campaign_anomaly_membership_source.py \
             --junitxml="$GITHUB_WORKSPACE/control/census-memory.xml"
       - name: Preserve completed and failed phase evidence

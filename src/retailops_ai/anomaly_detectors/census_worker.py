@@ -9,8 +9,8 @@ import numpy as np
 import sklearn  # type: ignore[import-untyped]
 
 from retailops_ai.anomaly_detectors.census_contract import CensusFitPolicy
-from retailops_ai.anomaly_detectors.census_resources import worker_peak_rss_bytes
 from retailops_ai.anomaly_detectors.worker import fit_forest
+from retailops_ai.anomaly_detectors.worker_resources import worker_peak_rss_bytes
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
     canonical_json,
