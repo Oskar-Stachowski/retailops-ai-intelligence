@@ -1,5 +1,21 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: kontroler osobnych faz i kosztów checkpointów.**
+[Dowód 09.76](evidence/09-76-phased-preparation-controller.json) potwierdza
+mały rzeczywisty przebieg pięciu faz i pięciu osobno nadzorowanych archiwizacji:
+20 trwałych rekordów, 10,22 s naliczonego budżetu i odtworzenie wszystkich
+checkpointów. 197 kontroli komponentów i kontraktów przeszło.
+Workflow zapisuje artefakt fazy przed następną; nieznany koszt niedokończonej
+operacji blokuje dalszą pracę tej sesji. Zdalne wznowienie z historią prób
+i kosztów, profile 25/50 oraz reprezentatywna ścieżka dane→raport są otwarte.
+Pełny trening anomaly i pakowanie są w [PR64](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/64),
+head `684ae43`; jego Required CI trwa. Lokalny `make ci-local` zachowano
+jako nieudany: 5120 testów przeszło, 49 pominięto, a pięć testów TensorFlow
+odmówiło startu przez `preflight_reserve` (trzy pozostałe przeszły).
+Kontrole adaptera Project na osobnej gałęzi mają 125/125 sukcesów ze źródeł
+i 125/125 z zainstalowanej paczki; nie oznaczają wykonania kampanii Project.
+Nowa diagnostyka canonical pozostaje wyłączona, AI 09 jest `not_ready`.
+
 **2026-10-09 — AI 09: natywna kontrola checkpointów ukończonych faz.**
 [Dowód 09.74](evidence/09-74-native-preparation-checkpoints.json) obejmuje
 pięć rzeczywistych faz na małym Source oraz wznowienie po kwalifikacji.

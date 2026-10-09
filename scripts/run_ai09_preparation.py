@@ -46,6 +46,13 @@ def environment(output: Path) -> dict[str, str]:
 
 
 def initialize(source: Path, output: Path, *, plan: dict[str, Any], producer_python: Path) -> None:
+    if any(
+        not root.is_absolute()
+        or ".." in root.parts
+        or any(path.is_symlink() for path in (root, *root.parents))
+        for root in (source, output)
+    ):
+        raise ValueError("preparation_controller_absolute_unlinked_paths_required")
     import psutil  # type: ignore[import-untyped]
 
     worker, probe = modules()

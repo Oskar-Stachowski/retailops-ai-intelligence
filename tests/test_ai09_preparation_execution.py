@@ -3,6 +3,7 @@
 import json
 import os
 import sys
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -283,3 +284,23 @@ def test_actions_uploads_each_phase_before_starting_the_next_and_retains_termina
     assert steps[-2]["if"] == steps[-1]["if"] == "always()"
     assert "--finalize" in steps[-2]["run"]
     assert "diagnostic-preflight/*.json" in steps[-1]["with"]["path"]
+
+
+@pytest.mark.parametrize("kind", ["relative", "symlink"])
+def test_invalid_output_path_is_rejected_before_preflight_or_source_access(
+    tmp_path, monkeypatch, kind
+):
+    def forbidden():
+        raise AssertionError("source tools must not be reached")
+
+    monkeypatch.setattr(controller, "modules", forbidden)
+    output = Path("relative-control")
+    if kind == "symlink":
+        link = tmp_path / "link"
+        link.symlink_to(tmp_path, target_is_directory=True)
+        output = link / "output"
+    with pytest.raises(ValueError, match="absolute_unlinked_paths_required"):
+        controller.initialize(
+            tmp_path / "source", output, plan={}, producer_python=Path(sys.executable)
+        )
+    assert not (tmp_path / "output-preflight").exists()

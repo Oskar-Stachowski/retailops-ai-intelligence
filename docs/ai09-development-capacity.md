@@ -59,9 +59,9 @@ Nowe pliki mają prawa `0600`, katalogi `0700`, niezależnie od `umask`.
 przeszły. Kontrolę wykonano w lokalnym środowisku testowym z zapisanymi
 wersjami pakietów; nie kwalifikuje ona pełnej skali ani środowiska Actions.
 
-Pozostała integracja checkpointów z rzeczywistym kontrolerem Actions:
-trwały upload po każdej fazie, zaufane powiązania poza archiwami, historia
-nieudanych prób oraz wspólny budżet wznowienia. Kontrola komponentu nie
+Pozostały odbiór checkpointów i wznowienie między przebiegami Actions:
+zaufane powiązania poza archiwami, pełna historia nieudanych prób
+oraz wspólny budżet wznowienia. Kontrola komponentu nie
 otwiera dostępu Project ani final i nie zamyka tych wymagań.
 
 Nowy `run_ai09_preparation.py` rozdziela każdą fazę na dwa procesy pod
@@ -78,9 +78,16 @@ przypięte; nie jest to ponowny pełny audyt wszystkich zainstalowanych plików.
 Workflow przekazuje każdą zakończoną lub nieudaną fazę do osobnego artefaktu
 przed przejściem dalej, zachowując checkpoint, niezależne powiązanie workera,
 dziennik, logi i koszty. Retencja wynosi 90 dni i wymaga późniejszego odbioru
-do trwałego archiwum. 195 kontroli komponentów i kontraktów przechodzi.
-Integracja małego rzeczywistego przebiegu tego kontrolera i zdalnego wznowienia
-jest jeszcze otwarta. Publiczne wejścia kontrolera oraz workera respektują
+do trwałego archiwum. [Dowód 09.76](evidence/09-76-phased-preparation-controller.json)
+obejmuje 197 zaliczonych kontroli oraz mały rzeczywisty przebieg pięciu faz
+nowego kontrolera na `a9f18aa`. Dziesięć osobno nadzorowanych procesów
+pozostawiło 20 trwałych rekordów. Naliczono 10,22 s obliczeń,
+osobno 0,38 s preflight; próbki RSS drzewa nie przekroczyły 132300800 B.
+Wszystkie pięć checkpointów odtworzono bez ponownej generacji.
+Późniejszą blokadę ścieżek względnych i symlinków sprawdzają dwie kontrole
+przed jakimkolwiek dostępem do Source; kod wykonania faz pozostał ten sam.
+Zdalny upload, transport i wznowienie wymagają rzeczywistej kontroli Actions.
+Publiczne wejścia kontrolera oraz workera respektują
 `dispatch_enabled=false` przed rozpoczęciem jakiejkolwiek pracy Source.
 
 **1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
