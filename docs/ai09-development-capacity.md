@@ -20,9 +20,22 @@ Artefakty kontroli są przechowywane przez 90 dni; to nie jest archiwum trwałe.
 Lokalne przejście testów ani końcowy log nie zastępują sprawdzenia widoczności
 przyrostowych wpisów w UI podczas działania joba.
 
+[Dowód live 09.73](evidence/09-73-actions-live-progress.json) potwierdza
+kontrolę [run 37919491269](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37919491269)
+na dokładnym AI `5914f8d2` i Source `ff2504a9`. W UI przy stanie
+`currently running` były widoczne rzeczywiste liczniki tabel, operacje
+walidacji i heartbeat po 60,2 s. Source skończył przed obserwacją UI;
+job wciąż wykonywał jawne okno obserwacji. Końcowy screenshot powstał już
+po zakończeniu i nie służy jako dowód wcześniejszej widoczności.
+Zweryfikowany artefakt zawiera 391 zdarzeń Source i trzy heartbeat
+w odstępach 60,08 oraz 60,20 s. Przebieg zakończył się sukcesem po 132,90 s,
+w tym 130 s celowego oczekiwania; RSS drzewa wyniosło 139595776 B,
+CPU workera co najmniej 2,34 s. Zachowano prywatną lokalną kopię artefaktu.
+Nie wyciągamy z tej małej kontroli prognozy czasu pełnego profilu.
+
 **1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
 `dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
-Pozostały odbiór chronionych head/main, dowód widoczności w Actions,
+Pozostały odbiór chronionych head/main, powiązanie dowodu live z końcowym kodem,
 zweryfikowane checkpointy/wznowienie i reprezentatywna ścieżka dane→raport.
 Kolejny spójny przyrost musi dostarczyć te dowody przed otwarciem bramki.
 Zachowano wszystkie wcześniejsze receptury i dziewięć rzeczywistych porażek.

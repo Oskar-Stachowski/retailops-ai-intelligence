@@ -7,9 +7,11 @@ Source [PR112](https://github.com/Oskar-Stachowski/retailops-cloud-native-platfo
 dodaje rzeczywiste liczniki etapów, zdarzeń, dni i wierszy. 11 końcowych
 kontroli Source i 141 kontroli AI/CI przeszło; prawdziwy mały Source ma
 58 tabel i 4044 wiersze, a jego 391 zdarzeń przyjął supervisor.
-[Dowód 09.72](evidence/09-72-live-capacity-preparation.json) rozdziela te kontrole
-od jeszcze niewykonanej obserwacji logów w działającym Actions UI.
-Pełna próba jest zablokowana do odbioru CI, widoczności live,
+[Przygotowanie 09.72](evidence/09-72-live-capacity-preparation.json) uzupełnia
+[dowód live 09.73](evidence/09-73-actions-live-progress.json): rzeczywiste logi
+Source oraz heartbeat po 60,2 s były widoczne przy działającym jobie.
+Przebieg kontrolny zakończył się sukcesem; jego artefakt i hash zweryfikowano.
+Pełna próba jest zablokowana do odbioru CI, powiązania dowodu z końcowym kodem,
 checkpointów/wznowienia i reprezentatywnej ścieżki dane→raport.
 Nie uruchomiono nowej diagnostyki canonical, fitów Project ani świeżego final.
 AI 09 pozostaje `not_ready`; profile 25/50 i protokół budżetów prób są otwarte.
