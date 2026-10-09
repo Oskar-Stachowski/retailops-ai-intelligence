@@ -1,5 +1,15 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: korekta pomiaru pamięci obu workerów anomaly.**
+[Dowód 09.78](evidence/09-78-native-worker-memory.json) zachowuje nieudany
+pełny run PR64 `37928364289`: dwa błędy census w shardzie 0 i 25 błędów
+wspólnego fixture starszego workera w shardzie 2; `required-result` nie przeszedł.
+Poprawka mierzy `VmHWM` bieżącego procesu po exec i zachowuje wszystkie limity.
+Mały rzeczywisty run Linux `37934821281` ma 97/97 zaliczonych testów,
+łącznie z workerami przy 600 MiB danych rodzica, pełnymi publicznymi Source
+oraz odmową przekroczenia budżetu. Obowiązuje pełny odbiór nowego head/main;
+mała kontrola nie zastępuje CI ani naukowej kwalifikacji. AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: pełny odbiór poprawek CPU Source, integracja anomaly trwa.**
 Source PR111 i wynikowy main `265b26a9` mają **30/30 success** każdy.
 AI PR63 nadal przechodzi pełne CI; rzeczywisty trening i reload TensorFlow przeszły.

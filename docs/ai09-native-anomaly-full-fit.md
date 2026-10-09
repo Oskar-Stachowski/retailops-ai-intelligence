@@ -18,7 +18,15 @@ workflow wykonuje kontrolę fork/exec, prawdziwy fit z 600 MiB danych rodzica,
 pełne testy census i trzy istniejące publiczne rodziny Source. Obejmuje również wcześniejszy
 fit oraz ocenę anomaly, której wspólny fixture zgłosił 25 błędów w shardzie 2.
 Pełny run PR64 zakończył się niepowodzeniem; dwa shardy wymagają poprawki.
-Nie uruchamia generatora, Project ani final. Zdalny wynik jest jeszcze nieznany.
+[Zdalna kontrola 09.78](evidence/09-78-native-worker-memory.json) na `ae1c929`
+przeszła: 97 testów, bez pominięć, 257,97 s. W rzeczywistym fork/exec bieżący
+obraz procesu miał peak 18300928 B, a stary `getrusage` 283668480 B.
+Z zachowanymi 600 MiB danych rodzica census zmieścił się w 832569344 B drzewa;
+wcześniejszy worker miał 144330752 B. Oba odtworzyły native score z błędem
+poniżej 1e-12. Kontrole nadal odrzucają rzeczywiste przekroczenie RSS i CPU.
+Artefakt GitHub pobrano, zweryfikowano i zachowano lokalnie. Nie uruchomiono
+generatora, Project ani final. Pełny Required CI dokładnego nowego head
+oraz wynikowego main pozostaje wymagany.
 
 [Pełna kontrola lokalna 09.75](evidence/09-75-full-fit-local-validation.json)
 na kodzie `cf8fc3f` zakończyła się niepowodzeniem: główny zestaw ma
