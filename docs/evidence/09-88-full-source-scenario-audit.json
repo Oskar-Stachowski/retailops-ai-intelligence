@@ -68,7 +68,7 @@
   "prospective_source_change": {
     "branch": "ai/09-full-source-scenarios",
     "base": "8479b5d313f7c6afc86487902995eb31ea054140",
-    "uncommitted": true,
+    "uncommitted": false,
     "execution_version": "planned-source-cached-execution-1.1.4",
     "code_files": {
       "data/anomalies/source_scope.py": "ef7bcd833ef010653da4136adf18c387669227bd24d451aacd2027cf5356ad1d",
@@ -168,7 +168,13 @@
           "complete_output_equal": true
         }
       ],
-      "candidate_code_files": "be593e05b1bf36c273d2105b33b672480f6d72bc22e62c034eab7aa618a15247",
+      "candidate_code_files": {
+        "data/anomalies/source_scope.py": "ef7bcd833ef010653da4136adf18c387669227bd24d451aacd2027cf5356ad1d",
+        "data/anomalies/source_process.py": "6d84e4686c82f9a8db6a9843ab37e6b4fa68ed447175a54de201a0f4fd980b2c",
+        "data/anomalies/source_cohort.py": "60837e8c39aba6773ab24cfad0c3b16cb1e5cb2889073af28757a7558762e885",
+        "data/anomalies/scenarios.py": "6f035821ce37479fba31e6da107791aa30940487d35cda1c381706867e06080c",
+        "data/anomalies/physical_scenarios.py": "de57f8f66d9533456b743834f81598033087615417977db41d9ee05f56dc5650"
+      },
       "full_profile_generations": 0,
       "project_fits": 0,
       "fresh_final_reads": 0,
@@ -210,7 +216,86 @@
         "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak"
       },
       "correction": "test temporary directory separated from monitored logs; global disk reserve unchanged; rerun queued"
-    }
+    },
+    "head": "57a50e263641efd71b8ef8b88eb8aef0e9c96a0f",
+    "remote_branch": "work/ai09-full-source-scenarios",
+    "pull_request": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/113",
+    "publication_status": "normal_exact_head_required_ci_pending",
+    "local_full_ci": "not_run_due_host_reserve; targeted controls accepted; normal Required CI pending",
+    "report_metadata_correction": "candidate_code_files previously repeated the last candidate hash due to report-variable shadowing; corrected to independently verified production file pins. Original candidate hashes and private report digest remain unchanged.",
+    "scenario_regression": {
+      "tests": 85,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 109.182,
+      "junit_sha256": "b03349d59038317a6276ae8d4cb7646186a32735ab671d095c0b6ddd80ca54af"
+    },
+    "scenario_regression_monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 109.86702416697517,
+      "sampled_tree_peak_rss_bytes": 231178240,
+      "sampled_worker_cpu_seconds": 107.61318976,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 21572,
+      "sampled_peak_scratch_allocated_bytes": 32768,
+      "minimum_free_disk_bytes": 53494992896,
+      "minimum_available_memory_bytes": 1244479488,
+      "samples": 982,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "owned control/log directory only; pytest temporary fixtures with deliberate malformed links excluded; global disk reserve enforced"
+    },
+    "publication_reader_qualification_export_validation": {
+      "status": "passed",
+      "tests": {
+        "tests": 29,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "seconds": 569.962,
+        "junit_sha256": "0d1e23480e275c86d290f6be934aa40e9febb05c308cae9f37eb176b86da2d7c"
+      },
+      "suites": [
+        "data/tests/test_full_source_scenario_parity.py",
+        "data/tests/test_planned_source_cohort.py",
+        "data/tests/test_planned_anomaly_snapshot.py"
+      ],
+      "monitor": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 571.0123817920103,
+        "sampled_tree_peak_rss_bytes": 195559424,
+        "sampled_worker_cpu_seconds": 559.733479305,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 10091,
+        "sampled_peak_scratch_allocated_bytes": 24576,
+        "minimum_free_disk_bytes": 53219500032,
+        "minimum_available_memory_bytes": 1080295424,
+        "samples": 5206,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "owned control/log directory only; pytest temporary fixtures with deliberate malformed links excluded; global disk reserve enforced"
+      },
+      "complete_profile_execution": false
+    },
+    "failed_controls_retained": [
+      {
+        "path": ".local/full-scenario-audit/component-1",
+        "passed": 16,
+        "failed": 2,
+        "cause": "test-only context did not have evaluated_at; corrected"
+      },
+      {
+        "path": ".local/full-scenario-audit/validation-queue/components-monitor.json",
+        "cause": "monitor rejected pytest-owned temporary links; separated test temporary directory from measured logs, global disk reserve retained"
+      }
+    ],
+    "source_evidence_sha256": "f6112cb76584bb13938e2214b18e1ca9a45b46ec3965139e6986513ebd4f3c63",
+    "source_evidence_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/57a50e263641efd71b8ef8b88eb8aef0e9c96a0f/docs/evidence/ai/09/full-source-scenario-replay.json"
   },
   "consumer": {
     "worker_sha256": "9292616be2169e3ee1b5ebcabe4c637e3b3bb713e5818163873e8d86e3420af1",
@@ -227,7 +312,6 @@
     "native_1_1_4_acceptance": false
   },
   "still_required": [
-    "Accept exact native candidate parity against original functions and complete Source publication/reader/snapshot regression",
     "Complete producer and consumer local/Required CI then protected main publication and explicit new Source pin",
     "Build genuine full-profile scenario plans with native grain, fulfillment and return validity",
     "Execute full-history preparation, independently verify critical groups, audited trial reuse and actual model search/selection",
@@ -239,5 +323,6 @@
   "new_canonical_diagnostic": false,
   "canonical_rss_bytes": 12884901888,
   "on_main": false,
-  "stage_ready": false
+  "stage_ready": false,
+  "updated_at_utc": "2026-10-09T19:10:27.406622+00:00"
 }

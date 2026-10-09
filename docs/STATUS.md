@@ -4,8 +4,10 @@
 [09.88](evidence/09-88-full-source-scenario-audit.json) odtwarza cztery odmowy
 natywnej weryfikacji demand/physical w profilach 25/50: builder efektów ma
 limit 5000 ziaren. Poprawka jawnych pełnych profili i czasu utrzymywania
-struktur danych jest przygotowana w osobnym Source worktree. Sześć małych
-kontroli dało identyczne wyniki; pełna skala, CI i publikacja pozostają otwarte.
+struktur danych jest w [Source PR 113](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/113).
+Sześć małych kontroli dało identyczne wyniki; 85 testów regresji i 29 kontroli
+publikacji/odczytu przeszło bez pominięć. Pełna skala, CI i publikacja na main
+pozostają otwarte.
 Consumer rozpoznaje przyszłą wersję 1.1.4,
 ale aktywny pin Source nie został zmieniony. AI 09 `not_ready`.
 
