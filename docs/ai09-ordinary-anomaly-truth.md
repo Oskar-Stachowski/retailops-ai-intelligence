@@ -47,3 +47,20 @@ chroniona akceptacja i publikacja na main pozostają wymagane. Nadal trzeba
 połączyć kompletne zwykłe i planowane oceny z rzeczywistą kampanią, pokryciem
 grup, niepewnością i końcową kwalifikacją trzech zastosowań. AI 09 pozostaje
 `not_ready`; limit canonical wynosi 12 GiB.
+
+Audyt natywnych scenariuszy wykrył dodatkową granicę starszego adaptera
+`source_truth`: zmiana popytu jednego SKU przestawia wspólne koszyki, co może
+zmienić późniejsze zwroty i zapas innego SKU. W rzeczywistym małym Source
+okno 2026-05-25–2026-05-31 miało ten sam popyt 172 sztuk, ale sprzedaż
+119 w zwykłym przebiegu i 116 po wcześniejszych interwencjach. Starsza reguła
+SKU oznaczała je jako clean, mimo braku bezpośredniej interwencji tego produktu
+do końca okna. [Dowód 09.92](evidence/09-92-native-planning-and-truth-boundary.json)
+wiąże diagnozę z natywnym Source 2.8, odtworzonymi efektami i dokładnym kodem.
+
+Dlatego stary adapter odrzuca teraz profile `ai-dev` i `ai-training` przed
+odczytem prywatnej prawdy. To blokada nieuzasadnionych etykiet, a nie nowy
+adapter kwalifikujący planowane dane Project. Potrzebny jest osobny, wersjonowany
+odbiór prawdy uwzględniający pośrednie efekty; zwykły Source pozostaje odrębną
+podstawą negatywów. Historycznych artefaktów AI 07 nie przeliczano. Krytyczne
+pokrycie, nowe próby Project oraz canonical pozostają niedopuszczone do czasu
+zamknięcia tej granicy i pozostałych bramek kampanii.

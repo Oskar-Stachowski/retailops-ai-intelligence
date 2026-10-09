@@ -1,5 +1,18 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: natywne plany przeszły replay; blokada błędnych clean labels.**
+[09.92](evidence/09-92-native-planning-and-truth-boundary.json) zapisuje poprawki
+Source PR 114: odtworzenie prywatnych parametrów produktów, właściwy kalendarz
+małej kontroli oraz trzy siedmiodniowe kontrole demand przed wszystkimi
+interwencjami. **23 testy kontrolne i 2 pełne testy writer/reader Source 2.8**
+przeszły bez pominięć; zwykły Required CI poprawionego head trwa.
+Natywna diagnoza wykazała też, że starsza reguła SKU może błędnie uznać
+pośrednio zmienione okno za clean. Adapter odrzuca teraz `ai-dev` i `ai-training`
+przed odczytem prywatnej prawdy. **53/53** kontroli regresyjnych przeszło
+bez pominięć. Oddzielny, wersjonowany odbiór prawdy Project,
+pełne dane, triale oraz odbiór tej gałęzi pozostają wymagane. Limit 12 GiB
+zachowany, canonical wyłączony; AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: odebrany main integracji adaptera i checkpointów.**
 [PR 65](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/65)
 przeszedł pełny Required CI **17/17**; wynikowy main `8fe28ea4` również

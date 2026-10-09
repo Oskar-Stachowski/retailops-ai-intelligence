@@ -39,6 +39,15 @@ def source_truth(
     has ended. This conservative, fixed rule uses intervention scope, never a
     detector's score or a clean-label training filter.
     """
+    if verified_source.get("descriptor", {}).get("resolved_parameters", {}).get("profile") in {
+        "ai-dev",
+        "ai-training",
+    }:
+        # Demand interventions redistribute other SKUs' baskets and can change
+        # their later returns/inventory. The legacy SKU-only rule below is not
+        # evidence of clean Project observations. Require a separate verified
+        # handoff; reject before opening private Source truth, including final.
+        raise ValueError("anomaly_truth_project_requires_independent_spillover_verification")
     raw = read_bytes(scenario_path.parent, scenario_path.name, 16 * 1024**2)
     receipt = verified_source["scenario"]
     document = decode_json(raw)
