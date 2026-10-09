@@ -94,6 +94,12 @@ from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
     CampaignForecastUncertaintyReport,
 )
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
+from retailops_ai.evaluation_campaign.development_profiles import (
+    DevelopmentProfile,
+    DevelopmentProfilePreparation,
+    DevelopmentProfileSource,
+)
+from retailops_ai.evaluation_campaign.development_search import ForecastDevelopmentSearch
 from retailops_ai.evaluation_campaign.label_contract import (
     ForecastOutcomeReadProtocol,
     OutcomeEvidence,
@@ -598,6 +604,36 @@ def main() -> int:
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, development_model in (
+        ("development_profile", DevelopmentProfile),
+        ("development_profile_source", DevelopmentProfileSource),
+        ("development_profile_preparation", DevelopmentProfilePreparation),
+        ("forecast_development_search", ForecastDevelopmentSearch),
+    ):
+        schema = development_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:29.0.0"
+        path = ROOT / "contracts/evaluation/v29" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Development profile/search contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for products in (25, 50):
+        profile = DevelopmentProfile.model_validate(
+            {"name": f"ai09-development-{products}-v1", "products": products}
+        )
+        path = ROOT / "contracts/evaluation/v29" / f"development-{products}.default.json"
+        raw = json.dumps(profile.model_dump(mode="json"), indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Development default profile differs: " + str(products))
+                return 1
+        else:
             path.write_text(raw)
     print("Evaluation preparation contract snapshots checked.")
     return 0

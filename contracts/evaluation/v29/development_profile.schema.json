@@ -1,0 +1,150 @@
+{
+  "$defs": {
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:development_profile:29.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "canonical_development_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Canonical Development Qualified",
+      "type": "boolean"
+    },
+    "data_seed": {
+      "const": 42,
+      "default": 42,
+      "title": "Data Seed",
+      "type": "integer"
+    },
+    "days": {
+      "const": 365,
+      "default": 365,
+      "title": "Days",
+      "type": "integer"
+    },
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "forecast_plan_days": {
+      "const": 14,
+      "default": 14,
+      "title": "Forecast Plan Days",
+      "type": "integer"
+    },
+    "history": {
+      "$ref": "#/$defs/DateWindow",
+      "default": {
+        "end": "2026-07-31",
+        "start": "2025-08-01"
+      }
+    },
+    "name": {
+      "enum": [
+        "ai09-development-25-v1",
+        "ai09-development-50-v1"
+      ],
+      "title": "Name",
+      "type": "string"
+    },
+    "population": {
+      "const": "complete_native_generation_no_parent_filter_or_history_sampling",
+      "default": "complete_native_generation_no_parent_filter_or_history_sampling",
+      "title": "Population",
+      "type": "string"
+    },
+    "products": {
+      "enum": [
+        25,
+        50
+      ],
+      "title": "Products",
+      "type": "integer"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "selling_pairs": {
+      "const": 5,
+      "default": 5,
+      "title": "Selling Pairs",
+      "type": "integer"
+    },
+    "source_base_profile": {
+      "const": "ai-dev",
+      "default": "ai-dev",
+      "title": "Source Base Profile",
+      "type": "string"
+    },
+    "stock_locations": {
+      "const": 3,
+      "default": 3,
+      "title": "Stock Locations",
+      "type": "integer"
+    },
+    "variants": {
+      "default": [
+        "ordinary",
+        "demand",
+        "physical"
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "prefixItems": [
+        {
+          "const": "ordinary",
+          "type": "string"
+        },
+        {
+          "const": "demand",
+          "type": "string"
+        },
+        {
+          "const": "physical",
+          "type": "string"
+        }
+      ],
+      "title": "Variants",
+      "type": "array"
+    },
+    "version": {
+      "const": "ai09-full-history-development-profile-1.0.0",
+      "default": "ai09-full-history-development-profile-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "products"
+  ],
+  "title": "DevelopmentProfile",
+  "type": "object"
+}

@@ -1,5 +1,15 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: kontrakty profili 25/50 i uczciwego budżetu prób.**
+[09.86](evidence/09-86-development-profile-design.json) dodaje osobne pełne
+historie 365 dni, wszystkie lokalizacje oraz ordinary/demand/physical.
+Kompilator przygotowuje oryginalne plany Source i równe budżety RF/HGB/TF.
+58 kontroli kontraktów, kompilacji i trwałości przeszło. Oryginalny parser
+Source potwierdził sześć konfiguracji; to kontrola konfiguracji z kontrolnymi
+IDs, bez generacji i bez dowodu krytycznego pokrycia. Rzeczywisty wykonawca
+prób, weryfikowany awans finalistów, pełny CI oraz publikacja pozostają
+wymagane. Pełny canonical i final bez zmian; AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: niezależna prawda zwykłego Source i kontrola Linuksa.**
 [09.85](evidence/09-85-ordinary-anomaly-truth.json) opisuje trwały odczyt prawdy
 offline, pełne natywne odtworzenie Source i osobną ewaluację zwykłych kontroli.
