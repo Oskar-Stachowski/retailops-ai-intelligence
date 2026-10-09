@@ -1,5 +1,18 @@
 # Aktualny status
 
+**2026-10-10 — AI 09: porównanie par Source przed nadaniem clean labels.**
+[09.93](evidence/09-93-paired-source-comparison.json) dodaje porównanie
+wszystkich wierszy i kolumn 58 tabel, także wspólnych koszyków, zwrotów
+i zapasu innych produktów. Indeks na dysku pozwala odczytywać rodziców
+kolejno. **36 testów ze źródeł i te same 36 z paczki** przeszły bez pominięć;
+632 moduły Python mają identyczne bajty. Kontrola na zachowanych małych
+Source nie wystartowała: pięciominutowe dopuszczenie nie uzyskało wolnej
+pamięci dla limitu 512 MiB i rezerwy 1 GiB. Nie obniżono zabezpieczeń.
+To komponent porównania; pełny replay pary, pozytywne epizody, trwały odbiór
+prawdy i pełny CI tego przyrostu pozostają wymagane. Limit canonical
+**12 GiB** ponownie potwierdzono na zdalnym main `8fe28ea4`.
+Nowego canonical ani prób Project nie uruchomiono; AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: natywne plany przeszły replay; blokada błędnych clean labels.**
 [09.92](evidence/09-92-native-planning-and-truth-boundary.json) zapisuje poprawki
 Source PR 114: odtworzenie prywatnych parametrów produktów, właściwy kalendarz

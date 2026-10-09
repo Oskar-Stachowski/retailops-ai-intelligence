@@ -64,3 +64,34 @@ odbiór prawdy uwzględniający pośrednie efekty; zwykły Source pozostaje odr�
 podstawą negatywów. Historycznych artefaktów AI 07 nie przeliczano. Krytyczne
 pokrycie, nowe próby Project oraz canonical pozostają niedopuszczone do czasu
 zamknięcia tej granicy i pozostałych bramek kampanii.
+
+Pierwszym elementem tego odbioru jest teraz `PairedSourceComparison`
+([09.93](evidence/09-93-paired-source-comparison.json)). Porównuje wszystkie
+wiersze i kolumny dokładnie 58 tabel zwykłego i planowanego Source. Zachowuje
+liczność rekordów, więc usunięcia i duplikaty nie znikają przez deduplikację.
+Zmiana nagłówka wspólnego koszyka dotyczy każdego powiązanego produktu;
+plany dostaw i prywatne próbki dostawcy wiąże z rzeczywistym zamówieniem.
+Zmiana wymiarów, polityk albo parametrów symulacji odrzuca całą parę.
+
+Pierwsza różnica wyznacza konserwatywną granicę dla wszystkich kanałów
+i obu typów zdarzeń produktu. Uwzględnia wcześniejszy początek okresu,
+a nie tylko dzień późniejszego snapshotu. Od tej granicy albo od początku
+bezpośredniej interwencji nie powstają nowe clean labels. Późniejsze równe
+wiersze nie dowodzą powrotu do stanu bez wpływu interwencji. Kandydaci na
+czyste okna są przecięciem kompletnych okien obu rodziców; luki i późniejszy
+zegar dostępności pozostają zachowane. Wszystkie obserwacje nadal należą
+do pełnego spisu ocenianych danych i raportu pokrycia.
+
+Prywatny indeks SQLite pozwala zwolnić zwykły zbiór przed otwarciem
+planowanego. Ma ograniczony cache i nie nadpisuje istniejącego pliku.
+Nieudane albo niekompletne ładowanie nie może utworzyć dowodu ani wznowić
+porównania z częściową bazą. **36 testów** przeszło ze źródeł i te same
+36 z zainstalowanej paczki; 632 moduły Python mają identyczne bajty.
+
+To komponent obliczeniowy, który sam nie otwiera Source i nie uprawnia
+do odczytu Project. Nadal potrzebne są: niezależny pełny replay obu rodziców
+pod przypiętym producer/runtime, wersjonowane pozytywne epizody i ich
+dojrzałość, trwała rezerwacja obu odczytów oraz powiązany receipt kampanii.
+Reguła może obniżyć udokumentowane pokrycie; bramki pokrycia nie zostały
+złagodzone. Stan małych kontroli zasobów zapisuje 09.93; pełny lokalny CI,
+Required CI oraz publikacja tego przyrostu na main pozostają otwarte.
