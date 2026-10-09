@@ -1,0 +1,167 @@
+{
+  "artifacts": [
+    {
+      "digest": "sha256:3b7a559da5ab79342c2443589f9d7cfd74d5cdfcedae09cd9f36c38feda0de02",
+      "expires_at": "2027-01-07T12:51:24Z",
+      "id": 11617027881,
+      "name": "ai09-generation-control-6c2b6009737e3199404a95d6ed6e4791de6a926a-37932792970",
+      "size_in_bytes": 1025971
+    },
+    {
+      "digest": "sha256:66a5469a1bb50e4ec5b5a1b961b20f8be99b64718642a926007e6f82811e186e",
+      "expires_at": "2027-01-07T12:51:24Z",
+      "id": 11616798477,
+      "name": "ai09-checkpoint-control-6c2b6009737e3199404a95d6ed6e4791de6a926a-37932792970-prefix",
+      "size_in_bytes": 248843
+    }
+  ],
+  "code_sha256": {
+    "scripts/ai09_checkpoint_transport.py": "ba4bff314c087b8cfed08c31c5466b71609386c010c3541922e724c0d9f9c5d0",
+    "scripts/check_ai09_checkpoint_control.py": "29ca2014bdb99dc36ea13a4c8b6814fca802f9fe73d9058d93924926ccd04261",
+    "scripts/run_ai09_preparation.py": "ae6162eb21b4db3217931daca4fd07bd7dbf43933a04749553c61030ea009aa3",
+    "src/retailops_ai/evaluation_campaign/preparation_execution.py": "1354db7be68ef1d1528673527454c11cddc9f81f51794aa37d943e2840ab701b",
+    "src/retailops_ai/evaluation_campaign/preparation_resume.py": "52bb8f5e0b6b42658015ca2ef3aa97be698ad333ff2498aef969840ba538f773"
+  },
+  "component_controls": {
+    "passed": 221,
+    "seconds": 7.8
+  },
+  "head": "6c2b6009737e3199404a95d6ed6e4791de6a926a",
+  "heartbeat_elapsed_seconds": [
+    0.01716885899999454,
+    60.113457924,
+    120.215153482
+  ],
+  "heartbeat_intervals_seconds": [
+    60.09628906500001,
+    60.101695558
+  ],
+  "idle_visibility_measurement": {
+    "actions_UI_visibility": "requires_independent_live_UI_observation",
+    "hold_seconds": 130,
+    "purpose": "explicit_idle_UI_observation_window_not_source_work",
+    "resource": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 15401619456,
+      "minimum_free_disk_bytes": 91204059136,
+      "reason": null,
+      "sample_seconds": 0.2,
+      "sampled_peak_scratch_allocated_bytes": 2875392,
+      "sampled_peak_scratch_logical_bytes": 2533574,
+      "sampled_tree_peak_rss_bytes": 50065408,
+      "sampled_worker_cpu_seconds": 0.0,
+      "samples": 633,
+      "status": "passed",
+      "telemetry_errors": [],
+      "wall_seconds": 130.088199465
+    }
+  },
+  "job_id": 113827394474,
+  "live_UI_observation": {
+    "current_phased_counters_and_heartbeat_seen_live": false,
+    "current_workflow_seen_running": true,
+    "historical_observer_proof": "09-73-actions-live-progress.json",
+    "reason": "Live observation window ended before phased log observation; downloaded logs are not a live UI proof",
+    "status": "not_verified"
+  },
+  "profile": {
+    "days": 10,
+    "products": 8,
+    "stores": 2,
+    "warehouses": 1
+  },
+  "recorded_at_utc": "2026-10-09T13:02:14.615063+00:00",
+  "remaining": [
+    "different-run resume with complete failed/interrupted attempt history and costs",
+    "current phased controller live UI proof",
+    "25/50 representative profiles and frozen trial budget",
+    "representative end-to-end and full exact head/main CI"
+  ],
+  "run_id": 37932792970,
+  "source_head": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+  "stage_ready": false,
+  "summary": {
+    "canonical_diagnostic_dispatched": false,
+    "cold_prefix_charged_wall_seconds": 5.848258543,
+    "completed_phases": 5,
+    "control_commit": "6c2b6009737e3199404a95d6ed6e4791de6a926a",
+    "fresh_final_reads": 0,
+    "new_project_fits": 0,
+    "original_inputs_retained": true,
+    "original_source_paths_unavailable_during_resumed_work": true,
+    "project_journal_initialized": false,
+    "remaining_control_budget_seconds": 582.8567000129999,
+    "remote_artifact": {
+      "artifact_id": 11616798477,
+      "artifact_metadata_sha256": "ae7bbc769fc567bd417cc4641ddc6dbac2d423860bf4ad935b2d703e306aab49",
+      "artifact_name": "ai09-checkpoint-control-6c2b6009737e3199404a95d6ed6e4791de6a926a-37932792970-prefix",
+      "control_commit": "6c2b6009737e3199404a95d6ed6e4791de6a926a",
+      "cross_host_authorization_stripped": true,
+      "deliberate_prefix_stop": true,
+      "event_sha256": "75d7ba3dedf3ab02a4295f03e0ed7ac0dadeb18bec6eef7f694b711780b9aefc",
+      "identity_sha256": "65660b6ea4b022f288177a2bd498a123742ccf4817d4044479ffc3fa841aec23",
+      "project_generation_receipt": false,
+      "run_id": 37932792970,
+      "source_regenerated": false,
+      "verified_github_artifact": true,
+      "version": "ai09-completed-prefix-transport-1.0.0",
+      "zip_sha256": "66a5469a1bb50e4ec5b5a1b961b20f8be99b64718642a926007e6f82811e186e"
+    },
+    "restore_measurement": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 15714525184,
+      "minimum_free_disk_bytes": 91202154496,
+      "reason": null,
+      "sample_seconds": 0.2,
+      "sampled_peak_scratch_allocated_bytes": 4820992,
+      "sampled_peak_scratch_logical_bytes": 4208202,
+      "sampled_tree_peak_rss_bytes": 72368128,
+      "sampled_worker_cpu_seconds": 0.23,
+      "samples": 3,
+      "status": "passed",
+      "wall_seconds": 0.42327788900001906
+    },
+    "source_commit": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+    "source_generation_processes": 1,
+    "stage_ready": false,
+    "status": "passed",
+    "total_charged_wall_seconds": 17.14329998700005,
+    "transport_measurement": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 15718850560,
+      "minimum_free_disk_bytes": 91203502080,
+      "reason": null,
+      "sample_seconds": 0.2,
+      "sampled_peak_scratch_allocated_bytes": 3473408,
+      "sampled_peak_scratch_logical_bytes": 3064227,
+      "sampled_tree_peak_rss_bytes": 76881920,
+      "sampled_worker_cpu_seconds": 0.23,
+      "samples": 5,
+      "status": "passed",
+      "wall_seconds": 0.8320329679999929
+    },
+    "version": "ai09-artifact-prefix-resume-control-1.0.0"
+  },
+  "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37932792970",
+  "verification": {
+    "all_five_inner_checkpoints_verified": true,
+    "both_github_zip_digests_verified": true,
+    "different_workflow_run_resume_tested": false,
+    "eight_cold_events_preserved_byte_equivalent": true,
+    "exact_runtime_identity_verified": true,
+    "failed_or_interrupted_history_resume_tested": false,
+    "local_private_durable_copies": true,
+    "same_actions_job_remote_roundtrip": true,
+    "transport_and_restore_cost_deducted": true,
+    "twenty_total_execution_events_verified": true
+  },
+  "version": "ai09-actions-checkpoint-resume-evidence-1.0.0",
+  "workflow_conclusion": "success",
+  "workflow_status": "completed"
+}

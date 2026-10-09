@@ -1,5 +1,18 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: transport i wznowienie checkpointów w Actions.**
+[Dowód 09.77](evidence/09-77-actions-checkpoint-resume.json) potwierdza
+5/5 rzeczywistych faz małego profilu na `6c2b600`: po kwalifikacji checkpointy
+wysłano i pobrano z GitHub, a eksport/import/curation użyły odtworzonych danych.
+Generator wystartował raz. Oba ZIP-y oraz pięć archiwów faz zweryfikowano
+i zachowano lokalnie. Koszt 5,85 s przed przerwą pozostał w dzienniku;
+transport i odtworzenie dodały 1,26 s, łączny koszt wyniósł 17,14 s.
+To kontrola transportu w obrębie jednego joba. Wznowienie z innego przebiegu,
+rozliczenie nieudanych prób i obserwacja logów nowego kontrolera na żywo
+pozostają otwarte. Zakończone logi nie zastępują tej obserwacji.
+221 kontroli komponentów przeszło. PR64 ma dwa błędy końcowego pomiaru
+pamięci w shardzie 0; pozostały odbiór CI trwa. AI 09 nadal `not_ready`.
+
 **2026-10-09 — AI 09: kontroler osobnych faz i kosztów checkpointów.**
 [Dowód 09.76](evidence/09-76-phased-preparation-controller.json) potwierdza
 mały rzeczywisty przebieg pięciu faz i pięciu osobno nadzorowanych archiwizacji:

@@ -105,8 +105,15 @@ Pierwotne aktywne ścieżki nie mogą więc przypadkowo obsłużyć wznowienia.
 Ten mechanizm przyjmuje celowo zatrzymany, w pełni zmierzony prefiks.
 Nie pozwala zastąpić historii nieudanej lub przerwanej próby wcześniejszym
 udanym checkpointem. Rozliczenie takiej historii pozostaje wymaganiem
-przed wznowieniem pełnej diagnostyki. Mała kontrola Actions, jej transport
-i widoczność nowego kontrolera w UI wymagają jeszcze rzeczywistego odbioru.
+przed wznowieniem pełnej diagnostyki. [Mała kontrola Actions 09.77](evidence/09-77-actions-checkpoint-resume.json)
+ukończyła 5/5 faz z pojedynczą generacją. Zweryfikowano oba artefakty GitHub,
+wszystkie archiwa faz i zachowanie wcześniejszych ośmiu rekordów kosztów.
+Łączny koszt wyniósł 17,14 s, w tym 1,26 s pobrania i odtworzenia.
+Kontrola wykonała transport przez GitHub w obrębie jednego joba; wznowienie
+z innego przebiegu pozostaje do sprawdzenia. Osobne 130,09 s okno obserwacji
+pozostawiło heartbeat po 60,11 i 120,22 s, ale nie obejrzano wtedy logów
+nowego kontrolera w UI. Ta bramka pozostaje otwarta; nie powtarzamy
+niezmienionego przebiegu tylko z powodu utraconego okna obserwacji.
 
 **1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
 `dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
