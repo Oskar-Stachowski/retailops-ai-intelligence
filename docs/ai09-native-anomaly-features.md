@@ -24,7 +24,8 @@ Nieznane wartości i niekwalifikowane dni zachowują natywne statusy i null.
 zachowuje pierwsze 32 passed / 2 failed i przerwanie własnej nowej kontroli.
 Błąd dotyczył zbyt małego własnego limitu Point: późne fakty w natywnym
 kontrakcie mogą dostarczyć długie listy braków. Poprawiona wersja zachowuje
-oryginalny limit bajtów natywnego artefaktu. Kontrole poprawionej wersji trwają.
+oryginalny limit bajtów natywnego artefaktu. Poprawiona wersja zaliczyła
+98 kontroli natywnych i 64 kontroli zainstalowanego pakietu, bez pominięć.
 
 Pełne natywne JSON Point są kompresowane zlib level 1, bez usuwania historii
 lub identyfikatorów. Odczyt ogranicza rozmiar po dekompresji, odrzuca niepełny
@@ -41,12 +42,12 @@ journal. Po zachowaniu wszystkich Point adapter zwalnia tylko indeks kontekstu,
 a następnie ponownie sprawdza hash pełnego census. Nie podnosi limitu 10000
 Point natywnego modelu i nie przyznaje kwalifikacji dla kampanii.
 
-Odbiór wymaga pełnego porównania z oryginalnym pipeline na publicznych źródłach
+Wykonane kontrole porównują pełny wynik z oryginalnym pipeline na publicznych źródłach
 ordinary 1.1 oraz demand/physical 1.2, również przy brakujących i spóźnionych
 faktach, kwarantannie i różnych opóźnieniach polityki. Kontrole zmienionych
 Point, ponownego zapieczętowania, lookup keys, brakujących rekordów, budżetów
-i przerwania kontekstu mają blokować ukończony receipt. Wyniki kontroli i pełne
-CI należy zapisać przed publikacją.
+i przerwania kontekstu blokują ukończony receipt. Pełny `make ci-local`, chroniony
+PR i odbiór dokładnego head oraz wynikowego main pozostają wymagane.
 
 Receipt wymaga późniejszego poprawnego zakończenia zewnętrznych kontekstów
 bramki, dni, replay i publicznego parenta. Genealogia generation, zamknięcie

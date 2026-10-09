@@ -2,9 +2,12 @@
 
 **AI 09: in_progress / not_ready — integracja po gotowych AI 07–08.**
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
+[Pełne historyczne cechy anomaly](docs/ai09-native-anomaly-features.md) zachowują
+natywny Point i cały kontekst na dysku. 98 kontroli natywnych i 64 zainstalowanego
+pakietu przeszły; pełne CI, publikacja i integracja całej kampanii pozostają otwarte.
 [Bramka dnia raw-DQ na dysku](docs/ai09-native-anomaly-day-gate.md) używa
 natywnych reguł dostępności i globalnej kwarantanny przy pełnych indeksach.
-Powiązanie z kampanią, cechy i prawda offline pozostają wymagane.
+Powiązanie z kampanią i prawda offline pozostają wymagane.
 [Pełna projekcja dni anomaly](docs/ai09-native-anomaly-days.md) zachowuje
 wszystkie serie i okres reklamacji na dysku. Kwalifikacja raw-DQ w historycznej
 chwili, cechy i pełna kampania pozostają wymagane.
@@ -24,7 +27,8 @@ przypina audytowane indeksy Source przy 12 GiB i pełnym profilu. 106 kontroli
 AI oraz 22 z paczki przeszły. Po pełnym odbiorze head i wynikowych main obu
 repozytoriów uruchomiono jedną diagnostykę
 [1.9](docs/evidence/09-59-query-capacity-acceptance-start.json), bez treningów
-i odczytu świeżego final; wynik pozostaje w toku.
+i odczytu świeżego final. [Wynik 1.9](docs/evidence/09-62-development-capacity-ninth-run.json)
+to limit czasu 3600 s przy około 8,44 GiB próbkowanego RSS, z 0/5 ukończonych faz.
 [Audyt pamięci i czasu](docs/ai09-capacity-audit.md) obejmuje wszystkie pięć
 faz przygotowania danych przed kolejnym canonical; zachowuje pełne dane i limity.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja

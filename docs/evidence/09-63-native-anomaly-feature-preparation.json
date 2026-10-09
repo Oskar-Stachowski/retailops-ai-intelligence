@@ -1,7 +1,7 @@
 {
   "version": "ai09-native-disk-anomaly-features-preparation-1.0.0",
-  "recorded_at_utc": "2026-10-08T23:43:34.062832+00:00",
-  "scope": "Full native Point census primitive on exposed public controls; acceptance incomplete",
+  "recorded_at_utc": "2026-10-09T00:15:41.963759+00:00",
+  "scope": "Full native Point census primitive on exposed public controls;98native and64installed pass; full CI and scientific campaign incomplete",
   "base": "be33444795ff0db4876b8052f9907a1f76983054",
   "implementation": "src/retailops_ai/evaluation_campaign/campaign_anomaly_features.py",
   "implementation_sha256": "1d8d2db03c4ca711acbfdc79185c471ef74fa8a218ab297572969b99e07629ff",
@@ -112,12 +112,30 @@
   },
   "corrected_controls": {
     "native_planned": 98,
-    "native_status": "running",
+    "native_status": "terminal_passed",
     "native_session": 7826,
     "installed_planned": 64,
-    "installed_status": "running",
+    "installed_status": "terminal_passed",
     "installed_session": 21654,
-    "full_local_ci_status": "not_started"
+    "full_local_ci_status": "not_started",
+    "installed_process_exit": 0,
+    "installed": {
+      "tests": 64,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1626.452,
+      "junit_sha256": "2115dfb331d6d8744685e236df2c9d491feb538c23b2e1b60843674d95342638"
+    },
+    "native_process_exit": 0,
+    "native": {
+      "tests": 98,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1934.154,
+      "junit_sha256": "cf8d081f153653529bca1ef29b3b75f49218ff275c5c3cec9dbde2c6df881947"
+    }
   },
   "static_checks": {
     "mypy": "725 source files passed",
@@ -150,7 +168,6 @@
   "stage_ready": false,
   "published_on_main": false,
   "remaining": [
-    "terminal corrected native/installed acceptance",
     "whole make ci-local and protected PR/exact head+resulting main CI",
     "Project source ancestry/producer closure/journal",
     "independent offline truth and artifact/cost/groups/paired uncertainty",

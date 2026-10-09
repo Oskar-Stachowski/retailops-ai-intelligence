@@ -6,7 +6,8 @@ wszystkie zadeklarowane dni przez natywne funkcje, z 28 dniami historii.
 Pełny kontekst pozostaje zweryfikowany na dysku, a jedna grupa trafia do
 natywnego doboru wersji. [09.63](evidence/09-63-native-anomaly-feature-preparation.json) zachowuje
 dwie początkowe awarie własnego limitu oraz poprawkę zapisu pełnych Point.
-Kontrole poprawionej wersji trwają; pełne CI i publikacja
+Poprawiona wersja zaliczyła 98 kontroli natywnych i 64 zainstalowanego pakietu.
+Pełne CI i publikacja
 pozostają wymagane. Integracja prawdy offline i całej kampanii jest otwarta.
 
 [Bramka dnia raw-DQ na dysku](ai09-native-anomaly-day-gate.md) łączy pełne
@@ -15,7 +16,7 @@ Odtwarza globalną nieprzypisaną kwarantannę od rzeczywistej chwili odbioru.
 Replay zachowuje odrzucone capture i sprawdza wyniki wobec hashy liczonych
 podczas przetwarzania. [09.61](evidence/09-61-native-disk-day-gate.json)
 zapisuje 60 kontroli, 60 z paczki i 43 regresje replay, bez pominięć.
-Pełne CI i publikacja pozostają wymagane; cechy, prawda offline
+Pełne CI i publikacja pozostają wymagane; integracja cech i prawda offline
 i pełna kwalifikacja kampanii są nadal otwarte.
 
 [Pełna projekcja dni anomaly](ai09-native-anomaly-days.md) odtwarza wszystkie
