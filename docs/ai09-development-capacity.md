@@ -1,5 +1,15 @@
 # Pomiar pełnego development AI 09
 
+[Audyt 09.84](evidence/09-84-integrated-worker-memory.json) rozszerza poprawkę
+pomiaru RSS na wszystkie workery przygotowania i kampanii. Na Linuksie
+`VmHWM` mierzy bieżący proces po exec; historyczny RSS launchera nie jest
+doliczany drugi raz. Supervisor nadal niezależnie mierzy całe żywe drzewo.
+Trening anomaly zachowuje również rzeczywiste pomiary pełnego drzewa każdego
+zakończonego fitu natywnego. Nie sumuje kolejnych fitów ani rodzica drugi raz.
+Nowy wspólny moduł jest objęty identyfikacją kodu i kontrolą paczki, a Source
+ładuje go bez zależności konsumenta. Zmiana nie podnosi żadnego budżetu.
+Pełny odbiór poprawionego przyrostu pozostaje wymagany; canonical jest wyłączony.
+
 [Przygotowywana receptura 1.11](reference/ai09-development-capacity-v1.11.json)
 ma zatwierdzony przez użytkownika budżet **180 minut obliczeń** oraz **210 minut
 na cały job Actions**. Limit RSS drzewa nadal wynosi **12 GiB**, scratch

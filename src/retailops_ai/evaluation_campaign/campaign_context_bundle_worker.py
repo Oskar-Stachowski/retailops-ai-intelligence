@@ -1,7 +1,6 @@
 """Isolated whole-source/full-role materialization, never model inference."""
 
 import os
-import resource
 import sys
 from contextlib import closing
 from pathlib import Path
@@ -37,6 +36,7 @@ from retailops_ai.evaluation_campaign.source_replay import (
 )
 from retailops_ai.source_snapshot.files import SnapshotError, file_hash
 from retailops_ai.source_snapshot.importer import verify_snapshot
+from retailops_ai.worker_resources import worker_peak_rss_bytes
 
 
 def _indexes(root: Path, maximum: int) -> None:
@@ -257,10 +257,9 @@ def main(root: Path) -> None:
     )
     if runtime_pin() != before:
         raise SnapshotError("campaign_context_bundle_worker_runtime_changed")
-    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     result.update(
         {
-            "worker_peak_rss_bytes": int(rss if sys.platform == "darwin" else rss * 1024),
+            "worker_peak_rss_bytes": worker_peak_rss_bytes(),
             "worker_wall_seconds": perf_counter() - started,
         }
     )

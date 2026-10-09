@@ -13,7 +13,6 @@ import importlib.metadata
 import importlib.util
 import json
 import platform
-import resource
 import sys
 from pathlib import Path
 from typing import Any
@@ -143,8 +142,7 @@ def run(args: argparse.Namespace) -> None:
     proof = native_witness(args.worker, result, identity)
     if digest(runtime(args.source if producer else ROOT, producer=producer)) != identity[key]:
         raise ValueError("preparation_worker_runtime_changed_during_execution")
-    peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    result["worker_peak_self_rss_bytes"] = int(peak if sys.platform == "darwin" else peak * 1024)
+    result["worker_peak_self_rss_bytes"] = probe.worker_peak_rss_bytes()
     probe.write(args.output / (args.worker + ".json"), result)
     probe.write(args.output / (args.worker + ".witness.json"), proof)
 

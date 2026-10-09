@@ -11,9 +11,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import importlib
+import importlib.util
 import json
 import os
-import resource
 import shutil
 import signal
 import stat
@@ -31,6 +31,17 @@ PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
     Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.11.json"
 )
+
+
+def worker_peak_rss_bytes() -> int:
+    """Keep Source inspection stdlib-only and measure the current executable."""
+    path = Path(__file__).resolve().parents[1] / "src/retailops_ai/worker_resources.py"
+    spec = importlib.util.spec_from_file_location("ai09_worker_resources", path)
+    if spec is None or spec.loader is None:
+        raise ValueError("capacity_memory_probe_unavailable")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return int(module.worker_peak_rss_bytes())
 
 
 def read(path: Path) -> dict[str, Any]:
@@ -802,10 +813,7 @@ def main() -> None:
         validate_plan(plan)
         require_dispatch_readiness(plan)
         result = observed_worker(args, plan)
-        peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-        result["worker_peak_self_rss_bytes"] = int(
-            peak if sys.platform == "darwin" else peak * 1024
-        )
+        result["worker_peak_self_rss_bytes"] = worker_peak_rss_bytes()
         write(args.output / (args.worker + ".json"), result)
     else:
         run(args)

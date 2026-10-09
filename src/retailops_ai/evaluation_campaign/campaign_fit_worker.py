@@ -445,6 +445,7 @@ def main(phase: str, root: Path) -> None:
     _package_path()
     from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitPlan
     from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+    from retailops_ai.worker_resources import worker_peak_rss_bytes
 
     request = read(root / "request.json")
     plan = CampaignForecastFitPlan.model_validate_json(json.dumps(request["plan"]))
@@ -468,8 +469,7 @@ def main(phase: str, root: Path) -> None:
         **result,
         "phase": phase,
         "worker_seconds": perf_counter() - started,
-        "worker_peak_rss_bytes": int(usage.ru_maxrss)
-        * (1 if platform.system() == "Darwin" else 1024),
+        "worker_peak_rss_bytes": worker_peak_rss_bytes(),
         "worker_cpu_seconds": usage.ru_utime + usage.ru_stime,
     }
     if phase != "prepare":

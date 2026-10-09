@@ -9,8 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from retailops_ai.anomaly_detectors import worker_resources as resources
-from retailops_ai.source_snapshot.files import SnapshotError
+from retailops_ai import worker_resources as resources
 
 
 @pytest.mark.parametrize(
@@ -27,7 +26,7 @@ from retailops_ai.source_snapshot.files import SnapshotError
 def test_missing_or_ambiguous_peak_refuses_receipt(raw, monkeypatch):
     monkeypatch.setattr(resources.sys, "platform", "linux")
     monkeypatch.setattr(resources.Path, "open", lambda *a, **k: io.BytesIO(raw))
-    with pytest.raises(SnapshotError, match="worker_peak_memory_unavailable"):
+    with pytest.raises(ValueError, match="worker_peak_memory_unavailable"):
         resources.worker_peak_rss_bytes()
 
 
@@ -53,7 +52,7 @@ def test_real_exec_does_not_add_launcher_memory_to_current_worker(tmp_path, reco
     )
     result = subprocess.run(
         [sys.executable, "-c", launcher, leaf],
-        env={**os.environ, "PYTHONPATH": str(Path(resources.__file__).parents[2])},
+        env={**os.environ, "PYTHONPATH": str(Path(resources.__file__).parents[1])},
         capture_output=True,
         text=True,
         check=True,
@@ -95,7 +94,7 @@ print(json.dumps(cost.model_dump(mode='json')))
     )
     result = subprocess.run(
         [sys.executable, str(script), str(tmp_path), kind],
-        env={**os.environ, "PYTHONPATH": str(Path(resources.__file__).parents[2])},
+        env={**os.environ, "PYTHONPATH": str(Path(resources.__file__).parents[1])},
         capture_output=True,
         text=True,
         check=True,

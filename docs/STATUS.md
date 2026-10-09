@@ -1,5 +1,19 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: integracja adaptera i checkpointów; audyt pamięci workerów.**
+Połączono adapter treningu anomaly z trwałym wznowieniem przygotowania.
+[09.84](evidence/09-84-integrated-worker-memory.json) rozszerza poprawkę RSS
+na całą ścieżkę przygotowania i kampanii oraz zachowuje koszt przerwanego
+lokalnego CI starszego commitu. 351 kontroli regresyjnych przeszło;
+sześć kontroli specyficznych dla Linuksa wymaga runnera. Mypy zaliczył
+749 plików, a 620 modułów Python jest identycznych w source/wheel/install.
+Końcowe kontrole rzeczywistego treningu/reloadu i pomiarów mają 60 sukcesów
+i sześć pominięć wymagających Linuksa; zakresy obu zestawów częściowo się pokrywają.
+Pełny lokalny i chroniony odbiór tego przyrostu pozostają otwarte.
+Limit 12 GiB zachowany, nowego canonical ani kampanii Project nie uruchomiono.
+Profile 25/50, zamrożony protokół prób, pełna ścieżka dane→raport i końcowa
+kwalifikacja pozostają wymagane. AI 09 nadal `not_ready`.
+
 **2026-10-09 — AI 09: wznowienie po awarii na niezależnych runnerach.**
 [Dowód 09.83](evidence/09-83-actions-cross-run-recovery.json) potwierdza dwa
 udane wznowienia z nowego joba: po błędzie procesu oraz przerwaniu kontrolera.
