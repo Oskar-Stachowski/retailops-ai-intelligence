@@ -1,0 +1,124 @@
+{
+  "$defs": {
+    "JsonValue": {}
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "complete_source_and_reports_replayed": {
+      "const": true,
+      "default": true,
+      "title": "Complete Source And Reports Replayed",
+      "type": "boolean"
+    },
+    "native_reader": {
+      "const": "data.inventory.source_dataset_io.read_source_dataset",
+      "default": "data.inventory.source_dataset_io.read_source_dataset",
+      "title": "Native Reader",
+      "type": "string"
+    },
+    "producer_code_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Producer Code Sha256",
+      "type": "string"
+    },
+    "producer_commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "title": "Producer Commit",
+      "type": "string"
+    },
+    "producer_lock_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Producer Lock Sha256",
+      "type": "string"
+    },
+    "producer_python_version": {
+      "pattern": "^3\\.11\\.[0-9]+$",
+      "title": "Producer Python Version",
+      "type": "string"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "resolved_parameters": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Resolved Parameters",
+      "type": "object"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_descriptor_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Descriptor Sha256",
+      "type": "string"
+    },
+    "source_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Manifest Sha256",
+      "type": "string"
+    },
+    "source_report_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Report Sha256",
+      "type": "string"
+    },
+    "source_rows": {
+      "maximum": 20000000,
+      "minimum": 1,
+      "title": "Source Rows",
+      "type": "integer"
+    },
+    "source_scenario_sha256": {
+      "default": null,
+      "title": "Source Scenario Sha256",
+      "type": "null"
+    },
+    "source_schema_version": {
+      "const": "2.7.0",
+      "default": "2.7.0",
+      "title": "Source Schema Version",
+      "type": "string"
+    },
+    "source_table_inventory_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Table Inventory Sha256",
+      "type": "string"
+    },
+    "source_tables": {
+      "maximum": 256,
+      "minimum": 1,
+      "title": "Source Tables",
+      "type": "integer"
+    },
+    "version": {
+      "const": "ai09-complete-ordinary-source-verification-1.0.0",
+      "default": "ai09-complete-ordinary-source-verification-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_dataset_id",
+    "source_manifest_sha256",
+    "source_descriptor_sha256",
+    "source_report_sha256",
+    "source_table_inventory_sha256",
+    "source_tables",
+    "source_rows",
+    "producer_commit",
+    "producer_code_sha256",
+    "producer_lock_sha256",
+    "producer_python_version",
+    "resolved_parameters"
+  ],
+  "title": "OrdinarySourceVerification",
+  "type": "object"
+}

@@ -4,7 +4,8 @@ import argparse
 import json
 from pathlib import Path
 
-from retailops_ai.anomaly_evaluation.contract import EvaluationPolicy, Truth
+from retailops_ai.anomaly_evaluation.contract import EvaluationPolicy, OrdinaryTruth, Truth
+from retailops_ai.evaluation_campaign.campaign_anomaly_truth import OrdinarySourceVerification
 
 ROOT = Path(__file__).resolve().parents[1] / "src/retailops_ai/anomaly_evaluation/contracts"
 
@@ -13,7 +14,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    for name, model in (("policy", EvaluationPolicy), ("truth", Truth)):
+    for name, model in (
+        ("policy", EvaluationPolicy),
+        ("truth", Truth),
+        ("ordinary-truth.v1", OrdinaryTruth),
+        ("ordinary-source-verification.v1", OrdinarySourceVerification),
+    ):
         raw = (
             json.dumps(
                 {
