@@ -1,5 +1,18 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: niezależna prawda zwykłego Source i kontrola Linuksa.**
+[09.85](evidence/09-85-ordinary-anomaly-truth.json) opisuje trwały odczyt prawdy
+offline, pełne natywne odtworzenie Source i osobną ewaluację zwykłych kontroli.
+Poprawiono konwersję tekstowych pól CSV; dostęp do final wymaga odtworzenia
+zakończonego wyboru wszystkich trzech zastosowań. 65 testów przeszło ze źródeł
+i te same 65 z paczki. Rzeczywista mała kontrola sprawdziła 58 tabel / 4044
+rekordy; celowo zmieniony i ponownie zahashowany raport został odrzucony.
+Niezależnie odebrano Linux control `37957294824` na `d27094f`: **131/131**,
+bez pominięć, z weryfikacją artefaktu i JUnit. To kontrola komponentów;
+pełny lokalny CI integracji nadal trwa. Nowy komponent prawdy wymaga własnej
+pełnej akceptacji oraz publikacji na main. Limit 12 GiB zachowany,
+nowego canonical ani kampanii Project nie uruchomiono. AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: integracja adaptera i checkpointów; audyt pamięci workerów.**
 Połączono adapter treningu anomaly z trwałym wznowieniem przygotowania.
 [09.84](evidence/09-84-integrated-worker-memory.json) rozszerza poprawkę RSS

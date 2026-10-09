@@ -5,7 +5,15 @@ import json
 from pathlib import Path
 
 from retailops_ai.anomaly_evaluation.contract import EvaluationPolicy, OrdinaryTruth, Truth
-from retailops_ai.evaluation_campaign.campaign_anomaly_truth import OrdinarySourceVerification
+from retailops_ai.evaluation_campaign.campaign_anomaly_evaluation import (
+    CampaignOrdinaryAnomalyCensusEvaluation,
+    CampaignOrdinaryAnomalyCensusPlan,
+)
+from retailops_ai.evaluation_campaign.campaign_anomaly_truth_contract import (
+    CampaignOrdinaryTruthPlan,
+    CampaignOrdinaryTruthReceipt,
+    OrdinarySourceVerification,
+)
 
 ROOT = Path(__file__).resolve().parents[1] / "src/retailops_ai/anomaly_evaluation/contracts"
 
@@ -19,6 +27,10 @@ def main() -> int:
         ("truth", Truth),
         ("ordinary-truth.v1", OrdinaryTruth),
         ("ordinary-source-verification.v1", OrdinarySourceVerification),
+        ("ordinary-truth-plan.v1", CampaignOrdinaryTruthPlan),
+        ("ordinary-truth-receipt.v1", CampaignOrdinaryTruthReceipt),
+        ("ordinary-census-plan.v1", CampaignOrdinaryAnomalyCensusPlan),
+        ("ordinary-census-evaluation.v1", CampaignOrdinaryAnomalyCensusEvaluation),
     ):
         raw = (
             json.dumps(

@@ -1,0 +1,192 @@
+{
+  "recorded_at_utc": "2026-10-09T16:56:13.286688+00:00",
+  "scope": "Audited ordinary Source truth adapter and separate native numerical evaluation; component evidence, not Project qualification",
+  "base_commit": "d27d815",
+  "integrated_dependency_commit": "d27094fff369b6f0d0e5dc3510a4fc5315dbd103",
+  "accepted_main": "20aae22c00e8cf9e6b1b5ff6b11e706b59d5f46e",
+  "source_code_sha256": {
+    "src/retailops_ai/anomaly_evaluation/contract.py": "55a8e67ba78328565a3a70f5c6b238db022ded90f17aa2e5ba85772d2ebd51c4",
+    "src/retailops_ai/anomaly_evaluation/evaluator.py": "6a746c798b018d9971e50611500864e69ecd98b6fcb1323c84963f1a2bf76316",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_evaluation.py": "87e2245cf5a0a29afe3e4b08e54942ed122be2587fd13c80dbaa10cbe517046d",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_truth.py": "7b89981d94018907f22379d434accfe4ec4e821d79349119d2691a3e7d20e32f",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_truth_contract.py": "bc18e6e0194de0cca5d18526d5d867e1b1545e9e9343374041da60109f0ef31f",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_truth_worker.py": "298c0fdb52da91dbd1976b1236f243ab45884c3b6d8ba4c3d8fb7e0f3d7c40f1"
+  },
+  "changes": [
+    "Reserve source_read before Source I/O; bind frozen generation, exact persisted receipt and runtime",
+    "Use complete native Source reader under clean pinned producer and exact declared dependencies; independently regenerate all reports",
+    "Convert commerce CSV booleans and policy integers through native producer scalar conversion without duplicating the complete dataset",
+    "Derive all native complete sales days and actual-parent purchase return tails; preserve gaps as unknown and maturity clocks",
+    "Separate versioned ordinary truth/plan/result from unchanged legacy planned wires; bind both independent parent hashes",
+    "Preserve native false-alert metrics and non-evaluable recall/AP when there are no positive episodes",
+    "Verify completed three-use selection evidence before final Source access and bind its digest to receipt",
+    "Persist and replay private complete bundle before journal completion; retain failed attempts and costs"
+  ],
+  "validation": {
+    "source_tests": {
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 13.584,
+      "sha256": "b275ec1168032fd1433d24395099cfa0af5ccb6b96337d1159a1bd36ccbe6f02",
+      "private_path": ".local/ordinary-truth/components-final.xml"
+    },
+    "installed_tests": {
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 14.641,
+      "sha256": "2c54c0af07e423ec5c4ea652df31f1d0bab84be47ed1ae78ccaea4b7275dd9dd",
+      "private_path": ".local/ordinary-truth/installed-tests.xml"
+    },
+    "sets_are_same_do_not_sum": true,
+    "mypy_files": 752,
+    "ruff_check_passed": true,
+    "ruff_format_files": 1295,
+    "ordinary_schema_check_passed": true,
+    "evaluation_preparation_schema_check_passed": true,
+    "legacy_truth_policy_schema_bytes_unchanged": true,
+    "wheel": {
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 2148005,
+      "sha256": "566ca65673ac03076d44ad5fc1026cec09189e272bdf5350d34b6218d75fb98c",
+      "python_modules_equal": 623,
+      "ordinary_schemas_equal": 6,
+      "private_paths_absent": true
+    },
+    "installed": {
+      "python_modules_source_wheel_install_equal": 623,
+      "ordinary_consumer_and_producer_worker_loaded_from_installed": true
+    },
+    "secret_scans": {
+      "working_directory_passed": true,
+      "git_history_passed": true,
+      "commits_scanned_before_this_commit": 947
+    }
+  },
+  "native_source_control": {
+    "classification": "previously_exposed_tiny_control_not_Project_generation",
+    "producer_commit": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+    "source_dataset_id": "source-sha256-c99626b5674df0e8e3c1d2c37228d74aae92419b22c8eb6e0fa296235721af46",
+    "result": {
+      "canonical_diagnostic": false,
+      "complete_observations": 292,
+      "complete_windows": 30,
+      "project_fits": 0,
+      "scope": "previously_exposed_tiny_native_source_control_no_Project_receipt",
+      "source_rows": 4044,
+      "source_tables": 58,
+      "stage_ready": false,
+      "verification_sha256": "f56e3508ec0533025005ca782e6de214fec3ba48a428a38cd831f83bf053ea0e"
+    },
+    "monitor": {
+      "cpu_measurement": "worker_tree_sampled_lower_bound_excludes_supervisor",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_and_owned_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1243152384,
+      "minimum_free_disk_bytes": 55518613504,
+      "reason": null,
+      "sample_seconds": 0.2,
+      "sampled_scratch_peak_bytes": 24576,
+      "sampled_tree_peak_rss_bytes": 117702656,
+      "sampled_worker_cpu_seconds": 0.9040343439999999,
+      "samples": 29,
+      "status": "passed",
+      "wall_seconds": 5.93094883300364
+    },
+    "worker": {
+      "cpu_seconds": 1.0656789999999998,
+      "wall_seconds": 5.748835958947893,
+      "worker_peak_rss_bytes": 84295680
+    },
+    "verification_file_sha256": "b3fa707d3f84767f2b43ace31dc2732e3449d761f19962d805ff11856581fcea",
+    "standalone_truth_generation_digest_is_explicit_zero_placeholder_not_a_Project_receipt": true
+  },
+  "native_report_forgery_control": {
+    "expected_native_rejection_observed": true,
+    "project_fits": 0,
+    "scope": "private_copy_resealed_report_control",
+    "stage_ready": false,
+    "worker_result": {
+      "cpu_measurement": "worker_tree_sampled_lower_bound_excludes_supervisor",
+      "exit_code": 1,
+      "memory_measurement": "sampled_supervisor_and_owned_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1347387392,
+      "minimum_free_disk_bytes": 55579566080,
+      "reason": "worker_exit",
+      "sample_seconds": 0.2,
+      "sampled_scratch_peak_bytes": 1200128,
+      "sampled_tree_peak_rss_bytes": 154714112,
+      "sampled_worker_cpu_seconds": 0.81270553,
+      "samples": 7,
+      "status": "failed",
+      "wall_seconds": 1.2878477500053123
+    }
+  },
+  "earlier_preflight_rejection": {
+    "result": {
+      "reason": "preflight_reserve",
+      "sampled_tree_peak_rss_bytes": null,
+      "samples": 0,
+      "status": "failed",
+      "wall_seconds": 3.770901821553707e-05
+    },
+    "source_worker_started": false,
+    "reserve_lowered": false,
+    "owned_controller_change": "Removed eager consumer imports before the small worker; same 256MiB tree cap and 1GiB reserve"
+  },
+  "integrated_dependency_linux_control": {
+    "recorded_at_utc": "2026-10-09T16:24:44.105112+00:00",
+    "run_id": 37957294824,
+    "job_id": 113910940494,
+    "head": "d27094fff369b6f0d0e5dc3510a4fc5315dbd103",
+    "workflow_success": true,
+    "artifact_id": 11630660677,
+    "artifact_bytes": 3514,
+    "artifact_sha256": "8b76c1511a5e38789889f04f82a21a803f81bc604cc3e5bd35dfc9213360488a",
+    "github_digest_verified": true,
+    "junit_sha256": "199bfee179bbb4e0dcd0a5d2df517e903bc8240920edb01bd77202da64ee53c0",
+    "passed": 131,
+    "failed": 0,
+    "skipped": 0,
+    "test_seconds": 541.73,
+    "critical_native_controls": [
+      "test_native_fit_with_retained_parent_keeps_unchanged_budget[census]",
+      "test_native_fit_with_retained_parent_keeps_unchanged_budget[legacy]",
+      "test_actual_producer_and_capacity_probes_exclude_launcher_history[retailops_ai.worker_resources]",
+      "test_actual_producer_and_capacity_probes_exclude_launcher_history[retailops_ai.evaluation_campaign.campaign_generation_worker]",
+      "test_actual_producer_and_capacity_probes_exclude_launcher_history[measure_ai09_development_capacity]",
+      "test_real_public_parent_fit_bundle_and_fresh_process_complete_reload[inventory-False]",
+      "test_real_public_parent_fit_bundle_and_fresh_process_complete_reload[inventory-True]",
+      "test_real_public_parent_fit_bundle_and_fresh_process_complete_reload[demand-False]",
+      "test_real_public_parent_fit_bundle_and_fresh_process_complete_reload[demand-True]",
+      "test_real_public_parent_fit_bundle_and_fresh_process_complete_reload[physical-False]",
+      "test_real_public_parent_fit_bundle_and_fresh_process_complete_reload[physical-True]"
+    ],
+    "full_required_ci": false,
+    "canonical_diagnostic": false,
+    "project_fits": 0,
+    "stage_ready": false
+  },
+  "limits": {
+    "canonical_tree_rss_bytes": 12884901888,
+    "minimum_memory_reserve_bytes": 1073741824,
+    "minimum_disk_reserve_bytes": 6442450944
+  },
+  "remaining": [
+    "Own full make ci-local on frozen code",
+    "Protected PR exact-head Required CI and resulting-main acceptance",
+    "Completed integration with ordinary and planned scientific campaign evaluation",
+    "Full native stockout, group coverage, uncertainty and final three-use qualification"
+  ],
+  "full_required_ci": false,
+  "on_main": false,
+  "new_project_generations": 0,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "quality_qualified": false,
+  "stage_ready": false
+}

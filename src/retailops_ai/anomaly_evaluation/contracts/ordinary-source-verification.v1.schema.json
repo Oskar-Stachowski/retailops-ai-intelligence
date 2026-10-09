@@ -1,20 +1,69 @@
 {
   "$defs": {
-    "JsonValue": {}
+    "JsonValue": {},
+    "Window": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "Window",
+      "type": "object"
+    }
   },
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
+    "complete_observation_count": {
+      "maximum": 1000000,
+      "minimum": 1,
+      "title": "Complete Observation Count",
+      "type": "integer"
+    },
     "complete_source_and_reports_replayed": {
       "const": true,
       "default": true,
       "title": "Complete Source And Reports Replayed",
       "type": "boolean"
     },
+    "complete_window_count": {
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Complete Window Count",
+      "type": "integer"
+    },
+    "complete_windows_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Complete Windows Sha256",
+      "type": "string"
+    },
+    "exporter_lock_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Exporter Lock Sha256",
+      "type": "string"
+    },
     "native_reader": {
       "const": "data.inventory.source_dataset_io.read_source_dataset",
       "default": "data.inventory.source_dataset_io.read_source_dataset",
       "title": "Native Reader",
+      "type": "string"
+    },
+    "population": {
+      "const": "all_native_sales_days_and_parent_purchase_return_tail",
+      "default": "all_native_sales_days_and_parent_purchase_return_tail",
+      "title": "Population",
       "type": "string"
     },
     "producer_code_sha256": {
@@ -103,6 +152,9 @@
       "default": "ai09-complete-ordinary-source-verification-1.0.0",
       "title": "Version",
       "type": "string"
+    },
+    "window": {
+      "$ref": "#/$defs/Window"
     }
   },
   "required": [
@@ -116,8 +168,13 @@
     "producer_commit",
     "producer_code_sha256",
     "producer_lock_sha256",
+    "exporter_lock_sha256",
     "producer_python_version",
-    "resolved_parameters"
+    "resolved_parameters",
+    "window",
+    "complete_windows_sha256",
+    "complete_window_count",
+    "complete_observation_count"
   ],
   "title": "OrdinarySourceVerification",
   "type": "object"

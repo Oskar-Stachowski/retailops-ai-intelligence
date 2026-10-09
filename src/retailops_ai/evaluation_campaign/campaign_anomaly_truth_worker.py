@@ -13,9 +13,102 @@ import resource
 import shutil
 import subprocess
 import sys
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from time import perf_counter
 from typing import Any
+
+KEY = ("product_id", "selling_location_id", "channel", "currency")
+
+
+def complete_ordinary_windows(
+    tables: dict[str, Any], window: dict[str, str]
+) -> list[dict[str, Any]]:
+    """Use the verified native day universe, retaining gaps as unknown truth."""
+    start, end = date.fromisoformat(window["start"]), date.fromisoformat(window["end"])
+    windows: list[dict[str, Any]] = []
+
+    def stamp(value: str) -> datetime:
+        result = datetime.fromisoformat(value)
+        if result.utcoffset() != timedelta(0):
+            raise ValueError("campaign_ordinary_truth_native_utc_required")
+        return result
+
+    def append(event: str, key: tuple[str, ...], first: date, last: date, known: datetime) -> None:
+        # These are the unchanged native evaluator maturity delays, not a claim
+        # that an event-time watermark proves return cohort completeness.
+        maturity = datetime.combine(last + timedelta(days=1), datetime.min.time(), UTC)
+        maturity += timedelta(hours=24 if event == "sale_completed" else 72)
+        windows.append(
+            {
+                "event_type": event,
+                **dict(zip(KEY, key, strict=True)),
+                "window": {"start": first.isoformat(), "end": last.isoformat()},
+                "available_at": max(known, maturity).isoformat().replace("+00:00", "Z"),
+            }
+        )
+        if len(windows) > 10000:
+            raise ValueError("campaign_ordinary_truth_window_budget")
+
+    sales: dict[tuple[str, ...], list[tuple[date, datetime]]] = {}
+    for row in tables["daily_demand_observations"]:
+        day = date.fromisoformat(row["business_date"])
+        if (
+            start <= day <= end
+            and row["source_data_complete"] is True
+            and row["quality_status"] == "valid"
+        ):
+            key = tuple(row[k] for k in KEY)
+            sales.setdefault(key, []).append((day, stamp(row["available_at"])))
+    for key, days in sorted(sales.items()):
+        ordered = sorted(days)
+        first, known = ordered[0]
+        previous = first
+        for day, available in ordered[1:]:
+            if day <= previous:
+                raise ValueError("campaign_ordinary_truth_duplicate_native_day")
+            if day != previous + timedelta(days=1):
+                append("sale_completed", key, first, previous, known)
+                first, known = day, available
+            else:
+                known = max(known, available)
+            previous = day
+        append("sale_completed", key, first, previous, known)
+
+    products = {row["id"]: row for row in tables["product_catalog"]}
+    policies = {(row["category_id"], row["channel"]): row for row in tables["return_policies"]}
+    purchases: dict[tuple[str, ...], tuple[date, datetime]] = {}
+    for row in tables["inventory_sales"]:
+        key = tuple(row[k] for k in KEY)
+        day, available = stamp(row["sold_at"]).date(), stamp(row["available_at"])
+        previous_purchase = purchases.get(key)
+        purchases[key] = (
+            (max(day, previous_purchase[0]), min(available, previous_purchase[1]))
+            if previous_purchase
+            else (day, available)
+        )
+    for key, (last_purchase, first_available) in sorted(purchases.items()):
+        policy = policies[products[key[0]]["category_id"], key[2]]
+        finish = min(end, last_purchase + timedelta(days=policy["window_days"]))
+        if finish < start:
+            continue
+        closed = datetime.combine(finish + timedelta(days=1), datetime.min.time(), UTC)
+        known = max(
+            closed + timedelta(days=policy["max_ingestion_delay_days"]),
+            first_available,
+            stamp(policy["known_at"]),
+        )
+        append("return_completed", key, start, finish, known)
+    windows.sort(
+        key=lambda item: (item["event_type"], *(item[k] for k in KEY), item["window"]["start"])
+    )
+    total = sum(
+        (date.fromisoformat(w["window"]["end"]) - date.fromisoformat(w["window"]["start"])).days + 1
+        for w in windows
+    )
+    if not windows or total > 1000000:
+        raise ValueError("campaign_ordinary_truth_census_budget")
+    return windows
 
 
 def _digest(value: Any) -> str:
@@ -62,12 +155,31 @@ def _producer(source: Path, request: dict[str, Any]) -> tuple[Any, dict[str, Any
     return io, provenance
 
 
-def verify_ordinary_source(source: Path, dataset: Path, request: dict[str, Any]) -> dict[str, Any]:
+def verify_ordinary_source(
+    source: Path, dataset: Path, request: dict[str, Any]
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Actually replay all facts, private truth, reports and the native file inventory."""
     io, provenance = _producer(source, request)
+    initial = io.load_json(
+        io.safe_file(dataset, "dataset_manifest.v2.json", limit=io.MAX_METADATA_BYTES)
+    )
+    references = [
+        *initial["artifacts"].values(),
+        *initial["reports"].values(),
+        initial["inventory_configuration"],
+    ]
+    if (
+        initial["schema_version"] != "2.7.0"
+        or sum(r["size_bytes"] for r in references) > request["max_source_bytes"]
+        or sum(r["row_count"] for r in initial["descriptor"]["tables"].values())
+        > request["max_source_rows"]
+    ):
+        raise ValueError("campaign_ordinary_truth_source_budget_or_kind")
     # This call independently recomputes every report from complete source data.
     # Hashes and an absent scenario field alone are explicitly insufficient.
     tables, manifest = io.read_source_dataset(dataset)
+    if manifest != initial:
+        raise ValueError("campaign_anomaly_truth_source_changed")
     descriptor = manifest["descriptor"]
     if (
         manifest["schema_version"] != "2.7.0"
@@ -108,6 +220,34 @@ def verify_ordinary_source(source: Path, dataset: Path, request: dict[str, Any])
     ):
         raise ValueError("campaign_anomaly_truth_ordinary_report_replay")
     table_count, row_count = len(tables), sum(len(rows) for rows in tables.values())
+    # The native reader returns typed inventory rows but canonical CSV strings
+    # for commerce. Use the producer's own scalar conversion: a nonempty
+    # "false" string is not evidence of completeness, and policy days are ints.
+    canonical_cell = importlib.import_module("data.generator.identity").canonical_cell
+    window_tables = {
+        **tables,
+        "daily_demand_observations": (
+            {
+                **row,
+                "source_data_complete": canonical_cell(
+                    "source_data_complete", row["source_data_complete"]
+                ),
+            }
+            for row in tables["daily_demand_observations"]
+        ),
+        "return_policies": (
+            {
+                **row,
+                "window_days": canonical_cell("window_days", row["window_days"]),
+                "max_ingestion_delay_days": canonical_cell(
+                    "max_ingestion_delay_days", row["max_ingestion_delay_days"]
+                ),
+            }
+            for row in tables["return_policies"]
+        ),
+    }
+    windows = complete_ordinary_windows(window_tables, request["window"])
+    del window_tables
     del tables
     references = [
         *manifest["artifacts"].values(),
@@ -143,11 +283,20 @@ def verify_ordinary_source(source: Path, dataset: Path, request: dict[str, Any])
         "exporter_lock_sha256": request["exporter_lock_sha256"],
         "producer_python_version": provenance["python_version"],
         "resolved_parameters": descriptor["resolved_parameters"],
+        "window": request["window"],
+        "complete_windows_sha256": _digest(windows),
+        "complete_window_count": len(windows),
+        "complete_observation_count": sum(
+            (date.fromisoformat(w["window"]["end"]) - date.fromisoformat(w["window"]["start"])).days
+            + 1
+            for w in windows
+        ),
+        "population": "all_native_sales_days_and_parent_purchase_return_tail",
         "source_scenario_sha256": None,
         "native_reader": "data.inventory.source_dataset_io.read_source_dataset",
         "complete_source_and_reports_replayed": True,
         "quality_qualified": False,
-    }
+    }, windows
 
 
 def main() -> None:
@@ -158,22 +307,25 @@ def main() -> None:
     args = parser.parse_args()
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
     # This helper imports only the standard library in the producer environment.
-    from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+    from retailops_ai.evaluation_campaign.campaign_generation_worker import (
+        read,
+        worker_peak_rss_bytes,
+        write,
+    )
 
     started = perf_counter()
-    verified = verify_ordinary_source(args.source, args.dataset, read(args.root / "request.json"))
+    request = read(args.root / "request.json")
+    verified, windows = verify_ordinary_source(args.source, args.dataset, request)
     usage = resource.getrusage(resource.RUSAGE_SELF)
     child = resource.getrusage(resource.RUSAGE_CHILDREN)
-    scale = 1 if sys.platform == "darwin" else 1024
     write(args.root / "ordinary-source-verification.json", verified)
+    write(args.root / "ordinary-source-windows.json", {"complete_windows": windows})
     write(
         args.root / "truth-worker-resources.json",
         {
             "wall_seconds": perf_counter() - started,
             "cpu_seconds": usage.ru_utime + usage.ru_stime + child.ru_utime + child.ru_stime,
-            "conservative_worker_tree_peak_rss_bytes": int(
-                (usage.ru_maxrss + child.ru_maxrss) * scale
-            ),
+            "worker_peak_rss_bytes": worker_peak_rss_bytes(),
         },
     )
 

@@ -1,0 +1,49 @@
+# Niezależna prawda dla zwykłego Source
+
+`read_campaign_ordinary_truth` tworzy prawdę offline dla zwykłego Source 2.7.
+Najpierw rezerwuje odczyt w trwałym dzienniku, sprawdza zamrożony plan,
+zakończoną generację i jej zapisany receipt. Worker działa pod przypiętym
+interpreterem producenta. Odczytuje wszystkie tabele, prywatną konfigurację
+i raporty przez `data.inventory.source_dataset_io.read_source_dataset`.
+Natywny reader niezależnie odtwarza raporty z faktów. Sam brak pola scenariusza
+albo poprawne sumy kontrolne nie dowodzą zwykłego, kompletnego zbioru.
+
+Source zwraca typowane wiersze inventory oraz tekst CSV dla commerce.
+Worker korzysta z konwersji skalarnych samego producenta. Tekst `false`
+nie staje się kompletnym dniem, a długości polityki zwrotów są liczbami.
+Kompletne okna sprzedaży obejmują wszystkie poprawne, kompletne dni Source;
+luki pozostają nieznane. Okna zwrotów wymagają rzeczywistych zakupów rodzica
+i kończą się zgodnie z polityką zwrotów. Zegar prawdy uwzględnia dostępność,
+politykę opóźnienia ingestii i dotychczasową dojrzałość 24/72 h.
+
+Oddzielne kontrakty `OrdinaryTruth`, `CampaignOrdinaryAnomalyCensusPlan`
+i `CampaignOrdinaryAnomalyCensusEvaluation` nie zmieniają starych kontraktów
+prawdy i ewaluacji scenariuszy. Zwykła prawda nie ma epizodów ani fikcyjnego
+hasha scenariusza. Wiąże pełną weryfikację Source i receipt generacji.
+Obie rodziny detektorów zachowują natywne metryki fałszywych alarmów oraz
+pokrycia. Brak pozytywów nie daje idealnego recall ani average precision.
+Prawda służy ocenie offline; nie trafia do cech ani treningu.
+
+Bundle zawiera `truth.json`, `verification.json` i `plan.json`.
+Publikację jako `completed` poprzedzają sprawdzenie całej zawartości,
+fsync i prywatny trwały receipt. Każda nieudana zarezerwowana próba zachowuje
+koszt i zużywa budżet. Odczyt final wymaga również rzeczywistej weryfikacji
+zakończonego wyboru dla forecast, anomaly i stockout; sama deklaracja
+zamrożenia wyboru nie wystarcza. Receipt wiąże hash tego wyboru.
+
+[Dowód 09.85](evidence/09-85-ordinary-anomaly-truth.json) obejmuje 65 testów
+ze źródeł i te same 65 z zainstalowanej paczki, bez pominięć.
+Mypy obejmuje 752 pliki, a 623 moduły Python i sześć nowych schematów
+zachowują zgodność paczki ze źródłami. Natywny odczyt wcześniej ujawnionego
+małego zbioru sprawdził 58 tabel, 4044 rekordy i 292 kompletne obserwacje.
+Druga kontrola zmieniła raport w prywatnej kopii i ponownie obliczyła jego
+checksum w manifeście: niezależny reader poprawnie odrzucił fałszywy raport.
+Pierwsza próba została zatrzymana przed odczytem przez rezerwę RAM i pozostaje
+w zapisach. Udana próba z mniej kosztownym kontrolerem zachowała te same limity.
+
+To dowód działania komponentu na małym zbiorze. Nie wykonano nowej generacji
+Project, treningu Project ani świeżego odczytu final. Pełny lokalny CI gałęzi,
+chroniona akceptacja i publikacja na main pozostają wymagane. Nadal trzeba
+połączyć kompletne zwykłe i planowane oceny z rzeczywistą kampanią, pokryciem
+grup, niepewnością i końcową kwalifikacją trzech zastosowań. AI 09 pozostaje
+`not_ready`; limit canonical wynosi 12 GiB.

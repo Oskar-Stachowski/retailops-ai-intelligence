@@ -208,6 +208,11 @@
       "title": "Source Dataset Id",
       "type": "string"
     },
+    "source_generation_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Generation Receipt Sha256",
+      "type": "string"
+    },
     "source_scenario_sha256": {
       "default": null,
       "title": "Source Scenario Sha256",
@@ -228,6 +233,7 @@
   "required": [
     "source_dataset_id",
     "source_verification_sha256",
+    "source_generation_receipt_sha256",
     "complete_windows"
   ],
   "title": "OrdinaryTruth",

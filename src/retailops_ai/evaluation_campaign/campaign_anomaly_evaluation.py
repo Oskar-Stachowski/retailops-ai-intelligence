@@ -116,11 +116,10 @@ def _plan(
 class CampaignAnomalyCensusEvaluation(Contract):
     """Native numerical evidence; complete Project admission remains separate."""
 
-    version: Literal[
-        "ai09-native-anomaly-census-evaluation-1.0.0",
-        "ai09-native-anomaly-census-evaluation-2.0.0",
-    ] = "ai09-native-anomaly-census-evaluation-1.0.0"
-    plan: CampaignAnomalyCensusPlan | CampaignOrdinaryAnomalyCensusPlan
+    version: Literal["ai09-native-anomaly-census-evaluation-1.0.0"] = (
+        "ai09-native-anomaly-census-evaluation-1.0.0"
+    )
+    plan: CampaignAnomalyCensusPlan
     rows: Annotated[int, Field(ge=1, le=MAX_NATIVE_EVALUATION_ROWS)]
     replay_batches: Annotated[int, Field(ge=1)]
     scoring_trace_sha256: Sha256
@@ -137,9 +136,7 @@ class CampaignAnomalyCensusEvaluation(Contract):
     @model_validator(mode="after")
     def binding(self) -> Self:
         if (
-            (self.version == "ai09-native-anomaly-census-evaluation-2.0.0")
-            != isinstance(self.plan, CampaignOrdinaryAnomalyCensusPlan)
-            or self.rows != self.plan.rows
+            self.rows != self.plan.rows
             or self.replay_batches != (self.rows + REPLAY_BATCH_ROWS - 1) // REPLAY_BATCH_ROWS
             or self.native_evaluation_sha256 != canonical_sha256(self.native_evaluation)
         ):
@@ -149,6 +146,15 @@ class CampaignAnomalyCensusEvaluation(Contract):
     def content_sha256(self) -> str:
         type(self).model_validate_json(self.model_dump_json())
         return canonical_sha256(self.model_dump(mode="json"))
+
+
+class CampaignOrdinaryAnomalyCensusEvaluation(CampaignAnomalyCensusEvaluation):
+    """Separate ordinary wire; the planned v1 result and its schema remain intact."""
+
+    version: Literal["ai09-native-ordinary-anomaly-census-evaluation-1.0.0"] = (
+        "ai09-native-ordinary-anomaly-census-evaluation-1.0.0"  # type: ignore[assignment]
+    )
+    plan: CampaignOrdinaryAnomalyCensusPlan
 
 
 def evaluate_anomaly_census(
@@ -247,10 +253,15 @@ def evaluate_anomaly_census(
         plan.evaluation_policy,
         source_dataset_id=plan.source_dataset_id,
     )
-    return CampaignAnomalyCensusEvaluation.model_validate_json(
+    result_type = (
+        CampaignOrdinaryAnomalyCensusEvaluation
+        if isinstance(plan, CampaignOrdinaryAnomalyCensusPlan)
+        else CampaignAnomalyCensusEvaluation
+    )
+    return result_type.model_validate_json(
         canonical_bytes(
             {
-                "version": "ai09-native-anomaly-census-evaluation-2.0.0"
+                "version": "ai09-native-ordinary-anomaly-census-evaluation-1.0.0"
                 if isinstance(plan, CampaignOrdinaryAnomalyCensusPlan)
                 else "ai09-native-anomaly-census-evaluation-1.0.0",
                 "plan": plan.model_dump(mode="json"),
@@ -278,6 +289,11 @@ def verify_anomaly_census_evaluation(
     Resealing a metrics hash or changing this result's plan cannot bypass replay.
     This function grants no Project quality or public final-access permission.
     """
-    safe = CampaignAnomalyCensusEvaluation.model_validate_json(result.model_dump_json())
+    result_type = (
+        CampaignOrdinaryAnomalyCensusEvaluation
+        if isinstance(result, CampaignOrdinaryAnomalyCensusEvaluation)
+        else CampaignAnomalyCensusEvaluation
+    )
+    safe = result_type.model_validate_json(result.model_dump_json())
     if safe != evaluate_anomaly_census(model, scored, truth, plan):
         raise ValueError("campaign_anomaly_evaluation_replay_mismatch")
