@@ -19,11 +19,24 @@ poniżej 13 GiB dostępnej pamięci. Nowej diagnostyki nie uruchomiono;
 pełny odbiór dokładnych head i wynikowych main obu repozytoriów jest wymagany.
 
 **2026-10-09 — AI 09: in_progress / not_ready.**
+[Pełny podział i trening anomaly](ai09-native-anomaly-membership.md) łączy
+zweryfikowane Point z natywnym membership i pełnymi rolami train/validation
+na dysku. 164 kontrole regresyjne przeszły, następnie 18 po dopracowaniu
+rezerwy dysku oraz 165 z końcowej zainstalowanej paczki. Kontrola 10020
+wierszy używa całego treningu; trzy publiczne warianty zachowują pełne liczniki.
+Model Project, dziennik, prawda offline i pełna kwalifikacja są nadal otwarte.
+PR #63 zaliczył cały Required CI dokładnego HEAD i jest scalony do
+`12484dee4db4b044e61460bac14f1612321900a8`; wynikowy main wymaga ukończenia
+swojego pełnego odbioru. Nowe zmiany 09.65/09.66/09.68/09.69 czekają na
+własny pełny CI i publikację.
+
+**2026-10-09 — AI 09: in_progress / not_ready.**
 [Pełny trening numeryczny anomaly](ai09-native-anomaly-full-fit.md) ma osobną
 wersję polityki/modelu, macierz na dysku i pełne progi walidacyjne.
 Kontrola 10017 wierszy wykorzystuje cały strumień i odtwarza zapisany las.
-Dotychczasowe kontrakty zachowują swoje limity. Powiązanie Point z membership,
-dziennikiem i modelem Project pozostaje otwarte; pełny CI i publikacja są wymagane.
+Dotychczasowe kontrakty zachowują swoje limity. Powiązanie Point z membership
+i pełnym treningiem uzupełnia 09.69. Dziennik i model Project pozostają otwarte;
+pełny CI i publikacja są wymagane.
 
 [Audyt podziału CI](evidence/09-67-ci-census-balance.json) zachowuje anulowany
 przebieg PR #63: 14 jobs przeszło, dwa shardy przekroczyły 45 minut, a agregator

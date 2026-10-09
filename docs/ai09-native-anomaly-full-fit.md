@@ -45,6 +45,7 @@ modelu pozostaje identycznych. Pełny CI i chroniona publikacja są wymagane.
 To wykonany komponent numeryczny. Jego wywołujący musi zweryfikować cały
 publiczny parent i membership, zarezerwować rzeczywisty odczyt/fit w dzienniku
 oraz zmierzyć całe przygotowanie cech. Powiązanie pełnego strumienia Point z
-membership i artefaktem Project pozostaje do wykonania. Te kontrole nie są
+[membership i rolami treningowymi](ai09-native-anomaly-membership.md) jest wykonane.
+Artefakt modelu Project i rzeczywisty dziennik pozostają do połączenia. Te kontrole nie są
 fitem Project ani oceną świeżego final. Prawda offline, jakość, krytyczne grupy,
 niepewność, komplet kosztów i lifecycle pozostają warunkami AI 09 ready.

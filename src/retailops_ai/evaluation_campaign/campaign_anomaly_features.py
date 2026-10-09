@@ -13,10 +13,17 @@ from collections.abc import Iterator
 from contextlib import ExitStack
 from copy import deepcopy
 from datetime import datetime, timedelta
+from itertools import zip_longest
 from pathlib import Path
-from typing import Annotated, Any, Literal, Self
+from typing import TYPE_CHECKING, Annotated, Any, Literal, Self
 
 from pydantic import Field
+
+if TYPE_CHECKING:
+    from retailops_ai.evaluation_campaign.campaign_anomaly_membership import (
+        AnomalyMembershipRow,
+        CampaignAnomalyMembershipPlan,
+    )
 
 from retailops_ai.anomaly_detectors.protocol import Scope, Window, series_key
 from retailops_ai.curated.builder import iter_rows
@@ -335,6 +342,37 @@ class CampaignAnomalyFeatureProjection:
             ):
                 self._db()
                 yield self._checked_point(values)
+
+    def training_memberships(
+        self, plan: "CampaignAnomalyMembershipPlan"
+    ) -> Iterator["AnomalyMembershipRow"]:
+        """Bind the full live native feature parent before producing causal rows."""
+        from retailops_ai.evaluation_campaign.campaign_anomaly_membership import (
+            CampaignAnomalyMembershipPlan,
+            iter_anomaly_membership_census,
+        )
+
+        self._db()
+        plan = CampaignAnomalyMembershipPlan.model_validate_json(plan.model_dump_json())
+        if (
+            plan.feature_plan_sha256 != canonical_sha256(self.plan.model_dump(mode="json"))
+            or plan.native_points_sha256 != self.native_points_sha256
+            or self.plan.policy != Policy()
+        ):
+            raise ValueError("campaign_anomaly_membership_complete_feature_parent_binding")
+        actual_scopes = self._db().execute(
+            "SELECT DISTINCT event_type,product_id,location_id,channel,currency "
+            "FROM points ORDER BY event_type,product_id,location_id,channel,currency"
+        )
+        if any(
+            expected != actual
+            for expected, actual in zip_longest((series_key(s) for s in plan.scopes), actual_scopes)
+        ):
+            raise ValueError("campaign_anomaly_membership_complete_scope_inventory")
+        yield from iter_anomaly_membership_census(
+            self.scoring_points(plan.scopes, Window(start=plan.train.start, end=plan.test.end)),
+            plan,
+        )
 
     def _hash_points(self) -> str:
         trace = hashlib.sha256()

@@ -35,12 +35,16 @@ przypina poprawki CPU Source, zachowuje 12 GiB i cały profil oraz zalicza
 [Odczyt census anomaly](docs/evidence/09-66-native-anomaly-census-access.json)
 łączy pełne cechy ze scorerem i sprawdza globalny indeks deduplikacji;
 82 kontrole natywne i 82 z końcowej paczki przeszły.
+[Pełny podział i trening anomaly](docs/ai09-native-anomaly-membership.md) łączy
+Point z membership i dyskowymi rolami. 165 kontroli końcowej paczki przeszło;
+10020 wierszy treningowych zachowuje pełną liczność. Dziennik i publikacja modelu
+Project pozostają otwarte.
 [Pełny trening numeryczny anomaly](docs/ai09-native-anomaly-full-fit.md)
 zachowuje wszystkie zadeklarowane wiersze, mediany train i rzeczywisty fit
 lasu, także powyżej wcześniejszego limitu 10000. Integracja Project jest otwarta.
 [Korekta podziału CI](docs/evidence/09-67-ci-census-balance.json) zachowuje
 pełną kolekcję testów i zapisuje częściowe czasy przed przerwaniem procesu.
-PR #63 wymaga ponownego pełnego odbioru po przekroczeniu czasu dwóch shardów.
+PR #63 zaliczył 17 jobs poprawionego HEAD i został scalony; odbiór wynikowego main trwa.
 [Audyt pamięci i czasu](docs/ai09-capacity-audit.md) obejmuje wszystkie pięć
 faz przygotowania danych przed kolejnym canonical; zachowuje pełne dane i limity.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja

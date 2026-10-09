@@ -1,0 +1,132 @@
+{
+  "version": "ai09-native-anomaly-membership-training-1.0.0",
+  "recorded_at_utc": "2026-10-09T08:28:51.770930+00:00",
+  "scope": "Complete causal Point memberships and bounded disk role fitting; Project journal/model publication remains open",
+  "base": "2e0986afa3331328b4f51df806d0cd039db2c844",
+  "code_sha256": {
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_membership.py": "2fe01cdd73c83fce62e44f289b879b6f2a076e7b4ca48ddb62af54135f5470b4",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_training.py": "6edfd58eae94bd2c088d4eb78cd60600948abaf384576bbd1af27d9562a9a07e",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_features.py": "5f9cf5f553c851c62f847b3d8bab2108c28fc9fafaa3225de58748c7120a53de"
+  },
+  "behavior": {
+    "full_parent_plan_and_points_pinned": true,
+    "all_actual_parent_scopes_required": true,
+    "all_requested_dates_counted_including_unknown_gap_test_and_cutoff_exclusions": true,
+    "native_membership_and_count_rate_math_unchanged": true,
+    "complete_membership_consumed_before_first_fit": true,
+    "maximum_private_role_files": 8,
+    "maximum_rows_per_group_role": 1000000,
+    "default_role_bytes": 2147483648,
+    "maximum_line_bytes": 32768,
+    "disk_reserve_bytes": 6442450944,
+    "training_rows_sampled": false,
+    "validation_threshold_rows_sampled": false,
+    "native_IF_algorithm_subsampling_unchanged": true,
+    "maximum_parity_probes_per_group": 64,
+    "score_batch_rows": 8192,
+    "canonical_rss_bytes_unchanged": 12884901888
+  },
+  "controls": {
+    "initial_training": {
+      "tests": 33,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 12.086,
+      "junit_sha256": "6d403162184e8fad417af36236d855f18165f2e95838a1cd555015f82e74d612"
+    },
+    "initial_training_failure": "Symlink was rejected by O_NOFOLLOW as OSError; normalized to the component SnapshotError and retested. No invalid result returned.",
+    "native_regression_before_final_disk_reserve_followup": {
+      "tests": 164,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 157.16,
+      "junit_sha256": "a10318e76eea6e27ea748a0fdba6a79144d78569312f83bb81d114170a6bf204"
+    },
+    "native_final_disk_reserve_followup": {
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 10.83,
+      "junit_sha256": "b0a501d4e4ff0ba9232274f09fab2830fb41c4d1b4b97a95e69da4592079f0be"
+    },
+    "installed_final": {
+      "tests": 165,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 159.434,
+      "junit_sha256": "037e4d4fd520c0aa1a735adc0352f188d3cc33147e49d2a022e1323593c11d1c"
+    },
+    "installed_origins": {
+      "all_from_actual_installed_target": true,
+      "modules": 99,
+      "receipt_sha256": "78e3f826f7b2fe5b916f5c0a4b0b3a65a71b054d118201ed1cfae4a3cf560fc6"
+    },
+    "full_fit_control": {
+      "eligible_training_rows": 10020,
+      "requested_rows": 29058,
+      "validation_rows": 8016,
+      "all_training_rows_consumed_and_full_hash_verified": true,
+      "same_small_native_forest_and_thresholds": true,
+      "real_fit": true,
+      "project_fit": false
+    },
+    "public_variants": [
+      "ordinary",
+      "demand",
+      "physical"
+    ],
+    "mypy_files": 730,
+    "ruff": "passed",
+    "format": "passed",
+    "package": {
+      "wheel_bytes": 2090511,
+      "wheel_sha256": "df81e5e6147022b58dd6fc94668b44aa9307028772d235aec5286aee49dc6da8",
+      "whole_package_source_wheel_installed_parity": {
+        "python": 609,
+        "json": 213,
+        "other_forced_files": 4
+      },
+      "private_files_absent": true
+    },
+    "initial_mypy_errors": 3,
+    "initial_mypy_correction": "Explicit list[str] for reasons; final 730 files passed.",
+    "package_verifier_correction": "Force-include directories merge with source packages; select longest applicable existing file, otherwise actual src file.",
+    "initial_public_membership_native": {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 122.475,
+      "junit_sha256": "c746e31f9dfcaa9d5335000cb4746d30de4cf59b392ad9dbbf83a9783897205a"
+    },
+    "docs_and_ci_contract": "passed",
+    "model_schema": "passed with explicit owned src import",
+    "initial_schema_command": "Shared interpreter without PYTHONPATH resolved older editable code; same check against owned src passed without schema edits.",
+    "secret_scans": {
+      "tree": "passed",
+      "whole_history": "passed"
+    },
+    "diff": "passed"
+  },
+  "resources": "Per-fit measured CPU/wall/conservative RSS are retained. Caller must journal and measure complete parent preparation, role preparation, validation scoring and failed attempts.",
+  "acceptance": {
+    "full_make_ci_local": "pending_on_current_head",
+    "exact_head_ci": "pending",
+    "resulting_main_ci": "pending",
+    "published_on_main": false
+  },
+  "scientific": {
+    "new_project_fits": 0,
+    "fresh_final_reads": 0,
+    "journal_initialized": false,
+    "project_model_publication_complete": false,
+    "independent_truth_integration_complete": false,
+    "full_science_complete": false,
+    "stage_ready": false
+  },
+  "prior_unaccounted_attempts": "Legacy 11 attempts,44 starts,40 complete,4 lost and64 reads remain unknown_not_zero; component controls do not reset that history."
+}
