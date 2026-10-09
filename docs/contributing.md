@@ -25,6 +25,11 @@ zbierają cały aktualny zestaw testów i publikują plan, JUnit oraz czasy faz
 setup/call/teardown. Agregator sprawdza pełną, rozłączną kolekcję i wykonanie
 każdego wybranego testu. Przy ponowieniu nieudanych jobs zachowuje wcześniejsze
 udane shardy tego samego runu/commitu; zawsze sprawdza najnowszą próbę sharda.
+Runner atomowo zapisuje raport po kolekcji, na granicach plików i podczas
+wykonywania zakończonych faz co najwyżej raz na 10 sekund. Przerwane raporty
+mają `exit_code: null` i `reporting_state: in_progress`; agregator ich nie
+zalicza. Podział korzysta z przejrzanych czasów plików, zachowując wszystkie
+testy. Limit joba testów wynosi 90 minut i nie zmienia budżetów diagnostyki.
 
 Podział acceptance przenosi całe bramki: `full-raw-dq-check` do `ci-forecast`,
 `day-qualification-check` do `ci-detectors`. Osobny `persistence-forecast`

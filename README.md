@@ -35,6 +35,9 @@ przypina poprawki CPU Source, zachowuje 12 GiB i cały profil oraz zalicza
 [Odczyt census anomaly](docs/evidence/09-66-native-anomaly-census-access.json)
 łączy pełne cechy ze scorerem i sprawdza globalny indeks deduplikacji;
 82 kontrole natywne i 82 z końcowej paczki przeszły.
+[Korekta podziału CI](docs/evidence/09-67-ci-census-balance.json) zachowuje
+pełną kolekcję testów i zapisuje częściowe czasy przed przerwaniem procesu.
+PR #63 wymaga ponownego pełnego odbioru po przekroczeniu czasu dwóch shardów.
 [Audyt pamięci i czasu](docs/ai09-capacity-audit.md) obejmuje wszystkie pięć
 faz przygotowania danych przed kolejnym canonical; zachowuje pełne dane i limity.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja

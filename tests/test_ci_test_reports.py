@@ -5,6 +5,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 from copy import deepcopy
 from pathlib import Path
 
@@ -58,6 +59,8 @@ def receipts():
         "forged-time",
         "overlap",
         "extra-test",
+        "in-progress",
+        "in-progress-zero-exit",
     ],
 )
 def test_incomplete_or_inconsistent_receipts_cannot_publish_weights(mutation):
@@ -84,6 +87,9 @@ def test_incomplete_or_inconsistent_receipts_cannot_publish_weights(mutation):
         reports[0]["seconds"][node.split("::")[0]] = 100
     elif mutation == "overlap":
         reports[1]["selected_node_ids"] = [node]
+    elif mutation.startswith("in-progress"):
+        reports[0]["reporting_state"] = "in_progress"
+        reports[0]["exit_code"] = None if mutation == "in-progress" else 0
     else:
         reports[0]["selected_node_ids"].append("tests/test_hidden.py::test_hidden")
     with pytest.raises(ValueError):
@@ -138,3 +144,73 @@ raise SystemExit(pytest.main([str(runner.ROOT / 'tests'), '--rootdir=' + str(run
         assert result.returncode == 0, result.stdout + result.stderr
     result = validated_timings([json.loads((tmp_path / f"{i}.json").read_text()) for i in range(4)])
     assert set(result["seconds"]) == {f"tests/test_{i}.py" for i in range(4)}
+
+
+def test_abruptly_stopped_pytest_preserves_completed_file_without_success(tmp_path):
+    tests = tmp_path / "tests"
+    tests.mkdir()
+    (tests / "test_a.py").write_text("def test_complete():\n    assert 2 + 2 == 4\n")
+    (tests / "test_b.py").write_text(
+        "import time\nfrom pathlib import Path\n"
+        "def test_wait():\n"
+        f"    Path({str(tmp_path / 'started')!r}).write_text('started')\n"
+        "    time.sleep(60)\n"
+    )
+    (tmp_path / "weights.json").write_text('{"seconds":{}}')
+    code = """
+import sys
+from pathlib import Path
+import pytest
+sys.path.insert(0, sys.argv[1])
+from scripts import run_ci_tests as runner
+runner.ROOT = Path(sys.argv[2])
+runner.TIMINGS = runner.ROOT / 'weights.json'
+plugin = runner.Shard(0, 1, None, runner.ROOT / 'receipt.json')
+raise SystemExit(pytest.main([str(runner.ROOT / 'tests'), '--rootdir=' + str(runner.ROOT), '-q'], plugins=[plugin]))
+"""
+    process = subprocess.Popen(
+        [sys.executable, "-c", code, str(ROOT), str(tmp_path)],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        env={**os.environ, "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"},
+    )
+    try:
+        deadline = time.monotonic() + 15
+        while not (tmp_path / "started").exists():
+            assert process.poll() is None, process.communicate(timeout=5)
+            assert time.monotonic() < deadline, "controlled pytest did not start"
+            time.sleep(0.02)
+        process.kill()
+        process.communicate(timeout=5)
+        report = json.loads((tmp_path / "receipt.json").read_text())
+        assert report["exit_code"] is None
+        assert report["reporting_state"] == "in_progress"
+        assert len(report["selected_node_ids"]) == 2
+        phases = report["phases"]["tests/test_a.py::test_complete"]
+        assert set(phases) == {"setup", "call", "teardown"}
+        assert all(phase["outcome"] == "passed" for phase in phases.values())
+        assert not list(tmp_path.glob("receipt.json.*.tmp"))
+    finally:
+        if process.poll() is None:
+            process.kill()
+            process.communicate(timeout=5)
+
+
+def test_failed_atomic_replacement_preserves_previous_receipt(tmp_path, monkeypatch):
+    from scripts import run_ci_tests as runner
+
+    path = tmp_path / "receipt.json"
+    plugin = runner.Shard(0, 1, None, path)
+    plugin._write_timings(None)
+    before = path.read_bytes()
+
+    def fail_replace(source, destination):
+        assert destination == path
+        raise OSError("controlled replace failure")
+
+    monkeypatch.setattr(runner.os, "replace", fail_replace)
+    with pytest.raises(OSError, match="controlled replace failure"):
+        plugin._write_timings(0)
+    assert path.read_bytes() == before
+    assert not list(tmp_path.glob("receipt.json.*.tmp"))

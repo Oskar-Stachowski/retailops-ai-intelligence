@@ -7,6 +7,8 @@ import hashlib
 import json
 import math
 import os
+import tempfile
+import time
 from pathlib import Path
 from typing import Any
 
@@ -42,6 +44,8 @@ class Shard:
         self.full_ids: list[str] = []
         self.selected_ids: list[str] = []
         self.phases: dict[str, dict[str, dict[str, Any]]] = {}
+        self._last_checkpoint = 0.0
+        self._active_file: str | None = None
 
     def pytest_collection_modifyitems(
         self, config: pytest.Config, items: list[pytest.Item]
@@ -91,14 +95,26 @@ class Shard:
         )
         config.hook.pytest_deselected(items=deselected)
         items[:] = selected
+        self._write_timings(None)
+
+    def pytest_runtest_logstart(self, nodeid: str, location: tuple[str, int, str]) -> None:
+        name = nodeid.split("::", 1)[0]
+        if self._active_file != name:
+            self._active_file = name
+            self._write_timings(None)
 
     def pytest_runtest_logreport(self, report: pytest.TestReport) -> None:
         self.phases.setdefault(report.nodeid, {})[report.when] = {
             "seconds": report.duration,
             "outcome": report.outcome,
         }
+        if time.monotonic() - self._last_checkpoint >= 10:
+            self._write_timings(None)
 
     def pytest_sessionfinish(self, session: pytest.Session, exitstatus: int) -> None:
+        self._write_timings(int(exitstatus))
+
+    def _write_timings(self, exitstatus: int | None) -> None:
         if self.timings is None:
             return
         seconds: dict[str, float] = {}
@@ -112,7 +128,8 @@ class Shard:
             "commit": os.environ.get("GITHUB_SHA", "local"),
             "shard": self.index,
             "shards": self.count,
-            "exit_code": int(exitstatus),
+            "exit_code": exitstatus,
+            "reporting_state": "in_progress" if exitstatus is None else "complete",
             "full_collection_sha256": hashlib.sha256("\n".join(self.full_ids).encode()).hexdigest(),
             "full_node_ids": self.full_ids,
             "selected_node_ids": self.selected_ids,
@@ -120,7 +137,26 @@ class Shard:
             "seconds": seconds,
         }
         self.timings.parent.mkdir(parents=True, exist_ok=True)
-        self.timings.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+        temporary: Path | None = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                mode="w",
+                encoding="utf-8",
+                dir=self.timings.parent,
+                prefix=self.timings.name + ".",
+                suffix=".tmp",
+                delete=False,
+            ) as stream:
+                temporary = Path(stream.name)
+                json.dump(result, stream, indent=2, sort_keys=True)
+                stream.write("\n")
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(temporary, self.timings)
+            self._last_checkpoint = time.monotonic()
+        finally:
+            if temporary is not None:
+                temporary.unlink(missing_ok=True)
 
 
 def main() -> int:
