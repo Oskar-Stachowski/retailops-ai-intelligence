@@ -47,7 +47,9 @@ zachowuje wszystkie zadeklarowane wiersze, mediany train i rzeczywisty fit
 lasu, także powyżej wcześniejszego limitu 10000. Integracja Project jest otwarta.
 [Korekta podziału CI](docs/evidence/09-67-ci-census-balance.json) zachowuje
 pełną kolekcję testów i zapisuje częściowe czasy przed przerwaniem procesu.
-PR #63 zaliczył 17 jobs poprawionego HEAD i został scalony; odbiór wynikowego main trwa.
+PR #63 zaliczył 17 jobs poprawionego HEAD i 17 jobs wynikowego main.
+[Poprawka pakowania](docs/ai09-package-boundary.md) usuwa prywatny stan z sdist
+i zachowuje identyczny wheel runtime; jej pełny CI i publikacja są wymagane.
 [Audyt pamięci i czasu](docs/ai09-capacity-audit.md) obejmuje wszystkie pięć
 faz przygotowania danych przed kolejnym canonical; zachowuje pełne dane i limity.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja

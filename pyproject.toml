@@ -61,6 +61,16 @@ dev = [
     "types-pyyaml==6.0.12.20260906",
 ]
 
+[tool.hatch.build]
+# Worktrees use a .git file; packaging must exclude private state explicitly
+# even when the build backend cannot recover VCS ignore rules from that layout.
+exclude = ["/.local", "/.venv", "/.tools", "/dist", "/reports", "/data/generated"]
+
+[tool.hatch.build.targets.sdist]
+# Publish only inputs needed to rebuild the runtime wheel. Runtime state and
+# credentials outside this inventory cannot enter an sdist in a worktree.
+include = ["/src", "/contracts", "/environments/tensorflow/uv.lock", "/pyproject.toml", "/uv.lock", "/README.md", "/LICENSE"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/retailops_ai"]
 
