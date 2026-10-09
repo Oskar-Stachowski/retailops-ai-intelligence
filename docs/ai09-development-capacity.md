@@ -87,6 +87,24 @@ Nie normalizujemy ani nie pomijamy wpisów RECORD zainstalowanych zależności.
 rzeczywistej kontroli między runnerami. Wcześniejsze awarie, ich koszty,
 nieznany koszt przerwania oraz osobne pomiary nieudanych pobrań są zachowane.
 
+Późniejszy [dowód 09.83](evidence/09-83-actions-cross-run-recovery.json)
+potwierdza rzeczywiste odzyskanie w osobnych runach `37951474556` i
+`37951481874` na identycznym `a381e63a`. Oryginalne jobs pozostały nieudane,
+a nowe ukończyły pięć faz bez generacji po stronie odbiorcy. Niezależna
+inspekcja przed pobraniem dała pełną zgodność środowisk Source i AI.
+Zweryfikowano osiem ZIP-ów oraz odtworzono dziesięć natywnych archiwów,
+włącznie z pełnym inventory i łańcuchem rodziców. Po błędzie procesu łączny
+naliczony koszt wyniósł 19,96 s, w tym 1,44 s nieudanego eksportu i 4,31 s
+pobrania/odtworzenia. Po przerwaniu naliczono 58,02 s, w tym 39 s osobnej
+ostrożnej rezerwy; nieznany koszt ścienny i CPU pozostały jawnie oznaczone.
+130-sekundowe okna obserwacji oraz preflight mają osobne zachowane pomiary.
+To wyłącznie kontrola jawnie wprowadzonych awarii na profilu 10×8×2×1,
+bez Project i final. Nie obejmuje twardego zabicia joba przed publikacją
+historii, ogólnego dopuszczania awarii ani kwalifikacji pełnego canonical.
+Bieżącego kontrolera nie zaobserwowano na żywo w UI; końcowe logi i status
+API nie zastępują tego dowodu. Przed canonical pozostają także profile 25/50,
+protokół budżetów prób, reprezentatywna ścieżka dane→raport i pełny CI.
+
 Workflow przekazuje każdą zakończoną lub nieudaną fazę do osobnego artefaktu
 przed przejściem dalej, zachowując checkpoint, niezależne powiązanie workera,
 dziennik, logi i koszty. Retencja wynosi 90 dni i wymaga późniejszego odbioru

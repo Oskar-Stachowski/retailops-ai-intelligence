@@ -1,0 +1,278 @@
+{
+  "UI_observation_limitation": "In-app browser unavailable. No observation claimed from final logs or API. Native user browser was left alone during these controls.",
+  "all_eight_artifact_zip_digests_verified": true,
+  "all_ten_native_phase_archives_independently_restored_and_verified": true,
+  "canonical_diagnostic_dispatched": false,
+  "code_sha256": {
+    ".github/workflows/ai09-development-capacity.yml": "d2f35274ade16b6ea92bee68cf2f4b400882efd3eeac509373f869c338f27543",
+    ".github/workflows/ai09-generation-control.yml": "c866b7825b76e7e19a44a04c6cf298f7ae5637cafdf5c8172801d47533be779f",
+    "scripts/ai09_attempt_transport.py": "1ea7ce320ddd9c6a39cdf1528a9dd68a5d8a091acbe7c0198c72f38d50cd30d3",
+    "scripts/ai09_checkpoint_transport.py": "44040f3517ff962ef936cdc09d7143963f0a9d68c8c2228e90537e2ee3a9f878",
+    "scripts/ai09_preparation_worker.py": "20e4ee4946d4d572b803f8aa897ddded2ab24ca5fe91fb4cde9f428d0d4022cc",
+    "scripts/check_ai09_cross_run_resume.py": "f7e15b1b50fd9ce7ffb315ae9b8fcb9f3d52c611a45969e66a5ecbafc7b47743",
+    "scripts/run_ai09_preparation.py": "ae6162eb21b4db3217931daca4fd07bd7dbf43933a04749553c61030ea009aa3",
+    "src/retailops_ai/evaluation_campaign/preparation_attempt.py": "278ad6668d23d988ac1a3290699a55520c168704098dc4610450ac435a72f542",
+    "src/retailops_ai/evaluation_campaign/preparation_execution.py": "6bd00d3c55250ff637b1c371f08cb98de901cf2b1294df27b96aa5c5288df0d6",
+    "src/retailops_ai/evaluation_campaign/preparation_resume.py": "d5cf65d87d6bbf39b58664b0b16d73f0946aac016e7cef4d9b2e2723ae6a2875"
+  },
+  "control_head": "a381e63a1f9ae2a793601688090ee2cc954bca4c",
+  "control_profile": {
+    "days": 10,
+    "products": 8,
+    "scratch_bytes": 536870912,
+    "stores": 2,
+    "tree_rss_bytes": 1073741824,
+    "wall_seconds": 600,
+    "warehouses": 1
+  },
+  "fresh_final_reads": 0,
+  "full_native_inventory_and_parent_lineage_verified": true,
+  "full_producer_and_consumer_runtime_snapshots_match_between_original_and_receiver": true,
+  "new_project_fits": 0,
+  "no_installed_dependency_RECORD_entries_ignored_or_normalized": true,
+  "old_events_and_archives_preserved_byte_for_byte": true,
+  "original_attempts": [
+    {
+      "artifacts": [
+        {
+          "digest": "sha256:4db974cb3e459c969d981b1cd376972d25e0f00b417fcf869d5c9a7ba49c322f",
+          "id": 11625473499,
+          "name": "ai09-preparation-attempt-a381e63a1f9ae2a793601688090ee2cc954bca4c-37950963471-1",
+          "size_in_bytes": 2062
+        },
+        {
+          "digest": "sha256:8be5e3625847f1816ab704c8a3e8767fc1c2dc2cf97788a2728e2e785b12e088",
+          "id": 11625393638,
+          "name": "ai09-generation-control-a381e63a1f9ae2a793601688090ee2cc954bca4c-37950963471",
+          "size_in_bytes": 144810
+        },
+        {
+          "digest": "sha256:4d83b5bee17e78c381ae704e5b13bcbbc80d471b532bdb6aa102109d402d0a7d",
+          "id": 11625008745,
+          "name": "ai09-checkpoint-control-a381e63a1f9ae2a793601688090ee2cc954bca4c-37950963471-prefix",
+          "size_in_bytes": 248891
+        }
+      ],
+      "conclusion": "failure",
+      "intentional_failure_verified": true,
+      "job": 113889314948,
+      "original_prefix_and_native_export_verified": true,
+      "run": 37950963471,
+      "settlement": {
+        "charged_wall_seconds": 1.4370885769999973,
+        "known_suffix_wall_seconds": 1.4370885769999973,
+        "reservation_is_not_measured_cost": false,
+        "reserved_unknown_wall_seconds": 0.0,
+        "suffix_events_retained": 2,
+        "unmeasured_cpu_cost_present": false,
+        "unmeasured_wall_cost_present": false,
+        "worker_cpu_seconds_lower_bound": 1.15
+      }
+    },
+    {
+      "artifacts": [
+        {
+          "digest": "sha256:e7389d42896bbef5196fe10aab721a05a3389f7898a72342124edb50a82fce68",
+          "id": 11625903255,
+          "name": "ai09-generation-control-a381e63a1f9ae2a793601688090ee2cc954bca4c-37950972983",
+          "size_in_bytes": 143707
+        },
+        {
+          "digest": "sha256:3ebeefa594e184728a96f1c9feaa6a9961dae9f49c3def3d6ee6e17b8f0ba17d",
+          "id": 11625552869,
+          "name": "ai09-checkpoint-control-a381e63a1f9ae2a793601688090ee2cc954bca4c-37950972983-prefix",
+          "size_in_bytes": 248854
+        },
+        {
+          "digest": "sha256:11cc9d2a319c26400f8dc8c086d768bead90055c4477405ebed48f8e1f473591",
+          "id": 11625523067,
+          "name": "ai09-preparation-attempt-a381e63a1f9ae2a793601688090ee2cc954bca4c-37950972983-1",
+          "size_in_bytes": 1915
+        }
+      ],
+      "conclusion": "failure",
+      "intentional_failure_verified": true,
+      "job": 113889350888,
+      "original_prefix_and_native_export_verified": true,
+      "run": 37950972983,
+      "settlement": {
+        "charged_wall_seconds": 39.0,
+        "known_suffix_wall_seconds": 0.0,
+        "reservation_is_not_measured_cost": true,
+        "reserved_unknown_wall_seconds": 39.0,
+        "suffix_events_retained": 1,
+        "unmeasured_cpu_cost_present": true,
+        "unmeasured_wall_cost_present": true,
+        "worker_cpu_seconds_lower_bound": 0.0
+      }
+    }
+  ],
+  "original_failed_jobs_remain_failed": true,
+  "phased_live_UI_verified": false,
+  "project_distribution_absent_in_preparation_environment": true,
+  "project_journal_initialized": false,
+  "receiver_runtime_identity_computed_before_download": true,
+  "recorded_at_utc": "2026-10-09T15:31:04.829568+00:00",
+  "recoveries": [
+    {
+      "actual_live_UI_verified": false,
+      "all_five_archives_and_native_inventory_parent_chain_restored_and_verified": true,
+      "all_known_original_failure_transport_restore_and_resumed_costs_charged": true,
+      "artifact": {
+        "digest": "sha256:2776bd5c5d5742c5efa0bf7866f602d3b672685968bc2936d7b4565a509bed7f",
+        "id": 11625629110,
+        "name": "ai09-generation-control-a381e63a1f9ae2a793601688090ee2cc954bca4c-37951474556",
+        "size_in_bytes": 1192142
+      },
+      "artifact_zip_digest_verified": true,
+      "both_independent_runtime_snapshots_equal_to_original": true,
+      "canonical_diagnostic": false,
+      "cold_prefix_wall_seconds": 3.5541553249999964,
+      "complete_terminal_attempt_snapshot_retained": true,
+      "conclusion": "success",
+      "cpu_seconds_lower_bound": 12.46,
+      "fresh_final_reads": 0,
+      "head": "a381e63a1f9ae2a793601688090ee2cc954bca4c",
+      "job": 113891070732,
+      "mode": "failure",
+      "observed_at_utc": "2026-10-09T15:28:46.090104+00:00",
+      "original_eight_events_and_two_archives_byte_equal": true,
+      "original_run": 37950963471,
+      "preflight_setup": {
+        "not_zero_or_included_in_worker_cost": true,
+        "producer_inspection_measurement": {
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "exit_code": 0,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "minimum_available_memory_bytes": 15172509696,
+          "minimum_free_disk_bytes": 91212595200,
+          "reason": null,
+          "sample_seconds": 0.2,
+          "sampled_peak_scratch_allocated_bytes": 40960,
+          "sampled_peak_scratch_logical_bytes": 37687,
+          "sampled_tree_peak_rss_bytes": 51933184,
+          "sampled_worker_cpu_seconds": 0.09999999999999999,
+          "samples": 2,
+          "status": "passed",
+          "wall_seconds": 0.21346265900000105
+        },
+        "scope": "preflight_setup_outside_preparation_budget_inside_job_deadline",
+        "wall_seconds": 0.29427979799999804
+      },
+      "project_fits": 0,
+      "remaining_wall_seconds": 580.037917583,
+      "reserved_unknown_wall_seconds": 0.0,
+      "restore_wall_seconds": 0.4150775689999975,
+      "run": 37951474556,
+      "source_generation_original": 1,
+      "source_generation_recovery": 0,
+      "stage_ready": false,
+      "status": "completed",
+      "terminal_settlement": {
+        "charged_wall_seconds": 1.4370885769999973,
+        "known_suffix_wall_seconds": 1.4370885769999973,
+        "reservation_is_not_measured_cost": false,
+        "reserved_unknown_wall_seconds": 0.0,
+        "suffix_events_retained": 2,
+        "unmeasured_cpu_cost_present": false,
+        "unmeasured_wall_cost_present": false,
+        "worker_cpu_seconds_lower_bound": 1.15
+      },
+      "total_charged_wall_seconds": 19.962082416999998,
+      "transport_wall_seconds": 3.8937773270000022,
+      "unmeasured_cost_flags_retained": false,
+      "visibility_idle_is_separate_from_preparation_budget": true,
+      "visibility_idle_wall_seconds": 130.22573125000002
+    },
+    {
+      "actual_live_UI_verified": false,
+      "all_five_archives_and_native_inventory_parent_chain_restored_and_verified": true,
+      "all_known_original_failure_transport_restore_and_resumed_costs_charged": true,
+      "artifact": {
+        "digest": "sha256:39b3a1f337473a0ff28206799bb696092b8e3b8f43ebf5c5e95028e1ebba3878",
+        "id": 11626007834,
+        "name": "ai09-generation-control-a381e63a1f9ae2a793601688090ee2cc954bca4c-37951481874",
+        "size_in_bytes": 1192013
+      },
+      "artifact_zip_digest_verified": true,
+      "both_independent_runtime_snapshots_equal_to_original": true,
+      "canonical_diagnostic": false,
+      "cold_prefix_wall_seconds": 6.043116773000008,
+      "complete_terminal_attempt_snapshot_retained": true,
+      "conclusion": "success",
+      "cpu_seconds_lower_bound": 13.49,
+      "fresh_final_reads": 0,
+      "head": "a381e63a1f9ae2a793601688090ee2cc954bca4c",
+      "job": 113891096179,
+      "mode": "interruption",
+      "observed_at_utc": "2026-10-09T15:28:46.581755+00:00",
+      "original_eight_events_and_two_archives_byte_equal": true,
+      "original_run": 37950972983,
+      "preflight_setup": {
+        "not_zero_or_included_in_worker_cost": true,
+        "producer_inspection_measurement": {
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "exit_code": 0,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "minimum_available_memory_bytes": 15523913728,
+          "minimum_free_disk_bytes": 91212648448,
+          "reason": null,
+          "sample_seconds": 0.2,
+          "sampled_peak_scratch_allocated_bytes": 40960,
+          "sampled_peak_scratch_logical_bytes": 37687,
+          "sampled_tree_peak_rss_bytes": 52428800,
+          "sampled_worker_cpu_seconds": 0.11,
+          "samples": 2,
+          "status": "passed",
+          "wall_seconds": 0.20816419900000938
+        },
+        "scope": "preflight_setup_outside_preparation_budget_inside_job_deadline",
+        "wall_seconds": 0.28220608100002664
+      },
+      "project_fits": 0,
+      "remaining_wall_seconds": 541.9801958259999,
+      "reserved_unknown_wall_seconds": 39.0,
+      "restore_wall_seconds": 0.4156978490000256,
+      "run": 37951481874,
+      "source_generation_original": 1,
+      "source_generation_recovery": 0,
+      "stage_ready": false,
+      "status": "completed",
+      "terminal_settlement": {
+        "charged_wall_seconds": 39.0,
+        "known_suffix_wall_seconds": 0.0,
+        "reservation_is_not_measured_cost": true,
+        "reserved_unknown_wall_seconds": 39.0,
+        "suffix_events_retained": 1,
+        "unmeasured_cpu_cost_present": true,
+        "unmeasured_wall_cost_present": true,
+        "worker_cpu_seconds_lower_bound": 0.0
+      },
+      "total_charged_wall_seconds": 58.019804174000114,
+      "transport_wall_seconds": 1.6386751740000136,
+      "unmeasured_cost_flags_retained": true,
+      "visibility_idle_is_separate_from_preparation_budget": true,
+      "visibility_idle_wall_seconds": 130.08759473100002
+    }
+  ],
+  "remaining": [
+    "current phased Actions live UI proof",
+    "generic reviewed failed-run admission and terminal history when hard job termination prevents publication remain outside these explicit injection controls",
+    "representative25/50profiles and frozen trial budget protocol",
+    "representative end-to-end data-to-report before canonical",
+    "full exact head and resulting-main Required CI for checkpoint increment",
+    "actual scientific Project campaign and final qualification"
+  ],
+  "scope": "actual ten-day controls at identical immutable head across independent GitHub Actions runners; only explicitly injected failures admitted",
+  "source_head": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+  "stage_ready": false,
+  "two_previous_failed_recovery_attempts_preserved": {
+    "evidence": "docs/evidence/09-82-cross-run-runtime-rejection.json",
+    "head": "004208d0c2fb4aa4176757c8e396c620dcba782b",
+    "runs": [
+      37948901587,
+      37948907819
+    ]
+  },
+  "version": "ai09-actions-cross-run-failed-prefix-recovery-evidence-1.0.0"
+}

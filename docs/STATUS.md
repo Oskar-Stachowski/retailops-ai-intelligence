@@ -1,5 +1,19 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: wznowienie po awarii na niezależnych runnerach.**
+[Dowód 09.83](evidence/09-83-actions-cross-run-recovery.json) potwierdza dwa
+udane wznowienia z nowego joba: po błędzie procesu oraz przerwaniu kontrolera.
+Każdy przypadek ukończył 5/5 faz małego profilu, bez ponownej generacji.
+Niezależne inspekcje obu środowisk są identyczne; zweryfikowano osiem ZIP-ów,
+odtworzono wszystkie dziesięć archiwów faz i sprawdzono ich natywne powiązania.
+Zachowano oryginalne wpisy, archiwa oraz nieudane próby. Po błędzie procesu
+naliczono 19,96 s całej pracy z odzyskaniem; po przerwaniu 58,02 s,
+w tym 39 s ostrożnej rezerwy na nieznany koszt. CPU tej przerwy pozostaje
+nieznane. Osobne 130 s obserwacji jest czasem bez pracy Source.
+Nie potwierdzono logów aktualnego kontrolera na żywo w UI. Pełny CI tego
+przyrostu, profile 25/50, protokół prób i ścieżka dane→raport pozostają otwarte.
+Canonical nadal wyłączony, limit 12 GiB zachowany, AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: odebrany main; poprawka przygotowania wznowienia.**
 [Dowód 09.82](evidence/09-82-cross-run-runtime-rejection.json) zachowuje cztery
 rzeczywiste nieudane jobs: dwie celowe awarie po natywnym eksporcie oraz dwie
