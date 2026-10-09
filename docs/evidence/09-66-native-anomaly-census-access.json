@@ -1,0 +1,380 @@
+{
+  "version": "ai09-native-anomaly-census-access-1.0.0",
+  "recorded_at_utc": "2026-10-09T06:23:29.051092+00:00",
+  "scope": "Native public feature-window/scoring integration and full global identity index verification; Project admission remains incomplete",
+  "source_cpu_acceptance": {
+    "head": {
+      "sha": "80293fb582e05f7004cf44c2da1828d1a5e74a97",
+      "run": 37864504892,
+      "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37864504892",
+      "whole_acceptance": true,
+      "jobs": [
+        {
+          "name": "Detect changed areas",
+          "conclusion": "success"
+        },
+        {
+          "name": "Required CI contract tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Repository diff hygiene",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Authenticated immutable native source bundle import",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Authenticated cross-repo intelligence runtime",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Validate Docker Compose config",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 07 full sales and returns offline replay",
+          "conclusion": "success"
+        },
+        {
+          "name": "frontend-gate / Frontend tests and lint",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 06 full cross-repo gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 03 full cross-repo gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "frontend-gate / Personal forecast and suggestion UI with actual PostgreSQL and API",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / Synthetic data quality gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "kubernetes-gate / Kustomize, schema and policy gates",
+          "conclusion": "success"
+        },
+        {
+          "name": "api-gate / API integration tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "iac-security-gate / TFLint IaC quality gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "iac-security-gate / Checkov IaC security report",
+          "conclusion": "success"
+        },
+        {
+          "name": "terraform-validation-gate / Terraform fmt, init and validate",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Filesystem vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Frontend image vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Backend image vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Python dependency audit",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Frontend dependency audit",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Secret scanning with Gitleaks",
+          "conclusion": "success"
+        },
+        {
+          "name": "frontend-gate / Build frontend application",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Build full stack and run smoke tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "frontend-gate / Build frontend Docker image",
+          "conclusion": "success"
+        },
+        {
+          "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Security evidence summary",
+          "conclusion": "success"
+        },
+        {
+          "name": "api-gate / API Docker image build",
+          "conclusion": "success"
+        },
+        {
+          "name": "required-result",
+          "conclusion": "success"
+        }
+      ]
+    },
+    "main": {
+      "sha": "265b26a9473b119b501d94d6d0dfcb418158cd9a",
+      "run": 37888416578,
+      "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/actions/runs/37888416578",
+      "whole_acceptance": true,
+      "jobs": [
+        {
+          "name": "Required CI contract tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Detect changed areas",
+          "conclusion": "success"
+        },
+        {
+          "name": "Repository diff hygiene",
+          "conclusion": "success"
+        },
+        {
+          "name": "terraform-validation-gate / Terraform fmt, init and validate",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Validate Docker Compose config",
+          "conclusion": "success"
+        },
+        {
+          "name": "api-gate / API integration tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Authenticated immutable native source bundle import",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Authenticated cross-repo intelligence runtime",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / Synthetic data quality gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 07 full sales and returns offline replay",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 03 full cross-repo gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "data-gate / AI 06 full cross-repo gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "kubernetes-gate / Kustomize, schema and policy gates",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Frontend image vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "iac-security-gate / Checkov IaC security report",
+          "conclusion": "success"
+        },
+        {
+          "name": "frontend-gate / Frontend tests and lint",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Backend image vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Frontend dependency audit",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Python dependency audit",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Secret scanning with Gitleaks",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Filesystem vulnerability scan",
+          "conclusion": "success"
+        },
+        {
+          "name": "iac-security-gate / TFLint IaC quality gate",
+          "conclusion": "success"
+        },
+        {
+          "name": "frontend-gate / Personal forecast and suggestion UI with actual PostgreSQL and API",
+          "conclusion": "success"
+        },
+        {
+          "name": "frontend-gate / Build frontend application",
+          "conclusion": "success"
+        },
+        {
+          "name": "docker-gate / Build full stack and run smoke tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "frontend-gate / Build frontend Docker image",
+          "conclusion": "success"
+        },
+        {
+          "name": "kubernetes-gate / Local kind runtime, persistence and rollback",
+          "conclusion": "success"
+        },
+        {
+          "name": "security-gate / Security evidence summary",
+          "conclusion": "success"
+        },
+        {
+          "name": "api-gate / API Docker image build",
+          "conclusion": "success"
+        },
+        {
+          "name": "required-result",
+          "conclusion": "success"
+        }
+      ]
+    }
+  },
+  "source_pull_request": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/111",
+  "capacity_recipe": "docs/reference/ai09-development-capacity-v1.10.json",
+  "capacity_recipe_sha256": "d1ea27c06bf14450828717271052e3895ae1ec10a5d6c5ecce8e06e9396c4cbf",
+  "new_capacity_dispatched": false,
+  "features": [
+    "Each requested series/window plus six previous days through the original SQL point index",
+    "Complete ordered native Point payloads, all requested scopes and native no-declaration abstentions",
+    "Whole parent integrity remains required at context completion even outside the selected window"
+  ],
+  "replay_audit": [
+    "Independent append-time global event-ID/digest/sequence trace",
+    "All global deduplication entries and extent verified before completion and on context close",
+    "Unexpected overwrite fails closed; original native event-ID/content/business duplicate rules retained",
+    "Changed digest, deletion, insertion and sequence tampering rejected with unchanged public receipts/facts"
+  ],
+  "initial_control_failure": {
+    "tests": 3,
+    "failures": 3,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 45.418,
+    "junit_sha256": "2eed0107398b2721b5863ebc8b51504aa33b7ed91dae9edce6bce705ee30345b",
+    "process_exit": 1,
+    "reason": "Own control used strict Python dictionary validation on JSON-mode descriptor with list fields; corrected to strict native JSON validation",
+    "production_feature_reader_unchanged_by_control_correction": true
+  },
+  "corrected_public_source_controls": {
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 123.499,
+    "junit_sha256": "d7f6cd63824099461665e9f248f4cdd9e93913d3e774d2a069d0dcd317d09fb2",
+    "process_exit": 0
+  },
+  "native_regressions_before_static_alias_correction": {
+    "tests": 82,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 248.185,
+    "junit_sha256": "b9018e6a2a37b2a1607ae66a5224933ed49c7803581e609608128d6e37e53298",
+    "process_exit": 0,
+    "followup": "Use explicit owned SQL adapter alias rather than accessing count through the native dict annotation; final byte-identical installed controls verify the corrected source"
+  },
+  "final_installed_controls": {
+    "tests": 82,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 236.403,
+    "junit_sha256": "b6e7052ff2a4f6f1dfe750642fd0dc5d9efd08fc74d35b84b581176153fc6f8d",
+    "process_exit": 0
+  },
+  "installed_origin": {
+    "installed_origin_verified": true,
+    "module_sha256": {
+      "retailops_ai.evaluation_campaign.campaign_anomaly_features": "d5a1550151595987eb9c817e96b5743312a4ca17e6a778ae8ecc599da481df3c",
+      "retailops_ai.evaluation_campaign.campaign_anomaly_parent": "3f397862646dbeb1583e9edaff5c1c0f1b1d7e3afff0e361468eeee6f5011b08",
+      "retailops_ai.evaluation_campaign.campaign_anomaly_replay": "6109f46603f2e5da2c2ad6001953dc49574c74f33bc6d375659096294c0c2784",
+      "retailops_ai.evaluation_campaign.campaign_anomaly_scoring": "bb9df38b17b2fb5e29edf2a170148fab4438299a598a42169a6b22e8150a3a7e"
+    },
+    "all_loaded_retailops_modules_from_installed_target": true,
+    "pytest_exit": 0
+  },
+  "package": {
+    "wheel_bytes": 2076510,
+    "wheel_sha256": "681ac1dfd51a34d57334f5d43a6f453a13a55c0d0862effa0dc0464985e861ce",
+    "byte_parity": {
+      "python": 604,
+      "json": 213
+    },
+    "private_files_absent": true,
+    "installed_verifier_origin_verified": true
+  },
+  "source_code_sha256": {
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_features.py": "d5a1550151595987eb9c817e96b5743312a4ca17e6a778ae8ecc599da481df3c",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_replay.py": "6109f46603f2e5da2c2ad6001953dc49574c74f33bc6d375659096294c0c2784"
+  },
+  "static_controls": {
+    "mypy_source_files": 725,
+    "mypy_initial_new_count_annotation_error_preserved": true,
+    "mypy_final": "passed",
+    "ruff": "passed",
+    "format": "passed",
+    "docs_required_ci_contract": "passed",
+    "diff_hygiene": "passed",
+    "tree_secret_scan": "passed"
+  },
+  "local_full_ci": {
+    "status": "pending",
+    "command": "make ci-local",
+    "only_owned_process_group_may_be_stopped": true,
+    "host_memory_reserve_bytes": 1073741824,
+    "nice_priority": 19
+  },
+  "ai_pr63_full_acceptance_pending": true,
+  "this_increment_head_main_full_ci_pending": true,
+  "source_generation_ancestry_verified": false,
+  "producer_closure_policy_verified": false,
+  "audited_project_read_authorization_proven": false,
+  "independent_project_truth_verified": false,
+  "full_fit_and_scientific_qualification_remaining": true,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "legacy_history": {
+    "attempts": 11,
+    "starts": 44,
+    "complete": 40,
+    "lost": 4,
+    "reads": 64,
+    "unobserved_costs": "unknown_not_zero"
+  },
+  "quality_qualified": false,
+  "promotion_allowed": false,
+  "stage_ready": false
+}

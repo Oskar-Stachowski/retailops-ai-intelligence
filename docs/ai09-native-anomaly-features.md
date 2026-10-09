@@ -1,5 +1,16 @@
 # Pełne historyczne cechy anomaly na dysku
 
+`scoring_points(scopes, window)` łączy cały zweryfikowany indeks z natywnym
+scoringiem census. Odczytuje kolejno każdą żądaną serię i okno wraz z sześcioma
+wcześniejszymi dniami. Korzysta z indeksu SQL; nie wczytuje całego parenta
+do pamięci. Brakujące deklaracje nadal powodują natywne abstencje dla wszystkich
+żądanych dni. Ukończenie kontekstu sprawdza cały parent, również poza oknem oceny.
+Nowe kontrole publicznych ordinary/demand/physical porównują pełny strumień
+z oryginalnymi Point i decyzje obu rodzin z niezmienionym natywnym scorerem.
+[Dowód 09.66](evidence/09-66-native-anomaly-census-access.json) zachowuje
+82 kontrole natywne i 82 z końcowej paczki, w tym indeks deduplikacji.
+Nie stanowią odczytu Project, fitu ani kwalifikacji jakości modeli.
+
 `CampaignAnomalyFeatureProjection` wyprowadza Point dla każdego zadeklarowanego
 dnia sprzedaży i zwrotu, z [natywnej bramki raw-DQ](ai09-native-anomaly-day-gate.md)
 tego samego całego publicznego Source. Plan przypina plan bramki, hash wszystkich

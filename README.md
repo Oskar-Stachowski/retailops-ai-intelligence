@@ -32,6 +32,9 @@ to limit czasu 3600 s przy około 8,44 GiB próbkowanego RSS, z 0/5 ukończonych
 [Przygotowanie 1.10](docs/evidence/09-65-source-cpu-capacity-preparation.json)
 przypina poprawki CPU Source, zachowuje 12 GiB i cały profil oraz zalicza
 62 kontrole receptury. Nowej diagnostyki jeszcze nie uruchomiono.
+[Odczyt census anomaly](docs/evidence/09-66-native-anomaly-census-access.json)
+łączy pełne cechy ze scorerem i sprawdza globalny indeks deduplikacji;
+82 kontrole natywne i 82 z końcowej paczki przeszły.
 [Audyt pamięci i czasu](docs/ai09-capacity-audit.md) obejmuje wszystkie pięć
 faz przygotowania danych przed kolejnym canonical; zachowuje pełne dane i limity.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja

@@ -107,8 +107,10 @@ def _capture(value: Row, version: str) -> Delivery | Progress:
 class _EventHashes(dict[str, str]):
     """Only the three dict operations used by the pinned native event kernel."""
 
-    def __init__(self, database: sqlite3.Connection) -> None:
+    def __init__(self, database: sqlite3.Connection, trace: Any) -> None:
         self.database = database
+        self.trace = trace
+        self.count = 0
 
     def __contains__(self, key: object) -> bool:
         return (
@@ -128,11 +130,21 @@ class _EventHashes(dict[str, str]):
         return str(row[0])
 
     def __setitem__(self, key: str, value: str) -> None:
-        self.database.execute(
-            "INSERT INTO event_hashes(identifier,digest) VALUES(?,?) "
-            "ON CONFLICT(identifier) DO UPDATE SET digest=excluded.digest",
-            (key, value),
-        )
+        # The native kernel checks membership before accepting an event ID and
+        # never overwrites it. Retain an independent append-time trace: checking
+        # receipts alone cannot authenticate this global deduplication state.
+        sequence = self.count + 1
+        try:
+            self.database.execute(
+                "INSERT INTO event_hashes(sequence,identifier,digest) VALUES(?,?,?)",
+                (sequence, key, value),
+            )
+        except sqlite3.IntegrityError:
+            raise CampaignAnomalyReplayStateError(
+                "campaign_anomaly_replay_private_event_identity_changed"
+            ) from None
+        self.trace.update(canonical_json((sequence, key, value)) + b"\n")
+        self.count = sequence
 
 
 class _MatchedParent(ParentFacts):
@@ -176,6 +188,7 @@ class CampaignAnomalyDiskReplay:
                 "progress",
                 "quarantine",
                 "quarantine_captures",
+                "event_hashes",
             )
         }
         self.maximum_index_bytes = self.maximum_group_rows = self.maximum_group_bytes = 0
@@ -197,7 +210,8 @@ class CampaignAnomalyDiskReplay:
             self._database.execute("PRAGMA temp_store=FILE")
             self._database.execute("PRAGMA mmap_size=0")
             self._database.executescript(
-                "CREATE TABLE event_hashes(identifier TEXT PRIMARY KEY,digest TEXT NOT NULL);"
+                "CREATE TABLE event_hashes(sequence INTEGER PRIMARY KEY,"
+                "identifier TEXT UNIQUE NOT NULL,digest TEXT NOT NULL);"
                 "CREATE TABLE receipts(sequence INTEGER PRIMARY KEY,identifier TEXT UNIQUE,payload BLOB,digest TEXT);"
                 "CREATE TABLE facts(sequence INTEGER PRIMARY KEY,event_type TEXT,business_id TEXT,"
                 "grain BLOB,available_at TEXT,payload BLOB,digest TEXT,UNIQUE(event_type,business_id));"
@@ -208,7 +222,8 @@ class CampaignAnomalyDiskReplay:
                 "CREATE TABLE quarantine(sequence INTEGER PRIMARY KEY,payload BLOB,digest TEXT,capture BLOB,capture_digest TEXT);"
             )
             self._kernel = Replay(_MatchedParent(self.parent, self._matched))
-            self._kernel.events = _EventHashes(self._database)
+            self._events = _EventHashes(self._database, self._outputs["event_hashes"])
+            self._kernel.events = self._events
             self._budget()
         except BaseException:
             self._failed = True
@@ -506,6 +521,16 @@ class CampaignAnomalyDiskReplay:
         database = self._db()
         hashes = {name: hashlib.sha256() for name in self._outputs}
         try:
+            count = 0
+            for row in database.execute(
+                "SELECT sequence,identifier,digest FROM event_hashes ORDER BY sequence"
+            ):
+                count += 1
+                if row[0] != count:
+                    raise ValueError("event identity sequence")
+                hashes["event_hashes"].update(canonical_json(row) + b"\n")
+            if count != self._events.count:
+                raise ValueError("event identity extent")
             for table in ("receipts", "facts", "revisions", "progress", "quarantine"):
                 queries = {
                     "receipts": "SELECT identifier,payload,digest FROM receipts ORDER BY sequence",

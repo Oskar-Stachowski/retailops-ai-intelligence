@@ -1,5 +1,15 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: pełny odbiór poprawek CPU Source, integracja anomaly trwa.**
+Source PR111 i wynikowy main `265b26a9` mają **30/30 success** każdy.
+AI PR63 nadal przechodzi pełne CI; rzeczywisty trening i reload TensorFlow przeszły.
+Nowy odczyt [cech anomaly](ai09-native-anomaly-features.md) zachowuje wszystkie
+żądane serie, okno i sześć wcześniejszych dni. [Replay](ai09-native-anomaly-replay.md)
+sprawdza również globalny indeks deduplikacji. [09.66](evidence/09-66-native-anomaly-census-access.json)
+zapisuje 82 kontrole natywne i 82 zainstalowanej paczki, bez pominięć.
+Pełny lokalny i chroniony odbiór CI tego przyrostu pozostają wymagane.
+Nie uruchomiono capacity 1.10 ani kampanii Project. AI 09 pozostaje `not_ready`.
+
 **2026-10-09 — przygotowanie AI 09 capacity 1.10; etap nadal not_ready.**
 [Receptura](reference/ai09-development-capacity-v1.10.json) przypina audytowane
 poprawki CPU Source PR111. [09.65](evidence/09-65-source-cpu-capacity-preparation.json)
