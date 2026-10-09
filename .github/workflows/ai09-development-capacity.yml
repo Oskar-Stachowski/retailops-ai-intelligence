@@ -45,30 +45,165 @@ jobs:
           uv venv --python 3.11.15 source/.venv
           uv pip install --python source/.venv/bin/python \
             -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt
-      - name: Measure full ai-dev generation and preparation without model fits
+      - name: Initialize guarded preparation session
         run: |
-          control/.venv/bin/python control/scripts/measure_ai09_development_capacity.py \
-            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/diagnostic"
-      - name: Preserve measurements and failed attempts
+          control/.venv/bin/python control/scripts/run_ai09_preparation.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/diagnostic" --initialize
+      - name: Prepare and seal generation
+        id: generation
+        run: |
+          control/.venv/bin/python control/scripts/run_ai09_preparation.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/diagnostic" --phase generation
+      - name: Retain completed or failed generation before continuing
+        if: ${{ always() && steps.generation.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-preparation-${{ github.sha }}-${{ github.run_id }}-generation
+          path: |
+            diagnostic/checkpoints/generation/
+            diagnostic/preparation-plan.json
+            diagnostic/preparation-identity.json
+            diagnostic/execution.json
+            diagnostic/events/*.json
+            diagnostic/*.checkpoint.json
+            diagnostic/generation.json
+            diagnostic/generation.witness.json
+            diagnostic/generation.seal-cost.json
+            diagnostic/generation.completed.json
+            diagnostic/generation.*.log
+            diagnostic/generation.*.progress.jsonl
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Prepare and seal qualification
+        id: qualification
+        run: |
+          control/.venv/bin/python control/scripts/run_ai09_preparation.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/diagnostic" --phase qualification
+      - name: Retain completed or failed qualification before continuing
+        if: ${{ always() && steps.qualification.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-preparation-${{ github.sha }}-${{ github.run_id }}-qualification
+          path: |
+            diagnostic/checkpoints/qualification/
+            diagnostic/preparation-plan.json
+            diagnostic/preparation-identity.json
+            diagnostic/execution.json
+            diagnostic/events/*.json
+            diagnostic/*.checkpoint.json
+            diagnostic/qualification.json
+            diagnostic/qualification.witness.json
+            diagnostic/qualification.seal-cost.json
+            diagnostic/qualification.completed.json
+            diagnostic/qualification.*.log
+            diagnostic/qualification.*.progress.jsonl
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Prepare and seal export
+        id: export
+        run: |
+          control/.venv/bin/python control/scripts/run_ai09_preparation.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/diagnostic" --phase export
+      - name: Retain completed or failed export before continuing
+        if: ${{ always() && steps.export.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-preparation-${{ github.sha }}-${{ github.run_id }}-export
+          path: |
+            diagnostic/checkpoints/export/
+            diagnostic/preparation-plan.json
+            diagnostic/preparation-identity.json
+            diagnostic/execution.json
+            diagnostic/events/*.json
+            diagnostic/*.checkpoint.json
+            diagnostic/export.json
+            diagnostic/export.witness.json
+            diagnostic/export.seal-cost.json
+            diagnostic/export.completed.json
+            diagnostic/export.*.log
+            diagnostic/export.*.progress.jsonl
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Prepare and seal import
+        id: import
+        run: |
+          control/.venv/bin/python control/scripts/run_ai09_preparation.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/diagnostic" --phase import
+      - name: Retain completed or failed import before continuing
+        if: ${{ always() && steps.import.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-preparation-${{ github.sha }}-${{ github.run_id }}-import
+          path: |
+            diagnostic/checkpoints/import/
+            diagnostic/preparation-plan.json
+            diagnostic/preparation-identity.json
+            diagnostic/execution.json
+            diagnostic/events/*.json
+            diagnostic/*.checkpoint.json
+            diagnostic/import.json
+            diagnostic/import.witness.json
+            diagnostic/import.seal-cost.json
+            diagnostic/import.completed.json
+            diagnostic/import.*.log
+            diagnostic/import.*.progress.jsonl
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Prepare and seal curation
+        id: curation
+        run: |
+          control/.venv/bin/python control/scripts/run_ai09_preparation.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/diagnostic" --phase curation
+      - name: Retain completed or failed curation before continuing
+        if: ${{ always() && steps.curation.outcome != 'skipped' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-preparation-${{ github.sha }}-${{ github.run_id }}-curation
+          path: |
+            diagnostic/checkpoints/curation/
+            diagnostic/preparation-plan.json
+            diagnostic/preparation-identity.json
+            diagnostic/execution.json
+            diagnostic/events/*.json
+            diagnostic/*.checkpoint.json
+            diagnostic/curation.json
+            diagnostic/curation.witness.json
+            diagnostic/curation.seal-cost.json
+            diagnostic/curation.completed.json
+            diagnostic/curation.*.log
+            diagnostic/curation.*.progress.jsonl
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Finalize measured session including failed or unfinished operations
+        if: always()
+        run: |
+          if [[ -f "$GITHUB_WORKSPACE/diagnostic/execution.json" ]]; then
+            control/.venv/bin/python control/scripts/run_ai09_preparation.py \
+              --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/diagnostic" --finalize
+          fi
+      - name: Preserve final attempt metadata and preflight costs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ai09-development-capacity-${{ github.sha }}-${{ github.run_id }}
           path: |
-            diagnostic/plan.json
-            diagnostic/resource.json
+            diagnostic-preflight/*.json
+            diagnostic-preflight/*.log
+            diagnostic/*.json
             diagnostic/*.progress.jsonl
-            diagnostic/generation.json
-            diagnostic/qualification.json
-            diagnostic/export.json
-            diagnostic/import.json
-            diagnostic/curation.json
-            diagnostic/generation.log
-            diagnostic/qualification.log
-            diagnostic/export.log
-            diagnostic/import.log
-            diagnostic/curation.log
+            diagnostic/*.log
+            diagnostic/events/*.json
           if-no-files-found: warn
           compression-level: 6
-          retention-days: 14
+          retention-days: 90
           overwrite: false

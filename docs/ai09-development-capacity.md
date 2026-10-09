@@ -64,6 +64,25 @@ trwały upload po każdej fazie, zaufane powiązania poza archiwami, historia
 nieudanych prób oraz wspólny budżet wznowienia. Kontrola komponentu nie
 otwiera dostępu Project ani final i nie zamyka tych wymagań.
 
+Nowy `run_ai09_preparation.py` rozdziela każdą fazę na dwa procesy pod
+nadzorem: natywne przygotowanie i zapis zweryfikowanego checkpointu.
+Oba zużywają wspólny budżet obliczeń; rezerwy RAM/dysku obejmują także
+kompresję. Dziennik zapisuje i synchronizuje zamiar przed startem procesu,
+a następnie rzeczywisty pomiar, także przy porażce. Brak końcowego pomiaru
+oznacza nieznany koszt i blokuje dalsze uruchomienia z tej sesji.
+Blokada pliku nie pozwala uruchomić drugiego kontrolera równocześnie.
+Inspekcja środowiska ma osobny pomiar preflight, poza budżetem przygotowania,
+ale wewnątrz limitu całego joba. Wersje pakietów i ich metadata RECORD są
+przypięte; nie jest to ponowny pełny audyt wszystkich zainstalowanych plików.
+
+Workflow przekazuje każdą zakończoną lub nieudaną fazę do osobnego artefaktu
+przed przejściem dalej, zachowując checkpoint, niezależne powiązanie workera,
+dziennik, logi i koszty. Retencja wynosi 90 dni i wymaga późniejszego odbioru
+do trwałego archiwum. 195 kontroli komponentów i kontraktów przechodzi.
+Integracja małego rzeczywistego przebiegu tego kontrolera i zdalnego wznowienia
+jest jeszcze otwarta. Publiczne wejścia kontrolera oraz workera respektują
+`dispatch_enabled=false` przed rozpoczęciem jakiejkolwiek pracy Source.
+
 **1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
 `dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
 Pozostały odbiór chronionych head/main konsumenta, powiązanie dowodu live
