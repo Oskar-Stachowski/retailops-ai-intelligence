@@ -1,5 +1,14 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: wykonawca przygotowania profili 25/50.**
+[09.87](evidence/09-87-development-preparation-execution.json) dodaje osobny
+prywatny dziennik i uruchomienie oryginalnych sześciu faz. Próba jest zapisana
+przed dostępem do Source; awaria lub przerwanie nie zwraca budżetu. 134 testy
+nowej ścieżki i regresji dziennika/generacji przeszły. Wyniki faz w kontroli
+są celowo kontrolowane; rzeczywiste dane 25/50, krytyczne pokrycie i wykonawca
+prób modeli pozostają wymagane. Pełny CI i publikacja przyrostu na main nadal
+przed nami. Nie otwarto final i nie uruchomiono canonical; AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: kontrakty profili 25/50 i uczciwego budżetu prób.**
 [09.86](evidence/09-86-development-profile-design.json) dodaje osobne pełne
 historie 365 dni, wszystkie lokalizacje oraz ordinary/demand/physical.

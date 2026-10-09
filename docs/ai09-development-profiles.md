@@ -39,10 +39,12 @@ Wszystkie nieudane próby i ich koszty mają pozostać w dzienniku.
 parametry i seed, wspólny budżet oraz osobne środowiska. `freeze_forecast_search`
 zapisuje niezmienną deklarację 0600 z fsync i odmawia nadpisania.
 
-**Zakres implementacji:** to kontrakty i kompilator planów, nie wykonawca
-kampanii ani automatyczny wybór finalisty. Nazwy finalistów podane kompilatorowi
-nie są dowodem zwycięstwa. Nadal potrzebne są: trwałe rozliczenie wykonania
-małych profili, weryfikator rzeczywistych metryk wyboru, powiązanie tej samej
+**Zakres v29:** to kontrakty i kompilator planów. Osobny
+[wykonawca przygotowania v30](ai09-development-preparation.md) dodaje trwały
+dziennik trzech generacji oraz oryginalne sześć faz. Automatyczny wybór
+finalisty nadal nie jest wykonany. Nazwy finalistów podane kompilatorowi
+nie są dowodem zwycięstwa. Potrzebne pozostają: rzeczywiste przygotowanie
+małych profili, wykonawca prób i weryfikator metryk wyboru, powiązanie tej samej
 decyzji z krokami 50/100 oraz rzeczywiste pokrycie krytycznych grup.
 Deklaracja nie daje uprawnienia do treningu, otwarcia final ani promocji.
 Konkretny protokół Project nie został jeszcze zamrożony ani uruchomiony.

@@ -177,6 +177,14 @@ class CampaignPortfolioJournal(CampaignJournal):
 
 def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
     document = decode_json(raw)
+    if "development_preparation_version" in document:
+        # Lazy import keeps additive source/profile contracts out of the
+        # original generation/portfolio contract import cycle.
+        from retailops_ai.evaluation_campaign.development_preparation import (
+            DevelopmentPreparationProtocol,
+        )
+
+        return DevelopmentPreparationProtocol.model_validate_json(canonical_bytes(document))
     model = CampaignPortfolioProtocol if "portfolio_version" in document else CampaignProtocol
     return model.model_validate_json(canonical_bytes(document))
 
@@ -184,6 +192,12 @@ def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
 def parse_campaign_journal(raw: bytes) -> CampaignJournal:
     document = decode_json(raw)
     protocol = document.get("protocol")
+    if isinstance(protocol, dict) and "development_preparation_version" in protocol:
+        from retailops_ai.evaluation_campaign.development_preparation import (
+            DevelopmentPreparationJournal,
+        )
+
+        return DevelopmentPreparationJournal.model_validate_json(canonical_bytes(document))
     model = (
         CampaignPortfolioJournal
         if isinstance(protocol, dict) and "portfolio_version" in protocol
