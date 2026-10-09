@@ -236,7 +236,17 @@ def fit_census_pipeline(
             or receipt.cpu_seconds > policy.fit_cpu_seconds
             or receipt.peak_rss_bytes > policy.fit_rss_bytes
         ):
-            raise SnapshotError("anomaly_census_fit_final_resource_budget")
+            raise SnapshotError(
+                "anomaly_census_fit_final_resource_budget: "
+                + canonical_json(
+                    {
+                        "measurement": receipt.model_dump(mode="json"),
+                        "parent_sampled_peak_rss_bytes": parent_peak,
+                        "child_reported_peak_rss_bytes": cost.peak_rss_bytes,
+                        "tree_sampled_peak_rss_bytes": peak,
+                    }
+                ).decode()
+            )
         return CensusPipeline(
             training_rows=row_count,
             training_rows_sha256=digest.hexdigest(),

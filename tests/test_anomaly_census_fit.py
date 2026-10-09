@@ -232,3 +232,30 @@ def test_matrix_mutation_cannot_publish_fitted_model(name, tmp_path, monkeypatch
 def test_census_policy_requires_explicit_new_version():
     with pytest.raises(ValidationError):
         FitPolicy.model_validate_json(CensusFitPolicy().model_dump_json())
+
+
+@pytest.mark.parametrize("field,value", [("peak_rss_bytes", 1024**3 + 1), ("cpu_seconds", 301)])
+def test_final_worker_peak_and_cpu_still_enforce_unchanged_limits(
+    field, value, tmp_path, monkeypatch
+):
+    import json
+
+    from retailops_ai.anomaly_detectors import census_fit
+
+    original = census_fit.read_bytes
+
+    def reported_peak(root, name, maximum):
+        raw = original(root, name, maximum)
+        if name == "resources.json":
+            record = json.loads(raw)
+            record[field] = value
+            return json.dumps(record).encode()
+        return raw
+
+    monkeypatch.setattr(census_fit, "read_bytes", reported_peak)
+    with pytest.raises(SnapshotError, match="fit_final_resource_budget") as caught:
+        fit_census_pipeline(iter(numeric_rows(32)), 32, [], CensusFitPolicy(), scratch=tmp_path)
+    measured = json.loads(str(caught.value).split(": ", 1)[1])
+    assert measured["measurement"][field] >= value
+    assert measured["parent_sampled_peak_rss_bytes"] > 0
+    assert not list(tmp_path.iterdir())
