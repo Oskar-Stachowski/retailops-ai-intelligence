@@ -2,9 +2,36 @@
 
 **AI 09: in_progress / not_ready — integracja po gotowych AI 07–08.**
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
+[Pełne historyczne cechy anomaly](docs/ai09-native-anomaly-features.md) zachowują
+natywny Point i cały kontekst na dysku. 98 kontroli natywnych i 64 zainstalowanego
+pakietu przeszły; pełne CI, publikacja i integracja całej kampanii pozostają otwarte.
+[Bramka dnia raw-DQ na dysku](docs/ai09-native-anomaly-day-gate.md) używa
+natywnych reguł dostępności i globalnej kwarantanny przy pełnych indeksach.
+Powiązanie z kampanią i prawda offline pozostają wymagane.
+[Pełna projekcja dni anomaly](docs/ai09-native-anomaly-days.md) zachowuje
+wszystkie serie i okres reklamacji na dysku. Kwalifikacja raw-DQ w historycznej
+chwili, cechy i pełna kampania pozostają wymagane.
+[Pełny publiczny parent anomaly](docs/ai09-native-anomaly-parent.md) odtwarza
+Source i curated, indeksuje wszystkie fakty na dysku i zachowuje natywny wire.
+42 kontrole i 42 kontrole z paczki przeszły; kwalifikacja dnia, Point census
+i offline truth pozostają wymagane.
+[Replay capture anomaly](docs/ai09-native-anomaly-replay.md) przechowuje
+globalny stan na dysku i odtwarza oryginalne reguły zdarzeń oraz agregacji.
+Pełne powiązanie z kampanią i kwalifikacja dnia pozostają wymagane.
+[Natywna weryfikacja kwalifikacji](docs/ai09-native-selection-verification.md)
+blokuje dostęp do final na podstawie samych deklaracji jakości anomaly/stockout.
+[Natywna ocena anomaly](docs/ai09-native-anomaly-evaluation.md) liczy rzeczywiste
+metryki i odtwarza score; pełne powiązanie z kampanią pozostaje otwarte.
 [Przygotowanie diagnostyki 1.9](docs/evidence/09-54-ledger-query-capacity-preparation.json)
 przypina audytowane indeksy Source przy 12 GiB i pełnym profilu. 106 kontroli
-AI oraz 22 z paczki przeszły; uruchomienie wymaga pełnego CI obu repozytoriów.
+AI oraz 22 z paczki przeszły. Po pełnym odbiorze head i wynikowych main obu
+repozytoriów uruchomiono jedną diagnostykę
+[1.9](docs/evidence/09-59-query-capacity-acceptance-start.json), bez treningów
+i odczytu świeżego final. [Wynik 1.9](docs/evidence/09-62-development-capacity-ninth-run.json)
+to limit czasu 3600 s przy około 8,44 GiB próbkowanego RSS, z 0/5 ukończonych faz.
+[Korekta podziału CI](docs/evidence/09-67-ci-census-balance.json) zachowuje
+pełną kolekcję testów i zapisuje częściowe czasy przed przerwaniem procesu.
+PR #63 wymaga ponownego pełnego odbioru po przekroczeniu czasu dwóch shardów.
 [Audyt pamięci i czasu](docs/ai09-capacity-audit.md) obejmuje wszystkie pięć
 faz przygotowania danych przed kolejnym canonical; zachowuje pełne dane i limity.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja

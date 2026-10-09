@@ -1,0 +1,456 @@
+{
+  "version": "ai09-ci-census-balance-1.0.0",
+  "recorded_at_utc": "2026-10-09T06:50:44.644872+00:00",
+  "scope": "CI scheduling and interruption evidence only",
+  "failed_run": {
+    "id": 37890247543,
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37890247543",
+    "head": "7661c31ba1ae68b4441d873cc9255e5544ac0a6c",
+    "checkout": {
+      "commit": "48f34b29bfc532d8e6ccfa60505e57a4a896ea82",
+      "parents": [
+        "1f2d4f698376e673098c204f77795418ff1e0372",
+        "7661c31ba1ae68b4441d873cc9255e5544ac0a6c"
+      ],
+      "run_head": "7661c31ba1ae68b4441d873cc9255e5544ac0a6c",
+      "run_status": "completed",
+      "run_conclusion": "cancelled"
+    },
+    "attempt": 1,
+    "conclusion": "cancelled",
+    "jobs": {
+      "success": 14,
+      "cancelled": 2,
+      "failure": 1
+    },
+    "cancelled_shards": [
+      2,
+      3
+    ],
+    "annotations": "Both test jobs exceeded the maximum execution time of 45m0s",
+    "whole_acceptance": false
+  },
+  "full_collection_count": 5088,
+  "full_file_count": 238,
+  "artifact_download_receipts": [
+    {
+      "id": 11599323978,
+      "name": "ci-test-shard-3-attempt-1",
+      "bytes": 285953,
+      "sha256": "cd3e023d7aca3c0674baf5979ff52910c6492f4916b2b9b60ec0b55372910ef8",
+      "github_digest_verified": true,
+      "members": [
+        {
+          "file": "ci-tests-3.plan.json",
+          "bytes": 1681038,
+          "sha256": "0fc2dd8937e0de7e64288c43915454072ce419634f56b5a19a710e0bba28f878"
+        },
+        {
+          "file": "ci-tests-3.timings.json",
+          "bytes": 4313663,
+          "sha256": "2f8f5948edc1d967592d6721a481d6a750ed8afcece7f4d98a534c4ed30be52b"
+        },
+        {
+          "file": "ci-tests-3.xml",
+          "bytes": 1189670,
+          "sha256": "396a10de58e33c857b83bb44ac0da662265f342fd440007b6b1da38052fafcd3"
+        }
+      ]
+    },
+    {
+      "id": 11599164278,
+      "name": "ci-test-shard-2-attempt-1",
+      "bytes": 85206,
+      "sha256": "bab7614993dd18b0b94974681b628df589d074be9afd283d289898e13a99352d",
+      "github_digest_verified": true,
+      "members": [
+        {
+          "file": "ci-tests-2.plan.json",
+          "bytes": 1681038,
+          "sha256": "b292e26651a8f6f129d3b5cc0b4ef80b587d0583384084e0faec66643dd3d3d9"
+        }
+      ]
+    },
+    {
+      "id": 11598922214,
+      "name": "ci-test-shard-1-attempt-1",
+      "bytes": 275555,
+      "sha256": "950d043d1e14d972911a063d7419733240ee439dbb991562a9b7c569afc63fb8",
+      "github_digest_verified": true,
+      "members": [
+        {
+          "file": "ci-tests-1.timings.json",
+          "bytes": 2307871,
+          "sha256": "89faf9cd8dc2246df3229903abeeca04901dbc4dbd8209d7339d80a61fab47bc"
+        },
+        {
+          "file": "ci-tests-1.xml",
+          "bytes": 195186,
+          "sha256": "a67337ca228e295833e2f0bb45982131b4c5c9fbee6df1aec285fe81d3ff1060"
+        },
+        {
+          "file": "ci-tests-1.plan.json",
+          "bytes": 1681038,
+          "sha256": "ea046d0e5513b8a6d65a1804ab21616334e70935d64d65c60bdb89336ed3024c"
+        }
+      ]
+    },
+    {
+      "id": 11598284284,
+      "name": "ci-test-shard-0-attempt-1",
+      "bytes": 283098,
+      "sha256": "1fe40db4a52cff008954b6cf3db65ef05a6e3bfbb1e9cf9dd48f10662f483d95",
+      "github_digest_verified": true,
+      "members": [
+        {
+          "file": "ci-tests-0.timings.json",
+          "bytes": 2472411,
+          "sha256": "c5dac196760aac1176b42f0639a40eb2e96c4b782f75144b33fc6ec1bf6041ad"
+        },
+        {
+          "file": "ci-tests-0.plan.json",
+          "bytes": 1681038,
+          "sha256": "0421c7c9c3ab80778121ba3ee035dd5455d59aae24fc9d1672a0f322d9d0b87b"
+        },
+        {
+          "file": "ci-tests-0.xml",
+          "bytes": 260738,
+          "sha256": "743cff33de9238e2f20a7dbaa9c85d6ca0fc4e61bf8830288965479461be1fef"
+        }
+      ]
+    }
+  ],
+  "reviewed_complete_phase_receipts": [
+    {
+      "shard": 0,
+      "job_conclusion": "success",
+      "pytest_exit_code": 0,
+      "selected_tests": 1307,
+      "all_selected_phases_complete": true,
+      "seconds": 1768.0754275959982,
+      "report_sha256": "c5dac196760aac1176b42f0639a40eb2e96c4b782f75144b33fc6ec1bf6041ad",
+      "files": [
+        "tests/test_ai10_compose_overlays.py",
+        "tests/test_ai10_source_sql_handoff.py",
+        "tests/test_anomaly_batch.py",
+        "tests/test_anomaly_count_rate.py",
+        "tests/test_anomaly_metadata.py",
+        "tests/test_anomaly_multiscale.py",
+        "tests/test_anomaly_read.py",
+        "tests/test_campaign_anomaly_days.py",
+        "tests/test_campaign_anomaly_replay.py",
+        "tests/test_campaign_calibration_worker.py",
+        "tests/test_campaign_evaluation_configuration.py",
+        "tests/test_campaign_final_export.py",
+        "tests/test_campaign_forecast_inputs.py",
+        "tests/test_campaign_portfolio.py",
+        "tests/test_campaign_required_group_evaluation.py",
+        "tests/test_campaign_score_data.py",
+        "tests/test_campaign_source_annotations.py",
+        "tests/test_campaign_uncertainty.py",
+        "tests/test_ci_contract.py",
+        "tests/test_corpus_review.py",
+        "tests/test_evaluation_replay.py",
+        "tests/test_forecast_functional_development.py",
+        "tests/test_forecast_functional_v12_exposure.py",
+        "tests/test_forecast_functional_v12_inputs.py",
+        "tests/test_forecast_functional_v12_remote.py",
+        "tests/test_forecast_input_store.py",
+        "tests/test_forecast_jobs.py",
+        "tests/test_forecast_models.py",
+        "tests/test_forecast_outcome_reader.py",
+        "tests/test_forecast_quality.py",
+        "tests/test_forecast_quality_v2.py",
+        "tests/test_forecast_source_replay.py",
+        "tests/test_independent_forecast_partitions.py",
+        "tests/test_index_jobs.py",
+        "tests/test_indexes.py",
+        "tests/test_intelligence_delivery.py",
+        "tests/test_inventory_snapshot_import.py",
+        "tests/test_mlflow_evidence.py",
+        "tests/test_model_intelligence_events.py",
+        "tests/test_observation_replay.py",
+        "tests/test_outcome_access_journal.py",
+        "tests/test_process_memory.py",
+        "tests/test_source_rest.py",
+        "tests/test_source_snapshot_import.py",
+        "tests/test_stockout_access.py",
+        "tests/test_stockout_api.py",
+        "tests/test_stockout_batch.py",
+        "tests/test_stockout_conditional_runtime.py",
+        "tests/test_stockout_disk_facts.py",
+        "tests/test_stockout_final_receipt_recovery.py",
+        "tests/test_stockout_resource_probe.py",
+        "tests/test_stockout_runtime_inputs.py",
+        "tests/test_stockout_temporal_series.py",
+        "tests/test_stockout_training.py",
+        "tests/test_tensorflow_challenger.py",
+        "tests/test_v12_acceptance_runner.py",
+        "tests/test_v12_development.py",
+        "tests/test_v12_inference_source.py",
+        "tests/test_v12_queue.py"
+      ]
+    },
+    {
+      "shard": 1,
+      "job_conclusion": "success",
+      "pytest_exit_code": 0,
+      "selected_tests": 1241,
+      "all_selected_phases_complete": true,
+      "seconds": 1775.7068886400104,
+      "report_sha256": "89faf9cd8dc2246df3229903abeeca04901dbc4dbd8209d7339d80a61fab47bc",
+      "files": [
+        "tests/test_ai04_acceptance.py",
+        "tests/test_ai09_campaign_journal.py",
+        "tests/test_ai10_model_native_delivery.py",
+        "tests/test_ai10_v12_archive_recovery.py",
+        "tests/test_anomaly_evaluation.py",
+        "tests/test_anomaly_portfolio_binding.py",
+        "tests/test_anomaly_portfolio_model.py",
+        "tests/test_anomaly_runtime_boundary.py",
+        "tests/test_campaign_anomaly_evaluation.py",
+        "tests/test_campaign_anomaly_scoring.py",
+        "tests/test_campaign_context_bundle.py",
+        "tests/test_campaign_evaluation_data.py",
+        "tests/test_campaign_fit.py",
+        "tests/test_campaign_generation.py",
+        "tests/test_campaign_portfolio_evaluation.py",
+        "tests/test_campaign_required_groups.py",
+        "tests/test_campaign_score_worker.py",
+        "tests/test_campaign_tune.py",
+        "tests/test_capacity_audit_indexes.py",
+        "tests/test_data_contracts.py",
+        "tests/test_development_storage.py",
+        "tests/test_development_trial_registry.py",
+        "tests/test_forecast_backtest.py",
+        "tests/test_forecast_features.py",
+        "tests/test_forecast_functional_evidence.py",
+        "tests/test_forecast_functional_v12_checkpoint_download.py",
+        "tests/test_forecast_functional_v12_cohort.py",
+        "tests/test_forecast_functional_v12_quality.py",
+        "tests/test_forecast_functional_v12_recipe.py",
+        "tests/test_forecast_functional_v12_run.py",
+        "tests/test_forecast_input_origin_validation.py",
+        "tests/test_forecast_input_storage.py",
+        "tests/test_forecast_manifests.py",
+        "tests/test_forecast_quality_v2_preflight.py",
+        "tests/test_forecast_runtime.py",
+        "tests/test_forecast_source_versions.py",
+        "tests/test_full_raw_dq.py",
+        "tests/test_golden_jobs.py",
+        "tests/test_intelligence_events.py",
+        "tests/test_mlflow_registry.py",
+        "tests/test_native_model_outbox_export.py",
+        "tests/test_observation_store_postgres.py",
+        "tests/test_qualification.py",
+        "tests/test_raw_dq.py",
+        "tests/test_stockout_balanced_quality.py",
+        "tests/test_stockout_features.py",
+        "tests/test_stockout_final_acceptance_runner.py",
+        "tests/test_stockout_final_campaign.py",
+        "tests/test_stockout_final_card.py",
+        "tests/test_stockout_final_scenarios.py",
+        "tests/test_stockout_final_source_preparation.py",
+        "tests/test_stockout_qualification.py",
+        "tests/test_stockout_release.py",
+        "tests/test_stockout_selected_policy.py",
+        "tests/test_stockout_upstream_series.py",
+        "tests/test_v12_backup_runner.py",
+        "tests/test_v12_jobs_api.py",
+        "tests/test_v12_lifecycle.py",
+        "tests/test_v12_mlflow_transport.py",
+        "tests/test_v12_runtime.py"
+      ]
+    },
+    {
+      "shard": 3,
+      "job_conclusion": "cancelled",
+      "pytest_exit_code": 0,
+      "selected_tests": 1258,
+      "all_selected_phases_complete": true,
+      "seconds": 2682.041934475003,
+      "report_sha256": "2f8f5948edc1d967592d6721a481d6a750ed8afcece7f4d98a534c4ed30be52b",
+      "files": [
+        "tests/test_acceptance_cleanup.py",
+        "tests/test_access.py",
+        "tests/test_ai09_legacy_carryover.py",
+        "tests/test_ai10_anomaly_public_export.py",
+        "tests/test_ai10_native_output_workflow.py",
+        "tests/test_anomaly_features.py",
+        "tests/test_anomaly_quality.py",
+        "tests/test_campaign_anomaly_day_gate.py",
+        "tests/test_campaign_anomaly_parent.py",
+        "tests/test_campaign_calibration_data.py",
+        "tests/test_campaign_evaluation.py",
+        "tests/test_campaign_evaluation_worker.py",
+        "tests/test_campaign_export.py",
+        "tests/test_campaign_forecast_artifacts.py",
+        "tests/test_campaign_planned_backend.py",
+        "tests/test_campaign_raw_context.py",
+        "tests/test_campaign_score.py",
+        "tests/test_campaign_segments.py",
+        "tests/test_campaign_tune_worker.py",
+        "tests/test_chunks.py",
+        "tests/test_ci_test_reports.py",
+        "tests/test_ci_test_shards.py",
+        "tests/test_corpus.py",
+        "tests/test_curated.py",
+        "tests/test_day_qualification.py",
+        "tests/test_forecast_freshness.py",
+        "tests/test_forecast_functional_v12_campaign.py",
+        "tests/test_forecast_functional_v12_checkpoint_import.py",
+        "tests/test_forecast_mean_validation_weights.py",
+        "tests/test_forecast_publication.py",
+        "tests/test_forecast_remediation.py",
+        "tests/test_forecast_remediation_v2.py",
+        "tests/test_forecast_source_watermark.py",
+        "tests/test_foundation.py",
+        "tests/test_index_lifecycle.py",
+        "tests/test_lifecycle_store.py",
+        "tests/test_lifecycle_store_interruption.py",
+        "tests/test_model_lifecycle.py",
+        "tests/test_observation_broker_runtime.py",
+        "tests/test_persistence.py",
+        "tests/test_raw_dq_store.py",
+        "tests/test_return_projection.py",
+        "tests/test_snapshot_handoff.py",
+        "tests/test_source_bundle.py",
+        "tests/test_stockout_api_startup.py",
+        "tests/test_stockout_capacity_comparison.py",
+        "tests/test_stockout_explanation.py",
+        "tests/test_stockout_final_qualification_cli.py",
+        "tests/test_stockout_label_partitions.py",
+        "tests/test_stockout_partitions.py",
+        "tests/test_stockout_priority.py",
+        "tests/test_stockout_public_inputs.py",
+        "tests/test_stockout_registry.py",
+        "tests/test_stockout_runtime_export.py",
+        "tests/test_stockout_selection.py",
+        "tests/test_stockout_split.py",
+        "tests/test_stockout_temporal_storage.py",
+        "tests/test_stockout_upstream_storage.py",
+        "tests/test_v12_clone_tracking.py",
+        "tests/test_v12_metadata.py"
+      ]
+    }
+  ],
+  "shard_2": {
+    "plan_only": true,
+    "executed_tests": null,
+    "seconds": null,
+    "cost_status": "unknown_not_zero"
+  },
+  "native_scheduling_estimate": {
+    "file": "tests/test_campaign_anomaly_features.py",
+    "platform": "macOS",
+    "cases": 64,
+    "seconds": 1592.8030000000003,
+    "report_sha256": "cf8d081f153653529bca1ef29b3b75f49218ff275c5c3cec9dbde2c6df881947"
+  },
+  "incomplete_run_strict_rejection": "exactly_four_distinct_shards_required",
+  "before_estimated_shard_seconds": [
+    1279.6000000000001,
+    1279.5999999999997,
+    1279.6,
+    1279.5999999999997
+  ],
+  "after_estimated_shard_seconds": [
+    2275.1499999999996,
+    2275.153999999999,
+    2275.2329999999993,
+    2275.2409999999995
+  ],
+  "unmeasured_current_files_with_default_weight": [
+    "tests/test_ai09_development_capacity.py",
+    "tests/test_ai10_native_lane_selection.py",
+    "tests/test_ai10_v12_native_runner.py",
+    "tests/test_campaign_calibration.py",
+    "tests/test_campaign_context_facts.py",
+    "tests/test_campaign_evaluation_metrics.py",
+    "tests/test_campaign_fit_data.py",
+    "tests/test_campaign_generation_wire.py",
+    "tests/test_campaign_portfolio_selection.py",
+    "tests/test_campaign_robust_forecast.py",
+    "tests/test_campaign_segment_metrics.py",
+    "tests/test_campaign_tune_data.py",
+    "tests/test_ci_anomaly_timings.py",
+    "tests/test_intelligence_outbox.py",
+    "tests/test_observation_broker.py",
+    "tests/test_observation_transport.py",
+    "tests/test_v12_scratch_tracking.py"
+  ],
+  "changes": {
+    "tests_job_timeout_minutes": {
+      "before": 45,
+      "after": 90
+    },
+    "progress_receipt": "Atomic checkpoint after collection, at file boundaries, and after completed phases at most every 10 seconds. Active phases produce no invented duration. Interrupted receipts have null exit_code and in_progress state; final success still requires every phase and all four successful jobs.",
+    "canonical_tree_rss_bytes": 12884901888,
+    "canonical_wall_seconds": 3600,
+    "canonical_scratch_bytes": 8589934592
+  },
+  "validation": {
+    "status": "focused_passed_full_remote_pending",
+    "focused_tests": {
+      "passed": 83,
+      "seconds": 1.74,
+      "junit_sha256": "9624809911a0b389874d0aa1b54a3c9a572da6fea3d116ae8262e64785ff6e84"
+    },
+    "actual_native_collection": {
+      "total": 5092,
+      "files": 238,
+      "all_5088_previous_node_ids_retained": true,
+      "new_regression_cases": 4,
+      "disjoint_complete_groups": true,
+      "groups": [
+        {
+          "files": 56,
+          "tests": 1125,
+          "estimated_seconds": 2275.1499999999996
+        },
+        {
+          "files": 60,
+          "tests": 1270,
+          "estimated_seconds": 2275.153999999999
+        },
+        {
+          "files": 61,
+          "tests": 1363,
+          "estimated_seconds": 2275.2329999999993
+        },
+        {
+          "files": 61,
+          "tests": 1334,
+          "estimated_seconds": 2275.2409999999995
+        }
+      ],
+      "plan_sha256": "e6794f9c9ef638a28bbca9cd1ecef5e9a0793f258df161140a8f4f559fdf006e"
+    },
+    "ruff": "passed",
+    "local_full_before_original_pr": {
+      "passed": 5038,
+      "skipped": 49,
+      "seconds": 6412.3,
+      "whole_ci_accepted": false,
+      "remaining_failure": "five TensorFlow controls refused preflight reserve; three passed"
+    },
+    "required_ci_corrected_head": "pending",
+    "required_ci_resulting_main": "pending",
+    "documentation_and_ci_contract": "passed",
+    "diff_whitespace": "passed",
+    "format": "passed",
+    "secret_scans": {
+      "tree": "passed",
+      "history": "passed",
+      "tree_report_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "history_report_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    }
+  },
+  "scientific": {
+    "project_fits": 0,
+    "fresh_final_reads": 0,
+    "journal_initialized": false,
+    "full_science_complete": false,
+    "stage_ready": false
+  }
+}

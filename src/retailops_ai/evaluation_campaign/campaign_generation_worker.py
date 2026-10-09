@@ -108,6 +108,7 @@ def producer(phase: str, source: Path, root: Path, request: dict[str, Any]) -> d
                     "planned-source-cached-execution-1.1.0",
                     "planned-source-cached-execution-1.1.1",
                     "planned-source-cached-execution-1.1.2",
+                    "planned-source-cached-execution-1.1.3",
                 }
                 else {}
             )

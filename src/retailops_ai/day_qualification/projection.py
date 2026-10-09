@@ -27,7 +27,10 @@ def declarations(tables: dict[str, list[Row]], start_date: str) -> list[Day]:
     for obs in tables["daily_demand_observations"]:
         day = obs["business_date"]
         series = tuple(obs[k] for k in KEY)
-        members = [s for s in grouped[series] if s["sold_at"].date() == day]
+        # A zero-sale observation does not establish a parent purchase cohort.
+        # Reading the defaultdict used to add an empty cohort, then fail while
+        # computing its return window. Retain the sale declaration only.
+        members = [s for s in grouped.get(series, ()) if s["sold_at"].date() == day]
         end = datetime.combine(day + timedelta(days=1), datetime.min.time(), UTC)
         complete = obs["source_data_complete"] and obs["quality_status"] == "valid"
         closed = obs["observation_status"] == "closed"

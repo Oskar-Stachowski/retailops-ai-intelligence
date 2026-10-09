@@ -1,14 +1,14 @@
 # Pomiar pełnego development AI 09
 
-[Prospektywna receptura 1.9](reference/ai09-development-capacity-v1.9.json)
-przypina Source `a7b850a0` i hash jego audytu indeksów. [Przygotowanie 09.54](evidence/09-54-ledger-query-capacity-preparation.json)
-zapisuje 274 kontrole Source, 106 AI, 22 z paczki i rzeczywiste małe pary.
-W workerze planned 1.1.2 korzysta z jawnego przekazania własnych tabel do writera.
-Kontrola zmienionego dowodu audytu odrzuca uruchomienie przed utworzeniem output
-i startem workera. Limit 12 GiB, pełne wymiary i pozostałe budżety pozostają
-zachowane; wynik 1.8 i wszystkie wcześniejsze porażki są przypięte. Nie uruchomiono
-1.9. Dispatch wymaga pełnego CI head i wynikowych main obu repozytoriów.
-
+[Wynik dziewiątej próby 09.62](evidence/09-62-development-capacity-ninth-run.json)
+wiąże zweryfikowany artefakt [run 37853501527](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37853501527).
+Receptura 1.9 zakończyła się `wall_limit`: **0/5 faz, 3600.53 s**,
+próbkowane RSS drzewa **9061416960 B**, dolna granica CPU workera **3599.51 s**.
+Pełny profil, limit 12 GiB, wszystkie bramki i dziewięć rzeczywistych porażek
+pozostają zachowane. Końcowa próbka stosu wskazuje niezależną rekonsyliację
+movementów podczas budowania raportu Source; nie dowodzi dominującego kosztu.
+Nie wykonano retry, fitów Project ani odczytu świeżego final. Pełna pojemność
+oraz kwalifikacja modeli pozostają niepotwierdzone.
 
 [Receptura 1.8](reference/ai09-development-capacity-v1.8.json) ma na polecenie
 użytkownika limit RSS drzewa **12 GiB** (12 884 901 888 B) i rezerwę 1 GiB.

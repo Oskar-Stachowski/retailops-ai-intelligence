@@ -1,6 +1,79 @@
 # Aktualny status
 
-**2026-10-08 — AI 09: in_progress / not_ready.**
+**2026-10-09 — AI 09: in_progress / not_ready.**
+[Audyt podziału CI](evidence/09-67-ci-census-balance.json) zachowuje anulowany
+przebieg PR #63: 14 jobs przeszło, dwa shardy przekroczyły 45 minut, a agregator
+zgłosił błąd. Shard 3 ukończył cały pytest, ale jego anulowany job nie jest
+zaliczony; shard 2 pozostawił tylko plan i nieznany koszt wykonania.
+Korekta wykorzystuje przejrzane czasy, zachowuje wszystkie testy i atomowo
+zapisuje raporty częściowe. Limit joba testów wynosi 90 minut. Pełny chroniony
+odbiór poprawionego HEAD i wynikowego main nadal jest wymagany.
+
+[Pełne historyczne cechy anomaly](ai09-native-anomaly-features.md) odtwarzają
+wszystkie zadeklarowane dni przez natywne funkcje, z 28 dniami historii.
+Pełny kontekst pozostaje zweryfikowany na dysku, a jedna grupa trafia do
+natywnego doboru wersji. [09.63](evidence/09-63-native-anomaly-feature-preparation.json) zachowuje
+dwie początkowe awarie własnego limitu oraz poprawkę zapisu pełnych Point.
+Poprawiona wersja zaliczyła 98 kontroli natywnych i 64 zainstalowanego pakietu.
+Pełne CI i publikacja
+pozostają wymagane. Integracja prawdy offline i całej kampanii jest otwarta.
+
+Pełny lokalny przebieg zaliczył 5038 testów z 49 udokumentowanymi pominięciami.
+Kontrole TensorFlow wymagają większej dostępnej rezerwy pamięci; ich pięć odmów
+startu pozostaje zapisanych. 43 kontrole obsługi nowego producenta i 43 kontrole
+końcowej paczki przeszły. [Skan historii](evidence/09-64-historical-scanner-verification.json)
+zachowuje dokładną klasyfikację fałszywych alarmów i kontrolę wykrywania nowych
+poświadczeń. Chroniony odbiór pełnego CI nadal jest wymagany.
+
+[Bramka dnia raw-DQ na dysku](ai09-native-anomaly-day-gate.md) łączy pełne
+indeksy dni i zaakceptowanych faktów z niezmienionym `DayGate.point`.
+Odtwarza globalną nieprzypisaną kwarantannę od rzeczywistej chwili odbioru.
+Replay zachowuje odrzucone capture i sprawdza wyniki wobec hashy liczonych
+podczas przetwarzania. [09.61](evidence/09-61-native-disk-day-gate.json)
+zapisuje 60 kontroli, 60 z paczki i 43 regresje replay, bez pominięć.
+Pełne CI i publikacja pozostają wymagane; integracja cech i prawda offline
+i pełna kwalifikacja kampanii są nadal otwarte.
+
+[Pełna projekcja dni anomaly](ai09-native-anomaly-days.md) odtwarza wszystkie
+serie i okres reklamacji z całego publicznego parenta, przez natywne reguły.
+Poprawiono awarię deklaracji serii bez sprzedaży, bez tworzenia pustej kohorty
+reklamacji. [09.60](evidence/09-60-native-full-day-projection.json) zapisuje
+96 kontroli z dotychczasową kwalifikacją dnia oraz końcowy odbiór retencji:
+48 kontroli i 48 z paczki, bez pominięć. Pomocnicze indeksy wejściowe są
+zwalniane po zachowaniu wszystkich dni. Pełne CI i publikacja są nadal
+wymagane; projekcja nie zastępuje kwalifikacji raw-DQ, causal Point census
+ani pełnej kampanii.
+
+[Pełny publiczny parent anomaly](ai09-native-anomaly-parent.md) wykonuje
+rzeczywisty replay całego snapshotu i curated, indeksuje wszystkie sales
+i return claims oraz zachowuje natywne globalne UUID i klucze biznesowe.
+Przywraca dokładną skalę kwot z typu Arrow przed generowaniem wire i UUID.
+42 kontrole na publicznych fixture 1.1/1.2 i 42 kontrole z paczki przeszły;
+[09.58](evidence/09-58-native-anomaly-public-parent.json) zachowuje także
+12 początkowych błędów i ich poprawki. Pełne CI i publikacja pozostają
+wymagane. Adapter nie zastępuje kwalifikacji
+dnia, Point census, truth, rzeczywistego dziennika ani jakości modeli.
+
+[Replay capture anomaly](ai09-native-anomaly-replay.md) przenosi globalne
+receipts, tożsamość zdarzeń, fakty i rewizje na dysk, zachowując natywny
+kernel zdarzeń AI 07. W pamięci zostaje jedna ograniczona grupa agregacji.
+Do pełnej kampanii nadal potrzebne są powiązanie publicznych parentów
+z dziennikiem, kwalifikacja dni, Point census i offline truth. Lokalny odbiór
+opisuje [09.57](evidence/09-57-native-anomaly-disk-replay.json);
+194 kontroli z regresjami i 43 z paczki przeszły bez pominięć. Publikacja
+i pełne CI są nadal wymagane.
+
+[Natywna ocena anomaly](ai09-native-anomaly-evaluation.md) podłącza pełny zadany
+census do replay modelu i metryk observation/episode. 81 kontroli i 25 z
+zainstalowanej paczki przeszło lokalnie. Projektowa integracja i kwalifikacja
+całości nadal pozostają otwarte; poprawka czeka na publikację i pełne CI.
+
+[Audyt kwalifikacji trzech zastosowań](ai09-native-selection-verification.md)
+zamyka lukę między integralnością plików a dowodem jakości anomaly/stockout.
+Poprawne hashe i zadeklarowane flagi nie otwierają final: do czasu pełnej
+natywnej weryfikacji Project bramka jawnie odrzuca te dwa receipts.
+Typowana weryfikacja forecast i zamknięte odbiory AI 07–08 pozostają zachowane.
+
 [Przygotowanie 09.54](evidence/09-54-ledger-query-capacity-preparation.json) i
 [receptura 1.9](reference/ai09-development-capacity-v1.9.json) przypinają Source
 `a7b850a0` z audytu indeksów zapytań, okresów fizycznych i jednostek produktów.
@@ -8,8 +81,15 @@ Niezależny verifier buduje własne koszyki dzienne. Source zaliczył 274 kontro
 AI 106 i 22 z zainstalowanego wheela. Małe pary zachowują wszystkie porównane
 hashe i mierzą także dodatkową pamięć indeksów. Receptura zachowuje 12 GiB,
 pełne wymiary, pozostałe budżety i wszystkie osiem poprzednich porażek.
-Nie została uruchomiona; wymaga pełnego odbioru dokładnych head i wynikowych
-main obu repozytoriów. Nie kwalifikuje pełnego profilu ani modeli.
+[Odbiór i start 09.59](evidence/09-59-query-capacity-acceptance-start.json)
+wiąże pełne CI head i wynikowych main: Source PR110 `a412a912` (21 success
+i 4 zadeklarowane scoped skips), AI PR62 `1f2d4f69` (17/17 success).
+Jedna próba [37853501527](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37853501527)
+zakończyła się `wall_limit`, bez ukończenia pierwszej fazy.
+[Wynik 09.62](evidence/09-62-development-capacity-ninth-run.json) zapisuje
+3600.53 s, RSS drzewa 9061416960 B i dolną granicę CPU workera 3599.51 s.
+Nie uruchomiono treningów, dziennika Project ani świeżego final.
+Pełna pojemność i kwalifikacja modeli nadal nie są potwierdzone.
 
 [Receptura 1.8](reference/ai09-development-capacity-v1.8.json) ma na polecenie
 użytkownika limit RSS drzewa **12 GiB** (12 884 901 888 B) i rezerwę 1 GiB.

@@ -1,0 +1,125 @@
+{
+  "version": "ai09-native-disk-day-gate-evidence-1.0.0",
+  "recorded_at_utc": "2026-10-08T23:20:54.197519+00:00",
+  "base_revision": "0416dc75510649b83d7e1a6734b47b5f3655cf84",
+  "scope": "complete_causal_native_day_gate_on_exposed_public_controls_not_full_Project_qualification",
+  "implementation": "retailops_ai.evaluation_campaign.campaign_anomaly_day_gate",
+  "native_point_kernel": "day_qualification.gate.DayGate.point",
+  "native_quarantine_kernel": "day_qualification.gate.DayGate.__init__",
+  "native_controls": {
+    "tests": 60,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 256.456,
+    "junit_sha256": "eaf24aa9bf655c6fc2b5d720dcd65b9f6945496af28ca5671c18970cf21d9f7c"
+  },
+  "installed_controls": {
+    "tests": 60,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 258.478,
+    "junit_sha256": "30ec5c37b3b8657af91dccb18cba349f9e6ec11df41dc8e6414a1280b0a7a36d"
+  },
+  "existing_disk_replay_controls": {
+    "tests": 43,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 104.135,
+    "junit_sha256": "0ebd26ee33134ce643ccd1708b08ad18cc3f99eff425848b31fd416c9d50d558"
+  },
+  "control_sources": [
+    "complete public inventory snapshot1.1",
+    "complete public demand snapshot1.2",
+    "complete public physical snapshot1.2"
+  ],
+  "control_coverage": [
+    "Every declared day queried at pre-closure,closure,delivery and later quarantine clocks; exact original native Point equality and all accepted-fact equality.",
+    "Complete capture,missing native fact,late repair,attributed quarantine,invalid JSON,conflicting global UUID,unhashable business-ID list and event-ID object preserve original global attribution and availability.",
+    "Exact quarantined record bodies and metadata retained from actually consumed capture; checked against original native quarantine and raw record identity.",
+    "Wrong day/replay plan hashes,whole day hash,accepted fact count or quarantine extent fail closed; no reduced population.",
+    "Changed and resealed fact/capture,changed fact lookup key and deleted receipt fail against original consume-time hashes; corruption remains fatal rather than operational quarantine.",
+    "Missing declaration remains absent; receipt lifetime,single-use,body failure,parent-context lifetime and owned scratch cleanup checked.",
+    "43 existing whole replay controls retain native all-record identity,duplicates,progress,late/out-of-order facts,revisions,quarantine and20k Project offsets."
+  ],
+  "state_integrity": "per-row checksums_and_complete_output_traces_computed_at_actual_consume_time_then_rechecked_before_finish_and_context_exit",
+  "quarantine_memory": "one_checked_capture_at_a_time_with_only_minimum_unattributed_received_at_retained",
+  "dictionary_compatibility_fix": "Disk parent mappings hash incoming keys before SQL; unhashable identifiers preserve native TypeError quarantine attribution,other nonmatching keys remain absent.",
+  "package": {
+    "wheel_bytes": 2069837,
+    "wheel_sha256": "6beb7a5d994faab10030e90d0f67eb79bba80d377fe17f6381e7a1e5dbc99584",
+    "byte_parity": {
+      "python": 603,
+      "json": 213
+    },
+    "private_files_absent": true,
+    "installed_verifier_origin_verified": true
+  },
+  "installed_module_sha256": {
+    "retailops_ai.evaluation_campaign.campaign_anomaly_day_gate": "c031477b7fa221422dc01ba9b0ae7b4b53e72f769f8344d71f33b663b1f74142",
+    "retailops_ai.evaluation_campaign.campaign_anomaly_parent": "3f397862646dbeb1583e9edaff5c1c0f1b1d7e3afff0e361468eeee6f5011b08",
+    "retailops_ai.evaluation_campaign.campaign_anomaly_replay": "6e30f8df597b46e77aabdf13b161f1e28b268fcd60729d22b612cdf3099608c3"
+  },
+  "static_controls": {
+    "configured_mypy_files": 724,
+    "ruff": "passed",
+    "format_files": 1245,
+    "docs_and_required_ci_contract": "passed",
+    "diff_hygiene": "passed"
+  },
+  "legacy_raw_capture_limits": {
+    "offsets": 8192,
+    "records": 16384,
+    "unchanged": true
+  },
+  "unchanged_frozen_files_sha256": {
+    "src/retailops_ai/full_raw_dq/contract.py": "1de90f812e1c61a1cc3dea175e70cb1c2edf048c197b5a4a394738b6238ce9f6",
+    "src/retailops_ai/full_raw_dq/replay.py": "a2da2e0f933290eac4ecb02936e8489b49b10c62d74391ba69de8644e5b72b4a",
+    "src/retailops_ai/full_raw_dq/source.py": "716dc3591abd4e7032800c9630e32f726e5b05dfee5a2981f724f07690158190",
+    "src/retailops_ai/day_qualification/gate.py": "155e6c435c455e88a17c86b126ac1bc495a23f80019de8138c06c45fbce77de7",
+    "src/retailops_ai/qualified_anomalies/features.py": "3322efae405f77b1e1deb2a3ae081aa76684c8691d7d85adaebc3683e61980e0",
+    "docs/reference/ai09-development-capacity.json": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9",
+    "docs/reference/ai09-development-capacity-v1.1.json": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee",
+    "docs/reference/ai09-development-capacity-v1.2.json": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "docs/reference/ai09-development-capacity-v1.3.json": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d",
+    "docs/reference/ai09-development-capacity-v1.4.json": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+    "docs/reference/ai09-development-capacity-v1.5.json": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "docs/reference/ai09-development-capacity-v1.6.json": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "docs/reference/ai09-development-capacity-v1.7.json": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+    "docs/reference/ai09-development-capacity-v1.8.json": "e219af373fab4ddcfcd077b17c26e3fe56399e2d1010b659e5798745143b55c3",
+    "docs/reference/ai09-development-capacity-v1.9.json": "07ee91c51bbd9f5300aac002ce7873f6bbdd4c22a0018a00baf1c25a4ec297f6",
+    "docs/evidence/09-53-development-capacity-eighth-run.json": "95039e3f5a3b927cee5e7598b771ec4b03f2b89d2b35a25c70a3f50fd8dd3443",
+    "docs/evidence/09-54-ledger-query-capacity-preparation.json": "cfdd19ea75ed656dc65a000eb47800fd8dd9158a488b3f2f69514f14c323029a",
+    "docs/evidence/09-55-native-selection-verification-guard.json": "c981d8ef77abe948841e34d2109b508e30c185abc03b7115f4d6bb880bbe392c",
+    "docs/evidence/09-56-native-anomaly-evaluation.json": "d693debe6da3732ff0d45c170748b4fff92bc7b7a6484968965074f8e04294b5",
+    "uv.lock": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587"
+  },
+  "native_day_projection_fix_preserved": {
+    "path": "src/retailops_ai/day_qualification/projection.py",
+    "before_sha256": "67eeac68ec2ef2fdb60510d018d6dca9bde82352bd10b13c6410798da9502859",
+    "after_sha256": "b856b9a166940ec0fea8d5762736e16cf76c2e0d76175bf8dad2004952ec18ac",
+    "previously_valid_purchase_cohort_calculations_unchanged": true,
+    "contracts_and_limits_unchanged": true,
+    "existing_publisher_day_coverage_and_qualification_regressions_passed": true
+  },
+  "native_causal_day_queries_verified_on_controls": true,
+  "outer_day_replay_and_public_parent_completion_required": true,
+  "producer_closure_policy_verified": false,
+  "source_generation_ancestry_verified": false,
+  "audited_read_authorization_proven": false,
+  "business_event_day_completeness": "not_qualified",
+  "day_and_point_adapter_complete": false,
+  "offline_truth_adapter_complete": false,
+  "full_real_population_capacity_proven": false,
+  "publication": "local_prepared_not_yet_published",
+  "full_ci_accepted": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_training_qualified": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "remaining_scope": "Bounded causal native Features/Point census and independently produced ordinary/demand/physical offline truth; actual generation ancestry,producer closure and audited source-read journal bindings,artifacts,costs,critical groups and paired uncertainty; native stockout integration and original full12sources/3uses/actualTensorFlowforecasting/MLflow/lifecycle/cards/reports/head+mainCI."
+}

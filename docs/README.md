@@ -1,6 +1,16 @@
 **AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
 i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
+[Wynik dziewiątej próby 09.62](evidence/09-62-development-capacity-ninth-run.json)
+wiąże zweryfikowany artefakt [run 37853501527](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37853501527).
+Receptura 1.9 zakończyła się `wall_limit`: **0/5 faz, 3600.53 s**,
+próbkowane RSS drzewa **9061416960 B**, dolna granica CPU workera **3599.51 s**.
+Pełny profil, limit 12 GiB, wszystkie bramki i dziewięć rzeczywistych porażek
+pozostają zachowane. Końcowa próbka stosu wskazuje niezależną rekonsyliację
+movementów podczas budowania raportu Source; nie dowodzi dominującego kosztu.
+Nie wykonano retry, fitów Project ani odczytu świeżego final. Pełna pojemność
+oraz kwalifikacja modeli pozostają niepotwierdzone.
+
 [Receptura 1.8](reference/ai09-development-capacity-v1.8.json) ma na polecenie
 użytkownika limit RSS drzewa **12 GiB** (12 884 901 888 B) i rezerwę 1 GiB.
 PR60 scalono normalnie jako `4ce8a3cf`; pełne CI dokładnego head i tego main
@@ -14,6 +24,9 @@ Zachowano siedem wcześniejszych porażek, receptury 1.0–1.7 i nieuruchomioną
 Nie wykonano automatycznego retry. Wynik nie kwalifikuje pełnego ai-training,
 modeli ani poprzedniego limitu 8 GiB. Nowe projektowe fity i odczyty świeżego
 final wynoszą zero; AI 09 pozostaje `not_ready`.
+[Historyczne cechy anomaly na dysku](ai09-native-anomaly-features.md)
+wyprowadzają pełny Point census, zachowując natywne historyczne zegary,
+reguły raw-DQ i wszystkie wersje kontekstu. Odbiór trwa.
 [Pełne portfolio scenariuszy v25](ai09-full-scenario-portfolio.md) rejestruje
 12 pełnych źródeł w jednym dzienniku. Nie zastępuje odbioru danych i modeli.
 [Natywny scoring anomaly w partiach](ai09-native-anomaly-campaign.md) zachowuje

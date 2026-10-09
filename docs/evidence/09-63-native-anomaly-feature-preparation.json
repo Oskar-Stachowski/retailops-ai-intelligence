@@ -1,0 +1,241 @@
+{
+  "version": "ai09-native-disk-anomaly-features-preparation-1.0.0",
+  "recorded_at_utc": "2026-10-09T05:32:06.542353+00:00",
+  "scope": "Full native Point census primitive on exposed public controls;98native and64installed pass; full CI and scientific campaign incomplete",
+  "base": "be33444795ff0db4876b8052f9907a1f76983054",
+  "implementation": "src/retailops_ai/evaluation_campaign/campaign_anomaly_features.py",
+  "implementation_sha256": "1d8d2db03c4ca711acbfdc79185c471ef74fa8a218ab297572969b99e07629ff",
+  "native_methods_preserved": [
+    "qualified_anomalies.Features.point",
+    "qualified_anomalies.Features.context",
+    "anomalies.features.latest",
+    "day_qualification.DayGate.point"
+  ],
+  "population": "All declared sale/return days and every public context row; no parent sampling",
+  "known_native_limits_preserved": {
+    "native_model_points": 10000,
+    "native_feature_artifact_bytes": 134217728,
+    "history_days": 28,
+    "day_business_ids_per_list": 4096
+  },
+  "context_semantics": {
+    "all_product_plan_versions_before_latest": true,
+    "mapping_versions_include_all_currencies": true,
+    "inventory_versions_full_product_date": true,
+    "original_order_preserved": true,
+    "no_daily_quantity_or_quality_substitution": true
+  },
+  "storage": "zlib level1, bounded native-size decompression; native bytes and lookup keys authenticated by fixed write-time traces",
+  "initial_control": {
+    "planned_tests": 60,
+    "reported_tests": 34,
+    "passed": 32,
+    "failed": 2,
+    "remaining_unreported": 26,
+    "at_least_one_unreported_control_interrupted": true,
+    "process_exit": 2,
+    "log_total_seconds": 493.49,
+    "cause": "Own new128KiB Point limit rejected native missing-fact lists on demand late receipts at both policies",
+    "interruption": "Only this turn newly created control process; no foreign session or O/L full CI interrupted",
+    "artifacts": [
+      {
+        "file": "native-initial.xml",
+        "sha256": "f7eb36520b86d5a83bfc40942b8ee5ff158d523208d11038440ef64d37e18a76",
+        "junit": [
+          {
+            "tests": "34",
+            "failures": "2",
+            "errors": "0",
+            "skipped": "0",
+            "time": "492.904"
+          }
+        ]
+      },
+      {
+        "file": "native-initial.log",
+        "sha256": "e15d8c7f6a998a9ec58473c2e5304f79ed63723d7d3958086ff66276fa10c99c"
+      }
+    ]
+  },
+  "isolated_failure_reproduction": {
+    "exit": 1,
+    "log_total_seconds": 75.28,
+    "artifacts": [
+      {
+        "file": "failing-case.xml",
+        "sha256": "aaad3e94158f655d494c7868843160d3deb7558fbb859cd007da2ab69b3c79e1",
+        "junit": [
+          {
+            "tests": "1",
+            "failures": "1",
+            "errors": "0",
+            "skipped": "0",
+            "time": "58.702"
+          }
+        ]
+      },
+      {
+        "file": "failing-case.log",
+        "sha256": "bab612cad105a3b4bd46bac89ddb860f3432dc18b4eca6582c302d6fe084f755"
+      }
+    ]
+  },
+  "first_native_causal_regression": {
+    "passed": 34,
+    "failed": 0,
+    "skipped": 0,
+    "process_exit": 0,
+    "before_storage_correction": true,
+    "artifacts": [
+      {
+        "file": "native-causal-regression.xml",
+        "sha256": "ace10ec58057983cd076b97f72537dd8b5853c5b1308c94f0b449f1f921cb54e",
+        "junit": [
+          {
+            "tests": "34",
+            "failures": "0",
+            "errors": "0",
+            "skipped": "0",
+            "time": "326.901"
+          }
+        ]
+      }
+    ]
+  },
+  "local_collection_error": {
+    "cause": "Indentation in test mutation branch, corrected before controls could execute",
+    "process_exit": 2,
+    "artifact": {
+      "file": "native-corrected.log",
+      "sha256": "66eabfad046583fc7602841fdae778a5edd70bd556b8bd1c76a15d00765a965a"
+    }
+  },
+  "corrected_controls": {
+    "native_planned": 98,
+    "native_status": "terminal_passed",
+    "native_session": 7826,
+    "installed_planned": 64,
+    "installed_status": "terminal_passed",
+    "installed_session": 21654,
+    "full_local_ci_status": "terminal_failed_TF_preflight_reserve",
+    "installed_process_exit": 0,
+    "installed": {
+      "tests": 64,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1626.452,
+      "junit_sha256": "2115dfb331d6d8744685e236df2c9d491feb538c23b2e1b60843674d95342638"
+    },
+    "native_process_exit": 0,
+    "native": {
+      "tests": 98,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1934.154,
+      "junit_sha256": "cf8d081f153653529bca1ef29b3b75f49218ff275c5c3cec9dbde2c6df881947"
+    },
+    "full_local_ci": {
+      "pytest_passed": 5038,
+      "pytest_skipped": 49,
+      "pytest_failed": 0,
+      "pytest_seconds": 6412.3,
+      "tensorflow_failed": 5,
+      "tensorflow_passed": 3,
+      "tensorflow_seconds": 82.64,
+      "tensorflow_reason": "preflight_reserve",
+      "process_exit": 2,
+      "full_ci_accepted": false,
+      "resource_guards_unchanged": true
+    }
+  },
+  "static_checks": {
+    "mypy": "725 source files passed",
+    "ruff": "src scripts tests passed",
+    "required_ci_and_docs": "passed",
+    "mypy-corrected.log": {
+      "sha256": "4e64ce91532d9c5db168cbe309a5947f4f2c3aaff20e63615bcb3111667d2ad9"
+    },
+    "ruff-corrected.log": {
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  },
+  "all_outer_gate_day_replay_parent_completion_required": true,
+  "source_generation_ancestry_verified": false,
+  "producer_closure_policy_verified": false,
+  "audited_read_authorization_proven": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "project_journal_initialized": false,
+  "legacy_history": {
+    "attempts": 11,
+    "starts": 44,
+    "complete": 40,
+    "lost": 4,
+    "reads": 64,
+    "unobserved_costs": "unknown_not_zero"
+  },
+  "whole_campaign_qualified": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "published_on_main": false,
+  "remaining": [
+    "whole make ci-local and protected PR/exact head+resulting main CI",
+    "Project source ancestry/producer closure/journal",
+    "independent offline truth and artifact/cost/groups/paired uncertainty",
+    "native stockout full campaign",
+    "full source capacity, fair trials, actual TF forecasting, MLflow/lifecycle/cards/fresh final"
+  ],
+  "corrected_package": {
+    "wheel_bytes": 2075462,
+    "wheel_sha256": "f904eb96fd20964b23e8edee16567f6907ea01d31834f676e25d2c5f5373c035",
+    "byte_parity": {
+      "python": 604,
+      "json": 213
+    },
+    "private_files_absent": true,
+    "installed_verifier_origin_verified": true
+  },
+  "corrected_installed_origin": {
+    "installed_origin_verified": true,
+    "module_sha256": {
+      "retailops_ai.evaluation_campaign.campaign_anomaly_features": "1d8d2db03c4ca711acbfdc79185c471ef74fa8a218ab297572969b99e07629ff",
+      "retailops_ai.evaluation_campaign.campaign_anomaly_parent": "3f397862646dbeb1583e9edaff5c1c0f1b1d7e3afff0e361468eeee6f5011b08",
+      "retailops_ai.evaluation_campaign.campaign_anomaly_replay": "6e30f8df597b46e77aabdf13b161f1e28b268fcd60729d22b612cdf3099608c3"
+    }
+  },
+  "source_backend_113_native": {
+    "tests": 43,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 27.541,
+    "junit_sha256": "61ab6b3d7848a0b521ced410f6ce2dfcc979bb475125aea7f0caf78ef5b531ad"
+  },
+  "source_backend_113_installed": {
+    "tests": 43,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 30.959,
+    "junit_sha256": "cada0e7b49211af87e38cc799104b68fe27ff164184e813950dc5058b8064c67"
+  },
+  "final_package_after_backend_113": {
+    "wheel_bytes": 2075600,
+    "wheel_sha256": "62338e7238445352d2c29e16b66f54d4f03c18f29de6de7d913805eca7560d8b",
+    "byte_parity": {
+      "python": 604,
+      "json": 213
+    },
+    "private_files_absent": true,
+    "installed_verifier_origin_verified": true
+  },
+  "final_backend_origin": {
+    "installed_origin_verified": true,
+    "worker_sha256": "26dd76e5cd5606bcc6c0c072372bbee0228c06eb2f54fdfd8dfc605d5153d06b"
+  },
+  "historical_scanner_correction_evidence": "docs/evidence/09-64-historical-scanner-verification.json",
+  "full_history_secrets_scan": "918commits,0leaks_after_exact_immutable_false_positive_review",
+  "working_tree_secrets_scan": "0leaks_after_public_proof_correction"
+}
