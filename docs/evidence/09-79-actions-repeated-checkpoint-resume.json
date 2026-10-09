@@ -1,0 +1,233 @@
+{
+  "artifacts": [
+    {
+      "digest": "sha256:c5a1c2e132c54cad5511d846a2e8436a36be418fc8d0632009fb51129b60c5ac",
+      "expires_at": "2027-01-07T13:43:47Z",
+      "id": 11621095481,
+      "name": "ai09-generation-control-8f63b56f0f7133ac7f9e475ec424fd900438af48-37938919820",
+      "size_in_bytes": 1504758
+    },
+    {
+      "digest": "sha256:4d46a124e3c67141a87dd6eeedeab51222a25bdd88eca1f6f6236219a5342f5a",
+      "expires_at": "2027-01-07T13:43:47Z",
+      "id": 11621010508,
+      "name": "ai09-checkpoint-control-8f63b56f0f7133ac7f9e475ec424fd900438af48-37938919820-prefix-second",
+      "size_in_bytes": 258679
+    },
+    {
+      "digest": "sha256:7389d6210f6ee37a26a710c855e6d5ecae5775507fee603e9272f6fc8993f5b5",
+      "expires_at": "2027-01-07T13:43:47Z",
+      "id": 11620266484,
+      "name": "ai09-checkpoint-control-8f63b56f0f7133ac7f9e475ec424fd900438af48-37938919820-prefix",
+      "size_in_bytes": 248863
+    }
+  ],
+  "code_sha256": {
+    "scripts/ai09_checkpoint_transport.py": "ba4bff314c087b8cfed08c31c5466b71609386c010c3541922e724c0d9f9c5d0",
+    "scripts/check_ai09_checkpoint_control.py": "8a0f87feaf0c5d3f6b6ad9f8c05d80fd49cf5d2c17ddac200381c954485f9652",
+    "scripts/run_ai09_preparation.py": "ae6162eb21b4db3217931daca4fd07bd7dbf43933a04749553c61030ea009aa3",
+    "src/retailops_ai/evaluation_campaign/preparation_execution.py": "1354db7be68ef1d1528673527454c11cddc9f81f51794aa37d943e2840ab701b",
+    "src/retailops_ai/evaluation_campaign/preparation_resume.py": "71fc977d77cc3f55e4a465c16e09de5e5c800317752eb254f7c5358c43f3246b"
+  },
+  "component_controls": {
+    "passed": 224,
+    "seconds": 8.547
+  },
+  "head": "8f63b56f0f7133ac7f9e475ec424fd900438af48",
+  "heartbeat_elapsed_seconds": [
+    0.017410120999997503,
+    60.099301665,
+    120.18019910899999
+  ],
+  "heartbeat_intervals_seconds": [
+    60.081891544,
+    60.08089744399999
+  ],
+  "idle_visibility_measurement": {
+    "actions_UI_visibility": "requires_independent_live_UI_observation",
+    "hold_seconds": 130,
+    "purpose": "explicit_idle_UI_observation_window_not_source_work",
+    "resource": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 15394201600,
+      "minimum_free_disk_bytes": 91203993600,
+      "reason": null,
+      "sample_seconds": 0.2,
+      "sampled_peak_scratch_allocated_bytes": 2879488,
+      "sampled_peak_scratch_logical_bytes": 2534643,
+      "sampled_tree_peak_rss_bytes": 50278400,
+      "sampled_worker_cpu_seconds": 0.01,
+      "samples": 633,
+      "status": "passed",
+      "telemetry_errors": [],
+      "wall_seconds": 130.04795821899998
+    }
+  },
+  "job_id": 113847976218,
+  "live_UI_observation": {
+    "current_phased_counters_and_heartbeat_seen_live": false,
+    "historical_observer_proof": "09-73-actions-live-progress.json",
+    "reason": "The active browser surface changed to the user session before the own control window could navigate; its focus and content were preserved. Terminal logs do not substitute for live observation.",
+    "status": "not_verified"
+  },
+  "profile": {
+    "days": 10,
+    "products": 8,
+    "stores": 2,
+    "warehouses": 1
+  },
+  "recorded_at_utc": "2026-10-09T13:54:08.984804+00:00",
+  "remaining": [
+    "different-run resume with complete failed/interrupted attempt history and costs",
+    "current phased controller live UI proof",
+    "25/50 representative profiles and frozen trial budget",
+    "representative end-to-end and full exact head/main CI"
+  ],
+  "run_id": 37938919820,
+  "sampled_worker_cpu_seconds_lower_bound": 13.81,
+  "source_head": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+  "stage_ready": false,
+  "summary": {
+    "canonical_diagnostic_dispatched": false,
+    "cold_prefix_charged_wall_seconds": 6.2636874920000025,
+    "completed_phases": 5,
+    "control_commit": "8f63b56f0f7133ac7f9e475ec424fd900438af48",
+    "cost_adjustments": [
+      {
+        "before_event_count": 8,
+        "kind": "verified_checkpoint_resume",
+        "receipt_sha256": "4038e2dbfe6333ea7fc1a2507b55bea854390a79c21027e5f4ae3041261ff0b3",
+        "wall_seconds": 1.2526911820000066,
+        "worker_cpu_seconds_lower_bound": 0.44
+      },
+      {
+        "before_event_count": 8,
+        "kind": "verified_checkpoint_resume",
+        "receipt_sha256": "078233d58d49952d6888cedb14237ae03d9485133c4819d70d908474e7420e0d",
+        "wall_seconds": 1.2402883079999754,
+        "worker_cpu_seconds_lower_bound": 0.46
+      }
+    ],
+    "first_resume": {
+      "charged_wall_seconds": 7.516378674000009,
+      "completed_phases": 2,
+      "restore_measurement": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 15698579456,
+        "minimum_free_disk_bytes": 91201830912,
+        "reason": null,
+        "sample_seconds": 0.2,
+        "sampled_peak_scratch_allocated_bytes": 5083136,
+        "sampled_peak_scratch_logical_bytes": 4460151,
+        "sampled_tree_peak_rss_bytes": 73236480,
+        "sampled_worker_cpu_seconds": 0.23,
+        "samples": 3,
+        "status": "passed",
+        "wall_seconds": 0.42143206599999417
+      },
+      "resume_count": 1,
+      "status": "prepared",
+      "transport_measurement": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 15712206848,
+        "minimum_free_disk_bytes": 91203436544,
+        "reason": null,
+        "sample_seconds": 0.2,
+        "sampled_peak_scratch_allocated_bytes": 3477504,
+        "sampled_peak_scratch_logical_bytes": 3065351,
+        "sampled_tree_peak_rss_bytes": 77561856,
+        "sampled_worker_cpu_seconds": 0.21,
+        "samples": 5,
+        "status": "passed",
+        "wall_seconds": 0.8312591160000125
+      }
+    },
+    "fresh_final_reads": 0,
+    "new_project_fits": 0,
+    "original_inputs_retained": true,
+    "original_source_paths_unavailable_during_resumed_work": true,
+    "project_journal_initialized": false,
+    "remaining_control_budget_seconds": 581.201890755,
+    "remote_artifact": {
+      "artifact_id": 11621010508,
+      "artifact_metadata_sha256": "dabb3d85b365e8624d05247e054f4748f2a46c5c1c049067c97aff0baa3a6041",
+      "artifact_name": "ai09-checkpoint-control-8f63b56f0f7133ac7f9e475ec424fd900438af48-37938919820-prefix-second",
+      "control_commit": "8f63b56f0f7133ac7f9e475ec424fd900438af48",
+      "cross_host_authorization_stripped": true,
+      "deliberate_prefix_stop": true,
+      "event_sha256": "45f1f44dd0e8ac55b22f2f1a40c40d4775321af20c05b5a35340261a4162cae3",
+      "identity_sha256": "92ef3e2496646bf413dd6a7eeb3579bfed79f7b0aa30e1349fa6b79da9d2c160",
+      "project_generation_receipt": false,
+      "run_id": 37938919820,
+      "source_regenerated": false,
+      "verified_github_artifact": true,
+      "version": "ai09-completed-prefix-transport-1.0.0",
+      "zip_sha256": "4d46a124e3c67141a87dd6eeedeab51222a25bdd88eca1f6f6236219a5342f5a"
+    },
+    "restore_measurement": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 15663517696,
+      "minimum_free_disk_bytes": 91199090688,
+      "reason": null,
+      "sample_seconds": 0.2,
+      "sampled_peak_scratch_allocated_bytes": 2236416,
+      "sampled_peak_scratch_logical_bytes": 1953251,
+      "sampled_tree_peak_rss_bytes": 72753152,
+      "sampled_worker_cpu_seconds": 0.24000000000000002,
+      "samples": 3,
+      "status": "passed",
+      "wall_seconds": 0.4201377539999953
+    },
+    "resume_count": 2,
+    "source_commit": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+    "source_generation_processes": 1,
+    "stage_ready": false,
+    "status": "passed",
+    "total_charged_wall_seconds": 18.79810924499995,
+    "transport_measurement": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 15646883840,
+      "minimum_free_disk_bytes": 91200696320,
+      "reason": null,
+      "sample_seconds": 0.2,
+      "sampled_peak_scratch_allocated_bytes": 630784,
+      "sampled_peak_scratch_logical_bytes": 558414,
+      "sampled_tree_peak_rss_bytes": 77316096,
+      "sampled_worker_cpu_seconds": 0.22,
+      "samples": 5,
+      "status": "passed",
+      "wall_seconds": 0.82015055399998
+    },
+    "version": "ai09-artifact-prefix-resume-control-1.1.0"
+  },
+  "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37938919820",
+  "verification": {
+    "all_five_inner_checkpoints_verified": true,
+    "all_three_github_zip_digests_verified": true,
+    "both_completed_prefix_bundles_verified": true,
+    "different_workflow_run_resume_tested": false,
+    "eight_cold_events_preserved_byte_equivalent": true,
+    "exact_runtime_identity_verified": true,
+    "failed_or_interrupted_history_resume_tested": false,
+    "generation_processes": 1,
+    "local_private_durable_copies": true,
+    "original_archives_preserved_byte_equivalent_after_both_resumes": true,
+    "restore_cost_includes_archive_copy_validation_and_fsync": true,
+    "same_actions_job_two_remote_roundtrips": true,
+    "twenty_final_events_verified": true,
+    "two_cumulative_resume_adjustments_verified": true
+  },
+  "version": "ai09-actions-repeated-checkpoint-resume-evidence-1.0.0",
+  "workflow_conclusion": "success",
+  "workflow_status": "completed"
+}

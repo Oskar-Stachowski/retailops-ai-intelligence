@@ -1,5 +1,21 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: dwa wznowienia z zachowaniem archiwów i kosztów.**
+[Dowód 09.79](evidence/09-79-actions-repeated-checkpoint-resume.json) potwierdza
+5/5 faz małego profilu na `8f63b56`, po dwóch rzeczywistych uploadach
+i pobraniach checkpointów z GitHub. Generator uruchomiono raz. Zweryfikowano
+trzy ZIP-y, oba prefiksy i wszystkie pięć archiwów; poprzednie koszty oraz
+osiem pierwotnych rekordów zachowano. Naliczono 18,80 s, w tym 2,49 s
+obu pobrań i odtworzeń razem z zachowaniem archiwów. 224 kontrole przeszły.
+To nadal jeden job Actions; wznowienie z innego przebiegu i rozliczenie
+nieudanych/przerwanych prób pozostają otwarte. Logów tego kontrolera nie
+potwierdzono na żywo w UI. Nie uruchomiono nowego canonical ani kampanii.
+PR64 ma poprawkę pomiaru pamięci na `0096663`; jego nowy pełny Required CI
+`37935771590` trwa. Poprzedni run `37928364289` pozostaje zachowaną porażką.
+Limit **12 GiB** ponownie potwierdzono w recepturze 1.9 na zdalnym main
+`12484dee`; historyczne receptury z 8 GiB pozostają dowodami dawnych prób.
+AI 09 nadal jest `not_ready`.
+
 **2026-10-09 — AI 09: transport i wznowienie checkpointów w Actions.**
 [Dowód 09.77](evidence/09-77-actions-checkpoint-resume.json) potwierdza
 5/5 rzeczywistych faz małego profilu na `6c2b600`: po kwalifikacji checkpointy

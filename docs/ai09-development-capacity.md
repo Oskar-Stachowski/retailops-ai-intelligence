@@ -124,12 +124,21 @@ atomowo, bez drugiego niezmierzonego skanowania payloadów. Sprawdza tożsamoś�
 plików przy przekazaniu własnego workera; późniejszy bundle ponownie sprawdza
 pełne hashe i powiązania. Oryginalne archiwa pozostają zachowane.
 
-224 kontrole przeszły, w tym dwa wznowienia, suma wcześniejszych kosztów oraz
-odmowa przy zmianie, braku i symlinku archiwum. Rozszerzona mała kontrola
-Actions ma wykonać dwa niezależne upload/pobrania, zachować koszt pierwszego
-wznowienia i dopiero potem dokończyć eksport/import/curation. Jej rzeczywisty
-wynik pozostaje do odebrania. Nie zamyka to rozliczenia nieudanych prób ani
-wznowienia pomiędzy oddzielnymi przebiegami Actions.
+[Dowód 09.79](evidence/09-79-actions-repeated-checkpoint-resume.json) obejmuje
+dwa kolejne rzeczywiste uploady i pobrania przez GitHub na `8f63b56`.
+Po drugim odtworzeniu kontrola ukończyła 5/5 faz, używając drugiego zestawu
+odtworzonych danych. Generator uruchomiono raz. Trzy artefakty, oba prefiksy,
+pięć archiwów faz, osiem pierwotnych i 20 końcowych rekordów zweryfikowano
+i zachowano lokalnie. Pierwsze 6,26 s pracy pozostało w budżecie; oba wznowienia
+dodały łącznie 2,49 s, a pełny naliczony koszt wyniósł 18,80 s.
+224 kontrole komponentów przeszły. Nadal jest to wznowienie w jednym jobie;
+nie kwalifikuje innego przebiegu ani historii awarii. Heartbeat w końcowym
+artefakcie nie jest dowodem obserwacji w UI podczas działania kontrolera.
+
+Kontrole komponentów obejmują dwa wznowienia, sumę wcześniejszych kosztów
+oraz odmowę przy zmianie, braku i symlinku archiwum. Wynik Actions odebrano
+i sprawdzono; rozliczenie nieudanych prób oraz wznowienie pomiędzy
+oddzielnymi przebiegami Actions pozostają otwarte.
 
 **1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
 `dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
