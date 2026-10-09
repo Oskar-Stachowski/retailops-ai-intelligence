@@ -10,7 +10,8 @@ AI 09 pozostaje `not_ready`.
 
 **2026-10-09 — AI 09: pełny odbiór poprawek CPU Source, integracja anomaly trwa.**
 Source PR111 i wynikowy main `265b26a9` mają **30/30 success** każdy.
-AI PR63 nadal przechodzi pełne CI; rzeczywisty trening i reload TensorFlow przeszły.
+AI PR63 i wynikowy main `12484dee` mają **17/17 success** każdy,
+w tym rzeczywisty trening i reload TensorFlow.
 Nowy odczyt [cech anomaly](ai09-native-anomaly-features.md) zachowuje wszystkie
 żądane serie, okno i sześć wcześniejszych dni. [Replay](ai09-native-anomaly-replay.md)
 sprawdza również globalny indeks deduplikacji. [09.66](evidence/09-66-native-anomaly-census-access.json)
@@ -32,7 +33,8 @@ zweryfikowane Point z natywnym membership i pełnymi rolami train/validation
 na dysku. 164 kontrole regresyjne przeszły, następnie 18 po dopracowaniu
 rezerwy dysku oraz 165 z końcowej zainstalowanej paczki. Kontrola 10020
 wierszy używa całego treningu; trzy publiczne warianty zachowują pełne liczniki.
-Model Project, dziennik, prawda offline i pełna kwalifikacja są nadal otwarte.
+Adapter modelu i dziennika uzupełnia 09.71; jego odbiór, rzeczywista kampania,
+prawda offline i pełna kwalifikacja są nadal otwarte.
 PR #63 zaliczył cały Required CI dokładnego HEAD i jest scalony do
 `12484dee4db4b044e61460bac14f1612321900a8`; wynikowy main również zaliczył
 wszystkie 17 jobs. [Poprawka pakowania 09.70](ai09-package-boundary.md) usuwa prywatne pliki z sdist
@@ -46,8 +48,8 @@ własny pełny CI i publikację.
 wersję polityki/modelu, macierz na dysku i pełne progi walidacyjne.
 Kontrola 10017 wierszy wykorzystuje cały strumień i odtwarza zapisany las.
 Dotychczasowe kontrakty zachowują swoje limity. Powiązanie Point z membership
-i pełnym treningiem uzupełnia 09.69. Dziennik i model Project pozostają otwarte;
-pełny CI i publikacja są wymagane.
+i pełnym treningiem uzupełnia 09.69, a adapter dziennika i modelu — 09.71.
+Pełny CI, publikacja oraz rzeczywista kampania są wymagane.
 
 [Audyt podziału CI](evidence/09-67-ci-census-balance.json) zachowuje anulowany
 przebieg PR #63: 14 jobs przeszło, dwa shardy przekroczyły 45 minut, a agregator
@@ -55,7 +57,8 @@ zgłosił błąd. Shard 3 ukończył cały pytest, ale jego anulowany job nie je
 zaliczony; shard 2 pozostawił tylko plan i nieznany koszt wykonania.
 Korekta wykorzystuje przejrzane czasy, zachowuje wszystkie testy i atomowo
 zapisuje raporty częściowe. Limit joba testów wynosi 90 minut. Pełny chroniony
-odbiór poprawionego HEAD i wynikowego main nadal jest wymagany.
+odbiór poprawionego HEAD i wynikowego main zakończył się po 17/17 success;
+[09.70](evidence/09-70-package-private-boundary.json) zapisuje oba identyfikatory CI.
 
 [Pełne historyczne cechy anomaly](ai09-native-anomaly-features.md) odtwarzają
 wszystkie zadeklarowane dni przez natywne funkcje, z 28 dniami historii.
