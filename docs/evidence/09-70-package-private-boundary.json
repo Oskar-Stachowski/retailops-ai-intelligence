@@ -1,0 +1,84 @@
+{
+  "version": "ai09-package-private-boundary-1.0.0",
+  "recorded_at_utc": "2026-10-09T09:08:07.578928+00:00",
+  "scope": "Source distribution private-state exclusion and complete runtime wheel preservation",
+  "base": "c30c971b08cfc791c057966ca993858f2eb0d565",
+  "actual_full_local_before_fix": {
+    "head": "acf770b6efc7da0da52eab064288872f6b1d6eab",
+    "pytest_passed": 5058,
+    "pytest_skipped": 49,
+    "pytest_seconds": 6558.99,
+    "result": {
+      "status": "failed",
+      "reason": "worker_exit",
+      "exit_code": 2,
+      "wall_seconds": 8552.781665458984,
+      "sampled_tree_peak_rss_bytes": 908836864,
+      "sampled_worker_cpu_seconds": 8125.059194144007,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 98351,
+      "sampled_peak_scratch_allocated_bytes": 155648,
+      "minimum_free_disk_bytes": 66840354816,
+      "minimum_available_memory_bytes": 1209171968,
+      "samples": 16725,
+      "sample_seconds": 0.5,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak"
+    },
+    "failure": "sdist included .local test output; uv rejected absolute external symlink",
+    "tensorflow_phase_reached": false,
+    "full_make_passed": false
+  },
+  "change": {
+    "sdist_includes": [
+      "src",
+      "contracts",
+      "environments/tensorflow/uv.lock",
+      "pyproject.toml",
+      "uv.lock",
+      "README.md",
+      "LICENSE"
+    ],
+    "backend_metadata": [
+      "PKG-INFO",
+      ".gitignore"
+    ],
+    "runtime_wheel_payload_preserved": true,
+    "all_repository_tests_retained": true,
+    "canonical_rss_bytes_unchanged": 12884901888
+  },
+  "controls": {
+    "real_sdist_and_both_wheel_builds": {
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 2.374,
+      "junit_sha256": "c10776a84d3778ace85c552b5cabe0babe8918ca836d596d61e262694fedf595"
+    },
+    "initial_control_failure": "Test allowlist omitted backend-generated .gitignore; private files were already absent. Added that public metadata entry; full roundtrip passed.",
+    "private_controls": [
+      "absolute symlink",
+      "runtime model file",
+      ".env canary"
+    ],
+    "comparison": "all retailops_ai payload files byte-identical between direct wheel and wheel rebuilt from sdist"
+  },
+  "prior_PR63_acceptance": {
+    "pr": 63,
+    "head": "b5ec6588563b176f93ba9c94f29854a607164b5a",
+    "head_run": 37896098207,
+    "head_successful_jobs": 17,
+    "main": "12484dee4db4b044e61460bac14f1612321900a8",
+    "main_run": 37902320346,
+    "main_successful_jobs": 17
+  },
+  "this_change_acceptance": {
+    "full_local_ci": "pending",
+    "exact_head_ci": "pending",
+    "resulting_main_ci": "pending",
+    "published_on_main": false
+  },
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "stage_ready": false
+}

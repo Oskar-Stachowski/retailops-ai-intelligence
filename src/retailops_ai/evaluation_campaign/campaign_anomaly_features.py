@@ -12,18 +12,31 @@ import zlib
 from collections.abc import Iterator
 from contextlib import ExitStack
 from copy import deepcopy
-from datetime import datetime
+from datetime import datetime, timedelta
+from itertools import zip_longest
 from pathlib import Path
-from typing import Annotated, Any, Literal, Self
+from typing import TYPE_CHECKING, Annotated, Any, Literal, Self
 
 from pydantic import Field
 
+if TYPE_CHECKING:
+    from retailops_ai.evaluation_campaign.campaign_anomaly_membership import (
+        AnomalyMembershipRow,
+        CampaignAnomalyMembershipPlan,
+    )
+
+from retailops_ai.anomaly_detectors.protocol import Scope, Window, series_key
 from retailops_ai.curated.builder import iter_rows
 from retailops_ai.curated.contract import Digest, columns_for, decoded, encoded
 from retailops_ai.data_contracts.common import Contract, Sha256
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.day_qualification.contract import GRAIN, Day
 from retailops_ai.evaluation_campaign.campaign_anomaly_day_gate import CampaignAnomalyDiskDayGate
+from retailops_ai.evaluation_campaign.campaign_anomaly_scoring import (
+    HISTORY_DAYS,
+    MAX_REQUESTED_ROWS,
+    MAX_SCOPES,
+)
 from retailops_ai.evaluation_campaign.source_replay import physical_limits
 from retailops_ai.qualified_anomalies.contract import MAX_BYTES, Context, Point, Policy
 from retailops_ai.qualified_anomalies.features import TABLES, Features
@@ -296,6 +309,70 @@ class CampaignAnomalyFeatureProjection:
         ):
             self._db()
             yield self._checked_point(values)
+
+    def scoring_points(self, scopes: tuple[Scope, ...], window: Window) -> Iterator[Point]:
+        """Read a native scoring window and its six preceding feature days.
+
+        Keep every requested series, including series with no declared points:
+        the scorer emits their native abstentions. The existing index retrieves
+        one series at a time, without collecting its rows or decompressing the
+        rest of the parent. Completion still verifies the entire stored census;
+        a selected window cannot qualify a corrupted unselected parent.
+        This method grants no campaign, outcome or final access permission.
+        """
+        self._db()
+        if not self._loaded:
+            raise CampaignAnomalyFeatureStateError("campaign_anomaly_features_points_unavailable")
+        if not 1 <= len(scopes) <= MAX_SCOPES:
+            raise ValueError("campaign_anomaly_features_scoring_scope_budget")
+        window = Window.model_validate_json(window.model_dump_json())
+        scopes = tuple(Scope.model_validate_json(s.model_dump_json()) for s in scopes)
+        keys = [series_key(s) for s in scopes]
+        days = (window.end - window.start).days + 1
+        if keys != sorted(set(keys)) or days > 2001 or len(keys) * days > MAX_REQUESTED_ROWS:
+            raise ValueError("campaign_anomaly_features_scoring_scope_or_window")
+        earliest = window.start - timedelta(days=HISTORY_DAYS)
+        for key in keys:
+            for values in self._db().execute(
+                "SELECT event_type,business_date,product_id,location_id,channel,currency,payload,digest "
+                "FROM points WHERE event_type=? AND product_id=? AND location_id=? "
+                "AND channel=? AND currency=? AND business_date BETWEEN ? AND ? "
+                "ORDER BY business_date",
+                (*key, earliest.isoformat(), window.end.isoformat()),
+            ):
+                self._db()
+                yield self._checked_point(values)
+
+    def training_memberships(
+        self, plan: "CampaignAnomalyMembershipPlan"
+    ) -> Iterator["AnomalyMembershipRow"]:
+        """Bind the full live native feature parent before producing causal rows."""
+        from retailops_ai.evaluation_campaign.campaign_anomaly_membership import (
+            CampaignAnomalyMembershipPlan,
+            iter_anomaly_membership_census,
+        )
+
+        self._db()
+        plan = CampaignAnomalyMembershipPlan.model_validate_json(plan.model_dump_json())
+        if (
+            plan.feature_plan_sha256 != canonical_sha256(self.plan.model_dump(mode="json"))
+            or plan.native_points_sha256 != self.native_points_sha256
+            or self.plan.policy != Policy()
+        ):
+            raise ValueError("campaign_anomaly_membership_complete_feature_parent_binding")
+        actual_scopes = self._db().execute(
+            "SELECT DISTINCT event_type,product_id,location_id,channel,currency "
+            "FROM points ORDER BY event_type,product_id,location_id,channel,currency"
+        )
+        if any(
+            expected != actual
+            for expected, actual in zip_longest((series_key(s) for s in plan.scopes), actual_scopes)
+        ):
+            raise ValueError("campaign_anomaly_membership_complete_scope_inventory")
+        yield from iter_anomaly_membership_census(
+            self.scoring_points(plan.scopes, Window(start=plan.train.start, end=plan.test.end)),
+            plan,
+        )
 
     def _hash_points(self) -> str:
         trace = hashlib.sha256()

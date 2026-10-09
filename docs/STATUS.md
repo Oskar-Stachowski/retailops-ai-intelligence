@@ -1,6 +1,56 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: korekta pomiaru pamięci obu workerów anomaly.**
+[Dowód 09.78](evidence/09-78-native-worker-memory.json) zachowuje nieudany
+pełny run PR64 `37928364289`: dwa błędy census w shardzie 0 i 25 błędów
+wspólnego fixture starszego workera w shardzie 2; `required-result` nie przeszedł.
+Poprawka mierzy `VmHWM` bieżącego procesu po exec i zachowuje wszystkie limity.
+Mały rzeczywisty run Linux `37934821281` ma 97/97 zaliczonych testów,
+łącznie z workerami przy 600 MiB danych rodzica, pełnymi publicznymi Source
+oraz odmową przekroczenia budżetu. Obowiązuje pełny odbiór nowego head/main;
+mała kontrola nie zastępuje CI ani naukowej kwalifikacji. AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: pełny odbiór poprawek CPU Source, integracja anomaly trwa.**
+Source PR111 i wynikowy main `265b26a9` mają **30/30 success** każdy.
+AI PR63 nadal przechodzi pełne CI; rzeczywisty trening i reload TensorFlow przeszły.
+Nowy odczyt [cech anomaly](ai09-native-anomaly-features.md) zachowuje wszystkie
+żądane serie, okno i sześć wcześniejszych dni. [Replay](ai09-native-anomaly-replay.md)
+sprawdza również globalny indeks deduplikacji. [09.66](evidence/09-66-native-anomaly-census-access.json)
+zapisuje 82 kontrole natywne i 82 zainstalowanej paczki, bez pominięć.
+Pełny lokalny i chroniony odbiór CI tego przyrostu pozostają wymagane.
+Nie uruchomiono capacity 1.10 ani kampanii Project. AI 09 pozostaje `not_ready`.
+
+**2026-10-09 — przygotowanie AI 09 capacity 1.10; etap nadal not_ready.**
+[Receptura](reference/ai09-development-capacity-v1.10.json) przypina audytowane
+poprawki CPU Source PR111. [09.65](evidence/09-65-source-cpu-capacity-preparation.json)
+zachowuje dziewięć rzeczywistych porażek, pełny profil oraz limit 12 GiB
+z rezerwą 1 GiB. 62 kontrole receptury przeszły, w tym odrzucenie startu
+poniżej 13 GiB dostępnej pamięci. Nowej diagnostyki nie uruchomiono;
+pełny odbiór dokładnych head i wynikowych main obu repozytoriów jest wymagany.
+
 **2026-10-09 — AI 09: in_progress / not_ready.**
+[Pełny podział i trening anomaly](ai09-native-anomaly-membership.md) łączy
+zweryfikowane Point z natywnym membership i pełnymi rolami train/validation
+na dysku. 164 kontrole regresyjne przeszły, następnie 18 po dopracowaniu
+rezerwy dysku oraz 165 z końcowej zainstalowanej paczki. Kontrola 10020
+wierszy używa całego treningu; trzy publiczne warianty zachowują pełne liczniki.
+Model Project, dziennik, prawda offline i pełna kwalifikacja są nadal otwarte.
+PR #63 zaliczył cały Required CI dokładnego HEAD i jest scalony do
+`12484dee4db4b044e61460bac14f1612321900a8`; wynikowy main również zaliczył
+wszystkie 17 jobs. [Poprawka pakowania 09.70](ai09-package-boundary.md) usuwa prywatne pliki z sdist
+po rzeczywistej awarii lokalnego buildu. 5058 testów przeszło; 49 pominięto
+z opisanymi warunkami integracji, TensorFlow nie został osiągnięty.
+Nowe zmiany 09.65/09.66/09.68/09.69/09.70 czekają na
+własny pełny CI i publikację.
+
+**2026-10-09 — AI 09: in_progress / not_ready.**
+[Pełny trening numeryczny anomaly](ai09-native-anomaly-full-fit.md) ma osobną
+wersję polityki/modelu, macierz na dysku i pełne progi walidacyjne.
+Kontrola 10017 wierszy wykorzystuje cały strumień i odtwarza zapisany las.
+Dotychczasowe kontrakty zachowują swoje limity. Powiązanie Point z membership
+i pełnym treningiem uzupełnia 09.69. Dziennik i model Project pozostają otwarte;
+pełny CI i publikacja są wymagane.
+
 [Audyt podziału CI](evidence/09-67-ci-census-balance.json) zachowuje anulowany
 przebieg PR #63: 14 jobs przeszło, dwa shardy przekroczyły 45 minut, a agregator
 zgłosił błąd. Shard 3 ukończył cały pytest, ale jego anulowany job nie jest

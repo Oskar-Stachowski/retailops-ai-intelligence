@@ -324,9 +324,10 @@ def test_stack_observation_cannot_change_scope_or_claim_allocation_measurement(c
         probe.validate_plan(plan)
 
 
-def test_all_eight_prior_actual_plan_bytes_and_failure_chain_are_retained() -> None:
+def test_all_nine_prior_actual_plan_bytes_and_failure_chain_are_retained() -> None:
     path = probe.PLAN_PATH
     for version, run_id in (
+        ("1.9", 37853501527),
         ("1.8", 37824794411),
         ("1.7", 37807749014),
         ("1.5", 37765329151),

@@ -1,5 +1,13 @@
 # Natywny replay capture anomaly w AI 09
 
+Globalny indeks `event_hashes` ma teraz niezależny hash liczony w chwili
+przyjęcia każdego nowego ID oraz jawną kolejność wpisów. Ukończenie i zamknięcie
+replay weryfikują jego pełną zawartość i liczbę, razem z dotychczasowymi wynikami.
+Zmiana digestu, usunięcie, dopisanie albo zmiana kolejności blokują odbiór także
+wtedy, gdy receipts i fakty pozostały bez zmian. Natywny kernel nie nadpisuje
+przyjętego ID; nieoczekiwana próba nadpisania kończy cały replay błędem.
+Reguły duplicate event, content conflict i duplicate business pozostają natywne.
+
 `campaign_anomaly_replay.CampaignAnomalyDiskReplay` przenosi globalny stan
 operacyjnego replay na dysk. Używa niezmienionego `full_raw_dq.replay.Replay._event`
 do sprawdzania zdarzeń i obliczania rewizji agregatów. Cały capture zachowuje

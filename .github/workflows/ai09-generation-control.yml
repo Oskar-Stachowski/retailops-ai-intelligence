@@ -2,6 +2,12 @@ name: AI09 real generation worker control
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [generation, census_memory]
+        default: generation
+        description: Fixed small native generation or census memory regression control
 
 permissions:
   contents: read
@@ -20,6 +26,7 @@ jobs:
           persist-credentials: false
           path: consumer
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: inputs.mode == 'generation'
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
           ref: 16d34887b058b3dfb270af474f28242194a968ca
@@ -30,13 +37,17 @@ jobs:
           version: "0.12.19"
           python-version: "3.11.15"
           enable-cache: true
-      - name: Install locked consumer and pinned producer dependencies
+      - name: Install locked consumer dependencies
         run: |
           uv sync --directory consumer --locked --extra snapshot --extra forecast
+      - name: Install pinned producer dependencies
+        if: inputs.mode == 'generation'
+        run: |
           uv venv --python 3.11.15 source/.venv
           uv pip install --python source/.venv/bin/python \
             -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt
       - name: Run both native six-phase controls without a project campaign
+        if: inputs.mode == 'generation'
         env:
           OMP_NUM_THREADS: "1"
           OPENBLAS_NUM_THREADS: "1"
@@ -47,6 +58,24 @@ jobs:
             --source "$GITHUB_WORKSPACE/source" \
             --producer-python "$GITHUB_WORKSPACE/source/.venv/bin/python" \
             --output "$GITHUB_WORKSPACE/control"
+      - name: Verify Linux executable memory and native full-census training controls
+        if: inputs.mode == 'census_memory'
+        timeout-minutes: 15
+        working-directory: consumer
+        env:
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+          PYTHONPATH: ${{ github.workspace }}/consumer/src
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/control"
+          .venv/bin/python -m pytest -q -rA \
+            tests/test_anomaly_census_resources.py \
+            tests/test_anomaly_census_fit.py \
+            tests/test_anomaly_detectors.py \
+            tests/test_campaign_anomaly_evaluation.py \
+            tests/test_campaign_anomaly_membership_source.py \
+            --junitxml="$GITHUB_WORKSPACE/control/census-memory.xml"
       - name: Preserve completed and failed phase evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -54,6 +83,7 @@ jobs:
           name: ai09-generation-control-${{ github.sha }}-${{ github.run_id }}
           path: |
             control/summary.json
+            control/*.xml
             control/*/*.json
             control/*/*.log
           if-no-files-found: warn

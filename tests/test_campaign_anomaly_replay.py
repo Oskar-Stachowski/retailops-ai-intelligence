@@ -13,6 +13,7 @@ from retailops_ai.evaluation_campaign.campaign_anomaly_replay import (
     CampaignAnomalyDiskReplay,
     CampaignAnomalyReplayPlan,
     CampaignAnomalyReplayResourceError,
+    CampaignAnomalyReplayStateError,
 )
 from retailops_ai.full_raw_dq.contract import parse_capture
 from retailops_ai.full_raw_dq.replay import GRAIN, Replay
@@ -88,6 +89,21 @@ def test_whole_real_source_capture_matches_unchanged_native_replay(
             == report["accepted_sales"] + report["accepted_return_claims"]
         )
         assert result["unique_receipts"] == report["input_records"]
+        assert (
+            dict(
+                replay._db().execute("SELECT identifier,digest FROM event_hashes ORDER BY sequence")
+            )
+            == prepared["replay"].events
+        )
+        assert (
+            result["output_sha256"]["event_hashes"]
+            == hashlib.sha256(
+                b"".join(
+                    canonical_json((i, key, value)) + b"\n"
+                    for i, (key, value) in enumerate(prepared["replay"].events.items(), 1)
+                )
+            ).hexdigest()
+        )
         assert result["actions"] == {
             action: report[action]
             for action in ("accepted", "duplicate_event", "duplicate_business", "quarantined")
@@ -102,6 +118,38 @@ def test_whole_real_source_capture_matches_unchanged_native_replay(
         assert not result["transport_durability_proven"]
         assert not result["quality_qualified"] and not result["stage_ready"]
         assert result["business_event_day_completeness"] == "not_qualified"
+    assert not list(tmp_path.iterdir())
+
+
+@pytest.mark.parametrize("when", ["before_finish", "after_finish"])
+@pytest.mark.parametrize("mutation", ["content", "delete", "extra", "sequence"])
+def test_global_event_identity_corruption_blocks_complete_replay(
+    prepared, tmp_path, when, mutation
+):
+    parent = prepared["parent"]
+    records = [decode_json(raw) for raw in prepared["raw"].splitlines()]
+    with pytest.raises(CampaignAnomalyReplayStateError, match="private_output_changed"):
+        with CampaignAnomalyDiskReplay(parent, plan(parent, records), tmp_path) as replay:
+            for record in records:
+                replay.consume(record)
+            if when == "after_finish":
+                replay.finish()
+            database = replay._db()
+            if mutation == "content":
+                database.execute("UPDATE event_hashes SET digest=? WHERE sequence=1", ("0" * 64,))
+            elif mutation == "delete":
+                database.execute("DELETE FROM event_hashes WHERE sequence=1")
+            elif mutation == "extra":
+                database.execute(
+                    "INSERT INTO event_hashes(sequence,identifier,digest) VALUES(?,?,?)",
+                    (100000, "00000000-0000-0000-0000-000000000999", "0" * 64),
+                )
+            else:
+                database.execute("UPDATE event_hashes SET sequence=100000 WHERE sequence=1")
+            # Public receipts/facts are unchanged. The independent native-ID
+            # insertion trace detects a gap in state those outputs do not bind.
+            if when == "before_finish":
+                replay.finish()
     assert not list(tmp_path.iterdir())
 
 

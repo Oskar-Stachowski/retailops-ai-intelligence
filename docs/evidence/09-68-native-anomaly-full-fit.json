@@ -1,0 +1,127 @@
+{
+  "version": "ai09-native-anomaly-full-fit-1.0.0",
+  "recorded_at_utc": "2026-10-09T07:21:41.259999+00:00",
+  "scope": "Full numerical fitting and thresholding; Project admission remains incomplete",
+  "base": "593f3920346a8936a652cfa4e187a74dfa2747a9",
+  "changes": {
+    "legacy_contracts_unchanged": true,
+    "new_model_version": "anomaly-portfolio-model-4.0.0",
+    "new_policy_version": "anomaly-detector-census-fit-1.0.0",
+    "declared_eligible_rows_all_used": true,
+    "row_limit": 1000000,
+    "matrix_bytes_limit": 268435456,
+    "fit_wall_seconds": 300,
+    "fit_cpu_seconds": 300,
+    "fit_rss_bytes": 1073741824,
+    "host_available_memory_reserve_bytes": 1073741824,
+    "host_free_disk_reserve_bytes": 6442450944,
+    "canonical_ram_budget_bytes": 12884901888,
+    "canonical_wall_seconds": 3600,
+    "legacy_qualified_input_id_for_full_model": null,
+    "native_forest_math_shared_with_legacy_worker": true,
+    "row_identity": "exact ordered native canonical JSON array SHA256, computed incrementally",
+    "validation_threshold": "full declared count, native Decimal capacity fractions, strict greater-than tie semantics",
+    "reaped_child_cpu_includes_final_worker_validation_and_writes": true,
+    "memory_peak_is_conservative_parent_plus_native_child_peak": true
+  },
+  "code": {
+    "src/retailops_ai/anomaly_detectors/census_contract.py": "28a9efe6c16f9b3a0ca9b5ca6657a1c6d1a8850f27218ca6d4a69b1d0cb0196f",
+    "src/retailops_ai/anomaly_detectors/census_fit.py": "dae5d94cba1200da6259822f633f8eae84a8df7cd5bf55182ff670fd6531d019",
+    "src/retailops_ai/anomaly_detectors/census_worker.py": "779bb513c0e0264c072025349bd9354cffcd8de6bbf752afea18f5af0121fdb7",
+    "src/retailops_ai/anomaly_detectors/worker.py": "7bbc25506d641cc3ec3c5ea6483e2ceb511c727940a1c4ff124ccc4d806c192e",
+    "src/retailops_ai/anomaly_portfolio/model.py": "cce09e0e9b62571d34215ab056adf15225ef7f0bc529b3c3f10816ab7fb06be0"
+  },
+  "controls": {
+    "initial_native": {
+      "passed": 15,
+      "seconds": 5.71,
+      "junit_sha256": "179760598fb47082e8d5924d17bc0682ba3248dd6a5b9a090b15477c933bb24d"
+    },
+    "legacy_and_new_regression": {
+      "passed": 123,
+      "seconds": 21.47,
+      "junit_sha256": "26a0f14d96a3e803be65ba75f1cde43c86037b70df2f6971f82b758d06576b03"
+    },
+    "native_after_negative_controls": {
+      "passed": 128,
+      "seconds": 22.72,
+      "junit_sha256": "ee0f5de17eaf306a6260caf52dabc99965539031646ca8caa29b6e8b5d66df94",
+      "before_conservative_parent_plus_child_peak_followup": true
+    },
+    "full_row_control": {
+      "actual_rows": 10017,
+      "all_rows_consumed": true,
+      "all_row_hash_matches_independent_complete_list": true,
+      "price_median": 101.0,
+      "prefix_10000_median_would_be": 51.0,
+      "real_isolation_forest_fit": true,
+      "portable_reload": true,
+      "both_native_families_and_saved_score_replay": true,
+      "project_fit": false
+    },
+    "final_installed_package": {
+      "passed": 128,
+      "seconds": 24.25,
+      "junit_sha256": "23186a56c73baac80667a1de9fd27594f75c1b4559cd609bca6c65f7bc04d2e3",
+      "all_loaded_retailops_modules_from_actual_installed_target": true,
+      "loaded_modules": 59,
+      "module_origins_receipt_sha256": "4eae10132ff82a915d6552a49955e91a57107280405c5da721d25ed650a83024",
+      "final_source_and_package_code_identical": true
+    },
+    "final_mypy": {
+      "passed": true,
+      "source_files": 728
+    },
+    "initial_mypy": {
+      "errors": 3,
+      "correction": "literal override ignore location and typed Popen"
+    },
+    "schema_parity": {
+      "legacy_definitions": 13,
+      "all_legacy_definitions_byte_equivalent_as_json": true,
+      "new_definitions": [
+        "CensusCountRateDescriptor",
+        "CensusFill",
+        "CensusFitPolicy",
+        "CensusGroup",
+        "CensusPipeline",
+        "CensusThreshold"
+      ]
+    },
+    "ruff": "passed",
+    "format": "passed",
+    "docs_and_ci_contract": "passed",
+    "package": {
+      "wheel_bytes": 2083714,
+      "wheel_sha256": "4e06b1eca752113b275e9d73053ced6238eeb9962017fb5dd085036999faa1eb",
+      "whole_package_source_wheel_installed_parity": {
+        "python": 607,
+        "json": 213,
+        "other_forced_files": 4
+      },
+      "private_files_absent": true
+    },
+    "initial_package_verifier_note": "Overlapping force-include prefixes resolved by longest destination prefix; initial assertion occurred before byte comparison.",
+    "secret_scans": {
+      "tree": "passed",
+      "whole_history": "passed"
+    }
+  },
+  "resource_scope": "Numerical preparation plus native child; conservative parent/child peak sum. Full Source/Point preparation and enclosing journal costs are not covered by this component.",
+  "acceptance": {
+    "full_make_ci_local": "pending",
+    "exact_head_ci": "pending",
+    "resulting_main_ci": "pending",
+    "published_on_main": false
+  },
+  "scientific": {
+    "new_project_fits": 0,
+    "fresh_final_reads": 0,
+    "journal_initialized": false,
+    "full_point_membership_adapter_complete": false,
+    "parent_generation_ancestry_verified": false,
+    "independent_truth_integration_complete": false,
+    "full_science_complete": false,
+    "stage_ready": false
+  }
+}

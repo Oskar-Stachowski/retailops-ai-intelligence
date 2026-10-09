@@ -12,6 +12,7 @@ from sklearn.ensemble import IsolationForest  # type: ignore[import-untyped]
 
 from retailops_ai.anomaly_detectors.codec import score_matrix
 from retailops_ai.anomaly_detectors.contract import FitPolicy, Forest, Node, Resources, Tree
+from retailops_ai.anomaly_detectors.worker_resources import worker_peak_rss_bytes
 from retailops_ai.source_snapshot.files import SnapshotError, canonical_json, read_bytes
 
 
@@ -32,6 +33,13 @@ def main(root: Path) -> None:
         or not np.isfinite(probes).all()
     ):
         raise SnapshotError("anomaly_training_matrix_budget_or_shape")
+    forest, receipt = fit_forest(x, probes, policy)
+    (root / "forest.json").write_bytes(canonical_json(forest.model_dump(mode="json")))
+    (root / "resources.json").write_text(json.dumps(receipt.model_dump(mode="json")))
+
+
+def fit_forest(x: np.ndarray, probes: np.ndarray, policy: FitPolicy) -> tuple[Forest, Resources]:
+    """Shared native fit/export math; callers enforce their versioned input budgets."""
     started = time.monotonic()
     fitted = IsolationForest(
         n_estimators=policy.n_estimators,
@@ -95,9 +103,7 @@ def main(root: Path) -> None:
     error = float(np.max(np.abs(restored + fitted.score_samples(examples))))
     if error > 1e-12:
         raise SnapshotError("anomaly_native_portable_score_mismatch")
-    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (
-        1 if sys.platform == "darwin" else 1024
-    )
+    rss = worker_peak_rss_bytes()
     usage = resource.getrusage(resource.RUSAGE_SELF)
     receipt = Resources(
         wall_seconds=time.monotonic() - started,
@@ -105,8 +111,7 @@ def main(root: Path) -> None:
         peak_rss_bytes=rss,
         native_max_score_error=error,
     )
-    (root / "forest.json").write_bytes(canonical_json(forest.model_dump(mode="json")))
-    (root / "resources.json").write_text(json.dumps(receipt.model_dump(mode="json")))
+    return forest, receipt
 
 
 if __name__ == "__main__":

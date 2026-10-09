@@ -28,7 +28,7 @@ from typing import Any, TextIO
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
-    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.9.json"
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.10.json"
 )
 
 
@@ -291,10 +291,10 @@ def require_remote() -> None:
 
 def validate_plan(plan: dict[str, Any]) -> None:
     """Do not let a smaller or final profile inherit this diagnostic's name."""
-    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.8.json")
+    previous_path = PLAN_PATH.with_name("ai09-development-capacity-v1.9.json")
     previous = read(previous_path)
     previous_result = read(
-        PLAN_PATH.parents[1] / "evidence/09-53-development-capacity-eighth-run.json"
+        PLAN_PATH.parents[1] / "evidence/09-62-development-capacity-ninth-run.json"
     )
     revision_keys = {
         "version",
@@ -313,17 +313,17 @@ def validate_plan(plan: dict[str, Any]) -> None:
     }:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.9.0"
-        or sha(previous_path) != "e219af373fab4ddcfcd077b17c26e3fe56399e2d1010b659e5798745143b55c3"
-        or sha(PLAN_PATH.parents[1] / "evidence/09-53-development-capacity-eighth-run.json")
-        != "95039e3f5a3b927cee5e7598b771ec4b03f2b89d2b35a25c70a3f50fd8dd3443"
-        or plan["producer_commit"] != "a7b850a06f4f4ad0fa9dcb0e17602b5c105f591c"
+        plan["version"] != "ai09-development-capacity-probe-1.10.0"
+        or sha(previous_path) != "07ee91c51bbd9f5300aac002ce7873f6bbdd4c22a0018a00baf1c25a4ec297f6"
+        or sha(PLAN_PATH.parents[1] / "evidence/09-62-development-capacity-ninth-run.json")
+        != "7228c0c40565bf198c756b5afc26408fd6eb34d35e9569f042c4f180eb08dffe"
+        or plan["producer_commit"] != "80293fb582e05f7004cf44c2da1828d1a5e74a97"
         or plan.get("producer_audit")
         != {
-            "evidence": "docs/evidence/ml/ai09-ledger-query-index.json",
-            "evidence_sha256": "fde90ac9ac6d09e7786f35e4093f19a4cca5f0a508c8af298041f2f98fc7910b",
-            "ordinary_implementation": "inventory-source-cached-ledger-2.2.2",
-            "planned_implementation": "planned-source-cached-execution-1.1.2",
+            "evidence": "docs/evidence/ml/ai09-source-cpu-followup.json",
+            "evidence_sha256": "f6c8ab7bf076c159342bbcc7dd00053a7e099a613cec6b8bd71acc434a10dfdf",
+            "ordinary_implementation": "inventory-source-cached-ledger-2.2.3",
+            "planned_implementation": "planned-source-cached-execution-1.1.3",
         }
         or plan["producer_lock_sha256"]
         != "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02"
@@ -373,9 +373,13 @@ def validate_plan(plan: dict[str, Any]) -> None:
         or plan["previous_attempt"]
         != {
             "version": previous["version"],
-            "workflow_run": 37824794411,
+            "workflow_run": 37853501527,
             "plan_sha256": sha(previous_path),
-            "resource_receipt_sha256": previous_result["resource_receipt_sha256"],
+            "resource_receipt_sha256": next(
+                entry["sha256"]
+                for entry in previous_result["download_receipt"]["files"]
+                if entry["name"] == "resource.json"
+            ),
             "reason": "wall_limit",
             "exit_code": -9,
             "completed_phases": 0,

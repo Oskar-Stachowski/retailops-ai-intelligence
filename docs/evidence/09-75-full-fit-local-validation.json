@@ -1,0 +1,49 @@
+{
+  "version": "ai09-full-fit-local-validation-1.0.0",
+  "recorded_at_utc": "2026-10-09T12:08:42.862016+00:00",
+  "code_commit": "cf8fc3f16f59103602020b5a0fb8bc3084e28c00",
+  "command": "make ci-local",
+  "result": "failed",
+  "resource_receipt": {
+    "status": "failed",
+    "reason": "worker_exit",
+    "exit_code": 2,
+    "wall_seconds": 9030.337954584014,
+    "sampled_tree_peak_rss_bytes": 1032896512,
+    "sampled_worker_cpu_seconds": 8413.039158359994,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 118533,
+    "sampled_peak_scratch_allocated_bytes": 155648,
+    "minimum_free_disk_bytes": 59443073024,
+    "minimum_available_memory_bytes": 1083441152,
+    "samples": 17679,
+    "sample_seconds": 0.5,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak"
+  },
+  "main_pytest": {
+    "passed": 5120,
+    "skipped": 49,
+    "seconds": 6732.37
+  },
+  "tensorflow": {
+    "passed": 3,
+    "failed": 5,
+    "seconds": 111.47,
+    "failure_reason": "preflight_reserve before each of five workers launched",
+    "failed_tests": [
+      "FAILED environments/tensorflow/tests/test_campaign_calibration_cpu.py::test_fresh_calibration_cpu_retains_not_ready_and_private_mlflow_scope",
+      "FAILED environments/tensorflow/tests/test_campaign_fit_cpu.py::test_real_complete_population_fit_supported_artifact_and_fresh_cpu_reload[rf]",
+      "FAILED environments/tensorflow/tests/test_campaign_fit_cpu.py::test_real_complete_population_fit_supported_artifact_and_fresh_cpu_reload[hgb]",
+      "FAILED environments/tensorflow/tests/test_campaign_fit_cpu.py::test_real_complete_population_fit_supported_artifact_and_fresh_cpu_reload[tensorflow]",
+      "FAILED environments/tensorflow/tests/test_campaign_score_cpu.py::test_real_fresh_six_model_cpu_inference_preserves_every_controlled_role_key"
+    ],
+    "protection_limits_reduced": false
+  },
+  "remaining_local_make_target": "secrets follows failed tensorflow-check; separate prior root/history scans passed, no full local success claimed",
+  "log_sha256": "b40b18105526c93de6ab0138779946390d850413506c2d6e5ef9d668bf3e8ef1",
+  "requires_full_remote_required_CI": true,
+  "quality_qualified": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "stage_ready": false
+}
