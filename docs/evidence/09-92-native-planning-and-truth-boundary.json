@@ -13,7 +13,7 @@
     "pr": 114,
     "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/114",
     "corrected_required_ci": 37995672304,
-    "ci_status_at_recording": "in_progress",
+    "ci_status_at_recording": "in_progress_with_failed_jobs",
     "production_sha256": "fdbec7faccb51df43b21c407dc3813edb318d74d8ef4d37ca653ea6ec317c4a7",
     "unit": {
       "monitor": {
@@ -76,7 +76,47 @@
       "native_demand_cross_product_clean_spillover",
       "unrelated_DockerHub429_pinned_base_pull"
     ],
-    "project_profiles_qualified": false
+    "project_profiles_qualified": false,
+    "latest_ci_observation": {
+      "known_jobs": 23,
+      "success": 11,
+      "declared_path_skips": 4,
+      "running": 5,
+      "failed_jobs": [
+        {
+          "id": 114041021142,
+          "name": "docker-gate / Authenticated cross-repo intelligence runtime",
+          "conclusion": "failure"
+        },
+        {
+          "id": 114041021232,
+          "name": "security-gate / Backend image vulnerability scan",
+          "conclusion": "failure"
+        },
+        {
+          "id": 114041383755,
+          "name": "security-gate / Security evidence summary",
+          "conclusion": "failure"
+        }
+      ],
+      "backend_image_failure": {
+        "job": 114041021232,
+        "reason": "DockerHub429 unauthenticated pull limit for unchanged pinned python base before build",
+        "log_sha256": "4ccab4ab19e6751bb88fdec486f9fb35c701ae138dd85e3dcad2f68874f18dee"
+      },
+      "authenticated_runtime_failure": {
+        "job": 114041021142,
+        "stage": "start_owned_databases",
+        "code": "runtime_command_failed",
+        "underlying_cause": "not_exposed_by_the_sanitized_runtime_report",
+        "cleanup": "passed",
+        "log_sha256": "036d594fcd5bba4dbb5ab74ddfddde103d2a539e354a55a667219a6658b41e6d",
+        "artifact_id": 11646663592,
+        "artifact_sha256": "ca6f9c1e1c99be1f49396cc3d49b00a590378d3553ca475bfdd236d5a5bf0d3a"
+      },
+      "retry_started": false,
+      "whole_workflow_terminal": false
+    }
   },
   "consumer_counterexample": {
     "result": "legacy_policy_misclassifies_demonstrated_cross_product_spillover_as_clean",

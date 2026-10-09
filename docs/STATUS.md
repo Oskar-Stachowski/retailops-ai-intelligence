@@ -5,7 +5,10 @@
 Source PR 114: odtworzenie prywatnych parametrów produktów, właściwy kalendarz
 małej kontroli oraz trzy siedmiodniowe kontrole demand przed wszystkimi
 interwencjami. **23 testy kontrolne i 2 pełne testy writer/reader Source 2.8**
-przeszły bez pominięć; zwykły Required CI poprawionego head trwa.
+przeszły bez pominięć. Required CI poprawionego head trwa, ale ma błąd
+Docker Hub 429 i odmowę startu izolowanych baz w bramce integracyjnej;
+przyczyna drugiego błędu nie jest ujawniona w bezpiecznym raporcie.
+Pełna akceptacja tego head pozostaje otwarta.
 Natywna diagnoza wykazała też, że starsza reguła SKU może błędnie uznać
 pośrednio zmienione okno za clean. Adapter odrzuca teraz `ai-dev` i `ai-training`
 przed odczytem prywatnej prawdy. **53/53** kontroli regresyjnych przeszło
