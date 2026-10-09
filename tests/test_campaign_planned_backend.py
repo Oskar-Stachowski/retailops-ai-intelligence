@@ -88,6 +88,7 @@ def test_addon_pin_failure_is_not_silently_replaced_by_ordinary_backend(tmp_path
         ("planned-source-cached-execution-1.1.1", {"consume_input": True}),
         ("planned-source-cached-execution-1.1.2", {"consume_input": True}),
         ("planned-source-cached-execution-1.1.3", {"consume_input": True}),
+        ("planned-source-cached-execution-1.1.4", {"consume_input": True}),
     ],
 )
 def test_planned_producer_transfers_owned_tables_only_to_supported_writer(

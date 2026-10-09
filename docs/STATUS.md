@@ -1,5 +1,14 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: wykryta granica pełnych scenariuszy Source.**
+[09.88](evidence/09-88-full-source-scenario-audit.json) odtwarza cztery odmowy
+natywnej weryfikacji demand/physical w profilach 25/50: builder efektów ma
+limit 5000 ziaren. Poprawka jawnych pełnych profili i czasu utrzymywania
+struktur danych jest przygotowana w osobnym Source worktree. Sześć małych
+kontroli dało identyczne wyniki; pełna skala, CI i publikacja pozostają otwarte.
+Consumer rozpoznaje przyszłą wersję 1.1.4,
+ale aktywny pin Source nie został zmieniony. AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: wykonawca przygotowania profili 25/50.**
 [09.87](evidence/09-87-development-preparation-execution.json) dodaje osobny
 prywatny dziennik i uruchomienie oryginalnych sześciu faz. Próba jest zapisana

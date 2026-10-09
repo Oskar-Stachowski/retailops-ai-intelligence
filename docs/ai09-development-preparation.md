@@ -7,6 +7,11 @@ ordinary, demand i physical. Korzysta z tych samych sześciu faz
 i verify. Nie dodaje własnego generatora ani uproszczonej weryfikacji Source.
 Profile zachowują [pełną historię i lokalizacje](ai09-development-profiles.md).
 
+**Otwarta zależność Source:** [audyt 09.88](ai09-full-source-scenario-audit.md)
+potwierdził limit 5000 ziaren w natywnej weryfikacji efektów obecnego pina.
+Demand/physical w skali 25/50 wymagają zaakceptowanej poprawki producenta;
+samo uruchomienie tego wrappera nie usuwa ograniczenia.
+
 `compile_development_preparation` otrzymuje konkretny pełny protokół portfolio,
 plan profilu oraz deklarację równego budżetu RF/HGB/TF. Sprawdza ich tożsamości,
 wspólne wersje i locki producenta, seed, historię oraz lokalizacje. Zamrożony
