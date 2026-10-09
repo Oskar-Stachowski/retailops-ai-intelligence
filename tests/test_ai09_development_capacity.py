@@ -141,6 +141,8 @@ def test_probe_cannot_authorize_fits_or_project_campaign() -> None:
 def test_modified_producer_audit_stops_before_output_or_worker(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    # Test audit integrity independently of the earlier pending-preparation gate.
+    monkeypatch.setattr(probe, "require_dispatch_readiness", lambda plan: None)
     source, output = tmp_path / "source", tmp_path / "output"
     plan = probe.read(probe.PLAN_PATH)
     audit = source / plan["producer_audit"]["evidence"]
@@ -175,6 +177,7 @@ def test_system_peak_rejects_phase_even_if_sample_missed_it(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, self_peak: int | None, reason: str
 ) -> None:
     # Exercise only supervisory control flow; no source generation or canonical data.
+    monkeypatch.setattr(probe, "require_dispatch_readiness", lambda plan: None)
     source, output = tmp_path / "source", tmp_path / "output"
     source.mkdir()
     plan = probe.read(probe.PLAN_PATH)
@@ -247,6 +250,7 @@ def test_twelve_gib_preflight_preserves_one_gib_reserve_before_starting_a_worker
 ) -> None:
     # Exercise the real preflight and receipt path with an isolated controlled
     # worker boundary, without allocating GiB or generating any source data.
+    monkeypatch.setattr(probe, "require_dispatch_readiness", lambda plan: None)
     source, output = tmp_path / "source", tmp_path / "output"
     source.mkdir()
     plan = probe.read(probe.PLAN_PATH)
@@ -385,6 +389,7 @@ def controlled_generation(args,plan):
     return {'length':len(local_value)}
 probe.producer_worker = controlled_generation
 plan = probe.read(probe.PLAN_PATH)
+plan.pop('live_progress')  # This control replaces Source with a stdlib-only stub.
 plan['worker_stack_observation']['interval_seconds'] = 0.025
 probe.observed_worker(SimpleNamespace(worker='generation'),plan)
 print('CONTROL_COMPLETED',flush=True)
@@ -408,8 +413,10 @@ def test_stack_timer_is_cancelled_before_propagating_generation_failure(monkeypa
         raise ValueError("controlled_generation_failure")
 
     monkeypatch.setattr(probe, "producer_worker", failed)
+    plan = probe.read(probe.PLAN_PATH)
+    plan.pop("live_progress")  # Source reporting is exercised by its separate real control.
     with pytest.raises(ValueError, match="controlled_generation_failure"):
-        probe.observed_worker(SimpleNamespace(worker="generation"), probe.read(probe.PLAN_PATH))
+        probe.observed_worker(SimpleNamespace(worker="generation"), plan)
     assert calls == ["start", "cancel"]
 
 
@@ -521,6 +528,7 @@ def test_observer_errors_cannot_return_successful_worker_result(monkeypatch) -> 
 
     monkeypatch.setattr(probe.sys, "stderr", BrokenStream())
     policy = probe.read(probe.PLAN_PATH)
+    policy.pop("live_progress")  # Isolate the Python stack observer's failure semantics.
     policy["worker_stack_observation"]["interval_seconds"] = 0.001
 
     def wait_for_observation(*args):
@@ -535,6 +543,7 @@ def test_observer_errors_cannot_return_successful_worker_result(monkeypatch) -> 
 def test_successful_worker_reports_observer_shutdown_and_cost_metadata(monkeypatch) -> None:
     monkeypatch.setattr(probe.sys, "stderr", io.StringIO())
     policy = probe.read(probe.PLAN_PATH)
+    policy.pop("live_progress")  # Isolate the Python stack observer with a stdlib worker.
     policy["worker_stack_observation"]["interval_seconds"] = 0.001
     monkeypatch.setattr(
         probe, "producer_worker", lambda *a: time.sleep(0.02) or {"status": "passed"}

@@ -2,6 +2,14 @@ name: AI09 real generation worker control
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Small generation regression or actual live-progress visibility control
+        type: choice
+        options:
+          - generation
+          - live_progress
+        default: generation
 
 permissions:
   contents: read
@@ -22,7 +30,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: 16d34887b058b3dfb270af474f28242194a968ca
+          ref: ${{ inputs.mode == 'live_progress' && 'ff2504a9cf6e4f46040c8327901b7bcb82d115c0' || '16d34887b058b3dfb270af474f28242194a968ca' }}
           persist-credentials: false
           path: source
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
@@ -37,6 +45,7 @@ jobs:
           uv pip install --python source/.venv/bin/python \
             -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt
       - name: Run both native six-phase controls without a project campaign
+        if: inputs.mode != 'live_progress'
         env:
           OMP_NUM_THREADS: "1"
           OPENBLAS_NUM_THREADS: "1"
@@ -47,6 +56,13 @@ jobs:
             --source "$GITHUB_WORKSPACE/source" \
             --producer-python "$GITHUB_WORKSPACE/source/.venv/bin/python" \
             --output "$GITHUB_WORKSPACE/control"
+      - name: Flush actual Source progress with a separate visibility observation window
+        if: inputs.mode == 'live_progress'
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_live_progress.py \
+            --source "$GITHUB_WORKSPACE/source" \
+            --producer-python "$GITHUB_WORKSPACE/source/.venv/bin/python" \
+            --output "$GITHUB_WORKSPACE/control"
       - name: Preserve completed and failed phase evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -54,8 +70,11 @@ jobs:
           name: ai09-generation-control-${{ github.sha }}-${{ github.run_id }}
           path: |
             control/summary.json
+            control/*.json
+            control/*.jsonl
+            control/*.log
             control/*/*.json
             control/*/*.log
           if-no-files-found: warn
-          retention-days: 14
+          retention-days: 90
           overwrite: false

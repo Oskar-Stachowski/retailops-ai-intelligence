@@ -1,6 +1,33 @@
 # Pomiar pełnego development AI 09
 
-[Receptura 1.10](reference/ai09-development-capacity-v1.10.json) przypina
+[Przygotowywana receptura 1.11](reference/ai09-development-capacity-v1.11.json)
+ma zatwierdzony przez użytkownika budżet **180 minut obliczeń** oraz **210 minut
+na cały job Actions**. Limit RSS drzewa nadal wynosi **12 GiB**, scratch
+8 GiB, rezerwa pamięci 1 GiB i dysku 6 GiB. Pełny profil i final portfolio
+pozostają zachowane. 180 minut jest budżetem pomiaru, nie obietnicą ukończenia.
+
+Nowe logi pokazują faktyczne etapy Source, zakończone zdarzenia, dni i wiersze
+oraz oczekiwane liczby, kiedy są znane. Niezależny supervisor co 60 s wypisuje
+heartbeat, upływ czasu, RAM i dolną granicę CPU; nie zwiększa liczników pracy.
+Rekordy trafiają przez `flush()` do Actions oraz do prywatnego JSONL z `fsync()`.
+Awaria telemetrii nie zasłania timeoutu ani kosztu nieudanego procesu.
+
+Producent jest przypięty do [Source PR112](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/112).
+Mały workflow `AI09 real generation worker control`, tryb `live_progress`,
+wykonuje rzeczywistą generację i osobne 130-sekundowe okno obserwacji logów.
+Ten czas jest jawnie oznaczony jako oczekiwanie na obserwację, bez pracy Source.
+Artefakty kontroli są przechowywane przez 90 dni; to nie jest archiwum trwałe.
+Lokalne przejście testów ani końcowy log nie zastępują sprawdzenia widoczności
+przyrostowych wpisów w UI podczas działania joba.
+
+**1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
+`dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
+Pozostały odbiór chronionych head/main, dowód widoczności w Actions,
+zweryfikowane checkpointy/wznowienie i reprezentatywna ścieżka dane→raport.
+Kolejny spójny przyrost musi dostarczyć te dowody przed otwarciem bramki.
+Zachowano wszystkie wcześniejsze receptury i dziewięć rzeczywistych porażek.
+
+Nieuruchomiona [receptura 1.10](reference/ai09-development-capacity-v1.10.json) przypina
 audyt CPU z [Source PR111](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/111):
 ograniczony cache konwersji Arrow oraz istniejący indeks ledger uruchamiany
 dopiero po pełnej walidacji. Trzy małe pary zachowują 58 tabel, kontekst, CSV

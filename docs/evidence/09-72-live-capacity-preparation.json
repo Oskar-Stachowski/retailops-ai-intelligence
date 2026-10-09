@@ -1,0 +1,119 @@
+{
+  "code_sha256": {
+    ".github/workflows/ai09-development-capacity.yml": "b22f2ec133c4906a6104984eae2a8235c997b8940dac208a3b02591ade92ea5b",
+    ".github/workflows/ai09-generation-control.yml": "1981b54c9b49eb5cc9c4dd39752a4269868cab0a78c0d6e5d428061a89bf9bc7",
+    "docs/reference/ai09-development-capacity-v1.11.json": "799f2b842af78f6043f340e78789f10c72974d46ed52accda6dd05b77210fc2c",
+    "scripts/ai09_live_progress.py": "d5cd00232e71b7ebaa9edf0865b5e098e604f5c792d10c15370f199957bc515d",
+    "scripts/check_ai09_live_progress.py": "11d5a326406993588c8102b048d9ea89e62e1979e875ecd5f04ff67ace952020",
+    "scripts/measure_ai09_development_capacity.py": "6589c26e60d7859fa6b9424524e3f1795572caf9dc2d8ab27d9f51ceab2e9f5a"
+  },
+  "controls": [
+    {
+      "errors": 0,
+      "failures": 4,
+      "junit_sha256": "acfabb8802c6de8b2da9e8da48128a277b878ca7670abe93f3d43b93594bdf4d",
+      "name": "initial",
+      "seconds": 2.341,
+      "skipped": 0,
+      "tests": 69
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "c6d1d293bbd14077a83c90b15368c55ec5b48f8b4e4fab350ae572637df0fcd4",
+      "name": "revised",
+      "seconds": 2.532,
+      "skipped": 0,
+      "tests": 74
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "6437a12217f7f83e48c42a43ac5869f70b542fcc54d83723c88a04df62d2e8da",
+      "name": "error-order",
+      "seconds": 3.162,
+      "skipped": 0,
+      "tests": 85
+    },
+    {
+      "errors": 0,
+      "failures": 1,
+      "junit_sha256": "6fce09e233780815e7256e1d66114f7535401540c9953e41a13060c428953e1a",
+      "name": "pinned-source",
+      "seconds": 4.024,
+      "skipped": 0,
+      "tests": 141
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "2491666f56541ef2127297902a4d8074c6d15d6c7c8f89c1be6e16a625e45b41",
+      "name": "pinned-source-final",
+      "seconds": 3.902,
+      "skipped": 0,
+      "tests": 141
+    }
+  ],
+  "native_source_control": {
+    "accepted_real_progress_events": 391,
+    "actions_UI_visibility_proven": false,
+    "hold_seconds": 0,
+    "raw_log_sha256": "cc66e4ad7419a034486432c4481e450089dee72e7b790d8e3bd5c5eb67208987",
+    "result": {
+      "canonical_profile": false,
+      "final_test_opened": false,
+      "native_source_writer_and_reader_completed": true,
+      "producer_commit": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+      "project_fits": 0,
+      "rows": 4044,
+      "source_dataset_id": "source-sha256-c99626b5674df0e8e3c1d2c37228d74aae92419b22c8eb6e0fa296235721af46",
+      "tables": 58,
+      "version": "ai09-actions-live-control-1.0.0"
+    }
+  },
+  "next_diagnostic": {
+    "computation_seconds": 10800,
+    "dispatch_enabled": false,
+    "job_minutes": 210,
+    "reason": "pending Actions UI live evidence, checkpoint/resume, representative endtoend and accepted exact head/main",
+    "recipe": "1.11",
+    "tree_rss_bytes": 12884901888
+  },
+  "recorded_at_utc": "2026-10-09T10:43:43.210840+00:00",
+  "retained_failures": [
+    "initial observer-only controls used stdlib mock with no Source; disabled unrelated livepolicy in four observer controls",
+    "first pinned-source suite140passed1failed: earlier pending-preparation guard masked intended audit-integrity failure; isolated audit test now explicitly mocks only preparation gate, alongside separate real pending-gate denial test",
+    "initial ad-hoc mypy duplicate namespace; used existing importlib script-loading convention",
+    "typed dynamic Source decorator was reported untyped; explicit wrapper invocation preserves semantics"
+  ],
+  "source": {
+    "base": "265b26a9473b119b501d94d6d0dfcb418158cd9a",
+    "head": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+    "pr": 112,
+    "state": "open",
+    "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/112"
+  },
+  "static_checks": {
+    "documentation_and_required_ci_contract": "passed",
+    "make_ci_local": "pending; existing predecessor full run and queued adapter verification remain undisturbed",
+    "mypy_changed_scripts": 3,
+    "ruff_and_format": "passed"
+  },
+  "unchanged": {
+    "canonical_dimensions": [
+      365,
+      100,
+      5,
+      3
+    ],
+    "fresh_final_reads": 0,
+    "full_final_portfolio": true,
+    "journal_initialized": false,
+    "old_failed_attempts": 9,
+    "old_recipe_bytes": true,
+    "project_fits": 0,
+    "seed": 42,
+    "stage_ready": false
+  },
+  "version": "ai09-live-capacity-preparation-1.0.0"
+}

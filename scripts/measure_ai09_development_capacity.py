@@ -21,6 +21,7 @@ import subprocess
 import sys
 import threading
 import time
+from contextlib import nullcontext
 from datetime import UTC, date, datetime
 from pathlib import Path
 from types import FrameType
@@ -28,7 +29,7 @@ from typing import Any, TextIO
 
 PHASES = ("generation", "qualification", "export", "import", "curation")
 PLAN_PATH = (
-    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.10.json"
+    Path(__file__).resolve().parents[1] / "docs/reference/ai09-development-capacity-v1.11.json"
 )
 
 
@@ -123,6 +124,7 @@ def monitor(
     roots: tuple[Path, ...],
     budgets: dict[str, Any],
     deadline: float,
+    live_progress: Any | None = None,
 ) -> dict[str, Any]:
     """Start only our worker; kill and reap its entire group on any budget/error."""
     import psutil
@@ -133,6 +135,8 @@ def monitor(
     minimum_memory = psutil.virtual_memory().available
     observed_cpu: dict[tuple[int, float], float] = {}
     reason: str | None = None
+    telemetry_errors: list[str] = []
+    rss = 0
     with log.open("xb") as stream:
         child = subprocess.Popen(  # noqa: S603 - owned interpreter/script/paths, no shell
             command, cwd=cwd, env=env, stdout=stream, stderr=stream, start_new_session=True
@@ -152,6 +156,10 @@ def monitor(
                     max(allocated_peak, allocated),
                 )
                 minimum_disk, minimum_memory = min(minimum_disk, disk), min(minimum_memory, memory)
+                if live_progress is not None:
+                    live_progress.observe(
+                        log, rss_bytes=rss, cpu_seconds=sum(observed_cpu.values())
+                    )
                 now = time.perf_counter()
                 if now >= deadline:
                     reason = "wall_limit"
@@ -170,7 +178,7 @@ def monitor(
                 time.sleep(budgets["sample_seconds"])
             if reason is None and child.returncode != 0:
                 reason = "worker_exit"
-        except (OSError, ValueError, psutil.Error) as error:
+        except (OSError, ValueError, TypeError, psutil.Error) as error:
             reason = "monitor_error_" + type(error).__name__
         finally:
             # Even a successful parent must not leave detached children behind.
@@ -186,6 +194,21 @@ def monitor(
             _, remaining = psutil.wait_procs(descendants, timeout=2)
             if any(p.is_running() and p.status() != psutil.STATUS_ZOMBIE for p in remaining):
                 reason = "worker_descendants_unresolved"
+            if live_progress is not None:
+                try:
+                    while live_progress.position < log.stat().st_size:
+                        live_progress.observe(
+                            log, rss_bytes=rss, cpu_seconds=sum(observed_cpu.values())
+                        )
+                except (OSError, ValueError, TypeError) as error:
+                    telemetry_errors.append("live_progress_error_" + type(error).__name__)
+                    reason = reason or telemetry_errors[-1]
+                finally:
+                    try:
+                        live_progress.finish("passed" if reason is None else "failed", reason)
+                    except (OSError, ValueError, TypeError) as error:
+                        telemetry_errors.append("live_progress_error_" + type(error).__name__)
+                        reason = reason or telemetry_errors[-1]
     return {
         "status": "passed" if reason is None else "failed",
         "reason": reason,
@@ -201,6 +224,7 @@ def monitor(
         "samples": samples,
         "sample_seconds": budgets["sample_seconds"],
         "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        **({"telemetry_errors": telemetry_errors} if live_progress is not None else {}),
     }
 
 
@@ -307,21 +331,33 @@ def validate_plan(plan: dict[str, Any]) -> None:
         "budgets",
         "revision_reason",
         "worker_stack_observation",
+        "live_progress",
+        "superseded_preparation",
+        "dispatch_enabled",
+        "preparation_pending",
     }
     if {k: v for k, v in plan.items() if k not in revision_keys} != {
         k: v for k, v in previous.items() if k not in revision_keys
     }:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
     if (
-        plan["version"] != "ai09-development-capacity-probe-1.10.0"
+        plan["version"] != "ai09-development-capacity-probe-1.11.0"
+        or plan.get("dispatch_enabled") is not False
+        or plan.get("preparation_pending")
+        != [
+            "protected_source_and_consumer_head_main_acceptance",
+            "actions_live_UI_visibility_receipt",
+            "verified_completed_stage_checkpoint_resume",
+            "representative_development_data_to_report_control",
+        ]
         or sha(previous_path) != "07ee91c51bbd9f5300aac002ce7873f6bbdd4c22a0018a00baf1c25a4ec297f6"
         or sha(PLAN_PATH.parents[1] / "evidence/09-62-development-capacity-ninth-run.json")
         != "7228c0c40565bf198c756b5afc26408fd6eb34d35e9569f042c4f180eb08dffe"
-        or plan["producer_commit"] != "80293fb582e05f7004cf44c2da1828d1a5e74a97"
+        or plan["producer_commit"] != "ff2504a9cf6e4f46040c8327901b7bcb82d115c0"
         or plan.get("producer_audit")
         != {
-            "evidence": "docs/evidence/ml/ai09-source-cpu-followup.json",
-            "evidence_sha256": "f6c8ab7bf076c159342bbcc7dd00053a7e099a613cec6b8bd71acc434a10dfdf",
+            "evidence": "docs/evidence/ml/ai09-source-live-progress.json",
+            "evidence_sha256": "4595523596b4d06ace264fb47287b41b2395746119c1dd653d27824f851b48f5",
             "ordinary_implementation": "inventory-source-cached-ledger-2.2.3",
             "planned_implementation": "planned-source-cached-execution-1.1.3",
         }
@@ -358,6 +394,26 @@ def validate_plan(plan: dict[str, Any]) -> None:
             "may_be_delayed_without_GIL": True,
             "truncation_explicit": True,
         }
+        or plan.get("live_progress")
+        != {
+            "source_version": "source-progress-1.0.0",
+            "supervisor_version": "ai09-live-progress-1.0.0",
+            "heartbeat_seconds": 60,
+            "output": "flushed_actions_stdout_and_private_jsonl",
+            "heartbeat_is_not_work_progress": True,
+            "percent_and_eta_inferred": False,
+            "actions_live_visibility_control_required": True,
+        }
+        or plan.get("superseded_preparation")
+        != {
+            "version": "ai09-development-capacity-probe-1.10.0",
+            "recipe": "docs/reference/ai09-development-capacity-v1.10.json",
+            "recipe_sha256": "d1ea27c06bf14450828717271052e3895ae1ec10a5d6c5ecce8e06e9396c4cbf",
+            "workflow_dispatched": False,
+            "superseded_before_execution": True,
+        }
+        or sha(PLAN_PATH.with_name("ai09-development-capacity-v1.10.json"))
+        != "d1ea27c06bf14450828717271052e3895ae1ec10a5d6c5ecce8e06e9396c4cbf"
         or plan["generation_entrypoint"] != "data.inventory.source_cohort_batch_v2.run"
         or plan["scope"] != "isolated_resource_diagnostic_on_previously_exposed_development_dates"
         or plan["expected_snapshot_schema_version"] != "1.1.0"
@@ -365,7 +421,7 @@ def validate_plan(plan: dict[str, Any]) -> None:
         != {
             "tree_rss_bytes": 12 * 1024**3,
             "scratch_bytes": 8 * 1024**3,
-            "wall_seconds": 3600,
+            "wall_seconds": 10800,
             "minimum_free_disk_bytes": 6 * 1024**3,
             "minimum_available_memory_bytes": 1024**3,
             "sample_seconds": 0.2,
@@ -423,12 +479,18 @@ def validate_plan(plan: dict[str, Any]) -> None:
         raise ValueError("capacity_frozen_diagnostic_scope_mismatch")
 
 
+def require_dispatch_readiness(plan: dict[str, Any]) -> None:
+    if plan.get("dispatch_enabled") is not True or plan.get("preparation_pending") != []:
+        raise ValueError("capacity_preparation_not_accepted")
+
+
 def run(args: argparse.Namespace) -> None:  # noqa: PLR0915 - ordered probe evidence and gates
     import psutil
 
     require_remote()
     plan = read(PLAN_PATH)
     validate_plan(plan)
+    require_dispatch_readiness(plan)
     source, output = args.source, args.output
     if not source.is_absolute() or not output.is_absolute():
         raise ValueError("capacity_absolute_paths_required")
@@ -493,6 +555,17 @@ def run(args: argparse.Namespace) -> None:  # noqa: PLR0915 - ordered probe evid
                 "TMPDIR": str(output / "temporary"),
             }
             Path(env["TMPDIR"]).mkdir(exist_ok=True, mode=0o700)
+            live = None
+            if plan.get("live_progress") is not None:
+                sys.path.insert(0, str(control))
+                live_module = importlib.import_module("scripts.ai09_live_progress")
+                live = live_module.LiveProgress(
+                    phase,
+                    started=started,
+                    budget_seconds=budgets["wall_seconds"],
+                    artifact=output / (phase + ".progress.jsonl"),
+                    interval_seconds=plan["live_progress"]["heartbeat_seconds"],
+                )
             measurement = monitor(
                 [
                     str(interpreter),
@@ -510,6 +583,7 @@ def run(args: argparse.Namespace) -> None:  # noqa: PLR0915 - ordered probe evid
                 roots=(output, snapshot_root),
                 budgets=budgets,
                 deadline=started + budgets["wall_seconds"],
+                live_progress=live,
             )
             phases.append({"phase": phase, **measurement})
             if measurement["status"] != "passed":
@@ -689,11 +763,19 @@ def observed_worker(args: argparse.Namespace, plan: dict[str, Any]) -> dict[str,
     if observer is not None:
         observer.start()
     try:
-        result = (
-            producer_worker(args, plan)
-            if args.worker in PHASES[:3]
-            else consumer_worker(args, plan)
-        )
+        reporting = nullcontext()
+        if plan.get("live_progress") is not None and args.worker in PHASES[:3]:
+            sys.path.insert(0, str(args.source))
+            progress = importlib.import_module("data.generator.progress")
+            reporting = progress.reporting(
+                sys.stdout, interval_seconds=plan["live_progress"]["heartbeat_seconds"]
+            )
+        with reporting:
+            result = (
+                producer_worker(args, plan)
+                if args.worker in PHASES[:3]
+                else consumer_worker(args, plan)
+            )
     finally:
         if observer is not None:
             observer.stop()
@@ -718,6 +800,7 @@ def main() -> None:
         require_remote()
         plan = read(PLAN_PATH)
         validate_plan(plan)
+        require_dispatch_readiness(plan)
         result = observed_worker(args, plan)
         peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         result["worker_peak_self_rss_bytes"] = int(

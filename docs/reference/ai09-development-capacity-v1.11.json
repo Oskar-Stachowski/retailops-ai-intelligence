@@ -1,0 +1,119 @@
+{
+  "version": "ai09-development-capacity-probe-1.11.0",
+  "scope": "isolated_resource_diagnostic_on_previously_exposed_development_dates",
+  "producer_commit": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+  "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+  "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+  "consumer_lock_sha256": "33c53d1a1f08d5c90b3b61c79e6aeb732f0eebc6e8be36e735c93ca277492587",
+  "generation": {
+    "profile": "ai-dev",
+    "seed": 42,
+    "days": 365,
+    "products": 100,
+    "stores": 5,
+    "warehouses": 3,
+    "start_date": "2025-08-01",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 182500,
+    "forecast_plan_days": 14
+  },
+  "budgets": {
+    "tree_rss_bytes": 12884901888,
+    "scratch_bytes": 8589934592,
+    "wall_seconds": 10800,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "parent_limits": {
+    "max_bytes": 2147483648,
+    "max_files": 10000,
+    "max_rows": 20000000,
+    "batch_rows": 256
+  },
+  "expected_snapshot_schema_version": "1.1.0",
+  "snapshot": {
+    "include_truth": false,
+    "chunk_rows": 256,
+    "partition_by_day": false,
+    "required_use_cases": [
+      "forecast_source",
+      "inventory_source"
+    ]
+  },
+  "project_campaign_authorized": false,
+  "model_fit_authorized": false,
+  "final_generation_authorized": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "previous_attempt": {
+    "version": "ai09-development-capacity-probe-1.9.0",
+    "workflow_run": 37853501527,
+    "plan_sha256": "07ee91c51bbd9f5300aac002ce7873f6bbdd4c22a0018a00baf1c25a4ec297f6",
+    "resource_receipt_sha256": "1217e0e01930bcfc4021c58e34b73bb6a47fbd537cd8d15615c91c05e3f873d2",
+    "reason": "wall_limit",
+    "exit_code": -9,
+    "completed_phases": 0,
+    "wall_seconds": 3600.5260635249997,
+    "sampled_tree_peak_rss_bytes": 9061416960,
+    "previous_failure_preserved": true
+  },
+  "revision_reason": "User-approved prospective 180-minute computation budget and 210-minute job ceiling. Add actual Source subphase/event/day/row progress plus independent flushed supervisor heartbeats and persistent measurements. Verify incremental visibility in Actions before one new full diagnostic. Preserve all nine actual failures and unexecuted preparations, 365 days x100 products x5 selling pairs x3 stock locations, seed42, dates, source event semantics, full final portfolio,12GiB tree RSS,8GiB scratch and host1GiB RAM/6GiB disk reserves. Source telemetry publication and checkpoint/resume proof remain required before dispatch; 180 minutes is a measurement budget, not a promise of success.",
+  "generation_entrypoint": "data.inventory.source_cohort_batch_v2.run",
+  "worker_stack_observation": {
+    "phases": [
+      "generation"
+    ],
+    "interval_seconds": 120,
+    "repeat": true,
+    "locals_dumped": false,
+    "periodic_observation_not_allocation_measurement": true,
+    "implementation": "python_current_frames_owned_references_no_native_watchdog",
+    "maximum_threads": 64,
+    "maximum_frames_per_thread": 64,
+    "maximum_snapshot_bytes": 65536,
+    "join_timeout_seconds": 5,
+    "may_be_delayed_without_GIL": true,
+    "truncation_explicit": true,
+    "maximum_filename_characters": 256,
+    "maximum_function_characters": 96
+  },
+  "previous_preparation": {
+    "version": "ai09-development-capacity-probe-1.6.0",
+    "recipe": "docs/reference/ai09-development-capacity-v1.6.json",
+    "recipe_sha256": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "evidence": "docs/evidence/09-48-audited-capacity-preparation.json",
+    "evidence_sha256": "8bbaac6c6a2a703103b89c87dd574aecfd166f2634c221e82b2be0f998f125b3",
+    "workflow_dispatched": false,
+    "superseded_before_execution": true
+  },
+  "producer_audit": {
+    "evidence": "docs/evidence/ml/ai09-source-live-progress.json",
+    "evidence_sha256": "4595523596b4d06ace264fb47287b41b2395746119c1dd653d27824f851b48f5",
+    "ordinary_implementation": "inventory-source-cached-ledger-2.2.3",
+    "planned_implementation": "planned-source-cached-execution-1.1.3"
+  },
+  "live_progress": {
+    "source_version": "source-progress-1.0.0",
+    "supervisor_version": "ai09-live-progress-1.0.0",
+    "heartbeat_seconds": 60,
+    "output": "flushed_actions_stdout_and_private_jsonl",
+    "heartbeat_is_not_work_progress": true,
+    "percent_and_eta_inferred": false,
+    "actions_live_visibility_control_required": true
+  },
+  "superseded_preparation": {
+    "version": "ai09-development-capacity-probe-1.10.0",
+    "recipe": "docs/reference/ai09-development-capacity-v1.10.json",
+    "recipe_sha256": "d1ea27c06bf14450828717271052e3895ae1ec10a5d6c5ecce8e06e9396c4cbf",
+    "workflow_dispatched": false,
+    "superseded_before_execution": true
+  },
+  "dispatch_enabled": false,
+  "preparation_pending": [
+    "protected_source_and_consumer_head_main_acceptance",
+    "actions_live_UI_visibility_receipt",
+    "verified_completed_stage_checkpoint_resume",
+    "representative_development_data_to_report_control"
+  ]
+}

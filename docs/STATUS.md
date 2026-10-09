@@ -1,8 +1,23 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: telemetria Source i przygotowanie capacity 1.11.**
+[Receptura i logi](ai09-development-capacity.md) zachowują 12 GiB RAM
+i podnoszą przyszły budżet obliczeń do 180 minut, a joba do 210 minut.
+Source [PR112](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/112)
+dodaje rzeczywiste liczniki etapów, zdarzeń, dni i wierszy. 11 końcowych
+kontroli Source i 141 kontroli AI/CI przeszło; prawdziwy mały Source ma
+58 tabel i 4044 wiersze, a jego 391 zdarzeń przyjął supervisor.
+[Dowód 09.72](evidence/09-72-live-capacity-preparation.json) rozdziela te kontrole
+od jeszcze niewykonanej obserwacji logów w działającym Actions UI.
+Pełna próba jest zablokowana do odbioru CI, widoczności live,
+checkpointów/wznowienia i reprezentatywnej ścieżki dane→raport.
+Nie uruchomiono nowej diagnostyki canonical, fitów Project ani świeżego final.
+AI 09 pozostaje `not_ready`; profile 25/50 i protokół budżetów prób są otwarte.
+
 **2026-10-09 — AI 09: pełny odbiór poprawek CPU Source, integracja anomaly trwa.**
 Source PR111 i wynikowy main `265b26a9` mają **30/30 success** każdy.
-AI PR63 nadal przechodzi pełne CI; rzeczywisty trening i reload TensorFlow przeszły.
+AI PR63 oraz wynikowy main `12484dee` mają **17/17 success** każdy,
+włącznie z rzeczywistym treningiem i reloadem TensorFlow.
 Nowy odczyt [cech anomaly](ai09-native-anomaly-features.md) zachowuje wszystkie
 żądane serie, okno i sześć wcześniejszych dni. [Replay](ai09-native-anomaly-replay.md)
 sprawdza również globalny indeks deduplikacji. [09.66](evidence/09-66-native-anomaly-census-access.json)
@@ -47,7 +62,7 @@ zgłosił błąd. Shard 3 ukończył cały pytest, ale jego anulowany job nie je
 zaliczony; shard 2 pozostawił tylko plan i nieznany koszt wykonania.
 Korekta wykorzystuje przejrzane czasy, zachowuje wszystkie testy i atomowo
 zapisuje raporty częściowe. Limit joba testów wynosi 90 minut. Pełny chroniony
-odbiór poprawionego HEAD i wynikowego main nadal jest wymagany.
+odbiór poprawionego HEAD PR63 i wynikowego main zakończył się sukcesem 17/17.
 
 [Pełne historyczne cechy anomaly](ai09-native-anomaly-features.md) odtwarzają
 wszystkie zadeklarowane dni przez natywne funkcje, z 28 dniami historii.

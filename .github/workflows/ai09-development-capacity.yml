@@ -13,7 +13,7 @@ concurrency:
 jobs:
   measure:
     runs-on: ubuntu-24.04
-    timeout-minutes: 75
+    timeout-minutes: 210
     env:
       OMP_NUM_THREADS: "1"
       OPENBLAS_NUM_THREADS: "1"
@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: 80293fb582e05f7004cf44c2da1828d1a5e74a97
+          ref: ff2504a9cf6e4f46040c8327901b7bcb82d115c0
           persist-credentials: false
           path: source
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
@@ -57,6 +57,7 @@ jobs:
           path: |
             diagnostic/plan.json
             diagnostic/resource.json
+            diagnostic/*.progress.jsonl
             diagnostic/generation.json
             diagnostic/qualification.json
             diagnostic/export.json
