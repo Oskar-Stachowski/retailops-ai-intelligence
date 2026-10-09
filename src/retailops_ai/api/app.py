@@ -13,9 +13,11 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from opentelemetry.trace import Tracer
 from prometheus_client import CONTENT_TYPE_LATEST
+from sqlalchemy import create_engine
 from starlette.exceptions import HTTPException
 from starlette.responses import JSONResponse, Response
 
+from retailops_ai.adapters.assistant_store import PostgresAssistantStore
 from retailops_ai.adapters.database import DatabaseProbe, database_engine
 from retailops_ai.adapters.index_jobs import IndexAdministration, PostgresIndexAdministration
 from retailops_ai.adapters.knowledge_search import KnowledgeBackend, PostgresKnowledge
@@ -24,9 +26,16 @@ from retailops_ai.adapters.vector_store import index_engine
 from retailops_ai.anomaly_portfolio.result_store import PostgresResults
 from retailops_ai.anomaly_portfolio.result_store import Reader as AnomalyReader
 from retailops_ai.api.access import access_router
+from retailops_ai.api.assistant import assistant_router
 from retailops_ai.api.errors import problem_response
 from retailops_ai.api.middleware import HttpObservation, single_header
 from retailops_ai.api.models import DependencyStatus, Health, Problem, Ready, ServiceVersion
+from retailops_ai.assistant.service import (
+    AdmissionPolicy,
+    AssistantBackend,
+    AssistantService,
+    AssistantStore,
+)
 from retailops_ai.config import Settings
 from retailops_ai.domain.readiness import Dependency
 from retailops_ai.forecast_jobs.queue import BatchAdministration, PostgresBatchQueue
@@ -92,6 +101,9 @@ def create_app(
     anomaly_reader: AnomalyReader | None = None,
     stockout_administration: StockoutAdministration | None = None,
     stockout_reader: StockoutReader | None = None,
+    assistant_backend: AssistantBackend | None = None,
+    assistant_store: AssistantStore | None = None,
+    assistant_policy: AdmissionPolicy | None = None,
 ) -> FastAPI:
     if any(d.name in {"startup", "ai_db"} for d in dependencies):
         raise ValueError("startup and ai_db are reserved dependency names")
@@ -100,7 +112,26 @@ def create_app(
         settings.metrics_token.get_secret_value() if settings.metrics_token else None,
     )
     engine = database_engine(settings) if settings.database_url is not None else None
+    if assistant_store is not None and settings.app_env != "test":
+        raise ValueError("injected_assistant_store_requires_test_environment")
+    if (
+        settings.assistant_suggestion_outbox_enabled
+        and assistant_store is not None
+        and (
+            not isinstance(assistant_store, PostgresAssistantStore)
+            or not assistant_store.suggestion_outbox_enabled
+        )
+    ):
+        raise ValueError("suggestion_outbox_requires_enabled_postgres_store")
+    if assistant_store is None and engine is not None:
+        assistant_store = PostgresAssistantStore(
+            engine,
+            settings.app_env,
+            suggestion_outbox_enabled=settings.assistant_suggestion_outbox_enabled,
+        )
+    assistant_service = None
     knowledge_engine = None
+    producer_engine = None
     if (
         knowledge_backend is None
         or index_administration is None
@@ -117,6 +148,9 @@ def create_app(
         or anomaly_reader is None
         or stockout_administration is None
         or stockout_reader is None
+        or settings.assistant_runtime_file is not None
+        or settings.assistant_native_offline_file is not None
+        or settings.assistant_native_runtime_file is not None
     ) and settings.database_url is not None:
         knowledge_engine = index_engine(settings)
     if knowledge_backend is None and knowledge_engine is not None:
@@ -168,6 +202,83 @@ def create_app(
         stockout_administration = LazyStockoutAdministration(knowledge_engine, settings.app_env)
     if stockout_reader is None and knowledge_engine is not None:
         stockout_reader = LazyStockoutReader(knowledge_engine, settings.app_env)
+    if settings.assistant_runtime_file is not None:
+        if (
+            assistant_backend is not None
+            or knowledge_engine is None
+            or settings.assistant_source_import is None
+        ):
+            raise ValueError("ambiguous_or_missing_assistant_runtime_dependencies")
+        from retailops_ai.assistant.runtime import document_backend
+
+        assistant_backend = document_backend(
+            settings.assistant_runtime_file,
+            settings.assistant_source_import,
+            knowledge_engine,
+            authority,
+            settings.app_env,
+        )
+    native_config_path = (
+        settings.assistant_native_offline_file or settings.assistant_native_runtime_file
+    )
+    if native_config_path is not None:
+        if (
+            assistant_backend is not None
+            or knowledge_engine is None
+            or settings.assistant_source_import is None
+            or settings.assistant_curated is None
+            or settings.assistant_replay is None
+            or settings.assistant_coverage is None
+            or settings.assistant_producer_database_url is None
+        ):
+            raise ValueError("ambiguous_or_missing_native_offline_dependencies")
+        from retailops_ai.assistant.native_bedrock import native_bedrock_backend
+        from retailops_ai.assistant.native_runtime import native_offline_backend
+
+        producer_engine = create_engine(
+            settings.assistant_producer_database_url.get_secret_value(),
+            connect_args={"connect_timeout": 3},
+            pool_size=1,
+            max_overflow=0,
+            pool_timeout=3,
+            hide_parameters=True,
+        )
+        native_factory = (
+            native_offline_backend
+            if settings.assistant_native_offline_file is not None
+            else native_bedrock_backend
+        )
+        assistant_backend = native_factory(
+            native_config_path,
+            settings.assistant_source_import,
+            settings.assistant_curated,
+            settings.assistant_replay,
+            settings.assistant_coverage,
+            knowledge_engine,
+            producer_engine,
+            authority,
+            settings.app_env,
+        )
+        if settings.assistant_suggestion_outbox_enabled and (
+            assistant_backend.runtime_config.graph.policy.suggestions.policy_version
+            != "read-only-review-v1"
+        ):
+            raise ValueError("suggestion_transport_requires_source_accepted_v1_policy")
+        dependencies = (
+            *dependencies,
+            Dependency(
+                "assistant_native_offline"
+                if settings.assistant_native_offline_file is not None
+                else "assistant_native_runtime",
+                assistant_backend.check,
+            ),
+        )
+    if assistant_backend is not None:
+        if assistant_store is None:
+            raise ValueError("assistant_requires_durable_store")
+        assistant_service = AssistantService(
+            assistant_backend, assistant_store, settings.app_env, assistant_policy
+        )
     if engine is not None:
         dependencies = (*dependencies, Dependency("ai_db", DatabaseProbe(engine).check))
     if anomaly_reader is None and knowledge_engine is not None:
@@ -190,6 +301,8 @@ def create_app(
                 await engine.dispose()
             if knowledge_engine is not None:
                 knowledge_engine.dispose()
+            if producer_engine is not None:
+                producer_engine.dispose()
             logger.info(
                 "application_stopped", extra={"event_data": {"event": "application_stopped"}}
             )
@@ -307,4 +420,6 @@ def create_app(
             stockout_reader,
         )
     )
+    app.include_router(assistant_router(authority, assistant_service, assistant_store))
+    app.state.assistant_backend = assistant_backend
     return app

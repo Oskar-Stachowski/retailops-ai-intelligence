@@ -1,0 +1,40 @@
+{
+  "event_id": "a8eae0dd-5646-5f8a-bf37-a3625130ffdb",
+  "event_type": "recommendation_generated",
+  "schema_version": "2.0",
+  "topic": "retailops.intelligence.v2",
+  "source": "retailops-ai",
+  "correlation_id": "22345678-1234-4234-8234-123456789012",
+  "occurred_at": "2026-10-04T18:00:01Z",
+  "ingested_at": "2026-10-04T18:00:01Z",
+  "payload": {
+    "recommendation_type": "refresh_source_data",
+    "product_id": "fixture-product",
+    "selling_location_id": "12345678-1234-4234-8234-123456789012",
+    "stock_location_id": null,
+    "channel": "store",
+    "action": "Ask an operator to review source freshness.",
+    "priority": "medium",
+    "rationale": "Fixture only: source lag meets the configured review rule; no refresh is executed.",
+    "evidence_refs": [
+      "fixture:operations:lag-60s"
+    ],
+    "model_release_refs": [],
+    "policy_version": "read-only-review-v1",
+    "policy_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "source_as_of": "2026-10-04T18:00:00Z",
+    "expires_at": "2026-10-04T18:05:00Z",
+    "freshness_status": "current",
+    "requires_human_review": true,
+    "status": "proposed",
+    "candidate_id": "candidate-sha256-38d41b8375f971ee438878df2138735b3192a128f40503dc5a72923426fe4b13",
+    "recommendation_id": "408a8867-dd38-5197-87f2-2e8e8f49ced2",
+    "trace_id": "22345678-1234-4234-8234-123456789012",
+    "answer_id": "d3714958-b7fc-51f0-8b40-16cd181fe74c",
+    "created_at": "2026-10-04T18:00:01Z",
+    "origin": "retailops-ai",
+    "store_id": "12345678-1234-4234-8234-123456789012",
+    "summary": "Mechanics fixture: source data needs human review.",
+    "agent_config_version": "fixture-agent-v1"
+  }
+}

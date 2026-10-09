@@ -1,0 +1,92 @@
+{
+  "input_usd_per_million": "0.065",
+  "mode": "on-demand-standard-in-region",
+  "model_id": "amazon.nova-lite-v1:0",
+  "output_usd_per_million": "0.26",
+  "paid_execution_approved": false,
+  "products": {
+    "5B2T2U8FNRYYV6G4": {
+      "attributes": {
+        "feature": "On-demand Inference",
+        "inferenceType": "Input tokens",
+        "location": "EU (Stockholm)",
+        "locationType": "AWS Region",
+        "model": "Nova Lite",
+        "operation": "",
+        "regionCode": "eu-north-1",
+        "servicecode": "AmazonBedrock",
+        "servicename": "Amazon Bedrock",
+        "usagetype": "EUN1-NovaLite-input-tokens"
+      },
+      "productFamily": "Amazon Bedrock",
+      "sku": "5B2T2U8FNRYYV6G4"
+    },
+    "E4Z3PKDHV45PZQMB": {
+      "attributes": {
+        "feature": "On-demand Inference",
+        "inferenceType": "Output tokens",
+        "location": "EU (Stockholm)",
+        "locationType": "AWS Region",
+        "model": "Nova Lite",
+        "operation": "",
+        "regionCode": "eu-north-1",
+        "servicecode": "AmazonBedrock",
+        "servicename": "Amazon Bedrock",
+        "usagetype": "EUN1-NovaLite-output-tokens"
+      },
+      "productFamily": "Amazon Bedrock",
+      "sku": "E4Z3PKDHV45PZQMB"
+    }
+  },
+  "proposed_smoke_cap_usd": "0.05",
+  "publication_date": "2026-09-28T22:53:13Z",
+  "region": "eu-north-1",
+  "retrieved_on": "2026-09-29",
+  "source_sha256": "8b66aaac066170d1479993f30908c2f09c7e37e7be51846df53d957633462fdc",
+  "source_url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/eu-north-1/index.json",
+  "terms": {
+    "5B2T2U8FNRYYV6G4": {
+      "5B2T2U8FNRYYV6G4.JRTCKXETXF": {
+        "effectiveDate": "2026-09-01T00:00:00Z",
+        "offerTermCode": "JRTCKXETXF",
+        "priceDimensions": {
+          "5B2T2U8FNRYYV6G4.JRTCKXETXF.6YS6EN2CT7": {
+            "appliesTo": [],
+            "beginRange": "0",
+            "description": "$0.000065 per 1K tokens for EUN1-NovaLite-input-tokens in EU (Stockholm)",
+            "endRange": "Inf",
+            "pricePerUnit": {
+              "USD": "0.0000650000"
+            },
+            "rateCode": "5B2T2U8FNRYYV6G4.JRTCKXETXF.6YS6EN2CT7",
+            "unit": "1K tokens"
+          }
+        },
+        "sku": "5B2T2U8FNRYYV6G4",
+        "termAttributes": {}
+      }
+    },
+    "E4Z3PKDHV45PZQMB": {
+      "E4Z3PKDHV45PZQMB.JRTCKXETXF": {
+        "effectiveDate": "2026-09-01T00:00:00Z",
+        "offerTermCode": "JRTCKXETXF",
+        "priceDimensions": {
+          "E4Z3PKDHV45PZQMB.JRTCKXETXF.6YS6EN2CT7": {
+            "appliesTo": [],
+            "beginRange": "0",
+            "description": "$0.00026 per 1K tokens for EUN1-NovaLite-output-tokens in EU (Stockholm)",
+            "endRange": "Inf",
+            "pricePerUnit": {
+              "USD": "0.0002600000"
+            },
+            "rateCode": "E4Z3PKDHV45PZQMB.JRTCKXETXF.6YS6EN2CT7",
+            "unit": "1K tokens"
+          }
+        },
+        "sku": "E4Z3PKDHV45PZQMB",
+        "termAttributes": {}
+      }
+    }
+  },
+  "version": "20260928225313"
+}

@@ -838,9 +838,10 @@ zachowują swoje wcześniejsze wyniki i granice.
 Aktualizacja: **2026-10-02**. **Etap 11 — RAG jest odebrany lokalnie.**
 [Instrukcja użytkowa](knowledge-semantic.md) opisuje rzeczywiste embeddings,
 przygotowanie, kwalifikację, aktywację i rollback. [Końcowy odbiór](evidence/11-completion.md)
-wiąże implementację z pomiarami i ograniczeniami. Zdalna publikacja przechodzi
-przez chroniony `main` oraz Required CI; stan wykonania pokazuje
-[workflow repozytorium](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/workflows/required-ci.yml).
+wiąże implementację z pomiarami i ograniczeniami. Etap 11 jest opublikowany na
+chronionym `main` przez [PR #4](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/4);
+[Required CI na main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/36461392661)
+ma `success`.
 
 **AI 04 — `ready`, finalna wersja v12, z jawną akceptacją trzech odstępstw.**
 Właściciel projektu zakończył iterację developerską na v12 2026-10-01.
@@ -1034,8 +1035,9 @@ normalizację, quarantine, immutable IDs i odczyt z pełnej historii wersji.
 [AI 03.6 — bramka cross-repo](evidence/03-06-cross-repo.md) wiąże oba repo
 przez pełne smoke i przypięte rewizje. Końcowy odbiór RetailOps określa wejście
 do 04/06 oraz odrębne readiness use cases.
-AI 12 rozwija się w osobnym worktree; forecasting zaczyna się od main z AI 03.
-Branch 03 jest opublikowany w [PR #5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/5).
+AI 12 jest wznowiony na `ai/12-resume`, z aktualnym `main` i zachowanym kodem
+`ai/12-tools`. Integracja i ponowna kwalifikacja trwają; historyczne wyniki poniżej
+nie potwierdzają obecnej wersji. AI 03 został zaakceptowany w [PR #5](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/5).
 Przypięte wyniki Required CI, testów i rzeczywistego Compose/persistence
 znajdują się w [końcowym evidence cross-repo](evidence/03-06-cross-repo.md).
 
@@ -1074,6 +1076,96 @@ Fake pozostaje wyłącznie ścieżką testową i nigdy nie uprawnia do użytkowe
 Szczegółowe wcześniejsze evidence opisuje historyczne, mniejsze zakresy odbioru;
 nie stanowi bieżącej listy braków.
 
+## Rozpoczęty AI 12
+
+[Pierwszy zakres](agent-tools.md) obejmuje osiem narzędzi tylko do odczytu,
+typowane request/result schemas, principal z prywatnych poświadczeń, jawne
+`assistant:query` i prawa poszczególnych źródeł, kontrolę całego scope oraz
+wspólny budżet wywołań. Adapter wiedzy korzysta z jednego serwerowego pinu
+AI 11. Przyszłe narzędzia biznesowe mają ścisłe kontrakty i testowe odpowiedniki;
+brak rzeczywistego źródła jest jawnym `unavailable`.
+[Odbiór](evidence/12-tools.md) opisuje lokalne testy i granice.
+Zakresy AI 12 są zapisywane lokalnie na osobnym branchu `ai/12-tools`.
+
+[Drugi zakres](agent-chat.md) dodaje konfigurację modelu/budżetu, sześć
+wersjonowanych promptów, checksum całej konfiguracji i schematów, kontrolę
+CLI offline oraz scripted fake chat. Sesja modelu dzieli deadline z narzędziami;
+retry i jedna naprawa zużywają wspólny budżet tokenów/kosztu. Draft przechodzi
+kontrolę zakresu planowanych narzędzi oraz powiązania referencji, cytatów,
+as-of i freshness z rzeczywiście pobranymi wynikami.
+[Odbiór](evidence/12-chat.md) opisuje testy i granice tego przygotowania.
+
+[Trzeci zakres](agent-graph.md) dodaje acykliczny LangGraph, jedno dogranie
+brakujących danych i jedną wspólną naprawę, dokładne wywołania z typed requestu,
+katalog kanonicznych faktów i sprawdzalne porównanie okresów sprzedaży.
+Podmienione liczby, jednostki, okresy, swobodne wnioski, braki dowodów,
+konfliktujące prognozy i niejednoznaczny mapping mają kontrolowane wyniki.
+Bezpieczny trace ma odczyt właściciela, scope, retencję i limit w pamięci.
+[Odbiór](evidence/12-graph.md) podaje testy i granice profilu.
+
+[Czwarty zakres](agent-evaluation.md) dodaje deterministyczną politykę trzech
+kandydatów do przeglądu przez człowieka, wiązanie do wybranych faktów i expiry.
+Wersjonowany golden obejmuje 50 przypadków, w tym sześć pytań z AI 11,
+niezależnie zapisane oracles i scripted replies. Release wiąże config grafu,
+politykę/prompty v4, schemas, golden, ewaluator i lock. `make agent-evaluate`
+jest bramką `make check`; pomiar dotyczy jawnych fixtures i kanonicznych twierdzeń.
+[Odbiór](evidence/12-evaluation.md) podaje wyniki oraz ograniczenia.
+
+[Piąty zakres](assistant-api.md) dodaje kontrakt HTTP queries/runs, lokalne
+auth i kontrolę całego scope, trwały zapis run/odpowiedź/review candidate
+w bazie AI oraz wspólne admission PostgreSQL. Trace sprawdza również cofnięte
+prawa narzędzi/wiedzy; admin wymaga osobnego assistant:audit.
+[Odbiór](evidence/12-assistant.md) opisuje rzeczywiste próby PG/HTTP i granice.
+Standardowe serve obsługuje opcjonalny runtime dokumentacyjny opisany niżej;
+bez jego konfiguracji query daje 503. Fake jest dostępny wyłącznie w testach.
+
+[Chat Bedrock](agent-bedrock.md) ma adapter Converse/CountTokens, kontrolę
+formularza/dostępu konta, zweryfikowane profile EU, circuit breaker i ograniczony
+smoke. Formularz oraz aktywacja Haiku 4.5 i Sonnet 4.6 zostały wykonane po
+potwierdzeniu danych projektu osobistego. Zgoda kosztowa wynosi **1,50 USD
+łącznie**; [rejestr wszystkich prób](evidence/12-bedrock-budget.json) zachowuje
+**1,4017210 USD** szacunków/rezerw, w tym pełny cap przerwanej próby.
+
+[Poprzedni mieszany test Sonnet](evidence/12-bedrock-real.md): **5/6**, w tym
+3/3 przypadki biznesowe i 2/2 zabezpieczenia serwera. Historyczny przypadek dokumentacji
+dał `invalid_evidence`: fixture nie zawierał odpowiedzi, chociaż etykieta
+wymagała `answered`. Wynik i koszt tej próby pozostają zachowane.
+[Bieżąca poprawka dowodów dokumentowych](agent-document-evidence.md) wprowadza
+`typed-facts-v2`, prompty v4 oraz golden v2. Pytanie musi mieć jawne wymagania
+i pobrane źródła pokrywające każde z nich; sam cytat, score lub status
+`verified` nie wystarcza. Sześć oryginalnych pytań ma poprawione fixtures/etykiety
+opisane w [przeglądzie](evidence/12-document-label-review.json).
+[Ponowny test Sonnet](evidence/12-bedrock-runs/sonnet-4-documents.json)
+zaliczył **6/6 pytań dokumentacji**, bez napraw: pięć kompletnych odpowiedzi
+i jedno poprawne `insufficient_evidence`. Koszt szacowany wyniósł
+**0,2439129 USD**. Aktualny stan budżetu uwzględnia też późniejszy test runtime.
+[Odbiór poprawki](evidence/12-document-evidence.md) zawiera pełne wyniki.
+Sonnet zaliczył ten ograniczony test; pełny golden rzeczywistego
+modelu i retrieval nadal wymaga odbioru.
+Test używa rzeczywistego chatu i syntetycznych narzędzi/retrieval.
+
+[Runtime dokumentacyjny](assistant-document-runtime.md) podłącza standardowe
+API do dwóch jawnych tras pytań, zweryfikowanego importu AI 03, rzeczywistego
+PostgreSQL/pgvector, Titan i Sonnet. Resolver zachowuje source UUID i sprawdza
+przypisanie kanału w całym okresie. Przypięte konfiguracje, brak automatycznej
+zmiany indeksu i kontrola pełnych dowodów pozostają obowiązkowe.
+[Ponowny odbiór](evidence/12-bedrock-runs/sonnet-6-runtime.json): **2/2**,
+4 Converse + 2 embeddings, bez napraw; odpowiedzi i trace zapisane w bazie,
+obcy operator nie ma dostępu. Projekcja sprawdzonych faktów ogranicza kontekst
+wysyłany do modelu. [Evidence zakresu](evidence/12-document-runtime.md) podaje
+regresję, testy SQL, pierwotną nieudaną próbę i ograniczenia.
+Pozostaje **0,0982790 USD** zatwierdzonego budżetu; dalszy większy test wymaga
+nowej zgody. Kwoty są szacunkami/rezerwami, nie rachunkiem AWS.
+
+Następny zakres bez AI 10: rozszerzenie zbioru pytań/routingu i kwalifikacja
+rzeczywistego modelu oraz retrieval na pełnym golden. Obecne dwie trasy nie
+są ogólnym plannerem języka naturalnego. Resolver source działa na przyjętym
+syntetycznym fixture AI 03; adaptery rzeczywistych źródeł biznesowych i ML
+pozostają do podłączenia. Pełne AI 12 wymaga AI 10 i E2E
+sugestii/outbox/v2/read API/UI. Profil sprawdza kanoniczne fakty i literalne
+cytaty, bez deklaracji jakości swobodnych odpowiedzi. Etykiety i progi są
+lokalnym profilem developmentu, bez niezależnego business/model approval.
+
 ## Fundament i dalsza praca
 
 Etap 01 ma odbiór lokalny i zdalny: pakiet/CLI, settings, HTTP/telemetry,
@@ -1085,7 +1177,7 @@ wykonywalne kontrakty danych/run/tool, jawne migracje i Required CI.
 [Bieżący odbiór danych](evidence/03-06-cross-repo.md) jest wspólny z RetailOps.
 Po pełnej bramce 03 można rozdzielić forecasting **04** w AI i ledger **06**
 w RetailOps; nowe źródło po 06 wymaga ponownego importu i zależnych ocen. Równolegle można przygotować
-interfejsy i test doubles **AI 12**. Pełne zamknięcie agenta wymaga **AI 10 i 11**;
+[rozwijany runtime **AI 12**](assistant-api.md). Pełne zamknięcie agenta wymaga **AI 10 i 11**;
 11 jest gotowy, 10 nadal należy do późniejszego ciągu danych/ML/integracji.
 [Pisemna mapa etapów i repozytoriów](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/main/docs/plans/ai/kolejnosc-i-repozytoria.md).
 
@@ -1094,8 +1186,8 @@ interfejsy i test doubles **AI 12**. Pełne zamknięcie agenta wymaga **AI 10 i 
 Odbiór dotyczy lokalnego retrieval na konkretnym zatwierdzonym snapshotcie.
 Zmiana dokumentacji na `main` nie aktualizuje automatycznie korpusu. Kolejna
 wersja wymaga nowego snapshotu, przeglądu i ewaluacji.
-Nie ma jeszcze generowania odpowiedzi, ewaluacji groundedness ani wykonywania
-narzędzi agenta — to AI 12. Pipeline danych, modele, integracja zdarzeń oraz
+Generowanie swobodnych odpowiedzi, ewaluacja rzeczywistego modelu i pełna
+ścieżka agenta pozostają do realizacji w AI 12. Pipeline danych, modele, integracja zdarzeń oraz
 wdrożenie AWS/EKS mają dalsze bramki. Limit AWS na proces nie zastępuje wspólnego
 budżetu wielu replik ani produkcyjnego IAM. Nie deklarujemy wdrożenia w chmurze.
 
@@ -1114,6 +1206,81 @@ baseline/Isolation Forest i progi wyznaczane z walidacji. Artefakty odtwarzają
 trening i wynik; nie kwalifikują jeszcze jakości modelu. AI07 wymaga oceny
 obserwacji i epizodów na większych danych, porównania modeli oraz własnego lifecycle.
 
+## 2026-10-07 — wznowienie AI12
+
+AI12 pozostaje **in_progress**. Branch `ai/12-resume` łączy zachowany kod
+`ai/12-tools` z `main` na `3329a815`. Konflikty API, uprawnień, zależności
+i migracji zostały rozwiązane bez edycji worktree AI09/AI10. Nowy profil
+26 pytań / 12 intencji jest proponowany, ograniczony do kwalifikacji offline.
+[Zakres i odbiór](evidence/12-resume.md), [routing](assistant-routing.md).
+
+Do READY nadal potrzeba rzeczywistych adapterów biznesowych/ML, obsługi
+przepływu sugestii AI12 → outbox/v2 → API/UI przez AI10, kwalifikacji Sonnet
+z rzeczywistymi danymi i przeglądu etykiet/konfiguracji. Wyniki historyczne
+nie potwierdzają nowego code hash.
+
+[Poprawki zgodności CI](evidence/12-ci-remediation.md) aktualizują osobny
+lockfile TensorFlow, weryfikują oba niezmienione modele anomaly przy jawnym
+rozszerzeniu środowiska o LangGraph i doprecyzowują środowisko historycznych
+testowych release'ów prognoz. Lokalnie 569/569 wybranych testów oraz pełne
+`ci-checks` passed. Nowe manifesty `.resume.v2` wiążą bieżący kod; zdalne
+OCI/PostgreSQL/MLflow i TensorFlow wymagają wyniku dla aktualnego head PR32.
+
+**AI12 — natywny odczyt prognozy v12.** Dostępny jest read-only adapter do
+`PostgresV12ForecastReader`, bez konwersji publikacji do legacy ModelRecord.
+Zachowuje pełne candidate/baseline, identyfikatory i daty; wymaga całej siatki
+zakresu i rozdziela świeżość dziennego origin od wieku sprawdzonego widoku.
+Tygodniowa prognoza przechodzi HTTP/planner/graf/store na jawnych fixtures;
+nie przedłuża expiry ani nie tworzy historycznej sugestii replenishment.
+[Opis](agent-forecast-v12.md), [odbiór](evidence/12-native-forecast.md),
+[receipt](evidence/12-native-forecast.json): 630/630 testów, pełne `ci-checks`,
+fake golden 50/50 i 36/36 critical, wheel/checkout 534 pliki Python.
+Nowe kandydaty `.native-v12.v1` zachowują historyczne manifesty i etykiety.
+Kwalifikacja rzeczywistego runtime i końcowego zdalnego CI pozostaje otwarta;
+status nadal **in_progress**.
+
+[Required CI poprzedniego checkpointu AI12](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37615009993)
+na `3dd53c2` zakończył wszystkie 14 jobów **success**, również anomaly OCI,
+PostgreSQL/MLflow i rzeczywisty TensorFlow. Po checkpointcie adaptera `fd9e892`
+przyjęto przejrzane optymalizacje wspólnego CI `02554284` jako `8280382`,
+z zachowaniem `agent-evaluate`, frozen training lock i bramek bezpieczeństwa.
+191/191 testów integracji i pełne `ci-checks` passed; plan obejmuje wszystkie
+3992 testy dokładnie raz. [Odbiór integracji](evidence/12-ci-integration.md)
+rozróżnia wynik poprzedniego head od wymaganego nowego zdalnego CI.
+
+Preflight nowego PR merge prawidłowo wykrył różnicę pełnego checksumu aplikacji
+względem kandydata gałęzi. AI12 scaliła opublikowany `main/e1f864c` we własnym
+worktree i utworzyła osobny kandydat `.native-v12-main.v1`, zachowując wcześniejsze
+manifesty i etykiety. [Odbiór zgodności](evidence/12-main-binding.md): 858/858
+testów, pełne `ci-checks`, golden 50/50, zgodność 536 plików Python checkout /
+wheel / faktyczne drzewo merge CI. Nowy head wymaga pełnego zdalnego runu;
+AI12 pozostaje **in_progress**.
+
+**AI12 — sprzedaż z kwalifikowanych dni.** Read-only adapter korzysta z
+oryginalnej weryfikacji Source/Curated/Raw DQ i zachowuje dzienne dowody na
+dokładny cutoff. Jedna niekwalifikowana doba wstrzymuje cały okres; zero
+wymaga potwierdzenia każdego dnia. Planner sprawdza pełne serie i limit
+punktów przed admission. [Opis](agent-qualified-sales.md),
+[odbiór](evidence/12-qualified-sales.md): 58/58 testów adaptera, 652 unikalne
+przypadki regresji z końcowym wynikiem passed, pełne `ci-checks`, golden 50/50
+i wheel/checkout 537 modułów Python. Fake chat i fixtures pozostają jawne.
+Nowe kandydaty `.native-sources.v1` zachowują wcześniejsze manifesty i etykiety.
+Scalono opublikowany `main/89b64d23` bez zmiany drzewa aplikacji.
+Wcześniejszy head `35dae7e` ma pełny Required CI **15/15 success**;
+nowy przyrost wymaga osobnego odbioru. Status nadal **in_progress**.
+
+**AI12 — natywny stan zapasu.** Read-only adapter weryfikuje Source i Curated,
+odbudowuje parent oraz zachowuje fizyczne snapshoty i natywne trasy sprzedaż →
+magazyn. Wymaga osobnego grantu fizycznego, pełnego scope i rzeczywistego czasu
+pomiaru. Brak lub nieaktualność jednego punktu wstrzymuje cały scope; wspólny
+zapas nie jest sumowany między sklepami. [Opis](agent-native-inventory.md),
+[odbiór](evidence/12-native-inventory.md): 61/61 testów adaptera, 704 unikalne
+przypadki z końcowym wynikiem passed, pełne `ci-checks`, golden 50/50 i zgodność
+538 modułów Python wheel/checkout. Plan CI obejmuje 4241 testów dokładnie raz.
+Main `a128bb38` scalono bez zmiany kodu aplikacji i locków. Nowe kandydaty
+`.native-inventory.v1` zachowują wcześniejsze manifesty i etykiety. Head
+sprzedażowy `8e4e0b1` zakończył Required CI **15/15 success**; przyrost inventory
+wymaga osobnego zdalnego odbioru. Status nadal **in_progress**.
 # AI10 — kolejny przyrost: immutable source bundles
 
 **2026-10-04.** [Instrukcja pobrania i importu](source-bundles.md) opisuje
@@ -1124,3 +1291,168 @@ import/reuse. Główny lock i kod modeli nie zmieniają się. Przypięte kopie
 importera pochodzą z zatwierdzonego ownera, a profil transferu ma osobny lock.
 Cały AI10 nadal jest `in_progress`; live SQL snapshot, snapshot/offset/replay,
 kwalifikacja trzech modeli i pełny UI E2E wymagają własnego odbioru.
+
+## 2026-10-07 — AI12: pełny katalog adapterów natywnych
+
+Dodano cztery pozostałe adaptery: stockout, anomalie, operacje i status modeli.
+Fabryka serwerowa składa **8/8 adapterów**. Odczyty zachowują natywne dowody,
+zakres, osobne uprawnienia źródłowe, fizyczne mapowania i aktualność; niepełne
+dane wstrzymują cały zakres. Operacje nie deklarują nieobserwowanego heartbeat
+ani Kafka lag; katalog modeli nie deklaruje wdrożenia czy driftu.
+[Zachowanie](agent-native-tools.md), [odbiór](evidence/12-native-tools.md).
+
+Main `2dc0a5ba` scalono wyłącznie w izolowanej gałęzi `ai/12-resume`.
+Migracja `0027_ai10_ai12` łączy opublikowane historie, a nowa rodzina
+`.native-tools.v1` zachowuje wcześniejsze kandydaty i etykiety. Osobny pin
+integracji Source zachowuje oryginalny manifest AI10 i oba locki; 83 moduły
+wspólnego kodu modeli oraz wersje wszystkich wcześniejszych zależności są
+niezmienione. Nie uruchamiano AWS, treningu, pełnego eksportu ani wspólnych
+usług. Stan nadal **in_progress**; PR32 pozostaje draft. Pełna kwalifikacja
+runtime/LLM, obserwacje heartbeat, natywna polityka sugestii i przekazanie
+AI10 oraz odbiór etykiet pytań pozostają otwarte.
+
+## 2026-10-07 — AI12: lokalna integracja bez AI10 i AWS
+
+Profil `assistant-native-offline-v1` podłącza osiem adapterów do API i trwałego
+store Assistant. Chat i wektory są jawnymi atrapami w `APP_ENV=test`; siedem
+adapterów danych wykonuje natywne odczyty. Konfiguracja wiąże zweryfikowane
+Source/Curated/DQ/coverage, graf, scope i aktywną generację indeksu. Readiness
+sprawdza oba połączenia SQL, UTC oraz dokładny pin indeksu. Uprawnienia natywnych
+źródeł i knowledge są zachowane także w trwałym trace.
+
+Main `16a02ae` scalono wyłącznie w `ai/12-resume`, zachowując nowe przypięcia
+właściciela Source z AI09. Poprzednie opublikowane rodziny kandydatów pozostają
+niezmienione; aktywna kwalifikacja używa `.native-offline.v1`. Nowa polityka
+review stockout zachowuje origin scoringu i osobny czas odczytu z TTL 300 s.
+Polityka oraz pakiet 26 pytań nadal są **proposed** i wymagają niezależnego odbioru.
+
+Poprzedni Required CI headu `3d4fe92` miał 15/17 zielonych jobów; shard prognoz
+przekroczył dawny limit 64 KiB kompletnego manifestu modułów. Limit przygotowania
+i weryfikacji zwiększono do 128 KiB, zachowując wszystkie przypięcia. Bieżący
+checkpoint wymaga własnego Required CI. Lokalny odbiór i ograniczenia opisują
+[dowody](evidence/12-native-offline.md) i [konfiguracja](assistant-native-offline.md).
+
+Stan AI12 pozostaje **in_progress**, PR32 jest draft. Pełne dane bieżące i dodatnia
+publikacja modeli, niezależne etykiety/polityka, runtime Sonnet/Titan, obserwacje
+operacyjne i przekazanie AI10 pozostają otwarte. Sąsiednich sesji nie zmieniano.
+
+## 2026-10-07 — AI12: atomowy emiter sugestii
+
+Opcjonalny outbox zapisuje odpowiedź, sugestie review, końcowy run i zdarzenie
+`recommendation_generated` w jednej transakcji. Worker zachowuje ID oraz dokładne
+bajty przy ponowieniu, pomija wygasłe sugestie i zapisuje potwierdzenie dopiero po
+poprawnym ACK. Migracja `0028_ai12_suggestion_outbox` chroni pochodzenie, cykl
+życia, limit 1000 rekordów i własną retencję. Transport domyślnie jest wyłączony.
+
+19 przypadków na prywatnym PostgreSQL przeszło, w tym rollback, awaria po ACK,
+konkurencyjni workerzy i ochrona przed utratą przy downgrade. Kontrakt wiąże
+przypiętą projekcję Source v1; proponowana polityka native-v2 nie jest automatycznie
+zmieniana na v1. [Opis](assistant-suggestion-outbox.md),
+[odbiór](evidence/12-suggestion-outbox.md). Aktywna rodzina kandydatów to
+`.suggestion-outbox.v1`; wcześniejsze rodziny i dowody pozostają niezmienione.
+
+Main `b0e2de1` z audytowanym eksporterem AI09 v14 scalono wyłącznie w gałęzi
+AI12. Zachowano oba zestawy kontraktów w wheel i odświeżono aktywne przypięcia.
+Poprzedni head `6b05497` zakończył Required CI **17/17 success**; bieżący przyrost
+wymaga osobnego odbioru CI.
+
+Stan nadal **in_progress**, PR32 pozostaje draft. Faktyczne dostarczenie do
+Source/UI, odbiór natywnej polityki, etykiety oraz AWS/LLM pozostają otwarte.
+Nie uruchamiano brokera, AWS ani usług AI10 i nie zmieniano sąsiednich sesji.
+
+## 2026-10-07 — AI12: rzeczywisty limit outboxa
+
+Rozszerzony odbiór na prywatnym PostgreSQL przechodzi **20/20 przypadków**.
+Nowy test wypełnia outbox do 1000 rekordów, odrzuca rekord 1001, zachowuje
+idempotencję przy pełnej kolejce i blokuje konflikt treści pod tym samym ID.
+Wycofanie transakcji przywraca liczby rekordów wszystkich czterech tabel;
+nie wyłączano SQL guards. Jest to kwalifikacja limitu SQL, a nie HTTP load test.
+
+[Odbiór](evidence/12-suggestion-capacity.md) zachowuje historyczne receipts
+i przypięcia. Kod aplikacji, 95 opublikowanych plików agenta, kontrakty oraz
+locki pozostają identyczne. Head aplikacji `e671d73` zakończył
+[Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37676309071)
+**17/17 success**, w tym oba joby persistence. Lokalnie przeszły ci-checks,
+golden i kontrola sekretów; nowy head testów wymaga własnego zdalnego CI. Prywatny klaster jest
+zatrzymany. AI12 pozostaje **in_progress**, PR32 jest draft; zewnętrzne bramki
+Source/UI, etykiet/polityki, bieżących danych, obserwacji i AWS pozostają otwarte.
+
+## 2026-10-08 — AI12: przygotowanie natywnego Sonnet przed płatnymi testami
+
+Runtime Bedrock składa **8/8 adapterów**, pin AI11, ograniczony chat i osobny
+budżet query embeddings. Source/Curated/DQ/coverage, UTC, revision i aktywny
+indeks są sprawdzane przed utworzeniem klienta modelu. Proponowane trasy oraz
+nieodebrany transport native-v2 pozostają blokowane. Main `bc50733` scalono
+tylko w gałęzi AI12; nowa rodzina `.prepaid.v2` zachowuje opublikowaną v1.
+
+Przeszły ci-checks, 49 testów runtime oraz golden wheel **50/50** bez sieci.
+Poprzedni checkpoint niezmienionego Assistant ma 728 testów bezpieczeństwa i
+21 przypadków SQL. Rzeczywiste wektory Titan odtworzono bez AWS: 44 przypadki
+retrieval, 39 spełniających wymagania indywidualne, **9/9 krytycznych** i
+zaliczone progi zbiorcze. Trzy z sześciu pytań dokumentacji mają komplet dowodów;
+pozostałe zachowują insufficient_evidence.
+
+Draft PR32 uruchamia osobny E2E bez AWS przez oryginalny emiter, broker,
+konsumenta Source, SQL/API i zbudowany UI Chromium; LLM i obserwacja sprzedaży
+są jawnie testowe. [Run 37740983436](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37740983436)
+przeszedł w całości; [receipt](evidence/12-prepaid-source-acceptance.json) i
+[sprawdzony zrzut UI](evidence/12-prepaid-source-ui.png) zachowują dowód.
+Aktualny odbiór całego Required CI podają checki PR32. Przygotowano pięć
+propozycji płatnego Sonnet dla 41 naturalnych przypadków, kompletny pakiet
+przeglądu 50 pytań/26 tras oraz osobny kandydat natywnego runtime.
+Nie znaleziono niezależnego odbioru etykiet; status proposed pozostaje prawdziwy.
+
+Płatne wywołania: **0**. Wykonano sześć bezpłatnych odczytów dostępu/profili;
+sam CI nie używa AWS. Nowy koszt kampanii jest propozycją, bez zgody; historyczny
+budżet pozostaje zachowany. [Checkpoint](evidence/12-prepaid-checkpoint.md) i
+[instrukcja wznowienia](ai12-paid-qualification.md) zawierają dowody i bramki.
+AI12 pozostaje **in_progress**, PR32 draft. Własny PostgreSQL zatrzymano,
+a oryginalne checkouty i usługi sąsiednich sesji pozostają nietknięte.
+
+
+## 2026-10-08 — AI12: odczyty rekomendacji i aktualizacja przygotowania
+
+Uzupełniono wymagane `GET /api/v1/recommendations` oraz detail UUID. Odczyty
+zwracają pełny immutable item, filtrują przed paginacją, sprawdzają właściciela,
+aktualne prawa narzędzi/RAG i fizyczny magazyn oraz ukrywają expiry także przed
+audit adminem. Transakcje SQL są `READ ONLY`; odczyt nie uruchamia LLM ani outboxa.
+Cztery nowe rzeczywiste SQL/HTTP testy i osobna kontrola cofnięcia grantów
+sprawdzają te granice. E2E Source sprawdza teraz także odczyt po stronie AI.
+
+Nowa rodzina `.prepaid.v3` zachowuje opublikowane v1/v2. Pełne wymagania
+planu mapuje [audyt bez AWS](ai12-unpaid-requirements.md); instrukcje używają
+bieżących konfiguracji, a dokumentacyjny runtime v1 jest oznaczony historycznie.
+[Preflight RAG](evidence/12-prepaid-native-preflight-v3.json) dodaje proponowane
+równoważne źródła instrukcji startu w istniejącym indeksie AI11. Pokrycie rośnie
+z 3/6 do 4/6 przy identycznym top-5, wymaganiach i statusach. Brak instrukcji
+precommit oraz verified metrics evidence pozostaje jawny; etykiety/supports
+wymagają niezależnego przeglądu. Aktualną kwalifikację CI podaje draft PR32.
+
+Nowe wywołania AWS podczas tego przyrostu: **0**, nowy koszt AWS: **0**.
+Płatne propozycje pozostają `not_run`, budżet nie jest zatwierdzony. AI12
+pozostaje **in_progress** do kwalifikacji LLM i niezależnego odbioru etykiet.
+
+
+## 2026-10-08 — AI12: przypięcie opublikowanego main
+
+CI pierwszego checkpointu v3 poprawnie odrzucił merge tree z późniejszym main,
+ponieważ zmiana `campaign_generation_worker.py` AI09 zmieniła application hash.
+Scalono opublikowany `ab77bb1` wyłącznie do worktree AI12; oryginalne checkouty
+pozostają nietknięte. Nowa rodzina `.prepaid.v4` zachowuje v1/v2/v3 i wiąże nowy
+kod oraz integration campaign pin. Adaptery, odczyty rekomendacji, graf i ranking
+AI11 nie zmieniły się. Pełną kwalifikację bieżącego HEAD podają checki i artefakty
+PR32. Propozycje LLM pozostają `not_run`, etykiety proposed; nowe AWS calls i koszty: 0.
+
+
+### AI12 — przypięcie opublikowanego AI09 portfolio (v5)
+
+Nowa rodzina `.prepaid.v5` integruje wyłącznie opublikowany main `656d7dd`
+(PR52 AI09 portfolio). CI HEAD `7170b37` wykrył inną sumę kodu w merge tree
+`17691465`; rzeczywisty Source/UI E2E tego HEAD przeszedł. Piny v1–v4 i ich
+dowody pozostają zachowane. Adaptery, recommendation read API, graf, źródła
+AI11 i ranking nie zmieniły się. Naprawa flaky testu expiry używa 30s lifetime
+w testowym profilu, sprawdza żywy wpis i jego rzeczywiste wygaśnięcie; limity
+produkcyjne pozostają bez zmian. Nowe SDK/inference/embedding calls i koszty
+AWS wynoszą 0. Odbiór pełnego CI dokładnej opublikowanej rewizji pozostaje
+w PR32; etap nadal `in_progress`, etykiety 50/26 nadal proposed bez odbioru
+człowieka, a przygotowane płatne propozycje pozostają `not_run`.

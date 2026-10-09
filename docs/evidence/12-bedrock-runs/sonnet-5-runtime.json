@@ -1,0 +1,193 @@
+{
+  "ai12_closed": false,
+  "cases": [
+    {
+      "answer": {
+        "agent_config_version": "assistant-runtime-sha256-911d41ea458765aa9878f8b49d93ffbc331605b84e692ef92e651c2559471b7a",
+        "answer_id": "5f6028e5-2f39-5301-9eb8-8f816dec49f7",
+        "citations": [
+          {
+            "chunk_id": "chunk-sha256-88e8bbe4569a6de7fe7d2bcc64de13e53d514843c2ed19cb5ba542bb7f32d414",
+            "commit_sha": "082bed47e1e6344e3ec148807f2decd1ef47a605",
+            "document_status": "implemented",
+            "heading": "Lokalna tożsamość i uprawnienia API / Endpointy",
+            "path": "docs/access-control.md",
+            "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/access-control.md#L10-L18"
+          }
+        ],
+        "confidence": "medium",
+        "created_at": "2026-09-29T10:46:37.702749Z",
+        "data_freshness": {
+          "inventory": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "predictions": {
+            "as_of": null,
+            "status": "not_requested"
+          },
+          "sales": {
+            "as_of": null,
+            "status": "not_requested"
+          }
+        },
+        "evidence": [
+          {
+            "as_of": null,
+            "calculation_id": null,
+            "claim": "Implementation documentation; scope=Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body.; revision=082bed47e1e6344e3ec148807f2decd1ef47a605; literal quote=\"| `GET /api/v1/identity` | Zweryfikowany token; własny principal, role, capabilities i skonfigurowany scope |\\n| `POST /api/v1/access/forecast-check` | Jawne forecast:read i cały dozwolony scope; 200 z decyzją dla tego żądania |\"",
+            "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@082bed47e1e6344e3ec148807f2decd1ef47a605:docs/access-control.md#L10-L18",
+            "source_type": "document",
+            "supporting_refs": []
+          }
+        ],
+        "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+        "limitations": [],
+        "outcome": "answered",
+        "recommended_actions": [],
+        "summary": "Implementation documentation; scope=Lokalna implementacja weryfikacji Bearer/principal i jawnych grantów/scope w podanej rewizji; bez OIDC/production IAM i ról nadawanych przez body.; revision=082bed47e1e6344e3ec148807f2decd1ef47a605; literal quote=\"| `GET /api/v1/identity` | Zweryfikowany token; własny principal, role, capabilities i skonfigurowany scope |\\n| `POST /api/v1/access/forecast-check` | Jawne forecast:read i cały dozwolony scope; 200 z decyzją dla tego żądania |\"",
+        "trace_id": "cc744a61-3114-405f-9c21-028114e5e610"
+      },
+      "case_id": "rag-03",
+      "checks": {
+        "exact_reviewed_quote": true,
+        "expected_outcome": true,
+        "no_business_actions": true,
+        "one_required_citation": true,
+        "only_knowledge_tool": true,
+        "persisted": true,
+        "runtime_binding": true,
+        "trace_authorization": true,
+        "trace_succeeded": true
+      },
+      "http_status": 200,
+      "passed": true,
+      "trace": {
+        "agent_config_version": "assistant-runtime-sha256-911d41ea458765aa9878f8b49d93ffbc331605b84e692ef92e651c2559471b7a",
+        "answer_id": "5f6028e5-2f39-5301-9eb8-8f816dec49f7",
+        "completed_at": "2026-09-29T10:46:37.724562Z",
+        "error_code": null,
+        "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+        "nodes": [
+          {
+            "duration_ms": 100.93195900844876,
+            "error_code": null,
+            "name": "validate_auth",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 6467.513333001989,
+            "error_code": null,
+            "name": "plan",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 660.9275000082562,
+            "error_code": null,
+            "name": "tools",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 23.46745799877681,
+            "error_code": null,
+            "name": "check_evidence",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 10603.591207996942,
+            "error_code": null,
+            "name": "synthesize",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 59.00212499545887,
+            "error_code": null,
+            "name": "validate_output",
+            "status": "ok"
+          },
+          {
+            "duration_ms": 0.0,
+            "error_code": null,
+            "name": "persist_trace",
+            "status": "ok"
+          }
+        ],
+        "outcome": "answered",
+        "requested_at": "2026-09-29T10:46:19.669035Z",
+        "status": "succeeded",
+        "tools": [
+          {
+            "freshness_status": "not_requested",
+            "name": "search_knowledge",
+            "source_refs": [
+              "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46"
+            ],
+            "status": "ok"
+          }
+        ],
+        "trace_id": "cc744a61-3114-405f-9c21-028114e5e610",
+        "usage": {
+          "currency": "USD",
+          "duration_ms": 18103.216457995586,
+          "estimated_cost": "0.0625317",
+          "input_tokens": 14314,
+          "output_tokens": 927
+        }
+      }
+    },
+    {
+      "case_id": "rag-04",
+      "http_status": 429,
+      "passed": false
+    }
+  ],
+  "chat_cap_usd": "0.30",
+  "chat_estimated_or_reserved_usd": "0.1282149",
+  "completed_at": "2026-09-29T10:46:55.227891+00:00",
+  "count_requests": 5,
+  "created_at": "2026-09-29T10:46:19.566859+00:00",
+  "embedding_input_tokens": 41,
+  "embedding_max_input_bytes": 4000,
+  "embedding_max_requests": 4,
+  "embedding_requests": 2,
+  "full_golden_qualified": false,
+  "golden_sha256": "1551bd576991595e9151eea6251bd75b5daefadbf052cccff7719081858990e2",
+  "index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+  "inference_requests": 4,
+  "kind": "configured_http_real_postgres_titan_converse",
+  "model": {
+    "inference_profile": "eu.anthropic.claude-sonnet-4-6",
+    "max_output_tokens": 1500,
+    "model_id": "anthropic.claude-sonnet-4-6",
+    "provider": "bedrock",
+    "region": "eu-central-1",
+    "temperature": 0.0
+  },
+  "runtime_code_sha256": "4357d1a180edd2ff483ce935b034fd8260497dba9e30990ecc134bcb991bb5ab",
+  "runtime_config_id": "assistant-runtime-sha256-911d41ea458765aa9878f8b49d93ffbc331605b84e692ef92e651c2559471b7a",
+  "schema_version": "1.0",
+  "snapshot_id": "snapshot-sha256-4d856185ebbe3a8f07dc468468c54eacf69aa40b7d49bfff7e39af8ddde815a4",
+  "source_catalog_sha256": "b220592bb82014ca40d83faf2e56bdc1c0bcb499ccd6cae214a6d2f362c817af",
+  "source_data_kind": "accepted_ai03_synthetic_source_fixture",
+  "source_dataset_id": "source-sha256-a12866e1099c3ae2ae7c73cac5c533a35733618d85a3728cd5f0e1c7b527fc00",
+  "source_scope": {
+    "from": "2026-07-05",
+    "product_ids": [
+      "163da9b8-d3e0-5f9e-9dd3-954c345c7684"
+    ],
+    "store_ids": [
+      "a2bf632d-148c-5158-9315-23eb98ca2f26"
+    ],
+    "to": "2026-07-06"
+  },
+  "status": "failed",
+  "verified_destination_regions": [
+    "eu-central-1",
+    "eu-north-1",
+    "eu-south-1",
+    "eu-south-2",
+    "eu-west-1",
+    "eu-west-3"
+  ]
+}

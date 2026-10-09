@@ -1,0 +1,21 @@
+{
+  "as_of": "2026-08-22T23:59:59Z",
+  "comparison_window": null,
+  "intent": "sales",
+  "limit": 5,
+  "question": "What evidence is available?",
+  "schema_version": "1.0",
+  "scope": {
+    "channel": "store",
+    "product_ids": [
+      "p-101"
+    ],
+    "selling_location_ids": [
+      "s-03"
+    ]
+  },
+  "window": {
+    "end": "2026-08-22",
+    "start": "2026-08-16"
+  }
+}

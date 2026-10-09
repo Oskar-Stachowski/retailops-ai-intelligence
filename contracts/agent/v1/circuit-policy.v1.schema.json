@@ -1,0 +1,36 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "failure_threshold": {
+      "default": 3,
+      "maximum": 10,
+      "minimum": 1,
+      "title": "Failure Threshold",
+      "type": "integer"
+    },
+    "max_inflight": {
+      "default": 2,
+      "maximum": 8,
+      "minimum": 1,
+      "title": "Max Inflight",
+      "type": "integer"
+    },
+    "recovery_seconds": {
+      "default": 30.0,
+      "exclusiveMinimum": 0,
+      "maximum": 300,
+      "title": "Recovery Seconds",
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version"
+  ],
+  "title": "CircuitPolicy",
+  "type": "object"
+}

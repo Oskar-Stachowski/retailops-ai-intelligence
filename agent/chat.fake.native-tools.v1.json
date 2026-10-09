@@ -1,0 +1,106 @@
+{
+  "budget": {
+    "max_calls": 6,
+    "max_input_tokens": 12000,
+    "max_output_tokens": 1500,
+    "max_repairs": 1,
+    "max_retries": 2,
+    "pricing": {
+      "currency": "USD",
+      "input_per_million": "0",
+      "kind": "synthetic_test_rates",
+      "max_run_cost": "0.02",
+      "max_smoke_cost": "0.05",
+      "output_per_million": "0",
+      "rate_version": "fixture-zero-v1"
+    },
+    "provider_timeout_seconds": 5.0,
+    "retry_base_seconds": 0.05,
+    "retry_max_seconds": 0.2
+  },
+  "embeddings": {
+    "dimension": 1024,
+    "distance": "cosine",
+    "inference_profile": null,
+    "model_id": "amazon.titan-embed-text-v2:0",
+    "normalization": "l2-unit",
+    "provider": "bedrock",
+    "region": "eu-north-1",
+    "schema_version": "1.0",
+    "transformation_version": "utf8-heading-path-body-v1",
+    "vector_format": "float32-big-endian-v1"
+  },
+  "graph_version": "pregraph-provider-v1",
+  "knowledge_index_id": "index-sha256-d193c015d0815215725156145cef5ed21553452e1c235d0c8e4cabece96d9f46",
+  "model": {
+    "inference_profile": null,
+    "max_output_tokens": 400,
+    "model_id": "scripted-chat-v1",
+    "provider": "fake",
+    "region": "offline",
+    "temperature": 0.0
+  },
+  "profile": "agent-bounded-v1",
+  "prompt_version": "prompts-v1",
+  "prompts": [
+    {
+      "name": "policy",
+      "resource_version": "v1",
+      "sha256": "fbb6d5ad02c01ddd4a41371e04cd9d85bda544a36d6210a09a8bc2f3dbf6be9b"
+    },
+    {
+      "name": "tool_selection",
+      "resource_version": "v1",
+      "sha256": "572f1b6bc660aef3714738c249cd913a698cef3f88903b6699c9f79eb17b07c7"
+    },
+    {
+      "name": "evidence",
+      "resource_version": "v1",
+      "sha256": "031c966ac7bd47db1e6a76776a81d38d620c37e7eaf7781ac274aff111d40b77"
+    },
+    {
+      "name": "response",
+      "resource_version": "v1",
+      "sha256": "35410e96a093377cb9dfcc655b19e934bc4c6d3af672ff8b89c6446100f227c4"
+    },
+    {
+      "name": "refusal",
+      "resource_version": "v1",
+      "sha256": "4c5b42d42f62bf3609773b2c834d305300f99d8bd7280503af86526b6c09481b"
+    },
+    {
+      "name": "examples",
+      "resource_version": "v1",
+      "sha256": "cc13ebe587e1f26b0263eae818f276a6ec8f7c5d050aa4552e32c60782d57a4e"
+    }
+  ],
+  "response_schema_sha256": "5f5a8e14081a9ac0fa82cb86144bbf2326e3cfd93da4e1007480f3ccc992aa5a",
+  "response_schema_version": "agent-draft-v1",
+  "retrieval": {
+    "candidate_limit": 256,
+    "diversification": "score-then-document-v1",
+    "max_chunks_per_document": 2,
+    "max_context_bytes": 24000,
+    "max_context_tokens": 6000,
+    "max_top_k": 5,
+    "min_cosine_score": 0.0,
+    "retrieval_version": "pgvector-cosine-exact-v1",
+    "schema_version": "1.0",
+    "size_estimator": "serialized-hits-utf8-div4-v1"
+  },
+  "schema_version": "1.0",
+  "tool_policy": {
+    "freshness_seconds": 300,
+    "max_calls": 6,
+    "max_locations": 5,
+    "max_period_days": 90,
+    "max_products": 20,
+    "max_result_bytes": 131072,
+    "max_rows": 50,
+    "profile": "agent-tools-bounded-v1",
+    "request_deadline_seconds": 45.0,
+    "schema_version": "1.0",
+    "tool_timeout_seconds": 5.0
+  },
+  "tool_schemas_sha256": "5cb37c9746a6e2d67a3555623bf961662d6063d010144e2d8825d4c5a1b7b18b"
+}

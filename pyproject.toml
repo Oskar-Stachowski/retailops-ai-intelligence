@@ -23,6 +23,7 @@ dependencies = [
     "alembic==1.20.0",
     "markdown-it-py==4.2.0",
     "boto3==1.43.103",
+    "langgraph==1.2.12",
 ]
 
 [project.scripts]
@@ -130,6 +131,7 @@ packages = ["src/retailops_ai"]
 "contracts/evaluation/v2" = "retailops_ai/tensorflow_challenger"
 "contracts/evaluation/v12" = "retailops_ai/evaluation_campaign/v12"
 "contracts/evaluation/v13" = "retailops_ai/evaluation_campaign/v13"
+"contracts/events/suggestion-source-v1" = "retailops_ai/intelligence_events/suggestion_source_v1"
 "contracts/evaluation/v14" = "retailops_ai/evaluation_campaign/v14"
 "contracts/evaluation/v15" = "retailops_ai/evaluation_campaign/v15"
 "contracts/evaluation/v16" = "retailops_ai/evaluation_campaign/v16"

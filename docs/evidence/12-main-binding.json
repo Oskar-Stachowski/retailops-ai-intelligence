@@ -1,0 +1,98 @@
+{
+  "application_sha256": "3a83ea5da5ccd941943ab606c3f1d98c1a49bb8f21c9244a9fc81ebf567f8dfb",
+  "candidate_release": "agent/evaluation-release.fake.native-v12-main.v1.json",
+  "checked_at": "2026-10-07T13:07:20.847737+00:00",
+  "ci_checks": {
+    "local_build": "offline; existing pinned hatchling with task-local editables 0.5 build-only helper",
+    "log_sha256": "811d22d5514987a5a6ddfff97511f2453f0eb51bf0000f2d09e5ce2b8880512d",
+    "mypy_files": 655,
+    "status": "passed"
+  },
+  "complete_collection_plan": {
+    "collection_sha256": "1d82fea5ca1a4286be03c3fbd26b82ca1333a828f2025383c6184d4b9899e0aa",
+    "executed_all_tests_locally": false,
+    "files": 185,
+    "native_cases_exactly_once": 41,
+    "tests": 4105
+  },
+  "failed_preflight": {
+    "cause": "PR merge included published main application changes absent from branch-bound evaluator checksum",
+    "conclusion": "failure",
+    "failed_gate": "checks/agent-evaluate",
+    "head": "1fda7fc2bf0e550e21c87c3e3b945ee8d22e1d84",
+    "heavy_jobs": "skipped_by_required_checks_dependency",
+    "no_pin_bypass": true,
+    "run_id": 37623445150,
+    "secrets": "success",
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37623445150"
+  },
+  "fixture_only": true,
+  "gitleaks_tree": "passed",
+  "isolation": {
+    "aws_calls": 0,
+    "full_source_exports_or_model_training_started_locally": false,
+    "neighbor_processes_stopped": false,
+    "neighbor_worktrees_edited": false,
+    "shared_compose_or_databases_changed": false
+  },
+  "labels_state": "proposed",
+  "main_integrated": "e1f864c33678f2bed65b550e7676c21a21934e35",
+  "merge_checkpoint": "0800ef26ab560ebcb797a15a3144f4b9cf0c2882",
+  "merge_tree_parity": {
+    "application_files": 536,
+    "ci_merge_application_sha256": "3a83ea5da5ccd941943ab606c3f1d98c1a49bb8f21c9244a9fc81ebf567f8dfb",
+    "ci_merge_commit": "281dd316170bd6e15820fd0eb6baa49f0ef4a5e2",
+    "current_application_sha256": "3a83ea5da5ccd941943ab606c3f1d98c1a49bb8f21c9244a9fc81ebf567f8dfb",
+    "parity": true
+  },
+  "new_head_remote_ci": "pending_publication",
+  "offline_evaluation": {
+    "aws_executed": false,
+    "case_pass": {
+      "passed": 50,
+      "total": 50,
+      "value": 1.0
+    },
+    "critical_cases": {
+      "passed": 36,
+      "total": 36,
+      "value": 1.0
+    },
+    "failed_gates": [],
+    "fixture_only": true,
+    "release_id": "agent-evaluation-release-sha256-78a1fed5e7147ba1599f4c9f7c3cc3c0dd21f9dcce8bc057b9ec3e21440960a6",
+    "status": "passed"
+  },
+  "release_id": "agent-evaluation-release-sha256-78a1fed5e7147ba1599f4c9f7c3cc3c0dd21f9dcce8bc057b9ec3e21440960a6",
+  "repair": {
+    "dependency_locks_unchanged": true,
+    "graph_code_and_schema_bindings_unchanged": true,
+    "historic_manifests_and_receipts_unchanged": true,
+    "main_merged_in_owned_worktree": true,
+    "new_candidate_created": true,
+    "question_labels_unchanged": true
+  },
+  "schema_version": "1.0",
+  "stage": "AI12",
+  "stage_ready": false,
+  "status": "in_progress",
+  "tests": {
+    "errors": "0",
+    "failures": "0",
+    "hostname": "Oskars-MacBook-Air.local",
+    "junit_sha256": "92333b8769a5ad21ec58538b846d6b548d669820e079e222aa8822be5c532af0",
+    "name": "pytest",
+    "skipped": "0",
+    "tests": "858",
+    "time": "326.035",
+    "timestamp": "2026-10-07T14:55:00.251671+02:00"
+  },
+  "wheel": {
+    "application_python_files": 536,
+    "both_runtime_locks_equal": true,
+    "code_sha256": "3a83ea5da5ccd941943ab606c3f1d98c1a49bb8f21c9244a9fc81ebf567f8dfb",
+    "status": "passed",
+    "wheel_checkout_equal": true,
+    "wheel_sha256": "b9a46783b1db273d5c3a9e76b4b213b63886dc9e6e6d13dadf32df9d9c1f2a6e"
+  }
+}

@@ -71,8 +71,8 @@ Plik `.env` nie jest automatycznie wczytywany: wybierz go przez `--env-file .env
 | `make model-catalog-smoke` | HTTP/PostgreSQL: scoped modele i wersje, piny, paginacja, uszkodzenia i restart; SQL-only stub jakości |
 | `make forecast-read-smoke` | HTTP/PostgreSQL: scoped prognozy, strony, watermark/current/stale/unknown, rollback i SIGKILL/restart; SQL-only stub jakości |
 | `make compose-smoke` | Rzeczywiste próby persistence i awarii, następnie shutdown |
-| `make contracts-check` | Porównanie intelligence/access/knowledge/forecast snapshots z kodem, walidacja struktury rejestru korpusu |
-| `make contracts` | Regeneracja HTTP oraz intelligence/access/knowledge/forecast schemas/examples do przeglądu |
+| `make contracts-check` | Porównanie intelligence/access/knowledge/forecast/agent/assistant snapshots z kodem, walidacja struktury rejestru korpusu |
+| `make contracts` | Regeneracja HTTP oraz intelligence/access/knowledge/forecast/agent/assistant schemas/examples do przeglądu |
 
 Gitleaks jest osobnym narzędziem; zainstaluj wersję 8.30.1 z
 [oficjalnego wydania](https://github.com/gitleaks/gitleaks/releases/tag/v8.30.1)
@@ -132,3 +132,30 @@ kandydacki manifest. Nie wymaga uruchomionego stosu DB/API.
 do odrębnej bazy AI. Build nie uruchamia DB lub AWS; zapis nie aktywuje indeksu.
 [Parser/chunker](knowledge-chunks.md) dodaje offline `chunk-build`; konfiguracja
 reguł i rozmiaru jest wersjonowana w `knowledge/chunker.v1.json`.
+
+[Katalog narzędzi agenta](agent-tools.md) dodaje offline `agent-tools`
+i `agent-tool-check`. Wykonawca jest na tym etapie interfejsem serwerowym;
+Kontrakt [Assistant API](assistant-api.md) jest wykonany;
+[runtime dokumentacyjny](assistant-document-runtime.md) podłącza dwie trasy
+pytań, source AI 03, RAG i Bedrock przez jawną konfigurację.
+
+[Konfiguracja rozmowy](agent-chat.md) dodaje offline
+`agent-config-check agent/chat.fake.v1.json`. `make contracts-check` kontroluje
+także checksum promptów, model/budget config i chat schemas; generowanie
+snapshotów nie aktualizuje zatwierdzonych powiązań konfiguracji po cichu.
+
+`make contracts-check` obejmuje także Assistant schemas/OpenAPI.
+`make compose-smoke` sprawdza transakcje Assistant w realnym PostgreSQL,
+wspólne limity procesów i zachowanie wyników po restartach. Backend dowodowy
+jest scripted i działa wyłącznie w APP_ENV=test.
+
+[Ograniczony graf](agent-graph.md) dodaje `agent-graph-check agent/graph.fake.v1.json`
+oraz `make agent-security-test` dla narzędzi, rozmowy i pełnego grafu.
+Testy działają bez AWS/AI 10; target nie zastępuje golden jakości odpowiedzi
+ani rzeczywistego smoke.
+
+[Reguły sugestii i ewaluacja](agent-evaluation.md) dodają
+`make agent-evaluate PROVIDER=fake`, również wykonywane przez `make check`.
+Golden/release/config/lock muszą mieć zgodne wiązania. Raport ma jawne liczniki
+i oznaczenie fixture; błędna bramka kończy CLI kodem 1. Zmiana schemas nie
+przepisuje oracles ani zatwierdzonych checksum konfiguracji.

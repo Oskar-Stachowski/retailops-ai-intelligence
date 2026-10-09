@@ -1,0 +1,19 @@
+{
+  "document_rules": [],
+  "max_catalogue_facts": 40,
+  "max_extra_evidence_rounds": 1,
+  "max_selected_facts": 5,
+  "max_steps": 20,
+  "profile": "bounded-evidence-graph-v1",
+  "schema_version": "1.0",
+  "suggestions": {
+    "lifetime_seconds": 300,
+    "max_candidates": 5,
+    "minimum_stockout_probability": 0.8,
+    "operations_lag_seconds": 60.0,
+    "policy_version": "read-only-review-v1",
+    "schema_version": "1.0"
+  },
+  "trace_capacity": 100,
+  "trace_retention_seconds": 900
+}

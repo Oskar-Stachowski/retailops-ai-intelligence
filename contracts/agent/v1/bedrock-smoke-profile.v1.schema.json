@@ -1,0 +1,80 @@
+{
+  "$defs": {
+    "CircuitPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "failure_threshold": {
+          "default": 3,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Failure Threshold",
+          "type": "integer"
+        },
+        "max_inflight": {
+          "default": 2,
+          "maximum": 8,
+          "minimum": 1,
+          "title": "Max Inflight",
+          "type": "integer"
+        },
+        "recovery_seconds": {
+          "default": 30.0,
+          "exclusiveMinimum": 0,
+          "maximum": 300,
+          "title": "Recovery Seconds",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version"
+      ],
+      "title": "CircuitPolicy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "case_ids": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+        "type": "string"
+      },
+      "maxItems": 10,
+      "minItems": 5,
+      "title": "Case Ids",
+      "type": "array"
+    },
+    "circuit": {
+      "$ref": "#/$defs/CircuitPolicy"
+    },
+    "offline_release_id": {
+      "pattern": "^agent-evaluation-release-sha256-[0-9a-f]{64}$",
+      "title": "Offline Release Id",
+      "type": "string"
+    },
+    "runtime_graph_config_id": {
+      "pattern": "^agent-graph-config-sha256-[0-9a-f]{64}$",
+      "title": "Runtime Graph Config Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "offline_release_id",
+    "runtime_graph_config_id",
+    "case_ids",
+    "circuit"
+  ],
+  "title": "BedrockSmokeProfile",
+  "type": "object"
+}

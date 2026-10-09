@@ -1,0 +1,186 @@
+{
+  "case_id": "document-5",
+  "category": "documentation",
+  "critical": false,
+  "rag_case_id": "rag-05",
+  "request_json": "{\"schema_version\": \"1.0\", \"question\": \"Jak zabezpieczono odczyt metryk diagnostycznych?\", \"intent\": \"verified_state\", \"scope\": {\"product_ids\": [\"p-101\"], \"selling_location_ids\": [\"s-03\"], \"channel\": \"store\"}, \"as_of\": \"2026-08-22T23:59:59Z\", \"window\": {\"start\": \"2026-08-16\", \"end\": \"2026-08-22\"}, \"comparison_window\": null, \"limit\": 5}",
+  "access": "operator",
+  "decision_time": "2026-08-23T00:00:00Z",
+  "tools": [
+    {
+      "request": {
+        "schema_version": "1.0",
+        "contract_type": "tool_request",
+        "tool": "search_knowledge",
+        "retrieval": {
+          "schema_version": "1.0",
+          "question": "Jak zabezpieczono odczyt metryk diagnostycznych?",
+          "purpose": "verified_state",
+          "filters": {
+            "repositories": null,
+            "document_types": null,
+            "document_statuses": null,
+            "access_classes": null
+          },
+          "top_k": 5,
+          "max_context_tokens": 6000
+        }
+      },
+      "result": {
+        "schema_version": "1.0",
+        "contract_type": "agent_tool_result",
+        "tool": "search_knowledge",
+        "status": "ok",
+        "index_id": "index-sha256-d3c53656f4fd0dbd8724be6f14eaba8665cdb71eb9f4c3a9dda6467c4a9e04e6",
+        "pin_generation": 1,
+        "provider": "bedrock",
+        "retrieval_config_id": "retrieval-config-sha256-39f5f998dea99bde765d259102ed605fa77583edcb22da6e39d5b0e871fd786b",
+        "content_trust": "untrusted_reference",
+        "items": [
+          {
+            "score": 1.0,
+            "chunk": {
+              "path": "docs/agent-evaluation-document-5-0.md",
+              "title": "Offline document evidence fixture",
+              "byte_sha256": "18aceef21a5f0c0a83699c6df50e5b24e4dbfb36a6e58746bb90383e8381d73d",
+              "document_type": "evidence",
+              "document_status": "verified",
+              "access_class": "public_project",
+              "fact_scope": "Synthetic offline fixture only",
+              "implementation_refs": [],
+              "verification": {
+                "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+                "commit_sha": "1111111111111111111111111111111111111111",
+                "path": "docs/evidence/agent-evaluation-example.json",
+                "byte_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                "verified_at": "2026-08-22T23:59:59Z",
+                "verified_commit": "1111111111111111111111111111111111111111",
+                "commit_pointer": "/commit",
+                "verified_at_pointer": "/verified_at",
+                "scope": "Synthetic offline fixture only",
+                "result_pointer": "/status",
+                "expected_result": "passed"
+              },
+              "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+              "commit_sha": "1111111111111111111111111111111111111111",
+              "document_id": "document-sha256-817369daa2296be861825ea9dab40363964e665a7f7d91e3ce9510c8697dc152",
+              "content_id": "markdown-sha256-18aceef21a5f0c0a83699c6df50e5b24e4dbfb36a6e58746bb90383e8381d73d",
+              "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-5-0.md",
+              "chunk_id": "chunk-sha256-3c557a0ecbe1490944ff76a44e36019bf94c4de8261015c65c579ad6688b8ee4",
+              "chunk_index": 0,
+              "chunker_version": "markdown-blocks-v1",
+              "chunker_config_id": "chunker-config-sha256-2222222222222222222222222222222222222222222222222222222222222222",
+              "heading_path": [
+                {
+                  "level": 1,
+                  "title": "Document requirement 5-0"
+                }
+              ],
+              "block_type": "paragraph",
+              "text": "Verified local diagnostic test: /metrics returned 404 without a configured metrics token and 401 for missing or wrong authorization. The dedicated metrics token was compared in constant time; the API identity token did not grant metrics access.",
+              "content_checksum": "18aceef21a5f0c0a83699c6df50e5b24e4dbfb36a6e58746bb90383e8381d73d",
+              "token_estimate": 61,
+              "occurrences": [
+                {
+                  "start_offset": 0,
+                  "end_offset": 244,
+                  "start_line": 1,
+                  "end_line": 1,
+                  "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-5-0.md#L1-L1"
+                }
+              ]
+            },
+            "claim_kind": "verified_evidence"
+          }
+        ],
+        "context_tokens": 573,
+        "context_bytes": 2290,
+        "source_kind": "fixture"
+      }
+    }
+  ],
+  "script": [
+    {
+      "expected_kind": "tool_plan",
+      "event": "reply",
+      "body": "{\"kind\": \"tool_plan\", \"tools\": [{\"schema_version\": \"1.0\", \"contract_type\": \"tool_request\", \"tool\": \"search_knowledge\", \"retrieval\": {\"schema_version\": \"1.0\", \"question\": \"Jak zabezpieczono odczyt metryk diagnostycznych?\", \"purpose\": \"verified_state\", \"filters\": {\"repositories\": null, \"document_types\": null, \"document_statuses\": null, \"access_classes\": null}, \"top_k\": 5, \"max_context_tokens\": 6000}}]}"
+    },
+    {
+      "expected_kind": "answer",
+      "event": "reply",
+      "body": "{\"kind\": \"answer\", \"outcome\": \"answered\", \"summary\": \"Verified evidence for the declared scope and revision; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\\\"Verified local diagnostic test: /metrics returned 404 without a configured metrics token and 401 for missing or wrong authorization. The dedicated metrics token was compared in constant time; the API identity token did not grant metrics access.\\\"\", \"evidence\": [{\"claim\": \"Verified evidence for the declared scope and revision; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\\\"Verified local diagnostic test: /metrics returned 404 without a configured metrics token and 401 for missing or wrong authorization. The dedicated metrics token was compared in constant time; the API identity token did not grant metrics access.\\\"\", \"source_type\": \"document\", \"source_ref\": \"git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-5-0.md#L1-L1\", \"as_of\": null, \"supporting_refs\": [], \"calculation_id\": null}], \"citations\": [{\"repository\": \"Oskar-Stachowski/retailops-ai-intelligence\", \"commit_sha\": \"1111111111111111111111111111111111111111\", \"path\": \"docs/agent-evaluation-document-5-0.md\", \"heading\": \"Document requirement 5-0\", \"chunk_id\": \"chunk-sha256-3c557a0ecbe1490944ff76a44e36019bf94c4de8261015c65c579ad6688b8ee4\", \"document_status\": \"verified\", \"source_ref\": \"git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-5-0.md#L1-L1\"}], \"confidence\": \"medium\", \"limitations\": [], \"recommended_actions\": [], \"data_freshness\": {\"inventory\": {\"as_of\": null, \"status\": \"not_requested\"}, \"predictions\": {\"as_of\": null, \"status\": \"not_requested\"}, \"sales\": {\"as_of\": null, \"status\": \"not_requested\"}}}"
+    }
+  ],
+  "expected": {
+    "status": "succeeded",
+    "error_code": null,
+    "answer": {
+      "kind": "answer",
+      "outcome": "answered",
+      "summary": "Verified evidence for the declared scope and revision; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"Verified local diagnostic test: /metrics returned 404 without a configured metrics token and 401 for missing or wrong authorization. The dedicated metrics token was compared in constant time; the API identity token did not grant metrics access.\"",
+      "evidence": [
+        {
+          "claim": "Verified evidence for the declared scope and revision; scope=Synthetic offline fixture only; revision=1111111111111111111111111111111111111111; literal quote=\"Verified local diagnostic test: /metrics returned 404 without a configured metrics token and 401 for missing or wrong authorization. The dedicated metrics token was compared in constant time; the API identity token did not grant metrics access.\"",
+          "source_type": "document",
+          "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-5-0.md#L1-L1",
+          "as_of": null,
+          "supporting_refs": [],
+          "calculation_id": null
+        }
+      ],
+      "recommended_actions": [],
+      "confidence": "medium",
+      "data_freshness": {
+        "sales": {
+          "as_of": null,
+          "status": "not_requested"
+        },
+        "inventory": {
+          "as_of": null,
+          "status": "not_requested"
+        },
+        "predictions": {
+          "as_of": null,
+          "status": "not_requested"
+        }
+      },
+      "citations": [
+        {
+          "repository": "Oskar-Stachowski/retailops-ai-intelligence",
+          "commit_sha": "1111111111111111111111111111111111111111",
+          "path": "docs/agent-evaluation-document-5-0.md",
+          "heading": "Document requirement 5-0",
+          "chunk_id": "chunk-sha256-3c557a0ecbe1490944ff76a44e36019bf94c4de8261015c65c579ad6688b8ee4",
+          "document_status": "verified",
+          "source_ref": "git:Oskar-Stachowski/retailops-ai-intelligence@1111111111111111111111111111111111111111:docs/agent-evaluation-document-5-0.md#L1-L1"
+        }
+      ],
+      "limitations": []
+    },
+    "candidate_types": [],
+    "tool_calls": [
+      {
+        "schema_version": "1.0",
+        "contract_type": "tool_request",
+        "tool": "search_knowledge",
+        "retrieval": {
+          "schema_version": "1.0",
+          "question": "Jak zabezpieczono odczyt metryk diagnostycznych?",
+          "purpose": "verified_state",
+          "filters": {
+            "repositories": null,
+            "document_types": null,
+            "document_statuses": null,
+            "access_classes": null
+          },
+          "top_k": 5,
+          "max_context_tokens": 6000
+        }
+      }
+    ],
+    "model_calls": 2,
+    "tool_attempts": 1,
+    "extra_evidence_rounds": 0,
+    "repairs": 0
+  }
+}

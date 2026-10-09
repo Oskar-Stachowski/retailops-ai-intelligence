@@ -18,6 +18,8 @@ Nie używa user_id, roli z body/query/header ani demo-admin RetailOps jako login
 | `POST /api/v1/knowledge-index-runs` | Admin + jawne knowledge:index; wymagany Idempotency-Key, zatwierdzony profil, trwały Run |
 | `GET /api/v1/knowledge-index-runs/{run_id}` | Admin + knowledge:index; stan runa w środowisku API |
 | `GET /api/v1/knowledge-indexes/current` | Admin + knowledge:index; metadane aktywnego indeksu lub 404 index-not-configured |
+| `POST /api/v1/assistant/queries` | Operator + assistant:query i cały scope/prawa narzędzi; bounded query |
+| `GET /api/v1/assistant/runs/{trace_id}` | Właściciel z zachowanymi prawami lub admin + assistant:audit; bezpieczny trace |
 
 Forecast-check jest **preflight uprawnień**; nie zwraca prognozy, nie sprawdza
 istnienia produktu w źródle i nie potwierdza gotowości modelu.
@@ -128,9 +130,9 @@ dla UID 10001, read-only mount i własnego odbioru; nie zmieniaj uprawnień na 0
 DB/MLflow, migracje i metryki Compose pozostają dotychczasowym lokalnym stosem.
 MLflow nie uzyskał aplikacyjnego auth przez tę zmianę.
 
-Nie ma OIDC/JWT, MFA, publicznego TLS, tenant isolation, trwałego audit store,
-rate limiter, publicznego serving API lub tool executora.
-Lokalne scoped read API prognoz i [modeli/wersji](model-catalog.md) ma kontrolę
+Nie ma OIDC/JWT, MFA, publicznego TLS ani tenant isolation.
+[Assistant API](assistant-api.md) ma trace store i wspólne admission PostgreSQL;
+[narzędzia](agent-tools.md) mają własne prawa i bounded executor. Lokalne scoped read API prognoz i [modeli/wersji](model-catalog.md) wymaga
 `forecast:read`; nie uruchamia inference ani promocji modelu. Warstwa domenowa
 principal/scope jest wspólna dla przyszłych odczytów; każdy kolejny endpoint
 musi ją egzekwować także dla listy, pojedynczego rekordu i cache.
@@ -138,3 +140,26 @@ musi ją egzekwować także dla listy, pojedynczego rekordu i cache.
 Źródła implementacyjne: [FastAPI security](https://fastapi.tiangolo.com/reference/security/),
 [Python secrets](https://docs.python.org/3.11/library/secrets.html),
 [Python os](https://docs.python.org/3.11/library/os.html).
+
+Grant `assistant:query` wymaga jawnego scope produktów, lokalizacji i kanałów.
+[Profil dokumentacyjny](assistant-document-runtime.md) dodatkowo wymaga
+`knowledge:read` i knowledge_scope; nie wymaga praw do źródeł sprzedażowych.
+
+## Zgodność z agentem AI12
+
+Nowe capability `assistant:query` wymaga roli `operator` i jawnego zakresu
+produktów, punktów sprzedaży oraz kanałów. `assistant:audit` wymaga `admin`.
+Uprawnienia `pipeline`/`promoter`, zakresy wiedzy i istniejące prawa modułów ML
+pozostają wymagane. Capability jest jawne; rola ani inne prawo nie nadają go
+automatycznie.
+
+`stockout:read` wymaga fizycznego `stockout_scope`; sam zakres punktów sprzedaży
+nie wystarcza. Narzędzie agenta żąda danych dla punktów sprzedaży. Jego rzeczywisty
+adapter musi dodatkowo sprawdzić jawne powiązanie z uprawnionymi miejscami
+składowania. Wznowiony runtime nie rejestruje takiego adaptera i nie utożsamia tych
+identyfikatorów. Fizyczny odczyt stockout nie wymaga zakresu sprzedaży.
+
+Historyczne narzędzie AI12 używa `anomalies:read`, a natywne API detektorów
+`anomaly:read`. Są to osobne capability; żadne nie nadaje automatycznie drugiego.
+Ich integracja wymaga jawnej decyzji adaptera i grantów, bez poszerzania dostępu
+przy scaleniu.

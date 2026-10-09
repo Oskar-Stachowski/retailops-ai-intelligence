@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 import local_stack as stack
+from verify_assistant import compose_check as assistant_check
 from verify_rag_index import run_in_compose
 
 from retailops_ai.adapters.database import EXPECTED_REVISION
@@ -231,6 +232,8 @@ def main() -> int:
             raise RuntimeError("invalid_semantic_report")
         expected_runs = [*expected_runs, *semantic_report["retained_runs"]]
         stage = "write_ai_and_mlflow"
+        assistant = assistant_check(command)
+        report["assistant"] = assistant
         sql(
             "retailops_ai",
             """INSERT INTO ai.service_metadata(name,value) VALUES ('persistence_smoke','{"proof":"retained"}')
@@ -263,6 +266,7 @@ def main() -> int:
         wait_ready()
         check_pin_retained(expected_pin)
         check_jobs_retained(expected_runs)
+        assistant_check(command, expected=assistant["http"])
         require(
             sql("retailops_ai", rag_retention_query, role="ai") == str(rag["chunks"]),
             "rag_data_lost_after_crash",

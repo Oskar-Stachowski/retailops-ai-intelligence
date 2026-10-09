@@ -342,7 +342,8 @@ def verify_retrieval(candidate: IndexCandidate) -> dict[str, object]:
 
             try:
                 body = request().model_dump(mode="json")
-                for _ in range(80):
+                # Container cold startup includes contract compilation; this is not query latency.
+                for _ in range(400):
                     try:
                         status, parsed, headers = http(body, token)
                         break

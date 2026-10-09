@@ -35,6 +35,33 @@ class Settings(BaseSettings):
         default=None, validation_alias="API_AUTH_FILE", exclude=True, repr=False
     )
     rag_bedrock_enabled: bool = Field(default=False, validation_alias="RAG_BEDROCK_ENABLED")
+    assistant_suggestion_outbox_enabled: bool = Field(
+        default=False, validation_alias="ASSISTANT_SUGGESTION_OUTBOX_ENABLED"
+    )
+    assistant_runtime_file: Path | None = Field(
+        default=None, validation_alias="ASSISTANT_RUNTIME_FILE", exclude=True, repr=False
+    )
+    assistant_source_import: Path | None = Field(
+        default=None, validation_alias="ASSISTANT_SOURCE_IMPORT", exclude=True, repr=False
+    )
+    assistant_native_offline_file: Path | None = Field(
+        default=None, validation_alias="ASSISTANT_NATIVE_OFFLINE_FILE", exclude=True, repr=False
+    )
+    assistant_native_runtime_file: Path | None = Field(
+        default=None, validation_alias="ASSISTANT_NATIVE_RUNTIME_FILE", exclude=True, repr=False
+    )
+    assistant_curated: Path | None = Field(
+        default=None, validation_alias="ASSISTANT_CURATED", exclude=True, repr=False
+    )
+    assistant_replay: Path | None = Field(
+        default=None, validation_alias="ASSISTANT_REPLAY", exclude=True, repr=False
+    )
+    assistant_coverage: Path | None = Field(
+        default=None, validation_alias="ASSISTANT_COVERAGE", exclude=True, repr=False
+    )
+    assistant_producer_database_url: SecretStr | None = Field(
+        default=None, validation_alias="ASSISTANT_PRODUCER_DATABASE_URL", exclude=True, repr=False
+    )
     metrics_token: SecretStr | None = Field(default=None, validation_alias="METRICS_TOKEN")
     readiness_timeout_seconds: float = Field(
         default=1.0, ge=0.01, le=5.0, validation_alias="READINESS_TIMEOUT_SECONDS"
@@ -46,7 +73,7 @@ class Settings(BaseSettings):
         default=None, pattern=r"^sha256:[0-9a-f]{64}$", validation_alias="IMAGE_DIGEST"
     )
 
-    @field_validator("database_url")
+    @field_validator("database_url", "assistant_producer_database_url")
     @classmethod
     def valid_database_url(cls, value: SecretStr | None) -> SecretStr | None:
         if value is None:
@@ -70,6 +97,55 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def valid_network_boundary(self) -> "Settings":
+        if self.assistant_suggestion_outbox_enabled and self.database_url is None:
+            raise ValueError("suggestion_outbox_requires_database")
+        runtime = (
+            self.assistant_runtime_file is not None
+            or self.assistant_native_offline_file is not None
+            or self.assistant_native_runtime_file is not None
+        )
+        if (
+            sum(
+                path is not None
+                for path in (
+                    self.assistant_runtime_file,
+                    self.assistant_native_offline_file,
+                    self.assistant_native_runtime_file,
+                )
+            )
+            > 1
+        ):
+            raise ValueError("ambiguous_assistant_runtime_configuration")
+        if runtime != (self.assistant_source_import is not None):
+            raise ValueError("assistant_runtime_requires_source_import")
+        native_inputs = (
+            self.assistant_curated,
+            self.assistant_replay,
+            self.assistant_coverage,
+            self.assistant_producer_database_url,
+        )
+        if self.assistant_native_offline_file is not None:
+            if (
+                self.app_env != "test"
+                or self.assistant_runtime_file is not None
+                or self.database_url is None
+                or self.rag_bedrock_enabled
+                or any(value is None for value in native_inputs)
+            ):
+                raise ValueError("native_offline_requires_isolated_test_dependencies")
+        elif self.assistant_native_runtime_file is not None:
+            if (
+                self.database_url is None
+                or not self.rag_bedrock_enabled
+                or any(value is None for value in native_inputs)
+            ):
+                raise ValueError("native_runtime_requires_database_bedrock_and_native_inputs")
+        elif any(value is not None for value in native_inputs):
+            raise ValueError("native_offline_configuration_required")
+        if self.assistant_runtime_file is not None and (
+            self.database_url is None or not self.rag_bedrock_enabled
+        ):
+            raise ValueError("assistant_runtime_requires_database_and_bedrock_opt_in")
         if self.network_mode == "compose" and self.database_url is None:
             raise ValueError("Compose mode requires a database URL")
         if self.http_host == "0.0.0.0" and self.network_mode != "compose":  # noqa: S104
@@ -85,7 +161,18 @@ class Settings(BaseSettings):
             raise ValueError("metrics token must contain 32-128 URL-safe characters")
         return value
 
-    @field_validator("artifact_root", "api_auth_file", mode="before")
+    @field_validator(
+        "artifact_root",
+        "api_auth_file",
+        "assistant_runtime_file",
+        "assistant_source_import",
+        "assistant_native_offline_file",
+        "assistant_native_runtime_file",
+        "assistant_curated",
+        "assistant_replay",
+        "assistant_coverage",
+        mode="before",
+    )
     @classmethod
     def nonempty_path(cls, value: object) -> object:
         if isinstance(value, str) and (not value.strip() or "\x00" in value):

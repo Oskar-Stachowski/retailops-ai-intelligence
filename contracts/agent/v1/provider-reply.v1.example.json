@@ -1,0 +1,7 @@
+{
+  "body": "{\"kind\":\"tool_plan\",\"tools\":[]}",
+  "usage": {
+    "input_tokens": 100,
+    "output_tokens": 20
+  }
+}

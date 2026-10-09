@@ -1,0 +1,19 @@
+{
+  "comparison": {
+    "graph_config_id": "agent-graph-config-sha256-37cd31d272fdda5eefdd47ab43bc9be0b8a6db21e182523ff2de107d2e4adc14",
+    "offline_release_id": "agent-evaluation-release-sha256-59ba04590c53ccbd12835722095676fc74fd208a4779677174581b11d2170a2a",
+    "profile_id": "bedrock-smoke-profile-sha256-f817128731cd124717a2468d279d3bf52705d2900154db905b364ab0437823ac"
+  },
+  "documents": {
+    "graph_config_id": "agent-graph-config-sha256-a4e9e5bedabadb5e0bfdc3eaed432af765a8bd7670268bcd70dc132eeb79bd74",
+    "offline_release_id": "agent-evaluation-release-sha256-59ba04590c53ccbd12835722095676fc74fd208a4779677174581b11d2170a2a",
+    "profile_id": "bedrock-smoke-profile-sha256-425033759a944d8fb2214ea8eb2d5eeb73358cdac6a084b066d56f6271ce4266"
+  },
+  "fixture_sources": true,
+  "graph_config_id": "agent-graph-config-sha256-3c05e0e3f406903e85518a6f4ecfc81ec02b5c35f64baa5cb2c5462d09fa1509",
+  "offline_release_id": "agent-evaluation-release-sha256-59ba04590c53ccbd12835722095676fc74fd208a4779677174581b11d2170a2a",
+  "profile_id": "bedrock-smoke-profile-sha256-92ab6438d58bdd56b4e1b2ea67164286d4b472d521ad45e940b85d022a55edee",
+  "provider_invoked": false,
+  "schema_version": "1.0",
+  "transport_version": "converse-json-counted-v1"
+}

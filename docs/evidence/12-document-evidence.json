@@ -1,0 +1,71 @@
+{
+  "ai12_closed": false,
+  "artifacts_sha256": {
+    "agent/document-smoke.v1.json": "ffada2e1fc67cae0494d63be38f60916eec9b19eb80bc3d0e6d814e639edeea6",
+    "agent/evaluation-release.fake.v1.json": "606eef1e8e8331376222b1fd95018f5b9d9d21cb9381756431579a087da609ed",
+    "agent/golden.canonical.v1.json": "dd3a3630b35d7ea2046340498e252aaeeb6989d11aa2ff9399d0e6fcab81eb26",
+    "agent/graph.document-smoke.v1.json": "4d135fbd1d5954b73578d64b6fa5c36b45b1424d67a7b773d375e21e94607079",
+    "agent/graph.evaluate.fake.v1.json": "9a80e719ccde809d4921a19d34daa3fcea39c436b98371ad24d65ab55ae32376",
+    "docs/evidence/12-bedrock-budget.json": "03db47ae01c0d38d4e84875fce812549f09c547b5340a24bc0549f342f35bb25",
+    "docs/evidence/12-bedrock-runs/sonnet-4-documents.json": "afb4782c12db0749fd02b320ab2ce7abc7b333ecbed59a33dc55a2953217b286",
+    "docs/evidence/12-document-label-review.json": "b316ddd85cad2cb0c2bf4d8175b524e2923032c7b3c622f2dde7b2ce87903d26",
+    "docs/evidence/12-document-offline.json": "8fe5de545d2e1b75776c7b23120d3f58c5c0487d7514e6f0d5375d1879822209",
+    "docs/evidence/12-document-wheel.json": "487227b2bfebf4172a02bd884aa3d1477be04a8c93929357566d72fff9291f89"
+  },
+  "base_commit": "2a423ecdf99ad0b0ac5bd5ce13af67d8a3143182",
+  "branch": "ai/12-tools",
+  "campaign_cap_usd": "1.50",
+  "campaign_estimated_or_reserved_usd": "1.1722710",
+  "checks": {
+    "compose_config": true,
+    "contract_snapshot_groups": 8,
+    "documentation_links": true,
+    "mypy_source_files": 135,
+    "package_build": true,
+    "ruff": true,
+    "secret_scan_files": true,
+    "secret_scan_history": true,
+    "wheel_outside_checkout": true
+  },
+  "created_at": "2026-09-29T10:10:50.874256+00:00",
+  "critical_cases": {
+    "passed": 36,
+    "total": 36,
+    "value": 1.0
+  },
+  "human_label_approval": false,
+  "labels_state": "proposed",
+  "new_estimated_cost_usd": "0.2439129",
+  "offline_cases": {
+    "passed": 50,
+    "total": 50,
+    "value": 1.0
+  },
+  "push_performed": false,
+  "pytest": {
+    "code_changed_for_rerun": false,
+    "loopback_rerun_outside_sandbox_passed": 2,
+    "passed": 1026,
+    "reason_for_rerun": "sandbox_denied_socket_bind",
+    "sandbox_passed": 1024
+  },
+  "real_document_cases": {
+    "passed": 6,
+    "total": 6
+  },
+  "real_model": {
+    "inference_profile": "eu.anthropic.claude-sonnet-4-6",
+    "max_output_tokens": 1500,
+    "model_id": "anthropic.claude-sonnet-4-6",
+    "provider": "bedrock",
+    "region": "eu-central-1",
+    "temperature": 0.0
+  },
+  "real_retrieval_measured": false,
+  "remaining_usd": "0.3277290",
+  "remote_ci_run": false,
+  "schema_version": "1.0",
+  "scope": "ai12_step1_document_answerability",
+  "sources": "synthetic_fixture_evidence",
+  "status": "passed"
+}
