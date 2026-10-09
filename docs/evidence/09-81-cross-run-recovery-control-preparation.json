@@ -1,0 +1,67 @@
+{
+  "actual_different_run_recovery_verified": false,
+  "canonical_diagnostic_dispatched": false,
+  "code_sha256": {
+    ".github/workflows/ai09-generation-control.yml": "dc80e2ac3b81943277195471afe1f383b6a959b5d09aae7fad38ce3c91c660ad",
+    "scripts/check_ai09_cross_run_resume.py": "f7e15b1b50fd9ce7ffb315ae9b8fcb9f3d52c611a45969e66a5ecbafc7b47743",
+    "tests/test_ai09_checkpoint_transport.py": "f63f2d9d5e470dc49ace49ca139b4298bdff76b83cafd1ca659cfffa298fd524"
+  },
+  "control_profile": {
+    "days": 10,
+    "products": 8,
+    "stores": 2,
+    "tree_rss_bytes": 1073741824,
+    "wall_seconds": 600,
+    "warehouses": 1
+  },
+  "fresh_final_reads": 0,
+  "new_project_fits": 0,
+  "original_modes": [
+    "checkpoint_failure",
+    "checkpoint_interruption"
+  ],
+  "project_journal_initialized": false,
+  "recorded_at_utc": "2026-10-09T14:51:48.422502+00:00",
+  "recovery_mode": "checkpoint_recovery",
+  "remaining": [
+    "actual failed-process and interrupted-controller jobs with durable complete final history",
+    "separate recovery jobs and independent artifact verification",
+    "current phased live UI proof, representative25/50profiles,trial protocol,end-to-end and full head/main acceptance"
+  ],
+  "requirements": {
+    "all_known_failed_and_resume_costs_retained": true,
+    "all_other_job_steps_must_be_successful_or_intentionally_skipped": true,
+    "automatic_retry": false,
+    "bounded_retrieval_seconds": 60,
+    "earlier_prefix_resource_receipt_preserved": true,
+    "explicit_previous_run_job_prefix_and_attempt_ids_required": true,
+    "failure_codes": [
+      23,
+      24
+    ],
+    "native_export_limit_seconds": 30,
+    "new_runner_recomputes_runtime_identity_before_download": true,
+    "only_deliberately_injected_failure_is_admitted": true,
+    "original_job_must_remain_failed": true,
+    "post_recovery_idle_UI_observation_seconds": 130,
+    "prefix_minimum_remaining_seconds": 300,
+    "real_native_export_before_failure_or_controller_exit": true,
+    "same_exact_control_head_and_source_required": true,
+    "source_generation_in_recovery": false,
+    "terminal_attempt_snapshot_uploaded_only_after_work_stops": true,
+    "unknown_interrupted_cost_reserved_from_terminal_job_and_remains_unknown": true
+  },
+  "stage_ready": false,
+  "status": "prepared_not_remotely_verified",
+  "validation": {
+    "failures": 0,
+    "junit_sha256": "bbc47a4eb81efa1943da8b212b0d7ec980a4bdf279df2ccdc2801b401bbc4e4f",
+    "mypy": "passed",
+    "mypy_files": 1,
+    "passed": 294,
+    "ruff": "passed",
+    "seconds": 19.203,
+    "skips": 0
+  },
+  "version": "ai09-cross-run-recovery-control-preparation-1.0.0"
+}

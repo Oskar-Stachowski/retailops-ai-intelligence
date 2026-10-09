@@ -5,6 +5,31 @@ import resource
 import sys
 from pathlib import Path
 from time import perf_counter
+from typing import Any
+
+
+def memory_evidence(phase: str, result: dict[str, Any]) -> dict[str, Any]:
+    """Native fit receipts already include their parent and short-lived child peaks."""
+    from retailops_ai.anomaly_detectors.contract import Resources
+    from retailops_ai.worker_resources import worker_peak_rss_bytes
+
+    peak = worker_peak_rss_bytes()
+    native_peaks = []
+    if phase == "fit":
+        if not isinstance(result.get("fit_resources"), list):
+            raise ValueError("campaign_anomaly_fit_native_memory_evidence_missing")
+        for raw in result["fit_resources"]:
+            measured = Resources.model_validate(raw)
+            if measured.peak_rss_bytes <= 0:
+                raise ValueError("campaign_anomaly_fit_native_memory_evidence_missing")
+            native_peaks.append(measured.peak_rss_bytes)
+    elif phase != "reload":
+        raise ValueError("campaign_anomaly_fit_unknown_memory_phase")
+    return {
+        "worker_peak_rss_bytes": peak,
+        "conservative_worker_tree_peak_rss_bytes": max([peak, *native_peaks]),
+        "memory_measurement": "current_executable_and_complete_native_fit_tree_receipts",
+    }
 
 
 def main() -> None:
@@ -51,12 +76,10 @@ def main() -> None:
         raise ValueError("campaign_anomaly_fit_worker_runtime_changed")
     usage = resource.getrusage(resource.RUSAGE_SELF)
     child = resource.getrusage(resource.RUSAGE_CHILDREN)
-    scale = 1 if sys.platform == "darwin" else 1024
     result.update(
         wall_seconds=perf_counter() - started,
         cpu_seconds=usage.ru_utime + usage.ru_stime + child.ru_utime + child.ru_stime,
-        worker_peak_rss_bytes=int(usage.ru_maxrss * scale),
-        conservative_worker_tree_peak_rss_bytes=int((usage.ru_maxrss + child.ru_maxrss) * scale),
+        **memory_evidence(args.phase, result),
     )
     write(args.root / (args.phase + ".json"), result)
 

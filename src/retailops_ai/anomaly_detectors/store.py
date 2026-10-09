@@ -47,9 +47,14 @@ def runtime() -> Runtime:
     package = files("retailops_ai.anomaly_detectors")
     return Runtime(
         code_files={
-            p.name: hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in package.iterdir()
-            if p.name.endswith(".py")
+            **{
+                p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                for p in package.iterdir()
+                if p.name.endswith(".py")
+            },
+            "retailops_ai/worker_resources.py": hashlib.sha256(
+                files("retailops_ai").joinpath("worker_resources.py").read_bytes()
+            ).hexdigest(),
         },
         contract_files={
             p.name: hashlib.sha256(p.read_bytes()).hexdigest()

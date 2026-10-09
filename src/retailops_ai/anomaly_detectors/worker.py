@@ -12,6 +12,7 @@ from sklearn.ensemble import IsolationForest  # type: ignore[import-untyped]
 
 from retailops_ai.anomaly_detectors.codec import score_matrix
 from retailops_ai.anomaly_detectors.contract import FitPolicy, Forest, Node, Resources, Tree
+from retailops_ai.anomaly_detectors.worker_resources import worker_peak_rss_bytes
 from retailops_ai.source_snapshot.files import SnapshotError, canonical_json, read_bytes
 
 
@@ -102,9 +103,7 @@ def fit_forest(x: np.ndarray, probes: np.ndarray, policy: FitPolicy) -> tuple[Fo
     error = float(np.max(np.abs(restored + fitted.score_samples(examples))))
     if error > 1e-12:
         raise SnapshotError("anomaly_native_portable_score_mismatch")
-    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (
-        1 if sys.platform == "darwin" else 1024
-    )
+    rss = worker_peak_rss_bytes()
     usage = resource.getrusage(resource.RUSAGE_SELF)
     receipt = Resources(
         wall_seconds=time.monotonic() - started,

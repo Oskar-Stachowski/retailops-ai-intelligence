@@ -2,9 +2,39 @@ name: AI09 real generation worker control
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Small generation, live progress, or artifact checkpoint resume control
+        type: choice
+        options:
+          - generation
+          - live_progress
+          - checkpoint_resume
+          - checkpoint_failure
+          - checkpoint_interruption
+          - checkpoint_recovery
+          - census_memory
+        default: generation
+      previous_run_id:
+        description: Completed original failure run, required only for checkpoint_recovery
+        type: string
+        default: ""
+      previous_job_id:
+        description: Original terminal control job ID
+        type: string
+        default: ""
+      prefix_artifact_id:
+        description: Original completed qualification prefix artifact ID
+        type: string
+        default: ""
+      attempt_artifact_id:
+        description: Final failed or interrupted attempt artifact ID
+        type: string
+        default: ""
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: ai09-generation-control-${{ github.ref }}
@@ -20,9 +50,10 @@ jobs:
           persist-credentials: false
           path: consumer
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        if: inputs.mode != 'census_memory'
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: 16d34887b058b3dfb270af474f28242194a968ca
+          ref: ${{ inputs.mode != 'generation' && 'ff2504a9cf6e4f46040c8327901b7bcb82d115c0' || '16d34887b058b3dfb270af474f28242194a968ca' }}
           persist-credentials: false
           path: source
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
@@ -30,13 +61,25 @@ jobs:
           version: "0.12.19"
           python-version: "3.11.15"
           enable-cache: true
-      - name: Install locked consumer and pinned producer dependencies
+      - name: Install locked consumer dependencies
+        env:
+          CONTROL_MODE: ${{ inputs.mode }}
         run: |
-          uv sync --directory consumer --locked --extra snapshot --extra forecast
+          if [[ "$CONTROL_MODE" == checkpoint_* ]]; then
+            # Preparation imports the exact checkout. Editable installation adds
+            # installer-local RECORD metadata that differs between fresh runners.
+            uv sync --directory consumer --locked --extra snapshot --extra forecast --no-install-project
+          else
+            uv sync --directory consumer --locked --extra snapshot --extra forecast
+          fi
+      - name: Install pinned producer dependencies
+        if: inputs.mode != 'census_memory'
+        run: |
           uv venv --python 3.11.15 source/.venv
           uv pip install --python source/.venv/bin/python \
             -r source/services/api/requirements-dev.txt -r source/data/requirements-parquet.txt
       - name: Run both native six-phase controls without a project campaign
+        if: inputs.mode == 'generation'
         env:
           OMP_NUM_THREADS: "1"
           OPENBLAS_NUM_THREADS: "1"
@@ -47,6 +90,121 @@ jobs:
             --source "$GITHUB_WORKSPACE/source" \
             --producer-python "$GITHUB_WORKSPACE/source/.venv/bin/python" \
             --output "$GITHUB_WORKSPACE/control"
+      - name: Flush actual Source progress with a separate visibility observation window
+        if: inputs.mode == 'live_progress'
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_live_progress.py \
+            --source "$GITHUB_WORKSPACE/source" \
+            --producer-python "$GITHUB_WORKSPACE/source/.venv/bin/python" \
+            --output "$GITHUB_WORKSPACE/control"
+      - name: Generate and qualify the fixed tiny checkpoint prefix
+        if: inputs.mode == 'checkpoint_resume' || inputs.mode == 'checkpoint_failure' || inputs.mode == 'checkpoint_interruption'
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_checkpoint_control.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" --operation prefix
+      - name: Upload completed prefix before resuming
+        if: inputs.mode == 'checkpoint_resume' || inputs.mode == 'checkpoint_failure' || inputs.mode == 'checkpoint_interruption'
+        id: checkpoint_prefix_upload
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-checkpoint-control-${{ github.sha }}-${{ github.run_id }}-prefix
+          path: control/prefix-artifact/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Inject an explicit failure after real native export
+        if: inputs.mode == 'checkpoint_failure' || inputs.mode == 'checkpoint_interruption'
+        env:
+          FAILURE_MODE: ${{ inputs.mode == 'checkpoint_failure' && 'failed_process' || 'controller_interruption' }}
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_cross_run_resume.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" \
+            --operation inject --failure-mode "$FAILURE_MODE"
+      - name: Finalize attempt history after all native work has stopped
+        if: always() && (inputs.mode == 'checkpoint_failure' || inputs.mode == 'checkpoint_interruption')
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_cross_run_resume.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" \
+            --operation publish-attempt
+      - name: Preserve the complete terminal attempt for an explicitly selected recovery
+        if: always() && (inputs.mode == 'checkpoint_failure' || inputs.mode == 'checkpoint_interruption') && hashFiles('control/attempt/attempt.json') != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-preparation-attempt-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: control/attempt/attempt.json
+          if-no-files-found: error
+          retention-days: 90
+          overwrite: false
+      - name: Recover the explicit terminal attempt in a different runner
+        if: inputs.mode == 'checkpoint_recovery'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PREVIOUS_RUN_ID: ${{ inputs.previous_run_id }}
+          PREVIOUS_JOB_ID: ${{ inputs.previous_job_id }}
+          PREFIX_ARTIFACT_ID: ${{ inputs.prefix_artifact_id }}
+          ATTEMPT_ARTIFACT_ID: ${{ inputs.attempt_artifact_id }}
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_cross_run_resume.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" \
+            --operation recover --previous-run-id "$PREVIOUS_RUN_ID" \
+            --previous-job-id "$PREVIOUS_JOB_ID" --prefix-artifact-id "$PREFIX_ARTIFACT_ID" \
+            --attempt-artifact-id "$ATTEMPT_ARTIFACT_ID"
+      - name: Observe flushed counters with an explicit idle visibility window
+        if: inputs.mode == 'checkpoint_resume' || inputs.mode == 'checkpoint_recovery'
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_checkpoint_control.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" --operation observe
+      - name: Restore the prefix and preserve inherited archives for another pause
+        if: inputs.mode == 'checkpoint_resume'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CHECKPOINT_ARTIFACT_ID: ${{ steps.checkpoint_prefix_upload.outputs.artifact-id }}
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_checkpoint_control.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" \
+            --operation resume --artifact-id "$CHECKPOINT_ARTIFACT_ID"
+      - name: Upload the resumed prefix including its first resume cost
+        if: inputs.mode == 'checkpoint_resume'
+        id: checkpoint_second_prefix_upload
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-checkpoint-control-${{ github.sha }}-${{ github.run_id }}-prefix-second
+          path: control/second-prefix-artifact/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Restore a second time and complete native export import and curation
+        if: inputs.mode == 'checkpoint_resume'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CHECKPOINT_ARTIFACT_ID: ${{ steps.checkpoint_second_prefix_upload.outputs.artifact-id }}
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_checkpoint_control.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" \
+            --operation resume --second --artifact-id "$CHECKPOINT_ARTIFACT_ID"
+      - name: Verify Linux executable memory and native full-census training controls
+        if: inputs.mode == 'census_memory'
+        timeout-minutes: 15
+        working-directory: consumer
+        env:
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+          PYTHONPATH: ${{ github.workspace }}/consumer/src
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/control"
+          .venv/bin/python -m pytest -q -rA \
+            tests/test_anomaly_census_resources.py \
+            tests/test_anomaly_census_fit.py \
+            tests/test_anomaly_detectors.py \
+            tests/test_campaign_anomaly_evaluation.py \
+            tests/test_campaign_anomaly_membership_source.py \
+            tests/test_campaign_worker_memory.py \
+            tests/test_campaign_anomaly_fit.py \
+            tests/test_campaign_anomaly_fit_data.py \
+            --junitxml="$GITHUB_WORKSPACE/control/census-memory.xml"
       - name: Preserve completed and failed phase evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -54,8 +212,29 @@ jobs:
           name: ai09-generation-control-${{ github.sha }}-${{ github.run_id }}
           path: |
             control/summary.json
+            control/*.json
+            control/*.jsonl
+            control/*.log
+            control/*.xml
             control/*/*.json
             control/*/*.log
+            control/*/*.jsonl
+            control/cold/events/*.json
+            control/resumed/events/*.json
+            control/resumed/resume-receipts/*.json
+            control/resumed/checkpoints/
+            control/attempt/*.json
+            control/attempt-download/*.json
+            control/identity-only-preflight/*.json
+            control/identity-only-preflight/*.log
+            control/second/*.json
+            control/second/*.log
+            control/second/*/*.json
+            control/second/*/*.jsonl
+            control/second/*/*.log
+            control/second/resumed/events/*.json
+            control/second/resumed/resume-receipts/*.json
+            control/second/resumed/checkpoints/
           if-no-files-found: warn
-          retention-days: 14
+          retention-days: 90
           overwrite: false

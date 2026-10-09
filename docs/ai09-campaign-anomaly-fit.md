@@ -32,13 +32,26 @@ konserwatywny RSS, czas cold load i odtworzenia całej walidacji. Obowiązuje
 zamrożony wspólny czas, scratch i RSS do 12 GiB oraz rezerwy hosta 1 GiB RAM
 i 6 GiB dysku. Mniejszy budżet może zostać zadeklarowany przed startem.
 
+[Audyt 09.84](evidence/09-84-integrated-worker-memory.json) wiąże pomiar RAM
+z bieżącym procesem po exec oraz kompletnymi natywnymi receipts fitów.
+Każdy taki receipt już obejmuje rodzica i dziecko, dlatego maksima kolejnych
+fitów nie są sumowane. Pełne monitorowanie drzewa i koszt CPU zakończonych
+dzieci pozostają aktywne. Kontrola Linuksa obejmuje rzeczywisty reload modelu
+uruchomiony przez proces utrzymujący 512 MiB pamięci; jej odbiór jest wymagany
+przed akceptacją poprawki.
+
 [Dowód 09.71](evidence/09-71-campaign-anomaly-fit.json) rozróżnia testy
 kontrolne od rzeczywistej kampanii. 15 kontroli trwałego dziennika przeszło.
 Wcześniejsze dwa pełne publiczne warianty planned przeszły rzeczywisty fit
 i świeży reload; zwykły zachowany fixture ma zmodyfikowanego producenta
 i został poprawnie odrzucony. Nie zmieniono jego pochodzenia ani wymogu
-czystego producenta. Końcowe kontrole wszystkich 11 cech, późnej odmowy
-parenta, discovery, regresje oraz zainstalowana paczka pozostają do wykonania.
+czystego producenta. Końcowy zestaw na `f78f4a5` ma 125 zaliczonych testów
+ze źródeł (352,53 s) i te same 125 z zainstalowanej paczki (356,09 s), bez
+pominięć. Obejmuje wszystkie 11 cech, późną odmowę parenta, discovery,
+dziennik, eksport, regresje i granice paczki. Zgodność source/wheel/install
+obejmuje 613 modułów Python, 215 JSON i cztery dodatkowe pliki. Prywatne pliki
+nie trafiły do paczki; sprawdzono pochodzenie rzeczywiście załadowanych modułów.
+Wheel ma 2108383 B, SHA-256 `e88ff0c4988d155abb8a9a9bd6c410d554601278969bb8c173481519c8880d9c`.
 
 To implementacja adaptera development, a nie odbiór jakości. Nowa produkcyjna
 kampania Project nie została uruchomiona, nie otwarto świeżego final i AI 09

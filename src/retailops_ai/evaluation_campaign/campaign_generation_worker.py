@@ -4,14 +4,25 @@ import argparse
 import hashlib
 import importlib
 import importlib.metadata
+import importlib.util
 import json
 import os
-import resource
 import stat
 import sys
 from datetime import date
 from pathlib import Path
 from typing import Any
+
+
+def worker_peak_rss_bytes() -> int:
+    """Load only the stdlib memory probe under the producer's own interpreter."""
+    path = Path(__file__).resolve().parents[1] / "worker_resources.py"
+    spec = importlib.util.spec_from_file_location("ai09_worker_resources", path)
+    if spec is None or spec.loader is None:
+        raise ValueError("campaign_generation_memory_probe_unavailable")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return int(module.worker_peak_rss_bytes())
 
 
 def read(path: Path) -> dict[str, Any]:
@@ -257,8 +268,7 @@ def main() -> None:
         if args.phase in {"generation", "qualification", "export"}
         else consumer(args.phase, args.root, request)
     )
-    peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    value["worker_peak_rss_bytes"] = int(peak if sys.platform == "darwin" else peak * 1024)
+    value["worker_peak_rss_bytes"] = worker_peak_rss_bytes()
     write(args.root / (args.phase + ".json"), value)
 
 

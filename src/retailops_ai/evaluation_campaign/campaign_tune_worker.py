@@ -2,7 +2,6 @@
 
 import hashlib
 import importlib
-import platform
 import resource
 from pathlib import Path
 from time import perf_counter
@@ -21,6 +20,7 @@ from retailops_ai.evaluation_campaign.campaign_tune_data import choose, paired_m
 from retailops_ai.evaluation_campaign.partitions import runtime_pin
 from retailops_ai.evaluation_campaign.physical_contract import PhysicalForecastManifest
 from retailops_ai.source_snapshot.files import SnapshotError, read_bytes
+from retailops_ai.worker_resources import worker_peak_rss_bytes
 
 
 def select(root: Path, request: dict[str, Any]) -> dict[str, Any]:
@@ -131,8 +131,7 @@ def main(root: Path) -> None:
         result.update(
             {
                 "worker_seconds": perf_counter() - started,
-                "worker_peak_rss_bytes": int(usage.ru_maxrss)
-                * (1 if platform.system() == "Darwin" else 1024),
+                "worker_peak_rss_bytes": worker_peak_rss_bytes(),
                 "worker_cpu_seconds": usage.ru_utime + usage.ru_stime,
             }
         )
@@ -153,8 +152,7 @@ def main(root: Path) -> None:
     result.update(
         {
             "worker_seconds": perf_counter() - started,
-            "worker_peak_rss_bytes": int(usage.ru_maxrss)
-            * (1 if platform.system() == "Darwin" else 1024),
+            "worker_peak_rss_bytes": worker_peak_rss_bytes(),
             "worker_cpu_seconds": usage.ru_utime + usage.ru_stime,
         }
     )

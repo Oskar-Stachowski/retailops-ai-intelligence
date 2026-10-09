@@ -162,15 +162,26 @@ def test_real_public_parent_fit_bundle_and_fresh_process_complete_reload(
     )
     from retailops_ai.evaluation_campaign import campaign_anomaly_fit_worker
 
-    subprocess.run(
-        [
+    command = [
+        sys.executable,
+        "-I",
+        "-B",
+        str(Path(campaign_anomaly_fit_worker.__file__)),
+        "reload",
+        str(root),
+    ]
+    if sys.platform == "linux":
+        # Exercise the actual model reload entrypoint after a large launcher;
+        # getrusage would charge that launcher's retained memory to the worker.
+        command = [
             sys.executable,
-            "-I",
-            "-B",
-            str(Path(campaign_anomaly_fit_worker.__file__)),
-            "reload",
-            str(root),
-        ],
+            "-c",
+            "import subprocess,sys; retained=bytearray(512*1024**2); "
+            "subprocess.run(sys.argv[1:],check=True,start_new_session=True)",
+            *command,
+        ]
+    subprocess.run(
+        command,
         check=True,
         timeout=60,
         env={**os.environ, "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1"},
@@ -183,6 +194,9 @@ def test_real_public_parent_fit_bundle_and_fresh_process_complete_reload(
     assert reload["cpu_seconds"] > 0
     assert reload["cold_model_load_wall_seconds"] > 0
     assert reload["validation_replay_wall_seconds"] > 0
+    assert reload["conservative_worker_tree_peak_rss_bytes"] == reload["worker_peak_rss_bytes"]
+    if sys.platform == "linux":
+        assert 0 < reload["worker_peak_rss_bytes"] < 512 * 1024**2
     # Hash/extent failures reject the whole reload, even after earlier rows passed.
     name = next(iter(result["validation_files"]))
     path = root / name

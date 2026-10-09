@@ -1,0 +1,126 @@
+{
+  "recorded_at_utc": "2026-10-09T16:09:51.825168+00:00",
+  "scope": "Integrated anomaly Project adapter and durable preparation; correct Linux pre-exec memory accounting, not scientific qualification",
+  "integration_commit": "54833addb3ac6ad663d76a0bdd178e55c3333b3f",
+  "accepted_main": "20aae22c00e8cf9e6b1b5ff6b11e706b59d5f46e",
+  "components_integrated": [
+    "09.71 complete anomaly fit adapter",
+    "09.72 through 09.83 durable preparation, progress, failure accounting and cross-run recovery"
+  ],
+  "changes": [
+    "One stdlib executable RSS probe: Linux VmHWM; existing macOS byte units retained",
+    "All eight campaign workers and both preparation worker entrypoints use executable RSS, retaining external live-tree guards",
+    "Anomaly native fit receipts already include parent and child peaks; retain maximum across sequential fits and complete worker lifetime, without summing a parent twice",
+    "Complete reaped-child CPU accounting remains unchanged",
+    "Missing native fit memory evidence is rejected; existing anomaly error code is preserved",
+    "Shared helper code is pinned by both native anomaly model runtime and full campaign runtime",
+    "Source-side probes run under isolated Python without third-party packages or consumer model imports",
+    "Linux control now includes real model reload launched with512MiB retained by its parent and the stdlib generation/capacity probes after256MiB launchers"
+  ],
+  "validation": {
+    "component_regressions": {
+      "tests": 357,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 6,
+      "seconds": 148.915,
+      "xml_sha256": "e7bf5113c75ebd4893bda862cb3dd442e64a980a4f71603faa0cbfcd67933e9a",
+      "private_path": ".local/worker-memory-audit/components.xml"
+    },
+    "native_and_final_resource_regressions": {
+      "tests": 66,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 6,
+      "seconds": 296.355,
+      "xml_sha256": "3c7e62f5b3d7abcf2ac12a16724c75f7874800aba6f791f1deb1ab5b46309073",
+      "private_path": ".local/worker-memory-audit/native.xml"
+    },
+    "component_sets_overlap_do_not_sum_as_unique_tests": true,
+    "macos_linux_only_skips_require_actual_linux_execution": true,
+    "native_scope": "Real clean demand/physical public parent fits, full fresh-process reload and late-parent rejection; preserved modified ordinary fixture remains rejected; no Project fits",
+    "mypy_source_files_passed": 749,
+    "ruff_check_and_format_passed": true,
+    "evaluation_and_detector_contract_snapshots_unchanged": true,
+    "wheel": {
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 2127565,
+      "sha256": "2687c168706940becd2a0196701666b9723e30438aceeaeefb2f6c3a67e1d523",
+      "memory_worker_source_parity": [
+        "retailops_ai/worker_resources.py",
+        "retailops_ai/anomaly_detectors/worker_resources.py",
+        "retailops_ai/anomaly_detectors/store.py",
+        "retailops_ai/evaluation_campaign/campaign_anomaly_fit_worker.py"
+      ],
+      "private_paths_absent": true
+    },
+    "installed_package": {
+      "wheel_sha256": "2687c168706940becd2a0196701666b9723e30438aceeaeefb2f6c3a67e1d523",
+      "python_modules_source_wheel_install_equal": 620,
+      "shared_probe_loaded_from_installed_package": true,
+      "shared_probe_pinned_by_native_model_and_campaign": true,
+      "actual_probe_rss_bytes": 76840960
+    },
+    "working_tree_and_945_commit_history_secret_scans_passed": true
+  },
+  "superseded_local_ci": {
+    "head": "54833ad",
+    "command": "make ci-local",
+    "reason": "Stopped only the owned earlier validation after identifying the additional memory defect; the frozen corrected head requires its own validation",
+    "result": {
+      "status": "failed",
+      "reason": "worker_exit",
+      "exit_code": -15,
+      "wall_seconds": 771.9917794170324,
+      "sampled_tree_peak_rss_bytes": 476053504,
+      "sampled_worker_cpu_seconds": 614.879658408,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 8960,
+      "sampled_peak_scratch_allocated_bytes": 20480,
+      "minimum_free_disk_bytes": 56457428992,
+      "minimum_available_memory_bytes": 1077985280,
+      "samples": 1517,
+      "sample_seconds": 0.5,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak"
+    },
+    "result_sha256": "4d950c78467e8266d003f6d8347ef2ea6a4a1800b8b3f1e0fdfa36f70e7928a2",
+    "log_sha256": "3e6daa29a40b129b6f541498e1f5b999af4716ed54bdf2a4c55a3d5acf70159a",
+    "passed": false,
+    "foreign_processes_or_sessions_mutated": false
+  },
+  "implementation_sha256": {
+    "src/retailops_ai/worker_resources.py": "2e2434ccdc248f77bc0fe6d476c7bd8636fa476c9b57b8a142775446ffcc627d",
+    "tests/test_campaign_worker_memory.py": "eb05b1942b568ab668f43b2ad4e8c6765053372b4ea00314047c8cd167902cd5",
+    ".github/workflows/ai09-generation-control.yml": "925170abe5806581988b09e3eb70034e9546ee502bddc51c2e38322591451e26",
+    "scripts/ai09_preparation_worker.py": "1368f23cb2efb3c1103b8a1e062eb400126c356283f20f04ea7d387184d6865e",
+    "scripts/measure_ai09_development_capacity.py": "59fc23cb6bbb781df4fbe3c038b8d55cecdae1b80f7138203542ff92ebbaafce",
+    "src/retailops_ai/anomaly_detectors/store.py": "d8e84a6bd43fce4273ebe678626c943e22a2b13ba9111566d30a794957449b3a",
+    "src/retailops_ai/anomaly_detectors/worker_resources.py": "5a2e222917038b5f454f745eb13b015b1b304ed6e6acc175936a64bd1e709a37",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_fit_worker.py": "d9397ec57fd0ba87cb91b77feb9a5087346684375cd769a70add3e5e8c884fc8",
+    "src/retailops_ai/evaluation_campaign/campaign_calibration_worker.py": "988e2f643207fdc740dcb0b7efd98cec1a97c4e5237b183bc7192d298ace95bd",
+    "src/retailops_ai/evaluation_campaign/campaign_context_bundle_worker.py": "423db76e4969cbe7c713e01ab6d46e39d778fbe77590ad6473fc6cb7c61e67fc",
+    "src/retailops_ai/evaluation_campaign/campaign_evaluation_worker.py": "489b669b912da03f91d34a5ed8d4a54b917b7661c14e9045bc83853d61d5de0b",
+    "src/retailops_ai/evaluation_campaign/campaign_fit_worker.py": "9127d11ac25ecd8ae55717dc7a084063f3c93246e29a984c8c33ebf96e0ea6ef",
+    "src/retailops_ai/evaluation_campaign/campaign_generation_worker.py": "3749842e96f891abc692637a0f940ad34cb156223720b72321cac5dac862c1da",
+    "src/retailops_ai/evaluation_campaign/campaign_score_worker.py": "b3405e934e4db161da41525bf501eccb282434fcbb6c0fbf16bf446f90d8e65b",
+    "src/retailops_ai/evaluation_campaign/campaign_tune_worker.py": "77f883593e308cad0a19be67f5f6fd7f69eaee119300a1aefde47dcc5b77138a",
+    "tests/test_anomaly_census_resources.py": "cc782e1029d707ea27574fafa1991ecb9c13e5657d770565856d110782c06e30",
+    "tests/test_campaign_anomaly_fit_data.py": "e6940cd1c232c46d7c381c45118bc1980a94327ff7c5cc3cd480c044cc9e8362"
+  },
+  "pending": [
+    "actual Linux control",
+    "full local make ci-local on corrected integration",
+    "full Required CI for exact PR head",
+    "protected merge and full resulting-main Required CI",
+    "profiles25/50 and frozen fair trial protocol",
+    "representative full data-to-report path",
+    "generic terminal failure/recovery admission and current phased live UI evidence",
+    "ordinary offline truth and complete scientific campaign for all use cases and final scope"
+  ],
+  "canonical_tree_rss_bytes": 12884901888,
+  "canonical_dispatch_enabled": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "quality_qualified": false,
+  "stage_ready": false
+}
