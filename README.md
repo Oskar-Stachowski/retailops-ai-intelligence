@@ -37,8 +37,11 @@ przypina poprawki CPU Source, zachowuje 12 GiB i cały profil oraz zalicza
 82 kontrole natywne i 82 z końcowej paczki przeszły.
 [Pełny podział i trening anomaly](docs/ai09-native-anomaly-membership.md) łączy
 Point z membership i dyskowymi rolami. 165 kontroli końcowej paczki przeszło;
-10020 wierszy treningowych zachowuje pełną liczność. Dziennik i publikacja modelu
-Project pozostają otwarte.
+10020 wierszy treningowych zachowuje pełną liczność. Adapter dziennika i modelu
+uzupełnia kolejny przyrost; jego odbiór i rzeczywista kampania pozostają otwarte.
+[Adapter kampanii anomaly](docs/ai09-campaign-anomaly-fit.md) rezerwuje próbę przed
+odczytem, wiąże pełny model i wymaga świeżego odtworzenia całej walidacji.
+15 kontroli dziennika przeszło; końcowy odbiór adaptera i kampanii trwa.
 [Pełny trening numeryczny anomaly](docs/ai09-native-anomaly-full-fit.md)
 zachowuje wszystkie zadeklarowane wiersze, mediany train i rzeczywisty fit
 lasu, także powyżej wcześniejszego limitu 10000. Integracja Project jest otwarta.

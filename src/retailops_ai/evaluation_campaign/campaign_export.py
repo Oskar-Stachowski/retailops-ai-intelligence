@@ -8,6 +8,7 @@ from uuid import uuid4
 
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.evaluation_campaign import campaign_journal
+from retailops_ai.evaluation_campaign.campaign_anomaly_fit_contract import CampaignAnomalyFitReceipt
 from retailops_ai.evaluation_campaign.campaign_calibration_contract import (
     CampaignForecastCalibrationReceipt,
 )
@@ -162,6 +163,7 @@ def _producer_values(
 def _store_receipt(
     root: Path,
     receipt: CampaignDevelopmentExportReceipt
+    | CampaignAnomalyFitReceipt
     | CampaignGeneratedParentReceipt
     | CampaignFinalExportReceipt
     | CampaignForecastFitReceipt
