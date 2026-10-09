@@ -1,5 +1,17 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: zakończony lokalny CI integracji; odmowa rezerwy RAM.**
+[09.89](evidence/09-89-integrated-local-ci.json) zachowuje wynik pełnego
+`make ci-local` na `d27094f`: **5347 passed / 55 skipped** w głównym zestawie
+oraz wykonane bramki do observation replay. Końcowy zestaw TensorFlow dał
+**3 passed / 5 failed**; wszystkie pięć prób zatrzymał `preflight_reserve`
+przed startem workera. Cały lokalny CI jest **niezaliczony**. Nie obniżono
+budżetów i nie zatrzymano innych sesji. Czas całego przebiegu wyniósł
+11 854,52 s, próbkowany szczyt RSS 906 035 200 B. Wcześniejsza odrębna kontrola
+Linux tego samego commitu ma **131/131 passed**, bez pominięć; nie zastępuje
+pełnego Required CI. Dalsza akceptacja wymaga zwykłego PR i pełnego CI na
+wynikowym main. Canonical pozostaje wyłączony; AI 09 nadal `not_ready`.
+
 **2026-10-09 — AI 09: integracja adaptera i checkpointów; audyt pamięci workerów.**
 Połączono adapter treningu anomaly z trwałym wznowieniem przygotowania.
 [09.84](evidence/09-84-integrated-worker-memory.json) rozszerza poprawkę RSS
