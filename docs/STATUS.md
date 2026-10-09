@@ -1,5 +1,15 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: ordinary reuse i generacja obu wariantów.**
+[09.91](evidence/09-91-resolved-development-variants.md) łączy bootstrap
+z przygotowaniem trzech wariantów bez ponownej generacji ordinary. Oryginalny
+parent przechodzi rozliczany pełny replay, potem demand i physical korzystają
+z dotychczasowych sześciu faz. Wspólny czas obejmuje zimną generację,
+planowanie i wszystkie nowe operacje; podstawowy generator również wymusza
+ten limit. 117 kontroli źródłowych przeszło. Są to testy wykonawcy,
+nie wyniki pełnych danych Project. Odbiór planera, dane, triale oraz pełne
+CI i publikacja tego przyrostu pozostają wymagane. AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: ordinary Source przed planowaniem anomalii.**
 [09.90](evidence/09-90-native-development-planning.md) usuwa zależność
 przygotowania od jeszcze nieznanych identyfikatorów scenariuszy. Osobny
@@ -19,7 +29,8 @@ struktur danych jest w [Source PR 113](https://github.com/Oskar-Stachowski/retai
 Sześć małych kontroli dało identyczne wyniki; 85 testów regresji i 29 kontroli
 publikacji/odczytu przeszło bez pominięć. PR został scalony do `95aa6f0e`
 po 21 sukcesach i czterech deklarowanych pominięciach Required CI.
-Kontrola wynikowego main oraz pełna skala pozostają otwarte.
+Wynikowy main `95aa6f0e` również przeszedł 21 kontroli przy czterech
+deklarowanych pominięciach. Pełna skala pozostaje otwarta.
 Consumer rozpoznaje przyszłą wersję 1.1.4,
 ale aktywny pin Source nie został zmieniony. AI 09 `not_ready`.
 

@@ -28,6 +28,7 @@ from retailops_ai.evaluation_campaign.campaign_generation_contract import (
 from retailops_ai.evaluation_campaign.contract import PreparationRuntime
 from retailops_ai.evaluation_campaign.development_profiles import (
     DevelopmentProfile,
+    DevelopmentProfilePreparation,
     DevelopmentProfileSource,
 )
 from retailops_ai.evaluation_campaign.legacy_carryover import LegacyCampaignCarryover
@@ -220,6 +221,41 @@ class NativeDevelopmentPlanningReceipt(Contract):
     def content_sha256(self) -> str:
         type(self).model_validate_json(self.model_dump_json())
         return canonical_sha256(self.model_dump(mode="json"))
+
+
+class ResolvedNativeDevelopmentPlanningReceipt(NativeDevelopmentPlanningReceipt):
+    """Resolve executable plans within the already charged native planning read.
+
+    The original v31 receipt wire remains unchanged. This v32 extension carries
+    only generation recipes, so the next protocol can freeze them without
+    reopening the truth-bearing native bundle before reserving another read.
+    """
+
+    resolved_preparation_version: Literal["ai09-resolved-development-preparation-1.0.0"] = (
+        "ai09-resolved-development-preparation-1.0.0"
+    )
+    preparation: DevelopmentProfilePreparation
+
+    @model_validator(mode="after")
+    def native_plan_binding(self) -> Self:
+        if (
+            self.preparation.sources[0].content_sha256() != self.source_recipe_sha256
+            or {s.variant: s.scenario_plan_sha256 for s in self.preparation.sources[1:]}
+            != self.plan_sha256
+        ):
+            raise ValueError("native_planning_resolved_preparation_binding_mismatch")
+        return self
+
+
+def parse_native_planning_receipt(
+    receipt: NativeDevelopmentPlanningReceipt,
+) -> NativeDevelopmentPlanningReceipt:
+    model = (
+        ResolvedNativeDevelopmentPlanningReceipt
+        if isinstance(receipt, ResolvedNativeDevelopmentPlanningReceipt)
+        else NativeDevelopmentPlanningReceipt
+    )
+    return model.model_validate_json(receipt.model_dump_json())
 
 
 def compile_native_development_planning(

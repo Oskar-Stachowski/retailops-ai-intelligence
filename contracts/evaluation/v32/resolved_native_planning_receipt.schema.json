@@ -1,0 +1,789 @@
+{
+  "$defs": {
+    "CampaignCost": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_bytes": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Artifact Bytes"
+        },
+        "peak_process_tree_rss_bytes": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Peak Process Tree Rss Bytes"
+        },
+        "wall_seconds": {
+          "minimum": 0,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "wall_seconds"
+      ],
+      "title": "CampaignCost",
+      "type": "object"
+    },
+    "CampaignGenerationPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_rows": {
+          "default": 256,
+          "maximum": 8192,
+          "minimum": 1,
+          "title": "Chunk Rows",
+          "type": "integer"
+        },
+        "entrypoint": {
+          "enum": [
+            "cached_inventory_v2",
+            "planned_anomaly"
+          ],
+          "title": "Entrypoint",
+          "type": "string"
+        },
+        "exporter_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Exporter Lock Sha256",
+          "type": "string"
+        },
+        "include_truth": {
+          "const": false,
+          "default": false,
+          "title": "Include Truth",
+          "type": "boolean"
+        },
+        "parent_budget": {
+          "$ref": "#/$defs/CampaignParentBudget",
+          "default": {
+            "batch_rows": 256,
+            "max_parent_bytes": 2147483648,
+            "max_parent_files": 10000,
+            "max_rows_per_parent": 20000000
+          }
+        },
+        "requested_parameters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Requested Parameters",
+          "type": "object"
+        },
+        "required_use_cases": {
+          "default": [
+            "forecast_source",
+            "inventory_source"
+          ],
+          "items": {
+            "enum": [
+              "forecast_source",
+              "inventory_source",
+              "anomaly_source"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 2,
+          "title": "Required Use Cases",
+          "type": "array"
+        },
+        "resolved_parameters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Resolved Parameters",
+          "type": "object"
+        },
+        "resources": {
+          "$ref": "#/$defs/CampaignGenerationResources"
+        },
+        "scenario_plan": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scenario Plan"
+        },
+        "snapshot_schema_version": {
+          "enum": [
+            "1.1.0",
+            "1.2.0"
+          ],
+          "title": "Snapshot Schema Version",
+          "type": "string"
+        },
+        "source_recipe_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Recipe Sha256",
+          "type": "string"
+        },
+        "version": {
+          "const": "ai09-campaign-generation-plan-1.0.0",
+          "default": "ai09-campaign-generation-plan-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_recipe_sha256",
+        "exporter_lock_sha256",
+        "requested_parameters",
+        "resolved_parameters",
+        "entrypoint",
+        "snapshot_schema_version",
+        "resources"
+      ],
+      "title": "CampaignGenerationPlan",
+      "type": "object"
+    },
+    "CampaignGenerationResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "max_log_bytes": {
+          "default": 16777216,
+          "maximum": 16777216,
+          "minimum": 1024,
+          "title": "Max Log Bytes",
+          "type": "integer"
+        },
+        "minimum_available_memory_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Available Memory Bytes",
+          "type": "integer"
+        },
+        "minimum_free_disk_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Free Disk Bytes",
+          "type": "integer"
+        },
+        "sample_seconds": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0.01,
+          "title": "Sample Seconds",
+          "type": "number"
+        },
+        "scratch_bytes": {
+          "maximum": 137438953472,
+          "minimum": 1024,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "tree_rss_bytes": {
+          "maximum": 68719476736,
+          "minimum": 1024,
+          "title": "Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "tree_rss_bytes",
+        "scratch_bytes",
+        "minimum_free_disk_bytes",
+        "minimum_available_memory_bytes"
+      ],
+      "title": "CampaignGenerationResources",
+      "type": "object"
+    },
+    "CampaignParentBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "batch_rows": {
+          "default": 256,
+          "maximum": 8192,
+          "minimum": 1,
+          "title": "Batch Rows",
+          "type": "integer"
+        },
+        "max_parent_bytes": {
+          "default": 2147483648,
+          "maximum": 2147483648,
+          "minimum": 1024,
+          "title": "Max Parent Bytes",
+          "type": "integer"
+        },
+        "max_parent_files": {
+          "default": 10000,
+          "maximum": 10000,
+          "minimum": 2,
+          "title": "Max Parent Files",
+          "type": "integer"
+        },
+        "max_rows_per_parent": {
+          "default": 20000000,
+          "maximum": 20000000,
+          "minimum": 1,
+          "title": "Max Rows Per Parent",
+          "type": "integer"
+        }
+      },
+      "title": "CampaignParentBudget",
+      "type": "object"
+    },
+    "DateWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "DateWindow",
+      "type": "object"
+    },
+    "DevelopmentProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "canonical_development_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Canonical Development Qualified",
+          "type": "boolean"
+        },
+        "data_seed": {
+          "const": 42,
+          "default": 42,
+          "title": "Data Seed",
+          "type": "integer"
+        },
+        "days": {
+          "const": 365,
+          "default": 365,
+          "title": "Days",
+          "type": "integer"
+        },
+        "final_test_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Access Authorized",
+          "type": "boolean"
+        },
+        "forecast_plan_days": {
+          "const": 14,
+          "default": 14,
+          "title": "Forecast Plan Days",
+          "type": "integer"
+        },
+        "history": {
+          "$ref": "#/$defs/DateWindow",
+          "default": {
+            "end": "2026-07-31",
+            "start": "2025-08-01"
+          }
+        },
+        "name": {
+          "enum": [
+            "ai09-development-25-v1",
+            "ai09-development-50-v1"
+          ],
+          "title": "Name",
+          "type": "string"
+        },
+        "population": {
+          "const": "complete_native_generation_no_parent_filter_or_history_sampling",
+          "default": "complete_native_generation_no_parent_filter_or_history_sampling",
+          "title": "Population",
+          "type": "string"
+        },
+        "products": {
+          "enum": [
+            25,
+            50
+          ],
+          "title": "Products",
+          "type": "integer"
+        },
+        "quality_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Quality Qualified",
+          "type": "boolean"
+        },
+        "selling_pairs": {
+          "const": 5,
+          "default": 5,
+          "title": "Selling Pairs",
+          "type": "integer"
+        },
+        "source_base_profile": {
+          "const": "ai-dev",
+          "default": "ai-dev",
+          "title": "Source Base Profile",
+          "type": "string"
+        },
+        "stock_locations": {
+          "const": 3,
+          "default": 3,
+          "title": "Stock Locations",
+          "type": "integer"
+        },
+        "variants": {
+          "default": [
+            "ordinary",
+            "demand",
+            "physical"
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "const": "ordinary",
+              "type": "string"
+            },
+            {
+              "const": "demand",
+              "type": "string"
+            },
+            {
+              "const": "physical",
+              "type": "string"
+            }
+          ],
+          "title": "Variants",
+          "type": "array"
+        },
+        "version": {
+          "const": "ai09-full-history-development-profile-1.0.0",
+          "default": "ai09-full-history-development-profile-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "products"
+      ],
+      "title": "DevelopmentProfile",
+      "type": "object"
+    },
+    "DevelopmentProfilePreparation": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_coverage_verified": {
+          "const": false,
+          "default": false,
+          "title": "Actual Coverage Verified",
+          "type": "boolean"
+        },
+        "critical_coverage": {
+          "const": "requires_complete_native_source_and_all_use_case_group_evidence",
+          "default": "requires_complete_native_source_and_all_use_case_group_evidence",
+          "title": "Critical Coverage",
+          "type": "string"
+        },
+        "final_test_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Access Authorized",
+          "type": "boolean"
+        },
+        "generations": {
+          "items": {
+            "$ref": "#/$defs/CampaignGenerationPlan"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "title": "Generations",
+          "type": "array"
+        },
+        "model_fit_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Model Fit Authorized",
+          "type": "boolean"
+        },
+        "profile": {
+          "$ref": "#/$defs/DevelopmentProfile"
+        },
+        "project_campaign_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Project Campaign Authorized",
+          "type": "boolean"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/DevelopmentProfileSource"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "title": "Sources",
+          "type": "array"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "version": {
+          "const": "ai09-development-profile-preparation-1.0.0",
+          "default": "ai09-development-profile-preparation-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile",
+        "sources",
+        "generations"
+      ],
+      "title": "DevelopmentProfilePreparation",
+      "type": "object"
+    },
+    "DevelopmentProfileSource": {
+      "additionalProperties": false,
+      "description": "Separate additive wire, rejected by both canonical source contracts.",
+      "properties": {
+        "development_profile": {
+          "$ref": "#/$defs/DevelopmentProfile"
+        },
+        "evaluation_origins": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DateWindow"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "exporter_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Exporter Lock Sha256",
+          "type": "string"
+        },
+        "generation_config_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Generation Config Sha256",
+          "type": "string"
+        },
+        "history": {
+          "$ref": "#/$defs/DateWindow"
+        },
+        "label_delay_days": {
+          "default": 1,
+          "maximum": 30,
+          "minimum": 1,
+          "title": "Label Delay Days",
+          "type": "integer"
+        },
+        "phase": {
+          "enum": [
+            "development",
+            "final"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "producer_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Producer Commit",
+          "type": "string"
+        },
+        "producer_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Producer Lock Sha256",
+          "type": "string"
+        },
+        "products": {
+          "minimum": 1,
+          "title": "Products",
+          "type": "integer"
+        },
+        "profile": {
+          "enum": [
+            "ai-dev",
+            "ai-training"
+          ],
+          "title": "Profile",
+          "type": "string"
+        },
+        "scenario_plan_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Scenario Plan Sha256"
+        },
+        "seed": {
+          "enum": [
+            42,
+            137,
+            2026
+          ],
+          "title": "Seed",
+          "type": "integer"
+        },
+        "selling_pairs": {
+          "minimum": 1,
+          "title": "Selling Pairs",
+          "type": "integer"
+        },
+        "stock_locations": {
+          "minimum": 1,
+          "title": "Stock Locations",
+          "type": "integer"
+        },
+        "variant": {
+          "enum": [
+            "ordinary",
+            "demand",
+            "physical"
+          ],
+          "title": "Variant",
+          "type": "string"
+        }
+      },
+      "required": [
+        "phase",
+        "seed",
+        "producer_commit",
+        "producer_lock_sha256",
+        "exporter_lock_sha256",
+        "generation_config_sha256",
+        "profile",
+        "history",
+        "products",
+        "selling_pairs",
+        "stock_locations",
+        "variant",
+        "scenario_plan_sha256",
+        "development_profile"
+      ],
+      "title": "DevelopmentProfileSource",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "PreparationRuntime": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "python_version": {
+          "pattern": "^3\\.11\\.[0-9]+$",
+          "title": "Python Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code_files",
+        "code_sha256",
+        "dependency_lock_sha256",
+        "python_version"
+      ],
+      "title": "PreparationRuntime",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:resolved_native_planning_receipt:32.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Resolve executable plans within the already charged native planning read.\n\nThe original v31 receipt wire remains unchanged. This v32 extension carries\nonly generation recipes, so the next protocol can freeze them without\nreopening the truth-bearing native bundle before reserving another read.",
+  "properties": {
+    "bundle_bytes": {
+      "maximum": 2097152,
+      "minimum": 1,
+      "title": "Bundle Bytes",
+      "type": "integer"
+    },
+    "bundle_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Bundle Sha256",
+      "type": "string"
+    },
+    "critical_coverage_verified": {
+      "const": false,
+      "default": false,
+      "title": "Critical Coverage Verified",
+      "type": "boolean"
+    },
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "generation_cost": {
+      "$ref": "#/$defs/CampaignCost"
+    },
+    "generation_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Generation Receipt Sha256",
+      "type": "string"
+    },
+    "model_fit_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Model Fit Authorized",
+      "type": "boolean"
+    },
+    "operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Operation Id",
+      "type": "string"
+    },
+    "plan_sha256": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "propertyNames": {
+        "enum": [
+          "demand",
+          "physical"
+        ]
+      },
+      "title": "Plan Sha256",
+      "type": "object"
+    },
+    "planning_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Planning Sha256",
+      "type": "string"
+    },
+    "preparation": {
+      "$ref": "#/$defs/DevelopmentProfilePreparation"
+    },
+    "producer_planner_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Producer Planner Sha256",
+      "type": "string"
+    },
+    "protocol_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Protocol Sha256",
+      "type": "string"
+    },
+    "realized_effects_verified": {
+      "const": false,
+      "default": false,
+      "title": "Realized Effects Verified",
+      "type": "boolean"
+    },
+    "reservation_id": {
+      "pattern": "^campaign-operation-[0-9a-f]{32}$",
+      "title": "Reservation Id",
+      "type": "string"
+    },
+    "resolved_preparation_version": {
+      "const": "ai09-resolved-development-preparation-1.0.0",
+      "default": "ai09-resolved-development-preparation-1.0.0",
+      "title": "Resolved Preparation Version",
+      "type": "string"
+    },
+    "runtime": {
+      "$ref": "#/$defs/PreparationRuntime"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Recipe Sha256",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "version": {
+      "const": "ai09-native-development-planning-receipt-1.0.0",
+      "default": "ai09-native-development-planning-receipt-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "protocol_sha256",
+    "source_recipe_sha256",
+    "operation_id",
+    "reservation_id",
+    "source_dataset_id",
+    "generation_receipt_sha256",
+    "generation_cost",
+    "planning_sha256",
+    "producer_planner_sha256",
+    "bundle_sha256",
+    "bundle_bytes",
+    "plan_sha256",
+    "runtime",
+    "preparation"
+  ],
+  "title": "ResolvedNativeDevelopmentPlanningReceipt",
+  "type": "object"
+}

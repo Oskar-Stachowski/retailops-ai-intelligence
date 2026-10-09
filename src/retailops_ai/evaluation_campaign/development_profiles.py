@@ -197,6 +197,7 @@ def prepare_development_profile(
     exporter_lock_sha256: Sha256,
     scenario_plans: dict[Literal["demand", "physical"], dict[str, JsonValue]],
     resources: CampaignGenerationResources,
+    label_delay_days: int = 1,
 ) -> DevelopmentProfilePreparation:
     """Compile exact existing native generation requests, without reading Source.
 
@@ -222,6 +223,7 @@ def prepare_development_profile(
             products=profile.products,
             selling_pairs=profile.selling_pairs,
             stock_locations=profile.stock_locations,
+            label_delay_days=label_delay_days,
             variant=variant,
             scenario_plan_sha256=canonical_sha256(scenario) if scenario is not None else None,
             development_profile=profile,

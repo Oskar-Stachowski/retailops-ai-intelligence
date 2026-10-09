@@ -22,6 +22,12 @@ from retailops_ai.evaluation_campaign.campaign_generation_worker import read, wr
 from retailops_ai.evaluation_campaign.development_planning_contract import (
     NativeDevelopmentPlanningJournal,
     NativeDevelopmentPlanningReceipt,
+    ResolvedNativeDevelopmentPlanningReceipt,
+    parse_native_planning_receipt,
+)
+from retailops_ai.evaluation_campaign.development_profiles import (
+    DevelopmentProfilePreparation,
+    prepare_development_profile,
 )
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
@@ -95,7 +101,7 @@ def plan_native_development_scenarios(
     producer: Path,
     producer_python: Path,
     output_root: Path,
-) -> tuple[Path, NativeDevelopmentPlanningReceipt]:
+) -> tuple[Path, ResolvedNativeDevelopmentPlanningReceipt]:
     """Reserve before any producer, raw Source or output access; never auto-retry.
 
     The original generation's verified identity and complete cold cost stay in
@@ -186,7 +192,34 @@ def plan_native_development_scenarios(
         bundle_size, bundle_sha256 = file_hash(root, "native-plans.json")
         if bundle_size > planning.max_bundle_bytes:
             raise SnapshotError("native_planning_bundle_size_limit")
-        hashes = _verified_bundle(read(root / "native-plans.json"), request)
+        bundle = read(root / "native-plans.json")
+        hashes = _verified_bundle(bundle, request)
+        resolved = prepare_development_profile(
+            source.development_profile,
+            producer_commit=source.producer_commit,
+            producer_lock_sha256=source.producer_lock_sha256,
+            exporter_lock_sha256=source.exporter_lock_sha256,
+            scenario_plans=bundle["plans"],
+            resources=protocol.generation.resources,
+            label_delay_days=source.label_delay_days,
+        )
+        resolved = DevelopmentProfilePreparation.model_validate_json(
+            resolved.model_copy(
+                update={
+                    "generations": tuple(
+                        g.model_copy(
+                            update={
+                                "parent_budget": protocol.generation.parent_budget,
+                                "chunk_rows": protocol.generation.chunk_rows,
+                            }
+                        )
+                        for g in resolved.generations
+                    )
+                }
+            ).model_dump_json()
+        )
+        if resolved.generations[0] != protocol.generation:
+            raise SnapshotError("native_planning_resolved_ordinary_generation_changed")
         _producer_pin(producer, source.producer_commit)
         artifact_bytes = scratch_bytes((root,))
         if (
@@ -194,7 +227,7 @@ def plan_native_development_scenarios(
             or artifact_bytes > planning.resources.scratch_bytes
         ):
             raise SnapshotError("native_planning_completion_resource_limit")
-        receipt = NativeDevelopmentPlanningReceipt(
+        receipt = ResolvedNativeDevelopmentPlanningReceipt(
             protocol_sha256=ledger.protocol_sha256,
             source_recipe_sha256=source.content_sha256(),
             operation_id=operation.operation_id,
@@ -208,6 +241,7 @@ def plan_native_development_scenarios(
             bundle_bytes=bundle_size,
             plan_sha256=hashes,
             runtime=protocol.runtime,
+            preparation=resolved,
         )
         _store_receipt(journal, receipt)
         handle.evidence_sha256 = receipt.content_sha256()
@@ -224,7 +258,7 @@ def validate_completed_native_planning(
     journal: Path, receipt: NativeDevelopmentPlanningReceipt
 ) -> None:
     """Metadata-only validation of a stored receipt; new data reuse needs a new charge."""
-    receipt = NativeDevelopmentPlanningReceipt.model_validate_json(receipt.model_dump_json())
+    receipt = parse_native_planning_receipt(receipt)
     ledger = planning_journal(journal)
     operation = ledger.protocol.operations[1]
     completion = next(

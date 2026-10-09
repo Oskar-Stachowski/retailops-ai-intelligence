@@ -42,12 +42,15 @@ wybór modelu, final ani zamknięcie kampanii.
 
 Producent pełnych scenariuszy jest scalony przez
 [Source PR 113](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/113),
-z kontrolą wynikowego main w toku. Sam planer jest w
+z zakończonym odbiorem wynikowego main `95aa6f0e` (21 sukcesów i cztery
+deklarowane pominięcia ścieżek). Sam planer jest w
 [Source PR 114](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/114).
 Jego poprawiona lokalna próba natywna nie wystartowała z powodu braku RAM;
 pełne Required CI musi potwierdzić jej wynik. Aktywny pin Source pozostaje
 niezmieniony do odbioru potrzebnego kodu.
 
+Opisany w [09.91](09-91-resolved-development-variants.md) wykonawca dodaje
+jawny replay ordinary oraz generację demand/physical, zachowując koszty.
 Następnie trzeba wykonać rzeczywiste przygotowanie i jawnie przenieść
 zweryfikowany ordinary parent do przygotowania trzech wariantów oraz prób
 modeli, zachowując koszt generacji i rejestrując nowe odczyty. Nadal potrzebne

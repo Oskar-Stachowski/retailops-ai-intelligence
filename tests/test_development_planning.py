@@ -9,6 +9,7 @@ import pytest
 from pydantic import ValidationError
 from test_ai09_campaign_journal import protocol_document
 from test_campaign_generation import fake_phases
+from test_development_profiles import plans as scenario_plans
 
 from retailops_ai.data_contracts.common import DateWindow, end_of_day
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
@@ -116,7 +117,7 @@ def controlled_worker(monkeypatch, root, *, failure=False, mutation=None):
                 "sampled_tree_peak_rss_bytes": None,
             }
         request = runner.read(kwargs["root"] / "request.json")
-        plans = {"demand": {"controlled": "demand"}, "physical": {"controlled": "physical"}}
+        plans = scenario_plans()
         bundle = {
             "version": request["planning"]["producer_planner_version"],
             "data_class": "simulation_truth",

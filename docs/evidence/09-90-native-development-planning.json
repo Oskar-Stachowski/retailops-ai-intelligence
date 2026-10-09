@@ -206,13 +206,27 @@
     "head_success": 21,
     "head_declared_path_skips": 4,
     "main_required_ci": 37985880874,
-    "main_validation_pending": true,
+    "main_validation_pending": false,
     "native_planner_pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/114",
     "native_planner_head": "133e0c57266286244106d22b097e2a8334c64f4a",
     "native_planner_ci": 37986959242,
     "native_acceptance_pending": true,
     "local_native_control_3": "admission expired after1801 seconds; no native worker started; 1GiB reserve retained",
-    "active_consumer_source_pin_changed": false
+    "active_consumer_source_pin_changed": false,
+    "main_acceptance_followup": {
+      "observed_at_utc": "2026-10-09T21:11:02.336238+00:00",
+      "pr": 113,
+      "head_sha": "57a50e263641efd71b8ef8b88eb8aef0e9c96a0f",
+      "head_run": 37978277332,
+      "main_sha": "95aa6f0e0f87b3eae0875b1fb34b8b951a4cc779",
+      "main_run": 37985880874,
+      "main_jobs": 25,
+      "main_success": 21,
+      "declared_path_skips": 4,
+      "failed": 0,
+      "normal_protected_merge": true,
+      "head_and_resulting_main_accepted": true
+    }
   },
   "still_required": [
     "Native Source helper acceptance, including actual paired outcomes and full Source2.8 writer/reader; protected PR/main checks",

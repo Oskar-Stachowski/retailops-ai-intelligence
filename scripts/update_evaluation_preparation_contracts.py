@@ -98,6 +98,7 @@ from retailops_ai.evaluation_campaign.development_planning_contract import (
     NativeDevelopmentPlanningJournal,
     NativeDevelopmentPlanningProtocol,
     NativeDevelopmentPlanningReceipt,
+    ResolvedNativeDevelopmentPlanningReceipt,
 )
 from retailops_ai.evaluation_campaign.development_preparation import (
     DevelopmentPreparationJournal,
@@ -109,6 +110,11 @@ from retailops_ai.evaluation_campaign.development_profiles import (
     DevelopmentProfileSource,
 )
 from retailops_ai.evaluation_campaign.development_search import ForecastDevelopmentSearch
+from retailops_ai.evaluation_campaign.development_variants_contract import (
+    ResolvedDevelopmentPreparationJournal,
+    ResolvedDevelopmentPreparationProtocol,
+    ReusedDevelopmentParentReceipt,
+)
 from retailops_ai.evaluation_campaign.label_contract import (
     ForecastOutcomeReadProtocol,
     OutcomeEvidence,
@@ -673,6 +679,24 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Native development planning contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, variants_model in (
+        ("resolved_native_planning_receipt", ResolvedNativeDevelopmentPlanningReceipt),
+        ("resolved_development_preparation_protocol", ResolvedDevelopmentPreparationProtocol),
+        ("resolved_development_preparation_journal", ResolvedDevelopmentPreparationJournal),
+        ("reused_development_parent_receipt", ReusedDevelopmentParentReceipt),
+    ):
+        schema = variants_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:32.0.0"
+        path = ROOT / "contracts/evaluation/v32" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Resolved development variants contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

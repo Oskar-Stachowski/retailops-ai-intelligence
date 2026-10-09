@@ -1,5 +1,6 @@
 """Reserve once, run all real source preparation phases, verify, then complete."""
 
+import math
 import os
 import shutil
 import stat
@@ -23,6 +24,9 @@ from retailops_ai.evaluation_campaign.campaign_generation_monitor import monitor
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
 from retailops_ai.evaluation_campaign.campaign_selection_evidence import (
     verify_completed_campaign_selection,
+)
+from retailops_ai.evaluation_campaign.development_variants_contract import (
+    ResolvedDevelopmentPreparationJournal,
 )
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
@@ -98,6 +102,7 @@ def generate_campaign_parent(
     operation_id: str,
     plan: CampaignGenerationPlan,
     selection_bundles: dict[str, Path] | None = None,
+    remaining_wall_seconds: float | None = None,
 ) -> tuple[Path, Path, CampaignGeneratedParentReceipt]:
     ledger = campaign_journal.inspect(journal)
     operation = next(
@@ -113,6 +118,31 @@ def generate_campaign_parent(
             canonical_bytes(plan.model_dump(mode="json"))
         )
         source = _source(ledger, operation_id, plan)
+        if isinstance(ledger, ResolvedDevelopmentPreparationJournal):
+            # The shared entry point enforces this too: calling it directly
+            # cannot bypass original costs, durable reuse or the total limit.
+            from retailops_ai.evaluation_campaign.development_variants import (
+                resolved_generation_allowance,
+            )
+
+            allowance = resolved_generation_allowance(journal)
+            remaining_wall_seconds = (
+                allowance
+                if remaining_wall_seconds is None
+                else min(remaining_wall_seconds, allowance)
+            )
+        # An enclosing, separately frozen preparation journal may only reduce
+        # this attempt's original limit after accounting for previous phases.
+        if remaining_wall_seconds is not None and (
+            not math.isfinite(remaining_wall_seconds) or remaining_wall_seconds <= 0
+        ):
+            raise SnapshotError("campaign_generation_aggregate_wall_budget_exhausted")
+        deadline = started + min(
+            plan.resources.wall_seconds,
+            remaining_wall_seconds
+            if remaining_wall_seconds is not None
+            else plan.resources.wall_seconds,
+        )
         if operation.phase == "final":
             verify_completed_campaign_selection(journal, selection_bundles or {})
         _producer_pin(producer, source.producer_commit)
@@ -139,7 +169,7 @@ def generate_campaign_parent(
                 env=_environment(root),
                 scratch=(root, snapshot_root),
                 resources=plan.resources,
-                deadline=started + plan.resources.wall_seconds,
+                deadline=deadline,
             )
             observed = result["sampled_tree_peak_rss_bytes"]
             if observed is not None:
@@ -180,10 +210,7 @@ def generate_campaign_parent(
             raise SnapshotError("campaign_generation_verified_parent_changed")
         _producer_pin(producer, source.producer_commit)
         artifact_bytes = scratch_bytes((root, snapshot_root))
-        if (
-            perf_counter() - started > plan.resources.wall_seconds
-            or artifact_bytes > plan.resources.scratch_bytes
-        ):
+        if perf_counter() > deadline or artifact_bytes > plan.resources.scratch_bytes:
             raise SnapshotError("campaign_generation_completion_resource_limit")
         _store_receipt(journal, receipt)
         handle.evidence_sha256 = receipt.content_sha256()
