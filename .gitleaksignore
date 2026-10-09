@@ -22,3 +22,9 @@ a15283ec67d64abbdaf67f73e48806cf041b7ab2:docs/runbooks/observability-runbook.md:
 ff31fb8d945acdb60602d5111e3efbea76d333b4:docs/runbooks/observability-runbook.md:curl-auth-user:108
 # documented local demonstration default, or variable expression
 ff31fb8d945acdb60602d5111e3efbea76d333b4:docs/runbooks/observability-runbook.md:curl-auth-user:300
+# Public image tags repeated in the initial scanner proof, then removed.
+4a95fb3de047b6fd7f5187659c447025e825587b:docs/evidence/09-64-historical-scanner-verification.json:generic-api-key:55
+4a95fb3de047b6fd7f5187659c447025e825587b:docs/evidence/09-64-historical-scanner-verification.json:generic-api-key:62
+4a95fb3de047b6fd7f5187659c447025e825587b:docs/evidence/09-64-historical-scanner-verification.json:generic-api-key:69
+4a95fb3de047b6fd7f5187659c447025e825587b:docs/evidence/09-64-historical-scanner-verification.json:generic-api-key:76
+4a95fb3de047b6fd7f5187659c447025e825587b:docs/evidence/09-64-historical-scanner-verification.json:generic-api-key:83

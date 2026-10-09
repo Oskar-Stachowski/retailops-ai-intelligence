@@ -237,5 +237,5 @@
   },
   "historical_scanner_correction_evidence": "docs/evidence/09-64-historical-scanner-verification.json",
   "full_history_secrets_scan": "918commits,0leaks_after_exact_immutable_false_positive_review",
-  "working_tree_secrets_scan": "0leaks"
+  "working_tree_secrets_scan": "0leaks_after_public_proof_correction"
 }

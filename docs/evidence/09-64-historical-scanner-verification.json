@@ -51,38 +51,28 @@
     },
     {
       "fingerprint": "11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:10",
-      "public_image_refs": [
-        "retailops-release-84037be319ff-api:sha-44f7404010b55eba3d9bacd888d2dc7bb9797180"
-      ],
-      "image_reference_only": true
+      "image_reference_only": true,
+      "image_reference_values_sha256": "97057cc12b653678b69438b702eb8e12b305a70c9d720d9b8bfab2b8a466b7bc"
     },
     {
       "fingerprint": "11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:103",
-      "public_image_refs": [
-        "retailops-release-84037be319ff-api:sha-977c776ed7cf80ae2229e1522dba8a44e3827a75"
-      ],
-      "image_reference_only": true
+      "image_reference_only": true,
+      "image_reference_values_sha256": "b1ca5bbe2ca1a308a12c279eb9b73da1012cf44188afe572e176dc7f35ecf473"
     },
     {
       "fingerprint": "11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:196",
-      "public_image_refs": [
-        "retailops-release-84037be319ff-api:sha-44f7404010b55eba3d9bacd888d2dc7bb9797180"
-      ],
-      "image_reference_only": true
+      "image_reference_only": true,
+      "image_reference_values_sha256": "97057cc12b653678b69438b702eb8e12b305a70c9d720d9b8bfab2b8a466b7bc"
     },
     {
       "fingerprint": "11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:515",
-      "public_image_refs": [
-        "retailops-release-84037be319ff-api:sha-44f7404010b55eba3d9bacd888d2dc7bb9797180"
-      ],
-      "image_reference_only": true
+      "image_reference_only": true,
+      "image_reference_values_sha256": "97057cc12b653678b69438b702eb8e12b305a70c9d720d9b8bfab2b8a466b7bc"
     },
     {
       "fingerprint": "11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:538",
-      "public_image_refs": [
-        "retailops-release-84037be319ff-api:sha-977c776ed7cf80ae2229e1522dba8a44e3827a75"
-      ],
-      "image_reference_only": true
+      "image_reference_only": true,
+      "image_reference_values_sha256": "b1ca5bbe2ca1a308a12c279eb9b73da1012cf44188afe572e176dc7f35ecf473"
     },
     {
       "fingerprint": "a15283ec67d64abbdaf67f73e48806cf041b7ab2:docs/runbooks/observability-runbook.md:curl-auth-user:306",
@@ -112,7 +102,7 @@
     }
   ],
   "exception_file": ".gitleaksignore",
-  "exception_file_sha256": "5e6de8d4a5ee285f84645d869affa7e718b9bf18fd6beb459098f6d572310b42",
+  "exception_file_sha256": "3d76461c228a1dd17049dd1371bf8168d36b5a9e3a00c941ab6f9a23b2e95786",
   "whole_history_scan": {
     "exit_code": 0,
     "leaks": 0,
@@ -137,5 +127,28 @@
   "history_rewritten": false,
   "new_project_fits": 0,
   "fresh_final_reads": 0,
-  "stage_ready": false
+  "stage_ready": false,
+  "initial_proof_correction": {
+    "commit": "4a95fb3de047b6fd7f5187659c447025e825587b",
+    "repeated_public_image_tag_findings": 5,
+    "raw_public_tag_values_removed": true,
+    "exceptions_exact_immutable_fingerprints_only": true,
+    "failed_tree_report_sha256": "66762554b362ae751f673a91417aac0f5fba89ffec9bfc0c2c91c2bbbb2a2a5d"
+  },
+  "exception_count": 16,
+  "final_history_and_tree_scans": {
+    "history_exit": 0,
+    "tree_exit": 0,
+    "leaks": 0,
+    "history_report_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "tree_report_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "history_log_sha256": "ba0dbe2d54a8c0476f9b178fa0872a29e94b874667c7f324e7f9aa3cfc4d0618"
+  },
+  "negative_control_after_proof_correction": {
+    "synthetic_only": true,
+    "new_credential_like_values_in_both_exception_paths_detected": true,
+    "scanner_exit_code": 1,
+    "findings": 2,
+    "report_sha256": "319e6ae8d42c9ecdf8f835553eaf67c88b5b0f97e77233dfb461065532e7c80a"
+  }
 }
