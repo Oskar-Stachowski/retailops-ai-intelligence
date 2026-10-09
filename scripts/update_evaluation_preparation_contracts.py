@@ -4,6 +4,10 @@ import argparse
 import json
 from pathlib import Path
 
+from retailops_ai.evaluation_campaign.campaign_anomaly_fit_contract import (
+    CampaignAnomalyFitPlan,
+    CampaignAnomalyFitReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_calibration_contract import (
     CampaignForecastCalibration,
     CampaignForecastCalibrationPlan,
@@ -575,6 +579,22 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Campaign required-group contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, anomaly_model in (
+        ("campaign_anomaly_fit_plan", CampaignAnomalyFitPlan),
+        ("campaign_anomaly_fit_receipt", CampaignAnomalyFitReceipt),
+    ):
+        schema = anomaly_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:28.0.0"
+        path = ROOT / "contracts/evaluation/v28" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Campaign anomaly fit contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

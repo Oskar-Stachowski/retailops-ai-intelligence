@@ -13,6 +13,7 @@ from retailops_ai.day_qualification.contract import GRAIN, TABLES
 from retailops_ai.day_qualification.gate import DayGate
 from retailops_ai.day_qualification.projection import declarations
 from retailops_ai.evaluation_campaign.campaign_anomaly_days import (
+    CampaignAnomalyDayDiscoveryPlan,
     CampaignAnomalyDayPlan,
     CampaignAnomalyDayProjection,
 )
@@ -174,6 +175,35 @@ def test_body_failure_withholds_receipt_and_parent_stays_usable(day_case, tmp_pa
     with pytest.raises(SnapshotError, match="not_completed"):
         adapter.receipt()
     assert day_case[0].parent.events[0]
+    assert not list(tmp_path.iterdir())
+
+
+@pytest.mark.parametrize("capacity", ["exact", "spare", "insufficient"])
+def test_discovery_resolves_the_whole_native_population_or_rejects(day_case, tmp_path, capacity):
+    parent, expected, _ = day_case
+    count = len(expected)
+    plan = CampaignAnomalyDayDiscoveryPlan(
+        parent_plan_sha256=canonical_sha256(parent.plan.model_dump(mode="json")),
+        parent_events_sha256=parent.native_events_sha256,
+        max_index_bytes=128 * 1024**2,
+        max_days=count + {"exact": 0, "spare": 1, "insufficient": -1}[capacity],
+    )
+    adapter = CampaignAnomalyDayProjection(parent, plan, tmp_path)
+    if capacity == "insufficient":
+        with pytest.raises(SnapshotError, match="full_population_binding"):
+            with adapter:
+                pytest.fail("a smaller native population was exposed")
+        with pytest.raises(SnapshotError, match="not_completed"):
+            adapter.receipt()
+    else:
+        with adapter:
+            assert len(adapter.days) == count
+            assert list(adapter.days.values()) == expected
+        receipt = adapter.receipt()
+        assert receipt["version"] == "ai09-anomaly-full-day-discovery-receipt-1.0.0"
+        assert receipt["resolved_day_count"] == count
+        assert receipt["population_reduced"] is False
+        assert receipt["complete_native_day_projection_passed"]
     assert not list(tmp_path.iterdir())
 
 

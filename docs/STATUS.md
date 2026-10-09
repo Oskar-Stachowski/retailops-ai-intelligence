@@ -1,5 +1,13 @@
 # Aktualny status
 
+**2026-10-09 — adapter kampanii anomaly: implementacja, odbiór w toku.**
+[09.71](ai09-campaign-anomaly-fit.md) łączy pełny parent, dni, replay,
+cechy, membership, fit i świeży reload modelu z trwałym dziennikiem.
+15 kontroli dziennika przeszło. Końcowe regresje i kontrola paczki
+są zaplanowane po bieżącym pełnym CI, aby nie kumulować obciążenia hosta.
+Nie wykonano produkcyjnego fitu Project ani świeżego odczytu final.
+AI 09 pozostaje `not_ready`.
+
 **2026-10-09 — AI 09: pełny odbiór poprawek CPU Source, integracja anomaly trwa.**
 Source PR111 i wynikowy main `265b26a9` mają **30/30 success** każdy.
 AI PR63 nadal przechodzi pełne CI; rzeczywisty trening i reload TensorFlow przeszły.

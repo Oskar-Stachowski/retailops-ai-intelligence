@@ -1,0 +1,95 @@
+{
+  "version": "ai09-campaign-anomaly-fit-controls-1.0.0",
+  "recorded_at_utc": "2026-10-09T09:26:48.069684+00:00",
+  "scope": "Development adapter implementation and controls; full campaign not executed",
+  "base": "c30c971b08cfc791c057966ca993858f2eb0d565",
+  "code_sha256": {
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_fit.py": "55bf7a7ad7e364205ffc0b7e3df32a8a587c3683e696ed657a33a5b4163fae56",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_fit_contract.py": "0b526594160c9c67ad85f585cb7a4b9e77ef7ce50f39a3ec00e3c453216c936e",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_fit_data.py": "45cc189ed605b34d306aa9500111b673e5c535290bdf0cd8bb400b497b072161",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_fit_worker.py": "ee4c6ea40a1d14eba967d16035ff81f2b637d1a569c34748a320190a9b2fea2d",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_days.py": "70a690b8e021a8a39b4730040e0c9db9939ecdfeec79b1c1417d6f3cfaa2479b"
+  },
+  "controls": {
+    "journal_initial": {
+      "tests": "12",
+      "failures": "4",
+      "errors": "0",
+      "skipped": "0",
+      "time": "7.127",
+      "junit_sha256": "2938dc5ce37823a7e7210f2585899857aa17017298dc0a8dcacc20cb6d7bdd70"
+    },
+    "journal_initial_failures": "4 controls expected SnapshotError for exhausted retry; actual Pydantic ValidationError correctly rejected the retry. Tests corrected; production admission unchanged.",
+    "journal_after_correction": {
+      "tests": "12",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "6.908",
+      "junit_sha256": "7555fc0c9899fb0504504e90ccd830ee9bce1d90b4a606d573da484909f80d88"
+    },
+    "journal_with_durable_success_and_family_inventory": {
+      "tests": "15",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "8.605",
+      "junit_sha256": "2f81dbbbd16cb07264dd654ec163f750aed5f6b712cd3dfd733e8b761a226f0b"
+    },
+    "physical_initial": {
+      "tests": "3",
+      "failures": "1",
+      "errors": "0",
+      "skipped": "0",
+      "time": "146.340",
+      "junit_sha256": "2baeda448c49dc963e5be2bd4a0aea508d0761f0993d010fe9bf61f0d4f54513"
+    },
+    "physical_initial_failure": "Ordinary preserved fixture was produced with code_state modified and was correctly rejected; two clean planned variants passed full native fit and actual fresh-process reload. Ordinary test now expects refusal. No resealing or producer requirement relaxation.",
+    "physical_final_all_11_features_late_parent_failure": "pending",
+    "day_discovery_full_native_regressions": "pending",
+    "installed_package_and_origins": "pending",
+    "mypy_previous": {
+      "source_files": 734,
+      "result": "passed; final follow-up pending"
+    },
+    "mypy_final": {
+      "source_files": 734,
+      "result": "passed"
+    },
+    "ruff": "passed",
+    "format": "passed",
+    "evaluation_contracts": "passed",
+    "documentation_and_ci_contract": "passed",
+    "tree_secret_scan": "passed"
+  },
+  "behavior": {
+    "journal_reservation_before_source_io": true,
+    "full_parent_days_features_membership_and_fit": true,
+    "validation_families": [
+      "seasonal_residual",
+      "isolation_forest"
+    ],
+    "default_features": 11,
+    "cold_reload_all_validation_rows": true,
+    "bundle_only_after_all_parent_contexts_complete": true,
+    "source_capture": "reconstructed_at_actual_fact_ingestion_time; no live broker claim",
+    "rss_max_bytes": 12884901888,
+    "host_ram_reserve_bytes": 1073741824,
+    "host_disk_reserve_bytes": 6442450944
+  },
+  "acceptance": {
+    "make_ci_local": "pending",
+    "exact_head_ci": "pending",
+    "resulting_main_ci": "pending",
+    "published_on_main": false
+  },
+  "scientific": {
+    "new_project_fits": 0,
+    "fresh_final_reads": 0,
+    "journal_initialized": false,
+    "independent_truth_integration_complete": false,
+    "full_science_complete": false,
+    "stage_ready": false
+  },
+  "legacy_unaccounted_cost": "11 attempts/44 starts/40 complete/4 lost/64 reads remain unknown_not_zero; controlled fixtures do not reset history."
+}
