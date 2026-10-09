@@ -157,6 +157,7 @@ packages = ["src/retailops_ai"]
 "contracts/evaluation/v28" = "retailops_ai/evaluation_campaign/v28"
 "contracts/evaluation/v29" = "retailops_ai/evaluation_campaign/v29"
 "contracts/evaluation/v30" = "retailops_ai/evaluation_campaign/v30"
+"contracts/evaluation/v31" = "retailops_ai/evaluation_campaign/v31"
 "contracts/source_snapshot/v1_2" = "retailops_ai/source_snapshot/v1_2"
 
 [tool.uv]

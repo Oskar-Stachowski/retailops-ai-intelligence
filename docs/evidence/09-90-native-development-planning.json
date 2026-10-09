@@ -1,0 +1,232 @@
+{
+  "recorded_at_utc": "2026-10-09T20:31:03.495491+00:00",
+  "scope": "Audited ordinary Source bootstrap and separate native scenario planning read, before concrete scenario IDs exist; controlled worker tests are not native Source or Project proof",
+  "base_commit": "d72c8c4d75c08b77e392b775694b0c007b95fa44",
+  "code_sha256": {
+    "src/retailops_ai/evaluation_campaign/development_planning.py": "9e0aa4a4d860eceb6fb285bc14f30d735fd2d1bbc5c772cbe7aff100a56cec5d",
+    "src/retailops_ai/evaluation_campaign/development_planning_contract.py": "6f41e959406d6e3e49c6b9dcb7b97a17883038b6176cdd3ba732cfb890b6ec27",
+    "src/retailops_ai/evaluation_campaign/development_planning_worker.py": "57a8c3a20a8865f280dd86f86d6e70425ff7e8b26af74809676c5ff986598aa0",
+    "src/retailops_ai/evaluation_campaign/campaign_export.py": "7b330190464d0611fd58044fa3d90a2bb8a956b8c3cbb7c31ace9903749356be",
+    "src/retailops_ai/evaluation_campaign/campaign_portfolio_contract.py": "155cec4559f250c04c20514b2aa622381b1bef1d9b4dca41c0b8f8fadcac46c0",
+    "src/retailops_ai/evaluation_campaign/campaign_generation_worker.py": "93453a4493a90b78d6d2e8864dedd1ebc5a5b2986dcee34db75afcbd5635a441",
+    "scripts/update_evaluation_preparation_contracts.py": "45842f3c08d642eba8167c5531ef20289e89a33be7b1c32b7071ddca21d77efc",
+    "pyproject.toml": "97f925f9eb3ff30ef87ed9eea36c4c43a32c425d26b85e52e2fc948fc6d9f654",
+    "tests/test_development_planning.py": "ad11155314c4a7246ed374c97dac74630e43a9e135e3f119b85e6a7bc063aa88",
+    "tests/test_development_planning_worker.py": "6c733ea01197af4b528ec8aeff89f868e6d5475bf53141a994397fe677cfcbb8"
+  },
+  "implementation": {
+    "development_products": [
+      25,
+      50
+    ],
+    "history_days": 365,
+    "selling_pairs": 5,
+    "stock_locations": 3,
+    "data_seed": 42,
+    "source_generate_attempts": 1,
+    "source_read_attempts": 1,
+    "model_fit_attempts": 0,
+    "ordinary_six_phase_runner_reused": true,
+    "source_identity_resolved_from_completed_generation_receipt": true,
+    "native_planner_module_and_clean_producer_pinned_before_generation": true,
+    "all_five_roles_and_policy_pins_frozen_before_generation": true,
+    "legacy_costs_retained": true,
+    "original_cold_generation_cost_retained_in_planning_receipt": true,
+    "actual_cold_wall_subtracted_from_total_budget": true,
+    "failed_or_unresolved_attempt_refunded": false,
+    "automatic_retry": false,
+    "invented_future_source_or_scenario_identity": false,
+    "native_helper_version": "ai09-native-development-scenario-selection-1.0.0"
+  },
+  "resource_ceilings": {
+    "tree_rss_bytes": 12884901888,
+    "scratch_bytes": 8589934592,
+    "maximum_total_wall_seconds": 10800,
+    "minimum_available_memory_bytes": 1073741824,
+    "minimum_free_disk_bytes": 6442450944,
+    "cpu_threads": 1
+  },
+  "validation": {
+    "initial_source_regression": {
+      "tests": 62,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 38.771,
+      "junit_sha256": "96b0732c5a6877a854cc7c7ffe2c0d8a9efb1fbcd8b34004dfadae73d4497b10",
+      "monitor": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 39.23596229200484,
+        "sampled_tree_peak_rss_bytes": 135430144,
+        "sampled_worker_cpu_seconds": 37.492697592,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 9633,
+        "sampled_peak_scratch_allocated_bytes": 16384,
+        "minimum_free_disk_bytes": 50114818048,
+        "minimum_available_memory_bytes": 1422114816,
+        "samples": 365,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "logs only; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "code_pins_unchanged": true
+      }
+    },
+    "retained_intermediate_controls": [
+      {
+        "result": {
+          "tests": 69,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 39.674,
+          "junit_sha256": "3e492000cc9ed09c08676f1ca1ee56ac5b825b8b7ccc0026d875130e36a75bf0",
+          "monitor": {
+            "status": "failed",
+            "reason": "worker_exit",
+            "exit_code": 1,
+            "wall_seconds": 40.24835891701514,
+            "sampled_tree_peak_rss_bytes": 156565504,
+            "sampled_worker_cpu_seconds": 38.10699924,
+            "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+            "sampled_peak_scratch_logical_bytes": 13657,
+            "sampled_peak_scratch_allocated_bytes": 16384,
+            "minimum_free_disk_bytes": 50093699072,
+            "minimum_available_memory_bytes": 1455587328,
+            "samples": 377,
+            "sample_seconds": 0.1,
+            "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+            "scratch_measurement": "logs only; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+            "code_pins_unchanged": true
+          }
+        },
+        "correction": "Negative test expected budget_exhausted, while the preserved unresolved-attempt guard correctly rejected it earlier. Only expected error assertion corrected."
+      },
+      {
+        "result": {
+          "tests": 70,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 39.509,
+          "junit_sha256": "be0ad8dd104cab5ef812051d6cdeb4c51a7d0d168ef14764459e62f9132c55a5",
+          "monitor": {
+            "status": "failed",
+            "reason": "worker_exit",
+            "exit_code": 1,
+            "wall_seconds": 40.01096679101465,
+            "sampled_tree_peak_rss_bytes": 153698304,
+            "sampled_worker_cpu_seconds": 37.849496586,
+            "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+            "sampled_peak_scratch_logical_bytes": 16473,
+            "sampled_peak_scratch_allocated_bytes": 20480,
+            "minimum_free_disk_bytes": 50072944640,
+            "minimum_available_memory_bytes": 1433731072,
+            "samples": 363,
+            "sample_seconds": 0.1,
+            "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+            "scratch_measurement": "logs only; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+            "code_pins_unchanged": true
+          }
+        },
+        "correction": "Negative missing-receipt test expected SnapshotError, while the existing safe regular_file boundary raises FileNotFoundError. Only expected error assertion corrected."
+      }
+    ],
+    "final_changed_source_tests": {
+      "tests": 29,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 6.616,
+      "junit_sha256": "509d4fdb114ff0e819d2aaa1b25826a8b75f0d13862e4e2c6a6520b65aa392e9",
+      "monitor": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 7.070008917013183,
+        "sampled_tree_peak_rss_bytes": 139837440,
+        "sampled_worker_cpu_seconds": 6.2854472569999995,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 4924,
+        "sampled_peak_scratch_allocated_bytes": 12288,
+        "minimum_free_disk_bytes": 50108461056,
+        "minimum_available_memory_bytes": 1583333376,
+        "samples": 65,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "logs only; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "code_pins_unchanged": true
+      }
+    },
+    "installed_source_and_regression": {
+      "tests": 70,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 42.289,
+      "junit_sha256": "0aa55d6442fdf23b4f6802f773102db449f22b306bc7f2eef093538327676fea",
+      "monitor": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 42.767548832984176,
+        "sampled_tree_peak_rss_bytes": 153911296,
+        "sampled_worker_cpu_seconds": 40.443649683,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 10896,
+        "sampled_peak_scratch_allocated_bytes": 16384,
+        "minimum_free_disk_bytes": 50036097024,
+        "minimum_available_memory_bytes": 1435516928,
+        "samples": 388,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+      }
+    },
+    "source_and_installed_counts_must_not_be_summed": true,
+    "wheel": {
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 2229096,
+      "sha256": "00d3342b8f5d07621ce0d6feb967a947be5fc2605e62e3e7ebf6fe88c5c5eb37",
+      "python_modules_equal": 629,
+      "new_contract_files_equal": 3,
+      "private_files_absent": true,
+      "new_modules_loaded_from_installed": true
+    },
+    "schema_check_passed": true,
+    "mypy_targeted_source_files": 4,
+    "ruff_check_passed": true,
+    "mypy_all_source_files": 758
+  },
+  "producer_dependency": {
+    "source_full_scenarios_pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/113",
+    "merged_main": "95aa6f0e0f87b3eae0875b1fb34b8b951a4cc779",
+    "head_required_ci": 37978277332,
+    "head_success": 21,
+    "head_declared_path_skips": 4,
+    "main_required_ci": 37985880874,
+    "main_validation_pending": true,
+    "native_planner_pr": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/114",
+    "native_planner_head": "133e0c57266286244106d22b097e2a8334c64f4a",
+    "native_planner_ci": 37986959242,
+    "native_acceptance_pending": true,
+    "local_native_control_3": "admission expired after1801 seconds; no native worker started; 1GiB reserve retained",
+    "active_consumer_source_pin_changed": false
+  },
+  "still_required": [
+    "Native Source helper acceptance, including actual paired outcomes and full Source2.8 writer/reader; protected PR/main checks",
+    "Bind the accepted clean producer and real policies; generate and plan the actual complete25/50 profile with durable costs",
+    "Explicitly reuse this verified ordinary parent in three-variant preparation and model-trial journals; no synthetic generation or cost reset",
+    "Independent metrics-based fair model trials and finalist selection at25/50/100",
+    "Full local and protected PR/resulting-main acceptance for this consumer branch",
+    "Representative data-to-report, unchanged canonical/final three-use-case portfolio, uncertainty, reports/cards/lifecycle"
+  ],
+  "actual_small_profile_generations": 0,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_enabled": false,
+  "full_required_ci": false,
+  "on_main": false,
+  "stage_ready": false
+}

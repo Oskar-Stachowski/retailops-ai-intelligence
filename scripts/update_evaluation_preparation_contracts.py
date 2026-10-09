@@ -94,6 +94,11 @@ from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
     CampaignForecastUncertaintyReport,
 )
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
+from retailops_ai.evaluation_campaign.development_planning_contract import (
+    NativeDevelopmentPlanningJournal,
+    NativeDevelopmentPlanningProtocol,
+    NativeDevelopmentPlanningReceipt,
+)
 from retailops_ai.evaluation_campaign.development_preparation import (
     DevelopmentPreparationJournal,
     DevelopmentPreparationProtocol,
@@ -651,6 +656,23 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Development preparation execution contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, planning_model in (
+        ("native_development_planning_protocol", NativeDevelopmentPlanningProtocol),
+        ("native_development_planning_journal", NativeDevelopmentPlanningJournal),
+        ("native_development_planning_receipt", NativeDevelopmentPlanningReceipt),
+    ):
+        schema = planning_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:31.0.0"
+        path = ROOT / "contracts/evaluation/v31" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Native development planning contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

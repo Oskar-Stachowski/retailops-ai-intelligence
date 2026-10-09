@@ -42,6 +42,9 @@ from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
 )
 from retailops_ai.evaluation_campaign.campaign_score_contract import CampaignForecastScoreReceipt
 from retailops_ai.evaluation_campaign.campaign_tune_contract import CampaignForecastTuneReceipt
+from retailops_ai.evaluation_campaign.development_planning_contract import (
+    NativeDevelopmentPlanningReceipt,
+)
 from retailops_ai.evaluation_campaign.physical_forecast import (
     _build_physical_forecast,
     _physical_bytes,
@@ -168,6 +171,7 @@ def _store_receipt(
     receipt: CampaignDevelopmentExportReceipt
     | CampaignAnomalyFitReceipt
     | CampaignOrdinaryTruthReceipt
+    | NativeDevelopmentPlanningReceipt
     | CampaignGeneratedParentReceipt
     | CampaignFinalExportReceipt
     | CampaignForecastFitReceipt

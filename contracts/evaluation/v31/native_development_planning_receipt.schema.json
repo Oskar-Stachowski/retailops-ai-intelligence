@@ -1,0 +1,210 @@
+{
+  "$defs": {
+    "CampaignCost": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_bytes": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Artifact Bytes"
+        },
+        "peak_process_tree_rss_bytes": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Peak Process Tree Rss Bytes"
+        },
+        "wall_seconds": {
+          "minimum": 0,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "wall_seconds"
+      ],
+      "title": "CampaignCost",
+      "type": "object"
+    },
+    "PreparationRuntime": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "python_version": {
+          "pattern": "^3\\.11\\.[0-9]+$",
+          "title": "Python Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code_files",
+        "code_sha256",
+        "dependency_lock_sha256",
+        "python_version"
+      ],
+      "title": "PreparationRuntime",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:native_development_planning_receipt:31.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bundle_bytes": {
+      "maximum": 2097152,
+      "minimum": 1,
+      "title": "Bundle Bytes",
+      "type": "integer"
+    },
+    "bundle_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Bundle Sha256",
+      "type": "string"
+    },
+    "critical_coverage_verified": {
+      "const": false,
+      "default": false,
+      "title": "Critical Coverage Verified",
+      "type": "boolean"
+    },
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "generation_cost": {
+      "$ref": "#/$defs/CampaignCost"
+    },
+    "generation_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Generation Receipt Sha256",
+      "type": "string"
+    },
+    "model_fit_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Model Fit Authorized",
+      "type": "boolean"
+    },
+    "operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Operation Id",
+      "type": "string"
+    },
+    "plan_sha256": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "propertyNames": {
+        "enum": [
+          "demand",
+          "physical"
+        ]
+      },
+      "title": "Plan Sha256",
+      "type": "object"
+    },
+    "planning_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Planning Sha256",
+      "type": "string"
+    },
+    "producer_planner_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Producer Planner Sha256",
+      "type": "string"
+    },
+    "protocol_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Protocol Sha256",
+      "type": "string"
+    },
+    "realized_effects_verified": {
+      "const": false,
+      "default": false,
+      "title": "Realized Effects Verified",
+      "type": "boolean"
+    },
+    "reservation_id": {
+      "pattern": "^campaign-operation-[0-9a-f]{32}$",
+      "title": "Reservation Id",
+      "type": "string"
+    },
+    "runtime": {
+      "$ref": "#/$defs/PreparationRuntime"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Recipe Sha256",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "version": {
+      "const": "ai09-native-development-planning-receipt-1.0.0",
+      "default": "ai09-native-development-planning-receipt-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "protocol_sha256",
+    "source_recipe_sha256",
+    "operation_id",
+    "reservation_id",
+    "source_dataset_id",
+    "generation_receipt_sha256",
+    "generation_cost",
+    "planning_sha256",
+    "producer_planner_sha256",
+    "bundle_sha256",
+    "bundle_bytes",
+    "plan_sha256",
+    "runtime"
+  ],
+  "title": "NativeDevelopmentPlanningReceipt",
+  "type": "object"
+}

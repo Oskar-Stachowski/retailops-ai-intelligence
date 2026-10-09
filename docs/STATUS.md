@@ -1,13 +1,25 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: ordinary Source przed planowaniem anomalii.**
+[09.90](evidence/09-90-native-development-planning.md) usuwa zależność
+przygotowania od jeszcze nieznanych identyfikatorów scenariuszy. Osobny
+dziennik dopuszcza jedną pełną generację ordinary 25/50 i jeden natywny
+odczyt planera. Zachowuje wcześniejsze koszty, przypina role/producer/runtime
+i odejmuje koszt generacji od wspólnego czasu. 29 końcowych testów nowej
+ścieżki i 70 kontroli z zainstalowanej paczki przeszło. Natywny helper jest
+w [Source PR 114](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/114);
+jego rzeczywisty odbiór trwa. Pełne dane, jawny transfer parenta do triali,
+próby modeli i odbiór tej gałęzi pozostają wymagane. AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: wykryta granica pełnych scenariuszy Source.**
 [09.88](evidence/09-88-full-source-scenario-audit.json) odtwarza cztery odmowy
 natywnej weryfikacji demand/physical w profilach 25/50: builder efektów ma
 limit 5000 ziaren. Poprawka jawnych pełnych profili i czasu utrzymywania
 struktur danych jest w [Source PR 113](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/113).
 Sześć małych kontroli dało identyczne wyniki; 85 testów regresji i 29 kontroli
-publikacji/odczytu przeszło bez pominięć. Pełna skala, CI i publikacja na main
-pozostają otwarte.
+publikacji/odczytu przeszło bez pominięć. PR został scalony do `95aa6f0e`
+po 21 sukcesach i czterech deklarowanych pominięciach Required CI.
+Kontrola wynikowego main oraz pełna skala pozostają otwarte.
 Consumer rozpoznaje przyszłą wersję 1.1.4,
 ale aktywny pin Source nie został zmieniony. AI 09 `not_ready`.
 

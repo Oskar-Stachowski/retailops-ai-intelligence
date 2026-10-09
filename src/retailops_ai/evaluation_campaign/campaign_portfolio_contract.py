@@ -177,6 +177,12 @@ class CampaignPortfolioJournal(CampaignJournal):
 
 def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
     document = decode_json(raw)
+    if "native_development_planning_version" in document:
+        from retailops_ai.evaluation_campaign.development_planning_contract import (
+            NativeDevelopmentPlanningProtocol,
+        )
+
+        return NativeDevelopmentPlanningProtocol.model_validate_json(canonical_bytes(document))
     if "development_preparation_version" in document:
         # Lazy import keeps additive source/profile contracts out of the
         # original generation/portfolio contract import cycle.
@@ -192,6 +198,12 @@ def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
 def parse_campaign_journal(raw: bytes) -> CampaignJournal:
     document = decode_json(raw)
     protocol = document.get("protocol")
+    if isinstance(protocol, dict) and "native_development_planning_version" in protocol:
+        from retailops_ai.evaluation_campaign.development_planning_contract import (
+            NativeDevelopmentPlanningJournal,
+        )
+
+        return NativeDevelopmentPlanningJournal.model_validate_json(canonical_bytes(document))
     if isinstance(protocol, dict) and "development_preparation_version" in protocol:
         from retailops_ai.evaluation_campaign.development_preparation import (
             DevelopmentPreparationJournal,
