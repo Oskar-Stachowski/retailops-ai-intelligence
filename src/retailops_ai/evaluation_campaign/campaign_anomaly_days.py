@@ -52,13 +52,23 @@ class CampaignAnomalyDayPlan(Contract):
     )
 
 
+class CampaignAnomalyDayDiscoveryPlan(CampaignAnomalyDayPlan):
+    """Resolve the exact census from all native declarations within a frozen cap."""
+
+    version: Literal["ai09-anomaly-full-day-discovery-plan-1.0.0"] = (
+        "ai09-anomaly-full-day-discovery-plan-1.0.0"  # type: ignore[assignment]
+    )
+    expected_days: None = None  # type: ignore[assignment]
+    max_days: Annotated[int, Field(ge=1, le=20000000)] = 20000000
+
+
 class _Days(Mapping[Grain, Day]):
     def __init__(self, owner: "CampaignAnomalyDayProjection") -> None:
         self.owner = owner
 
     def __len__(self) -> int:
         self.owner._db()
-        return self.owner.plan.expected_days
+        return self.owner._resolved_day_count
 
     def __iter__(self) -> Iterator[Grain]:
         for row in self.owner._db().execute(
@@ -98,10 +108,24 @@ class CampaignAnomalyDayProjection:
     """
 
     def __init__(
-        self, parent: CampaignAnomalyPublicParent, plan: CampaignAnomalyDayPlan, scratch: Path
+        self,
+        parent: CampaignAnomalyPublicParent,
+        plan: CampaignAnomalyDayPlan | CampaignAnomalyDayDiscoveryPlan,
+        scratch: Path,
     ) -> None:
         self.parent, self.scratch = parent, scratch
-        self.plan = CampaignAnomalyDayPlan.model_validate_json(plan.model_dump_json())
+        plan_type = (
+            CampaignAnomalyDayDiscoveryPlan
+            if isinstance(plan, CampaignAnomalyDayDiscoveryPlan)
+            else CampaignAnomalyDayPlan
+        )
+        self.plan = plan_type.model_validate_json(plan.model_dump_json())
+        self._day_limit = (
+            self.plan.max_days
+            if isinstance(self.plan, CampaignAnomalyDayDiscoveryPlan)
+            else self.plan.expected_days
+        )
+        self._resolved_day_count = 0
         self._stack = ExitStack()
         self._database: sqlite3.Connection | None = None
         self._used = self._failed = self._complete = False
@@ -154,6 +178,12 @@ class CampaignAnomalyDayProjection:
                     "quality_qualified": False,
                     "stage_ready": False,
                 }
+                if isinstance(self.plan, CampaignAnomalyDayDiscoveryPlan):
+                    self._receipt.update(
+                        version="ai09-anomaly-full-day-discovery-receipt-1.0.0",
+                        resolved_day_count=self._resolved_day_count,
+                        population_reduced=False,
+                    )
                 self._complete = True
         except BaseException:
             self._failed = True
@@ -309,12 +339,16 @@ class CampaignAnomalyDayProjection:
                     (*(getattr(day, key) for key in GRAIN), raw, hashlib.sha256(raw).hexdigest()),
                 )
                 self.stats["projected_days"] += 1
-                if self.stats["projected_days"] > self.plan.expected_days:
+                if self.stats["projected_days"] > self._day_limit:
                     raise SnapshotError("campaign_anomaly_day_full_population_binding")
             self._budget()
             database.commit()
             self._budget()
-        if self.stats["projected_days"] != self.plan.expected_days:
+        self._resolved_day_count = self.stats["projected_days"]
+        if self._resolved_day_count == 0 or (
+            not isinstance(self.plan, CampaignAnomalyDayDiscoveryPlan)
+            and self._resolved_day_count != self.plan.expected_days
+        ):
             raise SnapshotError("campaign_anomaly_day_full_population_binding")
         self.native_days_sha256 = self._hash_days()
         self.parent._replay.check_parents()
@@ -392,6 +426,6 @@ class CampaignAnomalyDayProjection:
                 raise CampaignAnomalyParentStateError("campaign_anomaly_day_private_grain_changed")
             trace.update(raw + b"\n")
             count += 1
-        if count != self.plan.expected_days:
+        if count != self._resolved_day_count:
             raise CampaignAnomalyParentStateError("campaign_anomaly_day_private_extent_changed")
         return trace.hexdigest()

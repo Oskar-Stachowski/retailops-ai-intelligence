@@ -1,5 +1,176 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: zakończony lokalny CI integracji; odmowa rezerwy RAM.**
+[09.89](evidence/09-89-integrated-local-ci.json) zachowuje wynik pełnego
+`make ci-local` na `d27094f`: **5347 passed / 55 skipped** w głównym zestawie
+oraz wykonane bramki do observation replay. Końcowy zestaw TensorFlow dał
+**3 passed / 5 failed**; wszystkie pięć prób zatrzymał `preflight_reserve`
+przed startem workera. Cały lokalny CI jest **niezaliczony**. Nie obniżono
+budżetów i nie zatrzymano innych sesji. Czas całego przebiegu wyniósł
+11 854,52 s, próbkowany szczyt RSS 906 035 200 B. Wcześniejsza odrębna kontrola
+Linux tego samego commitu ma **131/131 passed**, bez pominięć; nie zastępuje
+pełnego Required CI. Dalsza akceptacja wymaga zwykłego PR i pełnego CI na
+wynikowym main. Canonical pozostaje wyłączony; AI 09 nadal `not_ready`.
+
+**2026-10-09 — AI 09: integracja adaptera i checkpointów; audyt pamięci workerów.**
+Połączono adapter treningu anomaly z trwałym wznowieniem przygotowania.
+[09.84](evidence/09-84-integrated-worker-memory.json) rozszerza poprawkę RSS
+na całą ścieżkę przygotowania i kampanii oraz zachowuje koszt przerwanego
+lokalnego CI starszego commitu. 351 kontroli regresyjnych przeszło;
+sześć kontroli specyficznych dla Linuksa wymaga runnera. Mypy zaliczył
+749 plików, a 620 modułów Python jest identycznych w source/wheel/install.
+Końcowe kontrole rzeczywistego treningu/reloadu i pomiarów mają 60 sukcesów
+i sześć pominięć wymagających Linuksa; zakresy obu zestawów częściowo się pokrywają.
+Pełny lokalny i chroniony odbiór tego przyrostu pozostają otwarte.
+Limit 12 GiB zachowany, nowego canonical ani kampanii Project nie uruchomiono.
+Profile 25/50, zamrożony protokół prób, pełna ścieżka dane→raport i końcowa
+kwalifikacja pozostają wymagane. AI 09 nadal `not_ready`.
+
+**2026-10-09 — AI 09: wznowienie po awarii na niezależnych runnerach.**
+[Dowód 09.83](evidence/09-83-actions-cross-run-recovery.json) potwierdza dwa
+udane wznowienia z nowego joba: po błędzie procesu oraz przerwaniu kontrolera.
+Każdy przypadek ukończył 5/5 faz małego profilu, bez ponownej generacji.
+Niezależne inspekcje obu środowisk są identyczne; zweryfikowano osiem ZIP-ów,
+odtworzono wszystkie dziesięć archiwów faz i sprawdzono ich natywne powiązania.
+Zachowano oryginalne wpisy, archiwa oraz nieudane próby. Po błędzie procesu
+naliczono 19,96 s całej pracy z odzyskaniem; po przerwaniu 58,02 s,
+w tym 39 s ostrożnej rezerwy na nieznany koszt. CPU tej przerwy pozostaje
+nieznane. Osobne 130 s obserwacji jest czasem bez pracy Source.
+Nie potwierdzono logów aktualnego kontrolera na żywo w UI. Pełny CI tego
+przyrostu, profile 25/50, protokół prób i ścieżka dane→raport pozostają otwarte.
+Canonical nadal wyłączony, limit 12 GiB zachowany, AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: odebrany main; poprawka przygotowania wznowienia.**
+[Dowód 09.82](evidence/09-82-cross-run-runtime-rejection.json) zachowuje cztery
+rzeczywiste nieudane jobs: dwie celowe awarie po natywnym eksporcie oraz dwie
+odmowy wznowienia na nowym runnerze. Odmowa poprawnie zatrzymała pracę przy
+różnym RECORD lokalnej instalacji pakietu; kod, producent i pozostałe zależności
+były identyczne. Setup checkpointów korzysta teraz z przypiętego checkoutu
+oraz pełnych zależności bez dodatkowej instalacji lokalnego projektu.
+Ścisłe sprawdzanie tożsamości pozostaje bez zmian. 317 kontroli przeszło,
+a rzeczywista kontrola nowego setupu jest jeszcze wymagana.
+PR64 oraz wynikowy main `20aae22c` mają pełne **17/17 success** każdy,
+łącznie z TensorFlow i `required-result`. Zachowano siedem trybów kontroli.
+Limit **12 GiB** ponownie odczytano z dokładnego zdalnego main; otwartych
+sesji nie restartowano. Canonical pozostaje wyłączony, AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: przygotowana kontrola odzyskania pracy w nowym runnerze.**
+[09.81](evidence/09-81-cross-run-recovery-control-preparation.json) obejmuje
+dwie celowe awarie po rzeczywistym eksporcie: błąd procesu oraz przerwanie
+kontrolera przed końcowym wpisem kosztu. Pierwszy job ma pozostać nieudany,
+a jego końcowy zapis jest wysyłany dopiero po zatrzymaniu pracy. Nowy job
+niezależnie odtwarza tożsamość środowiska, sprawdza dokładne identyfikatory
+runu/joba/artefaktów i może wznowić tylko te celowo wprowadzone błędy.
+294 kontrole przeszły; rzeczywisty wynik nowych trybów Actions jest jeszcze
+do odebrania. Pełny CI main `20aae22c` w runie `37942975115` trwa.
+Nie uruchomiono canonical ani kampanii Project. AI 09 nadal `not_ready`.
+
+**2026-10-09 — AI 09: rozliczenie awarii; pełny odbiór PR64.**
+[Komponent 09.80](evidence/09-80-terminal-attempt-settlement.json) zachowuje
+zapis i koszty nieudanej pracy podczas wznowienia checkpointu. Nieznany czas
+po przerwaniu pozostaje niezmierzony; osobna ostrożna rezerwa na podstawie
+całego zakończonego joba pomniejsza budżet. Nieznane CPU pozostaje oznaczone
+także po kolejnym wznowieniu. 283 kontroli przeszło, w tym cztery rzeczywiste
+lokalne procesy kończące się błędem. Transport z GitHub sprawdzono na
+kontrolowanych odpowiedziach API; rzeczywista kontrola między dwoma
+przebiegami Actions i publikacja końcowego zapisu awarii są nadal wymagane.
+PR64 na `0096663` zaliczył **17/17 jobs** w Required CI `37935771590`,
+włącznie z treningiem/reloadem TensorFlow i `required-result`.
+Scalono go chronioną ścieżką do `20aae22c`. Pełny CI wynikowego main
+pozostaje do odebrania. Dziewięć porażek canonical oraz wcześniejsze błędy
+CI są zachowane. Nowej diagnostyki ani kampanii nie uruchomiono;
+AI 09 pozostaje `not_ready`.
+
+**2026-10-09 — AI 09: dwa wznowienia z zachowaniem archiwów i kosztów.**
+[Dowód 09.79](evidence/09-79-actions-repeated-checkpoint-resume.json) potwierdza
+5/5 faz małego profilu na `8f63b56`, po dwóch rzeczywistych uploadach
+i pobraniach checkpointów z GitHub. Generator uruchomiono raz. Zweryfikowano
+trzy ZIP-y, oba prefiksy i wszystkie pięć archiwów; poprzednie koszty oraz
+osiem pierwotnych rekordów zachowano. Naliczono 18,80 s, w tym 2,49 s
+obu pobrań i odtworzeń razem z zachowaniem archiwów. 224 kontrole przeszły.
+To nadal jeden job Actions; wznowienie z innego przebiegu i rozliczenie
+nieudanych/przerwanych prób pozostają otwarte. Logów tego kontrolera nie
+potwierdzono na żywo w UI. Nie uruchomiono nowego canonical ani kampanii.
+PR64 ma poprawkę pomiaru pamięci na `0096663`; jego nowy pełny Required CI
+`37935771590` trwa. Poprzedni run `37928364289` pozostaje zachowaną porażką.
+Limit **12 GiB** ponownie potwierdzono w recepturze 1.9 na zdalnym main
+`12484dee`; historyczne receptury z 8 GiB pozostają dowodami dawnych prób.
+AI 09 nadal jest `not_ready`.
+
+**2026-10-09 — AI 09: transport i wznowienie checkpointów w Actions.**
+[Dowód 09.77](evidence/09-77-actions-checkpoint-resume.json) potwierdza
+5/5 rzeczywistych faz małego profilu na `6c2b600`: po kwalifikacji checkpointy
+wysłano i pobrano z GitHub, a eksport/import/curation użyły odtworzonych danych.
+Generator wystartował raz. Oba ZIP-y oraz pięć archiwów faz zweryfikowano
+i zachowano lokalnie. Koszt 5,85 s przed przerwą pozostał w dzienniku;
+transport i odtworzenie dodały 1,26 s, łączny koszt wyniósł 17,14 s.
+To kontrola transportu w obrębie jednego joba. Wznowienie z innego przebiegu,
+rozliczenie nieudanych prób i obserwacja logów nowego kontrolera na żywo
+pozostają otwarte. Zakończone logi nie zastępują tej obserwacji.
+221 kontroli komponentów przeszło. PR64 ma dwa błędy końcowego pomiaru
+pamięci w shardzie 0; pozostały odbiór CI trwa. AI 09 nadal `not_ready`.
+
+**2026-10-09 — AI 09: kontroler osobnych faz i kosztów checkpointów.**
+[Dowód 09.76](evidence/09-76-phased-preparation-controller.json) potwierdza
+mały rzeczywisty przebieg pięciu faz i pięciu osobno nadzorowanych archiwizacji:
+20 trwałych rekordów, 10,22 s naliczonego budżetu i odtworzenie wszystkich
+checkpointów. 197 kontroli komponentów i kontraktów przeszło.
+Workflow zapisuje artefakt fazy przed następną; nieznany koszt niedokończonej
+operacji blokuje dalszą pracę tej sesji. Zdalne wznowienie z historią prób
+i kosztów, profile 25/50 oraz reprezentatywna ścieżka dane→raport są otwarte.
+Pełny trening anomaly i pakowanie są w [PR64](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/64),
+head `684ae43`; jego Required CI trwa. Lokalny `make ci-local` zachowano
+jako nieudany: 5120 testów przeszło, 49 pominięto, a pięć testów TensorFlow
+odmówiło startu przez `preflight_reserve` (trzy pozostałe przeszły).
+Kontrole adaptera Project na osobnej gałęzi mają 125/125 sukcesów ze źródeł
+i 125/125 z zainstalowanej paczki; nie oznaczają wykonania kampanii Project.
+Nowa diagnostyka canonical pozostaje wyłączona, AI 09 jest `not_ready`.
+
+**2026-10-09 — AI 09: natywna kontrola checkpointów ukończonych faz.**
+[Dowód 09.74](evidence/09-74-native-preparation-checkpoints.json) obejmuje
+pięć rzeczywistych faz na małym Source oraz wznowienie po kwalifikacji.
+Generator uruchomiono raz, eksport i dalsze etapy użyły odtworzonych danych.
+173 kontrole przeszły; poprawiono pełne powiązanie rodziców eksportu,
+powiązanie fazy z pomiarem i prywatne uprawnienia odtwarzanych plików.
+Source PR112 oraz wynikowy main `8479b5d3` mają po 21 udanych wymaganych
+jobs i cztery zamierzone pominięcia zgodne z polityką ścieżek Source.
+Pozostały integracja trwałego wznowienia i kosztów w Actions, profile 25/50,
+protokół prób, reprezentatywna ścieżka dane→raport oraz pełny odbiór konsumenta.
+Nie uruchomiono nowej próby canonical ani kampanii Project. AI 09 jest `not_ready`.
+Limit 12 GiB potwierdzono na zdalnym AI main `12484dee`; sesji nie restartowano.
+
+**2026-10-09 — AI 09: telemetria Source i przygotowanie capacity 1.11.**
+[Receptura i logi](ai09-development-capacity.md) zachowują 12 GiB RAM
+i podnoszą przyszły budżet obliczeń do 180 minut, a joba do 210 minut.
+Source [PR112](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/112)
+dodaje rzeczywiste liczniki etapów, zdarzeń, dni i wierszy. 11 końcowych
+kontroli Source i 141 kontroli AI/CI przeszło; prawdziwy mały Source ma
+58 tabel i 4044 wiersze, a jego 391 zdarzeń przyjął supervisor.
+[Przygotowanie 09.72](evidence/09-72-live-capacity-preparation.json) uzupełnia
+[dowód live 09.73](evidence/09-73-actions-live-progress.json): rzeczywiste logi
+Source oraz heartbeat po 60,2 s były widoczne przy działającym jobie.
+Przebieg kontrolny zakończył się sukcesem; jego artefakt i hash zweryfikowano.
+Pełna próba jest zablokowana do odbioru CI, powiązania dowodu z końcowym kodem,
+checkpointów/wznowienia i reprezentatywnej ścieżki dane→raport.
+Nie uruchomiono nowej diagnostyki canonical, fitów Project ani świeżego final.
+AI 09 pozostaje `not_ready`; profile 25/50 i protokół budżetów prób są otwarte.
+
+**2026-10-09 — adapter Project anomaly z zaakceptowaną poprawką pamięci.**
+Zintegrowano main `20aae22c` po pełnym odbiorze PR64 i wynikowego main:
+po 17 udanych jobs, w tym rzeczywisty TensorFlow i `required-result`.
+[09.71](ai09-campaign-anomaly-fit.md) zachowuje wcześniejsze 125/125 kontroli
+adaptera ze źródeł i 125/125 z zainstalowanej paczki na `c8ec8899`.
+Ten przyrost wymaga własnego pełnego CI i publikacji. Rzeczywiste fity
+Project i final nie zostały uruchomione, AI 09 pozostaje `not_ready`.
+
+**2026-10-09 — adapter kampanii anomaly: implementacja, odbiór w toku.**
+[09.71](ai09-campaign-anomaly-fit.md) łączy pełny parent, dni, replay,
+cechy, membership, fit i świeży reload modelu z trwałym dziennikiem.
+15 kontroli dziennika przeszło. Końcowe regresje i kontrola paczki
+są zaplanowane po bieżącym pełnym CI, aby nie kumulować obciążenia hosta.
+Nie wykonano produkcyjnego fitu Project ani świeżego odczytu final.
+AI 09 pozostaje `not_ready`.
+
 **2026-10-09 — AI 09: korekta pomiaru pamięci obu workerów anomaly.**
 [Dowód 09.78](evidence/09-78-native-worker-memory.json) zachowuje nieudany
 pełny run PR64 `37928364289`: dwa błędy census w shardzie 0 i 25 błędów
@@ -12,7 +183,8 @@ mała kontrola nie zastępuje CI ani naukowej kwalifikacji. AI 09 `not_ready`.
 
 **2026-10-09 — AI 09: pełny odbiór poprawek CPU Source, integracja anomaly trwa.**
 Source PR111 i wynikowy main `265b26a9` mają **30/30 success** każdy.
-AI PR63 nadal przechodzi pełne CI; rzeczywisty trening i reload TensorFlow przeszły.
+AI PR63 oraz wynikowy main `12484dee` mają **17/17 success** każdy,
+włącznie z rzeczywistym treningiem i reloadem TensorFlow.
 Nowy odczyt [cech anomaly](ai09-native-anomaly-features.md) zachowuje wszystkie
 żądane serie, okno i sześć wcześniejszych dni. [Replay](ai09-native-anomaly-replay.md)
 sprawdza również globalny indeks deduplikacji. [09.66](evidence/09-66-native-anomaly-census-access.json)
@@ -34,7 +206,8 @@ zweryfikowane Point z natywnym membership i pełnymi rolami train/validation
 na dysku. 164 kontrole regresyjne przeszły, następnie 18 po dopracowaniu
 rezerwy dysku oraz 165 z końcowej zainstalowanej paczki. Kontrola 10020
 wierszy używa całego treningu; trzy publiczne warianty zachowują pełne liczniki.
-Model Project, dziennik, prawda offline i pełna kwalifikacja są nadal otwarte.
+Adapter modelu i dziennika uzupełnia 09.71; jego odbiór, rzeczywista kampania,
+prawda offline i pełna kwalifikacja są nadal otwarte.
 PR #63 zaliczył cały Required CI dokładnego HEAD i jest scalony do
 `12484dee4db4b044e61460bac14f1612321900a8`; wynikowy main również zaliczył
 wszystkie 17 jobs. [Poprawka pakowania 09.70](ai09-package-boundary.md) usuwa prywatne pliki z sdist
@@ -48,8 +221,8 @@ własny pełny CI i publikację.
 wersję polityki/modelu, macierz na dysku i pełne progi walidacyjne.
 Kontrola 10017 wierszy wykorzystuje cały strumień i odtwarza zapisany las.
 Dotychczasowe kontrakty zachowują swoje limity. Powiązanie Point z membership
-i pełnym treningiem uzupełnia 09.69. Dziennik i model Project pozostają otwarte;
-pełny CI i publikacja są wymagane.
+i pełnym treningiem uzupełnia 09.69, a adapter dziennika i modelu — 09.71.
+Pełny CI, publikacja oraz rzeczywista kampania są wymagane.
 
 [Audyt podziału CI](evidence/09-67-ci-census-balance.json) zachowuje anulowany
 przebieg PR #63: 14 jobs przeszło, dwa shardy przekroczyły 45 minut, a agregator
@@ -57,7 +230,8 @@ zgłosił błąd. Shard 3 ukończył cały pytest, ale jego anulowany job nie je
 zaliczony; shard 2 pozostawił tylko plan i nieznany koszt wykonania.
 Korekta wykorzystuje przejrzane czasy, zachowuje wszystkie testy i atomowo
 zapisuje raporty częściowe. Limit joba testów wynosi 90 minut. Pełny chroniony
-odbiór poprawionego HEAD i wynikowego main nadal jest wymagany.
+odbiór poprawionego HEAD i wynikowego main zakończył się po 17/17 success;
+[09.70](evidence/09-70-package-private-boundary.json) zapisuje oba identyfikatory CI.
 
 [Pełne historyczne cechy anomaly](ai09-native-anomaly-features.md) odtwarzają
 wszystkie zadeklarowane dni przez natywne funkcje, z 28 dniami historii.

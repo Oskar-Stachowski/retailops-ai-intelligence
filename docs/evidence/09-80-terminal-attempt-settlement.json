@@ -1,0 +1,84 @@
+{
+  "behavior": {
+    "artifact_name_binds_latest_run_attempt": true,
+    "artifact_transport": "existing AI04 bounded download and authorization-free storage redirect",
+    "automatic_retry_or_dispatch": false,
+    "complete_failed_suffix_preserved_in_immutable_resume_receipt": true,
+    "cross_run_prefix_without_terminal_history_rejected": true,
+    "current_job_name_and_workflow_checked": true,
+    "history_and_prefix_same_run_required": true,
+    "interruption_reservation": "Entire authenticated terminal job wall duration plus2s timestamp rounding, added on top of all retained known work; intentionally conservative and explicitly not an exact measurement",
+    "known_failure_cost_added_before_new_work": true,
+    "metadata_routes": "fixed GitHub repository actions/runs/<id> and actions/jobs/<id>; no redirects",
+    "missing_final_history_blocks_resume": true,
+    "original_prefix_records_and_archives_preserved": true,
+    "run_rechecked_after_archive_download": true,
+    "same_consumer_code_identity_required": true,
+    "unknown_cpu_preserved_across_later_resume": true,
+    "unknown_wall_preserved_with_separate_settled_budget_reservation": true
+  },
+  "canonical_diagnostic_dispatched": false,
+  "code_sha256": {
+    "scripts/ai09_attempt_transport.py": "1ea7ce320ddd9c6a39cdf1528a9dd68a5d8a091acbe7c0198c72f38d50cd30d3",
+    "scripts/ai09_checkpoint_transport.py": "44040f3517ff962ef936cdc09d7143963f0a9d68c8c2228e90537e2ee3a9f878",
+    "src/retailops_ai/evaluation_campaign/preparation_attempt.py": "278ad6668d23d988ac1a3290699a55520c168704098dc4610450ac435a72f542",
+    "src/retailops_ai/evaluation_campaign/preparation_execution.py": "6bd00d3c55250ff637b1c371f08cb98de901cf2b1294df27b96aa5c5288df0d6",
+    "src/retailops_ai/evaluation_campaign/preparation_resume.py": "d5cf65d87d6bbf39b58664b0b16d73f0946aac016e7cef4d9b2e2723ae6a2875",
+    "tests/test_ai09_checkpoint_transport.py": "c653c6f2ca6b90761b38eb61c5013de5a07a66bcf82aec55f5ec49ba160e2bf3"
+  },
+  "component_controls": {
+    "actual_local_failed_processes": 4,
+    "completed_prefix_boundaries_tested": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "failures": 0,
+    "junit_sha256": "5f9f3612858528abef465c537d3d8a8ce7639a772a5ea634a5812919868e5a4d",
+    "outcomes": [
+      "native process failure",
+      "checkpoint sealer failure",
+      "unfinished native operation",
+      "unfinished sealer after measured native work",
+      "failed operation with unknown CPU",
+      "actual local process exit23"
+    ],
+    "passed": 283,
+    "seconds": 18.835,
+    "skips": 0
+  },
+  "fresh_final_reads": 0,
+  "new_project_fits": 0,
+  "project_journal_initialized": false,
+  "recorded_at_utc": "2026-10-09T14:17:53.268915+00:00",
+  "rejections": [
+    "active or successful remote job",
+    "previous run attempt",
+    "wrong repository/head/workflow/job",
+    "expired, mismatched or out-of-job artifact",
+    "changed snapshot or prefix",
+    "changed remaining budget",
+    "missing suffix record or prior cost adjustment",
+    "ZIP extras and links",
+    "run rerun during download",
+    "exhausted cumulative budget",
+    "cross-run prefix without terminal attempt history",
+    "history from a different run than the checkpoint"
+  ],
+  "remaining": [
+    "wire terminal attempt snapshot publication after preparation stops and guarded retrieval into cross-run control",
+    "actual failed and interrupted Actions recovery with independently reconstructed current runtime identity",
+    "account for guard/setup/transport costs in the final workflow and preserve every attempt",
+    "phased live UI proof,25/50 profiles,trial protocol,representative end-to-end",
+    "full exact head/main Required CI"
+  ],
+  "scope": "Component validation only; remote final-attempt transport uses controlled API fixtures, not a completed cross-run Actions recovery",
+  "stage_ready": false,
+  "validation": {
+    "mypy": "passed",
+    "mypy_source_files": 5,
+    "ruff": "passed"
+  },
+  "version": "ai09-terminal-attempt-settlement-component-evidence-1.0.0"
+}

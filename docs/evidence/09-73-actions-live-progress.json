@@ -1,0 +1,106 @@
+{
+  "artifact_bytes": 32169,
+  "artifact_digest_verified": true,
+  "artifact_expires_at": "2027-01-07T10:44:58Z",
+  "artifact_id": 11611079617,
+  "artifact_sha256": "acac02665029bdb6a26aed5dfbe54486976d0a2695292343c4e948657f952f70",
+  "canonical_diagnostic_dispatched": false,
+  "canonical_profile_qualified": false,
+  "code_sha256": {
+    "scripts/ai09_live_progress.py": "d5cd00232e71b7ebaa9edf0865b5e098e604f5c792d10c15370f199957bc515d",
+    "scripts/check_ai09_live_progress.py": "11d5a326406993588c8102b048d9ea89e62e1979e875ecd5f04ff67ace952020",
+    "scripts/measure_ai09_development_capacity.py": "6589c26e60d7859fa6b9424524e3f1795572caf9dc2d8ab27d9f51ceab2e9f5a"
+  },
+  "cross_host_authorization_stripped": true,
+  "files": [
+    {
+      "bytes": 1681,
+      "name": "live-control.json",
+      "sha256": "d9fd41db38fe67c06460a58cb8eb589056d13c17f347eb1c112dce10b509aeea"
+    },
+    {
+      "bytes": 159739,
+      "name": "live-source-control.log",
+      "sha256": "3190e48b89804039d7936823e0db3d05b64ff6b7aaba2aead79f070bf2d7c8e0"
+    },
+    {
+      "bytes": 297110,
+      "name": "live.progress.jsonl",
+      "sha256": "f126e1d78da570e4553c1ffd834aa23143ed0d294d3250c167f5b9900ba0ea82"
+    },
+    {
+      "bytes": 350,
+      "name": "source-result.json",
+      "sha256": "630c6823e1f859c8e9497fb82152b435643780bcfff691781d9db3b396308c37"
+    }
+  ],
+  "fresh_final_reads": 0,
+  "head": "5914f8d2a0d474e219c7aaba031f796840cb01b4",
+  "heartbeat_elapsed_seconds": [
+    0.11906287099999702,
+    60.203103189000004,
+    120.406094141
+  ],
+  "heartbeat_intervals_seconds": [
+    60.08404031800001,
+    60.20299095199999
+  ],
+  "job_id": 113783725753,
+  "local_durable_copy": true,
+  "project_fits": 0,
+  "recorded_at_utc": "2026-10-09T10:50:31.144699+00:00",
+  "resource": {
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "exit_code": 0,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "minimum_available_memory_bytes": 15237275648,
+    "minimum_free_disk_bytes": 91208036352,
+    "reason": null,
+    "sample_seconds": 0.2,
+    "sampled_peak_scratch_allocated_bytes": 1671168,
+    "sampled_peak_scratch_logical_bytes": 1489634,
+    "sampled_tree_peak_rss_bytes": 139595776,
+    "sampled_worker_cpu_seconds": 2.34,
+    "samples": 628,
+    "status": "passed",
+    "telemetry_errors": [],
+    "wall_seconds": 132.901883308
+  },
+  "run_id": 37919491269,
+  "source_event_count": 391,
+  "source_head": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+  "source_result": {
+    "canonical_profile": false,
+    "final_test_opened": false,
+    "native_source_writer_and_reader_completed": true,
+    "producer_commit": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+    "project_fits": 0,
+    "rows": 4044,
+    "source_dataset_id": "source-sha256-c99626b5674df0e8e3c1d2c37228d74aae92419b22c8eb6e0fa296235721af46",
+    "tables": 58,
+    "version": "ai09-actions-live-control-1.0.0"
+  },
+  "stage_ready": false,
+  "ui_observation": {
+    "browser_control_tab_closed": true,
+    "cancel_workflow_button_present": true,
+    "final_screenshot_was_after_completion": true,
+    "heartbeat_active_subphase": "visibility_observation_hold_no_source_work",
+    "method": "native Chrome accessibility state via cua_repl, before workflow completion",
+    "no_terminal_log_used_as_substitute_for_live_UI_observation": true,
+    "observed_later_120_second_heartbeat_while_live": false,
+    "observed_run_status": "currently running",
+    "source_events_visible_before_job_completion": true,
+    "source_generation_completed_before_UI_observation": true,
+    "visible_heartbeat": "elapsed=60.2/600s RAM=0.126GiB CPU>=2.29s last_reported_counter_subphase=source_read/warehouses records=1/1",
+    "visible_source_examples": [
+      "source_read/sales records=169/169",
+      "source_read/products records=8/8",
+      "validation/inventory_daily_demand_conservation started/completed"
+    ]
+  },
+  "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37919491269",
+  "version": "ai09-actions-live-visibility-evidence-1.0.0",
+  "workflow_conclusion": "success",
+  "workflow_status": "completed"
+}

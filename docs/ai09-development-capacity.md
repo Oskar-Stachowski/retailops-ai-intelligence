@@ -1,6 +1,247 @@
 # Pomiar pełnego development AI 09
 
-[Receptura 1.10](reference/ai09-development-capacity-v1.10.json) przypina
+[Audyt 09.84](evidence/09-84-integrated-worker-memory.json) rozszerza poprawkę
+pomiaru RSS na wszystkie workery przygotowania i kampanii. Na Linuksie
+`VmHWM` mierzy bieżący proces po exec; historyczny RSS launchera nie jest
+doliczany drugi raz. Supervisor nadal niezależnie mierzy całe żywe drzewo.
+Trening anomaly zachowuje również rzeczywiste pomiary pełnego drzewa każdego
+zakończonego fitu natywnego. Nie sumuje kolejnych fitów ani rodzica drugi raz.
+Nowy wspólny moduł jest objęty identyfikacją kodu i kontrolą paczki, a Source
+ładuje go bez zależności konsumenta. Zmiana nie podnosi żadnego budżetu.
+Pełny odbiór poprawionego przyrostu pozostaje wymagany; canonical jest wyłączony.
+
+[Przygotowywana receptura 1.11](reference/ai09-development-capacity-v1.11.json)
+ma zatwierdzony przez użytkownika budżet **180 minut obliczeń** oraz **210 minut
+na cały job Actions**. Limit RSS drzewa nadal wynosi **12 GiB**, scratch
+8 GiB, rezerwa pamięci 1 GiB i dysku 6 GiB. Pełny profil i final portfolio
+pozostają zachowane. 180 minut jest budżetem pomiaru, nie obietnicą ukończenia.
+
+Nowe logi pokazują faktyczne etapy Source, zakończone zdarzenia, dni i wiersze
+oraz oczekiwane liczby, kiedy są znane. Niezależny supervisor co 60 s wypisuje
+heartbeat, upływ czasu, RAM i dolną granicę CPU; nie zwiększa liczników pracy.
+Rekordy trafiają przez `flush()` do Actions oraz do prywatnego JSONL z `fsync()`.
+Awaria telemetrii nie zasłania timeoutu ani kosztu nieudanego procesu.
+
+Producent jest przypięty do [Source PR112](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/112).
+Mały workflow `AI09 real generation worker control`, tryb `live_progress`,
+wykonuje rzeczywistą generację i osobne 130-sekundowe okno obserwacji logów.
+Ten czas jest jawnie oznaczony jako oczekiwanie na obserwację, bez pracy Source.
+Artefakty kontroli są przechowywane przez 90 dni; to nie jest archiwum trwałe.
+Lokalne przejście testów ani końcowy log nie zastępują sprawdzenia widoczności
+przyrostowych wpisów w UI podczas działania joba.
+
+[Dowód live 09.73](evidence/09-73-actions-live-progress.json) potwierdza
+kontrolę [run 37919491269](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37919491269)
+na dokładnym AI `5914f8d2` i Source `ff2504a9`. W UI przy stanie
+`currently running` były widoczne rzeczywiste liczniki tabel, operacje
+walidacji i heartbeat po 60,2 s. Source skończył przed obserwacją UI;
+job wciąż wykonywał jawne okno obserwacji. Końcowy screenshot powstał już
+po zakończeniu i nie służy jako dowód wcześniejszej widoczności.
+Zweryfikowany artefakt zawiera 391 zdarzeń Source i trzy heartbeat
+w odstępach 60,08 oraz 60,20 s. Przebieg zakończył się sukcesem po 132,90 s,
+w tym 130 s celowego oczekiwania; RSS drzewa wyniosło 139595776 B,
+CPU workera co najmniej 2,34 s. Zachowano prywatną lokalną kopię artefaktu.
+Nie wyciągamy z tej małej kontroli prognozy czasu pełnego profilu.
+
+Source PR112 scalono jako `8479b5d3`. Dokładny head `ff2504a9` oraz
+wynikowy main mają po 25 zakończonych jobs: 21 wymaganych dla tego zakresu
+z sukcesem i cztery zamierzone pominięcia zgodne z polityką ścieżek Source.
+Pominięcia nie są liczone jako sukces. Dowód obejmuje także `required-result`.
+
+[Kontrola checkpointów 09.74](evidence/09-74-native-preparation-checkpoints.json)
+potwierdza zapis i odtworzenie wszystkich pięciu ukończonych faz na małym,
+rzeczywistym Source: 10 dni, 8 produktów, 2 sklepy, 1 magazyn, 58 tabel.
+Po generacji i kwalifikacji odtworzono ich archiwa do nowego katalogu;
+eksport, import i curation skorzystały z odtworzonych rodziców. Generator
+uruchomiono raz. Przechwycono pomyślny powrót rzeczywistego walidatora każdej
+fazy; pełne inventory danych odpowiada zachowanemu świadectwu walidacji.
+Cała kontrola zajęła 8,31 s, w tym 7,34 s pracy pięciu procesów,
+0,37 s zapisu archiwów i 0,39 s późniejszego odtworzenia wszystkich faz.
+Koszty odtworzenia i pierwotnego przygotowania pozostają osobne.
+
+Nowy komponent używa istniejącego formatu archiwów AI04 bez zmiany jego
+kontraktu ani mechanizmu AI08. Wymaga osobno zachowanego, zaufanego powiązania
+z wynikiem workera, kodem, konfiguracją, seedem, zależnościami i walidatorem.
+Sam poprawny hash archiwum nie wystarcza. Eksport wiąże zarówno Source,
+jak i kwalifikację; błąd dowolnego rodzica blokuje publikację całego prefiksu.
+Nowe pliki mają prawa `0600`, katalogi `0700`, niezależnie od `umask`.
+173 kontrole komponentów, wcześniejszego archiwum, telemetrii, capacity i CI
+przeszły. Kontrolę wykonano w lokalnym środowisku testowym z zapisanymi
+wersjami pakietów; nie kwalifikuje ona pełnej skali ani środowiska Actions.
+
+Pozostały odbiór checkpointów i wznowienie między przebiegami Actions:
+zaufane powiązania poza archiwami, pełna historia nieudanych prób
+oraz wspólny budżet wznowienia. Kontrola komponentu nie
+otwiera dostępu Project ani final i nie zamyka tych wymagań.
+
+Nowy `run_ai09_preparation.py` rozdziela każdą fazę na dwa procesy pod
+nadzorem: natywne przygotowanie i zapis zweryfikowanego checkpointu.
+Oba zużywają wspólny budżet obliczeń; rezerwy RAM/dysku obejmują także
+kompresję. Dziennik zapisuje i synchronizuje zamiar przed startem procesu,
+a następnie rzeczywisty pomiar, także przy porażce. Brak końcowego pomiaru
+oznacza nieznany koszt i blokuje dalsze uruchomienia z tej sesji.
+Blokada pliku nie pozwala uruchomić drugiego kontrolera równocześnie.
+Inspekcja środowiska ma osobny pomiar preflight, poza budżetem przygotowania,
+ale wewnątrz limitu całego joba. Wersje pakietów i ich metadata RECORD są
+przypięte; nie jest to ponowny pełny audyt wszystkich zainstalowanych plików.
+
+[Dowód 09.82](evidence/09-82-cross-run-runtime-rejection.json) zachowuje dwie
+celowe awarie po rzeczywistym eksporcie i dwie późniejsze odmowy wznowienia.
+Ścisła tożsamość wykryła różnicę RECORD lokalnego pakietu przy identycznym
+kodzie i pozostałych zależnościach. Tryby checkpointów i przyszły canonical
+instalują teraz zależności z `--locked --no-install-project`; kontroler
+ładuje kod z dokładnego checkoutu, którego pełna mapa nadal jest hashowana.
+Pozostałe tryby małego workflow zachowują instalację pakietu.
+Nie normalizujemy ani nie pomijamy wpisów RECORD zainstalowanych zależności.
+317 kontroli komponentów i regresji przeszło; nowy setup wymaga własnej
+rzeczywistej kontroli między runnerami. Wcześniejsze awarie, ich koszty,
+nieznany koszt przerwania oraz osobne pomiary nieudanych pobrań są zachowane.
+
+Późniejszy [dowód 09.83](evidence/09-83-actions-cross-run-recovery.json)
+potwierdza rzeczywiste odzyskanie w osobnych runach `37951474556` i
+`37951481874` na identycznym `a381e63a`. Oryginalne jobs pozostały nieudane,
+a nowe ukończyły pięć faz bez generacji po stronie odbiorcy. Niezależna
+inspekcja przed pobraniem dała pełną zgodność środowisk Source i AI.
+Zweryfikowano osiem ZIP-ów oraz odtworzono dziesięć natywnych archiwów,
+włącznie z pełnym inventory i łańcuchem rodziców. Po błędzie procesu łączny
+naliczony koszt wyniósł 19,96 s, w tym 1,44 s nieudanego eksportu i 4,31 s
+pobrania/odtworzenia. Po przerwaniu naliczono 58,02 s, w tym 39 s osobnej
+ostrożnej rezerwy; nieznany koszt ścienny i CPU pozostały jawnie oznaczone.
+130-sekundowe okna obserwacji oraz preflight mają osobne zachowane pomiary.
+To wyłącznie kontrola jawnie wprowadzonych awarii na profilu 10×8×2×1,
+bez Project i final. Nie obejmuje twardego zabicia joba przed publikacją
+historii, ogólnego dopuszczania awarii ani kwalifikacji pełnego canonical.
+Bieżącego kontrolera nie zaobserwowano na żywo w UI; końcowe logi i status
+API nie zastępują tego dowodu. Przed canonical pozostają także profile 25/50,
+protokół budżetów prób, reprezentatywna ścieżka dane→raport i pełny CI.
+
+Workflow przekazuje każdą zakończoną lub nieudaną fazę do osobnego artefaktu
+przed przejściem dalej, zachowując checkpoint, niezależne powiązanie workera,
+dziennik, logi i koszty. Retencja wynosi 90 dni i wymaga późniejszego odbioru
+do trwałego archiwum. [Dowód 09.76](evidence/09-76-phased-preparation-controller.json)
+obejmuje 197 zaliczonych kontroli oraz mały rzeczywisty przebieg pięciu faz
+nowego kontrolera na `a9f18aa`. Dziesięć osobno nadzorowanych procesów
+pozostawiło 20 trwałych rekordów. Naliczono 10,22 s obliczeń,
+osobno 0,38 s preflight; próbki RSS drzewa nie przekroczyły 132300800 B.
+Wszystkie pięć checkpointów odtworzono bez ponownej generacji.
+Późniejszą blokadę ścieżek względnych i symlinków sprawdzają dwie kontrole
+przed jakimkolwiek dostępem do Source; kod wykonania faz pozostał ten sam.
+Zdalny upload, transport i wznowienie wymagają rzeczywistej kontroli Actions.
+Publiczne wejścia kontrolera oraz workera respektują
+`dispatch_enabled=false` przed rozpoczęciem jakiejkolwiek pracy Source.
+
+Tryb `checkpoint_resume` małego workflow wykonuje wyłącznie zamrożony profil
+10 dni × 8 produktów × 2 sklepy × 1 magazyn. Zatrzymuje się po kwalifikacji,
+wysyła checkpointy do artefaktu, a następnie pobiera wybrany artefakt przez
+API GitHub. Sprawdza identyfikator, run, dokładny commit, nazwę, hash ZIP,
+pełną zawartość i niezależnie zachowane zakończenie natywnych faz.
+Używa istniejącego transportu HTTP AI04, który usuwa autoryzację przy
+przejściu na host storage; kontrakty AI04 i AI08 pozostają bez zmian.
+Koszt pobrania i odtworzenia pomniejsza pozostały budżet przygotowania.
+Wznowione eksport/import/curation korzystają z odtworzonych danych po
+przeniesieniu oryginałów do osobnego zachowanego katalogu kontrolnego.
+Pierwotne aktywne ścieżki nie mogą więc przypadkowo obsłużyć wznowienia.
+
+Ten mechanizm przyjmuje celowo zatrzymany, w pełni zmierzony prefiks.
+Nie pozwala zastąpić historii nieudanej lub przerwanej próby wcześniejszym
+udanym checkpointem. Rozliczenie takiej historii pozostaje wymaganiem
+przed wznowieniem pełnej diagnostyki. [Mała kontrola Actions 09.77](evidence/09-77-actions-checkpoint-resume.json)
+ukończyła 5/5 faz z pojedynczą generacją. Zweryfikowano oba artefakty GitHub,
+wszystkie archiwa faz i zachowanie wcześniejszych ośmiu rekordów kosztów.
+Łączny koszt wyniósł 17,14 s, w tym 1,26 s pobrania i odtworzenia.
+Kontrola wykonała transport przez GitHub w obrębie jednego joba; wznowienie
+z innego przebiegu pozostaje do sprawdzenia. Osobne 130,09 s okno obserwacji
+pozostawiło heartbeat po 60,11 i 120,22 s, ale nie obejrzano wtedy logów
+nowego kontrolera w UI. Ta bramka pozostaje otwarta; nie powtarzamy
+niezmienionego przebiegu tylko z powodu utraconego okna obserwacji.
+
+Poprawka kolejnego wznowienia zachowuje też wcześniejsze archiwa faz.
+Poprzednia implementacja przenosiła wyniki i koszty, lecz nie archiwa, więc
+kolejny `bundle_prefix` nie miał pełnej zawartości. Kopiowanie, weryfikacja
+natywnego powiązania i fsync odbywają się teraz wewnątrz nadzorowanego procesu
+odtwarzania i zużywają jego budżet. Kontroler przenosi gotowy prywatny katalog
+atomowo, bez drugiego niezmierzonego skanowania payloadów. Sprawdza tożsamość
+plików przy przekazaniu własnego workera; późniejszy bundle ponownie sprawdza
+pełne hashe i powiązania. Oryginalne archiwa pozostają zachowane.
+
+[Dowód 09.79](evidence/09-79-actions-repeated-checkpoint-resume.json) obejmuje
+dwa kolejne rzeczywiste uploady i pobrania przez GitHub na `8f63b56`.
+Po drugim odtworzeniu kontrola ukończyła 5/5 faz, używając drugiego zestawu
+odtworzonych danych. Generator uruchomiono raz. Trzy artefakty, oba prefiksy,
+pięć archiwów faz, osiem pierwotnych i 20 końcowych rekordów zweryfikowano
+i zachowano lokalnie. Pierwsze 6,26 s pracy pozostało w budżecie; oba wznowienia
+dodały łącznie 2,49 s, a pełny naliczony koszt wyniósł 18,80 s.
+224 kontrole komponentów przeszły. Nadal jest to wznowienie w jednym jobie;
+nie kwalifikuje innego przebiegu ani historii awarii. Heartbeat w końcowym
+artefakcie nie jest dowodem obserwacji w UI podczas działania kontrolera.
+
+Kontrole komponentów obejmują dwa wznowienia, sumę wcześniejszych kosztów
+oraz odmowę przy zmianie, braku i symlinku archiwum. Wynik Actions odebrano
+i sprawdzono; rozliczenie nieudanych prób oraz wznowienie pomiędzy
+oddzielnymi przebiegami Actions pozostają otwarte.
+
+[Komponent rozliczenia prób 09.80](evidence/09-80-terminal-attempt-settlement.json)
+dodaje do wznowienia pełny końcowy zapis nieudanej lub przerwanej próby.
+Zachowuje wcześniejsze rekordy, identyczne wejścia i koszty oraz cały zapis
+pracy po ostatnim ukończonym checkpointcie. Znany koszt porażki jest doliczany
+przed nową pracą. Dla niedokończonej operacji rezerwuje dodatkowo czas całego
+zakończonego joba GitHub z dwusekundowym marginesem rozdzielczości timestampów.
+To celowo ostrożna rezerwa; nie zastępuje jej fikcyjnym pomiarem ani zerem.
+Pola `unmeasured_wall_cost_present`, `reserved_unknown_wall_seconds` oraz
+`unsettled_wall_cost_present` rozróżniają nieznany pomiar i rozliczony budżet.
+Nieznane CPU i rezerwa przetrwają kolejne wznowienia. Wyczerpany budżet blokuje
+publikację sesji, a brak pełnego zapisu końcowej próby blokuje jej wznowienie.
+
+Czytnik używa stałych endpointów GitHub dla wskazanego runu i joba oraz
+wcześniejszego transportu artefaktów AI04. Sprawdza końcowy status, nazwę joba,
+workflow, repozytorium, commit i najnowszy numer próby. Nazwa i hash artefaktu
+wiążą końcowy zapis z tą próbą; run jest ponownie sprawdzany po pobraniu.
+Checkpoint z innego runu nie może być wznowiony bez końcowej historii;
+identyfikator runu w tej historii musi odpowiadać pobranemu checkpointowi.
+Sam dostarczony JSON z hashem nie stanowi upoważnienia: dowód musi pochodzić
+z tego czytnika i uwierzytelnionego serwera GitHub. Funkcja nie dispatchuje
+ani nie ponawia jobów. 283 kontroli obejmuje wszystkie cztery granice
+prefiksu, błędy natywnego procesu i archiwizacji, przerwania, późniejsze
+wznowienie oraz odrzucenie zmienionej lub niepełnej historii.
+API w tych kontrolach jest zastąpione kontrolowanymi odpowiedziami;
+publikacja snapshotu po zakończeniu pracy i rzeczywisty test między dwoma
+jobami pozostają otwarte. Całe pobranie i walidacja muszą być objęte nadzorem
+zasobów w kontrolerze wznowienia. Nie jest to jeszcze odbiór tej ścieżki Actions.
+
+[Przygotowanie kontroli 09.81](evidence/09-81-cross-run-recovery-control-preparation.json)
+wiąże ten komponent z osobnymi przebiegami Actions. Tryby `checkpoint_failure`
+i `checkpoint_interruption` wykonują mały natywny eksport po zapisaniu prefiksu
+generacja→kwalifikacja. Pierwszy kończy proces kodem 23 po eksporcie; drugi
+kończy kontroler kodem 24 po odebraniu zakończonego dziecka, przed końcowym
+wpisem kosztu. Nie pozostawia działającego osieroconego procesu.
+Job pozostaje nieudany. Osobny krok `always()` publikuje pełny `attempt.json`,
+zachowując też wcześniejszy raport prefiksu i odrębny raport końcowy.
+
+Tryb `checkpoint_recovery` wymaga jawnych identyfikatorów poprzedniego runu,
+joba, prefiksu i końcowej próby oraz tego samego niezmiennego commitu.
+Zanim pobierze dane, niezależnie wyznacza aktualną tożsamość runtime.
+Pobranie obu artefaktów ma osobny nadzór i limit 60 s; prefiks kontrolny
+musi zachować co najmniej 300 s swojego 600-sekundowego budżetu.
+Po rozliczeniu historii i pobrania pozostały budżet ogranicza odtworzenie
+oraz rzeczywiste eksport/import/curation. Generacja nie jest uruchamiana
+w jobie odzyskania. Sprawdzane są też kroki GitHub: tylko celowa iniekcja
+może zakończyć się błędem, a finalizacja i upload historii muszą się udać.
+To jawna kontrola małego profilu, nie automatyczna zgoda na ponawianie awarii
+canonical. 294 kontrole komponentów przeszły; rzeczywisty odbiór obu par
+jobów pozostaje wymagany przed uznaniem tej ścieżki za sprawdzoną.
+Po odzyskaniu pracy job pozostawia istniejące 130-sekundowe okno obserwacji
+logów. Jest ono oznaczone jako bezczynne oczekiwanie, osobno od pracy Source
+i budżetu przygotowania; sam końcowy zapis heartbeat nie zastępuje obserwacji UI.
+
+**1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
+`dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
+Pozostały odbiór chronionych head/main konsumenta, powiązanie dowodu live
+z końcowym kodem, integracja checkpointów/wznowienia w Actions
+i reprezentatywna ścieżka dane→raport.
+Kolejny spójny przyrost musi dostarczyć te dowody przed otwarciem bramki.
+Zachowano wszystkie wcześniejsze receptury i dziewięć rzeczywistych porażek.
+
+Nieuruchomiona [receptura 1.10](reference/ai09-development-capacity-v1.10.json) przypina
 audyt CPU z [Source PR111](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/111):
 ograniczony cache konwersji Arrow oraz istniejący indeks ledger uruchamiany
 dopiero po pełnej walidacji. Trzy małe pary zachowują 58 tabel, kontekst, CSV

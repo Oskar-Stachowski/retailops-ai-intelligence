@@ -4,7 +4,6 @@ import hashlib
 import importlib
 import json
 import os
-import platform
 import resource
 import sqlite3
 import sys
@@ -61,6 +60,7 @@ from retailops_ai.evaluation_campaign.physical_forecast import _index
 from retailops_ai.forecasting.manifests import verify_feature_set
 from retailops_ai.forecasting.quality_v2_contract import FunctionalForecast
 from retailops_ai.source_snapshot.files import SnapshotError, file_hash, read_bytes, regular_file
+from retailops_ai.worker_resources import worker_peak_rss_bytes
 
 POPULATION = (
     "rows",
@@ -691,8 +691,7 @@ def _usage(started: float) -> dict[str, float | int]:
     usage = resource.getrusage(resource.RUSAGE_SELF)
     return {
         "worker_seconds": perf_counter() - started,
-        "worker_peak_rss_bytes": int(usage.ru_maxrss)
-        * (1 if platform.system() == "Darwin" else 1024),
+        "worker_peak_rss_bytes": worker_peak_rss_bytes(),
         "worker_cpu_seconds": usage.ru_utime + usage.ru_stime,
     }
 
