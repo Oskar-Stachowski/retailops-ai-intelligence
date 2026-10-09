@@ -10,7 +10,26 @@ on:
           - generation
           - live_progress
           - checkpoint_resume
+          - checkpoint_failure
+          - checkpoint_interruption
+          - checkpoint_recovery
         default: generation
+      previous_run_id:
+        description: Completed original failure run, required only for checkpoint_recovery
+        type: string
+        default: ""
+      previous_job_id:
+        description: Original terminal control job ID
+        type: string
+        default: ""
+      prefix_artifact_id:
+        description: Original completed qualification prefix artifact ID
+        type: string
+        default: ""
+      attempt_artifact_id:
+        description: Final failed or interrupted attempt artifact ID
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -66,12 +85,12 @@ jobs:
             --producer-python "$GITHUB_WORKSPACE/source/.venv/bin/python" \
             --output "$GITHUB_WORKSPACE/control"
       - name: Generate and qualify the fixed tiny checkpoint prefix
-        if: inputs.mode == 'checkpoint_resume'
+        if: inputs.mode == 'checkpoint_resume' || inputs.mode == 'checkpoint_failure' || inputs.mode == 'checkpoint_interruption'
         run: |
           consumer/.venv/bin/python consumer/scripts/check_ai09_checkpoint_control.py \
             --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" --operation prefix
       - name: Upload completed prefix before resuming
-        if: inputs.mode == 'checkpoint_resume'
+        if: inputs.mode == 'checkpoint_resume' || inputs.mode == 'checkpoint_failure' || inputs.mode == 'checkpoint_interruption'
         id: checkpoint_prefix_upload
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
@@ -81,8 +100,45 @@ jobs:
           compression-level: 0
           retention-days: 90
           overwrite: false
+      - name: Inject an explicit failure after real native export
+        if: inputs.mode == 'checkpoint_failure' || inputs.mode == 'checkpoint_interruption'
+        env:
+          FAILURE_MODE: ${{ inputs.mode == 'checkpoint_failure' && 'failed_process' || 'controller_interruption' }}
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_cross_run_resume.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" \
+            --operation inject --failure-mode "$FAILURE_MODE"
+      - name: Finalize attempt history after all native work has stopped
+        if: always() && (inputs.mode == 'checkpoint_failure' || inputs.mode == 'checkpoint_interruption')
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_cross_run_resume.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" \
+            --operation publish-attempt
+      - name: Preserve the complete terminal attempt for an explicitly selected recovery
+        if: always() && (inputs.mode == 'checkpoint_failure' || inputs.mode == 'checkpoint_interruption') && hashFiles('control/attempt/attempt.json') != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-preparation-attempt-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: control/attempt/attempt.json
+          if-no-files-found: error
+          retention-days: 90
+          overwrite: false
+      - name: Recover the explicit terminal attempt in a different runner
+        if: inputs.mode == 'checkpoint_recovery'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PREVIOUS_RUN_ID: ${{ inputs.previous_run_id }}
+          PREVIOUS_JOB_ID: ${{ inputs.previous_job_id }}
+          PREFIX_ARTIFACT_ID: ${{ inputs.prefix_artifact_id }}
+          ATTEMPT_ARTIFACT_ID: ${{ inputs.attempt_artifact_id }}
+        run: |
+          consumer/.venv/bin/python consumer/scripts/check_ai09_cross_run_resume.py \
+            --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" \
+            --operation recover --previous-run-id "$PREVIOUS_RUN_ID" \
+            --previous-job-id "$PREVIOUS_JOB_ID" --prefix-artifact-id "$PREFIX_ARTIFACT_ID" \
+            --attempt-artifact-id "$ATTEMPT_ARTIFACT_ID"
       - name: Observe flushed counters with an explicit idle visibility window
-        if: inputs.mode == 'checkpoint_resume'
+        if: inputs.mode == 'checkpoint_resume' || inputs.mode == 'checkpoint_recovery'
         run: |
           consumer/.venv/bin/python consumer/scripts/check_ai09_checkpoint_control.py \
             --source "$GITHUB_WORKSPACE/source" --output "$GITHUB_WORKSPACE/control" --operation observe
@@ -132,6 +188,10 @@ jobs:
             control/resumed/events/*.json
             control/resumed/resume-receipts/*.json
             control/resumed/checkpoints/
+            control/attempt/*.json
+            control/attempt-download/*.json
+            control/identity-only-preflight/*.json
+            control/identity-only-preflight/*.log
             control/second/*.json
             control/second/*.log
             control/second/*/*.json

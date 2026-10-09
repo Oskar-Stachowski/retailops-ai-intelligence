@@ -11,6 +11,7 @@ import zipfile
 from pathlib import Path
 
 import pytest
+import yaml
 
 from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.evaluation_campaign import preparation_attempt as attempt
@@ -21,6 +22,7 @@ from retailops_ai.evaluation_campaign import preparation_witness as native
 from scripts import ai09_attempt_transport as attempt_transport
 from scripts import ai09_checkpoint_transport as transport
 from scripts import check_ai09_checkpoint_control as control
+from scripts import check_ai09_cross_run_resume as cross
 
 
 def measurement(phase="generation", seconds=1.0):
@@ -34,8 +36,8 @@ def measurement(phase="generation", seconds=1.0):
     }
 
 
-def fixture_prefix(tmp_path, *, phases=2):
-    plan = {
+def fixture_prefix(tmp_path, *, phases=2, plan=None):
+    plan = plan or {
         "controlled_test_only": True,
         "budgets": {
             "tree_rss_bytes": 1024**3,
@@ -129,8 +131,8 @@ def zip_bundle(bundle, archive, *, extra=None):
     return hashlib.sha256(archive.read_bytes()).hexdigest()
 
 
-def restored_prefix(tmp_path, *, phases=2):
-    original, identity = fixture_prefix(tmp_path, phases=phases)
+def restored_prefix(tmp_path, *, phases=2, plan=None):
+    original, identity = fixture_prefix(tmp_path, phases=phases, plan=plan)
     bundle = tmp_path / "bundle"
     manifest = transport.bundle_prefix(original, bundle)
     archive = tmp_path / "download.zip"
@@ -249,6 +251,135 @@ def failed_history(original, previous, identity, *, outcome="native_failed"):
         },
     }
     return attempt.bind_history(previous, captured=captured, authenticated_remote=remote)
+
+
+@pytest.mark.parametrize(
+    "mode,outcome",
+    [("failed_process", "native_failed"), ("controller_interruption", "interrupted_native")],
+)
+def test_cross_run_admission_accepts_only_explicit_controlled_failure_with_room_for_retrieval(
+    tmp_path, mode, outcome
+):
+    original, identity, previous, _, _, _ = restored_prefix(tmp_path, plan=control.control_plan())
+    history = failed_history(original, previous, identity, outcome=outcome)
+    events = execution.inspect(previous)["events"]
+    history["snapshot"].update(
+        control_failure_intent=cross.intent(mode, events),
+        control_native_completion={"native_export_returned": True},
+    )
+    if mode == "failed_process":
+        history["snapshot"]["events"][-1]["measurement"]["exit_code"] = 23
+    history["remote"]["job"]["steps"] = [
+        {"name": name, "conclusion": conclusion}
+        for name, conclusion in [
+            (cross.INJECTION_STEP, "failure"),
+            (cross.FINALIZE_STEP, "success"),
+            (cross.ATTEMPT_UPLOAD_STEP, "success"),
+        ]
+    ]
+    history["remote"]["snapshot_sha256"] = canonical_sha256(history["snapshot"])
+    settled = cross.admit_history(previous, history, {"previous_run_id": 17})
+    assert settled["reserved_unknown_wall_seconds"] == (
+        22 if outcome.startswith("interrupted") else 0
+    )
+    for damage in [
+        "wrong_intent",
+        "native_not_completed",
+        "foreign_run",
+        "budget",
+        "failed_publication",
+        "additional_failure",
+        "missing_injection",
+    ]:
+        changed = copy.deepcopy(history)
+        request = {"previous_run_id": 17}
+        if damage == "wrong_intent":
+            changed["snapshot"]["control_failure_intent"]["mode"] = "real_unreviewed_failure"
+        elif damage == "native_not_completed":
+            changed["snapshot"]["control_native_completion"]["native_export_returned"] = False
+        elif damage == "foreign_run":
+            request["previous_run_id"] = 99
+        elif damage == "failed_publication":
+            changed["remote"]["job"]["steps"][-1]["conclusion"] = "failure"
+        elif damage == "additional_failure":
+            changed["remote"]["job"]["steps"].append({"name": "other", "conclusion": "failure"})
+        elif damage == "missing_injection":
+            changed["remote"]["job"]["steps"].pop(0)
+        elif outcome.startswith("interrupted"):
+            changed["remote"]["job"]["completed_at"] = "2026-10-09T00:10:00Z"
+        else:
+            changed["snapshot"]["events"][-1]["charged_wall_seconds"] = 599
+        changed["remote"]["snapshot_sha256"] = canonical_sha256(changed["snapshot"])
+        with pytest.raises(ValueError):
+            cross.admit_history(previous, changed, request)
+
+
+@pytest.mark.parametrize("damage", ["missing", "zero", "bool", "same_run", "extra"])
+def test_cross_run_bad_request_is_rejected_before_identity_inspection(
+    tmp_path, monkeypatch, damage
+):
+    monkeypatch.setenv("GITHUB_RUN_ID", "100")
+    request = {key: number for number, key in enumerate(sorted(cross.REQUEST_KEYS), start=1)}
+    if damage == "missing":
+        request.pop("attempt_artifact_id")
+    elif damage == "zero":
+        request["prefix_artifact_id"] = 0
+    elif damage == "bool":
+        request["previous_job_id"] = True
+    elif damage == "same_run":
+        request["previous_run_id"] = 100
+    else:
+        request["url"] = "https://invalid.example"
+    monkeypatch.setattr(
+        control.consumer(), "initialize", lambda *a, **kw: pytest.fail("Source access")
+    )
+    with pytest.raises(ValueError):
+        cross.recover(tmp_path / "source", tmp_path / "output", tmp_path / "python", request)
+    assert not (tmp_path / "output").exists()
+
+
+@pytest.mark.parametrize("unsafe", ["relative", "dotdot", "symlink"])
+def test_cross_run_paths_cannot_escape_the_owned_runner_output(tmp_path, unsafe):
+    source, output = tmp_path / "source", tmp_path / "control"
+    if unsafe == "relative":
+        output = Path("relative")
+    elif unsafe == "dotdot":
+        output = tmp_path / "nested/../control"
+    else:
+        output.symlink_to(tmp_path)
+    with pytest.raises(ValueError):
+        cross.validate_paths(source, output)
+
+
+def test_cross_run_workflow_preserves_a_failed_job_and_uploads_its_final_history_after_stopping():
+    workflow = yaml.safe_load(
+        (
+            Path(__file__).resolve().parents[1] / ".github/workflows/ai09-generation-control.yml"
+        ).read_text()
+    )
+    inputs = workflow[True]["workflow_dispatch"]["inputs"]
+    assert {"checkpoint_failure", "checkpoint_interruption", "checkpoint_recovery"} <= set(
+        inputs["mode"]["options"]
+    )
+    assert cross.REQUEST_KEYS <= set(inputs)
+    steps = workflow["jobs"]["control"]["steps"]
+    injected = next(i for i, s in enumerate(steps) if "--operation inject" in s.get("run", ""))
+    finalized = next(
+        i for i, s in enumerate(steps) if "--operation publish-attempt" in s.get("run", "")
+    )
+    uploaded = next(
+        i
+        for i, s in enumerate(steps)
+        if s.get("with", {}).get("path") == "control/attempt/attempt.json"
+    )
+    assert injected < finalized < uploaded
+    assert all(not s.get("continue-on-error") for s in steps)
+    assert "always()" in steps[finalized]["if"] and "always()" in steps[uploaded]["if"]
+    assert "github.run_attempt" in steps[uploaded]["with"]["name"]
+    assert steps[uploaded]["with"]["overwrite"] is False
+    recovery = next(s for s in steps if "--operation recover" in s.get("run", ""))
+    assert recovery["if"] == "inputs.mode == 'checkpoint_recovery'"
+    assert all("inputs." not in line for line in recovery["run"].splitlines())
 
 
 @pytest.mark.parametrize("phases", [1, 2, 3, 4])

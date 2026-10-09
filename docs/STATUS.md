@@ -1,5 +1,16 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: przygotowana kontrola odzyskania pracy w nowym runnerze.**
+[09.81](evidence/09-81-cross-run-recovery-control-preparation.json) obejmuje
+dwie celowe awarie po rzeczywistym eksporcie: błąd procesu oraz przerwanie
+kontrolera przed końcowym wpisem kosztu. Pierwszy job ma pozostać nieudany,
+a jego końcowy zapis jest wysyłany dopiero po zatrzymaniu pracy. Nowy job
+niezależnie odtwarza tożsamość środowiska, sprawdza dokładne identyfikatory
+runu/joba/artefaktów i może wznowić tylko te celowo wprowadzone błędy.
+294 kontrole przeszły; rzeczywisty wynik nowych trybów Actions jest jeszcze
+do odebrania. Pełny CI main `20aae22c` w runie `37942975115` trwa.
+Nie uruchomiono canonical ani kampanii Project. AI 09 nadal `not_ready`.
+
 **2026-10-09 — AI 09: rozliczenie awarii; pełny odbiór PR64.**
 [Komponent 09.80](evidence/09-80-terminal-attempt-settlement.json) zachowuje
 zapis i koszty nieudanej pracy podczas wznowienia checkpointu. Nieznany czas

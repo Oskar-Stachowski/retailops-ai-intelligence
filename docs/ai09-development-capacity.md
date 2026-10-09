@@ -168,6 +168,31 @@ publikacja snapshotu po zakończeniu pracy i rzeczywisty test między dwoma
 jobami pozostają otwarte. Całe pobranie i walidacja muszą być objęte nadzorem
 zasobów w kontrolerze wznowienia. Nie jest to jeszcze odbiór tej ścieżki Actions.
 
+[Przygotowanie kontroli 09.81](evidence/09-81-cross-run-recovery-control-preparation.json)
+wiąże ten komponent z osobnymi przebiegami Actions. Tryby `checkpoint_failure`
+i `checkpoint_interruption` wykonują mały natywny eksport po zapisaniu prefiksu
+generacja→kwalifikacja. Pierwszy kończy proces kodem 23 po eksporcie; drugi
+kończy kontroler kodem 24 po odebraniu zakończonego dziecka, przed końcowym
+wpisem kosztu. Nie pozostawia działającego osieroconego procesu.
+Job pozostaje nieudany. Osobny krok `always()` publikuje pełny `attempt.json`,
+zachowując też wcześniejszy raport prefiksu i odrębny raport końcowy.
+
+Tryb `checkpoint_recovery` wymaga jawnych identyfikatorów poprzedniego runu,
+joba, prefiksu i końcowej próby oraz tego samego niezmiennego commitu.
+Zanim pobierze dane, niezależnie wyznacza aktualną tożsamość runtime.
+Pobranie obu artefaktów ma osobny nadzór i limit 60 s; prefiks kontrolny
+musi zachować co najmniej 300 s swojego 600-sekundowego budżetu.
+Po rozliczeniu historii i pobrania pozostały budżet ogranicza odtworzenie
+oraz rzeczywiste eksport/import/curation. Generacja nie jest uruchamiana
+w jobie odzyskania. Sprawdzane są też kroki GitHub: tylko celowa iniekcja
+może zakończyć się błędem, a finalizacja i upload historii muszą się udać.
+To jawna kontrola małego profilu, nie automatyczna zgoda na ponawianie awarii
+canonical. 294 kontrole komponentów przeszły; rzeczywisty odbiór obu par
+jobów pozostaje wymagany przed uznaniem tej ścieżki za sprawdzoną.
+Po odzyskaniu pracy job pozostawia istniejące 130-sekundowe okno obserwacji
+logów. Jest ono oznaczone jako bezczynne oczekiwanie, osobno od pracy Source
+i budżetu przygotowania; sam końcowy zapis heartbeat nie zastępuje obserwacji UI.
+
 **1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
 `dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
 Pozostały odbiór chronionych head/main konsumenta, powiązanie dowodu live
