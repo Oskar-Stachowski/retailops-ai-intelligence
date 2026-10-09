@@ -140,6 +140,34 @@ oraz odmowę przy zmianie, braku i symlinku archiwum. Wynik Actions odebrano
 i sprawdzono; rozliczenie nieudanych prób oraz wznowienie pomiędzy
 oddzielnymi przebiegami Actions pozostają otwarte.
 
+[Komponent rozliczenia prób 09.80](evidence/09-80-terminal-attempt-settlement.json)
+dodaje do wznowienia pełny końcowy zapis nieudanej lub przerwanej próby.
+Zachowuje wcześniejsze rekordy, identyczne wejścia i koszty oraz cały zapis
+pracy po ostatnim ukończonym checkpointcie. Znany koszt porażki jest doliczany
+przed nową pracą. Dla niedokończonej operacji rezerwuje dodatkowo czas całego
+zakończonego joba GitHub z dwusekundowym marginesem rozdzielczości timestampów.
+To celowo ostrożna rezerwa; nie zastępuje jej fikcyjnym pomiarem ani zerem.
+Pola `unmeasured_wall_cost_present`, `reserved_unknown_wall_seconds` oraz
+`unsettled_wall_cost_present` rozróżniają nieznany pomiar i rozliczony budżet.
+Nieznane CPU i rezerwa przetrwają kolejne wznowienia. Wyczerpany budżet blokuje
+publikację sesji, a brak pełnego zapisu końcowej próby blokuje jej wznowienie.
+
+Czytnik używa stałych endpointów GitHub dla wskazanego runu i joba oraz
+wcześniejszego transportu artefaktów AI04. Sprawdza końcowy status, nazwę joba,
+workflow, repozytorium, commit i najnowszy numer próby. Nazwa i hash artefaktu
+wiążą końcowy zapis z tą próbą; run jest ponownie sprawdzany po pobraniu.
+Checkpoint z innego runu nie może być wznowiony bez końcowej historii;
+identyfikator runu w tej historii musi odpowiadać pobranemu checkpointowi.
+Sam dostarczony JSON z hashem nie stanowi upoważnienia: dowód musi pochodzić
+z tego czytnika i uwierzytelnionego serwera GitHub. Funkcja nie dispatchuje
+ani nie ponawia jobów. 283 kontroli obejmuje wszystkie cztery granice
+prefiksu, błędy natywnego procesu i archiwizacji, przerwania, późniejsze
+wznowienie oraz odrzucenie zmienionej lub niepełnej historii.
+API w tych kontrolach jest zastąpione kontrolowanymi odpowiedziami;
+publikacja snapshotu po zakończeniu pracy i rzeczywisty test między dwoma
+jobami pozostają otwarte. Całe pobranie i walidacja muszą być objęte nadzorem
+zasobów w kontrolerze wznowienia. Nie jest to jeszcze odbiór tej ścieżki Actions.
+
 **1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
 `dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
 Pozostały odbiór chronionych head/main konsumenta, powiązanie dowodu live

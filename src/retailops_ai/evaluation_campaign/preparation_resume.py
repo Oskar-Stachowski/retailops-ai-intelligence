@@ -1,8 +1,8 @@
 """Resume a verified, deliberately stopped prefix without resetting measured cost.
 
-Only fully measured successful prefixes are accepted here. Failed/interrupted
-remote attempts need a separate complete attempt-history settlement; they cannot
-be silently replaced by a previously uploaded successful prefix.
+Successful prefixes need complete terminal-attempt history when subsequent work
+failed or was interrupted. That history and its charges survive every later
+resume; an older successful artifact cannot replace them.
 """
 
 from __future__ import annotations
@@ -183,6 +183,7 @@ def resume_prefix(
     transport_measurement: dict[str, Any],
     restore_measurement: dict[str, Any],
     retained_archives: dict[str, Any],
+    attempt_history: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Caller supplies independently trusted transport proof and guarded restore result."""
     state = execution.inspect(previous)
@@ -190,8 +191,7 @@ def resume_prefix(
     if (
         state["identity"] != identity
         or state["status"] != "prepared"
-        or state["unmeasured_wall_cost_present"]
-        or state["unmeasured_cpu_cost_present"]
+        or state["unsettled_wall_cost_present"]
         or not 1 <= count < len(checkpoints.PHASES)
         or len(state["events"]) != 4 * count
         or canonical_sha256(state["events"]) != expected_event_sha256
@@ -200,11 +200,28 @@ def resume_prefix(
         or transport_receipt.get("event_sha256") != expected_event_sha256
         or transport_receipt.get("identity_sha256") != canonical_sha256(identity)
         or transport_receipt.get("deliberate_prefix_stop") is not True
+        or transport_receipt.get("terminal_attempt_history_required") is not False
+        and attempt_history is None
     ):
         raise ValueError("preparation_resume_untrusted_incomplete_or_failed_history")
     transport_wall, transport_cpu = measured_cost(transport_measurement)
     restore_wall, restore_cpu = measured_cost(restore_measurement)
-    if transport_wall + restore_wall >= state["remaining_wall_seconds"]:
+    history_wall, history_cpu = 0.0, 0.0
+    if attempt_history is not None:
+        from retailops_ai.evaluation_campaign.preparation_attempt import validate_history
+
+        settled = validate_history(
+            attempt_history,
+            identity=identity,
+            plan=state["plan"],
+            events=state["events"],
+            charged_wall_seconds=state["charged_wall_seconds"],
+            prior_adjustments=state["cost_adjustments"],
+            source_run_id=transport_receipt.get("run_id"),
+        )
+        history_wall = settled["charged_wall_seconds"]
+        history_cpu = settled["worker_cpu_seconds_lower_bound"]
+    if history_wall + transport_wall + restore_wall >= state["remaining_wall_seconds"]:
         raise ValueError("preparation_resume_budget_exhausted")
     if not output.is_absolute() or output.exists() or ".." in output.parts:
         raise ValueError("preparation_resume_fresh_absolute_output_required")
@@ -230,11 +247,13 @@ def resume_prefix(
         "project_journal_initialized": False,
         "final_test_authorized": False,
     }
+    if attempt_history is not None:
+        receipt["attempt_history"] = attempt_history
     adjustment: dict[str, Any] = {
         "kind": "verified_checkpoint_resume",
         "before_event_count": len(state["events"]),
-        "wall_seconds": transport_wall + restore_wall,
-        "worker_cpu_seconds_lower_bound": transport_cpu + restore_cpu,
+        "wall_seconds": history_wall + (transport_wall + restore_wall),
+        "worker_cpu_seconds_lower_bound": history_cpu + (transport_cpu + restore_cpu),
         "receipt_sha256": canonical_sha256(receipt),
     }
     with tempfile.TemporaryDirectory(prefix=".resumed-session-", dir=output.parent) as temporary:

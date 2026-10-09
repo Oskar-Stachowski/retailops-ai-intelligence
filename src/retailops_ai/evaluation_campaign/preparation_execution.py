@@ -120,6 +120,57 @@ def initialize(
     fsync_tree(root)
 
 
+def validate_event(
+    event: dict[str, Any],
+    *,
+    index: int,
+    previous: str | None,
+    charged: float,
+    budget: float,
+    failed: bool,
+) -> tuple[float, float | None, bool]:
+    """Validate one immutable record, including records retained from a failed attempt."""
+    operation = index // 2
+    if (
+        failed
+        or not 0 <= index < MAX_EVENTS
+        or event.get("sequence") != index
+        or type(event.get("sequence")) is not int
+        or event.get("previous_sha256") != previous
+        or event.get("phase") != PHASES[operation // 2]
+        or event.get("kind") != KINDS[operation % 2]
+        or event.get("event") != ("started" if index % 2 == 0 else "finished")
+    ):
+        raise ValueError("preparation_execution_event_chain")
+    if not index % 2:
+        if event.get("remaining_wall_seconds") != max(0, budget - charged):
+            raise ValueError("preparation_execution_remaining_budget_changed")
+        return 0.0, 0.0, False
+    measurement = event.get("measurement", {})
+    cost = event.get("charged_wall_seconds")
+    if (
+        not _nonnegative(cost)
+        or not _nonnegative(measurement.get("wall_seconds"))
+        or cost < measurement["wall_seconds"]
+        or measurement.get("status") not in {"passed", "failed"}
+        or measurement.get("phase") != event["phase"]
+    ):
+        raise ValueError("preparation_execution_invalid_measured_cost")
+    if measurement["status"] == "passed" and (
+        measurement.get("reason") is not None
+        or type(measurement.get("exit_code")) is not int
+        or measurement["exit_code"] != 0
+    ):
+        raise ValueError("preparation_execution_false_success")
+    cpu = measurement.get("sampled_worker_cpu_seconds")
+    if cpu is None:
+        if measurement["status"] == "passed":
+            raise ValueError("preparation_execution_success_without_measured_cpu")
+    elif not _nonnegative(cpu):
+        raise ValueError("preparation_execution_invalid_measured_cpu")
+    return float(cost), None if cpu is None else float(cpu), measurement["status"] == "failed"
+
+
 def inspect(root: Path) -> dict[str, Any]:
     """Read the complete immutable event chain; incomplete cost is explicitly unknown."""
     root = checked_directory(root)
@@ -143,6 +194,7 @@ def inspect(root: Path) -> dict[str, Any]:
     charged = 0.0
     measured_cpu = 0.0
     unknown_cpu = False
+    reserved_unknown_wall = 0.0
     failed = False
     adjustments = header.get("cost_adjustments", [])
     if not isinstance(adjustments, list) or len(adjustments) > 16:
@@ -168,8 +220,8 @@ def inspect(root: Path) -> dict[str, Any]:
         last_boundary = boundary
 
     def add_resume_cost(boundary: int) -> None:
-        nonlocal charged, measured_cpu
-        for adjustment in adjustments:
+        nonlocal charged, measured_cpu, unknown_cpu, reserved_unknown_wall
+        for adjustment_index, adjustment in enumerate(adjustments):
             if adjustment["before_event_count"] == boundary:
                 receipt = read_json(
                     root, "resume-receipts/" + adjustment["receipt_sha256"] + ".json"
@@ -178,6 +230,25 @@ def inspect(root: Path) -> dict[str, Any]:
                     receipt.get("transport_measurement", {}),
                     receipt.get("restore_measurement", {}),
                 ]
+                history_wall, history_cpu = 0.0, 0.0
+                if "attempt_history" in receipt:
+                    from retailops_ai.evaluation_campaign.preparation_attempt import (
+                        validate_history,
+                    )
+
+                    settled = validate_history(
+                        receipt["attempt_history"],
+                        identity=identity,
+                        plan=plan,
+                        events=events,
+                        charged_wall_seconds=charged,
+                        prior_adjustments=adjustments[:adjustment_index],
+                        source_run_id=receipt.get("transport_receipt", {}).get("run_id"),
+                    )
+                    history_wall = settled["charged_wall_seconds"]
+                    history_cpu = settled["worker_cpu_seconds_lower_bound"]
+                    unknown_cpu |= settled["unmeasured_cpu_cost_present"]
+                    reserved_unknown_wall += settled["reserved_unknown_wall_seconds"]
                 if (
                     canonical_sha256(receipt) != adjustment["receipt_sha256"]
                     or receipt.get("version") != "ai09-verified-prefix-resume-1.0.0"
@@ -192,8 +263,9 @@ def inspect(root: Path) -> dict[str, Any]:
                         or not _nonnegative(m.get("sampled_worker_cpu_seconds"))
                         for m in measures
                     )
-                    or sum(m["wall_seconds"] for m in measures) != adjustment["wall_seconds"]
-                    or sum(m["sampled_worker_cpu_seconds"] for m in measures)
+                    or history_wall + sum(m["wall_seconds"] for m in measures)
+                    != adjustment["wall_seconds"]
+                    or history_cpu + sum(m["sampled_worker_cpu_seconds"] for m in measures)
                     != adjustment["worker_cpu_seconds_lower_bound"]
                 ):
                     raise ValueError("preparation_execution_resume_cost_receipt_mismatch")
@@ -206,49 +278,19 @@ def inspect(root: Path) -> dict[str, Any]:
         with regular_file(events_root, name) as stream:
             if stream.read() != canonical_bytes(event) + b"\n":
                 raise ValueError("preparation_execution_noncanonical_event")
-        operation = index // 2
-        if (
-            failed
-            or event.get("sequence") != index
-            or type(event.get("sequence")) is not int
-            or event.get("previous_sha256") != previous
-            or event.get("phase") != PHASES[operation // 2]
-            or event.get("kind") != KINDS[operation % 2]
-            or event.get("event") != ("started" if index % 2 == 0 else "finished")
-        ):
-            raise ValueError("preparation_execution_event_chain")
-        if index % 2:
-            measurement = event.get("measurement", {})
-            cost = event.get("charged_wall_seconds")
-            if (
-                not _nonnegative(cost)
-                or not _nonnegative(measurement.get("wall_seconds"))
-                or cost < measurement["wall_seconds"]
-                or measurement.get("status") not in {"passed", "failed"}
-                or measurement.get("phase") != event["phase"]
-            ):
-                raise ValueError("preparation_execution_invalid_measured_cost")
-            if measurement["status"] == "passed" and (
-                measurement.get("reason") is not None
-                or type(measurement.get("exit_code")) is not int
-                or measurement["exit_code"] != 0
-            ):
-                raise ValueError("preparation_execution_false_success")
-            cpu = measurement.get("sampled_worker_cpu_seconds")
-            if cpu is None:
-                unknown_cpu = True
-                if measurement["status"] == "passed":
-                    raise ValueError("preparation_execution_success_without_measured_cpu")
-            elif not _nonnegative(cpu):
-                raise ValueError("preparation_execution_invalid_measured_cpu")
-            else:
-                measured_cpu += cpu
-            charged += float(cost)
-            failed = measurement["status"] == "failed"
-        elif event.get("remaining_wall_seconds") != max(
-            0, plan["budgets"]["wall_seconds"] - charged
-        ):
-            raise ValueError("preparation_execution_remaining_budget_changed")
+        cost, cpu, failed = validate_event(
+            event,
+            index=index,
+            previous=previous,
+            charged=charged,
+            budget=plan["budgets"]["wall_seconds"],
+            failed=failed,
+        )
+        charged += cost
+        if cpu is None:
+            unknown_cpu = True
+        else:
+            measured_cpu += cpu
         previous = canonical_sha256(event)
         events.append(event)
     add_resume_cost(len(names))
@@ -258,7 +300,10 @@ def inspect(root: Path) -> dict[str, Any]:
         "charged_wall_seconds": charged,
         "worker_cpu_seconds_lower_bound": measured_cpu,
         "unmeasured_cpu_cost_present": incomplete or unknown_cpu,
-        "unmeasured_wall_cost_present": incomplete,
+        "unmeasured_wall_cost_present": incomplete or reserved_unknown_wall > 0,
+        "unsettled_wall_cost_present": incomplete,
+        "historical_unmeasured_wall_cost_present": reserved_unknown_wall > 0,
+        "reserved_unknown_wall_seconds": reserved_unknown_wall,
         "remaining_wall_seconds": None
         if incomplete
         else max(0, plan["budgets"]["wall_seconds"] - charged),

@@ -7,6 +7,7 @@ freeze contract and archive importer are unchanged.
 
 from __future__ import annotations
 
+import os
 import re
 import shutil
 import stat
@@ -271,6 +272,9 @@ def retrieve(
         "zip_sha256": digest,
         "artifact_metadata_sha256": canonical_sha256(metadata),
         "verified_github_artifact": True,
+        "terminal_attempt_history_required": not (
+            os.environ.get("GITHUB_RUN_ID") == str(run_id) and os.environ.get("GITHUB_SHA") == head
+        ),
         "deliberate_prefix_stop": manifest["deliberate_prefix_stop"],
         "event_sha256": manifest["event_sha256"],
         "identity_sha256": manifest["identity_sha256"],

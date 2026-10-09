@@ -2,7 +2,9 @@
 
 import copy
 import hashlib
+import io
 import json
+import shutil
 import stat
 import sys
 import zipfile
@@ -11,10 +13,12 @@ from pathlib import Path
 import pytest
 
 from retailops_ai.data_contracts.identity import canonical_sha256
+from retailops_ai.evaluation_campaign import preparation_attempt as attempt
 from retailops_ai.evaluation_campaign import preparation_checkpoint as checkpoints
 from retailops_ai.evaluation_campaign import preparation_execution as execution
 from retailops_ai.evaluation_campaign import preparation_resume as resume
 from retailops_ai.evaluation_campaign import preparation_witness as native
+from scripts import ai09_attempt_transport as attempt_transport
 from scripts import ai09_checkpoint_transport as transport
 from scripts import check_ai09_checkpoint_control as control
 
@@ -125,8 +129,8 @@ def zip_bundle(bundle, archive, *, extra=None):
     return hashlib.sha256(archive.read_bytes()).hexdigest()
 
 
-def restored_prefix(tmp_path):
-    original, identity = fixture_prefix(tmp_path)
+def restored_prefix(tmp_path, *, phases=2):
+    original, identity = fixture_prefix(tmp_path, phases=phases)
     bundle = tmp_path / "bundle"
     manifest = transport.bundle_prefix(original, bundle)
     archive = tmp_path / "download.zip"
@@ -136,18 +140,452 @@ def restored_prefix(tmp_path):
         archive, downloaded, expected_digest=digest, identity=identity, maximum=1024**2
     )
     bindings = []
-    for phase in checkpoints.PHASES[:2]:
+    for phase in checkpoints.PHASES[:phases]:
         binding = json.loads((downloaded / (phase + ".checkpoint.json")).read_bytes())
         bindings.append((downloaded / "checkpoints" / phase / binding["checkpoint_id"], binding))
     restored = checkpoints.restore_chain(bindings, tmp_path / "restored", identity=identity)
     receipt = {
         "verified_github_artifact": True,
+        "terminal_attempt_history_required": False,
+        "run_id": 17,
         "deliberate_prefix_stop": True,
         "event_sha256": manifest["event_sha256"],
         "identity_sha256": canonical_sha256(identity),
     }
     retained = resume.retain_prefix_archives(downloaded, tmp_path / "retained-checkpoints")
     return original, identity, downloaded, restored, receipt, retained
+
+
+def failed_history(original, previous, identity, *, outcome="native_failed"):
+    next_phase = checkpoints.PHASES[execution.inspect(previous)["completed_phases"]]
+
+    def operate(kind, failed=False, unknown=False):
+        measured = measurement(next_phase, seconds=2)
+        if failed:
+            measured.update(status="failed", reason="controlled_failure", exit_code=7)
+        if unknown:
+            measured["sampled_worker_cpu_seconds"] = None
+        execution.operate(
+            original,
+            phase=next_phase,
+            kind=kind,
+            command=[],
+            cwd=original,
+            env={},
+            roots=(original,),
+            monitor=lambda *a, **kw: measured,
+            accept=lambda m: None,
+        )
+
+    if outcome == "actual_process":
+        execution.operate(
+            original,
+            phase=next_phase,
+            kind="native",
+            command=[
+                sys.executable,
+                "-I",
+                "-c",
+                "import time; time.sleep(0.05); raise SystemExit(23)",
+            ],
+            cwd=original,
+            env={},
+            roots=(original,),
+            monitor=control.probe_module().monitor,
+            accept=lambda m: pytest.fail("failed process cannot be accepted"),
+        )
+    elif outcome in {"seal_failed", "interrupted_seal"}:
+        operate("native")
+    if outcome.startswith("interrupted"):
+        state = execution.inspect(original)
+        execution.write_once(
+            original / "events" / f"{len(state['events']):03d}.json",
+            {
+                "sequence": len(state["events"]),
+                "event": "started",
+                "previous_sha256": canonical_sha256(state["events"][-1]),
+                "phase": next_phase,
+                "kind": "seal" if outcome.endswith("seal") else "native",
+                "remaining_wall_seconds": state["remaining_wall_seconds"],
+                "at_utc": "controlled_interruption_boundary",
+            },
+        )
+    elif outcome != "actual_process":
+        operate("seal" if outcome == "seal_failed" else "native", True, outcome == "unknown_cpu")
+    captured = attempt.snapshot(original)
+    head = identity["consumer_commit"]
+    remote = {
+        "authenticated_github_download": True,
+        "snapshot_sha256": canonical_sha256(captured),
+        "downloaded_zip_sha256": "d" * 64,
+        "run": {
+            "id": 17,
+            "run_attempt": 1,
+            "repository": {"full_name": attempt.REPOSITORY},
+            "head_sha": head,
+            "status": "completed",
+            "conclusion": "failure",
+            "event": "workflow_dispatch",
+            "path": ".github/workflows/ai09-generation-control.yml",
+        },
+        "job": {
+            "id": 23,
+            "name": "control",
+            "run_id": 17,
+            "run_attempt": 1,
+            "head_sha": head,
+            "status": "completed",
+            "conclusion": "failure",
+            "started_at": "2026-10-09T00:00:00Z",
+            "completed_at": "2026-10-09T00:00:20Z",
+        },
+        "artifact": {
+            "id": 31,
+            "workflow_run": {"id": 17, "head_sha": head},
+            "name": f"ai09-preparation-attempt-{head}-17-1",
+            "expired": False,
+            "digest": "sha256:" + "d" * 64,
+            "created_at": "2026-10-09T00:00:19Z",
+        },
+    }
+    return attempt.bind_history(previous, captured=captured, authenticated_remote=remote)
+
+
+@pytest.mark.parametrize("phases", [1, 2, 3, 4])
+@pytest.mark.parametrize(
+    "outcome",
+    [
+        "native_failed",
+        "seal_failed",
+        "interrupted_native",
+        "interrupted_seal",
+        "unknown_cpu",
+        "actual_process",
+    ],
+)
+def test_resume_preserves_failed_work_and_reserves_interruption_without_inventing_cpu(
+    tmp_path, outcome, phases
+):
+    original, identity, previous, restored, receipt, retained = restored_prefix(
+        tmp_path, phases=phases
+    )
+    before = execution.inspect(previous)
+    history = failed_history(original, previous, identity, outcome=outcome)
+    failed = execution.inspect(original)
+    if outcome == "actual_process":
+        assert failed["events"][-1]["measurement"]["exit_code"] == 23
+        assert failed["events"][-1]["charged_wall_seconds"] > 0.05
+    original_bytes = {p.name: p.read_bytes() for p in (original / "events").glob("*.json")}
+    output = tmp_path / "resumed-after-failure"
+    resume.resume_prefix(
+        previous,
+        output,
+        identity=identity,
+        expected_event_sha256=receipt["event_sha256"],
+        restored=restored,
+        transport_receipt=receipt,
+        transport_measurement=measurement(seconds=2),
+        restore_measurement=measurement(seconds=3),
+        retained_archives=retained,
+        attempt_history=history,
+    )
+    state = execution.inspect(output)
+    reserve = 22 if outcome.startswith("interrupted") else 0
+    known = sum(
+        e["charged_wall_seconds"]
+        for e in failed["events"][len(before["events"]) :]
+        if e["event"] == "finished"
+    )
+    assert state["charged_wall_seconds"] == pytest.approx(
+        before["charged_wall_seconds"] + known + reserve + 5
+    )
+    assert state["remaining_wall_seconds"] == pytest.approx(100 - state["charged_wall_seconds"])
+    assert state["reserved_unknown_wall_seconds"] == reserve
+    assert state["historical_unmeasured_wall_cost_present"] == bool(reserve)
+    assert state["unmeasured_wall_cost_present"] == bool(reserve)
+    assert state["unsettled_wall_cost_present"] is False
+    assert state["unmeasured_cpu_cost_present"] == (bool(reserve) or outcome == "unknown_cpu")
+    assert state["worker_cpu_seconds_lower_bound"] == pytest.approx(
+        failed["worker_cpu_seconds_lower_bound"] + 0.2
+    )
+    assert state["events"] == before["events"]
+    assert original_bytes == {p.name: p.read_bytes() for p in (original / "events").glob("*.json")}
+    saved = json.loads(next((output / "resume-receipts").glob("*.json")).read_bytes())
+    assert saved["attempt_history"]["snapshot"]["events"] == failed["events"]
+    # A later deliberate pause must not lose the failure or turn unknown CPU into zero.
+    manifest = transport.bundle_prefix(output, tmp_path / "after-failure-bundle")
+    again = tmp_path / "resumed-again"
+    resume.resume_prefix(
+        output,
+        again,
+        identity=identity,
+        expected_event_sha256=manifest["event_sha256"],
+        restored=restored,
+        transport_receipt={**receipt, "event_sha256": manifest["event_sha256"]},
+        transport_measurement=measurement(seconds=1),
+        restore_measurement=measurement(seconds=1),
+        retained_archives=resume.retain_prefix_archives(output, tmp_path / "second-retained"),
+    )
+    after = execution.inspect(again)
+    assert after["charged_wall_seconds"] == state["charged_wall_seconds"] + 2
+    assert after["reserved_unknown_wall_seconds"] == reserve
+    assert after["unmeasured_cpu_cost_present"] == state["unmeasured_cpu_cost_present"]
+    assert len(after["cost_adjustments"]) == 2
+    assert len(list((again / "resume-receipts").glob("*.json"))) == 2
+
+
+@pytest.mark.parametrize(
+    "damage",
+    [
+        "running",
+        "successful",
+        "old_job_attempt",
+        "other_repository",
+        "other_head",
+        "old_artifact",
+        "wrong_name",
+        "expired",
+        "digest",
+        "snapshot_digest",
+        "missing_suffix",
+        "rewritten_prefix",
+        "forgotten_adjustment",
+        "budget",
+        "untrusted",
+        "wrong_job",
+        "non_dispatch",
+        "remaining_budget_reset",
+        "lost_native_finish",
+        "foreign_prefix_run",
+    ],
+)
+def test_failed_history_admission_rejects_old_partial_or_unbound_evidence(tmp_path, damage):
+    original, identity, previous, restored, receipt, retained = restored_prefix(tmp_path)
+    history = failed_history(original, previous, identity, outcome="interrupted_seal")
+    remote, captured = history["remote"], history["snapshot"]
+    if damage == "running":
+        remote["run"]["status"] = "in_progress"
+    elif damage == "successful":
+        remote["job"]["conclusion"] = "success"
+    elif damage == "old_job_attempt":
+        remote["run"]["run_attempt"] = 2
+    elif damage == "other_repository":
+        remote["run"]["repository"]["full_name"] = "other/repo"
+    elif damage == "other_head":
+        remote["job"]["head_sha"] = "c" * 40
+    elif damage == "old_artifact":
+        remote["artifact"]["created_at"] = "2026-10-08T23:59:59Z"
+    elif damage == "wrong_name":
+        remote["artifact"]["name"] += "-older-prefix"
+    elif damage == "expired":
+        remote["artifact"]["expired"] = True
+    elif damage == "digest":
+        remote["artifact"]["digest"] = "sha256:" + "c" * 64
+    elif damage == "snapshot_digest":
+        remote["snapshot_sha256"] = "c" * 64
+    elif damage == "missing_suffix":
+        captured["events"] = captured["events"][:8]
+    elif damage == "rewritten_prefix":
+        captured["events"][0]["at_utc"] = "changed"
+    elif damage == "forgotten_adjustment":
+        captured["execution"]["cost_adjustments"] = [{"lost": True}]
+    elif damage == "budget":
+        remote["job"]["completed_at"] = "2026-10-09T00:10:00Z"
+    elif damage == "wrong_job":
+        remote["job"]["name"] = "other_failed_job"
+    elif damage == "non_dispatch":
+        remote["run"]["event"] = "pull_request"
+    elif damage == "remaining_budget_reset":
+        captured["events"][-1]["remaining_wall_seconds"] = 100
+        remote["snapshot_sha256"] = canonical_sha256(captured)
+    elif damage == "lost_native_finish":
+        del captured["events"][-2]
+        remote["snapshot_sha256"] = canonical_sha256(captured)
+    elif damage == "foreign_prefix_run":
+        receipt["run_id"] = 99
+    else:
+        remote["authenticated_github_download"] = False
+    with pytest.raises(ValueError):
+        resume.resume_prefix(
+            previous,
+            tmp_path / "rejected",
+            identity=identity,
+            expected_event_sha256=receipt["event_sha256"],
+            restored=restored,
+            transport_receipt=receipt,
+            transport_measurement=measurement(),
+            restore_measurement=measurement(),
+            retained_archives=retained,
+            attempt_history=history,
+        )
+    assert not (tmp_path / "rejected").exists()
+    assert Path(retained["directory"]).is_dir()
+    assert execution.inspect(original)["status"] == "unfinished"
+
+
+@pytest.mark.parametrize(
+    "damage", [None, "live_run", "rerun_during_download", "extra_member", "link", "size"]
+)
+def test_terminal_attempt_transport_binds_actual_archive_and_latest_run(
+    tmp_path, monkeypatch, damage
+):
+    import download_forecast_cohort_checkpoint as legacy
+
+    original, identity, previous, _, _, _ = restored_prefix(tmp_path)
+    history = failed_history(original, previous, identity)
+    remote = copy.deepcopy(history["remote"])
+    archive = tmp_path / "terminal.zip"
+    with zipfile.ZipFile(archive, "x") as zipped:
+        info = zipfile.ZipInfo("attempt.json")
+        if damage == "link":
+            info.external_attr = (stat.S_IFLNK | 0o777) << 16
+        zipped.writestr(info, json.dumps(history["snapshot"]))
+        if damage == "extra_member":
+            zipped.writestr("unaccounted.json", "{}")
+    metadata = remote["artifact"]
+    metadata.update(
+        url=legacy.API + "31",
+        archive_download_url=legacy.API + "31/zip",
+        size_in_bytes=archive.stat().st_size,
+        digest="sha256:" + hashlib.sha256(archive.read_bytes()).hexdigest(),
+    )
+    if damage == "size":
+        metadata["size_in_bytes"] += 1
+    requests, transfers = [], []
+
+    def metadata_read(kind, identifier, token):
+        requests.append((kind, identifier))
+        answer = copy.deepcopy(remote["run" if kind == "runs" else "job"])
+        if kind == "runs" and damage == "live_run":
+            answer["status"] = "in_progress"
+        if kind == "runs" and damage == "rerun_during_download" and len(requests) > 2:
+            answer["run_attempt"] = 2
+        return answer
+
+    def download(identifier, target, digest, maximum, token):
+        transfers.append(identifier)
+        assert hashlib.sha256(archive.read_bytes()).hexdigest() == digest
+        assert archive.stat().st_size <= maximum
+        shutil.copyfile(archive, target)
+
+    monkeypatch.setattr(attempt_transport, "github_metadata", metadata_read)
+    monkeypatch.setattr(legacy, "artifact_metadata", lambda identifier, token: metadata)
+    monkeypatch.setattr(legacy, "_download_zip", download)
+    output = tmp_path / "retrieved-attempt"
+
+    def call():
+        return attempt_transport.retrieve_history(
+            previous,
+            output,
+            artifact_id=31,
+            run_id=17,
+            job_id=23,
+            identity=identity,
+            token=None,
+        )
+
+    if damage:
+        with pytest.raises(ValueError):
+            call()
+        assert not (output / "verified-history.json").exists()
+        if damage == "live_run":
+            assert not transfers
+    else:
+        result = call()
+        assert result["snapshot"] == history["snapshot"]
+        assert result["remote"]["downloaded_zip_sha256"] == metadata["digest"][7:]
+        assert requests == [("runs", 17), ("jobs", 23), ("runs", 17)]
+        assert json.loads((output / "verified-history.json").read_bytes()) == result
+        assert (output / "artifact.zip").read_bytes() == archive.read_bytes()
+        assert stat.S_IMODE((output / "artifact.zip").stat().st_mode) == 0o600
+
+
+@pytest.mark.parametrize("context", ["same_live_run", "other_run", "other_head"])
+def test_prefix_retrieval_requires_terminal_history_outside_its_current_run(
+    tmp_path, monkeypatch, context
+):
+    import download_forecast_cohort_checkpoint as legacy
+
+    original, identity = fixture_prefix(tmp_path)
+    bundle = tmp_path / "portable"
+    transport.bundle_prefix(original, bundle)
+    archive = tmp_path / "prefix.zip"
+    digest = zip_bundle(bundle, archive)
+    head = identity["consumer_commit"]
+    metadata = {
+        "id": 31,
+        "name": "selected-prefix",
+        "url": legacy.API + "31",
+        "archive_download_url": legacy.API + "31/zip",
+        "workflow_run": {"id": 17, "head_sha": head},
+        "expired": False,
+        "digest": "sha256:" + digest,
+        "size_in_bytes": archive.stat().st_size,
+    }
+    monkeypatch.setenv("GITHUB_RUN_ID", "18" if context == "other_run" else "17")
+    monkeypatch.setenv("GITHUB_SHA", "c" * 40 if context == "other_head" else head)
+    monkeypatch.setattr(legacy, "artifact_metadata", lambda identifier, token: metadata)
+    monkeypatch.setattr(
+        legacy, "_download_zip", lambda identifier, target, *a: shutil.copyfile(archive, target)
+    )
+    receipt = transport.retrieve(
+        artifact_id=31,
+        run_id=17,
+        head=head,
+        name="selected-prefix",
+        identity=identity,
+        output=tmp_path / "retrieved-prefix",
+        token=None,
+        maximum=1024**2,
+    )
+    assert receipt["terminal_attempt_history_required"] == (context != "same_live_run")
+
+
+@pytest.mark.parametrize(
+    "kind,identifier", [("runs/17/../../other", 1), ("jobs", True), ("runs", -1)]
+)
+def test_terminal_metadata_rejects_routes_before_network(monkeypatch, kind, identifier):
+    monkeypatch.setattr(
+        attempt_transport.http.client, "HTTPSConnection", lambda *a, **kw: pytest.fail("network")
+    )
+    with pytest.raises(ValueError, match="metadata_route"):
+        attempt_transport.github_metadata(kind, identifier, None)
+
+
+@pytest.mark.parametrize("status", [200, 302])
+def test_terminal_metadata_credentials_go_only_to_fixed_api_and_never_redirect(monkeypatch, status):
+    calls = []
+
+    class Response(io.BytesIO):
+        pass
+
+    response = Response(b'{"id":17}')
+    response.status = status
+
+    class Connection:
+        def __init__(self, host, **kwargs):
+            calls.append(("host", host))
+
+        def request(self, method, target, headers):
+            calls.append((method, target, headers))
+
+        def getresponse(self):
+            return response
+
+        def close(self):
+            calls.append(("closed",))
+
+    monkeypatch.setattr(attempt_transport.http.client, "HTTPSConnection", Connection)
+    if status == 200:
+        assert attempt_transport.github_metadata("runs", 17, "test-only-not-a-secret") == {"id": 17}
+    else:
+        with pytest.raises(ValueError, match="metadata_http_302"):
+            attempt_transport.github_metadata("runs", 17, "test-only-not-a-secret")
+    assert calls[0] == ("host", "api.github.com")
+    assert calls[1][0:2] == ("GET", "/repos/" + attempt.REPOSITORY + "/actions/runs/17")
+    assert calls[1][2]["Authorization"] == "Bearer test-only-not-a-secret"
+    assert calls[-1] == ("closed",)
+    assert response.closed
 
 
 def test_downloaded_checkpoint_prefix_resumes_with_original_cost_plus_transport_and_restore(
@@ -200,7 +638,16 @@ def test_downloaded_checkpoint_prefix_resumes_with_original_cost_plus_transport_
 
 @pytest.mark.parametrize(
     "damage",
-    ["unknown_cpu", "failed", "budget", "identity", "history", "transport", "result_rewrite"],
+    [
+        "unknown_cpu",
+        "failed",
+        "budget",
+        "identity",
+        "history",
+        "transport",
+        "result_rewrite",
+        "missing_terminal_history",
+    ],
 )
 def test_resume_rejects_untrusted_history_unknown_cost_and_changed_results(tmp_path, damage):
     _, identity, downloaded, restored, receipt, retained = restored_prefix(tmp_path)
@@ -218,6 +665,8 @@ def test_resume_rejects_untrusted_history_unknown_cost_and_changed_results(tmp_p
         expected = "c" * 64
     elif damage == "transport":
         receipt["verified_github_artifact"] = False
+    elif damage == "missing_terminal_history":
+        receipt["terminal_attempt_history_required"] = True
     else:
         restored[0]["resumed_result"]["controlled_fixture_only"] = False
     with pytest.raises(ValueError):

@@ -1,5 +1,21 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: rozliczenie awarii; pełny odbiór PR64.**
+[Komponent 09.80](evidence/09-80-terminal-attempt-settlement.json) zachowuje
+zapis i koszty nieudanej pracy podczas wznowienia checkpointu. Nieznany czas
+po przerwaniu pozostaje niezmierzony; osobna ostrożna rezerwa na podstawie
+całego zakończonego joba pomniejsza budżet. Nieznane CPU pozostaje oznaczone
+także po kolejnym wznowieniu. 283 kontroli przeszło, w tym cztery rzeczywiste
+lokalne procesy kończące się błędem. Transport z GitHub sprawdzono na
+kontrolowanych odpowiedziach API; rzeczywista kontrola między dwoma
+przebiegami Actions i publikacja końcowego zapisu awarii są nadal wymagane.
+PR64 na `0096663` zaliczył **17/17 jobs** w Required CI `37935771590`,
+włącznie z treningiem/reloadem TensorFlow i `required-result`.
+Scalono go chronioną ścieżką do `20aae22c`. Pełny CI wynikowego main
+pozostaje do odebrania. Dziewięć porażek canonical oraz wcześniejsze błędy
+CI są zachowane. Nowej diagnostyki ani kampanii nie uruchomiono;
+AI 09 pozostaje `not_ready`.
+
 **2026-10-09 — AI 09: dwa wznowienia z zachowaniem archiwów i kosztów.**
 [Dowód 09.79](evidence/09-79-actions-repeated-checkpoint-resume.json) potwierdza
 5/5 faz małego profilu na `8f63b56`, po dwóch rzeczywistych uploadach
