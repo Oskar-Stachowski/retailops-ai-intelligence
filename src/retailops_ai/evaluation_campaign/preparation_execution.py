@@ -82,7 +82,13 @@ def locked(root: Path) -> Iterator[None]:
         os.close(fd)
 
 
-def initialize(root: Path, *, plan: dict[str, Any], identity: dict[str, Any]) -> None:
+def initialize(
+    root: Path,
+    *,
+    plan: dict[str, Any],
+    identity: dict[str, Any],
+    cost_adjustments: list[dict[str, Any]] | None = None,
+) -> None:
     validate_identity(identity)
     if canonical_sha256(plan) != identity["plan_sha256"]:
         raise ValueError("preparation_execution_plan_identity")
@@ -106,6 +112,7 @@ def initialize(root: Path, *, plan: dict[str, Any], identity: dict[str, Any]) ->
             "identity_sha256": canonical_sha256(identity),
             "plan_sha256": canonical_sha256(plan),
             "created_at_utc": datetime.now(UTC).isoformat(),
+            "cost_adjustments": cost_adjustments or [],
             "project_journal_initialized": False,
             "final_test_authorized": False,
         },
@@ -137,7 +144,64 @@ def inspect(root: Path) -> dict[str, Any]:
     measured_cpu = 0.0
     unknown_cpu = False
     failed = False
+    adjustments = header.get("cost_adjustments", [])
+    if not isinstance(adjustments, list) or len(adjustments) > 16:
+        raise ValueError("preparation_execution_adjustment_budget")
+    last_boundary = 0
+    for adjustment in adjustments:
+        boundary = adjustment.get("before_event_count")
+        if (
+            type(boundary) is not int
+            or not 4 <= boundary <= min(len(names), MAX_EVENTS - 4)
+            or boundary % 4
+            or boundary < last_boundary
+            or adjustment.get("kind") != "verified_checkpoint_resume"
+            or not _nonnegative(adjustment.get("wall_seconds"))
+            or not _nonnegative(adjustment.get("worker_cpu_seconds_lower_bound"))
+            or not isinstance(adjustment.get("receipt_sha256"), str)
+            or len(adjustment["receipt_sha256"]) != 64
+            or any(
+                character not in "0123456789abcdef" for character in adjustment["receipt_sha256"]
+            )
+        ):
+            raise ValueError("preparation_execution_invalid_resume_cost")
+        last_boundary = boundary
+
+    def add_resume_cost(boundary: int) -> None:
+        nonlocal charged, measured_cpu
+        for adjustment in adjustments:
+            if adjustment["before_event_count"] == boundary:
+                receipt = read_json(
+                    root, "resume-receipts/" + adjustment["receipt_sha256"] + ".json"
+                )
+                measures = [
+                    receipt.get("transport_measurement", {}),
+                    receipt.get("restore_measurement", {}),
+                ]
+                if (
+                    canonical_sha256(receipt) != adjustment["receipt_sha256"]
+                    or receipt.get("version") != "ai09-verified-prefix-resume-1.0.0"
+                    or receipt.get("original_events_sha256") != canonical_sha256(events)
+                    or receipt.get("original_charged_wall_seconds") != charged
+                    or any(
+                        m.get("status") != "passed"
+                        or m.get("reason") is not None
+                        or type(m.get("exit_code")) is not int
+                        or m["exit_code"] != 0
+                        or not _nonnegative(m.get("wall_seconds"))
+                        or not _nonnegative(m.get("sampled_worker_cpu_seconds"))
+                        for m in measures
+                    )
+                    or sum(m["wall_seconds"] for m in measures) != adjustment["wall_seconds"]
+                    or sum(m["sampled_worker_cpu_seconds"] for m in measures)
+                    != adjustment["worker_cpu_seconds_lower_bound"]
+                ):
+                    raise ValueError("preparation_execution_resume_cost_receipt_mismatch")
+                charged += adjustment["wall_seconds"]
+                measured_cpu += adjustment["worker_cpu_seconds_lower_bound"]
+
     for index, name in enumerate(names):
+        add_resume_cost(index)
         event = read_json(events_root, name)
         with regular_file(events_root, name) as stream:
             if stream.read() != canonical_bytes(event) + b"\n":
@@ -187,6 +251,7 @@ def inspect(root: Path) -> dict[str, Any]:
             raise ValueError("preparation_execution_remaining_budget_changed")
         previous = canonical_sha256(event)
         events.append(event)
+    add_resume_cost(len(names))
     incomplete = len(events) % 2 == 1
     return {
         "events": events,
@@ -212,6 +277,7 @@ def inspect(root: Path) -> dict[str, Any]:
         ),
         "identity": identity,
         "plan": plan,
+        "cost_adjustments": adjustments,
     }
 
 

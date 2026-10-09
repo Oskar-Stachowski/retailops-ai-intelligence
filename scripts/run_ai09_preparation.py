@@ -35,7 +35,17 @@ def environment(output: Path) -> dict[str, str]:
     temporary = output / "temporary"
     temporary.mkdir(exist_ok=True, mode=0o700)
     return {
-        **os.environ,
+        **{
+            key: value
+            for key, value in os.environ.items()
+            if key
+            not in {
+                "GITHUB_TOKEN",
+                "GH_TOKEN",
+                "ACTIONS_RUNTIME_TOKEN",
+                "ACTIONS_ID_TOKEN_REQUEST_TOKEN",
+            }
+        },
         "OMP_NUM_THREADS": "1",
         "OPENBLAS_NUM_THREADS": "1",
         "MKL_NUM_THREADS": "1",

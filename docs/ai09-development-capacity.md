@@ -90,6 +90,24 @@ Zdalny upload, transport i wznowienie wymagają rzeczywistej kontroli Actions.
 Publiczne wejścia kontrolera oraz workera respektują
 `dispatch_enabled=false` przed rozpoczęciem jakiejkolwiek pracy Source.
 
+Tryb `checkpoint_resume` małego workflow wykonuje wyłącznie zamrożony profil
+10 dni × 8 produktów × 2 sklepy × 1 magazyn. Zatrzymuje się po kwalifikacji,
+wysyła checkpointy do artefaktu, a następnie pobiera wybrany artefakt przez
+API GitHub. Sprawdza identyfikator, run, dokładny commit, nazwę, hash ZIP,
+pełną zawartość i niezależnie zachowane zakończenie natywnych faz.
+Używa istniejącego transportu HTTP AI04, który usuwa autoryzację przy
+przejściu na host storage; kontrakty AI04 i AI08 pozostają bez zmian.
+Koszt pobrania i odtworzenia pomniejsza pozostały budżet przygotowania.
+Wznowione eksport/import/curation korzystają z odtworzonych danych po
+przeniesieniu oryginałów do osobnego zachowanego katalogu kontrolnego.
+Pierwotne aktywne ścieżki nie mogą więc przypadkowo obsłużyć wznowienia.
+
+Ten mechanizm przyjmuje celowo zatrzymany, w pełni zmierzony prefiks.
+Nie pozwala zastąpić historii nieudanej lub przerwanej próby wcześniejszym
+udanym checkpointem. Rozliczenie takiej historii pozostaje wymaganiem
+przed wznowieniem pełnej diagnostyki. Mała kontrola Actions, jej transport
+i widoczność nowego kontrolera w UI wymagają jeszcze rzeczywistego odbioru.
+
 **1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
 `dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
 Pozostały odbiór chronionych head/main konsumenta, powiązanie dowodu live
