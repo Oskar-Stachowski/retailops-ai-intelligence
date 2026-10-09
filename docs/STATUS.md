@@ -1,5 +1,13 @@
 # Aktualny status
 
+**2026-10-09 — przygotowanie AI 09 capacity 1.10; etap nadal not_ready.**
+[Receptura](reference/ai09-development-capacity-v1.10.json) przypina audytowane
+poprawki CPU Source PR111. [09.65](evidence/09-65-source-cpu-capacity-preparation.json)
+zachowuje dziewięć rzeczywistych porażek, pełny profil oraz limit 12 GiB
+z rezerwą 1 GiB. 62 kontrole receptury przeszły, w tym odrzucenie startu
+poniżej 13 GiB dostępnej pamięci. Nowej diagnostyki nie uruchomiono;
+pełny odbiór dokładnych head i wynikowych main obu repozytoriów jest wymagany.
+
 **2026-10-09 — AI 09: in_progress / not_ready.**
 [Pełne historyczne cechy anomaly](ai09-native-anomaly-features.md) odtwarzają
 wszystkie zadeklarowane dni przez natywne funkcje, z 28 dniami historii.

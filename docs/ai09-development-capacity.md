@@ -1,5 +1,18 @@
 # Pomiar pełnego development AI 09
 
+[Receptura 1.10](reference/ai09-development-capacity-v1.10.json) przypina
+audyt CPU z [Source PR111](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/111):
+ograniczony cache konwersji Arrow oraz istniejący indeks ledger uruchamiany
+dopiero po pełnej walidacji. Trzy małe pary zachowują 58 tabel, kontekst, CSV
+i raporty; mediana całego CPU spadła o 3,46%. To nie jest pomiar pełnego profilu.
+[Przygotowanie 09.65](evidence/09-65-source-cpu-capacity-preparation.json)
+zachowuje dziewięć rzeczywistych porażek, wszystkie wcześniejsze receptury
+i nieuruchomioną 1.6. Limit nadal wynosi **12 GiB** z rezerwą **1 GiB**;
+start wymaga co najmniej **13 GiB dostępnej pamięci**. Pełny profil,
+pięć faz, limit 3600 s, scratch 8 GiB i pozostałe bramki pozostają zachowane.
+Kontrole receptury zaliczyły 62 testy. Diagnostyki 1.10 jeszcze nie uruchomiono:
+wymaga pełnego odbioru dokładnego head oraz wynikowego main obu repozytoriów.
+
 [Wynik dziewiątej próby 09.62](evidence/09-62-development-capacity-ninth-run.json)
 wiąże zweryfikowany artefakt [run 37853501527](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37853501527).
 Receptura 1.9 zakończyła się `wall_limit`: **0/5 faz, 3600.53 s**,

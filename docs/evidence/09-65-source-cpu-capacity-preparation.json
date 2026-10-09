@@ -1,0 +1,172 @@
+{
+  "version": "ai09-source-cpu-capacity-preparation-1.0.0",
+  "recorded_at_utc": "2026-10-09T05:55:38.068281+00:00",
+  "scope": "Preparation only; complete full-profile capacity and scientific campaign remain unqualified",
+  "recipe": "docs/reference/ai09-development-capacity-v1.10.json",
+  "recipe_sha256": "d1ea27c06bf14450828717271052e3895ae1ec10a5d6c5ecce8e06e9396c4cbf",
+  "producer_commit": "80293fb582e05f7004cf44c2da1828d1a5e74a97",
+  "producer_audit": {
+    "evidence": "docs/evidence/ml/ai09-source-cpu-followup.json",
+    "evidence_sha256": "f6c8ab7bf076c159342bbcc7dd00053a7e099a613cec6b8bd71acc434a10dfdf",
+    "ordinary_implementation": "inventory-source-cached-ledger-2.2.3",
+    "planned_implementation": "planned-source-cached-execution-1.1.3"
+  },
+  "source_publication": {
+    "pull_request": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/111",
+    "head_ci": 37864504892,
+    "head_jobs_success": 30,
+    "merged": true,
+    "main": "265b26a9473b119b501d94d6d0dfcb418158cd9a",
+    "main_ci": 37888416578,
+    "main_acceptance_pending": true
+  },
+  "source_controls": {
+    "final_native_passed": 72,
+    "fresh_unprofiled_pairs": 3,
+    "all58_tables_context_csv_native_reports_exact": true,
+    "small_whole_cpu_median_change_percent": -3.462702326093281,
+    "small_whole_wall_median_change_percent": -3.5429171417618255,
+    "not_full_canonical_measurement": true
+  },
+  "ai_capacity_controls": {
+    "tests": 62,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 1.639,
+    "junit_sha256": "819750fcf3d56204fcffe3e245cd3acbd796ee34eb08c9486137b81fc1b684d8",
+    "process_exit": 0,
+    "real_owned_process_limits_and_preflight_verified": true
+  },
+  "producer_compatibility_controls": {
+    "native_passed": 43,
+    "installed_passed": 43,
+    "evidence": "docs/evidence/09-63-native-anomaly-feature-preparation.json",
+    "full_ai_pr_ci": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37890247543",
+    "full_acceptance_pending": true
+  },
+  "prior_actual_failure": {
+    "version": "ai09-development-capacity-probe-1.9.0",
+    "workflow_run": 37853501527,
+    "plan_sha256": "07ee91c51bbd9f5300aac002ce7873f6bbdd4c22a0018a00baf1c25a4ec297f6",
+    "resource_receipt_sha256": "1217e0e01930bcfc4021c58e34b73bb6a47fbd537cd8d15615c91c05e3f873d2",
+    "reason": "wall_limit",
+    "exit_code": -9,
+    "completed_phases": 0,
+    "wall_seconds": 3600.5260635249997,
+    "sampled_tree_peak_rss_bytes": 9061416960,
+    "previous_failure_preserved": true
+  },
+  "prior_evidence": "docs/evidence/09-62-development-capacity-ninth-run.json",
+  "prior_evidence_sha256": "7228c0c40565bf198c756b5afc26408fd6eb34d35e9569f042c4f180eb08dffe",
+  "all_nine_previous_actual_runs": [
+    37611605538,
+    37613368332,
+    37676033214,
+    37714051649,
+    37731200719,
+    37765329151,
+    37807749014,
+    37824794411,
+    37853501527
+  ],
+  "historical_recipe_sha256": {
+    "ai09-development-capacity-v1.1.json": "f67cbe9d38efe687f78a5982c777a9e1775b4fa6ce2664d23b63b873209aa6ee",
+    "ai09-development-capacity-v1.2.json": "7820dbd4f29eb3f78ddb9e8bf02710a85980d9c31f7df09d7030a28bc71055ca",
+    "ai09-development-capacity-v1.3.json": "ca022dd5bb020832837c7311036cc0b5e8fcd45e21edb3da6b6e323c0d363e4d",
+    "ai09-development-capacity-v1.4.json": "8d67264222c0cbe59065c722daeccdeb379bbd95bd84661a26c68cbcc0cbb25c",
+    "ai09-development-capacity-v1.5.json": "e06173b0da285a517c7c929e3f2ddfec2d50788bf0c81a580ec89b3e909a71f9",
+    "ai09-development-capacity-v1.6.json": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "ai09-development-capacity-v1.7.json": "6d76eb1aebde101a9723697c5190d6254d680b200a2df812faaaccc1dd223668",
+    "ai09-development-capacity-v1.8.json": "e219af373fab4ddcfcd077b17c26e3fe56399e2d1010b659e5798745143b55c3",
+    "ai09-development-capacity-v1.9.json": "07ee91c51bbd9f5300aac002ce7873f6bbdd4c22a0018a00baf1c25a4ec297f6",
+    "ai09-development-capacity.json": "1035ae5e86b4314eedb7de88601afdbb002df25b20acb281ca33cf36eb2a8fa9"
+  },
+  "unexecuted_1_6_preserved": {
+    "version": "ai09-development-capacity-probe-1.6.0",
+    "recipe": "docs/reference/ai09-development-capacity-v1.6.json",
+    "recipe_sha256": "ee655388302c75d564c46cc95ff341d86695fe4b25cf2a6e687ea1cbaddf2956",
+    "evidence": "docs/evidence/09-48-audited-capacity-preparation.json",
+    "evidence_sha256": "8bbaac6c6a2a703103b89c87dd574aecfd166f2634c221e82b2be0f998f125b3",
+    "workflow_dispatched": false,
+    "superseded_before_execution": true
+  },
+  "generation": {
+    "profile": "ai-dev",
+    "seed": 42,
+    "days": 365,
+    "products": 100,
+    "stores": 5,
+    "warehouses": 3,
+    "start_date": "2025-08-01",
+    "end_date": "2026-07-31",
+    "max_daily_rows": 182500,
+    "forecast_plan_days": 14
+  },
+  "budgets": {
+    "tree_rss_bytes": 12884901888,
+    "scratch_bytes": 8589934592,
+    "wall_seconds": 3600,
+    "minimum_free_disk_bytes": 6442450944,
+    "minimum_available_memory_bytes": 1073741824,
+    "sample_seconds": 0.2
+  },
+  "parent_limits": {
+    "max_bytes": 2147483648,
+    "max_files": 10000,
+    "max_rows": 20000000,
+    "batch_rows": 256
+  },
+  "snapshot": {
+    "include_truth": false,
+    "chunk_rows": 256,
+    "partition_by_day": false,
+    "required_use_cases": [
+      "forecast_source",
+      "inventory_source"
+    ]
+  },
+  "dispatch_gate": "Complete exact-head and resulting-main Required CI in both repositories, immutable fresh reference and durable single-dispatch intent; no unchanged/automatic retry",
+  "publication_and_full_ci_pending": true,
+  "workflow_dispatched": false,
+  "project_journal_initialized": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "legacy_history": {
+    "attempts": 11,
+    "starts": 44,
+    "complete": 40,
+    "lost": 4,
+    "reads": 64,
+    "unobserved_costs": "unknown_not_zero"
+  },
+  "canonical_training_qualified": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "ai_ci_contract_controls": {
+    "tests": 55,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 0.733,
+    "junit_sha256": "4e96cc7862dc3b323e1bb6a57494de39a7239e24f26aff8ae68a323f02a9e7cc",
+    "process_exit": 0
+  },
+  "static_controls": {
+    "ruff": "passed",
+    "ruff_format": "passed",
+    "repository_docs_and_required_ci_contract": "passed",
+    "diff_hygiene": "passed",
+    "historical_recipe_count": 10,
+    "all_historical_recipe_bytes_identical_to_base_commit": true,
+    "tree_secret_scan": "passed; no leaks"
+  },
+  "local_full_make_ci_local": {
+    "status": "not_started",
+    "available_memory_observed_bytes": 1355038720,
+    "physical_memory_bytes": 8589934592,
+    "reason": "Preserve foreign sessions; current available memory is below the existing TensorFlow control preflight minimum of2GiB",
+    "required_before_pr": true,
+    "resource_guards_unchanged": true
+  }
+}

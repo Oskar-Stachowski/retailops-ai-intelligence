@@ -29,6 +29,9 @@ repozytoriów uruchomiono jedną diagnostykę
 [1.9](docs/evidence/09-59-query-capacity-acceptance-start.json), bez treningów
 i odczytu świeżego final. [Wynik 1.9](docs/evidence/09-62-development-capacity-ninth-run.json)
 to limit czasu 3600 s przy około 8,44 GiB próbkowanego RSS, z 0/5 ukończonych faz.
+[Przygotowanie 1.10](docs/evidence/09-65-source-cpu-capacity-preparation.json)
+przypina poprawki CPU Source, zachowuje 12 GiB i cały profil oraz zalicza
+62 kontrole receptury. Nowej diagnostyki jeszcze nie uruchomiono.
 [Audyt pamięci i czasu](docs/ai09-capacity-audit.md) obejmuje wszystkie pięć
 faz przygotowania danych przed kolejnym canonical; zachowuje pełne dane i limity.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja
