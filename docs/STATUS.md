@@ -10,6 +10,13 @@ Poprawiona wersja zaliczyła 98 kontroli natywnych i 64 zainstalowanego pakietu.
 Pełne CI i publikacja
 pozostają wymagane. Integracja prawdy offline i całej kampanii jest otwarta.
 
+Pełny lokalny przebieg zaliczył 5038 testów z 49 udokumentowanymi pominięciami.
+Kontrole TensorFlow wymagają większej dostępnej rezerwy pamięci; ich pięć odmów
+startu pozostaje zapisanych. 43 kontrole obsługi nowego producenta i 43 kontrole
+końcowej paczki przeszły. [Skan historii](evidence/09-64-historical-scanner-verification.json)
+zachowuje dokładną klasyfikację fałszywych alarmów i kontrolę wykrywania nowych
+poświadczeń. Chroniony odbiór pełnego CI nadal jest wymagany.
+
 [Bramka dnia raw-DQ na dysku](ai09-native-anomaly-day-gate.md) łączy pełne
 indeksy dni i zaakceptowanych faktów z niezmienionym `DayGate.point`.
 Odtwarza globalną nieprzypisaną kwarantannę od rzeczywistej chwili odbioru.

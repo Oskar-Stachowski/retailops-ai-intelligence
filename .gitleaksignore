@@ -1,0 +1,24 @@
+# Exact reviewed historical false positives; immutable commit/file/rule/line only.
+# Proof: docs/evidence/09-64-historical-scanner-verification.json
+# public artifact SHA already exactly allowed at its renamed path
+73d2534c5ecbfd427c6ccfbc78c2b675a4352eaf:docs/evidence/ai/10/stockout-final-head.json:generic-api-key:10
+# workflow SHA independently matches this historical Git blob
+6a19ee11f970640b40363b7426535ccaf4c5121a:docs/evidence/ops/03/local-verification.json:generic-api-key:118
+# workflow SHA independently matches this historical Git blob
+da868d10a1c6dcb14074284a10eb4d7b515b699b:docs/evidence/ops/03/local-verification.json:generic-api-key:118
+# public Docker release image tag
+11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:10
+# public Docker release image tag
+11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:103
+# public Docker release image tag
+11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:196
+# public Docker release image tag
+11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:515
+# public Docker release image tag
+11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:538
+# documented local demonstration default, or variable expression
+a15283ec67d64abbdaf67f73e48806cf041b7ab2:docs/runbooks/observability-runbook.md:curl-auth-user:306
+# documented local demonstration default, or variable expression
+ff31fb8d945acdb60602d5111e3efbea76d333b4:docs/runbooks/observability-runbook.md:curl-auth-user:108
+# documented local demonstration default, or variable expression
+ff31fb8d945acdb60602d5111e3efbea76d333b4:docs/runbooks/observability-runbook.md:curl-auth-user:300

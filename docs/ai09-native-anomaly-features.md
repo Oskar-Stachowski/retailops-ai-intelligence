@@ -49,6 +49,18 @@ Point, ponownego zapieczętowania, lookup keys, brakujących rekordów, budżet�
 i przerwania kontekstu blokują ukończony receipt. Pełny `make ci-local`, chroniony
 PR i odbiór dokładnego head oraz wynikowego main pozostają wymagane.
 
+Wykonany pełny lokalny przebieg zaliczył 5038 testów, z 49 udokumentowanymi
+pominięciami. Pięć kontroli TensorFlow odmówiło startu przez wymaganą rezerwę
+pamięci; trzy pozostałe przeszły. Pełny odbiór na izolowanym runnerze pozostaje
+wymagany. Obsługa własnych tabel producenta `planned-source-cached-execution-1.1.3`
+zachowuje wszystkie kontrole tożsamości i niezależny odczyt; 43 kontrole natywne
+i 43 kontrole końcowej paczki przeszły.
+
+[Weryfikacja skanera](evidence/09-64-historical-scanner-verification.json)
+klasyfikuje 11 historycznych fałszywych alarmów. Wyjątki dotyczą tylko dokładnych
+commitów, plików, reguł i linii. Cała historia i obecne pliki przechodzą skan;
+syntetyczne nowe poświadczenie w tej samej ścieżce nadal jest wykrywane.
+
 Receipt wymaga późniejszego poprawnego zakończenia zewnętrznych kontekstów
 bramki, dni, replay i publicznego parenta. Genealogia generation, zamknięcie
 producenta, dziennik odczytów, niezależna prawda offline, pełna ocena jakości,

@@ -1,6 +1,6 @@
 {
   "version": "ai09-native-disk-anomaly-features-preparation-1.0.0",
-  "recorded_at_utc": "2026-10-09T00:15:41.963759+00:00",
+  "recorded_at_utc": "2026-10-09T05:32:06.542353+00:00",
   "scope": "Full native Point census primitive on exposed public controls;98native and64installed pass; full CI and scientific campaign incomplete",
   "base": "be33444795ff0db4876b8052f9907a1f76983054",
   "implementation": "src/retailops_ai/evaluation_campaign/campaign_anomaly_features.py",
@@ -117,7 +117,7 @@
     "installed_planned": 64,
     "installed_status": "terminal_passed",
     "installed_session": 21654,
-    "full_local_ci_status": "not_started",
+    "full_local_ci_status": "terminal_failed_TF_preflight_reserve",
     "installed_process_exit": 0,
     "installed": {
       "tests": 64,
@@ -135,6 +135,19 @@
       "skipped": 0,
       "seconds": 1934.154,
       "junit_sha256": "cf8d081f153653529bca1ef29b3b75f49218ff275c5c3cec9dbde2c6df881947"
+    },
+    "full_local_ci": {
+      "pytest_passed": 5038,
+      "pytest_skipped": 49,
+      "pytest_failed": 0,
+      "pytest_seconds": 6412.3,
+      "tensorflow_failed": 5,
+      "tensorflow_passed": 3,
+      "tensorflow_seconds": 82.64,
+      "tensorflow_reason": "preflight_reserve",
+      "process_exit": 2,
+      "full_ci_accepted": false,
+      "resource_guards_unchanged": true
     }
   },
   "static_checks": {
@@ -191,5 +204,38 @@
       "retailops_ai.evaluation_campaign.campaign_anomaly_parent": "3f397862646dbeb1583e9edaff5c1c0f1b1d7e3afff0e361468eeee6f5011b08",
       "retailops_ai.evaluation_campaign.campaign_anomaly_replay": "6e30f8df597b46e77aabdf13b161f1e28b268fcd60729d22b612cdf3099608c3"
     }
-  }
+  },
+  "source_backend_113_native": {
+    "tests": 43,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 27.541,
+    "junit_sha256": "61ab6b3d7848a0b521ced410f6ce2dfcc979bb475125aea7f0caf78ef5b531ad"
+  },
+  "source_backend_113_installed": {
+    "tests": 43,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 30.959,
+    "junit_sha256": "cada0e7b49211af87e38cc799104b68fe27ff164184e813950dc5058b8064c67"
+  },
+  "final_package_after_backend_113": {
+    "wheel_bytes": 2075600,
+    "wheel_sha256": "62338e7238445352d2c29e16b66f54d4f03c18f29de6de7d913805eca7560d8b",
+    "byte_parity": {
+      "python": 604,
+      "json": 213
+    },
+    "private_files_absent": true,
+    "installed_verifier_origin_verified": true
+  },
+  "final_backend_origin": {
+    "installed_origin_verified": true,
+    "worker_sha256": "26dd76e5cd5606bcc6c0c072372bbee0228c06eb2f54fdfd8dfc605d5153d06b"
+  },
+  "historical_scanner_correction_evidence": "docs/evidence/09-64-historical-scanner-verification.json",
+  "full_history_secrets_scan": "918commits,0leaks_after_exact_immutable_false_positive_review",
+  "working_tree_secrets_scan": "0leaks"
 }

@@ -1,0 +1,141 @@
+{
+  "version": "ai09-historical-scanner-verification-1.0.0",
+  "recorded_at_utc": "2026-10-09T05:40:25.975440+00:00",
+  "scope": "Exact immutable historical findings, not a general rule/path exception",
+  "initial_findings": 11,
+  "initial_report_sha256": "71dd826f34e555c56dad45ad8069b90ec18a436d0970d0117e13f779fbb04105",
+  "classification": [
+    {
+      "fingerprint": "73d2534c5ecbfd427c6ccfbc78c2b675a4352eaf:docs/evidence/ai/10/stockout-final-head.json:generic-api-key:10",
+      "hash_already_exactly_allowlisted": true
+    },
+    {
+      "fingerprint": "6a19ee11f970640b40363b7426535ccaf4c5121a:docs/evidence/ops/03/local-verification.json:generic-api-key:118",
+      "root_keys": [
+        "measured_at",
+        "base_commit",
+        "environment",
+        "command",
+        "results",
+        "skip_scope",
+        "junit_sha256",
+        "broker_cases",
+        "runtime_and_drill_sha256",
+        "checks",
+        "transport_semantics",
+        "schema_migrations",
+        "scope_excludes",
+        "full_regression_commit",
+        "followup_verification"
+      ],
+      "workflow_digest_matches_same_historical_tree": true
+    },
+    {
+      "fingerprint": "da868d10a1c6dcb14074284a10eb4d7b515b699b:docs/evidence/ops/03/local-verification.json:generic-api-key:118",
+      "root_keys": [
+        "measured_at",
+        "base_commit",
+        "environment",
+        "command",
+        "results",
+        "skip_scope",
+        "junit_sha256",
+        "broker_cases",
+        "runtime_and_drill_sha256",
+        "checks",
+        "transport_semantics",
+        "schema_migrations",
+        "scope_excludes"
+      ],
+      "workflow_digest_matches_same_historical_tree": true
+    },
+    {
+      "fingerprint": "11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:10",
+      "public_image_refs": [
+        "retailops-release-84037be319ff-api:sha-44f7404010b55eba3d9bacd888d2dc7bb9797180"
+      ],
+      "image_reference_only": true
+    },
+    {
+      "fingerprint": "11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:103",
+      "public_image_refs": [
+        "retailops-release-84037be319ff-api:sha-977c776ed7cf80ae2229e1522dba8a44e3827a75"
+      ],
+      "image_reference_only": true
+    },
+    {
+      "fingerprint": "11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:196",
+      "public_image_refs": [
+        "retailops-release-84037be319ff-api:sha-44f7404010b55eba3d9bacd888d2dc7bb9797180"
+      ],
+      "image_reference_only": true
+    },
+    {
+      "fingerprint": "11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:515",
+      "public_image_refs": [
+        "retailops-release-84037be319ff-api:sha-44f7404010b55eba3d9bacd888d2dc7bb9797180"
+      ],
+      "image_reference_only": true
+    },
+    {
+      "fingerprint": "11a5d08a7ecaf93407a34e1fd18d121c01b82544:docs/evidence/releases/2026-09-25-rollback.json:generic-api-key:538",
+      "public_image_refs": [
+        "retailops-release-84037be319ff-api:sha-977c776ed7cf80ae2229e1522dba8a44e3827a75"
+      ],
+      "image_reference_only": true
+    },
+    {
+      "fingerprint": "a15283ec67d64abbdaf67f73e48806cf041b7ab2:docs/runbooks/observability-runbook.md:curl-auth-user:306",
+      "variable_expressions": [
+        "${GRAFANA_ADMIN_USER:-admin}",
+        "${GRAFANA_ADMIN_PASSWORD:-retailops}"
+      ],
+      "variable_only_auth": true
+    },
+    {
+      "fingerprint": "ff31fb8d945acdb60602d5111e3efbea76d333b4:docs/runbooks/observability-runbook.md:curl-auth-user:108",
+      "variable_expressions": [],
+      "variable_only_auth": false,
+      "matches_documented_local_demo_default": true,
+      "default_configuration_paths": [
+        "docker-compose.yml"
+      ]
+    },
+    {
+      "fingerprint": "ff31fb8d945acdb60602d5111e3efbea76d333b4:docs/runbooks/observability-runbook.md:curl-auth-user:300",
+      "variable_expressions": [],
+      "variable_only_auth": false,
+      "matches_documented_local_demo_default": true,
+      "default_configuration_paths": [
+        "docker-compose.yml"
+      ]
+    }
+  ],
+  "exception_file": ".gitleaksignore",
+  "exception_file_sha256": "5e6de8d4a5ee285f84645d869affa7e718b9bf18fd6beb459098f6d572310b42",
+  "whole_history_scan": {
+    "exit_code": 0,
+    "leaks": 0,
+    "commits": 918,
+    "report_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "log_sha256": "7ae78193907f537e6600d67df8aa77aa3b8d9b8313ae0a3438247fb793114b8b"
+  },
+  "working_tree_scan": {
+    "exit_code": 0,
+    "leaks": 0,
+    "report_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "negative_control": {
+    "synthetic_only": true,
+    "new_credential_like_value_in_same_historical_path_detected": true,
+    "scanner_exit_code": 1,
+    "findings": 1,
+    "report_sha256": "82e72508d44a9a96e2dcb5557072d55b46ce6cf9e68c482b2e6aae3b73b33f72"
+  },
+  "default_detection_rules_preserved": true,
+  "broad_file_or_value_exceptions_added": false,
+  "history_rewritten": false,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "stage_ready": false
+}
