@@ -44,6 +44,7 @@ def validated_timings(reports: list[dict[str, Any]]) -> dict[str, Any]:
             report["version"] != "ci-test-execution-1.0.0"
             or report["shards"] != 4
             or report["exit_code"] != 0
+            or report.get("reporting_state", "complete") != "complete"
             or report["full_collection_sha256"] != digest
             or report["full_node_ids"] != full
             or any(report[key] != first[key] for key in ("run_id", "commit"))

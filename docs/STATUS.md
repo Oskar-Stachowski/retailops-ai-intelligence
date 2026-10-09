@@ -1,6 +1,14 @@
 # Aktualny status
 
 **2026-10-09 — AI 09: in_progress / not_ready.**
+[Audyt podziału CI](evidence/09-67-ci-census-balance.json) zachowuje anulowany
+przebieg PR #63: 14 jobs przeszło, dwa shardy przekroczyły 45 minut, a agregator
+zgłosił błąd. Shard 3 ukończył cały pytest, ale jego anulowany job nie jest
+zaliczony; shard 2 pozostawił tylko plan i nieznany koszt wykonania.
+Korekta wykorzystuje przejrzane czasy, zachowuje wszystkie testy i atomowo
+zapisuje raporty częściowe. Limit joba testów wynosi 90 minut. Pełny chroniony
+odbiór poprawionego HEAD i wynikowego main nadal jest wymagany.
+
 [Pełne historyczne cechy anomaly](ai09-native-anomaly-features.md) odtwarzają
 wszystkie zadeklarowane dni przez natywne funkcje, z 28 dniami historii.
 Pełny kontekst pozostaje zweryfikowany na dysku, a jedna grupa trafia do

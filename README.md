@@ -29,6 +29,9 @@ repozytoriów uruchomiono jedną diagnostykę
 [1.9](docs/evidence/09-59-query-capacity-acceptance-start.json), bez treningów
 i odczytu świeżego final. [Wynik 1.9](docs/evidence/09-62-development-capacity-ninth-run.json)
 to limit czasu 3600 s przy około 8,44 GiB próbkowanego RSS, z 0/5 ukończonych faz.
+[Korekta podziału CI](docs/evidence/09-67-ci-census-balance.json) zachowuje
+pełną kolekcję testów i zapisuje częściowe czasy przed przerwaniem procesu.
+PR #63 wymaga ponownego pełnego odbioru po przekroczeniu czasu dwóch shardów.
 [Audyt pamięci i czasu](docs/ai09-capacity-audit.md) obejmuje wszystkie pięć
 faz przygotowania danych przed kolejnym canonical; zachowuje pełne dane i limity.
 TensorFlow i mechanika audytu są zaimplementowane; pełna kampania, kalibracja
