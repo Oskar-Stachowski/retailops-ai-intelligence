@@ -1,5 +1,12 @@
 # Pełny trening numeryczny anomaly
 
+[Pełna kontrola lokalna 09.75](evidence/09-75-full-fit-local-validation.json)
+na kodzie `cf8fc3f` zakończyła się niepowodzeniem: główny zestaw ma
+5120 zaliczonych i 49 pominiętych testów, lecz pięć testów TensorFlow
+odmówiło startu z powodu `preflight_reserve` (trzy pozostałe przeszły).
+Nie obniżono rezerw i nie zalicza się tego przebiegu jako pełnego sukcesu.
+Pełna akceptacja wymaga Required CI dokładnego head i wynikowego main.
+
 `fit_census_pipeline` usuwa ograniczenie 10000 wierszy dla nowej, jawnej
 wersji modelu AI 09. Przyjmuje cały strumień zadeklarowanych, uprawnionych
 wierszy treningowych i jego dokładną liczność. Brakujący lub dodatkowy wiersz
