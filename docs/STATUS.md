@@ -1,5 +1,15 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: odebrany main integracji adaptera i checkpointów.**
+[PR 65](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/65)
+przeszedł pełny Required CI **17/17**; wynikowy main `8fe28ea4` również
+uzyskał **17/17**, bez pominięć. [09.89](evidence/09-89-integrated-local-ci.json)
+zachowuje osobno wcześniejszą lokalną odmowę rezerwy RAM i późniejszą
+akceptację zdalną. Ta akceptacja nie obejmuje jeszcze przyrostów 09.85–09.88
+oraz 09.90–09.91 tej gałęzi. Dane Project, próby modeli i końcowe bramki
+pozostają otwarte. Limit RAM wynosi 12 GiB, canonical nadal wyłączony;
+AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: ordinary reuse i generacja obu wariantów.**
 [09.91](evidence/09-91-resolved-development-variants.md) łączy bootstrap
 z przygotowaniem trzech wariantów bez ponownej generacji ordinary. Oryginalny
@@ -65,6 +75,18 @@ bez pominięć, z weryfikacją artefaktu i JUnit. To kontrola komponentów;
 pełny lokalny CI integracji nadal trwa. Nowy komponent prawdy wymaga własnej
 pełnej akceptacji oraz publikacji na main. Limit 12 GiB zachowany,
 nowego canonical ani kampanii Project nie uruchomiono. AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: zakończony lokalny CI integracji; odmowa rezerwy RAM.**
+[09.89](evidence/09-89-integrated-local-ci.json) zachowuje wynik pełnego
+`make ci-local` na `d27094f`: **5347 passed / 55 skipped** w głównym zestawie
+oraz wykonane bramki do observation replay. Końcowy zestaw TensorFlow dał
+**3 passed / 5 failed**; wszystkie pięć prób zatrzymał `preflight_reserve`
+przed startem workera. Cały lokalny CI jest **niezaliczony**. Nie obniżono
+budżetów i nie zatrzymano innych sesji. Czas całego przebiegu wyniósł
+11 854,52 s, próbkowany szczyt RSS 906 035 200 B. Wcześniejsza odrębna kontrola
+Linux tego samego commitu ma **131/131 passed**, bez pominięć; nie zastępuje
+pełnego Required CI. Dalsza akceptacja wymaga zwykłego PR i pełnego CI na
+wynikowym main. Canonical pozostaje wyłączony; AI 09 nadal `not_ready`.
 
 **2026-10-09 — AI 09: integracja adaptera i checkpointów; audyt pamięci workerów.**
 Połączono adapter treningu anomaly z trwałym wznowieniem przygotowania.
