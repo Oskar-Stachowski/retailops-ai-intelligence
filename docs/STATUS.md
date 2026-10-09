@@ -1,5 +1,18 @@
 # Aktualny status
 
+**2026-10-09 — AI 09: natywna kontrola checkpointów ukończonych faz.**
+[Dowód 09.74](evidence/09-74-native-preparation-checkpoints.json) obejmuje
+pięć rzeczywistych faz na małym Source oraz wznowienie po kwalifikacji.
+Generator uruchomiono raz, eksport i dalsze etapy użyły odtworzonych danych.
+173 kontrole przeszły; poprawiono pełne powiązanie rodziców eksportu,
+powiązanie fazy z pomiarem i prywatne uprawnienia odtwarzanych plików.
+Source PR112 oraz wynikowy main `8479b5d3` mają po 21 udanych wymaganych
+jobs i cztery zamierzone pominięcia zgodne z polityką ścieżek Source.
+Pozostały integracja trwałego wznowienia i kosztów w Actions, profile 25/50,
+protokół prób, reprezentatywna ścieżka dane→raport oraz pełny odbiór konsumenta.
+Nie uruchomiono nowej próby canonical ani kampanii Project. AI 09 jest `not_ready`.
+Limit 12 GiB potwierdzono na zdalnym AI main `12484dee`; sesji nie restartowano.
+
 **2026-10-09 — AI 09: telemetria Source i przygotowanie capacity 1.11.**
 [Receptura i logi](ai09-development-capacity.md) zachowują 12 GiB RAM
 i podnoszą przyszły budżet obliczeń do 180 minut, a joba do 210 minut.

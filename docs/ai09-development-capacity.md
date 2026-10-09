@@ -33,10 +33,42 @@ w tym 130 s celowego oczekiwania; RSS drzewa wyniosło 139595776 B,
 CPU workera co najmniej 2,34 s. Zachowano prywatną lokalną kopię artefaktu.
 Nie wyciągamy z tej małej kontroli prognozy czasu pełnego profilu.
 
+Source PR112 scalono jako `8479b5d3`. Dokładny head `ff2504a9` oraz
+wynikowy main mają po 25 zakończonych jobs: 21 wymaganych dla tego zakresu
+z sukcesem i cztery zamierzone pominięcia zgodne z polityką ścieżek Source.
+Pominięcia nie są liczone jako sukces. Dowód obejmuje także `required-result`.
+
+[Kontrola checkpointów 09.74](evidence/09-74-native-preparation-checkpoints.json)
+potwierdza zapis i odtworzenie wszystkich pięciu ukończonych faz na małym,
+rzeczywistym Source: 10 dni, 8 produktów, 2 sklepy, 1 magazyn, 58 tabel.
+Po generacji i kwalifikacji odtworzono ich archiwa do nowego katalogu;
+eksport, import i curation skorzystały z odtworzonych rodziców. Generator
+uruchomiono raz. Przechwycono pomyślny powrót rzeczywistego walidatora każdej
+fazy; pełne inventory danych odpowiada zachowanemu świadectwu walidacji.
+Cała kontrola zajęła 8,31 s, w tym 7,34 s pracy pięciu procesów,
+0,37 s zapisu archiwów i 0,39 s późniejszego odtworzenia wszystkich faz.
+Koszty odtworzenia i pierwotnego przygotowania pozostają osobne.
+
+Nowy komponent używa istniejącego formatu archiwów AI04 bez zmiany jego
+kontraktu ani mechanizmu AI08. Wymaga osobno zachowanego, zaufanego powiązania
+z wynikiem workera, kodem, konfiguracją, seedem, zależnościami i walidatorem.
+Sam poprawny hash archiwum nie wystarcza. Eksport wiąże zarówno Source,
+jak i kwalifikację; błąd dowolnego rodzica blokuje publikację całego prefiksu.
+Nowe pliki mają prawa `0600`, katalogi `0700`, niezależnie od `umask`.
+173 kontrole komponentów, wcześniejszego archiwum, telemetrii, capacity i CI
+przeszły. Kontrolę wykonano w lokalnym środowisku testowym z zapisanymi
+wersjami pakietów; nie kwalifikuje ona pełnej skali ani środowiska Actions.
+
+Pozostała integracja checkpointów z rzeczywistym kontrolerem Actions:
+trwały upload po każdej fazie, zaufane powiązania poza archiwami, historia
+nieudanych prób oraz wspólny budżet wznowienia. Kontrola komponentu nie
+otwiera dostępu Project ani final i nie zamyka tych wymagań.
+
 **1.11 nie została uruchomiona i nie pozwala jeszcze uruchomić pełnej próby**:
 `dispatch_enabled=false` blokuje supervisor i bezpośrednie wejście workera.
-Pozostały odbiór chronionych head/main, powiązanie dowodu live z końcowym kodem,
-zweryfikowane checkpointy/wznowienie i reprezentatywna ścieżka dane→raport.
+Pozostały odbiór chronionych head/main konsumenta, powiązanie dowodu live
+z końcowym kodem, integracja checkpointów/wznowienia w Actions
+i reprezentatywna ścieżka dane→raport.
 Kolejny spójny przyrost musi dostarczyć te dowody przed otwarciem bramki.
 Zachowano wszystkie wcześniejsze receptury i dziewięć rzeczywistych porażek.
 
