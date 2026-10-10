@@ -15,7 +15,14 @@ from pydantic import Field, JsonValue, model_validator
 
 from retailops_ai.anomaly_detectors.contract import Family
 from retailops_ai.anomaly_detectors.protocol import Scope, Window, scoring_origin, series_key
-from retailops_ai.anomaly_evaluation.contract import Decision, EvaluationPolicy, Truth
+from retailops_ai.anomaly_evaluation.contract import (
+    Decision,
+    EvaluationPolicy,
+    OrdinaryTruth,
+    PairedTruth,
+    Truth,
+    validate_truth,
+)
 from retailops_ai.anomaly_evaluation.evaluator import evaluate
 from retailops_ai.anomaly_evaluation.verification import verify_scores
 from retailops_ai.anomaly_portfolio.model import Model
@@ -85,6 +92,43 @@ class CampaignAnomalyCensusPlan(Contract):
         return canonical_sha256(self.model_dump(mode="json"))
 
 
+class CampaignOrdinaryAnomalyCensusPlan(CampaignAnomalyCensusPlan):
+    """Ordinary controls have a real Source-verification identity and no scenario."""
+
+    version: Literal["ai09-native-ordinary-anomaly-census-plan-1.0.0"] = (
+        "ai09-native-ordinary-anomaly-census-plan-1.0.0"  # type: ignore[assignment]
+    )
+    source_scenario_sha256: None = None  # type: ignore[assignment]
+    source_verification_sha256: Sha256
+    source_generation_receipt_sha256: Sha256
+
+
+class CampaignPairedAnomalyCensusPlan(CampaignAnomalyCensusPlan):
+    """Numerical planned census binds both native parents and the paired truth proof."""
+
+    version: Literal["ai09-native-paired-anomaly-census-plan-1.0.0"] = (
+        "ai09-native-paired-anomaly-census-plan-1.0.0"  # type: ignore[assignment]
+    )
+    ordinary_source_dataset_id: SourceID
+    source_verification_sha256: Sha256
+    ordinary_generation_receipt_sha256: Sha256
+    source_generation_receipt_sha256: Sha256
+    comparison_policy_sha256: Sha256
+
+
+def _plan(
+    plan: CampaignAnomalyCensusPlan | CampaignOrdinaryAnomalyCensusPlan,
+) -> CampaignAnomalyCensusPlan | CampaignOrdinaryAnomalyCensusPlan:
+    cls = (
+        CampaignPairedAnomalyCensusPlan
+        if isinstance(plan, CampaignPairedAnomalyCensusPlan)
+        else CampaignOrdinaryAnomalyCensusPlan
+        if isinstance(plan, CampaignOrdinaryAnomalyCensusPlan)
+        else CampaignAnomalyCensusPlan
+    )
+    return cls.model_validate_json(plan.model_dump_json())
+
+
 class CampaignAnomalyCensusEvaluation(Contract):
     """Native numerical evidence; complete Project admission remains separate."""
 
@@ -120,11 +164,48 @@ class CampaignAnomalyCensusEvaluation(Contract):
         return canonical_sha256(self.model_dump(mode="json"))
 
 
+class CampaignOrdinaryAnomalyCensusEvaluation(CampaignAnomalyCensusEvaluation):
+    """Separate ordinary wire; the planned v1 result and its schema remain intact."""
+
+    version: Literal["ai09-native-ordinary-anomaly-census-evaluation-1.0.0"] = (
+        "ai09-native-ordinary-anomaly-census-evaluation-1.0.0"  # type: ignore[assignment]
+    )
+    plan: CampaignOrdinaryAnomalyCensusPlan
+
+
+class CampaignPairedAnomalyCensusEvaluation(CampaignAnomalyCensusEvaluation):
+    version: Literal["ai09-native-paired-anomaly-census-evaluation-1.0.0"] = (
+        "ai09-native-paired-anomaly-census-evaluation-1.0.0"  # type: ignore[assignment]
+    )
+    plan: CampaignPairedAnomalyCensusPlan
+
+
+def _truth_binding(plan: CampaignAnomalyCensusPlan, truth: Truth | OrdinaryTruth) -> bool:
+    if isinstance(plan, CampaignPairedAnomalyCensusPlan):
+        return isinstance(truth, PairedTruth) and all(
+            getattr(plan, key) == getattr(truth, key)
+            for key in (
+                "ordinary_source_dataset_id",
+                "source_verification_sha256",
+                "ordinary_generation_receipt_sha256",
+                "source_generation_receipt_sha256",
+                "comparison_policy_sha256",
+            )
+        )
+    if isinstance(plan, CampaignOrdinaryAnomalyCensusPlan):
+        return (
+            isinstance(truth, OrdinaryTruth)
+            and plan.source_verification_sha256 == truth.source_verification_sha256
+            and plan.source_generation_receipt_sha256 == truth.source_generation_receipt_sha256
+        )
+    return type(truth) is Truth
+
+
 def evaluate_anomaly_census(
     model: Model,
     scored: Iterable[AnomalyScoredRow],
-    truth: Truth,
-    plan: CampaignAnomalyCensusPlan,
+    truth: Truth | OrdinaryTruth,
+    plan: CampaignAnomalyCensusPlan | CampaignOrdinaryAnomalyCensusPlan,
 ) -> CampaignAnomalyCensusEvaluation:
     """Replay every saved score, then use unchanged native observation/episode metrics.
 
@@ -135,11 +216,12 @@ def evaluate_anomaly_census(
     Native evaluation's one-million-row limit is preserved; an over-budget
     population fails before consuming input rather than silently trimming it.
     """
-    plan = CampaignAnomalyCensusPlan.model_validate_json(plan.model_dump_json())
+    plan = _plan(plan)
     model = Model.model_validate_json(model.model_dump_json())
-    truth = Truth.model_validate_json(truth.model_dump_json())
+    truth = validate_truth(truth)
     if (
-        canonical_sha256(model.model_dump(mode="json")) != plan.model_sha256
+        not _truth_binding(plan, truth)
+        or canonical_sha256(model.model_dump(mode="json")) != plan.model_sha256
         or canonical_sha256(truth.model_dump(mode="json")) != plan.truth_sha256
         or truth.source_dataset_id != plan.source_dataset_id
         or truth.source_scenario_sha256 != plan.source_scenario_sha256
@@ -206,9 +288,21 @@ def evaluate_anomaly_census(
         plan.evaluation_policy,
         source_dataset_id=plan.source_dataset_id,
     )
-    return CampaignAnomalyCensusEvaluation.model_validate_json(
+    result_type = (
+        CampaignPairedAnomalyCensusEvaluation
+        if isinstance(plan, CampaignPairedAnomalyCensusPlan)
+        else CampaignOrdinaryAnomalyCensusEvaluation
+        if isinstance(plan, CampaignOrdinaryAnomalyCensusPlan)
+        else CampaignAnomalyCensusEvaluation
+    )
+    return result_type.model_validate_json(
         canonical_bytes(
             {
+                "version": "ai09-native-paired-anomaly-census-evaluation-1.0.0"
+                if isinstance(plan, CampaignPairedAnomalyCensusPlan)
+                else "ai09-native-ordinary-anomaly-census-evaluation-1.0.0"
+                if isinstance(plan, CampaignOrdinaryAnomalyCensusPlan)
+                else "ai09-native-anomaly-census-evaluation-1.0.0",
                 "plan": plan.model_dump(mode="json"),
                 "rows": len(decisions),
                 "replay_batches": batches,
@@ -225,8 +319,8 @@ def verify_anomaly_census_evaluation(
     *,
     model: Model,
     scored: Iterable[AnomalyScoredRow],
-    truth: Truth,
-    plan: CampaignAnomalyCensusPlan,
+    truth: Truth | OrdinaryTruth,
+    plan: CampaignAnomalyCensusPlan | CampaignOrdinaryAnomalyCensusPlan,
 ) -> None:
     """Recompute against independently supplied frozen plan/model/input/truth parents.
 
@@ -234,6 +328,13 @@ def verify_anomaly_census_evaluation(
     Resealing a metrics hash or changing this result's plan cannot bypass replay.
     This function grants no Project quality or public final-access permission.
     """
-    safe = CampaignAnomalyCensusEvaluation.model_validate_json(result.model_dump_json())
+    result_type = (
+        CampaignPairedAnomalyCensusEvaluation
+        if isinstance(result, CampaignPairedAnomalyCensusEvaluation)
+        else CampaignOrdinaryAnomalyCensusEvaluation
+        if isinstance(result, CampaignOrdinaryAnomalyCensusEvaluation)
+        else CampaignAnomalyCensusEvaluation
+    )
+    safe = result_type.model_validate_json(result.model_dump_json())
     if safe != evaluate_anomaly_census(model, scored, truth, plan):
         raise ValueError("campaign_anomaly_evaluation_replay_mismatch")

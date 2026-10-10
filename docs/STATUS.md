@@ -1,5 +1,153 @@
 # Aktualny status
 
+**2026-10-10 — AI 09: pełny odbiór Source i wynik lokalnego CI konsumenta.**
+[09.95](evidence/09-95-paired-truth-local-ci.json) potwierdza sukces Source
+PR 114 i wynikowego main `d2363a5c`: po **21 zaliczonych kontroli oraz
+4 deklarowane pominięcia ścieżek**. Natywna bramka main zaliczyła **1160 testów**.
+Pin konsumenta pozostaje bez zmian; odbiór Source nie zastępuje jego aktualizacji.
+
+Pełne `make ci-local` na AI `545866a6` zaliczyło **5567 testów przy 55
+pominięciach**, Ruff, Mypy i pozostałe bramki poprzedzające TensorFlow.
+Zakończyło się błędem DNS podczas instalacji `h5py`. Osobne ponowienie
+TensorFlow pobrało zależności: **3 testy przeszły, 5 odmówiło startu workera
+przez `preflight_reserve`**. Nie obniżono limitów ani rezerwy, nie przerwano
+obcych procesów. Pełny lokalny CI pozostaje niezaliczony; wymagany jest normalny
+PR oraz pełny Required CI na Linuksie i wynikowym main. Dane Project 25/50,
+transfer do prób, rzeczywiste modele i końcowe bramki pozostają otwarte.
+Canonical wyłączony, limit **12 GiB** zachowany; AI 09 `not_ready`.
+
+**2026-10-10 — AI 09: pełny odczyt pary Source i trwały odbiór prawdy.**
+[09.94](evidence/09-94-paired-truth-native-verification.json) dodaje wykonawcę
+dwóch natywnych odczytów, wspólny zmierzony koszt, dowód obu zakończonych
+generacji oraz osobne kontrakty prawdy i pełnej ewaluacji. Final wymaga
+weryfikacji zakończonego wyboru wszystkich trzech zastosowań. Nieznane etykiety
+pozostają w populacji i pokryciu, a pozytywy ograniczone zapasem nie znikają.
+**146 testów źródłowych i te same 146 z paczki** przeszły bez pominięć;
+pełny Mypy objął 764 pliki, 635 modułów i 15 schematów w paczce mają identyczne
+bajty. Stare schematy pozostały bez zmian.
+
+Rzeczywista kontrola 30 dni × 8 produktów × 3 pary sprzedaży × 2 miejsca
+zapasu odtworzyła kompletne pary ordinary/demand oraz ordinary/physical
+na czystym kodzie producenta. Przeszła w **54.69 s**, przy próbkowanym peak
+RSS **174.2 MiB** i zachowanej rezerwie RAM 1 GiB. Pierwsza próba wykryła,
+że `daily_price_observations` zawiera wyniki sprzedaży; reguła 1.0.1 porównuje
+je jako wyniki produktu i przesuwa granicę clean przy każdej różnicy.
+Nieudana próba i jej koszt pozostają zapisane. To kontrola funkcjonalna,
+nie wynik pełnej skali ani kampanii Project.
+
+Source PR 114 przeszedł **21 kontroli i 4 deklarowane pominięcia ścieżek**
+po zwykłym ponowieniu nieudanych jobs; natywny data quality gate zaliczył
+1160 testów. PR scalono do `d2363a5c`; zakończony odbiór main `38000892591`
+i rzeczywisty wynik lokalnego CI opisuje 09.95 powyżej. Pin konsumenta pozostaje
+bez zmian. Odbiór PR/main tego przyrostu AI jest nadal wymagany, podobnie jak transfer ordinary
+do triali, rzeczywiste dane 25/50, modele i końcowe bramki. Canonical wyłączony,
+limit **12 GiB** zachowany; AI 09 `not_ready`.
+
+**2026-10-10 — AI 09: porównanie par Source przed nadaniem clean labels.**
+[09.93](evidence/09-93-paired-source-comparison.json) dodaje porównanie
+wszystkich wierszy i kolumn 58 tabel, także wspólnych koszyków, zwrotów
+i zapasu innych produktów. Indeks na dysku pozwala odczytywać rodziców
+kolejno. **36 testów ze źródeł i te same 36 z paczki** przeszły bez pominięć;
+632 moduły Python mają identyczne bajty. Kontrola na zachowanych małych
+Source nie wystartowała: pięciominutowe dopuszczenie nie uzyskało wolnej
+pamięci dla limitu 512 MiB i rezerwy 1 GiB. Nie obniżono zabezpieczeń.
+To komponent porównania; pełny replay pary, pozytywne epizody, trwały odbiór
+prawdy i pełny CI tego przyrostu pozostają wymagane. Limit canonical
+**12 GiB** ponownie potwierdzono na zdalnym main `8fe28ea4`.
+Nowego canonical ani prób Project nie uruchomiono; AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: natywne plany przeszły replay; blokada błędnych clean labels.**
+[09.92](evidence/09-92-native-planning-and-truth-boundary.json) zapisuje poprawki
+Source PR 114: odtworzenie prywatnych parametrów produktów, właściwy kalendarz
+małej kontroli oraz trzy siedmiodniowe kontrole demand przed wszystkimi
+interwencjami. **23 testy kontrolne i 2 pełne testy writer/reader Source 2.8**
+przeszły bez pominięć. Required CI poprawionego head trwa, ale ma błąd
+Docker Hub 429 i odmowę startu izolowanych baz w bramce integracyjnej;
+przyczyna drugiego błędu nie jest ujawniona w bezpiecznym raporcie.
+Pełna akceptacja tego head pozostaje otwarta.
+Natywna diagnoza wykazała też, że starsza reguła SKU może błędnie uznać
+pośrednio zmienione okno za clean. Adapter odrzuca teraz `ai-dev` i `ai-training`
+przed odczytem prywatnej prawdy. **53/53** kontroli regresyjnych przeszło
+bez pominięć. Oddzielny, wersjonowany odbiór prawdy Project,
+pełne dane, triale oraz odbiór tej gałęzi pozostają wymagane. Limit 12 GiB
+zachowany, canonical wyłączony; AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: odebrany main integracji adaptera i checkpointów.**
+[PR 65](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/65)
+przeszedł pełny Required CI **17/17**; wynikowy main `8fe28ea4` również
+uzyskał **17/17**, bez pominięć. [09.89](evidence/09-89-integrated-local-ci.json)
+zachowuje osobno wcześniejszą lokalną odmowę rezerwy RAM i późniejszą
+akceptację zdalną. Ta akceptacja nie obejmuje jeszcze przyrostów 09.85–09.88
+oraz 09.90–09.91 tej gałęzi. Dane Project, próby modeli i końcowe bramki
+pozostają otwarte. Limit RAM wynosi 12 GiB, canonical nadal wyłączony;
+AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: ordinary reuse i generacja obu wariantów.**
+[09.91](evidence/09-91-resolved-development-variants.md) łączy bootstrap
+z przygotowaniem trzech wariantów bez ponownej generacji ordinary. Oryginalny
+parent przechodzi rozliczany pełny replay, potem demand i physical korzystają
+z dotychczasowych sześciu faz. Wspólny czas obejmuje zimną generację,
+planowanie i wszystkie nowe operacje; podstawowy generator również wymusza
+ten limit. 117 kontroli źródłowych przeszło. Są to testy wykonawcy,
+nie wyniki pełnych danych Project. Odbiór planera, dane, triale oraz pełne
+CI i publikacja tego przyrostu pozostają wymagane. AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: ordinary Source przed planowaniem anomalii.**
+[09.90](evidence/09-90-native-development-planning.md) usuwa zależność
+przygotowania od jeszcze nieznanych identyfikatorów scenariuszy. Osobny
+dziennik dopuszcza jedną pełną generację ordinary 25/50 i jeden natywny
+odczyt planera. Zachowuje wcześniejsze koszty, przypina role/producer/runtime
+i odejmuje koszt generacji od wspólnego czasu. 29 końcowych testów nowej
+ścieżki i 70 kontroli z zainstalowanej paczki przeszło. Natywny helper jest
+w [Source PR 114](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/114);
+jego rzeczywisty odbiór trwa. Pełne dane, jawny transfer parenta do triali,
+próby modeli i odbiór tej gałęzi pozostają wymagane. AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: wykryta granica pełnych scenariuszy Source.**
+[09.88](evidence/09-88-full-source-scenario-audit.json) odtwarza cztery odmowy
+natywnej weryfikacji demand/physical w profilach 25/50: builder efektów ma
+limit 5000 ziaren. Poprawka jawnych pełnych profili i czasu utrzymywania
+struktur danych jest w [Source PR 113](https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/113).
+Sześć małych kontroli dało identyczne wyniki; 85 testów regresji i 29 kontroli
+publikacji/odczytu przeszło bez pominięć. PR został scalony do `95aa6f0e`
+po 21 sukcesach i czterech deklarowanych pominięciach Required CI.
+Wynikowy main `95aa6f0e` również przeszedł 21 kontroli przy czterech
+deklarowanych pominięciach. Pełna skala pozostaje otwarta.
+Consumer rozpoznaje przyszłą wersję 1.1.4,
+ale aktywny pin Source nie został zmieniony. AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: wykonawca przygotowania profili 25/50.**
+[09.87](evidence/09-87-development-preparation-execution.json) dodaje osobny
+prywatny dziennik i uruchomienie oryginalnych sześciu faz. Próba jest zapisana
+przed dostępem do Source; awaria lub przerwanie nie zwraca budżetu. 134 testy
+nowej ścieżki i regresji dziennika/generacji przeszły. Wyniki faz w kontroli
+są celowo kontrolowane; rzeczywiste dane 25/50, krytyczne pokrycie i wykonawca
+prób modeli pozostają wymagane. Pełny CI i publikacja przyrostu na main nadal
+przed nami. Nie otwarto final i nie uruchomiono canonical; AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: kontrakty profili 25/50 i uczciwego budżetu prób.**
+[09.86](evidence/09-86-development-profile-design.json) dodaje osobne pełne
+historie 365 dni, wszystkie lokalizacje oraz ordinary/demand/physical.
+Kompilator przygotowuje oryginalne plany Source i równe budżety RF/HGB/TF.
+58 kontroli kontraktów, kompilacji i trwałości przeszło. Oryginalny parser
+Source potwierdził sześć konfiguracji; to kontrola konfiguracji z kontrolnymi
+IDs, bez generacji i bez dowodu krytycznego pokrycia. Rzeczywisty wykonawca
+prób, weryfikowany awans finalistów, pełny CI oraz publikacja pozostają
+wymagane. Pełny canonical i final bez zmian; AI 09 `not_ready`.
+
+**2026-10-09 — AI 09: niezależna prawda zwykłego Source i kontrola Linuksa.**
+[09.85](evidence/09-85-ordinary-anomaly-truth.json) opisuje trwały odczyt prawdy
+offline, pełne natywne odtworzenie Source i osobną ewaluację zwykłych kontroli.
+Poprawiono konwersję tekstowych pól CSV; dostęp do final wymaga odtworzenia
+zakończonego wyboru wszystkich trzech zastosowań. 65 testów przeszło ze źródeł
+i te same 65 z paczki. Rzeczywista mała kontrola sprawdziła 58 tabel / 4044
+rekordy; celowo zmieniony i ponownie zahashowany raport został odrzucony.
+Niezależnie odebrano Linux control `37957294824` na `d27094f`: **131/131**,
+bez pominięć, z weryfikacją artefaktu i JUnit. To kontrola komponentów;
+pełny lokalny CI integracji nadal trwa. Nowy komponent prawdy wymaga własnej
+pełnej akceptacji oraz publikacji na main. Limit 12 GiB zachowany,
+nowego canonical ani kampanii Project nie uruchomiono. AI 09 `not_ready`.
+
 **2026-10-09 — AI 09: zakończony lokalny CI integracji; odmowa rezerwy RAM.**
 [09.89](evidence/09-89-integrated-local-ci.json) zachowuje wynik pełnego
 `make ci-local` na `d27094f`: **5347 passed / 55 skipped** w głównym zestawie

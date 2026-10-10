@@ -1,0 +1,210 @@
+{
+  "recorded_at_utc": "2026-10-09T17:33:57.733854+00:00",
+  "scope": "Versioned full-history25/50 profile and fair forecast-search contracts, native request compiler and immutable declaration; not executed preparation or trial advancement",
+  "base_commit": "d8fd92d213105549838ca802fb6c98bf772a7ba7",
+  "accepted_main": "20aae22c00e8cf9e6b1b5ff6b11e706b59d5f46e",
+  "code_sha256": {
+    "src/retailops_ai/evaluation_campaign/development_profiles.py": "aeb0f67b996e738e90dace42991a6038f0ee250766cc6aa88fc1ca04344bfcaf",
+    "src/retailops_ai/evaluation_campaign/development_search.py": "241421af8b0fe839897f7bd4ca5b1b11983e62ef24c6dd2367c5c67c8d54cafa",
+    "scripts/update_evaluation_preparation_contracts.py": "3ae4f2c59aa2e2793d0f6a38e08964c72e793eb40056a92bcca3405ce7208d7e",
+    "pyproject.toml": "4e1b53d67a3507cc6f19acbe2c287caec93e7177ffab82ed54dba9245634fb4c"
+  },
+  "profiles": [
+    {
+      "name": "ai09-development-25-v1",
+      "products": 25,
+      "days": 365,
+      "selling_pairs": 5,
+      "stock_locations": 3,
+      "data_seed": 42,
+      "start_date": "2025-08-01",
+      "end_date": "2026-07-31",
+      "max_daily_rows_before_native_lifecycle": 45625,
+      "known_forecast_plan_days": 14,
+      "variants": [
+        "ordinary",
+        "demand",
+        "physical"
+      ],
+      "canonical_profile": false
+    },
+    {
+      "name": "ai09-development-50-v1",
+      "products": 50,
+      "days": 365,
+      "selling_pairs": 5,
+      "stock_locations": 3,
+      "data_seed": 42,
+      "start_date": "2025-08-01",
+      "end_date": "2026-07-31",
+      "max_daily_rows_before_native_lifecycle": 91250,
+      "known_forecast_plan_days": 14,
+      "variants": [
+        "ordinary",
+        "demand",
+        "physical"
+      ],
+      "canonical_profile": false
+    }
+  ],
+  "forecast_search": {
+    "products": [
+      25,
+      50,
+      100
+    ],
+    "configurations_per_family": [
+      2,
+      1,
+      1
+    ],
+    "families": [
+      "rf",
+      "hgb",
+      "tensorflow"
+    ],
+    "initialization_seed": 42,
+    "data_seed": 42,
+    "maximum_fit_attempts": 12,
+    "maximum_attempts_per_configuration_and_scale": 1,
+    "maximum_fit_wall_seconds": 1200,
+    "shared_resource_budget_per_scale": true,
+    "original_native_fit_plan_compiler": true,
+    "finalist_names_are_not_selection_evidence": true,
+    "immutable_private_declaration_writer": true,
+    "actual_Project_protocol_frozen": false
+  },
+  "validation": {
+    "source": {
+      "tests": 58,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 12.56,
+      "sha256": "6965a74f4ea41e07eeb6f2d57e0cb3934200e25259d9c1f5a96b98fedb4eae2e",
+      "private_path": ".local/development-profiles/design-final.xml"
+    },
+    "installed": {
+      "tests": 58,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 14.273,
+      "sha256": "ca2e569f77e80591f16fa8f8e34921f71be5273e0515d1310b9c39ea0423f44a",
+      "private_path": ".local/development-profiles/installed-tests.xml"
+    },
+    "same_test_set_do_not_sum": true,
+    "ruff_check_passed": true,
+    "ruff_format_files": 1301,
+    "mypy_files": 754,
+    "new_json_contracts_and_defaults": 6,
+    "legacy_canonical_contracts_unchanged": true,
+    "wheel": {
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 2164469,
+      "sha256": "940137b45ec60c6191a02b70488fa68f60a5c833e4324d24028cff14f3534c7f",
+      "python_modules_equal": 625,
+      "new_contract_files_equal": 6,
+      "private_files_absent": true
+    },
+    "installed_package": {
+      "python_modules_equal": 625,
+      "new_modules_loaded_from_installed": true
+    },
+    "secret_scans": {
+      "directory_passed": true,
+      "history_passed": true,
+      "history_commits": 948,
+      "scope": "pre-publication working directory and existing full history; private artifacts excluded by repository policy"
+    }
+  },
+  "native_contract_control": {
+    "result": {
+      "scope": "native_configuration_and_original_scenario_parser_only_controlled_grain_ids_no_generation",
+      "producer_commit": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+      "producer_code_sha256": "06b7496e3fea6135e9ebe94479c08c31e78bbfa286f4ee49d70891759f1a3fdf",
+      "accepted": [
+        {
+          "profile": "ai09-development-25-v1",
+          "variant": "ordinary",
+          "rows_upper": 45625,
+          "native_resolved_configuration_equal": true,
+          "original_scenario_contract_accepted": false
+        },
+        {
+          "profile": "ai09-development-25-v1",
+          "variant": "demand",
+          "rows_upper": 45625,
+          "native_resolved_configuration_equal": true,
+          "original_scenario_contract_accepted": true
+        },
+        {
+          "profile": "ai09-development-25-v1",
+          "variant": "physical",
+          "rows_upper": 45625,
+          "native_resolved_configuration_equal": true,
+          "original_scenario_contract_accepted": true
+        },
+        {
+          "profile": "ai09-development-50-v1",
+          "variant": "ordinary",
+          "rows_upper": 91250,
+          "native_resolved_configuration_equal": true,
+          "original_scenario_contract_accepted": false
+        },
+        {
+          "profile": "ai09-development-50-v1",
+          "variant": "demand",
+          "rows_upper": 91250,
+          "native_resolved_configuration_equal": true,
+          "original_scenario_contract_accepted": true
+        },
+        {
+          "profile": "ai09-development-50-v1",
+          "variant": "physical",
+          "rows_upper": 91250,
+          "native_resolved_configuration_equal": true,
+          "original_scenario_contract_accepted": true
+        }
+      ],
+      "generated_datasets": 0,
+      "actual_scenario_grains_and_effects_verified": false,
+      "critical_coverage_verified": false,
+      "stage_ready": false
+    },
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 1.2742086670477875,
+      "sampled_tree_peak_rss_bytes": 142786560,
+      "sampled_scratch_peak_bytes": 40960,
+      "sampled_worker_cpu_seconds": 0.6360322239999999,
+      "cpu_measurement": "worker_tree_sampled_lower_bound_excludes_supervisor",
+      "memory_measurement": "sampled_supervisor_and_owned_worker_tree_not_continuous_peak",
+      "minimum_free_disk_bytes": 54805622784,
+      "minimum_available_memory_bytes": 1402912768,
+      "samples": 7,
+      "sample_seconds": 0.2
+    },
+    "result_sha256": "809864594d441ae6e38bd59a4fb07f70c837b9dacacec52ac1e7b1399a1a7f99",
+    "control_script_sha256": "256c75be48d947dfa044c183de1dafb634b4763e7e09f8deb739b6f3a0e7a9de",
+    "invalid_magnitude_rejections": 4,
+    "scope_limit": "Native configuration equality and original plan parser only; explicit controlled grain IDs, no generated data, native effect or critical coverage acceptance"
+  },
+  "still_required": [
+    "Executable audited development25/50 orchestration and actual full-history Source preparation",
+    "Actual critical-group coverage and original scenario effects on complete generated data",
+    "Independently verified metrics-based finalist selection and durable same-selection binding for50/100",
+    "Actual full representative data-to-report, then unchanged canonical and final portfolio",
+    "Full local make ci-local and protected exact-head/main Required CI",
+    "Full three-use scientific evidence, uncertainty, cost and lifecycle/model cards"
+  ],
+  "canonical_rss_bytes": 12884901888,
+  "new_project_generations": 0,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "full_required_ci": false,
+  "on_main": false,
+  "stage_ready": false
+}

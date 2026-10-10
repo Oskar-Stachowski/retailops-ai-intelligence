@@ -4,7 +4,28 @@ import argparse
 import json
 from pathlib import Path
 
-from retailops_ai.anomaly_evaluation.contract import EvaluationPolicy, Truth
+from retailops_ai.anomaly_evaluation.contract import (
+    EvaluationPolicy,
+    OrdinaryTruth,
+    PairedTruth,
+    Truth,
+)
+from retailops_ai.evaluation_campaign.campaign_anomaly_evaluation import (
+    CampaignOrdinaryAnomalyCensusEvaluation,
+    CampaignOrdinaryAnomalyCensusPlan,
+    CampaignPairedAnomalyCensusEvaluation,
+    CampaignPairedAnomalyCensusPlan,
+)
+from retailops_ai.evaluation_campaign.campaign_anomaly_truth_contract import (
+    CampaignOrdinaryTruthPlan,
+    CampaignOrdinaryTruthReceipt,
+    OrdinarySourceVerification,
+)
+from retailops_ai.evaluation_campaign.campaign_paired_truth_contract import (
+    CampaignPairedTruthPlan,
+    CampaignPairedTruthReceipt,
+    PairedSourceVerification,
+)
 
 ROOT = Path(__file__).resolve().parents[1] / "src/retailops_ai/anomaly_evaluation/contracts"
 
@@ -13,7 +34,22 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    for name, model in (("policy", EvaluationPolicy), ("truth", Truth)):
+    for name, model in (
+        ("policy", EvaluationPolicy),
+        ("truth", Truth),
+        ("ordinary-truth.v1", OrdinaryTruth),
+        ("ordinary-source-verification.v1", OrdinarySourceVerification),
+        ("ordinary-truth-plan.v1", CampaignOrdinaryTruthPlan),
+        ("ordinary-truth-receipt.v1", CampaignOrdinaryTruthReceipt),
+        ("ordinary-census-plan.v1", CampaignOrdinaryAnomalyCensusPlan),
+        ("ordinary-census-evaluation.v1", CampaignOrdinaryAnomalyCensusEvaluation),
+        ("paired-truth.v1", PairedTruth),
+        ("paired-source-verification.v1", PairedSourceVerification),
+        ("paired-truth-plan.v1", CampaignPairedTruthPlan),
+        ("paired-truth-receipt.v1", CampaignPairedTruthReceipt),
+        ("paired-census-plan.v1", CampaignPairedAnomalyCensusPlan),
+        ("paired-census-evaluation.v1", CampaignPairedAnomalyCensusEvaluation),
+    ):
         raw = (
             json.dumps(
                 {

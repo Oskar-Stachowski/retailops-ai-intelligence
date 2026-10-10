@@ -1,0 +1,328 @@
+{
+  "recorded_at_utc": "2026-10-09T18:29:11.714429+00:00",
+  "scope": "Confirmed full-profile native Source guard failure and prospective native fix; not full Source acceptance or Project execution",
+  "accepted_ai_main": "20aae22c00e8cf9e6b1b5ff6b11e706b59d5f46e",
+  "accepted_source_main": "8479b5d313f7c6afc86487902995eb31ea054140",
+  "active_source_pin": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+  "native_reproduction": {
+    "scope": "native full-profile guard reproduction with previously controlled plans, no dataset generated",
+    "producer_commit": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+    "producer_code_sha256": "06b7496e3fea6135e9ebe94479c08c31e78bbfa286f4ee49d70891759f1a3fdf",
+    "results": [
+      {
+        "products": 25,
+        "variant": "demand",
+        "daily_grains": 45625,
+        "native_plan_parser_accepted": true,
+        "native_source_scenario_rejected_before_generation": true,
+        "error": "This candidate runner is bounded to AI profiles with at most 5000 daily grains."
+      },
+      {
+        "products": 25,
+        "variant": "physical",
+        "daily_grains": 45625,
+        "native_plan_parser_accepted": true,
+        "native_source_scenario_rejected_before_generation": true,
+        "error": "Physical candidate is bounded to AI profiles with at most 5000 daily grains."
+      },
+      {
+        "products": 50,
+        "variant": "demand",
+        "daily_grains": 91250,
+        "native_plan_parser_accepted": true,
+        "native_source_scenario_rejected_before_generation": true,
+        "error": "This candidate runner is bounded to AI profiles with at most 5000 daily grains."
+      },
+      {
+        "products": 50,
+        "variant": "physical",
+        "daily_grains": 91250,
+        "native_plan_parser_accepted": true,
+        "native_source_scenario_rejected_before_generation": true,
+        "error": "Physical candidate is bounded to AI profiles with at most 5000 daily grains."
+      }
+    ],
+    "actual_generations": 0,
+    "project_fits": 0,
+    "fresh_final_reads": 0,
+    "stage_ready": false
+  },
+  "native_reproduction_monitor": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 1.2089139590389095,
+    "sampled_tree_peak_rss_bytes": 92815360,
+    "sampled_worker_cpu_seconds": 0.6371200119999999,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 31544,
+    "sampled_peak_scratch_allocated_bytes": 40960,
+    "minimum_free_disk_bytes": 53605605376,
+    "minimum_available_memory_bytes": 1306951680,
+    "samples": 12,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak"
+  },
+  "native_reproduction_sha256": "951a9f347d69db6eb007da52d50facc3051f613575bcd620f06b514357ccf8c4",
+  "earlier_preflight_refusal_retained": true,
+  "prospective_source_change": {
+    "branch": "ai/09-full-source-scenarios",
+    "base": "8479b5d313f7c6afc86487902995eb31ea054140",
+    "uncommitted": false,
+    "execution_version": "planned-source-cached-execution-1.1.4",
+    "code_files": {
+      "data/anomalies/source_scope.py": "ef7bcd833ef010653da4136adf18c387669227bd24d451aacd2027cf5356ad1d",
+      "data/anomalies/source_process.py": "6d84e4686c82f9a8db6a9843ab37e6b4fa68ed447175a54de201a0f4fd980b2c",
+      "data/anomalies/source_cohort.py": "60837e8c39aba6773ab24cfad0c3b16cb1e5cb2889073af28757a7558762e885",
+      "data/anomalies/scenarios.py": "6f035821ce37479fba31e6da107791aa30940487d35cda1c381706867e06080c",
+      "data/anomalies/physical_scenarios.py": "de57f8f66d9533456b743834f81598033087615417977db41d9ee05f56dc5650"
+    },
+    "complete_scope_only": true,
+    "original_standalone_5000_grain_guard_preserved": true,
+    "native_algorithm_parity_accepted": true,
+    "first_component_result": {
+      "passed": 16,
+      "failed": 2,
+      "reason": "controlled test context missing evaluated_at; fixture corrected, revalidation pending"
+    },
+    "resource_gated_validation_controller_started": true,
+    "full_required_ci": false,
+    "on_main": false,
+    "native_parity_scope": "complete native candidate contents on previously exposed720-grain controls only; six family/seed pairs",
+    "native_parity": {
+      "scope": "exact complete native candidate parity on previously exposed720-grain control profiles, not full-profile execution or quality",
+      "accepted_reference_commit": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+      "configuration": {
+        "profile": "ai-smoke",
+        "days": 30,
+        "products": 8,
+        "stores": 3,
+        "warehouses": 2,
+        "forecast_plan_days": 14
+      },
+      "results": [
+        {
+          "family": "demand",
+          "seed": 42,
+          "full_candidate_sha256": "b273a960c76771391e6ad73a35cc1e20e20a83e07d5142c905f132a340546abb",
+          "effects_sha256": "132290e312689eef25594d5f1c13d7a5da7bab6938551f77853b1bbceced33f1",
+          "plan_sha256": "17b6a37456496a01b5a4ebe7ee09a0840d2a4221134e00712f74240ffb3b761f",
+          "old_reference_sha256": "ed67701ae2ea85e4b179ac0620c57dbae986c225b7358e0396a3b8328d316250",
+          "old_wall_seconds": 4.3171395839890465,
+          "new_wall_seconds": 4.333516040991526,
+          "complete_output_equal": true
+        },
+        {
+          "family": "demand",
+          "seed": 137,
+          "full_candidate_sha256": "f6dc8c66d5ded9c2c9f0034380d2ba1ee6361c3074ef3db9a1f4ee270865ffa6",
+          "effects_sha256": "e37ce025232643d47231a62b1bb609c886f1815a5792d8d4b34b5ae32734628d",
+          "plan_sha256": "a481198abcd4bd3917372cfe6c1a8c056516d0275175d3fa7e8a625b39f275ed",
+          "old_reference_sha256": "ed67701ae2ea85e4b179ac0620c57dbae986c225b7358e0396a3b8328d316250",
+          "old_wall_seconds": 3.5729165420052595,
+          "new_wall_seconds": 3.925482207967434,
+          "complete_output_equal": true
+        },
+        {
+          "family": "demand",
+          "seed": 2026,
+          "full_candidate_sha256": "0723250c7d459d1e98740d4a91fe063ce84ab62995ff3f467c9b2a7859786a65",
+          "effects_sha256": "697eb8a589575989c829ba23156617f15043d0637f076fc6ef1e8f04beae7828",
+          "plan_sha256": "e0ef0c270d856ed517c3036b3339e8f5e3b7e41e8f720ee361190fc541745b6b",
+          "old_reference_sha256": "ed67701ae2ea85e4b179ac0620c57dbae986c225b7358e0396a3b8328d316250",
+          "old_wall_seconds": 3.9467764999717474,
+          "new_wall_seconds": 3.7450774159515277,
+          "complete_output_equal": true
+        },
+        {
+          "family": "physical",
+          "seed": 42,
+          "full_candidate_sha256": "5a775f5c557c984faa6c3d0629cc3eb5a3fdc1b88755b6cef2114e8145a669c7",
+          "effects_sha256": "3c7563edb66664f4f68daeca2700090ed85954b4307a5f6ef5a1c8a1666c704a",
+          "plan_sha256": "f612e0e6acceb2024119b6aefb64517e74e457a4565e24969f436e8d8b515138",
+          "old_reference_sha256": "b0e04d07e2518058b06a1d81d01c913af4403a351e86d82488547c6fe11ba49a",
+          "old_wall_seconds": 3.8898500410141423,
+          "new_wall_seconds": 3.8062533330521546,
+          "complete_output_equal": true
+        },
+        {
+          "family": "physical",
+          "seed": 137,
+          "full_candidate_sha256": "5d5214a7865da89c952ef90367ed0667d3b9fb1c20f18facf0ad529764c8f86b",
+          "effects_sha256": "cd143c8a3b6bc0ffa42e056865036a61b334a6f9ede311a02a73ea49c1f15105",
+          "plan_sha256": "0edae87f4a8a9bac016b3c92c224e694de1566ba23ae994c86b7caa18f5b9d98",
+          "old_reference_sha256": "b0e04d07e2518058b06a1d81d01c913af4403a351e86d82488547c6fe11ba49a",
+          "old_wall_seconds": 3.0715080829686485,
+          "new_wall_seconds": 3.0249728750204667,
+          "complete_output_equal": true
+        },
+        {
+          "family": "physical",
+          "seed": 2026,
+          "full_candidate_sha256": "be593e05b1bf36c273d2105b33b672480f6d72bc22e62c034eab7aa618a15247",
+          "effects_sha256": "f0324424c3b43f1704f8a33a54cb3330c05ba686d8093597de3c82e2b1143ac4",
+          "plan_sha256": "15198208c4ac710c5dc729de8b9dbc95c7d9a93ba44a9a65afe8f3970d110e9b",
+          "old_reference_sha256": "b0e04d07e2518058b06a1d81d01c913af4403a351e86d82488547c6fe11ba49a",
+          "old_wall_seconds": 3.514749334019143,
+          "new_wall_seconds": 3.294713541981764,
+          "complete_output_equal": true
+        }
+      ],
+      "candidate_code_files": {
+        "data/anomalies/source_scope.py": "ef7bcd833ef010653da4136adf18c387669227bd24d451aacd2027cf5356ad1d",
+        "data/anomalies/source_process.py": "6d84e4686c82f9a8db6a9843ab37e6b4fa68ed447175a54de201a0f4fd980b2c",
+        "data/anomalies/source_cohort.py": "60837e8c39aba6773ab24cfad0c3b16cb1e5cb2889073af28757a7558762e885",
+        "data/anomalies/scenarios.py": "6f035821ce37479fba31e6da107791aa30940487d35cda1c381706867e06080c",
+        "data/anomalies/physical_scenarios.py": "de57f8f66d9533456b743834f81598033087615417977db41d9ee05f56dc5650"
+      },
+      "full_profile_generations": 0,
+      "project_fits": 0,
+      "fresh_final_reads": 0,
+      "stage_ready": false
+    },
+    "native_parity_monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 52.85071699996479,
+      "sampled_tree_peak_rss_bytes": 175734784,
+      "sampled_worker_cpu_seconds": 51.148145408,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 18161,
+      "sampled_peak_scratch_allocated_bytes": 32768,
+      "minimum_free_disk_bytes": 53606699008,
+      "minimum_available_memory_bytes": 1244741632,
+      "samples": 485,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak"
+    },
+    "native_parity_result_sha256": "fd72faae2caf52f358d73ebe2d18584904f0cd46199a9a800fd1528aea419b96",
+    "regression_harness_failure": {
+      "reason": "monitor rejected pytest-owned temporary symlinks; owned worker stopped and failure retained",
+      "monitor": {
+        "status": "failed",
+        "reason": "monitor_error_ValueError",
+        "exit_code": -9,
+        "wall_seconds": 27.519120042037684,
+        "sampled_tree_peak_rss_bytes": 194854912,
+        "sampled_worker_cpu_seconds": 26.133636799999998,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 19235,
+        "sampled_peak_scratch_allocated_bytes": 45056,
+        "minimum_free_disk_bytes": 53616496640,
+        "minimum_available_memory_bytes": 1253081088,
+        "samples": 251,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak"
+      },
+      "correction": "test temporary directory separated from monitored logs; global disk reserve unchanged; rerun queued"
+    },
+    "head": "57a50e263641efd71b8ef8b88eb8aef0e9c96a0f",
+    "remote_branch": "work/ai09-full-source-scenarios",
+    "pull_request": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/113",
+    "publication_status": "normal_exact_head_required_ci_pending",
+    "local_full_ci": "not_run_due_host_reserve; targeted controls accepted; normal Required CI pending",
+    "report_metadata_correction": "candidate_code_files previously repeated the last candidate hash due to report-variable shadowing; corrected to independently verified production file pins. Original candidate hashes and private report digest remain unchanged.",
+    "scenario_regression": {
+      "tests": 85,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 109.182,
+      "junit_sha256": "b03349d59038317a6276ae8d4cb7646186a32735ab671d095c0b6ddd80ca54af"
+    },
+    "scenario_regression_monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 109.86702416697517,
+      "sampled_tree_peak_rss_bytes": 231178240,
+      "sampled_worker_cpu_seconds": 107.61318976,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 21572,
+      "sampled_peak_scratch_allocated_bytes": 32768,
+      "minimum_free_disk_bytes": 53494992896,
+      "minimum_available_memory_bytes": 1244479488,
+      "samples": 982,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "owned control/log directory only; pytest temporary fixtures with deliberate malformed links excluded; global disk reserve enforced"
+    },
+    "publication_reader_qualification_export_validation": {
+      "status": "passed",
+      "tests": {
+        "tests": 29,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "seconds": 569.962,
+        "junit_sha256": "0d1e23480e275c86d290f6be934aa40e9febb05c308cae9f37eb176b86da2d7c"
+      },
+      "suites": [
+        "data/tests/test_full_source_scenario_parity.py",
+        "data/tests/test_planned_source_cohort.py",
+        "data/tests/test_planned_anomaly_snapshot.py"
+      ],
+      "monitor": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 571.0123817920103,
+        "sampled_tree_peak_rss_bytes": 195559424,
+        "sampled_worker_cpu_seconds": 559.733479305,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 10091,
+        "sampled_peak_scratch_allocated_bytes": 24576,
+        "minimum_free_disk_bytes": 53219500032,
+        "minimum_available_memory_bytes": 1080295424,
+        "samples": 5206,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "owned control/log directory only; pytest temporary fixtures with deliberate malformed links excluded; global disk reserve enforced"
+      },
+      "complete_profile_execution": false
+    },
+    "failed_controls_retained": [
+      {
+        "path": ".local/full-scenario-audit/component-1",
+        "passed": 16,
+        "failed": 2,
+        "cause": "test-only context did not have evaluated_at; corrected"
+      },
+      {
+        "path": ".local/full-scenario-audit/validation-queue/components-monitor.json",
+        "cause": "monitor rejected pytest-owned temporary links; separated test temporary directory from measured logs, global disk reserve retained"
+      }
+    ],
+    "source_evidence_sha256": "f6112cb76584bb13938e2214b18e1ca9a45b46ec3965139e6986513ebd4f3c63",
+    "source_evidence_url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/blob/57a50e263641efd71b8ef8b88eb8aef0e9c96a0f/docs/evidence/ai/09/full-source-scenario-replay.json"
+  },
+  "consumer": {
+    "worker_sha256": "9292616be2169e3ee1b5ebcabe4c637e3b3bb713e5818163873e8d86e3420af1",
+    "tests": {
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.081,
+      "sha256": "61e0065c46d93b3e00283f5ccbbe7c5be46bcba046e635f27692b9d72b8eded4"
+    },
+    "controlled_supported_writer_ownership_and_independent_read": true,
+    "source_pin_changed": false,
+    "native_1_1_4_acceptance": false
+  },
+  "still_required": [
+    "Complete producer and consumer local/Required CI then protected main publication and explicit new Source pin",
+    "Build genuine full-profile scenario plans with native grain, fulfillment and return validity",
+    "Execute full-history preparation, independently verify critical groups, audited trial reuse and actual model search/selection",
+    "Full three-use Project evidence, representative data-to-report, unchanged final portfolio, uncertainty/cost and lifecycle artifacts"
+  ],
+  "actual_full_profile_generations": 0,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "new_canonical_diagnostic": false,
+  "canonical_rss_bytes": 12884901888,
+  "on_main": false,
+  "stage_ready": false,
+  "updated_at_utc": "2026-10-09T19:10:27.406622+00:00"
+}

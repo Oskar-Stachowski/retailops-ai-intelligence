@@ -64,12 +64,14 @@ def planned_backend(source: Path) -> tuple[Any, dict[str, Any]]:
     return process, {"version": "ordinary_planned_source_2_8", "cached_execution": False}
 
 
-def producer(phase: str, source: Path, root: Path, request: dict[str, Any]) -> dict[str, Any]:
+def producer_environment(
+    source: Path, recipe: dict[str, Any], exporter_lock_sha256: str
+) -> tuple[Any, dict[str, Any]]:
+    """Verify the same complete producer environment before any native operation."""
     sys.path.insert(0, str(source))
-    plan, recipe = request["plan"], request["source"]
     if (
         hashlib.sha256((source / "data/requirements-parquet.txt").read_bytes()).hexdigest()
-        != plan["exporter_lock_sha256"]
+        != exporter_lock_sha256
     ):
         raise ValueError("campaign_generation_exporter_lock_mismatch")
     for relative in ("services/api/requirements.txt", "data/requirements-parquet.txt"):
@@ -89,6 +91,12 @@ def producer(phase: str, source: Path, root: Path, request: dict[str, Any]) -> d
         or provenance["dependency_sha256"] != recipe["producer_lock_sha256"]
     ):
         raise ValueError("campaign_generation_producer_identity_mismatch")
+    return io, provenance
+
+
+def producer(phase: str, source: Path, root: Path, request: dict[str, Any]) -> dict[str, Any]:
+    plan, recipe = request["plan"], request["source"]
+    io, provenance = producer_environment(source, recipe, plan["exporter_lock_sha256"])
     if phase == "generation":
         configuration = importlib.import_module("data.generator.configuration")
         parameters = {
@@ -120,6 +128,7 @@ def producer(phase: str, source: Path, root: Path, request: dict[str, Any]) -> d
                     "planned-source-cached-execution-1.1.1",
                     "planned-source-cached-execution-1.1.2",
                     "planned-source-cached-execution-1.1.3",
+                    "planned-source-cached-execution-1.1.4",
                 }
                 else {}
             )

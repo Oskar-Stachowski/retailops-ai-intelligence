@@ -13,8 +13,10 @@ from retailops_ai.anomaly_evaluation.contract import (
     Episode,
     EvaluationPolicy,
     Metric,
+    OrdinaryTruth,
     Truth,
     dates,
+    validate_truth,
 )
 from retailops_ai.source_snapshot.files import json_sha256
 
@@ -128,7 +130,7 @@ def observation(
 
 def evaluate(
     predictions: Sequence[Prediction | Decision],
-    truth: Truth,
+    truth: Truth | OrdinaryTruth,
     window: Window,
     as_of: datetime,
     policy: EvaluationPolicy | None = None,
@@ -136,7 +138,7 @@ def evaluate(
     source_dataset_id: str,
 ) -> dict[str, Any]:
     policy = EvaluationPolicy.model_validate_json((policy or EvaluationPolicy()).model_dump_json())
-    truth = Truth.model_validate_json(truth.model_dump_json())
+    truth = validate_truth(truth)
     if truth.source_dataset_id != source_dataset_id:
         raise ValueError("anomaly_evaluation_truth_source_mismatch")
     if as_of.utcoffset() != timedelta(0):
