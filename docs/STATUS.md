@@ -1,5 +1,21 @@
 # Aktualny status
 
+**2026-10-10 — AI 09: pełny odbiór Source i wynik lokalnego CI konsumenta.**
+[09.95](evidence/09-95-paired-truth-local-ci.json) potwierdza sukces Source
+PR 114 i wynikowego main `d2363a5c`: po **21 zaliczonych kontroli oraz
+4 deklarowane pominięcia ścieżek**. Natywna bramka main zaliczyła **1160 testów**.
+Pin konsumenta pozostaje bez zmian; odbiór Source nie zastępuje jego aktualizacji.
+
+Pełne `make ci-local` na AI `545866a6` zaliczyło **5567 testów przy 55
+pominięciach**, Ruff, Mypy i pozostałe bramki poprzedzające TensorFlow.
+Zakończyło się błędem DNS podczas instalacji `h5py`. Osobne ponowienie
+TensorFlow pobrało zależności: **3 testy przeszły, 5 odmówiło startu workera
+przez `preflight_reserve`**. Nie obniżono limitów ani rezerwy, nie przerwano
+obcych procesów. Pełny lokalny CI pozostaje niezaliczony; wymagany jest normalny
+PR oraz pełny Required CI na Linuksie i wynikowym main. Dane Project 25/50,
+transfer do prób, rzeczywiste modele i końcowe bramki pozostają otwarte.
+Canonical wyłączony, limit **12 GiB** zachowany; AI 09 `not_ready`.
+
 **2026-10-10 — AI 09: pełny odczyt pary Source i trwały odbiór prawdy.**
 [09.94](evidence/09-94-paired-truth-native-verification.json) dodaje wykonawcę
 dwóch natywnych odczytów, wspólny zmierzony koszt, dowód obu zakończonych
@@ -21,9 +37,9 @@ nie wynik pełnej skali ani kampanii Project.
 
 Source PR 114 przeszedł **21 kontroli i 4 deklarowane pominięcia ścieżek**
 po zwykłym ponowieniu nieudanych jobs; natywny data quality gate zaliczył
-1160 testów. PR scalono do `d2363a5c`; CI wynikowego main `38000892591`
-nadal trwa. Pin konsumenta pozostaje bez zmian. Pełny lokalny CI i odbiór
-PR/main tego przyrostu AI są nadal wymagane, podobnie jak transfer ordinary
+1160 testów. PR scalono do `d2363a5c`; zakończony odbiór main `38000892591`
+i rzeczywisty wynik lokalnego CI opisuje 09.95 powyżej. Pin konsumenta pozostaje
+bez zmian. Odbiór PR/main tego przyrostu AI jest nadal wymagany, podobnie jak transfer ordinary
 do triali, rzeczywiste dane 25/50, modele i końcowe bramki. Canonical wyłączony,
 limit **12 GiB** zachowany; AI 09 `not_ready`.
 

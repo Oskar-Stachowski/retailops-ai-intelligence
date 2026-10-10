@@ -1,5 +1,12 @@
 # Niezależna prawda dla zwykłego Source
 
+Aktualny odbiór opisuje [09.95](evidence/09-95-paired-truth-local-ci.json):
+Source PR 114 i jego main są zaakceptowane. Pełny lokalny CI konsumenta
+zakończył się błędem instalacji po 5567 zaliczonych testach i 55 pominięciach;
+osobny retry TensorFlow dał 3 sukcesy i 5 odmów `preflight_reserve` przed
+workerami. Wyniki pozostają zapisane. Wymagany jest pełny odbiór PR i main;
+nie jest to jeszcze wynik kampanii Project ani zamknięcie AI 09.
+
 `read_campaign_ordinary_truth` tworzy prawdę offline dla zwykłego Source 2.7.
 Najpierw rezerwuje odczyt w trwałym dzienniku, sprawdza zamrożony plan,
 zakończoną generację i jej zapisany receipt. Worker działa pod przypiętym
