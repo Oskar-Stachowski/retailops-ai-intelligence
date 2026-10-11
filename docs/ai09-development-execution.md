@@ -43,7 +43,8 @@ nadal rezerwują każdą operację w oryginalnym dzienniku.
 Po selekcji wykonawca ponownie odbiera oryginalny wynik całej skali
 i zapisuje niezmienny `forecast-execution-result.json`. Plik jest wejściem
 do istniejącego kompilatora kolejnej skali. Samo ukończenie dziennika
-zachowuje `quality_qualified=false`, `final_test_access_authorized=false`+i `stage_ready=false`.
+zachowuje `quality_qualified=false`, `final_test_access_authorized=false`
+i `stage_ready=false`.
 
 **11 kontroli przeszło bez pominięć**, w tym wszystkie 12 operacji oraz
 ponowny odbiór ukończonego dziennika bez startu workera. Pełny Mypy sprawdził

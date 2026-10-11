@@ -1,5 +1,26 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: rzeczywiste reguły oceny przed planowaniem źródeł.**
+[09.102](evidence/09-102-prospective-development-policies.json) i
+[instrukcja zamrożenia](ai09-prospective-policies.md) wiążą dokumenty polityk,
+kategorie natywnego producenta oraz historyczne koszty. Nowe reguły grup
+można zamrozić przed wyznaczeniem identyfikatorów źródeł; późniejsza ocena
+nadal wymaga oryginalnego protokołu, planu i spisu populacji. Wszystkie
+krytyczne grupy i wcześniejsze formaty pozostają zachowane.
+
+**88 testów źródeł i te same 88 z paczki** przeszło bez pominięć.
+Mypy sprawdził **780 plików**. Zweryfikowano rzeczywisty odczyt ośmiu
+kategorii z zaakceptowanego Source `d2363a5c` oraz zapis/odczyt polityk.
+649 modułów i 28 plików kontraktów mają zgodne bajty w paczce; wszystkie
+391 wcześniejszych plików kontraktów są niezmienione. Pierwsze dopuszczenie
+testów wygasło bez startu workera; rozdzielone kontrole zachowały rezerwy.
+
+To odbiór komponentu. Przypięcie polityk do rzeczywistego workflow, generacja,
+treningi, ocena trzech zastosowań i final/lifecycle oraz pełny CI i publikacja
+pozostają otwarte. Pełny CI poprzedniego przyrostu `7c9070b` nadal trwa
+w odrębnym, niezmienianym drzewie. Canonical wyłączony; limit **12 GiB**
+zachowany; AI 09 **`not_ready`**.
+
 **2026-10-11 — AI 09: wykonawca zamrożonych dzienników prognoz.**
 [09.101](evidence/09-101-development-execution.json) i
 [instrukcja wykonania](ai09-development-execution.md) opisują polecenie

@@ -17,6 +17,9 @@ from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract imp
 from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
     CampaignPortfolioRequiredGroupPolicy,
 )
+from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
+    CampaignRequiredGroupRecipe,
+)
 from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
     CampaignForecastUncertaintyPolicy,
 )
@@ -131,18 +134,29 @@ class CampaignForecastRequiredGroupEvaluationReceipt(_CampaignForecastRobustEval
         return self
 
 
+class CampaignForecastGroupRecipeEvaluationReceipt(CampaignForecastRequiredGroupEvaluationReceipt):
+    """Same complete native evaluation, bound to pre-generation variant ownership."""
+
+    version: Literal["ai09-campaign-forecast-group-recipe-evaluation-receipt-1.0.0"] = (
+        "ai09-campaign-forecast-group-recipe-evaluation-receipt-1.0.0"  # type: ignore[assignment]
+    )
+    required_group_policy: CampaignRequiredGroupRecipe  # type: ignore[assignment]
+
+
 ForecastEvaluationReceipt = (
     CampaignForecastEvaluationReceipt
     | CampaignForecastRobustEvaluationReceipt
     | CampaignForecastPortfolioEvaluationReceipt
     | CampaignForecastPortfolioRobustEvaluationReceipt
     | CampaignForecastRequiredGroupEvaluationReceipt
+    | CampaignForecastGroupRecipeEvaluationReceipt
 )
 
 ForecastRobustEvaluationReceipt = (
     CampaignForecastRobustEvaluationReceipt
     | CampaignForecastPortfolioRobustEvaluationReceipt
     | CampaignForecastRequiredGroupEvaluationReceipt
+    | CampaignForecastGroupRecipeEvaluationReceipt
 )
 
 
@@ -174,4 +188,6 @@ def parse_forecast_evaluation_receipt(raw: bytes) -> ForecastEvaluationReceipt:
         return CampaignForecastPortfolioRobustEvaluationReceipt.model_validate_json(raw)
     if value.get("version") == "ai09-campaign-forecast-required-group-evaluation-receipt-1.0.0":
         return CampaignForecastRequiredGroupEvaluationReceipt.model_validate_json(raw)
+    if value.get("version") == "ai09-campaign-forecast-group-recipe-evaluation-receipt-1.0.0":
+        return CampaignForecastGroupRecipeEvaluationReceipt.model_validate_json(raw)
     raise SnapshotError("campaign_evaluation_receipt_version_invalid")

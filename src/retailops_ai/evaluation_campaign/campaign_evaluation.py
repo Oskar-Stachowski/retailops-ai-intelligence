@@ -74,10 +74,13 @@ from retailops_ai.evaluation_campaign.campaign_raw_context import (
     context_record,
     validate_raw_context_metrics,
 )
-from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
-    CampaignPortfolioRequiredGroupPolicy,
+from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
+    CampaignRequiredGroupRecipe,
+    RequiredGroupPolicy,
+    parse_required_group_policy,
 )
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CampaignForecastGroupRecipeEvaluationReceipt,
     CampaignForecastPortfolioEvaluationReceipt,
     CampaignForecastPortfolioRobustEvaluationReceipt,
     CampaignForecastRequiredGroupEvaluationReceipt,
@@ -404,7 +407,7 @@ def evaluate_campaign_forecast(
     raw_context_bundle: Path | None = None,
     raw_context_receipt: CampaignContextBundleReceipt | None = None,
     uncertainty_policy: CampaignForecastUncertaintyPolicy | None = None,
-    required_group_policy: CampaignPortfolioRequiredGroupPolicy | None = None,
+    required_group_policy: RequiredGroupPolicy | None = None,
 ) -> tuple[Path, ForecastEvaluationReceipt]:
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, operation_id)
@@ -459,7 +462,7 @@ def evaluate_campaign_forecast(
         )
         raw_context = None
         if required_group_policy is not None:
-            required_group_policy = CampaignPortfolioRequiredGroupPolicy.model_validate_json(
+            required_group_policy = parse_required_group_policy(
                 required_group_policy.model_dump_json()
             )
             if (
@@ -786,7 +789,9 @@ def evaluate_campaign_forecast(
         if uncertainty_policy is not None and raw_context is not None:
             context_parent, census = context_record(raw_context, plan, population)
             robust_model = (
-                CampaignForecastRequiredGroupEvaluationReceipt
+                CampaignForecastGroupRecipeEvaluationReceipt
+                if isinstance(required_group_policy, CampaignRequiredGroupRecipe)
+                else CampaignForecastRequiredGroupEvaluationReceipt
                 if required_group_policy is not None
                 else CampaignForecastPortfolioRobustEvaluationReceipt
                 if portfolio_binding is not None
@@ -867,7 +872,7 @@ def _verify_bundle(bundle: Path, receipt: ForecastEvaluationReceipt) -> None:
     if files != receipt.artifact_files or size != receipt.artifact_bytes:
         raise SnapshotError("campaign_evaluation_artifact_checksum_mismatch")
     if isinstance(receipt, CampaignForecastRequiredGroupEvaluationReceipt):
-        required = CampaignPortfolioRequiredGroupPolicy.model_validate_json(
+        required = parse_required_group_policy(
             read_bytes(bundle, "required-groups.json", MAX_PARENT_METADATA_BYTES)
         )
         protocol = CampaignPortfolioProtocol.model_validate_json(

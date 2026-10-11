@@ -44,8 +44,8 @@ from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract imp
     CampaignPortfolioForecastEvaluationBinding,
 )
 from retailops_ai.evaluation_campaign.campaign_raw_context import RawContextPass
-from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
-    CampaignPortfolioRequiredGroupPolicy,
+from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
+    parse_required_group_policy,
 )
 from retailops_ai.evaluation_campaign.campaign_score_contract import FAMILIES
 from retailops_ai.evaluation_campaign.campaign_score_worker import load_models
@@ -513,7 +513,7 @@ def finalize(
     if ("required_group_policy" in request) != ("portfolio_protocol" in request):
         raise SnapshotError("campaign_evaluation_required_group_policy_pair")
     if "required_group_policy" in request:
-        required_group_policy = CampaignPortfolioRequiredGroupPolicy.model_validate_json(
+        required_group_policy = parse_required_group_policy(
             canonical_bytes(request["required_group_policy"])
         )
         portfolio_protocol = CampaignPortfolioProtocol.model_validate_json(

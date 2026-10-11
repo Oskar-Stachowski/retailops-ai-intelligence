@@ -1,0 +1,1361 @@
+{
+  "$defs": {
+    "AttentionCosts": {
+      "additionalProperties": false,
+      "properties": {
+        "false_attention": {
+          "exclusiveMinimum": 0,
+          "maximum": 1000000,
+          "title": "False Attention",
+          "type": "number"
+        },
+        "interpretation": {
+          "const": "operator_proposal_not_validated_business_savings",
+          "default": "operator_proposal_not_validated_business_savings",
+          "title": "Interpretation",
+          "type": "string"
+        },
+        "missed_incident": {
+          "exclusiveMinimum": 0,
+          "maximum": 1000000,
+          "title": "Missed Incident",
+          "type": "number"
+        }
+      },
+      "required": [
+        "false_attention",
+        "missed_incident"
+      ],
+      "title": "AttentionCosts",
+      "type": "object"
+    },
+    "CampaignForecastQualityPolicy": {
+      "additionalProperties": false,
+      "description": "The same numerical gates as v2, with an explicit campaign evaluation scope.",
+      "properties": {
+        "evaluation_use": {
+          "const": "independent_and_final_after_frozen_selection_no_reselection",
+          "default": "independent_and_final_after_frozen_selection_no_reselection",
+          "title": "Evaluation Use",
+          "type": "string"
+        },
+        "interval_objective": {
+          "const": "central_interval_score_no_regression_against_baseline",
+          "default": "central_interval_score_no_regression_against_baseline",
+          "title": "Interval Objective",
+          "type": "string"
+        },
+        "legacy_width_ratio_threshold": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Legacy Width Ratio Threshold",
+          "type": "number"
+        },
+        "maximum_absolute_normalized_mean_bias": {
+          "default": 0.1,
+          "maximum": 0.1,
+          "minimum": 0.1,
+          "title": "Maximum Absolute Normalized Mean Bias",
+          "type": "number"
+        },
+        "maximum_segment_mae_regression": {
+          "default": 0.1,
+          "maximum": 0.1,
+          "minimum": 0.1,
+          "title": "Maximum Segment Mae Regression",
+          "type": "number"
+        },
+        "minimum_calibration_rows_per_horizon": {
+          "const": 100,
+          "default": 100,
+          "title": "Minimum Calibration Rows Per Horizon",
+          "type": "integer"
+        },
+        "minimum_eligibility_coverage": {
+          "default": 0.8,
+          "maximum": 0.8,
+          "minimum": 0.8,
+          "title": "Minimum Eligibility Coverage",
+          "type": "number"
+        },
+        "minimum_empirical_coverage": {
+          "default": 0.8,
+          "maximum": 0.8,
+          "minimum": 0.8,
+          "title": "Minimum Empirical Coverage",
+          "type": "number"
+        },
+        "minimum_global_rows": {
+          "const": 100,
+          "default": 100,
+          "title": "Minimum Global Rows",
+          "type": "integer"
+        },
+        "minimum_prediction_coverage": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 1.0,
+          "title": "Minimum Prediction Coverage",
+          "type": "number"
+        },
+        "minimum_relative_mae_improvement": {
+          "default": 0.05,
+          "maximum": 0.05,
+          "minimum": 0.05,
+          "title": "Minimum Relative Mae Improvement",
+          "type": "number"
+        },
+        "minimum_segment_rows": {
+          "const": 30,
+          "default": 30,
+          "title": "Minimum Segment Rows",
+          "type": "integer"
+        },
+        "nominal_coverage": {
+          "default": 0.9,
+          "maximum": 0.9,
+          "minimum": 0.9,
+          "title": "Nominal Coverage",
+          "type": "number"
+        },
+        "reference_functionals": {
+          "const": "separate_tune_choices_not_a_joint_distribution",
+          "default": "separate_tune_choices_not_a_joint_distribution",
+          "title": "Reference Functionals",
+          "type": "string"
+        },
+        "version": {
+          "const": "ai09-campaign-forecast-quality-1.0.0",
+          "default": "ai09-campaign-forecast-quality-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "zero_actuals": {
+          "const": "absolute_errors_and_false_positive_units_no_ratio_gate",
+          "default": "absolute_errors_and_false_positive_units_no_ratio_gate",
+          "title": "Zero Actuals",
+          "type": "string"
+        }
+      },
+      "title": "CampaignForecastQualityPolicy",
+      "type": "object"
+    },
+    "CampaignForecastSegmentPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "availability_membership": {
+          "const": "independent_boolean_strata_overlap_not_a_partition",
+          "default": "independent_boolean_strata_overlap_not_a_partition",
+          "title": "Availability Membership",
+          "type": "string"
+        },
+        "categories": {
+          "const": "complete_verified_source_catalog_not_selected_from_outcomes",
+          "default": "complete_verified_source_catalog_not_selected_from_outcomes",
+          "title": "Categories",
+          "type": "string"
+        },
+        "category_inventory": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 256,
+          "minItems": 1,
+          "title": "Category Inventory",
+          "type": "array"
+        },
+        "final_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Access Authorized",
+          "type": "boolean"
+        },
+        "intermittency_basis": {
+          "const": "known_open_history_days_missing_or_closed_are_not_sales_zeros",
+          "default": "known_open_history_days_missing_or_closed_are_not_sales_zeros",
+          "title": "Intermittency Basis",
+          "type": "string"
+        },
+        "inventory_basis": {
+          "const": "origin_known_unreserved_available_quantity_not_future_stock",
+          "default": "origin_known_unreserved_available_quantity_not_future_stock",
+          "title": "Inventory Basis",
+          "type": "string"
+        },
+        "late_observation_hours": {
+          "default": 24,
+          "maximum": 168,
+          "minimum": 1,
+          "title": "Late Observation Hours",
+          "type": "integer"
+        },
+        "lead_time_basis": {
+          "const": "origin_known_supplier_quote_not_realized_delivery_or_truth",
+          "default": "origin_known_supplier_quote_not_realized_delivery_or_truth",
+          "title": "Lead Time Basis",
+          "type": "string"
+        },
+        "lead_time_boundaries": {
+          "default": [
+            2,
+            7
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": 2,
+              "type": "integer"
+            },
+            {
+              "const": 7,
+              "type": "integer"
+            }
+          ],
+          "title": "Lead Time Boundaries",
+          "type": "array"
+        },
+        "max_rows": {
+          "default": 10000000,
+          "maximum": 100000000,
+          "minimum": 1,
+          "title": "Max Rows",
+          "type": "integer"
+        },
+        "max_segments": {
+          "default": 512,
+          "maximum": 4096,
+          "minimum": 60,
+          "title": "Max Segments",
+          "type": "integer"
+        },
+        "maximum_inventory_snapshot_age_hours": {
+          "const": 24,
+          "default": 24,
+          "title": "Maximum Inventory Snapshot Age Hours",
+          "type": "integer"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "scenario_basis": {
+          "const": "source_bound_preregistered_annotation_never_actual_target",
+          "default": "source_bound_preregistered_annotation_never_actual_target",
+          "title": "Scenario Basis",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "version": {
+          "const": "ai09-complete-forecast-segments-1.0.0",
+          "default": "ai09-complete-forecast-segments-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "volume_basis": {
+          "const": "origin_known_rolling_28_mean_not_target_outcome",
+          "default": "origin_known_rolling_28_mean_not_target_outcome",
+          "title": "Volume Basis",
+          "type": "string"
+        },
+        "volume_boundaries": {
+          "default": [
+            0,
+            5,
+            20
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "const": 0,
+              "type": "integer"
+            },
+            {
+              "const": 5,
+              "type": "integer"
+            },
+            {
+              "const": 20,
+              "type": "integer"
+            }
+          ],
+          "title": "Volume Boundaries",
+          "type": "array"
+        }
+      },
+      "required": [
+        "category_inventory"
+      ],
+      "title": "CampaignForecastSegmentPolicy",
+      "type": "object"
+    },
+    "CampaignForecastUncertaintyPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "assumptions": {
+          "default": [
+            "time_blocks_approximate_weak_dependence_no_stationarity_guarantee",
+            "series_clusters_assume_between_cluster_independence",
+            "methods_are_separate_sensitivity_reports_not_joint_multiway_inference"
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "const": "time_blocks_approximate_weak_dependence_no_stationarity_guarantee",
+              "type": "string"
+            },
+            {
+              "const": "series_clusters_assume_between_cluster_independence",
+              "type": "string"
+            },
+            {
+              "const": "methods_are_separate_sensitivity_reports_not_joint_multiway_inference",
+              "type": "string"
+            }
+          ],
+          "title": "Assumptions",
+          "type": "array"
+        },
+        "confidence_level": {
+          "default": 0.95,
+          "maximum": 0.99,
+          "minimum": 0.8,
+          "title": "Confidence Level",
+          "type": "number"
+        },
+        "final_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Access Authorized",
+          "type": "boolean"
+        },
+        "independent_row_resampling": {
+          "const": false,
+          "default": false,
+          "title": "Independent Row Resampling",
+          "type": "boolean"
+        },
+        "max_cluster_cells": {
+          "default": 100000,
+          "maximum": 1000000,
+          "minimum": 2,
+          "title": "Max Cluster Cells",
+          "type": "integer"
+        },
+        "max_index_bytes": {
+          "default": 1073741824,
+          "maximum": 8589934592,
+          "minimum": 4096,
+          "title": "Max Index Bytes",
+          "type": "integer"
+        },
+        "max_resampled_cluster_visits": {
+          "default": 10000000,
+          "maximum": 100000000,
+          "minimum": 398,
+          "title": "Max Resampled Cluster Visits",
+          "type": "integer"
+        },
+        "max_rows": {
+          "default": 10000000,
+          "maximum": 100000000,
+          "minimum": 1,
+          "title": "Max Rows",
+          "type": "integer"
+        },
+        "methods": {
+          "default": [
+            "time_block",
+            "series_cluster"
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": "time_block",
+              "type": "string"
+            },
+            {
+              "const": "series_cluster",
+              "type": "string"
+            }
+          ],
+          "title": "Methods",
+          "type": "array"
+        },
+        "minimum_eligible_series_clusters": {
+          "default": 30,
+          "maximum": 10000,
+          "minimum": 2,
+          "title": "Minimum Eligible Series Clusters",
+          "type": "integer"
+        },
+        "minimum_eligible_time_blocks": {
+          "default": 8,
+          "maximum": 1000,
+          "minimum": 2,
+          "title": "Minimum Eligible Time Blocks",
+          "type": "integer"
+        },
+        "nominal_coverage_guaranteed": {
+          "const": false,
+          "default": false,
+          "title": "Nominal Coverage Guaranteed",
+          "type": "boolean"
+        },
+        "nominal_interval_coverage": {
+          "default": 0.9,
+          "maximum": 0.9,
+          "minimum": 0.9,
+          "title": "Nominal Interval Coverage",
+          "type": "number"
+        },
+        "pairing": {
+          "const": "same_cluster_multiplicities_for_candidate_reference_and_actual",
+          "default": "same_cluster_multiplicities_for_candidate_reference_and_actual",
+          "title": "Pairing",
+          "type": "string"
+        },
+        "partial_boundary_blocks": {
+          "const": "retain_full_membership_never_drop_rows",
+          "default": "retain_full_membership_never_drop_rows",
+          "title": "Partial Boundary Blocks",
+          "type": "string"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "quantile_method": {
+          "const": "linear_percentile",
+          "default": "linear_percentile",
+          "title": "Quantile Method",
+          "type": "string"
+        },
+        "random_generator": {
+          "const": "numpy_PCG64",
+          "default": "numpy_PCG64",
+          "title": "Random Generator",
+          "type": "string"
+        },
+        "resamples": {
+          "default": 999,
+          "maximum": 9999,
+          "minimum": 199,
+          "title": "Resamples",
+          "type": "integer"
+        },
+        "resampling_seed": {
+          "default": 137,
+          "maximum": 4294967295,
+          "minimum": 0,
+          "title": "Resampling Seed",
+          "type": "integer"
+        },
+        "series_clusters": {
+          "const": "whole_product_selling_location_channel_all_origins_and_horizons",
+          "default": "whole_product_selling_location_channel_all_origins_and_horizons",
+          "title": "Series Clusters",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "time_basis": {
+          "const": "forecast_origin_utc_calendar_day",
+          "default": "forecast_origin_utc_calendar_day",
+          "title": "Time Basis",
+          "type": "string"
+        },
+        "time_block_anchor": {
+          "default": "2000-01-03",
+          "format": "date",
+          "title": "Time Block Anchor",
+          "type": "string"
+        },
+        "time_block_days": {
+          "default": 28,
+          "maximum": 365,
+          "minimum": 14,
+          "title": "Time Block Days",
+          "type": "integer"
+        },
+        "time_blocks": {
+          "const": "fixed_disjoint_calendar_blocks_all_series_jointly",
+          "default": "fixed_disjoint_calendar_blocks_all_series_jointly",
+          "title": "Time Blocks",
+          "type": "string"
+        },
+        "version": {
+          "const": "ai09-paired-cluster-uncertainty-1.0.0",
+          "default": "ai09-paired-cluster-uncertainty-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "CampaignForecastUncertaintyPolicy",
+      "type": "object"
+    },
+    "CampaignRequiredGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            "global",
+            "horizon",
+            "category",
+            "channel",
+            "volume",
+            "scenario",
+            "history",
+            "availability",
+            "inventory",
+            "lead_time",
+            "intermittency",
+            "anomaly"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "dimension",
+        "value"
+      ],
+      "title": "CampaignRequiredGroup",
+      "type": "object"
+    },
+    "CampaignRequiredGroupRecipe": {
+      "additionalProperties": false,
+      "properties": {
+        "coverage_rule": {
+          "const": "same_preregistered_variant_owners_in_every_seed_without_pooling",
+          "default": "same_preregistered_variant_owners_in_every_seed_without_pooling",
+          "title": "Coverage Rule",
+          "type": "string"
+        },
+        "critical_insufficient_sample": {
+          "const": "blocks_qualification",
+          "default": "blocks_qualification",
+          "title": "Critical Insufficient Sample",
+          "type": "string"
+        },
+        "diagnostics": {
+          "const": "all_census_groups_metrics_counts_validity_and_uncertainty_retained",
+          "default": "all_census_groups_metrics_counts_validity_and_uncertainty_retained",
+          "title": "Diagnostics",
+          "type": "string"
+        },
+        "final_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Access Authorized",
+          "type": "boolean"
+        },
+        "native_scenario_effects_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Native Scenario Effects Qualified",
+          "type": "boolean"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "segment_policy": {
+          "$ref": "#/$defs/CampaignForecastSegmentPolicy"
+        },
+        "source_binding": {
+          "const": "original_protocol_source_recipe_and_evaluation_scope",
+          "default": "original_protocol_source_recipe_and_evaluation_scope",
+          "title": "Source Binding",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "unknown_category_encoding_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Unknown Category Encoding Qualified",
+          "type": "boolean"
+        },
+        "variants": {
+          "items": {
+            "$ref": "#/$defs/CampaignVariantRequiredGroups"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "title": "Variants",
+          "type": "array"
+        },
+        "version": {
+          "const": "ai09-prospective-required-group-recipe-1.0.0",
+          "default": "ai09-prospective-required-group-recipe-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "segment_policy",
+        "variants"
+      ],
+      "title": "CampaignRequiredGroupRecipe",
+      "type": "object"
+    },
+    "CampaignVariantRequiredGroups": {
+      "additionalProperties": false,
+      "properties": {
+        "required": {
+          "items": {
+            "$ref": "#/$defs/CampaignRequiredGroup"
+          },
+          "maxItems": 4096,
+          "minItems": 1,
+          "title": "Required",
+          "type": "array"
+        },
+        "variant": {
+          "enum": [
+            "ordinary",
+            "demand",
+            "physical"
+          ],
+          "title": "Variant",
+          "type": "string"
+        }
+      },
+      "required": [
+        "variant",
+        "required"
+      ],
+      "title": "CampaignVariantRequiredGroups",
+      "type": "object"
+    },
+    "EvaluationPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "average_precision": {
+          "const": "score_ties_grouped_stepwise_average_precision",
+          "default": "score_ties_grouped_stepwise_average_precision",
+          "title": "Average Precision",
+          "type": "string"
+        },
+        "early_lead_days": {
+          "const": 0,
+          "default": 0,
+          "title": "Early Lead Days",
+          "type": "integer"
+        },
+        "episode_coverage": {
+          "const": "all_mature_episodes_in_complete_requested_census",
+          "default": "all_mature_episodes_in_complete_requested_census",
+          "title": "Episode Coverage",
+          "type": "string"
+        },
+        "false_alert_denominator": {
+          "const": "scored_mature_truth_clean_observations",
+          "default": "scored_mature_truth_clean_observations",
+          "title": "False Alert Denominator",
+          "type": "string"
+        },
+        "late_tolerance_days": {
+          "const": 1,
+          "default": 1,
+          "title": "Late Tolerance Days",
+          "type": "integer"
+        },
+        "overlap": {
+          "const": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+          "default": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+          "title": "Overlap",
+          "type": "string"
+        },
+        "repeat_alerts": {
+          "const": "report_without_increasing_episode_recall",
+          "default": "report_without_increasing_episode_recall",
+          "title": "Repeat Alerts",
+          "type": "string"
+        },
+        "unknown_truth": {
+          "const": "excluded_and_counted",
+          "default": "excluded_and_counted",
+          "title": "Unknown Truth",
+          "type": "string"
+        },
+        "version": {
+          "const": "anomaly-evaluation-1.0.0",
+          "default": "anomaly-evaluation-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "zero_prediction_precision": {
+          "const": "not_evaluable",
+          "default": "not_evaluable",
+          "title": "Zero Prediction Precision",
+          "type": "string"
+        }
+      },
+      "title": "EvaluationPolicy",
+      "type": "object"
+    },
+    "LabelPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "episode_policy": {
+          "const": "zero_after_event_including_instantaneous",
+          "default": "zero_after_event_including_instantaneous",
+          "title": "Episode Policy",
+          "type": "string"
+        },
+        "horizon_days": {
+          "const": 7,
+          "default": 7,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "max_ledger_rows": {
+          "default": 100000,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Max Ledger Rows",
+          "type": "integer"
+        },
+        "max_snapshot_age_seconds": {
+          "default": 86400,
+          "maximum": 86400,
+          "minimum": 0,
+          "title": "Max Snapshot Age Seconds",
+          "type": "integer"
+        },
+        "max_windows": {
+          "default": 10000,
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Max Windows",
+          "type": "integer"
+        },
+        "reservation_policy": {
+          "const": "none",
+          "default": "none",
+          "title": "Reservation Policy",
+          "type": "string"
+        },
+        "stock_measure": {
+          "const": "available_qty",
+          "default": "available_qty",
+          "title": "Stock Measure",
+          "type": "string"
+        },
+        "version": {
+          "const": "incident-stockout-labels-1.0.0",
+          "default": "incident-stockout-labels-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "LabelPolicy",
+      "type": "object"
+    },
+    "OperatorCapacity": {
+      "additionalProperties": false,
+      "properties": {
+        "fraction": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 1,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fraction"
+        },
+        "mode": {
+          "enum": [
+            "top_n",
+            "top_fraction"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "ties": {
+          "const": "product_stock_lexical",
+          "default": "product_stock_lexical",
+          "title": "Ties",
+          "type": "string"
+        },
+        "top_n": {
+          "anyOf": [
+            {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Top N"
+        },
+        "unit": {
+          "const": "physical_product_stock_keys_per_origin",
+          "default": "physical_product_stock_keys_per_origin",
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "title": "OperatorCapacity",
+      "type": "object"
+    },
+    "PolicySpec": {
+      "additionalProperties": false,
+      "properties": {
+        "approval_status": {
+          "const": "proposal_requires_operator_review",
+          "default": "proposal_requires_operator_review",
+          "title": "Approval Status",
+          "type": "string"
+        },
+        "capacity": {
+          "$ref": "#/$defs/OperatorCapacity"
+        },
+        "costs": {
+          "$ref": "#/$defs/AttentionCosts"
+        },
+        "evaluation_role": {
+          "default": "tune",
+          "enum": [
+            "tune",
+            "calibration"
+          ],
+          "title": "Evaluation Role",
+          "type": "string"
+        },
+        "final_test_access": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Final Test Access",
+          "type": "string"
+        },
+        "thresholds": {
+          "$ref": "#/$defs/RiskThresholds"
+        },
+        "version": {
+          "default": "stockout-threshold-proposal-1.0.0",
+          "enum": [
+            "stockout-threshold-proposal-1.0.0",
+            "stockout-threshold-proposal-2.0.0"
+          ],
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "thresholds",
+        "capacity",
+        "costs"
+      ],
+      "title": "PolicySpec",
+      "type": "object"
+    },
+    "QualityPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "maximum_false_alerts_per_1000": {
+          "maximum": 1000,
+          "minimum": 0,
+          "title": "Maximum False Alerts Per 1000",
+          "type": "number"
+        },
+        "minimum_clean_per_case": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Minimum Clean Per Case",
+          "type": "integer"
+        },
+        "minimum_episode_recall": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum Episode Recall",
+          "type": "number"
+        },
+        "minimum_episode_recall_per_type": {
+          "default": 0.5,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum Episode Recall Per Type",
+          "type": "number"
+        },
+        "minimum_episodes_per_type": {
+          "default": 3,
+          "maximum": 100,
+          "minimum": 3,
+          "title": "Minimum Episodes Per Type",
+          "type": "integer"
+        },
+        "minimum_evaluable_coverage": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum Evaluable Coverage",
+          "type": "number"
+        },
+        "minimum_high_severity_precision": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum High Severity Precision",
+          "type": "number"
+        },
+        "minimum_positive_observations_per_type": {
+          "default": 3,
+          "maximum": 10000,
+          "minimum": 3,
+          "title": "Minimum Positive Observations Per Type",
+          "type": "integer"
+        },
+        "minimum_precision": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum Precision",
+          "type": "number"
+        },
+        "minimum_recall": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Minimum Recall",
+          "type": "number"
+        },
+        "null_required_metric": {
+          "const": "blocks_qualification",
+          "default": "blocks_qualification",
+          "title": "Null Required Metric",
+          "type": "string"
+        },
+        "qualification_scope": {
+          "default": "synthetic_ai_07_portfolio_v1",
+          "enum": [
+            "synthetic_ai_07_portfolio_v1",
+            "synthetic_ai_07_portfolio_v2",
+            "synthetic_ai_07_portfolio_v3",
+            "synthetic_ai_07_portfolio_v4"
+          ],
+          "title": "Qualification Scope",
+          "type": "string"
+        },
+        "required_types": {
+          "default": [
+            "one_day_spike",
+            "multi_day_spike",
+            "sustained_drop",
+            "return_spike",
+            "inventory_censored_episode"
+          ],
+          "items": {
+            "enum": [
+              "one_day_spike",
+              "multi_day_spike",
+              "sustained_drop",
+              "return_spike",
+              "inventory_censored_episode"
+            ],
+            "type": "string"
+          },
+          "title": "Required Types",
+          "type": "array"
+        },
+        "segment_policy": {
+          "const": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+          "default": "event_type_currency_validity_and_clean_sample_report_quality_per_type",
+          "title": "Segment Policy",
+          "type": "string"
+        },
+        "source_scenarios": {
+          "default": [
+            "demand",
+            "physical"
+          ],
+          "items": {
+            "enum": [
+              "demand",
+              "physical"
+            ],
+            "type": "string"
+          },
+          "title": "Source Scenarios",
+          "type": "array"
+        },
+        "source_seeds": {
+          "default": [
+            42,
+            137,
+            2026
+          ],
+          "items": {
+            "enum": [
+              42,
+              137,
+              2026
+            ],
+            "type": "integer"
+          },
+          "title": "Source Seeds",
+          "type": "array"
+        },
+        "version": {
+          "const": "anomaly-portfolio-quality-1.0.0",
+          "default": "anomaly-portfolio-quality-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "minimum_precision",
+        "minimum_recall",
+        "maximum_false_alerts_per_1000",
+        "minimum_high_severity_precision",
+        "minimum_episode_recall",
+        "minimum_evaluable_coverage",
+        "minimum_clean_per_case"
+      ],
+      "title": "QualityPolicy",
+      "type": "object"
+    },
+    "QualityRequirements": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_category_count": {
+          "default": 8,
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Expected Category Count",
+          "type": "integer"
+        },
+        "expected_stock_location_count": {
+          "default": 2,
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Expected Stock Location Count",
+          "type": "integer"
+        },
+        "maximum_expected_calibration_error": {
+          "default": 0.15,
+          "exclusiveMinimum": 0,
+          "maximum": 0.15,
+          "title": "Maximum Expected Calibration Error",
+          "type": "number"
+        },
+        "minimum_segment_per_class": {
+          "default": 5,
+          "maximum": 1000,
+          "minimum": 5,
+          "title": "Minimum Segment Per Class",
+          "type": "integer"
+        },
+        "minimum_segment_rows": {
+          "default": 20,
+          "maximum": 10000,
+          "minimum": 20,
+          "title": "Minimum Segment Rows",
+          "type": "integer"
+        },
+        "quality_policy_status": {
+          "const": "proposal_before_final_test",
+          "default": "proposal_before_final_test",
+          "title": "Quality Policy Status",
+          "type": "string"
+        }
+      },
+      "title": "QualityRequirements",
+      "type": "object"
+    },
+    "RiskThresholds": {
+      "additionalProperties": false,
+      "properties": {
+        "critical_from": {
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "Critical From",
+          "type": "number"
+        },
+        "high_from": {
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "High From",
+          "type": "number"
+        },
+        "medium_from": {
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "Medium From",
+          "type": "number"
+        }
+      },
+      "required": [
+        "medium_from",
+        "high_from",
+        "critical_from"
+      ],
+      "title": "RiskThresholds",
+      "type": "object"
+    },
+    "SourceCatalogPolicyPin": {
+      "additionalProperties": false,
+      "properties": {
+        "category_inventory": {
+          "items": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Category Inventory",
+          "type": "array"
+        },
+        "code_sha256": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Sha256",
+          "type": "object"
+        },
+        "method": {
+          "const": "native_catalog_metadata_from_pinned_source_code_before_any_dataset_generation",
+          "default": "native_catalog_metadata_from_pinned_source_code_before_any_dataset_generation",
+          "title": "Method",
+          "type": "string"
+        },
+        "producer_commit": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Producer Commit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "producer_commit",
+        "code_sha256",
+        "category_inventory"
+      ],
+      "title": "SourceCatalogPolicyPin",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:development_policy_set:38.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One prospective rule set, shared by every development scale and final seed.\n\nThe anomaly reference is the existing AI07 numerical policy, not a claim\nthat new data belong to its original campaign. Current evaluation still\nrequires a separately bound AI09 report and original source evidence.",
+  "properties": {
+    "actual_source_catalog_verified": {
+      "const": false,
+      "default": false,
+      "title": "Actual Source Catalog Verified",
+      "type": "boolean"
+    },
+    "anomaly_metrics": {
+      "$ref": "#/$defs/EvaluationPolicy",
+      "default": {
+        "average_precision": "score_ties_grouped_stepwise_average_precision",
+        "early_lead_days": 0,
+        "episode_coverage": "all_mature_episodes_in_complete_requested_census",
+        "false_alert_denominator": "scored_mature_truth_clean_observations",
+        "late_tolerance_days": 1,
+        "overlap": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+        "repeat_alerts": "report_without_increasing_episode_recall",
+        "unknown_truth": "excluded_and_counted",
+        "version": "anomaly-evaluation-1.0.0",
+        "zero_prediction_precision": "not_evaluable"
+      }
+    },
+    "anomaly_reference_quality": {
+      "$ref": "#/$defs/QualityPolicy"
+    },
+    "catalog": {
+      "$ref": "#/$defs/SourceCatalogPolicyPin"
+    },
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "forecast_quality": {
+      "$ref": "#/$defs/CampaignForecastQualityPolicy",
+      "default": {
+        "evaluation_use": "independent_and_final_after_frozen_selection_no_reselection",
+        "interval_objective": "central_interval_score_no_regression_against_baseline",
+        "legacy_width_ratio_threshold": 2.0,
+        "maximum_absolute_normalized_mean_bias": 0.1,
+        "maximum_segment_mae_regression": 0.1,
+        "minimum_calibration_rows_per_horizon": 100,
+        "minimum_eligibility_coverage": 0.8,
+        "minimum_empirical_coverage": 0.8,
+        "minimum_global_rows": 100,
+        "minimum_prediction_coverage": 1.0,
+        "minimum_relative_mae_improvement": 0.05,
+        "minimum_segment_rows": 30,
+        "nominal_coverage": 0.9,
+        "reference_functionals": "separate_tune_choices_not_a_joint_distribution",
+        "version": "ai09-campaign-forecast-quality-1.0.0",
+        "zero_actuals": "absolute_errors_and_false_positive_units_no_ratio_gate"
+      }
+    },
+    "model_fit_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Model Fit Authorized",
+      "type": "boolean"
+    },
+    "required_groups": {
+      "$ref": "#/$defs/CampaignRequiredGroupRecipe"
+    },
+    "scenario_weights": {
+      "additionalProperties": {
+        "maximum": 1000,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "title": "Scenario Weights",
+      "type": "object"
+    },
+    "seed_weights": {
+      "additionalProperties": {
+        "maximum": 1000,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "title": "Seed Weights",
+      "type": "object"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "stockout_decision_reference": {
+      "$ref": "#/$defs/PolicySpec"
+    },
+    "stockout_labels": {
+      "$ref": "#/$defs/LabelPolicy",
+      "default": {
+        "episode_policy": "zero_after_event_including_instantaneous",
+        "horizon_days": 7,
+        "max_ledger_rows": 100000,
+        "max_snapshot_age_seconds": 86400,
+        "max_windows": 10000,
+        "reservation_policy": "none",
+        "stock_measure": "available_qty",
+        "version": "incident-stockout-labels-1.0.0"
+      }
+    },
+    "stockout_metric_rules": {
+      "const": "native_AP_above_no_skill_Brier_below_train_constant_ECE_and_complete_segment_support",
+      "default": "native_AP_above_no_skill_Brier_below_train_constant_ECE_and_complete_segment_support",
+      "title": "Stockout Metric Rules",
+      "type": "string"
+    },
+    "stockout_quality": {
+      "additionalProperties": {
+        "$ref": "#/$defs/QualityRequirements"
+      },
+      "propertyNames": {
+        "enum": [
+          "development",
+          "final"
+        ]
+      },
+      "title": "Stockout Quality",
+      "type": "object"
+    },
+    "uncertainty": {
+      "$ref": "#/$defs/CampaignForecastUncertaintyPolicy",
+      "default": {
+        "assumptions": [
+          "time_blocks_approximate_weak_dependence_no_stationarity_guarantee",
+          "series_clusters_assume_between_cluster_independence",
+          "methods_are_separate_sensitivity_reports_not_joint_multiway_inference"
+        ],
+        "confidence_level": 0.95,
+        "final_access_authorized": false,
+        "independent_row_resampling": false,
+        "max_cluster_cells": 100000,
+        "max_index_bytes": 1073741824,
+        "max_resampled_cluster_visits": 10000000,
+        "max_rows": 10000000,
+        "methods": [
+          "time_block",
+          "series_cluster"
+        ],
+        "minimum_eligible_series_clusters": 30,
+        "minimum_eligible_time_blocks": 8,
+        "nominal_coverage_guaranteed": false,
+        "nominal_interval_coverage": 0.9,
+        "pairing": "same_cluster_multiplicities_for_candidate_reference_and_actual",
+        "partial_boundary_blocks": "retain_full_membership_never_drop_rows",
+        "promotion_allowed": false,
+        "quantile_method": "linear_percentile",
+        "random_generator": "numpy_PCG64",
+        "resamples": 999,
+        "resampling_seed": 137,
+        "series_clusters": "whole_product_selling_location_channel_all_origins_and_horizons",
+        "stage_ready": false,
+        "time_basis": "forecast_origin_utc_calendar_day",
+        "time_block_anchor": "2000-01-03",
+        "time_block_days": 28,
+        "time_blocks": "fixed_disjoint_calendar_blocks_all_series_jointly",
+        "version": "ai09-paired-cluster-uncertainty-1.0.0"
+      }
+    },
+    "version": {
+      "const": "ai09-prospective-development-policies-1.0.0",
+      "default": "ai09-prospective-development-policies-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "catalog",
+    "required_groups",
+    "anomaly_reference_quality",
+    "stockout_quality",
+    "stockout_decision_reference",
+    "seed_weights",
+    "scenario_weights"
+  ],
+  "title": "DevelopmentPolicySet",
+  "type": "object"
+}

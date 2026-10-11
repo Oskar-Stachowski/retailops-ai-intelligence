@@ -64,7 +64,11 @@ from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract imp
 from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
     CampaignPortfolioRequiredGroupPolicy,
 )
+from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
+    CampaignRequiredGroupRecipe,
+)
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
+    CampaignForecastGroupRecipeEvaluationReceipt,
     CampaignForecastPortfolioEvaluationReceipt,
     CampaignForecastPortfolioRobustEvaluationReceipt,
     CampaignForecastRequiredGroupEvaluationReceipt,
@@ -122,6 +126,10 @@ from retailops_ai.evaluation_campaign.development_planning_contract import (
     NativeDevelopmentPlanningProtocol,
     NativeDevelopmentPlanningReceipt,
     ResolvedNativeDevelopmentPlanningReceipt,
+)
+from retailops_ai.evaluation_campaign.development_policy_freeze import (
+    DevelopmentPolicySet,
+    FrozenDevelopmentPolicies,
 )
 from retailops_ai.evaluation_campaign.development_preparation import (
     DevelopmentPreparationJournal,
@@ -832,6 +840,24 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Canonical forecast contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, policy_model in (
+        ("required_group_recipe", CampaignRequiredGroupRecipe),
+        ("forecast_group_recipe_evaluation_receipt", CampaignForecastGroupRecipeEvaluationReceipt),
+        ("development_policy_set", DevelopmentPolicySet),
+        ("frozen_development_policies", FrozenDevelopmentPolicies),
+    ):
+        schema = policy_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:38.0.0"
+        path = ROOT / "contracts/evaluation/v38" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Prospective development policy contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
