@@ -156,6 +156,9 @@ from retailops_ai.evaluation_campaign.development_variants_contract import (
     ResolvedDevelopmentPreparationProtocol,
     ReusedDevelopmentParentReceipt,
 )
+from retailops_ai.evaluation_campaign.development_workflow_contract import (
+    DevelopmentWorkflowOptions,
+)
 from retailops_ai.evaluation_campaign.label_contract import (
     ForecastOutcomeReadProtocol,
     OutcomeEvidence,
@@ -882,6 +885,18 @@ def main() -> int:
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(raw)
+    schema = DevelopmentWorkflowOptions.model_json_schema()
+    schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+    schema["$id"] = "urn:retailops:evaluation:development_workflow_options:40.0.0"
+    path = ROOT / "contracts/evaluation/v40/development_workflow_options.schema.json"
+    raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    if args.check:
+        if not path.is_file() or path.read_text() != raw:
+            print("Original development workflow options differ")
+            return 1
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(raw)
     print("Evaluation preparation contract snapshots checked.")
     return 0
 

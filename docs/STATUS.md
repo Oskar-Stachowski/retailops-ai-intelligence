@@ -1,5 +1,28 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: wspólny wykonawca Source i prognoz 25/50/100.**
+[09.104](evidence/09-104-development-workflow.json) i
+[instrukcja](ai09-development-workflow.md) łączą 43 oryginalne operacje,
+w tym 12 fitów. Cały program, polityki, konfiguracje i przyszłe budżety są
+zapisywane przed pierwszą generacją; wcześniejsze wyniki i koszty pozostają
+w oryginalnych dziennikach. Utrata całej sesji Source albo dziennika prognoz
+blokuje odtworzenie zużytych prób.
+
+**39 testów źródeł i te same 39 z paczki przeszło bez pominięć**, w tym komplet 43 operacji,
+wznowienie bez nowych workerów i porównanie wszystkich kosztów. Mypy sprawdził
+**787 plików**. Rzeczywiste zależności producenta i workerów modeli oraz zgodność
+runtime zostały sprawdzone; kontrolowane dane i modele w testach pozostają
+jawnymi zastępnikami. **398 wcześniejszych kontraktów pozostaje niezmienionych.**
+654 moduły i 31 plików kontraktów mają zgodne bajty w źródłach, paczce
+i instalacji. Kontrole formatowania, dokumentacji i sekretów przeszły.
+
+Do właściwej kampanii trzeba jeszcze dołączyć kalibrację i ocenę trzech
+zastosowań. Dziennik prognoz kończy się na selekcji; nie można dopisać do niego
+kolejnych operacji po starcie ani zmienić runtime w trakcie kampanii.
+Pełny CI wcześniejszego przyrostu oraz publikacja bieżących zmian są otwarte.
+Nie uruchomiono nowych danych ani modeli Project. Canonical wyłączony,
+limit **12 GiB** zachowany; AI 09 **`not_ready`**.
+
 **2026-10-11 — AI 09: wykonawca pięciu oryginalnych operacji Source.**
 [09.103](evidence/09-103-source-preparation-execution.json) i
 [instrukcja przygotowania](ai09-source-preparation-execution.md) łączą rzeczywiste
