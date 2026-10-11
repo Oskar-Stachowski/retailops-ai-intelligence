@@ -1,0 +1,317 @@
+{
+  "$defs": {
+    "CampaignStockoutPublicValues": {
+      "additionalProperties": false,
+      "properties": {
+        "available_qty": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Available Qty"
+        },
+        "days_of_supply_in_stock": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Days Of Supply In Stock"
+        },
+        "days_of_supply_observed": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Days Of Supply Observed"
+        },
+        "due_within_7d_quantity": {
+          "minimum": 0,
+          "title": "Due Within 7D Quantity",
+          "type": "integer"
+        },
+        "forecast_days_of_supply": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Forecast Days Of Supply"
+        },
+        "forecast_unavailable": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Forecast Unavailable",
+          "type": "integer"
+        },
+        "forecast_units_7d": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Forecast Units 7D"
+        },
+        "historical_stockout_onsets": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Historical Stockout Onsets"
+        },
+        "history_constrained_days": {
+          "minimum": 0,
+          "title": "History Constrained Days",
+          "type": "integer"
+        },
+        "history_in_stock_days": {
+          "minimum": 0,
+          "title": "History In Stock Days",
+          "type": "integer"
+        },
+        "history_inventory_unknown_days": {
+          "minimum": 0,
+          "title": "History Inventory Unknown Days",
+          "type": "integer"
+        },
+        "history_known_days": {
+          "minimum": 0,
+          "title": "History Known Days",
+          "type": "integer"
+        },
+        "history_missing_days": {
+          "minimum": 0,
+          "title": "History Missing Days",
+          "type": "integer"
+        },
+        "in_stock_sales_mean": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "In Stock Sales Mean"
+        },
+        "next_expected_delivery_hours": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Expected Delivery Hours"
+        },
+        "observed_sales_mean": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed Sales Mean"
+        },
+        "observed_sales_std": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed Sales Std"
+        },
+        "open_order_quantity": {
+          "minimum": 0,
+          "title": "Open Order Quantity",
+          "type": "integer"
+        },
+        "overdue_order_quantity": {
+          "minimum": 0,
+          "title": "Overdue Order Quantity",
+          "type": "integer"
+        },
+        "quoted_lead_time_days": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Quoted Lead Time Days"
+        },
+        "snapshot_age_hours": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Snapshot Age Hours"
+        }
+      },
+      "required": [
+        "available_qty",
+        "snapshot_age_hours",
+        "history_known_days",
+        "history_missing_days",
+        "observed_sales_mean",
+        "observed_sales_std",
+        "in_stock_sales_mean",
+        "history_in_stock_days",
+        "history_constrained_days",
+        "history_inventory_unknown_days",
+        "historical_stockout_onsets",
+        "days_of_supply_observed",
+        "days_of_supply_in_stock",
+        "open_order_quantity",
+        "due_within_7d_quantity",
+        "overdue_order_quantity",
+        "next_expected_delivery_hours",
+        "quoted_lead_time_days",
+        "forecast_units_7d",
+        "forecast_days_of_supply",
+        "forecast_unavailable"
+      ],
+      "title": "CampaignStockoutPublicValues",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:stockout_full_public_row:44.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "as_of": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "As Of",
+      "type": "string"
+    },
+    "category_id": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "type": "string"
+        },
+        {
+          "const": "__unknown__",
+          "type": "string"
+        }
+      ],
+      "title": "Category Id"
+    },
+    "category_source_record_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Category Source Record Sha256"
+    },
+    "feature_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Feature Sha256",
+      "type": "string"
+    },
+    "product_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Product Id",
+      "type": "string"
+    },
+    "reason": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Reason"
+    },
+    "status": {
+      "enum": [
+        "eligible",
+        "already_stockout",
+        "insufficient_data"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "stock_location_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Stock Location Id",
+      "type": "string"
+    },
+    "upstream_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Upstream Sha256",
+      "type": "string"
+    },
+    "values": {
+      "$ref": "#/$defs/CampaignStockoutPublicValues"
+    }
+  },
+  "required": [
+    "product_id",
+    "stock_location_id",
+    "as_of",
+    "status",
+    "reason",
+    "category_id",
+    "category_source_record_sha256",
+    "values",
+    "feature_sha256",
+    "upstream_sha256"
+  ],
+  "title": "CampaignStockoutPublicRow",
+  "type": "object"
+}

@@ -27,8 +27,9 @@ zachowuje wynik i pomiary. Te same **63 testy z paczki przeszły w 395,98 s**.
 i instalacji. Odbiór dokładnego PR oraz wynikowego main jest nadal wymagany.
 
 To przygotowanie publicznych cech. Kalibracja i trening na całej populacji są
-opisane [osobno](ai09-native-stockout-training.md). Wciąż trzeba podłączyć
-retrospektywny upstream, dojrzałe etykiety i pełny podział czasowy, rezerwacje
+opisane [osobno](ai09-native-stockout-training.md). [Pełne publiczne przygotowanie](ai09-stockout-public-preparation.md) dołącza
+retrospektywny upstream. Wciąż trzeba podłączyć dojrzałe etykiety i pełny
+podział czasowy, rezerwacje
 operacji, wybór modelu, progi oraz ocenę trzech wariantów i końcowych seedów.
 Sam adapter nie odczytuje prywatnych etykiet, nie uprawnia do fitu ani final test
 i nie oznacza `ready` AI 09.

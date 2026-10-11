@@ -1,0 +1,593 @@
+{
+  "$defs": {
+    "CampaignContextStoragePolicy": {
+      "additionalProperties": false,
+      "description": "Prospective AI09 limits; the closed AI08 storage wire is unchanged.",
+      "properties": {
+        "audited_source_read_proved_by_this_policy": {
+          "const": false,
+          "default": false,
+          "title": "Audited Source Read Proved By This Policy",
+          "type": "boolean"
+        },
+        "batch_rows": {
+          "default": 256,
+          "maximum": 512,
+          "minimum": 1,
+          "title": "Batch Rows",
+          "type": "integer"
+        },
+        "cache_kib": {
+          "const": 8192,
+          "default": 8192,
+          "title": "Cache Kib",
+          "type": "integer"
+        },
+        "final_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Access Authorized",
+          "type": "boolean"
+        },
+        "max_index_bytes": {
+          "default": 2147483648,
+          "maximum": 17179869184,
+          "minimum": 4096,
+          "title": "Max Index Bytes",
+          "type": "integer"
+        },
+        "max_parent_bytes": {
+          "default": 2147483648,
+          "maximum": 68719476736,
+          "minimum": 1,
+          "title": "Max Parent Bytes",
+          "type": "integer"
+        },
+        "max_parent_files": {
+          "default": 10000,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Max Parent Files",
+          "type": "integer"
+        },
+        "max_parent_rows": {
+          "default": 20000000,
+          "maximum": 100000000,
+          "minimum": 1,
+          "title": "Max Parent Rows",
+          "type": "integer"
+        },
+        "max_selected_bytes": {
+          "default": 67108864,
+          "maximum": 536870912,
+          "minimum": 1,
+          "title": "Max Selected Bytes",
+          "type": "integer"
+        },
+        "max_selected_rows": {
+          "default": 100000,
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Max Selected Rows",
+          "type": "integer"
+        },
+        "maximum_cached_physical_series": {
+          "const": 1,
+          "default": 1,
+          "title": "Maximum Cached Physical Series",
+          "type": "integer"
+        },
+        "projection": {
+          "const": "closed_ai08_origin_pit_feature_point_unchanged",
+          "default": "closed_ai08_origin_pit_feature_point_unchanged",
+          "title": "Projection",
+          "type": "string"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "retention": {
+          "const": "private_disposable_all_versions_original_order",
+          "default": "private_disposable_all_versions_original_order",
+          "title": "Retention",
+          "type": "string"
+        },
+        "series_index": {
+          "const": "closed_ai08_fact_index_one_physical_series_clip_again_per_origin",
+          "default": "closed_ai08_fact_index_one_physical_series_clip_again_per_origin",
+          "title": "Series Index",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "supported_curated_versions": {
+          "default": [
+            "1.1.0",
+            "1.2.0"
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": "1.1.0",
+              "type": "string"
+            },
+            {
+              "const": "1.2.0",
+              "type": "string"
+            }
+          ],
+          "title": "Supported Curated Versions",
+          "type": "array"
+        },
+        "version": {
+          "const": "ai09-source-context-disk-facts-1.0.0",
+          "default": "ai09-source-context-disk-facts-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "CampaignContextStoragePolicy",
+      "type": "object"
+    },
+    "CampaignStockoutParentPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "feature_policy": {
+          "$ref": "#/$defs/FeaturePolicy",
+          "default": {
+            "censored_sales_policy": "separate_all_sales_and_verified_in_stock_days",
+            "history_days": 28,
+            "max_snapshot_age_seconds": 86400,
+            "minimum_known_days": 7,
+            "preprocessing": "none_fit_only_in_training_later",
+            "sales_measure": "observed_sales_units_not_latent_demand",
+            "stock_measure": "available_qty_unreserved",
+            "version": "stockout-pit-features-1.0.0"
+          }
+        },
+        "max_origins": {
+          "default": 1000000,
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Max Origins",
+          "type": "integer"
+        },
+        "population": {
+          "const": "all_public_inventory_snapshot_physical_origins_no_sampling",
+          "default": "all_public_inventory_snapshot_physical_origins_no_sampling",
+          "title": "Population",
+          "type": "string"
+        },
+        "runtime": {
+          "$ref": "#/$defs/PreparationRuntime"
+        },
+        "source": {
+          "$ref": "#/$defs/PhysicalSourceSpec"
+        },
+        "storage": {
+          "$ref": "#/$defs/CampaignContextStoragePolicy",
+          "default": {
+            "audited_source_read_proved_by_this_policy": false,
+            "batch_rows": 256,
+            "cache_kib": 8192,
+            "final_access_authorized": false,
+            "max_index_bytes": 2147483648,
+            "max_parent_bytes": 2147483648,
+            "max_parent_files": 10000,
+            "max_parent_rows": 20000000,
+            "max_selected_bytes": 67108864,
+            "max_selected_rows": 100000,
+            "maximum_cached_physical_series": 1,
+            "projection": "closed_ai08_origin_pit_feature_point_unchanged",
+            "promotion_allowed": false,
+            "retention": "private_disposable_all_versions_original_order",
+            "series_index": "closed_ai08_fact_index_one_physical_series_clip_again_per_origin",
+            "stage_ready": false,
+            "supported_curated_versions": [
+              "1.1.0",
+              "1.2.0"
+            ],
+            "version": "ai09-source-context-disk-facts-1.0.0"
+          }
+        },
+        "version": {
+          "const": "ai09-stockout-public-parent-plan-1.0.0",
+          "default": "ai09-stockout-public-parent-plan-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "runtime"
+      ],
+      "title": "CampaignStockoutParentPlan",
+      "type": "object"
+    },
+    "FeaturePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "censored_sales_policy": {
+          "const": "separate_all_sales_and_verified_in_stock_days",
+          "default": "separate_all_sales_and_verified_in_stock_days",
+          "title": "Censored Sales Policy",
+          "type": "string"
+        },
+        "history_days": {
+          "const": 28,
+          "default": 28,
+          "title": "History Days",
+          "type": "integer"
+        },
+        "max_snapshot_age_seconds": {
+          "default": 86400,
+          "maximum": 86400,
+          "minimum": 0,
+          "title": "Max Snapshot Age Seconds",
+          "type": "integer"
+        },
+        "minimum_known_days": {
+          "default": 7,
+          "maximum": 28,
+          "minimum": 1,
+          "title": "Minimum Known Days",
+          "type": "integer"
+        },
+        "preprocessing": {
+          "const": "none_fit_only_in_training_later",
+          "default": "none_fit_only_in_training_later",
+          "title": "Preprocessing",
+          "type": "string"
+        },
+        "sales_measure": {
+          "const": "observed_sales_units_not_latent_demand",
+          "default": "observed_sales_units_not_latent_demand",
+          "title": "Sales Measure",
+          "type": "string"
+        },
+        "stock_measure": {
+          "const": "available_qty_unreserved",
+          "default": "available_qty_unreserved",
+          "title": "Stock Measure",
+          "type": "string"
+        },
+        "version": {
+          "const": "stockout-pit-features-1.0.0",
+          "default": "stockout-pit-features-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "FeaturePolicy",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "forecast_source_status": {
+          "const": "passed",
+          "title": "Forecast Source Status",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "curated_descriptor_sha256",
+        "business_timezone",
+        "forecast_source_status"
+      ],
+      "title": "Parent",
+      "type": "object"
+    },
+    "PhysicalSourceSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "batch_rows": {
+          "default": 256,
+          "maximum": 8192,
+          "minimum": 1,
+          "title": "Batch Rows",
+          "type": "integer"
+        },
+        "curated_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Manifest Sha256",
+          "type": "string"
+        },
+        "execution_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Execution Authorized",
+          "type": "boolean"
+        },
+        "final_test_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Access Authorized",
+          "type": "boolean"
+        },
+        "max_parent_bytes": {
+          "default": 2147483648,
+          "maximum": 2147483648,
+          "minimum": 1024,
+          "title": "Max Parent Bytes",
+          "type": "integer"
+        },
+        "max_parent_files": {
+          "default": 10000,
+          "maximum": 10000,
+          "minimum": 2,
+          "title": "Max Parent Files",
+          "type": "integer"
+        },
+        "max_rows_per_parent": {
+          "default": 20000000,
+          "maximum": 20000000,
+          "minimum": 1,
+          "title": "Max Rows Per Parent",
+          "type": "integer"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "resource_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Resource Qualified",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "enum": [
+            "1.0.0",
+            "1.1.0",
+            "1.2.0"
+          ],
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "snapshot_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Snapshot Manifest Sha256",
+          "type": "string"
+        },
+        "source_parameters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Source Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "schema_version",
+        "parent",
+        "source_parameters",
+        "snapshot_manifest_sha256",
+        "curated_manifest_sha256"
+      ],
+      "title": "PhysicalSourceSpec",
+      "type": "object"
+    },
+    "PreparationRuntime": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "python_version": {
+          "pattern": "^3\\.11\\.[0-9]+$",
+          "title": "Python Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code_files",
+        "code_sha256",
+        "dependency_lock_sha256",
+        "python_version"
+      ],
+      "title": "PreparationRuntime",
+      "type": "object"
+    },
+    "UpstreamPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "closed_target": {
+          "const": "known_closed_zero_unknown_calendar_not_zero",
+          "default": "known_closed_zero_unknown_calendar_not_zero",
+          "title": "Closed Target",
+          "type": "string"
+        },
+        "history_calendar_days": {
+          "const": 28,
+          "default": 28,
+          "title": "History Calendar Days",
+          "type": "integer"
+        },
+        "history_eligibility": {
+          "const": "seven_known_days_short_active_history_allowed",
+          "default": "seven_known_days_short_active_history_allowed",
+          "title": "History Eligibility",
+          "type": "string"
+        },
+        "horizon_days": {
+          "const": 7,
+          "default": 7,
+          "title": "Horizon Days",
+          "type": "integer"
+        },
+        "mapping": {
+          "const": "sum_selling_series_once_to_physical_route_known_at_origin",
+          "default": "sum_selling_series_once_to_physical_route_known_at_origin",
+          "title": "Mapping",
+          "type": "string"
+        },
+        "minimum_known_days": {
+          "const": 7,
+          "default": 7,
+          "title": "Minimum Known Days",
+          "type": "integer"
+        },
+        "model": {
+          "const": "moving_average",
+          "default": "moving_average",
+          "title": "Model",
+          "type": "string"
+        },
+        "origin_adapter": {
+          "const": "same_date_end_of_day_second_never_after_inventory_origin",
+          "default": "same_date_end_of_day_second_never_after_inventory_origin",
+          "title": "Origin Adapter",
+          "type": "string"
+        },
+        "parameters": {
+          "const": "fixed_algorithm_no_fitted_parameters",
+          "default": "fixed_algorithm_no_fitted_parameters",
+          "title": "Parameters",
+          "type": "string"
+        },
+        "reconstruction": {
+          "const": "retrospective_rolling_origin",
+          "default": "retrospective_rolling_origin",
+          "title": "Reconstruction",
+          "type": "string"
+        },
+        "sales_measure": {
+          "const": "observed_sales_units_not_latent_demand",
+          "default": "observed_sales_units_not_latent_demand",
+          "title": "Sales Measure",
+          "type": "string"
+        },
+        "selection": {
+          "const": "fixed_recipe_no_outcome_selection",
+          "default": "fixed_recipe_no_outcome_selection",
+          "title": "Selection",
+          "type": "string"
+        },
+        "version": {
+          "const": "stockout-upstream-ma28-1.0.0",
+          "default": "stockout-upstream-ma28-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "UpstreamPolicy",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:stockout_full_public_plan:44.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "max_artifact_bytes": {
+      "default": 2147483648,
+      "maximum": 8589934592,
+      "minimum": 4096,
+      "title": "Max Artifact Bytes",
+      "type": "integer"
+    },
+    "max_index_bytes": {
+      "default": 4294967296,
+      "maximum": 8589934592,
+      "minimum": 4096,
+      "title": "Max Index Bytes",
+      "type": "integer"
+    },
+    "max_record_bytes": {
+      "default": 16384,
+      "maximum": 65536,
+      "minimum": 1024,
+      "title": "Max Record Bytes",
+      "type": "integer"
+    },
+    "parent": {
+      "$ref": "#/$defs/CampaignStockoutParentPlan"
+    },
+    "population": {
+      "const": "every_public_physical_origin_including_ineligible_and_missing_upstream",
+      "default": "every_public_physical_origin_including_ineligible_and_missing_upstream",
+      "title": "Population",
+      "type": "string"
+    },
+    "upstream": {
+      "$ref": "#/$defs/UpstreamPolicy",
+      "default": {
+        "closed_target": "known_closed_zero_unknown_calendar_not_zero",
+        "history_calendar_days": 28,
+        "history_eligibility": "seven_known_days_short_active_history_allowed",
+        "horizon_days": 7,
+        "mapping": "sum_selling_series_once_to_physical_route_known_at_origin",
+        "minimum_known_days": 7,
+        "model": "moving_average",
+        "origin_adapter": "same_date_end_of_day_second_never_after_inventory_origin",
+        "parameters": "fixed_algorithm_no_fitted_parameters",
+        "reconstruction": "retrospective_rolling_origin",
+        "sales_measure": "observed_sales_units_not_latent_demand",
+        "selection": "fixed_recipe_no_outcome_selection",
+        "version": "stockout-upstream-ma28-1.0.0"
+      }
+    },
+    "version": {
+      "const": "ai09-stockout-full-public-plan-1.0.0",
+      "default": "ai09-stockout-full-public-plan-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "parent"
+  ],
+  "title": "CampaignStockoutPublicPlan",
+  "type": "object"
+}

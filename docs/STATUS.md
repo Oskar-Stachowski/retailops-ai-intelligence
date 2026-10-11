@@ -1,5 +1,22 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: pełne publiczne przygotowanie stockout z upstream.**
+[Nowy adapter](ai09-stockout-public-preparation.md) łączy wszystkie fizyczne
+obserwacje z natywnymi cechami, kategorią znaną w chwili obserwacji oraz
+retrospektywną prognozą AI 08. Indeks pozostaje na dysku, wspólna kontrola
+wersji wykonuje się raz na datę, a brak prognozy pozostaje jawnym wynikiem.
+Publikacja i ponowny odczyt sprawdzają całą populację oraz tożsamość artefaktu.
+
+Błąd typowania manifestu znaleziony w pierwszej kontroli został poprawiony.
+Formatowanie, Ruff i Mypy **795 plików** przeszły. **93 testy źródeł**
+zaliczyły porównanie z natywnymi wynikami i regresję wcześniejszych adapterów.
+[09.109](evidence/09-109-stockout-public-upstream.json) zachowuje pełny wynik.
+Te same **93 testy z paczki przeszły**, bez pominięć; 662 moduły
+i 39 kontraktów mają zgodne bajty. Prywatne etykiety, dojrzałe role oraz zarezerwowane operacje
+treningu, selekcji i oceny pozostają otwarte. Nie uruchomiono danych ani modeli
+Project, a limit canonical **12 GiB** i rezerwa **1 GiB** pozostają zachowane.
+AI 09 **`not_ready`**.
+
 **2026-10-11 — AI 09: przygotowany pełny publiczny odczyt stockout.**
 [Adapter publicznego Source](ai09-stockout-public-parent.md) odtwarza wszystkie
 fakty i klucze fizyczne, zachowuje statusy niekwalifikowania i korzysta z
