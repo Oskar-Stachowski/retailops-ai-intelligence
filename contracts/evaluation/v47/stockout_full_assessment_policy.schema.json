@@ -1,0 +1,211 @@
+{
+  "$defs": {
+    "AttentionCosts": {
+      "additionalProperties": false,
+      "properties": {
+        "false_attention": {
+          "exclusiveMinimum": 0,
+          "maximum": 1000000,
+          "title": "False Attention",
+          "type": "number"
+        },
+        "interpretation": {
+          "const": "operator_proposal_not_validated_business_savings",
+          "default": "operator_proposal_not_validated_business_savings",
+          "title": "Interpretation",
+          "type": "string"
+        },
+        "missed_incident": {
+          "exclusiveMinimum": 0,
+          "maximum": 1000000,
+          "title": "Missed Incident",
+          "type": "number"
+        }
+      },
+      "required": [
+        "false_attention",
+        "missed_incident"
+      ],
+      "title": "AttentionCosts",
+      "type": "object"
+    },
+    "OperatorCapacity": {
+      "additionalProperties": false,
+      "properties": {
+        "fraction": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 1,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fraction"
+        },
+        "mode": {
+          "enum": [
+            "top_n",
+            "top_fraction"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "ties": {
+          "const": "product_stock_lexical",
+          "default": "product_stock_lexical",
+          "title": "Ties",
+          "type": "string"
+        },
+        "top_n": {
+          "anyOf": [
+            {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Top N"
+        },
+        "unit": {
+          "const": "physical_product_stock_keys_per_origin",
+          "default": "physical_product_stock_keys_per_origin",
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "title": "OperatorCapacity",
+      "type": "object"
+    },
+    "RiskThresholds": {
+      "additionalProperties": false,
+      "properties": {
+        "critical_from": {
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "Critical From",
+          "type": "number"
+        },
+        "high_from": {
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "High From",
+          "type": "number"
+        },
+        "medium_from": {
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "title": "Medium From",
+          "type": "number"
+        }
+      },
+      "required": [
+        "medium_from",
+        "high_from",
+        "critical_from"
+      ],
+      "title": "RiskThresholds",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:stockout_full_assessment_policy:47.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capacity": {
+      "$ref": "#/$defs/OperatorCapacity"
+    },
+    "costs": {
+      "$ref": "#/$defs/AttentionCosts"
+    },
+    "expected_categories": {
+      "items": {
+        "anyOf": [
+          {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+            "type": "string"
+          },
+          {
+            "const": "__unknown__",
+            "type": "string"
+          }
+        ]
+      },
+      "maxItems": 512,
+      "minItems": 1,
+      "title": "Expected Categories",
+      "type": "array"
+    },
+    "expected_stock_locations": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+        "type": "string"
+      },
+      "maxItems": 128,
+      "minItems": 1,
+      "title": "Expected Stock Locations",
+      "type": "array"
+    },
+    "max_input_bytes": {
+      "default": 536870912,
+      "maximum": 1073741824,
+      "minimum": 1024,
+      "title": "Max Input Bytes",
+      "type": "integer"
+    },
+    "max_origins": {
+      "default": 2000,
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Max Origins",
+      "type": "integer"
+    },
+    "max_rows": {
+      "default": 1000000,
+      "maximum": 1000000,
+      "minimum": 1,
+      "title": "Max Rows",
+      "type": "integer"
+    },
+    "population": {
+      "const": "all_verified_eligible_physical_keys_no_sampling",
+      "default": "all_verified_eligible_physical_keys_no_sampling",
+      "title": "Population",
+      "type": "string"
+    },
+    "queue": {
+      "const": "one_global_capacity_per_origin_shared_by_all_segments",
+      "default": "one_global_capacity_per_origin_shared_by_all_segments",
+      "title": "Queue",
+      "type": "string"
+    },
+    "thresholds": {
+      "$ref": "#/$defs/RiskThresholds"
+    },
+    "version": {
+      "const": "ai09-full-stockout-assessment-1.0.0",
+      "default": "ai09-full-stockout-assessment-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "thresholds",
+    "capacity",
+    "costs",
+    "expected_categories",
+    "expected_stock_locations"
+  ],
+  "title": "CampaignStockoutAssessmentPolicy",
+  "type": "object"
+}

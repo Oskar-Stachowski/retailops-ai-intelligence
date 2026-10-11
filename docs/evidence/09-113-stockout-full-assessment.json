@@ -1,0 +1,125 @@
+{
+  "recorded_at_utc": "2026-10-11T21:36:46.519769+00:00",
+  "base_commit": "dcc36e8e94191338740c0005d80da7e36da22518",
+  "scope": "Complete numerical stockout threshold/capacity assessment above closed10000-row limit; native primitives, one global queue per origin, declared physical groups. No Source/membership/journal/quality authority.",
+  "source": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 11.24795745802112,
+    "sampled_tree_peak_rss_bytes": 222625792,
+    "sampled_worker_cpu_seconds": 8.947894632,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 145110,
+    "sampled_peak_scratch_allocated_bytes": 159744,
+    "minimum_free_disk_bytes": 28412452864,
+    "minimum_available_memory_bytes": 1807532032,
+    "samples": 104,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  },
+  "source_pytest": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "51",
+    "time": "4.406",
+    "timestamp": "2026-10-11T23:32:51.504306+02:00"
+  },
+  "installed": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 5.16202724998584,
+    "sampled_tree_peak_rss_bytes": 212779008,
+    "sampled_worker_cpu_seconds": 3.73079136,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 7651,
+    "sampled_peak_scratch_allocated_bytes": 16384,
+    "minimum_free_disk_bytes": 28368248832,
+    "minimum_available_memory_bytes": 1614659584,
+    "samples": 48,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "source_and_control_pins_unchanged": true,
+    "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+  },
+  "installed_pytest": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "51",
+    "time": "4.646",
+    "timestamp": "2026-10-11T23:34:39.804602+02:00"
+  },
+  "acceptance": {
+    "same_test_case_inventory": true,
+    "tests_per_suite": 51,
+    "controlled_25_50_setups_per_suite": 0,
+    "source_pins_unchanged": true
+  },
+  "package": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 3034249,
+    "sha256": "e96f546bea91630faf9f4bf33c9f773fe368d0fdbc977eac913c647b240dff7f",
+    "python_modules_equal": 668,
+    "new_contract_files_equal": 48,
+    "private_files_absent": true
+  },
+  "compatibility": {
+    "closed_ai08_unchanged": 129,
+    "existing_contracts_unchanged": 416
+  },
+  "mypy_files": 801,
+  "new_contract_version": 47,
+  "guarantees": [
+    "Full actual10001-row numerical control, no chunked queues or sampling.",
+    "Exact native confusion/cost/bands/capacity/segment values on small controls in both capacity modes and input orders.",
+    "Unobserved declared categories/stocks remain explicit not-evaluable groups; absent positive class never produces perfect recall.",
+    "UTC semantic duplicate keys and resource overflows refuse the whole operation.",
+    "Validate Python types before serialization, preventing model_copy boolean label/resource/capacity/cost conversion to numeric1.",
+    "No fit or recalibration is invoked by the numerical adapter."
+  ],
+  "preserved_failure": {
+    "source_control_1": {
+      "status": "failed",
+      "reason": "worker_exit",
+      "exit_code": 1,
+      "wall_seconds": 11.890808791969903,
+      "sampled_tree_peak_rss_bytes": 209993728,
+      "sampled_worker_cpu_seconds": 9.011129316,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 142853,
+      "sampled_peak_scratch_allocated_bytes": 155648,
+      "minimum_free_disk_bytes": 28451729408,
+      "minimum_available_memory_bytes": 1235632128,
+      "samples": 110,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 268435456,
+      "code_pins_unchanged": true
+    },
+    "cause": "A model_copy boolean label serialized as integer1 before JSON revalidation; test failed after11passes. Corrected by strict Python revalidation before serialization, with three added policy-copy controls."
+  },
+  "not_claimed": [
+    "Full profile capacity or model quality",
+    "Original Source/model/prediction membership proof",
+    "Journal authority or final access",
+    "Threshold approval or release",
+    "Whole CI of this branch or stage-ready"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "exact_PR_and_main_CI": "required after integration; not claimed by component checks"
+}
