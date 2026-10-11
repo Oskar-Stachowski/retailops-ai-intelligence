@@ -13,6 +13,10 @@ from retailops_ai.evaluation_campaign.campaign_evaluation_receipt import (
     CampaignForecastEvaluationRecipe,
 )
 from retailops_ai.evaluation_campaign.campaign_portfolio_contract import CampaignPortfolioProtocol
+from retailops_ai.evaluation_campaign.canonical_qualification import (
+    PreparedCanonicalQualificationProtocol,
+)
+from retailops_ai.source_snapshot.files import decode_json
 
 DevelopmentDataset = Annotated[str, Field(pattern=r"^ai09-physical-forecast-sha256-[0-9a-f]{64}$")]
 
@@ -84,3 +88,20 @@ class CampaignPortfolioForecastEvaluationBinding(Contract):
             and export.role == "all_parent_data"
             and export.source_recipe_sha256 == plan.source_recipe_sha256
         )
+
+
+class CanonicalQualificationEvaluationBinding(CampaignPortfolioForecastEvaluationBinding):
+    version: Literal["ai09-canonical-qualification-evaluation-binding-1.0.0"] = (
+        "ai09-canonical-qualification-evaluation-binding-1.0.0"  # type: ignore[assignment]
+    )
+    protocol: PreparedCanonicalQualificationProtocol
+
+
+def parse_portfolio_evaluation_binding(raw: bytes) -> CampaignPortfolioForecastEvaluationBinding:
+    value = decode_json(raw)
+    kind = (
+        CanonicalQualificationEvaluationBinding
+        if value.get("version") == "ai09-canonical-qualification-evaluation-binding-1.0.0"
+        else CampaignPortfolioForecastEvaluationBinding
+    )
+    return kind.model_validate_json(raw)

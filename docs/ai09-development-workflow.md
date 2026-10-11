@@ -7,7 +7,8 @@ polityki, sześć konfiguracji RF/HGB/TensorFlow, środowisko workerów oraz
 budżety wszystkich trzech skal. Nie trzeba ręcznie przekazywać wyników
 między osobnymi dziennikami.
 
-Kolejność obejmuje **43 oryginalne operacje**:
+Wersja `ai09-original-development-workflow-options-1.0.0` obejmuje
+**43 oryginalne operacje**:
 
 1. Przygotowanie ordinary/demand/physical dla 25 produktów: pięć operacji.
 2. Trzy eksporty, sześć fitów, dwa porównania Tune i selekcja: dwanaście operacji.
@@ -16,7 +17,16 @@ Kolejność obejmuje **43 oryginalne operacje**:
 5. Przygotowanie pełnych 100 produktów: pięć operacji.
 6. Trzy eksporty, trzy fity tych samych zwycięzców, scoring i selekcja: osiem operacji.
 
-To łącznie **12 fitów**. Każda skala zachowuje pełną historię i wszystkie
+Nowa wersja `ai09-qualified-development-workflow-options-1.0.0` dodaje osiem
+operacji na 100 produktach: scoring Calibration, kalibrator oraz kontekst
+i ocenę ordinary/demand/physical. Razem zamraża **51 operacji**, zanim
+powstaną pierwsze dane Source. Jej opcje mają osobny
+[schemat v41](../contracts/evaluation/v41/qualified_development_workflow_options.schema.json).
+Kontrole komponentu ze źródeł i paczki przeszły; wcześniejszej sesji 43 operacji
+nie można przekształcić w sesję kwalifikacji.
+
+Obie wersje zachowują **12 fitów modeli**; kwalifikacja dodaje jeden osobno
+rozliczany fit kalibratora. Każda skala zachowuje pełną historię i wszystkie
 przypisane jej klucze obserwacji. Wykonawca nie zmienia wcześniejszego
 rankingu, hiperparametrów, preprocessingu ani seeda inicjalizacji.
 Niepoprawny wynik rodzin na 50 produktach blokuje generację 100 produktów.
@@ -61,19 +71,43 @@ Błąd lub niedokończona rezerwacja pozostają w oryginalnym dzienniku i nie
 są automatycznie ponawiane.
 
 Końcowy `development-workflow-result.json` wiąże zamrożony program
-z oryginalnym `CompletedCanonicalForecast`, zawierającym wszystkie wcześniejsze
-wyniki i koszty 25/50/100. Samo ukończenie programu nie jest kwalifikacją modelu.
+z oryginalnym `CompletedCanonicalForecast` dla 43 operacji albo
+`CanonicalQualificationExecutionResult` dla 51 operacji. Oba zachowują
+wcześniejsze wyniki i koszty 25/50/100. Samo ukończenie programu nie jest kwalifikacją modelu.
 Kalibracja, niezależna ocena trzech zastosowań, final na uzgodnionych seedach,
 segmenty, niepewność, MLflow, model cards i lifecycle pozostają wymagane
 przed oznaczeniem AI 09 jako `ready`.
 
-Obecny dziennik prognoz kończy się na selekcji. Istniejący kontroler
+Starszy dziennik prognoz kończy się na selekcji. Istniejący kontroler
 kalibracji wymaga osobno zadeklarowanej operacji `calibrator_fit` oraz
 oryginalnych powiązań eksportu, fitów i Tune. Nie można dopisać tej operacji
 do już rozpoczętego dziennika ani przepisać wcześniejszych receipts na inny
 protokół. Pełne powiązanie kalibracji i końcowej oceny trzeba przygotować
 przed rzeczywistą kampanią. Zmiana modułów po jej rozpoczęciu zmienia
 przypięcie runtime i blokuje dalsze wykonanie dotychczasowego protokołu.
+
+Na gałęzi roboczej integracja przygotowuje osobny, kompletny protokół
+16 operacji canonical. Zachowuje osiem oryginalnych kroków i dodaje scoring
+Calibration, kalibrator oraz kontekst i ocenę wszystkich trzech wariantów.
+Budżet kalibracji i oceny pochodzi z wcześniejszego budżetu scoringu dla
+100 produktów, a kontekst korzysta z budżetu przygotowania tych samych źródeł.
+Nowy protokół powstaje przed pierwszym eksportem; nie zastępuje rozpoczętego
+dziennika. Test wykonawcy potwierdził zatrzymanie po niewystarczającej
+kalibracji oraz wznowienie bez nowych prób i zmian kosztów. Zamraża
+osobne katalogi kalibracji, kontekstu i oceny przed pierwszym eksportem.
+Wynik wiąże oryginalne receipts i koszty pełnego protokołu; nie przepisuje
+go na starszy wynik ośmiu operacji. Siedem nowych schematów v41 zachowuje
+wcześniejsze wersje. Osobny odczyt pełnych metadanych oceny i regresja workera
+mają 30 zaliczeń. Regresja programu 51 operacji, zatrzymania po niewystarczającej
+kalibracji, wznowienia i starszej wersji 43 operacji ma 27 zaliczeń bez pominięć.
+Kolejne osiem testów źródeł potwierdziło całą ścieżkę 51 operacji,
+wznowienie 47+4, wszystkie trzy oceny i pełne ponowne wznowienie bez workerów.
+Te same osiem testów z zainstalowanej paczki przeszło bez pominięć;
+[09.106](evidence/09-106-canonical-qualification.json) zachowuje zakres i pomiary.
+Polecenie wybiera program 43 albo 51 na podstawie jawnej wersji
+pliku opcji. Bez limitu nowych operacji wykonuje pozostały zamrożony program;
+błędny Tune lub kalibracja zatrzymują dalsze kroki. Program dotyczy prognoz;
+nie stanowi pełnej kwalifikacji AI 09 ani dostępu do final.
 
 [Odbiór 09.104](evidence/09-104-development-workflow.json) potwierdza 39 testów
 źródeł i te same 39 z zainstalowanej paczki, bez pominięć. Obejmują cały program

@@ -50,6 +50,9 @@ from retailops_ai.evaluation_campaign.campaign_segments import SegmentCensus
 from retailops_ai.evaluation_campaign.campaign_selection_evidence import (
     verify_completed_campaign_selection,
 )
+from retailops_ai.evaluation_campaign.canonical_qualification import (
+    PreparedCanonicalQualificationProtocol,
+)
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
     checked_directory,
@@ -82,6 +85,33 @@ def _binding(
     generated: CampaignGeneratedParentReceipt,
     exported: Export,
 ) -> None:
+    if isinstance(ledger.protocol, PreparedCanonicalQualificationProtocol):
+        declaration = ledger.protocol.qualification
+        prefix = declaration.prefix
+        position = next((i for i, item in enumerate(declaration.contexts) if item == recipe), None)
+        if position is None:
+            raise SnapshotError("canonical_qualification_original_context_recipe_required")
+        preparation = prefix.parents.preparation
+        expected_generation = (
+            preparation.bootstrap.generation
+            if position == 0
+            else preparation.planned.preparation.generations[position]
+        )
+        if (
+            operation != declaration.operations[10 + 2 * position]
+            or generation != expected_generation
+            or generated != prefix.parents.generations[position]
+            or not isinstance(exported, CampaignDevelopmentExportReceipt)
+            or exported.protocol_sha256 != ledger.protocol_sha256
+            or exported.operation_id != prefix.operations[position].operation_id
+            or exported.plan != prefix.exports[position]
+            or exported.generated_parent_receipt_sha256 != generated.content_sha256()
+            or exported.recipe.source != generated.source
+            or exported.runtime_code_sha256 != ledger.protocol.runtime.code_sha256
+        ):
+            raise SnapshotError("canonical_qualification_original_context_parents_required")
+        generation.bind(prefix.sources[position])
+        return
     operations = {o.operation_id: o for o in ledger.protocol.operations}
     parent = operations.get(recipe.generation_operation_id)
     export = operations.get(recipe.export_operation_id)
@@ -127,6 +157,19 @@ def _binding(
     generation.bind(source)
 
 
+def _validate_generation_parent(
+    journal: Path, ledger: CampaignJournal, generated: CampaignGeneratedParentReceipt
+) -> None:
+    if isinstance(ledger.protocol, PreparedCanonicalQualificationProtocol):
+        from retailops_ai.evaluation_campaign.canonical_development import (
+            verify_canonical_development_parents,
+        )
+
+        verify_canonical_development_parents(ledger.protocol.qualification.prefix.parents)
+    else:
+        validate_completed_generation(journal, generated)
+
+
 def build_campaign_context_bundle(
     snapshot: Path,
     curated: Path,
@@ -154,7 +197,7 @@ def build_campaign_context_bundle(
             else CampaignDevelopmentExportReceipt
         ).model_validate_json(exported.model_dump_json())
         _binding(ledger, operation, recipe, generation, generated, exported)
-        validate_completed_generation(journal, generated)
+        _validate_generation_parent(journal, ledger, generated)
         if isinstance(exported, CampaignFinalExportReceipt):
             validate_completed_final_export(journal, exported)
             selection, _ = verify_completed_campaign_selection(journal, selection_bundles or {})
@@ -444,7 +487,7 @@ def verify_campaign_context_bundle(
         else CampaignDevelopmentExportReceipt
     ).model_validate_json(canonical_bytes(parents["exported"]))
     _binding(ledger, operation, receipt.recipe, generation, generated, exported)
-    validate_completed_generation(journal, generated)
+    _validate_generation_parent(journal, ledger, generated)
     if isinstance(exported, CampaignFinalExportReceipt):
         validate_completed_final_export(journal, exported)
     else:

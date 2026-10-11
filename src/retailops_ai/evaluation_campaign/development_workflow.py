@@ -17,6 +17,14 @@ from retailops_ai.evaluation_campaign.canonical_development_contract import (
 )
 from retailops_ai.evaluation_campaign.canonical_forecast import compile_canonical_forecast
 from retailops_ai.evaluation_campaign.canonical_forecast_contract import CompletedCanonicalForecast
+from retailops_ai.evaluation_campaign.canonical_qualification import (
+    PreparedCanonicalQualificationProtocol,
+    compile_canonical_qualification,
+    qualification_protocol,
+)
+from retailops_ai.evaluation_campaign.canonical_qualification_execution_contract import (
+    CanonicalQualificationExecutionResult,
+)
 from retailops_ai.evaluation_campaign.development_advancement import (
     compile_forecast_advancement,
     freeze_multiscale_selection,
@@ -45,6 +53,8 @@ from retailops_ai.evaluation_campaign.development_screening_selection_contract i
 )
 from retailops_ai.evaluation_campaign.development_workflow_contract import (
     DevelopmentWorkflowOptions,
+    QualifiedDevelopmentWorkflowOptions,
+    parse_development_workflow_options,
 )
 from retailops_ai.evaluation_campaign.partitions import runtime_pin
 from retailops_ai.evaluation_campaign.preparation_execution import locked, write_once
@@ -82,7 +92,11 @@ def _freeze(
         raise SnapshotError("development_workflow_path_runtime_or_worker_lock_changed")
     path = root / "development-workflow.json"
     value = {
-        "version": "ai09-original-development-workflow-1.0.0",
+        "version": (
+            "ai09-qualified-development-workflow-1.0.0"
+            if isinstance(options, QualifiedDevelopmentWorkflowOptions)
+            else "ai09-original-development-workflow-1.0.0"
+        ),
         "root": str(root),
         "options": options.model_dump(mode="json"),
         "policies": policies.model_dump(mode="json"),
@@ -193,7 +207,10 @@ def _forecast(
     previous: CompletedForecastScreening
     | CompletedForecastAdvancement
     | CompletedCanonicalForecast
+    | CanonicalQualificationExecutionResult
     | None,
+    *,
+    policies: FrozenDevelopmentPolicies,
 ) -> Protocol:
     path = root / str(products) / "forecast"
     marker = root / f"forecast-{products}-initialization.json"
@@ -204,10 +221,16 @@ def _forecast(
         from retailops_ai.evaluation_campaign.development_execution import _protocol
 
         protocol = _protocol(campaign_journal.inspect(path))
+        if isinstance(protocol, PreparedCanonicalQualificationProtocol) != (
+            products == 100 and isinstance(options, QualifiedDevelopmentWorkflowOptions)
+        ):
+            raise SnapshotError("development_workflow_qualification_requires_frozen_program")
         _same(marker, {"protocol_sha256": protocol.content_sha256()})
         observed = (
             protocol.screening.parents
             if isinstance(protocol, MultiscaleSelectionProtocol)
+            else protocol.qualification.prefix.parents
+            if isinstance(protocol, PreparedCanonicalQualificationProtocol)
             else protocol.parents
         )
         if observed != parents or protocol.journal_path != str(path):
@@ -228,7 +251,15 @@ def _forecast(
         and isinstance(parents, PreparedCanonicalDevelopmentParents)
         and isinstance(previous, CompletedForecastAdvancement)
     ):
-        protocol = compile_canonical_forecast(advancement=previous, parents=parents)
+        protocol = (
+            qualification_protocol(
+                compile_canonical_qualification(
+                    advancement=previous, parents=parents, policies=policies
+                )
+            )
+            if isinstance(options, QualifiedDevelopmentWorkflowOptions)
+            else compile_canonical_forecast(advancement=previous, parents=parents)
+        )
     else:
         raise SnapshotError("development_workflow_original_scale_order_required")
     write_once(marker, {"protocol_sha256": protocol.content_sha256()})
@@ -248,12 +279,14 @@ def run_development_workflow(
     options: DevelopmentWorkflowOptions,
     policies: FrozenDevelopmentPolicies,
     *,
-    maximum_new_operations: int = 43,
+    maximum_new_operations: int | None = None,
 ) -> dict[str, object]:
-    """Run 15 original Source and 28 forecast operations, including exactly 12 fits."""
-    if type(maximum_new_operations) is not int or not 1 <= maximum_new_operations <= 43:
+    """Execute the frozen 43- or 51-operation program, retaining the same 12 model fits."""
+    options = parse_development_workflow_options(options.model_dump_json())
+    planned = options.maximum_source_operations + options.maximum_forecast_operations
+    maximum_new_operations = planned if maximum_new_operations is None else maximum_new_operations
+    if type(maximum_new_operations) is not int or not 1 <= maximum_new_operations <= planned:
         raise SnapshotError("development_workflow_operation_limit")
-    options = DevelopmentWorkflowOptions.model_validate_json(options.model_dump_json())
     policies = FrozenDevelopmentPolicies.model_validate_json(policies.model_dump_json())
     root = root.absolute()
     new = completed = 0
@@ -261,7 +294,7 @@ def run_development_workflow(
         "status": "incomplete",
         "new_operations": 0,
         "completed_operations": 0,
-        "planned_operations": 43,
+        "planned_operations": planned,
         "quality_qualified": False,
         "final_test_access_authorized": False,
         "stage_ready": False,
@@ -270,6 +303,7 @@ def run_development_workflow(
         CompletedForecastScreening
         | CompletedForecastAdvancement
         | CompletedCanonicalForecast
+        | CanonicalQualificationExecutionResult
         | None
     ) = None
     with locked(root):
@@ -301,7 +335,7 @@ def run_development_workflow(
                 else PreparedDevelopmentParents
             )
             parents = kind.model_validate_json(canonical_bytes(value["parents"]))
-            protocol = _forecast(root, options, products, parents, previous)
+            protocol = _forecast(root, options, products, parents, previous, policies=policies)
             output = root / str(products) / "forecast-artifacts"
             output.mkdir(mode=0o700, exist_ok=True)
             paths = DevelopmentExecutionPaths(
@@ -318,22 +352,34 @@ def run_development_workflow(
             result = run_development_forecast(
                 root / str(products) / "forecast",
                 paths,
-                maximum_new_operations=min(12, maximum_new_operations - new),
+                maximum_new_operations=min(
+                    16 if isinstance(protocol, PreparedCanonicalQualificationProtocol) else 12,
+                    maximum_new_operations - new,
+                ),
             )
             forecast_new, forecast_completed = _counts(result)
             new += forecast_new
             completed += forecast_completed
             summary.update(new_operations=new, completed_operations=completed)
-            if result["status"] != "completed":
+            qualified = isinstance(protocol, PreparedCanonicalQualificationProtocol)
+            if result["status"] != "completed" and not (
+                qualified and result["status"] == "not_ready"
+            ):
                 return summary
             raw = read_bytes(
-                root / str(products) / "forecast", "forecast-execution-result.json", MAX_BYTES
+                root / str(products) / "forecast",
+                "qualification-execution-result.json"
+                if qualified
+                else "forecast-execution-result.json",
+                MAX_BYTES,
             )
             result_kind = (
                 CompletedForecastScreening
                 if products == 25
                 else CompletedForecastAdvancement
                 if products == 50
+                else CanonicalQualificationExecutionResult
+                if qualified
                 else CompletedCanonicalForecast
             )
             previous = result_kind.model_validate_json(raw)
@@ -344,10 +390,16 @@ def run_development_workflow(
                 raise SnapshotError("development_workflow_fifty_not_ready_no_canonical_generation")
             if products < 100 and new == maximum_new_operations:
                 return summary
-        if not isinstance(previous, CompletedCanonicalForecast):
+        if not isinstance(
+            previous, (CompletedCanonicalForecast, CanonicalQualificationExecutionResult)
+        ):
             raise SnapshotError("development_workflow_original_canonical_result_required")
         value = {
-            "version": "ai09-original-development-workflow-result-1.0.0",
+            "version": (
+                "ai09-qualified-development-workflow-result-1.0.0"
+                if isinstance(previous, CanonicalQualificationExecutionResult)
+                else "ai09-original-development-workflow-result-1.0.0"
+            ),
             "workflow_sha256": canonical_sha256(
                 json.loads(read_bytes(root, "development-workflow.json", MAX_BYTES))
             ),
@@ -362,7 +414,14 @@ def run_development_workflow(
             _same(path, value)
         else:
             write_once(path, value)
-        summary["status"] = (
-            "completed" if previous.status == "original_families_verified" else "not_ready"
-        )
+        if isinstance(previous, CanonicalQualificationExecutionResult):
+            summary.update(
+                status=previous.status,
+                development_quality_qualified=previous.development_quality_qualified,
+                reasons=list(previous.reasons),
+            )
+        else:
+            summary["status"] = (
+                "completed" if previous.status == "original_families_verified" else "not_ready"
+            )
         return summary

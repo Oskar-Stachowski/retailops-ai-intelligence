@@ -16,7 +16,6 @@ from retailops_ai.data_contracts.identity import canonical_sha256
 from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
     CampaignForecastQualityPolicy,
 )
-from retailops_ai.evaluation_campaign.campaign_generation import _producer_pin
 from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
     CampaignRequiredGroupRecipe,
 )
@@ -174,8 +173,17 @@ class FrozenDevelopmentPolicies(Contract):
             raise SnapshotError("development_policy_source_catalog_producer_changed")
 
 
+def _producer_pin(producer: Path, commit: str) -> None:
+    # Policy contracts are embedded in qualification receipts imported by the
+    # generation controller. Load its executable verifier only when needed.
+    from retailops_ai.evaluation_campaign.campaign_generation import _producer_pin as verify
+
+    verify(producer, commit)
+
+
 def verify_catalog_policy_pin(pin: SourceCatalogPolicyPin, producer: Path) -> None:
     """Read native catalog metadata from the exact clean code, without generating data."""
+
     pin = SourceCatalogPolicyPin.model_validate_json(pin.model_dump_json())
     _producer_pin(producer, pin.producer_commit)
     for name, expected in pin.code_sha256.items():

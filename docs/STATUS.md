@@ -1,5 +1,44 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: trwa połączenie canonical z kalibracją i pełną oceną.**
+Na gałęzi roboczej powstał plan 16 operacji: osiem wcześniejszych kroków
+prognoz, scoring Calibration, fit kalibratora oraz kontekst i ocena każdego
+wariantu ordinary/demand/physical. Korzysta z oryginalnych zwycięzców 25/50,
+polityk i wcześniej zamrożonych budżetów; zachowuje 12 treningów modeli
+oraz osobno rozlicza jeden fit kalibratora. Cały dziennik musi powstać przed
+pierwszym eksportem canonical. Rozpoczętego dziennika ośmiu operacji nie
+można rozszerzyć ani przepisać jego receipts.
+
+Podłączenie istniejących kontrolerów zachowuje oryginalne dowody Source,
+kalibrację i obowiązkową ocenę segmentów oraz niepewności. **75 kontroli**
+zapisu protokołu oraz eksportu i oceny przeszło po poprawce zależności od
+kolejności kluczy JSON. Test oryginalnych 35 operacji i kolejnych dziesięciu
+potwierdził zatrzymanie po niewystarczającej kalibracji, zachowanie kosztów
+i wznowienie bez nowych workerów. **30 kontroli** przeszło dla workera oceny
+i osobnego odczytu dużych metadanych; limit wejść Source pozostaje 2 MiB.
+Mypy sprawdził 791 plików. Siedem schematów v41 zachowuje wcześniejsze wersje.
+
+Nowa wersja wspólnego programu zamraża **51 operacji** przed pierwszą
+generacją Source: 12 fitów modeli oraz osobny kalibrator i pełną ocenę
+trzech wariantów prognoz. **27 testów przeszło w 1866,15 s**, potwierdzając
+zamrożenie programu, zatrzymanie przy niewystarczającej kalibracji, zachowanie
+kosztów przy wznowieniu i zgodność ze starszą wersją 43 operacji. Kolejne
+**8 testów źródeł przeszło w 2060,78 s**: pełne 51 operacji, wznowienie 47+4,
+pełna kalibracja i ocena trzech wariantów oraz ponowne wznowienie bez workerów.
+[09.106](evidence/09-106-canonical-qualification.json) zachowuje osobno odmowę
+przy niepełnej kalibracji. Paczka ma zgodne bajty 658 modułów i 38 kontraktów;
+te same **8 testów z instalacji przeszło w 2232.60 s**,
+bez pominięć i przy niezmienionych źródłach oraz kontrolach.
+Nie uruchomiono danych ani modeli Project. AI 09 pozostaje **`not_ready`**.
+
+Wcześniejszy wykonawca prognoz 25/50/100 jest w
+[PR 67](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/67).
+Jego lokalny CI dał 5690 zaliczeń i 55 jawnych pominięć, a końcowo pięć
+odmów `preflight_reserve` przed startem natywnych workerów. Wynik pozostał
+nieudany. Pełny Required CI commitu `551d7bc` zaliczył **17/17 jobs**.
+Oznaczenie PR jako gotowego do review uruchomiło zgodnie z workflow kolejny
+pełny CI `38168569806`; jego odbiór i wynikowy main pozostają wymagane.
+
 **2026-10-11 — AI 09: wspólny wykonawca Source i prognoz 25/50/100.**
 [09.104](evidence/09-104-development-workflow.json) i
 [instrukcja](ai09-development-workflow.md) łączą 43 oryginalne operacje,
