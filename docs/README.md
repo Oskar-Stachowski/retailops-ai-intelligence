@@ -1,6 +1,10 @@
 **AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
 i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
+[Wykonawca przygotowania Source](ai09-source-preparation-execution.md) zachowuje
+pięć oryginalnych operacji i ich koszty. [09.103](evidence/09-103-source-preparation-execution.json)
+potwierdza 111 kontroli źródeł i te same 111 z paczki; rzeczywista kampania
+i pełny odbiór pozostają wymagane.
 [Polityki przed generowaniem](ai09-prospective-policies.md) zapisują rzeczywiste
 reguły i kategorie Source bez oczekiwania na identyfikatory przyszłych danych.
 [09.102](evidence/09-102-prospective-development-policies.json) potwierdza

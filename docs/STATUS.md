@@ -1,5 +1,25 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: wykonawca pięciu oryginalnych operacji Source.**
+[09.103](evidence/09-103-source-preparation-execution.json) i
+[instrukcja przygotowania](ai09-source-preparation-execution.md) łączą rzeczywiste
+zamrożone polityki z generacją ordinary, natywnym planowaniem, płatną
+weryfikacją ordinary i wariantami demand/physical dla 25/50/100 produktów.
+Utrata dziennika, brak artefaktu lub niedokończona próba blokuje ponowny start;
+ukończone operacje zachowują oryginalne receipts i koszty.
+
+**111 kontroli źródeł i te same 111 z paczki** przeszło bez pominięć.
+Mypy sprawdził **784 pliki**; 652 moduły i 30 plików kontraktów mają zgodne
+bajty w instalacji. Zachowano wszystkie 396 wcześniejszych kontraktów.
+Kontrole pięciu operacji używają jawnych zastępników workerów Source;
+osobno sprawdzono rzeczywiste metadane, zależności i natywny planer
+zaakceptowanego producenta `d2363a5c` w izolowanym środowisku.
+
+Pełny CI wcześniejszego `7c9070b` nadal trwa. Odbiór i publikacja bieżących
+przyrostów, rzeczywiste dane/treningi oraz końcowa ocena trzech zastosowań
+pozostają otwarte. Canonical wyłączony, limit **12 GiB** zachowany;
+AI 09 **`not_ready`**.
+
 **2026-10-11 — AI 09: rzeczywiste reguły oceny przed planowaniem źródeł.**
 [09.102](evidence/09-102-prospective-development-policies.json) i
 [instrukcja zamrożenia](ai09-prospective-policies.md) wiążą dokumenty polityk,

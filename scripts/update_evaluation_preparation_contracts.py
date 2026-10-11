@@ -181,6 +181,10 @@ from retailops_ai.evaluation_campaign.physical_contract import (
     PhysicalSourceSpec,
 )
 from retailops_ai.evaluation_campaign.preparation import default_plan
+from retailops_ai.evaluation_campaign.source_preparation_contract import (
+    SourcePreparationOptions,
+    SourcePreparationSession,
+)
 from retailops_ai.evaluation_campaign.source_replay_contract import (
     ForecastSourceReplayProtocol,
     ForecastSourceReplayReceipt,
@@ -858,6 +862,22 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Prospective development policy contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, source_model in (
+        ("source_preparation_options", SourcePreparationOptions),
+        ("source_preparation_session", SourcePreparationSession),
+    ):
+        schema = source_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:39.0.0"
+        path = ROOT / "contracts/evaluation/v39" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Original Source preparation contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
