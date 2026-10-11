@@ -1,5 +1,14 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: pełny lokalny CI wykonawcy zakończony błędem rezerwy RAM.**
+[09.105](evidence/09-105-canonical-forecast-local-ci.json) zachowuje wynik dla
+`7c9070b`: główny pytest **5690 zaliczeń i 55 jawnych pominięć** oraz wszystkie
+kolejne bramki do końcowej kontroli natywnego CPU. W niej trzy testy przeszły,
+a pięć workerów nie wystartowało przez `preflight_reserve`. To nie jest odbiór.
+Limity i rezerwy zachowano; otwarte sesje pozostawiono bez zmian. Publikacja
+komponentu wymaga pełnego Required CI dokładnego PR i wynikowego main.
+Nie uruchomiono nowych danych ani fitów Project; AI 09 nadal **`not_ready`**.
+
 **2026-10-11 — AI 09: wykonawca zamrożonych dzienników prognoz.**
 [09.101](evidence/09-101-development-execution.json) i
 [instrukcja wykonania](ai09-development-execution.md) opisują polecenie
