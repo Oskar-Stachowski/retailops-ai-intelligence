@@ -15,6 +15,21 @@ MLflow i lifecycle oraz odbiór PR/main pozostają otwarte. Przed canonical
 pozostaje końcowy audyt wspólnych odczytów. Limit **12 GiB** i rezerwa **1 GiB**
 pozostają zachowane; AI 09 **`not_ready`**.
 
+**2026-10-11 — AI 09: pełna ocena progów i wspólnej kolejki stockout.**
+[Adapter oceny](ai09-stockout-full-assessment.md) zachowuje natywne obliczenia
+kosztów i pojemności dla całego zbioru, także powyżej 10 tys. wierszy. Kategorie
+i magazyny korzystają z tej samej kolejki; brakujące zadeklarowane grupy
+pozostają jawne. Walidacja odrzuca nieprawidłowe etykiety i parametry przed
+serializacją. Nie wykonuje dodatkowego treningu ani kalibracji.
+
+**51 testów źródeł i te same 51 testów z paczki przeszło**. Mypy sprawdził
+801 plików; 668 modułów i 48 schematów mają zgodne bajty.
+[09.113](evidence/09-113-stockout-full-assessment.json) zachowuje również
+pierwszy błąd kontroli oraz jego poprawkę. Komponent wymaga połączenia z
+oryginalnymi predykcjami, pełnymi dojrzałymi rolami i dziennikiem kampanii.
+Odbiór PR/main, pełna kampania, MLflow i lifecycle pozostają otwarte.
+Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-11 — AI 09: połączona gałąź kwalifikacji prognoz i komponentów stockout.**
 [09.111](evidence/09-111-development-integration.json) łączy wykonawcę 51 operacji,
 pełny trening liczbowy stockout, publiczne cechy/upstream i odczyt oryginalnej
