@@ -1,5 +1,20 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: odtworzenie wszystkich oryginalnych etykiet stockout.**
+[Adapter etykiet](ai09-stockout-label-replay.md) łączy całą oryginalną
+kwalifikację z publicznymi ruchami towaru, pokryciem i stanami magazynowymi.
+Zachowuje obliczenia AI 08, nieznane wyniki i zgodność wszystkich fizycznych
+kluczy. Odbiór wymaga pełnego odczytu i pomyślnej kontroli rodziców przy wyjściu.
+
+**176 testów źródeł i te same 176 testów z paczki przeszło**. Mypy sprawdził
+802 pliki; 669 modułów i 48 schematów mają zgodne bajty.
+[09.112](evidence/09-112-stockout-label-replay.json) zachowuje także wcześniejszy
+błąd typowania, odmowę startu z braku rezerwy i ich rozstrzygnięcie.
+Pełne dojrzałe role, zarezerwowane treningi, selekcja, ocena trzech zastosowań,
+MLflow i lifecycle oraz odbiór PR/main pozostają otwarte. Przed canonical
+pozostaje końcowy audyt wspólnych odczytów. Limit **12 GiB** i rezerwa **1 GiB**
+pozostają zachowane; AI 09 **`not_ready`**.
+
 **2026-10-11 — AI 09: połączona gałąź kwalifikacji prognoz i komponentów stockout.**
 [09.111](evidence/09-111-development-integration.json) łączy wykonawcę 51 operacji,
 pełny trening liczbowy stockout, publiczne cechy/upstream i odczyt oryginalnej

@@ -50,6 +50,7 @@ class CampaignContextFacts:
 
     fact_tables: tuple[str, ...] = FEATURE_TABLES
     fact_keys = staticmethod(keys)
+    policy_model: type[CampaignContextStoragePolicy] = CampaignContextStoragePolicy
 
     def __init__(
         self,
@@ -65,7 +66,7 @@ class CampaignContextFacts:
             if isinstance(scope, CampaignStockoutContextScope)
             else CampaignForecastContextScope.model_validate_json(scope.model_dump_json())
         )
-        self.policy = CampaignContextStoragePolicy.model_validate_json(policy.model_dump_json())
+        self.policy = self.policy_model.model_validate_json(policy.model_dump_json())
         self._stack = ExitStack()
         self._db: sqlite3.Connection | None = None
         self._used = self._failed = False
