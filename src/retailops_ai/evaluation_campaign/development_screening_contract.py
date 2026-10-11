@@ -250,6 +250,12 @@ class PreparedDevelopmentScreeningProtocol(CampaignProtocol):
                 or first.model_dump(exclude=fields) != second.model_dump(exclude=fields)
             ):
                 raise ValueError("prepared_screening_distinct_recipes_equal_family_resources")
+        if any(
+            fit.worker_environment_lock_sha256 != score.worker_environment_lock_sha256
+            for fit in self.fits
+            for score in self.scores
+        ):
+            raise ValueError("prepared_screening_common_worker_environment_required")
         for i, score in enumerate(self.scores):
             if (
                 score.role != "tune"

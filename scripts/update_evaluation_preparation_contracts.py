@@ -94,6 +94,15 @@ from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
     CampaignForecastUncertaintyReport,
 )
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
+from retailops_ai.evaluation_campaign.development_advancement_contract import (
+    CompletedForecastAdvancement,
+    CompletedForecastScreening,
+    ForecastScaleBudget,
+    MultiscaleSelectionJournal,
+    MultiscaleSelectionProtocol,
+    PreparedForecastAdvancementJournal,
+    PreparedForecastAdvancementProtocol,
+)
 from retailops_ai.evaluation_campaign.development_planning_contract import (
     NativeDevelopmentPlanningJournal,
     NativeDevelopmentPlanningProtocol,
@@ -741,6 +750,27 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Prepared screening selection contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, advancement_model in (
+        ("forecast_scale_budget", ForecastScaleBudget),
+        ("multiscale_selection_protocol", MultiscaleSelectionProtocol),
+        ("multiscale_selection_journal", MultiscaleSelectionJournal),
+        ("completed_forecast_screening", CompletedForecastScreening),
+        ("prepared_forecast_advancement_protocol", PreparedForecastAdvancementProtocol),
+        ("prepared_forecast_advancement_journal", PreparedForecastAdvancementJournal),
+        ("completed_forecast_advancement", CompletedForecastAdvancement),
+    ):
+        schema = advancement_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:35.0.0"
+        path = ROOT / "contracts/evaluation/v35" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Forecast advancement contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

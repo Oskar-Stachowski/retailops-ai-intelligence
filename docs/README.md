@@ -4,6 +4,9 @@ i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [Wybór konfiguracji po pierwszym porównaniu](ai09-screening-selection.md)
 wiąże ranking RF/HGB/TF z pełnym dziennikiem i oryginalnymi kosztami.
 Eksport mierzy również pamięć; brak pomiaru blokuje zaliczenie operacji.
+[Przejście 25 → 50 w 09.98](evidence/09-98-frozen-forecast-advancement.json)
+zachowuje wybrane konfiguracje oraz koszty i zamraża przyszłe budżety przed
+pierwszą próbą. Przeszło 29 kontroli; szersze regresje i publikacja trwają.
 [Wynik dziewiątej próby 09.62](evidence/09-62-development-capacity-ninth-run.json)
 wiąże zweryfikowany artefakt [run 37853501527](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37853501527).
 Receptura 1.9 zakończyła się `wall_limit`: **0/5 faz, 3600.53 s**,

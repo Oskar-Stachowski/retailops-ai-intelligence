@@ -39,6 +39,9 @@ from retailops_ai.evaluation_campaign.campaign_tune_contract import (
     CampaignForecastTuneSelection,
 )
 from retailops_ai.evaluation_campaign.campaign_tune_data import choose
+from retailops_ai.evaluation_campaign.development_advancement_contract import (
+    PreparedForecastAdvancementProtocol,
+)
 from retailops_ai.evaluation_campaign.development_screening_selection import (
     ScreeningFamilyRanking,
     rank_screening_families,
@@ -266,7 +269,7 @@ def select_campaign_forecast(
             ),
         )
         _verify_bundle(root / "bundle", receipt)
-        if family_screening:
+        if family_screening or isinstance(ledger.protocol, PreparedForecastAdvancementProtocol):
             validate_completed_export(journal, exported)
             for key in plan.score_operation_ids:
                 verify_campaign_forecast_scores(bundles[key], journal=journal, receipt=scores[key])
@@ -383,6 +386,18 @@ def validate_completed_tune(journal: Path, receipt: CampaignForecastTuneReceipt)
         if not has_ranking or receipt.plan != ledger.protocol.selection_plan:
             raise SnapshotError("screening_completed_selection_requires_frozen_family_ranking")
         verify_prepared_development_parents(ledger.protocol.screening.parents)
+    elif isinstance(ledger.protocol, PreparedForecastAdvancementProtocol):
+        from retailops_ai.evaluation_campaign.development_advancement import (
+            verify_completed_screening,
+        )
+        from retailops_ai.evaluation_campaign.development_screening import (
+            verify_prepared_development_parents,
+        )
+
+        if has_ranking or receipt.plan != ledger.protocol.selection_plan:
+            raise SnapshotError("advancement_completed_selection_frozen_plan_required")
+        verify_completed_screening(ledger.protocol.screening)
+        verify_prepared_development_parents(ledger.protocol.parents)
     elif has_ranking:
         raise SnapshotError("screening_family_ranking_requires_explicit_protocol")
 
@@ -395,18 +410,16 @@ def verify_campaign_forecast_selection(
     _verify_bundle(bundle, receipt)
 
 
-def verified_screening_family_ranking(
-    bundle: Path, *, journal: Path, receipt: CampaignForecastTuneReceipt
-) -> ScreeningFamilyRanking:
-    """Replay the stored decision and original bookkeeping, without new label access.
-
-    The returned ranking is still not an advancement grant. A later compiler
-    must bind the original winning fit recipes, new parents and complete costs.
-    """
-    before = campaign_journal.inspect(journal)
-    if not isinstance(before.protocol, PreparedDevelopmentSelectionProtocol):
-        raise SnapshotError("screening_ranking_requires_original_selection_protocol")
-    verify_campaign_forecast_selection(bundle, journal=journal, receipt=receipt)
+def _verify_original_forecast_operations(
+    bundle: Path,
+    *,
+    journal: Path,
+    receipt: CampaignForecastTuneReceipt,
+    ledger: CampaignJournal,
+    operations: tuple[CampaignOperationPlan, ...],
+) -> None:
+    """Bind every original export/fit/score and its measured completion cost."""
+    before = ledger
     from retailops_ai.evaluation_campaign.campaign_fit import validate_completed_fit
     from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
     from retailops_ai.evaluation_campaign.campaign_score import validate_completed_score
@@ -415,7 +428,7 @@ def verified_screening_family_ranking(
     exports = {}
     fits = {}
     scores = {}
-    for operation in before.protocol.screening.operations:
+    for operation in operations:
         event = next(
             (
                 e
@@ -460,11 +473,32 @@ def verified_screening_family_ranking(
     ):
         raise SnapshotError("screening_original_export_fit_and_score_ancestry_changed")
     costs = [e.cost for e in before.events if e.kind == "finished"]
-    if len(costs) != 12 or any(
+    if len(costs) != len(operations) + 1 or any(
         c is None or c.peak_process_tree_rss_bytes is None or c.artifact_bytes is None
         for c in costs
     ):
         raise SnapshotError("screening_ranking_requires_all_original_measured_costs")
+
+
+def verified_screening_family_ranking(
+    bundle: Path, *, journal: Path, receipt: CampaignForecastTuneReceipt
+) -> ScreeningFamilyRanking:
+    """Replay the stored decision and original bookkeeping, without new label access.
+
+    The returned ranking is still not an advancement grant. A later compiler
+    must bind the original winning fit recipes, new parents and complete costs.
+    """
+    before = campaign_journal.inspect(journal)
+    if not isinstance(before.protocol, PreparedDevelopmentSelectionProtocol):
+        raise SnapshotError("screening_ranking_requires_original_selection_protocol")
+    verify_campaign_forecast_selection(bundle, journal=journal, receipt=receipt)
+    _verify_original_forecast_operations(
+        bundle,
+        journal=journal,
+        receipt=receipt,
+        ledger=before,
+        operations=before.protocol.screening.operations,
+    )
     worker = receipt.worker_evidence.get("worker")
     if not isinstance(worker, dict) or "family_screening" not in worker:
         raise SnapshotError("screening_completed_worker_ranking_missing")

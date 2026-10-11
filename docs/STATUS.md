@@ -1,5 +1,23 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: zamrożone budżety i wykonawca przejścia 25 → 50.**
+[Wykonawca](ai09-screening-selection.md) przenosi dokładnie wybrane
+konfiguracje RF/HGB/TF oraz wszystkie koszty do 50 produktów. Budżety i ścieżki
+dzienników 50/100 muszą być zamrożone przed pierwszą próbą 25. Osiem operacji
+50 obejmuje trzy eksporty, trzy fity, scoring i selekcję. Oryginalne dane,
+receipts i koszty obu skal są ponownie sprawdzane. Niezgodne środowiska fitu
+i scoringu są odrzucane przed treningiem.
+
+[09.98](evidence/09-98-frozen-forecast-advancement.json) potwierdza **29 kontroli
+bez pominięć**, Mypy dla **771 plików**, siedem nowych schematów i niezmienione
+375 wcześniejszych kontraktów. Regresje 226 źródeł/paczki są w toku; pełny CI
+tego przyrostu i odbiór PR/main pozostają wymagane. To kontrola z jawnymi
+zastępnikami danych i workerów, bez nowych danych i fitów Project.
+
+Wykonawca 100, pozostałe zastosowania i rzeczywista kampania pozostają
+otwarte. Limit canonical **12 GiB** potwierdzono na zdalnym main `931f4519`;
+nie restartowano sesji. Canonical wyłączony; AI 09 `not_ready`.
+
 **2026-10-11 — AI 09: pełny odbiór rankingu i pomiar pamięci eksportu.**
 [Wybór konfiguracji](ai09-screening-selection.md) dodaje zamrożoną przed
 treningiem dwunastą operację. Zachowuje wszystkie sześć prób RF/HGB/TF,

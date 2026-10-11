@@ -44,7 +44,39 @@ brak RSS eksportu zostały poprawione, a ich nieudane wyniki zachowano.
 paczce i instalacji. Wszystkie 372 wcześniejsze kontrakty pozostają niezmienione.
 Testy obejmują także wcześniejsze eksporty, fity, scoring, warianty i dziennik.
 
-Przed publikacją pozostają pełny lokalny CI oraz odbiór PR/main. Kolejny wykonawca musi
-przenieść dokładnie wybrane pierwotne konfiguracje i wszystkie koszty do
-zamrożonych profili 50 i 100. Nadal potrzebne są rzeczywiste dane i fit,
-powiązanie pozostałych zastosowań, kalibracja, final i lifecycle.
+Nowy protokół wieloskalowy zamraża budżety oraz osobne ścieżki dzienników
+przygotowania i wykonania dla 50 i 100 produktów jeszcze przed pierwszą
+próbą na 25 produktach. Nie można dopisać tych budżetów do rozpoczętego
+dziennika ani odzyskać zużytej próby przez wybór nowej ścieżki. Zachowuje
+limit 12 fitów: sześć na 25 produktach, trzy na 50 i trzy na 100.
+
+`capture_completed_screening` ponownie sprawdza oryginalny ranking, receipts
+i wszystkie dwanaście kosztów. `compile_forecast_advancement` wiąże wynik
+z rzeczywistymi rodzicami 50 produktów i tworzy osiem operacji: trzy eksporty,
+trzy fity zwycięzców rodzin, scoring oraz selekcję. Zmienia wyłącznie
+tożsamości danych i budżety zadeklarowane przed próbami. Hiperparametry,
+seed inicjalizacji, preprocessing, podziały czasu, pełna historia i polityki
+pozostają takie same. Przygotowanie korzysta z tego samego przypiętego
+planera Source; jego koszty nie znikają przy zmianie skali.
+
+Dotychczasowi wykonawcy eksportu, fitu, scoringu i selekcji obsługują ten
+protokół. Odbiór 50 produktów wymaga oryginalnych receipts i zmierzonych
+kosztów obu skal, pełnego wspólnego Tune oraz poprawnych wyników wszystkich
+trzech rodzin. Wczesna walidacja odrzuca niezgodne środowiska fitu i scoringu
+przed pierwszym treningiem; wcześniej błąd był wykrywany dopiero przy scoringu.
+Kontrole używają jawnych zastępników danych i workerów, w tym rzeczywistego
+kontrolera RF z kontrolowanymi wynikami prepare/fit/reload.
+
+[Dowód 09.98](evidence/09-98-frozen-forecast-advancement.json) zapisuje
+**29 zaliczonych kontroli**, bez pominięć, oraz pełny Mypy dla **771 plików**.
+Siedem nowych schematów v35 przeszło sprawdzenie; wszystkie 375 wcześniejszych
+kontraktów pozostaje bez zmian. Zachowano także wcześniejsze błędy dwóch
+kontrolnych fixtures. Szerszy zestaw 226 regresji źródłowych i tych samych
+testów z paczki jest w toku; jego wynik nie został jeszcze odebrany.
+
+Przed publikacją pozostają pełny lokalny CI oraz odbiór PR/main. Wykonawca
+100 produktów nadal wymaga powiązania z oryginalnym pełnym rodzicem;
+zamrożony budżet nie zastępuje jego implementacji ani uprawnienia do startu.
+Nadal potrzebne są rzeczywiste dane i fity Project, powiązanie pozostałych
+zastosowań, kalibracja, final i lifecycle. Canonical pozostaje wyłączony,
+a jego limit RSS wynosi 12 GiB.

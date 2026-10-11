@@ -24,11 +24,12 @@ from retailops_ai.evaluation_campaign.development_screening_selection_contract i
 from retailops_ai.source_snapshot.files import SnapshotError
 
 
-def controlled_parents(tmp_path, monkeypatch):
+def controlled_parents(tmp_path, monkeypatch, *, protocol_factory=None, score_phases=None):
     _, prefix, output = setup(tmp_path, monkeypatch)
     root = tmp_path / "screening-with-selection"
     prefix = prefix.model_copy(update={"journal_path": str(root)})
-    protocol = freeze_screening_selection(prefix)
+    protocol = (protocol_factory or freeze_screening_selection)(prefix)
+    prefix = protocol.screening
     journal.initialize(root, protocol)
     case = root, protocol.screening, output
     exports = []
@@ -76,7 +77,9 @@ def controlled_parents(tmp_path, monkeypatch):
     monkeypatch.setattr(scorer, "verify_campaign_forecast_bundle", declared_fit_verification)
     for op, plan in zip(protocol.operations[9:11], prefix.scores, strict=True):
         selected = {f: fits[plan.fit_operation_ids[f]] for f in FAMILIES}
-        fake_phases(monkeypatch, (root, datasets[0], output, plan, exports[0], selected))
+        (score_phases or fake_phases)(
+            monkeypatch, (root, datasets[0], output, plan, exports[0], selected)
+        )
         bundle, receipt = scorer.score_campaign_forecast(
             datasets[0],
             {f: output / ("declared-" + f) for f in FAMILIES},

@@ -1,6 +1,9 @@
 """Transfer completed preparation evidence into charged exports and frozen trials."""
 
+from __future__ import annotations
+
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from retailops_ai.evaluation_campaign.campaign_contract import (
     CampaignCost,
@@ -30,6 +33,11 @@ from retailops_ai.evaluation_campaign.development_variants_contract import (
     ReusedDevelopmentParentReceipt,
 )
 from retailops_ai.source_snapshot.files import SnapshotError
+
+if TYPE_CHECKING:
+    from retailops_ai.evaluation_campaign.development_advancement_contract import (
+        PreparedForecastAdvancementProtocol,
+    )
 
 
 def capture_prepared_development_parents(
@@ -106,11 +114,16 @@ def compile_prepared_development_screening(
 
 def prepared_screening_prefix(
     protocol: CampaignProtocol,
-) -> PreparedDevelopmentScreeningProtocol | None:
+) -> PreparedDevelopmentScreeningProtocol | PreparedForecastAdvancementProtocol | None:
+    from retailops_ai.evaluation_campaign.development_advancement_contract import (
+        PreparedForecastAdvancementProtocol,
+    )
     from retailops_ai.evaluation_campaign.development_screening_selection_contract import (
         PreparedDevelopmentSelectionProtocol,
     )
 
+    if isinstance(protocol, PreparedForecastAdvancementProtocol):
+        return protocol
     if isinstance(protocol, PreparedDevelopmentSelectionProtocol):
         return protocol.screening
     return protocol if isinstance(protocol, PreparedDevelopmentScreeningProtocol) else None
@@ -136,3 +149,13 @@ def bind_prepared_screening_export(
     ):
         raise SnapshotError("prepared_screening_frozen_export_and_original_parent_binding")
     verify_prepared_development_parents(p.parents)
+    from retailops_ai.evaluation_campaign.development_advancement_contract import (
+        PreparedForecastAdvancementProtocol,
+    )
+
+    if isinstance(p, PreparedForecastAdvancementProtocol):
+        from retailops_ai.evaluation_campaign.development_advancement import (
+            verify_completed_screening,
+        )
+
+        verify_completed_screening(p.screening)
