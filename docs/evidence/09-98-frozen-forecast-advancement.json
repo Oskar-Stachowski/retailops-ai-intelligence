@@ -37,6 +37,7 @@
     "unchanged_hyperparameters_initialization_seed_and_preprocessing": true
   },
   "fresh_final_reads": 0,
+  "implementation_commit": "996537b4d06c078337141e8f979b18aaa3a1df71",
   "implementation_sha256": {
     "contracts/evaluation/v35/completed_forecast_advancement.schema.json": "56ea06015c80a671567862f7a977f55dc161059d04552355b60ba6d2b9a180ae",
     "contracts/evaluation/v35/completed_forecast_screening.schema.json": "df652dd47c28d30a8608ce7d8d1ee032d1fbb84256fe5b701fc23553c850674c",
@@ -107,16 +108,132 @@
   },
   "new_Project_fits": 0,
   "new_Project_generations": 0,
-  "observed_at_utc": "2026-10-11T13:18:54.254140+00:00",
+  "observed_at_utc": "2026-10-11T13:44:43.558465+00:00",
   "package_regression": {
+    "installed_tests": {
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "fe9337ea74634d73383aaa99afb19353fe06b34528bb14b3d658d359cb73d683",
+      "seconds": 514.954,
+      "skipped": 0,
+      "tests": 226
+    },
     "minimum_available_memory_bytes": 1073741824,
     "minimum_free_disk_bytes": 6442450944,
+    "original_build_admission_expiry": {
+      "elapsed_seconds": 301.0206829169765,
+      "worker_started": false
+    },
+    "original_successful_source_tests_not_repeated": true,
     "per_phase_timeout_seconds": 900,
-    "result_not_yet_accepted": true,
-    "same_installed_tests_expected": 226,
-    "source_tests_expected": 226,
-    "status": "in_progress",
-    "tree_rss_ceiling_bytes": 402653184
+    "remainder_only_after_pins_and_original226_checked": true,
+    "remaining_monitors": {
+      "build": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1502101504,
+        "minimum_free_disk_bytes": 41893982208,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 8192,
+        "sampled_peak_scratch_logical_bytes": 3537,
+        "sampled_tree_peak_rss_bytes": 82886656,
+        "sampled_worker_cpu_seconds": 0.40031258299999994,
+        "samples": 8,
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "wall_seconds": 0.7513587500434369
+      },
+      "install": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1538965504,
+        "minimum_free_disk_bytes": 41879638016,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 8192,
+        "sampled_peak_scratch_logical_bytes": 754,
+        "sampled_tree_peak_rss_bytes": 61259776,
+        "sampled_worker_cpu_seconds": 0.204415076,
+        "samples": 3,
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "wall_seconds": 0.21994354203343391
+      },
+      "installed-import": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1499627520,
+        "minimum_free_disk_bytes": 41879392256,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 8192,
+        "sampled_peak_scratch_logical_bytes": 562,
+        "sampled_tree_peak_rss_bytes": 125943808,
+        "sampled_worker_cpu_seconds": 0.6235212240000001,
+        "samples": 10,
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "wall_seconds": 0.9722929170238785
+      },
+      "installed-tests": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1112539136,
+        "minimum_free_disk_bytes": 41483067392,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 49152,
+        "sampled_peak_scratch_logical_bytes": 41570,
+        "sampled_tree_peak_rss_bytes": 179257344,
+        "sampled_worker_cpu_seconds": 505.93782603999995,
+        "samples": 4627,
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "wall_seconds": 515.5917104170076
+      }
+    },
+    "same_exact_cases": true,
+    "source_monitor": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1220689920,
+      "minimum_free_disk_bytes": 41584136192,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 45056,
+      "sampled_peak_scratch_logical_bytes": 34929,
+      "sampled_tree_peak_rss_bytes": 189743104,
+      "sampled_worker_cpu_seconds": 516.6675801279999,
+      "samples": 4947,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "wall_seconds": 542.3175971249584
+    },
+    "source_pins_unchanged": true,
+    "source_tests": {
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "3ad206d7552f62ceaf3731a595b2ab3efa2fcec2fc603dfe682d758f92a67666",
+      "seconds": 541.776,
+      "skipped": 0,
+      "tests": 226
+    },
+    "status": "passed",
+    "tree_rss_ceiling_bytes": 402653184,
+    "wheel": {
+      "bytes": 2540634,
+      "new_contract_files_equal": 13,
+      "private_files_absent": true,
+      "python_modules_equal": 642,
+      "sha256": "93f5a75d45882015e631ec51a2bbebee06338da09b478f8c1b8650aa42fc752c",
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl"
+    }
   },
   "publication": {
     "full_local_CI_for_this_increment": "not_yet_run",
@@ -136,7 +253,6 @@
     "sessions_restarted": false
   },
   "remaining": [
-    "finish226source and226installed regression and wheel identity",
     "full local CI and normal PR/resultingmain acceptance",
     "100-product executor with actual canonical original preparation parents",
     "external original parents for anomaly and stockout",

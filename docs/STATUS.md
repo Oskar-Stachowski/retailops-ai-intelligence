@@ -10,8 +10,12 @@ i scoringu są odrzucane przed treningiem.
 
 [09.98](evidence/09-98-frozen-forecast-advancement.json) potwierdza **29 kontroli
 bez pominięć**, Mypy dla **771 plików**, siedem nowych schematów i niezmienione
-375 wcześniejszych kontraktów. Regresje 226 źródeł/paczki są w toku; pełny CI
-tego przyrostu i odbiór PR/main pozostają wymagane. To kontrola z jawnymi
+375 wcześniejszych kontraktów. **226 regresji ze źródeł i te same 226 z paczki**
+przeszły bez pominięć. 642 moduły i 13 schematów mają identyczne bajty
+w źródłach, paczce i instalacji. Pierwsze dopuszczenie budowy paczki wygasło
+bez startu workera; po zwolnieniu pamięci wykonano pozostałe kroki,
+z zachowaniem limitów, rezerw i wcześniejszego wyniku. Pełny CI tego przyrostu
+i odbiór PR/main pozostają wymagane. To kontrola z jawnymi
 zastępnikami danych i workerów, bez nowych danych i fitów Project.
 
 Wykonawca 100, pozostałe zastosowania i rzeczywista kampania pozostają

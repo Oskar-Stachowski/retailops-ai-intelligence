@@ -71,8 +71,12 @@ kontrolera RF z kontrolowanymi wynikami prepare/fit/reload.
 **29 zaliczonych kontroli**, bez pominięć, oraz pełny Mypy dla **771 plików**.
 Siedem nowych schematów v35 przeszło sprawdzenie; wszystkie 375 wcześniejszych
 kontraktów pozostaje bez zmian. Zachowano także wcześniejsze błędy dwóch
-kontrolnych fixtures. Szerszy zestaw 226 regresji źródłowych i tych samych
-testów z paczki jest w toku; jego wynik nie został jeszcze odebrany.
+kontrolnych fixtures. **226 regresji źródłowych i te same 226 z paczki**
+przeszły bez pominięć. 642 moduły i 13 schematów są identyczne w źródłach,
+paczce i instalacji. Budowa początkowo nie wystartowała przez brak wolnej
+pamięci w pięciominutowym oknie dopuszczenia. Następnie wykonano pozostałe
+kroki na niezmienionym kodzie i przy tych samych zabezpieczeniach;
+zaliczonych testów źródłowych nie powtarzano.
 
 Przed publikacją pozostają pełny lokalny CI oraz odbiór PR/main. Wykonawca
 100 produktów nadal wymaga powiązania z oryginalnym pełnym rodzicem;
