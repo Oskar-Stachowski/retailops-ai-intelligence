@@ -177,6 +177,12 @@ class CampaignPortfolioJournal(CampaignJournal):
 
 def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
     document = decode_json(raw)
+    if "screening_selection_version" in document:
+        from retailops_ai.evaluation_campaign.development_screening_selection_contract import (
+            PreparedDevelopmentSelectionProtocol,
+        )
+
+        return PreparedDevelopmentSelectionProtocol.model_validate_json(canonical_bytes(document))
     if "prepared_development_screening_version" in document:
         from retailops_ai.evaluation_campaign.development_screening_contract import (
             PreparedDevelopmentScreeningProtocol,
@@ -210,6 +216,12 @@ def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
 def parse_campaign_journal(raw: bytes) -> CampaignJournal:
     document = decode_json(raw)
     protocol = document.get("protocol")
+    if isinstance(protocol, dict) and "screening_selection_version" in protocol:
+        from retailops_ai.evaluation_campaign.development_screening_selection_contract import (
+            PreparedDevelopmentSelectionJournal,
+        )
+
+        return PreparedDevelopmentSelectionJournal.model_validate_json(canonical_bytes(document))
     if isinstance(protocol, dict) and "prepared_development_screening_version" in protocol:
         from retailops_ai.evaluation_campaign.development_screening_contract import (
             PreparedDevelopmentScreeningJournal,

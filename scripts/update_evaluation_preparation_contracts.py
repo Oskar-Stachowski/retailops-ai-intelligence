@@ -114,6 +114,11 @@ from retailops_ai.evaluation_campaign.development_screening_contract import (
     PreparedDevelopmentScreeningJournal,
     PreparedDevelopmentScreeningProtocol,
 )
+from retailops_ai.evaluation_campaign.development_screening_selection import ScreeningFamilyRanking
+from retailops_ai.evaluation_campaign.development_screening_selection_contract import (
+    PreparedDevelopmentSelectionJournal,
+    PreparedDevelopmentSelectionProtocol,
+)
 from retailops_ai.evaluation_campaign.development_search import ForecastDevelopmentSearch
 from retailops_ai.evaluation_campaign.development_variants_contract import (
     ResolvedDevelopmentPreparationJournal,
@@ -719,6 +724,23 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Prepared development screening contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, selection_model in (
+        ("prepared_development_selection_protocol", PreparedDevelopmentSelectionProtocol),
+        ("prepared_development_selection_journal", PreparedDevelopmentSelectionJournal),
+        ("screening_family_ranking", ScreeningFamilyRanking),
+    ):
+        schema = selection_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:34.0.0"
+        path = ROOT / "contracts/evaluation/v34" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Prepared screening selection contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

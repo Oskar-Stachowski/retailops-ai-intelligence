@@ -2,7 +2,11 @@
 
 from pathlib import Path
 
-from retailops_ai.evaluation_campaign.campaign_contract import CampaignCost, CampaignJournal
+from retailops_ai.evaluation_campaign.campaign_contract import (
+    CampaignCost,
+    CampaignJournal,
+    CampaignProtocol,
+)
 from retailops_ai.evaluation_campaign.campaign_export_contract import (
     CampaignDevelopmentExportPlan,
     CampaignGeneratedParentReceipt,
@@ -100,6 +104,18 @@ def compile_prepared_development_screening(
     )
 
 
+def prepared_screening_prefix(
+    protocol: CampaignProtocol,
+) -> PreparedDevelopmentScreeningProtocol | None:
+    from retailops_ai.evaluation_campaign.development_screening_selection_contract import (
+        PreparedDevelopmentSelectionProtocol,
+    )
+
+    if isinstance(protocol, PreparedDevelopmentSelectionProtocol):
+        return protocol.screening
+    return protocol if isinstance(protocol, PreparedDevelopmentScreeningProtocol) else None
+
+
 def bind_prepared_screening_export(
     ledger: CampaignJournal,
     operation_id: str,
@@ -107,8 +123,8 @@ def bind_prepared_screening_export(
     generated: CampaignGeneratedParentReceipt,
 ) -> None:
     """Called inside the reservation, before any snapshot, curated or Source I/O."""
-    p = ledger.protocol
-    if not isinstance(p, PreparedDevelopmentScreeningProtocol):
+    p = prepared_screening_prefix(ledger.protocol)
+    if p is None:
         raise SnapshotError("prepared_screening_explicit_protocol_required")
     position = next(
         (i for i, o in enumerate(p.operations[:3]) if o.operation_id == operation_id), None

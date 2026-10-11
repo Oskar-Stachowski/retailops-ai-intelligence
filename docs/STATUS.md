@@ -1,5 +1,24 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: pełny odbiór rankingu i pomiar pamięci eksportu.**
+[Wybór konfiguracji](ai09-screening-selection.md) dodaje zamrożoną przed
+treningiem dwunastą operację. Zachowuje wszystkie sześć prób RF/HGB/TF,
+wybiera po jednej konfiguracji według tej samej polityki i ponownie sprawdza
+oryginalne receipts oraz koszty. Pierwszy test całego dziennika wykrył brak
+RSS eksportu; pomiar został uzupełniony. Awaria pomiaru blokuje sukces,
+a nieudana praca i jej koszt pozostają zapisane.
+
+[Dowód 09.97](evidence/09-97-screening-selection-and-export-memory.json) potwierdza
+**214 regresji ze źródeł i te same 214 z paczki**, bez pominięć. Mypy sprawdził **769 plików**, a **640 modułów i sześć schematów**
+ma identyczną zawartość w źródłach i paczce. Wszystkie 372 wcześniejsze pliki
+kontraktów są niezmienione. Pełny lokalny CI, PR i wynikowy main tego przyrostu
+pozostają wymagane. Nie wykonano nowych danych ani fitów Project.
+
+Nadal otwarte są awans dokładnie tych samych konfiguracji do 50/100,
+przekazanie danych trzem zastosowaniom, rzeczywista kampania, kalibracja,
+final, segmenty, niepewność i lifecycle. Canonical wyłączony,
+limit **12 GiB** zachowany; AI 09 `not_ready`.
+
 **2026-10-11 — AI 09: PR 66 scalony; przygotowane dane przechodzą do prób.**
 [PR 66](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/66)
 uzyskał pełny Required CI **17/17**, bez pominięć, również dla TensorFlow CPU.

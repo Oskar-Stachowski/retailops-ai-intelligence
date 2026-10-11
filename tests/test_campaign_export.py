@@ -105,12 +105,15 @@ def run(case, tmp_path):
     )
 
 
-def assert_failed_read(root):
+def assert_failed_read(root, *, memory_known=True):
     events = journal.inspect(root).events
     assert events[-2].kind == "reserved" and events[-2].operation_id == "development-42-read"
     assert events[-1].kind == "finished" and events[-1].result == "failed"
     assert events[-1].cost is not None and events[-1].cost.wall_seconds > 0
-    assert events[-1].cost.peak_process_tree_rss_bytes is None
+    if memory_known:
+        assert events[-1].cost.peak_process_tree_rss_bytes > 0
+    else:
+        assert events[-1].cost.peak_process_tree_rss_bytes is None
     assert (
         journal.summary(root)["remaining_new_attempts"]
         == journal.inspect(root).protocol.maximum_new_attempts - 2
@@ -283,7 +286,7 @@ def test_complete_receipt_is_durable_and_bound_to_actual_finished_event(tmp_path
     event = journal.inspect(case[0]).events[-1]
     assert event.result == "completed" and event.evidence_sha256 == receipt.content_sha256()
     assert event.cost.artifact_bytes == receipt.artifact_bytes
-    assert event.cost.peak_process_tree_rss_bytes is None
+    assert event.cost.peak_process_tree_rss_bytes > 0
     assert (
         not receipt.resource_qualified
         and not receipt.holdout_freshness_qualified
@@ -309,6 +312,45 @@ def test_any_pipeline_failure_is_charged_and_cannot_create_completion(
     with pytest.raises((SnapshotError, OSError)):
         run(case, tmp_path)
     assert_failed_read(case[0])
+
+
+def test_initial_memory_failure_is_charged_without_reading_source(tmp_path, monkeypatch):
+    from retailops_ai.evaluation_campaign import inprocess_memory
+
+    case = setup_campaign(tmp_path)
+    forbid_parent(monkeypatch)
+
+    def unavailable():
+        raise OSError("controlled memory probe failure")
+
+    monkeypatch.setattr(inprocess_memory, "current_tree_rss_bytes", unavailable)
+    with pytest.raises(SnapshotError, match="memory_measurement_unavailable"):
+        run(case, tmp_path)
+    assert_failed_read(case[0], memory_known=False)
+
+
+def test_final_memory_failure_keeps_cost_and_blocks_receipt_acceptance(tmp_path, monkeypatch):
+    from retailops_ai.evaluation_campaign import inprocess_memory
+
+    case = setup_campaign(tmp_path)
+    mocked_pipeline(monkeypatch, case)
+    original_stop = inprocess_memory.SampledProcessTreeMemory.stop
+
+    def stop_with_failure(self):
+        original_stop(self)
+        self.failed = True
+
+    monkeypatch.setattr(inprocess_memory.SampledProcessTreeMemory, "stop", stop_with_failure)
+    with pytest.raises(SnapshotError, match="memory_measurement_unavailable"):
+        run(case, tmp_path)
+    event = journal.inspect(case[0]).events[-1]
+    assert event.result == "failed" and event.evidence_sha256 is None
+    assert event.cost.wall_seconds > 0 and event.cost.peak_process_tree_rss_bytes is None
+    assert event.cost.artifact_bytes > 0
+    stored = case[0] / "receipts" / (event.reservation_id + ".json")
+    receipt = CampaignDevelopmentExportReceipt.model_validate_json(stored.read_bytes())
+    with pytest.raises(SnapshotError, match="receipt_not_completed"):
+        exporter.validate_completed_export(case[0], receipt)
 
 
 @pytest.mark.parametrize(

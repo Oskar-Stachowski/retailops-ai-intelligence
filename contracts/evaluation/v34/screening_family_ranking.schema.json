@@ -1,0 +1,423 @@
+{
+  "$defs": {
+    "CampaignForecastChoice": {
+      "additionalProperties": false,
+      "properties": {
+        "fit_operation_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fit Operation Id"
+        },
+        "model": {
+          "enum": [
+            "history7",
+            "history28",
+            "weekday28",
+            "rf_mean",
+            "hgb",
+            "tensorflow"
+          ],
+          "title": "Model",
+          "type": "string"
+        },
+        "model_artifact_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Artifact Sha256"
+        },
+        "score_operation_id": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score Operation Id"
+        }
+      },
+      "required": [
+        "model"
+      ],
+      "title": "CampaignForecastChoice",
+      "type": "object"
+    },
+    "CampaignForecastTuneSelection": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_interval": {
+          "anyOf": [
+            {
+              "enum": [
+                "history7",
+                "history28",
+                "weekday28"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Baseline Interval"
+        },
+        "baseline_mean": {
+          "anyOf": [
+            {
+              "enum": [
+                "history7",
+                "history28",
+                "weekday28"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Baseline Mean"
+        },
+        "baseline_median": {
+          "anyOf": [
+            {
+              "enum": [
+                "history7",
+                "history28",
+                "weekday28"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Baseline Median"
+        },
+        "calibration_fitted": {
+          "const": false,
+          "default": false,
+          "title": "Calibration Fitted",
+          "type": "boolean"
+        },
+        "candidate_interval_center": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CampaignForecastChoice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eligible_rows": {
+          "minimum": 0,
+          "title": "Eligible Rows",
+          "type": "integer"
+        },
+        "final_test_accessed": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Accessed",
+          "type": "boolean"
+        },
+        "independent_evaluation_accessed": {
+          "const": false,
+          "default": false,
+          "title": "Independent Evaluation Accessed",
+          "type": "boolean"
+        },
+        "mean": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CampaignForecastChoice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "median": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CampaignForecastChoice"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quality_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Quality Qualified",
+          "type": "boolean"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "rows": {
+          "minimum": 1,
+          "title": "Rows",
+          "type": "integer"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "selected_for_independent_evaluation",
+            "not_ready"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "rows",
+        "eligible_rows",
+        "baseline_mean",
+        "baseline_median",
+        "baseline_interval",
+        "mean",
+        "median",
+        "candidate_interval_center",
+        "reasons"
+      ],
+      "title": "CampaignForecastTuneSelection",
+      "type": "object"
+    },
+    "ScreeningTrialRank": {
+      "additionalProperties": false,
+      "properties": {
+        "eligible": {
+          "title": "Eligible",
+          "type": "boolean"
+        },
+        "family": {
+          "enum": [
+            "rf",
+            "hgb",
+            "tensorflow"
+          ],
+          "title": "Family",
+          "type": "string"
+        },
+        "fit_operation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Fit Operation Id",
+          "type": "string"
+        },
+        "frozen_trial_index": {
+          "enum": [
+            0,
+            1
+          ],
+          "title": "Frozen Trial Index",
+          "type": "integer"
+        },
+        "mean_squared_error": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mean Squared Error"
+        },
+        "model_artifact_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Artifact Sha256",
+          "type": "string"
+        },
+        "normalized_mean_bias": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Normalized Mean Bias"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "score_operation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Score Operation Id",
+          "type": "string"
+        },
+        "score_receipt_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Score Receipt Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "family",
+        "frozen_trial_index",
+        "score_operation_id",
+        "fit_operation_id",
+        "score_receipt_sha256",
+        "model_artifact_sha256",
+        "mean_squared_error",
+        "normalized_mean_bias",
+        "eligible",
+        "reasons"
+      ],
+      "title": "ScreeningTrialRank",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:screening_family_ranking:34.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "advancement_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Advancement Authorized",
+      "type": "boolean"
+    },
+    "eligible_rows": {
+      "minimum": 0,
+      "title": "Eligible Rows",
+      "type": "integer"
+    },
+    "final_test_accessed": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Accessed",
+      "type": "boolean"
+    },
+    "global_tune_diagnostics": {
+      "$ref": "#/$defs/CampaignForecastTuneSelection"
+    },
+    "promotion_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Promotion Allowed",
+      "type": "boolean"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reasons",
+      "type": "array"
+    },
+    "rows": {
+      "minimum": 1,
+      "title": "Rows",
+      "type": "integer"
+    },
+    "rule": {
+      "const": "per_family_mean_mse_bias_coverage_then_frozen_trial_order",
+      "default": "per_family_mean_mse_bias_coverage_then_frozen_trial_order",
+      "title": "Rule",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "three_families_ranked",
+        "not_ready"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "trials": {
+      "items": {
+        "$ref": "#/$defs/ScreeningTrialRank"
+      },
+      "maxItems": 6,
+      "minItems": 6,
+      "title": "Trials",
+      "type": "array"
+    },
+    "version": {
+      "const": "ai09-screening-family-ranking-1.0.0",
+      "default": "ai09-screening-family-ranking-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "winners": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/ScreeningTrialRank"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "propertyNames": {
+        "enum": [
+          "rf",
+          "hgb",
+          "tensorflow"
+        ]
+      },
+      "title": "Winners",
+      "type": "object"
+    }
+  },
+  "required": [
+    "status",
+    "rows",
+    "eligible_rows",
+    "trials",
+    "winners",
+    "reasons",
+    "global_tune_diagnostics"
+  ],
+  "title": "ScreeningFamilyRanking",
+  "type": "object"
+}

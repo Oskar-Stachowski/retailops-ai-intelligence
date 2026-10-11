@@ -1,0 +1,360 @@
+{
+  "base_commit": "8efd6253e6449d181c61b03b099b656555d69170",
+  "canonical_dispatched": false,
+  "canonical_tree_rss_bytes": 12884901888,
+  "export_memory": {
+    "earlier_unknown_receipts_not_rewritten": true,
+    "existing_AI08_external_supervisors_preserved": true,
+    "external_resource_guards_unchanged": true,
+    "failed_work_cost_retained": true,
+    "initial_and_final_samples": true,
+    "initial_failure_prevents_source_IO": true,
+    "late_failure_prevents_successful_completion": true,
+    "measurement": "sampled lower bound, not continuous peak; exited descendants not reconstructed",
+    "original_work_failure_preserved": true,
+    "sample_seconds": 0.05,
+    "scope": "current process plus live descendants"
+  },
+  "fresh_final_reads": 0,
+  "frozen_selection": {
+    "advancement_authorized": false,
+    "all_six_trials_and_rejections_retained": true,
+    "exports": 3,
+    "extra_label_passes_for_ranking": 0,
+    "families": [
+      "rf",
+      "hgb",
+      "tensorflow"
+    ],
+    "final_test_access_authorized": false,
+    "fit_attempts": 6,
+    "global_native_baseline_decision_separate": true,
+    "operations": 12,
+    "original_receipts_and_all12_measured_costs_rechecked": true,
+    "ranking": "mean MSE within family, original bias/coverage gates, frozen trial order breaks ties",
+    "same_original_full_tune_label_passes": 2,
+    "selection_passes": 1,
+    "trials_per_family": 2,
+    "tune_trios": 2
+  },
+  "implementation_sha256": {
+    "pyproject.toml": "313fe2997f54ad9a211990cb1246bcb55de9cffd3a0e04a24a156949d7813c8b",
+    "scripts/update_evaluation_preparation_contracts.py": "fbe0b0f8fee0daf9da91acb855dda44d19217166c8aac4e6c053e80609f3b6d7",
+    "src/retailops_ai/evaluation_campaign/campaign_export.py": "fe41e88c1dcb4756feb08e4cec5b9c6865b12474b06c321d35ec967582cb47cd",
+    "src/retailops_ai/evaluation_campaign/campaign_portfolio_contract.py": "9960244f3ffccbccbff6c206dcb570d9a369a259330dab3ea018eab0b9d5b713",
+    "src/retailops_ai/evaluation_campaign/campaign_tune.py": "8b24703171d6b9c02d7b86b687e86e0697efa091b9c42b48f3a93e4a3ee253bc",
+    "src/retailops_ai/evaluation_campaign/campaign_tune_worker.py": "03515609d1cbb28c6b406975ccb31575d7c5618b8f660bb14c5a3a4f60d09663",
+    "src/retailops_ai/evaluation_campaign/development_screening.py": "b8c506c0602be08de3ca0cc56c6404c339672222bc6ceb88495ce6ae4a45eebd",
+    "src/retailops_ai/evaluation_campaign/development_screening_selection.py": "bc6c83b964c7c17d198a9d91407a48fbaab7e0e189d2855433e83d1a33df1792",
+    "src/retailops_ai/evaluation_campaign/development_screening_selection_contract.py": "3fe222e6a5416fcfe02731d11be1854b0573769393d6d5b9dd96a17b89eaf21b",
+    "src/retailops_ai/evaluation_campaign/inprocess_memory.py": "badc84a33c0da242ea34b43f06844bbce14754a6bd01a39a33902610af850a58",
+    "tests/test_campaign_export.py": "d354f44e7df06a1b5d9a2da95db405a5f69d4f36e2b200c2a8a90be673afaa3d",
+    "tests/test_campaign_inprocess_memory.py": "04826b2417e1a6b631235446e5dfcfb058978652a3a0c633f38e20d955367748",
+    "tests/test_development_screening_selection.py": "a89f41b131b875d4acabd72e7b6ef08af12df9677004f47c1d1336bf09cd247b",
+    "tests/test_development_screening_selection_execution.py": "24acaf746a29f6f3f3e69c60d91c6588e7fa921ea1f3074fb4e5d3032aa3f521",
+    "tests/test_development_screening_selection_journal.py": "143eabb731fd642f090808128eb4724220f6b51d2a2c299cd8955f84343006a4"
+  },
+  "new_Project_fits": 0,
+  "new_Project_generations": 0,
+  "observed_at_utc": "2026-10-11T12:28:36.828307+00:00",
+  "original_journal_gap": "First full-journal control had1failed3passed: export RSS was unknown, so verified ranking correctly refused success. Export measurement added; same original receipt verifier retained.",
+  "parent_PR66_main_observation": {
+    "conclusion": null,
+    "event": "push",
+    "failed_or_skipped": [],
+    "head": "931f4519bb7b2bfce4b049dd01302429c917e5fa",
+    "in_progress": [
+      "tests (0)"
+    ],
+    "run": 38135856812,
+    "status": "in_progress",
+    "successful_jobs": 15
+  },
+  "previous_prepared_screening_evidence": "docs/evidence/09-96-prepared-development-screening.json",
+  "remaining": [
+    "full local CI and normal PR/main acceptance",
+    "verified original winning configurations and all costs at50/100 without new hyperparameters",
+    "original external parents for pairedtruth/anomaly/stockout",
+    "actual Project generation/training and all three-use-case calibration/final/segment/uncertainty/lifecycle requirements"
+  ],
+  "retained_controls": [
+    {
+      "monitor": {
+        "code_pins_unchanged": true,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1423048704,
+        "minimum_free_disk_bytes": 44608614400,
+        "reason": "worker_exit",
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 56061952,
+        "sampled_peak_scratch_logical_bytes": 42935141,
+        "sampled_tree_peak_rss_bytes": 91963392,
+        "sampled_worker_cpu_seconds": 0.22384270300000003,
+        "samples": 6,
+        "scratch_measurement": "logs/evidence only; pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "failed",
+        "tree_rss_budget_bytes": 268435456,
+        "wall_seconds": 0.5761037920019589
+      },
+      "name": "ranking-control-1",
+      "scratch_scope_correction": "Measured root also included copied Mypy cache; original monitor note was too narrow. Original monitor preserved; pytest temporary files excluded, global6GiB disk reserve enforced."
+    },
+    {
+      "monitor": {
+        "code_pins_unchanged": true,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1305280512,
+        "minimum_free_disk_bytes": 44492406784,
+        "reason": "worker_exit",
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 57344000,
+        "sampled_peak_scratch_logical_bytes": 47393457,
+        "sampled_tree_peak_rss_bytes": 156925952,
+        "sampled_worker_cpu_seconds": 35.389611646,
+        "samples": 335,
+        "scratch_measurement": "logs/evidence only; pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "failed",
+        "tree_rss_budget_bytes": 268435456,
+        "wall_seconds": 37.33808466704795
+      },
+      "name": "ranking-control-2",
+      "result": {
+        "errors": 0,
+        "failures": 3,
+        "junit_sha256": "26bd32b3888d6577d91293b5f07096d912c00e2cd14d6fb8840860139ccb539a",
+        "seconds": 32.865,
+        "skipped": 0,
+        "tests": 73
+      },
+      "scratch_scope_correction": "Measured root also included copied Mypy cache; original monitor note was too narrow. Original monitor preserved; pytest temporary files excluded, global6GiB disk reserve enforced."
+    },
+    {
+      "monitor": {
+        "code_pins_unchanged": true,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1283260416,
+        "minimum_free_disk_bytes": 44422156288,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 47984640,
+        "sampled_peak_scratch_logical_bytes": 43230952,
+        "sampled_tree_peak_rss_bytes": 154353664,
+        "sampled_worker_cpu_seconds": 35.173550773,
+        "samples": 325,
+        "scratch_measurement": "logs/evidence only; pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "tree_rss_budget_bytes": 268435456,
+        "wall_seconds": 36.38841295801103
+      },
+      "name": "ranking-control-3",
+      "result": {
+        "errors": 0,
+        "failures": 0,
+        "junit_sha256": "a5fa14619c3b717324f6cab50d32b43e12bc0e9464fe65f78d0c2b02e354c7b9",
+        "seconds": 32.534,
+        "skipped": 0,
+        "tests": 73
+      },
+      "scratch_scope_correction": "Measured root also included copied Mypy cache; original monitor note was too narrow. Original monitor preserved; pytest temporary files excluded, global6GiB disk reserve enforced."
+    },
+    {
+      "monitor": {
+        "code_pins_unchanged": true,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1270726656,
+        "minimum_free_disk_bytes": 44398206976,
+        "reason": "worker_exit",
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 24576,
+        "sampled_peak_scratch_logical_bytes": 15342,
+        "sampled_tree_peak_rss_bytes": 148488192,
+        "sampled_worker_cpu_seconds": 99.99253862399999,
+        "samples": 906,
+        "scratch_measurement": "logs/evidence only; pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "failed",
+        "tree_rss_budget_bytes": 268435456,
+        "wall_seconds": 101.39736870798515
+      },
+      "name": "ranking-journal-control-1",
+      "result": {
+        "errors": 0,
+        "failures": 1,
+        "junit_sha256": "fcfacfd2fcac37b5d30a75cc3bf4fa0df85c093eeec5c1c3b91a508993700e19",
+        "seconds": 100.812,
+        "skipped": 0,
+        "tests": 4
+      }
+    },
+    {
+      "monitor": {
+        "code_pins_unchanged": true,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1268301824,
+        "minimum_free_disk_bytes": 44287942656,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 20480,
+        "sampled_peak_scratch_logical_bytes": 9748,
+        "sampled_tree_peak_rss_bytes": 159350784,
+        "sampled_worker_cpu_seconds": 123.38301849599999,
+        "samples": 1113,
+        "scratch_measurement": "logs/evidence only; pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "tree_rss_budget_bytes": 268435456,
+        "wall_seconds": 125.15937737497734
+      },
+      "name": "ranking-journal-control-2",
+      "result": {
+        "errors": 0,
+        "failures": 0,
+        "junit_sha256": "2dec05ec6eaece60fe8b55fc9cfa09670d656c5513090f1c85d13c85a375ac1e",
+        "seconds": 124.569,
+        "skipped": 0,
+        "tests": 44
+      }
+    }
+  ],
+  "retained_full_type_failure": {
+    "errors": 2,
+    "files_checked": 769,
+    "monitor": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1291550720,
+      "minimum_free_disk_bytes": 44298981376,
+      "reason": "worker_exit",
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 8192,
+      "sampled_peak_scratch_logical_bytes": 869,
+      "sampled_tree_peak_rss_bytes": 233570304,
+      "sampled_worker_cpu_seconds": 1.2270349759999999,
+      "samples": 20,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "failed",
+      "wall_seconds": 2.1403422920266166
+    },
+    "reason": "missing external psutil stubs and Any return; corrected using existing import boundary and typed runtime-validated RSS"
+  },
+  "scope": "Pre-fit frozen per-family forecast configuration ranking from two complete paired Tune passes; original12-operation receipt/cost verification and live export RSS measurement. Controlled Source/model workers in controller tests; no Project qualification.",
+  "stage_ready": false,
+  "validation": {
+    "compatibility": {
+      "new_schemas": {
+        "contracts/evaluation/v34/prepared_development_selection_journal.schema.json": "d6f28302563da87a8bf4848d73afe0d9789afec3b5ba68db3b33b0267e91fe92",
+        "contracts/evaluation/v34/prepared_development_selection_protocol.schema.json": "898ef4ebe2616f3cfc288a90c65497c04391c1e4ef0339f7a2354b13e3c91cc3",
+        "contracts/evaluation/v34/screening_family_ranking.schema.json": "12f7cbdde59e2d452797e37dae2dfe47feed8a24739f8c41dd7cfc1588b4730b"
+      },
+      "old_contract_files_byte_identical": 372
+    },
+    "full_ci_for_this_increment": "not_yet_run",
+    "installed": {
+      "monitor": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1253163008,
+        "minimum_free_disk_bytes": 43875016704,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 40960,
+        "sampled_peak_scratch_logical_bytes": 33039,
+        "sampled_tree_peak_rss_bytes": 145408000,
+        "sampled_worker_cpu_seconds": 347.075849376,
+        "samples": 3255,
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "wall_seconds": 352.0046779999975
+      },
+      "result": {
+        "errors": 0,
+        "failures": 0,
+        "junit_sha256": "da1444d6e2ea6ca482452239bb7b2c4be0cb6814ffcd51afafaf1bba53806df4",
+        "seconds": 351.454,
+        "skipped": 0,
+        "tests": 214
+      }
+    },
+    "mypy_files": 769,
+    "mypy_monitor": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1464467456,
+      "minimum_free_disk_bytes": 44235448320,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 8192,
+      "sampled_peak_scratch_logical_bytes": 477,
+      "sampled_tree_peak_rss_bytes": 151076864,
+      "sampled_worker_cpu_seconds": 0.779842544,
+      "samples": 15,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "wall_seconds": 1.5870119169703685
+    },
+    "normal_PR_and_resulting_main_acceptance": "required",
+    "schemas_monitor": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1524547584,
+      "minimum_free_disk_bytes": 44252020736,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 8192,
+      "sampled_peak_scratch_logical_bytes": 213,
+      "sampled_tree_peak_rss_bytes": 124518400,
+      "sampled_worker_cpu_seconds": 1.294718536,
+      "samples": 16,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "wall_seconds": 1.701227958954405
+    },
+    "source": {
+      "monitor": {
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "exit_code": 0,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "minimum_available_memory_bytes": 1261043712,
+        "minimum_free_disk_bytes": 44089708544,
+        "reason": null,
+        "sample_seconds": 0.1,
+        "sampled_peak_scratch_allocated_bytes": 40960,
+        "sampled_peak_scratch_logical_bytes": 33201,
+        "sampled_tree_peak_rss_bytes": 171540480,
+        "sampled_worker_cpu_seconds": 347.166159467,
+        "samples": 3165,
+        "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+        "status": "passed",
+        "wall_seconds": 352.8601036670152
+      },
+      "result": {
+        "errors": 0,
+        "failures": 0,
+        "junit_sha256": "634ad522478f3e957d0f90dc41a65798231c360e19e26b95eaf2f418c0459cfa",
+        "seconds": 352.166,
+        "skipped": 0,
+        "tests": 214
+      }
+    },
+    "wheel": {
+      "bytes": 2404700,
+      "new_contract_files_equal": 6,
+      "private_files_absent": true,
+      "python_modules_equal": 640,
+      "sha256": "11819a29e19dbfedaaa5fe8a365cd46c868ac0117d6aac7006ecc590e1a2a81a",
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl"
+    }
+  }
+}
