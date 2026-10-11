@@ -160,6 +160,27 @@ def verify_forecast_advancement(
         ledger=before,
         operations=protocol.operations[:-1],
     )
+    families, result_reasons = verified_family_metrics(bundle, selected)
+    result = CompletedForecastAdvancement(
+        protocol=protocol,
+        journal_head_sha256=before.head_sha256,
+        selection_bundle=str(bundle.resolve()),
+        selected=selected,
+        operation_costs=_completed_costs(before, 8),
+        status="not_ready" if result_reasons else "original_families_verified",
+        family_reasons=families,
+        reasons=result_reasons,
+    )
+    if campaign_journal.inspect(journal) != before:
+        raise SnapshotError("advancement_journal_changed_during_verification")
+    return result
+
+
+def verified_family_metrics(
+    bundle: Path,
+    selected: CampaignForecastTuneReceipt,
+) -> tuple[dict[Family, tuple[str, ...]], tuple[str, ...]]:
+    """Read already verified paired Tune metrics without another data or label pass."""
     trials = json.loads(read_bytes(bundle, "metrics.json", selected.plan.max_output_bytes))[
         "trials"
     ]
@@ -192,16 +213,4 @@ def verify_forecast_advancement(
         *selected.selection.reasons,
         *("invalid_" + f + "_family" for f in ("rf", "hgb", "tensorflow") if families[f]),
     )
-    result = CompletedForecastAdvancement(
-        protocol=protocol,
-        journal_head_sha256=before.head_sha256,
-        selection_bundle=str(bundle.resolve()),
-        selected=selected,
-        operation_costs=_completed_costs(before, 8),
-        status="not_ready" if result_reasons else "original_families_verified",
-        family_reasons=families,
-        reasons=result_reasons,
-    )
-    if campaign_journal.inspect(journal) != before:
-        raise SnapshotError("advancement_journal_changed_during_verification")
-    return result
+    return families, result_reasons

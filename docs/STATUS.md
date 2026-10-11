@@ -1,5 +1,23 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: powiązany wykonawca prognoz 25 → 50 → 100.**
+[09.100](evidence/09-100-canonical-forecast-execution.json) łączy oryginalne
+pełne dane 100 z wcześniej wybranymi konfiguracjami i zamrożonymi budżetami.
+Trzy eksporty, trzy fity, scoring Tune i selekcja zachowują wszystkie dowody
+oraz koszty poprzednich skal. Zaliczone **133 kontrole** używają kontrolowanych
+workerów; nie są treningami Project. Pełny Mypy sprawdził 775 plików,
+a trzy nowe schematy zachowują wszystkie 389 wcześniejszych plików kontraktów.
+Bezpieczne usunięcie powtórnych serializacji i skrótów skróciło kontrolę
+metadanych; pełne regresje źródeł i paczki są w toku.
+
+Pełny lokalny CI wcześniejszego `8efd625` miał 5580 zaliczeń i 55 pominięć
+w głównym pytest, ale później pięć workerów nie wystartowało przez
+`preflight_reserve`; trzy pozostałe kontrole środowiska TensorFlow przeszły.
+To wynik nieudany, zachowany w 09.100. Potrzebne pozostają odbiór bieżącego
+przyrostu, publikacja na main, aktualny pin Source, rzeczywisty workflow
+kampanii i pełna ocena trzech zastosowań. Canonical nadal wyłączony,
+limit **12 GiB** zachowany; AI 09 **`not_ready`**.
+
 **2026-10-11 — AI 09: oryginalne przygotowanie canonical 100 i odbiór rodziców.**
 [09.99](evidence/09-99-canonical-development-preparation.json) dodaje zwykłą
 generację, natywne planowanie, ponowne sprawdzenie ordinary oraz oba warianty

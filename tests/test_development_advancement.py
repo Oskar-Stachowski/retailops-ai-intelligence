@@ -167,8 +167,12 @@ def paired_selection_worker(monkeypatch, root, scores, exported):
     monkeypatch.setattr(tuner, "monitor", monitor)
 
 
-@pytest.fixture(scope="module")
-def completed(tmp_path_factory):
+@pytest.fixture(scope="session")
+def completed(completed_forecast_advancement):
+    return completed_forecast_advancement
+
+
+def build_completed_advancement(tmp_path_factory):
     root = tmp_path_factory.mktemp("controlled-advancement").resolve()
     with pytest.MonkeyPatch.context() as monkeypatch:
 
@@ -193,7 +197,9 @@ def completed(tmp_path_factory):
             def budget(products):
                 path = root / str(products)
                 return ForecastScaleBudget(
-                    bootstrap_journal_path=str(path / "journal"),
+                    bootstrap_journal_path=str(
+                        path / ("canonical-journal" if products == 100 else "journal")
+                    ),
                     preparation_journal_path=str(path / "variant-journal"),
                     execution_journal_path=str(path / "execution"),
                     preparation=prefix.parents.preparation.bootstrap.generation.resources,
@@ -237,105 +243,113 @@ def completed(tmp_path_factory):
             prep[0], ordinary=ordinary, demand=variants[0], physical=variants[1]
         )
         protocol = runner.compile_forecast_advancement(screening=screening, parents=parents)
-        execution = Path(protocol.journal_path)
-        journal.initialize(execution, protocol)
-        case50 = execution, protocol, prep[1]
-        exports, datasets = [], []
-        for i in range(3):
-            native_double(monkeypatch, case50, i)
-            dataset, receipt = export(case50, i)
-            datasets.append(dataset)
-            exports.append(receipt)
-        prototype = fake_fits(exports[0].dataset_id)
-        fits = {}
-        for operation, fit in zip(protocol.operations[3:6], protocol.fits, strict=True):
-            if fit.family == "rf":
-                phases = fit_phases(
-                    monkeypatch,
-                    (execution, datasets[0], prep[1], fit, exports[0]),
-                    operation=operation.operation_id,
-                )
-                _, receipt = fitter.fit_campaign_forecast(
-                    datasets[0],
-                    Path("/controlled-python"),
-                    prep[1],
-                    journal=execution,
-                    operation_id=operation.operation_id,
-                    plan=fit,
-                    exported=exports[0],
-                )
-                assert phases == ["prepare", "fit", "reload"]
-                fits[fit.family] = receipt
-                continue
-            start = journal.reserve(execution, operation.operation_id)
-            receipt = prototype[fit.family].model_copy(
-                update={
-                    "operation_id": operation.operation_id,
-                    "reservation_id": str(start.reservation_id),
-                    "plan": fit,
-                    "protocol_sha256": protocol.content_sha256(),
-                    "runtime_code_sha256": protocol.runtime.code_sha256,
-                    "export_receipt_sha256": exports[0].content_sha256(),
-                    "dataset_id": exports[0].dataset_id,
-                    # These declared doubles use the RF controller's controlled
-                    # training population; unrelated helper defaults differ.
-                    **fits["rf"].model_dump(
-                        include={
-                            "train_keys_sha256",
-                            "early_stopping_keys_sha256",
-                            "train_eligible_rows",
-                            "early_stopping_eligible_rows",
-                        }
-                    ),
-                }
+        result, bundle = run_winning_scale(
+            monkeypatch, protocol, prep[1], runner.verify_forecast_advancement
+        )
+        return screening, parents, protocol, result, bundle
+
+
+def run_winning_scale(monkeypatch, protocol, output, verifier):
+    """Original export/RF/score/Tune controllers with explicitly controlled worker outputs."""
+    execution = Path(protocol.journal_path)
+    journal.initialize(execution, protocol)
+    case50 = execution, protocol, output
+    exports, datasets = [], []
+    for i in range(3):
+        native_double(monkeypatch, case50, i)
+        dataset, receipt = export(case50, i)
+        datasets.append(dataset)
+        exports.append(receipt)
+    prototype = fake_fits(exports[0].dataset_id)
+    fits = {}
+    for operation, fit in zip(protocol.operations[3:6], protocol.fits, strict=True):
+        if fit.family == "rf":
+            phases = fit_phases(
+                monkeypatch,
+                (execution, datasets[0], output, fit, exports[0]),
+                operation=operation.operation_id,
             )
-            exporter._store_receipt(execution, receipt)
-            journal.finish(
-                execution,
-                str(start.reservation_id),
-                result="completed",
-                evidence_sha256=receipt.content_sha256(),
-                cost=CampaignCost(
-                    wall_seconds=0.01,
-                    peak_process_tree_rss_bytes=12345,
-                    artifact_bytes=receipt.model_artifact_bytes,
-                ),
+            _, receipt = fitter.fit_campaign_forecast(
+                datasets[0],
+                Path("/controlled-python"),
+                output,
+                journal=execution,
+                operation_id=operation.operation_id,
+                plan=fit,
+                exported=exports[0],
             )
+            assert phases == ["prepare", "fit", "reload"]
             fits[fit.family] = receipt
-        monkeypatch.setattr(
-            scorer,
-            "verify_campaign_forecast_bundle",
-            lambda bundle, *, journal, receipt: validate_completed_fit(journal, receipt),
+            continue
+        start = journal.reserve(execution, operation.operation_id)
+        receipt = prototype[fit.family].model_copy(
+            update={
+                "operation_id": operation.operation_id,
+                "reservation_id": str(start.reservation_id),
+                "plan": fit,
+                "protocol_sha256": protocol.content_sha256(),
+                "runtime_code_sha256": protocol.runtime.code_sha256,
+                "export_receipt_sha256": exports[0].content_sha256(),
+                "dataset_id": exports[0].dataset_id,
+                # These declared doubles use the RF controller's controlled
+                # training population; unrelated helper defaults differ.
+                **fits["rf"].model_dump(
+                    include={
+                        "train_keys_sha256",
+                        "early_stopping_keys_sha256",
+                        "train_eligible_rows",
+                        "early_stopping_eligible_rows",
+                    }
+                ),
+            }
         )
-        full_score_phases(
-            monkeypatch, (execution, datasets[0], prep[1], protocol.score, exports[0], fits)
+        exporter._store_receipt(execution, receipt)
+        journal.finish(
+            execution,
+            str(start.reservation_id),
+            result="completed",
+            evidence_sha256=receipt.content_sha256(),
+            cost=CampaignCost(
+                wall_seconds=0.01,
+                peak_process_tree_rss_bytes=12345,
+                artifact_bytes=receipt.model_artifact_bytes,
+            ),
         )
-        scored_bundle, scored = scorer.score_campaign_forecast(
-            datasets[0],
-            {f: prep[1] / ("declared-" + f) for f in FAMILIES},
-            Path("/controlled-python"),
-            prep[1],
-            journal=execution,
-            operation_id=protocol.operations[6].operation_id,
-            plan=protocol.score,
-            exported=exports[0],
-            fits=fits,
-        )
-        scores = {scored.operation_id: scored}
-        paired_selection_worker(monkeypatch, execution, scores, exports[0])
-        bundle, selected = tuner.select_campaign_forecast(
-            datasets[0],
-            {scored.operation_id: scored_bundle},
-            Path("/controlled-python"),
-            prep[1],
-            journal=execution,
-            operation_id=protocol.operations[-1].operation_id,
-            plan=protocol.selection_plan,
-            exported=exports[0],
-            scores=scores,
-        )
-        result = runner.verify_forecast_advancement(bundle, journal=execution, selected=selected)
-        yield screening, parents, protocol, result, bundle
+        fits[fit.family] = receipt
+    monkeypatch.setattr(
+        scorer,
+        "verify_campaign_forecast_bundle",
+        lambda bundle, *, journal, receipt: validate_completed_fit(journal, receipt),
+    )
+    full_score_phases(
+        monkeypatch, (execution, datasets[0], output, protocol.score, exports[0], fits)
+    )
+    scored_bundle, scored = scorer.score_campaign_forecast(
+        datasets[0],
+        {f: output / ("declared-" + f) for f in FAMILIES},
+        Path("/controlled-python"),
+        output,
+        journal=execution,
+        operation_id=protocol.operations[6].operation_id,
+        plan=protocol.score,
+        exported=exports[0],
+        fits=fits,
+    )
+    scores = {scored.operation_id: scored}
+    paired_selection_worker(monkeypatch, execution, scores, exports[0])
+    bundle, selected = tuner.select_campaign_forecast(
+        datasets[0],
+        {scored.operation_id: scored_bundle},
+        Path("/controlled-python"),
+        output,
+        journal=execution,
+        operation_id=protocol.operations[-1].operation_id,
+        plan=protocol.selection_plan,
+        exported=exports[0],
+        scores=scores,
+    )
+    result = verifier(bundle, journal=execution, selected=selected)
+    return result, bundle
 
 
 def test_full_original_configurations_and_every_cost_survive_actual_journals(completed):

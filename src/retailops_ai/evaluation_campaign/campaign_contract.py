@@ -2,6 +2,7 @@
 
 from collections.abc import Callable
 from datetime import timedelta
+from hashlib import sha256
 from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
@@ -249,8 +250,9 @@ class CampaignProtocol(Contract):
 
     def content_sha256(self) -> str:
         document = self.model_dump(mode="json")
-        type(self).model_validate_json(canonical_bytes(document))
-        return canonical_sha256(document)
+        raw = canonical_bytes(document)
+        type(self).model_validate_json(raw)
+        return sha256(raw).hexdigest()
 
 
 class SelectionBundle(Contract):

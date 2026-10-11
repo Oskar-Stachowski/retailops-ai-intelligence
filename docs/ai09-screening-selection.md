@@ -78,9 +78,65 @@ pamięci w pięciominutowym oknie dopuszczenia. Następnie wykonano pozostałe
 kroki na niezmienionym kodzie i przy tych samych zabezpieczeniach;
 zaliczonych testów źródłowych nie powtarzano.
 
-Przed publikacją pozostają pełny lokalny CI oraz odbiór PR/main. Wykonawca
-100 produktów nadal wymaga powiązania z oryginalnym pełnym rodzicem;
-zamrożony budżet nie zastępuje jego implementacji ani uprawnienia do startu.
-Nadal potrzebne są rzeczywiste dane i fity Project, powiązanie pozostałych
-zastosowań, kalibracja, final i lifecycle. Canonical pozostaje wyłączony,
-a jego limit RSS wynosi 12 GiB.
+Dodatek [v37 / 09.100](evidence/09-100-canonical-forecast-execution.json)
+wiąże wynik 50 produktów z [oryginalnymi rodzicami canonical 100](ai09-development-preparation.md).
+`compile_canonical_forecast` ponownie sprawdza oryginalne wyniki 25/50,
+wszystkie receipts i koszty oraz przygotowanie pełnych danych. Korzysta
+z jedynej ścieżki i budżetów 100 zadeklarowanych przed pierwszą próbą 25.
+Tworzy trzy eksporty, trzy fity wcześniejszych zwycięzców, wspólny scoring
+Tune i selekcję. Nie zmienia hiperparametrów, preprocessingu ani seeda.
+Niepoprawny wynik którejkolwiek rodziny na 50 blokuje kompilację.
+
+Istniejące kontrolery rozpoznają osobny protokół pełnego development.
+Oryginalne dowody obu poprzednich skal są sprawdzane przed eksportami
+oraz podczas odbioru. Wynik zachowuje wszystkie koszty 25/50/100, także
+koszty generacji, natywnego planowania i ponownego sprawdzania rodziców.
+Samo ukończenie tej ścieżki nie zamyka AI 09 ani nie otwiera final.
+
+Mypy sprawdził **775 plików**. Trzy schematy v37 zachowują wcześniejsze
+388 plików JSON i plik ograniczeń Source. **133 kontrole wykonawców,
+wariantów, portfolio i dziennika przeszły bez błędów i pominięć.**
+Pierwszą kontrolę zatrzymał limit 64 MiB roboczego miejsca podczas tworzenia
+cache Mypy, przed testami. Zachowano ten wynik; kolejna kontrola ma 256 MiB
+miejsca na lokalny cache, ten sam limit 384 MiB RAM i rezerwy 1 GiB RAM
+oraz 6 GiB dysku. Budżety właściwej kampanii pozostają niezmienione.
+Kontrole używają jawnych zastępników workerów, bez danych i fitów Project.
+
+Przed publikacją pozostają pełne regresje, lokalny CI oraz odbiór PR/main.
+Nadal potrzebne są aktualizacja aktywnego pina Source, rzeczywisty workflow,
+dane i fity Project, powiązanie pozostałych zastosowań, kalibracja, final
+i lifecycle. Canonical pozostaje wyłączony, a jego limit RSS wynosi 12 GiB.
+
+Pełny lokalny CI wcześniejszego przyrostu `8efd625` zakończył się błędem:
+główny pytest miał **5580 zaliczeń i 55 pominięć**, lecz późniejszy zestaw
+środowiska TensorFlow dał **3 zaliczenia i 5 odmów `preflight_reserve`**.
+Pięć workerów nie wystartowało przez brak wymaganej wolnej pamięci.
+Ten wynik pozostaje zapisany w 09.100; nie zalicza pełnego CI ani nowszego
+kodu selekcji i przejść 50/100. Rezerwy pozostają bez zmian, a inne sesje
+nie były zamykane na potrzeby kontroli.
+
+Kontrola po rozszerzeniu do 100 produktów przekroczyła lokalny limit 900 s
+przed ukończeniem pełnego zestawu. Zachowano jej częściowy wynik i koszty.
+Profilowanie kopii metadanych wykazało wielokrotne serializacje i liczenie
+tych samych skrótów. Kod używa teraz raz przygotowanych, w pełni sprawdzonych
+bajtów przy liczeniu skrótu protokołu oraz bieżących wyników skrótów wewnątrz
+pojedynczej walidacji. Nadal odczytuje wszystkie oryginalne dowody; nie dodaje
+trwałego cache wyników sprawdzeń. Na tej samej kopii 2 MB pojedynczy odczyt
+z profilerem skrócił się z 1,644 s do 1,135 s. To pomiar fragmentu, obejmujący
+narzut profilera i importy, a nie szacunek przyspieszenia całej kampanii.
+Kontrola po optymalizacji przeszła wszystkie 133 testy w 723,70 s; jej
+nadzorca zakończył się sukcesem po 729,38 s. Nadal utworzyła dwa zestawy
+przygotowania 25/50, mimo deklaracji session scope w importowanej fixture.
+Wspólna rejestracja w conftest usuwa tę duplikację; zastępniki workerów są
+zamykane przed przekazaniem wyniku. Pełny zestaw 20 plików testów źródeł
+i identycznej paczki jest w toku i sprawdzi także dokładnie jedno wspólne
+przygotowanie na proces. Lokalny limit każdej fazy paczki wynosi 1800 s,
+limit RAM 384 MiB, a rezerwy 1 GiB RAM i 6 GiB dysku. Budżety kampanii
+pozostają niezmienione.
+
+Przy odbiorze paczki ponowne uruchomienie Mypy z pustym cache przekroczyło
+lokalny limit 384 MiB (próbkowane 390,125 MiB), przed testami. Zachowano
+nieudany pomiar. Wykorzystano wcześniej zaliczoną kontrolę wszystkich
+775 plików i schematów na identycznym kodzie produkcyjnym; późniejsza zmiana
+dotyczyła wyłącznie przygotowania pytest, którego Mypy nie obejmuje.
+Pozostałe kroki paczki trwają przy tych samych zabezpieczeniach pamięci.

@@ -5,8 +5,10 @@ its slot by compiling another destination. Native scenario IDs are resolved by
 the original pinned planner, never selected using model outcomes.
 """
 
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Annotated, Literal, Self
+from typing import TYPE_CHECKING, Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
@@ -22,6 +24,7 @@ from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForec
 from retailops_ai.evaluation_campaign.campaign_generation_contract import (
     CampaignGenerationResources,
 )
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import PortfolioSourceRecipe
 from retailops_ai.evaluation_campaign.campaign_score_contract import CampaignForecastScorePlan
 from retailops_ai.evaluation_campaign.campaign_tune_contract import (
     CampaignForecastTunePlan,
@@ -38,6 +41,14 @@ from retailops_ai.evaluation_campaign.development_screening_selection import Scr
 from retailops_ai.evaluation_campaign.development_screening_selection_contract import (
     PreparedDevelopmentSelectionProtocol,
 )
+
+if TYPE_CHECKING:
+    from retailops_ai.evaluation_campaign.canonical_development_contract import (
+        PreparedCanonicalDevelopmentParents,
+    )
+    from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
+        PreparedCanonicalForecastProtocol,
+    )
 
 PrivatePath = Annotated[str, Field(pattern=r"^/", min_length=2, max_length=1024)]
 
@@ -146,7 +157,10 @@ class CompletedForecastScreening(Contract):
 
 
 def advancement_plans(
-    screening: CompletedForecastScreening, parents: PreparedDevelopmentParents
+    screening: CompletedForecastScreening,
+    parents: PreparedDevelopmentParents | PreparedCanonicalDevelopmentParents,
+    *,
+    products: Literal[50, 100] = 50,
 ) -> tuple[
     tuple[CampaignDevelopmentExportPlan, ...],
     tuple[CampaignForecastFitPlan, ...],
@@ -155,9 +169,9 @@ def advancement_plans(
 ]:
     """Rebind data identities and only the resource budgets frozen before fits."""
     prefix = screening.protocol.screening
-    resources = screening.protocol.future_budgets["50"]
+    resources = screening.protocol.future_budgets["50" if products == 50 else "100"]
     source = parents.preparation.sources[0]
-    export_id = "development-50-ordinary-export"
+    export_id = f"development-{products}-ordinary-export"
     exports = tuple(
         original.model_copy(
             update={
@@ -194,7 +208,7 @@ def advancement_plans(
             "source_recipe_sha256": source.content_sha256(),
             "export_operation_id": export_id,
             "fit_operation_ids": {
-                f: f"development-50-{f}-fit" for f in ("rf", "hgb", "tensorflow")
+                f: f"development-{products}-{f}-fit" for f in ("rf", "hgb", "tensorflow")
             },
             "resources": resources.score,
         }
@@ -203,7 +217,7 @@ def advancement_plans(
         update={
             "source_recipe_sha256": source.content_sha256(),
             "export_operation_id": export_id,
-            "score_operation_ids": ("development-50-tune-trio",),
+            "score_operation_ids": (f"development-{products}-tune-trio",),
             "resources": resources.score,
         }
     )
@@ -211,15 +225,17 @@ def advancement_plans(
 
 
 def advancement_operations(
-    sources: tuple[DevelopmentProfileSource, ...],
+    sources: tuple[PortfolioSourceRecipe, ...],
     exports: tuple[CampaignDevelopmentExportPlan, ...],
     fits: tuple[CampaignForecastFitPlan, ...],
     score: CampaignForecastScorePlan,
     tune: CampaignForecastTunePlan,
+    *,
+    products: Literal[50, 100] = 50,
 ) -> tuple[CampaignOperationPlan, ...]:
     operations = [
         CampaignOperationPlan(
-            operation_id=f"development-50-{s.variant}-export",
+            operation_id=f"development-{products}-{s.variant}-export",
             phase="development",
             action="source_read",
             use_case="source",
@@ -261,7 +277,7 @@ def advancement_operations(
     )
     operations.append(
         CampaignOperationPlan(
-            operation_id="development-50-tune-selection",
+            operation_id=f"development-{products}-tune-selection",
             phase="development",
             action="model_score",
             use_case="forecast",
@@ -294,59 +310,71 @@ class PreparedForecastAdvancementProtocol(CampaignProtocol):
     @model_validator(mode="after")
     def freeze_scope(self) -> Self:
         self._frozen_policies()
-        p = self.parents.preparation
-        original = self.screening.protocol.screening.parents.preparation
-        budget = self.screening.protocol.future_budgets["50"]
-        if (
-            self.journal_path != budget.execution_journal_path
-            or p.journal_path != budget.preparation_journal_path
-            or p.bootstrap.journal_path != budget.bootstrap_journal_path
-            or self.sources != p.sources
-            or any(s.products != 50 for s in self.sources)
-            or any(
-                getattr(self, k) != getattr(p, k) or getattr(self, k) != getattr(original, k)
-                for k in DevelopmentPlanningContext.model_fields
-            )
-            or p.bootstrap.planning.partitions != original.bootstrap.planning.partitions
-            or p.bootstrap.planning.producer_planner_sha256
-            != original.bootstrap.planning.producer_planner_sha256
-            or any(
-                getattr(s, k) != getattr(original.sources[0], k)
-                for s in self.sources
-                for k in (
-                    "producer_commit",
-                    "producer_lock_sha256",
-                    "exporter_lock_sha256",
-                    "label_delay_days",
-                    "history",
-                    "seed",
-                    "selling_pairs",
-                    "stock_locations",
-                )
-            )
-            or any(
-                r != budget.preparation
-                for r in (
-                    p.reuse.resources,
-                    p.bootstrap.generation.resources,
-                    p.bootstrap.planning.resources,
-                    *(g.resources for g in p.planned.preparation.generations),
-                )
-            )
-            or p.maximum_total_wall_seconds != budget.maximum_total_preparation_wall_seconds
-            or p.bootstrap.maximum_total_wall_seconds
-            != budget.maximum_total_preparation_wall_seconds
-            or (self.exports, self.fits, self.score, self.selection_plan)
-            != advancement_plans(self.screening, self.parents)
-            or self.operations
-            != advancement_operations(
-                self.sources, self.exports, self.fits, self.score, self.selection_plan
-            )
-        ):
-            raise ValueError(
-                "advancement_original_configuration_parents_policy_budget_or_path_changed"
-            )
+        validate_advancement_scope(self, screening=self.screening, products=50)
         return self
+
+
+def validate_advancement_scope(
+    protocol: PreparedForecastAdvancementProtocol | PreparedCanonicalForecastProtocol,
+    *,
+    screening: CompletedForecastScreening,
+    products: Literal[50, 100],
+) -> None:
+    """Apply the same original recipes, partitions, resource and path checks at both scales."""
+    p = protocol.parents.preparation
+    original = screening.protocol.screening.parents.preparation
+    budget = screening.protocol.future_budgets["50" if products == 50 else "100"]
+    if (
+        protocol.journal_path != budget.execution_journal_path
+        or p.journal_path != budget.preparation_journal_path
+        or p.bootstrap.journal_path != budget.bootstrap_journal_path
+        or protocol.sources != p.sources
+        or any(s.products != products for s in protocol.sources)
+        or any(
+            getattr(protocol, k) != getattr(p, k) or getattr(protocol, k) != getattr(original, k)
+            for k in DevelopmentPlanningContext.model_fields
+        )
+        or p.bootstrap.planning.partitions != original.bootstrap.planning.partitions
+        or p.bootstrap.planning.producer_planner_sha256
+        != original.bootstrap.planning.producer_planner_sha256
+        or any(
+            getattr(s, k) != getattr(original.sources[0], k)
+            for s in protocol.sources
+            for k in (
+                "producer_commit",
+                "producer_lock_sha256",
+                "exporter_lock_sha256",
+                "label_delay_days",
+                "history",
+                "seed",
+                "selling_pairs",
+                "stock_locations",
+            )
+        )
+        or any(
+            r != budget.preparation
+            for r in (
+                p.reuse.resources,
+                p.bootstrap.generation.resources,
+                p.bootstrap.planning.resources,
+                *(g.resources for g in p.planned.preparation.generations),
+            )
+        )
+        or p.maximum_total_wall_seconds != budget.maximum_total_preparation_wall_seconds
+        or p.bootstrap.maximum_total_wall_seconds != budget.maximum_total_preparation_wall_seconds
+        or (protocol.exports, protocol.fits, protocol.score, protocol.selection_plan)
+        != advancement_plans(screening, protocol.parents, products=products)
+        or protocol.operations
+        != advancement_operations(
+            protocol.sources,
+            protocol.exports,
+            protocol.fits,
+            protocol.score,
+            protocol.selection_plan,
+            products=products,
+        )
+    ):
+        raise ValueError("advancement_original_configuration_parents_policy_budget_or_path_changed")
 
 
 class PreparedForecastAdvancementJournal(CampaignJournal):

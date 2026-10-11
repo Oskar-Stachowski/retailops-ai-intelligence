@@ -177,6 +177,12 @@ class CampaignPortfolioJournal(CampaignJournal):
 
 def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
     document = decode_json(raw)
+    if "canonical_forecast_version" in document:
+        from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
+            PreparedCanonicalForecastProtocol,
+        )
+
+        return PreparedCanonicalForecastProtocol.model_validate_json(canonical_bytes(document))
     if "resolved_canonical_preparation_version" in document:
         from retailops_ai.evaluation_campaign.canonical_development_contract import (
             ResolvedCanonicalDevelopmentPreparationProtocol,
@@ -242,6 +248,12 @@ def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
 def parse_campaign_journal(raw: bytes) -> CampaignJournal:
     document = decode_json(raw)
     protocol = document.get("protocol")
+    if isinstance(protocol, dict) and "canonical_forecast_version" in protocol:
+        from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
+            PreparedCanonicalForecastJournal,
+        )
+
+        return PreparedCanonicalForecastJournal.model_validate_json(canonical_bytes(document))
     if isinstance(protocol, dict) and "resolved_canonical_preparation_version" in protocol:
         from retailops_ai.evaluation_campaign.canonical_development_contract import (
             ResolvedCanonicalDevelopmentPreparationJournal,

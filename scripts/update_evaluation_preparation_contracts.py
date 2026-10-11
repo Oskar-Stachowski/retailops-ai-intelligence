@@ -102,6 +102,11 @@ from retailops_ai.evaluation_campaign.canonical_development_contract import (
     ResolvedCanonicalDevelopmentPreparationJournal,
     ResolvedCanonicalDevelopmentPreparationProtocol,
 )
+from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
+    CompletedCanonicalForecast,
+    PreparedCanonicalForecastJournal,
+    PreparedCanonicalForecastProtocol,
+)
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
 from retailops_ai.evaluation_campaign.development_advancement_contract import (
     CompletedForecastAdvancement,
@@ -810,6 +815,23 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Canonical development preparation contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, forecast_model in (
+        ("prepared_canonical_forecast_protocol", PreparedCanonicalForecastProtocol),
+        ("prepared_canonical_forecast_journal", PreparedCanonicalForecastJournal),
+        ("completed_canonical_forecast", CompletedCanonicalForecast),
+    ):
+        schema = forecast_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:37.0.0"
+        path = ROOT / "contracts/evaluation/v37" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Canonical forecast contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

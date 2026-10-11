@@ -8,6 +8,9 @@ Eksport mierzy również pamięć; brak pomiaru blokuje zaliczenie operacji.
 zachowuje wybrane konfiguracje oraz koszty i zamraża przyszłe budżety przed
 pierwszą próbą. Przeszło 226 regresji źródeł i te same 226 z paczki;
 pełny lokalny CI oraz odbiór PR/main pozostają wymagane.
+[Wykonawca 25 → 50 → 100](ai09-screening-selection.md) wiąże oryginalne
+konfiguracje, rodziców i koszty. Zaliczył 133 kontrole z zastępnikami workerów;
+pełna paczka, CI i rzeczywiste treningi pozostają wymagane.
 [Przygotowanie canonical 100](ai09-development-preparation.md) zachowuje
 oryginalne źródła, natywne plany i wszystkie koszty. Przeszło 328 regresji
 źródeł i te same 328 z paczki; rzeczywista generacja, fity 100 i pełna

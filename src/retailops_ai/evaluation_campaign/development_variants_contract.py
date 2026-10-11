@@ -121,17 +121,22 @@ def validate_resolved_variant_scope(
 ) -> None:
     """Bind original bootstrap, resolved plans and cold costs for either source wire."""
     preparation = protocol.planned.preparation
+    # Reuse only values from this validation call, after full validation.
+    # No journal, receipt, model instance or previous call is cached.
+    bootstrap_sha256 = protocol.bootstrap.content_sha256()
+    generated_sha256 = protocol.generated.content_sha256()
+    planned_sha256 = protocol.planned.content_sha256()
     if (
         any(
             getattr(protocol, k) != getattr(protocol.bootstrap, k)
             for k in DevelopmentPlanningContext.model_fields
         )
-        or protocol.bootstrap.content_sha256() != protocol.reuse.bootstrap_protocol_sha256
-        or protocol.generated.protocol_sha256 != protocol.bootstrap.content_sha256()
-        or protocol.planned.protocol_sha256 != protocol.bootstrap.content_sha256()
-        or protocol.generated.content_sha256() != protocol.reuse.generated_receipt_sha256
-        or protocol.planned.content_sha256() != protocol.reuse.planning_receipt_sha256
-        or protocol.generated.content_sha256() != protocol.planned.generation_receipt_sha256
+        or bootstrap_sha256 != protocol.reuse.bootstrap_protocol_sha256
+        or protocol.generated.protocol_sha256 != bootstrap_sha256
+        or protocol.planned.protocol_sha256 != bootstrap_sha256
+        or generated_sha256 != protocol.reuse.generated_receipt_sha256
+        or planned_sha256 != protocol.reuse.planning_receipt_sha256
+        or generated_sha256 != protocol.planned.generation_receipt_sha256
         or protocol.generated.source.parent.source_dataset_id != protocol.planned.source_dataset_id
         or protocol.generated.runtime != protocol.runtime
         or protocol.planned.runtime != protocol.runtime

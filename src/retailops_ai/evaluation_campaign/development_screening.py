@@ -36,6 +36,9 @@ from retailops_ai.evaluation_campaign.development_variants_contract import (
 from retailops_ai.source_snapshot.files import SnapshotError
 
 if TYPE_CHECKING:
+    from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
+        PreparedCanonicalForecastProtocol,
+    )
     from retailops_ai.evaluation_campaign.development_advancement_contract import (
         PreparedForecastAdvancementProtocol,
     )
@@ -117,7 +120,15 @@ def compile_prepared_development_screening(
 
 def prepared_screening_prefix(
     protocol: CampaignProtocol,
-) -> PreparedDevelopmentScreeningProtocol | PreparedForecastAdvancementProtocol | None:
+) -> (
+    PreparedDevelopmentScreeningProtocol
+    | PreparedForecastAdvancementProtocol
+    | PreparedCanonicalForecastProtocol
+    | None
+):
+    from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
+        PreparedCanonicalForecastProtocol,
+    )
     from retailops_ai.evaluation_campaign.development_advancement_contract import (
         PreparedForecastAdvancementProtocol,
     )
@@ -125,7 +136,9 @@ def prepared_screening_prefix(
         PreparedDevelopmentSelectionProtocol,
     )
 
-    if isinstance(protocol, PreparedForecastAdvancementProtocol):
+    if isinstance(
+        protocol, (PreparedForecastAdvancementProtocol, PreparedCanonicalForecastProtocol)
+    ):
         return protocol
     if isinstance(protocol, PreparedDevelopmentSelectionProtocol):
         return protocol.screening
@@ -151,6 +164,19 @@ def bind_prepared_screening_export(
         or generated != p.parents.generations[position]
     ):
         raise SnapshotError("prepared_screening_frozen_export_and_original_parent_binding")
+    from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
+        PreparedCanonicalForecastProtocol,
+    )
+
+    if isinstance(p, PreparedCanonicalForecastProtocol):
+        from retailops_ai.evaluation_campaign.canonical_development import (
+            verify_canonical_development_parents,
+        )
+        from retailops_ai.evaluation_campaign.canonical_forecast import verify_completed_advancement
+
+        verify_canonical_development_parents(p.parents)
+        verify_completed_advancement(p.advancement)
+        return
     verify_prepared_development_parents(p.parents)
     from retailops_ai.evaluation_campaign.development_advancement_contract import (
         PreparedForecastAdvancementProtocol,
