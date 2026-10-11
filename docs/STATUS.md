@@ -8,8 +8,9 @@ receipts i wszystkie pięć kosztów. Małe profile 25/50 pozostają odrębne.
 **118 kontroli** przeszło bez pominięć; trzy kolejne potwierdziły naprawioną
 blokadę niezgodnych parametrów przed generowaniem. Mypy sprawdził **773 pliki**,
 a siedem nowych schematów zachowuje wszystkie 382 wcześniejsze kontrakty.
-Szersze regresje źródeł/paczki są w toku; testy używają kontrolowanych wyników
-workerów, bez nowych danych Source i fitów Project.
+**328 regresji źródeł i te same 328 z paczki** przeszły bez pominięć.
+644 moduły i 20 schematów mają identyczne bajty w źródłach, paczce i instalacji.
+Testy używają kontrolowanych wyników workerów, bez nowych danych Source i fitów Project.
 
 Otwarte pozostają trzy fity 100 powiązane z pierwotnym wyborem 25/50,
 aktualizacja pina Source, rzeczywisty workflow kampanii, pełna ocena trzech

@@ -26,9 +26,11 @@ Przeszło **118 kontroli przygotowania i wcześniejszych ścieżek**. Audyt
 wykrył możliwość zapisania rozwiniętych parametrów innych niż zamrożone
 żądanie canonical. Walidacja odrzuca teraz taki plan przed generowaniem;
 trzy kontrole odtworzyły błąd i następnie przeszły po poprawce. Pełny Mypy
-obejmuje 773 pliki, a siedem schematów v36 przechodzi sprawdzenie. Szersze
-regresje źródeł i zainstalowanej paczki trwają. Wyniki używają jawnie
-kontrolowanych workerów; nie dowodzą pełnej generacji Source ani fitów Project.
+obejmuje 773 pliki, a siedem schematów v36 przechodzi sprawdzenie.
+**328 regresji źródeł i te same 328 z zainstalowanej paczki** przeszły
+bez pominięć. Sprawdzono zgodność bajtów 644 modułów i 20 schematów v33–v36
+w źródłach, paczce i instalacji. Wyniki używają jawnie kontrolowanych workerów;
+nie dowodzą pełnej generacji Source ani fitów Project.
 
 Pozostają powiązanie tych rodziców z wybranymi wcześniej konfiguracjami
 i trzema fitami 100, rzeczywiste dane i modele, komplet trzech zastosowań
