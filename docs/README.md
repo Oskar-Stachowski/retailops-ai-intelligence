@@ -1,6 +1,10 @@
 **AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
 i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
+[Wykonawca development](ai09-development-execution.md) uruchamia zamrożone
+dzienniki prognoz 25/50/100 i zachowuje próby oraz koszty przy wznowieniu.
+[09.101](evidence/09-101-development-execution.json) potwierdza 11 kontroli źródeł i te same 11 z paczki;
+prawdziwa kampania Project oraz pełny CI pozostają wymagane.
 [Wybór konfiguracji po pierwszym porównaniu](ai09-screening-selection.md)
 wiąże ranking RF/HGB/TF z pełnym dziennikiem i oryginalnymi kosztami.
 Eksport mierzy również pamięć; brak pomiaru blokuje zaliczenie operacji.
@@ -10,7 +14,8 @@ pierwszą próbą. Przeszło 226 regresji źródeł i te same 226 z paczki;
 pełny lokalny CI oraz odbiór PR/main pozostają wymagane.
 [Wykonawca 25 → 50 → 100](ai09-screening-selection.md) wiąże oryginalne
 konfiguracje, rodziców i koszty. Zaliczył 133 kontrole z zastępnikami workerów;
-pełna paczka, CI i rzeczywiste treningi pozostają wymagane.
+363 regresje źródeł i te same 363 z paczki przeszły bez pominięć.
+Pełny CI i rzeczywiste treningi pozostają wymagane.
 [Przygotowanie canonical 100](ai09-development-preparation.md) zachowuje
 oryginalne źródła, natywne plany i wszystkie koszty. Przeszło 328 regresji
 źródeł i te same 328 z paczki; rzeczywista generacja, fity 100 i pełna

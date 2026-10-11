@@ -153,7 +153,7 @@
   },
   "new_Project_fits": 0,
   "new_Project_generations": 0,
-  "observed_at_utc": "2026-10-11T14:45:01.577156+00:00",
+  "observed_at_utc": "2026-10-11T15:14:03.966575+00:00",
   "operations": {
     "exports": 3,
     "new_fit_attempts_per_family": 1,
@@ -163,14 +163,97 @@
     "tune_selection": 1
   },
   "package_regression": {
+    "acceptance": {
+      "controlled_25_50_setups_per_suite": 1,
+      "same_test_case_inventory": true,
+      "source_pins_unchanged": true,
+      "tests_per_suite": 363
+    },
     "controlled_25_50_setup_count_required_per_suite": 1,
     "local_rss_bytes": 402653184,
     "minimum_available_memory_bytes": 1073741824,
     "minimum_free_disk_bytes": 6442450944,
     "per_phase_timeout_seconds": 1800,
+    "phase_statuses": {
+      "build": "passed",
+      "install": "passed",
+      "installed-import": "passed",
+      "installed-tests": "passed",
+      "source-tests": "passed"
+    },
     "same_test_inventory_required": true,
     "scope": "20files, full canonical100 execution, all earlier25/50/preparation and portfolio/journal/export/fit/score/selection/generation regressions. Declared workers only.",
-    "status": "running_remaining_steps_with_accepted_static_checks"
+    "status": "passed",
+    "suites": {
+      "installed-tests": {
+        "junit_sha256": "eea2a880cac7615a2c0039b253752c7d5740e878d442e8cf9a1544a7302769ff",
+        "monitor": {
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "exit_code": 0,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "minimum_available_memory_bytes": 1302888448,
+          "minimum_free_disk_bytes": 38238724096,
+          "reason": null,
+          "sample_seconds": 0.1,
+          "sampled_peak_scratch_allocated_bytes": 65536,
+          "sampled_peak_scratch_logical_bytes": 56339,
+          "sampled_tree_peak_rss_bytes": 205668352,
+          "sampled_worker_cpu_seconds": 864.5684347829999,
+          "samples": 7910,
+          "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+          "status": "passed",
+          "wall_seconds": 874.2864114589756
+        },
+        "tests": {
+          "errors": "0",
+          "failures": "0",
+          "hostname": "Oskars-MacBook-Air.local",
+          "name": "pytest",
+          "skipped": "0",
+          "tests": "363",
+          "time": "873.701",
+          "timestamp": "2026-10-11T16:58:19.380070+02:00"
+        }
+      },
+      "source-tests": {
+        "junit_sha256": "3bead6a2b07d5279c108a89adbdcd563b91b1507e7727136be88f0cd0dda218e",
+        "monitor": {
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "exit_code": 0,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "minimum_available_memory_bytes": 1364230144,
+          "minimum_free_disk_bytes": 38603911168,
+          "reason": null,
+          "sample_seconds": 0.1,
+          "sampled_peak_scratch_allocated_bytes": 65536,
+          "sampled_peak_scratch_logical_bytes": 56285,
+          "sampled_tree_peak_rss_bytes": 223887360,
+          "sampled_worker_cpu_seconds": 835.2024305619999,
+          "samples": 7509,
+          "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+          "status": "passed",
+          "wall_seconds": 843.2735612910474
+        },
+        "tests": {
+          "errors": "0",
+          "failures": "0",
+          "hostname": "Oskars-MacBook-Air.local",
+          "name": "pytest",
+          "skipped": "0",
+          "tests": "363",
+          "time": "842.643",
+          "timestamp": "2026-10-11T16:43:55.831042+02:00"
+        }
+      }
+    },
+    "wheel": {
+      "bytes": 2692547,
+      "new_contract_files_equal": 23,
+      "private_files_absent": true,
+      "python_modules_equal": 646,
+      "sha256": "3fd2d5e3c3be513709929b54095a7ed0fb52a7886be0a629250da6a33d3b4de6",
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl"
+    }
   },
   "prepublication_checks": {
     "checks": [
@@ -211,7 +294,6 @@
     "no final access or promotion grant"
   ],
   "remaining": [
-    "focused controllers and full package/regressions",
     "coherent full local CI and exact PR/resulting-main acceptance",
     "accepted Source producer pin in active execution",
     "real Project campaign entrypoint and original native Source/model execution",
@@ -267,8 +349,8 @@
     "additional_original_source_constraints_file_unchanged": true,
     "focused_controller_controls": "133 passed, zero skipped",
     "full_current_local_ci": "pending; earlier8efd625 failed five native-control preflights",
-    "full_package": "running;20files source and identical installed suite,1800seconds per phase",
-    "implementation_note": "Current implementation pins include subsequent metadata optimization; current full test acceptance is pending control3.",
+    "full_package": "passed:363source and same363installed tests, zero skipped, one shared25/50setup in each;646modules23schemas byteequal",
+    "implementation_note": "133focused controls accepted; subsequent global fixture registration correction verified by363source+same363installed with exactlyone25/50setup perinvocation.",
     "mypy": "passed",
     "mypy_files": 775,
     "new_v37_schemas": 3,

@@ -102,7 +102,7 @@ miejsca na lokalny cache, ten sam limit 384 MiB RAM i rezerwy 1 GiB RAM
 oraz 6 GiB dysku. Budżety właściwej kampanii pozostają niezmienione.
 Kontrole używają jawnych zastępników workerów, bez danych i fitów Project.
 
-Przed publikacją pozostają pełne regresje, lokalny CI oraz odbiór PR/main.
+Pełne regresje przeszły; przed publikacją pozostają lokalny CI oraz odbiór PR/main.
 Nadal potrzebne są aktualizacja aktywnego pina Source, rzeczywisty workflow,
 dane i fity Project, powiązanie pozostałych zastosowań, kalibracja, final
 i lifecycle. Canonical pozostaje wyłączony, a jego limit RSS wynosi 12 GiB.
@@ -129,8 +129,10 @@ nadzorca zakończył się sukcesem po 729,38 s. Nadal utworzyła dwa zestawy
 przygotowania 25/50, mimo deklaracji session scope w importowanej fixture.
 Wspólna rejestracja w conftest usuwa tę duplikację; zastępniki workerów są
 zamykane przed przekazaniem wyniku. Pełny zestaw 20 plików testów źródeł
-i identycznej paczki jest w toku i sprawdzi także dokładnie jedno wspólne
-przygotowanie na proces. Lokalny limit każdej fazy paczki wynosi 1800 s,
+i identycznej paczki przeszedł: **363 testy ze źródeł i te same 363 z instalacji**,
+bez pominięć. Obie próby potwierdziły dokładnie jedno wspólne przygotowanie
+25/50 na proces. 646 modułów i 23 schematy mają identyczne bajty w źródłach,
+paczce oraz instalacji. Lokalny limit każdej fazy paczki wynosi 1800 s,
 limit RAM 384 MiB, a rezerwy 1 GiB RAM i 6 GiB dysku. Budżety kampanii
 pozostają niezmienione.
 
@@ -139,4 +141,7 @@ lokalny limit 384 MiB (próbkowane 390,125 MiB), przed testami. Zachowano
 nieudany pomiar. Wykorzystano wcześniej zaliczoną kontrolę wszystkich
 775 plików i schematów na identycznym kodzie produkcyjnym; późniejsza zmiana
 dotyczyła wyłącznie przygotowania pytest, którego Mypy nie obejmuje.
-Pozostałe kroki paczki trwają przy tych samych zabezpieczeniach pamięci.
+Pozostałe kroki paczki zakończyły się sukcesem przy tych samych zabezpieczeniach
+pamięci. Testy źródeł trwały 842,65 s, z instalacji 873,71 s.
+Nowy [wykonawca dzienników](ai09-development-execution.md) dodaje osobne,
+sprawdzone sterowanie tymi kontrolerami; pełny CI po połączeniu zmian pozostaje wymagany.

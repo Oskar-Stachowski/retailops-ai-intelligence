@@ -1,5 +1,17 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: wykonawca zamrożonych dzienników prognoz.**
+[09.101](evidence/09-101-development-execution.json) i
+[instrukcja wykonania](ai09-development-execution.md) opisują polecenie
+wywołujące oryginalne eksporty, fity, scoring i selekcję. Trwale zapisuje
+ścieżki przed pierwszą operacją, zachowuje koszty przy wznowieniu i blokuje
+automatyczne ponowienie błędu albo niedokończonej próby. **11 kontroli**
+przeszło, w tym cały program 12 operacji z jawnymi zastępnikami workerów.
+Mypy sprawdził 777 plików; te same **11 testów z paczki** przeszło bez pominięć.
+647 modułów i 23 schematy mają zgodne bajty w źródłach i instalacji. Rzeczywiste polityki,
+Source i treningi Project, pozostałe zastosowania, final/lifecycle oraz
+pełny CI i publikacja pozostają otwarte. Canonical wyłączony; AI 09 `not_ready`.
+
 **2026-10-11 — AI 09: powiązany wykonawca prognoz 25 → 50 → 100.**
 [09.100](evidence/09-100-canonical-forecast-execution.json) łączy oryginalne
 pełne dane 100 z wcześniej wybranymi konfiguracjami i zamrożonymi budżetami.
@@ -8,7 +20,9 @@ oraz koszty poprzednich skal. Zaliczone **133 kontrole** używają kontrolowanyc
 workerów; nie są treningami Project. Pełny Mypy sprawdził 775 plików,
 a trzy nowe schematy zachowują wszystkie 389 wcześniejszych plików kontraktów.
 Bezpieczne usunięcie powtórnych serializacji i skrótów skróciło kontrolę
-metadanych; pełne regresje źródeł i paczki są w toku.
+metadanych. **363 regresje źródeł i te same 363 z paczki** przeszły bez
+pominięć; 646 modułów i 23 schematy mają identyczne bajty. Każda próba
+utworzyła dokładnie jedno wspólne przygotowanie 25/50.
 
 Pełny lokalny CI wcześniejszego `8efd625` miał 5580 zaliczeń i 55 pominięć
 w głównym pytest, ale później pięć workerów nie wystartowało przez
