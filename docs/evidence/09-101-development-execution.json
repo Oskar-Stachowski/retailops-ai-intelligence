@@ -1,0 +1,187 @@
+{
+  "base_commit": "68be3f7691715284e4caad255fab63095ee7bec8",
+  "canonical_dispatched": false,
+  "fresh_final_reads": 0,
+  "full_controller_control": {
+    "junit_sha256": "18c923358863b24a29a9c5882c1ff342ff552fba0e5aab49e13034236bf14362",
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1328021504,
+      "minimum_free_disk_bytes": 38288748544,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 43483136,
+      "sampled_peak_scratch_logical_bytes": 42933907,
+      "sampled_tree_peak_rss_bytes": 170016768,
+      "sampled_worker_cpu_seconds": 90.148159064,
+      "samples": 834,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 402653184,
+      "wall_seconds": 91.74800745799439
+    },
+    "mypy_files": 777,
+    "scope": "All12original25forecastoperations, with declared Source/fit outputs and real export/score/selection controllers; full completed resume startszero workers; preserves original event chain, result bytes and costs. Ten additional stop/resume/failure/concurrency/evidence/path cases total11.",
+    "status": "passed",
+    "tests": {
+      "errors": "0",
+      "failures": "0",
+      "hostname": "Oskars-MacBook-Air.local",
+      "name": "pytest",
+      "skipped": "0",
+      "tests": "11",
+      "time": "90.678",
+      "timestamp": "2026-10-11T17:07:49.782560+02:00"
+    }
+  },
+  "implementation_sha256": {
+    "scripts/run_ai09_development.py": "98710c7d4d7e9ada58544cfa6aafe12daa2bc7d123b27536ac95ca5af10ec241",
+    "src/retailops_ai/evaluation_campaign/development_execution.py": "3bdcf1111cc315640444624e3fddd0c8089c850f9b7c413d858767c8677d726f",
+    "tests/test_development_execution.py": "0b0df624f5e5b377d4ce743f2335ecc5d5e3f3af783f46147fd21c7ac915ce3a"
+  },
+  "initial_control": {
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1399029760,
+      "minimum_free_disk_bytes": 38342787072,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 58769408,
+      "sampled_peak_scratch_logical_bytes": 46842775,
+      "sampled_tree_peak_rss_bytes": 171687936,
+      "sampled_worker_cpu_seconds": 62.485310774,
+      "samples": 590,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 402653184,
+      "wall_seconds": 63.73982654098654
+    },
+    "mypy_files": 777,
+    "skipped": 0,
+    "tests_passed": 10
+  },
+  "new_Project_fits": 0,
+  "new_Project_generations": 0,
+  "observed_at_utc": "2026-10-11T15:14:03.969424+00:00",
+  "package": {
+    "acceptance": {
+      "controlled_25_50_setups_per_suite": 0,
+      "same_test_case_inventory": true,
+      "source_pins_unchanged": true,
+      "tests_per_suite": 11
+    },
+    "phase_statuses": {
+      "build": "passed",
+      "install": "passed",
+      "installed-import": "passed",
+      "installed-tests": "passed"
+    },
+    "source_control_reused": "development-execution-control-2;identicalproductioncode",
+    "status": "passed",
+    "suites": {
+      "installed-tests": {
+        "junit_sha256": "1b0cba6a06aeaf14e94644999e499932aced6329781118fb49ab8a217ec7b6e2",
+        "monitor": {
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "exit_code": 0,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "minimum_available_memory_bytes": 1302888448,
+          "minimum_free_disk_bytes": 38239277056,
+          "reason": null,
+          "sample_seconds": 0.1,
+          "sampled_peak_scratch_allocated_bytes": 12288,
+          "sampled_peak_scratch_logical_bytes": 2128,
+          "sampled_tree_peak_rss_bytes": 166035456,
+          "sampled_worker_cpu_seconds": 90.375953408,
+          "samples": 819,
+          "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+          "status": "passed",
+          "wall_seconds": 91.72865362500306
+        },
+        "tests": {
+          "errors": "0",
+          "failures": "0",
+          "hostname": "Oskars-MacBook-Air.local",
+          "name": "pytest",
+          "skipped": "0",
+          "tests": "11",
+          "time": "91.244",
+          "timestamp": "2026-10-11T17:10:54.745067+02:00"
+        }
+      },
+      "source-tests": {
+        "junit_sha256": "18c923358863b24a29a9c5882c1ff342ff552fba0e5aab49e13034236bf14362",
+        "tests": {
+          "errors": "0",
+          "failures": "0",
+          "hostname": "Oskars-MacBook-Air.local",
+          "name": "pytest",
+          "skipped": "0",
+          "tests": "11",
+          "time": "90.678",
+          "timestamp": "2026-10-11T17:07:49.782560+02:00"
+        }
+      }
+    },
+    "wheel": {
+      "bytes": 2696506,
+      "new_contract_files_equal": 23,
+      "private_files_absent": true,
+      "python_modules_equal": 647,
+      "sha256": "3c3ec4f735f67d49e46deb22437839402338bfaaed43fa04b530efe3da8f8034",
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl"
+    }
+  },
+  "prepublication_checks": {
+    "checks": [
+      "fullRuff",
+      "fullRuffFormat",
+      "repository documentation and RequiredCIcontract",
+      "gitleaks fullGit history and workingdirectory",
+      "newdriver imports from verified wheel installation"
+    ],
+    "log_sha256": "c305fc967e7506b459e2f1f0e1c740c3d35885811f474bd3a82497b45746e0b9",
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1467990016,
+      "minimum_free_disk_bytes": 38236405760,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 16384,
+      "sampled_peak_scratch_logical_bytes": 3770,
+      "sampled_tree_peak_rss_bytes": 366100480,
+      "sampled_worker_cpu_seconds": 89.691052194,
+      "samples": 142,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 402653184,
+      "wall_seconds": 16.04586587502854
+    },
+    "status": "passed"
+  },
+  "preserved": [
+    "No automatic retry or cost reset",
+    "Original receipts, manifests, model and scoring artifacts rechecked on resume",
+    "One nonblocking exclusive driver lock; every controller owns its original journal reservation",
+    "All previous wire contracts unchanged",
+    "12GiB canonical cap and1GiB available-memory reserve unchanged"
+  ],
+  "remaining": [
+    "One coherent current full localCI plus exact PR/main acceptance",
+    "Actual policy/context freeze and Source accepted producer pin",
+    "Original native Source generation and Project25/50/100 execution",
+    "Allthree usecases, calibration, independent/final evaluation, MLflow and lifecycle"
+  ],
+  "scope": "Executable controller driver for original25/50/100 forecast journals. Actual journals and export/score/selection controllers, declared Source and model doubles in controls; no Project evidence.",
+  "stage_ready": false,
+  "version": "ai09-development-execution-evidence-1.0.0"
+}

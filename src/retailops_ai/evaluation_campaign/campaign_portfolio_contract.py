@@ -177,6 +177,50 @@ class CampaignPortfolioJournal(CampaignJournal):
 
 def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
     document = decode_json(raw)
+    if "canonical_forecast_version" in document:
+        from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
+            PreparedCanonicalForecastProtocol,
+        )
+
+        return PreparedCanonicalForecastProtocol.model_validate_json(canonical_bytes(document))
+    if "resolved_canonical_preparation_version" in document:
+        from retailops_ai.evaluation_campaign.canonical_development_contract import (
+            ResolvedCanonicalDevelopmentPreparationProtocol,
+        )
+
+        return ResolvedCanonicalDevelopmentPreparationProtocol.model_validate_json(
+            canonical_bytes(document)
+        )
+    if "canonical_development_planning_version" in document:
+        from retailops_ai.evaluation_campaign.canonical_development_contract import (
+            CanonicalDevelopmentPlanningProtocol,
+        )
+
+        return CanonicalDevelopmentPlanningProtocol.model_validate_json(canonical_bytes(document))
+    if "multiscale_selection_version" in document:
+        from retailops_ai.evaluation_campaign.development_advancement_contract import (
+            MultiscaleSelectionProtocol,
+        )
+
+        return MultiscaleSelectionProtocol.model_validate_json(canonical_bytes(document))
+    if "forecast_advancement_version" in document:
+        from retailops_ai.evaluation_campaign.development_advancement_contract import (
+            PreparedForecastAdvancementProtocol,
+        )
+
+        return PreparedForecastAdvancementProtocol.model_validate_json(canonical_bytes(document))
+    if "screening_selection_version" in document:
+        from retailops_ai.evaluation_campaign.development_screening_selection_contract import (
+            PreparedDevelopmentSelectionProtocol,
+        )
+
+        return PreparedDevelopmentSelectionProtocol.model_validate_json(canonical_bytes(document))
+    if "prepared_development_screening_version" in document:
+        from retailops_ai.evaluation_campaign.development_screening_contract import (
+            PreparedDevelopmentScreeningProtocol,
+        )
+
+        return PreparedDevelopmentScreeningProtocol.model_validate_json(canonical_bytes(document))
     if "resolved_development_preparation_version" in document:
         from retailops_ai.evaluation_campaign.development_variants_contract import (
             ResolvedDevelopmentPreparationProtocol,
@@ -204,6 +248,50 @@ def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
 def parse_campaign_journal(raw: bytes) -> CampaignJournal:
     document = decode_json(raw)
     protocol = document.get("protocol")
+    if isinstance(protocol, dict) and "canonical_forecast_version" in protocol:
+        from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
+            PreparedCanonicalForecastJournal,
+        )
+
+        return PreparedCanonicalForecastJournal.model_validate_json(canonical_bytes(document))
+    if isinstance(protocol, dict) and "resolved_canonical_preparation_version" in protocol:
+        from retailops_ai.evaluation_campaign.canonical_development_contract import (
+            ResolvedCanonicalDevelopmentPreparationJournal,
+        )
+
+        return ResolvedCanonicalDevelopmentPreparationJournal.model_validate_json(
+            canonical_bytes(document)
+        )
+    if isinstance(protocol, dict) and "canonical_development_planning_version" in protocol:
+        from retailops_ai.evaluation_campaign.canonical_development_contract import (
+            CanonicalDevelopmentPlanningJournal,
+        )
+
+        return CanonicalDevelopmentPlanningJournal.model_validate_json(canonical_bytes(document))
+    if isinstance(protocol, dict) and "multiscale_selection_version" in protocol:
+        from retailops_ai.evaluation_campaign.development_advancement_contract import (
+            MultiscaleSelectionJournal,
+        )
+
+        return MultiscaleSelectionJournal.model_validate_json(canonical_bytes(document))
+    if isinstance(protocol, dict) and "forecast_advancement_version" in protocol:
+        from retailops_ai.evaluation_campaign.development_advancement_contract import (
+            PreparedForecastAdvancementJournal,
+        )
+
+        return PreparedForecastAdvancementJournal.model_validate_json(canonical_bytes(document))
+    if isinstance(protocol, dict) and "screening_selection_version" in protocol:
+        from retailops_ai.evaluation_campaign.development_screening_selection_contract import (
+            PreparedDevelopmentSelectionJournal,
+        )
+
+        return PreparedDevelopmentSelectionJournal.model_validate_json(canonical_bytes(document))
+    if isinstance(protocol, dict) and "prepared_development_screening_version" in protocol:
+        from retailops_ai.evaluation_campaign.development_screening_contract import (
+            PreparedDevelopmentScreeningJournal,
+        )
+
+        return PreparedDevelopmentScreeningJournal.model_validate_json(canonical_bytes(document))
     if isinstance(protocol, dict) and "resolved_development_preparation_version" in protocol:
         from retailops_ai.evaluation_campaign.development_variants_contract import (
             ResolvedDevelopmentPreparationJournal,

@@ -25,6 +25,11 @@ from retailops_ai.worker_resources import worker_peak_rss_bytes
 
 def select(root: Path, request: dict[str, Any]) -> dict[str, Any]:
     plan = CampaignForecastTunePlan.model_validate_json(canonical_bytes(request["plan"]))
+    family_screening = request.get("family_screening", False)
+    if type(family_screening) is not bool or (
+        family_screening and len(plan.score_operation_ids) != 2
+    ):
+        raise SnapshotError("screening_worker_requires_two_frozen_tune_trios")
     _versions(plan)
     exported = CampaignDevelopmentExportReceipt.model_validate_json(
         canonical_bytes(request["exported"])
@@ -65,6 +70,13 @@ def select(root: Path, request: dict[str, Any]) -> dict[str, Any]:
         _verify_bundle(bundle, score)
         trials.append(paired_metrics(dataset, bundle, manifest, score, plan))
     selection = choose(trials, scores, plan)
+    family_ranking = None
+    if family_screening:
+        from retailops_ai.evaluation_campaign.development_screening_selection import (
+            rank_screening_families,
+        )
+
+        family_ranking = rank_screening_families(trials, scores, plan)
     if runtime_pin() != before:
         raise SnapshotError("campaign_tune_worker_runtime_changed")
     bundle = root / "bundle"
@@ -98,6 +110,7 @@ def select(root: Path, request: dict[str, Any]) -> dict[str, Any]:
         "full_tune_label_passes": len(trials),
         "calibration_label_passes": 0,
         "independent_or_final_label_passes": 0,
+        **({"family_screening": family_ranking.model_dump(mode="json")} if family_ranking else {}),
     }
 
 
@@ -127,6 +140,8 @@ def main(root: Path) -> None:
         )
         for name in ("plan.json", "parents.json", "metrics.json", "selection.json"):
             mlflow.log_artifact(str(root / "bundle" / name), artifact_path="tune")
+        if "family_screening" in result:
+            mlflow.log_dict(result["family_screening"], "tune/family-screening.json")
         usage = resource.getrusage(resource.RUSAGE_SELF)
         result.update(
             {

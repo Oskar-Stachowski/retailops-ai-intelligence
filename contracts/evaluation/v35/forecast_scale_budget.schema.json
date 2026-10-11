@@ -1,0 +1,118 @@
+{
+  "$defs": {
+    "CampaignGenerationResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "max_log_bytes": {
+          "default": 16777216,
+          "maximum": 16777216,
+          "minimum": 1024,
+          "title": "Max Log Bytes",
+          "type": "integer"
+        },
+        "minimum_available_memory_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Available Memory Bytes",
+          "type": "integer"
+        },
+        "minimum_free_disk_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Free Disk Bytes",
+          "type": "integer"
+        },
+        "sample_seconds": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0.01,
+          "title": "Sample Seconds",
+          "type": "number"
+        },
+        "scratch_bytes": {
+          "maximum": 137438953472,
+          "minimum": 1024,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "tree_rss_bytes": {
+          "maximum": 68719476736,
+          "minimum": 1024,
+          "title": "Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "tree_rss_bytes",
+        "scratch_bytes",
+        "minimum_free_disk_bytes",
+        "minimum_available_memory_bytes"
+      ],
+      "title": "CampaignGenerationResources",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:forecast_scale_budget:35.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bootstrap_journal_path": {
+      "maxLength": 1024,
+      "minLength": 2,
+      "pattern": "^/",
+      "title": "Bootstrap Journal Path",
+      "type": "string"
+    },
+    "execution_journal_path": {
+      "maxLength": 1024,
+      "minLength": 2,
+      "pattern": "^/",
+      "title": "Execution Journal Path",
+      "type": "string"
+    },
+    "fit": {
+      "$ref": "#/$defs/CampaignGenerationResources"
+    },
+    "maximum_total_preparation_wall_seconds": {
+      "maximum": 10800,
+      "minimum": 2,
+      "title": "Maximum Total Preparation Wall Seconds",
+      "type": "integer"
+    },
+    "preparation": {
+      "$ref": "#/$defs/CampaignGenerationResources"
+    },
+    "preparation_journal_path": {
+      "maxLength": 1024,
+      "minLength": 2,
+      "pattern": "^/",
+      "title": "Preparation Journal Path",
+      "type": "string"
+    },
+    "score": {
+      "$ref": "#/$defs/CampaignGenerationResources"
+    }
+  },
+  "required": [
+    "bootstrap_journal_path",
+    "preparation_journal_path",
+    "execution_journal_path",
+    "preparation",
+    "fit",
+    "score",
+    "maximum_total_preparation_wall_seconds"
+  ],
+  "title": "ForecastScaleBudget",
+  "type": "object"
+}

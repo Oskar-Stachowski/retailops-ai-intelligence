@@ -1,5 +1,127 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: pełny lokalny CI wykonawcy zakończony błędem rezerwy RAM.**
+[09.105](evidence/09-105-canonical-forecast-local-ci.json) zachowuje wynik dla
+`7c9070b`: główny pytest **5690 zaliczeń i 55 jawnych pominięć** oraz wszystkie
+kolejne bramki do końcowej kontroli natywnego CPU. W niej trzy testy przeszły,
+a pięć workerów nie wystartowało przez `preflight_reserve`. To nie jest odbiór.
+Limity i rezerwy zachowano; otwarte sesje pozostawiono bez zmian. Publikacja
+komponentu wymaga pełnego Required CI dokładnego PR i wynikowego main.
+Nie uruchomiono nowych danych ani fitów Project; AI 09 nadal **`not_ready`**.
+
+**2026-10-11 — AI 09: wykonawca zamrożonych dzienników prognoz.**
+[09.101](evidence/09-101-development-execution.json) i
+[instrukcja wykonania](ai09-development-execution.md) opisują polecenie
+wywołujące oryginalne eksporty, fity, scoring i selekcję. Trwale zapisuje
+ścieżki przed pierwszą operacją, zachowuje koszty przy wznowieniu i blokuje
+automatyczne ponowienie błędu albo niedokończonej próby. **11 kontroli**
+przeszło, w tym cały program 12 operacji z jawnymi zastępnikami workerów.
+Mypy sprawdził 777 plików; te same **11 testów z paczki** przeszło bez pominięć.
+647 modułów i 23 schematy mają zgodne bajty w źródłach i instalacji. Rzeczywiste polityki,
+Source i treningi Project, pozostałe zastosowania, final/lifecycle oraz
+pełny CI i publikacja pozostają otwarte. Canonical wyłączony; AI 09 `not_ready`.
+
+**2026-10-11 — AI 09: powiązany wykonawca prognoz 25 → 50 → 100.**
+[09.100](evidence/09-100-canonical-forecast-execution.json) łączy oryginalne
+pełne dane 100 z wcześniej wybranymi konfiguracjami i zamrożonymi budżetami.
+Trzy eksporty, trzy fity, scoring Tune i selekcja zachowują wszystkie dowody
+oraz koszty poprzednich skal. Zaliczone **133 kontrole** używają kontrolowanych
+workerów; nie są treningami Project. Pełny Mypy sprawdził 775 plików,
+a trzy nowe schematy zachowują wszystkie 389 wcześniejszych plików kontraktów.
+Bezpieczne usunięcie powtórnych serializacji i skrótów skróciło kontrolę
+metadanych. **363 regresje źródeł i te same 363 z paczki** przeszły bez
+pominięć; 646 modułów i 23 schematy mają identyczne bajty. Każda próba
+utworzyła dokładnie jedno wspólne przygotowanie 25/50.
+
+Pełny lokalny CI wcześniejszego `8efd625` miał 5580 zaliczeń i 55 pominięć
+w głównym pytest, ale później pięć workerów nie wystartowało przez
+`preflight_reserve`; trzy pozostałe kontrole środowiska TensorFlow przeszły.
+To wynik nieudany, zachowany w 09.100. Potrzebne pozostają odbiór bieżącego
+przyrostu, publikacja na main, aktualny pin Source, rzeczywisty workflow
+kampanii i pełna ocena trzech zastosowań. Canonical nadal wyłączony,
+limit **12 GiB** zachowany; AI 09 **`not_ready`**.
+
+**2026-10-11 — AI 09: oryginalne przygotowanie canonical 100 i odbiór rodziców.**
+[09.99](evidence/09-99-canonical-development-preparation.json) dodaje zwykłą
+generację, natywne planowanie, ponowne sprawdzenie ordinary oraz oba warianty
+na pełnym, niezmienionym profilu 100 produktów. Odbiór wiąże oryginalne
+receipts i wszystkie pięć kosztów. Małe profile 25/50 pozostają odrębne.
+**118 kontroli** przeszło bez pominięć; trzy kolejne potwierdziły naprawioną
+blokadę niezgodnych parametrów przed generowaniem. Mypy sprawdził **773 pliki**,
+a siedem nowych schematów zachowuje wszystkie 382 wcześniejsze kontrakty.
+**328 regresji źródeł i te same 328 z paczki** przeszły bez pominięć.
+644 moduły i 20 schematów mają identyczne bajty w źródłach, paczce i instalacji.
+Testy używają kontrolowanych wyników workerów, bez nowych danych Source i fitów Project.
+
+Otwarte pozostają trzy fity 100 powiązane z pierwotnym wyborem 25/50,
+aktualizacja pina Source, rzeczywisty workflow kampanii, pełna ocena trzech
+zastosowań, CI oraz publikacja. Canonical wyłączony, limit **12 GiB** zachowany;
+AI 09 `not_ready`.
+
+**2026-10-11 — AI 09: zamrożone budżety i wykonawca przejścia 25 → 50.**
+[Wykonawca](ai09-screening-selection.md) przenosi dokładnie wybrane
+konfiguracje RF/HGB/TF oraz wszystkie koszty do 50 produktów. Budżety i ścieżki
+dzienników 50/100 muszą być zamrożone przed pierwszą próbą 25. Osiem operacji
+50 obejmuje trzy eksporty, trzy fity, scoring i selekcję. Oryginalne dane,
+receipts i koszty obu skal są ponownie sprawdzane. Niezgodne środowiska fitu
+i scoringu są odrzucane przed treningiem.
+
+[09.98](evidence/09-98-frozen-forecast-advancement.json) potwierdza **29 kontroli
+bez pominięć**, Mypy dla **771 plików**, siedem nowych schematów i niezmienione
+375 wcześniejszych kontraktów. **226 regresji ze źródeł i te same 226 z paczki**
+przeszły bez pominięć. 642 moduły i 13 schematów mają identyczne bajty
+w źródłach, paczce i instalacji. Pierwsze dopuszczenie budowy paczki wygasło
+bez startu workera; po zwolnieniu pamięci wykonano pozostałe kroki,
+z zachowaniem limitów, rezerw i wcześniejszego wyniku. Pełny CI tego przyrostu
+i odbiór PR/main pozostają wymagane. To kontrola z jawnymi
+zastępnikami danych i workerów, bez nowych danych i fitów Project.
+
+Wykonawca 100, pozostałe zastosowania i rzeczywista kampania pozostają
+otwarte. Limit canonical **12 GiB** potwierdzono na zdalnym main `931f4519`;
+nie restartowano sesji. Canonical wyłączony; AI 09 `not_ready`.
+
+**2026-10-11 — AI 09: pełny odbiór rankingu i pomiar pamięci eksportu.**
+[Wybór konfiguracji](ai09-screening-selection.md) dodaje zamrożoną przed
+treningiem dwunastą operację. Zachowuje wszystkie sześć prób RF/HGB/TF,
+wybiera po jednej konfiguracji według tej samej polityki i ponownie sprawdza
+oryginalne receipts oraz koszty. Pierwszy test całego dziennika wykrył brak
+RSS eksportu; pomiar został uzupełniony. Awaria pomiaru blokuje sukces,
+a nieudana praca i jej koszt pozostają zapisane.
+
+[Dowód 09.97](evidence/09-97-screening-selection-and-export-memory.json) potwierdza
+**214 regresji ze źródeł i te same 214 z paczki**, bez pominięć. Mypy sprawdził **769 plików**, a **640 modułów i sześć schematów**
+ma identyczną zawartość w źródłach i paczce. Wszystkie 372 wcześniejsze pliki
+kontraktów są niezmienione. Pełny lokalny CI, PR i wynikowy main tego przyrostu
+pozostają wymagane. Nie wykonano nowych danych ani fitów Project.
+
+Nadal otwarte są awans dokładnie tych samych konfiguracji do 50/100,
+przekazanie danych trzem zastosowaniom, rzeczywista kampania, kalibracja,
+final, segmenty, niepewność i lifecycle. Canonical wyłączony,
+limit **12 GiB** zachowany; AI 09 `not_ready`.
+
+**2026-10-11 — AI 09: PR 66 scalony; przygotowane dane przechodzą do prób.**
+[PR 66](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/66)
+uzyskał pełny Required CI **17/17**, bez pominięć, również dla TensorFlow CPU.
+Zmiany przygotowania danych i niezależnej prawdy anomalii są na main
+`931f4519`; jego [Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38135856812)
+zakończył się pełnym **17/17**, bez pominięć. Dowód odbioru zawiera 09.97. Lokalne błędy z 09.95
+pozostają zapisane osobno i nie są przemianowane na sukces.
+
+[Przekazanie danych do prób](ai09-prepared-development-screening.md)
+i [09.96](evidence/09-96-prepared-development-screening.json) wiążą pierwsze
+eksporty z oryginalnymi receipts ordinary/demand/physical, bez fikcyjnej
+generacji ani wyzerowania kosztów. Zamrożony program dla 25 produktów
+obejmuje trzy eksporty, sześć równych prób RF/HGB/TF i dwa porównania tune.
+**130 testów źródłowych i te same 130 z paczki** przeszły bez pominięć;
+Mypy sprawdził 766 plików, a 637 modułów i trzy nowe schematy są zgodne z paczką.
+Pełny lokalny CI i odbiór PR/main tego nowego kodu pozostają wymagane.
+
+Nadal potrzeba rzeczywistych danych i fitów Project, zweryfikowanego wyboru
+konfiguracji oraz awansu 25 → 50 → 100, powiązania trzech zastosowań
+z oryginalnymi rodzicami, kalibracji, final i lifecycle. Komponent nie nadaje
+dostępu final ani uprawnienia promocji. Canonical pozostaje wyłączony,
+limit **12 GiB** zachowany; AI 09 `not_ready`.
+
 **2026-10-10 — AI 09: pełny odbiór Source i wynik lokalnego CI konsumenta.**
 [09.95](evidence/09-95-paired-truth-local-ci.json) potwierdza sukces Source
 PR 114 i wynikowego main `d2363a5c`: po **21 zaliczonych kontroli oraz

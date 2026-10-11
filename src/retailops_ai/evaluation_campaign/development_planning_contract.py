@@ -4,11 +4,12 @@ from datetime import timedelta
 from pathlib import Path
 from typing import Annotated, Literal, Self
 
-from pydantic import Field, model_validator
+from pydantic import Field, JsonValue, model_validator
 
 from retailops_ai.data_contracts.common import (
     CommitSha,
     Contract,
+    DateWindow,
     FalseFlag,
     Sha256,
     Symbol,
@@ -25,6 +26,7 @@ from retailops_ai.evaluation_campaign.campaign_generation_contract import (
     CampaignGenerationPlan,
     CampaignGenerationResources,
 )
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import PortfolioSourceRecipe
 from retailops_ai.evaluation_campaign.contract import PreparationRuntime
 from retailops_ai.evaluation_campaign.development_profiles import (
     DevelopmentProfile,
@@ -84,7 +86,7 @@ class NativeDevelopmentPlanningPlan(Contract):
 
 
 def planning_operations(
-    source: DevelopmentProfileSource,
+    source: PortfolioSourceRecipe,
     generation: CampaignGenerationPlan,
     planning: NativeDevelopmentPlanningPlan,
 ) -> tuple[CampaignOperationPlan, ...]:
@@ -131,36 +133,57 @@ class NativeDevelopmentPlanningProtocol(CampaignProtocol):
     def freeze_scope(self) -> Self:
         self._frozen_policies()
         source = self.sources[0]
-        self.generation.bind(source)
-        profile = source.development_profile
-        if (
-            source.variant != "ordinary"
-            or self.generation.requested_parameters != profile.requested_parameters()
-            or self.planning.source_recipe_sha256 != source.content_sha256()
-            or self.planning.partitions.label_delay_days != source.label_delay_days
-            or self.operations != planning_operations(source, self.generation, self.planning)
-        ):
-            raise ValueError("native_planning_frozen_ordinary_source_or_operation_mismatch")
-        for resources in (self.generation.resources, self.planning.resources):
-            if (
-                resources.wall_seconds > self.maximum_total_wall_seconds
-                or resources.tree_rss_bytes > 12 * 1024**3
-                or resources.scratch_bytes > 8 * 1024**3
-                or resources.minimum_available_memory_bytes < 1024**3
-                or resources.minimum_free_disk_bytes < 6 * 1024**3
-            ):
-                raise ValueError("native_planning_resource_ceiling")
-        for role in self.planning.partitions.roles:
-            if (
-                role.origins.start < profile.history.start + timedelta(days=28)
-                or role.label_knowledge_cutoff > end_of_day(profile.history.end)
-                or (
-                    role.role in {"tune", "calibration", "development_evaluation"}
-                    and (role.origins.end - role.origins.start).days < 29
-                )
-            ):
-                raise ValueError("native_planning_exposed_development_roles_required")
+        validate_native_planning_scope(
+            source,
+            self.generation,
+            self.planning,
+            self.operations,
+            requested_parameters=source.development_profile.requested_parameters(),
+            history=source.development_profile.history,
+            maximum_total_wall_seconds=self.maximum_total_wall_seconds,
+        )
         return self
+
+
+def validate_native_planning_scope(
+    source: PortfolioSourceRecipe,
+    generation: CampaignGenerationPlan,
+    planning: NativeDevelopmentPlanningPlan,
+    operations: tuple[CampaignOperationPlan, ...],
+    *,
+    requested_parameters: dict[str, JsonValue],
+    history: DateWindow,
+    maximum_total_wall_seconds: int,
+) -> None:
+    """Shared complete generation/planning checks, without widening old wire formats."""
+    generation.bind(source)
+    if (
+        source.variant != "ordinary"
+        or generation.requested_parameters != requested_parameters
+        or planning.source_recipe_sha256 != source.content_sha256()
+        or planning.partitions.label_delay_days != source.label_delay_days
+        or operations != planning_operations(source, generation, planning)
+    ):
+        raise ValueError("native_planning_frozen_ordinary_source_or_operation_mismatch")
+    for resources in (generation.resources, planning.resources):
+        if (
+            resources.wall_seconds > maximum_total_wall_seconds
+            or resources.tree_rss_bytes > 12 * 1024**3
+            or resources.scratch_bytes > 8 * 1024**3
+            or resources.minimum_available_memory_bytes < 1024**3
+            or resources.minimum_free_disk_bytes < 6 * 1024**3
+        ):
+            raise ValueError("native_planning_resource_ceiling")
+    for role in planning.partitions.roles:
+        if (
+            role.origins.start < history.start + timedelta(days=28)
+            or role.label_knowledge_cutoff > end_of_day(history.end)
+            or (
+                role.role in {"tune", "calibration", "development_evaluation"}
+                and (role.origins.end - role.origins.start).days < 29
+            )
+        ):
+            raise ValueError("native_planning_exposed_development_roles_required")
 
 
 class NativeDevelopmentPlanningJournal(CampaignJournal):
@@ -250,6 +273,14 @@ class ResolvedNativeDevelopmentPlanningReceipt(NativeDevelopmentPlanningReceipt)
 def parse_native_planning_receipt(
     receipt: NativeDevelopmentPlanningReceipt,
 ) -> NativeDevelopmentPlanningReceipt:
+    from retailops_ai.evaluation_campaign.canonical_development_contract import (
+        ResolvedCanonicalDevelopmentPlanningReceipt,
+    )
+
+    if isinstance(receipt, ResolvedCanonicalDevelopmentPlanningReceipt):
+        return ResolvedCanonicalDevelopmentPlanningReceipt.model_validate_json(
+            receipt.model_dump_json()
+        )
     model = (
         ResolvedNativeDevelopmentPlanningReceipt
         if isinstance(receipt, ResolvedNativeDevelopmentPlanningReceipt)

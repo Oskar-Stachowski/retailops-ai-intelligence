@@ -39,6 +39,19 @@ from retailops_ai.evaluation_campaign.campaign_tune_contract import (
     CampaignForecastTuneSelection,
 )
 from retailops_ai.evaluation_campaign.campaign_tune_data import choose
+from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
+    PreparedCanonicalForecastProtocol,
+)
+from retailops_ai.evaluation_campaign.development_advancement_contract import (
+    PreparedForecastAdvancementProtocol,
+)
+from retailops_ai.evaluation_campaign.development_screening_selection import (
+    ScreeningFamilyRanking,
+    rank_screening_families,
+)
+from retailops_ai.evaluation_campaign.development_screening_selection_contract import (
+    PreparedDevelopmentSelectionProtocol,
+)
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
     checked_directory,
@@ -149,6 +162,7 @@ def select_campaign_forecast(
 ) -> tuple[Path, CampaignForecastTuneReceipt]:
     ledger = campaign_journal.inspect(journal)
     operation = _operation(ledger, operation_id)
+    family_screening = isinstance(ledger.protocol, PreparedDevelopmentSelectionProtocol)
     started = perf_counter()
     with campaign_journal.audited_operation(journal, operation_id) as handle:
         plan = CampaignForecastTunePlan.model_validate_json(
@@ -186,6 +200,7 @@ def select_campaign_forecast(
                 "plan": plan.model_dump(mode="json"),
                 "exported": exported.model_dump(mode="json"),
                 "runtime": ledger.protocol.runtime.model_dump(mode="json"),
+                **({"family_screening": True} if family_screening else {}),
             },
         )
         measured = monitor(
@@ -230,6 +245,7 @@ def select_campaign_forecast(
             or result["full_tune_label_passes"] != len(scores)
             or result["calibration_label_passes"] != 0
             or result["independent_or_final_label_passes"] != 0
+            or ("family_screening" in result) != family_screening
         ):
             raise SnapshotError("campaign_tune_worker_population_scope_or_peak_mismatch")
         files, size = _bundle_inventory(root / "bundle", plan.max_output_bytes)
@@ -256,6 +272,13 @@ def select_campaign_forecast(
             ),
         )
         _verify_bundle(root / "bundle", receipt)
+        if family_screening or isinstance(
+            ledger.protocol,
+            (PreparedForecastAdvancementProtocol, PreparedCanonicalForecastProtocol),
+        ):
+            validate_completed_export(journal, exported)
+            for key in plan.score_operation_ids:
+                verify_campaign_forecast_scores(bundles[key], journal=journal, receipt=scores[key])
         fsync_tree(root)
         if (
             perf_counter() - started > plan.resources.wall_seconds
@@ -309,6 +332,13 @@ def _verify_bundle(bundle: Path, receipt: CampaignForecastTuneReceipt) -> None:
     )
     if selection != receipt.selection or selection != choose(trials, scores, receipt.plan):
         raise SnapshotError("campaign_tune_artifact_selection_mismatch")
+    worker = receipt.worker_evidence.get("worker")
+    if isinstance(worker, dict) and "family_screening" in worker:
+        ranking = ScreeningFamilyRanking.model_validate_json(
+            canonical_bytes(worker["family_screening"])
+        )
+        if ranking != rank_screening_families(trials, scores, receipt.plan):
+            raise SnapshotError("screening_family_ranking_differs_from_paired_tune_metrics")
 
 
 def validate_completed_tune(journal: Path, receipt: CampaignForecastTuneReceipt) -> None:
@@ -352,6 +382,40 @@ def validate_completed_tune(journal: Path, receipt: CampaignForecastTuneReceipt)
         raise SnapshotError("campaign_tune_receipt_unavailable") from None
     if raw != canonical_bytes(receipt.model_dump(mode="json")) + b"\n":
         raise SnapshotError("campaign_tune_stored_receipt_mismatch")
+    worker = receipt.worker_evidence.get("worker")
+    has_ranking = isinstance(worker, dict) and "family_screening" in worker
+    if isinstance(ledger.protocol, PreparedDevelopmentSelectionProtocol):
+        from retailops_ai.evaluation_campaign.development_screening import (
+            verify_prepared_development_parents,
+        )
+
+        if not has_ranking or receipt.plan != ledger.protocol.selection_plan:
+            raise SnapshotError("screening_completed_selection_requires_frozen_family_ranking")
+        verify_prepared_development_parents(ledger.protocol.screening.parents)
+    elif isinstance(ledger.protocol, PreparedCanonicalForecastProtocol):
+        from retailops_ai.evaluation_campaign.canonical_development import (
+            verify_canonical_development_parents,
+        )
+        from retailops_ai.evaluation_campaign.canonical_forecast import verify_completed_advancement
+
+        if has_ranking or receipt.plan != ledger.protocol.selection_plan:
+            raise SnapshotError("canonical_forecast_completed_selection_frozen_plan_required")
+        verify_completed_advancement(ledger.protocol.advancement)
+        verify_canonical_development_parents(ledger.protocol.parents)
+    elif isinstance(ledger.protocol, PreparedForecastAdvancementProtocol):
+        from retailops_ai.evaluation_campaign.development_advancement import (
+            verify_completed_screening,
+        )
+        from retailops_ai.evaluation_campaign.development_screening import (
+            verify_prepared_development_parents,
+        )
+
+        if has_ranking or receipt.plan != ledger.protocol.selection_plan:
+            raise SnapshotError("advancement_completed_selection_frozen_plan_required")
+        verify_completed_screening(ledger.protocol.screening)
+        verify_prepared_development_parents(ledger.protocol.parents)
+    elif has_ranking:
+        raise SnapshotError("screening_family_ranking_requires_explicit_protocol")
 
 
 def verify_campaign_forecast_selection(
@@ -360,3 +424,103 @@ def verify_campaign_forecast_selection(
     """Check completed selection evidence without labels, calibration or new permission."""
     validate_completed_tune(journal, receipt)
     _verify_bundle(bundle, receipt)
+
+
+def _verify_original_forecast_operations(
+    bundle: Path,
+    *,
+    journal: Path,
+    receipt: CampaignForecastTuneReceipt,
+    ledger: CampaignJournal,
+    operations: tuple[CampaignOperationPlan, ...],
+) -> None:
+    """Bind every original export/fit/score and its measured completion cost."""
+    before = ledger
+    from retailops_ai.evaluation_campaign.campaign_fit import validate_completed_fit
+    from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
+    from retailops_ai.evaluation_campaign.campaign_score import validate_completed_score
+
+    parents = json.loads(read_bytes(bundle, "parents.json", receipt.plan.max_output_bytes))
+    exports = {}
+    fits = {}
+    scores = {}
+    for operation in operations:
+        event = next(
+            (
+                e
+                for e in before.events
+                if e.kind == "finished" and e.operation_id == operation.operation_id
+            ),
+            None,
+        )
+        if event is None or event.result != "completed":
+            raise SnapshotError("screening_original_operation_not_completed")
+        raw = read_bytes(
+            journal, "receipts/" + str(event.reservation_id) + ".json", MAX_RECEIPT_BYTES
+        )
+        if operation.action == "source_read":
+            exported = CampaignDevelopmentExportReceipt.model_validate_json(raw)
+            validate_completed_export(journal, exported)
+            exports[operation.operation_id] = exported
+        elif operation.action == "model_fit":
+            fitted = CampaignForecastFitReceipt.model_validate_json(raw)
+            validate_completed_fit(journal, fitted)
+            fits[operation.operation_id] = fitted
+        else:
+            scored = CampaignForecastScoreReceipt.model_validate_json(raw)
+            validate_completed_score(journal, scored)
+            scores[operation.operation_id] = scored
+    export_digest = exports[receipt.plan.export_operation_id].content_sha256()
+    if (
+        export_digest != receipt.export_receipt_sha256
+        or any(f.export_receipt_sha256 != export_digest for f in fits.values())
+        or {key: value.model_dump(mode="json") for key, value in scores.items()}
+        != parents["scores"]
+        or any(
+            s.export_receipt_sha256 != export_digest
+            or any(
+                s.fit_receipt_sha256[f] != fits[s.plan.fit_operation_ids[f]].content_sha256()
+                or s.model_artifact_sha256[f]
+                != fits[s.plan.fit_operation_ids[f]].model_artifact_sha256
+                for f in FAMILIES
+            )
+            for s in scores.values()
+        )
+    ):
+        raise SnapshotError("screening_original_export_fit_and_score_ancestry_changed")
+    costs = [e.cost for e in before.events if e.kind == "finished"]
+    if len(costs) != len(operations) + 1 or any(
+        c is None or c.peak_process_tree_rss_bytes is None or c.artifact_bytes is None
+        for c in costs
+    ):
+        raise SnapshotError("screening_ranking_requires_all_original_measured_costs")
+
+
+def verified_screening_family_ranking(
+    bundle: Path, *, journal: Path, receipt: CampaignForecastTuneReceipt
+) -> ScreeningFamilyRanking:
+    """Replay the stored decision and original bookkeeping, without new label access.
+
+    The returned ranking is still not an advancement grant. A later compiler
+    must bind the original winning fit recipes, new parents and complete costs.
+    """
+    before = campaign_journal.inspect(journal)
+    if not isinstance(before.protocol, PreparedDevelopmentSelectionProtocol):
+        raise SnapshotError("screening_ranking_requires_original_selection_protocol")
+    verify_campaign_forecast_selection(bundle, journal=journal, receipt=receipt)
+    _verify_original_forecast_operations(
+        bundle,
+        journal=journal,
+        receipt=receipt,
+        ledger=before,
+        operations=before.protocol.screening.operations,
+    )
+    worker = receipt.worker_evidence.get("worker")
+    if not isinstance(worker, dict) or "family_screening" not in worker:
+        raise SnapshotError("screening_completed_worker_ranking_missing")
+    ranking = ScreeningFamilyRanking.model_validate_json(
+        canonical_bytes(worker["family_screening"])
+    )
+    if campaign_journal.inspect(journal) != before:
+        raise SnapshotError("screening_journal_changed_during_ranking_verification")
+    return ranking

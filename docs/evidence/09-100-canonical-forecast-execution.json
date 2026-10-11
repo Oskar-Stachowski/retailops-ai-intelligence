@@ -1,0 +1,363 @@
+{
+  "base_commit": "d3aefc6",
+  "canonical_dispatched": false,
+  "control2": {
+    "correction": "Only local validation scratch cap raised to256MiB to accommodate cold type cache; partial cache reused. Scientific budgets unchanged.",
+    "local_rss_bytes": 402653184,
+    "local_scratch_bytes": 268435456,
+    "minimum_available_memory_bytes": 1073741824,
+    "minimum_free_disk_bytes": 6442450944,
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": -9,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1083654144,
+      "minimum_free_disk_bytes": 39028928512,
+      "reason": "wall_limit",
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 112881664,
+      "sampled_peak_scratch_logical_bytes": 97456183,
+      "sampled_tree_peak_rss_bytes": 332759040,
+      "sampled_worker_cpu_seconds": 874.482639264,
+      "samples": 8142,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "failed",
+      "tree_rss_budget_bytes": 402653184,
+      "wall_seconds": 900.1003592499765
+    },
+    "partial_tests": "12 completed progress indicators from earlier50 controls; canonical100 fixture unfinished, no terminal JUnit. This is not a full control pass.",
+    "status": "failed_wall_limit",
+    "wall_seconds": 900
+  },
+  "control3": {
+    "local_rss_bytes": 402653184,
+    "local_scratch_bytes": 268435456,
+    "log_sha256": "1c55e278f79ccc9f6ba433e488d348fd2f41d2d263b9d7ac90c1ca490fe58928",
+    "minimum_available_memory_bytes": 1073741824,
+    "minimum_free_disk_bytes": 6442450944,
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1474166784,
+      "minimum_free_disk_bytes": 38906073088,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 54542336,
+      "sampled_peak_scratch_logical_bytes": 45151142,
+      "sampled_tree_peak_rss_bytes": 213254144,
+      "sampled_worker_cpu_seconds": 723.643120508,
+      "samples": 6539,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 402653184,
+      "wall_seconds": 729.3757637080271
+    },
+    "scope": "775types,389previouscontractfiles,3newv37schemas, original25/50/100 plus variant/portfolio/journal negative controls",
+    "scope_note": "All production code current. Predates only shared test-fixture registration correction.",
+    "status": "passed",
+    "tests": {
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "7c3effd0d32d14e5d01a2b24288884ce9372e1781afc7e9a88c5797cbfad235f",
+      "seconds": 723.701,
+      "skipped": 0,
+      "tests": 133
+    },
+    "wall_seconds": 900
+  },
+  "earlier_screening_full_local_ci": {
+    "head": "8efd6253e6449d181c61b03b099b656555d69170",
+    "log_sha256": "4f160f3b6b818abb26c7eb34368a95f0d1d1a3b651116f40602dbf591f1c473e",
+    "main_pytest": {
+      "passed": 5580,
+      "seconds": 7450.27,
+      "skipped": 55
+    },
+    "no_foreign_sessions_changed": true,
+    "not_a_full_ci_pass": true,
+    "remaining_after_make_failure": [
+      "secrets target not reached in this full make invocation"
+    ],
+    "reserves_unchanged": true,
+    "result": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 2,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1112408064,
+      "minimum_free_disk_bytes": 39043547136,
+      "reason": "worker_exit",
+      "sample_seconds": 0.5,
+      "sampled_peak_scratch_allocated_bytes": 278528,
+      "sampled_peak_scratch_logical_bytes": 244626,
+      "sampled_tree_peak_rss_bytes": 901742592,
+      "sampled_worker_cpu_seconds": 9344.644192241007,
+      "samples": 19172,
+      "status": "failed",
+      "wall_seconds": 9806.118811582972
+    },
+    "scope": "Earlier prepared development screening only, before selection, 50 advancement and canonical100 additions; does not prove current source.",
+    "tensorflow_controls": {
+      "all_failure_reason": "preflight_reserve",
+      "failed": 5,
+      "passed": 3,
+      "seconds": 131.43,
+      "workers_for_five_failed_controls_started": false
+    }
+  },
+  "fresh_final_reads": 0,
+  "implementation_sha256": {
+    "contracts/evaluation/v37/completed_canonical_forecast.schema.json": "662ba1344d13b06f07069f91c6e74acfdd4489b842a0a0496a71c823258b22ef",
+    "contracts/evaluation/v37/prepared_canonical_forecast_journal.schema.json": "1297dca75ef64f2292afd208d5053275c6e745445815db2bf03b2d46f63f9009",
+    "contracts/evaluation/v37/prepared_canonical_forecast_protocol.schema.json": "1028706d0942cb94e35ffabe69b732ffa037d6158494ecfb2329259de4c24182",
+    "scripts/update_evaluation_preparation_contracts.py": "0518fd521fc15243421884fdcd8f60430845ce969d9dc0433bdfab9a421f89cb",
+    "src/retailops_ai/evaluation_campaign/campaign_contract.py": "8c668acf1ac270db739ba773ec6311ce37f56eabe50983256f623b299e21c950",
+    "src/retailops_ai/evaluation_campaign/campaign_portfolio_contract.py": "60eb689ca1775f12b87b090f1d360825413f3d0e2e1b10a49ce6130c7589c92f",
+    "src/retailops_ai/evaluation_campaign/campaign_tune.py": "514fa8dbc810ea2af0f03f4b0e9c724a8392207e2d4bdf60a4e15af77f6f1e58",
+    "src/retailops_ai/evaluation_campaign/canonical_forecast.py": "dd7786d718ace526c24cba2add1b11a11a551a889bbf8dc8592cb23a88b778db",
+    "src/retailops_ai/evaluation_campaign/canonical_forecast_contract.py": "46cb7111b0e7219cb30d43c2d9a5cf9aa7a321877bf1b6b044c4573c01cb9b61",
+    "src/retailops_ai/evaluation_campaign/development_advancement.py": "af809ec552991aac622a15a4216d0b24411639327a521c7095ed0897a3763f0a",
+    "src/retailops_ai/evaluation_campaign/development_advancement_contract.py": "a5c667353ce3c6b317ff8544ed282d6401d7367d853b21f3a4756f39c54fb44a",
+    "src/retailops_ai/evaluation_campaign/development_screening.py": "0c78ed3224e5b130994d4aeee380c420cf8dafa1fb7cfa0929c615669ba5e533",
+    "src/retailops_ai/evaluation_campaign/development_variants_contract.py": "f078691a5345fd291fe2c9580cdeb9bb7ad65af952a08421bd4134f4b54d4459",
+    "tests/conftest.py": "33c4128834d91e81a4321f391836938230f9c6fc3102755803389592346e95f4",
+    "tests/test_canonical_forecast.py": "47266263ecf21410c382e9038fac321f99d620481678582c89a629c495ae4a91",
+    "tests/test_development_advancement.py": "4deeac46f4d8141a04149a92bfd2e5fe02600f50f6a4b3d363af3d2501450582"
+  },
+  "metadata_optimization": {
+    "after": {
+      "elapsed_seconds": 1.1353229170199484,
+      "events": 13,
+      "input_bytes": 2028784,
+      "input_sha256": "c911bd8815912df04279912771c074e5813795830ed5ae8b22c964b0b142c603",
+      "scope": "cProfile adds overhead; this is pure metadata parsing, not full operation time",
+      "source": "atomic private controlled-journal snapshot, no original lock or Source data read"
+    },
+    "after_function_calls": 3262657,
+    "before": {
+      "elapsed_seconds": 1.644256207975559,
+      "events": 13,
+      "input_bytes": 2028784,
+      "input_sha256": "c911bd8815912df04279912771c074e5813795830ed5ae8b22c964b0b142c603",
+      "scope": "cProfile adds overhead; this is pure metadata parsing, not full operation time",
+      "source": "atomic private controlled-journal snapshot, no original lock or Source data read"
+    },
+    "before_function_calls": 4976591,
+    "comparison_limit": "One cProfile run per source variant on identical copied controlled metadata; includes cold imports and profiler overhead, not a whole-campaign speedup estimate.",
+    "scope": "Reuse only current-call validated digest values and already validated canonical bytes. No persistent object, receipt or journal cache; all original receipt checks preserved.",
+    "test_fixture_change": "Share completed25/50 setup across both related test modules and close its monkeypatch context before returning; all assertions retained.",
+    "test_fixture_correction": "Session scope on a fixture imported in two modules still created two25/50 setups in control3. Registered one shared builder in conftest; closes all patches before returning. Full package verifies exactly one setup in each invocation; outcome pending."
+  },
+  "new_Project_fits": 0,
+  "new_Project_generations": 0,
+  "observed_at_utc": "2026-10-11T15:14:03.966575+00:00",
+  "operations": {
+    "exports": 3,
+    "new_fit_attempts_per_family": 1,
+    "new_operations": 8,
+    "original_winning_fits": 3,
+    "paired_tune_score": 1,
+    "tune_selection": 1
+  },
+  "package_regression": {
+    "acceptance": {
+      "controlled_25_50_setups_per_suite": 1,
+      "same_test_case_inventory": true,
+      "source_pins_unchanged": true,
+      "tests_per_suite": 363
+    },
+    "controlled_25_50_setup_count_required_per_suite": 1,
+    "local_rss_bytes": 402653184,
+    "minimum_available_memory_bytes": 1073741824,
+    "minimum_free_disk_bytes": 6442450944,
+    "per_phase_timeout_seconds": 1800,
+    "phase_statuses": {
+      "build": "passed",
+      "install": "passed",
+      "installed-import": "passed",
+      "installed-tests": "passed",
+      "source-tests": "passed"
+    },
+    "same_test_inventory_required": true,
+    "scope": "20files, full canonical100 execution, all earlier25/50/preparation and portfolio/journal/export/fit/score/selection/generation regressions. Declared workers only.",
+    "status": "passed",
+    "suites": {
+      "installed-tests": {
+        "junit_sha256": "eea2a880cac7615a2c0039b253752c7d5740e878d442e8cf9a1544a7302769ff",
+        "monitor": {
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "exit_code": 0,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "minimum_available_memory_bytes": 1302888448,
+          "minimum_free_disk_bytes": 38238724096,
+          "reason": null,
+          "sample_seconds": 0.1,
+          "sampled_peak_scratch_allocated_bytes": 65536,
+          "sampled_peak_scratch_logical_bytes": 56339,
+          "sampled_tree_peak_rss_bytes": 205668352,
+          "sampled_worker_cpu_seconds": 864.5684347829999,
+          "samples": 7910,
+          "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+          "status": "passed",
+          "wall_seconds": 874.2864114589756
+        },
+        "tests": {
+          "errors": "0",
+          "failures": "0",
+          "hostname": "Oskars-MacBook-Air.local",
+          "name": "pytest",
+          "skipped": "0",
+          "tests": "363",
+          "time": "873.701",
+          "timestamp": "2026-10-11T16:58:19.380070+02:00"
+        }
+      },
+      "source-tests": {
+        "junit_sha256": "3bead6a2b07d5279c108a89adbdcd563b91b1507e7727136be88f0cd0dda218e",
+        "monitor": {
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "exit_code": 0,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "minimum_available_memory_bytes": 1364230144,
+          "minimum_free_disk_bytes": 38603911168,
+          "reason": null,
+          "sample_seconds": 0.1,
+          "sampled_peak_scratch_allocated_bytes": 65536,
+          "sampled_peak_scratch_logical_bytes": 56285,
+          "sampled_tree_peak_rss_bytes": 223887360,
+          "sampled_worker_cpu_seconds": 835.2024305619999,
+          "samples": 7509,
+          "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+          "status": "passed",
+          "wall_seconds": 843.2735612910474
+        },
+        "tests": {
+          "errors": "0",
+          "failures": "0",
+          "hostname": "Oskars-MacBook-Air.local",
+          "name": "pytest",
+          "skipped": "0",
+          "tests": "363",
+          "time": "842.643",
+          "timestamp": "2026-10-11T16:43:55.831042+02:00"
+        }
+      }
+    },
+    "wheel": {
+      "bytes": 2692547,
+      "new_contract_files_equal": 23,
+      "private_files_absent": true,
+      "python_modules_equal": 646,
+      "sha256": "3fd2d5e3c3be513709929b54095a7ed0fb52a7886be0a629250da6a33d3b4de6",
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl"
+    }
+  },
+  "prepublication_checks": {
+    "checks": [
+      "documentation_links",
+      "required_CI_contract",
+      "git_history_secret_scan",
+      "working_directory_secret_scan"
+    ],
+    "log_sha256": "43a0ff57eb256060dcf2fbff45e79c50e2a03ce646d7fc47448ce2631106552f",
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1612726272,
+      "minimum_free_disk_bytes": 38799769600,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 16384,
+      "sampled_peak_scratch_logical_bytes": 3135,
+      "sampled_tree_peak_rss_bytes": 375734272,
+      "sampled_worker_cpu_seconds": 87.256264594,
+      "samples": 127,
+      "scratch_measurement": "logs/evidence only; pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 402653184,
+      "wall_seconds": 14.382868458982557
+    },
+    "scope": "Current production optimization and global test fixture registration; full package still pending."
+  },
+  "preserved": [
+    "original25 winning hyperparameters, initialization seed and preprocessing",
+    "budgets and distinct paths frozen before first25 trial",
+    "full original canonical100 source format, native planner and partitions",
+    "ordinary, demand and physical original parents",
+    "all original25/50/100 preparation and operation costs",
+    "baseline may win; all three families retain their declared fit",
+    "no final access or promotion grant"
+  ],
+  "remaining": [
+    "coherent full local CI and exact PR/resulting-main acceptance",
+    "accepted Source producer pin in active execution",
+    "real Project campaign entrypoint and original native Source/model execution",
+    "all three use cases, independent evaluation, calibration/final and lifecycle"
+  ],
+  "retained_control1": {
+    "result": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": -9,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1296220160,
+      "minimum_free_disk_bytes": 40941629440,
+      "reason": "scratch_limit",
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 80687104,
+      "sampled_peak_scratch_logical_bytes": 72256256,
+      "sampled_tree_peak_rss_bytes": 354959360,
+      "sampled_worker_cpu_seconds": 8.881969078000001,
+      "samples": 88,
+      "scratch_measurement": "logs/evidence and Mypy cache; pytest temporary files and generated schemas excluded, global6GiB disk reserve enforced",
+      "status": "failed",
+      "tree_rss_budget_bytes": 402653184,
+      "wall_seconds": 10.046767416992225
+    },
+    "scope": "Cold Mypy cache hit local64MiB scratch ceiling before tests. No test result. Failure preserved."
+  },
+  "retained_package_static_failure": {
+    "handling": "Keep failure. Reuse already accepted775-file Mypy and schema checks on unchanged production source; Mypy excludes tests, so the later test-only shared-fixture correction is verified by the full pytest package suite. Remaining phases retain384MiB RSS guard and1GiB/6GiB reserves.",
+    "monitor": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": -9,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1436418048,
+      "minimum_free_disk_bytes": 38802477056,
+      "reason": "tree_rss_limit",
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 4096,
+      "sampled_peak_scratch_logical_bytes": 162,
+      "sampled_tree_peak_rss_bytes": 409075712,
+      "sampled_worker_cpu_seconds": 7.397647232000001,
+      "samples": 72,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "failed",
+      "wall_seconds": 7.970234874985181
+    },
+    "phase": "cold-cache full Mypy repeated before source tests",
+    "tests_started": false
+  },
+  "scope": "Original canonical100 parents plus original measured25/50 family winners; existing export, fit, score and Tune controllers. Controlled Source/model worker outputs only.",
+  "stage_ready": false,
+  "validation": {
+    "additional_original_source_constraints_file_unchanged": true,
+    "focused_controller_controls": "133 passed, zero skipped",
+    "full_current_local_ci": "pending; earlier8efd625 failed five native-control preflights",
+    "full_package": "passed:363source and same363installed tests, zero skipped, one shared25/50setup in each;646modules23schemas byteequal",
+    "implementation_note": "133focused controls accepted; subsequent global fixture registration correction verified by363source+same363installed with exactlyone25/50setup perinvocation.",
+    "mypy": "passed",
+    "mypy_files": 775,
+    "new_v37_schemas": 3,
+    "pr_main_acceptance": "pending",
+    "previous_json_contracts_unchanged": 388,
+    "ruff": "passed",
+    "ruff_format_files": 1345
+  },
+  "version": "ai09-canonical-forecast-execution-evidence-1.0.0"
+}

@@ -118,14 +118,16 @@ def run(value, *, plan=None, operation="development-fit"):
     )
 
 
-def fake_phases(monkeypatch, value, *, failure=None, wrong_reload=False):
+def fake_phases(
+    monkeypatch, value, *, failure=None, wrong_reload=False, operation="development-fit"
+):
     root, _, _, plan, exported = value
     observed = []
 
     def monitor(command, **kwargs):
         phase, folder = command[-2], kwargs["root"]
         event = journal.inspect(root).events[-1]
-        assert event.kind == "reserved" and event.operation_id == "development-fit"
+        assert event.kind == "reserved" and event.operation_id == operation
         observed.append(phase)
         if phase == failure:
             return {

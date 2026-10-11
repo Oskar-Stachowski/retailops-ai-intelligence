@@ -22,12 +22,17 @@ from retailops_ai.evaluation_campaign.campaign_generation_contract import (
 )
 from retailops_ai.evaluation_campaign.campaign_generation_monitor import monitor, scratch_bytes
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+from retailops_ai.evaluation_campaign.canonical_development_contract import (
+    ResolvedCanonicalDevelopmentPreparationJournal,
+    ResolvedCanonicalDevelopmentPreparationProtocol,
+)
 from retailops_ai.evaluation_campaign.development_planning import (
     planning_journal,
     validate_completed_native_planning,
 )
 from retailops_ai.evaluation_campaign.development_planning_contract import (
     DevelopmentPlanningContext,
+    NativeDevelopmentPlanningJournal,
     ResolvedNativeDevelopmentPlanningReceipt,
 )
 from retailops_ai.evaluation_campaign.development_variants_contract import (
@@ -55,6 +60,8 @@ def compile_resolved_development_preparation(
         planned.model_dump_json()
     )
     ledger = planning_journal(bootstrap_journal)
+    if not isinstance(ledger, NativeDevelopmentPlanningJournal):
+        raise SnapshotError("resolved_development_small_profile_bootstrap_required")
     validate_completed_generation(bootstrap_journal, generated)
     validate_completed_native_planning(bootstrap_journal, planned)
     planning_cost = next(
@@ -86,14 +93,22 @@ def compile_resolved_development_preparation(
     )
 
 
-def variants_journal(journal: Path) -> ResolvedDevelopmentPreparationJournal:
+def variants_journal(
+    journal: Path,
+) -> ResolvedDevelopmentPreparationJournal | ResolvedCanonicalDevelopmentPreparationJournal:
     ledger = campaign_journal.inspect(journal)
-    if not isinstance(ledger, ResolvedDevelopmentPreparationJournal):
+    if not isinstance(
+        ledger,
+        (ResolvedDevelopmentPreparationJournal, ResolvedCanonicalDevelopmentPreparationJournal),
+    ):
         raise SnapshotError("resolved_development_requires_separate_journal")
     return ledger
 
 
-def _bootstrap_unchanged(protocol: ResolvedDevelopmentPreparationProtocol) -> None:
+def _bootstrap_unchanged(
+    protocol: ResolvedDevelopmentPreparationProtocol
+    | ResolvedCanonicalDevelopmentPreparationProtocol,
+) -> None:
     root = Path(protocol.bootstrap.journal_path)
     ledger = planning_journal(root)
     validate_completed_generation(root, protocol.generated)
@@ -111,7 +126,9 @@ def _bootstrap_unchanged(protocol: ResolvedDevelopmentPreparationProtocol) -> No
         raise SnapshotError("resolved_development_bootstrap_bookkeeping_changed")
 
 
-def remaining_wall_seconds(ledger: ResolvedDevelopmentPreparationJournal) -> float:
+def remaining_wall_seconds(
+    ledger: ResolvedDevelopmentPreparationJournal | ResolvedCanonicalDevelopmentPreparationJournal,
+) -> float:
     completed = [e for e in ledger.events if e.kind == "finished"]
     if any(e.cost is None for e in completed):
         raise SnapshotError("resolved_development_unknown_previous_cost")

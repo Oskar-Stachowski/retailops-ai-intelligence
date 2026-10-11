@@ -1,6 +1,25 @@
 **AI 09 pozostaje in_progress / not_ready.** Integracja po gotowych AI 07–08
 i stan dalszej kampanii są opisane w [STATUS](STATUS.md) oraz
 [kompletnym komponencie oceny forecastu 09.37](evidence/09-37-complete-forecast-robustness.json).
+[Wykonawca development](ai09-development-execution.md) uruchamia zamrożone
+dzienniki prognoz 25/50/100 i zachowuje próby oraz koszty przy wznowieniu.
+[09.101](evidence/09-101-development-execution.json) potwierdza 11 kontroli źródeł i te same 11 z paczki;
+prawdziwa kampania Project oraz pełny CI pozostają wymagane.
+[Wybór konfiguracji po pierwszym porównaniu](ai09-screening-selection.md)
+wiąże ranking RF/HGB/TF z pełnym dziennikiem i oryginalnymi kosztami.
+Eksport mierzy również pamięć; brak pomiaru blokuje zaliczenie operacji.
+[Przejście 25 → 50 w 09.98](evidence/09-98-frozen-forecast-advancement.json)
+zachowuje wybrane konfiguracje oraz koszty i zamraża przyszłe budżety przed
+pierwszą próbą. Przeszło 226 regresji źródeł i te same 226 z paczki;
+pełny lokalny CI oraz odbiór PR/main pozostają wymagane.
+[Wykonawca 25 → 50 → 100](ai09-screening-selection.md) wiąże oryginalne
+konfiguracje, rodziców i koszty. Zaliczył 133 kontrole z zastępnikami workerów;
+363 regresje źródeł i te same 363 z paczki przeszły bez pominięć.
+Pełny CI i rzeczywiste treningi pozostają wymagane.
+[Przygotowanie canonical 100](ai09-development-preparation.md) zachowuje
+oryginalne źródła, natywne plany i wszystkie koszty. Przeszło 328 regresji
+źródeł i te same 328 z paczki; rzeczywista generacja, fity 100 i pełna
+akceptacja pozostają otwarte.
 [Wynik dziewiątej próby 09.62](evidence/09-62-development-capacity-ninth-run.json)
 wiąże zweryfikowany artefakt [run 37853501527](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37853501527).
 Receptura 1.9 zakończyła się `wall_limit`: **0/5 faz, 3600.53 s**,
