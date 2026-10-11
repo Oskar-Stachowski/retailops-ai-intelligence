@@ -92,6 +92,9 @@ from retailops_ai.evaluation_campaign.campaign_stockout_parent_contract import (
     CampaignStockoutContextScope,
     CampaignStockoutParentPlan,
 )
+from retailops_ai.evaluation_campaign.campaign_stockout_qualification import (
+    CampaignStockoutQualificationPolicy,
+)
 from retailops_ai.evaluation_campaign.campaign_stockout_training_contract import (
     CampaignStockoutConditionalRiskPipeline,
     CampaignStockoutConditionalSigmoid,
@@ -941,6 +944,19 @@ def main() -> int:
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(raw)
+    name = "stockout_full_qualification_read_policy"
+    schema = CampaignStockoutQualificationPolicy.model_json_schema()
+    schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+    schema["$id"] = f"urn:retailops:evaluation:{name}:45.0.0"
+    path = ROOT / "contracts/evaluation/v45" / (name + ".schema.json")
+    raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    if args.check:
+        if not path.is_file() or path.read_text() != raw:
+            print("Stockout full qualification read policy differs.")
+            return 1
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(raw)
     print("Evaluation preparation contract snapshots checked.")
     return 0
 
