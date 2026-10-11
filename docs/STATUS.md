@@ -23,7 +23,8 @@ limit **12 GiB** zachowany; AI 09 `not_ready`.
 [PR 66](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/66)
 uzyskał pełny Required CI **17/17**, bez pominięć, również dla TensorFlow CPU.
 Zmiany przygotowania danych i niezależnej prawdy anomalii są na main
-`931f4519`; odbiór CI tego wynikowego commitu trwa. Lokalne błędy z 09.95
+`931f4519`; jego [Required CI](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38135856812)
+zakończył się pełnym **17/17**, bez pominięć. Dowód odbioru zawiera 09.97. Lokalne błędy z 09.95
 pozostają zapisane osobno i nie są przemianowane na sukces.
 
 [Przekazanie danych do prób](ai09-prepared-development-screening.md)

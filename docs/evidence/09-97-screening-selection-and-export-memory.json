@@ -56,9 +56,26 @@
   },
   "new_Project_fits": 0,
   "new_Project_generations": 0,
-  "observed_at_utc": "2026-10-11T12:28:36.828307+00:00",
+  "observed_at_utc": "2026-10-11T12:31:46.599527+00:00",
   "original_journal_gap": "First full-journal control had1failed3passed: export RSS was unknown, so verified ranking correctly refused success. Export measurement added; same original receipt verifier retained.",
   "parent_PR66_main_observation": {
+    "accepted": true,
+    "conclusion": "success",
+    "event": "push",
+    "failed": 0,
+    "head": "931f4519bb7b2bfce4b049dd01302429c917e5fa",
+    "jobs_sha256": "29f021628a02b8696b6111c9575247f97244bd4d99b647af81314a26fc73c689",
+    "observed_at_utc": "2026-10-11T12:31:46.599527+00:00",
+    "required_jobs": 17,
+    "run": 38135856812,
+    "run_attempt": 1,
+    "run_sha256": "570088826c2e54813c301101b9d18ea0c174791b30cce401bcf9d65832cb38fb",
+    "skipped": 0,
+    "status": "completed",
+    "success": 17,
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38135856812"
+  },
+  "previous_parent_PR66_main_observation": {
     "conclusion": null,
     "event": "push",
     "failed_or_skipped": [],
@@ -257,6 +274,8 @@
       },
       "old_contract_files_byte_identical": 372
     },
+    "docs_check_passed": true,
+    "formatted_files": 1336,
     "full_ci_for_this_increment": "not_yet_run",
     "installed": {
       "monitor": {
@@ -304,6 +323,7 @@
       "wall_seconds": 1.5870119169703685
     },
     "normal_PR_and_resulting_main_acceptance": "required",
+    "ruff": "passed",
     "schemas_monitor": {
       "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
       "exit_code": 0,
@@ -320,6 +340,23 @@
       "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
       "status": "passed",
       "wall_seconds": 1.701227958954405
+    },
+    "secrets_monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1317797888,
+      "minimum_free_disk_bytes": 43879829504,
+      "reason": null,
+      "sample_seconds": 0.5,
+      "sampled_peak_scratch_allocated_bytes": 139264,
+      "sampled_peak_scratch_logical_bytes": 130174,
+      "sampled_tree_peak_rss_bytes": 334233600,
+      "sampled_worker_cpu_seconds": 96.61575067999999,
+      "samples": 34,
+      "status": "passed",
+      "wall_seconds": 16.812069208011962
     },
     "source": {
       "monitor": {
