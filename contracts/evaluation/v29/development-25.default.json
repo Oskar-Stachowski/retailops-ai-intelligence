@@ -1,0 +1,24 @@
+{
+  "canonical_development_qualified": false,
+  "data_seed": 42,
+  "days": 365,
+  "final_test_access_authorized": false,
+  "forecast_plan_days": 14,
+  "history": {
+    "end": "2026-07-31",
+    "start": "2025-08-01"
+  },
+  "name": "ai09-development-25-v1",
+  "population": "complete_native_generation_no_parent_filter_or_history_sampling",
+  "products": 25,
+  "quality_qualified": false,
+  "selling_pairs": 5,
+  "source_base_profile": "ai-dev",
+  "stock_locations": 3,
+  "variants": [
+    "ordinary",
+    "demand",
+    "physical"
+  ],
+  "version": "ai09-full-history-development-profile-1.0.0"
+}

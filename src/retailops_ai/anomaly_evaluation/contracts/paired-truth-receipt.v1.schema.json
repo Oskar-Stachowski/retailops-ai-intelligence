@@ -1,0 +1,323 @@
+{
+  "$defs": {
+    "CampaignGenerationResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_threads": {
+          "const": 1,
+          "default": 1,
+          "title": "Cpu Threads",
+          "type": "integer"
+        },
+        "max_log_bytes": {
+          "default": 16777216,
+          "maximum": 16777216,
+          "minimum": 1024,
+          "title": "Max Log Bytes",
+          "type": "integer"
+        },
+        "minimum_available_memory_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Available Memory Bytes",
+          "type": "integer"
+        },
+        "minimum_free_disk_bytes": {
+          "minimum": 1024,
+          "title": "Minimum Free Disk Bytes",
+          "type": "integer"
+        },
+        "sample_seconds": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0.01,
+          "title": "Sample Seconds",
+          "type": "number"
+        },
+        "scratch_bytes": {
+          "maximum": 137438953472,
+          "minimum": 1024,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "tree_rss_bytes": {
+          "maximum": 68719476736,
+          "minimum": 1024,
+          "title": "Tree Rss Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 86400,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "wall_seconds",
+        "tree_rss_bytes",
+        "scratch_bytes",
+        "minimum_free_disk_bytes",
+        "minimum_available_memory_bytes"
+      ],
+      "title": "CampaignGenerationResources",
+      "type": "object"
+    },
+    "CampaignPairedTruthPlan": {
+      "additionalProperties": false,
+      "description": "Both accesses are frozen in this execution recipe before the one reservation.\n\nThe operation belongs to the planned parent. Its ordinary parent is also a\nsource in the same protocol, with a completed generation before reservation.\nNeither Source may be read just because its path was supplied by a caller.",
+      "properties": {
+        "generation_operation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Generation Operation Id",
+          "type": "string"
+        },
+        "max_source_bytes": {
+          "default": 2147483648,
+          "maximum": 2147483648,
+          "minimum": 1024,
+          "title": "Max Source Bytes",
+          "type": "integer"
+        },
+        "max_source_rows": {
+          "default": 20000000,
+          "maximum": 20000000,
+          "minimum": 1,
+          "title": "Max Source Rows",
+          "type": "integer"
+        },
+        "max_truth_bytes": {
+          "default": 33554432,
+          "maximum": 33554432,
+          "minimum": 1024,
+          "title": "Max Truth Bytes",
+          "type": "integer"
+        },
+        "native_source_reads": {
+          "const": 2,
+          "default": 2,
+          "title": "Native Source Reads",
+          "type": "integer"
+        },
+        "ordinary_generation_operation_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Ordinary Generation Operation Id",
+          "type": "string"
+        },
+        "ordinary_source_recipe_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Ordinary Source Recipe Sha256",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "development",
+            "final"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "quality_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Quality Qualified",
+          "type": "boolean"
+        },
+        "resources": {
+          "$ref": "#/$defs/CampaignGenerationResources"
+        },
+        "scenario_plan_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Scenario Plan Sha256",
+          "type": "string"
+        },
+        "source_recipe_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Recipe Sha256",
+          "type": "string"
+        },
+        "version": {
+          "const": "ai09-campaign-paired-truth-plan-1.0.0",
+          "default": "ai09-campaign-paired-truth-plan-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/Window"
+        }
+      },
+      "required": [
+        "phase",
+        "source_recipe_sha256",
+        "ordinary_source_recipe_sha256",
+        "generation_operation_id",
+        "ordinary_generation_operation_id",
+        "scenario_plan_sha256",
+        "window",
+        "resources"
+      ],
+      "title": "CampaignPairedTruthPlan",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "Window": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "Window",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_bytes": {
+      "maximum": 37748736,
+      "minimum": 1,
+      "title": "Artifact Bytes",
+      "type": "integer"
+    },
+    "artifact_files": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Artifact Files",
+      "type": "object"
+    },
+    "cost_scope": {
+      "const": "one_total_for_both_native_reads_comparison_and_publication",
+      "default": "one_total_for_both_native_reads_comparison_and_publication",
+      "title": "Cost Scope",
+      "type": "string"
+    },
+    "generated_parent_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Generated Parent Receipt Sha256",
+      "type": "string"
+    },
+    "native_source_reads": {
+      "const": 2,
+      "default": 2,
+      "title": "Native Source Reads",
+      "type": "integer"
+    },
+    "operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Operation Id",
+      "type": "string"
+    },
+    "ordinary_generation_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Ordinary Generation Receipt Sha256",
+      "type": "string"
+    },
+    "ordinary_source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Ordinary Source Dataset Id",
+      "type": "string"
+    },
+    "plan": {
+      "$ref": "#/$defs/CampaignPairedTruthPlan"
+    },
+    "protocol_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Protocol Sha256",
+      "type": "string"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "reservation_id": {
+      "pattern": "^campaign-operation-[0-9a-f]{32}$",
+      "title": "Reservation Id",
+      "type": "string"
+    },
+    "runtime_code_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Runtime Code Sha256",
+      "type": "string"
+    },
+    "selection_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selection Sha256"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_verification_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Verification Sha256",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "truth_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Truth Sha256",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-campaign-paired-truth-receipt-1.0.0",
+      "default": "ai09-campaign-paired-truth-receipt-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "worker_evidence": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "title": "Worker Evidence",
+      "type": "object"
+    }
+  },
+  "required": [
+    "protocol_sha256",
+    "operation_id",
+    "reservation_id",
+    "runtime_code_sha256",
+    "plan",
+    "generated_parent_receipt_sha256",
+    "ordinary_generation_receipt_sha256",
+    "source_dataset_id",
+    "ordinary_source_dataset_id",
+    "source_verification_sha256",
+    "truth_sha256",
+    "artifact_files",
+    "artifact_bytes",
+    "worker_evidence"
+  ],
+  "title": "CampaignPairedTruthReceipt",
+  "type": "object"
+}

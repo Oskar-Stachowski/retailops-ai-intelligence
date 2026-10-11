@@ -1,0 +1,241 @@
+{
+  "$defs": {
+    "Episode": {
+      "additionalProperties": false,
+      "properties": {
+        "business_type": {
+          "enum": [
+            "one_day_spike",
+            "multi_day_spike",
+            "sustained_drop",
+            "return_spike",
+            "inventory_censored_episode"
+          ],
+          "title": "Business Type",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online",
+            "marketplace",
+            "wholesale"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "currency": {
+          "enum": [
+            "PLN",
+            "EUR"
+          ],
+          "title": "Currency",
+          "type": "string"
+        },
+        "episode_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+          "title": "Episode Id",
+          "type": "string"
+        },
+        "event_type": {
+          "enum": [
+            "sale_completed",
+            "return_completed"
+          ],
+          "title": "Event Type",
+          "type": "string"
+        },
+        "first_evidence_available_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "First Evidence Available At",
+          "type": "string"
+        },
+        "label_available_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Label Available At",
+          "type": "string"
+        },
+        "product_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/Window"
+        }
+      },
+      "required": [
+        "event_type",
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "currency",
+        "episode_id",
+        "business_type",
+        "window",
+        "first_evidence_available_at",
+        "label_available_at"
+      ],
+      "title": "Episode",
+      "type": "object"
+    },
+    "TruthWindow": {
+      "additionalProperties": false,
+      "properties": {
+        "available_at": {
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+          "title": "Available At",
+          "type": "string"
+        },
+        "channel": {
+          "enum": [
+            "store",
+            "online",
+            "marketplace",
+            "wholesale"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "currency": {
+          "enum": [
+            "PLN",
+            "EUR"
+          ],
+          "title": "Currency",
+          "type": "string"
+        },
+        "event_type": {
+          "enum": [
+            "sale_completed",
+            "return_completed"
+          ],
+          "title": "Event Type",
+          "type": "string"
+        },
+        "product_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/$defs/Window"
+        }
+      },
+      "required": [
+        "event_type",
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "currency",
+        "window",
+        "available_at"
+      ],
+      "title": "TruthWindow",
+      "type": "object"
+    },
+    "Window": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "Window",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Offline clean control backed by full ordinary Source verification, not a scenario.",
+  "properties": {
+    "clean_basis": {
+      "const": "complete_verified_ordinary_source_without_planned_interventions",
+      "default": "complete_verified_ordinary_source_without_planned_interventions",
+      "title": "Clean Basis",
+      "type": "string"
+    },
+    "complete_windows": {
+      "items": {
+        "$ref": "#/$defs/TruthWindow"
+      },
+      "maxItems": 10000,
+      "minItems": 1,
+      "title": "Complete Windows",
+      "type": "array"
+    },
+    "data_class": {
+      "const": "simulation_truth",
+      "default": "simulation_truth",
+      "title": "Data Class",
+      "type": "string"
+    },
+    "episodes": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Episode"
+      },
+      "maxItems": 0,
+      "title": "Episodes",
+      "type": "array"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_generation_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Generation Receipt Sha256",
+      "type": "string"
+    },
+    "source_scenario_sha256": {
+      "default": null,
+      "title": "Source Scenario Sha256",
+      "type": "null"
+    },
+    "source_verification_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Verification Sha256",
+      "type": "string"
+    },
+    "version": {
+      "const": "anomaly-ordinary-business-truth-1.0.0",
+      "default": "anomaly-ordinary-business-truth-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_dataset_id",
+    "source_verification_sha256",
+    "source_generation_receipt_sha256",
+    "complete_windows"
+  ],
+  "title": "OrdinaryTruth",
+  "type": "object"
+}

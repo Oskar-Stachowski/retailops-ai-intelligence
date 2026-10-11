@@ -82,5 +82,143 @@
   "new_canonical": false,
   "project_fits": 0,
   "fresh_final_reads": 0,
-  "stage_ready": false
+  "stage_ready": false,
+  "later_required_ci_acceptance": {
+    "pr": 65,
+    "pr_url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/65",
+    "pr_head": "680781673486afc2abeb7789a20795e84d4f798d",
+    "pr_run": 37981375500,
+    "pr_successful_jobs": 17,
+    "resulting_main": {
+      "head": "8fe28ea4a372611d70b013f60f6d783fc9fc9278",
+      "run_id": 37987647164,
+      "jobs_success": 17,
+      "path_skips": 0,
+      "full_required_ci_accepted": true,
+      "jobs_sha256": "c4777a3880e9def56dd49ec12d2121d2f7e20e50b1ff8fe0a8f3a51894509ddf",
+      "jobs": [
+        {
+          "id": 114013516596,
+          "name": "secrets",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013516705,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924358,
+          "name": "anomaly-oci",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924367,
+          "name": "TensorFlow CPU training, artifact and reload",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924382,
+          "name": "persistence",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924458,
+          "name": "acceptance (ci-forecast)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924516,
+          "name": "persistence-forecast",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924541,
+          "name": "acceptance (ci-qualified-inputs)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924577,
+          "name": "acceptance (ci-source-inputs)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924581,
+          "name": "observation-replay",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924593,
+          "name": "observation-broker",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924616,
+          "name": "tests (1)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924653,
+          "name": "tests (0)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924673,
+          "name": "tests (2)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924736,
+          "name": "tests (3)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114013924872,
+          "name": "acceptance (ci-detectors)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        },
+        {
+          "id": 114032232429,
+          "name": "required-result",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "8fe28ea4a372611d70b013f60f6d783fc9fc9278"
+        }
+      ]
+    },
+    "local_result_unchanged": "failed",
+    "later_branch_development_additions_accepted": false
+  }
 }

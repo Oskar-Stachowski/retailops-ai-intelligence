@@ -9,6 +9,9 @@ from uuid import uuid4
 from retailops_ai.data_contracts.identity import canonical_bytes, canonical_sha256
 from retailops_ai.evaluation_campaign import campaign_journal
 from retailops_ai.evaluation_campaign.campaign_anomaly_fit_contract import CampaignAnomalyFitReceipt
+from retailops_ai.evaluation_campaign.campaign_anomaly_truth_contract import (
+    CampaignOrdinaryTruthReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_calibration_contract import (
     CampaignForecastCalibrationReceipt,
 )
@@ -31,6 +34,9 @@ from retailops_ai.evaluation_campaign.campaign_export_contract import (
 )
 from retailops_ai.evaluation_campaign.campaign_final_contract import CampaignFinalExportReceipt
 from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
+from retailops_ai.evaluation_campaign.campaign_paired_truth_contract import (
+    CampaignPairedTruthReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
     CampaignForecastPortfolioEvaluationReceipt,
     CampaignForecastPortfolioRobustEvaluationReceipt,
@@ -39,6 +45,12 @@ from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
 )
 from retailops_ai.evaluation_campaign.campaign_score_contract import CampaignForecastScoreReceipt
 from retailops_ai.evaluation_campaign.campaign_tune_contract import CampaignForecastTuneReceipt
+from retailops_ai.evaluation_campaign.development_planning_contract import (
+    NativeDevelopmentPlanningReceipt,
+)
+from retailops_ai.evaluation_campaign.development_variants_contract import (
+    ReusedDevelopmentParentReceipt,
+)
 from retailops_ai.evaluation_campaign.physical_forecast import (
     _build_physical_forecast,
     _physical_bytes,
@@ -164,6 +176,10 @@ def _store_receipt(
     root: Path,
     receipt: CampaignDevelopmentExportReceipt
     | CampaignAnomalyFitReceipt
+    | CampaignOrdinaryTruthReceipt
+    | CampaignPairedTruthReceipt
+    | NativeDevelopmentPlanningReceipt
+    | ReusedDevelopmentParentReceipt
     | CampaignGeneratedParentReceipt
     | CampaignFinalExportReceipt
     | CampaignForecastFitReceipt

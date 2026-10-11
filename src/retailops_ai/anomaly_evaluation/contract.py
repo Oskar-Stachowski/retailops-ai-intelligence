@@ -118,34 +118,103 @@ class Truth(Contract):
 
     @model_validator(mode="after")
     def inventory(self) -> Self:
-        if sum((w.window.end - w.window.start).days + 1 for w in self.complete_windows) > 1000000:
-            raise ValueError("anomaly_truth_census_budget")
-        if len({e.episode_id for e in self.episodes}) != len(self.episodes):
-            raise ValueError("anomaly_duplicate_episode_id")
-        windows: dict[tuple[str, ...], list[Window]] = {}
-        for item in self.complete_windows:
-            scope = series_key(item)
-            if any(
-                not (item.window.end < w.start or w.end < item.window.start)
-                for w in windows.get(scope, [])
-            ):
-                raise ValueError("anomaly_truth_census_overlap")
-            windows.setdefault(scope, []).append(item.window)
-        occupied: dict[tuple[str, ...], list[Window]] = {}
-        for episode in self.episodes:
-            scope = series_key(episode)
-            if not any(
-                w.start <= episode.window.start <= episode.window.end <= w.end
-                for w in windows.get(scope, [])
-            ):
-                raise ValueError("anomaly_episode_outside_truth_census")
-            if any(
-                not (episode.window.end < w.start or w.end < episode.window.start)
-                for w in occupied.get(scope, [])
-            ):
-                raise ValueError("anomaly_business_truth_overlap")
-            occupied.setdefault(scope, []).append(episode.window)
+        _truth_inventory(self.complete_windows, self.episodes)
         return self
+
+
+class OrdinaryTruth(Contract):
+    """Offline clean control backed by full ordinary Source verification, not a scenario."""
+
+    version: Literal["anomaly-ordinary-business-truth-1.0.0"] = (
+        "anomaly-ordinary-business-truth-1.0.0"
+    )
+    data_class: Literal["simulation_truth"] = "simulation_truth"
+    source_dataset_id: SourceID
+    source_scenario_sha256: None = None
+    source_verification_sha256: Sha256
+    source_generation_receipt_sha256: Sha256
+    clean_basis: Literal["complete_verified_ordinary_source_without_planned_interventions"] = (
+        "complete_verified_ordinary_source_without_planned_interventions"
+    )
+    complete_windows: tuple[TruthWindow, ...] = Field(min_length=1, max_length=10000)
+    episodes: tuple[Episode, ...] = Field(default=(), max_length=0)
+
+    @model_validator(mode="after")
+    def inventory(self) -> Self:
+        _truth_inventory(self.complete_windows, self.episodes)
+        return self
+
+
+class PairedTruth(Truth):
+    """Native primary episodes and conservative clean labels from two verified parents."""
+
+    version: Literal["anomaly-paired-business-truth-1.0.0"] = "anomaly-paired-business-truth-1.0.0"  # type: ignore[assignment]
+    ordinary_source_dataset_id: SourceID
+    source_verification_sha256: Sha256
+    ordinary_generation_receipt_sha256: Sha256
+    source_generation_receipt_sha256: Sha256
+    comparison_policy_sha256: Sha256
+    clean_basis: Literal["native_complete_pair_before_first_product_difference_or_intervention"] = (
+        "native_complete_pair_before_first_product_difference_or_intervention"
+    )
+    # All-unknown is a valid, explicitly unevaluable result, never invented clean
+    # evidence. The original v1 Truth minimum and schema remain unchanged.
+    complete_windows: tuple[TruthWindow, ...] = Field(max_length=10000)
+
+    @model_validator(mode="after")
+    def pair(self) -> Self:
+        from retailops_ai.anomaly_evaluation.paired_source_comparison import POLICY
+        from retailops_ai.data_contracts.identity import canonical_sha256
+
+        if (
+            self.ordinary_source_dataset_id == self.source_dataset_id
+            or self.comparison_policy_sha256 != canonical_sha256(POLICY)
+        ):
+            raise ValueError("anomaly_paired_truth_parent_or_policy_binding")
+        return self
+
+
+def validate_truth(truth: Truth | OrdinaryTruth) -> Truth | OrdinaryTruth:
+    cls = (
+        PairedTruth
+        if isinstance(truth, PairedTruth)
+        else OrdinaryTruth
+        if isinstance(truth, OrdinaryTruth)
+        else Truth
+    )
+    return cls.model_validate_json(truth.model_dump_json())
+
+
+def _truth_inventory(
+    complete_windows: tuple[TruthWindow, ...], episodes: tuple[Episode, ...]
+) -> None:
+    if sum((w.window.end - w.window.start).days + 1 for w in complete_windows) > 1000000:
+        raise ValueError("anomaly_truth_census_budget")
+    if len({e.episode_id for e in episodes}) != len(episodes):
+        raise ValueError("anomaly_duplicate_episode_id")
+    windows: dict[tuple[str, ...], list[Window]] = {}
+    for item in complete_windows:
+        scope = series_key(item)
+        if any(
+            not (item.window.end < w.start or w.end < item.window.start)
+            for w in windows.get(scope, [])
+        ):
+            raise ValueError("anomaly_truth_census_overlap")
+        windows.setdefault(scope, []).append(item.window)
+    occupied: dict[tuple[str, ...], list[Window]] = {}
+    for episode in episodes:
+        scope = series_key(episode)
+        if not any(
+            w.start <= episode.window.start <= episode.window.end <= w.end
+            for w in windows.get(scope, [])
+        ):
+            raise ValueError("anomaly_episode_outside_truth_census")
+        if any(
+            not (episode.window.end < w.start or w.end < episode.window.start)
+            for w in occupied.get(scope, [])
+        ):
+            raise ValueError("anomaly_business_truth_overlap")
+        occupied.setdefault(scope, []).append(episode.window)
 
 
 class Metric(Contract):

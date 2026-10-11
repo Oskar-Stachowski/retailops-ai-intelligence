@@ -1,0 +1,107 @@
+{
+  "recorded_at_utc": "2026-10-09T17:54:29.456165+00:00",
+  "scope": "Audited native runner integration for separate full-history25/50 preparation journals; controlled phase outputs are not generated Source or empirical critical coverage",
+  "base_commit": "7fc04df85ebf61994e4b3515741c3aa0622bc72c",
+  "accepted_main": "20aae22c00e8cf9e6b1b5ff6b11e706b59d5f46e",
+  "code_sha256": {
+    "src/retailops_ai/evaluation_campaign/development_preparation.py": "76996d819e8ded4e73c8abb28582f9fdad8c766ec26f49cef81edfddbb19381d",
+    "src/retailops_ai/evaluation_campaign/campaign_portfolio_contract.py": "9343a7d7bd7db906ac6b65264af7cd95462d93bb6a248ce0c90c4c44f0607d34",
+    "scripts/update_evaluation_preparation_contracts.py": "e0849c30fc5b920b8b7edfe2c61d619eb4ae37f1de9bd2102c69b25e99442f56",
+    "pyproject.toml": "5dc73698c386319a61d452ecddf4c999ceddc126cddd018633587943b40b1ea7"
+  },
+  "implementation": {
+    "profile_products": [
+      25,
+      50
+    ],
+    "variants": [
+      "ordinary",
+      "demand",
+      "physical"
+    ],
+    "native_phases": [
+      "generation",
+      "qualification",
+      "export",
+      "import",
+      "curation",
+      "verify"
+    ],
+    "original_native_generation_runner_reused": true,
+    "original_parent_validation_reused": true,
+    "maximum_generation_attempts_per_profile": 3,
+    "maximum_attempts_per_variant": 1,
+    "maximum_fit_attempts": 0,
+    "reserve_before_producer_and_output_io": true,
+    "failed_attempt_refund": false,
+    "automatic_retry": false,
+    "automatic_checkpoint_resume": false,
+    "interrupted_reservation_retained": true,
+    "selection_and_final_events_rejected": true,
+    "unchanged_canonical_protocols_reject_small_wire": true,
+    "model_trials_or_parent_transfer_authorized": false
+  },
+  "validation": {
+    "source": {
+      "tests": 134,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 69.068,
+      "sha256": "65592c85475ccd640e68587c7c8d0b42c231c0411a0585e003d590347df40c0a",
+      "private_path": ".local/development-preparation/components-final.xml"
+    },
+    "installed": {
+      "tests": 134,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 76.45,
+      "sha256": "e6c8d5af0c92fb14633597dc9768de201016ca11a40c5cd4a9b3035b824d59b8",
+      "private_path": ".local/development-preparation/installed-tests.xml"
+    },
+    "identical_test_case_inventory": true,
+    "same_test_set_do_not_sum": true,
+    "controlled_six_phase_success_variants": 3,
+    "controlled_failed_phases": 6,
+    "actual_missing_producer_guard": true,
+    "concurrent_duplicate_reservation_rejected": true,
+    "completed_generation_requires_stored_receipt_and_measured_resources": true,
+    "old_campaign_generation_and_journal_regression": true,
+    "mypy_files": 755,
+    "ruff_check_passed": true,
+    "ruff_format_files": 1303,
+    "new_json_contracts": 2,
+    "legacy_json_contracts_unchanged": true,
+    "wheel": {
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 2195828,
+      "sha256": "719068f86778d66ab3df4d4185253418e3f8e7b4842b6e6b11f385f186d9557a",
+      "python_modules_equal": 626,
+      "new_contract_files_equal": 2,
+      "private_files_absent": true,
+      "new_module_loaded_from_installed": true
+    },
+    "secret_scans": {
+      "directory_passed": true,
+      "history_passed": true,
+      "history_commits": 949,
+      "scope": "pre-publication directory and existing history; private artifacts excluded by repository policy"
+    }
+  },
+  "still_required": [
+    "Actual native profile scenario grain binding, complete Source generation and native effect and critical-group verification",
+    "Explicit audited transfer/reuse of prepared parents for separate model-trial execution, preserving cold preparation cost and every new read",
+    "Independent metrics-based finalist selection and same-finalist binding at50/100",
+    "Full local make ci-local and protected exact-head/main Required CI",
+    "Actual representative data-to-report and unchanged full canonical/final portfolio with all three use cases",
+    "Uncertainty, per-seed/scenario costs, lifecycle/model cards and all scientific ready requirements"
+  ],
+  "canonical_rss_bytes": 12884901888,
+  "actual_small_profile_generations": 0,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "full_required_ci": false,
+  "on_main": false,
+  "stage_ready": false
+}

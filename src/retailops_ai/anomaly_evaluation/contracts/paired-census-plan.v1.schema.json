@@ -1,0 +1,290 @@
+{
+  "$defs": {
+    "EvaluationPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "average_precision": {
+          "const": "score_ties_grouped_stepwise_average_precision",
+          "default": "score_ties_grouped_stepwise_average_precision",
+          "title": "Average Precision",
+          "type": "string"
+        },
+        "early_lead_days": {
+          "const": 0,
+          "default": 0,
+          "title": "Early Lead Days",
+          "type": "integer"
+        },
+        "episode_coverage": {
+          "const": "all_mature_episodes_in_complete_requested_census",
+          "default": "all_mature_episodes_in_complete_requested_census",
+          "title": "Episode Coverage",
+          "type": "string"
+        },
+        "false_alert_denominator": {
+          "const": "scored_mature_truth_clean_observations",
+          "default": "scored_mature_truth_clean_observations",
+          "title": "False Alert Denominator",
+          "type": "string"
+        },
+        "late_tolerance_days": {
+          "const": 1,
+          "default": 1,
+          "title": "Late Tolerance Days",
+          "type": "integer"
+        },
+        "overlap": {
+          "const": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+          "default": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+          "title": "Overlap",
+          "type": "string"
+        },
+        "repeat_alerts": {
+          "const": "report_without_increasing_episode_recall",
+          "default": "report_without_increasing_episode_recall",
+          "title": "Repeat Alerts",
+          "type": "string"
+        },
+        "unknown_truth": {
+          "const": "excluded_and_counted",
+          "default": "excluded_and_counted",
+          "title": "Unknown Truth",
+          "type": "string"
+        },
+        "version": {
+          "const": "anomaly-evaluation-1.0.0",
+          "default": "anomaly-evaluation-1.0.0",
+          "title": "Version",
+          "type": "string"
+        },
+        "zero_prediction_precision": {
+          "const": "not_evaluable",
+          "default": "not_evaluable",
+          "title": "Zero Prediction Precision",
+          "type": "string"
+        }
+      },
+      "title": "EvaluationPolicy",
+      "type": "object"
+    },
+    "Scope": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "store",
+            "online",
+            "marketplace",
+            "wholesale"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "currency": {
+          "enum": [
+            "PLN",
+            "EUR"
+          ],
+          "title": "Currency",
+          "type": "string"
+        },
+        "event_type": {
+          "enum": [
+            "sale_completed",
+            "return_completed"
+          ],
+          "title": "Event Type",
+          "type": "string"
+        },
+        "product_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Product Id",
+          "type": "string"
+        },
+        "selling_location_id": {
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "title": "Selling Location Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_type",
+        "product_id",
+        "selling_location_id",
+        "channel",
+        "currency"
+      ],
+      "title": "Scope",
+      "type": "object"
+    },
+    "Window": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "title": "End",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "title": "Start",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "Window",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Numerical planned census binds both native parents and the paired truth proof.",
+  "properties": {
+    "as_of": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "As Of",
+      "type": "string"
+    },
+    "comparison_policy_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Comparison Policy Sha256",
+      "type": "string"
+    },
+    "evaluation_policy": {
+      "$ref": "#/$defs/EvaluationPolicy",
+      "default": {
+        "average_precision": "score_ties_grouped_stepwise_average_precision",
+        "early_lead_days": 0,
+        "episode_coverage": "all_mature_episodes_in_complete_requested_census",
+        "false_alert_denominator": "scored_mature_truth_clean_observations",
+        "late_tolerance_days": 1,
+        "overlap": "reject_truth_overlap_then_earliest_end_id_for_tolerance",
+        "repeat_alerts": "report_without_increasing_episode_recall",
+        "unknown_truth": "excluded_and_counted",
+        "version": "anomaly-evaluation-1.0.0",
+        "zero_prediction_precision": "not_evaluable"
+      }
+    },
+    "family": {
+      "enum": [
+        "seasonal_residual",
+        "isolation_forest"
+      ],
+      "title": "Family",
+      "type": "string"
+    },
+    "feature_parent_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Feature Parent Sha256",
+      "type": "string"
+    },
+    "max_rows": {
+      "maximum": 1000000,
+      "minimum": 1,
+      "title": "Max Rows",
+      "type": "integer"
+    },
+    "model_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Model Sha256",
+      "type": "string"
+    },
+    "ordinary_generation_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Ordinary Generation Receipt Sha256",
+      "type": "string"
+    },
+    "ordinary_source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Ordinary Source Dataset Id",
+      "type": "string"
+    },
+    "phase": {
+      "enum": [
+        "development",
+        "final"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "population": {
+      "const": "every_declared_scope_every_day_including_abstentions",
+      "default": "every_declared_scope_every_day_including_abstentions",
+      "title": "Population",
+      "type": "string"
+    },
+    "scopes": {
+      "items": {
+        "$ref": "#/$defs/Scope"
+      },
+      "maxItems": 65536,
+      "minItems": 1,
+      "title": "Scopes",
+      "type": "array"
+    },
+    "source_dataset_id": {
+      "pattern": "^source-sha256-[0-9a-f]{64}$",
+      "title": "Source Dataset Id",
+      "type": "string"
+    },
+    "source_generation_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Generation Receipt Sha256",
+      "type": "string"
+    },
+    "source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Recipe Sha256",
+      "type": "string"
+    },
+    "source_scenario_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Scenario Sha256",
+      "type": "string"
+    },
+    "source_verification_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Verification Sha256",
+      "type": "string"
+    },
+    "truth_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Truth Sha256",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-native-paired-anomaly-census-plan-1.0.0",
+      "default": "ai09-native-paired-anomaly-census-plan-1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "window": {
+      "$ref": "#/$defs/Window"
+    }
+  },
+  "required": [
+    "phase",
+    "source_dataset_id",
+    "source_recipe_sha256",
+    "source_scenario_sha256",
+    "feature_parent_sha256",
+    "model_sha256",
+    "truth_sha256",
+    "scopes",
+    "window",
+    "as_of",
+    "family",
+    "max_rows",
+    "ordinary_source_dataset_id",
+    "source_verification_sha256",
+    "ordinary_generation_receipt_sha256",
+    "source_generation_receipt_sha256",
+    "comparison_policy_sha256"
+  ],
+  "title": "CampaignPairedAnomalyCensusPlan",
+  "type": "object"
+}

@@ -1,0 +1,329 @@
+{
+  "$defs": {
+    "CampaignCost": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_bytes": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Artifact Bytes"
+        },
+        "peak_process_tree_rss_bytes": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Peak Process Tree Rss Bytes"
+        },
+        "wall_seconds": {
+          "minimum": 0,
+          "title": "Wall Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "wall_seconds"
+      ],
+      "title": "CampaignCost",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "forecast_source_status": {
+          "const": "passed",
+          "title": "Forecast Source Status",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "curated_descriptor_sha256",
+        "business_timezone",
+        "forecast_source_status"
+      ],
+      "title": "Parent",
+      "type": "object"
+    },
+    "PhysicalSourceSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "batch_rows": {
+          "default": 256,
+          "maximum": 8192,
+          "minimum": 1,
+          "title": "Batch Rows",
+          "type": "integer"
+        },
+        "curated_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Manifest Sha256",
+          "type": "string"
+        },
+        "execution_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Execution Authorized",
+          "type": "boolean"
+        },
+        "final_test_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Access Authorized",
+          "type": "boolean"
+        },
+        "max_parent_bytes": {
+          "default": 2147483648,
+          "maximum": 2147483648,
+          "minimum": 1024,
+          "title": "Max Parent Bytes",
+          "type": "integer"
+        },
+        "max_parent_files": {
+          "default": 10000,
+          "maximum": 10000,
+          "minimum": 2,
+          "title": "Max Parent Files",
+          "type": "integer"
+        },
+        "max_rows_per_parent": {
+          "default": 20000000,
+          "maximum": 20000000,
+          "minimum": 1,
+          "title": "Max Rows Per Parent",
+          "type": "integer"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "resource_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Resource Qualified",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "enum": [
+            "1.0.0",
+            "1.1.0",
+            "1.2.0"
+          ],
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "snapshot_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Snapshot Manifest Sha256",
+          "type": "string"
+        },
+        "source_parameters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Source Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "schema_version",
+        "parent",
+        "source_parameters",
+        "snapshot_manifest_sha256",
+        "curated_manifest_sha256"
+      ],
+      "title": "PhysicalSourceSpec",
+      "type": "object"
+    },
+    "PreparationRuntime": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "python_version": {
+          "pattern": "^3\\.11\\.[0-9]+$",
+          "title": "Python Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code_files",
+        "code_sha256",
+        "dependency_lock_sha256",
+        "python_version"
+      ],
+      "title": "PreparationRuntime",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:reused_development_parent_receipt:32.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "final_test_access_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Final Test Access Authorized",
+      "type": "boolean"
+    },
+    "generated_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Generated Receipt Sha256",
+      "type": "string"
+    },
+    "generation_cost": {
+      "$ref": "#/$defs/CampaignCost"
+    },
+    "model_fit_authorized": {
+      "const": false,
+      "default": false,
+      "title": "Model Fit Authorized",
+      "type": "boolean"
+    },
+    "new_source_generation_performed": {
+      "const": false,
+      "default": false,
+      "title": "New Source Generation Performed",
+      "type": "boolean"
+    },
+    "operation_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+      "title": "Operation Id",
+      "type": "string"
+    },
+    "planning_cost": {
+      "$ref": "#/$defs/CampaignCost"
+    },
+    "planning_receipt_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Planning Receipt Sha256",
+      "type": "string"
+    },
+    "protocol_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Protocol Sha256",
+      "type": "string"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "reservation_id": {
+      "pattern": "^campaign-operation-[0-9a-f]{32}$",
+      "title": "Reservation Id",
+      "type": "string"
+    },
+    "runtime": {
+      "$ref": "#/$defs/PreparationRuntime"
+    },
+    "source": {
+      "$ref": "#/$defs/PhysicalSourceSpec"
+    },
+    "source_recipe_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Recipe Sha256",
+      "type": "string"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "verified_inventories": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "propertyNames": {
+        "enum": [
+          "snapshot",
+          "curated",
+          "logical_curated"
+        ]
+      },
+      "title": "Verified Inventories",
+      "type": "object"
+    },
+    "version": {
+      "const": "ai09-reused-development-parent-receipt-1.0.0",
+      "default": "ai09-reused-development-parent-receipt-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "protocol_sha256",
+    "source_recipe_sha256",
+    "operation_id",
+    "reservation_id",
+    "source",
+    "generated_receipt_sha256",
+    "planning_receipt_sha256",
+    "generation_cost",
+    "planning_cost",
+    "verified_inventories",
+    "runtime"
+  ],
+  "title": "ReusedDevelopmentParentReceipt",
+  "type": "object"
+}

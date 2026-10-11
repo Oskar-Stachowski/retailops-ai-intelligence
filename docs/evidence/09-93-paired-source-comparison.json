@@ -1,0 +1,161 @@
+{
+  "already_accepted_ai_main": "8fe28ea4a372611d70b013f60f6d783fc9fc9278",
+  "canonical_dispatch_enabled": false,
+  "canonical_tree_rss_bytes": 12884901888,
+  "closed_AI07_artifacts_recomputed": false,
+  "component": "src/retailops_ai/anomaly_evaluation/paired_source_comparison.py",
+  "component_sha256": "c17803663dbef1b326db2858bca1a50bd2bfb25e5168e2e5fef99bc21a067765",
+  "consumer_base_commit": "6d842a8ee04151bf728eec950645e12f80992bea",
+  "fresh_final_reads": 0,
+  "historical_failed_costs_and_unavailable_reads_preserved": true,
+  "legacy_truth_policy_and_schemas_unchanged": true,
+  "new_Project_fits": 0,
+  "new_Project_generations": 0,
+  "observed_at_utc": "2026-10-09T22:22:27.631740+00:00",
+  "on_main": false,
+  "policy": {
+    "clean": "native_complete_days_strictly_before_first_product_difference_or_intervention",
+    "comparison": "canonical_row_multiset_with_shared_order_product_joins",
+    "population": "all_58_native_tables_all_rows_all_columns_both_parents",
+    "positive": "requires_separate_native_scenario_effect_and_maturity_verification",
+    "recovery": "never_inferred_from_later_equal_rows",
+    "spillover": "changed_product_all_channels_and_event_types_unknown_from_earliest_row_date",
+    "training_truth": "never_accessed_by_training_or_scoring",
+    "version": "anomaly-paired-source-comparison-1.0.0"
+  },
+  "properties": {
+    "all_rows_and_columns_both_parents": true,
+    "all_unknown_observations_remain_in_scoring_census": true,
+    "basket_header_changes_affect_all_linked_products": true,
+    "caller_can_release_ordinary_before_loading_planned": true,
+    "changed_product_all_channels_event_types_unknown_from_first_difference": true,
+    "detector_scores_used": false,
+    "dimension_policy_parameter_changes_rejected": true,
+    "earliest_date_includes_period_from_at_and_both_sides_of_moved_events": true,
+    "failed_partial_index_cannot_be_reused": true,
+    "intervention_boundary_even_without_observed_difference": true,
+    "later_equality_does_not_reset_unknown": true,
+    "multiset_preserves_duplicate_and_missing_rows": true,
+    "native_complete_window_intersection_preserves_gaps_and_maturity": true,
+    "private_exclusive_sqlite_multiset": true,
+    "source_access_or_quality_authorized_by_component": false,
+    "sqlite_cache_kib": 8192,
+    "supply_rows_use_actual_replenishment_join": true
+  },
+  "quality_qualified": false,
+  "remaining": [
+    "Complete original native reader control of both scenarios under the resource guard",
+    "Pinned clean producer verification of ordinary and planned parents, with exact generation ancestry",
+    "Versioned positive episode and maturity proof bound to the compared native scenario",
+    "Durable audited read reservation, cost accounting and parent/truth receipt",
+    "Full consumer local and protected PR/main acceptance",
+    "Real Project25/50 preparation, data-to-report model trials, critical coverage and full scientific qualification"
+  ],
+  "scope": "Conservative numerical comparison of complete native Source pairs; no Project truth receipt or campaign admission",
+  "source_pr114_observation": {
+    "conclusion_counts": {
+      "failure": 3,
+      "in_progress": 1,
+      "skipped": 4,
+      "success": 16
+    },
+    "fully_accepted": false,
+    "head": "58a6bb13fdbb36154d11d769b02fd88750092720",
+    "jobs_seen": 24,
+    "run": 37995672304
+  },
+  "source_tables": 58,
+  "stage_ready": false,
+  "validation": {
+    "counts_not_additive": true,
+    "earlier_native_admission_stopped_before_worker": {
+      "reason": "review_found_missing_native_period_from_at_boundary_before_admission",
+      "scope": "only_owned_admission_wait_stopped",
+      "worker_started": false
+    },
+    "full_local_ci": false,
+    "full_required_ci": false,
+    "installed": {
+      "counts": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 36
+      },
+      "junit_sha256": "a3aa7559498f281455e1e8e21a5f28dfebe9004732cdedf9c4cfda813dc56322",
+      "seconds": 0.121
+    },
+    "installed_monitor": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1411186688,
+      "minimum_free_disk_bytes": 49326051328,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 16384,
+      "sampled_peak_scratch_logical_bytes": 6097,
+      "sampled_tree_peak_rss_bytes": 73302016,
+      "sampled_worker_cpu_seconds": 0.325528752,
+      "samples": 6,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "wall_seconds": 0.5640165419899859
+    },
+    "mypy_source_files": 1,
+    "native_small_control": {
+      "admission_seconds": 301.1411589580239,
+      "admission_sha256": "438c6d50f1652dff6daeca97cdc563361865dcadc62026816b0672eb85888da1",
+      "budget_lowered_to_force_admission": false,
+      "full_native_pair_replayed_this_turn": false,
+      "maximum_observed_available_memory_bytes": 1557757952,
+      "minimum_available_memory_bytes": 1073741824,
+      "minimum_free_disk_bytes": 6442450944,
+      "minimum_observed_available_memory_bytes": 1222295552,
+      "required_admission_available_bytes": 1644167168,
+      "status": "admission_expired_before_worker_start",
+      "tree_rss_budget_bytes": 536870912,
+      "worker_started": false
+    },
+    "ruff_check_and_format": true,
+    "same_test_inventory": true,
+    "source": {
+      "counts": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 36
+      },
+      "junit_sha256": "1b57d92ee8f3b5a8d374070e4f02a21a2a805b8ac6f476c82eb1b28214c3cd86",
+      "seconds": 0.118
+    },
+    "source_monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1409171456,
+      "minimum_free_disk_bytes": 49346342912,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 20480,
+      "sampled_peak_scratch_logical_bytes": 8442,
+      "sampled_tree_peak_rss_bytes": 68485120,
+      "sampled_worker_cpu_seconds": 0.322107664,
+      "samples": 6,
+      "scratch_measurement": "logs/evidence only; pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 201326592,
+      "wall_seconds": 0.564622874953784
+    },
+    "wheel": {
+      "bytes": 2274741,
+      "new_contract_files_equal": 4,
+      "private_files_absent": true,
+      "python_modules_equal": 632,
+      "sha256": "80df683755970b52e554b5b76332433ad1e7284e8644e272b2f78dcbf1bab0aa",
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl"
+    }
+  },
+  "version": "ai09-paired-source-comparison-component-evidence-1.0.0"
+}

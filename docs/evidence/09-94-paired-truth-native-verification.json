@@ -1,0 +1,401 @@
+{
+  "already_accepted_ai_main": "8fe28ea4a372611d70b013f60f6d783fc9fc9278",
+  "audited_pair": {
+    "all_columns_rows_and_multiplicity_compared": true,
+    "all_unknown_observations_retained_in_full_census": true,
+    "both_generations_completed_before_reservation": true,
+    "both_parents_replayed_completely": true,
+    "both_sources_in_same_frozen_protocol": true,
+    "charged_cost": "one actual total for both native reads, comparison and publication",
+    "detector_scores_used_for_truth": false,
+    "external_bootstrap_journal_handoff_implemented_by_this_reader": false,
+    "failed_reservation_cost_and_attempt_retained": true,
+    "final_requires_verified_completed_selection_for_all_three_use_cases": true,
+    "inventory_censored_demand_positives_retained": true,
+    "native_source_reads_per_operation": 2,
+    "no_evaluable_labels_produce_null_metrics": true,
+    "ordinary_released_before_planned_loaded": true,
+    "original_reader": "data.inventory.source_dataset_io.read_source_dataset",
+    "positive_episodes_require_native_effects_and_actual_window_maturity": true,
+    "post_read_inventory_artifact_and_code_recheck": true,
+    "receipt_binds_both_completed_generation_receipts": true,
+    "source_tables_per_parent": 58
+  },
+  "canonical_dispatch_enabled": false,
+  "canonical_tree_rss_bytes": 12884901888,
+  "comparison_policy_version": "anomaly-paired-source-comparison-1.0.1",
+  "compatibility": {
+    "historical_AI07_artifacts_recomputed": false,
+    "legacy_plan_cannot_accept_paired_truth": true,
+    "legacy_truth_and_ordinary_schemas_unchanged": true,
+    "new_separate_schemas": 6
+  },
+  "consumer_base_commit": "1724dc9a146ce795eff1e4292d1428f73df108cd",
+  "fresh_final_reads": 0,
+  "historical_failures_costs_and_unavailable_reads_preserved": true,
+  "implementation_sha256": {
+    "src/retailops_ai/anomaly_evaluation/contract.py": "fbf5cc479810115830d914547f1363de3a3843267a6f84974ddcf9626615c21a",
+    "src/retailops_ai/anomaly_evaluation/paired_source_comparison.py": "d41c1ae1238004718051a65a5fda37ce963bb977f54765c8242d337ff474a0f5",
+    "src/retailops_ai/evaluation_campaign/campaign_anomaly_evaluation.py": "744cfe340253014d6178260909a42106c3895b3a4c869ec401f5eba418729e5c",
+    "src/retailops_ai/evaluation_campaign/campaign_paired_truth.py": "6c28dbbbfb0f439e71bac7f645f55ea63f87cd9d5717a6a42df0cc265576ce53",
+    "src/retailops_ai/evaluation_campaign/campaign_paired_truth_contract.py": "4760755ea3c35ae876d61c2241a9e76b23dad9afc667813f962893ea357dc32e",
+    "src/retailops_ai/evaluation_campaign/campaign_paired_truth_worker.py": "3573b3909d8bc73cb20c0b14191890ab30b61650ac03a9a53995065fb07522f5"
+  },
+  "native_small_control": {
+    "audited_Project_receipts_created": false,
+    "complete_native_reader_calls": 4,
+    "families": {
+      "demand": {
+        "changed_products": 8,
+        "verification": {
+          "both_complete_sources_and_reports_replayed": true,
+          "clean_window_count": 48,
+          "clean_windows_sha256": "c160982bd48da4cfce72134bee38e049d67d2e5cc014cca27c08d4cde14b6ed9",
+          "comparison_policy_sha256": "00e666991280ae6634882aefbdc02ec71d5c1d351983f022b3e43d3a26f7e4ad",
+          "comparison_sha256": "6f7aa0e6f39e6ec59e78e0e7622adfc4b2c2fede11765ff7233ae20dc96f7afa",
+          "complete_observation_count": 371,
+          "complete_window_count": 51,
+          "complete_windows_sha256": "2c89fd4a5994f7b28266db7ace925a2d3a9854215edd47094f6392466d453373",
+          "episode_count": 3,
+          "episodes_sha256": "c1deb8818863234ad2902862f78694486dc5a36efdd8bd0324e27a305941cefa",
+          "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+          "inventory_configuration_sha256": "a0d72fc8ee090ee900f8704848883bb8b96270d5309e412c1b4eb6e112266b27",
+          "native_reader": "data.inventory.source_dataset_io.read_source_dataset",
+          "ordinary": {
+            "source_dataset_id": "source-sha256-0cd508516ae2a30553f93dce2c6ca2d5dffb78e04e910b9383c87b34599d07d0",
+            "source_descriptor_sha256": "0cd508516ae2a30553f93dce2c6ca2d5dffb78e04e910b9383c87b34599d07d0",
+            "source_manifest_sha256": "0b9d3d878f9efee384e7a923c7ce365e43dcb29543dd623dc9a250bd734dc983",
+            "source_report_sha256": "a72af18511f5bd763eec51c9f6168c16742390a758ba96b94f1f85e12eddd913",
+            "source_rows": 22245,
+            "source_schema_version": "2.7.0",
+            "source_table_inventory_sha256": "d3a93b766bf1e29f68f77daf85c187928cb587453149e0ecfe17726690ec7472",
+            "source_tables": 58
+          },
+          "planned": {
+            "source_dataset_id": "source-sha256-26657bb28968f9214cf15aaaa7bb1a48c7246fdddd3d2d074834156e87a30a03",
+            "source_descriptor_sha256": "26657bb28968f9214cf15aaaa7bb1a48c7246fdddd3d2d074834156e87a30a03",
+            "source_manifest_sha256": "5d9ccf605e52896c309af242fb500eb4548e5a42e3194bea1017d1fd7615530e",
+            "source_report_sha256": "29a827cc7cd6bdf0b2882a81de1d895e9f75c531619204c300cd18dd06d1cef8",
+            "source_rows": 22427,
+            "source_schema_version": "2.8.0",
+            "source_table_inventory_sha256": "1cfa95a2fc71e75f49ae08b836b39e2e3b4b094fc2db73fb089d94dd69eb34a3",
+            "source_tables": 58
+          },
+          "producer_code_sha256": "bb4761e0c915bccec55baffcddd7b4414b5aac2bb34f818120be88ad804645c7",
+          "producer_commit": "58a6bb13fdbb36154d11d769b02fd88750092720",
+          "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+          "producer_python_version": "3.11.15",
+          "quality_qualified": false,
+          "resolved_parameters": {
+            "business_timezone": "UTC",
+            "days": 30,
+            "end_date": "2026-07-31",
+            "forecast_plan_days": 14,
+            "forecast_plan_version": "known-forecast-plans-1.0.0",
+            "label_tail_days": 0,
+            "max_daily_rows": 720,
+            "origin_days": 0,
+            "output_format": "csv",
+            "products": 8,
+            "profile": "ai-smoke",
+            "seed": 42,
+            "start_date": "2026-07-02",
+            "stores": 3,
+            "warehouses": 2,
+            "warmup_days": 0
+          },
+          "scenario_plan_sha256": "17b6a37456496a01b5a4ebe7ee09a0840d2a4221134e00712f74240ffb3b761f",
+          "source_context_sha256": "e7e4af23cbaad70a3be17da29871077e437491e704cc10a63f3557967b33d403",
+          "source_scenario_sha256": "7a82eb68dffc6bf74ac0524dd06b58c646c6df6ecec086bea1b754ad99b4f827",
+          "version": "ai09-complete-paired-source-verification-1.0.0",
+          "window": {
+            "end": "2026-07-31",
+            "start": "2026-07-02"
+          }
+        }
+      },
+      "physical": {
+        "changed_products": 8,
+        "verification": {
+          "both_complete_sources_and_reports_replayed": true,
+          "clean_window_count": 3,
+          "clean_windows_sha256": "3bd84a83ec3aa9c42aaf45b96f9e9bb0137160ae58675de4a350df6438ad3f76",
+          "comparison_policy_sha256": "00e666991280ae6634882aefbdc02ec71d5c1d351983f022b3e43d3a26f7e4ad",
+          "comparison_sha256": "fb88e51089053772b234f4fd75337d91a8fb6a6a91241a7cd0a96b05b419022a",
+          "complete_observation_count": 29,
+          "complete_window_count": 5,
+          "complete_windows_sha256": "ef439e0099d404a165cd0091f893600b8118c5ab9a20286ccf142947fc3f770e",
+          "episode_count": 2,
+          "episodes_sha256": "bce41a0b60dc4da3a2936be41b4385be396075986fb09e0d8cd48f5b5d476639",
+          "exporter_lock_sha256": "820f9d976a43690862abdf91c6b6a7af27b86201ef39e58ef0dc09b76d6d6f44",
+          "inventory_configuration_sha256": "a0d72fc8ee090ee900f8704848883bb8b96270d5309e412c1b4eb6e112266b27",
+          "native_reader": "data.inventory.source_dataset_io.read_source_dataset",
+          "ordinary": {
+            "source_dataset_id": "source-sha256-0cd508516ae2a30553f93dce2c6ca2d5dffb78e04e910b9383c87b34599d07d0",
+            "source_descriptor_sha256": "0cd508516ae2a30553f93dce2c6ca2d5dffb78e04e910b9383c87b34599d07d0",
+            "source_manifest_sha256": "0b9d3d878f9efee384e7a923c7ce365e43dcb29543dd623dc9a250bd734dc983",
+            "source_report_sha256": "a72af18511f5bd763eec51c9f6168c16742390a758ba96b94f1f85e12eddd913",
+            "source_rows": 22245,
+            "source_schema_version": "2.7.0",
+            "source_table_inventory_sha256": "d3a93b766bf1e29f68f77daf85c187928cb587453149e0ecfe17726690ec7472",
+            "source_tables": 58
+          },
+          "planned": {
+            "source_dataset_id": "source-sha256-16c19800fa0d38632bddb8d95d11c7c18758f6a1a070ced7a87be3d14424d1c5",
+            "source_descriptor_sha256": "16c19800fa0d38632bddb8d95d11c7c18758f6a1a070ced7a87be3d14424d1c5",
+            "source_manifest_sha256": "a383f8a38af0d0c8314d1c9efdd0944e098964accae9c331efff827d218389df",
+            "source_report_sha256": "8d737b985ba3dce0c239d01cc0a1885c3a91f35d61348503e8a8a5a5a2d8d4b5",
+            "source_rows": 22312,
+            "source_schema_version": "2.8.0",
+            "source_table_inventory_sha256": "37298348a50f565070c24cbb8c0d80a0ffa307099b787a4a99a40bafdf6bd1a9",
+            "source_tables": 58
+          },
+          "producer_code_sha256": "bb4761e0c915bccec55baffcddd7b4414b5aac2bb34f818120be88ad804645c7",
+          "producer_commit": "58a6bb13fdbb36154d11d769b02fd88750092720",
+          "producer_lock_sha256": "ea389b45f75dec8d4ce476d813ce9cbf8217bb9d5d0bfcfd0cdce5f217975c02",
+          "producer_python_version": "3.11.15",
+          "quality_qualified": false,
+          "resolved_parameters": {
+            "business_timezone": "UTC",
+            "days": 30,
+            "end_date": "2026-07-31",
+            "forecast_plan_days": 14,
+            "forecast_plan_version": "known-forecast-plans-1.0.0",
+            "label_tail_days": 0,
+            "max_daily_rows": 720,
+            "origin_days": 0,
+            "output_format": "csv",
+            "products": 8,
+            "profile": "ai-smoke",
+            "seed": 42,
+            "start_date": "2026-07-02",
+            "stores": 3,
+            "warehouses": 2,
+            "warmup_days": 0
+          },
+          "scenario_plan_sha256": "f612e0e6acceb2024119b6aefb64517e74e457a4565e24969f436e8d8b515138",
+          "source_context_sha256": "e7e4af23cbaad70a3be17da29871077e437491e704cc10a63f3557967b33d403",
+          "source_scenario_sha256": "69b3635b4a3483a41a7d3f3d3f9013a3c9ecff53e5fb5edce5ff6636a9752a0d",
+          "version": "ai09-complete-paired-source-verification-1.0.0",
+          "window": {
+            "end": "2026-07-31",
+            "start": "2026-07-02"
+          }
+        }
+      }
+    },
+    "generation_parameters": {
+      "business_timezone": "UTC",
+      "days": 30,
+      "end_date": "2026-07-31",
+      "forecast_plan_days": 14,
+      "forecast_plan_version": "known-forecast-plans-1.0.0",
+      "label_tail_days": 0,
+      "max_daily_rows": 720,
+      "origin_days": 0,
+      "output_format": "csv",
+      "products": 8,
+      "profile": "ai-smoke",
+      "seed": 42,
+      "start_date": "2026-07-02",
+      "stores": 3,
+      "warehouses": 2,
+      "warmup_days": 0
+    },
+    "larger_128day_counterexample_control_still_required": true,
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1221672960,
+      "minimum_free_disk_bytes": 49223839744,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 29872128,
+      "sampled_peak_scratch_logical_bytes": 28538036,
+      "sampled_tree_peak_rss_bytes": 182665216,
+      "sampled_worker_cpu_seconds": 53.36074044200001,
+      "samples": 488,
+      "scratch_measurement": "all new tiny Source parents, index, evidence and TMPDIR; global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 268435456,
+      "wall_seconds": 54.68551862501772
+    },
+    "new_tiny_generations": 3,
+    "private_result_sha256": "288f323dd966e545b9788634fd2f4403267b45cdeb8321dda3049b1852b3abe6",
+    "producer_code_sha256": "bb4761e0c915bccec55baffcddd7b4414b5aac2bb34f818120be88ad804645c7",
+    "producer_commit": "58a6bb13fdbb36154d11d769b02fd88750092720",
+    "provenance": "clean"
+  },
+  "new_Project_fits": 0,
+  "new_Project_generations": 0,
+  "observed_at_utc": "2026-10-09T22:58:47.467163+00:00",
+  "on_main": false,
+  "quality_qualified": false,
+  "remaining": [
+    "Own full make ci-local, normal protected PR and resulting main acceptance17of17",
+    "Source resulting main21success4declared path skips acceptance before consumer repin",
+    "128day cross-product counterexample paired replay and real25/50 full source/data-to-report pipeline",
+    "Explicit prepared ordinary parent transfer from bootstrap into trial/export journals",
+    "Frozen fair tuning and evidence-based25/50/100 progression without invented future final plans",
+    "Full scientific requirement: all three use cases, all final seeds/scenarios, critical coverage, uncertainty/costs, model cards/reports, MLflow and lifecycle/runtime"
+  ],
+  "retained_failed_native_control": {
+    "correction": "Compare every row and column as a product outcome; retain earliest date in unknown boundary. Planned prices and fixed policies still invariant. Version policy1.0.1.",
+    "diagnosis": "daily_price_observations includes actual quantity, gross_revenue and available_at, not only the fixed price policy",
+    "failed_cost_preserved": true,
+    "monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1219362816,
+      "minimum_free_disk_bytes": 49265729536,
+      "reason": "worker_exit",
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 17707008,
+      "sampled_peak_scratch_logical_bytes": 16755408,
+      "sampled_tree_peak_rss_bytes": 175865856,
+      "sampled_worker_cpu_seconds": 29.175010809,
+      "samples": 270,
+      "scratch_measurement": "all new tiny Source parents, index, evidence and TMPDIR; global6GiB disk reserve enforced",
+      "status": "failed",
+      "tree_rss_budget_bytes": 268435456,
+      "wall_seconds": 30.036815083003603
+    },
+    "reason": "anomaly_paired_truth_invariant_tables_differ",
+    "worker_log_sha256": "d7cae568792448bee33a58ae83a30e9ae40e273eea208046362792c114288c82"
+  },
+  "retained_intermediate_test_control": {
+    "later_pre_native_fix_tests": {
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "f50e41c3047e7dcf7f3c55eb68279c584d54c5c948fbf07cd6deba81d1ffce1b",
+      "seconds": 21.612,
+      "skipped": 0,
+      "tests": 142
+    },
+    "reason": "Two test fixtures used exclusive writer for intentional tampering; corrected fixtures, production exclusive writer unchanged",
+    "result": {
+      "errors": 0,
+      "failures": 2,
+      "junit_sha256": "db88451527de728c7f3af0a3a546e68096cf4bbc9bd8b039a4b8e01cec55763a",
+      "seconds": 21.856,
+      "skipped": 0,
+      "tests": 142
+    }
+  },
+  "scope": "Audited paired native truth implementation and bounded real tiny Source control; no Project generation/trial or scale qualification",
+  "source_pr114": {
+    "active_consumer_source_pin_unchanged": "ff2504a9cf6e4f46040c8327901b7bcb82d115c0",
+    "head": "58a6bb13fdbb36154d11d769b02fd88750092720",
+    "head_required_ci": {
+      "accepted_attempt": 2,
+      "attempt1_failure_preserved": true,
+      "data_quality_log_sha256": "2d99470f349c6a5355b62e812558d8bbb1a2453dcfb3c2e57bd7f84d53c2de31",
+      "data_quality_tests": 1160,
+      "declared_path_skips": 4,
+      "normal_failed_jobs_retry_only": true,
+      "run": 37995672304,
+      "success": 21
+    },
+    "main_required_ci": {
+      "accepted": false,
+      "conclusion": null,
+      "head": "d2363a5c78e0b190132e5e3d804da73b3136487d",
+      "run": 38000892591,
+      "status": "in_progress"
+    },
+    "merge_commit": "d2363a5c78e0b190132e5e3d804da73b3136487d",
+    "merged": true,
+    "url": "https://github.com/Oskar-Stachowski/retailops-cloud-native-platform/pull/114"
+  },
+  "stage_ready": false,
+  "validation": {
+    "counts_not_additive": true,
+    "full_make_ci_local": "not_yet_started_for_this_head",
+    "installed": {
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "daddfea54d582e53e612c9caf2cacaed06bcb0aef4498931d408c16dd3ad1f5e",
+      "seconds": 23.245,
+      "skipped": 0,
+      "tests": 146
+    },
+    "installed_monitor": {
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1290616832,
+      "minimum_free_disk_bytes": 49174798336,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 32768,
+      "sampled_peak_scratch_logical_bytes": 23973,
+      "sampled_tree_peak_rss_bytes": 328761344,
+      "sampled_worker_cpu_seconds": 22.201637503999997,
+      "samples": 217,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "wall_seconds": 23.798790749977343
+    },
+    "mypy_source_files": 764,
+    "native_typed_contracts": {
+      "audited_generation_receipts_created": false,
+      "families": {
+        "demand": {
+          "episodes": 3,
+          "verified_sha256": "42afd0d891eede58c2fce02f1146c734664d684077e90993c3ed64126b3e5438",
+          "windows": 51
+        },
+        "physical": {
+          "episodes": 2,
+          "verified_sha256": "ef40fc91e359fcc8404245b9d37151994aafbc2f64fb6196e24308a5bec35ab1",
+          "windows": 5
+        }
+      },
+      "scope": "Typed contracts of real tiny native outputs, no campaign receipt or Project qualification"
+    },
+    "protected_PR_and_resulting_main": "not_yet_run_for_this_increment",
+    "ruff_check_and_format": true,
+    "same_test_inventory": true,
+    "schema_check": true,
+    "source": {
+      "errors": 0,
+      "failures": 0,
+      "junit_sha256": "405651889449749e8601b8c6fe16a869b6e203a5a295976a926647aba4ff6201",
+      "seconds": 22.876,
+      "skipped": 0,
+      "tests": 146
+    },
+    "source_monitor": {
+      "code_pins_unchanged": true,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "exit_code": 0,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "minimum_available_memory_bytes": 1243037696,
+      "minimum_free_disk_bytes": 49209774080,
+      "reason": null,
+      "sample_seconds": 0.1,
+      "sampled_peak_scratch_allocated_bytes": 36864,
+      "sampled_peak_scratch_logical_bytes": 27380,
+      "sampled_tree_peak_rss_bytes": 325353472,
+      "sampled_worker_cpu_seconds": 20.694925943999998,
+      "samples": 213,
+      "scratch_measurement": "logs/evidence only; pytest temporary files excluded, global6GiB disk reserve enforced",
+      "status": "passed",
+      "tree_rss_budget_bytes": 402653184,
+      "wall_seconds": 23.502467415994033
+    },
+    "wheel": {
+      "bytes": 2297778,
+      "new_contract_files_equal": 15,
+      "private_files_absent": true,
+      "python_modules_equal": 635,
+      "sha256": "0f8c8d76bd18135e768983abc31df9b37c7b4d74af40c86fe6de806c79fc2424",
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl"
+    }
+  },
+  "version": "ai09-paired-truth-native-verification-evidence-1.0.0"
+}
