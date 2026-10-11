@@ -1,0 +1,337 @@
+{
+  "$defs": {
+    "CampaignStockoutPreprocessing": {
+      "additionalProperties": false,
+      "properties": {
+        "category_values": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Category Values",
+          "type": "object"
+        },
+        "means": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Means",
+          "type": "array"
+        },
+        "medians": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Medians",
+          "type": "array"
+        },
+        "numeric_columns": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 21,
+          "minItems": 1,
+          "title": "Numeric Columns",
+          "type": "array"
+        },
+        "output_columns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Output Columns",
+          "type": "array"
+        },
+        "scaled": {
+          "title": "Scaled",
+          "type": "boolean"
+        },
+        "scales": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "title": "Scales",
+          "type": "array"
+        },
+        "train_keys_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Train Keys Sha256",
+          "type": "string"
+        },
+        "train_rows": {
+          "maximum": 1000000,
+          "minimum": 2,
+          "title": "Train Rows",
+          "type": "integer"
+        },
+        "version": {
+          "const": "ai09-full-stockout-preprocessing-1.0.0",
+          "default": "ai09-full-stockout-preprocessing-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "numeric_columns",
+        "medians",
+        "means",
+        "scales",
+        "category_values",
+        "scaled",
+        "output_columns",
+        "train_rows",
+        "train_keys_sha256"
+      ],
+      "title": "CampaignStockoutPreprocessing",
+      "type": "object"
+    },
+    "LearnedEstimator": {
+      "additionalProperties": false,
+      "properties": {
+        "aggregation": {
+          "enum": [
+            "mean",
+            "baseline_plus_sum"
+          ],
+          "title": "Aggregation",
+          "type": "string"
+        },
+        "family": {
+          "enum": [
+            "random_forest",
+            "hist_gradient_boosting"
+          ],
+          "title": "Family",
+          "type": "string"
+        },
+        "feature_count": {
+          "maximum": 4097,
+          "minimum": 1,
+          "title": "Feature Count",
+          "type": "integer"
+        },
+        "input_dtype": {
+          "enum": [
+            "float32",
+            "float64"
+          ],
+          "title": "Input Dtype",
+          "type": "string"
+        },
+        "intercept": {
+          "title": "Intercept",
+          "type": "number"
+        },
+        "trees": {
+          "items": {
+            "$ref": "#/$defs/LearnedTree"
+          },
+          "maxItems": 200,
+          "minItems": 1,
+          "title": "Trees",
+          "type": "array"
+        }
+      },
+      "required": [
+        "family",
+        "feature_count",
+        "input_dtype",
+        "aggregation",
+        "intercept",
+        "trees"
+      ],
+      "title": "LearnedEstimator",
+      "type": "object"
+    },
+    "LearnedTree": {
+      "additionalProperties": false,
+      "properties": {
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/TreeNode"
+          },
+          "maxItems": 8191,
+          "minItems": 1,
+          "title": "Nodes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "nodes"
+      ],
+      "title": "LearnedTree",
+      "type": "object"
+    },
+    "LinearEstimator": {
+      "additionalProperties": false,
+      "properties": {
+        "intercept": {
+          "title": "Intercept",
+          "type": "number"
+        },
+        "weights": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 106,
+          "minItems": 1,
+          "title": "Weights",
+          "type": "array"
+        }
+      },
+      "required": [
+        "weights",
+        "intercept"
+      ],
+      "title": "LinearEstimator",
+      "type": "object"
+    },
+    "TreeNode": {
+      "additionalProperties": false,
+      "properties": {
+        "feature": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Feature"
+        },
+        "left": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Left"
+        },
+        "right": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Right"
+        },
+        "threshold": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Threshold"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value",
+        "feature",
+        "threshold",
+        "left",
+        "right"
+      ],
+      "title": "TreeNode",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:stockout_full_risk_pipeline:42.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "estimator": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LinearEstimator"
+        },
+        {
+          "$ref": "#/$defs/LearnedEstimator"
+        }
+      ],
+      "title": "Estimator"
+    },
+    "family": {
+      "enum": [
+        "logistic_regression",
+        "hist_gradient_boosting"
+      ],
+      "title": "Family",
+      "type": "string"
+    },
+    "fit_known_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Fit Known At",
+      "type": "string"
+    },
+    "preprocessing": {
+      "$ref": "#/$defs/CampaignStockoutPreprocessing"
+    },
+    "quality_qualified": {
+      "const": false,
+      "default": false,
+      "title": "Quality Qualified",
+      "type": "boolean"
+    },
+    "sigmoid": {
+      "default": null,
+      "title": "Sigmoid",
+      "type": "null"
+    },
+    "stage_ready": {
+      "const": false,
+      "default": false,
+      "title": "Stage Ready",
+      "type": "boolean"
+    },
+    "train_labels_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Train Labels Sha256",
+      "type": "string"
+    },
+    "variant": {
+      "enum": [
+        "without_upstream",
+        "with_upstream",
+        "raw_sales_only"
+      ],
+      "title": "Variant",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-full-stockout-risk-pipeline-1.0.0",
+      "default": "ai09-full-stockout-risk-pipeline-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "family",
+    "variant",
+    "fit_known_at",
+    "preprocessing",
+    "estimator",
+    "train_labels_sha256"
+  ],
+  "title": "CampaignStockoutRiskPipeline",
+  "type": "object"
+}

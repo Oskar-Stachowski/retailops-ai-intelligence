@@ -1,0 +1,112 @@
+{
+  "recorded_at_utc": "2026-10-11T19:29:47.958465+00:00",
+  "scope": "Native full-population stockout LR/HGB base and later conditional calibration with portable non-executable state. Internal numerical component; no Source or Project qualification.",
+  "versioned_model_population_limit": 1000000,
+  "measured_control_population_rows": 10001,
+  "native_AI08_row_cap_unchanged": 10000,
+  "native_AI08_modules_unchanged": true,
+  "whole_population_fit": true,
+  "sampling_performed": false,
+  "base_families": [
+    "logistic_regression",
+    "hist_gradient_boosting"
+  ],
+  "variants": [
+    "without_upstream",
+    "with_upstream",
+    "raw_sales_only"
+  ],
+  "conditional_C_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "preserved_equations": "Same frozen AI08 estimators, preprocessing, conditional offsets, signed portable logits, class prevalence and chronology; exact shared-population parity tested.",
+  "numeric_prediction_tolerance": {
+    "rtol": 1e-10,
+    "atol": 1e-12
+  },
+  "source": {
+    "tests": 29,
+    "skipped": 0,
+    "pytest_seconds": 5.85,
+    "mypy_files": 790,
+    "ruff_format_files": 1371,
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 9.785546290979255,
+      "sampled_tree_peak_rss_bytes": 216924160,
+      "sampled_worker_cpu_seconds": 7.705417942,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 140174,
+      "sampled_peak_scratch_allocated_bytes": 155648,
+      "minimum_free_disk_bytes": 30519816192,
+      "minimum_available_memory_bytes": 1542750208,
+      "samples": 88,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; reused existing U private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 402653184,
+      "code_pins_unchanged": true
+    },
+    "junit_sha256": "eafbce7320cf3ba3232042aca8c89fc4d9ecd9130cc9212c66e3d98846ced751"
+  },
+  "installed": {
+    "tests": 29,
+    "skipped": 0,
+    "suite_seconds": 4.988,
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 5.4935542910243385,
+      "sampled_tree_peak_rss_bytes": 210550784,
+      "sampled_worker_cpu_seconds": 5.160186528,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 5114,
+      "sampled_peak_scratch_allocated_bytes": 16384,
+      "minimum_free_disk_bytes": 30496288768,
+      "minimum_available_memory_bytes": 1456979968,
+      "samples": 50,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+    },
+    "junit_sha256": "ee18f5f23a615ed0f86800adde5d4990a305f88c815cfdc410aa8124c1ffc577"
+  },
+  "package": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 2789222,
+    "sha256": "6e1328deee63a7180c30420dc2631b0bcc443b658f45ace6339ba369e39c3dce",
+    "python_modules_equal": 657,
+    "new_contract_files_equal": 35,
+    "private_files_absent": true
+  },
+  "same_test_case_inventory": true,
+  "unchanged_prior_contract_files": 400,
+  "new_schema_files": 4,
+  "schema_directory": "contracts/evaluation/v42",
+  "code_sha256": {
+    "src/retailops_ai/evaluation_campaign/campaign_stockout_training.py": "0d666fc266a1ffbc7835a0b03582174f23eb21b1d40e0598d3be98e770db3296",
+    "src/retailops_ai/evaluation_campaign/campaign_stockout_training_contract.py": "afcf76a773af611f6c69c947cd2b93942fde33b997b61dfd012296bedf68f24e",
+    "src/retailops_ai/evaluation_campaign/campaign_stockout_calibration.py": "2ae39ed6926fd09cb0efc8803e1a9f756d872acdc0258bc0ed96634810898f94"
+  },
+  "audit_fix": "Compare product/location/parsedUTC instant for physical-key uniqueness, so Z/+00:00 spelling cannot double-count one observation. Incremental array hashes preserve native bytes without retaining a second full key/label list.",
+  "remaining": [
+    "verified_public_stockout_parent_and_complete_mature_role_membership",
+    "original_journal_reservations_all_fit_calibration_selection_costs",
+    "frozen_threshold_capacity_and_independent_three_variant_evaluation",
+    "fresh_final_three_seeds_uncertainty_segments_MLflow_cards_lifecycle",
+    "protected_exact_head_and_main_required_CI"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "twelve_GiB_canonical_budget_unchanged": true
+}

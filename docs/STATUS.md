@@ -1,5 +1,18 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: natywny trening i kalibracja stockout powyżej 10 000 wierszy.**
+[Nowy komponent](ai09-native-stockout-training.md) zachowuje równania LR/HGB,
+preprocessing całego TRAIN i późniejszą kalibrację warunkową. Nie próbkuje
+populacji; dotychczasowy kod i limity AI 08 pozostają niezmienione.
+**29 testów źródeł i te same 29 z paczki przeszło bez pominięć**, w tym rzeczywiste fity i odczyt modeli
+na 10 001 wierszach oraz zgodność z AI 08 na wspólnej populacji. Mypy sprawdził
+790 plików. [Dowód 09.107](evidence/09-107-native-stockout-full-training.json)
+potwierdza zgodność 657 modułów i 35 plików kontraktów w paczce i instalacji.
+Cztery nowe schematy v42 zachowują starsze kontrakty. Publikacja,
+adapter rzeczywistych rodziców i dziennika oraz pełna kwalifikacja
+trzech zastosowań pozostają wymagane. Nie uruchomiono Project ani final;
+limit 12 GiB zachowany. AI 09 nadal **`not_ready`**.
+
 **2026-10-11 — AI 09: wspólny wykonawca Source i prognoz 25/50/100.**
 [09.104](evidence/09-104-development-workflow.json) i
 [instrukcja](ai09-development-workflow.md) łączą 43 oryginalne operacje,

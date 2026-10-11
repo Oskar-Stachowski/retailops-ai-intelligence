@@ -1,0 +1,89 @@
+{
+  "$id": "urn:retailops:evaluation:stockout_full_preprocessing:42.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "category_values": {
+      "additionalProperties": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Category Values",
+      "type": "object"
+    },
+    "means": {
+      "items": {
+        "type": "number"
+      },
+      "title": "Means",
+      "type": "array"
+    },
+    "medians": {
+      "items": {
+        "type": "number"
+      },
+      "title": "Medians",
+      "type": "array"
+    },
+    "numeric_columns": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 21,
+      "minItems": 1,
+      "title": "Numeric Columns",
+      "type": "array"
+    },
+    "output_columns": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Output Columns",
+      "type": "array"
+    },
+    "scaled": {
+      "title": "Scaled",
+      "type": "boolean"
+    },
+    "scales": {
+      "items": {
+        "exclusiveMinimum": 0,
+        "type": "number"
+      },
+      "title": "Scales",
+      "type": "array"
+    },
+    "train_keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Train Keys Sha256",
+      "type": "string"
+    },
+    "train_rows": {
+      "maximum": 1000000,
+      "minimum": 2,
+      "title": "Train Rows",
+      "type": "integer"
+    },
+    "version": {
+      "const": "ai09-full-stockout-preprocessing-1.0.0",
+      "default": "ai09-full-stockout-preprocessing-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "numeric_columns",
+    "medians",
+    "means",
+    "scales",
+    "category_values",
+    "scaled",
+    "output_columns",
+    "train_rows",
+    "train_keys_sha256"
+  ],
+  "title": "CampaignStockoutPreprocessing",
+  "type": "object"
+}

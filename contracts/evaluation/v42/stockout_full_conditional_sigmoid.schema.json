@@ -1,0 +1,111 @@
+{
+  "$id": "urn:retailops:evaluation:stockout_full_conditional_sigmoid:42.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "C": {
+      "maximum": 10,
+      "minimum": 0.01,
+      "title": "C",
+      "type": "number"
+    },
+    "calibration_keys_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Calibration Keys Sha256",
+      "type": "string"
+    },
+    "calibration_labels_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Calibration Labels Sha256",
+      "type": "string"
+    },
+    "calibration_rows": {
+      "maximum": 1000000,
+      "minimum": 20,
+      "title": "Calibration Rows",
+      "type": "integer"
+    },
+    "categories": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+        "type": "string"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "Categories",
+      "type": "array"
+    },
+    "fit_known_at": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,6})?(?:Z|\\+00:00)$",
+      "title": "Fit Known At",
+      "type": "string"
+    },
+    "intercept": {
+      "title": "Intercept",
+      "type": "number"
+    },
+    "method": {
+      "const": "regularized_logistic_raw_score_PIT_category_stock_history_constraint",
+      "default": "regularized_logistic_raw_score_PIT_category_stock_history_constraint",
+      "title": "Method",
+      "type": "string"
+    },
+    "offset_weights": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 65,
+      "minItems": 3,
+      "title": "Offset Weights",
+      "type": "array"
+    },
+    "raw_score_slope": {
+      "exclusiveMinimum": 0,
+      "title": "Raw Score Slope",
+      "type": "number"
+    },
+    "sampling": {
+      "const": "natural_prevalence_no_class_weights",
+      "default": "natural_prevalence_no_class_weights",
+      "title": "Sampling",
+      "type": "string"
+    },
+    "stock_locations": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+        "type": "string"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "Stock Locations",
+      "type": "array"
+    },
+    "unknown_vocabulary": {
+      "const": "all_zero_offsets_no_future_category_fit",
+      "default": "all_zero_offsets_no_future_category_fit",
+      "title": "Unknown Vocabulary",
+      "type": "string"
+    },
+    "version": {
+      "const": "ai09-full-stockout-conditional-sigmoid-1.0.0",
+      "default": "ai09-full-stockout-conditional-sigmoid-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "fit_known_at",
+    "calibration_rows",
+    "calibration_keys_sha256",
+    "calibration_labels_sha256",
+    "C",
+    "raw_score_slope",
+    "intercept",
+    "categories",
+    "stock_locations",
+    "offset_weights"
+  ],
+  "title": "CampaignStockoutConditionalSigmoid",
+  "type": "object"
+}
