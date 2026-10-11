@@ -1,5 +1,17 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: przygotowany pełny publiczny odczyt stockout.**
+[Adapter publicznego Source](ai09-stockout-public-parent.md) odtwarza wszystkie
+fakty i klucze fizyczne, zachowuje statusy niekwalifikowania i korzysta z
+niezmienionych obliczeń AI 08. Odbiór powstaje dopiero po pełnym odczycie i
+końcowych kontrolach rodziców. **63 testy źródeł przeszły w 390,10 s**:
+publiczne fixtures 1.1/1.2 oraz regresja kontekstu forecastingu.
+[09.108](evidence/09-108-stockout-public-parent.json) zawiera także zaliczenie
+tych samych **63 testów z paczki w 395,98 s**, zgodność 659 modułów i 37
+kontraktów. Pełna publikacja PR/main nadal jest wymagana. Prywatne etykiety, upstream,
+pełny podział i rezerwacje stockout nadal wymagają integracji. Canonical nie
+został uruchomiony; limit **12 GiB** zachowany, AI 09 `not_ready`.
+
 **2026-10-11 — AI 09: natywny trening i kalibracja stockout powyżej 10 000 wierszy.**
 [Nowy komponent](ai09-native-stockout-training.md) zachowuje równania LR/HGB,
 preprocessing całego TRAIN i późniejszą kalibrację warunkową. Nie próbkuje

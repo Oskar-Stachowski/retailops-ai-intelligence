@@ -88,6 +88,10 @@ from retailops_ai.evaluation_campaign.campaign_segment_contract import (
     CampaignOriginRoute,
     CampaignSourceKeyAnnotation,
 )
+from retailops_ai.evaluation_campaign.campaign_stockout_parent_contract import (
+    CampaignStockoutContextScope,
+    CampaignStockoutParentPlan,
+)
 from retailops_ai.evaluation_campaign.campaign_stockout_training_contract import (
     CampaignStockoutConditionalRiskPipeline,
     CampaignStockoutConditionalSigmoid,
@@ -917,6 +921,22 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Full stockout model contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, parent_model in (
+        ("stockout_public_context", CampaignStockoutContextScope),
+        ("stockout_public_parent_plan", CampaignStockoutParentPlan),
+    ):
+        schema = parent_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:43.0.0"
+        path = ROOT / "contracts/evaluation/v43" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Stockout public parent contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

@@ -24,6 +24,9 @@ from retailops_ai.evaluation_campaign.campaign_segment_contract import (
     CampaignForecastSegmentPolicy,
     CampaignOriginRoute,
 )
+from retailops_ai.evaluation_campaign.campaign_stockout_parent_contract import (
+    CampaignStockoutContextScope,
+)
 from retailops_ai.forecasting.features_contract import InputRow
 from retailops_ai.source_snapshot.files import (
     SnapshotError,
@@ -49,12 +52,16 @@ class CampaignContextFacts:
         self,
         curated: Path,
         *,
-        scope: CampaignForecastContextScope,
+        scope: CampaignForecastContextScope | CampaignStockoutContextScope,
         policy: CampaignContextStoragePolicy,
         scratch: Path,
     ) -> None:
         self.curated, self.scratch = curated, scratch
-        self.scope = CampaignForecastContextScope.model_validate_json(scope.model_dump_json())
+        self.scope: CampaignForecastContextScope | CampaignStockoutContextScope = (
+            CampaignStockoutContextScope.model_validate_json(scope.model_dump_json())
+            if isinstance(scope, CampaignStockoutContextScope)
+            else CampaignForecastContextScope.model_validate_json(scope.model_dump_json())
+        )
         self.policy = CampaignContextStoragePolicy.model_validate_json(policy.model_dump_json())
         self._stack = ExitStack()
         self._db: sqlite3.Connection | None = None
@@ -387,7 +394,17 @@ class CampaignContextFacts:
                 raise SnapshotError("campaign_context_facts_declared_route_does_not_match_source")
             if route is None:
                 return None
-            key = feature.product_id, route.stock_location_id, feature.forecast_origin
+            return self.physical_point(
+                feature.product_id, route.stock_location_id, feature.forecast_origin
+            )
+        except Exception:
+            self._failed = True
+            raise
+
+    def physical_point(self, product: str, stock: str, as_of: datetime) -> FeaturePoint:
+        """The same AI08 projection, addressed directly at its physical grain."""
+        try:
+            key = product, stock, utc_time(as_of)
             if self._point_key != key:
                 self._point = self._point_key = None
                 if (
@@ -417,12 +434,17 @@ class CampaignContextFacts:
                 self._point_key = key
                 self.stats["origin_point_projections"] += 1
             self._connection()
+            if self._point is None:
+                raise SnapshotError("campaign_context_facts_causal_point_missing")
             return self._point
         except Exception:
             self._failed = True
             raise
 
     def check_categories(self, policy: CampaignForecastSegmentPolicy) -> None:
+        if not isinstance(self.scope, CampaignForecastContextScope):
+            self._failed = True
+            raise SnapshotError("campaign_context_forecast_segment_scope_required")
         db = self._connection()
         categories = set()
         for product, stock, ready, raw, checksum in db.execute(
