@@ -11,6 +11,7 @@ import pytest
 from test_campaign_anomaly_parent import public_parent as public_parent  # noqa: F401
 from test_campaign_anomaly_parent import source
 
+from retailops_ai.evaluation_campaign import source_replay
 from retailops_ai.evaluation_campaign.campaign_stockout_label_facts import (
     CampaignStockoutLabelStoragePolicy,
 )
@@ -125,8 +126,16 @@ def reference(public_parent, qualified):
 
 
 def test_all_original_labels_exact_native_field_and_complete_origin_parity(
-    public_parent, qualified, tmp_path
+    public_parent, qualified, tmp_path, monkeypatch
 ):
+    seals = []
+    original_seal = source_replay._seal_parent
+
+    def seal(directory, names, maximum):
+        seals.append(directory)
+        return original_seal(directory, names, maximum)
+
+    monkeypatch.setattr(source_replay, "_seal_parent", seal)
     expected = reference(public_parent, qualified)
     adapter = reader(public_parent, qualified, tmp_path)
     with adapter:
@@ -138,6 +147,16 @@ def test_all_original_labels_exact_native_field_and_complete_origin_parity(
         assert adapter._facts.policy.projection == "closed_ai08_label_preparation_point_unchanged"
         with pytest.raises(SnapshotError, match="not_completed"):
             adapter.receipt()
+        # Count actual whole-parent reads after complete consumption. Final
+        # receipt acceptance needs exactly one pass over all four parents.
+        parents = {
+            public_parent[0],
+            public_parent[1],
+            adapter._replay.curated,
+            adapter._replay.curated.parent / "snapshot",
+        }
+        seals.clear()
+    assert len(seals) == 4 and set(seals) == parents
     receipt = adapter.receipt()
     assert receipt["rows"] == len(expected)
     assert receipt["points_sha256"] == json_sha256(expected)
@@ -256,6 +275,35 @@ def test_original_sidecar_changed_after_consumption_invalidates_receipt(
             list(adapter.rows())
             path = root / "qualification_report.json"
             path.write_bytes(path.read_bytes() + b" ")
+    with pytest.raises(SnapshotError, match="not_completed"):
+        adapter.receipt()
+    assert not list(scratch.iterdir())
+
+
+@pytest.mark.parametrize(
+    "parent", ["original_snapshot", "original_curated", "private_snapshot", "private_curated"]
+)
+def test_unused_parent_bytes_changed_after_consumption_invalidate_receipt(
+    public_parent, qualified, tmp_path, parent
+):
+    snapshot, curated, scratch = (tmp_path / name for name in ("snapshot", "curated", "scratch"))
+    shutil.copytree(public_parent[0], snapshot)
+    shutil.copytree(public_parent[1], curated)
+    scratch.mkdir()
+    adapter = reader((snapshot, curated, *public_parent[2:]), qualified, scratch)
+    with pytest.raises(SnapshotError, match="parent_changed"):
+        with adapter:
+            list(adapter.rows())
+            parents = {
+                "original_snapshot": snapshot,
+                "original_curated": curated,
+                "private_snapshot": adapter._replay.curated.parent / "snapshot",
+                "private_curated": adapter._replay.curated,
+            }
+            # Stockout labels do not query sale facts. The final seal must
+            # nevertheless detect their corruption after the last yielded row.
+            target = next(p for p in parents[parent].rglob("*.parquet") if "sales" in str(p))
+            target.write_bytes(target.read_bytes() + b" ")
     with pytest.raises(SnapshotError, match="not_completed"):
         adapter.receipt()
     assert not list(scratch.iterdir())

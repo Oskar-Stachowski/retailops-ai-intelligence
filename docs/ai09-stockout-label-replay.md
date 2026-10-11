@@ -50,3 +50,12 @@ powtarzanych odczytów. AI 09 nadal nie jest ready.
 
 Canonical pozostaje wyłączony. Zapisany na głównej gałęzi limit RAM wynosi
 **12 GiB**, z zachowaną rezerwą **1 GiB** dla systemu.
+
+[Odbiór po połączeniu 09.115](evidence/09-115-stockout-final-parent-check.json)
+potwierdza 239 testów źródeł i te same 239 z paczki. Usunięto dodatkowy
+odczyt rodziców bezpośrednio przed zamknięciem właściciela Source. Właściciel
+nadal sprawdza wszystkie pliki w czterech katalogach rodzicielskich przy zamykaniu,
+a świadectwo powstaje dopiero po jego sukcesie. Kontrole na trzech zestawach
+Source potwierdzają jeden końcowy przebieg oraz odmowę po zmianie nieużywanych
+faktów sprzedaży w każdym z czterech rodziców. Nie jest to pomiar czasu
+pełnego profilu; audyt pozostałych odczytów nadal pozostaje wymagany.

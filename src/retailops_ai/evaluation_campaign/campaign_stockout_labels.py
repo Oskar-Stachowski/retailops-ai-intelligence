@@ -145,7 +145,8 @@ class CampaignStockoutLabels:
                     raise SnapshotError("campaign_stockout_labels_plan_changed")
                 if self._snapshot_hash != canonical_sha256(self._native.snapshot.manifest):
                     raise SnapshotError("campaign_stockout_labels_snapshot_changed")
-                self._replay.check_parents()
+                # The source replay exits last and seals all original/private
+                # parents there. Publish the receipt only after that succeeds.
         except BaseException:
             self._failed = True
             self._stack.__exit__(*sys.exc_info())

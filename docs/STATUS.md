@@ -1,5 +1,24 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: jeden pełny końcowy odczyt rodziców etykiet stockout.**
+[09.115](evidence/09-115-stockout-final-parent-check.json) potwierdza **239 testów źródeł i te same 239 z paczki**, bez pominięć. Końcowa kontrola hashuje każdego z czterech rodziców raz; zmiana nieużywanych faktów po odczycie nadal blokuje odbiór. 670 modułów i 49 schematów mają zgodne bajty. 129 modułów AI 08 i 416 wcześniejszych kontraktów pozostaje niezmienionych.
+
+Dojrzałe role, wspólny protokół wszystkich trzech zastosowań, wykonanie kampanii, MLflow i lifecycle oraz końcowy odbiór PR/main pozostają wymagane. Inne kontrole rodziców podlegają osobnemu audytowi; nie zmierzono przyspieszenia pełnego profilu. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-11 — AI 09: odbiór main PR 67 i połączenie nowych komponentów stockout.**
+[09.114](evidence/09-114-stockout-composition-main-acceptance.json) potwierdza
+pełne **17/17 jobs PR i wynikowego main** na `5875321`. Nowa osobna gałąź
+łączy odebrane komponenty etykiet i progów; 670 modułów, 302 moduły testowe
+i 418 kontraktów zachowują bajty tych komponentów. Zachowano oba nowe
+kontrakty v46 i v47. Kontrole wykonania po połączeniu pozostają wymagane.
+
+Pełny `make ci-local` wcześniejszej integracji nadal działa na niezmiennym
+`dcc36e8`; ten wynik nie obejmuje nowych przyrostów. Dojrzałe role, rezerwacje
+treningów i pełne połączenie trzech zastosowań pozostają do wykonania.
+Przed canonical wymagany jest końcowy audyt odczytów i zamrożenie wspólnego
+protokołu/runtime. Final, MLflow, karty i lifecycle są otwarte; AI 09
+**`not_ready`**, limit **12 GiB**, rezerwa **1 GiB**, canonical wyłączony.
+
 **2026-10-11 — AI 09: odtworzenie wszystkich oryginalnych etykiet stockout.**
 [Adapter etykiet](ai09-stockout-label-replay.md) łączy całą oryginalną
 kwalifikację z publicznymi ruchami towaru, pokryciem i stanami magazynowymi.
@@ -42,7 +61,8 @@ komponentów; pełny CI pozostaje wymagany.
 
 PR 67 został scalony do `main` jako `5875321` po pełnych **17/17 jobs**.
 [CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38173378231)
-trwa. Bieżąca gałąź zawiera ten merge i zachowuje wcześniejszą lokalną odmowę
+zakończyło się sukcesem: **17/17 jobs**, razem z `required-result`. Bieżąca
+gałąź zawiera ten merge i zachowuje wcześniejszą lokalną odmowę
 pięciu workerów TensorFlow z powodu rezerwy RAM.
 
 Odtworzenie etykiet stockout z ledgeru, pełne dojrzałe role oraz zarezerwowane
