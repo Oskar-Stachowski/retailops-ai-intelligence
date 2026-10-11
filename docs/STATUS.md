@@ -1,5 +1,27 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: PR 66 scalony; przygotowane dane przechodzą do prób.**
+[PR 66](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/66)
+uzyskał pełny Required CI **17/17**, bez pominięć, również dla TensorFlow CPU.
+Zmiany przygotowania danych i niezależnej prawdy anomalii są na main
+`931f4519`; odbiór CI tego wynikowego commitu trwa. Lokalne błędy z 09.95
+pozostają zapisane osobno i nie są przemianowane na sukces.
+
+[Przekazanie danych do prób](ai09-prepared-development-screening.md)
+i [09.96](evidence/09-96-prepared-development-screening.json) wiążą pierwsze
+eksporty z oryginalnymi receipts ordinary/demand/physical, bez fikcyjnej
+generacji ani wyzerowania kosztów. Zamrożony program dla 25 produktów
+obejmuje trzy eksporty, sześć równych prób RF/HGB/TF i dwa porównania tune.
+**130 testów źródłowych i te same 130 z paczki** przeszły bez pominięć;
+Mypy sprawdził 766 plików, a 637 modułów i trzy nowe schematy są zgodne z paczką.
+Pełny lokalny CI i odbiór PR/main tego nowego kodu pozostają wymagane.
+
+Nadal potrzeba rzeczywistych danych i fitów Project, zweryfikowanego wyboru
+konfiguracji oraz awansu 25 → 50 → 100, powiązania trzech zastosowań
+z oryginalnymi rodzicami, kalibracji, final i lifecycle. Komponent nie nadaje
+dostępu final ani uprawnienia promocji. Canonical pozostaje wyłączony,
+limit **12 GiB** zachowany; AI 09 `not_ready`.
+
 **2026-10-10 — AI 09: pełny odbiór Source i wynik lokalnego CI konsumenta.**
 [09.95](evidence/09-95-paired-truth-local-ci.json) potwierdza sukces Source
 PR 114 i wynikowego main `d2363a5c`: po **21 zaliczonych kontroli oraz

@@ -92,6 +92,19 @@ def _binding(
     plan: CampaignDevelopmentExportPlan,
     generated: CampaignGeneratedParentReceipt,
 ) -> CampaignSourceRecipe:
+    from retailops_ai.evaluation_campaign.development_screening_contract import (
+        PreparedDevelopmentScreeningProtocol,
+    )
+
+    if isinstance(ledger.protocol, PreparedDevelopmentScreeningProtocol):
+        from retailops_ai.evaluation_campaign.development_screening import (
+            bind_prepared_screening_export,
+        )
+
+        bind_prepared_screening_export(ledger, operation.operation_id, plan, generated)
+        return next(
+            s for s in ledger.protocol.sources if s.content_sha256() == plan.source_recipe_sha256
+        )
     if (
         operation.execution_recipe_sha256 != plan.content_sha256()
         or operation.source_recipe_sha256 != plan.source_recipe_sha256
@@ -264,6 +277,25 @@ def validate_completed_export(journal: Path, receipt: CampaignDevelopmentExportR
         raise SnapshotError("campaign_export_receipt_unavailable") from None
     if raw != canonical_bytes(receipt.model_dump(mode="json")) + b"\n":
         raise SnapshotError("campaign_export_stored_receipt_mismatch")
+    from retailops_ai.evaluation_campaign.development_screening_contract import (
+        PreparedDevelopmentScreeningProtocol,
+    )
+
+    if isinstance(ledger.protocol, PreparedDevelopmentScreeningProtocol):
+        p = ledger.protocol
+        position = next(
+            (i for i, o in enumerate(p.operations[:3]) if o.operation_id == receipt.operation_id),
+            None,
+        )
+        if position is None:
+            raise SnapshotError("prepared_screening_export_not_in_frozen_inventory")
+        parent = p.parents.generations[position]
+        if (
+            receipt.generated_parent_receipt_sha256 != parent.content_sha256()
+            or receipt.recipe.source != parent.source
+        ):
+            raise SnapshotError("prepared_screening_export_original_generation_mismatch")
+        _binding(ledger, operation, receipt.plan, parent)
 
 
 def export_development_forecast(
@@ -331,6 +363,12 @@ def export_development_forecast(
             replay.check_parents()
         # The private context's final source/runtime guard must finish before
         # durable receipt publication or a completed journal event can occur.
+        from retailops_ai.evaluation_campaign.development_screening_contract import (
+            PreparedDevelopmentScreeningProtocol,
+        )
+
+        if isinstance(ledger.protocol, PreparedDevelopmentScreeningProtocol):
+            _binding(ledger, operation, plan, generated)
         _store_receipt(journal, receipt)
         handle.evidence_sha256 = receipt.content_sha256()
         handle.cost = CampaignCost(
