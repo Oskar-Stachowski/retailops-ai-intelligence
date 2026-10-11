@@ -1,5 +1,20 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: strumieniowy odczyt pełnej kwalifikacji stockout.**
+[Nowy adapter](ai09-stockout-qualification-intake.md) wiąże oryginalne prywatne
+okna z publicznym snapshotem Source i sprawdza cały zbiór bez ładowania go jako
+jednego dokumentu metadanych. Zachowuje chronologię, nieznane wyniki, pełne
+hashe i regułę odbioru dopiero po zakończeniu oraz kontroli rodziców.
+
+**61 testów źródeł przeszło**, w tym oryginalne kwalifikacje 1.1/1.2, ponad
+10 000 rekordów i ponad 4 MiB, uszkodzenia, częściowy odczyt i zmiana tożsamości.
+Te same **61 testów z paczki przeszło**;
+[09.110](evidence/09-110-stockout-qualification-intake.json) zachowuje wynik
+i zgodność 660 modułów oraz 38 kontraktów. Odtworzenie ledgeru, dojrzałe role, zarezerwowane treningi
+i niezależna ocena pozostają otwarte. Canonical wyłączony, **12 GiB**,
+AI 09 **`not_ready`**.
+
+
 **2026-10-11 — AI 09: pełne publiczne przygotowanie stockout z upstream.**
 [Nowy adapter](ai09-stockout-public-preparation.md) łączy wszystkie fizyczne
 obserwacje z natywnymi cechami, kategorią znaną w chwili obserwacji oraz

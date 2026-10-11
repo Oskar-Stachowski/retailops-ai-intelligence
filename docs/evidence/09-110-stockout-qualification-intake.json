@@ -1,0 +1,100 @@
+{
+  "recorded_at_utc": "2026-10-11T20:34:29.048053+00:00",
+  "scope": "Full original Source qualification sidecar intake bound to public snapshot metadata, not independent Source generation or ledger verification. Actual existing exposed inventory1.1, demand1.2 and physical1.2 sidecars; independent parser control10001records and >4MiB with maximum8192B reads.",
+  "source": {
+    "tests": 61,
+    "skipped": 0,
+    "suite_seconds": 1.424,
+    "junit_sha256": "a862c28bc8482ec145351e9cc75f62c860a05a105dd8d0c8aa69586a94a8dfdc",
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 5.09861499996623,
+      "sampled_tree_peak_rss_bytes": 162086912,
+      "sampled_worker_cpu_seconds": 4.006401843,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 145847,
+      "sampled_peak_scratch_allocated_bytes": 163840,
+      "minimum_free_disk_bytes": 29878751232,
+      "minimum_available_memory_bytes": 1519730688,
+      "samples": 48,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; reused existing U private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 402653184,
+      "code_pins_unchanged": true
+    }
+  },
+  "installed": {
+    "tests": 61,
+    "skipped": 0,
+    "suite_seconds": 1.419,
+    "junit_sha256": "95b89ac8d45e6a23b516130fd03de53a8cde1e1a3fddde98620447afaabb3a70",
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 1.8505807500332594,
+      "sampled_tree_peak_rss_bytes": 115195904,
+      "sampled_worker_cpu_seconds": 1.65267848,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 10486,
+      "sampled_peak_scratch_allocated_bytes": 20480,
+      "minimum_free_disk_bytes": 29832593408,
+      "minimum_available_memory_bytes": 1484570624,
+      "samples": 18,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "source_and_control_pins_unchanged": true,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+    }
+  },
+  "acceptance": {
+    "same_test_case_inventory": true,
+    "tests_per_suite": 61,
+    "controlled_25_50_setups_per_suite": 0,
+    "source_pins_unchanged": true
+  },
+  "package": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 2800752,
+    "sha256": "a0c2fe0c0794a1cefb91dbf387a306c366ac3162a23da3981c3f71439bf430ca",
+    "python_modules_equal": 660,
+    "new_contract_files_equal": 38,
+    "private_files_absent": true
+  },
+  "compatibility": {
+    "prior_contract_files_unchanged": 406,
+    "closed_AI08_modules_unchanged": 129,
+    "new_v45_schemas": 1
+  },
+  "mypy_files": 793,
+  "guarantees": [
+    "explicit private-read opt-in before path access",
+    "original Source snapshot qualification identity/schema/provenance/report/whole-file seals",
+    "bounded incremental canonical UTF8 object array with exact original hash",
+    "physical keys strictly ordered and unique by UTC instant",
+    "seven-day horizon and mature available labels, original missingness retained",
+    "no complete receipt for partial/repeated stream or changed original files/in-memory metadata",
+    "no truncation when whole-file/record/population bounds fail"
+  ],
+  "not_claimed": [
+    "independent full Source generation verification",
+    "native physical ledger replay",
+    "complete mature train/tune/calibration/evaluation membership",
+    "durably reserved journal authorization",
+    "Project full capacity, model quality or final access"
+  ],
+  "legacy_metadata_limit_bytes_unchanged": 4194304,
+  "new_qualification_limit_windows": 1000000,
+  "new_qualification_default_bytes": 2147483648,
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "exact_PR_and_main_CI": "pending"
+}
