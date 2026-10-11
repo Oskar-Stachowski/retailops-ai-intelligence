@@ -1,5 +1,27 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: połączona gałąź kwalifikacji prognoz i komponentów stockout.**
+[09.111](evidence/09-111-development-integration.json) łączy wykonawcę 51 operacji,
+pełny trening liczbowy stockout, publiczne cechy/upstream i odczyt oryginalnej
+kwalifikacji. Wszystkie 667 modułów, 300 modułów testowych i 416 kontraktów
+mają bajty odebranych komponentów; zachowano schematy v41–v45.
+**84 kontrole po połączeniu przeszły**, Mypy sprawdził 800 plików oraz osobno
+10 plików natywnej przestrzeni nazw. Te same **84 testy z paczki przeszły**;
+667 modułów i 47 kontraktów mają zgodne bajty. To odbiór połączenia
+komponentów; pełny CI pozostaje wymagany.
+
+PR 67 został scalony do `main` jako `5875321` po pełnych **17/17 jobs**.
+[CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38173378231)
+trwa. Bieżąca gałąź zawiera ten merge i zachowuje wcześniejszą lokalną odmowę
+pięciu workerów TensorFlow z powodu rezerwy RAM.
+
+Odtworzenie etykiet stockout z ledgeru, pełne dojrzałe role oraz zarezerwowane
+operacje selekcji, progów i oceny stockout/anomaly nadal wymagają połączenia.
+Przed pierwszą generacją Project trzeba zamrozić wspólny protokół wszystkich
+trzech zastosowań i runtime. Final, MLflow, karty modeli i lifecycle pozostają
+otwarte. Canonical nieuruchomiony, **12 GiB** i rezerwa **1 GiB**; AI 09
+**`not_ready`**. Poniższe wpisy zachowują historię odbioru poszczególnych przyrostów.
+
 **2026-10-11 — AI 09: strumieniowy odczyt pełnej kwalifikacji stockout.**
 [Nowy adapter](ai09-stockout-qualification-intake.md) wiąże oryginalne prywatne
 okna z publicznym snapshotem Source i sprawdza cały zbiór bez ładowania go jako
