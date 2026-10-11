@@ -93,6 +93,15 @@ from retailops_ai.evaluation_campaign.campaign_uncertainty_contract import (
     CampaignForecastUncertaintyPolicy,
     CampaignForecastUncertaintyReport,
 )
+from retailops_ai.evaluation_campaign.canonical_development_contract import (
+    CanonicalDevelopmentPlanningJournal,
+    CanonicalDevelopmentPlanningProtocol,
+    CanonicalDevelopmentPreparation,
+    PreparedCanonicalDevelopmentParents,
+    ResolvedCanonicalDevelopmentPlanningReceipt,
+    ResolvedCanonicalDevelopmentPreparationJournal,
+    ResolvedCanonicalDevelopmentPreparationProtocol,
+)
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
 from retailops_ai.evaluation_campaign.development_advancement_contract import (
     CompletedForecastAdvancement,
@@ -771,6 +780,36 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Forecast advancement contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, canonical_model in (
+        ("prepared_canonical_development_parents", PreparedCanonicalDevelopmentParents),
+        (
+            "resolved_canonical_development_preparation_protocol",
+            ResolvedCanonicalDevelopmentPreparationProtocol,
+        ),
+        (
+            "resolved_canonical_development_preparation_journal",
+            ResolvedCanonicalDevelopmentPreparationJournal,
+        ),
+        ("canonical_development_preparation", CanonicalDevelopmentPreparation),
+        ("canonical_development_planning_protocol", CanonicalDevelopmentPlanningProtocol),
+        ("canonical_development_planning_journal", CanonicalDevelopmentPlanningJournal),
+        (
+            "resolved_canonical_development_planning_receipt",
+            ResolvedCanonicalDevelopmentPlanningReceipt,
+        ),
+    ):
+        schema = canonical_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:36.0.0"
+        path = ROOT / "contracts/evaluation/v36" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Canonical development preparation contract differs: " + name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

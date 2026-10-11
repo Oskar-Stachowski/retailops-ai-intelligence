@@ -1,5 +1,21 @@
 # Aktualny status
 
+**2026-10-11 — AI 09: oryginalne przygotowanie canonical 100 i odbiór rodziców.**
+[09.99](evidence/09-99-canonical-development-preparation.json) dodaje zwykłą
+generację, natywne planowanie, ponowne sprawdzenie ordinary oraz oba warianty
+na pełnym, niezmienionym profilu 100 produktów. Odbiór wiąże oryginalne
+receipts i wszystkie pięć kosztów. Małe profile 25/50 pozostają odrębne.
+**118 kontroli** przeszło bez pominięć; trzy kolejne potwierdziły naprawioną
+blokadę niezgodnych parametrów przed generowaniem. Mypy sprawdził **773 pliki**,
+a siedem nowych schematów zachowuje wszystkie 382 wcześniejsze kontrakty.
+Szersze regresje źródeł/paczki są w toku; testy używają kontrolowanych wyników
+workerów, bez nowych danych Source i fitów Project.
+
+Otwarte pozostają trzy fity 100 powiązane z pierwotnym wyborem 25/50,
+aktualizacja pina Source, rzeczywisty workflow kampanii, pełna ocena trzech
+zastosowań, CI oraz publikacja. Canonical wyłączony, limit **12 GiB** zachowany;
+AI 09 `not_ready`.
+
 **2026-10-11 — AI 09: zamrożone budżety i wykonawca przejścia 25 → 50.**
 [Wykonawca](ai09-screening-selection.md) przenosi dokładnie wybrane
 konfiguracje RF/HGB/TF oraz wszystkie koszty do 50 produktów. Budżety i ścieżki

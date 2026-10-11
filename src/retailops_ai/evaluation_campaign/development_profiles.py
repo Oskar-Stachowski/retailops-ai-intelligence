@@ -132,61 +132,73 @@ class DevelopmentProfilePreparation(Contract):
             s.development_profile != self.profile for s in self.sources
         ):
             raise ValueError("development_profile_requires_three_ordered_full_variants")
-        if (
-            len(
-                {
-                    (s.producer_commit, s.producer_lock_sha256, s.exporter_lock_sha256)
-                    for s in self.sources
-                }
-            )
-            != 1
-        ):
-            raise ValueError("development_profile_requires_one_pinned_producer")
-        if len({p.resources.model_dump_json() for p in self.generations}) != 1:
-            raise ValueError("development_profile_variant_resource_budgets_must_match")
-        for source, plan in zip(self.sources, self.generations, strict=True):
-            plan.bind(source)
-            if plan.requested_parameters != self.profile.requested_parameters():
-                raise ValueError("development_profile_requested_parameters_mismatch")
-            limits = plan.resources
-            if (
-                limits.tree_rss_bytes > 12 * 1024**3
-                or limits.scratch_bytes > 8 * 1024**3
-                or limits.wall_seconds > 10800
-                or limits.minimum_available_memory_bytes < 1024**3
-                or limits.minimum_free_disk_bytes < 6 * 1024**3
-            ):
-                raise ValueError("development_profile_preparation_resource_ceiling")
-            if source.variant != "ordinary":
-                scenario = plan.scenario_plan or {}
-                expected = (
-                    {"one_day_spike", "multi_day_spike", "sustained_drop"}
-                    if source.variant == "demand"
-                    else {"return_spike", "inventory_censored_episode"}
-                )
-                injections = scenario.get("injections")
-                if (
-                    scenario.get("seed") != self.profile.data_seed
-                    or not isinstance(injections, list)
-                    or {i.get("injection_type") for i in injections if isinstance(i, dict)}
-                    != expected
-                ):
-                    raise ValueError("development_profile_all_planned_anomaly_types_required")
-                controls = scenario.get("controls")
-                if not isinstance(controls, list) or not controls:
-                    raise ValueError("development_profile_clean_controls_required")
-                for window in (*injections, *controls):
-                    if not isinstance(window, dict):
-                        raise ValueError("development_profile_scenario_window_required")
-                    start = date.fromisoformat(str(window.get("start_date", "")))
-                    end = date.fromisoformat(str(window.get("end_date", "")))
-                    if not self.profile.history.start <= start <= end <= self.profile.history.end:
-                        raise ValueError("development_profile_scenario_outside_history")
+        validate_preparation_recipes(
+            self.sources,
+            self.generations,
+            requested_parameters=self.profile.requested_parameters(),
+            history=self.profile.history,
+            data_seed=self.profile.data_seed,
+        )
         return self
 
     def content_sha256(self) -> str:
         type(self).model_validate_json(self.model_dump_json())
         return canonical_sha256(self.model_dump(mode="json"))
+
+
+def validate_preparation_recipes(
+    sources: tuple[PortfolioSourceRecipe, ...],
+    generations: tuple[CampaignGenerationPlan, ...],
+    *,
+    requested_parameters: dict[str, JsonValue],
+    history: DateWindow,
+    data_seed: int,
+) -> None:
+    """Keep identical native scenario, resource and full-history checks at every scale."""
+    if (
+        len({(s.producer_commit, s.producer_lock_sha256, s.exporter_lock_sha256) for s in sources})
+        != 1
+    ):
+        raise ValueError("development_profile_requires_one_pinned_producer")
+    if len({p.resources.model_dump_json() for p in generations}) != 1:
+        raise ValueError("development_profile_variant_resource_budgets_must_match")
+    for source, plan in zip(sources, generations, strict=True):
+        plan.bind(source)
+        if plan.requested_parameters != requested_parameters:
+            raise ValueError("development_profile_requested_parameters_mismatch")
+        limits = plan.resources
+        if (
+            limits.tree_rss_bytes > 12 * 1024**3
+            or limits.scratch_bytes > 8 * 1024**3
+            or limits.wall_seconds > 10800
+            or limits.minimum_available_memory_bytes < 1024**3
+            or limits.minimum_free_disk_bytes < 6 * 1024**3
+        ):
+            raise ValueError("development_profile_preparation_resource_ceiling")
+        if source.variant != "ordinary":
+            scenario = plan.scenario_plan or {}
+            expected = (
+                {"one_day_spike", "multi_day_spike", "sustained_drop"}
+                if source.variant == "demand"
+                else {"return_spike", "inventory_censored_episode"}
+            )
+            injections = scenario.get("injections")
+            if (
+                scenario.get("seed") != data_seed
+                or not isinstance(injections, list)
+                or {i.get("injection_type") for i in injections if isinstance(i, dict)} != expected
+            ):
+                raise ValueError("development_profile_all_planned_anomaly_types_required")
+            controls = scenario.get("controls")
+            if not isinstance(controls, list) or not controls:
+                raise ValueError("development_profile_clean_controls_required")
+            for window in (*injections, *controls):
+                if not isinstance(window, dict):
+                    raise ValueError("development_profile_scenario_window_required")
+                start = date.fromisoformat(str(window.get("start_date", "")))
+                end = date.fromisoformat(str(window.get("end_date", "")))
+                if not history.start <= start <= end <= history.end:
+                    raise ValueError("development_profile_scenario_outside_history")
 
 
 def prepare_development_profile(

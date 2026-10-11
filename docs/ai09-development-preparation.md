@@ -1,4 +1,42 @@
-# Wykonanie przygotowania profili 25/50
+# Przygotowanie danych development
+
+[Planowanie natywne 09.90](evidence/09-90-native-development-planning.md)
+i [przygotowanie wariantów 09.91](evidence/09-91-resolved-development-variants.md)
+generują ordinary, pobierają plany scenariuszy z przypiętego Source, ponownie
+weryfikują przygotowane dane i wykonują oba oryginalne warianty. Ordinary
+nie jest generowane drugi raz. Kolejne kroki zachowują jego tożsamość,
+receipts i zmierzone koszty.
+
+Dodatek v36 w [09.99](evidence/09-99-canonical-development-preparation.json)
+obsługuje również pełny canonical development: **365 dni, 100 produktów,
+5 par sprzedaży i 3 lokalizacje zapasu, seed 42**. Używa oryginalnego
+`PortfolioSourceRecipe`; nie rozszerza małych profili 25/50 ani nie przypisuje
+im nazwy pełnego profilu. Wspólne walidatory zachowują reguły źródeł,
+scenariuszy, czasu, zasobów i pochodzenia. Wszystkie 382 wcześniejsze
+kontrakty pozostają niezmienione.
+
+Bootstrap obejmuje jedną generację i jeden odczyt planera. Następny dziennik
+obejmuje pełne ponowne sprawdzenie ordinary i dwie generacje wariantów.
+Wszystkie pięć kosztów pozostaje rozliczone. Bezpośrednie wywołanie generatora
+nadal wymaga ukończonego ponownego sprawdzenia i pozostałego wspólnego czasu.
+Odbiór rodziców ponownie sprawdza oryginalne dzienniki i receipts; brak
+oryginału blokuje dalsze użycie. Nie powstaje dodatkowa próba po błędzie.
+
+Przeszło **118 kontroli przygotowania i wcześniejszych ścieżek**. Audyt
+wykrył możliwość zapisania rozwiniętych parametrów innych niż zamrożone
+żądanie canonical. Walidacja odrzuca teraz taki plan przed generowaniem;
+trzy kontrole odtworzyły błąd i następnie przeszły po poprawce. Pełny Mypy
+obejmuje 773 pliki, a siedem schematów v36 przechodzi sprawdzenie. Szersze
+regresje źródeł i zainstalowanej paczki trwają. Wyniki używają jawnie
+kontrolowanych workerów; nie dowodzą pełnej generacji Source ani fitów Project.
+
+Pozostają powiązanie tych rodziców z wybranymi wcześniej konfiguracjami
+i trzema fitami 100, rzeczywiste dane i modele, komplet trzech zastosowań
+oraz odbiór CI i publikacja. Canonical diagnostic pozostaje wyłączony;
+limit RAM wynosi **12 GiB**, z rezerwą 1 GiB.
+
+Poniżej zachowano opis wcześniejszego wykonawcy v30, który przyjmuje już
+gotowe plany scenariuszy.
 
 Kontrakt [v30](../contracts/evaluation/v30/development_preparation_protocol.schema.json)
 umożliwia przygotowanie trzech pełnych wariantów jednego profilu development:
@@ -7,10 +45,11 @@ ordinary, demand i physical. Korzysta z tych samych sześciu faz
 i verify. Nie dodaje własnego generatora ani uproszczonej weryfikacji Source.
 Profile zachowują [pełną historię i lokalizacje](ai09-development-profiles.md).
 
-**Otwarta zależność Source:** [audyt 09.88](ai09-full-source-scenario-audit.md)
-potwierdził limit 5000 ziaren w natywnej weryfikacji efektów obecnego pina.
-Demand/physical w skali 25/50 wymagają zaakceptowanej poprawki producenta;
-samo uruchomienie tego wrappera nie usuwa ograniczenia.
+**Otwarta aktualizacja pina Source:** [audyt 09.88](ai09-full-source-scenario-audit.md)
+wykrył limit 5000 ziaren. Poprawki producenta uzyskały odbiór opisany
+w [09.95](evidence/09-95-paired-truth-local-ci.json), ale aktywne receptury
+i workflow konsumenta nadal wymagają spójnego przypięcia zaakceptowanego kodu.
+Samo uruchomienie wrappera nie zastępuje tej aktualizacji.
 
 `compile_development_preparation` otrzymuje konkretny pełny protokół portfolio,
 plan profilu oraz deklarację równego budżetu RF/HGB/TF. Sprawdza ich tożsamości,

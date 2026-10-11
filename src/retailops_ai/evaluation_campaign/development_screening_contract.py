@@ -5,7 +5,9 @@ passes. It cannot admit 50/100 advancement, final access or model promotion.
 Those require measured selection evidence and their own frozen execution scope.
 """
 
-from typing import Annotated, Literal, Self
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
@@ -32,6 +34,11 @@ from retailops_ai.evaluation_campaign.development_variants_contract import (
     ReusedDevelopmentParentReceipt,
 )
 
+if TYPE_CHECKING:
+    from retailops_ai.evaluation_campaign.canonical_development_contract import (
+        PreparedCanonicalDevelopmentParents,
+    )
+
 
 class PreparedDevelopmentParents(Contract):
     """Frozen original bookkeeping; validation alone grants no Source access."""
@@ -48,36 +55,7 @@ class PreparedDevelopmentParents(Contract):
 
     @model_validator(mode="after")
     def ancestry(self) -> Self:
-        p, reused = self.preparation, self.ordinary_reuse
-        preparation_sha256 = p.content_sha256()
-        if (
-            reused.protocol_sha256 != preparation_sha256
-            or reused.source_recipe_sha256 != p.sources[0].content_sha256()
-            or reused.operation_id != p.operations[0].operation_id
-            or reused.source != p.generated.source
-            or reused.generated_receipt_sha256 != p.generated.content_sha256()
-            or reused.planning_receipt_sha256 != p.planned.content_sha256()
-            or reused.generation_cost != p.planned.generation_cost
-            or reused.planning_cost != p.planning_cost
-            or reused.runtime != p.runtime
-            or any(
-                c.peak_process_tree_rss_bytes is None or c.artifact_bytes is None
-                for c in self.preparation_operation_costs
-            )
-        ):
-            raise ValueError("prepared_development_original_reuse_or_cost_binding")
-        for receipt, source, operation in zip(
-            self.variant_generations, p.sources[1:], p.operations[1:], strict=True
-        ):
-            if (
-                receipt.protocol_sha256 != preparation_sha256
-                or receipt.source_recipe_sha256 != source.content_sha256()
-                or receipt.operation_id != operation.operation_id
-                or receipt.runtime != p.runtime
-                or receipt.source.source_parameters
-                != source.development_profile.resolved_parameters()
-            ):
-                raise ValueError("prepared_development_original_variant_binding")
+        validate_prepared_parent_scope(self)
         return self
 
     @property
@@ -88,6 +66,45 @@ class PreparedDevelopmentParents(Contract):
         return self.preparation.cold_wall_seconds() + sum(
             c.wall_seconds for c in self.preparation_operation_costs
         )
+
+
+def validate_prepared_parent_scope(
+    parents: PreparedDevelopmentParents | PreparedCanonicalDevelopmentParents,
+) -> None:
+    """Bind both source formats to their original generation plans and measured costs."""
+    p, reused = parents.preparation, parents.ordinary_reuse
+    preparation_sha256 = p.content_sha256()
+    if (
+        reused.protocol_sha256 != preparation_sha256
+        or reused.source_recipe_sha256 != p.sources[0].content_sha256()
+        or reused.operation_id != p.operations[0].operation_id
+        or reused.source != p.generated.source
+        or reused.generated_receipt_sha256 != p.generated.content_sha256()
+        or reused.planning_receipt_sha256 != p.planned.content_sha256()
+        or reused.generation_cost != p.planned.generation_cost
+        or reused.planning_cost != p.planning_cost
+        or reused.runtime != p.runtime
+        or any(
+            c.peak_process_tree_rss_bytes is None or c.artifact_bytes is None
+            for c in parents.preparation_operation_costs
+        )
+    ):
+        raise ValueError("prepared_development_original_reuse_or_cost_binding")
+    for receipt, source, operation, plan in zip(
+        parents.variant_generations,
+        p.sources[1:],
+        p.operations[1:],
+        p.planned.preparation.generations[1:],
+        strict=True,
+    ):
+        if (
+            receipt.protocol_sha256 != preparation_sha256
+            or receipt.source_recipe_sha256 != source.content_sha256()
+            or receipt.operation_id != operation.operation_id
+            or receipt.runtime != p.runtime
+            or receipt.source.source_parameters != plan.resolved_parameters
+        ):
+            raise ValueError("prepared_development_original_variant_binding")
 
 
 def screening_operations(

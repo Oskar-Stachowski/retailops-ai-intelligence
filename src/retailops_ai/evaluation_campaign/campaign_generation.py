@@ -25,6 +25,9 @@ from retailops_ai.evaluation_campaign.campaign_generation_worker import read, wr
 from retailops_ai.evaluation_campaign.campaign_selection_evidence import (
     verify_completed_campaign_selection,
 )
+from retailops_ai.evaluation_campaign.canonical_development_contract import (
+    ResolvedCanonicalDevelopmentPreparationJournal,
+)
 from retailops_ai.evaluation_campaign.development_variants_contract import (
     ResolvedDevelopmentPreparationJournal,
 )
@@ -118,7 +121,10 @@ def generate_campaign_parent(
             canonical_bytes(plan.model_dump(mode="json"))
         )
         source = _source(ledger, operation_id, plan)
-        if isinstance(ledger, ResolvedDevelopmentPreparationJournal):
+        if isinstance(
+            ledger,
+            (ResolvedDevelopmentPreparationJournal, ResolvedCanonicalDevelopmentPreparationJournal),
+        ):
             # The shared entry point enforces this too: calling it directly
             # cannot bypass original costs, durable reuse or the total limit.
             from retailops_ai.evaluation_campaign.development_variants import (

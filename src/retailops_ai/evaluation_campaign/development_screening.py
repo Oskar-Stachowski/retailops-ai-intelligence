@@ -30,6 +30,7 @@ from retailops_ai.evaluation_campaign.development_variants import (
     variants_journal,
 )
 from retailops_ai.evaluation_campaign.development_variants_contract import (
+    ResolvedDevelopmentPreparationProtocol,
     ReusedDevelopmentParentReceipt,
 )
 from retailops_ai.source_snapshot.files import SnapshotError
@@ -49,6 +50,8 @@ def capture_prepared_development_parents(
 ) -> PreparedDevelopmentParents:
     """Inspect original durable receipts only, without touching Source facts."""
     before = variants_journal(journal)
+    if not isinstance(before.protocol, ResolvedDevelopmentPreparationProtocol):
+        raise SnapshotError("prepared_development_small_profile_parents_required")
     validate_reused_development_parent(journal, ordinary)
     validate_completed_generation(journal, demand)
     validate_completed_generation(journal, physical)

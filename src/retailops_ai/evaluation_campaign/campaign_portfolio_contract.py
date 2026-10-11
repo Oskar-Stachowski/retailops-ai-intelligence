@@ -177,6 +177,20 @@ class CampaignPortfolioJournal(CampaignJournal):
 
 def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
     document = decode_json(raw)
+    if "resolved_canonical_preparation_version" in document:
+        from retailops_ai.evaluation_campaign.canonical_development_contract import (
+            ResolvedCanonicalDevelopmentPreparationProtocol,
+        )
+
+        return ResolvedCanonicalDevelopmentPreparationProtocol.model_validate_json(
+            canonical_bytes(document)
+        )
+    if "canonical_development_planning_version" in document:
+        from retailops_ai.evaluation_campaign.canonical_development_contract import (
+            CanonicalDevelopmentPlanningProtocol,
+        )
+
+        return CanonicalDevelopmentPlanningProtocol.model_validate_json(canonical_bytes(document))
     if "multiscale_selection_version" in document:
         from retailops_ai.evaluation_campaign.development_advancement_contract import (
             MultiscaleSelectionProtocol,
@@ -228,6 +242,20 @@ def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
 def parse_campaign_journal(raw: bytes) -> CampaignJournal:
     document = decode_json(raw)
     protocol = document.get("protocol")
+    if isinstance(protocol, dict) and "resolved_canonical_preparation_version" in protocol:
+        from retailops_ai.evaluation_campaign.canonical_development_contract import (
+            ResolvedCanonicalDevelopmentPreparationJournal,
+        )
+
+        return ResolvedCanonicalDevelopmentPreparationJournal.model_validate_json(
+            canonical_bytes(document)
+        )
+    if isinstance(protocol, dict) and "canonical_development_planning_version" in protocol:
+        from retailops_ai.evaluation_campaign.canonical_development_contract import (
+            CanonicalDevelopmentPlanningJournal,
+        )
+
+        return CanonicalDevelopmentPlanningJournal.model_validate_json(canonical_bytes(document))
     if isinstance(protocol, dict) and "multiscale_selection_version" in protocol:
         from retailops_ai.evaluation_campaign.development_advancement_contract import (
             MultiscaleSelectionJournal,

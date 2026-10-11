@@ -19,6 +19,13 @@ from retailops_ai.evaluation_campaign.campaign_generation import (
 )
 from retailops_ai.evaluation_campaign.campaign_generation_monitor import monitor, scratch_bytes
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
+from retailops_ai.evaluation_campaign.canonical_development_contract import (
+    CanonicalDevelopmentPlanningJournal,
+    CanonicalDevelopmentPlanningProtocol,
+    CanonicalDevelopmentPreparation,
+    ResolvedCanonicalDevelopmentPlanningReceipt,
+    prepare_canonical_development,
+)
 from retailops_ai.evaluation_campaign.development_planning_contract import (
     NativeDevelopmentPlanningJournal,
     NativeDevelopmentPlanningReceipt,
@@ -37,9 +44,13 @@ from retailops_ai.source_snapshot.files import (
 )
 
 
-def planning_journal(journal: Path) -> NativeDevelopmentPlanningJournal:
+def planning_journal(
+    journal: Path,
+) -> NativeDevelopmentPlanningJournal | CanonicalDevelopmentPlanningJournal:
     ledger = campaign_journal.inspect(journal)
-    if not isinstance(ledger, NativeDevelopmentPlanningJournal):
+    if not isinstance(
+        ledger, (NativeDevelopmentPlanningJournal, CanonicalDevelopmentPlanningJournal)
+    ):
         raise SnapshotError("native_planning_requires_separate_journal")
     return ledger
 
@@ -101,7 +112,9 @@ def plan_native_development_scenarios(
     producer: Path,
     producer_python: Path,
     output_root: Path,
-) -> tuple[Path, ResolvedNativeDevelopmentPlanningReceipt]:
+) -> tuple[
+    Path, ResolvedNativeDevelopmentPlanningReceipt | ResolvedCanonicalDevelopmentPlanningReceipt
+]:
     """Reserve before any producer, raw Source or output access; never auto-retry.
 
     The original generation's verified identity and complete cold cost stay in
@@ -194,16 +207,29 @@ def plan_native_development_scenarios(
             raise SnapshotError("native_planning_bundle_size_limit")
         bundle = read(root / "native-plans.json")
         hashes = _verified_bundle(bundle, request)
-        resolved = prepare_development_profile(
-            source.development_profile,
-            producer_commit=source.producer_commit,
-            producer_lock_sha256=source.producer_lock_sha256,
-            exporter_lock_sha256=source.exporter_lock_sha256,
-            scenario_plans=bundle["plans"],
-            resources=protocol.generation.resources,
-            label_delay_days=source.label_delay_days,
+        resolved: DevelopmentProfilePreparation | CanonicalDevelopmentPreparation
+        receipt_type: (
+            type[ResolvedNativeDevelopmentPlanningReceipt]
+            | type[ResolvedCanonicalDevelopmentPlanningReceipt]
         )
-        resolved = DevelopmentProfilePreparation.model_validate_json(
+        if isinstance(protocol, CanonicalDevelopmentPlanningProtocol):
+            resolved = prepare_canonical_development(
+                source=source, generation=protocol.generation, scenario_plans=bundle["plans"]
+            )
+            receipt_type = ResolvedCanonicalDevelopmentPlanningReceipt
+        else:
+            original = protocol.sources[0]
+            resolved = prepare_development_profile(
+                original.development_profile,
+                producer_commit=original.producer_commit,
+                producer_lock_sha256=original.producer_lock_sha256,
+                exporter_lock_sha256=original.exporter_lock_sha256,
+                scenario_plans=bundle["plans"],
+                resources=protocol.generation.resources,
+                label_delay_days=original.label_delay_days,
+            )
+            receipt_type = ResolvedNativeDevelopmentPlanningReceipt
+        resolved = type(resolved).model_validate_json(
             resolved.model_copy(
                 update={
                     "generations": tuple(
@@ -227,21 +253,23 @@ def plan_native_development_scenarios(
             or artifact_bytes > planning.resources.scratch_bytes
         ):
             raise SnapshotError("native_planning_completion_resource_limit")
-        receipt = ResolvedNativeDevelopmentPlanningReceipt(
-            protocol_sha256=ledger.protocol_sha256,
-            source_recipe_sha256=source.content_sha256(),
-            operation_id=operation.operation_id,
-            reservation_id=str(handle.reservation.reservation_id),
-            source_dataset_id=generated.source.parent.source_dataset_id,
-            generation_receipt_sha256=generated.content_sha256(),
-            generation_cost=generation_cost,
-            planning_sha256=planning.content_sha256(),
-            producer_planner_sha256=planning.producer_planner_sha256,
-            bundle_sha256=bundle_sha256,
-            bundle_bytes=bundle_size,
-            plan_sha256=hashes,
-            runtime=protocol.runtime,
-            preparation=resolved,
+        receipt = receipt_type.model_validate(
+            dict(
+                protocol_sha256=ledger.protocol_sha256,
+                source_recipe_sha256=source.content_sha256(),
+                operation_id=operation.operation_id,
+                reservation_id=str(handle.reservation.reservation_id),
+                source_dataset_id=generated.source.parent.source_dataset_id,
+                generation_receipt_sha256=generated.content_sha256(),
+                generation_cost=generation_cost,
+                planning_sha256=planning.content_sha256(),
+                producer_planner_sha256=planning.producer_planner_sha256,
+                bundle_sha256=bundle_sha256,
+                bundle_bytes=bundle_size,
+                plan_sha256=hashes,
+                runtime=protocol.runtime,
+                preparation=resolved,
+            )
         )
         _store_receipt(journal, receipt)
         handle.evidence_sha256 = receipt.content_sha256()

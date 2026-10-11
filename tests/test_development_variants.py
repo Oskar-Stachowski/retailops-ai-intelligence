@@ -15,18 +15,28 @@ from retailops_ai.evaluation_campaign import campaign_journal as journal
 from retailops_ai.evaluation_campaign import development_variants as variants
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
 from retailops_ai.evaluation_campaign.campaign_portfolio_contract import parse_campaign_protocol
+from retailops_ai.evaluation_campaign.canonical_development import (
+    compile_canonical_development_preparation,
+)
+from retailops_ai.evaluation_campaign.canonical_development_contract import (
+    ResolvedCanonicalDevelopmentPreparationJournal,
+)
 from retailops_ai.evaluation_campaign.development_planning_contract import (
     NativeDevelopmentPlanningReceipt,
 )
 from retailops_ai.evaluation_campaign.development_variants_contract import (
     ResolvedDevelopmentPreparationJournal,
-    ResolvedDevelopmentPreparationProtocol,
 )
 from retailops_ai.source_snapshot.files import SnapshotError
 
 
 def prepared_case(tmp_path, monkeypatch, products=25):
-    bootstrap, output, initial = bootstrap_case(tmp_path, products)
+    if products == 100:
+        from test_canonical_development_planning import case as canonical_case
+
+        bootstrap, output, initial = canonical_case(tmp_path)
+    else:
+        bootstrap, output, initial = bootstrap_case(tmp_path, products)
     generated = generate(monkeypatch, bootstrap, output, initial)
     controlled_worker(monkeypatch, bootstrap)
     bundle, planned = plan(bootstrap, output, generated)
@@ -34,7 +44,12 @@ def prepared_case(tmp_path, monkeypatch, products=25):
     # protocol: the charged planning operation returned the exact native plans.
     bundle.unlink()
     root = tmp_path / "variant-journal"
-    protocol = variants.compile_resolved_development_preparation(
+    compiler = (
+        compile_canonical_development_preparation
+        if products == 100
+        else variants.compile_resolved_development_preparation
+    )
+    protocol = compiler(
         root,
         bootstrap_journal=bootstrap,
         generated=generated,
@@ -98,7 +113,7 @@ def run_variant(case, name):
     )
 
 
-@pytest.mark.parametrize("products", [25, 50])
+@pytest.mark.parametrize("products", [25, 50, 100])
 def test_complete_preparation_reuses_ordinary_then_runs_both_original_six_phase_generations(
     tmp_path,
     monkeypatch,
@@ -106,7 +121,12 @@ def test_complete_preparation_reuses_ordinary_then_runs_both_original_six_phase_
 ):
     case = prepared_case(tmp_path, monkeypatch, products)
     root, output, protocol, _, _ = case
-    assert isinstance(journal.inspect(root), ResolvedDevelopmentPreparationJournal)
+    expected_journal = (
+        ResolvedCanonicalDevelopmentPreparationJournal
+        if products == 100
+        else ResolvedDevelopmentPreparationJournal
+    )
+    assert isinstance(journal.inspect(root), expected_journal)
     assert parse_campaign_protocol(protocol.model_dump_json().encode()) == protocol
     assert protocol.sources == protocol.planned.preparation.sources
     assert protocol.planned.preparation.generations[0] == protocol.bootstrap.generation
@@ -119,6 +139,7 @@ def test_complete_preparation_reuses_ordinary_then_runs_both_original_six_phase_
     assert reused.generation_cost == protocol.planned.generation_cost
     assert reused.planning_cost == protocol.planning_cost and len(calls) == 1
     assert not reused.new_source_generation_performed
+    original_variants = []
     for position, name in ((1, "demand"), (2, "physical")):
         phases = fake_phases(
             monkeypatch,
@@ -130,6 +151,7 @@ def test_complete_preparation_reuses_ordinary_then_runs_both_original_six_phase_
             ),
         )
         _, _, generated = run_variant(case, name)
+        original_variants.append(generated)
         assert phases == list(generation.PHASES)
         generation.validate_completed_generation(root, generated)
         assert generated.source_recipe_sha256 == protocol.sources[position].content_sha256()
@@ -141,10 +163,45 @@ def test_complete_preparation_reuses_ordinary_then_runs_both_original_six_phase_
         "source_generate",
     ]
     assert journal.summary(root)["charged_new_fit_attempts"] == 0
+    if products == 100:
+        from retailops_ai.evaluation_campaign.canonical_development import (
+            capture_canonical_development_parents,
+            verify_canonical_development_parents,
+        )
+        from retailops_ai.evaluation_campaign.development_screening import (
+            capture_prepared_development_parents,
+        )
+
+        parents = capture_canonical_development_parents(
+            root, ordinary=reused, demand=original_variants[0], physical=original_variants[1]
+        )
+        verify_canonical_development_parents(parents)
+        assert parents.generations == (protocol.generated, *original_variants)
+        assert parents.cold_wall_seconds() == protocol.cold_wall_seconds() + sum(
+            e.cost.wall_seconds for e in events if e.kind == "finished"
+        )
+        with pytest.raises(SnapshotError, match="small_profile"):
+            capture_prepared_development_parents(
+                root, ordinary=reused, demand=original_variants[0], physical=original_variants[1]
+            )
+        original = root / "receipts" / (original_variants[1].reservation_id + ".json")
+        raw = original.read_bytes()
+        before = journal.inspect(root)
+        original.unlink()
+        try:
+            with pytest.raises((OSError, SnapshotError)):
+                verify_canonical_development_parents(parents)
+        finally:
+            original.write_bytes(raw)
+            original.chmod(0o600)
+        assert journal.inspect(root) == before
 
 
-def test_both_variants_require_verified_ordinary_and_fixed_sequential_order(tmp_path, monkeypatch):
-    case = prepared_case(tmp_path, monkeypatch)
+@pytest.mark.parametrize("products", [25, 100])
+def test_both_variants_require_verified_ordinary_and_fixed_sequential_order(
+    tmp_path, monkeypatch, products
+):
+    case = prepared_case(tmp_path, monkeypatch, products)
     root, output, protocol, _, _ = case
     for position, name in ((1, "demand"), (2, "physical")):
         phases = fake_phases(
@@ -176,10 +233,11 @@ def test_both_variants_require_verified_ordinary_and_fixed_sequential_order(tmp_
         lambda r: r.update(worker_peak_rss_bytes=13 * 1024**3),
     ],
 )
+@pytest.mark.parametrize("products", [25, 100])
 def test_changed_parent_or_incomplete_replay_consumes_the_single_read(
-    tmp_path, monkeypatch, mutation
+    tmp_path, monkeypatch, mutation, products
 ):
-    case = prepared_case(tmp_path, monkeypatch)
+    case = prepared_case(tmp_path, monkeypatch, products)
     calls = replay_worker(monkeypatch, case, mutation=mutation)
     with pytest.raises((SnapshotError, ValidationError)):
         reuse(case)
@@ -193,8 +251,11 @@ def test_changed_parent_or_incomplete_replay_consumes_the_single_read(
         run_variant(case, "demand")
 
 
-def test_bootstrap_metadata_rechecked_after_reserve_before_parent_worker(tmp_path, monkeypatch):
-    case = prepared_case(tmp_path, monkeypatch)
+@pytest.mark.parametrize("products", [25, 100])
+def test_bootstrap_metadata_rechecked_after_reserve_before_parent_worker(
+    tmp_path, monkeypatch, products
+):
+    case = prepared_case(tmp_path, monkeypatch, products)
     protocol = case[2]
     original = (
         Path(protocol.bootstrap.journal_path)
@@ -208,8 +269,11 @@ def test_bootstrap_metadata_rechecked_after_reserve_before_parent_worker(tmp_pat
     assert not calls and journal.inspect(case[0]).events[-1].result == "failed"
 
 
-def test_refused_worker_keeps_unknown_rss_and_does_not_reset_cold_costs(tmp_path, monkeypatch):
-    case = prepared_case(tmp_path, monkeypatch)
+@pytest.mark.parametrize("products", [25, 100])
+def test_refused_worker_keeps_unknown_rss_and_does_not_reset_cold_costs(
+    tmp_path, monkeypatch, products
+):
+    case = prepared_case(tmp_path, monkeypatch, products)
     replay_worker(monkeypatch, case, failed=True)
     with pytest.raises(SnapshotError, match="reuse_worker_failed"):
         reuse(case)
@@ -219,8 +283,11 @@ def test_refused_worker_keeps_unknown_rss_and_does_not_reset_cold_costs(tmp_path
     assert ledger.protocol.planning_cost.wall_seconds > 0
 
 
-def test_reuse_and_generation_deadlines_share_the_original_cold_budget(tmp_path, monkeypatch):
-    case = prepared_case(tmp_path, monkeypatch)
+@pytest.mark.parametrize("products", [25, 100])
+def test_reuse_and_generation_deadlines_share_the_original_cold_budget(
+    tmp_path, monkeypatch, products
+):
+    case = prepared_case(tmp_path, monkeypatch, products)
     root, output, protocol, _, _ = case
     calls = replay_worker(monkeypatch, case)
     monkeypatch.setattr(variants, "perf_counter", lambda: 100.0)
@@ -263,18 +330,22 @@ def test_reuse_and_generation_deadlines_share_the_original_cold_budget(tmp_path,
         lambda p: p["planned"]["preparation"]["generations"][1]["scenario_plan"].update(seed=137),
     ],
 )
+@pytest.mark.parametrize("products", [25, 100])
 def test_resealed_protocol_cannot_invent_generation_change_native_plans_or_erase_context(
-    tmp_path, monkeypatch, mutation
+    tmp_path, monkeypatch, mutation, products
 ):
-    case = prepared_case(tmp_path, monkeypatch)
+    case = prepared_case(tmp_path, monkeypatch, products)
     raw = case[2].model_dump(mode="json")
     mutation(raw)
     with pytest.raises(ValidationError):
-        ResolvedDevelopmentPreparationProtocol.model_validate_json(canonical_bytes(raw))
+        type(case[2]).model_validate_json(canonical_bytes(raw))
 
 
-def test_reused_receipt_must_remain_durable_before_scenario_generation(tmp_path, monkeypatch):
-    case = prepared_case(tmp_path, monkeypatch)
+@pytest.mark.parametrize("products", [25, 100])
+def test_reused_receipt_must_remain_durable_before_scenario_generation(
+    tmp_path, monkeypatch, products
+):
+    case = prepared_case(tmp_path, monkeypatch, products)
     replay_worker(monkeypatch, case)
     reused = reuse(case)
     (case[0] / "receipts" / (reused.reservation_id + ".json")).write_text("{}\n")
@@ -284,15 +355,19 @@ def test_reused_receipt_must_remain_durable_before_scenario_generation(tmp_path,
     assert journal.inspect(case[0]).events[-1].result == "failed"
 
 
-def test_ordinary_cannot_be_regenerated_in_resolved_preparation(tmp_path, monkeypatch):
-    case = prepared_case(tmp_path, monkeypatch)
+@pytest.mark.parametrize("products", [25, 100])
+def test_ordinary_cannot_be_regenerated_in_resolved_preparation(tmp_path, monkeypatch, products):
+    case = prepared_case(tmp_path, monkeypatch, products)
     with pytest.raises(SnapshotError, match="ordinary_must_be_reused"):
         run_variant(case, "ordinary")
     assert not journal.inspect(case[0]).events
 
 
-def test_exhausted_shared_budget_is_charged_before_any_new_source_work(tmp_path, monkeypatch):
-    case = prepared_case(tmp_path, monkeypatch)
+@pytest.mark.parametrize("products", [25, 100])
+def test_exhausted_shared_budget_is_charged_before_any_new_source_work(
+    tmp_path, monkeypatch, products
+):
+    case = prepared_case(tmp_path, monkeypatch, products)
     replay_worker(monkeypatch, case)
     reuse(case)
     root, output, protocol, _, _ = case
@@ -315,10 +390,11 @@ def test_exhausted_shared_budget_is_charged_before_any_new_source_work(tmp_path,
 
 
 @pytest.mark.parametrize("allowance", [1.0, 99999.0])
+@pytest.mark.parametrize("products", [25, 100])
 def test_outer_allowance_can_only_reduce_the_frozen_generation_limit(
-    tmp_path, monkeypatch, allowance
+    tmp_path, monkeypatch, allowance, products
 ):
-    case = prepared_case(tmp_path, monkeypatch)
+    case = prepared_case(tmp_path, monkeypatch, products)
     replay_worker(monkeypatch, case)
     reuse(case)
     root, output, protocol, _, _ = case
@@ -350,8 +426,11 @@ def test_outer_allowance_can_only_reduce_the_frozen_generation_limit(
     assert deadlines == [100.0 + effective] * 6
 
 
-def test_direct_generator_cannot_bypass_original_costs_or_durable_reuse(tmp_path, monkeypatch):
-    case = prepared_case(tmp_path, monkeypatch)
+@pytest.mark.parametrize("products", [25, 100])
+def test_direct_generator_cannot_bypass_original_costs_or_durable_reuse(
+    tmp_path, monkeypatch, products
+):
+    case = prepared_case(tmp_path, monkeypatch, products)
     replay_worker(monkeypatch, case)
     reused = reuse(case)
     root, output, protocol, _, _ = case

@@ -8,6 +8,9 @@ Eksport mierzy również pamięć; brak pomiaru blokuje zaliczenie operacji.
 zachowuje wybrane konfiguracje oraz koszty i zamraża przyszłe budżety przed
 pierwszą próbą. Przeszło 226 regresji źródeł i te same 226 z paczki;
 pełny lokalny CI oraz odbiór PR/main pozostają wymagane.
+[Przygotowanie canonical 100](ai09-development-preparation.md) zachowuje
+oryginalne źródła, natywne plany i wszystkie koszty. Odbiór rodziców przeszedł
+kontrole; rzeczywista generacja, fity 100 i pełna akceptacja pozostają otwarte.
 [Wynik dziewiątej próby 09.62](evidence/09-62-development-capacity-ninth-run.json)
 wiąże zweryfikowany artefakt [run 37853501527](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/37853501527).
 Receptura 1.9 zakończyła się `wall_limit`: **0/5 faz, 3600.53 s**,

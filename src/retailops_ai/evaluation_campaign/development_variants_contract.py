@@ -1,6 +1,8 @@
 """Complete three-variant preparation with explicit ordinary reuse and cold costs."""
 
-from typing import Annotated, Literal, Self
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
@@ -28,6 +30,12 @@ from retailops_ai.evaluation_campaign.development_profiles import (
 )
 from retailops_ai.evaluation_campaign.physical_contract import PhysicalSourceSpec
 
+if TYPE_CHECKING:
+    from retailops_ai.evaluation_campaign.canonical_development_contract import (
+        CanonicalDevelopmentPreparation,
+        ResolvedCanonicalDevelopmentPreparationProtocol,
+    )
+
 
 class OrdinaryDevelopmentReusePlan(Contract):
     version: Literal["ai09-ordinary-development-reuse-plan-1.0.0"] = (
@@ -51,7 +59,7 @@ class OrdinaryDevelopmentReusePlan(Contract):
 
 
 def variant_operations(
-    preparation: DevelopmentProfilePreparation,
+    preparation: DevelopmentProfilePreparation | CanonicalDevelopmentPreparation,
     reuse: OrdinaryDevelopmentReusePlan,
 ) -> tuple[CampaignOperationPlan, ...]:
     ordinary = preparation.sources[0]
@@ -100,47 +108,55 @@ class ResolvedDevelopmentPreparationProtocol(CampaignProtocol):
     @model_validator(mode="after")
     def freeze_scope(self) -> Self:
         self._frozen_policies()
-        preparation = self.planned.preparation
-        if (
-            any(
-                getattr(self, k) != getattr(self.bootstrap, k)
-                for k in DevelopmentPlanningContext.model_fields
-            )
-            or self.bootstrap.content_sha256() != self.reuse.bootstrap_protocol_sha256
-            or self.generated.protocol_sha256 != self.bootstrap.content_sha256()
-            or self.planned.protocol_sha256 != self.bootstrap.content_sha256()
-            or self.generated.content_sha256() != self.reuse.generated_receipt_sha256
-            or self.planned.content_sha256() != self.reuse.planning_receipt_sha256
-            or self.generated.content_sha256() != self.planned.generation_receipt_sha256
-            or self.generated.source.parent.source_dataset_id != self.planned.source_dataset_id
-            or self.generated.runtime != self.runtime
-            or self.planned.runtime != self.runtime
-            or self.generated.operation_id != self.bootstrap.operations[0].operation_id
-            or self.planned.operation_id != self.bootstrap.operations[1].operation_id
-            or self.planned.planning_sha256 != self.bootstrap.planning.content_sha256()
-            or self.planned.producer_planner_sha256
-            != self.bootstrap.planning.producer_planner_sha256
-            or preparation.sources[0] != self.bootstrap.sources[0]
-            or preparation.generations[0] != self.bootstrap.generation
-            or self.sources != preparation.sources
-            or self.operations != variant_operations(preparation, self.reuse)
-            or self.planning_cost.peak_process_tree_rss_bytes is None
-            or self.planning_cost.artifact_bytes is None
-        ):
-            raise ValueError("resolved_development_frozen_bootstrap_or_variant_mismatch")
-        for resources in (self.reuse.resources, *(g.resources for g in preparation.generations)):
-            if (
-                resources.wall_seconds > self.maximum_total_wall_seconds
-                or resources.tree_rss_bytes > 12 * 1024**3
-                or resources.scratch_bytes > 8 * 1024**3
-                or resources.minimum_available_memory_bytes < 1024**3
-                or resources.minimum_free_disk_bytes < 6 * 1024**3
-            ):
-                raise ValueError("resolved_development_resource_ceiling")
+        validate_resolved_variant_scope(self)
         return self
 
     def cold_wall_seconds(self) -> float:
         return self.planned.generation_cost.wall_seconds + self.planning_cost.wall_seconds
+
+
+def validate_resolved_variant_scope(
+    protocol: ResolvedDevelopmentPreparationProtocol
+    | ResolvedCanonicalDevelopmentPreparationProtocol,
+) -> None:
+    """Bind original bootstrap, resolved plans and cold costs for either source wire."""
+    preparation = protocol.planned.preparation
+    if (
+        any(
+            getattr(protocol, k) != getattr(protocol.bootstrap, k)
+            for k in DevelopmentPlanningContext.model_fields
+        )
+        or protocol.bootstrap.content_sha256() != protocol.reuse.bootstrap_protocol_sha256
+        or protocol.generated.protocol_sha256 != protocol.bootstrap.content_sha256()
+        or protocol.planned.protocol_sha256 != protocol.bootstrap.content_sha256()
+        or protocol.generated.content_sha256() != protocol.reuse.generated_receipt_sha256
+        or protocol.planned.content_sha256() != protocol.reuse.planning_receipt_sha256
+        or protocol.generated.content_sha256() != protocol.planned.generation_receipt_sha256
+        or protocol.generated.source.parent.source_dataset_id != protocol.planned.source_dataset_id
+        or protocol.generated.runtime != protocol.runtime
+        or protocol.planned.runtime != protocol.runtime
+        or protocol.generated.operation_id != protocol.bootstrap.operations[0].operation_id
+        or protocol.planned.operation_id != protocol.bootstrap.operations[1].operation_id
+        or protocol.planned.planning_sha256 != protocol.bootstrap.planning.content_sha256()
+        or protocol.planned.producer_planner_sha256
+        != protocol.bootstrap.planning.producer_planner_sha256
+        or preparation.sources[0] != protocol.bootstrap.sources[0]
+        or preparation.generations[0] != protocol.bootstrap.generation
+        or protocol.sources != preparation.sources
+        or protocol.operations != variant_operations(preparation, protocol.reuse)
+        or protocol.planning_cost.peak_process_tree_rss_bytes is None
+        or protocol.planning_cost.artifact_bytes is None
+    ):
+        raise ValueError("resolved_development_frozen_bootstrap_or_variant_mismatch")
+    for resources in (protocol.reuse.resources, *(g.resources for g in preparation.generations)):
+        if (
+            resources.wall_seconds > protocol.maximum_total_wall_seconds
+            or resources.tree_rss_bytes > 12 * 1024**3
+            or resources.scratch_bytes > 8 * 1024**3
+            or resources.minimum_available_memory_bytes < 1024**3
+            or resources.minimum_free_disk_bytes < 6 * 1024**3
+        ):
+            raise ValueError("resolved_development_resource_ceiling")
 
 
 class ResolvedDevelopmentPreparationJournal(CampaignJournal):
