@@ -1,5 +1,6 @@
 """Freeze the complete original development program before its first Source operation."""
 
+import json
 from pathlib import Path
 from typing import Annotated, Literal, Self
 
@@ -74,3 +75,28 @@ class DevelopmentWorkflowOptions(Contract):
             ) != second.model_dump(exclude={"name", *varying}):
                 raise ValueError("development_workflow_two_original_distinct_recipes_per_family")
         return self
+
+
+class QualifiedDevelopmentWorkflowOptions(DevelopmentWorkflowOptions):
+    """Freeze all 51 operations before Source, including separate calibration cost."""
+
+    version: Literal["ai09-qualified-development-workflow-options-1.0.0"] = (
+        "ai09-qualified-development-workflow-options-1.0.0"  # type: ignore[assignment]
+    )
+    maximum_forecast_operations: Literal[36] = 36  # type: ignore[assignment]
+    maximum_calibrator_fit_attempts: Literal[1] = 1
+    qualification_scope: Literal["ordinary_demand_physical_after_original_calibration"] = (
+        "ordinary_demand_physical_after_original_calibration"
+    )
+
+
+def parse_development_workflow_options(raw: str | bytes) -> DevelopmentWorkflowOptions:
+    value = json.loads(raw)
+    if not isinstance(value, dict):
+        raise ValueError("development_workflow_options_object_required")
+    kind = (
+        QualifiedDevelopmentWorkflowOptions
+        if value.get("version") == "ai09-qualified-development-workflow-options-1.0.0"
+        else DevelopmentWorkflowOptions
+    )
+    return kind.model_validate_json(raw)

@@ -10,7 +10,7 @@ from retailops_ai.evaluation_campaign.development_policy_freeze import (
 )
 from retailops_ai.evaluation_campaign.development_workflow import run_development_workflow
 from retailops_ai.evaluation_campaign.development_workflow_contract import (
-    DevelopmentWorkflowOptions,
+    parse_development_workflow_options,
 )
 from retailops_ai.source_snapshot.files import read_bytes
 
@@ -21,9 +21,9 @@ def main() -> None:
     parser.add_argument("--root", required=True, type=Path)
     parser.add_argument("--options", required=True, type=Path)
     parser.add_argument("--policies", required=True, type=Path)
-    parser.add_argument("--maximum-new-operations", type=int, default=43, choices=range(1, 44))
+    parser.add_argument("--maximum-new-operations", type=int, choices=range(1, 52))
     args = parser.parse_args()
-    options = DevelopmentWorkflowOptions.model_validate_json(
+    options = parse_development_workflow_options(
         read_bytes(args.options.parent, args.options.name, 65536)
     )
     policies = load_frozen_development_policies(args.policies)

@@ -42,6 +42,7 @@ from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
     CampaignForecastPortfolioRobustEvaluationReceipt,
     CampaignForecastRequiredGroupEvaluationReceipt,
     CampaignForecastRobustEvaluationReceipt,
+    CanonicalQualificationEvaluationReceipt,
 )
 from retailops_ai.evaluation_campaign.campaign_score_contract import CampaignForecastScoreReceipt
 from retailops_ai.evaluation_campaign.campaign_tune_contract import CampaignForecastTuneReceipt
@@ -70,6 +71,16 @@ from retailops_ai.source_snapshot.files import (
 )
 
 MAX_RECEIPT_BYTES = 512 * 1024
+
+
+def receipt_size_limit(receipt: object) -> int:
+    # The versioned qualification receipt embeds verified 25/50/100 ancestry.
+    # Keep the established small-receipt limit for every earlier wire version.
+    return (
+        8 * 1024**2
+        if isinstance(receipt, CanonicalQualificationEvaluationReceipt)
+        else MAX_RECEIPT_BYTES
+    )
 
 
 def _operation(ledger: CampaignJournal, operation_id: str) -> CampaignOperationPlan:
@@ -207,7 +218,7 @@ def _store_receipt(
 ) -> None:
     """Keep output evidence durable before completing the charged operation."""
     raw = canonical_bytes(receipt.model_dump(mode="json")) + b"\n"
-    if len(raw) > MAX_RECEIPT_BYTES:
+    if len(raw) > receipt_size_limit(receipt):
         raise SnapshotError("campaign_export_receipt_size_limit")
     directory = root / "receipts"
     try:

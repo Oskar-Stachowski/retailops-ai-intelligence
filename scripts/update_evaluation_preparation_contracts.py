@@ -60,6 +60,7 @@ from retailops_ai.evaluation_campaign.campaign_portfolio_contract import (
 )
 from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract import (
     CampaignPortfolioForecastEvaluationBinding,
+    CanonicalQualificationEvaluationBinding,
 )
 from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
     CampaignPortfolioRequiredGroupPolicy,
@@ -73,6 +74,7 @@ from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
     CampaignForecastPortfolioRobustEvaluationReceipt,
     CampaignForecastRequiredGroupEvaluationReceipt,
     CampaignForecastRobustEvaluationReceipt,
+    CanonicalQualificationEvaluationReceipt,
 )
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
     CampaignForecastRawPrediction,
@@ -125,6 +127,14 @@ from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
     PreparedCanonicalForecastJournal,
     PreparedCanonicalForecastProtocol,
 )
+from retailops_ai.evaluation_campaign.canonical_qualification import (
+    CanonicalQualificationPlan,
+    PreparedCanonicalQualificationJournal,
+    PreparedCanonicalQualificationProtocol,
+)
+from retailops_ai.evaluation_campaign.canonical_qualification_execution_contract import (
+    CanonicalQualificationExecutionResult,
+)
 from retailops_ai.evaluation_campaign.contract import EvaluationPreparation, PreparationManifest
 from retailops_ai.evaluation_campaign.development_advancement_contract import (
     CompletedForecastAdvancement,
@@ -172,6 +182,7 @@ from retailops_ai.evaluation_campaign.development_variants_contract import (
 )
 from retailops_ai.evaluation_campaign.development_workflow_contract import (
     DevelopmentWorkflowOptions,
+    QualifiedDevelopmentWorkflowOptions,
 )
 from retailops_ai.evaluation_campaign.label_contract import (
     ForecastOutcomeReadProtocol,
@@ -911,6 +922,27 @@ def main() -> int:
     else:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(raw)
+    for name, qualification_model in (
+        ("qualified_development_workflow_options", QualifiedDevelopmentWorkflowOptions),
+        ("canonical_qualification_plan", CanonicalQualificationPlan),
+        ("prepared_canonical_qualification_protocol", PreparedCanonicalQualificationProtocol),
+        ("prepared_canonical_qualification_journal", PreparedCanonicalQualificationJournal),
+        ("canonical_qualification_evaluation_binding", CanonicalQualificationEvaluationBinding),
+        ("canonical_qualification_evaluation_receipt", CanonicalQualificationEvaluationReceipt),
+        ("canonical_qualification_execution_result", CanonicalQualificationExecutionResult),
+    ):
+        schema = qualification_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:41.0.0"
+        path = ROOT / "contracts/evaluation/v41" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Canonical qualification contract differs: " + name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
     for name, stockout_model in (
         ("stockout_full_preprocessing", CampaignStockoutPreprocessing),
         ("stockout_full_risk_pipeline", CampaignStockoutRiskPipeline),

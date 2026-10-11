@@ -25,6 +25,7 @@ from retailops_ai.evaluation_campaign.campaign_evaluation_contract import (
     CampaignForecastTrialBinding,
     CampaignForecastTrialPrediction,
 )
+from retailops_ai.evaluation_campaign.campaign_evaluation_metadata import read
 from retailops_ai.evaluation_campaign.campaign_evaluation_metrics import (
     EvaluationSegment,
     ForecastMetrics,
@@ -38,10 +39,10 @@ from retailops_ai.evaluation_campaign.campaign_final_contract import (
 )
 from retailops_ai.evaluation_campaign.campaign_fit_contract import CampaignForecastFitReceipt
 from retailops_ai.evaluation_campaign.campaign_forecast_inference import infer_functionals
-from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
-from retailops_ai.evaluation_campaign.campaign_portfolio_contract import CampaignPortfolioProtocol
+from retailops_ai.evaluation_campaign.campaign_generation_worker import write
+from retailops_ai.evaluation_campaign.campaign_portfolio_contract import parse_portfolio_protocol
 from retailops_ai.evaluation_campaign.campaign_portfolio_evaluation_contract import (
-    CampaignPortfolioForecastEvaluationBinding,
+    parse_portfolio_evaluation_binding,
 )
 from retailops_ai.evaluation_campaign.campaign_raw_context import RawContextPass
 from retailops_ai.evaluation_campaign.campaign_required_group_recipe import (
@@ -145,7 +146,7 @@ def _configuration(
     )
     binding_raw = request.get("portfolio_binding")
     binding = (
-        CampaignPortfolioForecastEvaluationBinding.model_validate_json(canonical_bytes(binding_raw))
+        parse_portfolio_evaluation_binding(canonical_bytes(binding_raw))
         if binding_raw is not None
         else None
     )
@@ -516,7 +517,7 @@ def finalize(
         required_group_policy = parse_required_group_policy(
             canonical_bytes(request["required_group_policy"])
         )
-        portfolio_protocol = CampaignPortfolioProtocol.model_validate_json(
+        portfolio_protocol = parse_portfolio_protocol(
             canonical_bytes(request["portfolio_protocol"])
         )
         required_group_policy.bind(portfolio_protocol)

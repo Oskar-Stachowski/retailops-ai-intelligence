@@ -19,6 +19,7 @@ from retailops_ai.evaluation_campaign.campaign_portfolio_contract import (
     VARIANTS,
     CampaignPortfolioProtocol,
     SourceVariant,
+    parse_portfolio_protocol,
 )
 from retailops_ai.evaluation_campaign.campaign_required_group_contract import (
     CampaignPortfolioRequiredGroupPolicy,
@@ -85,7 +86,7 @@ class CampaignRequiredGroupRecipe(Contract):
 
     def bind(self, protocol: CampaignPortfolioProtocol) -> None:
         self = type(self).model_validate_json(self.model_dump_json())
-        protocol = CampaignPortfolioProtocol.model_validate_json(protocol.model_dump_json())
+        protocol = parse_portfolio_protocol(protocol.model_dump_json().encode())
         if (
             self.content_sha256() != protocol.selection_policy_sha256
             or self.segment_policy.content_sha256() != protocol.segment_policy_sha256
@@ -99,7 +100,7 @@ class CampaignRequiredGroupRecipe(Contract):
         census: CampaignForecastSegmentCensus,
     ) -> frozenset[GroupID]:
         self = type(self).model_validate_json(self.model_dump_json())
-        protocol = CampaignPortfolioProtocol.model_validate_json(protocol.model_dump_json())
+        protocol = parse_portfolio_protocol(protocol.model_dump_json().encode())
         self.bind(protocol)
         original = next(
             (s for s in protocol.sources if s.content_sha256() == plan.source_recipe_sha256), None

@@ -129,6 +129,9 @@ def prepared_screening_prefix(
     from retailops_ai.evaluation_campaign.canonical_forecast_contract import (
         PreparedCanonicalForecastProtocol,
     )
+    from retailops_ai.evaluation_campaign.canonical_qualification import (
+        PreparedCanonicalQualificationProtocol,
+    )
     from retailops_ai.evaluation_campaign.development_advancement_contract import (
         PreparedForecastAdvancementProtocol,
     )
@@ -136,6 +139,8 @@ def prepared_screening_prefix(
         PreparedDevelopmentSelectionProtocol,
     )
 
+    if isinstance(protocol, PreparedCanonicalQualificationProtocol):
+        return protocol.qualification.prefix
     if isinstance(
         protocol, (PreparedForecastAdvancementProtocol, PreparedCanonicalForecastProtocol)
     ):

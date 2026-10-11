@@ -24,6 +24,9 @@ from retailops_ai.evaluation_campaign import source_preparation as source
 from retailops_ai.evaluation_campaign.campaign_contract import CampaignCost
 from retailops_ai.evaluation_campaign.campaign_fit import validate_completed_fit
 from retailops_ai.evaluation_campaign.canonical_forecast_contract import CompletedCanonicalForecast
+from retailops_ai.evaluation_campaign.canonical_qualification import (
+    PreparedCanonicalQualificationProtocol,
+)
 from retailops_ai.evaluation_campaign.development_advancement_contract import (
     MultiscaleSelectionProtocol,
 )
@@ -31,6 +34,7 @@ from retailops_ai.evaluation_campaign.development_search import ForecastSearchRe
 from retailops_ai.evaluation_campaign.development_workflow_contract import (
     DevelopmentWorkflowOptions,
     ForecastWorkflowResources,
+    QualifiedDevelopmentWorkflowOptions,
 )
 from retailops_ai.evaluation_campaign.preparation_execution import locked
 from retailops_ai.forecasting.model_contract import HGBConfig, RFConfig
@@ -39,7 +43,7 @@ from retailops_ai.tensorflow_challenger.pipeline import environment_lock
 
 
 @pytest.fixture
-def program(source_setup, monkeypatch):  # noqa: F811 -- imported pytest fixture
+def program(source_setup, monkeypatch, request):  # noqa: F811 -- imported pytest fixture
     root, source_options, policies, state = source_setup
     resources = source_options.generation_resources.model_copy(update={"wall_seconds": 1200})
     recipes = (
@@ -58,7 +62,12 @@ def program(source_setup, monkeypatch):  # noqa: F811 -- imported pytest fixture
             for i in (1, 2)
         ),
     )
-    options = DevelopmentWorkflowOptions(
+    options_class = (
+        QualifiedDevelopmentWorkflowOptions
+        if getattr(request, "param", None) == "qualified"
+        else DevelopmentWorkflowOptions
+    )
+    options = options_class(
         source=source_options,
         recipes=recipes,
         worker_python="/declared-model-python",
@@ -86,6 +95,8 @@ def program(source_setup, monkeypatch):  # noqa: F811 -- imported pytest fixture
         prefix = (
             protocol.screening if isinstance(protocol, MultiscaleSelectionProtocol) else protocol
         )
+        if isinstance(protocol, PreparedCanonicalQualificationProtocol):
+            prefix = protocol.qualification.prefix
         position = next(i for i, p in enumerate(prefix.exports) if p == kwargs["plan"])
         prepared = json.loads(
             (kwargs["journal"].parent / "source/source-preparation-result.json").read_bytes()
@@ -139,6 +150,7 @@ def program(source_setup, monkeypatch):  # noqa: F811 -- imported pytest fixture
                 kwargs["exported"],
                 kwargs["fits"],
             ),
+            calibration_horizons=state.get("calibration_horizons", 1),
         )
         state["forecast"].append(kwargs["operation_id"])
         return scorer.score_campaign_forecast(dataset, bundles, worker_python, output, **kwargs)

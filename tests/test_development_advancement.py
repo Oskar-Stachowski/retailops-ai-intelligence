@@ -1,6 +1,7 @@
 """Real journals/controllers, declared Source and model doubles; no Project evidence."""
 
 import hashlib
+from datetime import timedelta
 from pathlib import Path
 
 import pytest
@@ -28,6 +29,9 @@ from retailops_ai.evaluation_campaign.campaign_portfolio_contract import parse_c
 from retailops_ai.evaluation_campaign.campaign_score_contract import FAMILIES
 from retailops_ai.evaluation_campaign.campaign_score_metrics import RawMetrics
 from retailops_ai.evaluation_campaign.campaign_tune_data import choose
+from retailops_ai.evaluation_campaign.canonical_qualification import (
+    PreparedCanonicalQualificationProtocol,
+)
 from retailops_ai.evaluation_campaign.development_advancement_contract import (
     ForecastScaleBudget,
     MultiscaleSelectionJournal,
@@ -44,6 +48,7 @@ from retailops_ai.evaluation_campaign.development_screening_selection_contract i
     freeze_screening_selection,
 )
 from retailops_ai.evaluation_campaign.partitions import membership_key
+from retailops_ai.forecasting.contract import make_origin
 from retailops_ai.source_snapshot.files import SnapshotError
 from retailops_ai.tensorflow_challenger.pipeline import environment_lock
 
@@ -52,18 +57,34 @@ def trial_values(operation):
     return forecasts(10.1, 10.2, 10.9) if operation.endswith("2") else forecasts(10.0, 10.8, 10.3)
 
 
-def full_score_phases(monkeypatch, value):
+def full_score_phases(monkeypatch, value, *, calibration_horizons=1):
     root, _, _, plan, exported, fits = value
     operation = next(
         o.operation_id
         for o in journal.inspect(root).protocol.operations
         if o.execution_recipe_sha256 == plan.content_sha256()
     )
-    rows = [prediction(i, trial_values(operation)) for i in range(100)]
+    rows = []
+    horizons = calibration_horizons if plan.role == "calibration" else 1
+    for horizon in range(1, horizons + 1):
+        for i in range(100):
+            row = prediction(i, trial_values(operation))
+            rows.append(
+                row.model_copy(
+                    update={
+                        "role": plan.role,
+                        "horizon_days": horizon,
+                        "forecast_origin": make_origin(
+                            row.target_date - timedelta(days=horizon)
+                        ).forecast_origin,
+                    }
+                )
+            )
+    rows.sort(key=membership_key)
     keys = hashlib.sha256(b"".join(membership_key(row) + b"\n" for row in rows)).hexdigest()
     population = dict(
-        rows=100,
-        eligible_rows=100,
+        rows=len(rows),
+        eligible_rows=len(rows),
         keys_sha256=keys,
         eligible_keys_sha256=keys,
         role_population_sha256="2" * 64,
@@ -102,7 +123,11 @@ def full_score_phases(monkeypatch, value):
 
 def paired_selection_worker(monkeypatch, root, scores, exported):
     protocol = journal.inspect(root).protocol
-    plan = protocol.selection_plan
+    plan = (
+        protocol.qualification.prefix.selection_plan
+        if isinstance(protocol, PreparedCanonicalQualificationProtocol)
+        else protocol.selection_plan
+    )
 
     def monitor(command, **kwargs):
         folder = kwargs["root"]
