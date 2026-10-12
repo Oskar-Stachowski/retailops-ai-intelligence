@@ -76,6 +76,10 @@ from retailops_ai.evaluation_campaign.campaign_robust_receipt import (
     CampaignForecastRobustEvaluationReceipt,
     CanonicalQualificationEvaluationReceipt,
 )
+from retailops_ai.evaluation_campaign.campaign_role_protocol import (
+    RoleAwareCampaignJournal,
+    RoleAwareCampaignProtocol,
+)
 from retailops_ai.evaluation_campaign.campaign_score_contract import (
     CampaignForecastRawPrediction,
     CampaignForecastScorePlan,
@@ -1073,6 +1077,22 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text() != raw:
                 print("Stockout role artifact contract differs:", name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
+    for name, role_protocol_model in (
+        ("role_aware_campaign_protocol", RoleAwareCampaignProtocol),
+        ("role_aware_campaign_journal", RoleAwareCampaignJournal),
+    ):
+        schema = role_protocol_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:50.0.0"
+        path = ROOT / "contracts/evaluation/v50" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Role-aware campaign contract differs:", name)
                 return 1
         else:
             path.parent.mkdir(parents=True, exist_ok=True)

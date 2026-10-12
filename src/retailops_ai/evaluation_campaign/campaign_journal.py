@@ -106,6 +106,12 @@ def _runtime(ledger: CampaignJournal) -> None:
 
 
 def initialize(root: Path, protocol: CampaignProtocol) -> CampaignJournal:
+    if hasattr(protocol, "role_protocol_version"):
+        from retailops_ai.evaluation_campaign.campaign_role_protocol import (
+            RoleAwareCampaignProtocol,
+        )
+
+        protocol = RoleAwareCampaignProtocol.model_validate(protocol.model_dump(mode="python"))
     protocol = parse_campaign_protocol(canonical_bytes(protocol.model_dump(mode="json")))
     if protocol.journal_path != str(root.absolute()):
         raise SnapshotError("campaign_journal_location_mismatch")

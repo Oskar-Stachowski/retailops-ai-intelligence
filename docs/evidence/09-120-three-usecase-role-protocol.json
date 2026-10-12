@@ -1,0 +1,232 @@
+{
+  "recorded_at_utc": "2026-10-12T07:04:02.549279+00:00",
+  "scope": "Additive role-aware full-portfolio declaration and real durable journal on controlled metadata. No physical Project execution, actual models, capacity or quality acceptance.",
+  "source": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 43.38246345799416,
+    "sampled_tree_peak_rss_bytes": 160989184,
+    "sampled_worker_cpu_seconds": 40.452700114,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 152182,
+    "sampled_peak_scratch_allocated_bytes": 167936,
+    "minimum_free_disk_bytes": 23565152256,
+    "minimum_available_memory_bytes": 1274068992,
+    "samples": 388,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  },
+  "source_pytest": {
+    "tests": "84",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "38.385"
+  },
+  "installed": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 54.13231200003065,
+    "sampled_tree_peak_rss_bytes": 141508608,
+    "sampled_worker_cpu_seconds": 50.374256352,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 13639,
+    "sampled_peak_scratch_allocated_bytes": 24576,
+    "minimum_free_disk_bytes": 23431024640,
+    "minimum_available_memory_bytes": 1285423104,
+    "samples": 477,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "source_and_control_pins_unchanged": true,
+    "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+  },
+  "installed_pytest": {
+    "tests": "84",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "53.567"
+  },
+  "package": {
+    "same_test_case_inventory": true,
+    "tests_per_suite": 84,
+    "controlled_25_50_setups_per_suite": 0,
+    "source_pins_unchanged": true
+  },
+  "wheel": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 3092655,
+    "sha256": "0bbe873882a42fc4e31b60251e69c74cd435aafac728cdb704a6de578a74e4e4",
+    "python_modules_equal": 675,
+    "new_contract_files_equal": 55,
+    "private_files_absent": true
+  },
+  "compatibility": {
+    "base": "2094eda7b4586ee811f2c0cae71d0a811e59119f",
+    "closed_ai08_stockout_modules_unchanged": 129,
+    "earlier_contracts_unchanged": 421,
+    "method": "Exact Git blob identity; original journal wire schemas unchanged despite shared inventory helper extraction."
+  },
+  "prior_failed_controls": [
+    {
+      "monitor": {
+        "status": "failed",
+        "reason": "worker_exit",
+        "exit_code": 1,
+        "wall_seconds": 7.700265541963745,
+        "sampled_tree_peak_rss_bytes": 189284352,
+        "sampled_worker_cpu_seconds": 6.362771521000001,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 140237,
+        "sampled_peak_scratch_allocated_bytes": 151552,
+        "minimum_free_disk_bytes": 23740841984,
+        "minimum_available_memory_bytes": 1361117184,
+        "samples": 72,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 268435456,
+        "code_pins_unchanged": true
+      },
+      "reason": "4Mypy errors: direct decorated-validator invocation and inferred untyped role tuples",
+      "fix": "Validate original typed operation fields and reuse extracted nondecorated development-inventory helper; annotate fitting role tuples"
+    },
+    {
+      "monitor": {
+        "status": "failed",
+        "reason": "worker_exit",
+        "exit_code": 1,
+        "wall_seconds": 5.433335416018963,
+        "sampled_tree_peak_rss_bytes": 182878208,
+        "sampled_worker_cpu_seconds": 4.230372259999999,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 142256,
+        "sampled_peak_scratch_allocated_bytes": 155648,
+        "minimum_free_disk_bytes": 23734444032,
+        "minimum_available_memory_bytes": 1551712256,
+        "samples": 51,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 268435456,
+        "code_pins_unchanged": true
+      },
+      "reason": "Test collection import used wrong existing fixture-helper name",
+      "fix": "Alias actual document helper; no production checks removed"
+    }
+  ],
+  "verified": {
+    "shared_five_windows": true,
+    "explicit_actual_read_roles": true,
+    "stockout_six_bases_and_twenty_four_C_trials": true,
+    "one_attempt_no_refunds": true,
+    "all_thirty_outcomes_before_selection": true,
+    "unresolved_base_blocks_calibrator_reservation": true,
+    "failed_base_cannot_complete_calibrator": true,
+    "original_cost_phase_final_freeze_and_complete_portfolio_guards_retained": true,
+    "old_started_journal_cannot_be_extended": true,
+    "python_bool_rejected_before_json_and_initialize_IO": true,
+    "maturity_uses_original_Source_label_delay": true
+  },
+  "controlled_journal_scope": {
+    "declared_operations": 99,
+    "fit_or_calibrator_reservations": 35,
+    "real_data_generations": 0,
+    "real_model_fits": 0,
+    "costs": "explicit test fixtures, not measured model costs",
+    "completion_is_not_quality_or_freshness_evidence": true
+  },
+  "remaining": [
+    "Compile this version into the existing25/50/100 outer workflow before any Project operation",
+    "Bind actual execution recipes and physical role readers to shared windows; declarations alone do not prove read enforcement",
+    "Execute all reserved native trials, original-artifact selection and stockout/anomaly assessments",
+    "Freeze whole-three-use-case runtime, accept full representative25/50 before canonical",
+    "Actual campaign/final, MLflow/cards/lifecycle and exact PR/main acceptance"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "intermediate_83_case_acceptance": {
+    "source": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 39.41647804202512,
+      "sampled_tree_peak_rss_bytes": 180666368,
+      "sampled_worker_cpu_seconds": 37.127528587,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 152037,
+      "sampled_peak_scratch_allocated_bytes": 167936,
+      "minimum_free_disk_bytes": 23731617792,
+      "minimum_available_memory_bytes": 1531887616,
+      "samples": 364,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 268435456,
+      "code_pins_unchanged": true
+    },
+    "source_pytest": {
+      "tests": "83",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "35.011"
+    },
+    "installed": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 40.43622037500609,
+      "sampled_tree_peak_rss_bytes": 144211968,
+      "sampled_worker_cpu_seconds": 38.684868112000004,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 13331,
+      "sampled_peak_scratch_allocated_bytes": 24576,
+      "minimum_free_disk_bytes": 23636865024,
+      "minimum_available_memory_bytes": 1420935168,
+      "samples": 375,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "source_and_control_pins_unchanged": true,
+      "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+    },
+    "installed_pytest": {
+      "tests": "83",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "39.950"
+    },
+    "package": {
+      "same_test_case_inventory": true,
+      "tests_per_suite": 83,
+      "controlled_25_50_setups_per_suite": 0,
+      "source_pins_unchanged": true
+    },
+    "wheel": {
+      "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+      "bytes": 3092611,
+      "sha256": "bd514bc6c5b7c36584d59cdd289fbdf3e73fc2fc4ae2e3c14629ce1801545dd2",
+      "python_modules_equal": 675,
+      "new_contract_files_equal": 55,
+      "private_files_absent": true
+    }
+  },
+  "subsequent_source_delay_fix": {
+    "finding": "Shared-role default15day maturity did not yet bind actual Source label_delay_days>1. Rebound all Source identities and operations in regression to test actual missing constraint, not merely reject stale hashes.",
+    "prior83_source_and_installed_preserved": true,
+    "fix": "Revalidate full shared forecast chronology using original development Source label delay before source I/O. Original Source schemas unchanged.",
+    "new_expected_tests": 84
+  }
+}

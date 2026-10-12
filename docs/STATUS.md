@@ -1,5 +1,10 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: jawne role trzech zastosowań i pełne rezerwacje stockout.**
+[Nowy kontrakt i dziennik](ai09-three-usecase-role-protocol.md) zapisuje wspólne daty, różne okna kalibracji forecastingu i stockout oraz dokładne role odczytu. Wymaga sześciu baz i 24 kalibratorów stockout; odrzuca nieukończone zależności, udany kalibrator po błędzie bazy i ponowienia poza budżetem. **84 testy kodu i te same 84 z paczki przeszły**, bez pominięć. [09.120](evidence/09-120-three-usecase-role-protocol.json) zachowuje wcześniejsze błędy kontroli i poprawki. 675 modułów i 55 schematów mają zgodne bajty.
+
+To deklaracja i trwały dziennik. Powiązanie rzeczywistych planów i plików ról, kompilacja do workflow 25/50/100, wykonanie prób i ocen, pełna kampania, MLflow i lifecycle oraz odbiór PR/main pozostają wymagane. Nie uruchomiono danych ani modeli Project. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: prywatne pliki ról stockout i odczyt jednej populacji.**
 [Zapis ról](ai09-stockout-role-artifacts.md) zachowuje pełne członkostwo i osobne pliki kwalifikujących się obserwacji. Publikacja wymaga końcowego odbioru oryginalnych etykiet i wszystkich plików. Odczyt wybranej roli sprawdza cały jej plik, nie otwierając pozostałych etykiet. **94 testy kodu i te same 94 z paczki przeszły**, bez pominięć. [09.117](evidence/09-117-stockout-role-artifacts.json) zachowuje także pierwszy błąd typowania i jego poprawkę. 674 moduły i 53 schematy mają zgodne bajty. Połączono odebrane dojrzałe role i optymalizację końcowego odczytu rodziców; kod kontroli pozostał identyczny.
 
