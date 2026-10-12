@@ -1,0 +1,149 @@
+{
+  "recorded_at_utc": "2026-10-11T23:07:39.076941+00:00",
+  "scope": "Full original stockout maturity join and explicit five-role mapping. Source fixtures and installed package only; no Project or complete workflow acceptance.",
+  "source": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 726.9779902089504,
+    "sampled_tree_peak_rss_bytes": 183697408,
+    "sampled_worker_cpu_seconds": 704.151837898,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 160265,
+    "sampled_peak_scratch_allocated_bytes": 176128,
+    "minimum_free_disk_bytes": 28485488640,
+    "minimum_available_memory_bytes": 1225916416,
+    "samples": 6507,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  },
+  "source_pytest": {
+    "tests": "142",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "722.770"
+  },
+  "installed": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 696.9463150000083,
+    "sampled_tree_peak_rss_bytes": 145981440,
+    "sampled_worker_cpu_seconds": 685.214466048,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 22313,
+    "sampled_peak_scratch_allocated_bytes": 32768,
+    "minimum_free_disk_bytes": 28008017920,
+    "minimum_available_memory_bytes": 1320910848,
+    "samples": 6213,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "source_and_control_pins_unchanged": true,
+    "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+  },
+  "installed_pytest": {
+    "tests": "142",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "696.413"
+  },
+  "package": {
+    "same_test_case_inventory": true,
+    "tests_per_suite": 142,
+    "controlled_25_50_setups_per_suite": 0,
+    "source_pins_unchanged": true
+  },
+  "wheel": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 3051554,
+    "sha256": "c52e1924d0db789e32fbf7d4cd9f7ac82639b283ec49c6982f0f2479301c62d0",
+    "python_modules_equal": 672,
+    "new_contract_files_equal": 50,
+    "private_files_absent": true
+  },
+  "compatibility": {
+    "base": "1542020c817a20fb15eaf26ab49f07e9da8eb6d8",
+    "closed_ai08_stockout_modules_unchanged": 129,
+    "earlier_contracts_unchanged": 417,
+    "checks": "Exact bytes against accepted composition base; no closed AI08 implementation or earlier contract changed."
+  },
+  "intermediate_control": {
+    "source": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 829.2981577499886,
+      "sampled_tree_peak_rss_bytes": 176390144,
+      "sampled_worker_cpu_seconds": 793.271527116,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 160047,
+      "sampled_peak_scratch_allocated_bytes": 176128,
+      "minimum_free_disk_bytes": 28606869504,
+      "minimum_available_memory_bytes": 1259307008,
+      "samples": 7333,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 268435456,
+      "code_pins_unchanged": true
+    },
+    "pytest": {
+      "tests": "139",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "820.106"
+    },
+    "status": "Intermediate139-case control superseded by final142; not installed acceptance",
+    "subsequent_fix": "Bind every actually consumed whole LabelPoint field to original replay receipt, retaining same-key label-substitution failures on all3 original Source cases."
+  },
+  "verified": {
+    "full_physical_key_join": true,
+    "full_consumption_and_successful_parent_exit_required": true,
+    "original_labels_preserved": true,
+    "same_key_label_payload_substitution_rejected": true,
+    "per_role_native_key_and_label_hash_parity": true,
+    "five_shared_development_windows": true,
+    "unavailable_or_already_stockout_outcomes_never_made_negative": true,
+    "purged_membership_preserved": true,
+    "synthetic_10001_row_stream_complete": true,
+    "synthetic_stream_is_Source_capacity_proof": false
+  },
+  "role_mapping": {
+    "train": "base_train",
+    "early_stopping": "calibrator_fit",
+    "tune": "recipe_selection",
+    "calibration": "threshold_assessment",
+    "development_evaluation": "development_evaluation"
+  },
+  "remaining": [
+    "Complete bounded private role artifact publication and selected-role loader",
+    "Introduce prospective all-three use-case protocol: legacy CampaignOperationPlan/OutcomePopulation do not authorize this stockout role mapping",
+    "Reserved native base/calibrator trials, original artifact selection and full assessment",
+    "Whole workflow/runtime freeze and representative25/50 before canonical",
+    "Actual development/fresh final, MLflow/cards/lifecycle and exact PR/main CI acceptance"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "journal_authorization_proven": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "publication_admission_1": {
+    "result": {
+      "worker_started": false,
+      "elapsed_seconds": 301.32704016700154
+    },
+    "worker_started": false,
+    "reason": "Not enough free memory for384MiB tree plus1GiB reserve and32MiB margin; no scanner or check started",
+    "followup": "Full unchanged repository, Git history and directory scan with Go scheduler1 and soft memory target128MiB, supervised tree256MiB; system1GiB and disk6GiB reserves retained. No scan paths/commits/rules omitted."
+  }
+}
