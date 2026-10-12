@@ -1,0 +1,111 @@
+{
+  "recorded_at_utc": "2026-10-11T22:34:11.651679+00:00",
+  "scope": "Complete combined full stockout label and assessment source/installed controls plus removal of one redundant successful-exit whole-parent reseal. No full AI09 integration acceptance or Project campaign claimed.",
+  "source": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 628.739412416995,
+    "sampled_tree_peak_rss_bytes": 214384640,
+    "sampled_worker_cpu_seconds": 608.622394951,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 182804,
+    "sampled_peak_scratch_allocated_bytes": 192512,
+    "minimum_free_disk_bytes": 28787560448,
+    "minimum_available_memory_bytes": 1260027904,
+    "samples": 5689,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 402653184,
+    "code_pins_unchanged": true
+  },
+  "source_pytest": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "239",
+    "time": "623.884",
+    "timestamp": "2026-10-12T00:09:59.095834+02:00",
+    "hostname": "Oskars-MacBook-Air.local"
+  },
+  "installed": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 674.3515828339732,
+    "sampled_tree_peak_rss_bytes": 212697088,
+    "sampled_worker_cpu_seconds": 644.7973826560001,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 37268,
+    "sampled_peak_scratch_allocated_bytes": 45056,
+    "minimum_free_disk_bytes": 28586020864,
+    "minimum_available_memory_bytes": 1259307008,
+    "samples": 5951,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "source_and_control_pins_unchanged": true,
+    "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+  },
+  "installed_pytest": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "239",
+    "time": "673.753",
+    "timestamp": "2026-10-12T00:21:31.174157+02:00",
+    "hostname": "Oskars-MacBook-Air.local"
+  },
+  "package": {
+    "same_test_case_inventory": true,
+    "tests_per_suite": 239,
+    "controlled_25_50_setups_per_suite": 0,
+    "source_pins_unchanged": true
+  },
+  "wheel": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 3042021,
+    "sha256": "c2aeb0784ecd413fa5007797f5908fe25e25b9524af011482f4a73f8080d2adc",
+    "python_modules_equal": 670,
+    "new_contract_files_equal": 49,
+    "private_files_absent": true
+  },
+  "compatibility": {
+    "base": "dcc36e8e94191338740c0005d80da7e36da22518",
+    "closed_ai08_stockout_modules_unchanged": 129,
+    "earlier_contracts_unchanged": 416,
+    "checks": "Exact Git blob identity against integration base; no closed-AI08 module or earlier contract changed."
+  },
+  "optimization": {
+    "previous_final_parent_hash_calls": 8,
+    "current_final_parent_hash_calls": 4,
+    "verified_parents": [
+      "original snapshot",
+      "original curated",
+      "private snapshot",
+      "private curated"
+    ],
+    "all_three_exposed_Source_cases": true,
+    "unused_sales_fact_mutations_after_complete_consumption_rejected_for_all_four_parents": true,
+    "original_source_generator_exit_check_retained": true,
+    "receipt_only_after_successful_all_context_exit": true,
+    "full_profile_speedup_measured": false
+  },
+  "remaining": [
+    "Review other owner-exit duplicated checks separately; keep borrowed-context and pre-publication guards",
+    "Complete explicit stockout mature roles and original-artifact reserved trials/evaluation",
+    "Freeze whole three-use-case protocol/runtime before any Project operation",
+    "Full representative25/50 data-to-report and live progress acceptance before next canonical",
+    "Actual full development/fresh final, MLflow/cards/lifecycle, exact PR and main acceptance"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "quality_qualified": false,
+  "stage_ready": false
+}
