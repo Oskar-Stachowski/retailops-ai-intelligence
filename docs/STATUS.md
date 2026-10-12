@@ -1,5 +1,12 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: pojedynczy pełny końcowy odczyt rodziców publicznych.**
+[Czytniki anomaly i stockout](ai09-parent-final-seals.md) pozostawiają końcowe sprawdzenie właścicielowi Source. Liczba pełnych odczytów przy zamknięciu spadła z ośmiu do czterech; wszystkie oryginały i prywatne kopie nadal podlegają kontroli przed udostępnieniem odbioru. Sześć pomiarów odczytów i 24 próby uszkodzenia plików potwierdzają tę granicę.
+
+**481 testów kodu i te same 481 testów z paczki przeszły**, bez pominięć. Mypy **808 plików**, zgodne bajty **675 modułów i 55 schematów**. [09.121](evidence/09-121-parent-final-seals.json) zachowuje kontrolę sprzed poprawki i jej sześć oczekiwanych błędów. To redukcja jednego przebiegu walidacji; nie zmierzono przyspieszenia całego profilu.
+
+Pełne połączenie trzech zastosowań, kampania, final, MLflow, lifecycle oraz odbiór PR/main pozostają wymagane. Nie uruchomiono nowych danych ani modeli Project. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: jawne role trzech zastosowań i pełne rezerwacje stockout.**
 [Nowy kontrakt i dziennik](ai09-three-usecase-role-protocol.md) zapisuje wspólne daty, różne okna kalibracji forecastingu i stockout oraz dokładne role odczytu. Wymaga sześciu baz i 24 kalibratorów stockout; odrzuca nieukończone zależności, udany kalibrator po błędzie bazy i ponowienia poza budżetem. **84 testy kodu i te same 84 z paczki przeszły**, bez pominięć. [09.120](evidence/09-120-three-usecase-role-protocol.json) zachowuje wcześniejsze błędy kontroli i poprawki. 675 modułów i 55 schematów mają zgodne bajty.
 
