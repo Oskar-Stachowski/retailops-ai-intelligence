@@ -1,0 +1,139 @@
+{
+  "recorded_at_utc": "2026-10-12T06:22:05.149087+00:00",
+  "scope": "Bounded private stockout role artifact publication, whole-artifact verification and separate chosen-role load. Existing exposed Source fixtures and synthetic role file; no Project operation or full workflow acceptance.",
+  "source": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 109.3433197910199,
+    "sampled_tree_peak_rss_bytes": 168083456,
+    "sampled_worker_cpu_seconds": 106.207047073,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 152957,
+    "sampled_peak_scratch_allocated_bytes": 167936,
+    "minimum_free_disk_bytes": 27953311744,
+    "minimum_available_memory_bytes": 1326710784,
+    "samples": 974,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  },
+  "source_pytest": {
+    "tests": "94",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "104.937"
+  },
+  "installed": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 105.03450879198499,
+    "sampled_tree_peak_rss_bytes": 155336704,
+    "sampled_worker_cpu_seconds": 102.71356928,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 14538,
+    "sampled_peak_scratch_allocated_bytes": 24576,
+    "minimum_free_disk_bytes": 27770605568,
+    "minimum_available_memory_bytes": 1369636864,
+    "samples": 939,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "source_and_control_pins_unchanged": true,
+    "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+  },
+  "installed_pytest": {
+    "tests": "94",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "104.624"
+  },
+  "package": {
+    "same_test_case_inventory": true,
+    "tests_per_suite": 94,
+    "controlled_25_50_setups_per_suite": 0,
+    "source_pins_unchanged": true
+  },
+  "wheel": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 3065573,
+    "sha256": "cc81f04df0e79dd2d51f7d91786a99037db28aeaf3991d9e87ef7009b85d4608",
+    "python_modules_equal": 674,
+    "new_contract_files_equal": 53,
+    "private_files_absent": true
+  },
+  "compatibility": {
+    "base": "3438e1582285cc7204fe3c0c1225bd358d5a0ae9",
+    "closed_ai08_stockout_modules_unchanged": 129,
+    "earlier_contracts_unchanged": 417,
+    "checks": "Exact Git blob identity against accepted optimized stockout composition. Includes all existing contracts."
+  },
+  "prior_failed_control": {
+    "monitor": {
+      "status": "failed",
+      "reason": "worker_exit",
+      "exit_code": 1,
+      "wall_seconds": 7.792600416985806,
+      "sampled_tree_peak_rss_bytes": 179077120,
+      "sampled_worker_cpu_seconds": 6.877542322,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 141934,
+      "sampled_peak_scratch_allocated_bytes": 151552,
+      "minimum_free_disk_bytes": 28032679936,
+      "minimum_available_memory_bytes": 1337163776,
+      "samples": 70,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 268435456,
+      "code_pins_unchanged": true
+    },
+    "failure": "12 Mypy typing errors in2files before pytest",
+    "fix": "Separate schema loop variable, explicit four-input tuple, separate manifest bytes, typed manifest and distinct compact/joined row variables; full schema/Ruff/Mypy807+94 controls passed after fix",
+    "failure_preserved": true
+  },
+  "verified": {
+    "all_original_memberships_preserved": true,
+    "only_eligible_full_rows_in_role_files": true,
+    "full_role_verification_before_publication": true,
+    "native_numeric_rows_and_original_label_hash_parity": true,
+    "all_six_files_including_empty_roles_verified": true,
+    "files_changed_after_read_rejected": true,
+    "selected_role_only_payload_reads": true,
+    "explicit_opt_in_before_IO": true,
+    "child_exit_failure_prevents_publication": true,
+    "private_permissions_0700_0600": true,
+    "synthetic_10001_role_records_read_without_sampling": true,
+    "synthetic_file_is_Source_capacity_proof": false,
+    "loader_whole_artifact_verified": false
+  },
+  "remaining": [
+    "Prospective all-three-use-case protocol with explicit dates/purposes and journal reservations",
+    "Reserved six base and24 conditional calibrator trials with costs and rejections",
+    "Original selected-artifact assessment without refitting and anomaly assessment",
+    "Whole workflow/runtime freeze and full representative25/50 acceptance before canonical",
+    "Actual development/fresh final, MLflow/cards/lifecycle and exact PR/main RequiredCI"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "journal_authorization_proven": false,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "accepted_dependency_composition": {
+    "maturity_commit": "605722193bd6fc34905ae347fd4904906ddeadf7",
+    "optimized_composition": "3438e1582285cc7204fe3c0c1225bd358d5a0ae9",
+    "merge_commit": "86dd086b8f32c69704fc65b39779fa3d0348cc61",
+    "all_python_control_pins_unchanged": true,
+    "source_tests": 94,
+    "installed_tests": 94,
+    "status_conflict": "Preserved entire optimized-composition status, including completed main CI; prepended only new maturity entry. First suffix assertion refused automatic write when existing historical body was changed."
+  }
+}

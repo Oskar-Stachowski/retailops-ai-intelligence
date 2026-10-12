@@ -1,5 +1,10 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: prywatne pliki ról stockout i odczyt jednej populacji.**
+[Zapis ról](ai09-stockout-role-artifacts.md) zachowuje pełne członkostwo i osobne pliki kwalifikujących się obserwacji. Publikacja wymaga końcowego odbioru oryginalnych etykiet i wszystkich plików. Odczyt wybranej roli sprawdza cały jej plik, nie otwierając pozostałych etykiet. **94 testy kodu i te same 94 z paczki przeszły**, bez pominięć. [09.117](evidence/09-117-stockout-role-artifacts.json) zachowuje także pierwszy błąd typowania i jego poprawkę. 674 moduły i 53 schematy mają zgodne bajty. Połączono odebrane dojrzałe role i optymalizację końcowego odczytu rodziców; kod kontroli pozostał identyczny.
+
+Wspólny protokół trzech zastosowań i rezerwacje, treningi, wybór oryginalnych artefaktów, pełna ocena oraz właściwa kampania, MLflow i lifecycle pozostają wymagane. Ten komponent nie dowodzi uprawnień dziennika, jakości ani wydajności pełnego profilu. Odbiór PR/main pozostaje otwarty. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: pełne dojrzałe role stockout i kontrola każdej etykiety.**
 [Adapter ról](ai09-stockout-mature-roles.md) zachowuje pełne członkostwo, oryginalne etykiety i pięć wspólnych okien development. Odbiór porównuje również całą treść każdej etykiety; podmiana przy zachowaniu klucza blokuje wynik. **142 testy źródeł i te same 142 z paczki przeszły**, bez pominięć. [09.116](evidence/09-116-stockout-mature-roles.json) zachowuje wcześniejsze 139 kontroli i późniejsze wzmocnienie. 672 moduły i 50 schematów mają zgodne bajty; 129 modułów AI 08 oraz 417 wcześniejszych kontraktów pozostaje niezmienionych.
 

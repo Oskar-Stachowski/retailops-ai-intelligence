@@ -108,6 +108,11 @@ from retailops_ai.evaluation_campaign.campaign_stockout_public_contract import (
 from retailops_ai.evaluation_campaign.campaign_stockout_qualification import (
     CampaignStockoutQualificationPolicy,
 )
+from retailops_ai.evaluation_campaign.campaign_stockout_role_contract import (
+    CampaignStockoutMembershipRecord,
+    CampaignStockoutRoleArtifactPlan,
+    CampaignStockoutRoleRow,
+)
 from retailops_ai.evaluation_campaign.campaign_stockout_training_contract import (
     CampaignStockoutConditionalRiskPipeline,
     CampaignStockoutConditionalSigmoid,
@@ -1055,6 +1060,23 @@ def main() -> int:
     else:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(raw)
+    for name, role_model in (
+        ("stockout_role_artifact_plan", CampaignStockoutRoleArtifactPlan),
+        ("stockout_role_membership_record", CampaignStockoutMembershipRecord),
+        ("stockout_role_record", CampaignStockoutRoleRow),
+    ):
+        schema = role_model.model_json_schema()
+        schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
+        schema["$id"] = f"urn:retailops:evaluation:{name}:49.0.0"
+        path = ROOT / "contracts/evaluation/v49" / (name + ".schema.json")
+        raw = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.check:
+            if not path.is_file() or path.read_text() != raw:
+                print("Stockout role artifact contract differs:", name)
+                return 1
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(raw)
     print("Evaluation preparation contract snapshots checked.")
     return 0
 
