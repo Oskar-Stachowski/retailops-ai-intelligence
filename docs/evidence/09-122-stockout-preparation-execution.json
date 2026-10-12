@@ -1,0 +1,257 @@
+{
+  "version": "ai09-stockout-preparation-execution-evidence-1.0.0",
+  "recorded_at_utc": "2026-10-12T08:40:29.839952+00:00",
+  "scope": "Audited stockout preparation controller plus actual three fresh worker phases on existing exposed Source fixtures. Journal tests use explicit cost and worker doubles. No real Project campaign, quality or capacity acceptance.",
+  "source": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 264.24555529200006,
+    "sampled_tree_peak_rss_bytes": 191594496,
+    "sampled_worker_cpu_seconds": 245.64422571999998,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 168095,
+    "sampled_peak_scratch_allocated_bytes": 184320,
+    "minimum_free_disk_bytes": 21458538496,
+    "minimum_available_memory_bytes": 1279066112,
+    "samples": 2331,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 335544320,
+    "code_pins_unchanged": true
+  },
+  "source_pytest": {
+    "tests": "162",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "258.600"
+  },
+  "installed": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 252.87416050001048,
+    "sampled_tree_peak_rss_bytes": 201310208,
+    "sampled_worker_cpu_seconds": 236.60447180499997,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 25334,
+    "sampled_peak_scratch_allocated_bytes": 36864,
+    "minimum_free_disk_bytes": 21319835648,
+    "minimum_available_memory_bytes": 1251590144,
+    "samples": 2238,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "source_and_control_pins_unchanged": true,
+    "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+  },
+  "installed_pytest": {
+    "tests": "162",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "252.257"
+  },
+  "package": {
+    "same_test_case_inventory": true,
+    "tests_per_suite": 162,
+    "controlled_25_50_setups_per_suite": 0,
+    "source_pins_unchanged": true
+  },
+  "wheel": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 3109434,
+    "sha256": "02c2c0c5603a402af9f6dbef6b7b4fe052a01b062a1f12d8e5f3055ce25391ab",
+    "python_modules_equal": 681,
+    "new_contract_files_equal": 57,
+    "private_files_absent": true
+  },
+  "compatibility": {
+    "base": "e617271c981cea922cf2331679357e1df52f4635",
+    "closed_ai08_stockout_modules_unchanged": 129,
+    "earlier_contracts_unchanged": 424,
+    "method": "Exact Git blob byte identity of all previous contracts and closed AI08 stockout Python modules."
+  },
+  "component_merge_identity": {
+    "parents": [
+      "9ed66d8cf39cd5acac1f687d5c129a5bc286a35c",
+      "8e2efd798ce4e4ccb4d9b1aa299940254204f14c"
+    ],
+    "base": "dcc36e8e94191338740c0005d80da7e36da22518",
+    "files_equal_to_accepted_components": 1601,
+    "new_execution_acceptance_claimed": false
+  },
+  "prior_failed_controls": [
+    {
+      "control": 1,
+      "monitor": {
+        "status": "failed",
+        "reason": "worker_exit",
+        "exit_code": 1,
+        "wall_seconds": 8.992013582959771,
+        "sampled_tree_peak_rss_bytes": 187465728,
+        "sampled_worker_cpu_seconds": 7.740864596,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 147826,
+        "sampled_peak_scratch_allocated_bytes": 163840,
+        "minimum_free_disk_bytes": 22109179904,
+        "minimum_available_memory_bytes": 1275494400,
+        "samples": 81,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 335544320,
+        "code_pins_unchanged": true
+      },
+      "pytest": {
+        "tests": "1",
+        "failures": "1",
+        "errors": "0",
+        "skipped": "0",
+        "time": "1.858"
+      },
+      "reason": "Fixture decoded strict tuple/date policy as Python JSON-shaped data; fixed typed JSON decoding, including controller worker role-plan result."
+    },
+    {
+      "control": 2,
+      "monitor": {
+        "status": "failed",
+        "reason": "worker_exit",
+        "exit_code": 1,
+        "wall_seconds": 7.403388249978889,
+        "sampled_tree_peak_rss_bytes": 176521216,
+        "sampled_worker_cpu_seconds": 5.994860525,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 149342,
+        "sampled_peak_scratch_allocated_bytes": 163840,
+        "minimum_free_disk_bytes": 22113722368,
+        "minimum_available_memory_bytes": 1273298944,
+        "samples": 67,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 335544320,
+        "code_pins_unchanged": true
+      },
+      "pytest": {
+        "tests": "1",
+        "failures": "1",
+        "errors": "0",
+        "skipped": "0",
+        "time": "1.813"
+      },
+      "reason": "Fixture changed only one of three shared Source configuration identities; all three identities and bindings now change consistently."
+    },
+    {
+      "control": 5,
+      "monitor": {
+        "status": "failed",
+        "reason": "worker_exit",
+        "exit_code": 1,
+        "wall_seconds": 12.262212792003993,
+        "sampled_tree_peak_rss_bytes": 188317696,
+        "sampled_worker_cpu_seconds": 10.732244703,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 147729,
+        "sampled_peak_scratch_allocated_bytes": 163840,
+        "minimum_free_disk_bytes": 21647622144,
+        "minimum_available_memory_bytes": 1290403840,
+        "samples": 110,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 335544320,
+        "code_pins_unchanged": true
+      },
+      "pytest": {
+        "tests": "10",
+        "failures": "1",
+        "errors": "0",
+        "skipped": "0",
+        "time": "7.332"
+      },
+      "reason": "Additional negative test used nonexistent max_snapshot_bytes field; corrected to actual max_parent_bytes. This fixture error did not exercise production acceptance."
+    }
+  ],
+  "prior_admission_refusal": {
+    "worker_started": false,
+    "elapsed_seconds": 301.3104894999997
+  },
+  "earlier_44_case_control": {
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 183.18732191697927,
+      "sampled_tree_peak_rss_bytes": 190627840,
+      "sampled_worker_cpu_seconds": 168.716267959,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 147630,
+      "sampled_peak_scratch_allocated_bytes": 163840,
+      "minimum_free_disk_bytes": 21714989056,
+      "minimum_available_memory_bytes": 1258110976,
+      "samples": 1670,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 335544320,
+      "code_pins_unchanged": true
+    },
+    "pytest": {
+      "tests": "44",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "177.965"
+    },
+    "superseded_by_complete_expanded_control": true
+  },
+  "verified": {
+    "audited_reservation_before_parent_reads": true,
+    "original_completed_generation_receipt_and_source_configuration": true,
+    "frozen_runtime_plan_and_shared_five_windows_binding": true,
+    "public_roles_verify_are_separate_fresh_processes": true,
+    "native_full_role_artifact_and_complete_membership": true,
+    "worker_failure_charged_without_receipt_or_retry": true,
+    "preflight_unmeasured_memory_remains_null": true,
+    "worker_resource_evidence_and_completion_budgets_required": true,
+    "post_verification_artifact_mutation_blocks_completion": true,
+    "receipt_is_private_durable_and_written_before_completed_event": true,
+    "old_export_generation_journal_regressions_pass": true,
+    "forecast_cold_import_boundary_preserved": true
+  },
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "stage_ready": false,
+  "full_ci_acceptance_claimed": false,
+  "remaining": [
+    "Integrate actual preparation recipes and role readers into the frozen three-use-case25/50/100 workflow before Project operations.",
+    "Execute six original stockout bases and24conditional calibrators with durable reservations, select original artifacts and perform complete assessments.",
+    "Complete actual anomaly and forecasting integration, representative25/50 qualification, then canonical and final campaigns.",
+    "MLflow, model cards, lifecycle, exact PR/main acceptance and current final documentation."
+  ],
+  "publication_check": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 98.26764141599415,
+    "sampled_tree_peak_rss_bytes": 177455104,
+    "sampled_worker_cpu_seconds": 96.231403112,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 3435,
+    "sampled_peak_scratch_allocated_bytes": 16384,
+    "minimum_free_disk_bytes": 21335822336,
+    "minimum_available_memory_bytes": 1270530048,
+    "samples": 890,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; no Mypy or pytest in publication check; global6GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  }
+}

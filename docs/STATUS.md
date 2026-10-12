@@ -1,5 +1,12 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: rezerwowane przygotowanie pełnych ról stockout.**
+[Wykonawca przygotowania](ai09-stockout-preparation-execution.md) wiąże oryginalną generację, konfigurację Source, wspólne daty i budżety z trwałym dziennikiem. Trzy osobne procesy przygotowują publiczne cechy, dojrzałe etykiety i ponownie sprawdzają pełny artefakt. Błąd pozostaje rozliczony; nieznany RSS nie staje się zerem, a zmiana pliku po kontroli blokuje odbiór.
+
+**162 testy kodu i te same 162 testy z paczki przeszły**, bez pominięć. Mypy **814 plików**, zgodność bajtów **681 modułów i 57 schematów**. [09.122](evidence/09-122-stockout-preparation-execution.json) zachowuje wcześniejsze błędy i odmowę startu. Wszystkie 129 modułów AI 08 i 424 dotychczasowe kontrakty pozostają identyczne.
+
+Testy dziennika korzystają z jawnych doubles; fizyczne workery korzystają z istniejących fixtures. Pełne połączenie workflow 25/50/100, zarezerwowane modele i oceny, kampania, final, MLflow, lifecycle oraz CI PR/main pozostają wymagane. Nie uruchomiono nowej kampanii Project. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: jawne role trzech zastosowań i pełne rezerwacje stockout.**
 [Nowy kontrakt i dziennik](ai09-three-usecase-role-protocol.md) zapisuje wspólne daty, różne okna kalibracji forecastingu i stockout oraz dokładne role odczytu. Wymaga sześciu baz i 24 kalibratorów stockout; odrzuca nieukończone zależności, udany kalibrator po błędzie bazy i ponowienia poza budżetem. **84 testy kodu i te same 84 z paczki przeszły**, bez pominięć. [09.120](evidence/09-120-three-usecase-role-protocol.json) zachowuje wcześniejsze błędy kontroli i poprawki. 675 modułów i 55 schematów mają zgodne bajty.
 
