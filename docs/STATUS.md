@@ -1,5 +1,10 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: pełne dojrzałe role stockout i kontrola każdej etykiety.**
+[Adapter ról](ai09-stockout-mature-roles.md) zachowuje pełne członkostwo, oryginalne etykiety i pięć wspólnych okien development. Odbiór porównuje również całą treść każdej etykiety; podmiana przy zachowaniu klucza blokuje wynik. **142 testy źródeł i te same 142 z paczki przeszły**, bez pominięć. [09.116](evidence/09-116-stockout-mature-roles.json) zachowuje wcześniejsze 139 kontroli i późniejsze wzmocnienie. 672 moduły i 50 schematów mają zgodne bajty; 129 modułów AI 08 oraz 417 wcześniejszych kontraktów pozostaje niezmienionych.
+
+Zapis i odczyt plików ról, nowy jawny protokół trzech zastosowań, zarezerwowane treningi, oceny i wykonanie kampanii pozostają wymagane. Komponent nie nadaje uprawnień starego dziennika ani do final. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: jeden pełny końcowy odczyt rodziców etykiet stockout.**
 [09.115](evidence/09-115-stockout-final-parent-check.json) potwierdza **239 testów źródeł i te same 239 z paczki**, bez pominięć. Końcowa kontrola hashuje każdego z czterech rodziców raz; zmiana nieużywanych faktów po odczycie nadal blokuje odbiór. 670 modułów i 49 schematów mają zgodne bajty. 129 modułów AI 08 i 416 wcześniejszych kontraktów pozostaje niezmienionych.
 
