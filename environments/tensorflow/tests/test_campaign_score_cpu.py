@@ -1,5 +1,6 @@
 """Real three-family fits and fresh common scoring on controlled typed records only."""
 
+import json
 import sys
 from contextlib import closing
 from pathlib import Path
@@ -156,6 +157,8 @@ def test_real_fresh_six_model_cpu_inference_preserves_every_controlled_role_key(
         resources=plan.resources,
         deadline=perf_counter() + plan.resources.wall_seconds,
     )
+    if measured["status"] != "passed":
+        print("Native common scoring resource failure:", json.dumps(measured, sort_keys=True))
     assert measured["status"] == "passed", (
         measured,
         (root / "predict.log").read_text()[-5000:]

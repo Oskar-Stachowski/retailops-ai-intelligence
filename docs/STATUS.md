@@ -1,5 +1,10 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: mniejszy narzut pamięci workerów prognoz.**
+[09.119](evidence/09-119-forecast-worker-imports.json) zachowuje rzeczywistą odmowę RSS natywnego joba PR 68 oraz poprawkę importów. Oba workery korzystają z tych samych funkcji kontroli artefaktu i tożsamości Source bez ładowania kontrolerów; AST czterech przeniesionych funkcji jest identyczne. Lokalna mediana zimnego importu scoringu spadła z **125,4 do 74,8 MiB (40,4%)**. To pomiar samego importu; pełny scoring na Linux wymaga ponownego odbioru.
+
+**163 testy kodu i te same 163 testy z paczki przeszły**, Mypy **802 pliki**, 669 modułów i 47 kontraktów mają zgodne bajty. Limity i asercje nie zostały poluzowane. [Opis poprawki](ai09-forecast-worker-imports.md) oddziela ten wynik od pełnego Required CI PR i wynikowego main. Wspólny wykonawca trzech zastosowań, kampania, final, MLflow i lifecycle pozostają otwarte. Canonical wyłączony, **12 GiB** z rezerwą **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: pełny lokalny CI połączonego przygotowania.**
 [09.118](evidence/09-118-development-integration-local-ci.json) zachowuje wynik `make ci-local` dla kodu `dcc36e8`: Mypy **800 plików** i osobno 10 natywnych, **5922 testy passed / 55 zadeklarowanych skips** oraz kolejne bramki do natywnego CPU. Wynik całego polecenia to **failed**: 3 kontrole natywne przeszły, 5 odmówiono przed uruchomieniem workerów z powodu `preflight_reserve`. Kod nie zmienił się podczas kontroli. Rezerwy pozostają zachowane; wymagany jest pełny Required CI dokładnego PR oraz wynikowego main.
 

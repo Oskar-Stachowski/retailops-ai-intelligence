@@ -14,18 +14,18 @@ from retailops_ai.evaluation_campaign.campaign_context_bundle_contract import (
 )
 from retailops_ai.evaluation_campaign.campaign_context_facts import CampaignContextFacts
 from retailops_ai.evaluation_campaign.campaign_contract import CampaignSourceRecipe
-from retailops_ai.evaluation_campaign.campaign_export import _producer
 from retailops_ai.evaluation_campaign.campaign_export_contract import (
     CampaignDevelopmentExportReceipt,
     CampaignGeneratedParentReceipt,
 )
 from retailops_ai.evaluation_campaign.campaign_final_contract import CampaignFinalExportReceipt
-from retailops_ai.evaluation_campaign.campaign_fit import _bundle_inventory
+from retailops_ai.evaluation_campaign.campaign_fit_artifact import _bundle_inventory
 from retailops_ai.evaluation_campaign.campaign_generation_contract import CampaignGenerationPlan
 from retailops_ai.evaluation_campaign.campaign_generation_worker import read, write
 from retailops_ai.evaluation_campaign.campaign_segment_contract import CampaignForecastContextScope
 from retailops_ai.evaluation_campaign.campaign_segments import SegmentCensus, context_from_inputs
 from retailops_ai.evaluation_campaign.campaign_source_annotations import SourceAnnotations
+from retailops_ai.evaluation_campaign.campaign_source_identity import _producer
 from retailops_ai.evaluation_campaign.final_forecast import verify_final_forecast
 from retailops_ai.evaluation_campaign.label_contract import EligibilityReason
 from retailops_ai.evaluation_campaign.partitions import membership_key, runtime_pin
