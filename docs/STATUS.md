@@ -1,5 +1,10 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: pełny lokalny CI połączonego przygotowania.**
+[09.118](evidence/09-118-development-integration-local-ci.json) zachowuje wynik `make ci-local` dla kodu `dcc36e8`: Mypy **800 plików** i osobno 10 natywnych, **5922 testy passed / 55 zadeklarowanych skips** oraz kolejne bramki do natywnego CPU. Wynik całego polecenia to **failed**: 3 kontrole natywne przeszły, 5 odmówiono przed uruchomieniem workerów z powodu `preflight_reserve`. Kod nie zmienił się podczas kontroli. Rezerwy pozostają zachowane; wymagany jest pełny Required CI dokładnego PR oraz wynikowego main.
+
+PR 67 ma odebrany wynikowy main `5875321`: **17/17 jobs success**, [run 38173378231](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38173378231). Bieżące połączenie wymaga własnego odbioru. Pełne role i operacje stockout, wspólny protokół i runtime trzech zastosowań, kampania, MLflow i lifecycle pozostają otwarte. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-11 — AI 09: połączona gałąź kwalifikacji prognoz i komponentów stockout.**
 [09.111](evidence/09-111-development-integration.json) łączy wykonawcę 51 operacji,
 pełny trening liczbowy stockout, publiczne cechy/upstream i odczyt oryginalnej

@@ -119,3 +119,9 @@ workerów danych ani treningu. Wszystkie 654 moduły i 31 plików kontraktów
 mają zgodne bajty w paczce i instalacji; 398 wcześniejszych kontraktów
 pozostało bez zmian. Pełny CI, publikacja na main i rzeczywista kampania
 pozostają wymagane.
+
+[Pełna kontrola połączenia 09.118](evidence/09-118-development-integration-local-ci.json)
+zachowuje 5922 zaliczone testy, 55 zadeklarowanych pominięć oraz końcową
+odmowę pięciu natywnych workerów z powodu rezerwy RAM. Pełny lokalny CI
+pozostaje niezaliczony. Wymagany odbiór dokładnego PR i wynikowego main
+obejmuje wszystkie jobs, również natywny trening i ponowny odczyt modeli.
