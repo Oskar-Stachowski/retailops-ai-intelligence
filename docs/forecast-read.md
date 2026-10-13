@@ -110,3 +110,19 @@ Do wykonania w AI 05: handoff i batch na rzeczywistym qualified release AI 04 or
 zdalny Required CI. Outbox/zdarzenia należą do AI 10.
 
 Katalog modeli i wersji ma osobny zakres [AI 05.7b](model-catalog.md).
+
+## Diagnostyka i sprzątanie odbioru
+
+Kontrola odczytu zachowuje limit 420 sekund. Proces testu wypisuje zamknięte
+nazwy faz, licznik ukończonych publikacji i czas od startu. Nadzorca zachowuje
+te informacje także po timeoutcie, filtrując dowolny tekst i dodatkowe pola.
+Raport poprzedniej udanej próby jest unieważniany przed walidacją wejścia;
+nowy wynik `passed` wymaga również porównania stanu po restarcie i udanego
+sprzątania. Jednoczesny timeout i błąd sprzątania pozostają osobnymi faktami.
+
+Sprzątanie świeżego, własnego projektu testowego obejmuje profil `maintenance`
+oraz jednorazowe kontenery pozostałe po przerwanym `compose run`. Weryfikacja
+własności obrazów, usuwanie samych tagów i zachowanie obcych zasobów pozostają
+aktywne. [09.126](evidence/09-126-forecast-smoke-diagnostics.json) zapisuje
+146 zgodnych kontroli kodu i instalacji, ograniczenia tego dowodu oraz
+wymagany jeszcze rzeczywisty odbiór Docker i Required CI PR/main.

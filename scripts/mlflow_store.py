@@ -167,7 +167,12 @@ def cleanup_test_stacks(*projects: str) -> None:
                     or labels.get("retailops.ai.build_service") != service
                 ):
                     raise ValueError("test_image_ownership_mismatch")
-            checked_run(compose(project, "down", "-v"))
+            # A timed-out `compose run` can leave a one-off migration container.
+            # Include that profile and one-offs before removing its image tag.
+            # Ownership was checked before this disposable project's first mutation.
+            checked_run(
+                compose(project, "--profile", "maintenance", "down", "-v", "--remove-orphans")
+            )
             if tags:
                 # Remove tags, not IDs: retain other tags and never force removal
                 # of an image used by another container or prune its parent images.

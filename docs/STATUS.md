@@ -1,5 +1,10 @@
 # Aktualny status
 
+**2026-10-13 — AI 09: poprawki obsługi błędu odczytu prognoz.**
+Kontrola `main` `e544c78` zakończyła się błędem: odczyt przekroczył 420 sekund, a następnie nie udało się usunąć obrazu testowego. Pozostałe 15 jobs poza agregatorem przeszło. Poprawiono sprzątanie jednorazowych kontenerów profilu `maintenance`, usuwanie nieaktualnego wyniku „passed” oraz zachowanie bezpiecznej diagnostyki faz po timeoutcie. Pierwotna przyczyna timeoutu pozostaje niewyjaśniona; limit nie został podniesiony.
+
+[09.126](evidence/09-126-forecast-smoke-diagnostics.json): **146 testów kodu i te same 146 testów z instalacji**, bez pominięć; Mypy **821 plików**, zgodne bajty **687 modułów**. Dowód używa kontrolowanych zastępczych operacji Docker; rzeczywisty odbiór i Required CI tej poprawki są nadal wymagane. [PR #69](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/69) weryfikuje wcześniejszą integrację i jeszcze nie zawiera tej poprawki. Nowe operacje Project: **0**; canonical wyłączony, **12 GiB + 1 GiB rezerwy**, AI 09 **`not_ready`**.
+
 **2026-10-13 — AI 09: pełny odbiór kodu i paczki prób stockout na Linux.**
 [Kontrola 38353774124](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38353774124) commitu `9591f38` przeszła: **191 testów źródeł i te same 191 testów z instalacji**, bez pominięć. Zbiór przypadków jest identyczny także z wcześniejszą kontrolą lokalną. Zweryfikowano hash archiwum GitHub oraz zgodność bajtów **686 modułów i 59 schematów**. Dziewięć nowych plików testowych otrzymało jawne wagi harmonogramu: cztery z pomiarów Linux, pięć z oznaczonych szacunków na podstawie pełnych pomiarów macOS. Wcześniejsze wagi, wszystkie testy, cztery shardy, limit 90 minut i 17 wymaganych jobs pozostają zachowane. [09.125](evidence/09-125-stockout-integration-progress.json) zachowuje wszystkie pomiary i wcześniejszą nieudaną próbę lokalną.
 
