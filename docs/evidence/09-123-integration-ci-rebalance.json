@@ -1,0 +1,227 @@
+{
+  "version": "ai09-integration-ci-rebalance-1.0.0",
+  "recorded_at_utc": "2026-10-12T08:12:37.791116+00:00",
+  "original_run": 38213005390,
+  "head_sha": "60b4a03b37f1b3502d958751800321d2059c4d07",
+  "checkout": {
+    "commit": "727d087b1ab15bfc6d7458c6cb46404c38ca15be",
+    "parents": [
+      "58753213fdee8c9ee7e899106ed94b36296a77ae",
+      "60b4a03b37f1b3502d958751800321d2059c4d07"
+    ],
+    "run_head": "60b4a03b37f1b3502d958751800321d2059c4d07",
+    "run_status": "completed",
+    "run_conclusion": "failure"
+  },
+  "status": "failed",
+  "jobs": [
+    {
+      "id": 114691207306,
+      "name": "checks",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691207383,
+      "name": "secrets",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512787,
+      "name": "persistence",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512813,
+      "name": "observation-replay",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512830,
+      "name": "observation-broker",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512848,
+      "name": "persistence-forecast",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512857,
+      "name": "anomaly-oci",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512879,
+      "name": "tests (0)",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512886,
+      "name": "acceptance (ci-detectors)",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512915,
+      "name": "tests (2)",
+      "conclusion": "cancelled"
+    },
+    {
+      "id": 114691512920,
+      "name": "acceptance (ci-forecast)",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512934,
+      "name": "acceptance (ci-qualified-inputs)",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512936,
+      "name": "tests (1)",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512955,
+      "name": "TensorFlow CPU training, artifact and reload",
+      "conclusion": "failure"
+    },
+    {
+      "id": 114691512989,
+      "name": "tests (3)",
+      "conclusion": "success"
+    },
+    {
+      "id": 114691512994,
+      "name": "acceptance (ci-source-inputs)",
+      "conclusion": "success"
+    },
+    {
+      "id": 114718031226,
+      "name": "required-result",
+      "conclusion": "failure"
+    }
+  ],
+  "original_complete_collection_tests": 5977,
+  "trigger": {
+    "native_scoring": "Actual six-model CPU inference exceeded1GiB RSS;7native controls passed/1failed. Import fix09.119 retains allbudgets/assertions and needs newLinuxacceptance.",
+    "shard_2": "Cancelled at90minute job timeout.1216 of1558selected cases have some phase records; incompletephase/case records do not count as passes.",
+    "cost_example": {
+      "file": "tests/test_development_workflow.py",
+      "previous_default_seconds": 1,
+      "actual_full_file_seconds": 1020.598
+    }
+  },
+  "scheduling_audit": {
+    "full_previous_collection": 5977,
+    "current_test_files": 287,
+    "updated_complete_files": 266,
+    "not_updated_partial_or_unstarted": [
+      "tests/test_return_inputs.py",
+      "tests/test_semantic_embeddings.py",
+      "tests/test_server_process.py",
+      "tests/test_source_snapshot_import.py",
+      "tests/test_stockout_api_startup.py",
+      "tests/test_stockout_batch.py",
+      "tests/test_stockout_campaign_archive.py",
+      "tests/test_stockout_explanation.py",
+      "tests/test_stockout_features.py",
+      "tests/test_stockout_final_download.py",
+      "tests/test_stockout_final_source_preparation.py",
+      "tests/test_stockout_registry.py",
+      "tests/test_stockout_remote_preparation.py",
+      "tests/test_stockout_runtime_export.py",
+      "tests/test_stockout_selection.py",
+      "tests/test_stockout_worker.py",
+      "tests/test_v12_calendar.py",
+      "tests/test_v12_lifecycle.py",
+      "tests/test_v12_queue.py",
+      "tests/test_v12_scratch_tracking.py"
+    ],
+    "original_weights_sha256": "a6e3c046df59f30dabc4f7cf8090be86a6b622f3266f03453fd6b9a1f5479d96",
+    "new_weights_sha256": "ef56680b2ae9103f0a1956ba239ac5caaad1495a0ef23c34b22e80f50eb05004",
+    "new_groups_at_updated_weights_seconds": [
+      4135.796000000008,
+      4135.793000000009,
+      4135.769000000007,
+      4135.764000000009
+    ],
+    "original_run_groups_at_updated_weights_seconds": [
+      2564.405,
+      4777.729,
+      6029.346,
+      3170.642
+    ]
+  },
+  "scheduling_scope": "Scheduling weights only. Every updated file has all selected tests and all required passing/skipped phases in the original Linux report. Shards0/1/3 finished; shard2 exceeded90minutes and its partial or unstarted files retain previous weights/defaults. Native TensorFlow failed separately. Neither failed CI nor partial tests are accepted. Four complete shards, all tests,90minute timeout and all17RequiredCI jobs remain required.",
+  "projection": {
+    "scope": "Scheduling estimate only, measured completed files plus unchanged older weights/defaults. Not a promise or actual total duration.",
+    "new_groups_at_updated_weights_seconds": [
+      4135.796000000008,
+      4135.793000000009,
+      4135.769000000007,
+      4135.764000000009
+    ],
+    "current_files": 287,
+    "original_run_groups_at_updated_weights_seconds": [
+      2564.405,
+      4777.729,
+      6029.346,
+      3170.642
+    ]
+  },
+  "gates_or_timeouts_weakened": false,
+  "required_CI_jobs": 17,
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "stage_ready": false,
+  "acceptance_required": "All17 jobs for exact updated PR and resulting main. Scheduling projections are not test/capacity/quality acceptance.",
+  "local_ci_regression": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 3.2825758339604363,
+    "sampled_tree_peak_rss_bytes": 145702912,
+    "sampled_worker_cpu_seconds": 2.299003433,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 149660,
+    "sampled_peak_scratch_allocated_bytes": 163840,
+    "minimum_free_disk_bytes": 21853335552,
+    "minimum_available_memory_bytes": 1256161280,
+    "samples": 30,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 201326592,
+    "code_pins_unchanged": true
+  },
+  "local_pytest": {
+    "tests": "83",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "2.096"
+  },
+  "publication_check": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 114.27906837500632,
+    "sampled_tree_peak_rss_bytes": 177979392,
+    "sampled_worker_cpu_seconds": 110.32147183699999,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 3708,
+    "sampled_peak_scratch_allocated_bytes": 16384,
+    "minimum_free_disk_bytes": 21802086400,
+    "minimum_available_memory_bytes": 1238335488,
+    "samples": 1012,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; no Mypy or pytest in publication check; global6GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  },
+  "post_scan_metadata_only_update": "Previous macOS estimate explicitly labelled historical; numerical weights/assignment unchanged. Added publication monitor receipt."
+}

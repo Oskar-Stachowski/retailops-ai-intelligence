@@ -1,5 +1,10 @@
 # Aktualny status
 
+**2026-10-12 — AI 09: poprawka podziału testów po pełnym wyniku PR 68.**
+[09.123](evidence/09-123-integration-ci-rebalance.json) zachowuje nieudany Required CI kodu `60b4a03`: **14 jobs success**, błąd RSS natywnego scoringu, anulowany po 90 minutach shard 2 i nieudany agregator. Żaden z tych wyników nie jest odbiorem. Wagi 266 w pełni zakończonych plików testowych zaktualizowano z oryginalnych pomiarów Linux; 20 niedokończonych lub nierozpoczętych plików zachowuje wcześniejsze wagi. Cztery shardy, pełna kolekcja, limit 90 minut i wszystkie 17 jobs pozostają wymagane.
+
+Test całego workflow trwał **1020,6 s**, przy wcześniejszej domyślnej wadze **1 s**. Nowy podział szacuje około **69 minut na shard**; to prognoza harmonogramu, wymagająca rzeczywistego CI. Włączono również poprawkę importów [09.119](evidence/09-119-forecast-worker-imports.json). Pełny PR/main, wspólny wykonawca trzech zastosowań, kampania, final, MLflow i lifecycle pozostają otwarte. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: rezerwowane przygotowanie pełnych ról stockout.**
 [Wykonawca przygotowania](ai09-stockout-preparation-execution.md) wiąże oryginalną generację, konfigurację Source, wspólne daty i budżety z trwałym dziennikiem. Trzy osobne procesy przygotowują publiczne cechy, dojrzałe etykiety i ponownie sprawdzają pełny artefakt. Błąd pozostaje rozliczony; nieznany RSS nie staje się zerem, a zmiana pliku po kontroli blokuje odbiór.
 
