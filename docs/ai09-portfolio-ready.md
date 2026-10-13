@@ -117,7 +117,7 @@ originy końcowe 2027-01-17–2027-03-15 i cutoff etykiet 2027-03-30.
 To daty symulacji, nie zebrane obserwacje przyszłości. Wszystkie modele mają
 te same oceniane klucze; agregat nadaje każdemu seedowi wagę 1/3.
 Brak próbki w grupie pozostaje `not_ready`, a słaby wynik kończy się
-odrzuceniem TF bez ponownego strojenia. Dane końcowe nie zostały jeszcze wygenerowane.
+odrzuceniem TF bez ponownego strojenia. Dane końcowe mogą zostać wygenerowane dopiero po zweryfikowaniu artefaktu zamrożenia.
 
 Jawnie zachowujemy ograniczenie starszej, utraconej historii: znane wcześniejsze
 próby AI09 dotyczyły danych do lipca 2026, nowy development do grudnia 2026,
@@ -126,6 +126,18 @@ będzie oparta na nowym, prospektywnym wykonaniu i rozłączności z konkretnymi
 danymi dopasowania i kalibracji; nie deklarujemy globalnego dowodu wszystkich
 dawnych odczytów. [Plan kalibracji](reference/ai09-portfolio-calibration-v1.json)
 przypina dokładny wynik naprawy, zachowuje jedną próbę i nie dopuszcza nowych fitów.
+
+[Kalibracja została wykonana](evidence/09-134-portfolio-calibration-complete.json)
+w run `38381951994`: 279–304 kwalifikowane obserwacje na każdy z 14 horyzontów,
+wszystkie promienie dopasowane, zero nowych fitów modeli. Artefakt zamrożenia
+`11804525844` ma zweryfikowany ZIP oraz 73 pliki modeli. Jego oryginalny commit,
+kalibrator i cztery pliki implementacji są przypięte w
+[planie końcowego wykonania](reference/ai09-portfolio-final-v1.json).
+Wykonanie końcowe zachowuje oryginalne role `final_evaluation`, rezerwuje cały
+nowy parent przed generowaniem oraz ponownie weryfikuje snapshot i pełną
+transformację curated. Trzy seedy wykonują się na trzech odrębnych runnerach;
+każdy ma jedną próbę i własny limit 12 GiB. Kod nie tworzy nowych modeli.
+Po wyniku final nie zmieniamy wyboru, kalibracji ani progów.
 
 1. Przypiąć zakres i zinwentaryzować istniejące dane, modele i historię ekspozycji.
 2. Zamrozić mały development i wykonać jeden oryginalny przebieg od Source,

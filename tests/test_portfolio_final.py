@@ -1,0 +1,80 @@
+"""Prospective dates, exact seeds and complete calibration required before final access."""
+
+from datetime import date, timedelta
+from pathlib import Path
+
+import pytest
+
+from retailops_ai.data_contracts.identity import canonical_bytes
+from retailops_ai.evaluation_campaign.campaign_final_contract import CampaignFinalExportPlan
+from retailops_ai.evaluation_campaign.portfolio_final_data import prepare_final
+from retailops_ai.source_snapshot.files import SnapshotError
+from scripts import run_ai09_portfolio_final as runner
+
+
+@pytest.mark.parametrize("seed", [42, 137, 2026])
+def test_final_source_and_mature_origins_are_fixed_before_generation(seed):
+    assessment = runner.probe.read(runner.ASSESSMENT)
+    source = runner.source_plan(seed)
+    final = assessment["final"]
+    assert source["generation"]["seed"] == seed
+    assert source["generation"]["products"] == 8
+    assert source["generation"]["stores"] == 3
+    assert source["generation"]["max_daily_rows"] == 8760
+    start, end = (
+        date.fromisoformat(source["generation"][key]) for key in ("start_date", "end_date")
+    )
+    assert (end - start).days + 1 == source["generation"]["days"] == 365
+    origins = final["origins"]
+    assert date.fromisoformat(origins["start"]) > date(2026, 12, 31) + timedelta(days=15)
+    plan = CampaignFinalExportPlan.model_validate_json(
+        canonical_bytes(
+            {
+                "source_recipe_sha256": "a" * 64,
+                "generation_operation_id": "test-final-seed",
+                "origins": origins,
+                "label_knowledge_cutoff": final["label_knowledge_cutoff"],
+                "prior_exposure_end": final["prior_documented_parent_exposure_end"],
+            }
+        )
+    )
+    assert plan.label_knowledge_cutoff.date() >= plan.origins.end + timedelta(days=15)
+    assert source["budgets"]["tree_rss_bytes"] == 12 * 1024**3
+    assert source["final_test_opened"] is True
+
+
+@pytest.mark.parametrize("seed", [0, 41, 43, 2027, True, "42"])
+def test_unregistered_seed_cannot_create_a_new_final_attempt(seed):
+    with pytest.raises(ValueError, match="unregistered_seed"):
+        runner.source_plan(seed)
+
+
+def test_final_data_refuses_access_before_whole_parent_reservation(tmp_path, monkeypatch):
+    import retailops_ai.evaluation_campaign.portfolio_final_data as final_data
+
+    def guarded(root, name):
+        assert root == tmp_path and name == "intent.json", "must not inspect a final parent"
+        return {"final_test_opened": False}
+
+    monkeypatch.setattr(final_data, "read_json", guarded)
+    with pytest.raises(SnapshotError, match="reservation_required"):
+        prepare_final(tmp_path, {}, {})
+
+
+def test_missing_frozen_calibration_cannot_start_final(tmp_path):
+    with pytest.raises((FileNotFoundError, ValueError)):
+        runner.verified_freeze(tmp_path, {"freeze_sha256": "a" * 64})
+
+
+def test_source_worker_entrypoint_remains_stdlib_only_before_operation():
+    import subprocess
+    import sys
+
+    result = subprocess.run(
+        [sys.executable, "-I", "-S", str(Path(runner.__file__)), "--help"],
+        capture_output=True,
+        text=True,
+        timeout=10,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "--producer-python" in result.stdout

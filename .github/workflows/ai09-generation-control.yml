@@ -17,6 +17,7 @@ on:
           - portfolio_development
           - portfolio_repair
           - portfolio_calibration
+          - portfolio_final
         default: generation
       previous_run_id:
         description: Completed original failure run, required only for checkpoint_recovery
@@ -45,6 +46,11 @@ concurrency:
 
 jobs:
   control:
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        seed: ${{ inputs.mode == 'portfolio_final' && fromJSON('[42,137,2026]') || fromJSON('[0]') }}
     runs-on: ubuntu-24.04
     timeout-minutes: ${{ startsWith(inputs.mode, 'portfolio_') && 110 || 25 }}
     steps:
@@ -56,7 +62,7 @@ jobs:
         if: inputs.mode != 'census_memory' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration'
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: ${{ inputs.mode == 'portfolio_development' && 'd2363a5c78e0b190132e5e3d804da73b3136487d' || inputs.mode != 'generation' && 'ff2504a9cf6e4f46040c8327901b7bcb82d115c0' || '16d34887b058b3dfb270af474f28242194a968ca' }}
+          ref: ${{ (inputs.mode == 'portfolio_development' || inputs.mode == 'portfolio_final') && 'd2363a5c78e0b190132e5e3d804da73b3136487d' || inputs.mode != 'generation' && 'ff2504a9cf6e4f46040c8327901b7bcb82d115c0' || '16d34887b058b3dfb270af474f28242194a968ca' }}
           persist-credentials: false
           path: source
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
@@ -65,7 +71,7 @@ jobs:
           python-version: "3.11.15"
           enable-cache: true
       - name: Install locked consumer dependencies
-        if: inputs.mode != 'portfolio_development' && inputs.mode != 'portfolio_repair' && inputs.mode != 'portfolio_calibration'
+        if: startsWith(inputs.mode, 'portfolio_') == false
         env:
           CONTROL_MODE: ${{ inputs.mode }}
         run: |
@@ -379,6 +385,48 @@ jobs:
           path: |
             assessment/
             assessment-preflight/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
+      - name: Verify final temporal and artifact guards before source generation
+        if: inputs.mode == 'portfolio_final'
+        working-directory: consumer
+        env:
+          PYTHONPATH: ${{ github.workspace }}/consumer/src:${{ github.workspace }}/consumer/tests
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/final-preflight"
+          environments/tensorflow/.venv/bin/python -m pytest -q \
+            tests/test_portfolio_final.py tests/test_portfolio_assessment.py \
+            --junitxml="$GITHUB_WORKSPACE/final-preflight/tests.xml"
+      - name: Execute one reserved independent final seed without model refitting
+        if: inputs.mode == 'portfolio_final'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          FINAL_SEED: ${{ matrix.seed }}
+          CUDA_VISIBLE_DEVICES: "-1"
+          TF_CPP_MIN_LOG_LEVEL: "2"
+          TF_ENABLE_ONEDNN_OPTS: "0"
+          TF_NUM_INTEROP_THREADS: "1"
+          TF_NUM_INTRAOP_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+        run: |
+          consumer/environments/tensorflow/.venv/bin/python consumer/scripts/run_ai09_portfolio_final.py \
+            --source "$GITHUB_WORKSPACE/source" \
+            --producer-python "$GITHUB_WORKSPACE/source/.venv/bin/python" \
+            --output "$GITHUB_WORKSPACE/final" --seed "$FINAL_SEED"
+      - name: Preserve complete final source, predictions, costs and failures per seed
+        if: always() && inputs.mode == 'portfolio_final'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ai09-portfolio-final-seed${{ matrix.seed }}-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            final/
+            final-preflight/
           if-no-files-found: error
           compression-level: 0
           retention-days: 90
