@@ -287,8 +287,13 @@ jobs:
           mkdir -p "$GITHUB_WORKSPACE/repair-preflight"
           environments/tensorflow/.venv/bin/python -m pytest -q -rA \
             tests/test_forecast_worker_resources.py tests/test_campaign_worker_memory.py \
-            tests/test_ai09_portfolio_repair.py environments/tensorflow/tests \
-            --junitxml="$GITHUB_WORKSPACE/repair-preflight/tests.xml"
+            tests/test_ai09_portfolio_repair.py \
+            --junitxml="$GITHUB_WORKSPACE/repair-preflight/memory-tests.xml"
+          # Numeric worker regression imports sklearn into its pytest parent.
+          # Run native budget controls in a fresh process, as in Required CI.
+          environments/tensorflow/.venv/bin/python -m pytest -q -rA \
+            environments/tensorflow/tests \
+            --junitxml="$GITHUB_WORKSPACE/repair-preflight/tensorflow-tests.xml"
       - name: Reuse original development data for the one explicit repair
         if: inputs.mode == 'portfolio_repair'
         env:
