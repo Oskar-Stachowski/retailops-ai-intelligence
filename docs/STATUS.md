@@ -1,5 +1,15 @@
 # Aktualny status
 
+**2026-10-13 — zatwierdzony mniejszy zakres zamknięcia AI 09.**
+Użytkownik wybrał [TensorFlow i konsolidację portfolio](ai09-portfolio-ready.md).
+AI 07–08 pozostają zamknięte; ich wyniki zostaną przypięte jako historyczne
+odbiory. Nowa ocena dotyczy forecastingu: baseline/RF/HGB/TF, mniejszy jawny
+profil, trzy seedy, rzeczywisty model, odtworzenie, jakość, koszty i raport.
+Warianty 2–3 zapisano jako przyszłe ulepszenia, bez wdrażania w tym zadaniu.
+Starsze wpisy poniżej opisują wcześniejszy zakres i zachowane wyniki prób.
+Pełna wspólna kampania oraz jej canonical capacity nie są już warunkiem
+zamknięcia tego wariantu. R1–R8 pozostają do wykonania: **not_ready**.
+
 **2026-10-13 — AI 09: poprawki obsługi błędu odczytu prognoz.**
 Kontrola `main` `e544c78` zakończyła się błędem: odczyt przekroczył 420 sekund, a następnie nie udało się usunąć obrazu testowego. Pozostałe 15 jobs poza agregatorem przeszło. Poprawiono sprzątanie jednorazowych kontenerów profilu `maintenance`, usuwanie nieaktualnego wyniku „passed” oraz zachowanie bezpiecznej diagnostyki faz po timeoutcie. Pierwotna przyczyna timeoutu pozostaje niewyjaśniona; limit nie został podniesiony.
 

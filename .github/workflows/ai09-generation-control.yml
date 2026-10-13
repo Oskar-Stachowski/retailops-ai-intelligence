@@ -15,6 +15,7 @@ on:
           - checkpoint_recovery
           - census_memory
           - stockout_trials
+          - portfolio_development
         default: generation
       previous_run_id:
         description: Completed original failure run, required only for checkpoint_recovery
@@ -44,7 +45,7 @@ concurrency:
 jobs:
   control:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: ${{ inputs.mode == 'portfolio_development' && 110 || 25 }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -54,7 +55,7 @@ jobs:
         if: inputs.mode != 'census_memory' && inputs.mode != 'stockout_trials'
         with:
           repository: Oskar-Stachowski/retailops-cloud-native-platform
-          ref: ${{ inputs.mode != 'generation' && 'ff2504a9cf6e4f46040c8327901b7bcb82d115c0' || '16d34887b058b3dfb270af474f28242194a968ca' }}
+          ref: ${{ inputs.mode == 'portfolio_development' && 'd2363a5c78e0b190132e5e3d804da73b3136487d' || inputs.mode != 'generation' && 'ff2504a9cf6e4f46040c8327901b7bcb82d115c0' || '16d34887b058b3dfb270af474f28242194a968ca' }}
           persist-credentials: false
           path: source
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
@@ -63,6 +64,7 @@ jobs:
           python-version: "3.11.15"
           enable-cache: true
       - name: Install locked consumer dependencies
+        if: inputs.mode != 'portfolio_development'
         env:
           CONTROL_MODE: ${{ inputs.mode }}
         run: |
@@ -73,6 +75,9 @@ jobs:
           else
             uv sync --directory consumer --locked --extra snapshot --extra forecast
           fi
+      - name: Install locked portfolio TensorFlow and consumer dependencies
+        if: inputs.mode == 'portfolio_development'
+        run: uv sync --directory consumer/environments/tensorflow --locked --no-install-project --no-install-package retailops-ai-intelligence
       - name: Install pinned producer dependencies
         if: inputs.mode != 'census_memory' && inputs.mode != 'stockout_trials'
         run: |
@@ -213,8 +218,36 @@ jobs:
         run: |
           .venv/bin/python scripts/check_ai09_stockout_trial_package.py \
             --output "$GITHUB_WORKSPACE/control"
+      - name: Execute the approved original development comparison
+        if: inputs.mode == 'portfolio_development'
+        env:
+          CUDA_VISIBLE_DEVICES: "-1"
+          TF_CPP_MIN_LOG_LEVEL: "2"
+          TF_ENABLE_ONEDNN_OPTS: "0"
+          TF_NUM_INTEROP_THREADS: "1"
+          TF_NUM_INTRAOP_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+        run: |
+          consumer/environments/tensorflow/.venv/bin/python consumer/scripts/run_ai09_portfolio_development.py \
+            --source "$GITHUB_WORKSPACE/source" \
+            --producer-python "$GITHUB_WORKSPACE/source/.venv/bin/python" \
+            --output "$GITHUB_WORKSPACE/control"
+      - name: Preserve original portfolio data, models, measurements and failures
+        if: always() && inputs.mode == 'portfolio_development'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ai09-portfolio-development-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            control/
+            control-preflight/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
+          overwrite: false
       - name: Preserve completed and failed phase evidence
-        if: always()
+        if: always() && inputs.mode != 'portfolio_development'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ai09-generation-control-${{ github.sha }}-${{ github.run_id }}

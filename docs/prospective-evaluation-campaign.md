@@ -1,5 +1,11 @@
 # Prospektywna kampania AI 09
 
+**Aktualizacja 2026-10-13:** użytkownik zatwierdził
+[TensorFlow i konsolidację portfolio](ai09-portfolio-ready.md).
+Poniżej zachowano wcześniejszy, szerszy protokół jako możliwe dalsze
+ulepszenie. Nie jest bramką ready zatwierdzonego wariantu; jego dotychczasowe
+wyniki i ograniczenia pozostają niezmienione.
+
 AI 07 i AI 08 są zamknięte. AI 09 przygotowuje wspólną końcową ocenę i pozostaje
 `in_progress / not_ready`. [Odbiór 09.12](evidence/09-12-prospective-campaign-journal.md)
 obejmuje rozliczenie zachowanej historii oraz trwały dziennik kolejnej kampanii.

@@ -4,7 +4,13 @@ Rozwijaj jedną spójną funkcję na branchu `ai/...`. Commituj kod, kontrakty,
 dokumentację i mały dowód razem. PR zaczyna się od problemu i zachowania,
 podaje wykonane kontrole, pozostały zakres, zgodność oraz sposób wycofania.
 
-Przed PR wykonaj `make ci-local`. Required CI nie filtruje ścieżek: także
+Przed PR wykonaj `make ci-local`. Wyjątek zatwierdzony przez użytkownika
+2026-10-13 dla [AI 09 — TensorFlow i konsolidacja portfolio](ai09-portfolio-ready.md):
+wykonaj lokalne kontrole dotyczące zmian, statyczne kontrole kodu i skan sekretów;
+pełny odbiór wykonuje Linux Required CI dokładnego PR i wynikowego main.
+Nie wymagamy dodatkowego pełnego `ci-local` na komputerze z 8 GiB RAM.
+Wcześniejsze nieudane i anulowane kontrole pozostają tak oznaczone.
+Required CI nie filtruje ścieżek: także
 nowe moduły, docs i kontrakty uruchamiają bramki. `required-result` wymaga
 sukcesu wszystkich jobs; skipped/cancelled/failed nie oznacza zaliczenia.
 Actions są przypięte pełnym SHA, zmiany wersji mają osobny przegląd.
