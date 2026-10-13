@@ -148,6 +148,10 @@ class CampaignPortfolioJournal(CampaignJournal):
     @model_validator(mode="after")
     def replay(self) -> Self:
         self._replay_events()
+        self._require_development_inventory()
+        return self
+
+    def _require_development_inventory(self) -> None:
         required = {
             o.operation_id
             for o in self.protocol.operations
@@ -172,11 +176,16 @@ class CampaignPortfolioJournal(CampaignJournal):
                 not required.issubset(completed) or not fits.issubset(attempted)
             ):
                 raise ValueError("campaign_portfolio_freeze_requires_full_development_inventory")
-        return self
 
 
 def parse_campaign_protocol(raw: bytes) -> CampaignProtocol:
     document = decode_json(raw)
+    if "role_protocol_version" in document:
+        from retailops_ai.evaluation_campaign.campaign_role_protocol import (
+            RoleAwareCampaignProtocol,
+        )
+
+        return RoleAwareCampaignProtocol.model_validate_json(raw)
     if document.get("portfolio_version") == "ai09-canonical-qualification-portfolio-1.0.0":
         from retailops_ai.evaluation_campaign.canonical_qualification import (
             PreparedCanonicalQualificationProtocol,
@@ -261,6 +270,10 @@ def parse_portfolio_protocol(raw: bytes) -> CampaignPortfolioProtocol:
 def parse_campaign_journal(raw: bytes) -> CampaignJournal:
     document = decode_json(raw)
     protocol = document.get("protocol")
+    if isinstance(protocol, dict) and "role_protocol_version" in protocol:
+        from retailops_ai.evaluation_campaign.campaign_role_protocol import RoleAwareCampaignJournal
+
+        return RoleAwareCampaignJournal.model_validate_json(raw)
     if (
         isinstance(protocol, dict)
         and protocol.get("portfolio_version") == "ai09-canonical-qualification-portfolio-1.0.0"

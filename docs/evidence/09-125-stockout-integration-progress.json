@@ -1,0 +1,594 @@
+{
+  "version": "ai09-stockout-integration-progress-1.1.0",
+  "observed_at_utc": "2026-10-13T06:17:37.280574+00:00",
+  "scope": "Composition of already controlled components. No inference of complete integration acceptance from component tests.",
+  "integration_head": "6abfee39336167ca5c77756413c7f54e640cde98",
+  "components": {
+    "stockout_preparation": "b9bea0bd4b6f9278d05feeff9f4f619a5bb44205",
+    "parent_final_seals": "126c364dcc9acacdb89df8ddf0b53f09a441455b",
+    "pr68_main": "e544c78b757be1524915184155a2ff1b098b4325"
+  },
+  "composition": {
+    "checked_files": 1610,
+    "all_exact_component_bytes": true,
+    "manifest_sha256": "1ad246cc6ed94b8a919ccc9b444bb8d5577eda19e7a228bd45b49446d3421048",
+    "changed_from_preparation": [
+      "src/retailops_ai/evaluation_campaign/campaign_anomaly_parent.py",
+      "src/retailops_ai/evaluation_campaign/campaign_stockout_parent.py",
+      "tests/test_campaign_parent_final_seal.py",
+      "scripts/ci_test_timings.json"
+    ]
+  },
+  "pr68": {
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/68",
+    "run": 38222735935,
+    "head": "c8da6db8e01573286ba3a0814edaa1de8bf058f3",
+    "base": "58753213fdee8c9ee7e899106ed94b36296a77ae",
+    "tested_checkout": "7e0a14205f4a80639b8a24d43652a53bb1b90213",
+    "merged_as": "e544c78b757be1524915184155a2ff1b098b4325",
+    "jobs": [
+      {
+        "name": "secrets",
+        "conclusion": "success"
+      },
+      {
+        "name": "checks",
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-qualified-inputs)",
+        "conclusion": "success"
+      },
+      {
+        "name": "persistence-forecast",
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (3)",
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-source-inputs)",
+        "conclusion": "success"
+      },
+      {
+        "name": "observation-broker",
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (0)",
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (1)",
+        "conclusion": "success"
+      },
+      {
+        "name": "anomaly-oci",
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-detectors)",
+        "conclusion": "success"
+      },
+      {
+        "name": "TensorFlow CPU training, artifact and reload",
+        "conclusion": "success"
+      },
+      {
+        "name": "persistence",
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-forecast)",
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (2)",
+        "conclusion": "success"
+      },
+      {
+        "name": "observation-replay",
+        "conclusion": "success"
+      },
+      {
+        "name": "required-result",
+        "conclusion": "success"
+      }
+    ],
+    "main_run": 38350390036,
+    "main_acceptance_pending": true,
+    "main_known_failure": {
+      "job": 115141488946,
+      "name": "persistence-forecast",
+      "step": "forecast-read-smoke",
+      "phase": "read_acceptance",
+      "reason": "TimeoutExpired after420seconds, followed by owned-stack cleanup failure",
+      "log_sha256": "fe0238727a96fefdc7f807253eca17afbf35f34ddd111bf80c993709f2a76b31",
+      "whole_run_still_in_progress": true,
+      "accepted": false
+    }
+  },
+  "earlier_full_local_ci": {
+    "head": "2094eda7b4586ee811f2c0cae71d0a811e59119f",
+    "monitor": {
+      "status": "failed",
+      "reason": "worker_exit",
+      "exit_code": 2,
+      "wall_seconds": 15293.883472999965,
+      "sampled_tree_peak_rss_bytes": 914178048,
+      "sampled_worker_cpu_seconds": 14736.855700575015,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 255836,
+      "sampled_peak_scratch_allocated_bytes": 294912,
+      "minimum_free_disk_bytes": 17972764672,
+      "minimum_available_memory_bytes": 1104871424,
+      "samples": 29895,
+      "sample_seconds": 0.5,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "code_pins_unchanged": true
+    },
+    "ordinary_pytest": {
+      "passed": 6123,
+      "declared_skips": 55,
+      "seconds": 13295.45
+    },
+    "native_tensorflow": {
+      "passed": 3,
+      "failed": 5,
+      "seconds": 86.05,
+      "reason": "preflight_reserve before workers started"
+    },
+    "whole_acceptance": false,
+    "applies_to_new_integration": false
+  },
+  "preparation_fixture_limitations": [
+    {
+      "fixture_index": 0,
+      "manifest_sha256": "a901a01377dce2cadaff6e0845d074f42fbf4bc7786812d3fa989d98c23abe7e",
+      "rows": {
+        "base_train.jsonl": 0,
+        "calibrator_fit.jsonl": 0,
+        "development_evaluation.jsonl": 0,
+        "membership.jsonl": 60,
+        "recipe_selection.jsonl": 0,
+        "threshold_assessment.jsonl": 0
+      }
+    },
+    {
+      "fixture_index": 1,
+      "manifest_sha256": "760cebb93fd701190f2ff5dc28686237cc4490f42de05cd638019b986b76bf66",
+      "rows": {
+        "base_train.jsonl": 0,
+        "calibrator_fit.jsonl": 0,
+        "development_evaluation.jsonl": 0,
+        "membership.jsonl": 480,
+        "recipe_selection.jsonl": 0,
+        "threshold_assessment.jsonl": 0
+      }
+    },
+    {
+      "fixture_index": 2,
+      "manifest_sha256": "aafa5ef4e126c49eca872ee5e1c99fd0023afc02da648e19a67fd1f69c6257c6",
+      "rows": {
+        "base_train.jsonl": 0,
+        "calibrator_fit.jsonl": 0,
+        "development_evaluation.jsonl": 0,
+        "membership.jsonl": 480,
+        "recipe_selection.jsonl": 0,
+        "threshold_assessment.jsonl": 0
+      }
+    }
+  ],
+  "new_project_generations": 0,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "tree_rss_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "stage_ready": false,
+  "remaining": [
+    "Complete frozen 25/50/100 workflow for all three use cases and original artifact selection",
+    "Full native policy and independent assessments",
+    "Representative 25/50 data-to-report and live-progress qualification before canonical",
+    "Real development and final campaigns, uncertainty, MLflow, cards, lifecycle",
+    "Exact final PR and resulting main acceptance"
+  ],
+  "linux_package_control": {
+    "mode": "stockout_trials",
+    "dispatched": true,
+    "scope": "complete source and installed synthetic trial and regression controls on separate Linux runner",
+    "new_project_operations": 0,
+    "accepted": true,
+    "head": "9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+    "run": 38353774124,
+    "job": 115151865357,
+    "artifact_id": 11792452244,
+    "artifact_sha256": "1061988011ec892e892ba6f89d6aa8c0fe0ce8edae75a5fbdf2117a53eccc254",
+    "source_local_linux_installed_same_cases": true,
+    "tests_per_suite": 191,
+    "pytest_seconds": {
+      "source": 429.285,
+      "installed": 424.639
+    },
+    "summary": {
+      "scope": "complete_synthetic_fixture_controls_not_Project_or_quality_acceptance",
+      "head": "9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+      "status": "passed",
+      "budgets": {
+        "tree_rss_bytes": 536870912,
+        "scratch_bytes": 268435456,
+        "minimum_available_memory_bytes": 1073741824,
+        "minimum_free_disk_bytes": 6442450944,
+        "sample_seconds": 0.2
+      },
+      "scratch_measurement": "measurement logs only; test/dependency scratch excluded; global disk reserve enforced",
+      "new_project_operations": 0,
+      "stage_ready": false,
+      "phases": {
+        "source-0": {
+          "status": "passed",
+          "reason": null,
+          "exit_code": 0,
+          "wall_seconds": 306.28816030400003,
+          "sampled_tree_peak_rss_bytes": 456081408,
+          "sampled_worker_cpu_seconds": 297.74999999999994,
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "sampled_peak_scratch_logical_bytes": 111,
+          "sampled_peak_scratch_allocated_bytes": 4096,
+          "minimum_free_disk_bytes": 90455093248,
+          "minimum_available_memory_bytes": 14924562432,
+          "samples": 1503,
+          "sample_seconds": 0.2,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "code_pins_unchanged": true
+        },
+        "source-1": {
+          "status": "passed",
+          "reason": null,
+          "exit_code": 0,
+          "wall_seconds": 126.064606534,
+          "sampled_tree_peak_rss_bytes": 485363712,
+          "sampled_worker_cpu_seconds": 123.89000000000001,
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "sampled_peak_scratch_logical_bytes": 1019,
+          "sampled_peak_scratch_allocated_bytes": 12288,
+          "minimum_free_disk_bytes": 90390216704,
+          "minimum_available_memory_bytes": 15371972608,
+          "samples": 620,
+          "sample_seconds": 0.2,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "code_pins_unchanged": true
+        },
+        "build": {
+          "status": "passed",
+          "reason": null,
+          "exit_code": 0,
+          "wall_seconds": 1.0218733549999683,
+          "sampled_tree_peak_rss_bytes": 142868480,
+          "sampled_worker_cpu_seconds": 0.64,
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "sampled_peak_scratch_logical_bytes": 1825,
+          "sampled_peak_scratch_allocated_bytes": 20480,
+          "minimum_free_disk_bytes": 90423488512,
+          "minimum_available_memory_bytes": 15631364096,
+          "samples": 6,
+          "sample_seconds": 0.2,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "code_pins_unchanged": true
+        },
+        "install": {
+          "status": "passed",
+          "reason": null,
+          "exit_code": 0,
+          "wall_seconds": 0.2077326360000029,
+          "sampled_tree_peak_rss_bytes": 47833088,
+          "sampled_worker_cpu_seconds": 0.18,
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "sampled_peak_scratch_logical_bytes": 2774,
+          "sampled_peak_scratch_allocated_bytes": 28672,
+          "minimum_free_disk_bytes": 90404433920,
+          "minimum_available_memory_bytes": 15673618432,
+          "samples": 2,
+          "sample_seconds": 0.2,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "code_pins_unchanged": true
+        },
+        "installed-origin": {
+          "status": "passed",
+          "reason": null,
+          "exit_code": 0,
+          "wall_seconds": 2.0461696859999847,
+          "sampled_tree_peak_rss_bytes": 205225984,
+          "sampled_worker_cpu_seconds": 1.92,
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "sampled_peak_scratch_logical_bytes": 3394,
+          "sampled_peak_scratch_allocated_bytes": 32768,
+          "minimum_free_disk_bytes": 90404401152,
+          "minimum_available_memory_bytes": 15579471872,
+          "samples": 11,
+          "sample_seconds": 0.2,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "code_pins_unchanged": true
+        },
+        "installed-0": {
+          "status": "passed",
+          "reason": null,
+          "exit_code": 0,
+          "wall_seconds": 300.51579640000006,
+          "sampled_tree_peak_rss_bytes": 457408512,
+          "sampled_worker_cpu_seconds": 293.01000000000005,
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "sampled_peak_scratch_logical_bytes": 4127,
+          "sampled_peak_scratch_allocated_bytes": 40960,
+          "minimum_free_disk_bytes": 90349727744,
+          "minimum_available_memory_bytes": 15369781248,
+          "samples": 1475,
+          "sample_seconds": 0.2,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "code_pins_unchanged": true
+        },
+        "installed-1": {
+          "status": "passed",
+          "reason": null,
+          "exit_code": 0,
+          "wall_seconds": 127.07167983,
+          "sampled_tree_peak_rss_bytes": 475013120,
+          "sampled_worker_cpu_seconds": 125.07000000000001,
+          "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+          "sampled_peak_scratch_logical_bytes": 5037,
+          "sampled_peak_scratch_allocated_bytes": 49152,
+          "minimum_free_disk_bytes": 90284851200,
+          "minimum_available_memory_bytes": 15354257408,
+          "samples": 625,
+          "sample_seconds": 0.2,
+          "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+          "code_pins_unchanged": true
+        }
+      },
+      "source_tests": 191,
+      "package": {
+        "wheel_sha256": "bfeff5428992c9c44747488f20e69c1ca998e1b5f804094d9c230f17ed5c19a2",
+        "wheel_bytes": 3129952,
+        "python_modules_equal": 686,
+        "contract_files_equal": 59
+      },
+      "installed_tests": 191,
+      "same_test_inventory": true,
+      "code_pins_unchanged": true
+    }
+  },
+  "composition_after_trial_merge": {
+    "head": "d9d1a8b5d99b2933d79fc10d1dd5e392a924b1dd",
+    "refs": {
+      "trials": "2d5c5b5771767979a15dc905ccada05ef25e66ee",
+      "seals": "126c364dcc9acacdb89df8ddf0b53f09a441455b",
+      "main": "e544c78b757be1524915184155a2ff1b098b4325",
+      "harness": "d9d1a8b5d99b2933d79fc10d1dd5e392a924b1dd"
+    },
+    "checked_files": 1619,
+    "all_exact_declared_component_bytes": true,
+    "manifest_sha256": "10e0cf487cbbf7f4ab299fa914c114c56eed48a36acb3cf160bbeae35eeae98a"
+  },
+  "integration_static_and_ci_configuration_control": {
+    "monitor": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 20.34802437503822,
+      "sampled_tree_peak_rss_bytes": 169066496,
+      "sampled_worker_cpu_seconds": 17.885578183,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 29355,
+      "sampled_peak_scratch_allocated_bytes": 40960,
+      "minimum_free_disk_bytes": 17486438400,
+      "minimum_available_memory_bytes": 1264893952,
+      "samples": 181,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; own Mypy cache and pytest scratch excluded; global6GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 335544320,
+      "code_pins_unchanged": true
+    },
+    "pytest": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "156",
+      "time": "15.770",
+      "timestamp": "2026-10-13T07:49:13.524464+02:00",
+      "hostname": "Oskars-MacBook-Air.local"
+    },
+    "mypy_files": 820,
+    "source_trial_suite_on_integrated_head": "passed191 on exact9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+    "installed_trial_suite": "passed191; exact same local/source/Linux/installed testcase inventory"
+  },
+  "prior_integration_static_control": {
+    "monitor": {
+      "status": "failed",
+      "reason": "tree_rss_limit",
+      "exit_code": -9,
+      "wall_seconds": 2.297843624954112,
+      "sampled_tree_peak_rss_bytes": 271155200,
+      "sampled_worker_cpu_seconds": 1.7735612989999998,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 3531,
+      "sampled_peak_scratch_allocated_bytes": 16384,
+      "minimum_free_disk_bytes": 17577807872,
+      "minimum_available_memory_bytes": 1388953600,
+      "samples": 21,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; no Mypy or pytest in publication check; global6GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 268435456,
+      "code_pins_unchanged": true
+    },
+    "resolution": "Copy unchanged accepted Mypy cache into own worktree cache, preserve failed attempt, use320MiB own guard with unchanged1GiB host reserve. Complete Mypy and both entire selected test modules then passed."
+  },
+  "publication_check": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 69.91096870903857,
+    "sampled_tree_peak_rss_bytes": 188694528,
+    "sampled_worker_cpu_seconds": 70.85253071,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 3433,
+    "sampled_peak_scratch_allocated_bytes": 16384,
+    "minimum_free_disk_bytes": 17484283904,
+    "minimum_available_memory_bytes": 1278836736,
+    "samples": 624,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; no Mypy or pytest in publication check; global6GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  },
+  "new_file_scheduling": {
+    "weights_version": "ci-test-file-timings-1.4.0",
+    "evidence": {
+      "previous_weights_sha256": "ef56680b2ae9103f0a1956ba239ac5caaad1495a0ef23c34b22e80f50eb05004",
+      "existing_weights_unchanged": true,
+      "whole_suite_or_capacity_acceptance": false,
+      "note": "Only nine previously default-weight files receive explicit estimates. Four use actual completed Linux source-control JUnit durations; five use 2x complete macOS file durations as clearly provisional scheduling estimates. The 2x factor is an engineering margin, not a measured cross-platform speed ratio. All current tests, four shards, 90-minute job limits and 17 required jobs remain unchanged.",
+      "files": [
+        {
+          "path": "tests/test_campaign_stockout_trial.py",
+          "scope": "complete_file_in_Linux_component_control",
+          "run": 38353774124,
+          "head": "9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+          "archive_sha256": "1061988011ec892e892ba6f89d6aa8c0fe0ce8edae75a5fbdf2117a53eccc254",
+          "tests": 13,
+          "observed_seconds": 302.604,
+          "scheduling_seconds": 302.604
+        },
+        {
+          "path": "tests/test_campaign_stockout_preparation.py",
+          "scope": "complete_file_in_Linux_component_control",
+          "run": 38353774124,
+          "head": "9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+          "archive_sha256": "1061988011ec892e892ba6f89d6aa8c0fe0ce8edae75a5fbdf2117a53eccc254",
+          "tests": 26,
+          "observed_seconds": 14.799,
+          "scheduling_seconds": 14.799
+        },
+        {
+          "path": "tests/test_campaign_role_protocol.py",
+          "scope": "complete_file_in_Linux_component_control",
+          "run": 38353774124,
+          "head": "9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+          "archive_sha256": "1061988011ec892e892ba6f89d6aa8c0fe0ce8edae75a5fbdf2117a53eccc254",
+          "tests": 26,
+          "observed_seconds": 23.254,
+          "scheduling_seconds": 23.254
+        },
+        {
+          "path": "tests/test_campaign_worker_import_boundary.py",
+          "scope": "complete_file_in_Linux_component_control",
+          "run": 38353774124,
+          "head": "9591f38551bf4c694fa74bb1ad47c0d93fc60a6a",
+          "archive_sha256": "1061988011ec892e892ba6f89d6aa8c0fe0ce8edae75a5fbdf2117a53eccc254",
+          "tests": 2,
+          "observed_seconds": 2.201,
+          "scheduling_seconds": 2.201
+        },
+        {
+          "path": "tests/test_campaign_parent_final_seal.py",
+          "scope": "provisional_scheduling_estimate_from_complete_macOS_component_file_not_measured_Linux",
+          "component": "retailops-ai09-parent-final-seals",
+          "receipt": "docs/evidence/09-121-parent-final-seals.json",
+          "junit_sha256": "806c121c4e1cc4a306211922ee88572bc10ee58d875bc252a6d6ee2a04e5a22b",
+          "tests": 30,
+          "observed_macos_seconds": 331.814,
+          "estimate_multiplier": 2.0,
+          "scheduling_seconds": 663.628
+        },
+        {
+          "path": "tests/test_campaign_stockout_labels.py",
+          "scope": "provisional_scheduling_estimate_from_complete_macOS_component_file_not_measured_Linux",
+          "component": "retailops-ai09-parent-final-seals",
+          "receipt": "docs/evidence/09-121-parent-final-seals.json",
+          "junit_sha256": "806c121c4e1cc4a306211922ee88572bc10ee58d875bc252a6d6ee2a04e5a22b",
+          "tests": 55,
+          "observed_macos_seconds": 495.126,
+          "estimate_multiplier": 2.0,
+          "scheduling_seconds": 990.252
+        },
+        {
+          "path": "tests/test_campaign_stockout_maturity.py",
+          "scope": "provisional_scheduling_estimate_from_complete_macOS_component_file_not_measured_Linux",
+          "component": "retailops-ai09-parent-final-seals",
+          "receipt": "docs/evidence/09-121-parent-final-seals.json",
+          "junit_sha256": "806c121c4e1cc4a306211922ee88572bc10ee58d875bc252a6d6ee2a04e5a22b",
+          "tests": 63,
+          "observed_macos_seconds": 425.899,
+          "estimate_multiplier": 2.0,
+          "scheduling_seconds": 851.798
+        },
+        {
+          "path": "tests/test_campaign_stockout_role_artifact.py",
+          "scope": "provisional_scheduling_estimate_from_complete_macOS_component_file_not_measured_Linux",
+          "component": "retailops-ai09-parent-final-seals",
+          "receipt": "docs/evidence/09-121-parent-final-seals.json",
+          "junit_sha256": "806c121c4e1cc4a306211922ee88572bc10ee58d875bc252a6d6ee2a04e5a22b",
+          "tests": 58,
+          "observed_macos_seconds": 145.963,
+          "estimate_multiplier": 2.0,
+          "scheduling_seconds": 291.926
+        },
+        {
+          "path": "tests/test_campaign_stockout_preparation_worker.py",
+          "scope": "provisional_scheduling_estimate_from_complete_macOS_component_file_not_measured_Linux",
+          "component": "retailops-ai09-stockout-preparation-execution",
+          "receipt": "docs/evidence/09-122-stockout-preparation-execution.json",
+          "junit_sha256": "7a2ea3ebd89db60c11ff0959b5e8b641e30adfe6350b268adcf00fbea2861f99",
+          "tests": 6,
+          "observed_macos_seconds": 151.336,
+          "estimate_multiplier": 2.0,
+          "scheduling_seconds": 302.672
+        }
+      ]
+    },
+    "projection": {
+      "scope": "Scheduling estimates including explicitly provisional macOS-derived weights; actual Required CI is required. Not measured wall time or capacity.",
+      "current_files": 296,
+      "new_groups_at_updated_weights_seconds": [
+        4996.577,
+        4996.55,
+        4996.606,
+        4996.523
+      ]
+    },
+    "remaining_default_files": [
+      "tests/test_campaign_stockout_assessment.py",
+      "tests/test_v12_scratch_tracking.py"
+    ],
+    "all_prior_weights_preserved": true,
+    "control": {
+      "scope": "83 complete shard, report and CI-contract tests, documentation contract, whitespace validation and complete Git/directory secret scans",
+      "tests_passed": 83,
+      "tests_skipped": 0,
+      "junit_seconds": 1.54,
+      "monitor": {
+        "status": "passed",
+        "reason": null,
+        "exit_code": 0,
+        "wall_seconds": 71.91082691703923,
+        "sampled_tree_peak_rss_bytes": 188973056,
+        "sampled_worker_cpu_seconds": 72.258304259,
+        "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+        "sampled_peak_scratch_logical_bytes": 15495,
+        "sampled_peak_scratch_allocated_bytes": 28672,
+        "minimum_free_disk_bytes": 17444909056,
+        "minimum_available_memory_bytes": 1265844224,
+        "samples": 645,
+        "sample_seconds": 0.1,
+        "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+        "scratch_measurement": "guard/log files only; pytest temporary files excluded; global6GiB disk reserve enforced",
+        "tree_rss_budget_bytes": 268435456,
+        "code_pins_unchanged": true
+      }
+    }
+  }
+}

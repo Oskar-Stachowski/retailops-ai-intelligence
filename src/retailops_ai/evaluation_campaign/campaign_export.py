@@ -51,6 +51,12 @@ from retailops_ai.evaluation_campaign.campaign_source_identity import (
 from retailops_ai.evaluation_campaign.campaign_source_identity import (
     _producer_values as _producer_values,
 )
+from retailops_ai.evaluation_campaign.campaign_stockout_preparation_contract import (
+    CampaignStockoutPreparationReceipt,
+)
+from retailops_ai.evaluation_campaign.campaign_stockout_trial_contract import (
+    CampaignStockoutTrialReceipt,
+)
 from retailops_ai.evaluation_campaign.campaign_tune_contract import CampaignForecastTuneReceipt
 from retailops_ai.evaluation_campaign.development_planning_contract import (
     NativeDevelopmentPlanningReceipt,
@@ -198,7 +204,9 @@ def _store_receipt(
     | CampaignForecastPortfolioEvaluationReceipt
     | CampaignForecastPortfolioRobustEvaluationReceipt
     | CampaignForecastRequiredGroupEvaluationReceipt
-    | CampaignContextBundleReceipt,
+    | CampaignContextBundleReceipt
+    | CampaignStockoutPreparationReceipt
+    | CampaignStockoutTrialReceipt,
 ) -> None:
     """Keep output evidence durable before completing the charged operation."""
     raw = canonical_bytes(receipt.model_dump(mode="json")) + b"\n"

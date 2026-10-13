@@ -392,6 +392,7 @@ def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editab
         "generation",
         "live_progress",
         "census_memory",
+        "stockout_trials",
         "checkpoint_resume",
         "checkpoint_failure",
         "checkpoint_interruption",
@@ -400,13 +401,20 @@ def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editab
     steps = workflow["jobs"]["control"]["steps"]
     source = next(s for s in steps if s.get("with", {}).get("path") == "source")
     producer = next(s for s in steps if s.get("name") == "Install pinned producer dependencies")
-    assert source["if"] == producer["if"] == "inputs.mode != 'census_memory'"
+    assert (
+        source["if"]
+        == producer["if"]
+        == "inputs.mode != 'census_memory' && inputs.mode != 'stockout_trials'"
+    )
     consumer = next(s for s in steps if s.get("name") == "Install locked consumer dependencies")
     assert consumer["env"]["CONTROL_MODE"] == "${{ inputs.mode }}"
-    assert 'if [[ "$CONTROL_MODE" == checkpoint_* ]]; then' in consumer["run"]
+    assert (
+        'if [[ "$CONTROL_MODE" == checkpoint_* || "$CONTROL_MODE" == stockout_trials ]]; then'
+        in consumer["run"]
+    )
     assert "--locked --extra snapshot --extra forecast --no-install-project" in consumer["run"]
     # Execute the setup's branching without installation: each native mode keeps
-    # its dependency selection, and only preparation omits the local project.
+    # its dependency selection; installed-package checks also omit the local project.
     for mode in options:
         commands = subprocess.run(
             ["/bin/bash", "-eu", "-c", 'uv() { printf "%s\\n" "$*"; }\n' + consumer["run"]],
@@ -417,7 +425,7 @@ def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editab
             timeout=5,
         ).stdout.splitlines()
         expected = "sync --directory consumer --locked --extra snapshot --extra forecast"
-        if mode.startswith("checkpoint_"):
+        if mode.startswith("checkpoint_") or mode == "stockout_trials":
             expected += " --no-install-project"
         assert commands == [expected]
     canonical = yaml.safe_load(

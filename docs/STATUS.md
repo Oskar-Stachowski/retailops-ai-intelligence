@@ -1,9 +1,47 @@
 # Aktualny status
 
+**2026-10-13 — AI 09: pełny odbiór kodu i paczki prób stockout na Linux.**
+[Kontrola 38353774124](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38353774124) commitu `9591f38` przeszła: **191 testów źródeł i te same 191 testów z instalacji**, bez pominięć. Zbiór przypadków jest identyczny także z wcześniejszą kontrolą lokalną. Zweryfikowano hash archiwum GitHub oraz zgodność bajtów **686 modułów i 59 schematów**. Dziewięć nowych plików testowych otrzymało jawne wagi harmonogramu: cztery z pomiarów Linux, pięć z oznaczonych szacunków na podstawie pełnych pomiarów macOS. Wcześniejsze wagi, wszystkie testy, cztery shardy, limit 90 minut i 17 wymaganych jobs pozostają zachowane. [09.125](evidence/09-125-stockout-integration-progress.json) zachowuje wszystkie pomiary i wcześniejszą nieudaną próbę lokalną.
+
+Próby używają rzeczywistych modeli i świeżych procesów na jawnie syntetycznych rolach. To odbiór komponentu po połączeniu; pełny Required CI PR/main, wybór oryginalnych artefaktów, oceny i wspólny workflow trzech zastosowań, reprezentatywne profile, kampania/final, MLflow oraz lifecycle pozostają wymagane. Znany timeout testu odczytu prognoz na main nadal wymaga rozstrzygnięcia. Nowe operacje Project: **0**. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-13 — AI 09: rzeczywiste próby stockout na kontrolowanych rolach.**
+[Wykonawca prób](ai09-stockout-trial-execution.md) rezerwuje sześć baz LR/HGB i 24 kalibratory, korzysta wyłącznie z przypisanej roli i odtwarza każdy model w świeżym procesie. **191 testów kodu przeszło**, bez pominięć; Mypy **819 plików**. Zgodne są bajty **686 modułów i 59 schematów** w źródłach, paczce i instalacji.
+
+Naprawiono powielanie pełnej historii w receipts oraz utratę jawnej przyczyny odrzucenia kalibratora. Limit zapisu **512 KiB**, koszty nieudanych prób i blokady nieuprawnionych odczytów pozostają zachowane. [09.124](evidence/09-124-stockout-trial-execution.json) zapisuje również nieukończony test instalacji: nadzorca zatrzymał własne procesy po naruszeniu rezerwy wolnego RAM. **Odbiór paczki pozostaje otwarty**; kod nie jest pełnym odbiorem komponentu ani kampanii.
+
+To jawnie syntetyczne fixtures i zastępcze metadane Source, z rzeczywistymi fitami i zimnym odtworzeniem. Wybór oryginalnych modeli, polityki i niezależne oceny, pełny workflow, profile reprezentatywne, kampania/final, MLflow, lifecycle i odbiór PR/main pozostają wymagane. Nowe operacje Project: **0**. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-13 — AI 09: PR 68 na main i dalsze połączenie stockout.**
+[PR 68](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/68) przeszedł wszystkie **17/17 wymaganych jobs** dla dokładnego head i został scalony jako `e544c78`. Natywny TensorFlow zaliczył **8 testów** przy zachowanym limicie fixture 1 GiB. [CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38350390036) trwa; `persistence-forecast` zakończył się błędem `TimeoutExpired` podczas testu odczytu HTTP/SQL. **Wynikowy main nie jest odebrany**; pozostałych jobs nie przerwano.
+
+Bazowe połączenie `6abfee3` łączy przygotowanie i role stockout, dziennik trzech zastosowań oraz pojedynczą końcową kontrolę rodziców. **1610 plików** kodu, testów, skryptów i kontraktów zachowuje dokładne bajty sprawdzonych komponentów. [09.125](evidence/09-125-stockout-integration-progress.json) zachowuje pochodzenie oraz rzeczywisty wynik wcześniejszego lokalnego CI: **6123 passed / 55 zadeklarowanych skips**, a następnie **3 natywne passed / 5 odmów startu przez rezerwę RAM**. Cały lokalny CI jest **failed** i nie stanowi odbioru nowej integracji. Przygotowano oddzielny tryb Linux `stockout_trials` do pełnych kontroli kodu i instalacji, bez generowania Source oraz bez operacji Project. Po połączeniu prób zachowano pochodzenie **1619 plików**. Mypy sprawdził **820 plików**, a **156 testów** transportu checkpointów i kontraktu CI przeszło; wykonanie pełnej kontroli paczki na Linux pozostaje wymagane.
+
+Wykonawca prób stockout, wybór oryginalnych modeli, pełne oceny i workflow trzech zastosowań, reprezentatywne profile, kampania/final, MLflow, lifecycle i odbiór całego przyrostu pozostają otwarte. Nie wykonano nowych operacji Project. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-12 — AI 09: pojedynczy pełny końcowy odczyt rodziców publicznych.**
+[Czytniki anomaly i stockout](ai09-parent-final-seals.md) pozostawiają końcowe sprawdzenie właścicielowi Source. Liczba pełnych odczytów przy zamknięciu spadła z ośmiu do czterech; wszystkie oryginały i prywatne kopie nadal podlegają kontroli przed udostępnieniem odbioru. Sześć pomiarów odczytów i 24 próby uszkodzenia plików potwierdzają tę granicę.
+
+**481 testów kodu i te same 481 testów z paczki przeszły**, bez pominięć. Mypy **808 plików**, zgodne bajty **675 modułów i 55 schematów**. [09.121](evidence/09-121-parent-final-seals.json) zachowuje kontrolę sprzed poprawki i jej sześć oczekiwanych błędów. To redukcja jednego przebiegu walidacji; nie zmierzono przyspieszenia całego profilu.
+
+Pełne połączenie trzech zastosowań, kampania, final, MLflow, lifecycle oraz odbiór PR/main pozostają wymagane. Nie uruchomiono nowych danych ani modeli Project. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: poprawka podziału testów po pełnym wyniku PR 68.**
 [09.123](evidence/09-123-integration-ci-rebalance.json) zachowuje nieudany Required CI kodu `60b4a03`: **14 jobs success**, błąd RSS natywnego scoringu, anulowany po 90 minutach shard 2 i nieudany agregator. Żaden z tych wyników nie jest odbiorem. Wagi 266 w pełni zakończonych plików testowych zaktualizowano z oryginalnych pomiarów Linux; 20 niedokończonych lub nierozpoczętych plików zachowuje wcześniejsze wagi. Cztery shardy, pełna kolekcja, limit 90 minut i wszystkie 17 jobs pozostają wymagane.
 
 Test całego workflow trwał **1020,6 s**, przy wcześniejszej domyślnej wadze **1 s**. Nowy podział szacuje około **69 minut na shard**; to prognoza harmonogramu, wymagająca rzeczywistego CI. Włączono również poprawkę importów [09.119](evidence/09-119-forecast-worker-imports.json). Pełny PR/main, wspólny wykonawca trzech zastosowań, kampania, final, MLflow i lifecycle pozostają otwarte. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-12 — AI 09: rezerwowane przygotowanie pełnych ról stockout.**
+[Wykonawca przygotowania](ai09-stockout-preparation-execution.md) wiąże oryginalną generację, konfigurację Source, wspólne daty i budżety z trwałym dziennikiem. Trzy osobne procesy przygotowują publiczne cechy, dojrzałe etykiety i ponownie sprawdzają pełny artefakt. Błąd pozostaje rozliczony; nieznany RSS nie staje się zerem, a zmiana pliku po kontroli blokuje odbiór.
+
+**162 testy kodu i te same 162 testy z paczki przeszły**, bez pominięć. Mypy **814 plików**, zgodność bajtów **681 modułów i 57 schematów**. [09.122](evidence/09-122-stockout-preparation-execution.json) zachowuje wcześniejsze błędy i odmowę startu. Wszystkie 129 modułów AI 08 i 424 dotychczasowe kontrakty pozostają identyczne.
+
+Testy dziennika korzystają z jawnych doubles; fizyczne workery korzystają z istniejących fixtures. Pełne połączenie workflow 25/50/100, zarezerwowane modele i oceny, kampania, final, MLflow, lifecycle oraz CI PR/main pozostają wymagane. Nie uruchomiono nowej kampanii Project. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-12 — AI 09: jawne role trzech zastosowań i pełne rezerwacje stockout.**
+[Nowy kontrakt i dziennik](ai09-three-usecase-role-protocol.md) zapisuje wspólne daty, różne okna kalibracji forecastingu i stockout oraz dokładne role odczytu. Wymaga sześciu baz i 24 kalibratorów stockout; odrzuca nieukończone zależności, udany kalibrator po błędzie bazy i ponowienia poza budżetem. **84 testy kodu i te same 84 z paczki przeszły**, bez pominięć. [09.120](evidence/09-120-three-usecase-role-protocol.json) zachowuje wcześniejsze błędy kontroli i poprawki. 675 modułów i 55 schematów mają zgodne bajty.
+
+To deklaracja i trwały dziennik. Powiązanie rzeczywistych planów i plików ról, kompilacja do workflow 25/50/100, wykonanie prób i ocen, pełna kampania, MLflow i lifecycle oraz odbiór PR/main pozostają wymagane. Nie uruchomiono danych ani modeli Project. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
 
 **2026-10-12 — AI 09: mniejszy narzut pamięci workerów prognoz.**
 [09.119](evidence/09-119-forecast-worker-imports.json) zachowuje rzeczywistą odmowę RSS natywnego joba PR 68 oraz poprawkę importów. Oba workery korzystają z tych samych funkcji kontroli artefaktu i tożsamości Source bez ładowania kontrolerów; AST czterech przeniesionych funkcji jest identyczne. Lokalna mediana zimnego importu scoringu spadła z **125,4 do 74,8 MiB (40,4%)**. To pomiar samego importu; pełny scoring na Linux wymaga ponownego odbioru.
@@ -14,6 +52,65 @@ Test całego workflow trwał **1020,6 s**, przy wcześniejszej domyślnej wadze 
 [09.118](evidence/09-118-development-integration-local-ci.json) zachowuje wynik `make ci-local` dla kodu `dcc36e8`: Mypy **800 plików** i osobno 10 natywnych, **5922 testy passed / 55 zadeklarowanych skips** oraz kolejne bramki do natywnego CPU. Wynik całego polecenia to **failed**: 3 kontrole natywne przeszły, 5 odmówiono przed uruchomieniem workerów z powodu `preflight_reserve`. Kod nie zmienił się podczas kontroli. Rezerwy pozostają zachowane; wymagany jest pełny Required CI dokładnego PR oraz wynikowego main.
 
 PR 67 ma odebrany wynikowy main `5875321`: **17/17 jobs success**, [run 38173378231](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38173378231). Bieżące połączenie wymaga własnego odbioru. Pełne role i operacje stockout, wspólny protokół i runtime trzech zastosowań, kampania, MLflow i lifecycle pozostają otwarte. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-12 — AI 09: prywatne pliki ról stockout i odczyt jednej populacji.**
+[Zapis ról](ai09-stockout-role-artifacts.md) zachowuje pełne członkostwo i osobne pliki kwalifikujących się obserwacji. Publikacja wymaga końcowego odbioru oryginalnych etykiet i wszystkich plików. Odczyt wybranej roli sprawdza cały jej plik, nie otwierając pozostałych etykiet. **94 testy kodu i te same 94 z paczki przeszły**, bez pominięć. [09.117](evidence/09-117-stockout-role-artifacts.json) zachowuje także pierwszy błąd typowania i jego poprawkę. 674 moduły i 53 schematy mają zgodne bajty. Połączono odebrane dojrzałe role i optymalizację końcowego odczytu rodziców; kod kontroli pozostał identyczny.
+
+Wspólny protokół trzech zastosowań i rezerwacje, treningi, wybór oryginalnych artefaktów, pełna ocena oraz właściwa kampania, MLflow i lifecycle pozostają wymagane. Ten komponent nie dowodzi uprawnień dziennika, jakości ani wydajności pełnego profilu. Odbiór PR/main pozostaje otwarty. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-12 — AI 09: pełne dojrzałe role stockout i kontrola każdej etykiety.**
+[Adapter ról](ai09-stockout-mature-roles.md) zachowuje pełne członkostwo, oryginalne etykiety i pięć wspólnych okien development. Odbiór porównuje również całą treść każdej etykiety; podmiana przy zachowaniu klucza blokuje wynik. **142 testy źródeł i te same 142 z paczki przeszły**, bez pominięć. [09.116](evidence/09-116-stockout-mature-roles.json) zachowuje wcześniejsze 139 kontroli i późniejsze wzmocnienie. 672 moduły i 50 schematów mają zgodne bajty; 129 modułów AI 08 oraz 417 wcześniejszych kontraktów pozostaje niezmienionych.
+
+Zapis i odczyt plików ról, nowy jawny protokół trzech zastosowań, zarezerwowane treningi, oceny i wykonanie kampanii pozostają wymagane. Komponent nie nadaje uprawnień starego dziennika ani do final. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-12 — AI 09: jeden pełny końcowy odczyt rodziców etykiet stockout.**
+[09.115](evidence/09-115-stockout-final-parent-check.json) potwierdza **239 testów źródeł i te same 239 z paczki**, bez pominięć. Końcowa kontrola hashuje każdego z czterech rodziców raz; zmiana nieużywanych faktów po odczycie nadal blokuje odbiór. 670 modułów i 49 schematów mają zgodne bajty. 129 modułów AI 08 i 416 wcześniejszych kontraktów pozostaje niezmienionych.
+
+Dojrzałe role, wspólny protokół wszystkich trzech zastosowań, wykonanie kampanii, MLflow i lifecycle oraz końcowy odbiór PR/main pozostają wymagane. Inne kontrole rodziców podlegają osobnemu audytowi; nie zmierzono przyspieszenia pełnego profilu. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
+**2026-10-11 — AI 09: odbiór main PR 67 i połączenie nowych komponentów stockout.**
+[09.114](evidence/09-114-stockout-composition-main-acceptance.json) potwierdza
+pełne **17/17 jobs PR i wynikowego main** na `5875321`. Nowa osobna gałąź
+łączy odebrane komponenty etykiet i progów; 670 modułów, 302 moduły testowe
+i 418 kontraktów zachowują bajty tych komponentów. Zachowano oba nowe
+kontrakty v46 i v47. Kontrole wykonania po połączeniu pozostają wymagane.
+
+Pełny `make ci-local` wcześniejszej integracji nadal działa na niezmiennym
+`dcc36e8`; ten wynik nie obejmuje nowych przyrostów. Dojrzałe role, rezerwacje
+treningów i pełne połączenie trzech zastosowań pozostają do wykonania.
+Przed canonical wymagany jest końcowy audyt odczytów i zamrożenie wspólnego
+protokołu/runtime. Final, MLflow, karty i lifecycle są otwarte; AI 09
+**`not_ready`**, limit **12 GiB**, rezerwa **1 GiB**, canonical wyłączony.
+
+**2026-10-11 — AI 09: odtworzenie wszystkich oryginalnych etykiet stockout.**
+[Adapter etykiet](ai09-stockout-label-replay.md) łączy całą oryginalną
+kwalifikację z publicznymi ruchami towaru, pokryciem i stanami magazynowymi.
+Zachowuje obliczenia AI 08, nieznane wyniki i zgodność wszystkich fizycznych
+kluczy. Odbiór wymaga pełnego odczytu i pomyślnej kontroli rodziców przy wyjściu.
+
+**176 testów źródeł i te same 176 testów z paczki przeszło**. Mypy sprawdził
+802 pliki; 669 modułów i 48 schematów mają zgodne bajty.
+[09.112](evidence/09-112-stockout-label-replay.json) zachowuje także wcześniejszy
+błąd typowania, odmowę startu z braku rezerwy i ich rozstrzygnięcie.
+Pełne dojrzałe role, zarezerwowane treningi, selekcja, ocena trzech zastosowań,
+MLflow i lifecycle oraz odbiór PR/main pozostają otwarte. Przed canonical
+pozostaje końcowy audyt wspólnych odczytów. Limit **12 GiB** i rezerwa **1 GiB**
+pozostają zachowane; AI 09 **`not_ready`**.
+
+**2026-10-11 — AI 09: pełna ocena progów i wspólnej kolejki stockout.**
+[Adapter oceny](ai09-stockout-full-assessment.md) zachowuje natywne obliczenia
+kosztów i pojemności dla całego zbioru, także powyżej 10 tys. wierszy. Kategorie
+i magazyny korzystają z tej samej kolejki; brakujące zadeklarowane grupy
+pozostają jawne. Walidacja odrzuca nieprawidłowe etykiety i parametry przed
+serializacją. Nie wykonuje dodatkowego treningu ani kalibracji.
+
+**51 testów źródeł i te same 51 testów z paczki przeszło**. Mypy sprawdził
+801 plików; 668 modułów i 48 schematów mają zgodne bajty.
+[09.113](evidence/09-113-stockout-full-assessment.json) zachowuje również
+pierwszy błąd kontroli oraz jego poprawkę. Komponent wymaga połączenia z
+oryginalnymi predykcjami, pełnymi dojrzałymi rolami i dziennikiem kampanii.
+Odbiór PR/main, pełna kampania, MLflow i lifecycle pozostają otwarte.
+Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
 
 **2026-10-11 — AI 09: połączona gałąź kwalifikacji prognoz i komponentów stockout.**
 [09.111](evidence/09-111-development-integration.json) łączy wykonawcę 51 operacji,
@@ -27,7 +124,8 @@ komponentów; pełny CI pozostaje wymagany.
 
 PR 67 został scalony do `main` jako `5875321` po pełnych **17/17 jobs**.
 [CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38173378231)
-trwa. Bieżąca gałąź zawiera ten merge i zachowuje wcześniejszą lokalną odmowę
+zakończyło się sukcesem: **17/17 jobs**, razem z `required-result`. Bieżąca
+gałąź zawiera ten merge i zachowuje wcześniejszą lokalną odmowę
 pięciu workerów TensorFlow z powodu rezerwy RAM.
 
 Odtworzenie etykiet stockout z ledgeru, pełne dojrzałe role oraz zarezerwowane

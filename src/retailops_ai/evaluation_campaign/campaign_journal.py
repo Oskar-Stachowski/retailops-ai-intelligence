@@ -2,6 +2,7 @@
 
 import fcntl
 import os
+import re
 import stat
 from collections.abc import Iterator
 from contextlib import contextmanager
@@ -106,6 +107,12 @@ def _runtime(ledger: CampaignJournal) -> None:
 
 
 def initialize(root: Path, protocol: CampaignProtocol) -> CampaignJournal:
+    if hasattr(protocol, "role_protocol_version"):
+        from retailops_ai.evaluation_campaign.campaign_role_protocol import (
+            RoleAwareCampaignProtocol,
+        )
+
+        protocol = RoleAwareCampaignProtocol.model_validate(protocol.model_dump(mode="python"))
     protocol = parse_campaign_protocol(canonical_bytes(protocol.model_dump(mode="json")))
     if protocol.journal_path != str(root.absolute()):
         raise SnapshotError("campaign_journal_location_mismatch")
@@ -268,13 +275,22 @@ class OperationCompletion:
 
 
 @contextmanager
-def audited_operation(root: Path, operation_id: str) -> Iterator[OperationCompletion]:
+def audited_operation(
+    root: Path, operation_id: str, *, failure_codes: frozenset[str] = frozenset()
+) -> Iterator[OperationCompletion]:
     """Put generation, reading or fitting entirely inside the reservation context.
 
     The runner supplies a verified output receipt and measured costs before exit.
     A SIGKILL leaves a charged unresolved reservation; ordinary failure is charged
-    and recorded without sensitive exception text. There is no budget refund.
+    and recorded without sensitive exception text. A controller may explicitly
+    allow stable machine codes from SnapshotError; all other exceptions retain
+    the generic code. There is no budget refund.
     """
+    if not isinstance(failure_codes, frozenset) or any(
+        not isinstance(code, str) or re.fullmatch(r"[a-z][a-z0-9_]{0,127}", code) is None
+        for code in failure_codes
+    ):
+        raise ValueError("campaign_invalid_public_failure_codes")
     started = perf_counter()
     handle = OperationCompletion(reserve(root, operation_id))
     reservation_id = str(handle.reservation.reservation_id)
@@ -289,15 +305,23 @@ def audited_operation(root: Path, operation_id: str) -> Iterator[OperationComple
             evidence_sha256=handle.evidence_sha256,
             cost=handle.cost,
         )
-    except BaseException:
+    except BaseException as error:
         # Ordinary failures have an observed wall cost. A SIGKILL still leaves
         # an unresolved charge with unknown costs; never replace it with zero.
         partial = handle.cost
+        code = (
+            error.args[0]
+            if isinstance(error, SnapshotError)
+            and len(error.args) == 1
+            and isinstance(error.args[0], str)
+            and error.args[0] in failure_codes
+            else "campaign_operation_failed"
+        )
         finish(
             root,
             reservation_id,
             result="failed",
-            error_code="campaign_operation_failed",
+            error_code=code,
             cost=CampaignCost(
                 wall_seconds=perf_counter() - started,
                 peak_process_tree_rss_bytes=(

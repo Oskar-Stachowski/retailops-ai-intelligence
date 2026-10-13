@@ -1,0 +1,155 @@
+{
+  "recorded_at_utc": "2026-10-11T21:47:26.392283+00:00",
+  "scope": "Complete original stockout label replay from verified public Source1.1/1.2 and original private qualification, exact all-physical-origin join, unchanged native LabelPreparation.point and label_window. Existing exposed controls, no Project or fresh final.",
+  "source": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 479.589795207954,
+    "sampled_tree_peak_rss_bytes": 182976512,
+    "sampled_worker_cpu_seconds": 469.61621411300007,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 165403,
+    "sampled_peak_scratch_allocated_bytes": 180224,
+    "minimum_free_disk_bytes": 28423356416,
+    "minimum_available_memory_bytes": 1266958336,
+    "samples": 4279,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+    "tree_rss_budget_bytes": 268435456,
+    "code_pins_unchanged": true
+  },
+  "source_pytest": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "176",
+    "time": "475.077",
+    "timestamp": "2026-10-11T23:21:46.760419+02:00"
+  },
+  "installed": {
+    "status": "passed",
+    "reason": null,
+    "exit_code": 0,
+    "wall_seconds": 499.0890766659868,
+    "sampled_tree_peak_rss_bytes": 145129472,
+    "sampled_worker_cpu_seconds": 481.409916928,
+    "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+    "sampled_peak_scratch_logical_bytes": 27930,
+    "sampled_peak_scratch_allocated_bytes": 36864,
+    "minimum_free_disk_bytes": 28144173056,
+    "minimum_available_memory_bytes": 1279672320,
+    "samples": 4511,
+    "sample_seconds": 0.1,
+    "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+    "source_and_control_pins_unchanged": true,
+    "scratch_measurement": "logs only; package and pytest temporary files excluded, global6GiB disk reserve enforced"
+  },
+  "installed_pytest": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "176",
+    "time": "498.675",
+    "timestamp": "2026-10-11T23:34:40.404327+02:00"
+  },
+  "acceptance": {
+    "same_test_case_inventory": true,
+    "tests_per_suite": 176,
+    "controlled_25_50_setups_per_suite": 0,
+    "source_pins_unchanged": true
+  },
+  "package": {
+    "wheel": "retailops_ai_intelligence-0.1.0.dev0-py3-none-any.whl",
+    "bytes": 3038169,
+    "sha256": "89d606d589ebc78ef424be0b3a63b07d4550c995053bd21d22e587517497d837",
+    "python_modules_equal": 669,
+    "new_contract_files_equal": 48,
+    "private_files_absent": true
+  },
+  "compatibility": {
+    "base_commit": "dcc36e8e94191338740c0005d80da7e36da22518",
+    "closed_ai08_python_modules_unchanged": 129,
+    "existing_contract_files_unchanged": 416,
+    "new_contract_files": [
+      "contracts/evaluation/v46/stockout_full_label_replay_plan.schema.json"
+    ],
+    "mechanism": "Current file bytes hashed as Git blobs and compared to committed HEAD tree object IDs; includes every closed stockout package and every earlier contract"
+  },
+  "mypy_files": 802,
+  "new_contract_version": 46,
+  "guarantees": [
+    "Original label fields/status/reason/availability exactly match native projection on inventory1.1, demand1.2 and physical1.2.",
+    "Complete original qualification and public-origin streams have identical UTC physical keys, without sampling or silently missing windows.",
+    "Future movements belong only to labels; a separate label-storage policy declares this rather than claiming causal feature projection. Shared public-feature storage keeps its previous default policy.",
+    "All private facts and complete original parents rechecked; partial/caught repeated streams, missing/extra origins, ledger/coverage/index/metadata changes cannot yield a receipt.",
+    "Physical ledger counts preflight before decoding. Actual synthetic100003-row query control selects2matching rows without applying a whole-table100000cap; an unrelated100001-movement physical series is rejected before decoding. This unit control is not Source or full capacity proof.",
+    "Receipt requires successful context exit; public and private read reservations and Source generation ancestry must be supplied by the enclosing campaign."
+  ],
+  "preserved_preceding_controls": {
+    "source_control_1": {
+      "status": "failed",
+      "reason": "worker_exit",
+      "exit_code": 1,
+      "wall_seconds": 4.255105499993078,
+      "sampled_tree_peak_rss_bytes": 182812672,
+      "sampled_worker_cpu_seconds": 3.3744769160000003,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 145478,
+      "sampled_peak_scratch_allocated_bytes": 155648,
+      "minimum_free_disk_bytes": 28757946368,
+      "minimum_available_memory_bytes": 1428422656,
+      "samples": 39,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 402653184,
+      "code_pins_unchanged": true
+    },
+    "source_control_1_reason": "Mypy rejected generic JSON data_seed vs fixed seed literal; corrected with canonical JSON scope validation before pytest.",
+    "source_control_2": {
+      "worker_started": false,
+      "elapsed_seconds": 301.3981180829578
+    },
+    "source_control_2_reason": "No worker started;384MiB plus1GiB reserve admission expired. Subsequent small-fixture controls used stricter256MiB process cap, unchanged1GiB reserve, justified by measured182.8MB first control and earlier native controls.",
+    "source_control_3": {
+      "status": "passed",
+      "reason": null,
+      "exit_code": 0,
+      "wall_seconds": 351.64490837504854,
+      "sampled_tree_peak_rss_bytes": 166805504,
+      "sampled_worker_cpu_seconds": 343.733935957,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 159356,
+      "sampled_peak_scratch_allocated_bytes": 176128,
+      "minimum_free_disk_bytes": 28674932736,
+      "minimum_available_memory_bytes": 1269694464,
+      "samples": 3152,
+      "sample_seconds": 0.1,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "scratch_measurement": "guard/log files only; own copied private Mypy cache excluded; pytest temporary files excluded, global 6 GiB disk reserve enforced",
+      "tree_rss_budget_bytes": 268435456,
+      "code_pins_unchanged": true
+    },
+    "source_control_3_tests": 140,
+    "source_control_4_extension": "Explicit label-storage policy semantics and shared public-feature regression; all176source/installed passed."
+  },
+  "not_claimed": [
+    "Full-scale Project capacity or model quality",
+    "Full mature train/tune/calibration/evaluation membership",
+    "Source generation ancestry or durable journal authority",
+    "Model fit, selection, threshold approval or final access",
+    "Whole branch PR/main CI or stage-ready"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "quality_qualified": false,
+  "stage_ready": false,
+  "exact_PR_and_main_CI": "required after integration; not claimed by component checks"
+}

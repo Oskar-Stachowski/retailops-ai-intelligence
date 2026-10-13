@@ -1,0 +1,424 @@
+{
+  "$defs": {
+    "CampaignStockoutLabelStoragePolicy": {
+      "additionalProperties": false,
+      "description": "Same bounded storage resources, explicitly for outcomes rather than PIT features.",
+      "properties": {
+        "audited_source_read_proved_by_this_policy": {
+          "const": false,
+          "default": false,
+          "title": "Audited Source Read Proved By This Policy",
+          "type": "boolean"
+        },
+        "batch_rows": {
+          "default": 256,
+          "maximum": 512,
+          "minimum": 1,
+          "title": "Batch Rows",
+          "type": "integer"
+        },
+        "cache_kib": {
+          "const": 8192,
+          "default": 8192,
+          "title": "Cache Kib",
+          "type": "integer"
+        },
+        "final_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Access Authorized",
+          "type": "boolean"
+        },
+        "max_index_bytes": {
+          "default": 2147483648,
+          "maximum": 17179869184,
+          "minimum": 4096,
+          "title": "Max Index Bytes",
+          "type": "integer"
+        },
+        "max_parent_bytes": {
+          "default": 2147483648,
+          "maximum": 68719476736,
+          "minimum": 1,
+          "title": "Max Parent Bytes",
+          "type": "integer"
+        },
+        "max_parent_files": {
+          "default": 10000,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Max Parent Files",
+          "type": "integer"
+        },
+        "max_parent_rows": {
+          "default": 20000000,
+          "maximum": 100000000,
+          "minimum": 1,
+          "title": "Max Parent Rows",
+          "type": "integer"
+        },
+        "max_selected_bytes": {
+          "default": 67108864,
+          "maximum": 536870912,
+          "minimum": 1,
+          "title": "Max Selected Bytes",
+          "type": "integer"
+        },
+        "max_selected_rows": {
+          "default": 100000,
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Max Selected Rows",
+          "type": "integer"
+        },
+        "maximum_cached_physical_series": {
+          "const": 1,
+          "default": 1,
+          "title": "Maximum Cached Physical Series",
+          "type": "integer"
+        },
+        "projection": {
+          "const": "closed_ai08_label_preparation_point_unchanged",
+          "default": "closed_ai08_label_preparation_point_unchanged",
+          "title": "Projection",
+          "type": "string"
+        },
+        "promotion_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Promotion Allowed",
+          "type": "boolean"
+        },
+        "retention": {
+          "const": "private_disposable_all_versions_original_order",
+          "default": "private_disposable_all_versions_original_order",
+          "title": "Retention",
+          "type": "string"
+        },
+        "series_index": {
+          "const": "one_complete_physical_ledger_no_origin_knowledge_clipping",
+          "default": "one_complete_physical_ledger_no_origin_knowledge_clipping",
+          "title": "Series Index",
+          "type": "string"
+        },
+        "stage_ready": {
+          "const": false,
+          "default": false,
+          "title": "Stage Ready",
+          "type": "boolean"
+        },
+        "supported_curated_versions": {
+          "default": [
+            "1.1.0",
+            "1.2.0"
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": "1.1.0",
+              "type": "string"
+            },
+            {
+              "const": "1.2.0",
+              "type": "string"
+            }
+          ],
+          "title": "Supported Curated Versions",
+          "type": "array"
+        },
+        "version": {
+          "const": "ai09-full-stockout-label-facts-1.0.0",
+          "default": "ai09-full-stockout-label-facts-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "CampaignStockoutLabelStoragePolicy",
+      "type": "object"
+    },
+    "CampaignStockoutQualificationPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_bytes": {
+          "default": 8192,
+          "maximum": 65536,
+          "minimum": 1,
+          "title": "Chunk Bytes",
+          "type": "integer"
+        },
+        "max_bytes": {
+          "default": 2147483648,
+          "maximum": 4294967296,
+          "minimum": 4096,
+          "title": "Max Bytes",
+          "type": "integer"
+        },
+        "max_record_bytes": {
+          "default": 16384,
+          "maximum": 65536,
+          "minimum": 1024,
+          "title": "Max Record Bytes",
+          "type": "integer"
+        },
+        "max_windows": {
+          "default": 1000000,
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Max Windows",
+          "type": "integer"
+        },
+        "version": {
+          "const": "ai09-stockout-full-qualification-read-1.0.0",
+          "default": "ai09-stockout-full-qualification-read-1.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "title": "CampaignStockoutQualificationPolicy",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "Parent": {
+      "additionalProperties": false,
+      "properties": {
+        "business_timezone": {
+          "const": "UTC",
+          "title": "Business Timezone",
+          "type": "string"
+        },
+        "curated_dataset_id": {
+          "pattern": "^curated-sha256-[0-9a-f]{64}$",
+          "title": "Curated Dataset Id",
+          "type": "string"
+        },
+        "curated_descriptor_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Descriptor Sha256",
+          "type": "string"
+        },
+        "forecast_source_status": {
+          "const": "passed",
+          "title": "Forecast Source Status",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "pattern": "^snapshot-sha256-[0-9a-f]{64}$",
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "source_dataset_id": {
+          "pattern": "^source-sha256-[0-9a-f]{64}$",
+          "title": "Source Dataset Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_dataset_id",
+        "curated_dataset_id",
+        "snapshot_id",
+        "curated_descriptor_sha256",
+        "business_timezone",
+        "forecast_source_status"
+      ],
+      "title": "Parent",
+      "type": "object"
+    },
+    "PhysicalSourceSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "batch_rows": {
+          "default": 256,
+          "maximum": 8192,
+          "minimum": 1,
+          "title": "Batch Rows",
+          "type": "integer"
+        },
+        "curated_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Curated Manifest Sha256",
+          "type": "string"
+        },
+        "execution_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Execution Authorized",
+          "type": "boolean"
+        },
+        "final_test_access_authorized": {
+          "const": false,
+          "default": false,
+          "title": "Final Test Access Authorized",
+          "type": "boolean"
+        },
+        "max_parent_bytes": {
+          "default": 2147483648,
+          "maximum": 2147483648,
+          "minimum": 1024,
+          "title": "Max Parent Bytes",
+          "type": "integer"
+        },
+        "max_parent_files": {
+          "default": 10000,
+          "maximum": 10000,
+          "minimum": 2,
+          "title": "Max Parent Files",
+          "type": "integer"
+        },
+        "max_rows_per_parent": {
+          "default": 20000000,
+          "maximum": 20000000,
+          "minimum": 1,
+          "title": "Max Rows Per Parent",
+          "type": "integer"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "resource_qualified": {
+          "const": false,
+          "default": false,
+          "title": "Resource Qualified",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "enum": [
+            "1.0.0",
+            "1.1.0",
+            "1.2.0"
+          ],
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "snapshot_manifest_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Snapshot Manifest Sha256",
+          "type": "string"
+        },
+        "source_parameters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Source Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "schema_version",
+        "parent",
+        "source_parameters",
+        "snapshot_manifest_sha256",
+        "curated_manifest_sha256"
+      ],
+      "title": "PhysicalSourceSpec",
+      "type": "object"
+    },
+    "PreparationRuntime": {
+      "additionalProperties": false,
+      "properties": {
+        "code_files": {
+          "additionalProperties": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Code Files",
+          "type": "object"
+        },
+        "code_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Code Sha256",
+          "type": "string"
+        },
+        "dependency_lock_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Dependency Lock Sha256",
+          "type": "string"
+        },
+        "python_version": {
+          "pattern": "^3\\.11\\.[0-9]+$",
+          "title": "Python Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code_files",
+        "code_sha256",
+        "dependency_lock_sha256",
+        "python_version"
+      ],
+      "title": "PreparationRuntime",
+      "type": "object"
+    }
+  },
+  "$id": "urn:retailops:evaluation:stockout_full_label_replay_plan:46.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "population": {
+      "const": "all_original_qualified_and_public_physical_origins_exact_join",
+      "default": "all_original_qualified_and_public_physical_origins_exact_join",
+      "title": "Population",
+      "type": "string"
+    },
+    "projection": {
+      "const": "unchanged_ai08_label_window_and_label_preparation_point",
+      "default": "unchanged_ai08_label_window_and_label_preparation_point",
+      "title": "Projection",
+      "type": "string"
+    },
+    "qualification": {
+      "$ref": "#/$defs/CampaignStockoutQualificationPolicy",
+      "default": {
+        "chunk_bytes": 8192,
+        "max_bytes": 2147483648,
+        "max_record_bytes": 16384,
+        "max_windows": 1000000,
+        "version": "ai09-stockout-full-qualification-read-1.0.0"
+      }
+    },
+    "runtime": {
+      "$ref": "#/$defs/PreparationRuntime"
+    },
+    "source": {
+      "$ref": "#/$defs/PhysicalSourceSpec"
+    },
+    "storage": {
+      "$ref": "#/$defs/CampaignStockoutLabelStoragePolicy",
+      "default": {
+        "audited_source_read_proved_by_this_policy": false,
+        "batch_rows": 256,
+        "cache_kib": 8192,
+        "final_access_authorized": false,
+        "max_index_bytes": 2147483648,
+        "max_parent_bytes": 2147483648,
+        "max_parent_files": 10000,
+        "max_parent_rows": 20000000,
+        "max_selected_bytes": 67108864,
+        "max_selected_rows": 100000,
+        "maximum_cached_physical_series": 1,
+        "projection": "closed_ai08_label_preparation_point_unchanged",
+        "promotion_allowed": false,
+        "retention": "private_disposable_all_versions_original_order",
+        "series_index": "one_complete_physical_ledger_no_origin_knowledge_clipping",
+        "stage_ready": false,
+        "supported_curated_versions": [
+          "1.1.0",
+          "1.2.0"
+        ],
+        "version": "ai09-full-stockout-label-facts-1.0.0"
+      }
+    },
+    "version": {
+      "const": "ai09-full-stockout-label-replay-1.0.0",
+      "default": "ai09-full-stockout-label-replay-1.0.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source",
+    "runtime"
+  ],
+  "title": "CampaignStockoutLabelPlan",
+  "type": "object"
+}

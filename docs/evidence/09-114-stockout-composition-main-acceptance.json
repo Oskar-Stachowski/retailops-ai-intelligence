@@ -1,0 +1,161 @@
+{
+  "recorded_at_utc": "2026-10-11T21:59:27.618184+00:00",
+  "scope": "PR67 complete exact resulting-main acceptance and composition of independently accepted stockout label/assessment components. Combined source or installed execution not claimed yet.",
+  "pr67_main": {
+    "verified_at_utc": "2026-10-11T21:55:01.059680+00:00",
+    "head_sha": "58753213fdee8c9ee7e899106ed94b36296a77ae",
+    "run_id": 38173378231,
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38173378231",
+    "event": "push",
+    "run_attempt": 1,
+    "required_jobs": 17,
+    "all_completed_success": true,
+    "same_job_inventory_as_accepted_PR": true,
+    "required_result": "success",
+    "response_sha256": {
+      "run": "6dde9bc687dea8185fa95419ec6902f53314fe21d4fef5255d9a2108875954f5",
+      "jobs": "b76130976913b157ac6abf992b859daea0a66d0aa84901d0a7e7ff2d31151c50"
+    },
+    "jobs": [
+      {
+        "name": "secrets",
+        "id": 114570518329,
+        "conclusion": "success"
+      },
+      {
+        "name": "checks",
+        "id": 114570518530,
+        "conclusion": "success"
+      },
+      {
+        "name": "persistence",
+        "id": 114570754834,
+        "conclusion": "success"
+      },
+      {
+        "name": "persistence-forecast",
+        "id": 114570754909,
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-source-inputs)",
+        "id": 114570754912,
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-detectors)",
+        "id": 114570754920,
+        "conclusion": "success"
+      },
+      {
+        "name": "TensorFlow CPU training, artifact and reload",
+        "id": 114570754924,
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (1)",
+        "id": 114570754936,
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (3)",
+        "id": 114570754947,
+        "conclusion": "success"
+      },
+      {
+        "name": "anomaly-oci",
+        "id": 114570754950,
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-forecast)",
+        "id": 114570754967,
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (0)",
+        "id": 114570754969,
+        "conclusion": "success"
+      },
+      {
+        "name": "observation-replay",
+        "id": 114570754997,
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (2)",
+        "id": 114570755006,
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-qualified-inputs)",
+        "id": 114570755026,
+        "conclusion": "success"
+      },
+      {
+        "name": "observation-broker",
+        "id": 114570755073,
+        "conclusion": "success"
+      },
+      {
+        "name": "required-result",
+        "id": 114583271453,
+        "conclusion": "success"
+      }
+    ]
+  },
+  "pr67_head": {
+    "accepted": true,
+    "observed_at_utc": "2026-10-11T20:43:04.717709+00:00",
+    "head": "551d7bceda2083115ceec3336c42b951e84509e1",
+    "run": 38168569806,
+    "run_attempt": 1,
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "success",
+    "required_jobs": 17,
+    "success": 17,
+    "failed": 0,
+    "skipped": 0,
+    "run_sha256": "aad46a4c5351d95aeb399bb2be52ae8055252b0bb503c5802b88265d03331cb9",
+    "jobs_sha256": "fc0adffae13e9547657694b8483ddfb78f28756a05940627b564184cce60f3d6",
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38168569806",
+    "base": "931f4519bb7b2bfce4b049dd01302429c917e5fa",
+    "mergeable_state": "clean"
+  },
+  "composition": {
+    "at_utc": "2026-10-11T21:56:22.415040+00:00",
+    "head": "1542020c817a20fb15eaf26ab49f07e9da8eb6d8",
+    "accepted_refs": {
+      "ai/09-stockout-ledger-replay": "9740d045469b50deae9952e4751e9269ea43b413",
+      "ai/09-stockout-full-assessment": "56b41e14b72d1c985a1e8506c274f36ecc13a0e0"
+    },
+    "all_blobs_match_an_accepted_component": true,
+    "counts": {
+      "src": 670,
+      "tests": 302,
+      "contracts": 418
+    },
+    "combined_source_tests_run": false,
+    "combined_package_run": false
+  },
+  "component_evidence": [
+    "09-112-stockout-label-replay.json",
+    "09-113-stockout-full-assessment.json"
+  ],
+  "remaining": [
+    "Complete mature stockout roles and reserved6base+24conditional trials, including rejected trials and original-artifact assessment without refitting",
+    "Anomaly threshold/evaluation and all required segments/uncertainty",
+    "Final audit of repeated whole-parent reads, retaining generator-exit and pre-publication guards",
+    "One coherent all-three-usecase protocol/runtime frozen before first Project generation",
+    "Full representative data-to-report/live-progress evidence before a new canonical",
+    "Actual full development and fresh three-seed final, costs, MLflow, cards, lifecycle, exact new PR/main CI"
+  ],
+  "new_Project_generations": 0,
+  "new_Project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "canonical_tree_rss_budget_bytes": 12884901888,
+  "quality_qualified": false,
+  "stage_ready": false
+}

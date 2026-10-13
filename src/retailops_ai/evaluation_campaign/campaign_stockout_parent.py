@@ -88,7 +88,8 @@ class CampaignStockoutPublicParent:
             if args[0] is None:
                 if self._failed or not self._exhausted:
                     raise SnapshotError("campaign_stockout_complete_origin_stream_required")
-                self._replay.check_parents()
+                # The owned replay closes last and seals all four parents.
+                # A receipt is available only after that final pass succeeds.
         except BaseException:
             self._failed = True
             raise

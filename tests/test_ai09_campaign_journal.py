@@ -210,6 +210,43 @@ def test_reservation_is_persisted_before_the_context_body_can_read(campaign):
     assert journal.summary(root)["completed_new_attempts"] == 1
 
 
+@pytest.mark.parametrize(
+    "error,allowed,expected",
+    [
+        (SnapshotError("controlled_rejection"), True, "controlled_rejection"),
+        (SnapshotError("controlled_rejection"), False, "campaign_operation_failed"),
+        (SnapshotError("private exception detail"), True, "campaign_operation_failed"),
+        (ValueError("controlled_rejection"), True, "campaign_operation_failed"),
+    ],
+)
+def test_only_explicit_machine_failures_are_persisted(campaign, error, allowed, expected):
+    root, _ = campaign
+    codes = frozenset({"controlled_rejection"}) if allowed else frozenset()
+    with pytest.raises(type(error)):
+        with journal.audited_operation(
+            root, "development-42-generate", failure_codes=codes
+        ) as operation:
+            operation.cost = FULL_COST
+            raise error
+    event = journal.inspect(root).events[-1]
+    assert event.result == "failed" and event.error_code == expected
+    assert event.cost.wall_seconds > 0
+    assert event.cost.peak_process_tree_rss_bytes == FULL_COST.peak_process_tree_rss_bytes
+    assert event.cost.artifact_bytes == FULL_COST.artifact_bytes
+    assert "private exception detail" not in (root / "journal.json").read_text()
+
+
+def test_invalid_public_failure_code_is_refused_before_reservation(campaign):
+    root, _ = campaign
+    before = journal.inspect(root)
+    with pytest.raises(ValueError, match="campaign_invalid_public_failure_codes"):
+        with journal.audited_operation(
+            root, "development-42-generate", failure_codes=frozenset({"private text"})
+        ):
+            pytest.fail("invalid failure policy entered operation")
+    assert journal.inspect(root) == before
+
+
 @pytest.mark.parametrize("failed_fsync", [1, 2])
 def test_publication_failure_never_enters_the_operation_body(campaign, monkeypatch, failed_fsync):
     root, _ = campaign
