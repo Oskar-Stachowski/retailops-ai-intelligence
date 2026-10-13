@@ -1,0 +1,13 @@
+{
+  "version": "ai09-portfolio-calibration-preflight-1",
+  "run": 38381515082,
+  "job": 115242837515,
+  "head": "9faa3f9af1de94246aaa92c8d53df7d141097ad4",
+  "status": "failed_preflight_no_project_calibration_started",
+  "cause": "The controlled native test protocol used placeholder implementation hash f*64. The new model bundle verifier correctly refused it. Pin the real comparison implementation in that test before any test fit; preserve the fixture source profile and every production guard.",
+  "correction_scope": "test_fixture_only_no_model_policy_or_production_verifier_change",
+  "project_fits": 0,
+  "project_calibration_started": false,
+  "final_generation_started": false,
+  "stage_ready": false
+}

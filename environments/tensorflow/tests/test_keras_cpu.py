@@ -180,7 +180,9 @@ def test_comparison_real_tree_heads_tensorflow_reload_and_no_refits(
 
     fold, train, validation = development
     policy = DevelopmentComparisonPolicy(tensorflow=ChallengerPolicy(epochs=3))
-    protocol = protocol_for(fold, policy)
+    protocol = protocol_for(fold, policy).model_copy(
+        update={"implementation_sha256": benchmark.comparison_code()}
+    )
     root = tmp_path / "comparison"
 
     # Controlled parents exercise the complete real fit/registry path, not source qualification.
