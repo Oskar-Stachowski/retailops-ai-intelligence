@@ -1,6 +1,11 @@
 # RetailOps AI Intelligence
 
-**AI 09: in_progress / not_ready — integracja po gotowych AI 07–08.**
+**AI 09: in_progress / not_ready — TensorFlow i konsolidacja portfolio.**
+Od 2026-10-13 obowiązuje [zatwierdzony wariant 1](docs/ai09-portfolio-ready.md):
+nowe porównanie forecastingu i przypięcie gotowych wyników AI 07–08.
+Nowa wspólna kampania trzech zastosowań oraz pełny wcześniejszy profil są
+zapisane jako możliwe dalsze ulepszenia, bez wdrażania w tym zadaniu.
+Poniższe opisy komponentów zachowują historię prac szerszego wariantu.
 [Aktualny status](docs/STATUS.md) podaje pozostały zakres i granice dowodów.
 [Pełne historyczne cechy anomaly](docs/ai09-native-anomaly-features.md) zachowują
 natywny Point i cały kontekst na dysku. 98 kontroli natywnych i 64 zainstalowanego

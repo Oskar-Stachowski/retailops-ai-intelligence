@@ -1,0 +1,29 @@
+{
+  "version": "ai09-approved-portfolio-scope-1.0.0",
+  "date": "2026-10-13",
+  "authorization": "User explicitly approved recommended variant TensorFlow + consolidation of AI07/08 and deferred variants2/3 without implementation.",
+  "scope_document": "docs/ai09-portfolio-ready.md",
+  "development_recipe": "docs/reference/ai09-portfolio-development-v1.json",
+  "recipe_sha256": "b1291dab5e4a7d9a496d4e55662a23cfe0606fb8d83346e45677129861bc242b",
+  "checks": {
+    "targeted_tests": 107,
+    "skipped": 0,
+    "ruff_check": "passed",
+    "ruff_format": "passed",
+    "mypy_new_runner": "passed",
+    "documentation_and_required_ci_contract": "passed",
+    "gitleaks_directory": "passed"
+  },
+  "evidence_limit": "Local scope/chronology/failure-accounting and checkpoint regression checks only. The original Source and native TensorFlow comparison have not run under this recipe.",
+  "new_original_generations": 0,
+  "new_model_fits": 0,
+  "final_test_opened": false,
+  "stage_ready": false,
+  "remaining": [
+    "original development generation/qualification/features/nonempty roles and real model comparison",
+    "separate calibration and independent development assessment",
+    "final protocol/freeze and three fresh seed evaluations",
+    "historical AI07/08 portfolio bindings and model cards",
+    "exact PR and resulting main full Required CI"
+  ]
+}

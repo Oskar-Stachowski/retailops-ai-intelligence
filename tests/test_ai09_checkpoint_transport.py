@@ -392,6 +392,7 @@ def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editab
         "generation",
         "live_progress",
         "census_memory",
+        "portfolio_development",
         "checkpoint_resume",
         "checkpoint_failure",
         "checkpoint_interruption",
@@ -400,16 +401,31 @@ def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editab
     steps = workflow["jobs"]["control"]["steps"]
     source = next(s for s in steps if s.get("with", {}).get("path") == "source")
     producer = next(s for s in steps if s.get("name") == "Install pinned producer dependencies")
-    assert source["if"] == producer["if"] == "inputs.mode != 'census_memory'"
+    assert (
+        source["if"]
+        == producer["if"]
+        == "inputs.mode != 'census_memory'"
+    )
     consumer = next(s for s in steps if s.get("name") == "Install locked consumer dependencies")
+    assert consumer["if"] == "inputs.mode != 'portfolio_development'"
+    portfolio = next(
+        s
+        for s in steps
+        if s.get("name") == "Install locked portfolio TensorFlow and consumer dependencies"
+    )
+    assert portfolio["if"] == "inputs.mode == 'portfolio_development'"
     assert consumer["env"]["CONTROL_MODE"] == "${{ inputs.mode }}"
-    assert 'if [[ "$CONTROL_MODE" == checkpoint_* ]]; then' in consumer["run"]
+    assert (
+        'if [[ "$CONTROL_MODE" == checkpoint_* ]]; then'
+        in consumer["run"]
+    )
     assert "--locked --extra snapshot --extra forecast --no-install-project" in consumer["run"]
     # Execute the setup's branching without installation: each native mode keeps
-    # its dependency selection, and only preparation omits the local project.
+    # its dependency selection; portfolio uses the separate locked TensorFlow environment.
     for mode in options:
+        command = portfolio["run"] if mode == "portfolio_development" else consumer["run"]
         commands = subprocess.run(
-            ["/bin/bash", "-eu", "-c", 'uv() { printf "%s\\n" "$*"; }\n' + consumer["run"]],
+            ["/bin/bash", "-eu", "-c", 'uv() { printf "%s\\n" "$*"; }\n' + command],
             env={**os.environ, "CONTROL_MODE": mode},
             check=True,
             capture_output=True,
@@ -419,6 +435,8 @@ def test_checkpoint_dependency_setup_keeps_strict_runtime_pins_without_an_editab
         expected = "sync --directory consumer --locked --extra snapshot --extra forecast"
         if mode.startswith("checkpoint_"):
             expected += " --no-install-project"
+        elif mode == "portfolio_development":
+            expected = "sync --directory consumer/environments/tensorflow --locked --no-install-project --no-install-package retailops-ai-intelligence"
         assert commands == [expected]
     canonical = yaml.safe_load(
         (root / ".github/workflows/ai09-development-capacity.yml").read_text()
