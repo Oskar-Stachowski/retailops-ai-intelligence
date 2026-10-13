@@ -32,6 +32,7 @@ from retailops_ai.forecast_jobs.publication_acceptance import (
 )
 from retailops_ai.forecast_jobs.queue import PostgresBatchQueue
 from retailops_ai.forecast_jobs.read_contracts import ForecastQuery
+from retailops_ai.forecast_jobs.read_progress import read_progress
 from retailops_ai.forecast_jobs.reader import PostgresForecastReader
 from retailops_ai.model_lifecycle.acceptance import require
 from retailops_ai.security.local import strict_json
@@ -160,6 +161,7 @@ def server(
 
 
 def main() -> int:
+    started = time.monotonic()
     parser = argparse.ArgumentParser()
     parser.add_argument("--inspect", action="store_true")
     args = parser.parse_args()
@@ -177,6 +179,7 @@ def main() -> int:
             all(v == 0 for v in snapshot(engine)["counts"].values()),
             "read_acceptance_requires_empty_database",
         )
+        read_progress("database_empty", started)
         raw = sys.stdin.buffer.read(MAX_INPUT_BYTES + 1)
         if len(raw) > MAX_INPUT_BYTES:
             raise ValueError("acceptance_input_byte_limit")
@@ -186,8 +189,11 @@ def main() -> int:
             inputs.scope.selling_location_ids == ("s-1",) and inputs.scope.channel == "store",
             "unexpected_read_fixture_scope",
         )
+        read_progress("fixture_prepared", started)
         PostgresInputStore(engine, "test").register(inputs)
+        read_progress("inputs_registered", started)
         seed_stub(engine, stub_release(inputs, settings.image_digest))
+        read_progress("release_seeded", started)
         queue = PostgresBatchQueue(
             engine,
             "test",
@@ -226,6 +232,7 @@ def main() -> int:
             return run.run_id
 
         first_id = publish("read-first")
+        read_progress("first_publication", started)
         try:
             direct = PostgresForecastReader(engine, "test").read(
                 ForecastQuery(), actor(inputs.scope.product_ids[:1])
@@ -238,6 +245,7 @@ def main() -> int:
             raise ValueError("direct_read_database_failed") from None
         checks = []
         with server(inputs.scope.product_ids) as http:
+            read_progress("server_ready", started)
             uri = "/api/v1/forecasts"
             require(
                 http(uri, None)[0] == 401 and http(uri, "http-pipeline")[0] == 403,
@@ -295,6 +303,7 @@ def main() -> int:
                     "old_origin_is_stale_without_fabricated_intervals",
                 ]
             )
+            read_progress("http_scope_checked", started)
             seed_stub(engine, stub_release(inputs, settings.image_digest, "2"))
             second_id = publish(
                 "read-subset-replay", product=inputs.scope.product_ids[0], units=3.0
@@ -318,6 +327,7 @@ def main() -> int:
                 and latest["items"][0]["inference_run_id"] == second_id,
                 "read_pins_followed_alias",
             )
+            read_progress("replay_checked", started)
             request = BatchRequest(
                 profile_id=inputs.profile_id,
                 as_of=inputs.as_of_time,
@@ -347,8 +357,10 @@ def main() -> int:
                 ]
             )
             # History outside the viewer scope must not consume its candidate budget or count.
+            read_progress("failed_run_checked", started)
             for i in range(33):
                 publish("read-outside-history-" + str(i), product=inputs.scope.product_ids[-1])
+                read_progress("outside_history", started, completed=i + 1)
             require(
                 http(uri)[0] == 200 and http(uri)[1]["pagination"]["total"] == 14,
                 "read_outside_history_consumed_budget",
@@ -361,6 +373,7 @@ def main() -> int:
             checks.append(
                 "sql_scope_filter_precedes_candidate_budget_and_pin_recovers_bounded_history"
             )
+            read_progress("history_budget_checked", started)
             before = snapshot(engine)
             # Table-owner corruption injection in this disposable fixture; restore exactly in finally.
             with engine.begin() as conn:
@@ -419,7 +432,10 @@ def main() -> int:
             checks.append(
                 "corrupt_out_of_page_and_out_of_scope_partition_refuses_entire_read_without_leaking_rows"
             )
+            read_progress("corruption_restored", started)
+            read_progress("freshness_probes_started", started)
             watermark_probes = probes(engine, queue, inputs, pipeline, http, settings.image_digest)
+            read_progress("freshness_probes_complete", started)
             checks.extend(
                 [
                     "pinned_source_watermark_http_current_stale_unknown_and_cutoff_availability",
@@ -428,6 +444,7 @@ def main() -> int:
                 ]
             )
         report = read_snapshot(engine)
+        read_progress("final_snapshot", started)
         report.update(
             status="passed",
             checks=checks,

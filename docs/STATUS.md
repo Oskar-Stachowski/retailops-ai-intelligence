@@ -1,5 +1,10 @@
 # Aktualny status
 
+**2026-10-13 — AI 09: poprawki obsługi błędu odczytu prognoz.**
+Kontrola `main` `e544c78` zakończyła się błędem: odczyt przekroczył 420 sekund, a następnie nie udało się usunąć obrazu testowego. Pozostałe 15 jobs poza agregatorem przeszło. Poprawiono sprzątanie jednorazowych kontenerów profilu `maintenance`, usuwanie nieaktualnego wyniku „passed” oraz zachowanie bezpiecznej diagnostyki faz po timeoutcie. Pierwotna przyczyna timeoutu pozostaje niewyjaśniona; limit nie został podniesiony.
+
+[09.126](evidence/09-126-forecast-smoke-diagnostics.json): **146 testów kodu i te same 146 testów z instalacji**, bez pominięć; Mypy **821 plików**, zgodne bajty **687 modułów**. Dowód używa kontrolowanych zastępczych operacji Docker; rzeczywisty odbiór i Required CI tej poprawki są nadal wymagane. [PR #69](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/69) weryfikuje wcześniejszą integrację i jeszcze nie zawiera tej poprawki. Nowe operacje Project: **0**; canonical wyłączony, **12 GiB + 1 GiB rezerwy**, AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: poprawka podziału testów po pełnym wyniku PR 68.**
 [09.123](evidence/09-123-integration-ci-rebalance.json) zachowuje nieudany Required CI kodu `60b4a03`: **14 jobs success**, błąd RSS natywnego scoringu, anulowany po 90 minutach shard 2 i nieudany agregator. Żaden z tych wyników nie jest odbiorem. Wagi 266 w pełni zakończonych plików testowych zaktualizowano z oryginalnych pomiarów Linux; 20 niedokończonych lub nierozpoczętych plików zachowuje wcześniejsze wagi. Cztery shardy, pełna kolekcja, limit 90 minut i wszystkie 17 jobs pozostają wymagane.
 
