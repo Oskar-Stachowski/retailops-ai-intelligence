@@ -33,3 +33,10 @@ fixtures. Żaden z tych wyników nie oznacza wykonania nowej kampanii Project.
 Połączenie z całym workflow 25/50/100, zarezerwowane treningi i selekcja,
 ocena trzech zastosowań, final, MLflow i lifecycle pozostają wymagane.
 Canonical wyłączony, **12 GiB** z rezerwą **1 GiB**; AI 09 **`not_ready`**.
+
+Trzy istniejące fizyczne fixtures sprawdzają pełny przebieg przygotowania,
+lecz dają **0 kwalifikujących się wierszy w każdej z pięciu ról**
+(przy 60/480/480 wierszach członkostwa). Nie są dodatnim dowodem treningu
+na rzeczywistej, przygotowanej populacji. [09.125](evidence/09-125-stockout-integration-progress.json)
+zapisuje liczniki z zachowanych manifestów. Taki dowód pozostaje wymagany
+w reprezentatywnym przebiegu całego workflow.

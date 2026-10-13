@@ -1,0 +1,205 @@
+{
+  "version": "ai09-stockout-integration-progress-1.0.0",
+  "observed_at_utc": "2026-10-13T05:27:52.371151+00:00",
+  "scope": "Composition of already controlled components. No inference of complete integration acceptance from component tests.",
+  "integration_head": "6abfee39336167ca5c77756413c7f54e640cde98",
+  "components": {
+    "stockout_preparation": "b9bea0bd4b6f9278d05feeff9f4f619a5bb44205",
+    "parent_final_seals": "126c364dcc9acacdb89df8ddf0b53f09a441455b",
+    "pr68_main": "e544c78b757be1524915184155a2ff1b098b4325"
+  },
+  "composition": {
+    "checked_files": 1610,
+    "all_exact_component_bytes": true,
+    "manifest_sha256": "1ad246cc6ed94b8a919ccc9b444bb8d5577eda19e7a228bd45b49446d3421048",
+    "changed_from_preparation": [
+      "src/retailops_ai/evaluation_campaign/campaign_anomaly_parent.py",
+      "src/retailops_ai/evaluation_campaign/campaign_stockout_parent.py",
+      "tests/test_campaign_parent_final_seal.py",
+      "scripts/ci_test_timings.json"
+    ]
+  },
+  "pr68": {
+    "url": "https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/68",
+    "run": 38222735935,
+    "head": "c8da6db8e01573286ba3a0814edaa1de8bf058f3",
+    "base": "58753213fdee8c9ee7e899106ed94b36296a77ae",
+    "tested_checkout": "7e0a14205f4a80639b8a24d43652a53bb1b90213",
+    "merged_as": "e544c78b757be1524915184155a2ff1b098b4325",
+    "jobs": [
+      {
+        "name": "secrets",
+        "conclusion": "success"
+      },
+      {
+        "name": "checks",
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-qualified-inputs)",
+        "conclusion": "success"
+      },
+      {
+        "name": "persistence-forecast",
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (3)",
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-source-inputs)",
+        "conclusion": "success"
+      },
+      {
+        "name": "observation-broker",
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (0)",
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (1)",
+        "conclusion": "success"
+      },
+      {
+        "name": "anomaly-oci",
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-detectors)",
+        "conclusion": "success"
+      },
+      {
+        "name": "TensorFlow CPU training, artifact and reload",
+        "conclusion": "success"
+      },
+      {
+        "name": "persistence",
+        "conclusion": "success"
+      },
+      {
+        "name": "acceptance (ci-forecast)",
+        "conclusion": "success"
+      },
+      {
+        "name": "tests (2)",
+        "conclusion": "success"
+      },
+      {
+        "name": "observation-replay",
+        "conclusion": "success"
+      },
+      {
+        "name": "required-result",
+        "conclusion": "success"
+      }
+    ],
+    "main_run": 38350390036,
+    "main_acceptance_pending": true,
+    "main_known_failure": {
+      "job": 115141488946,
+      "name": "persistence-forecast",
+      "step": "forecast-read-smoke",
+      "phase": "read_acceptance",
+      "reason": "TimeoutExpired after420seconds, followed by owned-stack cleanup failure",
+      "log_sha256": "fe0238727a96fefdc7f807253eca17afbf35f34ddd111bf80c993709f2a76b31",
+      "whole_run_still_in_progress": true,
+      "accepted": false
+    }
+  },
+  "earlier_full_local_ci": {
+    "head": "2094eda7b4586ee811f2c0cae71d0a811e59119f",
+    "monitor": {
+      "status": "failed",
+      "reason": "worker_exit",
+      "exit_code": 2,
+      "wall_seconds": 15293.883472999965,
+      "sampled_tree_peak_rss_bytes": 914178048,
+      "sampled_worker_cpu_seconds": 14736.855700575015,
+      "cpu_measurement": "sampled_worker_tree_lower_bound_excludes_supervisor_and_unsampled_children",
+      "sampled_peak_scratch_logical_bytes": 255836,
+      "sampled_peak_scratch_allocated_bytes": 294912,
+      "minimum_free_disk_bytes": 17972764672,
+      "minimum_available_memory_bytes": 1104871424,
+      "samples": 29895,
+      "sample_seconds": 0.5,
+      "memory_measurement": "sampled_supervisor_plus_worker_tree_not_continuous_peak",
+      "code_pins_unchanged": true
+    },
+    "ordinary_pytest": {
+      "passed": 6123,
+      "declared_skips": 55,
+      "seconds": 13295.45
+    },
+    "native_tensorflow": {
+      "passed": 3,
+      "failed": 5,
+      "seconds": 86.05,
+      "reason": "preflight_reserve before workers started"
+    },
+    "whole_acceptance": false,
+    "applies_to_new_integration": false
+  },
+  "preparation_fixture_limitations": [
+    {
+      "fixture_index": 0,
+      "manifest_sha256": "a901a01377dce2cadaff6e0845d074f42fbf4bc7786812d3fa989d98c23abe7e",
+      "rows": {
+        "base_train.jsonl": 0,
+        "calibrator_fit.jsonl": 0,
+        "development_evaluation.jsonl": 0,
+        "membership.jsonl": 60,
+        "recipe_selection.jsonl": 0,
+        "threshold_assessment.jsonl": 0
+      }
+    },
+    {
+      "fixture_index": 1,
+      "manifest_sha256": "760cebb93fd701190f2ff5dc28686237cc4490f42de05cd638019b986b76bf66",
+      "rows": {
+        "base_train.jsonl": 0,
+        "calibrator_fit.jsonl": 0,
+        "development_evaluation.jsonl": 0,
+        "membership.jsonl": 480,
+        "recipe_selection.jsonl": 0,
+        "threshold_assessment.jsonl": 0
+      }
+    },
+    {
+      "fixture_index": 2,
+      "manifest_sha256": "aafa5ef4e126c49eca872ee5e1c99fd0023afc02da648e19a67fd1f69c6257c6",
+      "rows": {
+        "base_train.jsonl": 0,
+        "calibrator_fit.jsonl": 0,
+        "development_evaluation.jsonl": 0,
+        "membership.jsonl": 480,
+        "recipe_selection.jsonl": 0,
+        "threshold_assessment.jsonl": 0
+      }
+    }
+  ],
+  "new_project_generations": 0,
+  "new_project_fits": 0,
+  "fresh_final_reads": 0,
+  "canonical_dispatched": false,
+  "tree_rss_bytes": 12884901888,
+  "minimum_available_memory_bytes": 1073741824,
+  "stage_ready": false,
+  "remaining": [
+    "New stockout trial worker source and installed controls",
+    "Complete frozen 25/50/100 workflow for all three use cases and original artifact selection",
+    "Full native policy and independent assessments",
+    "Representative 25/50 data-to-report and live-progress qualification before canonical",
+    "Real development and final campaigns, uncertainty, MLflow, cards, lifecycle",
+    "Exact final PR and resulting main acceptance"
+  ],
+  "linux_package_control": {
+    "mode": "stockout_trials",
+    "scope": "complete source and installed synthetic trial and regression controls on separate Linux runner",
+    "new_project_operations": 0,
+    "dispatched": false,
+    "accepted": false
+  }
+}

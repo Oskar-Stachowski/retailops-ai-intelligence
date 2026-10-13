@@ -1,5 +1,12 @@
 # Aktualny status
 
+**2026-10-13 — AI 09: PR 68 na main i dalsze połączenie stockout.**
+[PR 68](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/pull/68) przeszedł wszystkie **17/17 wymaganych jobs** dla dokładnego head i został scalony jako `e544c78`. Natywny TensorFlow zaliczył **8 testów** przy zachowanym limicie fixture 1 GiB. [CI wynikowego main](https://github.com/Oskar-Stachowski/retailops-ai-intelligence/actions/runs/38350390036) trwa; `persistence-forecast` zakończył się błędem `TimeoutExpired` podczas testu odczytu HTTP/SQL. **Wynikowy main nie jest odebrany**; pozostałych jobs nie przerwano.
+
+Bazowe połączenie `6abfee3` łączy przygotowanie i role stockout, dziennik trzech zastosowań oraz pojedynczą końcową kontrolę rodziców. **1610 plików** kodu, testów, skryptów i kontraktów zachowuje dokładne bajty sprawdzonych komponentów. [09.125](evidence/09-125-stockout-integration-progress.json) zachowuje pochodzenie oraz rzeczywisty wynik wcześniejszego lokalnego CI: **6123 passed / 55 zadeklarowanych skips**, a następnie **3 natywne passed / 5 odmów startu przez rezerwę RAM**. Cały lokalny CI jest **failed** i nie stanowi odbioru nowej integracji. Przygotowano oddzielny tryb Linux `stockout_trials` do pełnych kontroli kodu i instalacji, bez generowania Source oraz bez operacji Project.
+
+Wykonawca prób stockout, wybór oryginalnych modeli, pełne oceny i workflow trzech zastosowań, reprezentatywne profile, kampania/final, MLflow, lifecycle i odbiór całego przyrostu pozostają otwarte. Nie wykonano nowych operacji Project. Canonical wyłączony, **12 GiB** i rezerwa **1 GiB**; AI 09 **`not_ready`**.
+
 **2026-10-12 — AI 09: pojedynczy pełny końcowy odczyt rodziców publicznych.**
 [Czytniki anomaly i stockout](ai09-parent-final-seals.md) pozostawiają końcowe sprawdzenie właścicielowi Source. Liczba pełnych odczytów przy zamknięciu spadła z ośmiu do czterech; wszystkie oryginały i prywatne kopie nadal podlegają kontroli przed udostępnieniem odbioru. Sześć pomiarów odczytów i 24 próby uszkodzenia plików potwierdzają tę granicę.
 
